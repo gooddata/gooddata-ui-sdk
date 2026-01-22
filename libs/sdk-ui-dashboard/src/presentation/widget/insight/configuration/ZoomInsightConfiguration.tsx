@@ -8,12 +8,12 @@ import { type IInsightWidget } from "@gooddata/sdk-model";
 import { getInsightVisualizationMeta } from "@gooddata/sdk-ui-ext";
 import { Bubble, BubbleHoverTrigger, Checkbox, Message } from "@gooddata/sdk-ui-kit";
 
+import { changeInsightWidgetVisProperties } from "../../../../model/commands/insight.js";
 import {
-    changeInsightWidgetVisProperties,
-    selectInsightByRef,
     useDashboardDispatch,
     useDashboardSelector,
-} from "../../../../model/index.js";
+} from "../../../../model/react/DashboardStoreProvider.js";
+import { selectInsightByRef } from "../../../../model/store/insights/insightsSelectors.js";
 
 interface IZoomInsightConfigurationProps {
     widget: IInsightWidget;

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type PropsWithChildren, memo, useCallback, useMemo } from "react";
 
@@ -10,7 +10,7 @@ import { useCancelablePromise } from "@gooddata/sdk-ui";
 
 import { useFilterActions, useFilterState } from "./FilterContext.js";
 import { StaticFilter } from "./StaticFilter.js";
-import { testIds } from "../automation/index.js";
+import { filterOrigin } from "../automation/testIds.js";
 
 type OriginOption = Exclude<ObjectOrigin, "ALL">;
 
@@ -52,7 +52,7 @@ export function FilterOrigin() {
             isSelectionInverted={isSelectionInverted}
             onSelectionChange={handleChange}
             getItemTitle={getItemTitle}
-            dataTestId={testIds.filterOrigin}
+            dataTestId={filterOrigin}
         />
     );
 }

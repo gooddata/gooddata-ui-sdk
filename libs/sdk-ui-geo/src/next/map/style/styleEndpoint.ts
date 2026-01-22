@@ -1,8 +1,9 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 import type { StyleSpecification } from "../../layers/common/mapFacade.js";
+import type { GeoTileset } from "../../types/map/tileset.js";
 
 const ABSOLUTE_URL_PATTERN = /^https?:\/\//i;
 
@@ -10,6 +11,8 @@ type VectorSourceWithTiles = {
     type: "vector";
     tiles?: string[];
 } & Record<string, unknown>;
+
+const RASTER_TILESETS: Array<GeoTileset> = ["satellite"];
 
 /**
  * Fetches the MapLibre style specification from the backend.
@@ -20,10 +23,69 @@ type VectorSourceWithTiles = {
  *
  * @internal
  */
-export async function fetchMapStyle(backend: IAnalyticalBackend): Promise<StyleSpecification> {
+export async function fetchMapStyle(
+    backend: IAnalyticalBackend,
+    tileset: GeoTileset,
+): Promise<StyleSpecification> {
     const style = (await backend.geo().getDefaultStyle()) as unknown;
     assertValidStyle(style);
+    // replace source and layer with raster tileset, we should change this later to fetch the raster style from backend
+    if (RASTER_TILESETS.includes(tileset)) {
+        return applyRasterTilesetQueryToStyle(style, tileset);
+    }
     return style;
+}
+
+function applyRasterTilesetQueryToStyle(style: StyleSpecification, tileset: GeoTileset): StyleSpecification {
+    const tileUrl = getVectorTileUrl(style);
+    if (!tileUrl) {
+        return style;
+    }
+
+    const rasterTiles = [appendTilesetQuery(tileUrl, tileset)];
+
+    return {
+        ...style,
+        name: style.name ? `${style.name} (${tileset})` : style.name,
+        sources: {
+            [tileset]: {
+                type: "raster",
+                tiles: rasterTiles,
+            },
+        },
+        layers: [
+            {
+                id: tileset,
+                type: "raster",
+                source: tileset,
+            },
+        ],
+    };
+}
+
+function appendTilesetQuery(tileUrl: string, tileset: string): string {
+    if (!tileUrl) {
+        return tileUrl;
+    }
+
+    return `${tileUrl}?tileset=${encodeURIComponent(tileset)}`;
+}
+
+function getVectorTileUrl(style: StyleSpecification): string | undefined {
+    const sources = style.sources ?? {};
+
+    for (const source of Object.values(sources)) {
+        if (!source || typeof source !== "object" || !("tiles" in source)) {
+            continue;
+        }
+
+        const tiles = (source as VectorSourceWithTiles).tiles;
+        if (Array.isArray(tiles) && tiles.length > 0) {
+            return tiles[0];
+        }
+    }
+
+    return undefined;
 }
 
 function assertValidStyle(style: unknown): asserts style is StyleSpecification {

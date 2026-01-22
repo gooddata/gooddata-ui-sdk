@@ -35,30 +35,35 @@ import { IconInsight } from "@gooddata/sdk-ui-kit";
 
 import { useDashboardInsightDrills } from "./useDashboardInsightDrills.js";
 import { useHandlePropertiesPushData } from "./useHandlePropertiesPushData.js";
+import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
+import { useDashboardAsyncRender } from "../../../../../model/react/useDashboardAsyncRender.js";
+import { useWidgetExecutionsHandler } from "../../../../../model/react/useWidgetExecutionsHandler.js";
+import { useWidgetFilters } from "../../../../../model/react/useWidgetFilters.js";
 import {
     selectAgGridToken,
     selectColorPalette,
-    selectCrossFilteringSelectedPointsByWidgetRef,
-    selectDrillableItems,
     selectEnableExecutionCancelling,
     selectEnableSnapshotExportAccessibility,
-    selectExecutionTimestamp,
     selectIsExport,
-    selectIsInEditMode,
-    selectIsInExportMode,
     selectLocale,
     selectMapboxToken,
-    selectPermissions,
     selectSeparators,
     selectSettings,
-    useDashboardAsyncRender,
-    useDashboardSelector,
-    useWidgetExecutionsHandler,
-    useWidgetFilters,
-} from "../../../../../model/index.js";
-import { useDashboardComponentsContext } from "../../../../dashboardContexts/index.js";
-import { useMinimalSizeValidation, useVisualizationExportData } from "../../../../export/index.js";
-import { IntlWrapper } from "../../../../localization/index.js";
+} from "../../../../../model/store/config/configSelectors.js";
+import {
+    selectCrossFilteringSelectedPointsByWidgetRef,
+    selectDrillableItems,
+} from "../../../../../model/store/drill/drillSelectors.js";
+import { selectPermissions } from "../../../../../model/store/permissions/permissionsSelectors.js";
+import {
+    selectIsInEditMode,
+    selectIsInExportMode,
+} from "../../../../../model/store/renderMode/renderModeSelectors.js";
+import { selectExecutionTimestamp } from "../../../../../model/store/ui/uiSelectors.js";
+import { useDashboardComponentsContext } from "../../../../dashboardContexts/DashboardComponentsContext.js";
+import { useMinimalSizeValidation } from "../../../../export/hooks/useMinimalSizeValidation.js";
+import { useVisualizationExportData } from "../../../../export/useExportData.js";
+import { IntlWrapper } from "../../../../localization/IntlWrapper.js";
 import { InsightBody } from "../../InsightBody.js";
 import { type IDashboardInsightProps } from "../../types.js";
 import { CustomError } from "../CustomError/CustomError.js";

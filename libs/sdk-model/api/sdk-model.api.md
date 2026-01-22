@@ -3834,6 +3834,7 @@ export interface ISettings {
     enableGenAIMemory?: boolean;
     enableGenAIReasoningVisibility?: boolean;
     enableGeoArea?: boolean;
+    enableGeoBasemapConfig?: boolean;
     enableHeadlineExport?: boolean;
     enableHighchartsAccessibility?: boolean;
     enableIgnoreCrossFiltering?: boolean;

@@ -12,13 +12,13 @@ import { DeleteAlertConfirmDialog } from "./components/DeleteAlertConfirmDialog.
 import { PauseAlertRunner } from "./components/PauseAlertRunner.js";
 import { DefaultAlertingManagementDialogContentBasic } from "./DefaultAlertingManagementDialogContentBasic.js";
 import { DefaultAlertingManagementDialogContentEnhanced } from "./DefaultAlertingManagementDialogContentEnhanced.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import {
-    selectDashboardId,
     selectEnableAutomationManagement,
     selectExternalRecipient,
     selectIsEmbedded,
-    useDashboardSelector,
-} from "../../../model/index.js";
+} from "../../../model/store/config/configSelectors.js";
+import { selectDashboardId } from "../../../model/store/meta/metaSelectors.js";
 import { type IAlertingManagementDialogProps } from "../types.js";
 
 /**

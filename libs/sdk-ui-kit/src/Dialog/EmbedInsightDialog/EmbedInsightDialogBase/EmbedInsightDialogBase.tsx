@@ -15,7 +15,7 @@ import {
     type IWebComponentsOptions,
 } from "./types.js";
 import { dialogEmbedTabLabels, dialogHeadlineLabels } from "../../../locales.js";
-import { type ITab, Tabs } from "../../../Tabs/index.js";
+import { type ITab, Tabs } from "../../../Tabs/Tabs.js";
 import { ConfirmDialogBase } from "../../ConfirmDialogBase.js";
 
 /**

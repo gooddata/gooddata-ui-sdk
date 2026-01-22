@@ -1,13 +1,14 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import cx from "classnames";
 
 import { type IDashboardLayoutSizeByScreenSize } from "@gooddata/sdk-model";
 
 import { SectionHeaderEditable } from "./EditableHeader/SectionHeaderEditable.js";
-import { type IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/flexibleLayout/index.js";
+import { type IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
 import { getLayoutConfiguration } from "../../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
-import { selectIsSectionInsertedByPlugin, useDashboardSelector } from "../../../model/index.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectIsSectionInsertedByPlugin } from "../../../model/store/ui/uiSelectors.js";
 import { SectionHotspot } from "../dragAndDrop/draggableWidget/SectionHotspot.js";
 import { getRefsForSection } from "../refs.js";
 

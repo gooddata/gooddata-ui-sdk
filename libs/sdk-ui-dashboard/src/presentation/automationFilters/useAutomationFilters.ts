@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type MutableRefObject, useCallback, useMemo, useRef, useState } from "react";
 
@@ -25,21 +25,27 @@ import {
     getNonHiddenFilters,
     getNonSelectedFilters,
 } from "./utils.js";
+import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
 import {
-    type IAutomationFiltersTab,
-    selectAttributeFilterConfigsOverrides,
-    selectAttributeFilterConfigsOverridesByTab,
-    selectAutomationCommonDateFilterId,
     selectCatalogAttributes,
     selectCatalogDateDatasets,
+} from "../../model/store/catalog/catalogSelectors.js";
+import { selectEnableNewScheduledExport } from "../../model/store/config/configSelectors.js";
+import {
+    type IAutomationFiltersTab,
+    selectAutomationCommonDateFilterId,
     selectDashboardLockedFilters,
-    selectDateFilterConfigOverridesByTab,
+} from "../../model/store/filtering/dashboardFilterSelectors.js";
+import { selectPersistedDashboardFilterContextDateFilterConfig } from "../../model/store/meta/metaSelectors.js";
+import {
+    selectAttributeFilterConfigsOverrides,
+    selectAttributeFilterConfigsOverridesByTab,
+} from "../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { selectDateFilterConfigOverridesByTab } from "../../model/store/tabs/dateFilterConfig/dateFilterConfigSelectors.js";
+import {
     selectDateFilterConfigsOverrides,
     selectDateFilterConfigsOverridesByTab,
-    selectEnableNewScheduledExport,
-    selectPersistedDashboardFilterContextDateFilterConfig,
-    useDashboardSelector,
-} from "../../model/index.js";
+} from "../../model/store/tabs/dateFilterConfigs/dateFilterConfigsSelectors.js";
 
 //
 // Helper functions for computing filter data

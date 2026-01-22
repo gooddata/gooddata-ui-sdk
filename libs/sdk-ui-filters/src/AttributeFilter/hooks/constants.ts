@@ -1,5 +1,6 @@
-// (C) 2022-2024 GoodData Corporation
-import { type Correlation } from "../../AttributeFilterHandler/index.js";
+// (C) 2022-2026 GoodData Corporation
+
+import { type Correlation } from "../../AttributeFilterHandler/types/common.js";
 
 /**
  * @internal

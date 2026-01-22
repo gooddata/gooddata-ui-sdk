@@ -47,21 +47,21 @@ import {
 import { dashboardLayoutSanitize } from "../../../../_staging/dashboard/dashboardLayout.js";
 import { createDefaultFilterContext } from "../../../../_staging/dashboard/defaultFilterContext.js";
 import { DEFAULT_FISCAL_DATE_FILTER_PRESET } from "../../../../_staging/dateFilterConfig/defaultConfig.js";
+import { configHasFiscalPresets } from "../../../../_staging/dateFilterConfig/validation.js";
 import { type ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
 import { getPrivateContext } from "../../../store/_infra/contexts.js";
 import { drillActions } from "../../../store/drill/index.js";
 import { insightsActions } from "../../../store/insights/index.js";
 import { metaActions } from "../../../store/meta/index.js";
 import { selectIsNewDashboard } from "../../../store/meta/metaSelectors.js";
-import { filterContextInitialState } from "../../../store/tabs/filterContext/filterContextState.js";
 import {
-    DEFAULT_TAB_ID,
     type FilterContextState,
-    type ITabState,
-    tabsActions,
-} from "../../../store/tabs/index.js";
+    filterContextInitialState,
+} from "../../../store/tabs/filterContext/filterContextState.js";
+import { tabsActions } from "../../../store/tabs/index.js";
 import { selectScreen } from "../../../store/tabs/layout/layoutSelectors.js";
 import { layoutInitialState } from "../../../store/tabs/layout/layoutState.js";
+import { DEFAULT_TAB_ID, type ITabState } from "../../../store/tabs/tabsState.js";
 import { uiActions } from "../../../store/ui/index.js";
 import {
     type DashboardContext,
@@ -223,7 +223,9 @@ export function* actionsToInitializeNewDashboard(
     insights: IInsight[];
 }> {
     const effectiveDateFilterConfig =
-        settings.activeCalendars?.default === "FISCAL"
+        settings.activeCalendars?.fiscal &&
+        settings.activeCalendars?.default === "FISCAL" &&
+        configHasFiscalPresets(dateFilterConfig)
             ? { ...dateFilterConfig, selectedOption: DEFAULT_FISCAL_DATE_FILTER_PRESET }
             : dateFilterConfig;
 

@@ -7,8 +7,8 @@ import { type IDashboard, idRef, insightRef } from "@gooddata/sdk-model";
 import { createDefaultFilterContext } from "../../../_staging/dashboard/defaultFilterContext.js";
 import { defaultDateFilterConfig } from "../../../_staging/dateFilterConfig/defaultConfig.js";
 import { EmptyDashboardLayout } from "../../commandHandlers/dashboard/common/dashboardInitialize.js";
-import { addLayoutSection } from "../../commands/index.js";
-import { type IInsightAttributesMeta, queryInsightAttributesMeta } from "../../queries/index.js";
+import { addLayoutSection } from "../../commands/layout.js";
+import { type IInsightAttributesMeta, queryInsightAttributesMeta } from "../../queries/insights.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../tests/DashboardTester.js";
 import {
     EmptyDashboardIdentifier,

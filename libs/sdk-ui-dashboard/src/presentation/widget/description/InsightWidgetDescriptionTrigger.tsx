@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { objRefToString, widgetRef } from "@gooddata/sdk-model";
 import { stringUtils } from "@gooddata/util";
@@ -7,14 +7,12 @@ import { DescriptionClickTrigger } from "./DescriptionClickTrigger.js";
 import { type IInsightWidgetDescriptionTriggerProps } from "./types.js";
 import { useInsightWidgetDescription } from "./useInsightWidgetDescription.js";
 import { useRichTextWidgetFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
-import {
-    type DescriptionTooltipOpenedData,
-    selectEnableRichTextDynamicReferences,
-    selectExecutionTimestamp,
-    useDashboardSelector,
-    useDashboardUserInteraction,
-} from "../../../model/index.js";
-import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
+import { type DescriptionTooltipOpenedData } from "../../../model/events/userInteraction.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { useDashboardUserInteraction } from "../../../model/react/useDashboardUserInteraction.js";
+import { selectEnableRichTextDynamicReferences } from "../../../model/store/config/configSelectors.js";
+import { selectExecutionTimestamp } from "../../../model/store/ui/uiSelectors.js";
+import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
 
 export function InsightWidgetDescriptionTrigger(props: IInsightWidgetDescriptionTriggerProps) {
     const { widget } = props;

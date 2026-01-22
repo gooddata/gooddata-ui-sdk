@@ -16,7 +16,8 @@ import { type DateFilterValidationResult } from "../../../../types.js";
 import { createMemoizedSelector } from "../../_infra/selectors.js";
 import { selectIsInEditMode } from "../../renderMode/renderModeSelectors.js";
 import { type DashboardSelector } from "../../types.js";
-import { DEFAULT_TAB_ID, selectActiveTabLocalIdentifier, selectTabs } from "../index.js";
+import { selectActiveTabLocalIdentifier, selectTabs } from "../tabsSelectors.js";
+import { DEFAULT_TAB_ID } from "../tabsState.js";
 
 const selectTabsArray = createSelector(selectTabs, (tabs) => [...(tabs ?? [])]);
 

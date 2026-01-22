@@ -1,11 +1,9 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type IDashboardCustomizationLogger } from "./customizationLogging.js";
-import { isCustomWidget } from "../../model/index.js";
-import {
-    type CustomDashboardWidgetComponent,
-    type OptionalWidgetComponentProvider,
-} from "../../presentation/index.js";
+import { isCustomWidget } from "../../model/types/layoutTypes.js";
+import type { OptionalWidgetComponentProvider } from "../../presentation/dashboardContexts/types.js";
+import type { CustomDashboardWidgetComponent } from "../../presentation/widget/widget/types.js";
 import { type IDashboardWidgetCustomizer } from "../customizer.js";
 
 /*

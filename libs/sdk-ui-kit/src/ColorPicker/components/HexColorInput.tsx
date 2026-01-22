@@ -4,7 +4,7 @@ import { Fragment, type ReactNode, memo, useCallback } from "react";
 
 import { type ColorFormats } from "tinycolor2";
 
-import { Input } from "../../Form/index.js";
+import { Input } from "../../Form/Input.js";
 import { getHexFromHslColor, getHslFromHexColor, isHexColorValid } from "../utils.js";
 
 export interface IHexColorInputProps {

@@ -6,21 +6,9 @@ import { QueryAttributeElementsService } from "./queryAttributeElements.js";
 import { QueryAvailableDatasetForItemsService } from "./queryAvailableDatasetsForItems.js";
 import { QueryConnectedAttributesService } from "./queryConnectedAttributes.js";
 import { QueryConnectingAttributesService } from "./queryConnectingAttributes.js";
-import {
-    QueryInsightAttributesMetaService,
-    selectInsightAttributesMeta,
-    type selectInsightAttributesMetaType,
-} from "./queryInsightAttributesMeta.js";
-import {
-    QueryDateDatasetsForInsightService,
-    selectDateDatasetsForInsight,
-    type selectDateDatasetsForInsightType,
-} from "./queryInsightDateDatasets.js";
-import {
-    QueryDateDatasetsForMeasureService,
-    selectDateDatasetsForMeasure,
-    type selectDateDatasetsForMeasureType,
-} from "./queryMeasureDateDatasets.js";
+import { QueryInsightAttributesMetaService } from "./queryInsightAttributesMeta.js";
+import { QueryDateDatasetsForInsightService } from "./queryInsightDateDatasets.js";
+import { QueryDateDatasetsForMeasureService } from "./queryMeasureDateDatasets.js";
 import { QueryMetricsAndFactsService } from "./queryMetricsAndFacts.js";
 import { QueryWidgetAlertCountService } from "./queryWidgetAlertCount.js";
 import { QueryWidgetBrokenAlertService } from "./queryWidgetBrokenAlerts.js";
@@ -41,7 +29,3 @@ export const AllQueryServices = [
     QueryMetricsAndFactsService,
     QueryAvailableDatasetForItemsService,
 ];
-
-export { selectDateDatasetsForInsight, type selectDateDatasetsForInsightType };
-export { selectInsightAttributesMeta, type selectInsightAttributesMetaType };
-export { selectDateDatasetsForMeasure, type selectDateDatasetsForMeasureType };

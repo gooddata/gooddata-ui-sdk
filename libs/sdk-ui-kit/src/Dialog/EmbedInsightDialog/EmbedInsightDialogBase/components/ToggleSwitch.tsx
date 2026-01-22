@@ -2,7 +2,8 @@
 
 import cx from "classnames";
 
-import { Bubble, BubbleHoverTrigger } from "../../../../Bubble/index.js";
+import { Bubble } from "../../../../Bubble/Bubble.js";
+import { BubbleHoverTrigger } from "../../../../Bubble/BubbleHoverTrigger.js";
 
 const alignPoints = [{ align: "cr cl" }];
 

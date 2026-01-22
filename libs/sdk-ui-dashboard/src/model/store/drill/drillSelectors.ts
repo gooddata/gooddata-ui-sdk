@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
 
@@ -7,7 +7,7 @@ import { type ExplicitDrill, type IDrillEventIntersectionElement } from "@goodda
 
 import { type ICrossFilteringItem } from "./types.js";
 import { createMemoizedSelector } from "../_infra/selectors.js";
-import { selectActiveOrDefaultTabLocalIdentifier } from "../tabs/index.js";
+import { selectActiveOrDefaultTabLocalIdentifier } from "../tabs/tabsSelectors.js";
 import { type DashboardSelector, type DashboardState } from "../types.js";
 
 const selectSelf = createSelector(

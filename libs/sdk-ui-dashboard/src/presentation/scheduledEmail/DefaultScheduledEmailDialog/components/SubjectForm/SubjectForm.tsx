@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type FocusEvent, useCallback } from "react";
 
@@ -13,7 +13,7 @@ import {
 } from "@gooddata/sdk-ui";
 import { Input, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
-import { DASHBOARD_TITLE_MAX_LENGTH } from "../../../../../presentation/constants/index.js";
+import { DASHBOARD_TITLE_MAX_LENGTH } from "../../../../../presentation/constants/dashboard.js";
 import { ErrorWrapper } from "../ErrorWrapper/ErrorWrapper.js";
 
 const MAX_SUBJECT_LENGTH = 255;

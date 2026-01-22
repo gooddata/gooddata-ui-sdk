@@ -1,6 +1,0 @@
-// (C) 2021-2025 GoodData Corporation
-export { DefaultMenuButton } from "./DefaultMenuButton.js";
-export { HiddenMenuButton } from "./HiddenMenuButton.js";
-export { MenuButton } from "./MenuButton.js";
-export { useDefaultMenuItems } from "./useDefaultMenuItems.js";
-export type * from "./types.js";

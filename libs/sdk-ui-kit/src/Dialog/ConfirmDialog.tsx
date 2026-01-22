@@ -4,7 +4,7 @@ import { memo } from "react";
 
 import { ConfirmDialogBase } from "./ConfirmDialogBase.js";
 import { type IConfirmDialogBaseProps } from "./typings.js";
-import { Overlay } from "../Overlay/index.js";
+import { Overlay } from "../Overlay/Overlay.js";
 
 /**
  * @internal

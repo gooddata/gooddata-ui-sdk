@@ -1,10 +1,10 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { useIntl } from "react-intl";
 
 import { ExportDialog } from "@gooddata/sdk-ui-kit";
 
-import { useExportXlsxDialogContext } from "../dashboardContexts/index.js";
+import { useExportXlsxDialogContext } from "../dashboardContexts/ExportXlsxDialogContext.js";
 
 /**
  * @internal

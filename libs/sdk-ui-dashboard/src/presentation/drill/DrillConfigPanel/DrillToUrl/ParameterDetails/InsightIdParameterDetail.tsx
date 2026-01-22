@@ -6,7 +6,9 @@ import { invariant } from "ts-invariant";
 import { type ObjRef, isInsightWidget } from "@gooddata/sdk-model";
 
 import { ParameterDetail } from "./ParameterDetail.js";
-import { selectInsightByRef, selectWidgetByRef, useDashboardSelector } from "../../../../../model/index.js";
+import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
+import { selectInsightByRef } from "../../../../../model/store/insights/insightsSelectors.js";
+import { selectWidgetByRef } from "../../../../../model/store/tabs/layout/layoutSelectors.js";
 
 interface IIdentifierDetailProps {
     title: string;

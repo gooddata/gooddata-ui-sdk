@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import {
@@ -14,11 +14,11 @@ import {
 } from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
+import { type IMultiSelectAttributeFilterHandler } from "../../AttributeFilterHandler/types/attributeFilterHandler.js";
 import {
     type AsyncOperationStatus,
     type AttributeElementKey,
-    type IMultiSelectAttributeFilterHandler,
-} from "../../AttributeFilterHandler/index.js";
+} from "../../AttributeFilterHandler/types/common.js";
 
 /**
  * @internal

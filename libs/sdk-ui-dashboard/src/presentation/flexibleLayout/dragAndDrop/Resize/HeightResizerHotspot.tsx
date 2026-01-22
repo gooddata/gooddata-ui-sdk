@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type Ref, useEffect, useMemo, useState } from "react";
 
@@ -21,18 +21,18 @@ import {
     getMinHeight,
 } from "../../../../_staging/layout/sizing.js";
 import { type ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
+import { resizeNestedLayoutItemsHeight } from "../../../../model/commands/layout.js";
 import {
-    isCustomWidgetBase,
-    resizeNestedLayoutItemsHeight,
-    selectInsightsMap,
-    selectSettings,
     useDashboardDispatch,
     useDashboardSelector,
-} from "../../../../model/index.js";
-import { type ExtendedDashboardWidget } from "../../../../model/types/layoutTypes.js";
+} from "../../../../model/react/DashboardStoreProvider.js";
+import { selectSettings } from "../../../../model/store/config/configSelectors.js";
+import { selectInsightsMap } from "../../../../model/store/insights/insightsSelectors.js";
+import { type ExtendedDashboardWidget, isCustomWidgetBase } from "../../../../model/types/layoutTypes.js";
 import { useDashboardItemPathAndSize } from "../../../dashboard/components/DashboardItemPathAndSizeContext.js";
 import { useScreenSize } from "../../../dashboard/components/DashboardScreenSizeContext.js";
-import { HoveredWidgetContext, useResizeContext } from "../../../dragAndDrop/index.js";
+import { HoveredWidgetContext } from "../../../dragAndDrop/HoveredWidgetContext.js";
+import { useResizeContext } from "../../../dragAndDrop/LayoutResizeContext.js";
 import { useDashboardDrag } from "../../../dragAndDrop/useDashboardDrag.js";
 import { DEFAULT_WIDTH_RESIZER_HEIGHT } from "../../constants.js";
 

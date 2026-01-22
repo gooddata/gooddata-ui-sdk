@@ -7,7 +7,7 @@ import cx from "classnames";
 import { type ITheme } from "@gooddata/sdk-model";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import { Icon } from "../Icon/index.js";
+import { Icon } from "../Icon/Icon.js";
 
 /**
  * @internal

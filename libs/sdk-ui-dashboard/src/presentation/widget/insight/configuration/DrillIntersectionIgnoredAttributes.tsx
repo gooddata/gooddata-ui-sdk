@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { FormattedMessage } from "react-intl";
 
@@ -8,12 +8,12 @@ import {
     DrillIntersectionIgnoredAttributesSelect,
     type IDrillIntersectionIgnoredAttributesSelectOption,
 } from "./DrillIntersectionIgnoredAttributesSelect.js";
+import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import {
     selectCatalogAttributeDisplayForms,
     selectCatalogDateDatasets,
-    selectInsightByWidgetRef,
-    useDashboardSelector,
-} from "../../../../model/index.js";
+} from "../../../../model/store/catalog/catalogSelectors.js";
+import { selectInsightByWidgetRef } from "../../../../model/store/insights/insightsSelectors.js";
 import { type DRILL_TARGET_TYPE, type IDrillConfigItem } from "../../../drill/types.js";
 
 export interface IDrillIntersectionIgnoredAttributesProps {

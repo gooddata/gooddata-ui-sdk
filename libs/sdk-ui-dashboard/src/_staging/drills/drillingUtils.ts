@@ -32,13 +32,6 @@ import {
     type IGlobalDrillDownAttributeHierarchyDefinition,
 } from "../../types.js";
 
-export {
-    type IDrillToUrlPlaceholder,
-    getAttributeIdentifiersPlaceholdersFromUrl,
-    getDashboardAttributeFilterPlaceholdersFromUrl,
-    getInsightAttributeFilterPlaceholdersFromUrl,
-} from "@gooddata/sdk-model/internal";
-
 export function getDrillsBySourceLocalIdentifiers(
     widgetDrillDefinition: Array<DashboardDrillDefinition>,
     drillSourceLocalIdentifiers: string[],

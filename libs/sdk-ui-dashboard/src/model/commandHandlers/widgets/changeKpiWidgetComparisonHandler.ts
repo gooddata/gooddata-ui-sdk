@@ -6,9 +6,8 @@ import { put, select } from "redux-saga/effects";
 import { type IKpiWidget } from "@gooddata/sdk-model";
 
 import { validateExistingKpiWidget } from "./validation/widgetValidations.js";
-import { type IChangeKpiWidgetComparison } from "../../commands/index.js";
-import { type IDashboardKpiWidgetComparisonChanged } from "../../events/index.js";
-import { kpiWidgetComparisonChanged } from "../../events/kpi.js";
+import { type IChangeKpiWidgetComparison } from "../../commands/kpi.js";
+import { type IDashboardKpiWidgetComparisonChanged, kpiWidgetComparisonChanged } from "../../events/kpi.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";

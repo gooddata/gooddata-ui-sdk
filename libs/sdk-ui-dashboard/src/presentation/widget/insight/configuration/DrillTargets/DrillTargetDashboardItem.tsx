@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -7,13 +7,12 @@ import { type IntlShape, useIntl } from "react-intl";
 import { type IListedDashboard, type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 
 import { DrillTargetDashboardTabSelector } from "./DrillTargetDashboardTabSelector.js";
-import {
-    type IInaccessibleDashboard,
-    selectAccessibleDashboards,
-    selectInaccessibleDashboards,
-    useDashboardSelector,
-} from "../../../../../model/index.js";
-import { DashboardList, type IDrillableDashboardListItem } from "../../../../dashboardList/index.js";
+import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
+import { selectAccessibleDashboards } from "../../../../../model/store/accessibleDashboards/accessibleDashboardsSelectors.js";
+import { selectInaccessibleDashboards } from "../../../../../model/store/inaccessibleDashboards/inaccessibleDashboardsSelectors.js";
+import { type IInaccessibleDashboard } from "../../../../../model/types/inaccessibleDashboardTypes.js";
+import { DashboardList } from "../../../../dashboardList/DashboardList.js";
+import { type IDrillableDashboardListItem } from "../../../../dashboardList/types.js";
 
 interface IDrillTargetDashboardItemProps {
     selected?: ObjRef;

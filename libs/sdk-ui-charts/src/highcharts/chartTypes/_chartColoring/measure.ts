@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import {
     type IColor,
@@ -12,6 +12,7 @@ import { type DataViewFacade, type IColorAssignment } from "@gooddata/sdk-ui";
 import { isDarkTheme } from "@gooddata/sdk-ui-theme-provider";
 import {
     ColorStrategy,
+    type IColorMapping,
     type ICreateColorAssignmentReturnValue,
     getColorByGuid,
     getColorFromMapping,
@@ -19,7 +20,6 @@ import {
     isValidMappedColor,
 } from "@gooddata/sdk-ui-vis-commons";
 
-import { type IColorMapping } from "../../../interfaces/index.js";
 import { findMeasureGroupInDimensions } from "../_util/executionResultHelper.js";
 
 const emptyColorPaletteItem: IColorFromPalette = { type: "guid", value: "none" };

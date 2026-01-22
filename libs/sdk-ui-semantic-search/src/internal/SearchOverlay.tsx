@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import {
     type KeyboardEvent as ReactKeyboardEvent,
@@ -38,8 +38,9 @@ import { LeveledSearchTreeView, type SearchTreeViewLevels } from "./LeveledSearc
 import { getItemTitle } from "./LeveledSearchTreeViewItem.js";
 import { MetadataTimezoneProvider } from "./metadataTimezoneContext.js";
 import { SearchNoResults } from "./SearchNoResults.js";
-import { testIds } from "../automation/index.js";
-import { useSearchIds, useSemanticSearch } from "../hooks/index.js";
+import { semanticSearchInput } from "../automation/testIds.js";
+import { useSearchIds } from "../hooks/useSearchIds.js";
+import { useSemanticSearch } from "../hooks/useSemanticSearch.js";
 import { useSearchKeyboard } from "../hooks/usSearchKeyboard.js";
 import { IntlWrapper } from "../localization/IntlWrapper.js";
 
@@ -310,7 +311,7 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
                 onChange={onValueChange}
                 onEscKeyPress={onEscKeyPress}
                 onKeyDown={handleKeyDown}
-                dataTestId={testIds.semanticSearchInput}
+                dataTestId={semanticSearchInput}
             />
             {(() => {
                 if (searchStatus === "loading") {

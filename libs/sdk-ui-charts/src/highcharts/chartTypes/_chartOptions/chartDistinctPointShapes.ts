@@ -6,7 +6,7 @@ import {
     type IChartConfig,
     type IDistinctPointShapes,
     type PointShapeSymbolType,
-} from "../../../interfaces/index.js";
+} from "../../../interfaces/chartConfig.js";
 import { type ISeriesItem } from "../../typings/unsafe.js";
 import { isAreaChart, isComboChart, isLineChart } from "../_util/common.js";
 

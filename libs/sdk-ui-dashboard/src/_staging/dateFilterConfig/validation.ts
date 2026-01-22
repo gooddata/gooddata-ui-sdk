@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { groupBy, isEmpty } from "lodash-es";
 
@@ -137,6 +137,10 @@ const FISCAL_GRANULARITIES: DateFilterGranularity[] = [
     "GDC.time.fiscal_quarter",
     "GDC.time.fiscal_month",
 ];
+
+export function configHasFiscalPresets(config: IDateFilterConfig | undefined): boolean {
+    return config?.relativePresets?.some((p) => FISCAL_GRANULARITIES.includes(p.granularity)) ?? false;
+}
 
 const getFiscalPresetsFromDefault = () => {
     return (

@@ -9,16 +9,16 @@ import { UiTag } from "./UiTag.js";
 import { type IAccessibilityConfigBase } from "../../typings/accessibility.js";
 import { bem } from "../@utils/bem.js";
 import { UiButton } from "../UiButton/UiButton.js";
+import { type IUiComboboxOption } from "../UiCombobox/types.js";
+import { UiCombobox } from "../UiCombobox/UiCombobox.js";
+import { UiComboboxInput } from "../UiCombobox/UiComboboxInput.js";
+import { UiComboboxList } from "../UiCombobox/UiComboboxList.js";
 import {
-    type IUiComboboxOption,
-    UiCombobox,
-    UiComboboxInput,
-    UiComboboxList,
     UiComboboxListItem,
     UiComboboxListItemCreatableLabel,
     UiComboboxListItemLabel,
-    UiComboboxPopup,
-} from "../UiCombobox/index.js";
+} from "../UiCombobox/UiComboboxListItem.js";
+import { UiComboboxPopup } from "../UiCombobox/UiComboboxPopup.js";
 import { UiPopover } from "../UiPopover/UiPopover.js";
 
 const { b, e } = bem("gd-ui-kit-tags");

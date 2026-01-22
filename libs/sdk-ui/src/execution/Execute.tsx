@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ReactElement } from "react";
 
@@ -21,16 +21,16 @@ import {
     type IWithLoadingEvents,
     type WithLoadingResult,
 } from "./withExecutionLoading.js";
+import { UnexpectedSdkError } from "../base/errors/GoodDataSdkError.js";
 import {
     type AttributesMeasuresOrPlaceholders,
     type AttributesOrPlaceholders,
     type NullableFiltersOrPlaceholders,
     type SortsOrPlaceholders,
     type TotalsOrPlaceholders,
-    UnexpectedSdkError,
-    useResolveValuesWithPlaceholders,
-    withContexts,
-} from "../base/index.js";
+} from "../base/react/placeholders/aliases.js";
+import { useResolveValuesWithPlaceholders } from "../base/react/placeholders/hooks.js";
+import { withContexts } from "../base/react/withContexts.js";
 
 /**
  * Props of the {@link Execute} component.

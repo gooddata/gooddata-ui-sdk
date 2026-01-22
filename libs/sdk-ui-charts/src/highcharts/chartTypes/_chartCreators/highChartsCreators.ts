@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { merge } from "lodash-es";
 import { type IntlShape } from "react-intl";
@@ -9,7 +9,7 @@ import { type IDrillConfig, type VisType, VisualizationTypes } from "@gooddata/s
 
 import { getCommonConfiguration } from "./commonConfiguration.js";
 import { getCustomizedConfiguration } from "./customConfiguration.js";
-import { type IChartConfig, type IChartLimits } from "../../../interfaces/index.js";
+import { type IChartConfig, type IChartLimits } from "../../../interfaces/chartConfig.js";
 import { type HighchartsOptions } from "../../lib/index.js";
 import { type IChartOptions, type ISeriesItem } from "../../typings/unsafe.js";
 import { stringifyChartTypes } from "../_util/common.js";

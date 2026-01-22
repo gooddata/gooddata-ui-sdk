@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useCallback, useRef, useState } from "react";
 
@@ -10,13 +10,11 @@ import { IconAlert, IconAlertPaused, IconWarning, ShortenedText } from "@gooddat
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { AlertDropdown } from "./AlertDropdown.js";
-import {
-    selectCanManageWorkspace,
-    selectCurrentUser,
-    selectSeparators,
-    selectWidgetByRef,
-    useDashboardSelector,
-} from "../../../../model/index.js";
+import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
+import { selectSeparators } from "../../../../model/store/config/configSelectors.js";
+import { selectCanManageWorkspace } from "../../../../model/store/permissions/permissionsSelectors.js";
+import { selectWidgetByRef } from "../../../../model/store/tabs/layout/layoutSelectors.js";
+import { selectCurrentUser } from "../../../../model/store/user/userSelectors.js";
 import { gdColorNegative, gdColorStateBlank } from "../../../constants/colors.js";
 import { useAlertValidation } from "../../DefaultAlertingDialog/hooks/useAlertValidation.js";
 import { getSubtitle } from "../../DefaultAlertingDialog/utils/getters.js";

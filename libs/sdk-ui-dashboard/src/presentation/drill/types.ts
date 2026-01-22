@@ -15,29 +15,31 @@ import {
 } from "@gooddata/sdk-model";
 import { type IAvailableDrillTargetMeasure, type IAvailableDrillTargets } from "@gooddata/sdk-ui";
 
-import { type IKdaDefinition } from "../../kdaDialog/index.js";
-import {
-    type DashboardDrillCommand,
-    type ICrossFiltering,
-    type IDashboardCommandFailed,
-    type IDashboardCrossFilteringResolved,
-    type IDashboardDrillDownResolved,
-    type IDashboardDrillResolved,
-    type IDashboardDrillToAttributeUrlResolved,
-    type IDashboardDrillToCustomUrlResolved,
-    type IDashboardDrillToDashboardResolved,
-    type IDashboardDrillToInsightResolved,
-    type IDashboardDrillToLegacyDashboardResolved,
-    type IDashboardKeyDriverAnalysisResolved,
-    type IDrill,
-    type IDrillDown,
-    type IDrillToAttributeUrl,
-    type IDrillToCustomUrl,
-    type IDrillToDashboard,
-    type IDrillToInsight,
-    type IDrillToLegacyDashboard,
-    type IKeyDriverAnalysis,
-} from "../../model/index.js";
+import type { IKdaDefinition } from "../../kdaDialog/types.js";
+import type {
+    DashboardDrillCommand,
+    ICrossFiltering,
+    IDrill,
+    IDrillDown,
+    IDrillToAttributeUrl,
+    IDrillToCustomUrl,
+    IDrillToDashboard,
+    IDrillToInsight,
+    IDrillToLegacyDashboard,
+    IKeyDriverAnalysis,
+} from "../../model/commands/drill.js";
+import type {
+    IDashboardCrossFilteringResolved,
+    IDashboardDrillDownResolved,
+    IDashboardDrillResolved,
+    IDashboardDrillToAttributeUrlResolved,
+    IDashboardDrillToCustomUrlResolved,
+    IDashboardDrillToDashboardResolved,
+    IDashboardDrillToInsightResolved,
+    IDashboardDrillToLegacyDashboardResolved,
+    IDashboardKeyDriverAnalysisResolved,
+} from "../../model/events/drill.js";
+import type { IDashboardCommandFailed } from "../../model/events/general.js";
 import {
     type IDashboardDrillContext,
     type IDashboardDrillEvent,

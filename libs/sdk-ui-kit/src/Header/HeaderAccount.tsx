@@ -7,8 +7,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { type IHeaderAccountProps, type IHeaderMenuItem } from "./typings.js";
 import { UiFocusManager } from "../@ui/UiFocusManager/UiFocusManager.js";
-import { Button } from "../Button/index.js";
-import { Overlay } from "../Overlay/index.js";
+import { Button } from "../Button/Button.js";
+import { Overlay } from "../Overlay/Overlay.js";
 import { isActionKey } from "../utils/events.js";
 import { useIdPrefixed } from "../utils/useId.js";
 

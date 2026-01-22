@@ -21,7 +21,7 @@ import {
     validateDateFilterConfig,
 } from "../../../../_staging/dateFilterConfig/validation.js";
 import { stripUserAndWorkspaceProps } from "../../../../_staging/settings/conversion.js";
-import { type InitializeDashboard } from "../../../commands/index.js";
+import { type InitializeDashboard } from "../../../commands/dashboard.js";
 import { tabsActions } from "../../../store/tabs/index.js";
 import {
     type DashboardConfig,

@@ -11556,7 +11556,7 @@ readonly setAttributeFilterConfigs: (state: WritableDraft<ITabsState>, action: {
 payload: any;
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
-readonly removeAttributeFilterConfig: TabsReducer<{
+readonly removeAttributeFilterConfig: TabsReducer<    {
 payload: string;
 type: string;
 }>;
@@ -11564,37 +11564,37 @@ readonly changeDisplayAsLabel: (state: WritableDraft<ITabsState>, action: {
 payload: ISetDashboardAttributeFilterConfigDisplayAsLabelPayload;
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
-readonly setTabs: TabsReducer<{
+readonly setTabs: TabsReducer<    {
 payload: {
 tabs?: ITabState[];
 activeTabLocalIdentifier?: string;
 };
 type: string;
 }>;
-readonly setActiveTabLocalIdentifier: TabsReducer<{
+readonly setActiveTabLocalIdentifier: TabsReducer<    {
 payload: string | undefined;
 type: string;
 }>;
-readonly updateTab: TabsReducer<{
+readonly updateTab: TabsReducer<    {
 payload: ITabState;
 type: string;
 }>;
-readonly removeTabById: TabsReducer<{
+readonly removeTabById: TabsReducer<    {
 payload: string;
 type: string;
 }>;
-readonly clearTabs: TabsReducer<{
+readonly clearTabs: TabsReducer<    {
 payload: void;
 type: string;
 }>;
-readonly setTabIsRenaming: TabsReducer<{
+readonly setTabIsRenaming: TabsReducer<    {
 payload: {
 tabId: string;
 isRenaming: boolean;
 };
 type: string;
 }>;
-readonly renameTab: TabsReducer<{
+readonly renameTab: TabsReducer<    {
 payload: {
 tabId: string;
 title: string;

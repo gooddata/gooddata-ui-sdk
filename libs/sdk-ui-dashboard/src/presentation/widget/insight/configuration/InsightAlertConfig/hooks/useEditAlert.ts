@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useCallback, useState } from "react";
 
@@ -28,17 +28,17 @@ import {
     convertCurrentUserToAutomationRecipient,
     convertCurrentUserToWorkspaceUser,
 } from "../../../../../../_staging/automation/index.js";
+import { useDashboardSelector } from "../../../../../../model/react/DashboardStoreProvider.js";
 import {
-    selectCanUseAiAssistant,
-    selectCurrentUser,
     selectEnableAnomalyDetectionAlert,
     selectEnableExternalRecipients,
-    selectEntitlementMinimumRecurrenceMinutes,
     selectTimezone,
-    selectUsers,
     selectWeekStart,
-    useDashboardSelector,
-} from "../../../../../../model/index.js";
+} from "../../../../../../model/store/config/configSelectors.js";
+import { selectEntitlementMinimumRecurrenceMinutes } from "../../../../../../model/store/entitlements/entitlementsSelectors.js";
+import { selectCanUseAiAssistant } from "../../../../../../model/store/permissions/permissionsSelectors.js";
+import { selectCurrentUser } from "../../../../../../model/store/user/userSelectors.js";
+import { selectUsers } from "../../../../../../model/store/users/usersSelectors.js";
 import {
     type IMeasureFormatMap,
     getDescription,

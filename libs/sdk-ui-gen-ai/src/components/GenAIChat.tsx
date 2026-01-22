@@ -13,7 +13,8 @@ import { CustomizationProvider } from "./CustomizationProvider.js";
 import { GenAIChatWrapper } from "./GenAIChatWrapper.js";
 import { useGenAIStore } from "../hooks/useGenAIStore.js";
 import { IntlWrapper } from "../localization/IntlWrapper.js";
-import { PermissionsProvider, usePermissions } from "../permissions/index.js";
+import { PermissionsProvider } from "../permissions/PermissionsContext.js";
+import { usePermissions } from "../permissions/usePermissions.js";
 import { type ChatEventHandler } from "../store/events.js";
 
 /**

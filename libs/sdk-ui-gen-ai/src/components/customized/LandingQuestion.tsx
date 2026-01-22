@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import { Button } from "@gooddata/sdk-ui-kit";
 
 import { makeAssistantMessage, makeTextContents, makeUserMessage } from "../../model.js";
-import { setMessagesAction } from "../../store/index.js";
+import { setMessagesAction } from "../../store/messages/messagesSlice.js";
 import { escapeMarkdown } from "../utils/markdownUtils.js";
 
 interface ILandingQuestionActionsProps {

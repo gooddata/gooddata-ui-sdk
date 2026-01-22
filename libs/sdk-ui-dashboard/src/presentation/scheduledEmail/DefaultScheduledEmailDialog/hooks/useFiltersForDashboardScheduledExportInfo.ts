@@ -1,4 +1,5 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
+
 import { compact } from "lodash-es";
 
 import {
@@ -14,12 +15,10 @@ import {
 import { type DateFilterOption } from "@gooddata/sdk-ui-filters";
 
 import { useFiltersNamings } from "../../../../_staging/sharedHooks/useFiltersNamings.js";
-import {
-    selectEffectiveAttributeFiltersModeMap,
-    selectEffectiveDateFilterMode,
-    selectEffectiveDateFiltersModeMap,
-    useDashboardSelector,
-} from "../../../../model/index.js";
+import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
+import { selectEffectiveAttributeFiltersModeMap } from "../../../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { selectEffectiveDateFilterMode } from "../../../../model/store/tabs/dateFilterConfig/dateFilterConfigSelectors.js";
+import { selectEffectiveDateFiltersModeMap } from "../../../../model/store/tabs/dateFilterConfigs/dateFilterConfigsSelectors.js";
 
 export interface IAttachmentFilterInfo {
     id: string;

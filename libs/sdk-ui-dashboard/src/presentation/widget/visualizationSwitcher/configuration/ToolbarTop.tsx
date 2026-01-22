@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { useCallback } from "react";
 
@@ -18,7 +18,7 @@ import {
 } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import { useDashboardUserInteraction } from "../../../../model/index.js";
+import { useDashboardUserInteraction } from "../../../../model/react/useDashboardUserInteraction.js";
 
 const bubbleAlignPoints: IAlignPoint[] = [{ align: "tc bc", offset: { x: 0, y: -8 } }];
 interface IToolbarTopProps {

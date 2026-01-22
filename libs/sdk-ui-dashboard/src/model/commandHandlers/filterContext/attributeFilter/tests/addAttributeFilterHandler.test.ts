@@ -5,9 +5,9 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { DashboardAttributeFilterConfigModeValues, uriRef } from "@gooddata/sdk-model";
 
-import { addAttributeFilter } from "../../../../commands/index.js";
-import { type IDashboardCommandFailed } from "../../../../events/index.js";
-import { selectAttributeFilterConfigsModeMap } from "../../../../store/index.js";
+import { addAttributeFilter } from "../../../../commands/filters.js";
+import { type IDashboardCommandFailed } from "../../../../events/general.js";
+import { selectAttributeFilterConfigsModeMap } from "../../../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import {
     selectAttributeFilterDisplayFormsMap,
     selectFilterContextAttributeFilters,

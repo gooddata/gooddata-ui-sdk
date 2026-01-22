@@ -15,8 +15,9 @@ import { messages } from "./locales.js";
 import { type RecurrenceType } from "./types.js";
 import { getIntlDayName, getWeekNumber, isLastOccurrenceOfWeekdayInMonth } from "./utils/utils.js";
 import { UiListbox } from "../@ui/UiListbox/UiListbox.js";
-import { Dropdown, DropdownButton } from "../Dropdown/index.js";
-import { SingleSelectListItem } from "../List/index.js";
+import { Dropdown } from "../Dropdown/Dropdown.js";
+import { DropdownButton } from "../Dropdown/DropdownButton.js";
+import { SingleSelectListItem } from "../List/ListItem.js";
 
 interface IDropdownItem {
     id: RecurrenceType;

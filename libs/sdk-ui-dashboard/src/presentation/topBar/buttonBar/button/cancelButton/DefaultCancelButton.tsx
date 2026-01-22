@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { useCallback } from "react";
 
@@ -7,15 +7,15 @@ import { useIntl } from "react-intl";
 import { Button } from "@gooddata/sdk-ui-kit";
 
 import { type ICancelButtonProps } from "./types.js";
+import { cancelEditRenderMode } from "../../../../../model/commands/renderMode.js";
 import {
-    cancelEditRenderMode,
-    selectIsDashboardDirty,
-    selectIsDashboardSaving,
-    selectIsInEditMode,
-    uiActions,
     useDashboardDispatch,
     useDashboardSelector,
-} from "../../../../../model/index.js";
+} from "../../../../../model/react/DashboardStoreProvider.js";
+import { selectIsDashboardDirty } from "../../../../../model/store/meta/metaSelectors.js";
+import { selectIsInEditMode } from "../../../../../model/store/renderMode/renderModeSelectors.js";
+import { selectIsDashboardSaving } from "../../../../../model/store/saving/savingSelectors.js";
+import { uiActions } from "../../../../../model/store/ui/index.js";
 
 /**
  * @internal

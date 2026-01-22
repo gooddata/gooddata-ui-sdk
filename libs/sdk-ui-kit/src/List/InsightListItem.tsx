@@ -9,9 +9,9 @@ import { type IExecutionConfig, type IFilter, type ISeparators } from "@gooddata
 import { stringUtils } from "@gooddata/util";
 
 import { InsightListItemDate } from "./InsightListItemDate.js";
-import { Button } from "../Button/index.js";
-import { DESCRIPTION_PANEL_ARROW_OFFSETS, DescriptionPanel } from "../DescriptionPanel/index.js";
-import { ShortenedText } from "../ShortenedText/index.js";
+import { Button } from "../Button/Button.js";
+import { DESCRIPTION_PANEL_ARROW_OFFSETS, DescriptionPanel } from "../DescriptionPanel/DescriptionPanel.js";
+import { ShortenedText } from "../ShortenedText/ShortenedText.js";
 import { getDateTimeConfig } from "../utils/dateTimeConfig.js";
 
 const VISUALIZATION_TYPE_UNKNOWN = "unknown";

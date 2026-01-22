@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { actionChannel, call, take } from "redux-saga/effects";
@@ -6,7 +6,8 @@ import { actionChannel, call, take } from "redux-saga/effects";
 import { getDashboardContext } from "./contexts.js";
 import { dispatchDashboardEvent } from "./eventDispatcher.js";
 import { DefaultCommandHandlers } from "../../commandHandlers/index.js";
-import { type DashboardCommands, type IDashboardCommand } from "../../commands/index.js";
+import { type IDashboardCommand } from "../../commands/base.js";
+import { type DashboardCommands } from "../../commands/index.js";
 import { isDashboardEvent } from "../../events/base.js";
 import {
     commandRejected,

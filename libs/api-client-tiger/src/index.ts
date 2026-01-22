@@ -15,13 +15,104 @@ import {
     setAxiosAuthorizationToken,
     setGlobalAuthorizationToken,
 } from "./axios.js";
-import { type ITigerClient, tigerClientFactory } from "./client.js";
+import {
+    type ITigerClient,
+    type ITigerClientBase,
+    tigerClientBaseFactory,
+    tigerClientFactory,
+} from "./client.js";
+
+// -----------------------------------------------------------------------------
+// Generated API Base Classes and Configurations
+// -----------------------------------------------------------------------------
+
+export {
+    BaseAPI as MetadataBaseApi,
+    type RequestArgs as MetadataRequestArgs,
+} from "./generated/metadata-json-api/base.js";
+export {
+    Configuration as MetadataConfiguration,
+    type ConfigurationParameters as MetadataConfigurationParameters,
+} from "./generated/metadata-json-api/index.js";
+
+export {
+    BaseAPI as ScanModelBaseApi,
+    type RequestArgs as ScanModelRequestArgs,
+} from "./generated/scan-json-api/base.js";
+export {
+    type ActionsApiInterface as ScanModelActionsApiInterface,
+    Configuration as ScanModelConfiguration,
+    type ConfigurationParameters as ScanModelConfigurationParameters,
+} from "./generated/scan-json-api/index.js";
+
+export {
+    BaseAPI as LabelElementsBaseApi,
+    type RequestArgs as LabelElementsRequestArgs,
+} from "./generated/afm-rest-api/base.js";
+export {
+    Configuration as LabelElementsConfiguration,
+    type ConfigurationParameters as LabelElementsConfigurationParameters,
+} from "./generated/afm-rest-api/index.js";
+
+export type { ActionsApiInterface as ResultActionsApiInterface } from "./generated/result-json-api/index.js";
+
+// -----------------------------------------------------------------------------
+// Specific API Interfaces
+// -----------------------------------------------------------------------------
+
+export {
+    type LocationStyleApiInterface,
+    type LocationStyleDocument,
+    tigerLocationStyleClientFactory,
+} from "./locationStyle.js";
+
+export {
+    type FeatureContext,
+    type ILiveFeatures,
+    type IStaticFeatures,
+    type IUserProfile,
+    type ProfileApiInterface,
+    isLiveFeatures,
+    isStaticFeatures,
+    tigerProfileClientFactory,
+} from "./profile.js";
+
+// -----------------------------------------------------------------------------
+// Client Factories
+// -----------------------------------------------------------------------------
+
+// export { tigerEntitiesObjectsClientFactory } from "./entitiesObjects.js";
+export { tigerClientBaseFactory, type ITigerClient, type ITigerClientBase, tigerClientFactory };
+
+export { tigerActionsClientFactory } from "./actions.js";
+export { tigerAfmExplainClientFactory } from "./explain.js";
+export { tigerAuthActionsClientFactory } from "./authActions.js";
+export { tigerAutomationClientFactory } from "./automation.js";
+export { tigerExecutionClientFactory } from "./execution.js";
+export { tigerExecutionResultClientFactory } from "./executionResult.js";
+export { tigerExportClientFactory } from "./export.js";
+export { tigerGenAIClientFactory } from "./genAI.js";
+export { tigerLabelElementsClientFactory } from "./labelElements.js";
+export { tigerLayoutClientFactory } from "./layout.js";
+export { tigerResultClientFactory } from "./result.js";
+export { tigerScanModelClientFactory } from "./scanModel.js";
+export { tigerSmartFunctionsClientFactory } from "./smartFunctions.js";
+export { tigerUserManagementClientFactory } from "./userManagement.js";
+export { tigerValidDescendantsClientFactory } from "./validDescendants.js";
+export { tigerValidObjectsClientFactory } from "./validObjects.js";
+
+// -----------------------------------------------------------------------------
+// GD Tiger Model
+// -----------------------------------------------------------------------------
 
 export {
     VisualizationObjectModelV1,
     VisualizationObjectModelV2,
     AnalyticalDashboardModelV1,
     AnalyticalDashboardModelV2,
+} from "./gd-tiger-model/index.js";
+
+export {
     isAttributeHeader,
     isAfmObjectIdentifier,
     isAfmObjectLocalIdentifier,
@@ -36,7 +127,11 @@ export {
     isAttributeItem,
     isMetricItem,
     isFactItem,
-} from "./gd-tiger-model/index.js";
+} from "./gd-tiger-model/typeGuards.js";
+
+// -----------------------------------------------------------------------------
+// Axios Utilities
+// -----------------------------------------------------------------------------
 
 export { newAxios, setAxiosAuthorizationToken, setGlobalAuthorizationToken };
 
@@ -489,6 +584,7 @@ export type {
     BaseAPI as AutomationBaseAPI,
     RequestArgs as AutomationRequestArgs,
 } from "./generated/automation-json-api/base.js";
+// eslint-disable-next-line no-restricted-syntax
 export * from "./generated/metadata-json-api/api.js";
 
 export type {
@@ -574,6 +670,7 @@ export type {
     GdStorageFileTypeEnum,
 } from "./generated/result-json-api/api.js";
 
+// eslint-disable-next-line no-restricted-syntax
 export * from "./generated/export-json-api/index.js";
 export type {
     Configuration as ExportConfiguration,
@@ -583,8 +680,6 @@ export type {
     BaseAPI as ExportBaseAPI,
     RequestArgs as ExportRequestArgs,
 } from "./generated/export-json-api/base.js";
-
-export * from "./client.js";
 
 export { jsonApiHeaders, JSON_API_HEADER_VALUE, ValidateRelationsHeader } from "./constants.js";
 

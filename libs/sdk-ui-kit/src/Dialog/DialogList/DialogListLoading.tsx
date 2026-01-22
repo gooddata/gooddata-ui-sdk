@@ -2,7 +2,7 @@
 
 import cx from "classnames";
 
-import { LoadingMask } from "../../LoadingMask/index.js";
+import { LoadingMask } from "../../LoadingMask/LoadingMask.js";
 
 export function DialogListLoading({ className }: { className?: string }) {
     return (

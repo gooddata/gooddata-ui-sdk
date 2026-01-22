@@ -40,7 +40,8 @@ import {
 import { getChartOptions } from "./chartTypes/_chartOptions/chartOptionsBuilder.js";
 import { isChartSupported, stringifyChartTypes } from "./chartTypes/_util/common.js";
 import { type IChartOptions } from "./typings/unsafe.js";
-import { type IChartConfig, type OnLegendReady } from "../interfaces/index.js";
+import { type IChartConfig } from "../interfaces/chartConfig.js";
+import { type OnLegendReady } from "../interfaces/chartProps.js";
 
 export function renderHighCharts(props: IHighChartsRendererProps): ReactElement {
     const childrenRenderer = (contentRect: ContentRect) => (

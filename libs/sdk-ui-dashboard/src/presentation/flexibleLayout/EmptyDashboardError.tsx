@@ -1,8 +1,8 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { useIntl } from "react-intl";
 
-import { useDashboardComponentsContext } from "../dashboardContexts/index.js";
+import { useDashboardComponentsContext } from "../dashboardContexts/DashboardComponentsContext.js";
 
 export function EmptyDashboardError() {
     const intl = useIntl();

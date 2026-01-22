@@ -610,6 +610,11 @@ export interface ISettings {
     enableGeoArea?: boolean;
 
     /**
+     * Enable basemap selection in geo chart configuration.
+     */
+    enableGeoBasemapConfig?: boolean;
+
+    /**
      * Enable automation management in dashboards
      */
     enableAutomationManagement?: boolean;

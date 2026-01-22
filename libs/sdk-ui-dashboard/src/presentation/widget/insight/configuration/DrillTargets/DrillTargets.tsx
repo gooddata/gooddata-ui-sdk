@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import {
     type DrillOrigin,
@@ -18,7 +18,7 @@ import { DrillTargetAttributeHierarchyItem } from "./DrillTargetAttributeHierarc
 import { DrillTargetDashboardItem } from "./DrillTargetDashboardItem.js";
 import { DrillTargetInsightItem } from "./DrillTargetInsightItem.js";
 import { DrillTargetUrlItem } from "./DrillTargetUrlItem.js";
-import { type IDrillableDashboardListItem } from "../../../../dashboardList/index.js";
+import { type IDrillableDashboardListItem } from "../../../../dashboardList/types.js";
 import {
     DRILL_TARGET_TYPE,
     type IDrillConfigItem,

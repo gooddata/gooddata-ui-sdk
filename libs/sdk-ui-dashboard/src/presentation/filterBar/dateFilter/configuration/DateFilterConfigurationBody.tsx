@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { useCallback, useState } from "react";
 
@@ -9,7 +9,8 @@ import { type IFilterConfigurationProps } from "@gooddata/sdk-ui-filters";
 
 import { DateFilterConfigurationActions } from "./DateFilterConfigurationActions.js";
 import { messages } from "../../../../locales.js";
-import { selectBackendCapabilities, useDashboardSelector } from "../../../../model/index.js";
+import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
+import { selectBackendCapabilities } from "../../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
 import { ConfigurationCategory } from "../../configuration/ConfigurationCategory.js";
 import { ConfigModeSelect } from "../../configuration/ConfigurationModeSelect.js";
 import { ConfigurationPanelHeader } from "../../configuration/ConfigurationPanelHeader.js";

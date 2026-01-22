@@ -4,13 +4,13 @@ import { beforeEach, describe, expect, it } from "vitest";
 
 import { localIdRef, uriRef } from "@gooddata/sdk-model";
 
+import { addDrillTargets } from "../../../commands/drillTargets.js";
 import {
     type IRemoveDrillsForInsightWidget,
-    addDrillTargets,
     modifyDrillsForInsightWidget,
     removeDrillsForInsightWidget,
-} from "../../../commands/index.js";
-import { type IDashboardCommandFailed } from "../../../events/index.js";
+} from "../../../commands/insight.js";
+import { type IDashboardCommandFailed } from "../../../events/general.js";
 import { type IDashboardInsightWidgetDrillsRemoved } from "../../../events/insight.js";
 import { selectAnalyticalWidgetByRef } from "../../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";

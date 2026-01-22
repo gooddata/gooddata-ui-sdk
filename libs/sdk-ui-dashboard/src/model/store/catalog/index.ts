@@ -1,12 +1,8 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type Reducer, createSlice } from "@reduxjs/toolkit";
 
-import {
-    type SetCatalogItemsPayload,
-    type SetCatalogMeasuresAndFactsPayload,
-    catalogReducers,
-} from "./catalogReducers.js";
+import { catalogReducers } from "./catalogReducers.js";
 import { type CatalogState, catalogInitialState } from "./catalogState.js";
 
 const catalogSlice = createSlice({
@@ -14,8 +10,6 @@ const catalogSlice = createSlice({
     initialState: catalogInitialState,
     reducers: catalogReducers,
 });
-
-export type { SetCatalogMeasuresAndFactsPayload, SetCatalogItemsPayload };
 
 export const catalogSliceReducer: Reducer<CatalogState> = catalogSlice.reducer;
 

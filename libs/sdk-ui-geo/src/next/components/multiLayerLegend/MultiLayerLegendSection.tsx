@@ -18,7 +18,7 @@ import { LayerToggleSwitch } from "./LayerToggleSwitch.js";
 import { LegendGroupColor } from "./LegendGroupColor.js";
 import { LegendGroupColorScale } from "./LegendGroupColorScale.js";
 import { LegendGroupSize } from "./LegendGroupSize.js";
-import type { ILegendGroup, ILegendSection } from "../../types/legend/index.js";
+import { type ILegendGroup, type ILegendSection } from "../../types/legend/model.js";
 
 /**
  * Props for MultiLayerLegendSection component.

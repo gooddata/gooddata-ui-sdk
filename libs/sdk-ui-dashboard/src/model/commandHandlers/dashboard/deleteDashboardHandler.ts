@@ -8,10 +8,9 @@ import { invariant } from "ts-invariant";
 import { type ObjRef, areObjRefsEqual, idRef, uriRef } from "@gooddata/sdk-model";
 
 import { actionsToInitializeNewDashboard } from "./common/stateInitializers.js";
-import { type IDeleteDashboard } from "../../commands/index.js";
-import { dashboardDeleted } from "../../events/dashboard.js";
+import { type IDeleteDashboard } from "../../commands/dashboard.js";
+import { type IDashboardDeleted, dashboardDeleted } from "../../events/dashboard.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
-import { type IDashboardDeleted } from "../../events/index.js";
 import { selectAllCatalogDisplayFormsMap } from "../../store/catalog/catalogSelectors.js";
 import { selectDateFilterConfig, selectSettings } from "../../store/config/configSelectors.js";
 import { executionResultsActions } from "../../store/executionResults/index.js";

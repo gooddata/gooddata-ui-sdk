@@ -8,12 +8,18 @@ import { useIntl } from "react-intl";
 import { type ObjRef } from "@gooddata/sdk-model";
 import { stringUtils } from "@gooddata/util";
 
-import { Bubble, BubbleHoverTrigger } from "../../Bubble/index.js";
-import { Button } from "../../Button/index.js";
-import { ColorPreview, type IStylingPickerItem, type StylingPickerItemContent } from "../../Dialog/index.js";
-import { Item, ItemsWrapper, Separator } from "../../List/index.js";
-import { type IOnOpenedChangeParams, Menu } from "../../Menu/index.js";
-import { ShortenedText } from "../../ShortenedText/index.js";
+import { Bubble } from "../../Bubble/Bubble.js";
+import { BubbleHoverTrigger } from "../../Bubble/BubbleHoverTrigger.js";
+import { Button } from "../../Button/Button.js";
+import { ColorPreview } from "../../Dialog/StylingEditorDialog/ColorPreview.js";
+import {
+    type IStylingPickerItem,
+    type StylingPickerItemContent,
+} from "../../Dialog/StylingEditorDialog/StylingEditorDialog.js";
+import { Item, ItemsWrapper, Separator } from "../../List/MenuList.js";
+import { Menu } from "../../Menu/Menu.js";
+import { type IOnOpenedChangeParams } from "../../Menu/MenuSharedTypes.js";
+import { ShortenedText } from "../../ShortenedText/ShortenedText.js";
 
 interface IStylingSettingListItemProps<T extends StylingPickerItemContent> {
     item: IStylingPickerItem<T>;

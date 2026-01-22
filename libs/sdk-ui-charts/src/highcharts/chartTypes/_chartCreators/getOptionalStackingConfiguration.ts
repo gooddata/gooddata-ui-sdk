@@ -6,7 +6,7 @@ import { type IDrillConfig } from "@gooddata/sdk-ui";
 
 import { formatAsPercent, getLabelStyle, getTotalsVisibilityConfig } from "./dataLabelsHelpers.js";
 import { isPrimaryYAxis } from "./isPrimaryYAxis.js";
-import { type IChartConfig } from "../../../interfaces/index.js";
+import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { type StackingType } from "../../constants/stacking.js";
 import { type HighchartsOptions, type XAxisOptions, type YAxisOptions } from "../../lib/index.js";
 import {

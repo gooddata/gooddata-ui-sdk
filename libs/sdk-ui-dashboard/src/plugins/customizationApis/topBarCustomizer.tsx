@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { union } from "lodash-es";
 import { InvariantError } from "ts-invariant";
@@ -6,11 +6,11 @@ import { InvariantError } from "ts-invariant";
 import { type IDashboardCustomizationLogger } from "./customizationLogging.js";
 import { type CustomizerMutationsContext } from "./types.js";
 import {
-    type CustomTopBarComponent,
     type OptionalTopBarComponentProvider,
-    RenderModeAwareTopBar,
     type TopBarComponentProvider,
-} from "../../presentation/index.js";
+} from "../../presentation/dashboardContexts/types.js";
+import { RenderModeAwareTopBar } from "../../presentation/topBar/topBar/RenderModeAwareTopBar.js";
+import { type CustomTopBarComponent } from "../../presentation/topBar/topBar/types.js";
 import { type ITopBarCustomizer } from "../customizer.js";
 
 const DefaultTopBarRendererProvider: TopBarComponentProvider = () => {

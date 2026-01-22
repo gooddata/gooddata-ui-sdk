@@ -11,7 +11,7 @@ import {
 import { type FilterContextItem, type ObjRef } from "@gooddata/sdk-model";
 
 import { ensureAllTimeFilterForExport } from "../../../_staging/exportUtils/filterUtils.js";
-import { type IExportDashboardToPptPresentation } from "../../commands/index.js";
+import { type IExportDashboardToPptPresentation } from "../../commands/dashboard.js";
 import {
     type IDashboardExportToPptPresentationResolved,
     dashboardExportToPptPresentationRequested,

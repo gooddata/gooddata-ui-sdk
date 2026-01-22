@@ -19,12 +19,12 @@ import {
     DETAILED_ANNOUNCEMENT_THRESHOLD,
     UiSearchResultsAnnouncement,
 } from "../@ui/UiSearchResultsAnnouncement/UiSearchResultsAnnouncement.js";
-import { AutoSize } from "../AutoSize/index.js";
-import { Input } from "../Form/index.js";
-import { type IListProps, List } from "../List/index.js";
-import { LoadingMask } from "../LoadingMask/index.js";
-import { NoData } from "../NoData/index.js";
-import { type ITab } from "../Tabs/index.js";
+import { AutoSize } from "../AutoSize/AutoSize.js";
+import { Input } from "../Form/Input.js";
+import { type IListProps, List } from "../List/List.js";
+import { LoadingMask } from "../LoadingMask/LoadingMask.js";
+import { NoData } from "../NoData/NoData.js";
+import { type ITab } from "../Tabs/Tabs.js";
 import { isTypingKey } from "../utils/events.js";
 
 /**

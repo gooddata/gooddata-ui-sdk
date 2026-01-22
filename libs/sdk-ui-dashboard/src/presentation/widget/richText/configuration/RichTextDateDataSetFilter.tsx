@@ -8,12 +8,12 @@ import {
     type IInsightDateDatasets,
     type IQueryInsightDateDatasets,
     queryDateDatasetsForInsight,
-    selectIsWidgetLoadingAdditionalDataByWidgetRef,
-    useDashboardQueryProcessing,
-    useDashboardSelector,
-} from "../../../../model/index.js";
+} from "../../../../model/queries/insights.js";
+import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
+import { useDashboardQueryProcessing } from "../../../../model/react/useDashboardQueryProcessing.js";
+import { selectIsWidgetLoadingAdditionalDataByWidgetRef } from "../../../../model/store/ui/uiSelectors.js";
+import { DateDatasetFilter } from "../../common/configuration/DateDatasetFilter.js";
 import { useDateDatasetFilter } from "../../common/configuration/useDateDatasetFilter.js";
-import { DateDatasetFilter } from "../../common/index.js";
 
 export interface IRichTextDateDataSetFilterProps {
     widget: IRichTextWidget;

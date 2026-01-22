@@ -3,7 +3,7 @@
 import { describe, expect, it } from "vitest";
 
 import { customItemsMock, fullyDefinedThemeMock } from "./mocks.js";
-import { getColorsPreviewFromTheme } from "../StylingSettingWidget/index.js";
+import { getColorsPreviewFromTheme } from "../StylingSettingWidget/utils.js";
 
 describe("getColorsPreviewFromTheme", () => {
     it("should return default array of colors when theme is empty", () => {

@@ -13,8 +13,9 @@ import {
 import { createDefaultFilterContext } from "../../../_staging/dashboard/defaultFilterContext.js";
 import { defaultDateFilterConfig } from "../../../_staging/dateFilterConfig/defaultConfig.js";
 import { EmptyDashboardLayout } from "../../commandHandlers/dashboard/common/dashboardInitialize.js";
-import { addLayoutSection, initializeDashboard } from "../../commands/index.js";
-import { type IInsightDateDatasets, queryDateDatasetsForInsight } from "../../queries/index.js";
+import { initializeDashboard } from "../../commands/dashboard.js";
+import { addLayoutSection } from "../../commands/layout.js";
+import { type IInsightDateDatasets, queryDateDatasetsForInsight } from "../../queries/insights.js";
 import { DashboardTester, preloadedTesterFactory } from "../../tests/DashboardTester.js";
 import {
     MockAvailabilityWithDifferentRelevance,

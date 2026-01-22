@@ -2,8 +2,8 @@
 
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { renameDashboard } from "../../../commands/index.js";
-import { type IDashboardRenamed } from "../../../events/index.js";
+import { renameDashboard } from "../../../commands/dashboard.js";
+import { type IDashboardRenamed } from "../../../events/dashboard.js";
 import { selectDashboardTitle, selectPersistedDashboard } from "../../../store/meta/metaSelectors.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";

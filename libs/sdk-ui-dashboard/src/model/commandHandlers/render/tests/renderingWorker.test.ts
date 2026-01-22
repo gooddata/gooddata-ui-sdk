@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { beforeEach, describe, expect, it } from "vitest";
 
@@ -6,7 +6,7 @@ import { type IDashboard, idRef } from "@gooddata/sdk-model";
 
 import { createDefaultFilterContext } from "../../../../_staging/dashboard/defaultFilterContext.js";
 import { defaultDateFilterConfig } from "../../../../_staging/dateFilterConfig/defaultConfig.js";
-import { initializeDashboard } from "../../../commands/index.js";
+import { initializeDashboard } from "../../../commands/dashboard.js";
 import { requestAsyncRender, resolveAsyncRender } from "../../../commands/render.js";
 import { DashboardTester } from "../../../tests/DashboardTester.js";
 import {

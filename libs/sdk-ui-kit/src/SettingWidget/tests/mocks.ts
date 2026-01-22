@@ -2,7 +2,7 @@
 
 import { type ITheme, idRef } from "@gooddata/sdk-model";
 
-import { type IStylingPickerItem } from "../../Dialog/index.js";
+import { type IStylingPickerItem } from "../../Dialog/StylingEditorDialog/StylingEditorDialog.js";
 
 export const defaultItemMock: IStylingPickerItem<ITheme> = {
     ref: idRef("default-theme"),

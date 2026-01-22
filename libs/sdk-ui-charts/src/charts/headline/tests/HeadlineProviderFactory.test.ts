@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
@@ -6,7 +6,7 @@ import { ReferenceMd } from "@gooddata/reference-workspace";
 import { type IBucket, type IMeasure, newBucket } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 
-import { type IChartConfig } from "../../../interfaces/index.js";
+import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { createHeadlineProvider } from "../HeadlineProviderFactory.js";
 import { ComparisonProvider } from "../internal/providers/ComparisonProvider.js";
 import { MultiMeasuresProvider } from "../internal/providers/MultiMeasuresProvider.js";

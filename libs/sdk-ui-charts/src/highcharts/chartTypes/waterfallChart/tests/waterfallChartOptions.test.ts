@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
@@ -9,7 +9,7 @@ import { DefaultColorPalette, type IColorAssignment, localIdentifierMatch } from
 import { type ChartFillType } from "@gooddata/sdk-ui-vis-commons";
 
 import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
-import { type IChartConfig, type ITotalConfig } from "../../../../interfaces/index.js";
+import { type IChartConfig, type ITotalConfig } from "../../../../interfaces/chartConfig.js";
 import { type ISeriesItem } from "../../../typings/unsafe.js";
 import { getDrillableSeries } from "../../_chartOptions/chartDrilling.js";
 import { getMVS } from "../../_util/test/helper.js";

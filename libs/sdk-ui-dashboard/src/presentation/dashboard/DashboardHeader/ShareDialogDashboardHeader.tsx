@@ -6,24 +6,24 @@ import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { type CurrentUserPermissions, useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../../../locales.js";
+import { changeSharing } from "../../../model/commands/dashboard.js";
+import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { useDashboardCommandProcessing } from "../../../model/react/useDashboardCommandProcessing.js";
+import { useDashboardUserInteraction } from "../../../model/react/useDashboardUserInteraction.js";
+import { selectEnableDashboardShareDialogLink } from "../../../model/store/config/configSelectors.js";
+import { selectDashboardPermissions } from "../../../model/store/dashboardPermissions/dashboardPermissionsSelectors.js";
+import { selectPersistedDashboard } from "../../../model/store/meta/metaSelectors.js";
+import { selectCanManageWorkspace } from "../../../model/store/permissions/permissionsSelectors.js";
+import { selectFilterContextFilters } from "../../../model/store/tabs/filterContext/filterContextSelectors.js";
 import {
-    changeSharing,
-    selectCanManageWorkspace,
-    selectCurrentUser,
-    selectDashboardPermissions,
-    selectEnableDashboardShareDialogLink,
-    selectFilterContextFilters,
     selectIsDashboardShareLinkVisible,
-    selectIsShareDialogOpen,
     selectIsShareGrantVisible,
-    selectPersistedDashboard,
-    uiActions,
-    useDashboardCommandProcessing,
-    useDashboardDispatch,
-    useDashboardSelector,
-    useDashboardUserInteraction,
-} from "../../../model/index.js";
-import { type ISharingApplyPayload, ShareDialog } from "../../shareDialog/index.js";
+} from "../../../model/store/topBar/topBarSelectors.js";
+import { uiActions } from "../../../model/store/ui/index.js";
+import { selectIsShareDialogOpen } from "../../../model/store/ui/uiSelectors.js";
+import { selectCurrentUser } from "../../../model/store/user/userSelectors.js";
+import { ShareDialog } from "../../shareDialog/ShareDialog.js";
+import { type ISharingApplyPayload } from "../../shareDialog/types.js";
 
 const useShareDialogDashboardHeader = () => {
     const dispatch = useDashboardDispatch();

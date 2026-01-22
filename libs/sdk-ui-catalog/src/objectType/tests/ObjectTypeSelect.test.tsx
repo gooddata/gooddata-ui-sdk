@@ -1,9 +1,9 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import { testIds } from "../../automation/index.js";
+import { objectType } from "../../automation/testIds.js";
 import { TestIntlProvider } from "../../localization/TestIntlProvider.js";
 import { ObjectTypeSelect } from "../ObjectTypeSelect.js";
 
@@ -68,14 +68,14 @@ describe("ObjectTypeSelect", () => {
     it("allows selecting an individual object type using data-testid", () => {
         render(<ObjectTypeSelect {...commonProps} />, { wrapper });
 
-        const objectTypeElements = screen.getAllByTestId(testIds.objectType);
+        const objectTypeElements = screen.getAllByTestId(objectType);
         expect(objectTypeElements.length).toBe(6);
 
-        expect(screen.getByTestId(`${testIds.objectType}/analyticalDashboard`)).toBeVisible();
-        expect(screen.getByTestId(`${testIds.objectType}/insight`)).toBeVisible();
-        expect(screen.getByTestId(`${testIds.objectType}/measure`)).toBeVisible();
-        expect(screen.getByTestId(`${testIds.objectType}/fact`)).toBeVisible();
-        expect(screen.getByTestId(`${testIds.objectType}/attribute`)).toBeVisible();
-        expect(screen.getByTestId(`${testIds.objectType}/dataSet`)).toBeVisible();
+        expect(screen.getByTestId(`${objectType}/analyticalDashboard`)).toBeVisible();
+        expect(screen.getByTestId(`${objectType}/insight`)).toBeVisible();
+        expect(screen.getByTestId(`${objectType}/measure`)).toBeVisible();
+        expect(screen.getByTestId(`${objectType}/fact`)).toBeVisible();
+        expect(screen.getByTestId(`${objectType}/attribute`)).toBeVisible();
+        expect(screen.getByTestId(`${objectType}/dataSet`)).toBeVisible();
     });
 });

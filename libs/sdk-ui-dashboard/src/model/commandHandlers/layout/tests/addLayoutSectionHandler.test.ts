@@ -6,12 +6,9 @@ import { type IAnalyticalWidget, type IDashboard, idRef, uriRef } from "@gooddat
 
 import { createDefaultFilterContext } from "../../../../_staging/dashboard/defaultFilterContext.js";
 import { defaultDateFilterConfig } from "../../../../_staging/dateFilterConfig/defaultConfig.js";
-import { type IAddLayoutSection, addLayoutSection, undoLayoutChanges } from "../../../commands/index.js";
-import {
-    type IDashboardCommandFailed,
-    type IDashboardLayoutChanged,
-    type IDashboardLayoutSectionAdded,
-} from "../../../events/index.js";
+import { type IAddLayoutSection, addLayoutSection, undoLayoutChanges } from "../../../commands/layout.js";
+import { type IDashboardCommandFailed } from "../../../events/general.js";
+import { type IDashboardLayoutChanged, type IDashboardLayoutSectionAdded } from "../../../events/layout.js";
 import { selectInsightByRef } from "../../../store/insights/insightsSelectors.js";
 import { selectLayout } from "../../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";

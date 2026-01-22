@@ -1,11 +1,12 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { useCallback } from "react";
 
 import { type IInsight, type IInsightWidget, insightTitle } from "@gooddata/sdk-model";
 
-import { changeInsightWidgetHeader, useDashboardDispatch } from "../../../../model/index.js";
-import { DashboardItemHeadlineContainer } from "../../../presentationComponents/index.js";
+import { changeInsightWidgetHeader } from "../../../../model/commands/insight.js";
+import { useDashboardDispatch } from "../../../../model/react/DashboardStoreProvider.js";
+import { DashboardItemHeadlineContainer } from "../../../presentationComponents/DashboardItems/DashboardItemHeadlineContainer.js";
 import { EditableHeadline } from "../../common/EditableHeadline.js";
 
 const MAX_VISUALIZATION_TITLE_LENGTH = 200;

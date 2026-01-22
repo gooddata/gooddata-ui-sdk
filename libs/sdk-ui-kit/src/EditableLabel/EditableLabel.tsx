@@ -19,7 +19,7 @@ import ReactTextareaAutosize from "react-textarea-autosize";
 import { v4 as uuid } from "uuid";
 
 import { type IEditableLabelProps } from "./typings.js";
-import { Overlay } from "../Overlay/index.js";
+import { Overlay } from "../Overlay/Overlay.js";
 import { ENUM_KEY_CODE } from "../typings/utilities.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).

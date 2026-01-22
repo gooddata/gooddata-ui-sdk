@@ -7,7 +7,7 @@ import cx from "classnames";
 
 import { applySizeLimitation } from "./sizeLimiting.js";
 import { type DragResizeProps } from "../../../dragAndDrop/DragLayerPreview/types.js";
-import { useResizeHandlers } from "../../../dragAndDrop/index.js";
+import { useResizeHandlers } from "../../../dragAndDrop/LayoutResizeContext.js";
 import { type IWidthResizerDragItem } from "../../../dragAndDrop/types.js";
 import { WidthResizer } from "../Resize/WidthResizer.js";
 

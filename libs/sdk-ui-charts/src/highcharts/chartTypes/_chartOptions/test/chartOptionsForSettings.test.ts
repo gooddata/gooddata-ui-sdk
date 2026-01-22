@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 
 import { type ISettings } from "@gooddata/sdk-model";
 
-import { type IChartConfig } from "../../../../interfaces/index.js";
+import { type IChartConfig } from "../../../../interfaces/chartConfig.js";
 import { updateConfigWithSettings } from "../chartOptionsForSettings.js";
 
 describe("updateConfigWithSettings", () => {

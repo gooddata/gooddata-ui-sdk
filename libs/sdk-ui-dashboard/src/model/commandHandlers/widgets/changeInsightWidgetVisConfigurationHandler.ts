@@ -4,9 +4,11 @@ import { type SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
 import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
-import { type ChangeInsightWidgetVisConfiguration } from "../../commands/index.js";
-import { type IDashboardInsightWidgetVisConfigurationChanged } from "../../events/index.js";
-import { insightWidgetVisConfigurationChanged } from "../../events/insight.js";
+import { type ChangeInsightWidgetVisConfiguration } from "../../commands/insight.js";
+import {
+    type IDashboardInsightWidgetVisConfigurationChanged,
+    insightWidgetVisConfigurationChanged,
+} from "../../events/insight.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";

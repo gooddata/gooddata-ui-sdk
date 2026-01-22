@@ -9,17 +9,18 @@ import { type IDashboardCustomizationLogger } from "./customizationLogging.js";
 import { ExportLayoutCustomizer } from "./exportLayoutCustomizer.js";
 import { FluidLayoutCustomizer } from "./fluidLayoutCustomizer.js";
 import { type CustomizerMutationsContext } from "./types.js";
-import { type DashboardTransformFn, type ExtendedDashboardWidget } from "../../model/index.js";
 import {
     type DashboardLayoutExportTransformFn,
+    type DashboardTransformFn,
     type IDashboardFocusObject,
 } from "../../model/types/commonTypes.js";
+import { type ExtendedDashboardWidget } from "../../model/types/layoutTypes.js";
 import {
-    type CustomDashboardLayoutComponent,
-    DefaultDashboardLayout as DefaultDashboardLayoutComponent,
     type LayoutComponentProvider,
     type OptionalLayoutComponentProvider,
-} from "../../presentation/index.js";
+} from "../../presentation/dashboardContexts/types.js";
+import { DefaultDashboardLayout as DefaultDashboardLayoutComponent } from "../../presentation/flexibleLayout/DefaultDashboardLayout.js";
+import { type CustomDashboardLayoutComponent } from "../../presentation/widget/dashboardLayout/types.js";
 import {
     type ExportLayoutCustomizationFn,
     type FluidLayoutCustomizationFn,

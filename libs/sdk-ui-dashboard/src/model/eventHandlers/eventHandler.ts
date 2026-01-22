@@ -2,16 +2,15 @@
 
 import { type AnyAction, type Dispatch } from "@reduxjs/toolkit";
 
-import { type IDashboardCommand } from "../commands/index.js";
+import { type IDashboardCommand } from "../commands/base.js";
+import { type ICustomDashboardEvent, isDashboardEvent } from "../events/base.js";
 import {
-    type DashboardEvents,
-    type ICustomDashboardEvent,
     type IDashboardCommandFailed,
     type IDashboardCommandStarted,
     isDashboardCommandFailed,
     isDashboardCommandStarted,
-    isDashboardEvent,
-} from "../events/index.js";
+} from "../events/general.js";
+import { type DashboardEvents } from "../events/index.js";
 import { type DashboardSelectorEvaluator } from "../store/types.js";
 
 /**

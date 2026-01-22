@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type ReactNode, useCallback, useMemo } from "react";
 
@@ -8,15 +8,14 @@ import { defineMessages, useIntl } from "react-intl";
 import { isWidget, widgetTitle } from "@gooddata/sdk-model";
 import { type IMessage } from "@gooddata/sdk-ui-kit";
 
+import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
+import { selectWidgetsMap } from "../../../model/store/tabs/layout/layoutSelectors.js";
+import { uiActions } from "../../../model/store/ui/index.js";
 import {
     selectInvalidDrillWidgetRefs,
     selectInvalidUrlDrillParameterWidgetWarnings,
-    selectIsInEditMode,
-    selectWidgetsMap,
-    uiActions,
-    useDashboardDispatch,
-    useDashboardSelector,
-} from "../../../model/index.js";
+} from "../../../model/store/ui/uiSelectors.js";
 
 const commonReplacements = {
     b: (chunks: ReactNode) => <b>{chunks}</b>,

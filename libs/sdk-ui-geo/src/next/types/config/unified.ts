@@ -10,6 +10,7 @@ import { type IGeoPointsConfigNext } from "./points.js";
 import { type IGeoConfigViewportNext } from "./viewport.js";
 import type { StyleSpecification } from "../../layers/common/mapFacade.js";
 import { type IGeoLngLat } from "../common/coordinates.js";
+import type { GeoTileset } from "../map/tileset.js";
 
 /**
  * Unified configuration shared by {@link GeoChartNext} and its wrappers.
@@ -51,6 +52,11 @@ export interface IGeoChartNextConfig {
      * MapLibre style URL or inline style specification.
      */
     mapStyle?: string | StyleSpecification;
+
+    /**
+     * Selected basemap tileset.
+     */
+    tileset?: GeoTileset;
 
     /**
      * Maximum zoom level allowed on the map. Null/undefined keeps MapLibre defaults.

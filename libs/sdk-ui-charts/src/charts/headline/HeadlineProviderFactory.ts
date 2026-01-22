@@ -8,7 +8,8 @@ import { BucketNames } from "@gooddata/sdk-ui";
 import { type IHeadlineProvider } from "./HeadlineProvider.js";
 import { ComparisonProvider } from "./internal/providers/ComparisonProvider.js";
 import { MultiMeasuresProvider } from "./internal/providers/MultiMeasuresProvider.js";
-import { type IChartConfig, type IComparison } from "../../interfaces/index.js";
+import { type IChartConfig } from "../../interfaces/chartConfig.js";
+import { type IComparison } from "../../interfaces/comparison.js";
 
 enum HeadlineType {
     MULTI_MEASURES,

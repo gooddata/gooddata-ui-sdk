@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { useHubspotForm } from "@aaronhayes/react-use-hubspot-form";
 import { render, screen, waitFor } from "@testing-library/react";
@@ -9,9 +9,9 @@ import { IntlWrapper } from "@gooddata/sdk-ui";
 
 import {
     HubspotConversionTouchPointDialogBase,
+    type IHubspotConversionTouchPointDialogBaseProps,
     type IHubspotFormField,
 } from "../HubspotConversionTouchPointDialogBase.js";
-import { type IHubspotConversionTouchPointDialogBaseProps } from "../index.js";
 
 interface IFormReadyProps {
     onFormReady: ($form: IHubspotFormField[]) => void;

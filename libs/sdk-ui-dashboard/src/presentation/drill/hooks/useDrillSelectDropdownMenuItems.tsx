@@ -6,7 +6,8 @@ import { defineMessages, useIntl } from "react-intl";
 
 import { type IUiMenuItem } from "@gooddata/sdk-ui-kit";
 
-import { selectEnableImplicitDrillToUrl, useDashboardSelector } from "../../../model/index.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectEnableImplicitDrillToUrl } from "../../../model/store/config/configSelectors.js";
 import { type DashboardDrillDefinition } from "../../../types.js";
 import { DrillType, type IDrillSelectItem } from "../DrillSelect/types.js";
 

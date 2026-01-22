@@ -47,25 +47,27 @@ import { DefaultLoadingScheduledEmailDialog } from "./DefaultLoadingScheduledEma
 import { useEditScheduledEmail } from "./hooks/useEditScheduledEmail.js";
 import { useFiltersForDashboardScheduledExportInfo } from "./hooks/useFiltersForDashboardScheduledExportInfo.js";
 import { useSaveScheduledEmailToBackend } from "./hooks/useSaveScheduledEmailToBackend.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import {
-    getWidgetTitle,
-    selectDashboardTitle,
     selectDateFormat,
     selectEnableAutomationFilterContext,
     selectEnableAutomationManagement,
     selectEnableNewScheduledExport,
-    selectEntitlementMaxAutomationRecipients,
-    selectEntitlementMinimumRecurrenceMinutes,
-    selectExecutionTimestamp,
     selectExternalRecipient,
-    selectIsAutomationDialogSecondaryTitleVisible,
-    selectIsCrossFiltering,
     selectIsWhiteLabeled,
     selectLocale,
     selectSettings,
     selectWeekStart,
-    useDashboardSelector,
-} from "../../../model/index.js";
+} from "../../../model/store/config/configSelectors.js";
+import { selectIsCrossFiltering } from "../../../model/store/drill/drillSelectors.js";
+import {
+    selectEntitlementMaxAutomationRecipients,
+    selectEntitlementMinimumRecurrenceMinutes,
+} from "../../../model/store/entitlements/entitlementsSelectors.js";
+import { selectDashboardTitle } from "../../../model/store/meta/metaSelectors.js";
+import { selectIsAutomationDialogSecondaryTitleVisible } from "../../../model/store/topBar/topBarSelectors.js";
+import { selectExecutionTimestamp } from "../../../model/store/ui/uiSelectors.js";
+import { getWidgetTitle } from "../../../model/utils/dashboardItemUtils.js";
 import { ApplyCurrentFiltersConfirmDialog } from "../../automationFilters/components/ApplyLatestFiltersConfirmDialog.js";
 import { AutomationFiltersSelect } from "../../automationFilters/components/AutomationFiltersSelect.js";
 import { useValidateExistingAutomationFilters } from "../../automationFilters/hooks/useValidateExistingAutomationFilters.js";
@@ -74,8 +76,8 @@ import {
     useAutomationFiltersSelect,
 } from "../../automationFilters/useAutomationFiltersSelect.js";
 import { validateAllFilterLocalIdentifiers } from "../../automationFilters/utils.js";
-import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/index.js";
-import { IntlWrapper } from "../../localization/index.js";
+import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/zIndex.js";
+import { IntlWrapper } from "../../localization/IntlWrapper.js";
 import { DeleteScheduleConfirmDialog } from "../DefaultScheduledEmailManagementDialog/components/DeleteScheduleConfirmDialog.js";
 import { useScheduleEmailDialogAccessibility } from "../hooks/useScheduleEmailDialogAccessibility.js";
 import { getDefaultCronExpression } from "../utils/cron.js";

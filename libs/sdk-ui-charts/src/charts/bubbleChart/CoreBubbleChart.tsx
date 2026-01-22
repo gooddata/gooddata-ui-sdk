@@ -1,6 +1,6 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
-import { type ICoreChartProps } from "../../interfaces/index.js";
+import { type ICoreChartProps } from "../../interfaces/chartProps.js";
 import { BaseChart } from "../_base/BaseChart.js";
 
 export function CoreBubbleChart(props: ICoreChartProps) {

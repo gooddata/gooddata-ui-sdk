@@ -12,7 +12,8 @@ import {
 import { ErrorComponent } from "@gooddata/sdk-ui";
 import { UiButton, UiCopyButton, UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
-import { selectPermissions, useDashboardSelector } from "../../model/index.js";
+import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
+import { selectPermissions } from "../../model/store/permissions/permissionsSelectors.js";
 
 export interface IKdaErrorComponentProps {
     type: KdaErrorType;

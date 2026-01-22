@@ -12,15 +12,16 @@ import {
     AutomationDateFilterProvider,
     useAutomationDateFilterContext,
 } from "./AutomationDateFilterContext.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectCatalogDateDatasets } from "../../../model/store/catalog/catalogSelectors.js";
 import {
-    selectCatalogDateDatasets,
     selectEffectiveDateFilterAvailableGranularities,
     selectEffectiveDateFilterAvailableGranularitiesForTab,
     selectEffectiveDateFilterOptions,
     selectEffectiveDateFilterOptionsForTab,
-    useDashboardSelector,
-} from "../../../model/index.js";
-import { DefaultDashboardDateFilter, type IDashboardDateFilterConfig } from "../../filterBar/index.js";
+} from "../../../model/store/tabs/dateFilterConfig/dateFilterConfigSelectors.js";
+import { DefaultDashboardDateFilter } from "../../filterBar/dateFilter/DefaultDashboardDateFilter.js";
+import type { IDashboardDateFilterConfig } from "../../filterBar/dateFilter/types.js";
 
 function AutomationDateFilterButton(props: IDateFilterButtonProps) {
     const {

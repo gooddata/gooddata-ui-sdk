@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type ComponentType } from "react";
 
@@ -17,7 +17,7 @@ import {
 import { BucketNames } from "@gooddata/sdk-ui";
 
 import { AbstractProvider } from "./AbstractProvider.js";
-import { CalculateAs, type IComparison } from "../../../../interfaces/index.js";
+import { CalculateAs, type IComparison } from "../../../../interfaces/comparison.js";
 import { type IHeadlineTransformationProps } from "../../HeadlineProvider.js";
 import { COMPARISON_DEFAULT_OBJECT } from "../interfaces/BaseHeadlines.js";
 import { ComparisonTransformation } from "../transformations/ComparisonTransformation.js";

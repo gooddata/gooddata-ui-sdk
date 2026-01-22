@@ -14,8 +14,8 @@ import {
     type TStylingEditorDialogFooterProps,
 } from "./StylingEditorDialogFooter.js";
 import { StylingExample } from "./StylingExample.js";
-import { Button } from "../../Button/index.js";
-import { Typography } from "../../Typography/index.js";
+import { Button } from "../../Button/Button.js";
+import { Typography } from "../../Typography/Typography.js";
 import { useId } from "../../utils/useId.js";
 import { Dialog } from "../Dialog.js";
 import { type IDialogBaseProps } from "../typings.js";

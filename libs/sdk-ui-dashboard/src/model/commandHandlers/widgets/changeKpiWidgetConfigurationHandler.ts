@@ -4,9 +4,11 @@ import { type SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
 import { validateExistingKpiWidget } from "./validation/widgetValidations.js";
-import { type IChangeKpiWidgetConfiguration } from "../../commands/index.js";
-import { type IDashboardKpiWidgetConfigurationChanged } from "../../events/index.js";
-import { kpiWidgetConfigurationChanged } from "../../events/kpi.js";
+import { type IChangeKpiWidgetConfiguration } from "../../commands/kpi.js";
+import {
+    type IDashboardKpiWidgetConfigurationChanged,
+    kpiWidgetConfigurationChanged,
+} from "../../events/kpi.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";

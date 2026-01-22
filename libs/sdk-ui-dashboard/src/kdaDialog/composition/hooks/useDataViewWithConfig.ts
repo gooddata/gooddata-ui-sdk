@@ -6,7 +6,8 @@ import { useIntl } from "react-intl";
 
 import { useWorkspaceStrict } from "@gooddata/sdk-ui";
 
-import { selectColorPalette, selectSettings, useDashboardSelector } from "../../../model/index.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectColorPalette, selectSettings } from "../../../model/store/config/configSelectors.js";
 import { type IKdaItem, type IKdaItemGroup } from "../../internalTypes.js";
 import { useKdaState } from "../../providers/KdaState.js";
 import { createConfig, createDataView } from "../data/dataview.js";

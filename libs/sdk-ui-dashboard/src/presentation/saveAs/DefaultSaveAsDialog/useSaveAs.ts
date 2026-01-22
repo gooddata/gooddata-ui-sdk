@@ -5,17 +5,17 @@ import { useCallback } from "react";
 import { type IDashboard } from "@gooddata/sdk-model";
 import { type ILocale } from "@gooddata/sdk-ui";
 
+import { saveDashboardAs } from "../../../model/commands/dashboard.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import {
     type CommandProcessingStatus,
-    saveDashboardAs,
-    selectBackendCapabilities,
-    selectDashboardTitle,
-    selectIsDashboardSaving,
-    selectIsInEditMode,
-    selectLocale,
     useDashboardCommandProcessing,
-    useDashboardSelector,
-} from "../../../model/index.js";
+} from "../../../model/react/useDashboardCommandProcessing.js";
+import { selectBackendCapabilities } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
+import { selectLocale } from "../../../model/store/config/configSelectors.js";
+import { selectDashboardTitle } from "../../../model/store/meta/metaSelectors.js";
+import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
+import { selectIsDashboardSaving } from "../../../model/store/saving/savingSelectors.js";
 
 interface IUseSaveAsResult {
     locale: ILocale;

@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { useCallback, useMemo } from "react";
 
@@ -16,7 +16,7 @@ import {
     UiReturnFocusOnUnmount,
 } from "@gooddata/sdk-ui-kit";
 
-import { useDashboardUserInteraction } from "../../../../model/index.js";
+import { useDashboardUserInteraction } from "../../../../model/react/useDashboardUserInteraction.js";
 import { ConfigurationBubble } from "../../common/configuration/ConfigurationBubble.js";
 
 interface ILayoutDirectionConfigurationDialogProps {

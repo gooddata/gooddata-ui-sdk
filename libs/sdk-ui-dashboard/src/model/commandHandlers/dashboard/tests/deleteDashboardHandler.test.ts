@@ -2,8 +2,9 @@
 
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { deleteDashboard } from "../../../commands/index.js";
-import { type IDashboardCommandFailed, type IDashboardDeleted } from "../../../events/index.js";
+import { deleteDashboard } from "../../../commands/dashboard.js";
+import { type IDashboardDeleted } from "../../../events/dashboard.js";
+import { type IDashboardCommandFailed } from "../../../events/general.js";
 import { selectDateFilterConfig } from "../../../store/config/configSelectors.js";
 import { selectInsights } from "../../../store/insights/insightsSelectors.js";
 import { selectDashboardTitle, selectPersistedDashboard } from "../../../store/meta/metaSelectors.js";

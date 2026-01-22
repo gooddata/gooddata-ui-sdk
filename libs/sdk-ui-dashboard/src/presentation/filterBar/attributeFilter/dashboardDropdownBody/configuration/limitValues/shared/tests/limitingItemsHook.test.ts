@@ -1,10 +1,10 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
 import { idRef } from "@gooddata/sdk-model";
 
-import { type IDashboardAttributeFilterParentItem } from "../../../../../../../../model/index.js";
+import { type IDashboardAttributeFilterParentItem } from "../../../../../../../../model/types/attributeFilterTypes.js";
 import { type IValuesLimitingItemWithTitle, sortByTypeAndTitle } from "../limitingItemsHook.js";
 
 const buildFilter = (localIdentifier: string, labelId: string): IDashboardAttributeFilterParentItem => ({

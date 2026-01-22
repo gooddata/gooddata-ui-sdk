@@ -23,12 +23,9 @@ import {
 
 import { DEFAULT_COLUMN_CLIENT_WIDTH, DEFAULT_WIDTH_RESIZER_HEIGHT } from "./constants.js";
 import { DashboardItemOverlay } from "./DashboardItemOverlay/DashboardItemOverlay.js";
-import {
-    type IDashboardLayoutItemFacade,
-    type IDashboardLayoutWidgetRenderProps,
-    getDashboardLayoutItemHeightForRatioAndScreen,
-} from "./DefaultDashboardLayoutRenderer/index.js";
+import { type IDashboardLayoutWidgetRenderProps } from "./DefaultDashboardLayoutRenderer/interfaces.js";
 import { useWidthValidation } from "./DefaultDashboardLayoutRenderer/useItemWidthValidation.js";
+import { getDashboardLayoutItemHeightForRatioAndScreen } from "./DefaultDashboardLayoutRenderer/utils/sizing.js";
 import { Hotspot } from "./dragAndDrop/draggableWidget/Hotspot.js";
 import { useShouldShowRowEndHotspot } from "./dragAndDrop/draggableWidget/RowEndHotspot.js";
 import { HoverDetector } from "./dragAndDrop/Resize/HoverDetector.js";
@@ -36,41 +33,45 @@ import { ResizeOverlay } from "./dragAndDrop/Resize/ResizeOverlay.js";
 import { WidthResizerHotspot } from "./dragAndDrop/Resize/WidthResizerHotspot.js";
 import { getRefsForItem, getRefsForSection } from "./refs.js";
 import { DASHBOARD_LAYOUT_GRID_SINGLE_COLUMN } from "../../_staging/dashboard/flexibleLayout/config.js";
+import { type IDashboardLayoutItemFacade } from "../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
 import { getLayoutConfiguration } from "../../_staging/dashboard/flexibleLayout/layoutConfiguration.js";
 import { getItemIndex } from "../../_staging/layout/coordinates.js";
 import { calculateWidgetMinHeight, getSizeInfo } from "../../_staging/layout/sizing.js";
 import { type ObjRefMap } from "../../_staging/metadata/objRefMap.js";
+import { useDashboardDispatch, useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
+import { useWidgetSelection } from "../../model/react/useWidgetSelection.js";
+import {
+    selectEnableSnapshotExportAccessibility,
+    selectIsExport,
+    selectSettings,
+} from "../../model/store/config/configSelectors.js";
+import { selectInsightsMap } from "../../model/store/insights/insightsSelectors.js";
+import {
+    selectIsInEditMode,
+    selectIsInExportMode,
+} from "../../model/store/renderMode/renderModeSelectors.js";
+import { uiActions } from "../../model/store/ui/index.js";
+import {
+    selectSectionModification,
+    selectWidgetsModification,
+    selectWidgetsOverlayState,
+} from "../../model/store/ui/uiSelectors.js";
 import {
     type ExtendedDashboardWidget,
     isCustomWidget,
     isExtendedDashboardLayoutWidget,
-    selectEnableSnapshotExportAccessibility,
-    selectInsightsMap,
-    selectIsExport,
-    selectIsInEditMode,
-    selectIsInExportMode,
-    selectSectionModification,
-    selectSettings,
-    selectWidgetsModification,
-    selectWidgetsOverlayState,
-    uiActions,
-    useDashboardDispatch,
-    useDashboardSelector,
-    useWidgetSelection,
-} from "../../model/index.js";
-import { isAnyPlaceholderWidget, isPlaceholderWidget } from "../../widgets/index.js";
+} from "../../model/types/layoutTypes.js";
+import { isAnyPlaceholderWidget, isPlaceholderWidget } from "../../widgets/placeholders/types.js";
 import { DashboardItemPathAndSizeProvider } from "../dashboard/components/DashboardItemPathAndSizeContext.js";
 import { useScreenSize } from "../dashboard/components/DashboardScreenSizeContext.js";
-import { useDashboardComponentsContext } from "../dashboardContexts/index.js";
+import { useDashboardComponentsContext } from "../dashboardContexts/DashboardComponentsContext.js";
 import { useWidgetDragEndHandler } from "../dragAndDrop/draggableWidget/useWidgetDragEndHandler.js";
-import {
-    type BaseDraggableLayoutItemSize,
-    type DraggableLayoutItem,
-    useDashboardDrag,
-    useResizeItemStatus,
-} from "../dragAndDrop/index.js";
-import { useWidgetExportData } from "../export/index.js";
-import { DashboardWidget, type IDashboardWidgetProps } from "../widget/index.js";
+import { useResizeItemStatus } from "../dragAndDrop/LayoutResizeContext.js";
+import { type BaseDraggableLayoutItemSize, type DraggableLayoutItem } from "../dragAndDrop/types.js";
+import { useDashboardDrag } from "../dragAndDrop/useDashboardDrag.js";
+import { useWidgetExportData } from "../export/useExportData.js";
+import { DashboardWidget } from "../widget/widget/DashboardWidget.js";
+import { type IDashboardWidgetProps } from "../widget/widget/types.js";
 
 function logInvalidWidth(
     isValid: boolean,

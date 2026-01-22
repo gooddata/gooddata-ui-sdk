@@ -1,8 +1,8 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { merge } from "lodash-es";
 
-import { type IChartConfig } from "../../../interfaces/index.js";
+import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { type HighchartsOptions } from "../../lib/index.js";
 import { alignChart } from "../_chartCreators/helpers.js";
 import { highlightChartPoints } from "../_chartHighlighting/highlightPoints.js";

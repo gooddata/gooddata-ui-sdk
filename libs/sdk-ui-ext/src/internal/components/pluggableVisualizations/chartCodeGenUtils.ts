@@ -13,11 +13,13 @@ import { type IChartConfig } from "@gooddata/sdk-ui-charts";
 
 import { type IEmbeddingCodeContext } from "../../interfaces/VisualizationDescriptor.js";
 import {
-    type IAdditionalFactoryDefinition,
     type IInsightToPropConversion,
-    type PropMeta,
     insightConversion,
-} from "../../utils/embeddingCodeGenerator/index.js";
+} from "../../utils/embeddingCodeGenerator/insightToPropsConverter/convertor.js";
+import {
+    type IAdditionalFactoryDefinition,
+    type PropMeta,
+} from "../../utils/embeddingCodeGenerator/types.js";
 import { getChartSupportedControls } from "../../utils/propertiesHelper.js";
 import { removeUseless } from "../../utils/removeUseless.js";
 

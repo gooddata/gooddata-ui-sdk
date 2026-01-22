@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useCallback, useMemo, useState } from "react";
 
@@ -15,13 +15,11 @@ import {
 
 import { IncludeMetrics } from "./IncludeMetrics.js";
 import { InsightDescription } from "./InsightDescription.js";
-import {
-    selectInsightByRef,
-    selectSeparators,
-    useDashboardSelector,
-    useWidgetFilters,
-} from "../../../../../model/index.js";
-import { useDashboardComponentsContext } from "../../../../dashboardContexts/index.js";
+import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
+import { useWidgetFilters } from "../../../../../model/react/useWidgetFilters.js";
+import { selectSeparators } from "../../../../../model/store/config/configSelectors.js";
+import { selectInsightByRef } from "../../../../../model/store/insights/insightsSelectors.js";
+import { useDashboardComponentsContext } from "../../../../dashboardContexts/DashboardComponentsContext.js";
 
 interface IInsightDescriptionConfigProps {
     widget: IInsightWidget;

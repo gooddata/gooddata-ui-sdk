@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
 
@@ -13,8 +13,9 @@ import {
 import { IconDragHandle, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import { selectCatalogAttributes, useDashboardSelector } from "../../../model/index.js";
-import { type IAttributeFilterDraggingComponentProps } from "../../componentDefinition/index.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectCatalogAttributes } from "../../../model/store/catalog/catalogSelectors.js";
+import { type IAttributeFilterDraggingComponentProps } from "../../componentDefinition/types.js";
 
 function isDisplayFormEqual(displayForm: IAttributeDisplayFormMetadataObject, identifierOrUriRef: ObjRef) {
     return (

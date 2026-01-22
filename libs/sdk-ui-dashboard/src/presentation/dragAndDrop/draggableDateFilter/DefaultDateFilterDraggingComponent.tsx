@@ -1,10 +1,11 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { IconDragHandle, ShortenedText } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
-import { selectAllCatalogDateDatasetsMap, useDashboardSelector } from "../../../model/index.js";
-import { type IDateFilterDraggingComponentProps } from "../../componentDefinition/index.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectAllCatalogDateDatasetsMap } from "../../../model/store/catalog/catalogSelectors.js";
+import { type IDateFilterDraggingComponentProps } from "../../componentDefinition/types.js";
 import { useCurrentDateFilterConfig } from "../useCurrentDateFilterConfig.js";
 
 export function DefaultDateFilterDraggingComponent({ item }: IDateFilterDraggingComponentProps) {

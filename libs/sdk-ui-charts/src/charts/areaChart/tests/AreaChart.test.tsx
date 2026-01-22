@@ -7,7 +7,7 @@ import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { type IAttributeOrMeasure } from "@gooddata/sdk-model";
 
-import { type IChartConfig } from "../../../interfaces/index.js";
+import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { AreaChart } from "../AreaChart.js";
 import { CoreAreaChart } from "../CoreAreaChart.js";
 

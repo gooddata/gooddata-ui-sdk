@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ComponentType, type ReactElement, type ReactNode, createContext, useContext } from "react";
 
@@ -41,11 +41,8 @@ import {
 } from "../componentDefinition/types.js";
 import { type CustomSidebarComponent } from "../dashboard/DashboardSidebar/types.js";
 import { type CustomDashboardSettingsDialogComponent } from "../dashboardSettingsDialog/types.js";
-import { type CustomFilterBarComponent } from "../filterBar/types.js";
-import {
-    type CustomDashboardLayoutComponent,
-    type CustomEmptyLayoutDropZoneBodyComponent,
-} from "../flexibleLayout/types.js";
+import { type CustomFilterBarComponent } from "../filterBar/filterBar/types.js";
+import { type CustomEmptyLayoutDropZoneBodyComponent } from "../flexibleLayout/types.js";
 import { type CustomSaveAsDialogComponent } from "../saveAs/types.js";
 import {
     type CustomScheduledEmailDialogComponent,
@@ -53,14 +50,13 @@ import {
 } from "../scheduledEmail/types.js";
 import { type CustomShareDialogComponent } from "../shareDialog/types.js";
 import { type CustomToolbarComponent } from "../toolbar/types.js";
-import {
-    type CustomButtonBarComponent,
-    type CustomMenuButtonComponent,
-    type CustomSaveButtonComponent,
-    type CustomSettingButtonComponent,
-    type CustomTitleComponent,
-    type CustomTopBarComponent,
-} from "../topBar/types.js";
+import { type CustomSaveButtonComponent } from "../topBar/buttonBar/button/saveButton/types.js";
+import { type CustomSettingButtonComponent } from "../topBar/buttonBar/button/settingButton/types.js";
+import { type CustomButtonBarComponent } from "../topBar/buttonBar/types.js";
+import { type CustomMenuButtonComponent } from "../topBar/menuButton/types.js";
+import { type CustomTitleComponent } from "../topBar/title/types.js";
+import { type CustomTopBarComponent } from "../topBar/topBar/types.js";
+import { type CustomDashboardLayoutComponent } from "../widget/dashboardLayout/types.js";
 
 /**
  * @internal

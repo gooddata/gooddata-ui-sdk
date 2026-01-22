@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type ComponentType } from "react";
 
@@ -17,38 +17,39 @@ import {
 } from "@gooddata/sdk-model";
 import { type ILoadingProps } from "@gooddata/sdk-ui";
 
-import { type DashboardConfig, type ExtendedDashboardWidget } from "../../model/index.js";
+import { type DashboardConfig } from "../../model/types/commonTypes.js";
+import { type ExtendedDashboardWidget } from "../../model/types/layoutTypes.js";
 import { type RenderMode } from "../../types.js";
+import { type CustomDashboardAttributeFilterComponent } from "../filterBar/attributeFilter/types.js";
+import { type CustomDashboardDateFilterComponent } from "../filterBar/dateFilter/types.js";
+import { type CustomFilterBarComponent, type IFilterBarProps } from "../filterBar/filterBar/types.js";
+import { type CustomTitleComponent, type ITitleProps } from "../topBar/title/types.js";
+import { type CustomTopBarComponent, type ITopBarProps } from "../topBar/topBar/types.js";
 import {
-    type CustomDashboardAttributeFilterComponent,
-    type CustomDashboardDateFilterComponent,
-    type CustomFilterBarComponent,
-    type IFilterBarProps,
-} from "../filterBar/types.js";
-import { type CustomDashboardLayoutComponent, type IDashboardLayoutProps } from "../flexibleLayout/types.js";
-import {
-    type CustomTitleComponent,
-    type CustomTopBarComponent,
-    type ITitleProps,
-    type ITopBarProps,
-} from "../topBar/types.js";
+    type CustomDashboardLayoutComponent,
+    type CustomDashboardLayoutComponent as CustomDashboardNestedLayoutComponent,
+    type IDashboardLayoutProps,
+} from "../widget/dashboardLayout/types.js";
 import {
     type CustomDashboardInsightComponent,
+    type CustomInsightBodyComponent,
+} from "../widget/insight/types.js";
+import {
     type CustomDashboardInsightMenuButtonComponent,
     type CustomDashboardInsightMenuComponent,
     type CustomDashboardInsightMenuTitleComponent,
-    type CustomDashboardNestedLayoutComponent,
-    type CustomDashboardRichTextComponent,
+    type IInsightMenuItem,
+} from "../widget/insightMenu/types.js";
+import { type CustomDashboardRichTextComponent } from "../widget/richText/types.js";
+import {
     type CustomDashboardRichTextMenuComponent,
     type CustomDashboardRichTextMenuTitleComponent,
-    type CustomDashboardVisualizationSwitcherComponent,
-    type CustomDashboardWidgetComponent,
-    type CustomInsightBodyComponent,
-    type CustomShowAsTableButtonComponent,
-    type CustomVisualizationSwitcherToolbarComponent,
-    type IInsightMenuItem,
     type IRichTextMenuItem,
-} from "../widget/types.js";
+} from "../widget/richTextMenu/types.js";
+import { type CustomShowAsTableButtonComponent } from "../widget/showAsTableButton/types.js";
+import { type CustomVisualizationSwitcherToolbarComponent } from "../widget/visualizationSwitcher/configuration/types.js";
+import { type CustomDashboardVisualizationSwitcherComponent } from "../widget/visualizationSwitcher/types.js";
+import { type CustomDashboardWidgetComponent } from "../widget/widget/types.js";
 
 /**
  * @public

@@ -1,9 +1,11 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type IInsight, type IInsightWidget } from "@gooddata/sdk-model";
 
 import { useVisualizationSwitcherEditableInsightMenu } from "./useVisualizationSwitcherEditableInsightMenu.js";
-import { selectInsightsMap, selectRenderMode, useDashboardSelector } from "../../../../model/index.js";
+import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
+import { selectInsightsMap } from "../../../../model/store/insights/insightsSelectors.js";
+import { selectRenderMode } from "../../../../model/store/renderMode/renderModeSelectors.js";
 import { DashboardInsightMenuBody } from "../../insightMenu/DefaultDashboardInsightMenu/DashboardInsightMenu/index.js";
 
 interface IVisualizationConfigProps {

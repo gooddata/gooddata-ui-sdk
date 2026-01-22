@@ -15,8 +15,10 @@ import { CustomizationProvider } from "./CustomizationProvider.js";
 import { GenAIChatOverlay } from "./GenAIChatOverlay.js";
 import { useGenAIStore } from "../hooks/useGenAIStore.js";
 import { IntlWrapper } from "../localization/IntlWrapper.js";
+import { isOpenSelector } from "../store/chatWindow/chatWindowSelectors.js";
+import { setOpenAction } from "../store/chatWindow/chatWindowSlice.js";
 import { type ChatEventHandler } from "../store/events.js";
-import { getIsOpened, isOpenSelector, setOpenAction } from "../store/index.js";
+import { getIsOpened } from "../store/localStorage.js";
 
 export type GenAIChatDialogProps = {
     backend?: IAnalyticalBackend;

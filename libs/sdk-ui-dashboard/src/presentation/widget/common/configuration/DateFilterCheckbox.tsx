@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type ChangeEvent, useCallback } from "react";
 
@@ -9,7 +9,7 @@ import { type ICatalogDateDataset, type IWidget, type ObjRef, isInsightWidget } 
 import { type IAlignPoint, ShortenedText } from "@gooddata/sdk-ui-kit";
 
 import { getUnrelatedDateDataset } from "./utils.js";
-import { useCurrentDateFilterConfig } from "../../../dragAndDrop/index.js";
+import { useCurrentDateFilterConfig } from "../../../dragAndDrop/useCurrentDateFilterConfig.js";
 
 const tooltipAlignPoints: IAlignPoint[] = [{ align: "cl cr", offset: { x: -20, y: 0 } }];
 

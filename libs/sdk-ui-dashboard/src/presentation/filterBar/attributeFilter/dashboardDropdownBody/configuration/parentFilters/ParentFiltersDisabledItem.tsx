@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type ReactNode } from "react";
 
@@ -10,11 +10,9 @@ import { areObjRefsEqual } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
 
-import {
-    selectAttributeFilterDisplayFormByLocalId,
-    selectCatalogAttributes,
-    useDashboardSelector,
-} from "../../../../../../model/index.js";
+import { useDashboardSelector } from "../../../../../../model/react/DashboardStoreProvider.js";
+import { selectCatalogAttributes } from "../../../../../../model/store/catalog/catalogSelectors.js";
+import { selectAttributeFilterDisplayFormByLocalId } from "../../../../../../model/store/tabs/filterContext/filterContextSelectors.js";
 interface IParentFiltersDisabledItemProps {
     itemTitle: string;
     itemLocalId?: string;

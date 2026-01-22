@@ -20,14 +20,13 @@ import {
     isRichTextWidget,
 } from "@gooddata/sdk-model";
 
-import { type IDashboardCommand } from "../../../commands/index.js";
+import { type IDashboardCommand } from "../../../commands/base.js";
 import {
     type IInsightDateDatasets,
-    type IMeasureDateDatasets,
     insightSelectDateDataset,
     queryDateDatasetsForInsight,
-    queryDateDatasetsForMeasure,
-} from "../../../queries/index.js";
+} from "../../../queries/insights.js";
+import { type IMeasureDateDatasets, queryDateDatasetsForMeasure } from "../../../queries/kpis.js";
 import { query } from "../../../store/_infra/queryCall.js";
 import { selectAllCatalogDateDatasetsMap } from "../../../store/catalog/catalogSelectors.js";
 import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";

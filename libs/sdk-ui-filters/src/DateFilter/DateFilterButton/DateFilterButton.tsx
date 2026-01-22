@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type KeyboardEvent, type MutableRefObject, type ReactNode, useCallback } from "react";
 
@@ -7,7 +7,8 @@ import cx from "classnames";
 import { isActionKey } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
 
-import { FilterButtonCustomIcon, type IFilterButtonCustomIcon } from "../../shared/index.js";
+import { FilterButtonCustomIcon } from "../../shared/components/internal/FilterButtonCustomIcon.js";
+import { type IFilterButtonCustomIcon } from "../../shared/interfaces/index.js";
 
 /**
  * @alpha

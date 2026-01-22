@@ -11,13 +11,9 @@ import {
 } from "@gooddata/sdk-backend-spi";
 
 import { GlobalError } from "./GlobalError.js";
-import {
-    type RootState,
-    asyncProcessSelector,
-    clearThreadAction,
-    globalErrorSelector,
-    setGlobalErrorAction,
-} from "../store/index.js";
+import { asyncProcessSelector, globalErrorSelector } from "../store/messages/messagesSelectors.js";
+import { clearThreadAction, setGlobalErrorAction } from "../store/messages/messagesSlice.js";
+import { type RootState } from "../store/types.js";
 
 type ErrorBoundaryProps = {
     children: ReactNode;

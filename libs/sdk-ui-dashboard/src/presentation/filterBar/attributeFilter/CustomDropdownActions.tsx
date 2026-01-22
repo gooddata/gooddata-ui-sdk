@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { FormattedMessage } from "react-intl";
 import { invariant } from "ts-invariant";
@@ -13,12 +13,10 @@ import { AttributeFilterConfigurationButton } from "@gooddata/sdk-ui-filters";
 import { Button, UiTooltip, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 import { useAttributeFilterDisplayFormFromMap } from "../../../_staging/sharedHooks/useAttributeFilterDisplayFormFromMap.js";
-import {
-    selectAllCatalogAttributesMap,
-    selectIsApplyFiltersAllAtOnceEnabledAndSet,
-    selectIsInEditMode,
-    useDashboardSelector,
-} from "../../../model/index.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectAllCatalogAttributesMap } from "../../../model/store/catalog/catalogSelectors.js";
+import { selectIsApplyFiltersAllAtOnceEnabledAndSet } from "../../../model/store/config/configSelectors.js";
+import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
 
 function useIsConfigButtonVisible(filterDisplayFormRef: ObjRef, attributes?: IAttributeMetadataObject[]) {
     const isEditMode = useDashboardSelector(selectIsInEditMode);

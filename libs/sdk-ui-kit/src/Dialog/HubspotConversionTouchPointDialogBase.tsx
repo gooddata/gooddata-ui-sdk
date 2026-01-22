@@ -7,8 +7,8 @@ import { useIntl } from "react-intl";
 
 import { LoadingComponent } from "@gooddata/sdk-ui";
 
-import { Button } from "../Button/index.js";
-import { Typography } from "../Typography/index.js";
+import { Button } from "../Button/Button.js";
+import { Typography } from "../Typography/Typography.js";
 
 declare global {
     // eslint-disable-next-line @typescript-eslint/naming-convention

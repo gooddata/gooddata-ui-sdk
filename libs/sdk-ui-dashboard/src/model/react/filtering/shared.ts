@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import {
     type IFilter,
@@ -8,7 +8,7 @@ import {
     isAttributeFilter,
 } from "@gooddata/sdk-model";
 
-import { type ICrossFilteringItem } from "../../store/index.js";
+import { type ICrossFilteringItem } from "../../store/drill/types.js";
 
 /**
  * @internal

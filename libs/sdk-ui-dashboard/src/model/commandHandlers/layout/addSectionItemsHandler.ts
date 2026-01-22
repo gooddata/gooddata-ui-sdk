@@ -21,7 +21,7 @@ import {
     updateItemIndex,
 } from "../../../_staging/layout/coordinates.js";
 import { normalizeItemSizeToParent } from "../../../_staging/layout/sizing.js";
-import { type IAddSectionItems } from "../../commands/index.js";
+import { type IAddSectionItems } from "../../commands/layout.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { type IDashboardLayoutSectionItemsAdded, layoutSectionItemsAdded } from "../../events/layout.js";
 import { selectSettings } from "../../store/config/configSelectors.js";

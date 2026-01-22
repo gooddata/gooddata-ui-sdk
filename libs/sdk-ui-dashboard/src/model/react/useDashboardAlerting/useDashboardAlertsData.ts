@@ -1,4 +1,5 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 
 import {
@@ -6,23 +7,30 @@ import {
     selectAutomationsError,
     selectAutomationsIsInitialized,
     selectAutomationsIsLoading,
-    selectCanCreateAutomation,
-    selectCanManageWorkspace,
     selectDashboardUserAutomationAlertsInContext,
-    selectEnableAlerting,
+} from "../../store/automations/automationsSelectors.js";
+import { selectEnableAlerting, selectIsReadOnly } from "../../store/config/configSelectors.js";
+import {
     selectEntitlementMaxAutomations,
     selectEntitlementUnlimitedAutomations,
-    selectFilterableWidgetByRef,
-    selectInsightByWidgetRef,
-    selectIsAlertingDialogOpen,
-    selectIsAlertsManagementDialogOpen,
-    selectIsInViewMode,
-    selectIsReadOnly,
-    selectMenuButtonItemsVisibility,
+} from "../../store/entitlements/entitlementsSelectors.js";
+import { selectInsightByWidgetRef } from "../../store/insights/insightsSelectors.js";
+import {
     selectNotificationChannels,
     selectNotificationChannelsCount,
-} from "../../store/index.js";
-import { selectAlertingDialogContext } from "../../store/ui/uiSelectors.js";
+} from "../../store/notificationChannels/notificationChannelsSelectors.js";
+import {
+    selectCanCreateAutomation,
+    selectCanManageWorkspace,
+} from "../../store/permissions/permissionsSelectors.js";
+import { selectIsInViewMode } from "../../store/renderMode/renderModeSelectors.js";
+import { selectFilterableWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
+import {
+    selectAlertingDialogContext,
+    selectIsAlertingDialogOpen,
+    selectIsAlertsManagementDialogOpen,
+    selectMenuButtonItemsVisibility,
+} from "../../store/ui/uiSelectors.js";
 import { useDashboardSelector } from "../DashboardStoreProvider.js";
 import { DEFAULT_MAX_AUTOMATIONS } from "../useDashboardAutomations/constants.js";
 

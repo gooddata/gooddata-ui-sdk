@@ -1,11 +1,12 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { type ScenarioRecording, recordedDataView } from "@gooddata/sdk-backend-mockingbird";
 import { type IMeasure, newMeasure } from "@gooddata/sdk-model";
 
-import { type IChartConfig } from "../../../interfaces/index.js";
+import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { getSanitizedStackingConfig, sanitizeConfig } from "../sanitizeStacking.js";
 
 const [M1, M2]: IMeasure[] = ["m1", "m2"].map((name: string) => {

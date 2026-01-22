@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type ComponentProps } from "react";
 
@@ -17,7 +17,7 @@ import {
     EVENT_HANDLER,
     GET_COMPONENT,
     LOAD_COMPONENT,
-} from "../common/index.js";
+} from "../common/CustomElementAdapter.js";
 import { stringToObjectTypes } from "../common/typeGuards/stringToObjectTypes.js";
 import { type CustomElementContext } from "../context.js";
 

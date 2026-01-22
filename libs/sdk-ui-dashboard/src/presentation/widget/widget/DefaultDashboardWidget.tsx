@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type ReactElement, memo, useMemo } from "react";
 
@@ -17,8 +17,8 @@ import {
 import { BackendProvider, convertError, useBackendStrict } from "@gooddata/sdk-ui";
 
 import { RenderModeAwareDashboardNestedLayoutWidget } from "./DashboardNestedLayoutWidget/RenderModeAwareDashboardNestedLayoutWidget.js";
-import { RenderModeAwareDashboardInsightWidget } from "./InsightWidget/index.js";
-import { RenderModeAwareDashboardRichTextWidget } from "./RichTextWidget/index.js";
+import { RenderModeAwareDashboardInsightWidget } from "./InsightWidget/RenderModeAwareDashboardInsightWidget.js";
+import { RenderModeAwareDashboardRichTextWidget } from "./RichTextWidget/RenderModeAwareDashboardRichTextWidget.js";
 import { type IDashboardWidgetProps } from "./types.js";
 import { RenderModeAwareDashboardVisualizationSwitcherWidget } from "./VisualizationSwitcherWidget/RenderModeAwareDashboardVisualizationSwitcherWidget.js";
 import { serializeLayoutItemPath } from "../../../_staging/layout/coordinates.js";
@@ -28,7 +28,8 @@ import {
     widgetExecutionStarted,
     widgetExecutionSucceeded,
 } from "../../../model/events/widget.js";
-import { isExtendedDashboardLayoutWidget, useDashboardEventDispatch } from "../../../model/index.js";
+import { useDashboardEventDispatch } from "../../../model/react/useDashboardEventDispatch.js";
+import { isExtendedDashboardLayoutWidget } from "../../../model/types/layoutTypes.js";
 
 type WidgetComponentAdditionalProps = Pick<
     IDashboardWidgetProps,

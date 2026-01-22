@@ -23,7 +23,7 @@ import {
     AutomationAttributeFilterProvider,
     useAutomationAttributeFilterContext,
 } from "./AutomationAttributeFilterContext.js";
-import { DefaultDashboardAttributeFilter } from "../../../presentation/filterBar/index.js";
+import { DefaultDashboardAttributeFilter } from "../../filterBar/attributeFilter/DefaultDashboardAttributeFilter.js";
 
 export function AutomationAttributeFilter({
     filter,

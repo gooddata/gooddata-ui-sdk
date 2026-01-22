@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type Dispatch, type MouseEvent, type SetStateAction, useMemo, useState } from "react";
 
@@ -23,7 +23,8 @@ import {
 import { DashboardInsightEditMenuBubble } from "./DashboardInsightEditMenuBubble.js";
 import { DashboardInsightMenuBubble } from "./DashboardInsightMenuBubble.js";
 import { DashboardInsightMenuContainer } from "./DashboardInsightMenuContainer.js";
-import { selectRenderMode, useDashboardSelector } from "../../../../../model/index.js";
+import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
+import { selectRenderMode } from "../../../../../model/store/renderMode/renderModeSelectors.js";
 import { type RenderMode } from "../../../../../types.js";
 import {
     type IDashboardInsightMenuProps,

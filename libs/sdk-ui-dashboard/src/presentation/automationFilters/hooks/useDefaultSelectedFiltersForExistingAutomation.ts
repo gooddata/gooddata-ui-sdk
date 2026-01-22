@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -20,13 +20,13 @@ import {
     getAutomationVisualizationFilters,
 } from "../../../_staging/automation/index.js";
 import { dashboardFilterToFilterContextItem } from "../../../_staging/dashboard/dashboardFilterContext.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import {
-    type ExtendedDashboardWidget,
-    removeIgnoredWidgetFilters,
     selectAutomationAvailableDashboardFilters,
     selectAutomationCommonDateFilterId,
-    useDashboardSelector,
-} from "../../../model/index.js";
+} from "../../../model/store/filtering/dashboardFilterSelectors.js";
+import type { ExtendedDashboardWidget } from "../../../model/types/layoutTypes.js";
+import { removeIgnoredWidgetFilters } from "../../../model/utils/widgetFilters.js";
 import { type IDashboardFilter, isDashboardFilter } from "../../../types.js";
 
 export function useDefaultSelectedFiltersForExistingAutomation(

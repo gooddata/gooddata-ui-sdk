@@ -9,19 +9,20 @@ import { asLayoutItemPath, serializeLayoutSectionPath } from "../../../../_stagi
 import { getSizeInfo } from "../../../../_staging/layout/sizing.js";
 import {
     type IChangeInsightWidgetFilterSettings,
-    type IDashboardCommandFailed,
-    addNestedLayoutSection,
-    dispatchAndWaitFor,
     enableInsightWidgetDateFilter,
-    replaceNestedLayoutSectionItem,
-    selectSettings,
-    uiActions,
-    useDashboardCommandProcessing,
+} from "../../../../model/commands/insight.js";
+import { addNestedLayoutSection, replaceNestedLayoutSectionItem } from "../../../../model/commands/layout.js";
+import { type IDashboardCommandFailed } from "../../../../model/events/general.js";
+import {
     useDashboardDispatch,
     useDashboardSelector,
-} from "../../../../model/index.js";
+} from "../../../../model/react/DashboardStoreProvider.js";
+import { useDashboardCommandProcessing } from "../../../../model/react/useDashboardCommandProcessing.js";
+import { dispatchAndWaitFor } from "../../../../model/store/_infra/dispatchAndWaitFor.js";
+import { selectSettings } from "../../../../model/store/config/configSelectors.js";
+import { uiActions } from "../../../../model/store/ui/index.js";
 import { type ILayoutSectionPath } from "../../../../types.js";
-import { newLoadingPlaceholderWidget } from "../../../../widgets/index.js";
+import { newLoadingPlaceholderWidget } from "../../../../widgets/placeholders/types.js";
 
 export function useNewSectionInsightListItemDropHandler(sectionIndex: ILayoutSectionPath) {
     const dispatch = useDashboardDispatch();

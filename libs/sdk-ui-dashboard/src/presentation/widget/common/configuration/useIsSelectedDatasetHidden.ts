@@ -1,15 +1,14 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { useMemo } from "react";
 
 import { type ObjRef, areObjRefsEqual, idRef } from "@gooddata/sdk-model";
 import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 import { safeSerializeObjRef } from "../../../../_staging/metadata/safeSerializeObjRef.js";
-import {
-    selectCatalogDateDatasets,
-    selectObjectAvailabilityConfig,
-    useDashboardSelector,
-} from "../../../../model/index.js";
+import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
+import { selectCatalogDateDatasets } from "../../../../model/store/catalog/catalogSelectors.js";
+import { selectObjectAvailabilityConfig } from "../../../../model/store/config/configSelectors.js";
 
 export function useIsSelectedDatasetHidden(selectedDateDatasetRef: ObjRef | undefined) {
     const backend = useBackendStrict();

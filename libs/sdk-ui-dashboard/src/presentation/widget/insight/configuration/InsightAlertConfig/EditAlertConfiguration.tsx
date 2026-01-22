@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useState } from "react";
 
@@ -15,7 +15,7 @@ import {
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { AlertTriggerModeSelect } from "../../../../alerting/DefaultAlertingDialog/components/AlertTriggerModeSelect.js";
-import { gdColorStateBlank } from "../../../../constants/index.js";
+import { gdColorStateBlank } from "../../../../constants/colors.js";
 
 const TOOLTIP_ALIGN_POINTS = [
     { align: "cr cl", offset: { x: 0, y: -1 } },

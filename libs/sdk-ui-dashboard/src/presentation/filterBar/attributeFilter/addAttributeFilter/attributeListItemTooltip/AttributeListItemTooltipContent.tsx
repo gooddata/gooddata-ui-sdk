@@ -1,10 +1,10 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { type ICatalogAttribute, type IDataSetMetadataObject } from "@gooddata/sdk-model";
 
-import { type IUseAttributeElements } from "../../../../../model/index.js";
+import type { IUseAttributeElements } from "../../../../../model/types/attributeFilterTypes.js";
 
 function AttrTooltipElements({ elements, totalCount }: IUseAttributeElements) {
     const intl = useIntl();

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { memo, useMemo } from "react";
 
@@ -8,8 +8,8 @@ import { UiSkeleton } from "@gooddata/sdk-ui-kit";
 
 import { useFilterActions, useFilterState } from "./FilterContext.js";
 import { StaticFilter } from "./StaticFilter.js";
-import { testIds } from "../automation/index.js";
-import { useCatalogTags } from "../catalogResource/index.js";
+import { filterTags } from "../automation/testIds.js";
+import { useCatalogTags } from "../catalogResource/CatalogTagsContext.js";
 
 export function FilterTags() {
     const intl = useIntl();
@@ -37,7 +37,7 @@ export function FilterTags() {
             selection={selection}
             isSelectionInverted={tags.isInverted}
             onSelectionChange={(selection, isInverted) => setTags({ values: selection, isInverted })}
-            dataTestId={testIds.filterTags}
+            dataTestId={filterTags}
             noDataMessage={<FormattedMessage id="analyticsCatalog.filter.tags.noOptions" />}
         />
     );

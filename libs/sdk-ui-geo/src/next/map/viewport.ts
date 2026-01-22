@@ -3,8 +3,6 @@
 import { type IGeoLayerData } from "../context/GeoLayersContext.js";
 import { type IMapViewport } from "../types/map/provider.js";
 
-export { computeViewportFromConfig } from "./viewport/viewportResolution.js";
-
 function mergeBounds(
     a: IMapViewport["bounds"] | undefined,
     b: IMapViewport["bounds"] | undefined,

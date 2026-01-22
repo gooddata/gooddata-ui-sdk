@@ -7,7 +7,7 @@ import { objRefToString } from "@gooddata/sdk-model";
 
 import { loadInsight } from "./common/loadInsight.js";
 import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
-import { type IRefreshInsightWidget } from "../../commands/index.js";
+import { type IRefreshInsightWidget } from "../../commands/insight.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { type IDashboardInsightWidgetRefreshed, insightWidgetRefreshed } from "../../events/insight.js";
 import { insightsActions } from "../../store/insights/index.js";

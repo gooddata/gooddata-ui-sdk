@@ -14,7 +14,7 @@ import {
     isDashboardFilterViewDefaultStatusChangeSucceeded,
     isDashboardFilterViewDeletionFailed,
     isDashboardFilterViewDeletionSucceeded,
-} from "../../../../model/index.js";
+} from "../../../../model/events/filters.js";
 
 const messages: Record<string, MessageDescriptor> = defineMessages({
     creationSuccess: { id: "filters.filterViews.toast.viewSaved" },

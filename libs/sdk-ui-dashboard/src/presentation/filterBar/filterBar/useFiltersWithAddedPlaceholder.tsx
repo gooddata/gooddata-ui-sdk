@@ -21,15 +21,16 @@ import {
 import {
     addAttributeFilter as addAttributeFilterAction,
     addDateFilter as addDateFilterAction,
-    dispatchAndWaitFor,
-    getFilterIdentifier,
+} from "../../../model/commands/filters.js";
+import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { dispatchAndWaitFor } from "../../../model/store/_infra/dispatchAndWaitFor.js";
+import {
     selectAllCatalogDateDatasetsMap,
     selectCatalogAttributes,
-    selectSelectedFilterIndex,
-    uiActions,
-    useDashboardDispatch,
-    useDashboardSelector,
-} from "../../../model/index.js";
+} from "../../../model/store/catalog/catalogSelectors.js";
+import { getFilterIdentifier } from "../../../model/store/tabs/filterContext/filterContextUtils.js";
+import { uiActions } from "../../../model/store/ui/index.js";
+import { selectSelectedFilterIndex } from "../../../model/store/ui/uiSelectors.js";
 
 /**
  * @internal

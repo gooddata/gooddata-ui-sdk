@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import cx from "classnames";
 
@@ -9,7 +9,7 @@ import { valueWithEmptyHandling } from "@gooddata/sdk-ui-vis-commons";
 
 import { multiMeasuresAlternatingTypes } from "./chartCapabilities.js";
 import { formatValueForTooltip, getFormattedValueForTooltip } from "./tooltip.js";
-import { type IChartConfig } from "../../../interfaces/index.js";
+import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { type IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
 import {
     type ICategory,

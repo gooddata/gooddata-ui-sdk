@@ -8,15 +8,15 @@ import { type IAttributeFilter, type IDashboardAttributeFilter, type ObjRef } fr
 import { type IAttributeFilterBaseProps } from "@gooddata/sdk-ui-filters";
 
 import { dashboardAttributeFilterToAttributeFilter } from "../../../_staging/dashboard/dashboardFilterConverter.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectSupportsSettingConnectingAttributes } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
+import { selectIsApplyFiltersAllAtOnceEnabledAndSet } from "../../../model/store/config/configSelectors.js";
 import {
     selectFilterContextAttributeFilters,
     selectFilterContextAttributeFiltersForTab,
-    selectIsApplyFiltersAllAtOnceEnabledAndSet,
-    selectSupportsSettingConnectingAttributes,
     selectWorkingFilterContextAttributeFilters,
     selectWorkingFilterContextAttributeFiltersForTab,
-    useDashboardSelector,
-} from "../../../model/index.js";
+} from "../../../model/store/tabs/filterContext/filterContextSelectors.js";
 
 /**
  * Result of the {@link useParentFilters} hook, that can be used as parent filtering input props for {@link @gooddata/sdk-ui-filters#AttributeFilter}.

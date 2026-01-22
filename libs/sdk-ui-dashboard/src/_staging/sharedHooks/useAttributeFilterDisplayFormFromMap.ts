@@ -1,14 +1,12 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useCallback } from "react";
 
 import { type ObjRef } from "@gooddata/sdk-model";
 
-import {
-    selectAllCatalogDisplayFormsMap,
-    selectAttributeFilterDisplayFormsMap,
-    useDashboardSelector,
-} from "../../model/index.js";
+import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
+import { selectAllCatalogDisplayFormsMap } from "../../model/store/catalog/catalogSelectors.js";
+import { selectAttributeFilterDisplayFormsMap } from "../../model/store/tabs/filterContext/filterContextSelectors.js";
 
 export function useAttributeFilterDisplayFormFromMap() {
     const catalogDisplayFormsMap = useDashboardSelector(selectAllCatalogDisplayFormsMap);

@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import {
     type Dispatch,
@@ -14,13 +14,10 @@ import { type AnyAction } from "@reduxjs/toolkit";
 
 import { type ScreenSize } from "@gooddata/sdk-model";
 
-import {
-    selectScreen,
-    setScreenSize as setScreenSizeAction,
-    useDashboardDispatch,
-    useDashboardSelector,
-} from "../../../model/index.js";
-import { DASHBOARD_LAYOUT_BREAK_POINTS } from "../../constants/index.js";
+import { setScreenSize as setScreenSizeAction } from "../../../model/commands/layout.js";
+import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectScreen } from "../../../model/store/tabs/layout/layoutSelectors.js";
+import { DASHBOARD_LAYOUT_BREAK_POINTS } from "../../constants/layout.js";
 
 const getCurrentScreenSize = (): ScreenSize | undefined => {
     let viewportWidth = 0;

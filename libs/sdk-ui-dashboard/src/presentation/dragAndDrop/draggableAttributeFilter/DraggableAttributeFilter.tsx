@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type Ref, useCallback, useMemo } from "react";
 
@@ -7,14 +7,12 @@ import classNames from "classnames";
 import { type IDashboardAttributeFilter, type ObjRef } from "@gooddata/sdk-model";
 
 import { convertDashboardAttributeFilterElementsUrisToValues } from "../../../_staging/dashboard/legacyFilterConvertors.js";
-import {
-    selectCanAddMoreFilters,
-    selectIsApplyFiltersAllAtOnceEnabledAndSet,
-    selectIsInEditMode,
-    selectSupportsElementUris,
-    useDashboardSelector,
-} from "../../../model/index.js";
-import { type CustomDashboardAttributeFilterComponent } from "../../filterBar/types.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectSupportsElementUris } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
+import { selectIsApplyFiltersAllAtOnceEnabledAndSet } from "../../../model/store/config/configSelectors.js";
+import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
+import { selectCanAddMoreFilters } from "../../../model/store/tabs/filterContext/filterContextSelectors.js";
+import { type CustomDashboardAttributeFilterComponent } from "../../filterBar/attributeFilter/types.js";
 import { DraggableFilterDropZoneHint } from "../draggableFilterDropZone/DraggableFilterDropZoneHint.js";
 import { useDashboardDrag } from "../useDashboardDrag.js";
 

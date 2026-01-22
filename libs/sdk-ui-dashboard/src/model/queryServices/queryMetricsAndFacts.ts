@@ -7,9 +7,10 @@ import { type IWorkspaceCatalogFactoryOptions } from "@gooddata/sdk-backend-spi"
 import { idRef } from "@gooddata/sdk-model";
 
 import { invalidQueryArguments } from "../events/general.js";
-import { type IMetricsAndFacts, type IQueryMetricsAndFacts } from "../queries/index.js";
+import { type IMetricsAndFacts, type IQueryMetricsAndFacts } from "../queries/metricsAndFacts.js";
 import { createCachedQueryService } from "../store/_infra/queryService.js";
-import { catalogActions, selectCatalogFacts, selectCatalogMeasures } from "../store/index.js";
+import { selectCatalogFacts, selectCatalogMeasures } from "../store/catalog/catalogSelectors.js";
+import { catalogActions } from "../store/catalog/index.js";
 import { type DashboardContext } from "../types/commonTypes.js";
 
 export const QueryMetricsAndFactsService = createCachedQueryService(

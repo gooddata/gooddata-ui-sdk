@@ -26,9 +26,9 @@ import { HeaderSearchButton } from "./HeaderSearchButton.js";
 import { HeaderSearchProvider } from "./headerSearchContext.js";
 import { HeaderUpsellButton } from "./HeaderUpsellButton.js";
 import { type IAppHeaderProps, type IAppHeaderState, type IHeaderMenuItem } from "./typings.js";
-import { Icon } from "../Icon/index.js";
-import { Overlay } from "../Overlay/index.js";
-import { Typography } from "../Typography/index.js";
+import { Icon } from "../Icon/Icon.js";
+import { Overlay } from "../Overlay/Overlay.js";
+import { Typography } from "../Typography/Typography.js";
 import { removeFromDom } from "../utils/domUtilities.js";
 
 function getOuterWidth(element: HTMLDivElement) {

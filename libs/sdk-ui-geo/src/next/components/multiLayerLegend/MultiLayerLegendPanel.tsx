@@ -16,7 +16,7 @@ import cx from "classnames";
 import type { PositionType } from "@gooddata/sdk-ui-vis-commons";
 
 import { MultiLayerLegendSection } from "./MultiLayerLegendSection.js";
-import type { ILegendModel, ILegendSection } from "../../types/legend/index.js";
+import { type ILegendModel, type ILegendSection } from "../../types/legend/model.js";
 
 /**
  * State for tracking which sections are expanded.

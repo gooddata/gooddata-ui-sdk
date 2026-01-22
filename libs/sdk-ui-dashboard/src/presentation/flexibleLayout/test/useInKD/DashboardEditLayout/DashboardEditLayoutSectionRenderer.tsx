@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { useCallback, useState } from "react";
 
@@ -6,7 +6,7 @@ import cx from "classnames";
 
 import { DashboardEditLayoutSectionBorder } from "./DashboardEditLayoutSectionBorder.js";
 import { type IDashboardEditLayoutContent } from "./DashboardEditLayoutTypes.js";
-import { type IDashboardLayoutSectionRenderProps } from "../../../DefaultDashboardLayoutRenderer/index.js";
+import { type IDashboardLayoutSectionRenderProps } from "../../../DefaultDashboardLayoutRenderer/interfaces.js";
 
 export type IDashboardEditLayoutSectionRendererOwnProps =
     IDashboardLayoutSectionRenderProps<IDashboardEditLayoutContent>;

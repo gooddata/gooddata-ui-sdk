@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { useState } from "react";
 
@@ -9,7 +9,7 @@ import { type IGenAIVisualization } from "@gooddata/sdk-model";
 import { ConfirmDialog, Input, Typography } from "@gooddata/sdk-ui-kit";
 
 import { useVisualisationSaving } from "./hooks/useVisualisationSaving.js";
-import { saveVisualizationAction } from "../../../store/index.js";
+import { saveVisualizationAction } from "../../../store/messages/messagesSlice.js";
 
 export type VisualizationSaveDialogProps = {
     onClose: () => void;

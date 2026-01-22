@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ReactNode } from "react";
 
@@ -6,7 +6,8 @@ import cx from "classnames";
 
 import { ErrorComponent, LoadingComponent } from "@gooddata/sdk-ui";
 
-import { selectIsDashboardLoading, useDashboardSelector } from "../../model/index.js";
+import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
+import { selectIsDashboardLoading } from "../../model/store/loading/loadingSelectors.js";
 import { useKdaState } from "../providers/KdaState.js";
 
 interface IKdaDialogSectionsProps {

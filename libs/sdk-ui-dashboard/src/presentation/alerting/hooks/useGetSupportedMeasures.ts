@@ -5,12 +5,12 @@ import { useEffect, useMemo, useState } from "react";
 import { type IInsight } from "@gooddata/sdk-model";
 import { fillMissingTitles } from "@gooddata/sdk-ui";
 
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectCatalogDateDatasets } from "../../../model/store/catalog/catalogSelectors.js";
 import {
-    selectCatalogDateDatasets,
     selectEnableComparisonInAlerting,
     selectLocale,
-    useDashboardSelector,
-} from "../../../model/index.js";
+} from "../../../model/store/config/configSelectors.js";
 import { getSupportedInsightMeasuresByInsight } from "../DefaultAlertingDialog/utils/items.js";
 import { type AlertMetric } from "../types.js";
 

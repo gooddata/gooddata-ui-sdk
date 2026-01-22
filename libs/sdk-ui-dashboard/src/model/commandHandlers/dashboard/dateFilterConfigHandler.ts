@@ -4,7 +4,7 @@ import { batchActions } from "redux-batched-actions";
 import { type SagaIterator } from "redux-saga";
 import { put } from "redux-saga/effects";
 
-import { type ISetDashboardDateFilterConfigMode } from "../../commands/index.js";
+import { type ISetDashboardDateFilterConfigMode } from "../../commands/dashboard.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 

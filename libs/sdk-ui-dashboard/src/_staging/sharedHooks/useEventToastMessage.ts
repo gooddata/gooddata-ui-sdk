@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { useEffect } from "react";
 
@@ -10,10 +10,10 @@ import { type MessageParameters, useToastMessage } from "@gooddata/sdk-ui-kit";
 import {
     type DashboardEventEvalFn,
     type DashboardEventHandler,
-    type DashboardEvents,
-    type ICustomDashboardEvent,
-    useDashboardEventsContext,
-} from "../../model/index.js";
+} from "../../model/eventHandlers/eventHandler.js";
+import { type ICustomDashboardEvent } from "../../model/events/base.js";
+import { type DashboardEvents } from "../../model/events/index.js";
+import { useDashboardEventsContext } from "../../model/react/DashboardEventsContext.js";
 
 export function isMessageDescriptor(obj: unknown): obj is MessageDescriptor {
     return !isEmpty(obj) && (obj as MessageDescriptor).id !== undefined;

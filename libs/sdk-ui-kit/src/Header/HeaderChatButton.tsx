@@ -5,7 +5,7 @@ import { type MouseEvent } from "react";
 import cx from "classnames";
 
 import { UiIcon } from "../@ui/UiIcon/UiIcon.js";
-import { Button } from "../Button/index.js";
+import { Button } from "../Button/Button.js";
 
 type HeaderChatButtonProps = {
     title?: string;

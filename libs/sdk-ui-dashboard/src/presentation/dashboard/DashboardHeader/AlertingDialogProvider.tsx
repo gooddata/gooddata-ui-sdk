@@ -1,8 +1,9 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { AlertingDialogProviderNew } from "./AlertingDialogProviderNew.js";
 import { AlertingDialogProviderOld } from "./AlertingDialogProviderOld.js";
-import { selectEnableAutomationFilterContext, useDashboardSelector } from "../../../model/index.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectEnableAutomationFilterContext } from "../../../model/store/config/configSelectors.js";
 
 export function AlertingDialogProvider() {
     const enableAutomationFilters = useDashboardSelector(selectEnableAutomationFilterContext);

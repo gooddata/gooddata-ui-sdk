@@ -1,10 +1,10 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
 import { type XYCoord } from "@evil-internetmann/react-dnd";
 
-import { useDashboardComponentsContext } from "../../../dashboardContexts/index.js";
+import { useDashboardComponentsContext } from "../../../dashboardContexts/DashboardComponentsContext.js";
 import { DEBUG_SHOW_DROP_ZONES } from "../../../dragAndDrop/debug.js";
 import { type DragPreviewProps } from "../../../dragAndDrop/DragLayerPreview/types.js";
 import { type DraggableContentItem, type DraggableContentItemType } from "../../../dragAndDrop/types.js";

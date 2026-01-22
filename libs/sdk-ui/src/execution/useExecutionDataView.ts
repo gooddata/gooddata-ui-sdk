@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type DependencyList } from "react";
 
@@ -8,22 +8,24 @@ import { type IAnalyticalBackend, type IPreparedExecution } from "@gooddata/sdk-
 
 import { createExecution } from "./createExecution.js";
 import { type DataViewWindow } from "./withExecutionLoading.js";
+import { convertError } from "../base/errors/errorHandling.js";
+import { type GoodDataSdkError } from "../base/errors/GoodDataSdkError.js";
+import { useBackendStrict } from "../base/react/BackendContext.js";
 import {
     type AttributesMeasuresOrPlaceholders,
     type AttributesOrPlaceholders,
-    DataViewFacade,
-    type GoodDataSdkError,
     type NullableFiltersOrPlaceholders,
     type SortsOrPlaceholders,
     type TotalsOrPlaceholders,
+} from "../base/react/placeholders/aliases.js";
+import { useResolveValuesWithPlaceholders } from "../base/react/placeholders/hooks.js";
+import {
     type UseCancelablePromiseCallbacks,
     type UseCancelablePromiseState,
-    convertError,
-    useBackendStrict,
     useCancelablePromise,
-    useResolveValuesWithPlaceholders,
-    useWorkspaceStrict,
-} from "../base/index.js";
+} from "../base/react/useCancelablePromise.js";
+import { useWorkspaceStrict } from "../base/react/WorkspaceContext.js";
+import { DataViewFacade } from "../base/results/facade.js";
 
 /**
  * Convenient interface to define execution by series and slices.

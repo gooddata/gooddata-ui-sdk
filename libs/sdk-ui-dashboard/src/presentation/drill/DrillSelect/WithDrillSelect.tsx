@@ -20,25 +20,22 @@ import { OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-k
 
 import { DrillSelectDropdown } from "./DrillSelectDropdown.js";
 import { type IDrillSelectContext } from "./types.js";
-import {
-    type DashboardDrillCommand,
-    type IDashboardCommandFailed,
-    type IDashboardKeyDriverCombinationItem,
-    selectBackendCapabilities,
-    selectDashboardFiltersWithoutCrossFiltering,
-    selectDisableDefaultDrills,
-    selectLocale,
-    selectWidgetDrills,
-    useDashboardSelector,
-} from "../../../model/index.js";
+import type { DashboardDrillCommand } from "../../../model/commands/drill.js";
+import type { IDashboardKeyDriverCombinationItem } from "../../../model/events/drill.js";
+import type { IDashboardCommandFailed } from "../../../model/events/general.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectBackendCapabilities } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
+import { selectDisableDefaultDrills, selectLocale } from "../../../model/store/config/configSelectors.js";
+import { selectDashboardFiltersWithoutCrossFiltering } from "../../../model/store/filtering/dashboardFilterSelectors.js";
+import { selectWidgetDrills } from "../../../model/store/tabs/layout/layoutSelectors.js";
 import {
     type DashboardDrillDefinition,
     type IDashboardDrillContext,
     type IDashboardDrillEvent,
     isDrillDownDefinition,
 } from "../../../types.js";
-import { DASHBOARD_DRILL_MENU_Z_INDEX } from "../../constants/index.js";
-import { IntlWrapper } from "../../localization/index.js";
+import { DASHBOARD_DRILL_MENU_Z_INDEX } from "../../constants/zIndex.js";
+import { IntlWrapper } from "../../localization/IntlWrapper.js";
 import { useDrills } from "../hooks/useDrills.js";
 import {
     type OnDashboardDrill,

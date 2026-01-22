@@ -1,8 +1,8 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type ScreenSize } from "@gooddata/sdk-model";
 
-import { type IDashboardLayoutItemFacade } from "../../../../_staging/dashboard/flexibleLayout/index.js";
+import { type IDashboardLayoutItemFacade } from "../../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
 import { asLayoutItemPath } from "../../../../_staging/layout/coordinates.js";
 import { type ILayoutSectionPath } from "../../../../types.js";
 

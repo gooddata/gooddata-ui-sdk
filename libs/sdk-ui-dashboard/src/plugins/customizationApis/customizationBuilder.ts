@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { walkLayout } from "@gooddata/sdk-backend-spi";
 import {
@@ -24,8 +24,8 @@ import { DefaultTopBarCustomizer } from "./topBarCustomizer.js";
 import { createCustomizerMutationsContext } from "./types.js";
 import { DefaultVisualizationSwitcherCustomizer } from "./visualizationSwitcherCustomizer.js";
 import { DefaultWidgetCustomizer } from "./widgetCustomizer.js";
-import { type IDashboardWidgetOverlay, type WidgetsOverlayFn } from "../../model/index.js";
-import { type IDashboardExtensionProps } from "../../presentation/index.js";
+import { type IDashboardWidgetOverlay, type WidgetsOverlayFn } from "../../model/types/commonTypes.js";
+import { type IDashboardExtensionProps } from "../../presentation/dashboard/types.js";
 import {
     type IDashboardContentCustomizer,
     type IDashboardCustomizer,

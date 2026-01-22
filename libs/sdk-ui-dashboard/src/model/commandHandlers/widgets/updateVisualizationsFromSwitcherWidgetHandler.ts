@@ -4,11 +4,11 @@ import { type SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
 import { validateExistingVisualizationSwitcherWidget } from "./validation/widgetValidations.js";
-import { type IUpdateVisualizationsFromVisualizationSwitcherWidgetContent } from "../../commands/index.js";
+import { type IUpdateVisualizationsFromVisualizationSwitcherWidgetContent } from "../../commands/visualizationSwitcher.js";
 import {
     type IDashboardVisualizationSwitcherWidgetVisualizationsUpdated,
     visualizationSwitcherWidgetVisualizationsUpdated,
-} from "../../events/index.js";
+} from "../../events/visualizationSwitcher.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";

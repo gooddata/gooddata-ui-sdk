@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { useCallback, useMemo, useRef, useState } from "react";
 
@@ -16,20 +16,16 @@ import { type VisType } from "@gooddata/sdk-ui";
 import { AllVisualizationsDashInsights } from "./AllVisualizationsDashInsights.js";
 import { type IDashboardVisualizationSwitcherProps } from "./types.js";
 import { useExecutionProgress } from "./useExecutionProgress.js";
-import {
-    selectInsightsMap,
-    selectSettings,
-    useDashboardAlerts,
-    useDashboardScheduledEmails,
-    useDashboardSelector,
-} from "../../../model/index.js";
-import { useDashboardComponentsContext } from "../../../presentation/dashboardContexts/index.js";
-import {
-    DashboardItem,
-    DashboardItemVisualization,
-    getVisTypeCssClass,
-} from "../../../presentation/presentationComponents/index.js";
-import { useInsightExport } from "../common/index.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { useDashboardScheduledEmails } from "../../../model/react/useDasboardScheduledEmails/useDashboardScheduledEmails.js";
+import { useDashboardAlerts } from "../../../model/react/useDashboardAlerting/useDashboardAlerts.js";
+import { selectSettings } from "../../../model/store/config/configSelectors.js";
+import { selectInsightsMap } from "../../../model/store/insights/insightsSelectors.js";
+import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
+import { DashboardItem } from "../../presentationComponents/DashboardItems/DashboardItem.js";
+import { DashboardItemVisualization } from "../../presentationComponents/DashboardItems/DashboardItemVisualization.js";
+import { getVisTypeCssClass } from "../../presentationComponents/DashboardItems/utils.js";
+import { useInsightExport } from "../common/useInsightExport.js";
 import { InsightWidgetDescriptionTrigger } from "../description/InsightWidgetDescriptionTrigger.js";
 import { supportsShowAsTable } from "../insight/insightToTable.js";
 import { ShowAsTableButton } from "../showAsTableButton/ShowAsTableButton.js";

@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { compact, isEmpty, range } from "lodash-es";
 
@@ -6,7 +6,7 @@ import { type IMeasureDescriptor, type IMeasureGroupDescriptor } from "@gooddata
 import { BucketNames, type DataViewFacade } from "@gooddata/sdk-ui";
 
 import { supportedDualAxesChartTypes } from "./chartCapabilities.js";
-import { type IChartConfig } from "../../../interfaces/index.js";
+import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { type IUnwrappedAttributeHeadersWithItems } from "../../typings/mess.js";
 import { type IAxis, type ISeriesItem } from "../../typings/unsafe.js";
 import {

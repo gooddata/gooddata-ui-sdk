@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type ReactNode, createContext, useCallback, useContext, useMemo } from "react";
 
@@ -25,13 +25,13 @@ import { useSelectionModeConfiguration } from "./dashboardDropdownBody/configura
 import { useTitleConfiguration } from "./dashboardDropdownBody/configuration/hooks/useTitleConfiguration.js";
 import { dashboardAttributeFilterToAttributeFilter } from "../../../_staging/dashboard/dashboardFilterConverter.js";
 import { useAttributeFilterDisplayFormFromMap } from "../../../_staging/sharedHooks/useAttributeFilterDisplayFormFromMap.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectAllCatalogDisplayFormsMap } from "../../../model/store/catalog/catalogSelectors.js";
 import {
-    selectAllCatalogDisplayFormsMap,
     selectFilterContextDateFilter,
     selectFilterContextDateFiltersWithDimension,
     selectOtherContextAttributeFilters,
-    useDashboardSelector,
-} from "../../../model/index.js";
+} from "../../../model/store/tabs/filterContext/filterContextSelectors.js";
 
 /**
  * @internal

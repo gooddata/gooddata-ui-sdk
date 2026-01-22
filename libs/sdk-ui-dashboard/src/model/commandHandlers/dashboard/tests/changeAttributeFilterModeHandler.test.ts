@@ -1,8 +1,8 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { setDashboardAttributeFilterConfigMode } from "../../../commands/index.js";
+import { setDashboardAttributeFilterConfigMode } from "../../../commands/dashboard.js";
 import { selectAttributeFilterConfigsOverrides } from "../../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectFilterContextAttributeFilters } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";

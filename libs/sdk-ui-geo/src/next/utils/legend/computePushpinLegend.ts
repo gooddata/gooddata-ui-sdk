@@ -1,16 +1,16 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { formatLegendLabel } from "@gooddata/sdk-ui-vis-commons";
 
 import { computeColorScale } from "./computeColorScale.js";
 import type { IAvailableLegends, IGeoLegendItem } from "../../types/common/legends.js";
 import type { IPushpinGeoData } from "../../types/geoData/pushpin.js";
-import type {
-    ILegendColorCategoryItem,
-    ILegendGroup,
-    ILegendSection,
-    ILegendSizeAnchorItem,
-} from "../../types/legend/index.js";
+import {
+    type ILegendColorCategoryItem,
+    type ILegendGroup,
+    type ILegendSection,
+    type ILegendSizeAnchorItem,
+} from "../../types/legend/model.js";
 
 /**
  * Minimum size in pixels for smallest size anchor.

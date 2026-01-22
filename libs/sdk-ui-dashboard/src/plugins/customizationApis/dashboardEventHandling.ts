@@ -4,10 +4,10 @@ import {
     type DashboardEventEvalFn,
     type DashboardEventHandler,
     type DashboardEventHandlerFn,
-    type DashboardEvents,
-    type ICustomDashboardEvent,
-} from "../../model/index.js";
-import { type IDashboardEventing } from "../../presentation/index.js";
+} from "../../model/eventHandlers/eventHandler.js";
+import { type ICustomDashboardEvent } from "../../model/events/base.js";
+import { type DashboardEvents } from "../../model/events/index.js";
+import { type IDashboardEventing } from "../../presentation/dashboard/types.js";
 import { type DashboardStateChangeCallback, type IDashboardEventHandling } from "../customizer.js";
 
 /**

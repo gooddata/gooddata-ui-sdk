@@ -11,11 +11,11 @@ import {
     type ICatalogDetailContentProps,
     type OpenHandlerEvent,
 } from "./catalogDetail/CatalogDetailContent.js";
-import { CatalogResourceProvider } from "./catalogResource/index.js";
+import { CatalogResourceProvider } from "./catalogResource/CatalogResourceProvider.js";
 import { IntlWrapper } from "./localization/IntlWrapper.js";
-import type { ObjectType } from "./objectType/index.js";
+import { type ObjectType } from "./objectType/types.js";
 import { OverlayProvider } from "./overlay/OverlayProvider.js";
-import { PermissionsProvider } from "./permission/index.js";
+import { PermissionsProvider } from "./permission/PermissionsContext.js";
 import { usePermissionsQuery } from "./permission/usePermissionsQuery.js";
 import { QualityProvider } from "./quality/QualityContext.js";
 

@@ -1,8 +1,8 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type ReactNode, createContext, useContext } from "react";
 
-import { type IMenuButtonConfiguration } from "../topBar/types.js";
+import { type IMenuButtonConfiguration } from "../topBar/menuButton/types.js";
 
 interface IDashboardConfigContext {
     menuButtonConfig: IMenuButtonConfiguration | undefined;

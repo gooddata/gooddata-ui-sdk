@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { invariant } from "ts-invariant";
 
 import { type IAnalyticalBackend, type IExecutionResult } from "@gooddata/sdk-backend-spi";
@@ -12,7 +13,7 @@ import {
 
 import { createExecution } from "./createExecution.js";
 import { type DataViewWindow } from "./withExecutionLoading.js";
-import { DataViewFacade } from "../base/index.js";
+import { DataViewFacade } from "../base/results/facade.js";
 
 /**
  * {@link DataViewLoader} options

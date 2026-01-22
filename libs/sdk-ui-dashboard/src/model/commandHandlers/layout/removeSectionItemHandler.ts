@@ -15,7 +15,7 @@ import {
     serializeLayoutItemPath,
 } from "../../../_staging/layout/coordinates.js";
 import { type ILayoutItemPath, type ILayoutSectionPath } from "../../../types.js";
-import { type IRemoveSectionItem, type IRemoveSectionItemByWidgetRef } from "../../commands/index.js";
+import { type IRemoveSectionItem, type IRemoveSectionItemByWidgetRef } from "../../commands/layout.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { layoutSectionItemRemoved, layoutSectionRemoved } from "../../events/layout.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";

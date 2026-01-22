@@ -19,9 +19,11 @@ import {
     validateDateFiltersToIgnore,
 } from "./validation/filterValidation.js";
 import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
-import { type IChangeInsightWidgetFilterSettings } from "../../commands/index.js";
-import { type IDashboardInsightWidgetFilterSettingsChanged } from "../../events/index.js";
-import { insightWidgetFilterSettingsChanged } from "../../events/insight.js";
+import { type IChangeInsightWidgetFilterSettings } from "../../commands/insight.js";
+import {
+    type IDashboardInsightWidgetFilterSettingsChanged,
+    insightWidgetFilterSettingsChanged,
+} from "../../events/insight.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";

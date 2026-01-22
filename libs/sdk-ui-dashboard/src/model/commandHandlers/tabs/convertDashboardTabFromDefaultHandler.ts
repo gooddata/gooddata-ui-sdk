@@ -9,8 +9,9 @@ import { type IConvertDashboardTabFromDefault, switchDashboardTab } from "../../
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { type IDashboardTabSwitched, dashboardTabConvertedFromDefault } from "../../events/tabs.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
-import { DEFAULT_TAB_ID, tabsActions } from "../../store/tabs/index.js";
+import { tabsActions } from "../../store/tabs/index.js";
 import { selectActiveTabLocalIdentifier, selectTabs } from "../../store/tabs/tabsSelectors.js";
+import { DEFAULT_TAB_ID } from "../../store/tabs/tabsState.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 
 export function* convertDashboardTabFromDefaultHandler(

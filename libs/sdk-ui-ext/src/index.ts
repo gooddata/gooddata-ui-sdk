@@ -26,6 +26,8 @@ import {
     type IDrillDownDefinition,
     type IEmbedInsightDialogProps,
     type IFluidLayoutDescriptor,
+    type IInsightTitleProps,
+    type IInsightViewProps,
     type ILayoutDescriptor,
     INSIGHT_WIDGET_SIZE_INFO_DEFAULT,
     INSIGHT_WIDGET_SIZE_INFO_NEW_DEFAULT,
@@ -54,8 +56,36 @@ import {
 } from "./internal/index.js";
 
 export { clearInsightViewCaches } from "./dataLoaders/index.js";
-export * from "./insightView/index.js";
-export * from "./automations/index.js";
+export { InsightView } from "./insightView/InsightView.js";
+export { InsightError, type IInsightErrorProps } from "./insightView/InsightError.js";
+export { InsightRenderer, type IInsightRendererProps } from "./insightView/InsightRenderer.js";
+export { type IInsightViewProps, type IInsightTitleProps };
+export { Automations } from "./automations/Automations.js";
+export type {
+    IAutomationsProps,
+    AutomationsType,
+    AutomationsScope,
+    AutomationsColumnName,
+    ScheduleAutomationsColumnName,
+    CommonAutomationsColumnName,
+    AutomationColumnDefinition,
+    AutomationColumnDefinitions,
+    AutomationsFilterName,
+    AutomationsFilterPreselectName,
+    AutomationsFilterPreselectValue,
+    AutomationsPreselectedFilters,
+    AutomationsAvailableFilters,
+    AutomationsOnLoad,
+    IEditAutomation,
+} from "./automations/types.js";
+export { getComparisonOperatorTitle, getRelativeOperatorTitle } from "./automations/utils.js";
+export {
+    COMPARISON_OPERATORS,
+    RELATIVE_OPERATORS,
+    ARITHMETIC_OPERATORS,
+    AI_OPERATORS,
+    AI_OPERATOR,
+} from "./automations/constants.js";
 // exported for sdk-ui-dashboard
 export {
     type IDrillDownDefinition,
@@ -143,12 +173,86 @@ export function getInsightVisualizationMeta(
     ).getMeta(settings);
 }
 
-export * from "./internal/components/dialogs/userManagementDialogs/index.js";
+export type {
+    UserEditDialogMode,
+    UserGroupEditDialogMode,
+    WorkspacePermissionSubject,
+    DataSourcePermissionSubject,
+    IGrantedDataSource,
+    DataSourcePermission,
+    UserTabId,
+} from "./internal/components/dialogs/userManagementDialogs/types.js";
+export {
+    UserEditDialog,
+    type IUserEditDialogProps,
+} from "./internal/components/dialogs/userManagementDialogs/UserEditDialog.js";
+export {
+    UserGroupEditDialog,
+    type IUserGroupEditDialogProps,
+} from "./internal/components/dialogs/userManagementDialogs/UserGroupEditDialog.js";
+export {
+    CreateUserGroupDialog,
+    type ICreateUserGroupDialogProps,
+} from "./internal/components/dialogs/userManagementDialogs/CreateUserGroupDialog.js";
+export {
+    DeleteUserDialog,
+    type IDeleteUserDialogProps,
+} from "./internal/components/dialogs/userManagementDialogs/DeleteUserDialog.js";
+export {
+    DeleteUsersDialog,
+    type IDeleteUsersDialogProps,
+} from "./internal/components/dialogs/userManagementDialogs/DeleteUsersDialog.js";
+export {
+    DeleteUserGroupDialog,
+    type IDeleteUserGroupDialogProps,
+} from "./internal/components/dialogs/userManagementDialogs/DeleteUserGroupDialog.js";
+export {
+    DeleteUserGroupsDialog,
+    type IDeleteUserGroupsDialogProps,
+} from "./internal/components/dialogs/userManagementDialogs/DeleteUserGroupsDialog.js";
+export {
+    AddWorkspaceToSubjects,
+    type IAddWorkspaceToSubjectsProps,
+} from "./internal/components/dialogs/userManagementDialogs/AddWorkspaceToSubjects.js";
+export {
+    AddDataSourceToSubjects,
+    type IAddDataSourceToSubjectsProps,
+} from "./internal/components/dialogs/userManagementDialogs/AddDataSourceToSubjects.js";
+export {
+    AddUserGroupsToUsersDialog,
+    type IAddUserGroupsToUsersDialogProps,
+} from "./internal/components/dialogs/userManagementDialogs/AddUserGroupsToUsersDialog.js";
+export {
+    AddUsersToUserGroupsDialog,
+    type IAddUsersToUserGroupsDialogProps,
+} from "./internal/components/dialogs/userManagementDialogs/AddUsersToUserGroupsDialog.js";
+export type {
+    TelemetryEvent,
+    TrackEventCallback,
+    IWithTelemetryProps,
+} from "./internal/components/dialogs/userManagementDialogs/TelemetryContext.js";
 
-export * from "./internal/components/attributeHierarchies/index.js";
+export {
+    AttributeHierarchyDetailBubble,
+    type IAttributeHierarchyDetailBubbleProps,
+} from "./internal/components/attributeHierarchies/attributeHierarchyDetail/AttributeHierarchyDetailBubble.js";
+export {
+    AttributeHierarchyDetailPanel,
+    type IAttributeHierarchyDetailItem,
+    type IAttributeHierarchyDetailPanelProps,
+} from "./internal/components/attributeHierarchies/attributeHierarchyDetail/AttributeHierarchyDetailPanel.js";
+export {
+    AttributeHierarchyDialog,
+    type IAttributeHierarchyDialogProps,
+} from "./internal/components/attributeHierarchies/attributeHierarchyDialog/AttributeHierarchyDialog.js";
 
-export * from "./internal/components/pluggableVisualizations/alerts.js";
-export * from "./internal/components/pluggableVisualizations/keyDriverAnalysis.js";
+export {
+    isInsightSupportedForAlerts,
+    isInsightSupportedForScheduledExports,
+    isInsightAlertingConfigurationEnabled,
+    isInsightScheduledExportsConfigurationEnabled,
+} from "./internal/components/pluggableVisualizations/alerts.js";
+export { isInsightKeyDriverAnalysisEnabled } from "./internal/components/pluggableVisualizations/keyDriverAnalysis.js";
 
 export {
     NotificationsPanel,

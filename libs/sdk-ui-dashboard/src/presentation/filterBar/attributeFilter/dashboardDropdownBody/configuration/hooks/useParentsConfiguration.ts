@@ -1,4 +1,5 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { useCallback, useMemo, useState } from "react";
 
 import { isEqual } from "lodash-es";
@@ -12,11 +13,9 @@ import {
 import { useBackend } from "@gooddata/sdk-ui";
 
 import { useOriginalConfigurationState } from "./useOriginalConfigurationState.js";
-import {
-    type IDashboardAttributeFilterParentItem,
-    setAttributeFilterParents,
-    useDispatchDashboardCommand,
-} from "../../../../../../model/index.js";
+import { setAttributeFilterParents } from "../../../../../../model/commands/filters.js";
+import { useDispatchDashboardCommand } from "../../../../../../model/react/useDispatchDashboardCommand.js";
+import { type IDashboardAttributeFilterParentItem } from "../../../../../../model/types/attributeFilterTypes.js";
 
 export function useParentsConfiguration(
     neighborFilters: IDashboardAttributeFilter[],

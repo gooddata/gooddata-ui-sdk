@@ -2,6 +2,107 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.17.0",
+            "tag": "@gooddata/sdk-ui-all_v11.17.0",
+            "date": "Thu, 22 Jan 2026 10:30:55 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "sdk-ui-dashboard: Initialize new dashboard with default calendar."
+                    },
+                    {
+                        "comment": "Fix `AppHeader` responsive measurement."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Fix mobile `UiDrawer` layout to render full-width."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Add `role` attribute to `Separator` component."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Export `UiAsyncTable` menu column widths constants."
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: Fix missing attribute tags in Tiger metadata conversion."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Add tooltip for close button in AI assistant."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Fix catalog semantic quality gating for users without AI Assistant permission."
+                    },
+                    {
+                        "comment": "sdk-client-tiger: Use PATCH endpoints for `attribute` and `fact` metadata updates."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Add support for `data-testid` attribute to `Dialog` component."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Add `data-testid` attributes to `KdaDialog` component."
+                    },
+                    {
+                        "comment": "sdk-ui-all: Support anomaly detection in line visualization"
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: add isLocked into memory item"
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Design changes and repairs based on latest design reviews"
+                    },
+                    {
+                        "comment": "sdk-ui-kit: New button component for copy paste content into clipboard"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: update fullscreen experience of ai chatbot"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: update markdown styling in chatbot messages"
+                    },
+                    {
+                        "comment": "Added support for tables in AI Asisstant response"
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Enhance dropdown accessibility props."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Add settings to tabular pdf scheduling option."
+                    },
+                    {
+                        "comment": "sdk-ui: Extend dashboard url builders to accept isEmbedded option. Switch to single object argument. "
+                    },
+                    {
+                        "comment": "Add Amazon Athena data source support"
+                    },
+                    {
+                        "comment": "chore: Rename various @internal, @alpha and @beta interfaces to conform with naming standards (added I to start of names)"
+                    },
+                    {
+                        "comment": "chore: Remove barrel files from all packages"
+                    },
+                    {
+                        "comment": "Integrate new FilterGroup into a dashboard"
+                    },
+                    {
+                        "comment": "sdk-ui-filters: Allow metric value filter in headline visualization type and empty insights"
+                    },
+                    {
+                        "comment": "sdk-ui-ext: Enable enableImprovedAdFilters by default "
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Merging reasoning thoughts under steps"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Change the logic for handling multiple interaction IDs in the assistant message stream."
+                    }
+                ],
+                "patch": [
+                    {
+                        "comment": "Fix Key Driver Analysis date formatting by normalizing server patterns to ISO week tokens."
+                    }
+                ]
+            }
+        },
+        {
             "version": "11.16.0",
             "tag": "@gooddata/sdk-ui-all_v11.16.0",
             "date": "Thu, 15 Jan 2026 09:13:41 GMT",

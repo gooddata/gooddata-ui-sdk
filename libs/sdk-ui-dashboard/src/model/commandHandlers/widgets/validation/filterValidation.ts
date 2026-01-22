@@ -20,14 +20,10 @@ import {
 
 import { newInsight } from "../../../../_staging/insight/insightBuilder.js";
 import { newCatalogDateDatasetMap } from "../../../../_staging/metadata/objRefMap.js";
-import { type IDashboardCommand } from "../../../commands/index.js";
+import { type IDashboardCommand } from "../../../commands/base.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
-import {
-    type IInsightDateDatasets,
-    type IMeasureDateDatasets,
-    queryDateDatasetsForInsight,
-    queryDateDatasetsForMeasure,
-} from "../../../queries/index.js";
+import { type IInsightDateDatasets, queryDateDatasetsForInsight } from "../../../queries/insights.js";
+import { type IMeasureDateDatasets, queryDateDatasetsForMeasure } from "../../../queries/kpis.js";
 import { query } from "../../../store/_infra/queryCall.js";
 import {
     selectAllCatalogDateDatasetsMap,

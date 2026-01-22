@@ -1,6 +1,6 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
-import { DashboardLayoutEditSectionHeader } from "../../../DefaultDashboardLayoutRenderer/index.js";
+import { DashboardLayoutEditSectionHeader } from "../../../DefaultDashboardLayoutRenderer/DashboardLayoutEditSectionHeader.js";
 
 export interface IDashboardEditLayoutSectionHeaderOwnProps {
     title: string;

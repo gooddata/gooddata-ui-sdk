@@ -3,7 +3,7 @@
 import { useCallback } from "react";
 
 import { useDispatchDashboardCommand } from "./useDispatchDashboardCommand.js";
-import { requestAsyncRender, resolveAsyncRender } from "../commands/index.js";
+import { requestAsyncRender, resolveAsyncRender } from "../commands/render.js";
 
 /**
  * Callbacks returned from {@link useDashboardAsyncRender} hook.

@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { defineMessage } from "react-intl";
 
@@ -10,7 +10,7 @@ import {
 } from "@gooddata/sdk-model";
 import { getColorByGuid, isValidMappedColor } from "@gooddata/sdk-ui-vis-commons";
 
-import { CalculateAs, type CalculationType } from "../../interfaces/index.js";
+import { CalculateAs, type CalculationType } from "../../interfaces/comparison.js";
 
 /**
  * @internal

@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -8,22 +8,22 @@ import { FormattedMessage } from "react-intl";
 
 import { Typography } from "@gooddata/sdk-ui-kit";
 
-import { DraggableInsightList } from "./DraggableInsightList/index.js";
+import { DraggableInsightList } from "./DraggableInsightList/DraggableInsightList.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectSupportsRichTextWidgets } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
 import {
     selectEnableKDRichText,
     selectEnableVisualizationSwitcher,
-    selectIsNewDashboard,
     selectSettings,
-    selectSupportsRichTextWidgets,
-    useDashboardSelector,
-} from "../../../model/index.js";
+} from "../../../model/store/config/configSelectors.js";
+import { selectIsNewDashboard } from "../../../model/store/meta/metaSelectors.js";
 import {
     type AttributeFilterComponentSet,
     type DashboardLayoutWidgetComponentSet,
     type InsightWidgetComponentSet,
     type RichTextWidgetComponentSet,
     type VisualizationSwitcherWidgetComponentSet,
-} from "../../componentDefinition/index.js";
+} from "../../componentDefinition/types.js";
 import {
     type IWrapCreatePanelItemWithDragComponent,
     type IWrapInsightListItemWithDragComponent,

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type MouseEvent } from "react";
 
@@ -15,7 +15,7 @@ import { UiButton } from "@gooddata/sdk-ui-kit";
 
 import { QualityIssueObjects } from "./QualityIssueObjects.js";
 import { QualitySeverityIcon } from "./QualitySeverityIcon.js";
-import { type ICatalogItemRef } from "../catalogItem/index.js";
+import { type ICatalogItemRef } from "../catalogItem/types.js";
 
 const titleMessages: { [key in SemanticQualityIssueCode]?: MessageDescriptor } = defineMessages({
     [SemanticQualityIssueCodeValues.IDENTICAL_TITLE]: {

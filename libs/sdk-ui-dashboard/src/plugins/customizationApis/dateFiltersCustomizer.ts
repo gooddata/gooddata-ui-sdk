@@ -1,12 +1,13 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { InvariantError } from "ts-invariant";
 
 import { type IDashboardCustomizationLogger } from "./customizationLogging.js";
 import {
     type DateFilterComponentProvider,
-    DefaultDashboardDateFilter,
     type OptionalDateFilterComponentProvider,
-} from "../../presentation/index.js";
+} from "../../presentation/dashboardContexts/types.js";
+import { DefaultDashboardDateFilter } from "../../presentation/filterBar/dateFilter/DefaultDashboardDateFilter.js";
 import { type IDateFiltersCustomizer } from "../customizer.js";
 
 const DefaultDateFilterRendererProvider: DateFilterComponentProvider = () => {

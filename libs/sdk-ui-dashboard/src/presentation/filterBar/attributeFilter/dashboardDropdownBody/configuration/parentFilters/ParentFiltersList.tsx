@@ -1,16 +1,16 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type IAttributeMetadataObject, type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
 import { ParentFiltersListItem } from "./ParentFiltersListItem.js";
 import { ParentFiltersListItemWithoutConnectingAttributes } from "./ParentFiltersListItemWithoutConnectingAttributes.js";
+import { useDashboardSelector } from "../../../../../../model/react/DashboardStoreProvider.js";
+import { selectSupportsSettingConnectingAttributes } from "../../../../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
 import {
     type IConnectingAttribute,
     type IDashboardAttributeFilterParentItem,
-    selectSupportsSettingConnectingAttributes,
-    useDashboardSelector,
-} from "../../../../../../model/index.js";
+} from "../../../../../../model/types/attributeFilterTypes.js";
 
 const ARROW_OFFSETS = { "cr cl": [20, 0], "cl cr": [-10, 0] };
 const ALIGN_POINTS = [{ align: "cr cl" }, { align: "cl cr" }];

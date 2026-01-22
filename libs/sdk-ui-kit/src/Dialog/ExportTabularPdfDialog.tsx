@@ -10,8 +10,9 @@ import { ConfirmDialogBase } from "./ConfirmDialogBase.js";
 import { type IExportTabularPdfDialogProps, type PageOrientation, type PageSize } from "./typings.js";
 import { type IUiMenuInteractiveItem } from "../@ui/UiMenu/types.js";
 import { UiMenu } from "../@ui/UiMenu/UiMenu.js";
-import { Dropdown, DropdownButton } from "../Dropdown/index.js";
-import { Checkbox } from "../Form/index.js";
+import { Dropdown } from "../Dropdown/Dropdown.js";
+import { DropdownButton } from "../Dropdown/DropdownButton.js";
+import { Checkbox } from "../Form/Checkbox.js";
 import { Overlay } from "../Overlay/Overlay.js";
 import { useIdPrefixed } from "../utils/useId.js";
 

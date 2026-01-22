@@ -6,37 +6,39 @@ import { useIntl } from "react-intl";
 
 import { type IconType, UiIcon, useMediaQuery } from "@gooddata/sdk-ui-kit";
 
+import { type IMenuButtonItem } from "./types.js";
 import { useExportDashboardToPdf } from "./useExportDashboardToPdf.js";
 import { useExportDashboardToPdfPresentation } from "./useExportDashboardToPdfPresentation.js";
 import { useExportDashboardToPowerPointPresentation } from "./useExportDashboardToPowerPointPresentation.js";
 import { useExportToTabular } from "./useExportToTabular.js";
+import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { useDashboardScheduledEmails } from "../../../model/react/useDasboardScheduledEmails/useDashboardScheduledEmails.js";
+import { useDashboardAlerts } from "../../../model/react/useDashboardAlerting/useDashboardAlerts.js";
+import {
+    selectEnableAutomationManagement,
+    selectEnableDashboardTabularExport,
+    selectEnableSnapshotExport,
+    selectIsReadOnly,
+    selectSettings,
+} from "../../../model/store/config/configSelectors.js";
+import { selectDashboardTitle, selectIsNewDashboard } from "../../../model/store/meta/metaSelectors.js";
 import {
     selectCanCreateAutomation,
     selectCanExportPdf,
     selectCanExportTabular,
-    selectDashboardTitle,
+} from "../../../model/store/permissions/permissionsSelectors.js";
+import { selectLayoutHasAnalyticalWidgets } from "../../../model/store/tabs/layout/layoutSelectors.js";
+import {
     selectDeleteVisible,
-    selectEnableAutomationManagement,
-    selectEnableDashboardTabularExport,
-    selectEnableSnapshotExport,
     selectFilterViewsVisible,
-    selectIsNewDashboard,
-    selectIsReadOnly,
-    selectLayoutHasAnalyticalWidgets,
-    selectMenuButtonItemsVisibility,
     selectPdfExportVisible,
     selectSaveAsVisible,
-    selectSettings,
     selectSettingsVisible,
     selectSlideShowExportVisible,
-    uiActions,
-    useDashboardAlerts,
-    useDashboardDispatch,
-    useDashboardScheduledEmails,
-    useDashboardSelector,
-} from "../../../model/index.js";
+} from "../../../model/store/topBar/topBarSelectors.js";
+import { uiActions } from "../../../model/store/ui/index.js";
+import { selectMenuButtonItemsVisibility } from "../../../model/store/ui/uiSelectors.js";
 import { useExportXlsxDialogContext } from "../../dashboardContexts/ExportXlsxDialogContext.js";
-import { type IMenuButtonItem } from "../types.js";
 
 // inject separator to each visible section, flat map the sections into a list of menu items
 const buildMenuItemList = (menuSections: IMenuButtonItem[][]): IMenuButtonItem[] =>

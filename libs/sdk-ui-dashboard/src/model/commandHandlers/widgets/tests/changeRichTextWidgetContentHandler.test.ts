@@ -6,15 +6,13 @@ import { type IDashboard, type IRichTextWidgetDefinition, idRef } from "@gooddat
 
 import { createDefaultFilterContext } from "../../../../_staging/dashboard/defaultFilterContext.js";
 import { defaultDateFilterConfig } from "../../../../_staging/dateFilterConfig/defaultConfig.js";
+import { addLayoutSection } from "../../../commands/layout.js";
 import {
     type IChangeRichTextWidgetContent,
-    addLayoutSection,
     changeRichTextWidgetContent,
-} from "../../../commands/index.js";
-import {
-    type IDashboardCommandFailed,
-    type IDashboardRichTextWidgetContentChanged,
-} from "../../../events/index.js";
+} from "../../../commands/richText.js";
+import { type IDashboardCommandFailed } from "../../../events/general.js";
+import { type IDashboardRichTextWidgetContentChanged } from "../../../events/richText.js";
 import { selectAnalyticalWidgetByRef } from "../../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import {

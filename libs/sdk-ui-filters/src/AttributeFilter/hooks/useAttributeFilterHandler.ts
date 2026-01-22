@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
@@ -13,10 +13,8 @@ import {
 } from "@gooddata/sdk-model";
 import { usePrevious } from "@gooddata/sdk-ui";
 
-import {
-    type IMultiSelectAttributeFilterHandler,
-    newAttributeFilterHandler,
-} from "../../AttributeFilterHandler/index.js";
+import { newAttributeFilterHandler } from "../../AttributeFilterHandler/factory.js";
+import { type IMultiSelectAttributeFilterHandler } from "../../AttributeFilterHandler/types/attributeFilterHandler.js";
 
 /**
  * Properties of the {@link useAttributeFilterHandler} hook.

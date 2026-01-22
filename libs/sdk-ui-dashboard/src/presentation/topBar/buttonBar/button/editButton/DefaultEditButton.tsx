@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useCallback } from "react";
 
@@ -7,16 +7,16 @@ import { useIntl } from "react-intl";
 import { Button, UiTooltip, useMediaQuery } from "@gooddata/sdk-ui-kit";
 
 import { type IEditButtonProps } from "./types.js";
+import { switchToEditRenderMode } from "../../../../../model/commands/renderMode.js";
 import {
-    selectCanEnterEditMode,
-    selectCatalogIsLoaded,
-    selectExecutionTimestamp,
-    selectIsDashboardLoading,
-    selectIsInEditMode,
-    switchToEditRenderMode,
     useDashboardDispatch,
     useDashboardSelector,
-} from "../../../../../model/index.js";
+} from "../../../../../model/react/DashboardStoreProvider.js";
+import { selectCatalogIsLoaded } from "../../../../../model/store/catalog/catalogSelectors.js";
+import { selectIsDashboardLoading } from "../../../../../model/store/loading/loadingSelectors.js";
+import { selectIsInEditMode } from "../../../../../model/store/renderMode/renderModeSelectors.js";
+import { selectCanEnterEditMode } from "../../../../../model/store/topBar/topBarSelectors.js";
+import { selectExecutionTimestamp } from "../../../../../model/store/ui/uiSelectors.js";
 
 /**
  * @internal

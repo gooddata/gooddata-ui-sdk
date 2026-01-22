@@ -1,29 +1,27 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-import {
-    browserEnv,
-    chaiFriendly,
-    cypress,
-    env,
-    eslint,
-    eslintComments,
-    esm,
-    header,
-    ignore,
-    importEsm,
-    import_,
-    noOnlyTests,
-    prettier,
-    react,
-    reactHooks,
-    regexp,
-    security,
-    sonarjs,
-    storybook,
-    tsdoc,
-    typescript,
-    vitest,
-} from "./configurations/index.js";
+import { browserEnv } from "./configurations/browser-env.js";
+import { chaiFriendly } from "./configurations/chai-friendly.js";
+import { cypress } from "./configurations/cypress.js";
+import { env } from "./configurations/env.js";
+import { eslintComments } from "./configurations/eslint-comments.js";
+import { eslint } from "./configurations/eslint.js";
+import { esm } from "./configurations/esm.js";
+import { header } from "./configurations/header.js";
+import { ignore } from "./configurations/ignore.js";
+import { importEsm } from "./configurations/import-esm.js";
+import { import_ } from "./configurations/import.js";
+import { noOnlyTests } from "./configurations/no-only-tests.js";
+import { prettier } from "./configurations/prettier.js";
+import { reactHooks } from "./configurations/react-hooks.js";
+import { react } from "./configurations/react.js";
+import { regexp } from "./configurations/regexp.js";
+import { security } from "./configurations/security.js";
+import { sonarjs } from "./configurations/sonarjs.js";
+import { storybook } from "./configurations/storybook.js";
+import { tsdoc } from "./configurations/tsdoc.js";
+import { typescript } from "./configurations/typescript.js";
+import { vitest } from "./configurations/vitest.js";
 
 export const common = [
     env,

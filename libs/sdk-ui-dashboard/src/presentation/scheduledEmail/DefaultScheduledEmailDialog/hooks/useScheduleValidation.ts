@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import {
     type IAutomationMetadataObjectDefinition,
@@ -7,7 +7,8 @@ import {
     isExportDefinitionVisualizationObjectRequestPayload,
 } from "@gooddata/sdk-model";
 
-import { selectWidgetByRef, useDashboardSelector } from "../../../../model/index.js";
+import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
+import { selectWidgetByRef } from "../../../../model/store/tabs/layout/layoutSelectors.js";
 
 export const useScheduleValidation = (schedule: IAutomationMetadataObjectDefinition) => {
     const isDashboardSchedule = schedule.exportDefinitions?.some((exportDefinition) =>

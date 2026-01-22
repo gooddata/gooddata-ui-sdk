@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type IInsight, type IInsightDefinition, type ISettings } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
@@ -17,15 +17,17 @@ import {
     type IVisualizationSizeInfo,
     type PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor.js";
+import { getReactEmbeddingCodeGenerator } from "../../../utils/embeddingCodeGenerator/getReactEmbeddingCodeGenerator.js";
 import {
     executionConfigInsightConversion,
     filtersInsightConversion,
-    getInsightToPropsConverter,
-    getReactEmbeddingCodeGenerator,
-    insightConversion,
     localeInsightConversion,
     singleMeasureBucketConversion,
-} from "../../../utils/embeddingCodeGenerator/index.js";
+} from "../../../utils/embeddingCodeGenerator/insightToPropsConverter/convenience.js";
+import {
+    getInsightToPropsConverter,
+    insightConversion,
+} from "../../../utils/embeddingCodeGenerator/insightToPropsConverter/convertor.js";
 import { MAX_VISUALIZATION_HEIGHT } from "../constants.js";
 
 const hasSecondaryMeasure = (insight: IInsightDefinition) =>

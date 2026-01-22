@@ -1,6 +1,6 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
-import { type TableConfigAccessors } from "../../impl/config/index.js";
+import { type TableConfigAccessors } from "../../impl/config/tableConfigAccessors.js";
 import { type ICorePivotTableProps } from "../../publicTypes.js";
 
 /**

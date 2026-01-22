@@ -16,7 +16,8 @@ import cx from "classnames";
 
 import { stringUtils } from "@gooddata/util";
 
-import { Bubble, BubbleHoverTrigger } from "../Bubble/index.js";
+import { Bubble } from "../Bubble/Bubble.js";
+import { BubbleHoverTrigger } from "../Bubble/BubbleHoverTrigger.js";
 import { type IMenuAccessibilityConfig } from "../typings/accessibility.js";
 
 const BUBBLE_OFFSET_X = 16;

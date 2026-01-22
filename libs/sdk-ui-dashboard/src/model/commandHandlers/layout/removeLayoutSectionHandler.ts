@@ -12,7 +12,7 @@ import {
     serializeLayoutSectionPath,
     updateSectionIndex,
 } from "../../../_staging/layout/coordinates.js";
-import { type IRemoveLayoutSection } from "../../commands/index.js";
+import { type IRemoveLayoutSection } from "../../commands/layout.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { type IDashboardLayoutSectionRemoved, layoutSectionRemoved } from "../../events/layout.js";
 import { tabsActions } from "../../store/tabs/index.js";

@@ -1,10 +1,10 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { describe, expect, it, vi } from "vitest";
 
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
-import { type ChartAlignTypes, type IChartConfig } from "../../../../interfaces/index.js";
+import { type ChartAlignTypes, type IChartConfig } from "../../../../interfaces/chartConfig.js";
 import { BOTTOM, TOP } from "../../../constants/alignments.js";
 import {
     alignChart,

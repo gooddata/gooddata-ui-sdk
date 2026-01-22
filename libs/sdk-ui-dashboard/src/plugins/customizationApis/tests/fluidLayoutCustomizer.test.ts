@@ -10,7 +10,11 @@ import {
 import { suppressConsole } from "@gooddata/util";
 
 import { EMPTY_MUTATIONS } from "./utils.js";
-import { type ExtendedDashboardWidget, type ICustomWidget, newCustomWidget } from "../../../model/index.js";
+import {
+    type ExtendedDashboardWidget,
+    type ICustomWidget,
+    newCustomWidget,
+} from "../../../model/types/layoutTypes.js";
 import { DashboardCustomizationLogger } from "../customizationLogging.js";
 import { FluidLayoutCustomizer } from "../fluidLayoutCustomizer.js";
 import { type CustomizerMutationsContext, createCustomizerMutationsContext } from "../types.js";

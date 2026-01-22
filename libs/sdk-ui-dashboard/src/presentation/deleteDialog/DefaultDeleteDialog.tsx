@@ -8,19 +8,17 @@ import { FormattedMessage, defineMessages, useIntl } from "react-intl";
 import { ConfirmDialog } from "@gooddata/sdk-ui-kit";
 
 import { type IDeleteDialogProps } from "./types.js";
+import { deleteDashboard } from "../../model/commands/dashboard.js";
+import { useDashboardDispatch, useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
+import { dispatchAndWaitFor } from "../../model/store/_infra/dispatchAndWaitFor.js";
 import {
-    deleteDashboard,
-    dispatchAndWaitFor,
-    selectDashboardTitle,
     selectDashboardUserAutomationAlerts,
     selectDashboardUserAutomationSchedules,
-    selectEnableAlerting,
-    selectEnableScheduling,
-    selectIsDeleteDialogOpen,
-    uiActions,
-    useDashboardDispatch,
-    useDashboardSelector,
-} from "../../model/index.js";
+} from "../../model/store/automations/automationsSelectors.js";
+import { selectEnableAlerting, selectEnableScheduling } from "../../model/store/config/configSelectors.js";
+import { selectDashboardTitle } from "../../model/store/meta/metaSelectors.js";
+import { uiActions } from "../../model/store/ui/index.js";
+import { selectIsDeleteDialogOpen } from "../../model/store/ui/uiSelectors.js";
 
 const deleteMessages = defineMessages({
     default: {

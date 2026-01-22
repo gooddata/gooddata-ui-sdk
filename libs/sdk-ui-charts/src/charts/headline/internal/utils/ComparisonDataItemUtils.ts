@@ -1,9 +1,9 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type IColorPalette } from "@gooddata/sdk-model";
 import { getRgbStringFromRGB } from "@gooddata/sdk-ui-vis-commons";
 
-import { type IColorConfig } from "../../../../interfaces/index.js";
+import { type IColorConfig } from "../../../../interfaces/comparison.js";
 import {
     ComparisonColorType,
     DEFAULT_COMPARISON_PALETTE,

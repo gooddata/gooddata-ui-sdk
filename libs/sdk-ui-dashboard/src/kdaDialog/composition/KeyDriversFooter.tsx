@@ -7,7 +7,11 @@ import { FormattedMessage } from "react-intl";
 import { type ICatalogAttribute, type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import { DropdownInvertableSelect, InvertableSelectItem, UiButton, UiSkeleton } from "@gooddata/sdk-ui-kit";
 
-import { selectCatalogAttributes, selectCatalogIsLoaded, useDashboardSelector } from "../../model/index.js";
+import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
+import {
+    selectCatalogAttributes,
+    selectCatalogIsLoaded,
+} from "../../model/store/catalog/catalogSelectors.js";
 import { useSummaryDrivers } from "../hooks/useSummaryDrivers.js";
 import { type IKdaItemGroup } from "../internalTypes.js";
 import { useKdaState } from "../providers/KdaState.js";

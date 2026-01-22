@@ -1,9 +1,9 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type ReactElement } from "react";
 
 import { DefaultFlexibleDashboardLayout } from "./DefaultFlexibleDashboardLayout.js";
-import { type IDashboardLayoutProps } from "./types.js";
+import { type IDashboardLayoutProps } from "../widget/dashboardLayout/types.js";
 
 /**
  * @alpha

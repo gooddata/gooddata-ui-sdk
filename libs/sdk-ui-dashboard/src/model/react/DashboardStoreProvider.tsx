@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { createContext } from "react";
 
@@ -14,7 +14,7 @@ import {
 import { DashboardEventsProvider } from "./DashboardEventsContext.js";
 import { type IDashboardStoreProviderProps } from "./types.js";
 import { useInitializeDashboardStore } from "./useInitializeDashboardStore.js";
-import { type DashboardState } from "../store/index.js";
+import { type DashboardState } from "../store/types.js";
 
 /**
  * @alpha

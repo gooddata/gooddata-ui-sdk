@@ -3,7 +3,7 @@
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { type IResizeWidth, resizeWidth } from "../../../commands/layout.js";
-import { type IDashboardCommandFailed } from "../../../events/index.js";
+import { type IDashboardCommandFailed } from "../../../events/general.js";
 import { selectLayout } from "../../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import { TestCorrelation } from "../../../tests/fixtures/Dashboard.fixtures.js";

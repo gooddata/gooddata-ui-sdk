@@ -19,23 +19,25 @@ import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 import { AttributeFilterReduxBridge } from "./bridge.js";
 import { type AttributeFilterHandlerConfig } from "./types.js";
 import {
-    type AsyncOperationStatus,
-    type CallbackRegistration,
-    type Correlation,
     type IAttributeFilterLoader,
-    type ILoadElementsOptions,
     type OnInitCancelCallbackPayload,
     type OnInitErrorCallbackPayload,
     type OnInitStartCallbackPayload,
     type OnInitSuccessCallbackPayload,
-    type OnInitTotalCountCancelCallbackPayload,
-    type OnInitTotalCountErrorCallbackPayload,
-    type OnInitTotalCountStartCallbackPayload,
-    type OnInitTotalCountSuccessCallbackPayload,
+} from "../types/attributeFilterLoader.js";
+import {
     type OnLoadAttributeCancelCallbackPayload,
     type OnLoadAttributeErrorCallbackPayload,
     type OnLoadAttributeStartCallbackPayload,
     type OnLoadAttributeSuccessCallbackPayload,
+} from "../types/attributeLoader.js";
+import { type AsyncOperationStatus, type CallbackRegistration, type Correlation } from "../types/common.js";
+import {
+    type ILoadElementsOptions,
+    type OnInitTotalCountCancelCallbackPayload,
+    type OnInitTotalCountErrorCallbackPayload,
+    type OnInitTotalCountStartCallbackPayload,
+    type OnInitTotalCountSuccessCallbackPayload,
     type OnLoadCustomElementsCancelCallbackPayload,
     type OnLoadCustomElementsErrorCallbackPayload,
     type OnLoadCustomElementsStartCallbackPayload,
@@ -52,7 +54,7 @@ import {
     type OnLoadNextElementsPageErrorCallbackPayload,
     type OnLoadNextElementsPageStartCallbackPayload,
     type OnLoadNextElementsPageSuccessCallbackPayload,
-} from "../types/index.js";
+} from "../types/elementsLoader.js";
 
 /**
  * @internal

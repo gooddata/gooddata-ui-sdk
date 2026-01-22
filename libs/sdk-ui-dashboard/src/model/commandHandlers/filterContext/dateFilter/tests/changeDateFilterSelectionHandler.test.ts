@@ -1,8 +1,8 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { changeDateFilterSelection, clearDateFilterSelection } from "../../../../commands/index.js";
+import { changeDateFilterSelection, clearDateFilterSelection } from "../../../../commands/filters.js";
 import { selectFilterContextDateFilter } from "../../../../store/tabs/filterContext/filterContextSelectors.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../../../tests/DashboardTester.js";
 import { TestCorrelation } from "../../../../tests/fixtures/Dashboard.fixtures.js";

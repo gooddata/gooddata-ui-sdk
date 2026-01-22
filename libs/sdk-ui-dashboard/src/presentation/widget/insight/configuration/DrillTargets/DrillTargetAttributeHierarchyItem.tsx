@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
 
@@ -14,11 +14,9 @@ import { AttributeHierarchyDialog } from "@gooddata/sdk-ui-ext";
 import { AttributeHierarchyDropdown } from "./AttributeHierarchyDropdown.js";
 import { EmptyAttributeHierarchyInfo } from "./EmptyAttributeHierarchyInfo.js";
 import { useAttributeHierarchy } from "./useAttributeHierarchy.js";
-import {
-    selectAllCatalogAttributeHierarchies,
-    useDashboardSelector,
-    useDashboardUserInteraction,
-} from "../../../../../model/index.js";
+import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
+import { useDashboardUserInteraction } from "../../../../../model/react/useDashboardUserInteraction.js";
+import { selectAllCatalogAttributeHierarchies } from "../../../../../model/store/catalog/catalogSelectors.js";
 import { type IDrillDownAttributeHierarchyConfig } from "../../../../drill/types.js";
 
 interface IDrillTargetDashboardItemProps {

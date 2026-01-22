@@ -22,27 +22,25 @@ import {
 } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../../../locales.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import {
-    selectAutomationsInvalidationId,
-    selectCanCreateAutomation,
-    selectDashboardId,
-    selectDashboardTitle,
     selectEnableAccessibilityMode,
     selectExternalRecipient,
-    selectInsightByWidgetRef,
-    selectIsAlertingDialogOpen,
-    selectIsAlertingManagementDialogContext,
     selectIsEmbedded,
     selectIsWhiteLabeled,
     selectTimezone,
-    selectWidgetByRef,
-    useDashboardSelector,
-} from "../../../model/index.js";
+} from "../../../model/store/config/configSelectors.js";
+import { selectInsightByWidgetRef } from "../../../model/store/insights/insightsSelectors.js";
+import { selectDashboardId, selectDashboardTitle } from "../../../model/store/meta/metaSelectors.js";
+import { selectCanCreateAutomation } from "../../../model/store/permissions/permissionsSelectors.js";
+import { selectWidgetByRef } from "../../../model/store/tabs/layout/layoutSelectors.js";
 import {
-    AUTOMATIONS_COLUMN_CONFIG,
-    AUTOMATIONS_MAX_HEIGHT,
-    DASHBOARD_DIALOG_OVERS_Z_INDEX,
-} from "../../../presentation/constants/index.js";
+    selectAutomationsInvalidationId,
+    selectIsAlertingDialogOpen,
+    selectIsAlertingManagementDialogContext,
+} from "../../../model/store/ui/uiSelectors.js";
+import { AUTOMATIONS_COLUMN_CONFIG, AUTOMATIONS_MAX_HEIGHT } from "../../constants/automations.js";
+import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/zIndex.js";
 import { ALERTING_DIALOG_ID } from "../DefaultAlertingDialog/constants.js";
 import { isMobileView } from "../DefaultAlertingDialog/utils/responsive.js";
 import { useAlertingDialogAccessibility } from "../hooks/useAlertingDialogAccessibility.js";

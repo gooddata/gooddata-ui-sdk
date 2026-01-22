@@ -2,17 +2,13 @@
 
 import { useEffect, useState } from "react";
 
-import {
-    type DashboardEventHandler,
-    type IDashboardCommandStarted,
-    type RequestAsyncRender,
-    type ResolveAsyncRender,
-    isDashboardCommandStarted,
-    isDashboardFilterContextChanged,
-    selectIsDashboardExecuted,
-    useDashboardEventsContext,
-    useDashboardSelector,
-} from "../../../model/index.js";
+import { type RequestAsyncRender, type ResolveAsyncRender } from "../../../model/commands/render.js";
+import { type DashboardEventHandler } from "../../../model/eventHandlers/eventHandler.js";
+import { isDashboardFilterContextChanged } from "../../../model/events/filters.js";
+import { type IDashboardCommandStarted, isDashboardCommandStarted } from "../../../model/events/general.js";
+import { useDashboardEventsContext } from "../../../model/react/DashboardEventsContext.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectIsDashboardExecuted } from "../../../model/store/executed/executedSelectors.js";
 
 export const useExecutionProgress = (): {
     showOthers: boolean;

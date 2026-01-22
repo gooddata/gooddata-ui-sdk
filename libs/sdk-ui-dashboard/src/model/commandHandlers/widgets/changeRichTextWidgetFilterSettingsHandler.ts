@@ -19,11 +19,11 @@ import {
     validateDateFiltersToIgnore,
 } from "./validation/filterValidation.js";
 import { validateExistingRichTextWidget } from "./validation/widgetValidations.js";
-import { type IChangeRichTextWidgetFilterSettings } from "../../commands/index.js";
+import { type IChangeRichTextWidgetFilterSettings } from "../../commands/richText.js";
 import {
     type IDashboardRichTextWidgetFilterSettingsChanged,
     richTextWidgetFilterSettingsChanged,
-} from "../../events/index.js";
+} from "../../events/richText.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";

@@ -46,8 +46,9 @@ import {
     selectFilterContextDefinitionsByTab,
     selectFilterContextIdentity,
 } from "../tabs/filterContext/filterContextSelectors.js";
-import { DEFAULT_TAB_ID, type ITabState, selectActiveTabLocalIdentifier, selectTabs } from "../tabs/index.js";
 import { selectBasicLayout, selectBasicLayoutByTab } from "../tabs/layout/layoutSelectors.js";
+import { selectActiveTabLocalIdentifier, selectTabs } from "../tabs/tabsSelectors.js";
+import { DEFAULT_TAB_ID, type ITabState } from "../tabs/tabsState.js";
 import { type DashboardSelector, type DashboardState } from "../types.js";
 
 const selectSelf = createSelector(

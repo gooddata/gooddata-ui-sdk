@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ReactElement, useCallback } from "react";
 
@@ -7,12 +7,9 @@ import { useToastMessage } from "@gooddata/sdk-ui-kit";
 import { SaveAsDialogRenderer } from "./SaveAsDialogRenderer.js";
 import { useSaveAs } from "./useSaveAs.js";
 import { messages } from "../../../locales.js";
-import {
-    selectIsSaveAsDialogOpen,
-    uiActions,
-    useDashboardDispatch,
-    useDashboardSelector,
-} from "../../../model/index.js";
+import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { uiActions } from "../../../model/store/ui/index.js";
+import { selectIsSaveAsDialogOpen } from "../../../model/store/ui/uiSelectors.js";
 import { type ISaveAsDialogProps } from "../types.js";
 
 /**

@@ -1,12 +1,9 @@
 // (C) 2020-2026 GoodData Corporation
 
-import {
-    type IDashboardCommandFailed,
-    type IDashboardDrillToDashboardResolved,
-    type IDrillToDashboard,
-    drillToDashboard,
-    useDashboardCommandProcessing,
-} from "../../../model/index.js";
+import { type IDrillToDashboard, drillToDashboard } from "../../../model/commands/drill.js";
+import type { IDashboardDrillToDashboardResolved } from "../../../model/events/drill.js";
+import type { IDashboardCommandFailed } from "../../../model/events/general.js";
+import { useDashboardCommandProcessing } from "../../../model/react/useDashboardCommandProcessing.js";
 
 /**
  * @internal

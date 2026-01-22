@@ -1,9 +1,9 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { unsupportedNegativeValuesTypes } from "./chartCapabilities.js";
-import { type IChartLimits } from "../../../interfaces/index.js";
+import { type IChartLimits } from "../../../interfaces/chartConfig.js";
 import {
     DEFAULT_CATEGORIES_LIMIT,
     DEFAULT_DATA_POINTS_LIMIT,

@@ -1,15 +1,16 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { type DependencyList } from "react";
 
 import { type IExportConfig, type IPreparedExecution } from "@gooddata/sdk-backend-spi";
 
+import { convertError } from "../base/errors/errorHandling.js";
+import { type GoodDataSdkError } from "../base/errors/GoodDataSdkError.js";
 import {
-    type GoodDataSdkError,
     type UseCancelablePromiseCallbacks,
     type UseCancelablePromiseState,
-    convertError,
     useCancelablePromise,
-} from "../base/index.js";
+} from "../base/react/useCancelablePromise.js";
 
 /**
  * Indicates current state of useDataExport hook

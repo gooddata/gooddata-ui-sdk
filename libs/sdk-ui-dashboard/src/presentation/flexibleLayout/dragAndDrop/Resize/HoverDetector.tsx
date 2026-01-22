@@ -4,7 +4,7 @@ import { type ReactNode, useEffect, useRef } from "react";
 
 import { type ObjRef } from "@gooddata/sdk-model";
 
-import { HoveredWidgetContext } from "../../../dragAndDrop/index.js";
+import { HoveredWidgetContext } from "../../../dragAndDrop/HoveredWidgetContext.js";
 
 interface IHoverDetectorProps {
     widgetRef: ObjRef;

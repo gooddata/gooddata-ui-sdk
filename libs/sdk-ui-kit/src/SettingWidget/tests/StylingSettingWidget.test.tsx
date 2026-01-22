@@ -9,7 +9,10 @@ import { IntlWrapper } from "@gooddata/sdk-ui";
 
 import { customItemsMock, defaultItemMock } from "./mocks.js";
 import * as useMediaQuery from "../../responsive/useMediaQuery.js";
-import { type IStylingSettingWidgetProps, StylingSettingWidget } from "../StylingSettingWidget/index.js";
+import {
+    type IStylingSettingWidgetProps,
+    StylingSettingWidget,
+} from "../StylingSettingWidget/StylingSettingWidget.js";
 
 const expectedButtonsState = (buttons: HTMLElement[], disabled = true) => {
     return buttons.forEach((item) => {

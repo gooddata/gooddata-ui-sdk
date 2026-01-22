@@ -2,7 +2,7 @@
 
 import { type IFeedbackData } from "./FeedbackPopup.js";
 import { type AssistantMessage } from "../../model.js";
-import { type setUserFeedback } from "../../store/index.js";
+import { type setUserFeedback } from "../../store/messages/messagesSlice.js";
 
 /**
  * @internal

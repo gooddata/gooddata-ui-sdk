@@ -15,8 +15,10 @@ import {
     sortDirection,
 } from "@gooddata/sdk-model";
 
-import { Dropdown, DropdownButton, DropdownList } from "../../Dropdown/index.js";
-import { SingleSelectListItem } from "../../List/index.js";
+import { Dropdown } from "../../Dropdown/Dropdown.js";
+import { DropdownButton } from "../../Dropdown/DropdownButton.js";
+import { DropdownList } from "../../Dropdown/DropdownList.js";
+import { SingleSelectListItem } from "../../List/ListItem.js";
 import { MeasureDropdown } from "../MeasureDropdown/MeasureDropdown.js";
 import {
     type IAvailableSortsGroup,

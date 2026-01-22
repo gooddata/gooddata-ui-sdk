@@ -20,7 +20,7 @@ import {
     updateSectionIndex,
 } from "../../../_staging/layout/coordinates.js";
 import { normalizeItemSizeToParent } from "../../../_staging/layout/sizing.js";
-import { type IAddLayoutSection } from "../../commands/index.js";
+import { type IAddLayoutSection } from "../../commands/layout.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { type IDashboardLayoutSectionAdded, layoutSectionAdded } from "../../events/layout.js";
 import { selectSettings } from "../../store/config/configSelectors.js";

@@ -1,4 +1,5 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
+
 import { useMemo } from "react";
 
 import { invariant } from "ts-invariant";
@@ -9,7 +10,7 @@ import {
     isUriRef,
 } from "@gooddata/sdk-model";
 
-import { type IDashboardDependentDateFilter } from "../../../../../../model/index.js";
+import { type IDashboardDependentDateFilter } from "../../../../../../model/types/dateFilterTypes.js";
 
 /**
  * @internal

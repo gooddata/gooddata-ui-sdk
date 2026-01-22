@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     type IInsight,
@@ -21,18 +21,20 @@ import {
     type IVisualizationSizeInfo,
     type PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor.js";
+import { getReactEmbeddingCodeGenerator } from "../../../utils/embeddingCodeGenerator/getReactEmbeddingCodeGenerator.js";
 import {
     executionConfigInsightConversion,
     filtersInsightConversion,
-    getInsightToPropsConverter,
-    getReactEmbeddingCodeGenerator,
-    insightConversion,
     localeInsightConversion,
     multipleAttributesBucketConversion,
     multipleAttributesOrMeasuresBucketConversion,
     sortsInsightConversion,
     totalsInsightConversion,
-} from "../../../utils/embeddingCodeGenerator/index.js";
+} from "../../../utils/embeddingCodeGenerator/insightToPropsConverter/convenience.js";
+import {
+    getInsightToPropsConverter,
+    insightConversion,
+} from "../../../utils/embeddingCodeGenerator/insightToPropsConverter/convertor.js";
 import { getPageSizeFromProperties, getPaginationFromProperties } from "../../../utils/propertiesHelper.js";
 import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
 import { MIN_VISUALIZATION_HEIGHT_TABLE_REPEATER_FLEXIBLE_LAYOUT } from "../constants.js";

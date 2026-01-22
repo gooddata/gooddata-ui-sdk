@@ -4,7 +4,6 @@ import { colorPaletteDataLoaderFactory } from "./ColorPaletteDataLoader.js";
 import { insightDataLoaderFactory } from "./InsightDataLoader.js";
 import { type IDataLoaderFactory } from "./types.js";
 import { userWorkspaceSettingsDataLoaderFactory } from "./UserWorkspaceSettingsDataLoader.js";
-import { workspacePermissionsDataLoaderFactory } from "./WorkspacePermissionsDataLoader.js";
 
 /**
  * Clears all the caches used by the InsightView components.
@@ -19,10 +18,3 @@ export function clearInsightViewCaches(): void {
     ];
     relevantFactories.forEach((factory) => factory.reset());
 }
-
-export {
-    colorPaletteDataLoaderFactory,
-    insightDataLoaderFactory,
-    userWorkspaceSettingsDataLoaderFactory,
-    workspacePermissionsDataLoaderFactory,
-};

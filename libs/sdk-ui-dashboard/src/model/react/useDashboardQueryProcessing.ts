@@ -12,9 +12,9 @@ import {
     type IDashboardQueryRejected,
     isDashboardQueryFailed,
     isDashboardQueryRejected,
-} from "../events/index.js";
+} from "../events/general.js";
 import { type DashboardQueries } from "../queries/index.js";
-import { queryAndWaitFor } from "../store/index.js";
+import { queryAndWaitFor } from "../store/_infra/queryAndWaitFor.js";
 
 /**
  * @public

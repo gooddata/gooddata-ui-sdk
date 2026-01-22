@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import {
     type IAttribute,
@@ -14,11 +14,9 @@ import { BucketNames } from "@gooddata/sdk-ui";
 import { type IGeoConfig } from "@gooddata/sdk-ui-geo";
 
 import { type IEmbeddingCodeContext } from "../../../interfaces/VisualizationDescriptor.js";
-import {
-    type IInsightToPropConversion,
-    type PropWithMeta,
-    sdkModelPropMetas,
-} from "../../../utils/embeddingCodeGenerator/index.js";
+import { sdkModelPropMetas } from "../../../utils/embeddingCodeGenerator/insightToPropsConverter/convenience.js";
+import { type IInsightToPropConversion } from "../../../utils/embeddingCodeGenerator/insightToPropsConverter/convertor.js";
+import { type PropWithMeta } from "../../../utils/embeddingCodeGenerator/types.js";
 
 const supportedGeoConfigProperties = new Set<keyof IGeoConfig>([
     "center",

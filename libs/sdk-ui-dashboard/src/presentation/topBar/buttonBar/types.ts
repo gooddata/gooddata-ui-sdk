@@ -1,15 +1,13 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type ComponentType, type ReactNode } from "react";
 
-import {
-    type ICancelButtonProps,
-    type IEditButtonProps,
-    type ISaveAsNewButtonProps,
-    type ISaveButtonProps,
-    type ISettingButtonProps,
-    type IShareButtonProps,
-} from "./button/types.js";
+import { type ICancelButtonProps } from "./button/cancelButton/types.js";
+import { type IEditButtonProps } from "./button/editButton/types.js";
+import { type ISaveAsNewButtonProps } from "./button/saveAsButton/types.js";
+import { type ISaveButtonProps } from "./button/saveButton/types.js";
+import { type ISettingButtonProps } from "./button/settingButton/types.js";
+import { type IShareButtonProps } from "./button/shareButton/types.js";
 
 /**
  * @beta

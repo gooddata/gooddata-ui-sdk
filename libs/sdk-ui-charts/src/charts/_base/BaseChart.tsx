@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type ComponentType, useMemo } from "react";
 
@@ -15,7 +15,7 @@ import {
 } from "@gooddata/sdk-ui";
 
 import { type IRawChartProps, RawChart } from "./RawChart.js";
-import { type ICoreChartProps, type OnLegendReady } from "../../interfaces/index.js";
+import { type ICoreChartProps, type OnLegendReady } from "../../interfaces/chartProps.js";
 import { withDefaultCoreChartProps } from "../_commons/defaultProps.js";
 
 /**

@@ -1,17 +1,15 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { compact } from "lodash-es";
 import { type IntlShape } from "react-intl";
 
 import { type IRichTextWidget } from "@gooddata/sdk-model";
 
-import {
-    eagerRemoveSectionItemByWidgetRef,
-    type useDashboardDispatch,
-    type useDashboardEventDispatch,
-} from "../../../../model/index.js";
+import { eagerRemoveSectionItemByWidgetRef } from "../../../../model/commands/layout.js";
+import { type useDashboardDispatch } from "../../../../model/react/DashboardStoreProvider.js";
+import { type useDashboardEventDispatch } from "../../../../model/react/useDashboardEventDispatch.js";
 import { RichTextConfiguration } from "../../richText/configuration/RichTextConfiguration.js";
-import { type IRichTextMenuItem } from "../../types.js";
+import { type IRichTextMenuItem } from "../types.js";
 
 /**
  * @internal

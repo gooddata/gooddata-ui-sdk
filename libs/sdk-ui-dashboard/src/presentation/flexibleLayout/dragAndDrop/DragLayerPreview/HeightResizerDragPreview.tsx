@@ -9,7 +9,7 @@ import {
     type DragResizeProps,
     type ReachedResizingLimit,
 } from "../../../dragAndDrop/DragLayerPreview/types.js";
-import { useResizeHandlers } from "../../../dragAndDrop/index.js";
+import { useResizeHandlers } from "../../../dragAndDrop/LayoutResizeContext.js";
 import { type IHeightResizerDragItem } from "../../../dragAndDrop/types.js";
 import { HeightResizer } from "../Resize/HeightResizer.js";
 

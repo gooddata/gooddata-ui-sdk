@@ -22,29 +22,29 @@ import {
 } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../../../locales.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { DEFAULT_MAX_AUTOMATIONS } from "../../../model/react/useDashboardAutomations/constants.js";
 import {
-    DEFAULT_MAX_AUTOMATIONS,
-    selectAutomationsInvalidationId,
-    selectCanCreateAutomation,
-    selectDashboardId,
-    selectDashboardTitle,
     selectEnableAccessibilityMode,
-    selectEntitlementMaxAutomations,
-    selectEntitlementUnlimitedAutomations,
-    selectExecutionTimestamp,
     selectExternalRecipient,
     selectIsEmbedded,
-    selectIsScheduleEmailDialogOpen,
     selectIsWhiteLabeled,
     selectLocale,
     selectTimezone,
-    useDashboardSelector,
-} from "../../../model/index.js";
+} from "../../../model/store/config/configSelectors.js";
 import {
-    AUTOMATIONS_COLUMN_CONFIG,
-    AUTOMATIONS_MAX_HEIGHT,
-    DASHBOARD_DIALOG_OVERS_Z_INDEX,
-} from "../../constants/index.js";
+    selectEntitlementMaxAutomations,
+    selectEntitlementUnlimitedAutomations,
+} from "../../../model/store/entitlements/entitlementsSelectors.js";
+import { selectDashboardId, selectDashboardTitle } from "../../../model/store/meta/metaSelectors.js";
+import { selectCanCreateAutomation } from "../../../model/store/permissions/permissionsSelectors.js";
+import {
+    selectAutomationsInvalidationId,
+    selectExecutionTimestamp,
+    selectIsScheduleEmailDialogOpen,
+} from "../../../model/store/ui/uiSelectors.js";
+import { AUTOMATIONS_COLUMN_CONFIG, AUTOMATIONS_MAX_HEIGHT } from "../../constants/automations.js";
+import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/zIndex.js";
 import { SCHEDULED_EMAIL_DIALOG_ID } from "../DefaultScheduledEmailDialog/constants.js";
 import { useScheduleEmailDialogAccessibility } from "../hooks/useScheduleEmailDialogAccessibility.js";
 import { isMobileView } from "../utils/responsive.js";

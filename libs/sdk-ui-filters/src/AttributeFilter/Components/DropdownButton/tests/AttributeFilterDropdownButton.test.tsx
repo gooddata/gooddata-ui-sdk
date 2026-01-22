@@ -1,11 +1,11 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { render } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { withIntl } from "@gooddata/sdk-ui";
 
-import * as shared from "../../../../shared/index.js";
+import * as shared from "../../../../shared/components/internal/FilterButtonCustomIcon.js";
 import {
     AttributeFilterDropdownButton,
     type IAttributeFilterDropdownButtonProps,

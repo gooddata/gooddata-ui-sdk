@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { useCallback, useState } from "react";
 
@@ -6,7 +6,8 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { Button, Checkbox, Input, UiFocusManager, UiSubmenuHeader } from "@gooddata/sdk-ui-kit";
 
-import { saveFilterView, useDashboardDispatch } from "../../../../model/index.js";
+import { saveFilterView } from "../../../../model/commands/filters.js";
+import { useDashboardDispatch } from "../../../../model/react/DashboardStoreProvider.js";
 
 export interface IAddFilterViewProps {
     onClose: () => void;

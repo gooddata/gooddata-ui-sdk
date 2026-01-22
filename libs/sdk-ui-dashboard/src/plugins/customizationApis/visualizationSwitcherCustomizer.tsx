@@ -1,17 +1,18 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { union } from "lodash-es";
 import { InvariantError } from "ts-invariant";
 
 import { type IDashboardCustomizationLogger } from "./customizationLogging.js";
 import { type CustomizerMutationsContext } from "./types.js";
-import {
-    DefaultDashboardVisualizationSwitcher,
-    DefaultVisualizationSwitcherToolbar,
-    type OptionalVisualizationSwitcherComponentProvider,
-    type OptionalVisualizationSwitcherToolbarComponentProvider,
-    type VisualizationSwitcherComponentProvider,
-    type VisualizationSwitcherToolbarComponentProvider,
-} from "../../presentation/index.js";
+import type {
+    OptionalVisualizationSwitcherComponentProvider,
+    OptionalVisualizationSwitcherToolbarComponentProvider,
+    VisualizationSwitcherComponentProvider,
+    VisualizationSwitcherToolbarComponentProvider,
+} from "../../presentation/dashboardContexts/types.js";
+import { DefaultVisualizationSwitcherToolbar } from "../../presentation/widget/visualizationSwitcher/configuration/DefaultVisualizationSwitcherToolbar.js";
+import { DefaultDashboardVisualizationSwitcher } from "../../presentation/widget/visualizationSwitcher/DefaultDashboardVisualizationSwitcher.js";
 import { type IVisualizationSwitcherCustomizer } from "../customizer.js";
 
 const DefaultVisualizationSwitcherRendererProvider: VisualizationSwitcherComponentProvider = () => {

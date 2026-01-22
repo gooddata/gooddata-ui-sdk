@@ -1,9 +1,10 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import cx from "classnames";
 
 import { type IDefaultDashboardRichTextWidgetProps } from "./types.js";
-import { DashboardItem, DashboardItemBase } from "../../../presentationComponents/index.js";
+import { DashboardItem } from "../../../presentationComponents/DashboardItems/DashboardItem.js";
+import { DashboardItemBase } from "../../../presentationComponents/DashboardItems/DashboardItemBase.js";
 import { useWidgetHighlighting } from "../../common/useWidgetHighlighting.js";
 import { DashboardRichText } from "../../richText/DashboardRichText.js";
 

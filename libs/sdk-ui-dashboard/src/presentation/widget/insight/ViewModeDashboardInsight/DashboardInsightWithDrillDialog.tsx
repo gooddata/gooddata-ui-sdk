@@ -7,15 +7,15 @@ import { type IDrillEventContext, createFocusHighchartsDatapointEvent } from "@g
 
 import { DashboardInsightWithDrillSelect } from "./Insight/DashboardInsightWithDrillSelect.js";
 import { InsightDrillDialog } from "./InsightDrillDialog/InsightDrillDialog.js";
-import { KdaDialogController } from "../../../../kdaDialog/internal.js";
+import { KdaDialogController } from "../../../../kdaDialog/dialog/KdaDialogController.js";
+import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
+import { selectCatalogAttributeDisplayFormsById } from "../../../../model/store/catalog/catalogSelectors.js";
 import {
-    selectCatalogAttributeDisplayFormsById,
     selectEnableDrilledTooltip,
     selectLocale,
     selectObjectAvailabilityConfig,
     selectSeparators,
-    useDashboardSelector,
-} from "../../../../model/index.js";
+} from "../../../../model/store/config/configSelectors.js";
 import { type IDrillDownDefinition, isDrillDownDefinition } from "../../../../types.js";
 import {
     type IDrillStep,
@@ -24,8 +24,8 @@ import {
     type OnDrillDownSuccess,
     type OnDrillToInsightSuccess,
     type OnKeyDriverAnalysisSuccess,
-    getDrillDownTitle,
-} from "../../../drill/index.js";
+} from "../../../drill/types.js";
+import { getDrillDownTitle } from "../../../drill/utils/drillDownUtils.js";
 import { type IDashboardInsightProps } from "../types.js";
 
 type IReturnFocusInfo =

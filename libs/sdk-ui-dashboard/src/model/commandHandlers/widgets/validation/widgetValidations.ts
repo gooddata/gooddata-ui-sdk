@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import {
     type IInsightWidget,
@@ -14,7 +14,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { type ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
-import { type IDashboardCommand } from "../../../commands/index.js";
+import { type IDashboardCommand } from "../../../commands/base.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import { type DashboardContext } from "../../../types/commonTypes.js";
 import { type ExtendedDashboardWidget } from "../../../types/layoutTypes.js";

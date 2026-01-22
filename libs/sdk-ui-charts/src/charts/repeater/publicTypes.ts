@@ -1,9 +1,9 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type DataViewFacade, type ExplicitDrill, type OnFiredDrillEvent } from "@gooddata/sdk-ui";
 
 import { type RepeaterColumnWidthItem } from "./columnWidths.js";
-import { type IChartConfig } from "../../interfaces/index.js";
+import { type IChartConfig } from "../../interfaces/chartConfig.js";
 
 /**
  * @public

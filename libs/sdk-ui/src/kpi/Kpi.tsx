@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ComponentType } from "react";
 
@@ -10,15 +10,13 @@ import { type IMeasure, type INullableFilter, type ISeparators } from "@gooddata
 
 import { FormattedNumber } from "./FormattedNumber.js";
 import { KpiError } from "./KpiError.js";
-import {
-    type DataViewFacade,
-    type IErrorProps,
-    type ILoadingProps,
-    IntlWrapper,
-    LoadingComponent,
-    withContexts,
-} from "../base/index.js";
-import { type IRawExecuteProps, type IWithLoadingEvents, RawExecute } from "../execution/index.js";
+import { IntlWrapper } from "../base/localization/IntlWrapper.js";
+import { type IErrorProps } from "../base/react/ErrorComponent.js";
+import { type ILoadingProps, LoadingComponent } from "../base/react/LoadingComponent.js";
+import { withContexts } from "../base/react/withContexts.js";
+import { type DataViewFacade } from "../base/results/facade.js";
+import { type IRawExecuteProps, RawExecute } from "../execution/RawExecute.js";
+import { type IWithLoadingEvents } from "../execution/withExecutionLoading.js";
 
 //
 // Internals

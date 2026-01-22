@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ReactElement } from "react";
 
@@ -21,7 +21,7 @@ import {
     type IWithLoadingEvents,
     type WithLoadingResult,
 } from "./withExecutionLoading.js";
-import { withContexts } from "../base/index.js";
+import { withContexts } from "../base/react/withContexts.js";
 
 /**
  * Props of the {@link ExecuteInsight} component.

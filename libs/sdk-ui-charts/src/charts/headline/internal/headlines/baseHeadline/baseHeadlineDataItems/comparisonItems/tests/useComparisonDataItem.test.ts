@@ -1,9 +1,9 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { renderHook } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { type IChartConfig } from "../../../../../../../../interfaces/index.js";
+import { type IChartConfig } from "../../../../../../../../interfaces/chartConfig.js";
 import { EvaluationType } from "../../../../../interfaces/BaseHeadlines.js";
 import {
     TEST_COLOR_CONFIGS,

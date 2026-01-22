@@ -6,7 +6,8 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { isEmpty, isEqual } from "lodash-es";
 
-import { type AttributeElementKey, type InvertableAttributeElementSelection } from "../../../types/index.js";
+import { type InvertableAttributeElementSelection } from "../../../types/attributeFilterHandler.js";
+import { type AttributeElementKey } from "../../../types/common.js";
 import { selectState } from "../common/selectors.js";
 import { type FilterSelector } from "../common/types.js";
 

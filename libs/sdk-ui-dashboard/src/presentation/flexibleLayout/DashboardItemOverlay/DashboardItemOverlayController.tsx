@@ -1,14 +1,10 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { DashboardItemOverlay } from "./DashboardItemOverlay.js";
-import { type IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/flexibleLayout/index.js";
-import {
-    selectSectionModification,
-    selectWidgetsOverlayState,
-    uiActions,
-    useDashboardDispatch,
-    useDashboardSelector,
-} from "../../../model/index.js";
+import { type IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
+import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { uiActions } from "../../../model/store/ui/index.js";
+import { selectSectionModification, selectWidgetsOverlayState } from "../../../model/store/ui/uiSelectors.js";
 import { getRefsForSection } from "../refs.js";
 
 interface IDashboardLayoutSectionOverlayControllerProps {

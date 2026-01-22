@@ -1,8 +1,8 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { formatLegendLabel } from "@gooddata/sdk-ui-vis-commons";
 
-import type { ILegendColorScaleItem } from "../../types/legend/index.js";
+import { type ILegendColorScaleItem } from "../../types/legend/model.js";
 
 /**
  * Default numeric symbols for legend label formatting.

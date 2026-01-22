@@ -25,7 +25,9 @@ import {
     dashboardLayoutWidgetIdentityMap,
 } from "../../../_staging/dashboard/dashboardLayout.js";
 import { createListedDashboard } from "../../../_staging/listedDashboard/listedDashboardUtils.js";
-import { type ISaveDashboard, changeRenderMode, switchDashboardTab } from "../../commands/index.js";
+import { type ISaveDashboard } from "../../commands/dashboard.js";
+import { changeRenderMode } from "../../commands/renderMode.js";
+import { switchDashboardTab } from "../../commands/tabs.js";
 import { type DashboardSaved, dashboardSaved } from "../../events/dashboard.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
 import { accessibleDashboardsActions } from "../../store/accessibleDashboards/index.js";

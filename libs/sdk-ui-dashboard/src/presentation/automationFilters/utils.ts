@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { compact, isEqual } from "lodash-es";
 import { type IntlShape } from "react-intl";
@@ -35,8 +35,9 @@ import {
     relativeDateFilterValues,
 } from "@gooddata/sdk-model";
 
-import { filterContextItemsToDashboardFiltersByWidget } from "../../converters/index.js";
-import { type ExtendedDashboardWidget, removeIgnoredWidgetFilters } from "../../model/index.js";
+import { filterContextItemsToDashboardFiltersByWidget } from "../../converters/filterConverters.js";
+import type { ExtendedDashboardWidget } from "../../model/types/layoutTypes.js";
+import { removeIgnoredWidgetFilters } from "../../model/utils/widgetFilters.js";
 
 export const getFilterLocalIdentifier = (filter: FilterContextItem): string | undefined => {
     if (isDashboardAttributeFilter(filter)) {

@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useCallback } from "react";
 
@@ -8,11 +8,9 @@ import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { useDashboardAlertsCommands } from "./useDashboardAlertsCommands.js";
 import { messages } from "../../../locales.js";
-import {
-    selectDashboardRef,
-    selectEnableAutomationManagement,
-    selectIsAlertingManagementDialogContext,
-} from "../../store/index.js";
+import { selectEnableAutomationManagement } from "../../store/config/configSelectors.js";
+import { selectDashboardRef } from "../../store/meta/metaSelectors.js";
+import { selectIsAlertingManagementDialogContext } from "../../store/ui/uiSelectors.js";
 import { useDashboardSelector } from "../DashboardStoreProvider.js";
 import { useDashboardAutomations } from "../useDashboardAutomations/useDashboardAutomations.js";
 

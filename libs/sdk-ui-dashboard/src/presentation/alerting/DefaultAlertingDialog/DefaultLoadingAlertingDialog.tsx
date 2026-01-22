@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { useIntl } from "react-intl";
 
@@ -11,7 +11,7 @@ import {
     useId,
 } from "@gooddata/sdk-ui-kit";
 
-import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/index.js";
+import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../constants/zIndex.js";
 import { type IAlertingDialogProps } from "../types.js";
 const overlayController = OverlayController.getInstance(DASHBOARD_DIALOG_OVERS_Z_INDEX);
 

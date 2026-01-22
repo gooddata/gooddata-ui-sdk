@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -11,7 +11,7 @@ import { MessageContents } from "./MessageContents.js";
 import { getAssistantMessageState } from "./messageState.js";
 import { useUserFeedback } from "./useUserFeedback.js";
 import { type AssistantMessage } from "../../model.js";
-import { setUserFeedback } from "../../store/index.js";
+import { setUserFeedback } from "../../store/messages/messagesSlice.js";
 
 type AssistantMessageProps = {
     message: AssistantMessage;

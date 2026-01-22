@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
@@ -10,7 +10,7 @@ import {
     TEST_FILTERS,
     TEST_SORT_ITEMS,
 } from "./TestData.fixtures.js";
-import { CalculateAs, type CalculationType, type IComparison } from "../../../../../interfaces/index.js";
+import { CalculateAs, type CalculationType, type IComparison } from "../../../../../interfaces/comparison.js";
 import { ComparisonProvider } from "../ComparisonProvider.js";
 
 describe("ComparisonProvider", () => {
