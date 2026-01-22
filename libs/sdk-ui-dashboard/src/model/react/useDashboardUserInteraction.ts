@@ -14,7 +14,7 @@ import {
     type ShareDialogInteractionData,
     type VisualizationSwitcherInteractionType,
     userInteractionTriggered,
-} from "../events/index.js";
+} from "../events/userInteraction.js";
 
 /**
  * Hook for dispatching relevant user interaction commands.

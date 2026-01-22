@@ -1,4 +1,5 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { partition } from "lodash-es";
 
 import {
@@ -20,7 +21,7 @@ import {
     isWeakMeasureColumnWidthItem,
 } from "@gooddata/sdk-ui-pivot";
 
-import { type IAdditionalFactoryDefinition } from "../../../utils/embeddingCodeGenerator/index.js";
+import { type IAdditionalFactoryDefinition } from "../../../utils/embeddingCodeGenerator/types.js";
 
 export function factoryNotationForAttributeColumnWidthItem(obj: IAttributeColumnWidthItem): string {
     const { attributeIdentifier, width } = obj.attributeColumnWidthItem;

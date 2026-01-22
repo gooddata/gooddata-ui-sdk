@@ -9,7 +9,7 @@ import {
     type IStylingEditorDialogProps,
     type IStylingPickerItem,
     StylingEditorDialog,
-} from "../StylingEditorDialog/index.js";
+} from "../StylingEditorDialog/StylingEditorDialog.js";
 
 describe("Styling editor dialog", () => {
     const theme = (color: string): IStylingPickerItem<ITheme> => {

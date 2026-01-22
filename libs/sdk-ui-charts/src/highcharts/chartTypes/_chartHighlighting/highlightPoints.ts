@@ -1,9 +1,9 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import cx from "classnames";
 import { isEqual } from "lodash-es";
 
-import { type IChartConfig } from "../../../interfaces/index.js";
+import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 
 /**
  * Adds highlighting class to chart points based on provided drill intersections.

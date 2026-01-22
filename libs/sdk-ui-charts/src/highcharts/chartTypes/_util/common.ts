@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { clone, escape, setWith, unescape } from "lodash-es";
 
@@ -6,7 +6,7 @@ import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import { type DataValue } from "@gooddata/sdk-model";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
-import { type ChartOrientationType, type IChartConfig } from "../../../interfaces/index.js";
+import { type ChartOrientationType, type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { DEFAULT_DECIMAL_SEPARATOR } from "../../constants/format.js";
 import { type IChartOptions, type ISeriesItem } from "../../typings/unsafe.js";
 

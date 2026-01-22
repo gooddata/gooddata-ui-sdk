@@ -8,7 +8,7 @@ import { type IconType, UiButtonSegmentedControl, UiIconButton, UiTooltip } from
 
 import { OBJECT_TYPE_ORDER, ObjectTypes } from "./constants.js";
 import type { ObjectType } from "./types.js";
-import { testIds } from "../automation/index.js";
+import { objectType } from "../automation/testIds.js";
 
 const icons: Record<ObjectType, IconType> = {
     [ObjectTypes.DASHBOARD]: "dashboard",
@@ -55,7 +55,7 @@ export function ObjectTypeSelect({ selectedTypes, onSelect, counter, ariaLabelle
                     <div
                         key={type}
                         className="gd-analytics-catalog__object-type"
-                        data-testid={testIds.objectType}
+                        data-testid={objectType}
                         data-object-type={type}
                     >
                         <UiTooltip
@@ -69,7 +69,7 @@ export function ObjectTypeSelect({ selectedTypes, onSelect, counter, ariaLabelle
                                     accessibilityConfig={{ ariaLabel, ariaPressed: isSelected }}
                                     onClick={() => handleSelect(type)}
                                     // Since object types are stable, dynamic testing ID is acceptable.
-                                    dataTestId={`${testIds.objectType}/${type}`}
+                                    dataTestId={`${objectType}/${type}`}
                                 />
                             }
                             content={ariaLabel}

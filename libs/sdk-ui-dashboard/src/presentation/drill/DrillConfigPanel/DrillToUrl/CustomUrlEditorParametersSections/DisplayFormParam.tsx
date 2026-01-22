@@ -6,11 +6,9 @@ import { type AttributeDisplayFormType, type IAttributeDisplayFormMetadataObject
 import { useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 import { Parameter } from "./Parameter.js";
-import {
-    selectAllCatalogAttributesMap,
-    selectFilterContextAttributeFilterByDisplayForm,
-    useDashboardSelector,
-} from "../../../../../model/index.js";
+import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
+import { selectAllCatalogAttributesMap } from "../../../../../model/store/catalog/catalogSelectors.js";
+import { selectFilterContextAttributeFilterByDisplayForm } from "../../../../../model/store/tabs/filterContext/filterContextSelectors.js";
 import { AttributeDisplayFormParameterDetail } from "../ParameterDetails/AttributeDisplayFormParameterDetail.js";
 
 interface IXProps {

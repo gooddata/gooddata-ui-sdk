@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type ReactNode } from "react";
 
@@ -8,7 +8,7 @@ import { type IWidget, objRefToString, widgetRef } from "@gooddata/sdk-model";
 import { type ArrowDirections, type ArrowOffsets, Bubble, type IAlignPoint } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
 
-import { IGNORED_CONFIGURATION_MENU_CLICK_CLASS } from "../../../../constants/index.js";
+import { IGNORED_CONFIGURATION_MENU_CLICK_CLASS } from "../../../../constants/classes.js";
 
 const alignPoints: IAlignPoint[] = [
     { align: "tr tl" },

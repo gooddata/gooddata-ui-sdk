@@ -8,11 +8,11 @@ import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 import {
     type IQueryConnectedAttributes,
     queryConnectedAttributes,
-    selectAttributeFilterDisplayFormsMap,
-    selectSupportsSettingConnectingAttributes,
-    useDashboardQueryProcessing,
-    useDashboardSelector,
-} from "../../../../../../model/index.js";
+} from "../../../../../../model/queries/connectedAttributes.js";
+import { useDashboardSelector } from "../../../../../../model/react/DashboardStoreProvider.js";
+import { useDashboardQueryProcessing } from "../../../../../../model/react/useDashboardQueryProcessing.js";
+import { selectSupportsSettingConnectingAttributes } from "../../../../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
+import { selectAttributeFilterDisplayFormsMap } from "../../../../../../model/store/tabs/filterContext/filterContextSelectors.js";
 
 interface IUseValidNeighbourAttributesResult {
     validNeighbourAttributes: ObjRef[];

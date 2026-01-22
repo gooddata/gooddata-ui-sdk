@@ -6,105 +6,22 @@ import { tigerActionsClientFactory } from "./actions.js";
 import { tigerAuthActionsClientFactory } from "./authActions.js";
 import { tigerAutomationClientFactory } from "./automation.js";
 import { setAxiosAuthorizationToken } from "./axios.js";
-import {
-    MetadataBaseApi,
-    MetadataConfiguration,
-    type MetadataConfigurationParameters,
-    type MetadataRequestArgs,
-    tigerEntitiesObjectsClientFactory,
-} from "./entitiesObjects.js";
+import { tigerEntitiesObjectsClientFactory } from "./entitiesObjects.js";
 import { tigerExecutionClientFactory } from "./execution.js";
 import { tigerExecutionResultClientFactory } from "./executionResult.js";
 import { tigerAfmExplainClientFactory } from "./explain.js";
 import { tigerExportClientFactory } from "./export.js";
 import { tigerGenAIClientFactory } from "./genAI.js";
-import {
-    LabelElementsBaseApi,
-    LabelElementsConfiguration,
-    type LabelElementsConfigurationParameters,
-    type LabelElementsRequestArgs,
-    tigerLabelElementsClientFactory,
-} from "./labelElements.js";
+import { tigerLabelElementsClientFactory } from "./labelElements.js";
 import { tigerLayoutClientFactory } from "./layout.js";
-import {
-    type LocationStyleApiInterface,
-    type LocationStyleDocument,
-    tigerLocationStyleClientFactory,
-} from "./locationStyle.js";
-import {
-    type FeatureContext,
-    type ILiveFeatures,
-    type IStaticFeatures,
-    type IUserProfile,
-    type ProfileApiInterface,
-    isLiveFeatures,
-    isStaticFeatures,
-    tigerProfileClientFactory,
-} from "./profile.js";
-import {
-    type ResultActionsApiInterface,
-    tigerGeoCollectionsClientFactory,
-    tigerResultClientFactory,
-} from "./result.js";
-import {
-    type ScanModelActionsApiInterface,
-    ScanModelBaseApi,
-    ScanModelConfiguration,
-    type ScanModelConfigurationParameters,
-    type ScanModelRequestArgs,
-    tigerScanModelClientFactory,
-} from "./scanModel.js";
+import { tigerLocationStyleClientFactory } from "./locationStyle.js";
+import { tigerProfileClientFactory } from "./profile.js";
+import { tigerGeoCollectionsClientFactory, tigerResultClientFactory } from "./result.js";
+import { tigerScanModelClientFactory } from "./scanModel.js";
 import { tigerSmartFunctionsClientFactory } from "./smartFunctions.js";
 import { tigerUserManagementClientFactory } from "./userManagement.js";
 import { tigerValidDescendantsClientFactory } from "./validDescendants.js";
 import { tigerValidObjectsClientFactory } from "./validObjects.js";
-
-export type {
-    MetadataConfigurationParameters,
-    MetadataRequestArgs,
-    LabelElementsConfigurationParameters,
-    LabelElementsRequestArgs,
-    ProfileApiInterface,
-    IUserProfile,
-    ILiveFeatures,
-    IStaticFeatures,
-    FeatureContext,
-    LocationStyleApiInterface,
-    LocationStyleDocument,
-    ScanModelConfigurationParameters,
-    ScanModelRequestArgs,
-    ScanModelActionsApiInterface,
-    ResultActionsApiInterface,
-};
-export {
-    tigerExecutionClientFactory,
-    //    tigerEntitiesObjectsClientFactory,
-    tigerExecutionResultClientFactory,
-    tigerLabelElementsClientFactory,
-    tigerValidObjectsClientFactory,
-    tigerValidDescendantsClientFactory,
-    tigerLayoutClientFactory,
-    tigerAfmExplainClientFactory,
-    tigerProfileClientFactory,
-    tigerLocationStyleClientFactory,
-    tigerActionsClientFactory,
-    tigerAuthActionsClientFactory,
-    tigerScanModelClientFactory,
-    tigerExportClientFactory,
-    tigerAutomationClientFactory,
-    tigerResultClientFactory,
-    tigerUserManagementClientFactory,
-    tigerSmartFunctionsClientFactory,
-    tigerGenAIClientFactory,
-    MetadataConfiguration,
-    MetadataBaseApi,
-    LabelElementsConfiguration,
-    LabelElementsBaseApi,
-    isLiveFeatures,
-    isStaticFeatures,
-    ScanModelConfiguration,
-    ScanModelBaseApi,
-};
 
 export interface ITigerClientBase {
     axios: AxiosInstance;

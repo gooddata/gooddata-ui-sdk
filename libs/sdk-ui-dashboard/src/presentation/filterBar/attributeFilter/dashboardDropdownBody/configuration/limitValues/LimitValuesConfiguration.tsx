@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { useState } from "react";
 
@@ -19,17 +19,17 @@ import { LimitingItem } from "./shared/LimitingItem.js";
 import { useLimitingItems } from "./shared/limitingItemsHook.js";
 import { useCommonDateFilterTitle } from "../../../../../../_staging/sharedHooks/useCommonDateFilterTitle.js";
 import { messages } from "../../../../../../locales.js";
+import { type IMetricsAndFacts } from "../../../../../../model/queries/metricsAndFacts.js";
+import { useDashboardSelector } from "../../../../../../model/react/DashboardStoreProvider.js";
+import { useDashboardUserInteraction } from "../../../../../../model/react/useDashboardUserInteraction.js";
+import { selectBackendCapabilities } from "../../../../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
+import { selectEnableKDAttributeFilterDatesValidation } from "../../../../../../model/store/config/configSelectors.js";
+import { type IDashboardAttributeFilterParentItem } from "../../../../../../model/types/attributeFilterTypes.js";
 import {
-    type IDashboardAttributeFilterParentItem,
     type IDashboardDependentDateFilter,
-    type IMetricsAndFacts,
     isDashboardDependentDateFilter,
-    selectBackendCapabilities,
-    selectEnableKDAttributeFilterDatesValidation,
-    useDashboardSelector,
-    useDashboardUserInteraction,
-} from "../../../../../../model/index.js";
-import { IntlWrapper } from "../../../../../localization/index.js";
+} from "../../../../../../model/types/dateFilterTypes.js";
+import { IntlWrapper } from "../../../../../localization/IntlWrapper.js";
 import { type ValuesLimitingItem } from "../../../types.js";
 
 const extractKey = (item: ValuesLimitingItem) =>

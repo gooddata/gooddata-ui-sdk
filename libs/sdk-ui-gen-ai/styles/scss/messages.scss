@@ -160,6 +160,21 @@
     &:last-child {
         margin-bottom: 40px;
     }
+
+    .gd-gen-ai-chat__messages__content {
+        .gd-typography--h1,
+        .gd-typography--h2,
+        .gd-typography--h3,
+        .gd-typography--h4 {
+            margin-top: 15px;
+            margin-bottom: 10px;
+        }
+
+        .gd-typography--p {
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+    }
 }
 
 .gd-gen-ai-chat__messages__contents {

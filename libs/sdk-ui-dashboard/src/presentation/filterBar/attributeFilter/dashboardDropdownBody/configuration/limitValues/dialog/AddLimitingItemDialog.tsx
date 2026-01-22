@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { useState } from "react";
 
@@ -9,10 +9,8 @@ import { ActionSelectionPage } from "./ActionSelectionPage.js";
 import { DateFiltersPage } from "./DateFiltersPage.js";
 import { LimitingItemsPage } from "./LimitingItemsPage.js";
 import { ParentFiltersPage } from "./ParentFiltersPage.js";
-import {
-    type IDashboardAttributeFilterParentItem,
-    type IDashboardDependentDateFilter,
-} from "../../../../../../../model/index.js";
+import { type IDashboardAttributeFilterParentItem } from "../../../../../../../model/types/attributeFilterTypes.js";
+import { type IDashboardDependentDateFilter } from "../../../../../../../model/types/dateFilterTypes.js";
 import { ConfigurationBubble } from "../../../../../../widget/common/configuration/ConfigurationBubble.js";
 import { type ValuesLimitingItem } from "../../../../types.js";
 

@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { union } from "lodash-es";
 import { InvariantError } from "ts-invariant";
@@ -6,11 +6,11 @@ import { InvariantError } from "ts-invariant";
 import { type IDashboardCustomizationLogger } from "./customizationLogging.js";
 import { type CustomizerMutationsContext } from "./types.js";
 import {
-    type CustomTitleComponent,
     type OptionalTitleComponentProvider,
-    RenderModeAwareTitle,
     type TitleComponentProvider,
-} from "../../presentation/index.js";
+} from "../../presentation/dashboardContexts/types.js";
+import { RenderModeAwareTitle } from "../../presentation/topBar/title/RenderModeAwareTitle.js";
+import { type CustomTitleComponent } from "../../presentation/topBar/title/types.js";
 import { type ITitleCustomizer } from "../customizer.js";
 
 const DefaultTitleRendererProvider: TitleComponentProvider = () => {

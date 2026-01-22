@@ -11,7 +11,8 @@ import {
     insightSetProperties,
 } from "@gooddata/sdk-model";
 
-import { selectSettings, useDashboardSelector } from "../../../../model/index.js";
+import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
+import { selectSettings } from "../../../../model/store/config/configSelectors.js";
 
 /**
  * @internal

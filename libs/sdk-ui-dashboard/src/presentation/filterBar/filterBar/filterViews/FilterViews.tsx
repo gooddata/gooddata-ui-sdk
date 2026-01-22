@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { useCallback, useMemo } from "react";
 
@@ -19,20 +19,26 @@ import { AddFilterView } from "./AddFilterView.js";
 import { FilterViewsList } from "./FilterViewsList.js";
 import { useFilterViewsToastMessages } from "./useFilterViewsToastMessages.js";
 import {
-    selectCanCreateFilterView,
-    selectDisableFilterViews,
-    selectFilterViews,
-    selectFilterViewsDialogMode,
-    selectIsApplyFiltersAllAtOnceEnabledAndSet,
-    selectIsFilterViewsDialogOpen,
-    selectIsInEditMode,
-    selectIsNewDashboard,
-    selectIsReadOnly,
-    uiActions,
     useDashboardDispatch,
     useDashboardSelector,
-    useDashboardUserInteraction,
-} from "../../../../model/index.js";
+} from "../../../../model/react/DashboardStoreProvider.js";
+import { useDashboardUserInteraction } from "../../../../model/react/useDashboardUserInteraction.js";
+import {
+    selectIsApplyFiltersAllAtOnceEnabledAndSet,
+    selectIsReadOnly,
+} from "../../../../model/store/config/configSelectors.js";
+import { selectFilterViews } from "../../../../model/store/filterViews/filterViewsReducersSelectors.js";
+import {
+    selectDisableFilterViews,
+    selectIsNewDashboard,
+} from "../../../../model/store/meta/metaSelectors.js";
+import { selectCanCreateFilterView } from "../../../../model/store/permissions/permissionsSelectors.js";
+import { selectIsInEditMode } from "../../../../model/store/renderMode/renderModeSelectors.js";
+import { uiActions } from "../../../../model/store/ui/index.js";
+import {
+    selectFilterViewsDialogMode,
+    selectIsFilterViewsDialogOpen,
+} from "../../../../model/store/ui/uiSelectors.js";
 import { ConfigurationBubble } from "../../../widget/common/configuration/ConfigurationBubble.js";
 
 const BUBBLE_ALIGN_POINTS: IAlignPoint[] = [{ align: "br tr", offset: { x: -27, y: -10 } }];

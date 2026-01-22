@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useCallback } from "react";
 
@@ -22,11 +22,9 @@ import {
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { isVisualisationAutomation } from "../../../../_staging/automation/index.js";
-import {
-    selectCanManageWorkspace,
-    selectCurrentUser,
-    useDashboardSelector,
-} from "../../../../model/index.js";
+import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
+import { selectCanManageWorkspace } from "../../../../model/store/permissions/permissionsSelectors.js";
+import { selectCurrentUser } from "../../../../model/store/user/userSelectors.js";
 import { gdColorNegative, gdColorStateBlank } from "../../../constants/colors.js";
 import { useScheduleValidation } from "../../DefaultScheduledEmailDialog/hooks/useScheduleValidation.js";
 

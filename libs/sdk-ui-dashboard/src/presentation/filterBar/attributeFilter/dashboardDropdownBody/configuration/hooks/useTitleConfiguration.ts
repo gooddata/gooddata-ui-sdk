@@ -1,13 +1,12 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
+
 import { useCallback, useState } from "react";
 
 import { type IDashboardAttributeFilter } from "@gooddata/sdk-model";
 
-import {
-    setAttributeFilterTitle,
-    useDashboardCommandProcessing,
-    useDashboardUserInteraction,
-} from "../../../../../../model/index.js";
+import { setAttributeFilterTitle } from "../../../../../../model/commands/filters.js";
+import { useDashboardCommandProcessing } from "../../../../../../model/react/useDashboardCommandProcessing.js";
+import { useDashboardUserInteraction } from "../../../../../../model/react/useDashboardUserInteraction.js";
 
 export function useTitleConfiguration(
     currentFilter: IDashboardAttributeFilter,

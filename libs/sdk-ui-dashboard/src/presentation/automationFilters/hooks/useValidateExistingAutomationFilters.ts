@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { differenceBy, omit } from "lodash-es";
 
@@ -28,16 +28,16 @@ import {
     getAutomationDashboardFiltersByTab,
     getAutomationVisualizationFilters,
 } from "../../../_staging/automation/index.js";
-import { filterContextItemsToDashboardFiltersByWidget } from "../../../converters/index.js";
+import { filterContextItemsToDashboardFiltersByWidget } from "../../../converters/filterConverters.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import {
-    type ExtendedDashboardWidget,
     selectAutomationCommonDateFilterId,
     selectAutomationFiltersByTab,
     selectDashboardFiltersWithoutCrossFiltering,
     selectDashboardHiddenFilters,
     selectDashboardLockedFilters,
-    useDashboardSelector,
-} from "../../../model/index.js";
+} from "../../../model/store/filtering/dashboardFilterSelectors.js";
+import type { ExtendedDashboardWidget } from "../../../model/types/layoutTypes.js";
 import { type IDashboardFilter } from "../../../types.js";
 import {
     areFiltersEqual,

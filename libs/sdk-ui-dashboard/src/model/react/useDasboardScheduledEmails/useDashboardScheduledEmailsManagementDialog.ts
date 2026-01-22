@@ -1,4 +1,5 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { useCallback } from "react";
 
 import { type IAutomationMetadataObject, type IWidget } from "@gooddata/sdk-model";
@@ -6,11 +7,9 @@ import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { useDashboardScheduledEmailsCommands } from "./useDashboardScheduledEmailsCommands.js";
 import { messages } from "../../../locales.js";
-import {
-    selectDashboardRef,
-    selectEnableAutomationManagement,
-    selectIsScheduleEmailManagementDialogContext,
-} from "../../store/index.js";
+import { selectEnableAutomationManagement } from "../../store/config/configSelectors.js";
+import { selectDashboardRef } from "../../store/meta/metaSelectors.js";
+import { selectIsScheduleEmailManagementDialogContext } from "../../store/ui/uiSelectors.js";
 import { useDashboardSelector } from "../DashboardStoreProvider.js";
 import { useDashboardAutomations } from "../useDashboardAutomations/useDashboardAutomations.js";
 

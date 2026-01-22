@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { defineMessage, useIntl } from "react-intl";
 
@@ -6,8 +6,9 @@ import { EditableLabel } from "@gooddata/sdk-ui-kit";
 
 import { TitleWrapper } from "./TitleWrapper.js";
 import { type ITitleProps } from "./types.js";
-import { selectDashboardTitle, useDashboardSelector } from "../../../model/index.js";
-import { DASHBOARD_TITLE_MAX_LENGTH } from "../../constants/index.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectDashboardTitle } from "../../../model/store/meta/metaSelectors.js";
+import { DASHBOARD_TITLE_MAX_LENGTH } from "../../constants/dashboard.js";
 
 const placeholderMessage = defineMessage({ id: "untitled" });
 

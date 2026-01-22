@@ -16,7 +16,8 @@ import { AlertsOld } from "./components/AlertsListOld.js";
 import { DeleteAlertConfirmDialog } from "./components/DeleteAlertConfirmDialog.js";
 import { PauseAlertRunner } from "./components/PauseAlertRunner.js";
 import { messages } from "../../../locales.js";
-import { selectIsWhiteLabeled, useDashboardSelector } from "../../../model/index.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectIsWhiteLabeled } from "../../../model/store/config/configSelectors.js";
 import { isMobileView } from "../DefaultAlertingDialog/utils/responsive.js";
 import { type IAlertingManagementDialogOldProps } from "../types.js";
 

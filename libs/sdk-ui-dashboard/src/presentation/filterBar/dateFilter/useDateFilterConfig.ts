@@ -1,15 +1,16 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
+
 import { type DashboardDateFilterConfigMode, type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 
 import { useDateFilterTitleConfiguration } from "./configuration/hooks/useDateFilterTitleConfiguration.js";
 import {
-    selectDateFilterConfigOverrides,
-    selectDateFilterConfigsOverrides,
     setDashboardDateFilterConfigMode,
     setDashboardDateFilterWithDimensionConfigMode,
-    useDashboardSelector,
-    useDispatchDashboardCommand,
-} from "../../../model/index.js";
+} from "../../../model/commands/dashboard.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { useDispatchDashboardCommand } from "../../../model/react/useDispatchDashboardCommand.js";
+import { selectDateFilterConfigOverrides } from "../../../model/store/tabs/dateFilterConfig/dateFilterConfigSelectors.js";
+import { selectDateFilterConfigsOverrides } from "../../../model/store/tabs/dateFilterConfigs/dateFilterConfigsSelectors.js";
 
 export const useDateFilterConfig = (dateDataSet: ObjRef | undefined, defaultDateFilterTitle: string) => {
     const filterConfig = useDashboardSelector(selectDateFilterConfigOverrides);

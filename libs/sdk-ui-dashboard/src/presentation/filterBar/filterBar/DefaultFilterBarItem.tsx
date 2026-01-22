@@ -13,6 +13,8 @@ import {
     serializeObjRef,
 } from "@gooddata/sdk-model";
 
+import { DashboardFilterGroup } from "./DashboardFilterGroup.js";
+import { type IFilterBarProps } from "./types.js";
 import {
     type FilterBarItem,
     isFilterBarAttributeFilter,
@@ -20,26 +22,34 @@ import {
     isFilterBarFilterPlaceholder,
 } from "./useFiltersWithAddedPlaceholder.js";
 import { convertDashboardAttributeFilterElementsUrisToValues } from "../../../_staging/dashboard/legacyFilterConvertors.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectSupportsElementUris } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
 import {
-    selectAttributeFilterConfigsDisplayAsLabelMap,
-    selectAttributeFilterDisplayFormsMap,
     selectCatalogAttributes,
     selectCatalogDateDatasets,
-    selectCrossFilteringFiltersLocalIdentifiers,
-    selectEffectiveAttributeFiltersModeMap,
-    selectEffectiveDateFilterAvailableGranularities,
-    selectEffectiveDateFilterOptions,
-    selectEffectiveDateFiltersModeMap,
+} from "../../../model/store/catalog/catalogSelectors.js";
+import {
     selectEnableDashboardFilterGroups,
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
+} from "../../../model/store/config/configSelectors.js";
+import { selectCrossFilteringFiltersLocalIdentifiers } from "../../../model/store/drill/drillSelectors.js";
+import {
+    selectAttributeFilterConfigsDisplayAsLabelMap,
+    selectEffectiveAttributeFiltersModeMap,
+} from "../../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import {
+    selectEffectiveDateFilterAvailableGranularities,
+    selectEffectiveDateFilterOptions,
+} from "../../../model/store/tabs/dateFilterConfig/dateFilterConfigSelectors.js";
+import { selectEffectiveDateFiltersModeMap } from "../../../model/store/tabs/dateFilterConfigs/dateFilterConfigsSelectors.js";
+import {
+    selectAttributeFilterDisplayFormsMap,
     selectIsWorkingFilterContextChanged,
-    selectSupportsElementUris,
-    useDashboardSelector,
-} from "../../../model/index.js";
-import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
-import { DraggableAttributeFilter, DraggableDateFilter } from "../../dragAndDrop/index.js";
-import { type IDashboardDateFilterConfig, type IFilterBarProps } from "../types.js";
-import { DashboardFilterGroup } from "./DashboardFilterGroup.js";
+} from "../../../model/store/tabs/filterContext/filterContextSelectors.js";
+import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
+import { DraggableAttributeFilter } from "../../dragAndDrop/draggableAttributeFilter/DraggableAttributeFilter.js";
+import { DraggableDateFilter } from "../../dragAndDrop/draggableDateFilter/DraggableDateFilter.js";
+import { type IDashboardDateFilterConfig } from "../dateFilter/types.js";
 
 /**
  * @alpha

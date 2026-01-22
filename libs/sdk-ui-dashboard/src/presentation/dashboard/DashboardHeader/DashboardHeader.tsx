@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type ReactElement } from "react";
 
@@ -7,14 +7,22 @@ import { DashboardTabs, useDashboardTabsProps } from "./DashboardTabs.js";
 import { ScheduledEmailDialogProvider } from "./ScheduledEmailDialogProvider.js";
 import { SettingsDialogProvider } from "./SettingsDialogProvider.js";
 import { ShareDialogDashboardHeader } from "./ShareDialogDashboardHeader.js";
-import { CancelEditDialog, useCancelEditDialog } from "../../cancelEditDialog/index.js";
-import { DeleteDialog, useDeleteDialogProps } from "../../deleteDialog/index.js";
-import { ExportTabularPdfDialogProvider, ExportXlsxDialogProvider } from "../../dialogs/index.js";
-import { FilterBar, useFilterBarProps } from "../../filterBar/index.js";
-import { KpiDeleteDialog, useKpiDeleteDialogProps } from "../../kpiDeleteDialog/index.js";
-import { SaveAsDialog, useSaveAsDialogProps } from "../../saveAs/index.js";
-import { TopBar, useTopBarProps } from "../../topBar/index.js";
-import { WidgetDeleteDialog, useWidgetDeleteDialogProps } from "../../widgetDeleteDialog/index.js";
+import { CancelEditDialog } from "../../cancelEditDialog/CancelEditDialog.js";
+import { useCancelEditDialog } from "../../cancelEditDialog/DefaultCancelEditDialog.js";
+import { useDeleteDialogProps } from "../../deleteDialog/DefaultDeleteDialog.js";
+import { DeleteDialog } from "../../deleteDialog/DeleteDialog.js";
+import { ExportTabularPdfDialogProvider } from "../../dialogs/ExportTabularPdfDialogProvider.js";
+import { ExportXlsxDialogProvider } from "../../dialogs/ExportXlsxDialogProvider.js";
+import { useFilterBarProps } from "../../filterBar/filterBar/DefaultFilterBar.js";
+import { FilterBar } from "../../filterBar/filterBar/FilterBar.js";
+import { useKpiDeleteDialogProps } from "../../kpiDeleteDialog/DefaultKpiDeleteDialog.js";
+import { KpiDeleteDialog } from "../../kpiDeleteDialog/KpiDeleteDialog.js";
+import { useSaveAsDialogProps } from "../../saveAs/DefaultSaveAsDialog/index.js";
+import { SaveAsDialog } from "../../saveAs/SaveAsDialog.js";
+import { useTopBarProps } from "../../topBar/topBar/DefaultTopBar.js";
+import { TopBar } from "../../topBar/topBar/TopBar.js";
+import { useWidgetDeleteDialogProps } from "../../widgetDeleteDialog/DefaultWidgetDeleteDialog.js";
+import { WidgetDeleteDialog } from "../../widgetDeleteDialog/WidgetDeleteDialog.js";
 import { ToastMessages } from "../components/ToastMessages.js";
 
 // these wrapper components are here to prevent the whole DashboardHeader from re-rendering whenever some

@@ -2,7 +2,7 @@
 
 import { type ISeparators, type ISettings } from "@gooddata/sdk-model";
 
-import { type IChartConfig } from "../../../interfaces/index.js";
+import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 
 function getSettingsBasedConfig(settings: ISettings): Partial<IChartConfig> {
     return {

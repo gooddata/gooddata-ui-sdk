@@ -1,14 +1,16 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 
+import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
 import {
     selectDateFilterConfigOverrides,
     selectDateFilterConfigOverridesByTab,
+} from "../../model/store/tabs/dateFilterConfig/dateFilterConfigSelectors.js";
+import {
     selectDateFilterConfigsOverrides,
     selectDateFilterConfigsOverridesByTab,
-    useDashboardSelector,
-} from "../../model/index.js";
+} from "../../model/store/tabs/dateFilterConfigs/dateFilterConfigsSelectors.js";
 
 export const useCurrentDateFilterConfig = (
     dateDataSet: ObjRef | undefined,

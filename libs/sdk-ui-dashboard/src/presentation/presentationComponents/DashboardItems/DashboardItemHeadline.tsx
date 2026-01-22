@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { useMemo, useRef } from "react";
 
@@ -6,7 +6,7 @@ import OriginalLinesEllipsis from "react-lines-ellipsis";
 import responsiveHOC from "react-lines-ellipsis/lib/responsiveHOC.js";
 
 import { DashboardItemHeadlineContainer } from "./DashboardItemHeadlineContainer.js";
-import { type CommonExportDataAttributes } from "../../export/index.js";
+import { type CommonExportDataAttributes } from "../../export/types.js";
 
 // This fixes the infinite render loop with 0.15.x version,
 // we cannot upgrade to 0.16.0 which has solved the infinite loop

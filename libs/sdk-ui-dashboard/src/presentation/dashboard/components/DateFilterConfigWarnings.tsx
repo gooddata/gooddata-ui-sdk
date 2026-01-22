@@ -1,16 +1,14 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
 import { FormattedMessage, type MessageDescriptor, defineMessage } from "react-intl";
 
 import { Message } from "@gooddata/sdk-ui-kit";
 
-import {
-    selectDateFilterConfigValidationWarnings,
-    selectIsInEditMode,
-    selectIsNewDashboard,
-    useDashboardSelector,
-} from "../../../model/index.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectIsNewDashboard } from "../../../model/store/meta/metaSelectors.js";
+import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
+import { selectDateFilterConfigValidationWarnings } from "../../../model/store/tabs/dateFilterConfig/dateFilterConfigSelectors.js";
 import { type DateFilterValidationResult } from "../../../types.js";
 
 const workspaceValidationMessagesMapping: { [K in DateFilterValidationResult]?: MessageDescriptor } = {

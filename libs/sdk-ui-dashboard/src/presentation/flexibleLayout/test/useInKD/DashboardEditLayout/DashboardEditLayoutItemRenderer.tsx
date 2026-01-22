@@ -1,14 +1,12 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import cx from "classnames";
 
 import { type ObjRef, areObjRefsEqual, idRef } from "@gooddata/sdk-model";
 
 import { type IDashboardEditLayoutContent } from "./DashboardEditLayoutTypes.js";
-import {
-    DashboardLayoutItemViewRenderer,
-    type IDashboardLayoutItemRenderProps,
-} from "../../../DefaultDashboardLayoutRenderer/index.js";
+import { DashboardLayoutItemViewRenderer } from "../../../DefaultDashboardLayoutRenderer/DashboardLayoutItemViewRenderer.js";
+import { type IDashboardLayoutItemRenderProps } from "../../../DefaultDashboardLayoutRenderer/interfaces.js";
 
 export interface IDashboardEditLayoutItemRendererStateProps {
     hiddenWidgetRef?: ObjRef;

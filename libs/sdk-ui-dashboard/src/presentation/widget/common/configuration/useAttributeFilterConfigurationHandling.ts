@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useCallback, useState } from "react";
 
@@ -7,13 +7,14 @@ import { type IWidget, type ObjRef, isInsightWidget, isRichTextWidget, widgetRef
 import { safeSerializeObjRef } from "../../../../_staging/metadata/safeSerializeObjRef.js";
 import {
     ignoreFilterOnInsightWidget,
-    ignoreFilterOnKpiWidget,
-    ignoreFilterOnRichTextWidget,
     unignoreFilterOnInsightWidget,
-    unignoreFilterOnKpiWidget,
+} from "../../../../model/commands/insight.js";
+import { ignoreFilterOnKpiWidget, unignoreFilterOnKpiWidget } from "../../../../model/commands/kpi.js";
+import {
+    ignoreFilterOnRichTextWidget,
     unignoreFilterOnRichTextWidget,
-    useDashboardCommandProcessing,
-} from "../../../../model/index.js";
+} from "../../../../model/commands/richText.js";
+import { useDashboardCommandProcessing } from "../../../../model/react/useDashboardCommandProcessing.js";
 
 export function useAttributeFilterConfigurationHandling(
     widget: IWidget,

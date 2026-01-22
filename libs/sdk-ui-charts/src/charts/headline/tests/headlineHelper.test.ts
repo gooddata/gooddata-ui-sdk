@@ -1,10 +1,10 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
 import { type IColorFromPalette, type IRgbColor } from "@gooddata/sdk-model";
 
-import { CalculateAs, type CalculationType } from "../../../interfaces/index.js";
+import { CalculateAs, type CalculationType } from "../../../interfaces/comparison.js";
 import {
     ComparisonColorType,
     DEFAULT_COMPARISON_PALETTE,

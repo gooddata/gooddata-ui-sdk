@@ -5,9 +5,8 @@ import {
     type IDrillToCustomUrl,
     areObjRefsEqual,
 } from "@gooddata/sdk-model";
+import { getAttributeIdentifiersPlaceholdersFromUrl } from "@gooddata/sdk-model/internal";
 import { type IDrillEvent, isDrillIntersectionAttributeItem } from "@gooddata/sdk-ui";
-
-import { getAttributeIdentifiersPlaceholdersFromUrl } from "../../../_staging/drills/drillingUtils.js";
 
 /**
  * Used to determine if drill to URL actions should be disabled

@@ -6,7 +6,7 @@ import { type SagaReturnType, call, put, select } from "redux-saga/effects";
 import { type FiltersByTab, type IExportResult } from "@gooddata/sdk-backend-spi";
 import { type FilterContextItem, type ObjRef } from "@gooddata/sdk-model";
 
-import { type IExportDashboardToExcel } from "../../commands/index.js";
+import { type IExportDashboardToExcel } from "../../commands/dashboard.js";
 import {
     type IDashboardExportToExcelResolved,
     dashboardExportToExcelRequested,

@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type ReactElement, type ReactNode, useCallback, useMemo, useState } from "react";
 
@@ -42,21 +42,25 @@ import {
     dashboardAttributeFilterToAttributeFilter,
 } from "../../../_staging/dashboard/dashboardFilterConverter.js";
 import { useAttributes } from "../../../_staging/sharedHooks/useAttributes.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { useDashboardUserInteraction } from "../../../model/react/useDashboardUserInteraction.js";
+import { selectBackendCapabilities } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
+import {
+    selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
+    selectIsApplyFiltersAllAtOnceEnabledAndSet,
+    selectLocale,
+} from "../../../model/store/config/configSelectors.js";
+import { selectIsFilterFromCrossFilteringByLocalIdentifier } from "../../../model/store/drill/drillSelectors.js";
+import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
 import {
     selectAttributeFilterConfigsModeMap,
     selectAttributeFilterConfigsModeMapByTab,
-    selectBackendCapabilities,
-    selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
-    selectIsApplyFiltersAllAtOnceEnabledAndSet,
+} from "../../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import {
     selectIsAttributeFilterDependentByLocalIdentifier,
     selectIsAttributeFilterDependentByLocalIdentifierForTab,
-    selectIsFilterFromCrossFilteringByLocalIdentifier,
-    selectIsInEditMode,
-    selectLocale,
     selectPreloadedAttributesWithReferences,
-    useDashboardSelector,
-    useDashboardUserInteraction,
-} from "../../../model/index.js";
+} from "../../../model/store/tabs/filterContext/filterContextSelectors.js";
 import { getVisibilityIcon } from "../utils.js";
 
 /**

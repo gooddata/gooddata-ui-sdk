@@ -14,7 +14,8 @@ import {
     settingsSelector,
     tagsSelector,
 } from "../store/chatWindow/chatWindowSelectors.js";
-import { type RootState, setKeyDriverAnalysisAction } from "../store/index.js";
+import { setKeyDriverAnalysisAction } from "../store/chatWindow/chatWindowSlice.js";
+import { type RootState } from "../store/types.js";
 
 interface IKeyDriverAnalysisProps {
     keyDriverAnalysis?: IKdaDefinition;

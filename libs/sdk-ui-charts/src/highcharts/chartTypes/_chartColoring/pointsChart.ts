@@ -9,13 +9,13 @@ import {
 import { type DataViewFacade, type IColorAssignment } from "@gooddata/sdk-ui";
 import {
     AttributeColorStrategy,
+    type IColorMapping,
     getColorByGuid,
     getColorFromMapping,
     getRgbStringFromRGB,
     isValidMappedColor,
 } from "@gooddata/sdk-ui-vis-commons";
 
-import { type IColorMapping } from "../../../interfaces/index.js";
 import { findMeasureGroupInDimensions } from "../_util/executionResultHelper.js";
 
 export class PointsChartColorStrategy extends AttributeColorStrategy {

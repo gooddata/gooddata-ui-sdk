@@ -18,15 +18,15 @@ import {
     useDefaultSelectedFiltersForExistingAutomation,
 } from "./hooks/useDefaultSelectedFiltersForExistingAutomation.js";
 import { useDefaultSelectedFiltersForNewAutomation } from "./hooks/useDefaultSelectedFiltersForNewAutomation.js";
+import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
 import {
-    type ExtendedDashboardWidget,
     type IAutomationFiltersTab,
-    removeIgnoredWidgetFilters,
     selectAutomationCommonDateFilterId,
     selectAutomationFiltersByTab,
     selectDashboardFiltersWithoutCrossFiltering,
-    useDashboardSelector,
-} from "../../model/index.js";
+} from "../../model/store/filtering/dashboardFilterSelectors.js";
+import type { ExtendedDashboardWidget } from "../../model/types/layoutTypes.js";
+import { removeIgnoredWidgetFilters } from "../../model/utils/widgetFilters.js";
 
 /**
  * Edited automation filters structured by tab ID.

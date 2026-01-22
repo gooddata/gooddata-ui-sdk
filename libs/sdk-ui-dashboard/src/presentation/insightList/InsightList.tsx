@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type MouseEvent, useCallback, useEffect, useRef, useState } from "react";
 
@@ -22,22 +22,24 @@ import { DropdownList, type ITab, InsightListItem } from "@gooddata/sdk-ui-kit";
 import { InsightListNoData } from "./InsightListNoData.js";
 import { type IInsightListProps } from "./types.js";
 import { messages } from "../../locales.js";
+import { createInsightRequested } from "../../model/events/lab.js";
+import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
+import { useDashboardEventDispatch } from "../../model/react/useDashboardEventDispatch.js";
+import { selectBackendCapabilities } from "../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
 import {
-    createInsightRequested,
-    getAuthor,
     selectAllowCreateInsightRequest,
-    selectBackendCapabilities,
-    selectCanCreateVisualization,
-    selectCurrentUser,
     selectEnableRichTextDescriptions,
     selectEnableRichTextDynamicReferences,
+    selectSettings,
+} from "../../model/store/config/configSelectors.js";
+import { selectCanCreateVisualization } from "../../model/store/permissions/permissionsSelectors.js";
+import {
     selectExecutionTimestamp,
     selectInsightListLastUpdateRequested,
-    selectSettings,
-    useDashboardEventDispatch,
-    useDashboardSelector,
-} from "../../model/index.js";
-import { useDashboardComponentsContext } from "../dashboardContexts/index.js";
+} from "../../model/store/ui/uiSelectors.js";
+import { selectCurrentUser } from "../../model/store/user/userSelectors.js";
+import { getAuthor } from "../../model/utils/author.js";
+import { useDashboardComponentsContext } from "../dashboardContexts/DashboardComponentsContext.js";
 
 const ITEMS_PER_PAGE = 50;
 const ITEM_HEIGHT = 40;

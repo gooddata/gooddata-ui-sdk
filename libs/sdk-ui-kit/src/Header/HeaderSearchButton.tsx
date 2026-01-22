@@ -6,8 +6,8 @@ import cx from "classnames";
 
 import { useHeaderSearch } from "./headerSearchContext.js";
 import { UiFocusManager } from "../@ui/UiFocusManager/UiFocusManager.js";
-import { Button } from "../Button/index.js";
-import { Overlay } from "../Overlay/index.js";
+import { Button } from "../Button/Button.js";
+import { Overlay } from "../Overlay/Overlay.js";
 import { useIdPrefixed } from "../utils/useId.js";
 
 export type HeaderSearchProps = PropsWithChildren<{

@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type ReactNode } from "react";
 
@@ -10,11 +10,9 @@ import { stringUtils } from "@gooddata/util";
 
 import { PopupHeader } from "./PopupHeader.js";
 import { messages } from "../../../../../../../locales.js";
-import {
-    selectIsWhiteLabeled,
-    useDashboardSelector,
-    useDashboardUserInteraction,
-} from "../../../../../../../model/index.js";
+import { useDashboardSelector } from "../../../../../../../model/react/DashboardStoreProvider.js";
+import { useDashboardUserInteraction } from "../../../../../../../model/react/useDashboardUserInteraction.js";
+import { selectIsWhiteLabeled } from "../../../../../../../model/store/config/configSelectors.js";
 
 interface IActionProps {
     title: string;

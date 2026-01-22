@@ -5,7 +5,7 @@ import { type SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
 import { validateExistingInsightWidget } from "./validation/widgetValidations.js";
-import { type IRemoveDrillDownForInsightWidget } from "../../commands/index.js";
+import { type IRemoveDrillDownForInsightWidget } from "../../commands/insight.js";
 import {
     type IDashboardInsightWidgetDrillDownRemoved,
     insightWidgetDrillDownRemoved,

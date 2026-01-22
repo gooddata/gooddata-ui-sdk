@@ -20,18 +20,19 @@ export {
 export { DummySemanticSearchQueryBuilder } from "./dummyBackend/DummySemanticSearch.js";
 export { DummyGenAIChatThread } from "./dummyBackend/DummyGenAIChatThread.js";
 
-export {
-    type DecoratorFactories,
-    type CatalogDecoratorFactory,
-    type ExecutionDecoratorFactory,
-    type SecuritySettingsDecoratorFactory,
-    type WorkspaceSettingsDecoratorFactory,
-    type AutomationsDecoratorFactory,
-    type AttributesDecoratorFactory,
-    type DashboardsDecoratorFactory,
-    type GeoDecoratorFactory,
-    decoratedBackend,
-} from "./decoratedBackend/index.js";
+export { decoratedBackend } from "./decoratedBackend/index.js";
+
+export type {
+    DecoratorFactories,
+    CatalogDecoratorFactory,
+    ExecutionDecoratorFactory,
+    SecuritySettingsDecoratorFactory,
+    WorkspaceSettingsDecoratorFactory,
+    AutomationsDecoratorFactory,
+    AttributesDecoratorFactory,
+    DashboardsDecoratorFactory,
+    GeoDecoratorFactory,
+} from "./decoratedBackend/types.js";
 
 export {
     type PreparedExecutionWrapper,

@@ -7,8 +7,8 @@ import { FormattedMessage } from "react-intl";
 import { type ISeparators } from "@gooddata/sdk-ui";
 import { stringUtils } from "@gooddata/util";
 
-import { Bubble } from "../../../Bubble/index.js";
-import { Typography } from "../../../Typography/index.js";
+import { Bubble } from "../../../Bubble/Bubble.js";
+import { Typography } from "../../../Typography/Typography.js";
 import { type IFormatTemplate } from "../../typings.js";
 import { PreviewRows } from "../shared/PreviewRows.js";
 

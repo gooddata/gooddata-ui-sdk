@@ -32,7 +32,8 @@ import {
 
 import { Chart, type IChartProps } from "./Chart.js";
 import { mergePropertiesWithOverride } from "./propertyMerger.js";
-import { type IChartConfig, type OnLegendReady } from "../../interfaces/index.js";
+import { type IChartConfig } from "../../interfaces/chartConfig.js";
+import { type OnLegendReady } from "../../interfaces/chartProps.js";
 import { alignChart } from "../chartTypes/_chartCreators/helpers.js";
 import {
     isFunnel,

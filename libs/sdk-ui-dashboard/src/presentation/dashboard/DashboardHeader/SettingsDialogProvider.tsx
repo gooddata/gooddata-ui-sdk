@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type ReactElement, useCallback } from "react";
 
@@ -6,17 +6,12 @@ import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../../../locales.js";
-import {
-    metaActions,
-    selectIsSettingsDialogOpen,
-    uiActions,
-    useDashboardDispatch,
-    useDashboardSelector,
-} from "../../../model/index.js";
-import {
-    DashboardSettingsDialog,
-    type IDashboardSettingsApplyPayload,
-} from "../../dashboardSettingsDialog/index.js";
+import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { metaActions } from "../../../model/store/meta/index.js";
+import { uiActions } from "../../../model/store/ui/index.js";
+import { selectIsSettingsDialogOpen } from "../../../model/store/ui/uiSelectors.js";
+import { DashboardSettingsDialog } from "../../dashboardSettingsDialog/DashboardSettingsDialog.js";
+import { type IDashboardSettingsApplyPayload } from "../../dashboardSettingsDialog/types.js";
 
 const useShareDialogDashboardHeader = () => {
     const dispatch = useDashboardDispatch();

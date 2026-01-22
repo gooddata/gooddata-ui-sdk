@@ -1,10 +1,10 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { defineMessages } from "react-intl";
 
 import { type DisabledReason } from "./types.js";
 import { isDataError, isDataErrorTooLarge } from "../../../../_staging/errors/errorPredicates.js";
-import { type IExecutionResultEnvelope } from "../../../../model/index.js";
+import { type IExecutionResultEnvelope } from "../../../../model/store/executionResults/types.js";
 
 const tooltipMessages = defineMessages({
     tooLarge: { id: "options.menu.data.too.large" },

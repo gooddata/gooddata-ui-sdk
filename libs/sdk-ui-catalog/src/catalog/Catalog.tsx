@@ -10,12 +10,13 @@ import { LoadingMask } from "@gooddata/sdk-ui-kit";
 
 import { Layout } from "./Layout.js";
 import type { OpenHandlerEvent } from "../catalogDetail/CatalogDetailContent.js";
-import type { ICatalogItemRef } from "../catalogItem/index.js";
+import { type ICatalogItemRef } from "../catalogItem/types.js";
 import { Header } from "../header/Header.js";
 import { Main } from "../main/Main.js";
-import { PermissionsGate, useFeatureFlag } from "../permission/index.js";
+import { PermissionsGate } from "../permission/PermissionsGate.js";
+import { useIsCatalogQualityEnabled } from "../quality/gate.js";
 import { QualityScoreCard } from "../quality/QualityScoreCard.js";
-import { FullTextSearchInput } from "../search/index.js";
+import { FullTextSearchInput } from "../search/FullTextSearchInput.js";
 
 type Props = {
     backend: IAnalyticalBackend;
@@ -38,7 +39,7 @@ export function Catalog({
 }: Props) {
     const intl = useIntl();
 
-    const isQualityEnabled = useFeatureFlag("enableGenAICatalogQualityChecker");
+    const isQualityEnabled = useIsCatalogQualityEnabled();
 
     return (
         <Layout>

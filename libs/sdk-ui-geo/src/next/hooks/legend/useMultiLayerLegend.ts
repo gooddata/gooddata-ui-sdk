@@ -1,12 +1,12 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
 import type { IGeoLayerData } from "../../context/GeoLayersContext.js";
 import { useGeoLegend } from "../../context/GeoLegendContext.js";
-import type { ILegendModel } from "../../types/legend/index.js";
+import { type ILegendModel } from "../../types/legend/model.js";
 import type { ILayerExecutionRecord } from "../../types/props/geoChartNext/internal.js";
-import { aggregateLegend } from "../../utils/legend/index.js";
+import { aggregateLegend } from "../../utils/legend/aggregateLegend.js";
 
 /**
  * Options for the multi-layer legend hook.

@@ -1,8 +1,8 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { cloneDeep } from "lodash-es";
 
-import { type IChartConfig } from "../../../interfaces/index.js";
+import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { type HighchartsOptions } from "../../lib/index.js";
 import { MAX_POINT_WIDTH } from "../_chartCreators/commonConfiguration.js";
 import { getCommonResponsiveConfig } from "../_chartCreators/responsive.js";

@@ -10,7 +10,7 @@ import {
     type IDashboardLayoutSectionFacade,
 } from "../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
 import { serializeLayoutItemPath } from "../../../_staging/layout/coordinates.js";
-import { type ExtendedDashboardWidget } from "../../../model/index.js";
+import { type ExtendedDashboardWidget } from "../../../model/types/layoutTypes.js";
 import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
 import { useIsDraggingWidget } from "../../dragAndDrop/draggableWidget/useIsDraggingWidget.js";
 import { HeightResizerHotspot } from "../dragAndDrop/Resize/HeightResizerHotspot.js";

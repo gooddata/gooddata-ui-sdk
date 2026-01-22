@@ -2,8 +2,9 @@
 
 import { type SagaIterator } from "redux-saga";
 
-import { type ITriggerEvent } from "../../commands/index.js";
-import { type DashboardEvents, type ICustomDashboardEvent } from "../../events/index.js";
+import { type ITriggerEvent } from "../../commands/events.js";
+import { type ICustomDashboardEvent } from "../../events/base.js";
+import { type DashboardEvents } from "../../events/index.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 

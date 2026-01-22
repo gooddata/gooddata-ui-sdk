@@ -7,7 +7,8 @@ import { isEmpty } from "lodash-es";
 import { FormattedMessage } from "react-intl";
 import { v4 } from "uuid";
 
-import { type ArrowOffsets, Bubble } from "../../../../Bubble/index.js";
+import { Bubble } from "../../../../Bubble/Bubble.js";
+import { type ArrowOffsets } from "../../../../Bubble/typings.js";
 import { type IAlignPoint } from "../../../../typings/positioning.js";
 
 const VALID_INPUT = "^[0-9]+[.,]?[0-9]*$";

@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import {
     type IAutomationMetadataObject,
@@ -12,7 +12,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { EditAlert } from "./EditAlert.js";
-import { type IExecutionResultEnvelope } from "../../../../../model/index.js";
+import { type IExecutionResultEnvelope } from "../../../../../model/store/executionResults/types.js";
 import { type IMeasureFormatMap } from "../../../../alerting/DefaultAlertingDialog/utils/getters.js";
 import { type AlertAttribute, type AlertMetric } from "../../../../alerting/types.js";
 

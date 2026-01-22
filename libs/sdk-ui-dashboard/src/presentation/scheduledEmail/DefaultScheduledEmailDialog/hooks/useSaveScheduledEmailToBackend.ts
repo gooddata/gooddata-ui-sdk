@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { useCallback, useState } from "react";
 
 import { omit } from "lodash-es";
@@ -18,7 +19,8 @@ import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
 import { useCreateScheduledEmail } from "./useCreateScheduledEmail.js";
 import { useUpdateScheduledEmail } from "./useUpdateScheduledEmail.js";
-import { selectEnableAutomationFilterContext, useDashboardSelector } from "../../../../model/index.js";
+import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
+import { selectEnableAutomationFilterContext } from "../../../../model/store/config/configSelectors.js";
 import { type IScheduledEmailDialogProps } from "../../types.js";
 
 export function useSaveScheduledEmailToBackend(

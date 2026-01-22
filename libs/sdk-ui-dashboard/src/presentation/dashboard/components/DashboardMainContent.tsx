@@ -1,18 +1,16 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type Ref, type RefObject, forwardRef, useEffect } from "react";
 
 import cx from "classnames";
 
 import { DateFilterConfigWarnings } from "./DateFilterConfigWarnings.js";
-import {
-    changeFilterContextSelection,
-    useDispatchDashboardCommand,
-    useWidgetSelection,
-} from "../../../model/index.js";
-import { useDashboardDrop } from "../../dragAndDrop/index.js";
+import { changeFilterContextSelection } from "../../../model/commands/filters.js";
+import { useDispatchDashboardCommand } from "../../../model/react/useDispatchDashboardCommand.js";
+import { useWidgetSelection } from "../../../model/react/useWidgetSelection.js";
+import { useDashboardDrop } from "../../dragAndDrop/useDashboardDrop.js";
 import { useWidgetDragHoverHandlers as useFlexibleWidgetDragHoverHandlers } from "../../flexibleLayout/dragAndDrop/draggableWidget/useWidgetDragHoverHandlers.js";
-import { DashboardLayout } from "../../widget/index.js";
+import { DashboardLayout } from "../../widget/dashboardLayout/DashboardLayout.js";
 import { type IDashboardProps } from "../types.js";
 
 export const DashboardMainContent = forwardRef(function DashboardMainContent(_: IDashboardProps, ref) {

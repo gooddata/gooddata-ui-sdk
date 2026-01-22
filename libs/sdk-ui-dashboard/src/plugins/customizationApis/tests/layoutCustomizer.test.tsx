@@ -8,8 +8,8 @@ import { suppressConsole } from "@gooddata/util";
 
 import { TestingDashboardCustomizationLogger } from "./fixtures/TestingDashboardCustomizationLogger.js";
 import { EMPTY_MUTATIONS } from "./utils.js";
-import { type ExtendedDashboardWidget } from "../../../model/index.js";
-import { type IDashboardLayoutProps } from "../../../presentation/index.js";
+import { type ExtendedDashboardWidget } from "../../../model/types/layoutTypes.js";
+import { type IDashboardLayoutProps } from "../../../presentation/widget/dashboardLayout/types.js";
 import { DashboardCustomizationLogger } from "../customizationLogging.js";
 import { DefaultLayoutCustomizer } from "../layoutCustomizer.js";
 import { type CustomizerMutationsContext, createCustomizerMutationsContext } from "../types.js";

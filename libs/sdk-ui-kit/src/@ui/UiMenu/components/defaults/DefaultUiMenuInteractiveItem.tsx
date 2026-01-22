@@ -4,7 +4,7 @@ import { type KeyboardEvent, type MouseEvent, type ReactNode, useCallback } from
 
 import cx from "classnames";
 
-import { ShortenedText } from "../../../../ShortenedText/index.js";
+import { ShortenedText } from "../../../../ShortenedText/ShortenedText.js";
 import { UiTooltip } from "../../../UiTooltip/UiTooltip.js";
 import { typedUiMenuContextStore } from "../../context.js";
 import { e } from "../../menuBem.js";

@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type IntlShape } from "react-intl";
 
@@ -19,7 +19,7 @@ import {
     ComparisonPositionValues,
     type IComparison,
     type ILabelConfig,
-} from "../../../../interfaces/index.js";
+} from "../../../../interfaces/comparison.js";
 import {
     type IDefaultLabelKeys,
     getCalculationValuesDefault,

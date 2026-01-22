@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, all, call, put } from "redux-saga/effects";
@@ -14,7 +14,7 @@ import {
     widgetRef,
 } from "@gooddata/sdk-model";
 
-import { type IDashboardCommand } from "../../commands/index.js";
+import { type IDashboardCommand } from "../../commands/base.js";
 import { insightWidgetDrillsRemoved } from "../../events/insight.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { uiActions } from "../../store/ui/index.js";

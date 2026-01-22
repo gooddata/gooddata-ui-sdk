@@ -21,34 +21,37 @@ import { useImageExportHandler } from "./useImageExportHandler.js";
 import { useRawExportHandler } from "./useRawExportHandler.js";
 import { useSlidesExportHandler } from "./useSlidesExportHandler.js";
 import {
-    type IDashboardInsightWidgetExportResolved,
     type IExportImageInsightWidget,
     type IExportInsightWidget,
     type IExportRawInsightWidget,
     type IExportSlidesInsightWidget,
-    dispatchAndWaitFor,
     exportImageInsightWidget,
     exportInsightWidget,
     exportRawInsightWidget,
     exportSlidesInsightWidget,
+} from "../../../model/commands/insight.js";
+import { type IDashboardInsightWidgetExportResolved } from "../../../model/events/insight.js";
+import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { dispatchAndWaitFor } from "../../../model/store/_infra/dispatchAndWaitFor.js";
+import {
     selectEnableDashboardTabularExport,
+    selectSettings,
+} from "../../../model/store/config/configSelectors.js";
+import {
     selectIsExecutionResultExportableToCsvByRef,
     selectIsExecutionResultExportableToPdfByRef,
     selectIsExecutionResultExportableToXlsxByRef,
+} from "../../../model/store/executionResults/executionResultsSelectors.js";
+import { selectShowWidgetAsTable } from "../../../model/store/showWidgetAsTable/showWidgetAsTableSelectors.js";
+import { selectSlideShowExportVisible } from "../../../model/store/topBar/topBarSelectors.js";
+import {
     selectIsExportableToCSV,
     selectIsExportableToPdfTabular,
     selectIsExportableToPngImage,
     selectIsExportableToXLSX,
-    selectSettings,
-    selectShowWidgetAsTable,
-    selectSlideShowExportVisible,
-    useDashboardDispatch,
-    useDashboardSelector,
-} from "../../../model/index.js";
-import {
-    useExportTabularPdfDialogContext,
-    useExportXlsxDialogContext,
-} from "../../dashboardContexts/index.js";
+} from "../../../model/store/widgetExports/widgetExportsSelectors.js";
+import { useExportTabularPdfDialogContext } from "../../dashboardContexts/ExportTabularPdfDialogContext.js";
+import { useExportXlsxDialogContext } from "../../dashboardContexts/ExportXlsxDialogContext.js";
 import { getDefaultPdfPageSize } from "../../scheduledEmail/utils/pdfPageSize.js";
 import { useExportToTabular } from "../../topBar/menuButton/useExportToTabular.js";
 

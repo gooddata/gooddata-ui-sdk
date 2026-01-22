@@ -1,10 +1,10 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { call, put } from "redux-saga/effects";
 
 import { queryEnvelopeWithPromise } from "./queryProcessing.js";
-import { type IDashboardQuery } from "../../queries/index.js";
+import { type IDashboardQuery } from "../../queries/base.js";
 
 /**
  * Runs the provided query and returns its result.

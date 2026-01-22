@@ -1,12 +1,10 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
-import { type ICreatePanelItemComponentProps } from "../../componentDefinition/index.js";
-import {
-    AddVisualizationSwitcherWidgetButton,
-    DraggableVisualizationSwitcherCreatePanelItem,
-} from "../../dragAndDrop/index.js";
+import { type ICreatePanelItemComponentProps } from "../../componentDefinition/types.js";
+import { AddVisualizationSwitcherWidgetButton } from "../../dragAndDrop/draggableWidget/AddVisualizationSwitcherWidgetButton.js";
+import { DraggableVisualizationSwitcherCreatePanelItem } from "../../dragAndDrop/draggableWidget/DraggableVisualizationSwitcherCreatePanelItem.js";
 
 /**
  * @internal

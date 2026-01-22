@@ -9,8 +9,8 @@ import { FormattedMessage, type WrappedComponentProps, injectIntl } from "react-
 import { guidFor } from "./guid.js";
 import { LegacyMultiSelectListWithIntl } from "./LegacyMultiSelectList.js";
 import { LegacyMultiSelectListItem } from "./LegacyMultiSelectListItem.js";
-import { Input } from "../Form/index.js";
-import { Message } from "../Messages/index.js";
+import { Input } from "../Form/Input.js";
+import { Message } from "../Messages/Message.js";
 
 function NoItemsFound() {
     return (

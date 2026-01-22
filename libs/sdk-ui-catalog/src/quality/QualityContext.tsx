@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type PropsWithChildren, createContext, useCallback, useContext, useMemo, useState } from "react";
 
@@ -6,8 +6,8 @@ import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import type { ISemanticQualityIssue, ISemanticQualityReport, Identifier } from "@gooddata/sdk-model";
 import { type UseCancelablePromiseStatus, useCancelablePromise } from "@gooddata/sdk-ui";
 
+import { useIsCatalogQualityEnabled } from "./gate.js";
 import { createQueryId, getQualityReportQuery, triggerQualityIssuesCalculationQuery } from "./query.js";
-import { useFeatureFlag } from "../permission/index.js";
 
 type QualityQueryType = "fetch" | "trigger";
 
@@ -43,7 +43,7 @@ type Props = PropsWithChildren<{
 }>;
 
 export function QualityProvider({ backend, workspace, children }: Props) {
-    const enabled = useFeatureFlag("enableGenAICatalogQualityChecker");
+    const enabled = useIsCatalogQualityEnabled();
 
     const [queryType, setQueryType] = useState<QualityQueryType>("fetch");
     const [queryKey, setQueryKey] = useState<string>(createQueryId);

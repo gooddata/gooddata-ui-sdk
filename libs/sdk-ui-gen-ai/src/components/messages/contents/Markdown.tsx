@@ -8,7 +8,8 @@ import { Typography } from "@gooddata/sdk-ui-kit";
 
 import { CustomHyperlink } from "./CustomHyperlink.js";
 import { type TextContentObject } from "../../../model.js";
-import { rehypeReferences, remarkReferences } from "../../completion/index.js";
+import { rehypeReferences } from "../../completion/plugins/rehype-references.js";
+import { remarkReferences } from "../../completion/plugins/remark-references.js";
 
 const componentMap: Components = {
     p: ({ children }) => <Typography tagName="p">{children}</Typography>,

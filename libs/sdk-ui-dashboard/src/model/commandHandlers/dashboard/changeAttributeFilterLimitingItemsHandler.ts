@@ -4,7 +4,7 @@ import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 
-import { type ISetAttributeFilterLimitingItems } from "../../commands/index.js";
+import { type ISetAttributeFilterLimitingItems } from "../../commands/dashboard.js";
 import { dashboardAttributeConfigLimitingItemsChanged } from "../../events/filters.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";

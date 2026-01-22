@@ -8,7 +8,8 @@ import {
 } from "@gooddata/sdk-backend-spi";
 import { type ISettings } from "@gooddata/sdk-model";
 
-import { type WorkspaceSettingsDecoratorFactory, decoratedBackend } from "../decoratedBackend/index.js";
+import { decoratedBackend } from "../decoratedBackend/index.js";
+import { type WorkspaceSettingsDecoratorFactory } from "../decoratedBackend/types.js";
 import { DecoratedWorkspaceSettingsService } from "../decoratedBackend/workspaceSettings.js";
 
 /**

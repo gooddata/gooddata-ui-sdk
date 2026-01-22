@@ -19,7 +19,8 @@ import { ShortenedText, UiTooltip, isActionKey, useIdPrefixed } from "@gooddata/
 import { stringUtils } from "@gooddata/util";
 
 import { AttributeFilterButtonTooltip } from "./AttributeFilterButtonTooltip.js";
-import { FilterButtonCustomIcon, type IFilterButtonCustomIcon } from "../../../shared/index.js";
+import { FilterButtonCustomIcon } from "../../../shared/components/internal/FilterButtonCustomIcon.js";
+import { type IFilterButtonCustomIcon } from "../../../shared/interfaces/index.js";
 
 export const ALIGN_POINT = [
     { align: "tc bc", offset: { x: 0, y: -2 } },

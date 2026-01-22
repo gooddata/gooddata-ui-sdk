@@ -4,8 +4,9 @@ import { beforeEach, describe, expect, it } from "vitest";
 
 import { type IDashboardDefinition } from "@gooddata/sdk-model";
 
-import { addLayoutSection, saveDashboard } from "../../../commands/index.js";
-import { type DashboardSaved } from "../../../events/index.js";
+import { saveDashboard } from "../../../commands/dashboard.js";
+import { addLayoutSection } from "../../../commands/layout.js";
+import { type DashboardSaved } from "../../../events/dashboard.js";
 import { selectPersistedDashboard } from "../../../store/meta/metaSelectors.js";
 import { selectFilterContextIdentity } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { selectBasicLayout } from "../../../store/tabs/layout/layoutSelectors.js";

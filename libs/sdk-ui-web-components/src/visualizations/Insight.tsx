@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type ComponentProps } from "react";
 
@@ -14,7 +14,12 @@ import {
 } from "@gooddata/sdk-ui";
 import type { InsightView } from "@gooddata/sdk-ui-ext";
 
-import { CustomElementAdapter, EVENT_HANDLER, GET_COMPONENT, LOAD_COMPONENT } from "../common/index.js";
+import {
+    CustomElementAdapter,
+    EVENT_HANDLER,
+    GET_COMPONENT,
+    LOAD_COMPONENT,
+} from "../common/CustomElementAdapter.js";
 import { stringToFilters } from "../common/typeGuards/stringToFilters.js";
 import { type CustomElementContext } from "../context.js";
 

@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type ComponentType, useCallback, useEffect, useState } from "react";
 
@@ -8,12 +8,12 @@ import { useIntl } from "react-intl";
 import { type IFilter, type ISeparators } from "@gooddata/sdk-model";
 import { type IAlignPoint, RichTextWithTooltip, TextAreaWithSubmit } from "@gooddata/sdk-ui-kit";
 
+import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
 import {
     selectEnableRichTextDescriptions,
     selectEnableRichTextDynamicReferences,
-    selectExecutionTimestamp,
-    useDashboardSelector,
-} from "../../../../../model/index.js";
+} from "../../../../../model/store/config/configSelectors.js";
+import { selectExecutionTimestamp } from "../../../../../model/store/ui/uiSelectors.js";
 
 const richTextTooltipAlignPoints: IAlignPoint[] = [
     { align: "bl tl", offset: { x: 4, y: 5 } },

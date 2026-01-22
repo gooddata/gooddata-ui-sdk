@@ -1,8 +1,10 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type ComponentPropsWithRef, type ComponentType } from "react";
 
-import { selectEnableSlideshowExports, selectRenderMode, useDashboardSelector } from "../../model/index.js";
+import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
+import { selectEnableSlideshowExports } from "../../model/store/config/configSelectors.js";
+import { selectRenderMode } from "../../model/store/renderMode/renderModeSelectors.js";
 import { type RenderMode } from "../../types.js";
 
 /**

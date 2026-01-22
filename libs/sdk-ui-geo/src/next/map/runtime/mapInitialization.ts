@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
@@ -52,12 +52,13 @@ export async function initializeMapLibreMap(
         cooperativeGestures = true,
         maxZoom,
         style,
+        tileset,
     }: IMapOptions,
     locale?: IMapLibreLocale,
     backend?: IAnalyticalBackend,
 ): Promise<IMapInitResult> {
     const maplibregl = await import("maplibre-gl");
-    const styleSpecification = style ?? (backend ? await fetchMapStyle(backend) : undefined);
+    const styleSpecification = style ?? (backend ? await fetchMapStyle(backend, tileset) : undefined);
 
     if (!styleSpecification) {
         throw new Error("Map style is required. Provide either a style option or a backend instance.");

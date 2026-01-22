@@ -1,8 +1,9 @@
-// (C) 2022 GoodData Corporation
-import { type DateFilterComponentSet } from "../../componentDefinition/index.js";
-import { type DateFilterComponentProvider } from "../../dashboardContexts/index.js";
-import { DefaultDateFilterDraggingComponent } from "../../dragAndDrop/index.js";
-import { AttributesDropdown } from "../attributeFilter/addAttributeFilter/index.js";
+// (C) 2022-2026 GoodData Corporation
+
+import { type DateFilterComponentSet } from "../../componentDefinition/types.js";
+import { type DateFilterComponentProvider } from "../../dashboardContexts/types.js";
+import { DefaultDateFilterDraggingComponent } from "../../dragAndDrop/draggableDateFilter/DefaultDateFilterDraggingComponent.js";
+import { AttributesDropdown } from "../attributeFilter/addAttributeFilter/AttributesDropdown.js";
 import { CreatableAttributeFilter } from "../attributeFilter/CreatableAttributeFilter.js";
 
 /**

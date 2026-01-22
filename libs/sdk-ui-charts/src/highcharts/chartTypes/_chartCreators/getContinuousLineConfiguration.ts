@@ -1,5 +1,6 @@
-// (C) 2023-2025 GoodData Corporation
-import { type IChartConfig } from "../../../interfaces/index.js";
+// (C) 2023-2026 GoodData Corporation
+
+import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { type HighchartsOptions, type SeriesAreaOptions } from "../../lib/index.js";
 import { type IChartOptions } from "../../typings/unsafe.js";
 import { isAreaChart, isComboChart } from "../_util/common.js";

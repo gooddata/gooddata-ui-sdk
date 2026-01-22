@@ -19,8 +19,8 @@ import {
 } from "@gooddata/sdk-model";
 import { fillMissingTitles } from "@gooddata/sdk-ui";
 
-import { filterContextItemsToDashboardFiltersByWidget } from "../../../converters/index.js";
-import { type IExportRawInsightWidget } from "../../commands/index.js";
+import { filterContextItemsToDashboardFiltersByWidget } from "../../../converters/filterConverters.js";
+import { type IExportRawInsightWidget } from "../../commands/insight.js";
 import {
     type IDashboardInsightWidgetExportResolved,
     insightWidgetExportResolved,

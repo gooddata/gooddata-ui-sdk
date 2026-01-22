@@ -5,8 +5,9 @@ import { type ReactElement } from "react";
 import cx from "classnames";
 
 import { type ActionType, type ISettingItem } from "./typings.js";
-import { Bubble, BubbleHoverTrigger } from "../Bubble/index.js";
-import { Button } from "../Button/index.js";
+import { Bubble } from "../Bubble/Bubble.js";
+import { BubbleHoverTrigger } from "../Bubble/BubbleHoverTrigger.js";
+import { Button } from "../Button/Button.js";
 
 const DEFAULT_ALIGN_POINT_TITLE_TOOLTIP = [{ align: "cr cl" }, { align: "bl tl" }, { align: "bc tc" }];
 

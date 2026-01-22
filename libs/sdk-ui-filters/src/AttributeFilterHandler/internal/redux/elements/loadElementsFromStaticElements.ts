@@ -16,7 +16,7 @@ import {
 
 import { InMemoryPaging } from "./InMemoryPaging.js";
 import { type IHiddenElementsInfo } from "./types.js";
-import { type ILoadElementsOptions } from "../../../types/index.js";
+import { type ILoadElementsOptions } from "../../../types/elementsLoader.js";
 
 const resolveHiddenElements =
     (hiddenElements: IAttributeElements) =>

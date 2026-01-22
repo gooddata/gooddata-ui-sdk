@@ -1,17 +1,13 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useCallback } from "react";
 
 import { type ILocale } from "@gooddata/sdk-ui";
 
-import {
-    changeIgnoreExecutionTimestamp,
-    selectExecutionTimestamp,
-    selectLocale,
-    selectTimezone,
-    useDashboardDispatch,
-    useDashboardSelector,
-} from "../../../model/index.js";
+import { changeIgnoreExecutionTimestamp } from "../../../model/commands/dashboard.js";
+import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectLocale, selectTimezone } from "../../../model/store/config/configSelectors.js";
+import { selectExecutionTimestamp } from "../../../model/store/ui/uiSelectors.js";
 
 /**
  * Formats a date using the provided locale and timezone from backend settings,

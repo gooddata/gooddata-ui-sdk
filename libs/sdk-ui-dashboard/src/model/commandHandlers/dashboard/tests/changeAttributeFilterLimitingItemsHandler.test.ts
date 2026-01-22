@@ -1,10 +1,10 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { idRef } from "@gooddata/sdk-model";
 
-import { setAttributeFilterLimitingItems } from "../../../commands/index.js";
+import { setAttributeFilterLimitingItems } from "../../../commands/dashboard.js";
 import { selectFilterContextAttributeFilters } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import { SimpleDashboardIdentifier } from "../../../tests/fixtures/SimpleDashboard.fixtures.js";

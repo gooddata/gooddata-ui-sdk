@@ -3,13 +3,15 @@
 import { type Middleware, type PayloadAction } from "@reduxjs/toolkit";
 import { type SagaIterator } from "redux-saga";
 
-import { type DashboardCommandType, type DashboardCommands } from "../commands/index.js";
-import { type DashboardEventType, type DashboardEvents } from "../events/index.js";
-import { type IDashboardQuery } from "../queries/index.js";
+import { type DashboardCommandType } from "../commands/base.js";
+import { type DashboardCommands } from "../commands/index.js";
+import { type DashboardEventType } from "../events/base.js";
+import { type DashboardEvents } from "../events/index.js";
+import { type IDashboardQuery } from "../queries/base.js";
 import { queryEnvelopeWithPromise } from "../store/_infra/queryProcessing.js";
 import { type IDashboardQueryService } from "../store/_infra/queryService.js";
 import { type IReduxedDashboardStore, createDashboardStore } from "../store/dashboardStore.js";
-import { type DashboardState } from "../store/index.js";
+import { type DashboardState } from "../store/types.js";
 import { type DashboardContext, type DashboardModelCustomizationFns } from "../types/commonTypes.js";
 
 /**

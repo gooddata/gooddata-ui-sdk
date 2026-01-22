@@ -1,6 +1,6 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
-import { type IChartConfig } from "../../../interfaces/index.js";
+import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { type HighchartsOptions, type SeriesPieOptions } from "../../lib/index.js";
 import { alignChart } from "../_chartCreators/helpers.js";
 import { getPieResponsiveConfig } from "../_chartCreators/responsive.js";

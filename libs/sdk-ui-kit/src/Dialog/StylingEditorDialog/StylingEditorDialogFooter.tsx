@@ -2,10 +2,11 @@
 
 import { useIntl } from "react-intl";
 
-import { Bubble, BubbleHoverTrigger } from "../../Bubble/index.js";
-import { Button } from "../../Button/index.js";
-import { Hyperlink } from "../../Hyperlink/index.js";
-import { LoadingSpinner } from "../../LoadingSpinner/index.js";
+import { Bubble } from "../../Bubble/Bubble.js";
+import { BubbleHoverTrigger } from "../../Bubble/BubbleHoverTrigger.js";
+import { Button } from "../../Button/Button.js";
+import { Hyperlink } from "../../Hyperlink/Hyperlink.js";
+import { LoadingSpinner } from "../../LoadingSpinner/LoadingSpinner.js";
 import { Footer } from "../Footer.js";
 import { FooterButtons } from "../FooterButtons.js";
 import { type IDialogBaseProps } from "../typings.js";

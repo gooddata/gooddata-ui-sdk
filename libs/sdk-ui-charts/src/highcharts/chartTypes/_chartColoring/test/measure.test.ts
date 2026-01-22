@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
@@ -6,11 +6,11 @@ import { ReferenceMd, ReferenceRecordings } from "@gooddata/reference-workspace"
 import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { type IColorPalette, type ITheme } from "@gooddata/sdk-model";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
+import { type IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 
 import { TwoColorPalette } from "./color.fixture.js";
 import { getColorsFromStrategy } from "./helper.js";
 import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
-import { type IColorMapping } from "../../../../interfaces/index.js";
 import { ColorFactory } from "../../_chartOptions/colorFactory.js";
 import { getMVS } from "../../_util/test/helper.js";
 import { MeasureColorStrategy } from "../measure.js";

@@ -13,10 +13,10 @@ import { suppressConsole } from "@gooddata/util";
 
 import { EMPTY_MUTATIONS } from "./utils.js";
 import {
-    type IDashboardInsightProps,
     type InsightComponentProvider,
     type OptionalInsightComponentProvider,
-} from "../../../presentation/index.js";
+} from "../../../presentation/dashboardContexts/types.js";
+import { type IDashboardInsightProps } from "../../../presentation/widget/insight/types.js";
 import { DashboardCustomizationLogger } from "../customizationLogging.js";
 import { DefaultInsightCustomizer } from "../insightCustomizer.js";
 import { type CustomizerMutationsContext, createCustomizerMutationsContext } from "../types.js";

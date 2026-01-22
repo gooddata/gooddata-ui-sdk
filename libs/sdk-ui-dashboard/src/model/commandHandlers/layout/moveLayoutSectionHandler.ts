@@ -14,7 +14,7 @@ import {
     serializeLayoutSectionPath,
     updateSectionIndex,
 } from "../../../_staging/layout/coordinates.js";
-import { type IMoveLayoutSection } from "../../commands/index.js";
+import { type IMoveLayoutSection } from "../../commands/layout.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { type IDashboardLayoutSectionMoved, layoutSectionMoved } from "../../events/layout.js";
 import { tabsActions } from "../../store/tabs/index.js";

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { memo, useMemo, useState } from "react";
 
@@ -11,7 +11,7 @@ import { UiButton, UiSkeleton } from "@gooddata/sdk-ui-kit";
 
 import { useFilterActions, useFilterState } from "./FilterContext.js";
 import { StaticFilter } from "./StaticFilter.js";
-import { testIds } from "../automation/index.js";
+import { filterCreatedBy } from "../automation/testIds.js";
 
 type Props = {
     backend: IAnalyticalBackend;
@@ -66,7 +66,7 @@ export function FilterCreatedBy({ backend, workspace }: Props) {
             }
             getItemKey={getItemKey}
             getItemTitle={getItemTitle}
-            dataTestId={testIds.filterCreatedBy}
+            dataTestId={filterCreatedBy}
             noDataMessage={
                 isSyncing ? reasoning : <FormattedMessage id="analyticsCatalog.filter.createdBy.noOptions" />
             }

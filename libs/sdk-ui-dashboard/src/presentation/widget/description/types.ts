@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type ComponentType } from "react";
 
@@ -10,7 +10,7 @@ import {
     type ScreenSize,
 } from "@gooddata/sdk-model";
 
-import { type DescriptionExportData } from "../../export/index.js";
+import { type DescriptionExportData } from "../../export/types.js";
 
 export interface IInsightWidgetDescriptionTriggerProps {
     widget: IInsightWidget;

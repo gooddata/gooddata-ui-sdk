@@ -2,7 +2,7 @@
 
 import { type IAttributeElement } from "@gooddata/sdk-model";
 
-import { type AttributeElementKey } from "../../../types/index.js";
+import { type AttributeElementKey } from "../../../types/common.js";
 import { type IAttributeFilterState } from "../store/state.js";
 
 /**

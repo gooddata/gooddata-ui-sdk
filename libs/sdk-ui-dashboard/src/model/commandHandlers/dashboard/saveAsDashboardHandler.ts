@@ -28,7 +28,7 @@ import {
 } from "../../../_staging/dashboard/dashboardLayout.js";
 import { createListedDashboard } from "../../../_staging/listedDashboard/listedDashboardUtils.js";
 import { type SaveDashboardAs } from "../../commands/dashboard.js";
-import { changeRenderMode } from "../../commands/index.js";
+import { changeRenderMode } from "../../commands/renderMode.js";
 import { type DashboardCopySaved, dashboardCopySaved } from "../../events/dashboard.js";
 import { accessibleDashboardsActions } from "../../store/accessibleDashboards/index.js";
 import { selectBackendCapabilities } from "../../store/backendCapabilities/backendCapabilitiesSelectors.js";
@@ -50,9 +50,10 @@ import {
     selectFilterContextAttributeFilters,
     selectFilterContextDefinition,
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
-import { type ITabState, tabsActions } from "../../store/tabs/index.js";
+import { tabsActions } from "../../store/tabs/index.js";
 import { filterOutCustomWidgets, selectBasicLayout } from "../../store/tabs/layout/layoutSelectors.js";
 import { selectTabs } from "../../store/tabs/tabsSelectors.js";
+import { type ITabState } from "../../store/tabs/tabsState.js";
 import { selectCurrentUser } from "../../store/user/userSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { type PromiseFnReturnType } from "../../types/sagas.js";

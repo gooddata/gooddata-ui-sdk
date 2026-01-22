@@ -1,11 +1,11 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type CSSProperties } from "react";
 
 import { type IntlShape } from "react-intl";
 
 import { ComparisonIndicators, getComparisonAriaLabelMessage } from "./ComparisonIndicator.js";
-import { type IChartConfig } from "../../../../../../../interfaces/index.js";
+import { type IChartConfig } from "../../../../../../../interfaces/chartConfig.js";
 import {
     type ComparisonDataItem,
     type EvaluationType,

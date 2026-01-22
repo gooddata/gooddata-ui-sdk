@@ -1,4 +1,5 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { useCallback, useMemo } from "react";
 
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -13,7 +14,7 @@ import {
     type InsightWidgetComponentSet,
     type RichTextWidgetComponentSet,
     type VisualizationSwitcherWidgetComponentSet,
-} from "../../componentDefinition/index.js";
+} from "../../componentDefinition/types.js";
 import {
     type AttributeFilterComponentProvider,
     type DashboardContentComponentProvider,
@@ -31,32 +32,28 @@ import {
     type VisualizationSwitcherComponentProvider,
     type VisualizationSwitcherToolbarComponentProvider,
     type WidgetComponentProvider,
-} from "../../dashboardContexts/index.js";
-import {
-    DefaultDashboardAttributeFilter,
-    DefaultDashboardAttributeFilterComponentSetFactory,
-    DefaultDashboardDateFilter,
-    DefaultDashboardDateFilterComponentSetFactory,
-} from "../../filterBar/index.js";
-import {
-    DefaultDashboardInsight,
-    DefaultDashboardInsightComponentSetFactory,
-    DefaultDashboardInsightMenu,
-    DefaultDashboardInsightMenuButton,
-    DefaultDashboardInsightMenuTitle,
-    DefaultDashboardLayoutComponentSetFactory,
-    DefaultDashboardNestedLayout,
-    DefaultDashboardRichText,
-    DefaultDashboardRichTextComponentSetFactory,
-    DefaultDashboardRichTextMenu,
-    DefaultDashboardRichTextMenuTitle,
-    DefaultDashboardVisualizationSwitcher,
-    DefaultDashboardVisualizationSwitcherComponentSetFactory,
-    DefaultDashboardWidget,
-    DefaultInsightBody,
-    DefaultShowAsTableButton,
-    DefaultVisualizationSwitcherToolbar,
-} from "../../widget/index.js";
+} from "../../dashboardContexts/types.js";
+import { DefaultDashboardAttributeFilter } from "../../filterBar/attributeFilter/DefaultDashboardAttributeFilter.js";
+import { DefaultDashboardAttributeFilterComponentSetFactory } from "../../filterBar/attributeFilter/DefaultDashboardAttributeFilterComponentSetFactory.js";
+import { DefaultDashboardDateFilter } from "../../filterBar/dateFilter/DefaultDashboardDateFilter.js";
+import { DefaultDashboardDateFilterComponentSetFactory } from "../../filterBar/dateFilter/DefaultDashboardDateFilterComponentSetFactory.js";
+import { DefaultDashboardLayout as DefaultDashboardNestedLayout } from "../../widget/dashboardLayout/DefaultDashboardLayout.js";
+import { DefaultDashboardLayoutComponentSetFactory } from "../../widget/dashboardLayout/DefaultDashboardLayoutComponentSetFactory.js";
+import { DefaultDashboardInsight } from "../../widget/insight/DefaultDashboardInsight.js";
+import { DefaultDashboardInsightComponentSetFactory } from "../../widget/insight/DefaultDashboardInsightComponentSetFactory.js";
+import { DefaultInsightBody } from "../../widget/insight/DefaultInsightBody/DefaultInsightBody.js";
+import { DefaultDashboardInsightMenu } from "../../widget/insightMenu/DefaultDashboardInsightMenu/DefaultDashboardInsightMenu.js";
+import { DefaultDashboardInsightMenuButton } from "../../widget/insightMenu/DefaultDashboardInsightMenu/DefaultDashboardInsightMenuButton.js";
+import { DefaultDashboardInsightMenuTitle } from "../../widget/insightMenu/DefaultDashboardInsightMenu/DefaultDashboardInsightMenuTitle.js";
+import { DefaultDashboardRichText } from "../../widget/richText/DefaultDashboardRichText.js";
+import { DefaultDashboardRichTextComponentSetFactory } from "../../widget/richText/DefaultDashboardRichTextComponentSetFactory.js";
+import { DefaultDashboardRichTextMenu } from "../../widget/richTextMenu/DefaultDashboardRichTextMenu/DefaultDashboardRichTextMenu.js";
+import { DefaultDashboardRichTextMenuTitle } from "../../widget/richTextMenu/DefaultDashboardRichTextMenu/DefaultDashboardRichTextMenuTitle.js";
+import { DefaultShowAsTableButton } from "../../widget/showAsTableButton/DefaultShowAsTableButton/DefaultShowAsTableButton.js";
+import { DefaultVisualizationSwitcherToolbar } from "../../widget/visualizationSwitcher/configuration/DefaultVisualizationSwitcherToolbar.js";
+import { DefaultDashboardVisualizationSwitcher } from "../../widget/visualizationSwitcher/DefaultDashboardVisualizationSwitcher.js";
+import { DefaultDashboardVisualizationSwitcherComponentSetFactory } from "../../widget/visualizationSwitcher/DefaultDashboardVisualizationSwitcherComponentSetFactory.js";
+import { DefaultDashboardWidget } from "../../widget/widget/DefaultDashboardWidget.js";
 import { DefaultDashboardMainContent } from "../DefaultDashboardContent/DefaultDashboardMainContent.js";
 import { type IDashboardProps } from "../types.js";
 

@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { useCallback } from "react";
 
@@ -15,7 +15,7 @@ import {
     buildDrillEventData,
     getHeadlineData,
 } from "./utils/XirrTransformationUtils.js";
-import { type IChartConfig } from "../../../interfaces/index.js";
+import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { LegacyHeadline } from "../../headline/internal/headlines/LegacyHeadline.js";
 import {
     type HeadlineFiredDrillEvent,

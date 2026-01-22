@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type CSSProperties } from "react";
 
@@ -7,7 +7,7 @@ import cx from "classnames";
 import { bemFactory } from "@gooddata/sdk-ui-kit";
 
 import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../../../_staging/dashboard/flexibleLayout/config.js";
-import { useResizeWidthStatus } from "../../../dragAndDrop/index.js";
+import { useResizeWidthStatus } from "../../../dragAndDrop/LayoutResizeContext.js";
 
 const { b, e } = bemFactory("gd-grid-layout-ruler");
 

@@ -23,5 +23,5 @@ export {
     type OpenHandlerEvent,
 } from "./catalogDetail/CatalogDetailContent.js";
 
-export { type ObjectType } from "./objectType/index.js";
-export { type ICatalogItem, type ICatalogItemRef, type VisualizationType } from "./catalogItem/index.js";
+export { type ObjectType } from "./objectType/types.js";
+export { type ICatalogItem, type ICatalogItemRef, type VisualizationType } from "./catalogItem/types.js";

@@ -1,14 +1,13 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
+
 import { useCallback, useState } from "react";
 
 import { type DashboardAttributeFilterConfigMode, type IDashboardAttributeFilter } from "@gooddata/sdk-model";
 
-import {
-    selectAttributeFilterConfigsOverrides,
-    setDashboardAttributeFilterConfigMode,
-    useDashboardCommandProcessing,
-    useDashboardSelector,
-} from "../../../../../../model/index.js";
+import { setDashboardAttributeFilterConfigMode } from "../../../../../../model/commands/dashboard.js";
+import { useDashboardSelector } from "../../../../../../model/react/DashboardStoreProvider.js";
+import { useDashboardCommandProcessing } from "../../../../../../model/react/useDashboardCommandProcessing.js";
+import { selectAttributeFilterConfigsOverrides } from "../../../../../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 
 export function useModeConfiguration(
     currentFilter: IDashboardAttributeFilter,

@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { beforeEach, describe, expect, it } from "vitest";
 
@@ -9,26 +9,30 @@ import {
     newPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
 
+import { renameDashboard } from "../../../commands/dashboard.js";
 import {
     addAttributeFilter,
-    addLayoutSection,
-    addSectionItem,
     applyAttributeFilter,
     applyDateFilter,
+    moveAttributeFilter,
+    removeAttributeFilter,
+} from "../../../commands/filters.js";
+import {
     changeInsightWidgetHeader,
     changeInsightWidgetVisProperties,
+    removeDrillsForInsightWidget,
+    unignoreFilterOnInsightWidget,
+} from "../../../commands/insight.js";
+import {
+    addLayoutSection,
+    addSectionItem,
     changeLayoutSectionHeader,
-    moveAttributeFilter,
     moveLayoutSection,
     moveSectionItem,
-    removeAttributeFilter,
-    removeDrillsForInsightWidget,
     removeLayoutSection,
     removeSectionItem,
-    renameDashboard,
     replaceSectionItem,
-    unignoreFilterOnInsightWidget,
-} from "../../../commands/index.js";
+} from "../../../commands/layout.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import {
     ComplexDashboardFilters,

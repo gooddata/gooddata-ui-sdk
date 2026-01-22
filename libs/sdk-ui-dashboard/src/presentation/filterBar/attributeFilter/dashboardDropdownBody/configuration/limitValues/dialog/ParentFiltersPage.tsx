@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type ReactNode } from "react";
 
@@ -17,14 +17,14 @@ import { stringUtils } from "@gooddata/util";
 import { PopupHeader } from "./PopupHeader.js";
 import { WithDisabledParentFilterTooltip } from "./WithDisabledParentFilterTooltip.js";
 import { messages } from "../../../../../../../locales.js";
+import { useDashboardSelector } from "../../../../../../../model/react/DashboardStoreProvider.js";
+import { useDashboardUserInteraction } from "../../../../../../../model/react/useDashboardUserInteraction.js";
+import { selectEnableKDAttributeFilterDatesValidation } from "../../../../../../../model/store/config/configSelectors.js";
+import { type IDashboardAttributeFilterParentItem } from "../../../../../../../model/types/attributeFilterTypes.js";
 import {
-    type IDashboardAttributeFilterParentItem,
     type IDashboardDependentDateFilter,
     isDashboardDependentDateFilter,
-    selectEnableKDAttributeFilterDatesValidation,
-    useDashboardSelector,
-    useDashboardUserInteraction,
-} from "../../../../../../../model/index.js";
+} from "../../../../../../../model/types/dateFilterTypes.js";
 import { type ValuesLimitingItem } from "../../../../types.js";
 import { LimitingItemTitle, UnknownItemTitle } from "../shared/LimitingItem.js";
 import { type IValuesLimitingItemWithTitle, useFilterItems } from "../shared/limitingItemsHook.js";

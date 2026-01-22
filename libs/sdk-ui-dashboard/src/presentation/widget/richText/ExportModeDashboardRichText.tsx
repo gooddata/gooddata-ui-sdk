@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { useCallback, useState } from "react";
 
@@ -6,7 +6,7 @@ import { type GoodDataSdkError, type ILoadingState } from "@gooddata/sdk-ui";
 
 import { type IDashboardRichTextProps } from "./types.js";
 import { ViewModeDashboardRichText } from "./ViewModeDashboardRichText.js";
-import { useRichTextExportData, useVisualizationExportData } from "../../export/index.js";
+import { useRichTextExportData, useVisualizationExportData } from "../../export/useExportData.js";
 
 export function ExportModeDashboardRichText(props: IDashboardRichTextProps) {
     const { onLoadingChanged, onError } = props;

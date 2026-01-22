@@ -1,12 +1,9 @@
 // (C) 2023-2026 GoodData Corporation
 
-import {
-    type ICrossFiltering,
-    type IDashboardCommandFailed,
-    type IDashboardCrossFilteringResolved,
-    crossFiltering,
-    useDashboardCommandProcessing,
-} from "../../../model/index.js";
+import { type ICrossFiltering, crossFiltering } from "../../../model/commands/drill.js";
+import type { IDashboardCrossFilteringResolved } from "../../../model/events/drill.js";
+import type { IDashboardCommandFailed } from "../../../model/events/general.js";
+import { useDashboardCommandProcessing } from "../../../model/react/useDashboardCommandProcessing.js";
 
 /**
  * @internal

@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -11,12 +11,11 @@ import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { AllVisualizationsDashInsights } from "./AllVisualizationsDashInsights.js";
 import { type IDashboardVisualizationSwitcherProps } from "./types.js";
 import { useExecutionProgress } from "./useExecutionProgress.js";
-import { selectInsightsMap, useDashboardSelector } from "../../../model/index.js";
-import {
-    DashboardItem,
-    DashboardItemVisualization,
-    getVisTypeCssClass,
-} from "../../../presentation/presentationComponents/index.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectInsightsMap } from "../../../model/store/insights/insightsSelectors.js";
+import { DashboardItem } from "../../presentationComponents/DashboardItems/DashboardItem.js";
+import { DashboardItemVisualization } from "../../presentationComponents/DashboardItems/DashboardItemVisualization.js";
+import { getVisTypeCssClass } from "../../presentationComponents/DashboardItems/utils.js";
 import { EditableDashboardInsightWidgetHeader } from "../widget/InsightWidget/EditableDashboardInsightWidgetHeader.js";
 
 /**

@@ -919,6 +919,10 @@
         "text": "Map",
         "crowdinContext": "Map configuration"
     },
+    "properties.map.basemap.title": {
+        "text": "Basemap",
+        "crowdinContext": "Geo pushpin configuration: Label for selecting the basemap tileset."
+    },
     "properties.viewport.area.title": {
         "text": "Default viewport",
         "crowdinContext": "Default viewport configuration"

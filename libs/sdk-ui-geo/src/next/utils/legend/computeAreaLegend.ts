@@ -1,9 +1,13 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { computeColorScale } from "./computeColorScale.js";
 import type { IAvailableLegends, IGeoLegendItem } from "../../types/common/legends.js";
 import type { IAreaGeoData } from "../../types/geoData/area.js";
-import type { ILegendColorCategoryItem, ILegendGroup, ILegendSection } from "../../types/legend/index.js";
+import {
+    type ILegendColorCategoryItem,
+    type ILegendGroup,
+    type ILegendSection,
+} from "../../types/legend/model.js";
 
 /**
  * Converts legend items to color category items for area layers.

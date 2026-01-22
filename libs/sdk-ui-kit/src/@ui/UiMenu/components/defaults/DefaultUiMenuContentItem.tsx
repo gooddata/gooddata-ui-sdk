@@ -11,7 +11,7 @@ import {
 
 import cx from "classnames";
 
-import { ShortenedText } from "../../../../ShortenedText/index.js";
+import { ShortenedText } from "../../../../ShortenedText/ShortenedText.js";
 import { typedUiMenuContextStore } from "../../context.js";
 import { e } from "../../menuBem.js";
 import {

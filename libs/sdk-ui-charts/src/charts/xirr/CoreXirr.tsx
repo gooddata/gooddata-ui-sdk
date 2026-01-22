@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type ReactElement, useMemo } from "react";
 
@@ -12,7 +12,7 @@ import {
 } from "@gooddata/sdk-ui";
 
 import { XirrTransformation } from "./internal/XirrTransformation.js";
-import { type ICoreChartProps } from "../../interfaces/index.js";
+import { type ICoreChartProps } from "../../interfaces/chartProps.js";
 import { withDefaultCoreChartProps } from "../_commons/defaultProps.js";
 
 type Props = ICoreChartProps & ILoadingInjectedProps;

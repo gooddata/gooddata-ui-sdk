@@ -2865,6 +2865,21 @@
                         "nullable": true,
                         "readOnly": true
                     },
+                    "secretKey": {
+                        "maxLength": 10000,
+                        "type": "string",
+                        "description": "Hmac secret key for the webhook signature.",
+                        "nullable": true,
+                        "writeOnly": true,
+                        "example": "secret_key"
+                    },
+                    "hasSecretKey": {
+                        "maxLength": 10000,
+                        "type": "boolean",
+                        "description": "Flag indicating if webhook has a hmac secret key.",
+                        "nullable": true,
+                        "readOnly": true
+                    },
                     "type": {
                         "type": "string",
                         "description": "The destination type.",

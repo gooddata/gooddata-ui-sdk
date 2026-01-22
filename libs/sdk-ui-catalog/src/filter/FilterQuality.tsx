@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { memo, useCallback, useMemo } from "react";
 
@@ -9,7 +9,7 @@ import { UiSkeleton } from "@gooddata/sdk-ui-kit";
 
 import { useFilterActions, useFilterState } from "./FilterContext.js";
 import { StaticFilter } from "./StaticFilter.js";
-import { testIds } from "../automation/index.js";
+import { filterQuality } from "../automation/testIds.js";
 import { useQualityReportState } from "../quality/QualityContext.js";
 import { getQualityIssueCodes } from "../quality/utils.js";
 
@@ -73,7 +73,7 @@ export function FilterQuality() {
             isSelectionInverted={qualityCodes.isInverted}
             onSelectionChange={handleChange}
             getItemTitle={getItemTitle}
-            dataTestId={testIds.filterQuality}
+            dataTestId={filterQuality}
             noDataMessage={<FormattedMessage id="analyticsCatalog.filter.qualityCodes.noOptions" />}
         />
     );

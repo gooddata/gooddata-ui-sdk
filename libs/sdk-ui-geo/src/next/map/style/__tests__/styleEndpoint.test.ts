@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { describe, expect, it, vi } from "vitest";
 
@@ -24,7 +24,7 @@ describe("fetchMapStyle", () => {
         const getDefaultStyle = vi.fn().mockResolvedValue(SAMPLE_STYLE);
         const backend = createBackendMock(getDefaultStyle);
 
-        const style = await fetchMapStyle(backend);
+        const style = await fetchMapStyle(backend, "default");
 
         expect(style).toEqual(SAMPLE_STYLE);
         expect(getDefaultStyle).toHaveBeenCalledTimes(1);
@@ -35,7 +35,7 @@ describe("fetchMapStyle", () => {
         const getDefaultStyle = vi.fn().mockResolvedValue(invalidStyle);
         const backend = createBackendMock(getDefaultStyle);
 
-        await expect(fetchMapStyle(backend)).rejects.toThrow("valid style version");
+        await expect(fetchMapStyle(backend, "default")).rejects.toThrow("valid style version");
     });
 
     it("throws when style has no sources", async () => {
@@ -43,7 +43,7 @@ describe("fetchMapStyle", () => {
         const getDefaultStyle = vi.fn().mockResolvedValue(invalidStyle);
         const backend = createBackendMock(getDefaultStyle);
 
-        await expect(fetchMapStyle(backend)).rejects.toThrow("must contain sources");
+        await expect(fetchMapStyle(backend, "default")).rejects.toThrow("must contain sources");
     });
 
     it("throws when glyphs URL is not absolute", async () => {
@@ -51,7 +51,7 @@ describe("fetchMapStyle", () => {
         const getDefaultStyle = vi.fn().mockResolvedValue(invalidStyle);
         const backend = createBackendMock(getDefaultStyle);
 
-        await expect(fetchMapStyle(backend)).rejects.toThrow("must be an absolute URL");
+        await expect(fetchMapStyle(backend, "default")).rejects.toThrow("must be an absolute URL");
     });
 
     it("throws when vector source tiles URL is not absolute", async () => {
@@ -67,7 +67,7 @@ describe("fetchMapStyle", () => {
         const getDefaultStyle = vi.fn().mockResolvedValue(invalidStyle);
         const backend = createBackendMock(getDefaultStyle);
 
-        await expect(fetchMapStyle(backend)).rejects.toThrow("must be an absolute URL");
+        await expect(fetchMapStyle(backend, "default")).rejects.toThrow("must be an absolute URL");
     });
 });
 

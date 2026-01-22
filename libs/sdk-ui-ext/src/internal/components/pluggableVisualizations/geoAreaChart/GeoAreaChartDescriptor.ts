@@ -11,13 +11,15 @@ import {
     type IVisualizationSizeInfo,
     type PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor.js";
+import { getReactEmbeddingCodeGenerator } from "../../../utils/embeddingCodeGenerator/getReactEmbeddingCodeGenerator.js";
 import {
     executionConfigInsightConversion,
-    getInsightToPropsConverter,
-    getReactEmbeddingCodeGenerator,
-    insightConversion,
     sdkModelPropMetas,
-} from "../../../utils/embeddingCodeGenerator/index.js";
+} from "../../../utils/embeddingCodeGenerator/insightToPropsConverter/convenience.js";
+import {
+    getInsightToPropsConverter,
+    insightConversion,
+} from "../../../utils/embeddingCodeGenerator/insightToPropsConverter/convertor.js";
 import { BaseChartDescriptor } from "../baseChart/BaseChartDescriptor.js";
 import { chartAdditionalFactories } from "../chartCodeGenUtils.js";
 import { MAX_VISUALIZATION_HEIGHT, MIDDLE_VISUALIZATION_HEIGHT } from "../constants.js";

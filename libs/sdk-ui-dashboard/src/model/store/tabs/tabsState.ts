@@ -42,9 +42,6 @@ export const getTabOrActive = (state: ITabsState, tabLocalIdentifier?: string): 
     return getActiveTab(state);
 };
 
-// Re-export for convenience
-export type { IDateFilterConfigState, FilterContextState, ILayoutState };
-
 /**
  * @alpha
  */

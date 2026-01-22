@@ -9,7 +9,7 @@ import {
     type IVisualizationSwitcherWidget,
 } from "@gooddata/sdk-model";
 
-import { type ICustomWidget } from "../../model/index.js";
+import type { ICustomWidget } from "../../model/types/layoutTypes.js";
 import {
     type AttributeFilterComponentProvider,
     type DashboardLayoutComponentProvider,
@@ -34,15 +34,13 @@ import {
 import {
     type IDashboardAttributeFilterPlaceholderProps,
     type IDashboardAttributeFilterProps,
-    type IDashboardDateFilterProps,
-} from "../filterBar/types.js";
-import {
-    type IDashboardInsightProps,
-    type IDashboardNestedLayoutProps,
-    type IDashboardRichTextProps,
-    type IDashboardVisualizationSwitcherProps,
-    type IDashboardWidgetProps,
-} from "../widget/types.js";
+} from "../filterBar/attributeFilter/types.js";
+import { type IDashboardDateFilterProps } from "../filterBar/dateFilter/types.js";
+import { type IDashboardLayoutProps as IDashboardNestedLayoutProps } from "../widget/dashboardLayout/types.js";
+import { type IDashboardInsightProps } from "../widget/insight/types.js";
+import { type IDashboardRichTextProps } from "../widget/richText/types.js";
+import { type IDashboardVisualizationSwitcherProps } from "../widget/visualizationSwitcher/types.js";
+import { type IDashboardWidgetProps } from "../widget/widget/types.js";
 
 /**
  * @internal

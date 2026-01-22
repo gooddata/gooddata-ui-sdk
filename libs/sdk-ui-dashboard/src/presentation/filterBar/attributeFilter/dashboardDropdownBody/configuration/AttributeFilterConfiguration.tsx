@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useCallback, useEffect, useMemo } from "react";
 
@@ -25,13 +25,15 @@ import { ParentFiltersList } from "./parentFilters/ParentFiltersList.js";
 import { SelectionMode } from "./selectionMode/SelectionMode.js";
 import { useAttributes } from "../../../../../_staging/sharedHooks/useAttributes.js";
 import { useMetricsAndFacts } from "../../../../../_staging/sharedHooks/useMetricsAndFacts.js";
+import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
 import {
     selectBackendCapabilities,
+    selectSupportsSingleSelectDependentFilters,
+} from "../../../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
+import {
     selectFilterContextAttributeFilters,
     selectOtherContextAttributeFilters,
-    selectSupportsSingleSelectDependentFilters,
-    useDashboardSelector,
-} from "../../../../../model/index.js";
+} from "../../../../../model/store/tabs/filterContext/filterContextSelectors.js";
 import { ConfigModeSelect } from "../../../configuration/ConfigurationModeSelect.js";
 import { AttributeTitleRenaming } from "../../../configuration/title/AttributeTitleRenaming.js";
 import { useAttributeFilterParentFiltering } from "../../AttributeFilterParentFilteringContext.js";

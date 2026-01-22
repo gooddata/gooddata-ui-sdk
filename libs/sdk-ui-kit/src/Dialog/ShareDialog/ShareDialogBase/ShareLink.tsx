@@ -6,8 +6,8 @@ import { compressForUrl } from "@gooddata/sdk-ui";
 
 import { type IShareLinkProps } from "./types.js";
 import { SHARE_LINK_HEADLINE_ID, SHARE_LINK_HELPER_TEXT_ID } from "./utils.js";
-import { Input } from "../../../Form/index.js";
-import { Typography } from "../../../Typography/index.js";
+import { Input } from "../../../Form/Input.js";
+import { Typography } from "../../../Typography/Typography.js";
 import { isCopyKey } from "../../../utils/events.js";
 
 /**

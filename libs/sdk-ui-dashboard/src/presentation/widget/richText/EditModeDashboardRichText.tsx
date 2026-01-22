@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { useEffect, useMemo, useState } from "react";
 
@@ -20,20 +20,19 @@ import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 import { type IDashboardRichTextProps } from "./types.js";
 import { useEditableRichTextMenu } from "./useEditableRichTextMenu.js";
 import { useRichTextWidgetFilters } from "../../../_staging/sharedHooks/useRichTextFilters.js";
+import { eagerRemoveSectionItemByWidgetRef } from "../../../model/commands/layout.js";
+import { changeRichTextWidgetContent } from "../../../model/commands/richText.js";
+import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { useWidgetSelection } from "../../../model/react/useWidgetSelection.js";
 import {
-    changeRichTextWidgetContent,
-    eagerRemoveSectionItemByWidgetRef,
     selectEnableRichTextDynamicReferences,
-    selectExecutionTimestamp,
     selectIsWhiteLabeled,
     selectSeparators,
-    uiActions,
-    useDashboardDispatch,
-    useDashboardSelector,
-    useWidgetSelection,
-} from "../../../model/index.js";
-import { DASHBOARD_OVERLAYS_FILTER_Z_INDEX } from "../../../presentation/constants/index.js";
-import { useDashboardComponentsContext } from "../../dashboardContexts/index.js";
+} from "../../../model/store/config/configSelectors.js";
+import { uiActions } from "../../../model/store/ui/index.js";
+import { selectExecutionTimestamp } from "../../../model/store/ui/uiSelectors.js";
+import { DASHBOARD_OVERLAYS_FILTER_Z_INDEX } from "../../../presentation/constants/zIndex.js";
+import { useDashboardComponentsContext } from "../../dashboardContexts/DashboardComponentsContext.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_OVERLAYS_FILTER_Z_INDEX);
 

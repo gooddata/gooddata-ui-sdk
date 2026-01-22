@@ -5,14 +5,14 @@ import { beforeEach, describe, expect, it } from "vitest";
 import {
     type IMoveLayoutSection,
     moveSectionItemToNewSection,
+    moveSectionItemToNewSectionAndRemoveOriginalSectionIfEmpty,
     undoLayoutChanges,
-} from "../../../commands/index.js";
-import { moveSectionItemToNewSectionAndRemoveOriginalSectionIfEmpty } from "../../../commands/layout.js";
+} from "../../../commands/layout.js";
+import { type IDashboardCommandFailed } from "../../../events/general.js";
 import {
-    type IDashboardCommandFailed,
     type IDashboardLayoutChanged,
     type IDashboardLayoutSectionItemMoved,
-} from "../../../events/index.js";
+} from "../../../events/layout.js";
 import { selectLayout } from "../../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import {

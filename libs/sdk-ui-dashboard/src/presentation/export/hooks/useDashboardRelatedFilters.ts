@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
@@ -14,13 +14,11 @@ import {
 import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 import { type FilterNaming, useFiltersNamings } from "../../../_staging/sharedHooks/useFiltersNamings.js";
-import {
-    selectAttributeFilterConfigsOverrides,
-    selectDateFilterConfigOverrides,
-    selectDateFilterConfigsOverrides,
-    selectFilterContextFilters,
-    useDashboardSelector,
-} from "../../../model/index.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectAttributeFilterConfigsOverrides } from "../../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { selectDateFilterConfigOverrides } from "../../../model/store/tabs/dateFilterConfig/dateFilterConfigSelectors.js";
+import { selectDateFilterConfigsOverrides } from "../../../model/store/tabs/dateFilterConfigs/dateFilterConfigsSelectors.js";
+import { selectFilterContextFilters } from "../../../model/store/tabs/filterContext/filterContextSelectors.js";
 
 /**
  * @alpha

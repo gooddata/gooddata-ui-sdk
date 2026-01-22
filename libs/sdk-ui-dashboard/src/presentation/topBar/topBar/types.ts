@@ -1,9 +1,11 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { type ComponentType } from "react";
 
 import { type IButtonBarProps } from "../buttonBar/types.js";
 import { type IMenuButtonProps } from "../menuButton/types.js";
-import { type ILockedStatusProps, type IShareStatusProps } from "../shareIndicators/index.js";
+import { type ILockedStatusProps } from "../shareIndicators/lockedStatus/types.js";
+import { type IShareStatusProps } from "../shareIndicators/shareStatus/types.js";
 import { type ITitleProps } from "../title/types.js";
 
 /**

@@ -11,8 +11,8 @@ import {
     convertInsightToCatalogItem,
     convertMeasureToCatalogItem,
 } from "../../catalogItem/converter.js";
-import type { ICatalogItem } from "../../catalogItem/index.js";
-import type { ObjectType } from "../../objectType/index.js";
+import { type ICatalogItem } from "../../catalogItem/types.js";
+import { type ObjectType } from "../../objectType/types.js";
 
 export interface IUseCatalogItemLoad {
     objectId?: string | null;

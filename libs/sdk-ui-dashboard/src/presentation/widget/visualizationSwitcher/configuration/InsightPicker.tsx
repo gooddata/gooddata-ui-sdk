@@ -1,11 +1,11 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { useIntl } from "react-intl";
 
 import { type IInsight } from "@gooddata/sdk-model";
 import { UiSubmenuHeader } from "@gooddata/sdk-ui-kit";
 
-import { InsightList } from "../../../insightList/index.js";
+import { InsightList } from "../../../insightList/InsightList.js";
 
 interface IInsightPickerProps {
     onInsightSelect: (insight: IInsight) => void;

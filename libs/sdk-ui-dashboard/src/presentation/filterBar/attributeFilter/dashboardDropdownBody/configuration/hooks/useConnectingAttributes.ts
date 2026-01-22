@@ -6,13 +6,13 @@ import { type ObjRef } from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
 import {
-    type IConnectingAttribute,
     type IQueryConnectingAttributes,
     queryConnectingAttributes,
-    selectSupportsSettingConnectingAttributes,
-    useDashboardQueryProcessing,
-    useDashboardSelector,
-} from "../../../../../../model/index.js";
+} from "../../../../../../model/queries/connectingAttributes.js";
+import { useDashboardSelector } from "../../../../../../model/react/DashboardStoreProvider.js";
+import { useDashboardQueryProcessing } from "../../../../../../model/react/useDashboardQueryProcessing.js";
+import { selectSupportsSettingConnectingAttributes } from "../../../../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
+import { type IConnectingAttribute } from "../../../../../../model/types/attributeFilterTypes.js";
 
 interface IUseConnectingAttributesResult {
     connectingAttributes: IConnectingAttribute[][] | undefined;

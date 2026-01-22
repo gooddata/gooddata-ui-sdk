@@ -1,7 +1,7 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { DefaultTopBar } from "./DefaultTopBar.js";
-import { renderModeAware } from "../../componentDefinition/index.js";
+import { renderModeAware } from "../../componentDefinition/renderModeAware.js";
 
 /**
  * @internal

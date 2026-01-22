@@ -17,7 +17,8 @@ import { GeoChartNextLegendOverlay } from "./multiLayerLegend/GeoChartNextLegend
 import { useGeoChartNextProps } from "../context/GeoChartNextContext.js";
 import { useGeoLayers } from "../context/GeoLayersContext.js";
 import { MapController } from "../map/MapController.js";
-import { computeCombinedViewport, computeViewportFromConfig } from "../map/viewport.js";
+import { computeViewportFromConfig } from "../map/viewport/viewportResolution.js";
+import { computeCombinedViewport } from "../map/viewport.js";
 import { PushDataSync } from "../pushData/PushDataSync.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).

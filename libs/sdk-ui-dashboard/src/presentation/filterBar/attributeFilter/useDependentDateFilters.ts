@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -11,18 +11,18 @@ import {
 } from "@gooddata/sdk-model";
 import { type IAttributeFilterBaseProps } from "@gooddata/sdk-ui-filters";
 
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectIsApplyFiltersAllAtOnceEnabledAndSet } from "../../../model/store/config/configSelectors.js";
 import {
     selectFilterContextDateFilter,
     selectFilterContextDateFilterForTab,
     selectFilterContextDateFiltersWithDimension,
     selectFilterContextDateFiltersWithDimensionForTab,
-    selectIsApplyFiltersAllAtOnceEnabledAndSet,
     selectWorkingFilterContextDateFilter,
     selectWorkingFilterContextDateFilterForTab,
     selectWorkingFilterContextDateFiltersWithDimension,
     selectWorkingFilterContextDateFiltersWithDimensionForTab,
-    useDashboardSelector,
-} from "../../../model/index.js";
+} from "../../../model/store/tabs/filterContext/filterContextSelectors.js";
 
 /**
  * Result of the {@link useDependentDateFilters} hook, that can be used as dependent date filtering input props for {@link @gooddata/sdk-ui-filters#AttributeFilter}.

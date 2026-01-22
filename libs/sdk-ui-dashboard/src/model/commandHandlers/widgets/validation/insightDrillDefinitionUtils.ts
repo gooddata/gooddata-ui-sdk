@@ -24,15 +24,15 @@ import {
     isListedDashboard,
     objRefToString,
 } from "@gooddata/sdk-model";
-import { type IAvailableDrillTargets } from "@gooddata/sdk-ui";
-import { typesUtils } from "@gooddata/util";
-
 import {
     getAttributeIdentifiersPlaceholdersFromUrl,
     getDashboardAttributeFilterPlaceholdersFromUrl,
-    getDrillOriginLocalIdentifier,
     getInsightAttributeFilterPlaceholdersFromUrl,
-} from "../../../../_staging/drills/drillingUtils.js";
+} from "@gooddata/sdk-model/internal";
+import { type IAvailableDrillTargets } from "@gooddata/sdk-ui";
+import { typesUtils } from "@gooddata/util";
+
+import { getDrillOriginLocalIdentifier } from "../../../../_staging/drills/drillingUtils.js";
 import { type ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
 import { type IInaccessibleDashboard } from "../../../types/inaccessibleDashboardTypes.js";
 import { isDisplayFormRelevantToDrill } from "../../common/isDisplayFormRelevantToDrill.js";

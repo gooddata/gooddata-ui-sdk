@@ -1,4 +1,5 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
+
 import { uniqWith } from "lodash-es";
 import { invariant } from "ts-invariant";
 
@@ -8,12 +9,12 @@ import {
     areObjRefsEqual,
 } from "@gooddata/sdk-model";
 
+import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
 import {
     selectAllCatalogAttributesMap,
     selectAllCatalogDisplayFormsMap,
-    selectSelectedWidgetRef,
-    useDashboardSelector,
-} from "../../../../../model/index.js";
+} from "../../../../../model/store/catalog/catalogSelectors.js";
+import { selectSelectedWidgetRef } from "../../../../../model/store/ui/uiSelectors.js";
 import { type IAttributeWithDisplayForm } from "../../../../drill/DrillConfigPanel/DrillToUrl/types.js";
 
 export interface IUseAttributesWithDisplayFormsResult {

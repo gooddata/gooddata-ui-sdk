@@ -12,13 +12,12 @@ import {
 
 import { AttributeFilterLoader } from "./loader.js";
 import { type AttributeFilterHandlerConfig } from "./types.js";
+import { type ISingleSelectAttributeFilterHandler } from "../types/attributeFilterHandler.js";
+import { type AttributeElementKey, type CallbackRegistration } from "../types/common.js";
 import {
-    type AttributeElementKey,
-    type CallbackRegistration,
-    type ISingleSelectAttributeFilterHandler,
     type OnSelectionChangedCallbackPayload,
     type OnSelectionCommittedCallbackPayload,
-} from "../types/index.js";
+} from "../types/selectionHandler.js";
 
 /**
  * @internal

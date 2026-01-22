@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type ReactElement, useCallback } from "react";
 
@@ -9,11 +9,11 @@ import { Button, UiTooltip } from "@gooddata/sdk-ui-kit";
 import { HiddenShareButton } from "./HiddenShareButton.js";
 import { type IShareButtonProps } from "./types.js";
 import {
-    selectIsShareButtonVisible,
-    uiActions,
     useDashboardDispatch,
     useDashboardSelector,
-} from "../../../../../model/index.js";
+} from "../../../../../model/react/DashboardStoreProvider.js";
+import { selectIsShareButtonVisible } from "../../../../../model/store/topBar/topBarSelectors.js";
+import { uiActions } from "../../../../../model/store/ui/index.js";
 
 /**
  * @internal

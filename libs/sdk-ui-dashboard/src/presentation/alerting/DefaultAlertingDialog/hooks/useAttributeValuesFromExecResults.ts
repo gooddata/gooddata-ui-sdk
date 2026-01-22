@@ -12,7 +12,7 @@ import {
 } from "@gooddata/sdk-model";
 import { DataViewFacade, type IDataSeries } from "@gooddata/sdk-ui";
 
-import { type IExecutionResultEnvelope } from "../../../../model/index.js";
+import type { IExecutionResultEnvelope } from "../../../../model/store/executionResults/types.js";
 
 export type AttributeValue = {
     title: string;

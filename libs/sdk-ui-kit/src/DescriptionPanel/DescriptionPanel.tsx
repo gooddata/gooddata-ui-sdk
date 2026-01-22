@@ -9,9 +9,11 @@ import { type IExecutionConfig, type IFilter, type ISeparators } from "@gooddata
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
 import { EllipsisText } from "./EllipsisText.js";
-import { type ArrowOffsets, Bubble, BubbleHoverTrigger } from "../Bubble/index.js";
-import { useMediaQuery } from "../responsive/index.js";
-import { RichText } from "../RichText/index.js";
+import { Bubble } from "../Bubble/Bubble.js";
+import { BubbleHoverTrigger } from "../Bubble/BubbleHoverTrigger.js";
+import { type ArrowOffsets } from "../Bubble/typings.js";
+import { useMediaQuery } from "../responsive/useMediaQuery.js";
+import { RichText } from "../RichText/RichText.js";
 import { ZOOM_THRESHOLD, useIsZoomed } from "../ZoomContext/ZoomContext.js";
 
 /**

@@ -8,7 +8,7 @@ import { useEventToastMessage } from "../../../_staging/sharedHooks/useEventToas
 import {
     type IDashboardCrossFilteringResolved,
     isDashboardCrossFilteringResolved,
-} from "../../../model/index.js";
+} from "../../../model/events/drill.js";
 
 const crossFilterMessages: Record<string, MessageDescriptor> = defineMessages({
     crossFilterSuccess: {

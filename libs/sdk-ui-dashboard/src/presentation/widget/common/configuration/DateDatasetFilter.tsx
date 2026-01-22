@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useCallback, useState } from "react";
 
@@ -10,13 +10,13 @@ import { DateFilterCheckbox } from "./DateFilterCheckbox.js";
 import { useDateFilterConfigurationHandling } from "./useDateFilterConfigurationHandling.js";
 import { useIsSelectedDatasetHidden } from "./useIsSelectedDatasetHidden.js";
 import { getUnrelatedDateDataset, getUnrelatedDateDatasets } from "./utils.js";
+import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import {
     selectAllCatalogDateDatasetsMap,
     selectCatalogDateDatasets,
-    selectEnableUnavailableItemsVisibility,
-    selectFilterContextDateFilterByDataSet,
-    useDashboardSelector,
-} from "../../../../model/index.js";
+} from "../../../../model/store/catalog/catalogSelectors.js";
+import { selectEnableUnavailableItemsVisibility } from "../../../../model/store/config/configSelectors.js";
+import { selectFilterContextDateFilterByDataSet } from "../../../../model/store/tabs/filterContext/filterContextSelectors.js";
 
 interface IDateDatasetFilterProps {
     widget: IWidget;

@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type IInsight, type IInsightWidget } from "@gooddata/sdk-model";
 import {
@@ -8,15 +8,15 @@ import {
     isInsightSupportedForScheduledExports,
 } from "@gooddata/sdk-ui-ext";
 
+import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
+import { selectIsReadOnly, selectSettings } from "../../../../model/store/config/configSelectors.js";
+import { selectNotificationChannelsCount } from "../../../../model/store/notificationChannels/notificationChannelsSelectors.js";
+import { selectCanManageWorkspace } from "../../../../model/store/permissions/permissionsSelectors.js";
+import { isCustomWidget } from "../../../../model/types/layoutTypes.js";
 import {
-    isCustomWidget,
-    selectCanManageWorkspace,
-    selectIsReadOnly,
-    selectNotificationChannelsCount,
-    selectSettings,
-    useDashboardSelector,
-} from "../../../../model/index.js";
-import { type AlertingDisabledReason, type SchedulingDisabledReason } from "../../insightMenu/index.js";
+    type AlertingDisabledReason,
+    type SchedulingDisabledReason,
+} from "../../insightMenu/DefaultDashboardInsightMenu/types.js";
 
 type UseAlertingAndSchedulingConfig = {
     insight?: IInsight;

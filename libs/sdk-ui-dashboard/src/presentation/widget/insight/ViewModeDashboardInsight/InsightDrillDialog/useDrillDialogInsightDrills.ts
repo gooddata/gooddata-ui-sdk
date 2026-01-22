@@ -13,11 +13,11 @@ import {
     isSomeHeaderPredicateMatched,
 } from "@gooddata/sdk-ui";
 
+import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
 import {
     selectDrillableItemsByAvailableDrillTargets,
     selectImplicitDrillsByAvailableDrillTargets,
-    useDashboardSelector,
-} from "../../../../../model/index.js";
+} from "../../../../../model/store/widgetDrills/widgetDrillSelectors.js";
 import { type IDashboardDrillEvent } from "../../../../../types.js";
 import { type OnWidgetDrill } from "../../../../drill/types.js";
 

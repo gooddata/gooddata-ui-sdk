@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
 
@@ -11,7 +11,7 @@ import {
 import { type IColumnSizing, type PivotTableNextConfig } from "@gooddata/sdk-ui-pivot/next";
 
 import { type IEmbeddingCodeContext } from "../../../interfaces/VisualizationDescriptor.js";
-import { type PropWithMeta } from "../../../utils/embeddingCodeGenerator/index.js";
+import { type PropWithMeta } from "../../../utils/embeddingCodeGenerator/types.js";
 import {
     getPaginationFromProperties,
     getTextWrappingFromProperties,

@@ -30,23 +30,20 @@ import {
 } from "@gooddata/sdk-ui-kit";
 
 import {
-    DEFAULT_TAB_ID,
-    type ITabState,
     cancelRenamingDashboardTab,
     convertDashboardTabFromDefault,
     createDashboardTab,
     deleteDashboardTab,
     renameDashboardTab,
     repositionDashboardTab,
-    selectActiveTabLocalIdentifier,
-    selectIsAddTabButtonHidden,
-    selectIsInEditMode,
-    selectTabs,
     startRenamingDashboardTab,
     switchDashboardTab,
-    useDashboardDispatch,
-    useDashboardSelector,
-} from "../../../model/index.js";
+} from "../../../model/commands/tabs.js";
+import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectIsAddTabButtonHidden } from "../../../model/store/config/configSelectors.js";
+import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
+import { selectActiveTabLocalIdentifier, selectTabs } from "../../../model/store/tabs/tabsSelectors.js";
+import { DEFAULT_TAB_ID, type ITabState } from "../../../model/store/tabs/tabsState.js";
 
 const EMPTY_TABS: ITabState[] = [];
 

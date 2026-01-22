@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type ReactNode, useMemo, useState } from "react";
 
@@ -41,7 +41,7 @@ import { type RepeaterInlineVisualizationDataPoint } from "./dataViewToRepeaterD
 import { InlineColumnChart } from "./InlineColumnChart.js";
 import { InlineLineChart } from "./InlineLineChart.js";
 import { AgGridDatasource } from "./repeaterAgGridDataSource.js";
-import { type IChartConfig } from "../../../interfaces/index.js";
+import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { useDrilling } from "../hooks/useDrilling.js";
 import { useFocusMng } from "../hooks/useFocusMng.js";
 import { useRenderWatcher } from "../hooks/useRenderWatcher.js";

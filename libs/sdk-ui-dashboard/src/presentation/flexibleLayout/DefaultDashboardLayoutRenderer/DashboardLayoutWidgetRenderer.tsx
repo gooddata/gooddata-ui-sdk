@@ -1,15 +1,15 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type CSSProperties, type ReactElement, useMemo } from "react";
 
 import cx from "classnames";
 
 import { type IDashboardLayoutWidgetRenderProps } from "./interfaces.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import {
     selectEnableSnapshotExportAccessibility,
     selectIsExport,
-    useDashboardSelector,
-} from "../../../model/index.js";
+} from "../../../model/store/config/configSelectors.js";
 import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
 
 export function DashboardLayoutWidgetRenderer({

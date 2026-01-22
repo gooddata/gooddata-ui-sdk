@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { render } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
@@ -7,7 +7,7 @@ import { ReferenceMd, ReferenceMdExt } from "@gooddata/reference-workspace";
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { type IMeasure, measureLocalId, modifyMeasure, modifySimpleMeasure } from "@gooddata/sdk-model";
 
-import { type IChartConfig } from "../../../interfaces/index.js";
+import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { ComboChart } from "../ComboChart.js";
 import { CoreComboChart } from "../CoreComboChart.js";
 

@@ -34,19 +34,25 @@ import {
     removeDrillDownForInsightWidget,
     removeDrillToUrlForInsightWidget,
     removeDrillsForInsightWidget,
-    selectAllCatalogAttributeHierarchies,
-    selectAllowMultipleInteractionsPerAttributeAndMeasure,
-    selectDrillTargetsByWidgetRef,
-    selectDrillsToUrlAttributeByWidgetRef,
-    selectEnableImplicitDrillToUrl,
-    selectGlobalDrillsDownAttributeHierarchyByWidgetRef,
-    selectInsightByRef,
-    selectInvalidUrlDrillParameterDrillLocalIdsByWidgetRef,
-    selectSupportsAttributeHierarchies,
-    selectWidgetByRef,
+} from "../../../../../model/commands/insight.js";
+import {
     useDashboardDispatch,
     useDashboardSelector,
-} from "../../../../../model/index.js";
+} from "../../../../../model/react/DashboardStoreProvider.js";
+import {
+    selectAllowMultipleInteractionsPerAttributeAndMeasure,
+    selectSupportsAttributeHierarchies,
+} from "../../../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
+import { selectAllCatalogAttributeHierarchies } from "../../../../../model/store/catalog/catalogSelectors.js";
+import { selectEnableImplicitDrillToUrl } from "../../../../../model/store/config/configSelectors.js";
+import { selectDrillTargetsByWidgetRef } from "../../../../../model/store/drillTargets/drillTargetsSelectors.js";
+import { selectInsightByRef } from "../../../../../model/store/insights/insightsSelectors.js";
+import { selectWidgetByRef } from "../../../../../model/store/tabs/layout/layoutSelectors.js";
+import { selectInvalidUrlDrillParameterDrillLocalIdsByWidgetRef } from "../../../../../model/store/ui/uiSelectors.js";
+import {
+    selectDrillsToUrlAttributeByWidgetRef,
+    selectGlobalDrillsDownAttributeHierarchyByWidgetRef,
+} from "../../../../../model/store/widgetDrills/widgetDrillSelectors.js";
 import {
     DRILL_TARGET_TYPE,
     type IDrillConfigItem,

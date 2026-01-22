@@ -8,12 +8,12 @@ import {
     removeSectionItem,
     undoLayoutChanges,
 } from "../../../commands/layout.js";
+import { type IDashboardCommandFailed } from "../../../events/general.js";
 import {
-    type IDashboardCommandFailed,
     type IDashboardLayoutChanged,
     type IDashboardLayoutSectionItemRemoved,
     type IDashboardLayoutSectionRemoved,
-} from "../../../events/index.js";
+} from "../../../events/layout.js";
 import { selectLayout, selectStash } from "../../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import {

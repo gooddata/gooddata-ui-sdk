@@ -11,9 +11,9 @@ import { type IDashboardAttributeFilter } from "@gooddata/sdk-model";
 import { EMPTY_MUTATIONS } from "./utils.js";
 import {
     type AttributeFilterComponentProvider,
-    type IDashboardAttributeFilterProps,
     type OptionalAttributeFilterComponentProvider,
-} from "../../../presentation/index.js";
+} from "../../../presentation/dashboardContexts/types.js";
+import { type IDashboardAttributeFilterProps } from "../../../presentation/filterBar/attributeFilter/types.js";
 import { DefaultAttributeFiltersCustomizer } from "../attributeFiltersCustomizer.js";
 import { DashboardCustomizationLogger } from "../customizationLogging.js";
 import { type CustomizerMutationsContext, createCustomizerMutationsContext } from "../types.js";

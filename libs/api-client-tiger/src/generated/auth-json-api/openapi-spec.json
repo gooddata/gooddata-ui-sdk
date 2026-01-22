@@ -253,6 +253,10 @@
                     },
                     "lastName": {
                         "type": "string"
+                    },
+                    "forceSend": {
+                        "type": "boolean",
+                        "description": "Force resend invitation email even if a pending invitation exists. Maximum 3 emails can be sent per invitation (1 initial + 2 resends)"
                     }
                 }
             },

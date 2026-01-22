@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -19,19 +19,19 @@ import {
 } from "@gooddata/sdk-model";
 
 import { type ObjRefMap } from "../../../../../../../_staging/metadata/objRefMap.js";
+import { type IMetricsAndFacts } from "../../../../../../../model/queries/metricsAndFacts.js";
+import { useDashboardSelector } from "../../../../../../../model/react/DashboardStoreProvider.js";
 import {
-    type IDashboardAttributeFilterParentItem,
-    type IDashboardDependentDateFilter,
-    type IMetricsAndFacts,
     selectAllCatalogDateDatasetsMap,
     selectAllCatalogDisplayFormsMap,
     selectCatalogAttributes,
     selectCatalogFacts,
     selectCatalogMeasures,
-    selectDateFilterConfigOverrides,
-    selectDateFilterConfigsOverrides,
-    useDashboardSelector,
-} from "../../../../../../../model/index.js";
+} from "../../../../../../../model/store/catalog/catalogSelectors.js";
+import { selectDateFilterConfigOverrides } from "../../../../../../../model/store/tabs/dateFilterConfig/dateFilterConfigSelectors.js";
+import { selectDateFilterConfigsOverrides } from "../../../../../../../model/store/tabs/dateFilterConfigs/dateFilterConfigsSelectors.js";
+import { type IDashboardAttributeFilterParentItem } from "../../../../../../../model/types/attributeFilterTypes.js";
+import { type IDashboardDependentDateFilter } from "../../../../../../../model/types/dateFilterTypes.js";
 import { type ValuesLimitingItem } from "../../../../types.js";
 
 export interface IValuesLimitingItemWithTitle {

@@ -8,9 +8,9 @@ import { IntlWrapper } from "@gooddata/sdk-ui";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
 
 import { Overlay } from "./Overlay.js";
-import { Button } from "../Button/index.js";
-import { Icon } from "../Icon/index.js";
-import { Typography } from "../Typography/index.js";
+import { Button } from "../Button/Button.js";
+import { Icon } from "../Icon/Icon.js";
+import { Typography } from "../Typography/Typography.js";
 
 /**
  * @internal

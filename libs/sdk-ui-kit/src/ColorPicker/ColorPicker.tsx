@@ -12,7 +12,7 @@ import { HexColorInput } from "./components/HexColorInput.js";
 import { HueColorPicker } from "./components/HueColorPicker.js";
 import { type IColorPickerProps } from "./typings.js";
 import { getHslFromRgbColor, getRgbFromHslColor, isHslColorBlackOrWhite } from "./utils.js";
-import { Button } from "../Button/index.js";
+import { Button } from "../Button/Button.js";
 
 /**
  * @internal

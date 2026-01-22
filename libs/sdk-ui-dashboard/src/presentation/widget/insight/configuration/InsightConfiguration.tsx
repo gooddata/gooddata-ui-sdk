@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import cx from "classnames";
 
@@ -16,11 +16,13 @@ import { InsightTitleConfig } from "./InsightTitleConfig.js";
 import {
     changeInsightWidgetDescription,
     changeInsightWidgetVisConfiguration,
-    selectSettings,
+} from "../../../../model/commands/insight.js";
+import {
     useDashboardDispatch,
     useDashboardSelector,
-} from "../../../../model/index.js";
-import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/index.js";
+} from "../../../../model/react/DashboardStoreProvider.js";
+import { selectSettings } from "../../../../model/store/config/configSelectors.js";
+import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/zIndex.js";
 import { type IInsightMenuSubmenuComponentProps } from "../../insightMenu/types.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);

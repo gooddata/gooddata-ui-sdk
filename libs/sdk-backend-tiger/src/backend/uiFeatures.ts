@@ -119,6 +119,7 @@ export enum TigerFeaturesNames {
     EnableNewPivotTable = "enableNewPivotTable",
     EnableNewGeoPushpin = "enableNewGeoPushpin",
     EnableGeoArea = "enableGeoArea",
+    EnableGeoBasemapConfig = "enableGeoBasemapConfig",
     EnableAutomationManagement = "enableAutomationManagement",
     EnableNewPdfTabularExport = "enableNewPdfTabularExport",
     EnableFilterAccessibility = "enableFilterAccessibility",
@@ -248,6 +249,7 @@ export type ITigerFeatureFlags = {
     enableNewPivotTable: (typeof FeatureFlagsValues)["enableNewPivotTable"][number];
     enableNewGeoPushpin: (typeof FeatureFlagsValues)["enableNewGeoPushpin"][number];
     enableGeoArea: (typeof FeatureFlagsValues)["enableGeoArea"][number];
+    enableGeoBasemapConfig: (typeof FeatureFlagsValues)["enableGeoBasemapConfig"][number];
     enableAutomationManagement: (typeof FeatureFlagsValues)["enableAutomationManagement"][number];
     enableNewPdfTabularExport: (typeof FeatureFlagsValues)["enableNewPdfTabularExport"][number];
     enableFilterAccessibility: (typeof FeatureFlagsValues)["enableFilterAccessibility"][number];
@@ -377,6 +379,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableNewPivotTable: true,
     enableNewGeoPushpin: false,
     enableGeoArea: false,
+    enableGeoBasemapConfig: false,
     enableAutomationManagement: true,
     enableNewPdfTabularExport: true,
     enableFilterAccessibility: true,
@@ -507,6 +510,7 @@ export const FeatureFlagsValues = {
     enableNewPivotTable: [true, false] as const,
     enableNewGeoPushpin: [true, false] as const,
     enableGeoArea: [true, false] as const,
+    enableGeoBasemapConfig: [true, false] as const,
     enableAutomationManagement: [true, false] as const,
     enableNewPdfTabularExport: [true, false] as const,
     enableFilterAccessibility: [false, true] as const,

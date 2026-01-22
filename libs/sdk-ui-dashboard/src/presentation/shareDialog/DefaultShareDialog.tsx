@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type ReactElement, useMemo } from "react";
 
@@ -7,7 +7,8 @@ import { useIntl } from "react-intl";
 import { type IShareDialogLabels, ShareDialog } from "@gooddata/sdk-ui-kit";
 
 import { type IShareDialogProps } from "./types.js";
-import { selectLocale, useDashboardSelector } from "../../model/index.js";
+import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
+import { selectLocale } from "../../model/store/config/configSelectors.js";
 
 /**
  * @alpha

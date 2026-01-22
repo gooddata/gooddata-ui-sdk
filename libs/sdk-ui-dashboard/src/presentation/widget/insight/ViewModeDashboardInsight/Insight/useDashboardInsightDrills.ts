@@ -12,17 +12,19 @@ import {
     isSomeHeaderPredicateMatched,
 } from "@gooddata/sdk-ui";
 
+import { addDrillTargets } from "../../../../../model/commands/drillTargets.js";
 import {
-    addDrillTargets,
-    selectAccessibleDashboardsLoaded,
-    selectCatalogIsLoaded,
-    selectConfiguredAndImplicitDrillsByWidgetRef,
-    selectDrillTargetsByWidgetRef,
-    selectDrillableItemsByWidgetRef,
-    selectIsInEditMode,
     useDashboardDispatch,
     useDashboardSelector,
-} from "../../../../../model/index.js";
+} from "../../../../../model/react/DashboardStoreProvider.js";
+import { selectAccessibleDashboardsLoaded } from "../../../../../model/store/accessibleDashboards/accessibleDashboardsSelectors.js";
+import { selectCatalogIsLoaded } from "../../../../../model/store/catalog/catalogSelectors.js";
+import { selectDrillTargetsByWidgetRef } from "../../../../../model/store/drillTargets/drillTargetsSelectors.js";
+import { selectIsInEditMode } from "../../../../../model/store/renderMode/renderModeSelectors.js";
+import {
+    selectConfiguredAndImplicitDrillsByWidgetRef,
+    selectDrillableItemsByWidgetRef,
+} from "../../../../../model/store/widgetDrills/widgetDrillSelectors.js";
 import { type IDashboardDrillEvent } from "../../../../../types.js";
 import { type OnWidgetDrill } from "../../../../drill/types.js";
 /**

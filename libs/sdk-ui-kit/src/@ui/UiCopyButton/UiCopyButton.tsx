@@ -4,7 +4,7 @@ import { useCallback } from "react";
 
 import { type MessageDescriptor, defineMessages, useIntl } from "react-intl";
 
-import { type MessageParameters, useToastMessage } from "../../Messages/index.js";
+import { type MessageParameters, useToastMessage } from "../../Messages/toasts/useToastMessage.js";
 import { UiIconButton } from "../UiIconButton/UiIconButton.js";
 
 /**

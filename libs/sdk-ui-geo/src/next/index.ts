@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-export { GeoPushpinChartNext, PUSHPIN_LAYER_ID } from "./GeoPushpinChartNext.js";
+export { GeoPushpinChartNext } from "./GeoPushpinChartNext.js";
 export type {
     IGeoPushpinChartNextBaseProps,
     IGeoPushpinChartNextProps,
@@ -21,11 +21,12 @@ export {
 } from "./types/config/points.js";
 export type { IGeoLegendConfigNext } from "./types/config/legend.js";
 
-export { GeoAreaChart, AREA_LAYER_ID } from "./GeoAreaChart.js";
+export { GeoAreaChart } from "./GeoAreaChart.js";
 export type { IGeoAreaChartBaseProps, IGeoAreaChartProps } from "./types/props/areaChart/public.js";
 export type { ICoreGeoAreaChartProps } from "./types/props/areaChart/internal.js";
 export type { IGeoAreaChartConfig } from "./types/config/areaChart.js";
 export type { IGeoAreasConfig } from "./types/config/areas.js";
+export type { GeoTileset } from "./types/map/tileset.js";
 
 export { GeoChartNext, GeoChartNextInternal } from "./GeoChartNext.js";
 export type { IGeoChartNextProps } from "./types/props/geoChartNext/public.js";
@@ -46,8 +47,8 @@ export {
 } from "./utils/layerConversion.js";
 export { buildLayerExecution } from "./layers/execution/buildLayerExecution.js";
 
-export { createPushpinLayer } from "./layers/pushpin/layerFactory.js";
-export { createAreaLayer } from "./layers/area/layerFactory.js";
+export { createPushpinLayer, PUSHPIN_LAYER_ID } from "./layers/pushpin/layerFactory.js";
+export { createAreaLayer, AREA_LAYER_ID } from "./layers/area/layerFactory.js";
 
 export { GEO_CHART_DEFAULTS, type IGeoChartDefaults } from "./constants/defaults.js";
 

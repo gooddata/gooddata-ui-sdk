@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { useCallback, useMemo } from "react";
 
@@ -8,14 +8,12 @@ import { idRef } from "@gooddata/sdk-model";
 
 import { useUpdateWidgetDefaultSizeByParent } from "./useUpdateWidgetDefaultSizeByParent.js";
 import { asLayoutItemPath } from "../../../../_staging/layout/coordinates.js";
-import {
-    addNestedLayoutSection,
-    uiActions,
-    useDashboardCommandProcessing,
-    useDashboardDispatch,
-} from "../../../../model/index.js";
+import { addNestedLayoutSection } from "../../../../model/commands/layout.js";
+import { useDashboardDispatch } from "../../../../model/react/DashboardStoreProvider.js";
+import { useDashboardCommandProcessing } from "../../../../model/react/useDashboardCommandProcessing.js";
+import { uiActions } from "../../../../model/store/ui/index.js";
 import { type ILayoutSectionPath } from "../../../../types.js";
-import { type BaseDraggableLayoutItemSize } from "../../../dragAndDrop/index.js";
+import { type BaseDraggableLayoutItemSize } from "../../../dragAndDrop/types.js";
 
 export function useNewSectionVisualizationSwitcherPlaceholderDropHandler(sectionIndex: ILayoutSectionPath) {
     const dispatch = useDashboardDispatch();

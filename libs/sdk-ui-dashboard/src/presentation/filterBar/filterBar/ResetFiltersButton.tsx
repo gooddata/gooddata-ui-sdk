@@ -9,7 +9,7 @@ import { IconReset, UiTooltip } from "@gooddata/sdk-ui-kit";
 import { useResetFiltersButton } from "./hooks/useResetFiltersButton.js";
 import { useEventToastMessage } from "../../../_staging/sharedHooks/useEventToastMessage.js";
 import { messages } from "../../../locales.js";
-import { isDashboardFilterContextSelectionReset } from "../../../model/index.js";
+import { isDashboardFilterContextSelectionReset } from "../../../model/events/filters.js";
 
 /**
  * @internal

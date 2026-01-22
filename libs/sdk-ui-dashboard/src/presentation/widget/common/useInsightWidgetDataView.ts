@@ -1,4 +1,5 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { useMemo } from "react";
 
 import stringify from "json-stable-stringify";
@@ -14,7 +15,9 @@ import {
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 
-import { selectInsightByRef, useDashboardSelector, useWidgetFilters } from "../../../model/index.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { useWidgetFilters } from "../../../model/react/useWidgetFilters.js";
+import { selectInsightByRef } from "../../../model/store/insights/insightsSelectors.js";
 
 /**
  * Configuration for the `useInsightWidgetDataView` hook.

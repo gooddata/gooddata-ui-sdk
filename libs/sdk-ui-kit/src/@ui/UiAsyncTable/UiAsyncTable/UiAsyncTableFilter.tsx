@@ -17,7 +17,7 @@ import { getFilterDropdownId, getFilterOptionsMap } from "./utils.js";
 import { ContentDivider } from "../../../Dialog/ContentDivider.js";
 import { Dropdown } from "../../../Dropdown/Dropdown.js";
 import { DropdownList } from "../../../Dropdown/DropdownList.js";
-import { Message } from "../../../Messages/index.js";
+import { Message } from "../../../Messages/Message.js";
 import { UiButton } from "../../UiButton/UiButton.js";
 import { UiChip } from "../../UiChip/UiChip.js";
 import { UiAutofocus } from "../../UiFocusManager/UiAutofocus.js";

@@ -45,4 +45,4 @@ export { ColorUtils } from "@gooddata/sdk-ui-vis-commons";
 export { getValidColorPalette } from "./chartTypes/_util/color.js";
 
 // High contrast mode utilities for Windows High Contrast Mode support
-export { isHighContrastMode } from "./utils/index.js";
+export { isHighContrastMode } from "./utils/highContrastMode.js";

@@ -4,7 +4,7 @@ import { type CaseReducer, type Draft, type PayloadAction } from "@reduxjs/toolk
 import { type Patch, applyPatches, enablePatches, original, produce, produceWithPatches } from "immer";
 import { invariant } from "ts-invariant";
 
-import { type IDashboardCommand } from "../../commands/index.js";
+import { type IDashboardCommand } from "../../commands/base.js";
 
 /*
  * Undo relies on immer's patching functionality. It has to be turned on explicitly.

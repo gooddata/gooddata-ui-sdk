@@ -1,9 +1,9 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type IExecutionDefinition, type ITheme, bucketIsEmpty, bucketsFind } from "@gooddata/sdk-model";
 import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
 
-import { type IChartConfig } from "../../../interfaces/index.js";
+import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { MAX_POINT_WIDTH } from "../_chartCreators/commonConfiguration.js";
 import { styleVariables } from "../_chartCreators/styles/variables.js";
 import { isLineChart } from "../_util/common.js";

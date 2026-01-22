@@ -1,8 +1,8 @@
 // (C) 2021-2025 GoodData Corporation
 
 import { Dialog } from "./Dialog.js";
-import { Button } from "../Button/index.js";
-import { Message } from "../Messages/index.js";
+import { Button } from "../Button/Button.js";
+import { Message } from "../Messages/Message.js";
 import { useId } from "../utils/useId.js";
 
 /**

@@ -5,13 +5,10 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import { attributeDisplayFormRef } from "@gooddata/sdk-model";
 
-import {
-    addAttributeFilter,
-    addLayoutSection,
-    renameDashboard,
-    resetDashboard,
-} from "../../../commands/index.js";
-import { type IDashboardWasReset } from "../../../events/index.js";
+import { renameDashboard, resetDashboard } from "../../../commands/dashboard.js";
+import { addAttributeFilter } from "../../../commands/filters.js";
+import { addLayoutSection } from "../../../commands/layout.js";
+import { type IDashboardWasReset } from "../../../events/dashboard.js";
 import { selectDashboardTitle } from "../../../store/meta/metaSelectors.js";
 import {
     selectFilterContextAttributeFilters,

@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { useEffect, useState } from "react";
 
@@ -12,7 +12,7 @@ import { stringUtils } from "@gooddata/util";
 import { PopupHeader } from "./PopupHeader.js";
 import { getTelemetryEventForLimitingItem } from "./telemetryUtils.js";
 import { messages } from "../../../../../../../locales.js";
-import { useDashboardUserInteraction } from "../../../../../../../model/index.js";
+import { useDashboardUserInteraction } from "../../../../../../../model/react/useDashboardUserInteraction.js";
 import { type ValuesLimitingItem } from "../../../../types.js";
 import { LimitingItemTitle } from "../shared/LimitingItem.js";
 import {

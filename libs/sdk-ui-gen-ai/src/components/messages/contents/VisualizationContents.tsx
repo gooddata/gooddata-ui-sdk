@@ -69,19 +69,20 @@ import { useExecution } from "./useExecution.js";
 import { VisualizationErrorBoundary } from "./VisualizationErrorBoundary.js";
 import { VisualizationSaveDialog } from "./VisualizationSaveDialog.js";
 import { type VisualizationContents, makeTextContents, makeUserMessage } from "../../../model.js";
+import { colorPaletteSelector, settingsSelector } from "../../../store/chatWindow/chatWindowSelectors.js";
 import {
-    type RootState,
-    colorPaletteSelector,
     copyToClipboardAction,
-    newMessageAction,
-    saveVisualisationRenderStatusAction,
     setKeyDriverAnalysisAction,
-    settingsSelector,
-    visualizationErrorAction,
-} from "../../../store/index.js";
+} from "../../../store/chatWindow/chatWindowSlice.js";
 import { getAbsoluteVisualizationHref, getHeadlineComparison, getVisualizationHref } from "../../../utils.js";
 import { useConfig } from "../../ConfigContext.js";
 import { DrillSelectDropdownMenu } from "./drill/DrillSelectDropdownMenu.js";
+import {
+    newMessageAction,
+    saveVisualisationRenderStatusAction,
+    visualizationErrorAction,
+} from "../../../store/messages/messagesSlice.js";
+import { type RootState } from "../../../store/types.js";
 import { createKdaDefinitionFromDrill, getDashboardAttributeFilter } from "../../hooks/useKdaDefinition.js";
 import { convertIntersectionToAttributeFilters, mergeFilters } from "../../utils/intersectionUtils.js";
 

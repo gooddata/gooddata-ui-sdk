@@ -6,7 +6,10 @@ import { type ObjRef, areObjRefsEqual, objRefToString } from "@gooddata/sdk-mode
 
 import { StylingSettingListItem } from "./StylingSettingListItem.js";
 import { DialogListEmpty } from "../../Dialog/DialogList/DialogListEmpty.js";
-import { type IStylingPickerItem, type StylingPickerItemContent } from "../../Dialog/index.js";
+import {
+    type IStylingPickerItem,
+    type StylingPickerItemContent,
+} from "../../Dialog/StylingEditorDialog/StylingEditorDialog.js";
 
 interface IStylingSettingListProps<T extends StylingPickerItemContent> {
     items: IStylingPickerItem<T>[];

@@ -4,7 +4,7 @@ import { type ReactNode } from "react";
 
 import { FormattedMessage } from "react-intl";
 
-import { Message } from "../../../../Messages/index.js";
+import { Message } from "../../../../Messages/Message.js";
 
 export interface IPrepareEnvMessageProps {
     integrationDocLink: string;

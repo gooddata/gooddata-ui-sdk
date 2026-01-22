@@ -24,7 +24,7 @@ import {
 import { AlertTitle } from "./AlertTitle.js";
 import { EditAlertConfiguration } from "./EditAlertConfiguration.js";
 import { useEditAlert } from "./hooks/useEditAlert.js";
-import { type IExecutionResultEnvelope } from "../../../../../model/index.js";
+import { type IExecutionResultEnvelope } from "../../../../../model/store/executionResults/types.js";
 import { AlertAttributeSelectOld } from "../../../../alerting/DefaultAlertingDialog/components/AlertAttributeSelectOld.js";
 import { AlertComparisonOperatorSelect } from "../../../../alerting/DefaultAlertingDialog/components/AlertComparisonOperatorSelect.js";
 import { AlertComparisonPeriodSelect } from "../../../../alerting/DefaultAlertingDialog/components/AlertComparisonPeriodSelect.js";

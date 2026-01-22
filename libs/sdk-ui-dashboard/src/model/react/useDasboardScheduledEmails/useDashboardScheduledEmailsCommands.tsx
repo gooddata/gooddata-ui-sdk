@@ -9,14 +9,12 @@ import {
     isInsightWidget,
 } from "@gooddata/sdk-model";
 
-import { switchDashboardTab } from "../../commands/index.js";
-import {
-    selectActiveTabLocalIdentifier,
-    selectEnableScheduling,
-    selectInsights,
-    selectWidgets,
-    uiActions,
-} from "../../store/index.js";
+import { switchDashboardTab } from "../../commands/tabs.js";
+import { selectEnableScheduling } from "../../store/config/configSelectors.js";
+import { selectInsights } from "../../store/insights/insightsSelectors.js";
+import { selectWidgets } from "../../store/tabs/layout/layoutSelectors.js";
+import { selectActiveTabLocalIdentifier } from "../../store/tabs/tabsSelectors.js";
+import { uiActions } from "../../store/ui/index.js";
 import { useDashboardDispatch, useDashboardSelector } from "../DashboardStoreProvider.js";
 import { useDashboardUserInteraction } from "../useDashboardUserInteraction.js";
 

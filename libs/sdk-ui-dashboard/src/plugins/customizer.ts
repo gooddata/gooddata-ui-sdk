@@ -6,44 +6,39 @@ import {
     type IDashboardLayoutSection,
 } from "@gooddata/sdk-model";
 
-import {
-    type DashboardDispatch,
-    type DashboardEventHandler,
-    type DashboardEventHandlerFn,
-    type DashboardEvents,
-    type DashboardState,
-    type ExtendedDashboardWidget,
-    type ICustomDashboardEvent,
-    type ICustomWidget,
-} from "../model/index.js";
-import {
-    type AttributeFilterComponentProvider,
-    type CustomDashboardInsightComponent,
-    type CustomDashboardWidgetComponent,
-    type DashboardContentComponentProvider,
-    type FilterBarComponentProvider,
-    type InsightComponentProvider,
-    type LayoutComponentProvider,
-    type LoadingComponentProvider,
-    type OptionalAttributeFilterComponentProvider,
-    type OptionalDashboardContentComponentProvider,
-    type OptionalDateFilterComponentProvider,
-    type OptionalFilterBarComponentProvider,
-    type OptionalInsightBodyComponentProvider,
-    type OptionalInsightComponentProvider,
-    type OptionalLayoutComponentProvider,
-    type OptionalLoadingComponentProvider,
-    type OptionalRichTextComponentProvider,
-    type OptionalTitleComponentProvider,
-    type OptionalTopBarComponentProvider,
-    type OptionalVisualizationSwitcherComponentProvider,
-    type OptionalVisualizationSwitcherToolbarComponentProvider,
-    type RichTextComponentProvider,
-    type TitleComponentProvider,
-    type TopBarComponentProvider,
-    type VisualizationSwitcherComponentProvider,
-    type VisualizationSwitcherToolbarComponentProvider,
-} from "../presentation/index.js";
+import type { DashboardEventHandler, DashboardEventHandlerFn } from "../model/eventHandlers/eventHandler.js";
+import type { ICustomDashboardEvent } from "../model/events/base.js";
+import type { DashboardEvents } from "../model/events/index.js";
+import type { DashboardDispatch, DashboardState } from "../model/store/types.js";
+import type { ExtendedDashboardWidget, ICustomWidget } from "../model/types/layoutTypes.js";
+import type {
+    AttributeFilterComponentProvider,
+    DashboardContentComponentProvider,
+    FilterBarComponentProvider,
+    InsightComponentProvider,
+    LayoutComponentProvider,
+    LoadingComponentProvider,
+    OptionalAttributeFilterComponentProvider,
+    OptionalDashboardContentComponentProvider,
+    OptionalDateFilterComponentProvider,
+    OptionalFilterBarComponentProvider,
+    OptionalInsightBodyComponentProvider,
+    OptionalInsightComponentProvider,
+    OptionalLayoutComponentProvider,
+    OptionalLoadingComponentProvider,
+    OptionalRichTextComponentProvider,
+    OptionalTitleComponentProvider,
+    OptionalTopBarComponentProvider,
+    OptionalVisualizationSwitcherComponentProvider,
+    OptionalVisualizationSwitcherToolbarComponentProvider,
+    RichTextComponentProvider,
+    TitleComponentProvider,
+    TopBarComponentProvider,
+    VisualizationSwitcherComponentProvider,
+    VisualizationSwitcherToolbarComponentProvider,
+} from "../presentation/dashboardContexts/types.js";
+import type { CustomDashboardInsightComponent } from "../presentation/widget/insight/types.js";
+import type { CustomDashboardWidgetComponent } from "../presentation/widget/widget/types.js";
 import { type ILayoutItemPath, type ILayoutSectionPath } from "../types.js";
 
 /**

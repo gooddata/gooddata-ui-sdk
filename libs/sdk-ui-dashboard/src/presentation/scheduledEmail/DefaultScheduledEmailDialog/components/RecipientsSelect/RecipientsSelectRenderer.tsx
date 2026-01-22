@@ -52,7 +52,7 @@ import {
     makeKeyboardNavigation,
 } from "@gooddata/sdk-ui-kit";
 
-import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../../../constants/index.js";
+import { DASHBOARD_DIALOG_OVERS_Z_INDEX } from "../../../../constants/zIndex.js";
 import { matchRecipient } from "../../../utils/users.js";
 import { isEmail } from "../../../utils/validate.js";
 

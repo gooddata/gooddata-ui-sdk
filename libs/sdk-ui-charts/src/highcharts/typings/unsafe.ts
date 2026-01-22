@@ -4,7 +4,7 @@ import { type IColorPalette } from "@gooddata/sdk-model";
 import { type IColorAssignment } from "@gooddata/sdk-ui";
 import { type IChartFillConfig } from "@gooddata/sdk-ui-vis-commons";
 
-import { type ChartAlignTypes, type IAxisConfig, type IGridConfig } from "../../interfaces/index.js";
+import { type ChartAlignTypes, type IAxisConfig, type IGridConfig } from "../../interfaces/chartConfig.js";
 import { type StackingType } from "../constants/stacking.js";
 import {
     type ColorAxisOptions,

@@ -19,11 +19,9 @@ import { type ArrowOffsets, Bubble } from "@gooddata/sdk-ui-kit";
 import { ToolbarBottom } from "./ToolbarBottom.js";
 import { ToolbarTop } from "./ToolbarTop.js";
 import { getSizeInfo } from "../../../../_staging/layout/sizing.js";
-import {
-    selectSettings,
-    useDashboardSelector,
-    useDashboardUserInteraction,
-} from "../../../../model/index.js";
+import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
+import { useDashboardUserInteraction } from "../../../../model/react/useDashboardUserInteraction.js";
+import { selectSettings } from "../../../../model/store/config/configSelectors.js";
 import {
     defaultAlignPoints,
     defaultArrowDirections,

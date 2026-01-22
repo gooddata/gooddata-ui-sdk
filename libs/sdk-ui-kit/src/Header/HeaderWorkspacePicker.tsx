@@ -7,8 +7,9 @@ import { type IntlShape, injectIntl } from "react-intl";
 
 import { HeaderWorkspacePickerButton } from "./HeaderWorkspacePickerButton.js";
 import { HeaderWorkspacePickerItem } from "./HeaderWorkspacePickerItem.js";
-import { Dropdown, DropdownList } from "../Dropdown/index.js";
-import { NoData } from "../NoData/index.js";
+import { Dropdown } from "../Dropdown/Dropdown.js";
+import { DropdownList } from "../Dropdown/DropdownList.js";
+import { NoData } from "../NoData/NoData.js";
 
 /**
  * @internal

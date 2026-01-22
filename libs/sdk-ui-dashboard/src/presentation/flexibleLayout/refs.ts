@@ -1,10 +1,11 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import { type ObjRef } from "@gooddata/sdk-model";
 
 import {
     type IDashboardLayoutItemFacade,
     type IDashboardLayoutSectionFacade,
-} from "../../_staging/dashboard/flexibleLayout/index.js";
+} from "../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
 
 export function getRefsForSection(section: IDashboardLayoutSectionFacade<unknown>): (ObjRef | undefined)[] {
     return section.items().map((item) => item.ref());

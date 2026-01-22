@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import stringify from "json-stable-stringify";
 import { type LRUCache } from "lru-cache";
@@ -16,10 +16,8 @@ import {
     widgetUri,
 } from "@gooddata/sdk-model";
 
-import {
-    type DashboardLayoutItemModifications,
-    validateDashboardLayoutWidgetSize,
-} from "./DefaultDashboardLayoutRenderer/index.js";
+import { validateDashboardLayoutWidgetSize } from "./DefaultDashboardLayoutRenderer/utils/sizing.js";
+import { type DashboardLayoutItemModifications } from "../../_staging/dashboard/flexibleLayout/builder/interfaces.js";
 
 /**
  * We need to aggressively memoize the widget sanitization results in order to prevent expensive re-renders

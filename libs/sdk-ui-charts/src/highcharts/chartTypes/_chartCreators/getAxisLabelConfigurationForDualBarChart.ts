@@ -1,6 +1,6 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
-import { type IAxisConfig } from "../../../interfaces/index.js";
+import { type IAxisConfig } from "../../../interfaces/chartConfig.js";
 import {
     ALIGN_LEFT,
     ALIGN_RIGHT,

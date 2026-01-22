@@ -1,14 +1,15 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
+
 import { union } from "lodash-es";
 import { InvariantError } from "ts-invariant";
 
 import { type IDashboardCustomizationLogger } from "./customizationLogging.js";
 import { type CustomizerMutationsContext } from "./types.js";
+import { DefaultDashboardMainContent } from "../../presentation/dashboard/DefaultDashboardContent/DefaultDashboardMainContent.js";
 import {
     type DashboardContentComponentProvider,
-    DefaultDashboardMainContent,
     type OptionalDashboardContentComponentProvider,
-} from "../../presentation/index.js";
+} from "../../presentation/dashboardContexts/types.js";
 import { type IDashboardContentCustomizer } from "../customizer.js";
 
 const DefaultDashboardContentComponentProvider: DashboardContentComponentProvider = () => {

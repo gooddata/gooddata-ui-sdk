@@ -1,7 +1,8 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { type IRichTextWidget, type ScreenSize } from "@gooddata/sdk-model";
 
-import { type WidgetExportData } from "../../../export/index.js";
+import { type WidgetExportData } from "../../../export/types.js";
 
 export interface IDefaultDashboardRichTextWidgetProps {
     widget: IRichTextWidget;

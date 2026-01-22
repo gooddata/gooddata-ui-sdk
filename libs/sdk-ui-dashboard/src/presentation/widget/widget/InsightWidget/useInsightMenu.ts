@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type Dispatch, type SetStateAction, useCallback, useMemo, useState } from "react";
 
@@ -7,21 +7,19 @@ import { useIntl } from "react-intl";
 import { type IInsight, type IInsightWidget } from "@gooddata/sdk-model";
 
 import { isDataError } from "../../../../_staging/errors/errorPredicates.js";
-import {
-    selectCanCreateAutomation,
-    selectDashboardUserAutomationAlertsInContext,
-    selectEnableAutomationManagement,
-    selectExecutionResultByRef,
-    useDashboardSelector,
-} from "../../../../model/index.js";
-import { useDashboardCustomizationsContext } from "../../../dashboardContexts/index.js";
+import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
+import { selectDashboardUserAutomationAlertsInContext } from "../../../../model/store/automations/automationsSelectors.js";
+import { selectEnableAutomationManagement } from "../../../../model/store/config/configSelectors.js";
+import { selectExecutionResultByRef } from "../../../../model/store/executionResults/executionResultsSelectors.js";
+import { selectCanCreateAutomation } from "../../../../model/store/permissions/permissionsSelectors.js";
+import { useDashboardCustomizationsContext } from "../../../dashboardContexts/DashboardCustomizationsContext.js";
+import { getDefaultInsightMenuItems } from "../../insightMenu/DefaultDashboardInsightMenu/getDefaultInsightMenuItems.js";
 import {
     type AlertingDisabledReason,
     type DisabledReason,
-    type IInsightMenuItem,
     type SchedulingDisabledReason,
-    getDefaultInsightMenuItems,
-} from "../../insightMenu/index.js";
+} from "../../insightMenu/DefaultDashboardInsightMenu/types.js";
+import { type IInsightMenuItem } from "../../insightMenu/types.js";
 
 type UseInsightMenuConfig = {
     insight?: IInsight;

@@ -8,7 +8,7 @@ import {
     type RefObject,
 } from "react";
 
-import { type ArrowOffsets } from "../Bubble/index.js";
+import { type ArrowOffsets } from "../Bubble/typings.js";
 import { type IButtonAccessibilityConfig } from "../Button/typings.js";
 import { type IAlignPoint } from "../typings/positioning.js";
 

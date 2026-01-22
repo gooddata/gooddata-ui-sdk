@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type PayloadAction } from "@reduxjs/toolkit";
 
@@ -10,7 +10,7 @@ import {
     selectIsWorkingSelectionInverted,
     selectWorkingSelection,
 } from "./selectionSelectors.js";
-import { type AttributeElementKey } from "../../../types/index.js";
+import { type AttributeElementKey } from "../../../types/common.js";
 import { type AttributeFilterReducer } from "../store/state.js";
 
 const changeSelection: AttributeFilterReducer<

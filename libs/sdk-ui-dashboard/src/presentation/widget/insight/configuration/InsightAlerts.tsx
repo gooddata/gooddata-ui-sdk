@@ -1,8 +1,9 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { InsightAlertsNew } from "./InsightAlertsNew.js";
 import { InsightAlertsOld } from "./InsightAlertsOld.js";
-import { selectEnableAutomationFilterContext, useDashboardSelector } from "../../../../model/index.js";
+import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
+import { selectEnableAutomationFilterContext } from "../../../../model/store/config/configSelectors.js";
 import { type IInsightMenuSubmenuComponentProps } from "../../insightMenu/types.js";
 
 export function InsightAlerts({ widget, onClose, onGoBack }: IInsightMenuSubmenuComponentProps) {

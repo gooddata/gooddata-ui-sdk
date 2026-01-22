@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type Ref } from "react";
 
@@ -10,7 +10,9 @@ import { useWidgetDragEndHandler } from "./draggableWidget/useWidgetDragEndHandl
 import { type IWrapInsightListItemWithDragProps } from "./types.js";
 import { useDashboardDrag } from "./useDashboardDrag.js";
 import { getSizeInfo } from "../../_staging/layout/sizing.js";
-import { selectIsInEditMode, selectSettings, useDashboardSelector } from "../../model/index.js";
+import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
+import { selectSettings } from "../../model/store/config/configSelectors.js";
+import { selectIsInEditMode } from "../../model/store/renderMode/renderModeSelectors.js";
 
 /**
  * @internal

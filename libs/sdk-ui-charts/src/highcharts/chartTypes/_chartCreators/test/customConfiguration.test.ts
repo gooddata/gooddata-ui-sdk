@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type PlotBarDataLabelsOptions, type PlotBubbleDataLabelsOptions } from "highcharts";
 import { omit, set } from "lodash-es";
@@ -7,7 +7,7 @@ import { describe, expect, it, vi } from "vitest";
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
 import { type IDrillConfig, VisualizationTypes, createIntlMock } from "@gooddata/sdk-ui";
 
-import { type IDataLabelsConfig } from "../../../../interfaces/index.js";
+import { type IDataLabelsConfig } from "../../../../interfaces/chartConfig.js";
 import {
     type IChartOptions,
     type IPointData,

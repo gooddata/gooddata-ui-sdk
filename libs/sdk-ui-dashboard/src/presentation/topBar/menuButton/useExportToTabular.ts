@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useRef } from "react";
 
@@ -7,7 +7,8 @@ import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { downloadFile } from "../../../_staging/fileUtils/downloadFile.js";
 import { messages } from "../../../locales.js";
-import { exportDashboardToExcel, useDashboardCommandProcessing } from "../../../model/index.js";
+import { exportDashboardToExcel } from "../../../model/commands/dashboard.js";
+import { useDashboardCommandProcessing } from "../../../model/react/useDashboardCommandProcessing.js";
 
 export const useExportToTabular = (onSuccess?: () => void) => {
     const { addSuccess, addError, addProgress, removeMessage } = useToastMessage();

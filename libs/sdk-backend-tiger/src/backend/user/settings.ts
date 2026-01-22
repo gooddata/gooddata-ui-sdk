@@ -14,7 +14,8 @@ import { type ISettings } from "@gooddata/sdk-model";
 import { unwrapSettingContent } from "../../convertors/fromBackend/SettingsConverter.js";
 import { type TigerAuthenticatedCallGuard, type TigerSettingsType } from "../../types/index.js";
 import { TigerFeaturesService, pickContext } from "../features/index.js";
-import { TigerSettingsService, mapTypeToKey } from "../settings/index.js";
+import { mapTypeToKey } from "../settings/mapping.js";
+import { TigerSettingsService } from "../settings/settings.js";
 import { DefaultUserSettings } from "../uiSettings.js";
 
 export class TigerUserSettingsService

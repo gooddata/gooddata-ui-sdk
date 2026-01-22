@@ -4,7 +4,8 @@ import { isEmpty } from "lodash-es";
 
 import { type IMetadataObjectBase } from "@gooddata/sdk-model";
 
-import { Bubble, BubbleHoverTrigger } from "../Bubble/index.js";
+import { Bubble } from "../Bubble/Bubble.js";
+import { BubbleHoverTrigger } from "../Bubble/BubbleHoverTrigger.js";
 
 const ARROW_OFFSETS = {
     "cr cl": [13, 0],

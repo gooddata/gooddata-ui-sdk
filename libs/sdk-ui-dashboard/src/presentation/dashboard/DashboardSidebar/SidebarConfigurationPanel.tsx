@@ -1,10 +1,10 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type ReactElement } from "react";
 
 import { CreationPanel } from "./CreationPanel.js";
 import { type ISidebarProps } from "./types.js";
-import { useWidgetSelection } from "../../../model/index.js";
+import { useWidgetSelection } from "../../../model/react/useWidgetSelection.js";
 
 /**
  * @internal

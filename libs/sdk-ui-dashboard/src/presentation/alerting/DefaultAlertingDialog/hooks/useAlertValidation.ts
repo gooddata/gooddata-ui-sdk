@@ -1,13 +1,11 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 
-import {
-    selectCatalogDateDatasets,
-    selectInsightByWidgetRef,
-    selectWidgetByRef,
-    useDashboardSelector,
-} from "../../../../model/index.js";
+import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
+import { selectCatalogDateDatasets } from "../../../../model/store/catalog/catalogSelectors.js";
+import { selectInsightByWidgetRef } from "../../../../model/store/insights/insightsSelectors.js";
+import { selectWidgetByRef } from "../../../../model/store/tabs/layout/layoutSelectors.js";
 import { getAlertMeasure } from "../utils/getters.js";
 import { getSupportedInsightMeasuresByInsight } from "../utils/items.js";
 

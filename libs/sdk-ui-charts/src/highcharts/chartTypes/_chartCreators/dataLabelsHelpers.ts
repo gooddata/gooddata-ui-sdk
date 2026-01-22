@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type ITheme } from "@gooddata/sdk-model";
 
@@ -10,7 +10,7 @@ import {
     isStacked,
     pointInRange,
 } from "./helpers.js";
-import { type IChartConfig, type IDataLabelsVisible } from "../../../interfaces/index.js";
+import { type IChartConfig, type IDataLabelsVisible } from "../../../interfaces/chartConfig.js";
 import {
     DATA_LABEL_C6,
     getBackplateLabelStyle,

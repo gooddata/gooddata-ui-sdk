@@ -5,7 +5,7 @@ import { type MouseEvent, useCallback, useEffect, useState } from "react";
 import { areObjRefsEqual } from "@gooddata/sdk-model";
 
 import type { OpenHandlerEvent } from "../../catalogDetail/CatalogDetailContent.js";
-import type { ICatalogItem, ICatalogItemRef } from "../../catalogItem/index.js";
+import { type ICatalogItem, type ICatalogItemRef } from "../../catalogItem/types.js";
 
 export function useCatalogItemOpen(
     onCatalogItemOpenClick?: (e: MouseEvent, item: OpenHandlerEvent) => void,

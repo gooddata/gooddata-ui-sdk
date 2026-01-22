@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type MouseEvent } from "react";
 
@@ -25,11 +25,9 @@ import { ShortenedText } from "@gooddata/sdk-ui-kit";
 import { stringUtils } from "@gooddata/util";
 
 import { type ObjRefMap } from "../../../../../_staging/metadata/objRefMap.js";
-import {
-    selectAllCatalogAttributesMap,
-    selectCanManageAttributeHierarchy,
-    useDashboardSelector,
-} from "../../../../../model/index.js";
+import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
+import { selectAllCatalogAttributesMap } from "../../../../../model/store/catalog/catalogSelectors.js";
+import { selectCanManageAttributeHierarchy } from "../../../../../model/store/permissions/permissionsSelectors.js";
 
 /**
  * @internal

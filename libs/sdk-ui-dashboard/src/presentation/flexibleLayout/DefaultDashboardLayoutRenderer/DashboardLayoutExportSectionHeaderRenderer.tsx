@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ReactElement, useMemo, useState } from "react";
 
@@ -10,7 +10,7 @@ import { type IDashboardLayoutSectionHeaderRenderProps } from "./interfaces.js";
 import { buildEmptyItemFacadeWithSetSize } from "./utils/emptyFacade.js";
 import { determineWidthForScreen } from "../../../_staging/layout/sizing.js";
 import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
-import { useSectionDescriptionExportData } from "../../export/index.js";
+import { useSectionDescriptionExportData } from "../../export/useExportData.js";
 
 export function DashboardLayoutExportSectionHeaderRenderer(
     props: IDashboardLayoutSectionHeaderRenderProps<unknown>,

@@ -3,13 +3,17 @@
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { type ILayoutItemPath } from "../../../../types.js";
-import { type IMoveLayoutSection, moveSectionItem, undoLayoutChanges } from "../../../commands/index.js";
-import { moveSectionItemAndRemoveOriginalSectionIfEmpty } from "../../../commands/layout.js";
 import {
-    type IDashboardCommandFailed,
+    type IMoveLayoutSection,
+    moveSectionItem,
+    moveSectionItemAndRemoveOriginalSectionIfEmpty,
+    undoLayoutChanges,
+} from "../../../commands/layout.js";
+import { type IDashboardCommandFailed } from "../../../events/general.js";
+import {
     type IDashboardLayoutChanged,
     type IDashboardLayoutSectionItemMoved,
-} from "../../../events/index.js";
+} from "../../../events/layout.js";
 import { selectLayout } from "../../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardTester, preloadedTesterFactory } from "../../../tests/DashboardTester.js";
 import {

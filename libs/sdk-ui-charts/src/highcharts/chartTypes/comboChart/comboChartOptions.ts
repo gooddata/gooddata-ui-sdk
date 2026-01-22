@@ -12,7 +12,7 @@ import {
 } from "@gooddata/sdk-model";
 import { BucketNames, type DataViewFacade, VisualizationTypes } from "@gooddata/sdk-ui";
 
-import { type IChartConfig } from "../../../interfaces/index.js";
+import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { type StackingType } from "../../constants/stacking.js";
 import { type ISeriesItem } from "../../typings/unsafe.js";
 import { isSolidFill } from "../_chartOptions/patternFillOptions.js";

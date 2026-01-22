@@ -3,7 +3,7 @@
 import { render } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
-import type { ILegendModel } from "../../../types/legend/index.js";
+import { type ILegendModel } from "../../../types/legend/model.js";
 import { MultiLayerLegendPanel } from "../MultiLayerLegendPanel.js";
 
 const mockModel: ILegendModel = {

@@ -6,7 +6,7 @@ import { useIntl } from "react-intl";
 
 import { type IUiTagDef, UiTags } from "@gooddata/sdk-ui-kit";
 
-import { useCatalogTags } from "../catalogResource/index.js";
+import { useCatalogTags } from "../catalogResource/CatalogTagsContext.js";
 
 type Props = {
     tags: string[];

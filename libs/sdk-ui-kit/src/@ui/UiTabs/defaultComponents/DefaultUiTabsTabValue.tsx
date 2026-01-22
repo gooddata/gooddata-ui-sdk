@@ -2,7 +2,7 @@
 
 import { type EmptyObject } from "@gooddata/util";
 
-import { ShortenedText } from "../../../ShortenedText/index.js";
+import { ShortenedText } from "../../../ShortenedText/ShortenedText.js";
 import { UiTabsBem } from "../bem.js";
 import { getTypedUiTabsContextStore } from "../context.js";
 import { type IUiTabComponentProps } from "../types.js";

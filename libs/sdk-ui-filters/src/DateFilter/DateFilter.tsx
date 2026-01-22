@@ -24,7 +24,7 @@ import {
 import { normalizeSelectedFilterOption } from "./utils/FilterOptionNormalization.js";
 import { canExcludeCurrentPeriod } from "./utils/PeriodExclusion.js";
 import { validateFilterOption } from "./validation/OptionValidation.js";
-import { type IFilterButtonCustomIcon, type VisibilityMode } from "../shared/index.js";
+import { type IFilterButtonCustomIcon, type VisibilityMode } from "../shared/interfaces/index.js";
 
 /**
  * Props of the {@link DateFilter} component that are reflected in the state.

@@ -1,4 +1,5 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
+
 import {
     type IBucket,
     type IMeasure,
@@ -7,11 +8,9 @@ import {
     insightBucket,
 } from "@gooddata/sdk-model";
 
-import {
-    type IInsightToPropConversion,
-    type PropMeta,
-    sdkModelPropMetas,
-} from "../../../utils/embeddingCodeGenerator/index.js";
+import { sdkModelPropMetas } from "../../../utils/embeddingCodeGenerator/insightToPropsConverter/convenience.js";
+import { type IInsightToPropConversion } from "../../../utils/embeddingCodeGenerator/insightToPropsConverter/convertor.js";
+import { type PropMeta } from "../../../utils/embeddingCodeGenerator/types.js";
 
 export function singleSecondaryMeasureBucketConversion<TProps extends object, TPropKey extends keyof TProps>(
     propName: TPropKey,

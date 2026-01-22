@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 /* eslint-disable */
 /**
@@ -1728,6 +1728,14 @@ export interface AutomationWebhook {
      * Flag indicating if webhook has a token.
      */
     hasToken?: boolean | null;
+    /**
+     * Hmac secret key for the webhook signature.
+     */
+    secretKey?: string | null;
+    /**
+     * Flag indicating if webhook has a hmac secret key.
+     */
+    hasSecretKey?: boolean | null;
     /**
      * The destination type.
      */

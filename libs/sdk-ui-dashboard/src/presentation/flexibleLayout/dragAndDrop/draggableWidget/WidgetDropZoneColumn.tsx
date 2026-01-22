@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type CSSProperties, useMemo } from "react";
 
@@ -16,11 +16,13 @@ import { WidgetDropZone } from "./WidgetDropZone.js";
 import { areLayoutPathsEqual } from "../../../../_staging/layout/coordinates.js";
 import { getDashboardLayoutItemHeight } from "../../../../_staging/layout/sizing.js";
 import {
-    selectDraggingWidgetTargetLayoutPath,
-    selectDraggingWidgetTriggeringDropZoneType,
     useDashboardDispatch,
     useDashboardSelector,
-} from "../../../../model/index.js";
+} from "../../../../model/react/DashboardStoreProvider.js";
+import {
+    selectDraggingWidgetTargetLayoutPath,
+    selectDraggingWidgetTriggeringDropZoneType,
+} from "../../../../model/store/ui/uiSelectors.js";
 import { type ILayoutItemPath } from "../../../../types.js";
 import { draggableWidgetDropHandler } from "../../../dragAndDrop/draggableWidget/draggableWidgetDropHandler.js";
 import { type BaseDraggableLayoutItem } from "../../../dragAndDrop/types.js";

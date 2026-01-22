@@ -17,66 +17,37 @@ import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
 import { newAttributeFilterCallbacks } from "./callbacks.js";
 import {
-    type IAttributeFilterHandlerStore,
-    actions,
-    createAttributeFilterHandlerStore,
-    getElementsByKeys,
-    selectAttribute,
-    selectAttributeError,
     selectAttributeFilter,
     selectAttributeFilterDisplayAsLabel,
     selectAttributeFilterToDisplay,
-    selectAttributeStatus,
-    selectCommittedSelection,
-    selectElements,
-    selectElementsCache,
-    selectElementsTotalCount,
-    selectElementsTotalCountWithCurrentSettings,
-    selectInitError,
-    selectInitStatus,
-    selectInitTotalCountError,
-    selectInitTotalCountStatus,
-    selectInvertableCommittedSelection,
-    selectInvertableWorkingSelection,
-    selectIsLoadElementsOptionsChanged,
-    selectIsWorkingSelectionChanged,
-    selectIsWorkingSelectionEmpty,
-    selectLimit,
-    selectLimitingAttributeFilters,
-    selectLimitingAttributeFiltersAttributes,
-    selectLimitingDateFilters,
-    selectLimitingMeasures,
-    selectLimitingValidationItems,
-    selectLoadInitialElementsPageError,
-    selectLoadInitialElementsPageStatus,
-    selectLoadNextElementsPageError,
-    selectLoadNextElementsPageStatus,
-    selectOffset,
-    selectOrder,
     selectOriginalFilter,
-    selectSearch,
-    selectWorkingSelection,
-} from "./redux/index.js";
+} from "./redux/filter/filterSelectors.js";
 import { type AttributeFilterHandlerConfig } from "./types.js";
+import { type InvertableAttributeElementSelection } from "../types/attributeFilterHandler.js";
+import {
+    type OnInitCancelCallbackPayload,
+    type OnInitErrorCallbackPayload,
+    type OnInitStartCallbackPayload,
+    type OnInitSuccessCallbackPayload,
+} from "../types/attributeFilterLoader.js";
+import {
+    type OnLoadAttributeCancelCallbackPayload,
+    type OnLoadAttributeErrorCallbackPayload,
+    type OnLoadAttributeStartCallbackPayload,
+    type OnLoadAttributeSuccessCallbackPayload,
+} from "../types/attributeLoader.js";
 import {
     type AsyncOperationStatus,
     type AttributeElementKey,
     type CallbackRegistration,
     type Correlation,
+} from "../types/common.js";
+import {
     type ILoadElementsOptions,
-    type InvertableAttributeElementSelection,
-    type OnInitCancelCallbackPayload,
-    type OnInitErrorCallbackPayload,
-    type OnInitStartCallbackPayload,
-    type OnInitSuccessCallbackPayload,
     type OnInitTotalCountCancelCallbackPayload,
     type OnInitTotalCountErrorCallbackPayload,
     type OnInitTotalCountStartCallbackPayload,
     type OnInitTotalCountSuccessCallbackPayload,
-    type OnLoadAttributeCancelCallbackPayload,
-    type OnLoadAttributeErrorCallbackPayload,
-    type OnLoadAttributeStartCallbackPayload,
-    type OnLoadAttributeSuccessCallbackPayload,
     type OnLoadCustomElementsCancelCallbackPayload,
     type OnLoadCustomElementsErrorCallbackPayload,
     type OnLoadCustomElementsStartCallbackPayload,
@@ -93,9 +64,55 @@ import {
     type OnLoadNextElementsPageErrorCallbackPayload,
     type OnLoadNextElementsPageStartCallbackPayload,
     type OnLoadNextElementsPageSuccessCallbackPayload,
+} from "../types/elementsLoader.js";
+import {
     type OnSelectionChangedCallbackPayload,
     type OnSelectionCommittedCallbackPayload,
-} from "../types/index.js";
+} from "../types/selectionHandler.js";
+import {
+    getElementsByKeys,
+    selectElements,
+    selectElementsCache,
+    selectElementsTotalCount,
+    selectElementsTotalCountWithCurrentSettings,
+    selectInitTotalCountError,
+    selectInitTotalCountStatus,
+    selectLimit,
+    selectLimitingAttributeFilters,
+    selectLimitingAttributeFiltersAttributes,
+    selectLimitingDateFilters,
+    selectLimitingMeasures,
+    selectLimitingValidationItems,
+    selectOffset,
+    selectOrder,
+    selectSearch,
+} from "./redux/elements/elementsSelectors.js";
+import { selectInitError, selectInitStatus } from "./redux/init/initSelectors.js";
+import {
+    selectAttribute,
+    selectAttributeError,
+    selectAttributeStatus,
+} from "./redux/loadAttribute/loadAttributeSelectors.js";
+import {
+    selectLoadInitialElementsPageError,
+    selectLoadInitialElementsPageStatus,
+} from "./redux/loadInitialElementsPage/loadInitialElementsPageSelectors.js";
+import {
+    selectIsLoadElementsOptionsChanged,
+    selectLoadNextElementsPageError,
+    selectLoadNextElementsPageStatus,
+} from "./redux/loadNextElementsPage/loadNextElementsPageSelectors.js";
+import {
+    selectCommittedSelection,
+    selectInvertableCommittedSelection,
+    selectInvertableWorkingSelection,
+    selectIsWorkingSelectionChanged,
+    selectIsWorkingSelectionEmpty,
+    selectWorkingSelection,
+} from "./redux/selection/selectionSelectors.js";
+import { createAttributeFilterHandlerStore } from "./redux/store/createStore.js";
+import { actions } from "./redux/store/slice.js";
+import { type IAttributeFilterHandlerStore } from "./redux/store/types.js";
 
 /**
  * @internal

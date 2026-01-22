@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type ReactElement, useMemo } from "react";
 
@@ -24,8 +24,8 @@ import {
 import { getItemIndex, serializeLayoutItemPath } from "../../../_staging/layout/coordinates.js";
 import { type ILayoutItemPath, type RenderMode } from "../../../types.js";
 import { useScreenSize } from "../../dashboard/components/DashboardScreenSizeContext.js";
-import { useSlideSizeStyle } from "../../dashboardContexts/index.js";
-import { useSectionExportData } from "../../export/index.js";
+import { useSlideSizeStyle } from "../../dashboardContexts/useSlideData.js";
+import { useSectionExportData } from "../../export/useExportData.js";
 import { DashboardLayoutSectionOverlayController } from "../DashboardItemOverlay/DashboardItemOverlayController.js";
 
 /**

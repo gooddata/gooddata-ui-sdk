@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import {
     type IAttribute,
@@ -16,7 +16,7 @@ import {
     useResolveValuesWithPlaceholders,
 } from "@gooddata/sdk-ui";
 
-import { type IBucketChartProps } from "../../interfaces/index.js";
+import { type IBucketChartProps } from "../../interfaces/chartProps.js";
 import { withChart } from "../_base/withChart.js";
 import { type IChartDefinition } from "../_commons/chartDefinition.js";
 import { roundChartDimensions } from "../_commons/dimensions.js";

@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { useRef } from "react";
 
@@ -6,10 +6,8 @@ import cx from "classnames";
 
 import { type IDashboardEditLayoutContent } from "./DashboardEditLayoutTypes.js";
 import { DashboardEditLayoutWidget } from "./DashboardEditLayoutWidget.js";
-import {
-    type IDashboardLayoutWidgetRenderProps,
-    getDashboardLayoutItemHeightForRatioAndScreen,
-} from "../../../DefaultDashboardLayoutRenderer/index.js";
+import { type IDashboardLayoutWidgetRenderProps } from "../../../DefaultDashboardLayoutRenderer/interfaces.js";
+import { getDashboardLayoutItemHeightForRatioAndScreen } from "../../../DefaultDashboardLayoutRenderer/utils/sizing.js";
 
 type IDashboardEditLayoutWidgetRendererOwnProps =
     IDashboardLayoutWidgetRenderProps<IDashboardEditLayoutContent>;

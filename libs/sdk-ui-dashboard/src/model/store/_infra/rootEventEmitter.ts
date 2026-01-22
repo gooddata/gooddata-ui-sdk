@@ -4,7 +4,8 @@ import { type SagaIterator } from "redux-saga";
 import { actionChannel, select, take } from "redux-saga/effects";
 
 import { type DashboardEventHandler } from "../../eventHandlers/eventHandler.js";
-import { type DashboardEvents, isDashboardEventOrCustomDashboardEvent } from "../../events/index.js";
+import { isDashboardEventOrCustomDashboardEvent } from "../../events/base.js";
+import { type DashboardEvents } from "../../events/index.js";
 import { type DashboardDispatch, type DashboardSelectorEvaluator, type DashboardState } from "../types.js";
 
 export interface IEventEmitter {

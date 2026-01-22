@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type FocusEvent, memo, useCallback, useState } from "react";
 
@@ -8,8 +8,8 @@ import { useIntl } from "react-intl";
 import { ConfirmDialog, Input, Message, Typography } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../../../locales.js";
-import { DASHBOARD_TITLE_MAX_LENGTH } from "../../constants/index.js";
-import { IntlWrapper } from "../../localization/index.js";
+import { DASHBOARD_TITLE_MAX_LENGTH } from "../../constants/dashboard.js";
+import { IntlWrapper } from "../../localization/IntlWrapper.js";
 
 export interface ISaveAsDialogRendererOwnProps {
     dashboardTitle: string;

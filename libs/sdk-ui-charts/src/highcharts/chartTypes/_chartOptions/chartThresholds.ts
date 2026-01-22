@@ -1,9 +1,9 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 // for some reason categories array is not typed in some cases
 import { type DataViewFacade, type VisType } from "@gooddata/sdk-ui";
 
-import { type IChartConfig } from "../../../interfaces/index.js";
+import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import {
     type IPatternObject,
     type ISeriesDataItem,

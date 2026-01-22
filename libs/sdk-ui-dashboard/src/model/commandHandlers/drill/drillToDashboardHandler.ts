@@ -33,7 +33,7 @@ import {
 import {
     dashboardAttributeFilterToAttributeFilter,
     dashboardDateFilterToDateFilterByWidget,
-} from "../../../converters/index.js";
+} from "../../../converters/filterConverters.js";
 import { type IDashboardFilter } from "../../../types.js";
 import { type IDrillToDashboard } from "../../commands/drill.js";
 import { switchDashboardTab } from "../../commands/tabs.js";

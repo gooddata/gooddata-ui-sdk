@@ -6,8 +6,8 @@ import {
     type IMetricsAndFacts,
     type IQueryMetricsAndFacts,
     queryMetricsAndFacts,
-    useDashboardQueryProcessing,
-} from "../../model/index.js";
+} from "../../model/queries/metricsAndFacts.js";
+import { useDashboardQueryProcessing } from "../../model/react/useDashboardQueryProcessing.js";
 
 /**
  * @internal

@@ -14,17 +14,17 @@ import {
     isRelativeDateFilter,
 } from "@gooddata/sdk-model";
 
-import { filterContextItemsToDashboardFiltersByRichTextWidget } from "../../converters/index.js";
+import { filterContextItemsToDashboardFiltersByRichTextWidget } from "../../converters/filterConverters.js";
 import {
     type IInsightDateDatasets,
     type IQueryInsightDateDatasets,
     queryDateDatasetsForInsight,
-    selectFilterContextFilters,
-    selectSectionHeadersDateDataSet,
-    useDashboardQueryProcessing,
-    useDashboardSelector,
-    useWidgetFilters,
-} from "../../model/index.js";
+} from "../../model/queries/insights.js";
+import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
+import { useDashboardQueryProcessing } from "../../model/react/useDashboardQueryProcessing.js";
+import { useWidgetFilters } from "../../model/react/useWidgetFilters.js";
+import { selectSectionHeadersDateDataSet } from "../../model/store/meta/metaSelectors.js";
+import { selectFilterContextFilters } from "../../model/store/tabs/filterContext/filterContextSelectors.js";
 
 /**
  * Result of {@link useRichTextWidgetFilters} and {@link useSectionDescriptionFilters} hooks.

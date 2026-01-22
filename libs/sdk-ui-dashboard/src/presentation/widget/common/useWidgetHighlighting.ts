@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type RefObject, useCallback, useEffect, useReducer, useRef, useState } from "react";
 
@@ -12,14 +12,12 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 
-import {
-    selectDashboardUserAutomations,
-    selectFocusObject,
-    selectIsDashboardExecuted,
-    selectIsInExportMode,
-    selectWidgets,
-    useDashboardSelector,
-} from "../../../model/index.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectDashboardUserAutomations } from "../../../model/store/automations/automationsSelectors.js";
+import { selectFocusObject } from "../../../model/store/config/configSelectors.js";
+import { selectIsDashboardExecuted } from "../../../model/store/executed/executedSelectors.js";
+import { selectIsInExportMode } from "../../../model/store/renderMode/renderModeSelectors.js";
+import { selectWidgets } from "../../../model/store/tabs/layout/layoutSelectors.js";
 
 const selectIsWidgetHighlighted = (widget: IWidget) =>
     createSelector(

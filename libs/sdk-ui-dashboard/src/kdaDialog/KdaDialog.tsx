@@ -1,9 +1,9 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { KdaDialog as KdaDialogComponent } from "./dialog/KdaDialog.js";
 import { KdaStateProvider } from "./providers/KdaState.js";
 import { type IKdaDialogProps } from "./types.js";
-import { IntlWrapper } from "../presentation/localization/index.js";
+import { IntlWrapper } from "../presentation/localization/IntlWrapper.js";
 
 /**
  * @internal

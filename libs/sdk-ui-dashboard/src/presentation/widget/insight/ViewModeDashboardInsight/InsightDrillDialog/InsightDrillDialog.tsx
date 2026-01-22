@@ -34,24 +34,20 @@ import { DrillDialog } from "./DrillDialog.js";
 import { DrillDialogInsight } from "./DrillDialogInsight.js";
 import { getTitleWithBreadcrumbs } from "./getTitleWithBreadcrumbs.js";
 import { DOWNLOADER_ID } from "../../../../../_staging/fileUtils/downloadFile.js";
+import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
+import { useWidgetExecutionsHandler } from "../../../../../model/react/useWidgetExecutionsHandler.js";
 import {
     selectEnableRichTextDynamicReferences,
-    selectExecutionTimestamp,
     selectSeparators,
-    useDashboardSelector,
-    useWidgetExecutionsHandler,
-} from "../../../../../model/index.js";
-import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../../constants/index.js";
-import { useDashboardComponentsContext } from "../../../../dashboardContexts/index.js";
-import {
-    type IDrillStep,
-    type OnDashboardDrill,
-    type OnDrillDownSuccess,
-    WithDrillSelect,
-} from "../../../../drill/index.js";
-import { IntlWrapper } from "../../../../localization/index.js";
-import { ThemedLoadingEqualizer } from "../../../../presentationComponents/index.js";
-import { useInsightExport } from "../../../common/index.js";
+} from "../../../../../model/store/config/configSelectors.js";
+import { selectExecutionTimestamp } from "../../../../../model/store/ui/uiSelectors.js";
+import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../../constants/zIndex.js";
+import { useDashboardComponentsContext } from "../../../../dashboardContexts/DashboardComponentsContext.js";
+import { WithDrillSelect } from "../../../../drill/DrillSelect/WithDrillSelect.js";
+import { type IDrillStep, type OnDashboardDrill, type OnDrillDownSuccess } from "../../../../drill/types.js";
+import { IntlWrapper } from "../../../../localization/IntlWrapper.js";
+import { ThemedLoadingEqualizer } from "../../../../presentationComponents/ThemedLoadingEqualizer.js";
+import { useInsightExport } from "../../../common/useInsightExport.js";
 import { useShowAsTable } from "../../../showAsTableButton/useShowAsTable.js";
 import { supportsShowAsTable } from "../../insightToTable.js";
 

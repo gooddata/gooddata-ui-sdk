@@ -2,7 +2,7 @@
 
 import { type ReactNode } from "react";
 
-import { Separator } from "../../../List/index.js";
+import { Separator } from "../../../List/MenuList.js";
 import { type IUiListboxStaticItemProps } from "../types.js";
 
 /**

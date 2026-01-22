@@ -1,4 +1,5 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
+
 import { BucketNames } from "@gooddata/sdk-ui";
 import { type ISankeyChartProps } from "@gooddata/sdk-ui-charts";
 
@@ -8,16 +9,16 @@ import {
     type IVisualizationMeta,
     type PluggableVisualizationFactory,
 } from "../../../interfaces/VisualizationDescriptor.js";
+import { getReactEmbeddingCodeGenerator } from "../../../utils/embeddingCodeGenerator/getReactEmbeddingCodeGenerator.js";
 import {
     executionConfigInsightConversion,
     filtersInsightConversion,
-    getInsightToPropsConverter,
-    getReactEmbeddingCodeGenerator,
     localeInsightConversion,
     singleAttributeBucketConversion,
     singleAttributeOrMeasureBucketConversion,
     sortsInsightConversion,
-} from "../../../utils/embeddingCodeGenerator/index.js";
+} from "../../../utils/embeddingCodeGenerator/insightToPropsConverter/convenience.js";
+import { getInsightToPropsConverter } from "../../../utils/embeddingCodeGenerator/insightToPropsConverter/convertor.js";
 import { chartAdditionalFactories, chartConfigInsightConversion } from "../chartCodeGenUtils.js";
 import { SankeyChartDescriptor } from "../sankeyChart/SankeyChartDescriptor.js";
 

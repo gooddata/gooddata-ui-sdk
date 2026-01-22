@@ -7,7 +7,7 @@ import { defaultImport } from "default-import";
 import ReactContentLoader from "react-content-loader";
 
 import { type IRenderListItemProps, List } from "./List.js";
-import { LoadingMask } from "../LoadingMask/index.js";
+import { LoadingMask } from "../LoadingMask/LoadingMask.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 // In ESM, default exports of CJS modules are wrapped in default properties instead of being exposed directly.

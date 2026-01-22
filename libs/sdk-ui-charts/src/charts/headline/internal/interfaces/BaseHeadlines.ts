@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type ComponentType, type RefObject } from "react";
 
@@ -7,7 +7,7 @@ import { isEmpty } from "lodash-es";
 import { type HeadlineElementType } from "@gooddata/sdk-ui";
 
 import { type IHeadlineDataItem } from "./Headlines.js";
-import { type IComparison } from "../../../../interfaces/index.js";
+import { type IComparison } from "../../../../interfaces/comparison.js";
 
 export const COMPARISON_DEFAULT_OBJECT: IComparison = {
     enabled: true,

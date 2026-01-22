@@ -60,7 +60,7 @@ export {
     isChatCopyToClipboardEvent,
 } from "./store/events.js";
 
-export { clearThreadAction, newMessageAction } from "./store/index.js";
+export { clearThreadAction, newMessageAction } from "./store/messages/messagesSlice.js";
 export { type LinkHandlerEvent } from "./components/ConfigContext.js";
 export { useGenAiChatAvailability } from "./hooks/useGenAiChatAvailability.js";
 

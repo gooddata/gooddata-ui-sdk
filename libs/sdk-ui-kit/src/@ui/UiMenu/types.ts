@@ -11,7 +11,7 @@ import {
     type SetStateAction,
 } from "react";
 
-import { type IDropdownBodyRenderProps } from "../../Dropdown/index.js";
+import { type IDropdownBodyRenderProps } from "../../Dropdown/Dropdown.js";
 import { type SizeMedium, type SizeSmall } from "../@types/size.js";
 
 /**

@@ -16,14 +16,16 @@ import {
 import { switchDashboardTabHandler } from "./switchDashboardTabHandler.js";
 import { createDefaultFilterContext } from "../../../_staging/dashboard/defaultFilterContext.js";
 import { DEFAULT_FISCAL_DATE_FILTER_PRESET } from "../../../_staging/dateFilterConfig/defaultConfig.js";
+import { configHasFiscalPresets } from "../../../_staging/dateFilterConfig/validation.js";
 import { type ICreateDashboardTab, switchDashboardTab } from "../../commands/tabs.js";
 import { type IDashboardTabSwitched, dashboardTabCreated } from "../../events/tabs.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
 import { InitialUndoState } from "../../store/_infra/undoEnhancer.js";
 import { selectActiveCalendars, selectDateFilterConfig } from "../../store/config/configSelectors.js";
-import { type ITabState, tabsActions } from "../../store/tabs/index.js";
+import { tabsActions } from "../../store/tabs/index.js";
 import { selectScreen } from "../../store/tabs/layout/layoutSelectors.js";
 import { selectActiveTabLocalIdentifier, selectTabs } from "../../store/tabs/tabsSelectors.js";
+import { type ITabState } from "../../store/tabs/tabsState.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { type ExtendedDashboardWidget } from "../../types/layoutTypes.js";
 import { EmptyDashboardLayout } from "../dashboard/common/dashboardInitialize.js";
@@ -98,7 +100,9 @@ export function* createDashboardTabHandler(ctx: DashboardContext, cmd: ICreateDa
 
     // 2. Create new tab with an empty filter context and layout
     const effectiveDateFilterConfig =
-        activeCalendars?.default === "FISCAL"
+        activeCalendars?.fiscal &&
+        activeCalendars?.default === "FISCAL" &&
+        configHasFiscalPresets(dateFilterConfig)
             ? { ...dateFilterConfig, selectedOption: DEFAULT_FISCAL_DATE_FILTER_PRESET }
             : dateFilterConfig;
 

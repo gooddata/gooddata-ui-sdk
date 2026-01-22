@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type Context, type ReactNode } from "react";
 
@@ -9,7 +9,7 @@ import { type IDashboard, type IWorkspacePermissions, type ObjRef } from "@goodd
 
 import { type RenderMode } from "../../types.js";
 import { type DashboardEventHandler } from "../eventHandlers/eventHandler.js";
-import { type DashboardDispatch, type DashboardState } from "../store/index.js";
+import { type DashboardDispatch, type DashboardState } from "../store/types.js";
 import {
     type DashboardConfig,
     type DashboardModelCustomizationFns,

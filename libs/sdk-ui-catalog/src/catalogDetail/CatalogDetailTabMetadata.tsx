@@ -10,7 +10,7 @@ import { CatalogDetailContentRow } from "./CatalogDetailContentRow.js";
 import { CatalogDetailGranularities } from "./CatalogDetailGranularities.js";
 import { CatalogDetailMetricSettings } from "./CatalogDetailMetricSettings.js";
 import { CatalogDetailTags } from "./CatalogDetailTags.js";
-import type { ICatalogItem } from "../catalogItem/index.js";
+import { type ICatalogItem } from "../catalogItem/types.js";
 import type { ObjectType } from "../objectType/types.js";
 
 const TYPES_SUPPORTING_IS_HIDDEN: ObjectType[] = ["insight", "measure", "attribute", "fact"];

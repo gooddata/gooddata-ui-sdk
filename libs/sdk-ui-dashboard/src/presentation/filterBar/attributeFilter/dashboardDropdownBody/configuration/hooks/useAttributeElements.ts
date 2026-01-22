@@ -6,10 +6,10 @@ import { type ObjRef } from "@gooddata/sdk-model";
 
 import {
     type IQueryAttributeElements,
-    type IUseAttributeElements,
     queryAttributeElements,
-    useDashboardQueryProcessing,
-} from "../../../../../../model/index.js";
+} from "../../../../../../model/queries/attributeElements.js";
+import { useDashboardQueryProcessing } from "../../../../../../model/react/useDashboardQueryProcessing.js";
+import { type IUseAttributeElements } from "../../../../../../model/types/attributeFilterTypes.js";
 
 /**
  * @internal

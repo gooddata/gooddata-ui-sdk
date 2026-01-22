@@ -1,8 +1,9 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { CreatableRichText } from "./CreatableRichText.js";
-import { type RichTextWidgetComponentSet } from "../../componentDefinition/index.js";
-import { type RichTextComponentProvider } from "../../dashboardContexts/index.js";
-import { RichTextDraggingComponent } from "../../dragAndDrop/index.js";
+import { type RichTextWidgetComponentSet } from "../../componentDefinition/types.js";
+import { type RichTextComponentProvider } from "../../dashboardContexts/types.js";
+import { RichTextDraggingComponent } from "../../dragAndDrop/draggableWidget/RichTextDraggingComponent.js";
 
 /**
  * @internal

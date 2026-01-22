@@ -20,18 +20,18 @@ import { DateFilterConfigurationBody } from "./configuration/DateFilterConfigura
 import { type IDashboardDateFilterProps } from "./types.js";
 import { dateFilterOptionToDashboardDateFilter } from "../../../_staging/dashboard/dashboardFilterConverter.js";
 import { matchDateFilterToDateFilterOptionWithPreference } from "../../../_staging/dateFilterConfig/dateFilterOptionMapping.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectBackendCapabilities } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
+import { selectCatalogDateDatasets } from "../../../model/store/catalog/catalogSelectors.js";
 import {
     selectActiveCalendars,
-    selectBackendCapabilities,
-    selectCatalogDateDatasets,
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
-    selectIsInEditMode,
     selectLocale,
     selectSettings,
     selectWeekStart,
-    useDashboardSelector,
-} from "../../../model/index.js";
-import { useCurrentDateFilterConfig } from "../../dragAndDrop/index.js";
+} from "../../../model/store/config/configSelectors.js";
+import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
+import { useCurrentDateFilterConfig } from "../../dragAndDrop/useCurrentDateFilterConfig.js";
 import { getVisibilityIcon } from "../utils.js";
 
 /**

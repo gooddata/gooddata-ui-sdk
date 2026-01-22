@@ -1,13 +1,11 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ReactElement, useMemo } from "react";
 
 import { GeoChartNext } from "./GeoChartNext.js";
-import { PUSHPIN_LAYER_ID, createPushpinLayer } from "./layers/pushpin/layerFactory.js";
+import { createPushpinLayer } from "./layers/pushpin/layerFactory.js";
 import { type IGeoLayer } from "./types/layers/index.js";
 import { type IGeoPushpinChartNextProps } from "./types/props/pushpinChart/public.js";
-
-export { PUSHPIN_LAYER_ID };
 
 /**
  * GeoPushpinChartNext wraps {@link GeoChartNext} for the single pushpin-layer scenario.

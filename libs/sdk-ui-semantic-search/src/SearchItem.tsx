@@ -1,10 +1,10 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type AriaAttributes, type AriaRole, type MouseEvent, type ReactNode } from "react";
 
 import classnames from "classnames";
 
-import { testIds } from "./automation/index.js";
+import { semanticSearchItem, semanticSearchItemIcon } from "./automation/testIds.js";
 
 export type SearchItemProps = {
     className?: string;
@@ -55,7 +55,7 @@ export function SearchItem({
     });
 
     return (
-        <div className={wrapperClassName} data-level={level} data-testid={testIds.semanticSearchItem}>
+        <div className={wrapperClassName} data-level={level} data-testid={semanticSearchItem}>
             <Tag
                 {...ariaAttributes}
                 href={href}
@@ -65,10 +65,7 @@ export function SearchItem({
                 onAuxClick={handleClick}
                 onMouseEnter={onHover}
             >
-                <span
-                    className="gd-semantic-search__results-item__icon"
-                    data-testid={testIds.semanticSearchItemIcon}
-                >
+                <span className="gd-semantic-search__results-item__icon" data-testid={semanticSearchItemIcon}>
                     {icon}
                 </span>
                 <span className="gd-semantic-search__results-item__text">{children}</span>

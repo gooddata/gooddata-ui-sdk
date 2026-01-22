@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import {
     type IWidget,
@@ -9,11 +9,9 @@ import {
     widgetRef,
 } from "@gooddata/sdk-model";
 
-import {
-    selectAttributeFilterDisplayFormsMap,
-    selectExecutionResultByRef,
-    useDashboardSelector,
-} from "../../../../model/index.js";
+import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
+import { selectExecutionResultByRef } from "../../../../model/store/executionResults/executionResultsSelectors.js";
+import { selectAttributeFilterDisplayFormsMap } from "../../../../model/store/tabs/filterContext/filterContextSelectors.js";
 
 const WARNING_FILTER_NOT_APPLIED = "gdc.aqe.not_applied_filter.report";
 

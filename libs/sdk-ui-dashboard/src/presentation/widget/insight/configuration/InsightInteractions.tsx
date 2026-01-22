@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import cx from "classnames";
 
@@ -7,7 +7,7 @@ import { OverlayController, OverlayControllerProvider, ScrollablePanel } from "@
 import { stringUtils } from "@gooddata/util";
 
 import { InsightDrillConfigPanel } from "./InsightDrillConfigPanel/InsightDrillConfigPanel.js";
-import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/index.js";
+import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/zIndex.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
 

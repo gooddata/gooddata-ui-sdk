@@ -1,5 +1,6 @@
-// (C) 2019-2020 GoodData Corporation
-import { type IChartConfig } from "../../../interfaces/index.js";
+// (C) 2019-2026 GoodData Corporation
+
+import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { type IChartOptions } from "../../typings/unsafe.js";
 
 export function getChartAlignmentConfiguration(

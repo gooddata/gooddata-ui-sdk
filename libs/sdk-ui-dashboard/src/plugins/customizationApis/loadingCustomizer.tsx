@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type ComponentType } from "react";
 
@@ -12,7 +12,7 @@ import { type CustomizerMutationsContext } from "./types.js";
 import {
     type LoadingComponentProvider,
     type OptionalLoadingComponentProvider,
-} from "../../presentation/index.js";
+} from "../../presentation/dashboardContexts/types.js";
 import { type ILoadingCustomizer } from "../customizer.js";
 
 const DefaultLoadingRendererProvider: LoadingComponentProvider = () => {

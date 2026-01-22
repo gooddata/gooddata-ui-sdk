@@ -1,11 +1,8 @@
 // (C) 2023-2026 GoodData Corporation
 
-import {
-    type IDashboardCommandFailed,
-    type IKeyDriverAnalysis,
-    keyDriverAnalysis,
-    useDashboardCommandProcessing,
-} from "../../../model/index.js";
+import { type IKeyDriverAnalysis, keyDriverAnalysis } from "../../../model/commands/drill.js";
+import type { IDashboardCommandFailed } from "../../../model/events/general.js";
+import { useDashboardCommandProcessing } from "../../../model/react/useDashboardCommandProcessing.js";
 
 /**
  * @internal

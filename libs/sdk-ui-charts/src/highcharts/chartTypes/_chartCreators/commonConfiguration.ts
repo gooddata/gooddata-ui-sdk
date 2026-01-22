@@ -9,7 +9,7 @@ import { type ChartType, type IDrillConfig } from "@gooddata/sdk-ui";
 import { chartClick } from "./drilldownEventing.js";
 import { setupDrilldown } from "./setupDrilldownToParentAttribute.js";
 import { styleVariables } from "./styles/variables.js";
-import { type IChartConfig } from "../../../interfaces/index.js";
+import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import {
     getBackplateLabelColor,
     getBackplateStackedLabelStyling,

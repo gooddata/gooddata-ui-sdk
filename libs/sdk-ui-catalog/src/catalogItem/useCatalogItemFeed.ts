@@ -22,11 +22,12 @@ import {
 } from "./query.js";
 import type { ICatalogItem, ICatalogItemFeedOptions, ICatalogItemQueryOptions } from "./types.js";
 import { useUpdateItemCallback } from "./useUpdateItemCallback.js";
-import type { AsyncStatus } from "../async/index.js";
-import { useFilterState, useQualityFilter } from "../filter/index.js";
+import { type AsyncStatus } from "../async/types.js";
+import { useFilterState, useQualityFilter } from "../filter/FilterContext.js";
 import { useMounted } from "../hooks/useMounted.js";
-import { type ObjectType, ObjectTypes } from "../objectType/index.js";
-import { useFullTextSearchState } from "../search/index.js";
+import { ObjectTypes } from "../objectType/constants.js";
+import { type ObjectType } from "../objectType/types.js";
+import { useFullTextSearchState } from "../search/FullTextSearchContext.js";
 
 export function useCatalogItemFeed({ backend, workspace, id, pageSize }: ICatalogItemFeedOptions) {
     const state = useFeedState();

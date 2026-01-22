@@ -1,4 +1,4 @@
-// (C) 2007-2019 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 const SCREEN = "only screen";
 
@@ -20,4 +20,8 @@ const getQueryMatching = (range: IMatchingRange) =>
 
 const mobileRange = smallRange;
 
-export const IS_MOBILE_DEVICE = getQueryMatching(mobileRange);
+const IS_MOBILE_DEVICE = getQueryMatching(mobileRange);
+
+export const MediaQueries = {
+    IS_MOBILE_DEVICE,
+};

@@ -4,18 +4,12 @@ import { type ComponentType, useCallback, useEffect, useRef, useState } from "re
 
 import hoistNonReactStatics from "hoist-non-react-statics";
 
-import {
-    CancelledSdkError,
-    type DataViewFacade,
-    type GoodDataSdkError,
-    type ICancelablePromise,
-    type IExportFunction,
-    convertError,
-    createExportErrorFunction,
-    createExportFunction,
-    isCancelError,
-    makeCancelable,
-} from "../base/index.js";
+import { convertError } from "../base/errors/errorHandling.js";
+import { CancelledSdkError, type GoodDataSdkError } from "../base/errors/GoodDataSdkError.js";
+import { type ICancelablePromise, isCancelError, makeCancelable } from "../base/react/CancelablePromise.js";
+import { type DataViewFacade } from "../base/results/facade.js";
+import { type IExportFunction } from "../base/vis/Events.js";
+import { createExportErrorFunction, createExportFunction } from "../base/vis/export.js";
 
 /**
  * Structure specifying a particular portion of data.

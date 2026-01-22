@@ -1,5 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
+// eslint-disable-next-line no-restricted-syntax
 export * from "highcharts";
 
 declare module "highcharts" {

@@ -9,6 +9,7 @@ import { type IGeoPointsConfigNext } from "./points.js";
 import { type IGeoConfigViewportNext } from "./viewport.js";
 import type { StyleSpecification } from "../../layers/common/mapFacade.js";
 import { type IGeoLngLat } from "../common/coordinates.js";
+import type { GeoTileset } from "../map/tileset.js";
 
 /**
  * Configuration for GeoPushpinChartNext component
@@ -26,6 +27,11 @@ export interface IGeoPushpinChartNextConfig {
      * Custom MapLibre style URL or inline specification.
      */
     mapStyle?: string | StyleSpecification;
+
+    /**
+     * Selected basemap tileset.
+     */
+    tileset?: GeoTileset;
     /**
      * Maximum zoom level allowed on the map. Null/undefined keeps MapLibre defaults.
      */

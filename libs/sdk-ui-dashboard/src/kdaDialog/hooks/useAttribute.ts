@@ -1,10 +1,11 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useCallback } from "react";
 
 import { type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 
-import { selectCatalogAttributes, useDashboardSelector } from "../../model/index.js";
+import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
+import { selectCatalogAttributes } from "../../model/store/catalog/catalogSelectors.js";
 
 export function useAttribute() {
     const dateAttributes = useDashboardSelector(selectCatalogAttributes);

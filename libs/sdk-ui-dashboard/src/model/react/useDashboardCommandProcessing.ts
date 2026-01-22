@@ -1,9 +1,11 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
+
 import { useState } from "react";
 
 import { useDashboardCommand } from "./useDashboardCommand.js";
 import { type DashboardCommands } from "../commands/index.js";
-import { type DashboardEventType, type DashboardEvents } from "../events/index.js";
+import { type DashboardEventType } from "../events/base.js";
+import { type DashboardEvents } from "../events/index.js";
 
 /**
  * @internal

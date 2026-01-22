@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { compact } from "lodash-es";
 import { type IntlShape } from "react-intl";
@@ -6,13 +6,11 @@ import { type IntlShape } from "react-intl";
 import { type IInsightWidget } from "@gooddata/sdk-model";
 import { IconInteraction } from "@gooddata/sdk-ui-kit";
 
-import {
-    eagerRemoveSectionItemByWidgetRef,
-    uiActions,
-    type useDashboardDispatch,
-    type useDashboardEventDispatch,
-    userInteractionTriggered,
-} from "../../../../model/index.js";
+import { eagerRemoveSectionItemByWidgetRef } from "../../../../model/commands/layout.js";
+import { userInteractionTriggered } from "../../../../model/events/userInteraction.js";
+import { type useDashboardDispatch } from "../../../../model/react/DashboardStoreProvider.js";
+import { type useDashboardEventDispatch } from "../../../../model/react/useDashboardEventDispatch.js";
+import { uiActions } from "../../../../model/store/ui/index.js";
 import { InsightConfiguration } from "../../insight/configuration/InsightConfiguration.js";
 import { InsightInteractions } from "../../insight/configuration/InsightInteractions.js";
 import { type IInsightMenuItem } from "../types.js";

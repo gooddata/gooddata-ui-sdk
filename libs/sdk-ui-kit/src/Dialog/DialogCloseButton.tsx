@@ -8,7 +8,7 @@ import { useIntl } from "react-intl";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
 import { type IDialogCloseButtonProps } from "./typings.js";
-import { Button } from "../Button/index.js";
+import { Button } from "../Button/Button.js";
 
 /**
  * @internal

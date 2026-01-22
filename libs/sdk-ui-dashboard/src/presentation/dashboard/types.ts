@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type ComponentType, type Context, type ReactElement } from "react";
 
@@ -9,14 +9,13 @@ import { type IDashboard, type ITheme, type IWorkspacePermissions, type ObjRef }
 import { type IErrorProps, type ILoadingProps } from "@gooddata/sdk-ui";
 
 import { type CustomSidebarComponent } from "./DashboardSidebar/types.js";
+import { type DashboardEventHandler } from "../../model/eventHandlers/eventHandler.js";
+import { type DashboardDispatch, type DashboardState } from "../../model/store/types.js";
 import {
     type DashboardConfig,
-    type DashboardDispatch,
-    type DashboardEventHandler,
     type DashboardModelCustomizationFns,
-    type DashboardState,
     type WidgetsOverlayFn,
-} from "../../model/index.js";
+} from "../../model/types/commonTypes.js";
 import {
     type CustomAlertingDialogComponent,
     type CustomAlertingManagementDialogComponent,
@@ -41,27 +40,24 @@ import {
     type OptionalVisualizationSwitcherToolbarComponentProvider,
     type OptionalWidgetComponentProvider,
     type RichTextMenuItemsProvider,
-} from "../dashboardContexts/index.js";
-import { type CustomDashboardSettingsDialogComponent } from "../dashboardSettingsDialog/index.js";
-import { type CustomFilterBarComponent } from "../filterBar/index.js";
-import { type CustomEmptyLayoutDropZoneBodyComponent } from "../flexibleLayout/index.js";
-import { type CustomSaveAsDialogComponent } from "../saveAs/index.js";
+} from "../dashboardContexts/types.js";
+import { type CustomDashboardSettingsDialogComponent } from "../dashboardSettingsDialog/types.js";
+import { type CustomFilterBarComponent } from "../filterBar/filterBar/types.js";
+import { type CustomEmptyLayoutDropZoneBodyComponent } from "../flexibleLayout/types.js";
+import { type CustomSaveAsDialogComponent } from "../saveAs/types.js";
 import {
     type CustomScheduledEmailDialogComponent,
     type CustomScheduledEmailManagementDialogComponent,
-} from "../scheduledEmail/index.js";
-import { type CustomShareDialogComponent } from "../shareDialog/index.js";
-import { type CustomToolbarComponent } from "../toolbar/index.js";
-import {
-    type CustomButtonBarComponent,
-    type CustomMenuButtonComponent,
-    type CustomSaveButtonComponent,
-    type CustomSettingButtonComponent,
-    type CustomTitleComponent,
-    type CustomTopBarComponent,
-    type IMenuButtonConfiguration,
-} from "../topBar/index.js";
-import { type CustomDashboardNestedLayoutComponent as CustomDashboardLayoutComponent } from "../widget/index.js";
+} from "../scheduledEmail/types.js";
+import { type CustomShareDialogComponent } from "../shareDialog/types.js";
+import { type CustomToolbarComponent } from "../toolbar/types.js";
+import { type CustomSaveButtonComponent } from "../topBar/buttonBar/button/saveButton/types.js";
+import { type CustomSettingButtonComponent } from "../topBar/buttonBar/button/settingButton/types.js";
+import { type CustomButtonBarComponent } from "../topBar/buttonBar/types.js";
+import { type CustomMenuButtonComponent, type IMenuButtonConfiguration } from "../topBar/menuButton/types.js";
+import { type CustomTitleComponent } from "../topBar/title/types.js";
+import { type CustomTopBarComponent } from "../topBar/topBar/types.js";
+import { type CustomDashboardLayoutComponent as CustomDashboardLayoutComponent } from "../widget/dashboardLayout/types.js";
 
 /**
  * These props allow you to specify custom components or custom component providers that the Dashboard

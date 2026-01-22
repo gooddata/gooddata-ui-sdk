@@ -1,8 +1,8 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type PropsWithChildren, createContext, useContext } from "react";
 
-import type { ISettings } from "@gooddata/sdk-model";
+import type { ISettings, WorkspacePermission } from "@gooddata/sdk-model";
 
 import type { PermissionsState } from "./types.js";
 
@@ -27,4 +27,9 @@ export function usePermissionsState(): PermissionsState {
 export function useFeatureFlag(flag: keyof ISettings): boolean {
     const { result } = usePermissionsState();
     return Boolean(result?.settings?.[flag]);
+}
+
+export function useWorkspacePermission(permission: WorkspacePermission): boolean {
+    const { result } = usePermissionsState();
+    return Boolean(result?.permissions?.[permission]);
 }

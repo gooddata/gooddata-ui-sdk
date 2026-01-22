@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useCallback, useMemo } from "react";
 
@@ -8,7 +8,7 @@ import { type ObjRef } from "@gooddata/sdk-model";
 import { stringUtils } from "@gooddata/util";
 
 import { ParentFiltersDisabledItem } from "./ParentFiltersDisabledItem.js";
-import { type IDashboardAttributeFilterParentItem } from "../../../../../../model/index.js";
+import { type IDashboardAttributeFilterParentItem } from "../../../../../../model/types/attributeFilterTypes.js";
 
 interface IConfigurationParentItemProps {
     currentFilterLocalId: string;

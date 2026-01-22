@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -7,11 +7,9 @@ import { defineMessages, useIntl } from "react-intl";
 import { idRef } from "@gooddata/sdk-model";
 import { type IUiMenuInteractiveItem, type IUiMenuItem, type IconType } from "@gooddata/sdk-ui-kit";
 
-import {
-    selectExecutionResultByRef,
-    selectSettings,
-    useDashboardSelector,
-} from "../../../../../model/index.js";
+import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
+import { selectSettings } from "../../../../../model/store/config/configSelectors.js";
+import { selectExecutionResultByRef } from "../../../../../model/store/executionResults/executionResultsSelectors.js";
 import { getExportTooltipId } from "../../../insightMenu/DefaultDashboardInsightMenu/getExportTooltips.js";
 
 export interface IMenuItemData {

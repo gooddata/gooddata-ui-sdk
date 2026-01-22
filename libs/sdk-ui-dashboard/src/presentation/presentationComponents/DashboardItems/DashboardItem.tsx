@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type HTMLAttributes, type Ref, forwardRef } from "react";
 
@@ -7,7 +7,7 @@ import cx from "classnames";
 import { type ScreenSize } from "@gooddata/sdk-model";
 import { useId } from "@gooddata/sdk-ui-kit";
 
-import { type CommonExportDataAttributes } from "../../export/index.js";
+import { type CommonExportDataAttributes } from "../../export/types.js";
 interface IDashboardItemProps extends HTMLAttributes<HTMLDivElement> {
     screen: ScreenSize;
     description?: string;

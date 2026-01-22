@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { useEffect, useMemo } from "react";
 
@@ -14,8 +14,8 @@ import {
     setTagsAction,
 } from "../store/chatWindow/chatWindowSlice.js";
 import { type ChatEventHandler, EventDispatcher } from "../store/events.js";
-import { getStore } from "../store/index.js";
 import { OptionsDispatcher } from "../store/options.js";
+import { getStore } from "../store/store.js";
 
 export const useGenAIStore = (
     backend: IAnalyticalBackend,

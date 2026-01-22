@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ReactElement, useCallback, useEffect, useState } from "react";
 
@@ -16,20 +16,22 @@ import {
     getDescription,
     getTitle,
 } from "./sectionHeaderHelper.js";
-import { type IDashboardLayoutSectionFacade } from "../../../../_staging/dashboard/flexibleLayout/index.js";
+import { type IDashboardLayoutSectionFacade } from "../../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
 import { serializeLayoutSectionPath } from "../../../../_staging/layout/coordinates.js";
 import { useSectionDescriptionFilters } from "../../../../_staging/sharedHooks/useRichTextFilters.js";
+import { changeNestedLayoutSectionHeader } from "../../../../model/commands/layout.js";
 import {
-    changeNestedLayoutSectionHeader,
-    selectEnableRichTextDescriptions,
-    selectEnableRichTextDynamicReferences,
-    selectExecutionTimestamp,
-    selectSeparators,
-    uiActions,
     useDashboardDispatch,
     useDashboardSelector,
-} from "../../../../model/index.js";
-import { useDashboardComponentsContext } from "../../../dashboardContexts/index.js";
+} from "../../../../model/react/DashboardStoreProvider.js";
+import {
+    selectEnableRichTextDescriptions,
+    selectEnableRichTextDynamicReferences,
+    selectSeparators,
+} from "../../../../model/store/config/configSelectors.js";
+import { uiActions } from "../../../../model/store/ui/index.js";
+import { selectExecutionTimestamp } from "../../../../model/store/ui/uiSelectors.js";
+import { useDashboardComponentsContext } from "../../../dashboardContexts/DashboardComponentsContext.js";
 
 const richTextTooltipAlignPoints: IAlignPoint[] = [{ align: "tl bl", offset: { x: 6, y: -4 } }];
 

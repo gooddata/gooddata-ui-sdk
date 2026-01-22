@@ -2,14 +2,13 @@
 
 import { GridLayoutElement } from "./GridLayoutElement.js";
 import { type IDashboardLayoutSectionRenderProps } from "./interfaces.js";
-import { type IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/flexibleLayout/index.js";
+import { type IDashboardLayoutSectionFacade } from "../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
 import { areSectionLayoutPathsEqual } from "../../../_staging/layout/coordinates.js";
-import { selectActiveSection, useDashboardSelector } from "../../../model/index.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectActiveSection } from "../../../model/store/ui/uiSelectors.js";
 import { useIsDraggingWidget } from "../../dragAndDrop/draggableWidget/useIsDraggingWidget.js";
-import {
-    DashboardLayoutSectionBorder,
-    type DashboardLayoutSectionBorderStatus,
-} from "../dragAndDrop/draggableWidget/DashboardLayoutSectionBorder/index.js";
+import { DashboardLayoutSectionBorder } from "../dragAndDrop/draggableWidget/DashboardLayoutSectionBorder/DashboardLayoutSectionBorder.js";
+import { type DashboardLayoutSectionBorderStatus } from "../dragAndDrop/draggableWidget/DashboardLayoutSectionBorder/types.js";
 
 const isHiddenStyle = { height: 0, width: 0, overflow: "hidden", flex: 0 };
 const defaultStyle = {};

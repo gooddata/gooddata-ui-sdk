@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { Fragment } from "react";
 
@@ -12,7 +12,8 @@ import {
 } from "@gooddata/sdk-model";
 
 import { DisplayFormParam } from "./DisplayFormParam.js";
-import { selectAllCatalogDisplayFormsMap, useDashboardSelector } from "../../../../../model/index.js";
+import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
+import { selectAllCatalogDisplayFormsMap } from "../../../../../model/store/catalog/catalogSelectors.js";
 import { DropdownSectionHeader } from "../DropdownSectionHeader.js";
 import { type IParametersPanelSectionsCommonProps } from "../types.js";
 

@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type Ref } from "react";
 
@@ -9,7 +9,8 @@ import { isDashboardAttributeFilter } from "@gooddata/sdk-model";
 
 import { getDropZoneDebugStyle } from "./debug.js";
 import { useDashboardDrop } from "./useDashboardDrop.js";
-import { removeAttributeFilter, removeDateFilter, useDashboardDispatch } from "../../model/index.js";
+import { removeAttributeFilter, removeDateFilter } from "../../model/commands/filters.js";
+import { useDashboardDispatch } from "../../model/react/DashboardStoreProvider.js";
 
 export function DeleteDropZone() {
     const dispatch = useDashboardDispatch();

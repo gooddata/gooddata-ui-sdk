@@ -6,13 +6,12 @@ import type { IntlShape } from "react-intl";
 
 import { type IUiAsyncTableColumn } from "@gooddata/sdk-ui-kit";
 
-import {
-    CatalogItemLockMemo,
-    CatalogItemVisibilityIconMemo,
-    type ICatalogItem,
-} from "../../catalogItem/index.js";
-import { ObjectTypeIconMemo, ObjectTypeTooltip } from "../../objectType/index.js";
-import { QualityIconMemo } from "../../quality/index.js";
+import { CatalogItemLockMemo } from "../../catalogItem/CatalogItemLock.js";
+import { CatalogItemVisibilityIconMemo } from "../../catalogItem/CatalogItemVisibilityIcon.js";
+import { type ICatalogItem } from "../../catalogItem/types.js";
+import { ObjectTypeIconMemo } from "../../objectType/ObjectTypeIcon.js";
+import { ObjectTypeTooltip } from "../../objectType/ObjectTypeTooltip.js";
+import { QualityIconMemo } from "../../quality/QualityIcon.js";
 
 export const titleColumn: (intl: IntlShape, width: number) => IUiAsyncTableColumn<ICatalogItem> = (
     intl,

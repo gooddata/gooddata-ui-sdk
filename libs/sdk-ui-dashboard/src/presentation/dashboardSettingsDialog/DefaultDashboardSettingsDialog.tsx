@@ -25,7 +25,10 @@ import {
     type IInsightDateDatasets,
     type IQueryInsightDateDatasets,
     queryDateDatasetsForInsight,
-    selectCrossFilteringEnabledAndSupported,
+} from "../../model/queries/insights.js";
+import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
+import { useDashboardQueryProcessing } from "../../model/react/useDashboardQueryProcessing.js";
+import {
     selectDateFormat,
     selectEnableAlertsEvaluationFrequencySetup,
     selectEnableDashboardSectionHeadersDateDataSet,
@@ -34,9 +37,8 @@ import {
     selectLocale,
     selectSettings,
     selectWeekStart,
-    useDashboardQueryProcessing,
-    useDashboardSelector,
-} from "../../model/index.js";
+} from "../../model/store/config/configSelectors.js";
+import { selectCrossFilteringEnabledAndSupported } from "../../model/store/topBar/topBarSelectors.js";
 
 /**
  * @alpha

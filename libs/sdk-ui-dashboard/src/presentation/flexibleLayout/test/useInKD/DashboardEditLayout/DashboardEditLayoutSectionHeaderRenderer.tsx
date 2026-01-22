@@ -1,14 +1,12 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type ScreenSize } from "@gooddata/sdk-model";
 
 import { DashboardEditLayoutSectionHeader } from "./DashboardEditLayoutSectionHeader.js";
 import { type IDashboardEditLayoutContent } from "./DashboardEditLayoutTypes.js";
-import {
-    DashboardLayoutItemViewRenderer,
-    type IDashboardLayoutItemFacade,
-    type IDashboardLayoutSectionHeaderRenderProps,
-} from "../../../DefaultDashboardLayoutRenderer/index.js";
+import { type IDashboardLayoutItemFacade } from "../../../../../_staging/dashboard/flexibleLayout/facade/interfaces.js";
+import { DashboardLayoutItemViewRenderer } from "../../../DefaultDashboardLayoutRenderer/DashboardLayoutItemViewRenderer.js";
+import { type IDashboardLayoutSectionHeaderRenderProps } from "../../../DefaultDashboardLayoutRenderer/interfaces.js";
 
 type IDashboardLayoutSectionHeaderRendererOwnProps =
     IDashboardLayoutSectionHeaderRenderProps<IDashboardEditLayoutContent>;

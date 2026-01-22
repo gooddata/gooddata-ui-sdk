@@ -1,11 +1,12 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
 import { type IAttributeDescriptor, areObjRefsEqual, idRef } from "@gooddata/sdk-model";
+import { getAttributeIdentifiersPlaceholdersFromUrl } from "@gooddata/sdk-model/internal";
 
-import { getAttributeIdentifiersPlaceholdersFromUrl } from "../../../../../_staging/drills/drillingUtils.js";
-import { selectAllCatalogDisplayFormsMap, useDashboardSelector } from "../../../../../model/index.js";
+import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
+import { selectAllCatalogDisplayFormsMap } from "../../../../../model/store/catalog/catalogSelectors.js";
 import { type UrlDrillTarget, isDrillToCustomUrlConfig } from "../../../../drill/types.js";
 
 export function useInvalidAttributeDisplayFormIdentifiers(

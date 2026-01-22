@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 // in current version of @reduxjs/toolkit esm export are not defined
 // we need direct import from esm module otherwise import ar not node compatible
@@ -8,7 +8,8 @@ import { isEqual, omit } from "lodash-es";
 
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
-import { type AsyncOperationStatus, type ILoadElementsOptions } from "../../../types/index.js";
+import { type AsyncOperationStatus } from "../../../types/common.js";
+import { type ILoadElementsOptions } from "../../../types/elementsLoader.js";
 import { selectState } from "../common/selectors.js";
 import { type FilterSelector } from "../common/types.js";
 import {

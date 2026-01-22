@@ -1,4 +1,5 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
+
 import { useCallback, useState } from "react";
 
 import {
@@ -9,8 +10,8 @@ import {
 import {
     changeAttributeFilterSelection,
     setAttributeFilterSelectionMode,
-    useDashboardCommandProcessing,
-} from "../../../../../../model/index.js";
+} from "../../../../../../model/commands/filters.js";
+import { useDashboardCommandProcessing } from "../../../../../../model/react/useDashboardCommandProcessing.js";
 
 export const useSelectionModeConfiguration = (attributeFilter: IDashboardAttributeFilter) => {
     const { run: changeSelectionMode } = useDashboardCommandProcessing({

@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useCallback, useMemo, useState } from "react";
 
@@ -9,12 +9,10 @@ import {
     areObjRefsEqual,
 } from "@gooddata/sdk-model";
 
-import {
-    selectCatalogAttributes,
-    setDashboardAttributeFilterConfigDisplayAsLabel,
-    useDashboardCommandProcessing,
-    useDashboardSelector,
-} from "../../../../../../model/index.js";
+import { setDashboardAttributeFilterConfigDisplayAsLabel } from "../../../../../../model/commands/dashboard.js";
+import { useDashboardSelector } from "../../../../../../model/react/DashboardStoreProvider.js";
+import { useDashboardCommandProcessing } from "../../../../../../model/react/useDashboardCommandProcessing.js";
+import { selectCatalogAttributes } from "../../../../../../model/store/catalog/catalogSelectors.js";
 
 export function useDisplayFormConfiguration(
     currentFilter: IDashboardAttributeFilter,

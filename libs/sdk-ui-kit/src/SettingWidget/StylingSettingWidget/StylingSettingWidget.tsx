@@ -9,12 +9,15 @@ import { type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
 import { StylingSettingBody } from "./StylingSettingBody.js";
-import { Button } from "../../Button/index.js";
-import { type IStylingPickerItem, type StylingPickerItemContent } from "../../Dialog/index.js";
-import { Hyperlink } from "../../Hyperlink/index.js";
-import { LoadingSpinner } from "../../LoadingSpinner/index.js";
-import { Message } from "../../Messages/index.js";
-import { useMediaQuery } from "../../responsive/index.js";
+import { Button } from "../../Button/Button.js";
+import {
+    type IStylingPickerItem,
+    type StylingPickerItemContent,
+} from "../../Dialog/StylingEditorDialog/StylingEditorDialog.js";
+import { Hyperlink } from "../../Hyperlink/Hyperlink.js";
+import { LoadingSpinner } from "../../LoadingSpinner/LoadingSpinner.js";
+import { Message } from "../../Messages/Message.js";
+import { useMediaQuery } from "../../responsive/useMediaQuery.js";
 import { Footer } from "../Footer.js";
 import { FooterButtons } from "../FooterButtons.js";
 import { Header } from "../Header.js";

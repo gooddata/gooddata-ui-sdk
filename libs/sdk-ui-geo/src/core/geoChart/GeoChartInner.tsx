@@ -40,8 +40,6 @@ import { isColorAssignmentItemChanged, isFluidLegendEnabled } from "./helpers/ge
 import { getAvailableLegends } from "./helpers/geoChart/data.js";
 import { getResponsiveInfo, isAutoPositionWithPopup } from "./helpers/geoChart/responsive.js";
 
-export type { IGeoChartRendererProps, IGeoChartLegendRendererProps };
-
 const GeoChartRendererLazy = lazy(() =>
     import("./GeoChartRenderer.js").then((module) => ({
         default: module.GeoChartRenderer,

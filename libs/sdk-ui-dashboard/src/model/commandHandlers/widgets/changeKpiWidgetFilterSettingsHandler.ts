@@ -16,9 +16,11 @@ import {
     validateDatasetForKpiWidgetDateFilter,
 } from "./validation/filterValidation.js";
 import { validateExistingKpiWidget } from "./validation/widgetValidations.js";
-import { type IChangeKpiWidgetFilterSettings } from "../../commands/index.js";
-import { type IDashboardKpiWidgetFilterSettingsChanged } from "../../events/index.js";
-import { kpiWidgetFilterSettingsChanged } from "../../events/kpi.js";
+import { type IChangeKpiWidgetFilterSettings } from "../../commands/kpi.js";
+import {
+    type IDashboardKpiWidgetFilterSettingsChanged,
+    kpiWidgetFilterSettingsChanged,
+} from "../../events/kpi.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";

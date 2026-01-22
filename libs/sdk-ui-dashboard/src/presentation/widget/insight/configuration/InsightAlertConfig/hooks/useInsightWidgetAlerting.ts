@@ -14,37 +14,49 @@ import { fillMissingTitles, useBackendStrict, useWorkspaceStrict } from "@goodda
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
 import { convertCurrentUserToAutomationRecipient } from "../../../../../../_staging/automation/index.js";
+import { refreshAutomations } from "../../../../../../model/commands/scheduledEmail.js";
 import {
-    DEFAULT_MAX_AUTOMATIONS,
-    dispatchAndWaitFor,
-    refreshAutomations,
+    useDashboardDispatch,
+    useDashboardSelector,
+} from "../../../../../../model/react/DashboardStoreProvider.js";
+import { useWidgetAlertFilters } from "../../../../../../model/react/filtering/useWidgetAlertFilters.js";
+import { DEFAULT_MAX_AUTOMATIONS } from "../../../../../../model/react/useDashboardAutomations/constants.js";
+import { useDashboardUserInteraction } from "../../../../../../model/react/useDashboardUserInteraction.js";
+import { useWorkspaceUsers } from "../../../../../../model/react/useWorkspaceUsers.js";
+import { dispatchAndWaitFor } from "../../../../../../model/store/_infra/dispatchAndWaitFor.js";
+import {
     selectAllAutomationsCount,
-    selectCanCreateAutomation,
-    selectCanManageWorkspace,
+    selectDashboardUserAutomationAlertsInContext,
+} from "../../../../../../model/store/automations/automationsSelectors.js";
+import {
     selectCatalogAttributes,
     selectCatalogDateDatasets,
-    selectCurrentUser,
-    selectDashboardDescriptor,
-    selectDashboardId,
-    selectDashboardUserAutomationAlertsInContext,
+} from "../../../../../../model/store/catalog/catalogSelectors.js";
+import {
     selectEnableAlertAttributes,
     selectEnableComparisonInAlerting,
+    selectLocale,
+    selectSeparators,
+    selectSettings,
+} from "../../../../../../model/store/config/configSelectors.js";
+import {
     selectEntitlementMaxAutomationRecipients,
     selectEntitlementMaxAutomations,
     selectEntitlementUnlimitedAutomations,
-    selectExecutionResultByRef,
-    selectExecutionTimestamp,
-    selectInsightByWidgetRef,
-    selectLocale,
-    selectNotificationChannels,
-    selectSeparators,
-    selectSettings,
-    useDashboardDispatch,
-    useDashboardSelector,
-    useDashboardUserInteraction,
-    useWidgetAlertFilters,
-    useWorkspaceUsers,
-} from "../../../../../../model/index.js";
+} from "../../../../../../model/store/entitlements/entitlementsSelectors.js";
+import { selectExecutionResultByRef } from "../../../../../../model/store/executionResults/executionResultsSelectors.js";
+import { selectInsightByWidgetRef } from "../../../../../../model/store/insights/insightsSelectors.js";
+import {
+    selectDashboardDescriptor,
+    selectDashboardId,
+} from "../../../../../../model/store/meta/metaSelectors.js";
+import { selectNotificationChannels } from "../../../../../../model/store/notificationChannels/notificationChannelsSelectors.js";
+import {
+    selectCanCreateAutomation,
+    selectCanManageWorkspace,
+} from "../../../../../../model/store/permissions/permissionsSelectors.js";
+import { selectExecutionTimestamp } from "../../../../../../model/store/ui/uiSelectors.js";
+import { selectCurrentUser } from "../../../../../../model/store/user/userSelectors.js";
 import { useSaveAlertToBackend } from "../../../../../alerting/DefaultAlertingDialog/hooks/useSaveAlertToBackend.js";
 import { messages } from "../../../../../alerting/DefaultAlertingDialog/messages.js";
 import { createDefaultAlert } from "../../../../../alerting/DefaultAlertingDialog/utils/convertors.js";

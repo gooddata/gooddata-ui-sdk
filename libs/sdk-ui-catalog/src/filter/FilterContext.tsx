@@ -11,7 +11,7 @@ import {
     SemanticQualityIssueCodeValues,
 } from "@gooddata/sdk-model";
 
-import type { ObjectType } from "../objectType/index.js";
+import { type ObjectType } from "../objectType/types.js";
 import { useQualityReportState } from "../quality/QualityContext.js";
 import { getQualityIssueIdsByCodes } from "../quality/utils.js";
 

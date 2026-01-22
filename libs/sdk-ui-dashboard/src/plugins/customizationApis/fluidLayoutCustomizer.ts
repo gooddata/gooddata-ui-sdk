@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { cloneDeep, isEmpty } from "lodash-es";
 
 import {
@@ -10,8 +11,8 @@ import {
 
 import { type IDashboardCustomizationLogger } from "./customizationLogging.js";
 import { type CustomizerMutationsContext } from "./types.js";
-import { DashboardLayoutBuilder } from "../../_staging/dashboard/flexibleLayout/index.js";
-import { type ExtendedDashboardWidget, type ICustomWidget } from "../../model/index.js";
+import { DashboardLayoutBuilder } from "../../_staging/dashboard/flexibleLayout/builder/layout.js";
+import { type ExtendedDashboardWidget, type ICustomWidget } from "../../model/types/layoutTypes.js";
 import { type ILayoutItemPath, type ILayoutSectionPath } from "../../types.js";
 import { type IFluidLayoutCustomizer } from "../customizer.js";
 

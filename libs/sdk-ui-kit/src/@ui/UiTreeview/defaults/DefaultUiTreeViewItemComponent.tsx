@@ -2,7 +2,7 @@
 
 import { type CSSProperties, type ReactNode } from "react";
 
-import { ShortenedText } from "../../../ShortenedText/index.js";
+import { ShortenedText } from "../../../ShortenedText/ShortenedText.js";
 import { UiIcon } from "../../UiIcon/UiIcon.js";
 import { UiTooltip } from "../../UiTooltip/UiTooltip.js";
 import { e } from "../treeviewBem.js";

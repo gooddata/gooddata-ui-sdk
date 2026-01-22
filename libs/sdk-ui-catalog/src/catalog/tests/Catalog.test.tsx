@@ -6,10 +6,11 @@ import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
+import type { IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import type { IWorkspacePermissions } from "@gooddata/sdk-model";
 import { ToastsCenterContextProvider } from "@gooddata/sdk-ui-kit";
 
-import { testIds } from "../../automation/index.js";
+import { catalog } from "../../automation/testIds.js";
 import { TestIntlProvider } from "../../localization/TestIntlProvider.js";
 import { TestPermissionsProvider } from "../../permission/TestPermissionsProvider.js";
 import type { PermissionsState } from "../../permission/types.js";
@@ -37,7 +38,7 @@ describe("Catalog", () => {
     it("renders with proper data-testid", () => {
         render(<Catalog {...props} />, { wrapper });
 
-        expect(screen.getByTestId(testIds.catalog)).toBeVisible();
+        expect(screen.getByTestId(catalog)).toBeVisible();
     });
 
     it("renders with header title", () => {
@@ -80,5 +81,49 @@ describe("Catalog", () => {
         );
 
         expect(screen.getByText("Unauthorized")).toBeVisible();
+    });
+
+    it("does not render quality scorecard without AI Assistant permission", () => {
+        render(
+            <TestPermissionsProvider
+                status="success"
+                result={{
+                    settings: {
+                        enableGenAICatalogQualityChecker: true,
+                    } as IUserWorkspaceSettings,
+                    permissions: {
+                        canCreateVisualization: true,
+                        canUseAiAssistant: false,
+                    } as IWorkspacePermissions,
+                }}
+            >
+                <Catalog {...props} />
+            </TestPermissionsProvider>,
+            { wrapper },
+        );
+
+        expect(screen.queryByText("Semantic quality")).not.toBeInTheDocument();
+    });
+
+    it("renders quality scorecard when feature flag enabled and AI Assistant permission granted", () => {
+        render(
+            <TestPermissionsProvider
+                status="success"
+                result={{
+                    settings: {
+                        enableGenAICatalogQualityChecker: true,
+                    } as IUserWorkspaceSettings,
+                    permissions: {
+                        canCreateVisualization: true,
+                        canUseAiAssistant: true,
+                    } as IWorkspacePermissions,
+                }}
+            >
+                <Catalog {...props} />
+            </TestPermissionsProvider>,
+            { wrapper },
+        );
+
+        expect(screen.getByText("Semantic quality")).toBeVisible();
     });
 });

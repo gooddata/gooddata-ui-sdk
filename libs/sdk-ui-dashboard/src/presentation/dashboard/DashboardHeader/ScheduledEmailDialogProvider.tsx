@@ -1,15 +1,11 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
-import {
-    useDashboardScheduledEmails,
-    useScheduledExportFilters,
-    useWorkspaceUsers,
-} from "../../../model/index.js";
-import {
-    type IScheduledEmailDialogProps,
-    ScheduledEmailDialog,
-    ScheduledEmailManagementDialog,
-} from "../../scheduledEmail/index.js";
+import { useScheduledExportFilters } from "../../../model/react/filtering/useScheduledExportFilters.js";
+import { useDashboardScheduledEmails } from "../../../model/react/useDasboardScheduledEmails/useDashboardScheduledEmails.js";
+import { useWorkspaceUsers } from "../../../model/react/useWorkspaceUsers.js";
+import { ScheduledEmailDialog } from "../../scheduledEmail/ScheduledEmailDialog.js";
+import { ScheduledEmailManagementDialog } from "../../scheduledEmail/ScheduledEmailManagementDialog.js";
+import { type IScheduledEmailDialogProps } from "../../scheduledEmail/types.js";
 
 export function ScheduledEmailDialogProvider() {
     const {

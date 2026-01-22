@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ISettings } from "@gooddata/sdk-model";
 
@@ -58,6 +58,7 @@ const TYPE_TO_KEY_MAP = {
     MAX_ZOOM_LEVEL: "maxZoomLevel",
     ACTIVE_CALENDARS: "activeCalendars",
     ENABLE_AI_ON_DATA: "enableAiOnData",
+    API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE: "apiEntitiesDefaultContentMediaType",
 } as const satisfies Record<MandatoryTypes, keyof ISettings>;
 
 export function mapTypeToKey(

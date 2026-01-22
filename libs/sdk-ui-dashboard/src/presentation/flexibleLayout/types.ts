@@ -1,10 +1,6 @@
-// (C) 2020-2024 GoodData Corporation
-import { type ComponentType } from "react";
+// (C) 2020-2026 GoodData Corporation
 
-export type {
-    IDashboardLayoutProps,
-    CustomDashboardLayoutComponent,
-} from "../widget/dashboardLayout/types.js";
+import { type ComponentType } from "react";
 
 /**
  * @internal

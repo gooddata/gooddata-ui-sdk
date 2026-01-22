@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { useCallback } from "react";
 
 import { type IExecutionResult } from "@gooddata/sdk-backend-spi";
@@ -10,7 +11,7 @@ import {
     setExecutionResultData,
     setExecutionResultError,
     setExecutionResultLoading,
-} from "../commands/index.js";
+} from "../commands/executionResults.js";
 
 /**
  * Provides callbacks to integrate with the executionResults slice.

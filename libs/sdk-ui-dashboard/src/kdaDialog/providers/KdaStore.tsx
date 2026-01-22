@@ -1,10 +1,11 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ReactNode } from "react";
 
 import { BackendProvider, WorkspaceProvider, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
-import { DashboardStoreProvider, type IDashboardStoreProviderProps } from "../../model/index.js";
+import { DashboardStoreProvider } from "../../model/react/DashboardStoreProvider.js";
+import { type IDashboardStoreProviderProps } from "../../model/react/types.js";
 
 export function KdaStoreProvider({
     children,

@@ -1,12 +1,11 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { useCallback } from "react";
 
-import {
-    moveNestedLayoutSectionItemToNewSectionAndRemoveOriginalSectionIfEmpty,
-    useDashboardDispatch,
-} from "../../../../model/index.js";
+import { moveNestedLayoutSectionItemToNewSectionAndRemoveOriginalSectionIfEmpty } from "../../../../model/commands/layout.js";
+import { useDashboardDispatch } from "../../../../model/react/DashboardStoreProvider.js";
 import { type ILayoutSectionPath } from "../../../../types.js";
-import { type BaseDraggableMovingItem } from "../../../dragAndDrop/index.js";
+import { type BaseDraggableMovingItem } from "../../../dragAndDrop/types.js";
 
 export function useMoveWidgetToNewSectionDropHandler(newSectionIndex: ILayoutSectionPath) {
     const dispatch = useDashboardDispatch();

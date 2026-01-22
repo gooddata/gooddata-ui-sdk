@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type MutableRefObject, useCallback, useEffect, useMemo, useState } from "react";
 
@@ -13,13 +13,11 @@ import { AddAttributeFilterButton } from "./AddAttributeFilterButton.js";
 import { isLocationIconEnabled } from "./addAttributeFilterUtils.js";
 import { AttributeListItem, getAttributeListItemTitle } from "./AttributeListItem.js";
 import { DateAttributeListItem, getDateAttributeListItemTitle } from "./DateAttributeListItem.js";
-import {
-    selectAllInsightWidgets,
-    selectEnableMultipleDateFilters,
-    selectInsightsMap,
-    selectSupportsMultipleDateFilters,
-    useDashboardSelector,
-} from "../../../../model/index.js";
+import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
+import { selectSupportsMultipleDateFilters } from "../../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
+import { selectEnableMultipleDateFilters } from "../../../../model/store/config/configSelectors.js";
+import { selectInsightsMap } from "../../../../model/store/insights/insightsSelectors.js";
+import { selectAllInsightWidgets } from "../../../../model/store/tabs/layout/layoutSelectors.js";
 import { type IDashboardAttributeFilterPlaceholderProps } from "../types.js";
 
 const dropdownAlignPoints = [

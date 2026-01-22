@@ -15,7 +15,7 @@ import {
     queryRejected,
     queryStarted,
 } from "../../events/general.js";
-import { type IDashboardQuery } from "../../queries/index.js";
+import { type IDashboardQuery } from "../../queries/base.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 
 /**

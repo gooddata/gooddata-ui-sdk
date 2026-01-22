@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -17,13 +17,13 @@ import { DateFilterConfigurationItem } from "./DateFilterConfigurationItem.js";
 import { getAttributeByDisplayForm } from "./utils.js";
 import { useAttributeFilterDisplayFormFromMap } from "../../../../_staging/sharedHooks/useAttributeFilterDisplayFormFromMap.js";
 import { useAttributes } from "../../../../_staging/sharedHooks/useAttributes.js";
+import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import {
     selectAllCatalogAttributesMap,
     selectAllCatalogDateDatasetsMap,
-    selectAttributeFilterConfigsDisplayAsLabelMap,
-    selectFilterContextFilters,
-    useDashboardSelector,
-} from "../../../../model/index.js";
+} from "../../../../model/store/catalog/catalogSelectors.js";
+import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
+import { selectFilterContextFilters } from "../../../../model/store/tabs/filterContext/filterContextSelectors.js";
 
 interface IFilterConfigurationProps {
     widget: IWidget;

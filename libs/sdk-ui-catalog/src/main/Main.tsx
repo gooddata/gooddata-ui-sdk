@@ -10,20 +10,18 @@ import { useToastMessage } from "@gooddata/sdk-ui-kit";
 import { useCatalogItemOpen } from "./hooks/useCatalogItemOpen.js";
 import { CatalogDetail } from "../catalogDetail/CatalogDetail.js";
 import type { OpenHandlerEvent } from "../catalogDetail/CatalogDetailContent.js";
-import { CatalogItemFeed, type ICatalogItemRef } from "../catalogItem/index.js";
-import {
-    FilterCreatedByMemo,
-    FilterGroupLayout,
-    FilterObjectTypeMemo,
-    FilterOriginGuard,
-    FilterOriginMemo,
-    FilterQualityMemo,
-    FilterResetButtonMemo,
-    FilterTagsMemo,
-    FilterVisibilityMemo,
-    useFilterActions,
-} from "../filter/index.js";
-import { useFeatureFlag } from "../permission/index.js";
+import { CatalogItemFeed } from "../catalogItem/CatalogItemFeed.js";
+import { type ICatalogItemRef } from "../catalogItem/types.js";
+import { useFilterActions } from "../filter/FilterContext.js";
+import { FilterCreatedByMemo } from "../filter/FilterCreatedBy.js";
+import { FilterGroupLayout } from "../filter/FilterGroupLayout.js";
+import { FilterObjectTypeMemo } from "../filter/FilterObjectType.js";
+import { FilterOriginGuard, FilterOriginMemo } from "../filter/FilterOrigin.js";
+import { FilterQualityMemo } from "../filter/FilterQuality.js";
+import { FilterResetButtonMemo } from "../filter/FilterResetButton.js";
+import { FilterTagsMemo } from "../filter/FilterTags.js";
+import { FilterVisibilityMemo } from "../filter/FilterVisibility.js";
+import { useIsCatalogQualityEnabled } from "../quality/gate.js";
 import { Table } from "../table/Table.js";
 
 type Props = {
@@ -54,7 +52,7 @@ export function Main({
     const intl = useIntl();
     const { addError } = useToastMessage();
     const { toggleTag } = useFilterActions();
-    const isQualityEnabled = useFeatureFlag("enableGenAICatalogQualityChecker");
+    const isQualityEnabled = useIsCatalogQualityEnabled();
 
     const { open, openedItem, setItemOpened, onOpenDetail, onCloseDetail, onOpenClick } = useCatalogItemOpen(
         onCatalogItemOpenClick,

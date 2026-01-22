@@ -10,7 +10,7 @@ import { IntlWrapper, VisualizationTypes, withIntl } from "@gooddata/sdk-ui";
 
 import * as fixtures from "../../../__mocks__/fixtures.js";
 import { recordedDataFacade } from "../../../__mocks__/recordings.js";
-import { type IChartConfig } from "../../interfaces/index.js";
+import { type IChartConfig } from "../../interfaces/chartConfig.js";
 import { HighChartsRenderer } from "../adapter/HighChartsRenderer.js";
 import { ChartTransformation } from "../ChartTransformation.js";
 import { BOTTOM, MIDDLE, TOP } from "../constants/alignments.js";

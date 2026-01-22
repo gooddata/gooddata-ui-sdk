@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type IInsightDefinition, type ISettings } from "@gooddata/sdk-model";
 import { DefaultLocale, type ILocale, resolveLocale } from "@gooddata/sdk-ui";
@@ -16,7 +16,7 @@ import {
     pivotTableNextConfigForInsightViewComponent,
 } from "../../components/pluggableVisualizations/pivotTableNext/pivotTableNextConfigFromInsight.js";
 import { type IEmbeddingCodeContext } from "../../interfaces/VisualizationDescriptor.js";
-import { type PropWithMeta } from "../embeddingCodeGenerator/index.js";
+import { type PropWithMeta } from "../embeddingCodeGenerator/types.js";
 
 /**
  * @internal

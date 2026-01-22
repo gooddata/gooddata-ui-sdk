@@ -1,14 +1,12 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type IntlShape } from "react-intl";
 
 import { type IDashboardDateFilter, areObjRefsEqual, serializeObjRef } from "@gooddata/sdk-model";
 
-import {
-    selectCatalogDateDatasets,
-    selectDateFilterConfigsOverrides,
-    useDashboardSelector,
-} from "../../model/index.js";
+import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
+import { selectCatalogDateDatasets } from "../../model/store/catalog/catalogSelectors.js";
+import { selectDateFilterConfigsOverrides } from "../../model/store/tabs/dateFilterConfigs/dateFilterConfigsSelectors.js";
 
 export const useDateFiltersTitles = (filters: IDashboardDateFilter[], intl: IntlShape) => {
     const allDateDatasets = useDashboardSelector(selectCatalogDateDatasets);

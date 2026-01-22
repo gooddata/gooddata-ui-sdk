@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import cx from "classnames";
 
@@ -14,16 +14,17 @@ import { type VisType } from "@gooddata/sdk-ui";
 import { InsightListItem } from "@gooddata/sdk-ui-kit";
 
 import { DraggableInsightListItemWrapper } from "./DraggableInsightListItemWrapper.js";
+import { type DescriptionTooltipOpenedData } from "../../../../model/events/userInteraction.js";
+import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
+import { useDashboardUserInteraction } from "../../../../model/react/useDashboardUserInteraction.js";
 import {
-    type DescriptionTooltipOpenedData,
     selectEnableRichTextDescriptions,
     selectEnableRichTextDynamicReferences,
     selectSettings,
-    useDashboardSelector,
-    useDashboardUserInteraction,
-} from "../../../../model/index.js";
-import { useDashboardComponentsContext } from "../../../dashboardContexts/index.js";
-import { type IInsightListProps, InsightList } from "../../../insightList/index.js";
+} from "../../../../model/store/config/configSelectors.js";
+import { useDashboardComponentsContext } from "../../../dashboardContexts/DashboardComponentsContext.js";
+import { InsightList } from "../../../insightList/InsightList.js";
+import { type IInsightListProps } from "../../../insightList/types.js";
 
 export function DraggableInsightListCore({
     enableDescriptions,

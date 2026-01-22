@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type AnyAction } from "@reduxjs/toolkit";
 import { type SagaIterator } from "redux-saga";
@@ -6,7 +6,7 @@ import { type SagaReturnType, call, cancelled, put, race, take, takeEvery } from
 
 import { type GoodDataSdkError, convertError } from "@gooddata/sdk-ui";
 
-import { type ILoadElementsResult } from "../../../types/index.js";
+import { type ILoadElementsResult } from "../../../types/elementsLoader.js";
 import { elementsSaga } from "../elements/elementsSaga.js";
 import { actions } from "../store/slice.js";
 

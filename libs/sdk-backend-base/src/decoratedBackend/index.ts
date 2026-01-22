@@ -21,29 +21,7 @@ import {
 import { AnalyticalWorkspaceDecorator } from "./analyticalWorkspace.js";
 import { OrganizationDecorator } from "./organization.js";
 import { OrganizationsDecorator } from "./organizations.js";
-import {
-    type AttributesDecoratorFactory,
-    type AutomationsDecoratorFactory,
-    type CatalogDecoratorFactory,
-    type DashboardsDecoratorFactory,
-    type DecoratorFactories,
-    type ExecutionDecoratorFactory,
-    type GeoDecoratorFactory,
-    type SecuritySettingsDecoratorFactory,
-    type WorkspaceSettingsDecoratorFactory,
-} from "./types.js";
-
-export type {
-    ExecutionDecoratorFactory,
-    CatalogDecoratorFactory,
-    SecuritySettingsDecoratorFactory,
-    WorkspaceSettingsDecoratorFactory,
-    AttributesDecoratorFactory,
-    AutomationsDecoratorFactory,
-    DashboardsDecoratorFactory,
-    GeoDecoratorFactory,
-    DecoratorFactories,
-};
+import { type DecoratorFactories } from "./types.js";
 
 class BackendWithDecoratedServices implements IAnalyticalBackend {
     public capabilities: IBackendCapabilities;

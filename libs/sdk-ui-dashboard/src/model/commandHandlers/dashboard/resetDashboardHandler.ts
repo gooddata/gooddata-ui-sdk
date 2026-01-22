@@ -23,9 +23,8 @@ import {
     actionsToInitializeExistingDashboard,
     actionsToInitializeNewDashboard,
 } from "./common/stateInitializers.js";
-import { type IResetDashboard } from "../../commands/index.js";
-import { dashboardWasReset } from "../../events/dashboard.js";
-import { type IDashboardWasReset } from "../../events/index.js";
+import { type IResetDashboard } from "../../commands/dashboard.js";
+import { type IDashboardWasReset, dashboardWasReset } from "../../events/dashboard.js";
 import { selectAllCatalogDisplayFormsMap } from "../../store/catalog/catalogSelectors.js";
 import {
     selectDateFilterConfig,
@@ -35,12 +34,8 @@ import {
 import { selectCrossFilteringFiltersLocalIdentifiers } from "../../store/drill/drillSelectors.js";
 import { selectFilterViews } from "../../store/filterViews/filterViewsReducersSelectors.js";
 import { selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
-import {
-    DEFAULT_TAB_ID,
-    type ITabState,
-    selectActiveTabLocalIdentifier,
-    selectTabs,
-} from "../../store/tabs/index.js";
+import { selectActiveTabLocalIdentifier, selectTabs } from "../../store/tabs/tabsSelectors.js";
+import { DEFAULT_TAB_ID, type ITabState } from "../../store/tabs/tabsState.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { resolveInsights } from "../../utils/insightResolver.js";
 

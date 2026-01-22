@@ -21,30 +21,36 @@ import { stringUtils } from "@gooddata/util";
 
 import { AlertsList } from "./InsightAlertConfig/AlertsList.js";
 import { NoAvailableMeasures } from "./InsightAlertConfig/NoAvailableAlerts.js";
+import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
+import { useDashboardAlerts } from "../../../../model/react/useDashboardAlerting/useDashboardAlerts.js";
+import { DEFAULT_MAX_AUTOMATIONS } from "../../../../model/react/useDashboardAutomations/constants.js";
+import { useDashboardAutomations } from "../../../../model/react/useDashboardAutomations/useDashboardAutomations.js";
 import {
-    DEFAULT_MAX_AUTOMATIONS,
     selectAllAutomationsCount,
     selectAutomationsIsLoading,
-    selectCanCreateAutomation,
-    selectCanManageWorkspace,
-    selectCatalogDateDatasets,
-    selectCurrentUser,
     selectDashboardUserAutomationAlertsInContext,
+} from "../../../../model/store/automations/automationsSelectors.js";
+import { selectCatalogDateDatasets } from "../../../../model/store/catalog/catalogSelectors.js";
+import {
     selectEnableComparisonInAlerting,
+    selectLocale,
+} from "../../../../model/store/config/configSelectors.js";
+import {
     selectEntitlementMaxAutomations,
     selectEntitlementUnlimitedAutomations,
-    selectExecutionTimestamp,
-    selectInsightByWidgetRef,
-    selectLocale,
-    useDashboardAlerts,
-    useDashboardAutomations,
-    useDashboardSelector,
-} from "../../../../model/index.js";
+} from "../../../../model/store/entitlements/entitlementsSelectors.js";
+import { selectInsightByWidgetRef } from "../../../../model/store/insights/insightsSelectors.js";
+import {
+    selectCanCreateAutomation,
+    selectCanManageWorkspace,
+} from "../../../../model/store/permissions/permissionsSelectors.js";
+import { selectExecutionTimestamp } from "../../../../model/store/ui/uiSelectors.js";
+import { selectCurrentUser } from "../../../../model/store/user/userSelectors.js";
 import { AlertDeleteDialog } from "../../../alerting/DefaultAlertingDialog/components/AlertDeleteDialog.js";
 import { useSaveAlertToBackend } from "../../../alerting/DefaultAlertingDialog/hooks/useSaveAlertToBackend.js";
 import { messages } from "../../../alerting/DefaultAlertingDialog/messages.js";
 import { getSupportedInsightMeasuresByInsight } from "../../../alerting/DefaultAlertingDialog/utils/items.js";
-import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/index.js";
+import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/zIndex.js";
 import { type IInsightMenuSubmenuComponentProps } from "../../insightMenu/types.js";
 
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);

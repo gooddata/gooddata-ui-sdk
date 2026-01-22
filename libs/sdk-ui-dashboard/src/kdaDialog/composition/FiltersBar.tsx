@@ -1,9 +1,10 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useIntl } from "react-intl";
 
 import { AddFilterButton } from "./AddFilterButton.js";
-import { selectAttributeFilterConfigsOverrides, useDashboardSelector } from "../../model/index.js";
+import { useDashboardSelector } from "../../model/react/DashboardStoreProvider.js";
+import { selectAttributeFilterConfigsOverrides } from "../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { AttributeBar } from "../components/bars/AttributeBar.js";
 import { DateBar } from "../components/bars/DateBar.js";
 import { KdaBar } from "../components/KdaBar.js";

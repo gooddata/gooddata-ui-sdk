@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 /* eslint-disable */
 /**
@@ -770,8 +770,8 @@ export interface ClusteringResult {
     xCoord?: Array<number | null>;
     yCoord?: Array<number | null>;
     clusters: Array<number | null>;
-    xcoord: Array<number>;
     ycoord: Array<number>;
+    xcoord: Array<number>;
 }
 
 /**
@@ -7383,6 +7383,62 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
 
 // ComputationApi FP - ComputationApiAxiosParamCreator
 /**
+ * Each cancel token corresponds to one unique execution request for the same result id. If all cancel tokens for the same result id are applied, the execution for this result id is cancelled.
+ * @summary Applies all the given cancel tokens.
+ * @param {string} workspaceId Workspace identifier
+ * @param {AfmCancelTokens} afmCancelTokens
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputationApiAxiosParamCreator_CancelExecutions(
+    workspaceId: string,
+    afmCancelTokens: AfmCancelTokens,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists("cancelExecutions", "workspaceId", workspaceId);
+    // verify required parameter 'afmCancelTokens' is not null or undefined
+    assertParamExists("cancelExecutions", "afmCancelTokens", afmCancelTokens);
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/afm/cancel`.replace(
+        `{${"workspaceId"}}`,
+        encodeURIComponent(String(workspaceId)),
+    );
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: "POST", ...baseOptions, ...options };
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    localVarHeaderParameter["Content-Type"] = "application/json";
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof afmCancelTokens !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(afmCancelTokens !== undefined ? afmCancelTokens : {})
+        : afmCancelTokens || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+// ComputationApi FP - ComputationApiAxiosParamCreator
+/**
  * Computes change analysis for the provided execution definition.
  * @summary Compute change analysis
  * @param {string} workspaceId Workspace identifier
@@ -8179,6 +8235,33 @@ export async function ComputationApiAxiosParamCreator_RetrieveResult(
 
 // ComputationApi Api FP
 /**
+ * Each cancel token corresponds to one unique execution request for the same result id. If all cancel tokens for the same result id are applied, the execution for this result id is cancelled.
+ * @summary Applies all the given cancel tokens.
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ComputationApiCancelExecutionsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputationApi_CancelExecutions(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: ComputationApiCancelExecutionsRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<AfmCancelTokens> {
+    const localVarAxiosArgs = await ComputationApiAxiosParamCreator_CancelExecutions(
+        requestParameters.workspaceId,
+        requestParameters.afmCancelTokens,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+// ComputationApi Api FP
+/**
  * Computes change analysis for the provided execution definition.
  * @summary Compute change analysis
  * @param {AxiosInstance} axios Axios instance.
@@ -8551,6 +8634,19 @@ export async function ComputationApi_RetrieveResult(
  */
 export interface ComputationApiInterface {
     /**
+     * Each cancel token corresponds to one unique execution request for the same result id. If all cancel tokens for the same result id are applied, the execution for this result id is cancelled.
+     * @summary Applies all the given cancel tokens.
+     * @param {ComputationApiCancelExecutionsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApiInterface
+     */
+    cancelExecutions(
+        requestParameters: ComputationApiCancelExecutionsRequest,
+        options?: AxiosRequestConfig,
+    ): AxiosPromise<AfmCancelTokens>;
+
+    /**
      * Computes change analysis for the provided execution definition.
      * @summary Compute change analysis
      * @param {ComputationApiChangeAnalysisRequest} requestParameters Request parameters.
@@ -8718,6 +8814,27 @@ export interface ComputationApiInterface {
         requestParameters: ComputationApiRetrieveResultRequest,
         options?: AxiosRequestConfig,
     ): AxiosPromise<ExecutionResult>;
+}
+
+/**
+ * Request parameters for cancelExecutions operation in ComputationApi.
+ * @export
+ * @interface ComputationApiCancelExecutionsRequest
+ */
+export interface ComputationApiCancelExecutionsRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ComputationApiCancelExecutions
+     */
+    readonly workspaceId: string;
+
+    /**
+     *
+     * @type {AfmCancelTokens}
+     * @memberof ComputationApiCancelExecutions
+     */
+    readonly afmCancelTokens: AfmCancelTokens;
 }
 
 /**
@@ -9123,6 +9240,27 @@ export interface ComputationApiRetrieveResultRequest {
  * @extends {BaseAPI}
  */
 export class ComputationApi extends BaseAPI implements ComputationApiInterface {
+    /**
+     * Each cancel token corresponds to one unique execution request for the same result id. If all cancel tokens for the same result id are applied, the execution for this result id is cancelled.
+     * @summary Applies all the given cancel tokens.
+     * @param {ComputationApiCancelExecutionsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApi
+     */
+    public cancelExecutions(
+        requestParameters: ComputationApiCancelExecutionsRequest,
+        options?: AxiosRequestConfig,
+    ) {
+        return ComputationApi_CancelExecutions(
+            this.axios,
+            this.basePath,
+            requestParameters,
+            options,
+            this.configuration,
+        );
+    }
+
     /**
      * Computes change analysis for the provided execution definition.
      * @summary Compute change analysis

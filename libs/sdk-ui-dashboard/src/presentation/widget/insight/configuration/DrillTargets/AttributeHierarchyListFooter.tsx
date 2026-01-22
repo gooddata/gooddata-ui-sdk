@@ -1,11 +1,12 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { useIntl } from "react-intl";
 
 import { messages } from "@gooddata/sdk-ui";
 import { Button, Separator } from "@gooddata/sdk-ui-kit";
 
-import { selectCanManageAttributeHierarchy, useDashboardSelector } from "../../../../../model/index.js";
+import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
+import { selectCanManageAttributeHierarchy } from "../../../../../model/store/permissions/permissionsSelectors.js";
 
 interface IAttributeHierarchyListFooterProps {
     onClick: () => void;

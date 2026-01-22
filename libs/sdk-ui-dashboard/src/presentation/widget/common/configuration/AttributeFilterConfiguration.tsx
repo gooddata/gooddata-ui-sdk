@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -10,11 +10,9 @@ import { AttributeFilterConfigurationItem } from "./AttributeFilterConfiguration
 import { getAttributeByDisplayForm } from "./utils.js";
 import { useAttributeFilterDisplayFormFromMap } from "../../../../_staging/sharedHooks/useAttributeFilterDisplayFormFromMap.js";
 import { useAttributes } from "../../../../_staging/sharedHooks/useAttributes.js";
-import {
-    selectAllCatalogAttributesMap,
-    selectFilterContextAttributeFilters,
-    useDashboardSelector,
-} from "../../../../model/index.js";
+import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
+import { selectAllCatalogAttributesMap } from "../../../../model/store/catalog/catalogSelectors.js";
+import { selectFilterContextAttributeFilters } from "../../../../model/store/tabs/filterContext/filterContextSelectors.js";
 
 interface IAttributeFilterConfigurationProps {
     widget: IWidget;

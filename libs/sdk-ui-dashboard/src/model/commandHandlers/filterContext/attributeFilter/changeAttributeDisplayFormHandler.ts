@@ -12,7 +12,7 @@ import { newDisplayFormMap } from "../../../../_staging/metadata/objRefMap.js";
 import { type ISetAttributeFilterDisplayForm } from "../../../commands/filters.js";
 import { attributeDisplayFormChanged } from "../../../events/filters.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
-import { queryAttributeByDisplayForm } from "../../../queries/index.js";
+import { queryAttributeByDisplayForm } from "../../../queries/attributes.js";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
 import { query } from "../../../store/_infra/queryCall.js";
 import { selectAllCatalogDisplayFormsMap } from "../../../store/catalog/catalogSelectors.js";

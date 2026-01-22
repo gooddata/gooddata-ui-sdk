@@ -16,11 +16,9 @@ import { emptyHeaderTitleFromIntl, useBackendStrict } from "@gooddata/sdk-ui";
 
 import { ParameterDetail } from "./ParameterDetail.js";
 import { newDisplayFormMap } from "../../../../../_staging/metadata/objRefMap.js";
-import {
-    selectBackendCapabilities,
-    selectCatalogDateDatasets,
-    useDashboardSelector,
-} from "../../../../../model/index.js";
+import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
+import { selectBackendCapabilities } from "../../../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
+import { selectCatalogDateDatasets } from "../../../../../model/store/catalog/catalogSelectors.js";
 
 const MAX_CACHED_REQUESTS = 50;
 const MAX_URL_LENGTH = 100;
