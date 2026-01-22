@@ -90,7 +90,11 @@ function GenAIChatOverlayComponent({
                         <div className="gd-gen-ai-chat__window__header__divider"></div>
                     </>
                 )}
-                <HeaderIcon icon="cross" onClick={onClose} />
+                <HeaderIcon
+                    icon="cross"
+                    tooltip={intl.formatMessage({ id: "gd.gen-ai.header.close-tooltip" })}
+                    onClick={onClose}
+                />
             </div>
             <GenAIChatWrapper autofocus />
         </Dialog>

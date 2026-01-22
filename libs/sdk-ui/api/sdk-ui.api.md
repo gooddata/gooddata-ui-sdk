@@ -651,7 +651,11 @@ export type IAutomationUrlBuilder = (params: {
     dashboardId?: string;
     automationId?: string;
     isEmbedded?: boolean;
+    queryParams?: IAutomationUrlQueryParams;
 }) => string | undefined;
+
+// @internal
+export type IAutomationUrlQueryParams = Omit<IDashboardUrlQueryParams, "automationId">;
 
 // @internal (undocumented)
 export interface IAvailableDrillTargetAttribute {
@@ -804,7 +808,20 @@ export type IDashboardUrlBuilder = (params: {
     dashboardId?: string;
     tabId?: string;
     isEmbedded?: boolean;
+    queryParams?: IDashboardUrlQueryParams;
 }) => string | undefined;
+
+// @internal
+export interface IDashboardUrlQueryParams {
+    // (undocumented)
+    automationId?: string;
+    // (undocumented)
+    openAutomationOnLoad?: string;
+    // (undocumented)
+    recipient?: string;
+    // (undocumented)
+    widgetId?: string;
+}
 
 // @public
 export interface IDataAccessMethods {
@@ -2082,7 +2099,11 @@ export type IWidgetUrlBuilder = (params: {
     widgetId?: string;
     tabId?: string;
     isEmbedded?: boolean;
+    queryParams?: IWidgetUrlQueryParams;
 }) => string | undefined;
+
+// @internal
+export type IWidgetUrlQueryParams = Omit<IDashboardUrlQueryParams, "widgetId">;
 
 // @internal
 export interface IWithExecution<T> {

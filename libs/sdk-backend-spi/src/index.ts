@@ -9,17 +9,17 @@
  *
  * @packageDocumentation
  */
-export type {
-    IAnalyticalBackend,
-    IAnalyticalBackendConfig,
-    AnalyticalBackendFactory,
-    IAuthenticationContext,
-    IAuthenticatedPrincipal,
-    IAuthenticationProvider,
-    NotAuthenticatedHandler,
-    IRequestCorrelationMetadata,
+export {
+    type IAnalyticalBackend,
+    type IAnalyticalBackendConfig,
+    type AnalyticalBackendFactory,
+    type IAuthenticationContext,
+    type IAuthenticatedPrincipal,
+    type IAuthenticationProvider,
+    type NotAuthenticatedHandler,
+    type IRequestCorrelationMetadata,
+    prepareExecution,
 } from "./backend/index.js";
-export { prepareExecution } from "./backend/index.js";
 
 export type { IBackendCapabilities } from "./backend/capabilities.js";
 
@@ -85,20 +85,18 @@ export type {
     ExportDefinitionQuerySort,
 } from "./workspace/exportDefinitions/index.js";
 
-export type {
-    IElementsQueryFactory,
-    IElementsQueryResult,
-    IElementsQuery,
-    IElementsQueryOptions,
-    IElementsQueryAttributeFilter,
-    IElementsQueryOptionsElementsByUri,
-    IElementsQueryOptionsElementsByValue,
-    IElementsQueryOptionsElementsByPrimaryDisplayFormValue,
-    ElementsQueryOptionsElementsSpecification,
-    IFilterElementsQuery,
-    FilterWithResolvableElements,
-} from "./workspace/attributes/elements/index.js";
 export {
+    type IElementsQueryFactory,
+    type IElementsQueryResult,
+    type IElementsQuery,
+    type IElementsQueryOptions,
+    type IElementsQueryAttributeFilter,
+    type IElementsQueryOptionsElementsByUri,
+    type IElementsQueryOptionsElementsByValue,
+    type IElementsQueryOptionsElementsByPrimaryDisplayFormValue,
+    type ElementsQueryOptionsElementsSpecification,
+    type IFilterElementsQuery,
+    type FilterWithResolvableElements,
     isElementsQueryOptionsElementsByValue,
     isElementsQueryOptionsElementsByPrimaryDisplayFormValue,
     isValueBasedElementsQueryOptionsElements,
@@ -126,15 +124,13 @@ export type {
 } from "./workspace/genAI/index.js";
 
 export type { IWorkspaceStylingService } from "./workspace/styling/index.js";
-export type {
-    AuthenticationFlow,
-    IDataTooLargeResponseBody,
-    IDataTooLargeResponseBodyLimitBreak,
-    IDataTooLargeResponseBodyStructuredDetail,
-    ErrorConverter,
-    NotAuthenticatedReason,
-} from "./errors/index.js";
 export {
+    type AuthenticationFlow,
+    type IDataTooLargeResponseBody,
+    type IDataTooLargeResponseBodyLimitBreak,
+    type IDataTooLargeResponseBodyStructuredDetail,
+    type ErrorConverter,
+    type NotAuthenticatedReason,
     AnalyticalBackendError,
     NoDataError,
     DataTooLargeError,
@@ -223,8 +219,9 @@ export type {
     IDashboardExportPresentationOptions,
     FiltersByTab,
 } from "./workspace/dashboards/index.js";
-export type { IWidgetWithLayoutPath, LayoutPath } from "./workspace/dashboards/utils.js";
 export {
+    type IWidgetWithLayoutPath,
+    type LayoutPath,
     isDashboardLayoutEmpty,
     layoutWidgets,
     layoutWidgetsWithPaths,

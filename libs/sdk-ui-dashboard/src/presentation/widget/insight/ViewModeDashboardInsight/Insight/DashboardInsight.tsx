@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import {
     type CSSProperties,
@@ -48,6 +48,7 @@ import {
     selectIsInExportMode,
     selectLocale,
     selectMapboxToken,
+    selectPermissions,
     selectSeparators,
     selectSettings,
     useDashboardAsyncRender,
@@ -150,6 +151,7 @@ export function DashboardInsight({
 
     // State props
     const { locale, settings, colorPalette } = useDashboardSelector(selectCommonDashboardInsightProps);
+    const permissions = useDashboardSelector(selectPermissions);
     const isInEditMode = useDashboardSelector(selectIsInEditMode);
     const crossFilteringSelectedPoints = useDashboardSelector(
         selectCrossFilteringSelectedPointsByWidgetRef(ref),
@@ -347,6 +349,7 @@ export function DashboardInsight({
                                 onLoadingChanged={handleLoadingChanged}
                                 locale={locale}
                                 settings={settings as IUserWorkspaceSettings}
+                                permissions={permissions}
                                 colorPalette={colorPalette}
                                 onError={handleError}
                                 pushData={handlePushData}

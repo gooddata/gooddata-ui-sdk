@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type IAttributeMetadataObject, isAttributeMetadataObject } from "./attribute/index.js";
 import {
@@ -83,14 +83,15 @@ export {
     isAttributeHierarchyMetadataObject,
     isMemoryItemMetadataObject,
 };
-export type {
-    IMdObjectBase,
-    IMdObjectIdentity,
-    IMdObject,
-    IMdObjectDefinition,
-    ToMdObjectDefinition,
+export {
+    type IMdObjectBase,
+    type IMdObjectIdentity,
+    type IMdObject,
+    type IMdObjectDefinition,
+    type ToMdObjectDefinition,
+    isMdObject,
+    isMdObjectDefinition,
 } from "./next.js";
-export { isMdObject, isMdObjectDefinition } from "./next.js";
 
 /**
  * Type that represents any metadata object

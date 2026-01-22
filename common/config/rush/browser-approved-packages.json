@@ -1159,6 +1159,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "remark-gfm",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "require-from-string",
       "allowedCategories": [ "production" ]
     },

@@ -1,6 +1,11 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 export { DefaultDashboardToolbar } from "./DefaultDashboardToolbar.js";
-export type { IDefaultDashboardToolbarGroupProps } from "./DefaultDashboardToolbarGroup.js";
-export { DefaultDashboardToolbarGroup } from "./DefaultDashboardToolbarGroup.js";
-export type { IDefaultDashboardToolbarButtonProps } from "./DefaultDashboardToolbarButton.js";
-export { DefaultDashboardToolbarButton } from "./DefaultDashboardToolbarButton.js";
+export {
+    DefaultDashboardToolbarGroup,
+    type IDefaultDashboardToolbarGroupProps,
+} from "./DefaultDashboardToolbarGroup.js";
+export {
+    DefaultDashboardToolbarButton,
+    type IDefaultDashboardToolbarButtonProps,
+} from "./DefaultDashboardToolbarButton.js";

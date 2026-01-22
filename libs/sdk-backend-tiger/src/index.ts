@@ -10,7 +10,7 @@
  *
  * @packageDocumentation
  */
-import { withNormalization } from "@gooddata/sdk-backend-base";
+import { AnonymousAuthProvider, withNormalization } from "@gooddata/sdk-backend-base";
 import { type IAnalyticalBackend, type IAnalyticalBackendConfig } from "@gooddata/sdk-backend-spi";
 
 import { TigerBackend } from "./backend/index.js";
@@ -47,7 +47,7 @@ export function tigerFactory(config?: IAnalyticalBackendConfig, implConfig?: any
     return withNormalization(new TigerBackend(config, implConfig), { executeByRefMode: "fallback" });
 }
 
-export { AnonymousAuthProvider } from "@gooddata/sdk-backend-base";
+export { AnonymousAuthProvider };
 export type {
     ApiEntitlementNameEnum,
     DeclarativeModel,
@@ -64,13 +64,11 @@ export type {
     Invitation,
 } from "@gooddata/api-client-tiger";
 
-export type {
-    SetJwtCallback,
-    JwtIsAboutToExpireHandler,
-    IRedirectToTigerAuthenticationParams,
-    RedirectToTigerAuthenticationHandler,
-} from "./auth.js";
 export {
+    type SetJwtCallback,
+    type JwtIsAboutToExpireHandler,
+    type IRedirectToTigerAuthenticationParams,
+    type RedirectToTigerAuthenticationHandler,
     ContextDeferredAuthProvider,
     TigerTokenAuthProvider,
     TigerJwtAuthProvider,
@@ -120,15 +118,14 @@ export type {
 } from "./backend/tigerSpecificFunctions.js";
 
 export type { TigerAfmType, TigerMetadataType, TigerObjectType } from "./types/index.js";
-export type { TigerCompatibleObjectType } from "./types/refTypeMapping.js";
 export {
+    type TigerCompatibleObjectType,
     isTigerType,
     isTigerCompatibleType,
     tigerIdTypeToObjectType,
     objectTypeToTigerIdType,
 } from "./types/refTypeMapping.js";
-export type { IOriginInfoWithId } from "./convertors/fromBackend/ObjectInheritance.js";
-export { getIdOrigin } from "./convertors/fromBackend/ObjectInheritance.js";
+export { type IOriginInfoWithId, getIdOrigin } from "./convertors/fromBackend/ObjectInheritance.js";
 export { toAfmExecution } from "./convertors/toBackend/afm/toAfmResultSpec.js";
 
 /**

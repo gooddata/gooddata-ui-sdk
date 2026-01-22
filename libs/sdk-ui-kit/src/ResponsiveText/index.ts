@@ -1,3 +1,3 @@
-// (C) 2020-2024 GoodData Corporation
-export type { IResponsiveTextProps } from "./ResponsiveText.js";
-export { ResponsiveText } from "./ResponsiveText.js";
+// (C) 2020-2026 GoodData Corporation
+
+export { ResponsiveText, type IResponsiveTextProps } from "./ResponsiveText.js";

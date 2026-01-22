@@ -1,8 +1,8 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-export type {
-    IRawChartProps,
-    IChartTransformationProps,
-    IHighChartsRendererProps,
+export {
+    type IRawChartProps,
+    type IChartTransformationProps,
+    type IHighChartsRendererProps,
+    RawChart,
 } from "./charts/_base/RawChart.js";
-export { RawChart } from "./charts/_base/RawChart.js";

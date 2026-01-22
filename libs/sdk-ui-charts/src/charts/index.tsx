@@ -1,42 +1,52 @@
-// (C) 2019-2024 GoodData Corporation
-export type { IBaseChartProps } from "./_base/BaseChart.js";
-export { BaseChart } from "./_base/BaseChart.js";
+// (C) 2019-2026 GoodData Corporation
 
-export type { IAreaChartProps, IAreaChartBucketProps } from "./areaChart/AreaChart.js";
-export { AreaChart } from "./areaChart/AreaChart.js";
+export { type IBaseChartProps, BaseChart } from "./_base/BaseChart.js";
 
-export type { IBarChartProps, IBarChartBucketProps } from "./barChart/BarChart.js";
-export { BarChart } from "./barChart/BarChart.js";
+export { type IAreaChartProps, type IAreaChartBucketProps, AreaChart } from "./areaChart/AreaChart.js";
 
-export type { IBubbleChartProps, IBubbleChartBucketProps } from "./bubbleChart/BubbleChart.js";
-export { BubbleChart } from "./bubbleChart/BubbleChart.js";
+export { type IBarChartProps, type IBarChartBucketProps, BarChart } from "./barChart/BarChart.js";
 
-export type { IBulletChartProps, IBulletChartBucketProps } from "./bulletChart/BulletChart.js";
-export { BulletChart } from "./bulletChart/BulletChart.js";
-
-export type { IColumnChartProps, IColumnChartBucketProps } from "./columnChart/ColumnChart.js";
-export { ColumnChart } from "./columnChart/ColumnChart.js";
-
-export type { IComboChartProps, IComboChartBucketProps } from "./comboChart/ComboChart.js";
-export { ComboChart } from "./comboChart/ComboChart.js";
-
-export type { IDonutChartProps, IDonutChartBucketProps } from "./donutChart/DonutChart.js";
-export { DonutChart } from "./donutChart/DonutChart.js";
-
-export type { IFunnelChartProps, IFunnelChartBucketProps } from "./funnelChart/FunnelChart.js";
-export { FunnelChart } from "./funnelChart/FunnelChart.js";
-
-export type { IPyramidChartProps, IPyramidChartBucketProps } from "./pyramidChart/PyramidChart.js";
-export { PyramidChart } from "./pyramidChart/PyramidChart.js";
-
-export type { IHeadlineProps, IHeadlineBucketProps } from "./headline/Headline.js";
-export { Headline } from "./headline/Headline.js";
-
-export type { ICoreHeadlineExtendedProps } from "./headline/CoreHeadline.js";
-export { CoreHeadline } from "./headline/CoreHeadline.js";
-export { createHeadlineProvider } from "./headline/HeadlineProviderFactory.js";
-export type { ICalculationDefaultValue, IDefaultLabelKeys } from "./headline/headlineHelper.js";
 export {
+    type IBubbleChartProps,
+    type IBubbleChartBucketProps,
+    BubbleChart,
+} from "./bubbleChart/BubbleChart.js";
+
+export {
+    type IBulletChartProps,
+    type IBulletChartBucketProps,
+    BulletChart,
+} from "./bulletChart/BulletChart.js";
+
+export {
+    type IColumnChartProps,
+    type IColumnChartBucketProps,
+    ColumnChart,
+} from "./columnChart/ColumnChart.js";
+
+export { type IComboChartProps, type IComboChartBucketProps, ComboChart } from "./comboChart/ComboChart.js";
+
+export { type IDonutChartProps, type IDonutChartBucketProps, DonutChart } from "./donutChart/DonutChart.js";
+
+export {
+    type IFunnelChartProps,
+    type IFunnelChartBucketProps,
+    FunnelChart,
+} from "./funnelChart/FunnelChart.js";
+
+export {
+    type IPyramidChartProps,
+    type IPyramidChartBucketProps,
+    PyramidChart,
+} from "./pyramidChart/PyramidChart.js";
+
+export { type IHeadlineProps, type IHeadlineBucketProps, Headline } from "./headline/Headline.js";
+
+export { type ICoreHeadlineExtendedProps, CoreHeadline } from "./headline/CoreHeadline.js";
+export { createHeadlineProvider } from "./headline/HeadlineProviderFactory.js";
+export {
+    type ICalculationDefaultValue,
+    type IDefaultLabelKeys,
     DEFAULT_COMPARISON_PALETTE,
     CALCULATION_VALUES_DEFAULT,
     ComparisonColorType,
@@ -50,35 +60,39 @@ export type {
     ICreateExecutionParams,
 } from "./headline/HeadlineProvider.js";
 
-export type { IHeatmapProps, IHeatmapBucketProps } from "./heatmap/Heatmap.js";
-export { Heatmap } from "./heatmap/Heatmap.js";
+export { type IHeatmapProps, type IHeatmapBucketProps, Heatmap } from "./heatmap/Heatmap.js";
 
-export type { ILineChartProps, ILineChartBucketProps } from "./lineChart/LineChart.js";
-export { LineChart } from "./lineChart/LineChart.js";
+export { type ILineChartProps, type ILineChartBucketProps, LineChart } from "./lineChart/LineChart.js";
 
-export type { IPieChartProps, IPieChartBucketProps } from "./pieChart/PieChart.js";
-export { PieChart } from "./pieChart/PieChart.js";
+export { type IPieChartProps, type IPieChartBucketProps, PieChart } from "./pieChart/PieChart.js";
 
-export type { IScatterPlotProps, IScatterPlotBucketProps } from "./scatterPlot/ScatterPlot.js";
-export { ScatterPlot } from "./scatterPlot/ScatterPlot.js";
+export {
+    type IScatterPlotProps,
+    type IScatterPlotBucketProps,
+    ScatterPlot,
+} from "./scatterPlot/ScatterPlot.js";
 
-export type { ITreemapProps, ITreemapBucketProps } from "./treemap/Treemap.js";
-export { Treemap } from "./treemap/Treemap.js";
+export { type ITreemapProps, type ITreemapBucketProps, Treemap } from "./treemap/Treemap.js";
 
-export type { ISankeyChartProps, ISankeyChartBucketProps } from "./sankeyChart/SankeyChart.js";
-export { SankeyChart } from "./sankeyChart/SankeyChart.js";
+export {
+    type ISankeyChartProps,
+    type ISankeyChartBucketProps,
+    SankeyChart,
+} from "./sankeyChart/SankeyChart.js";
 
-export type {
-    IDependencyWheelChartProps,
-    IDependencyWheelChartBucketProps,
+export {
+    type IDependencyWheelChartProps,
+    type IDependencyWheelChartBucketProps,
+    DependencyWheelChart,
 } from "./dependencyWheelChart/DependencyWheelChart.js";
-export { DependencyWheelChart } from "./dependencyWheelChart/DependencyWheelChart.js";
 
-export type { IWaterfallChartProps, IWaterfallChartBucketProps } from "./waterfallChart/WaterfallChart.js";
-export { WaterfallChart } from "./waterfallChart/WaterfallChart.js";
+export {
+    type IWaterfallChartProps,
+    type IWaterfallChartBucketProps,
+    WaterfallChart,
+} from "./waterfallChart/WaterfallChart.js";
 
-export type { IXirrProps, IXirrBucketProps } from "./xirr/Xirr.js";
-export { Xirr } from "./xirr/Xirr.js";
+export { type IXirrProps, type IXirrBucketProps, Xirr } from "./xirr/Xirr.js";
 
 export { CoreXirr } from "./xirr/CoreXirr.js";
 
@@ -86,27 +100,26 @@ export {
     constructRepeaterBuckets,
     constructRepeaterDimensions,
 } from "./repeater/internal/repeaterExecution.js";
-export type { IRepeaterProps, IRepeaterBucketProps } from "./repeater/Repeater.js";
-export { Repeater } from "./repeater/Repeater.js";
-export type {
-    ICoreRepeaterChartProps,
-    RepeaterColumnResizedCallback,
-    RepeaterColumnWidthItem,
-    RepeaterColumnWidth,
-    RepeaterDefaultColumnWidth,
-    RepeaterColumnLocator,
-    IRepeaterColumnSizing,
-    IRepeaterAbsoluteColumnWidth,
-    IRepeaterAutoColumnWidth,
-    IRepeaterAttributeColumnWidthItem,
-    IRepeaterMeasureColumnWidthItem,
-    IRepeaterAttributeColumnWidthItemBody,
-    IRepeaterMeasureColumnWidthItemBody,
-    IRepeaterAttributeColumnLocator,
-    IRepeaterAttributeColumnLocatorBody,
-    IRepeaterMeasureColumnLocator,
-    IRepeaterMeasureColumnLocatorBody,
+export { type IRepeaterProps, type IRepeaterBucketProps, Repeater } from "./repeater/Repeater.js";
+export {
+    type ICoreRepeaterChartProps,
+    type RepeaterColumnResizedCallback,
+    type RepeaterColumnWidthItem,
+    type RepeaterColumnWidth,
+    type RepeaterDefaultColumnWidth,
+    type RepeaterColumnLocator,
+    type IRepeaterColumnSizing,
+    type IRepeaterAbsoluteColumnWidth,
+    type IRepeaterAutoColumnWidth,
+    type IRepeaterAttributeColumnWidthItem,
+    type IRepeaterMeasureColumnWidthItem,
+    type IRepeaterAttributeColumnWidthItemBody,
+    type IRepeaterMeasureColumnWidthItemBody,
+    type IRepeaterAttributeColumnLocator,
+    type IRepeaterAttributeColumnLocatorBody,
+    type IRepeaterMeasureColumnLocator,
+    type IRepeaterMeasureColumnLocatorBody,
+    CoreRepeater,
 } from "./repeater/CoreRepeater.js";
-export { CoreRepeater } from "./repeater/CoreRepeater.js";
 
 export { withJsxExport } from "./withJsxExport.js";

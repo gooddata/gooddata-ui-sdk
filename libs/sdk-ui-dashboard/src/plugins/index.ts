@@ -1,9 +1,11 @@
 // (C) 2019-2026 GoodData Corporation
 
-export type { IDashboardPluginContract_V1, DashboardPluginDescriptor } from "./plugin.js";
-export { DashboardPluginV1 } from "./plugin.js";
-export type { IDashboardEngine } from "./engine.js";
-export { newDashboardEngine } from "./engine.js";
+export {
+    DashboardPluginV1,
+    type IDashboardPluginContract_V1,
+    type DashboardPluginDescriptor,
+} from "./plugin.js";
+export { newDashboardEngine, type IDashboardEngine } from "./engine.js";
 export type {
     IDashboardEventHandling,
     IDashboardCustomizer,

@@ -21,6 +21,7 @@ import {
     type IInsightDefinition,
     type IInsightWidget,
     type ITheme,
+    type IWorkspacePermissions,
     insightProperties,
     insightSetProperties,
     insightTitle,
@@ -62,6 +63,7 @@ export interface IInsightRendererProps
     insight: IInsightDefinition | undefined;
     locale: ILocale;
     settings: IUserWorkspaceSettings | undefined;
+    permissions?: IWorkspacePermissions;
     colorPalette: IColorPalette | undefined;
     onError?: OnError;
     theme?: ITheme;
@@ -236,6 +238,7 @@ class InsightRendererCore extends PureComponent<
             projectId: this.props.workspace!,
             visualizationProperties: insightProperties(this.props.insight),
             featureFlags: this.props.settings,
+            permissions: this.props.permissions,
             renderFun: this.getReactRenderFunction(),
             unmountFun: this.getReactUnmountFunction(),
         });

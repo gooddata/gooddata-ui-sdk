@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { cloneDeep, isEmpty, set } from "lodash-es";
 import { type WrappedComponentProps } from "react-intl";
@@ -243,6 +243,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
                     isError={this.getIsError()}
                     isLoading={this.isLoading}
                     featureFlags={this.featureFlags}
+                    permissions={this.permissions}
                     configurationPanelRenderers={options.custom?.configurationPanelRenderers}
                 />,
                 configPanelElement,

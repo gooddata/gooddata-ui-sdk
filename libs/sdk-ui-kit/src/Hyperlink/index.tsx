@@ -1,3 +1,3 @@
-// (C) 2022-2024 GoodData Corporation
-export type { IHyperlinkProps } from "./Hyperlink.js";
-export { Hyperlink } from "./Hyperlink.js";
+// (C) 2022-2026 GoodData Corporation
+
+export { Hyperlink, type IHyperlinkProps } from "./Hyperlink.js";

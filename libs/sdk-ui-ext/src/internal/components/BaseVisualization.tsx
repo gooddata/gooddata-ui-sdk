@@ -18,6 +18,7 @@ import {
     type ISettings,
     type ITheme,
     type IVisualizationClass,
+    type IWorkspacePermissions,
     insightProperties,
     isInsight,
     visClassUrl,
@@ -65,6 +66,7 @@ export interface IBaseVisualizationProps extends IVisCallbacks {
     drillableItems?: ExplicitDrill[];
     totalsEditAllowed?: boolean;
     featureFlags?: ISettings;
+    permissions?: IWorkspacePermissions;
     visualizationCatalog?: IVisualizationCatalog;
     newDerivedBucketItems?: IBucketItem[];
     referencePoint?: IReferencePoint;
@@ -255,6 +257,7 @@ export class BaseVisualization extends PureComponent<IBaseVisualizationProps> {
             environment,
             locale,
             featureFlags,
+            permissions,
             projectId,
             configPanelClassName,
             renderer,
@@ -316,6 +319,7 @@ export class BaseVisualization extends PureComponent<IBaseVisualizationProps> {
                     onDataView: props.onDataView,
                 },
                 featureFlags,
+                permissions,
                 visualizationProperties: insightProperties(props.insight),
                 renderFun: (renderer ?? this.getReactRenderFunction()) as (
                     component: any,

@@ -79,10 +79,13 @@ export * from "./FilterGroupItem/index.js";
 /**
  * New components
  */
-export { ComponentTable, propCombinationsFor } from "./@ui/@dev/ComponentTable.js";
-export type { IComponentTableProps, IPropCombination } from "./@ui/@dev/ComponentTable.js";
-export type { StyleProps } from "./@ui/@utils/bem.js";
-export { bem, bemFactory } from "./@ui/@utils/bem.js";
+export {
+    ComponentTable,
+    propCombinationsFor,
+    type IComponentTableProps,
+    type IPropCombination,
+} from "./@ui/@dev/ComponentTable.js";
+export { type StyleProps, bem, bemFactory } from "./@ui/@utils/bem.js";
 export type {
     SizeXSmall,
     SizeSmall,
@@ -105,46 +108,49 @@ export type {
 export type { ThemeColor } from "./@ui/@types/themeColors.js";
 export { useElementSize } from "./@ui/hooks/useElementSize.js";
 export type { IconType } from "./@ui/@types/icon.js";
-export { UiButton } from "./@ui/UiButton/UiButton.js";
-export type { IUiButtonProps, IUiButtonAccessibilityConfig } from "./@ui/UiButton/UiButton.js";
-export { UiButtonSegmentedControl } from "./@ui/UiButtonSegmentedControl/UiButtonSegmentedControl.js";
-export type { UiButtonSegmentedControlProps } from "./@ui/UiButtonSegmentedControl/UiButtonSegmentedControl.js";
-export { UiIconButton } from "./@ui/UiIconButton/UiIconButton.js";
-export type { UiIconButtonProps } from "./@ui/UiIconButton/UiIconButton.js";
+export { UiButton, type IUiButtonProps, type IUiButtonAccessibilityConfig } from "./@ui/UiButton/UiButton.js";
+export {
+    UiButtonSegmentedControl,
+    type UiButtonSegmentedControlProps,
+} from "./@ui/UiButtonSegmentedControl/UiButtonSegmentedControl.js";
+export { UiIconButton, type UiIconButtonProps } from "./@ui/UiIconButton/UiIconButton.js";
 export type { IUiIconButtonPublicProps } from "./@ui/UiIconButton/UiIconButtonRenderer.js";
-export { UiPaginationButton } from "./@ui/UiPaginationButton/UiPaginationButton.js";
-export type {
-    IUiPaginationButtonProps,
-    UiPaginationButtonSize,
-    UiPaginationButtonDirection,
+export {
+    UiPaginationButton,
+    type IUiPaginationButtonProps,
+    type UiPaginationButtonSize,
+    type UiPaginationButtonDirection,
 } from "./@ui/UiPaginationButton/UiPaginationButton.js";
 export { UiChip } from "./@ui/UiChip/UiChip.js";
 export type { IUiChipProps, IUiChipAccessibilityConfig } from "./@ui/UiChip/types.js";
-export { UiCheckbox } from "./@ui/UiCheckbox/UiCheckbox.js";
-export type { IUiCheckboxProps } from "./@ui/UiCheckbox/UiCheckbox.js";
-export { UiIcon } from "./@ui/UiIcon/UiIcon.js";
-export type { IUiIconProps } from "./@ui/UiIcon/UiIcon.js";
+export { UiCheckbox, type IUiCheckboxProps } from "./@ui/UiCheckbox/UiCheckbox.js";
+export { UiIcon, type IUiIconProps } from "./@ui/UiIcon/UiIcon.js";
 export type { BackgroundType, BackgroundShape } from "./@ui/@types/background.js";
 export { iconPaths } from "./@ui/UiIcon/icons.js";
-export { UiSkeleton } from "./@ui/UiSkeleton/UiSkeleton.js";
-export type { IUiSkeletonProps } from "./@ui/UiSkeleton/UiSkeleton.js";
-export { UiPagedVirtualList } from "./@ui/UiPagedVirtualList/UiPagedVirtualList.js";
-export type { IUiPagedVirtualListImperativeHandle } from "./@ui/UiPagedVirtualList/UiPagedVirtualList.js";
-export type {
-    IUiPagedVirtualListProps,
-    IUiPagedVirtualListSkeletonItemProps,
+export { UiSkeleton, type IUiSkeletonProps } from "./@ui/UiSkeleton/UiSkeleton.js";
+export {
+    UiPagedVirtualList,
+    type IUiPagedVirtualListImperativeHandle,
+    type IUiPagedVirtualListProps,
+    type IUiPagedVirtualListSkeletonItemProps,
 } from "./@ui/UiPagedVirtualList/UiPagedVirtualList.js";
-export { UiFocusManager, useUiFocusManagerConnectors } from "./@ui/UiFocusManager/UiFocusManager.js";
-export type { IUiFocusManagerProps } from "./@ui/UiFocusManager/UiFocusManager.js";
+export {
+    UiFocusManager,
+    useUiFocusManagerConnectors,
+    type IUiFocusManagerProps,
+} from "./@ui/UiFocusManager/UiFocusManager.js";
 export { UiFocusTrap, useUiFocusTrapConnectors } from "./@ui/UiFocusManager/UiFocusTrap.js";
 export { UiTabOutHandler, useUiTabOutHandlerConnectors } from "./@ui/UiFocusManager/UiTabOutHandler.js";
-export { UiAutofocus, useUiAutofocusConnectors } from "./@ui/UiFocusManager/UiAutofocus.js";
-export type { IUiAutofocusOptions } from "./@ui/UiFocusManager/UiAutofocus.js";
+export {
+    UiAutofocus,
+    useUiAutofocusConnectors,
+    type IUiAutofocusOptions,
+} from "./@ui/UiFocusManager/UiAutofocus.js";
 export {
     UiReturnFocusOnUnmount,
     useUiReturnFocusOnUnmountConnectors,
+    type IUiReturnFocusOnUnmountOptions,
 } from "./@ui/UiFocusManager/UiReturnFocusOnUnmount.js";
-export type { IUiReturnFocusOnUnmountOptions } from "./@ui/UiFocusManager/UiReturnFocusOnUnmount.js";
 export {
     resolveRef,
     getNextFocusableElement,
@@ -155,8 +161,7 @@ export {
 } from "./@ui/UiFocusManager/utils.js";
 export type { IUiFocusHelperConnectors } from "./@ui/UiFocusManager/types.js";
 export type { NavigationDirection } from "./typings/navigation.js";
-export { UiLink } from "./@ui/UiLink/UiLink.js";
-export type { IUiLinkProps } from "./@ui/UiLink/UiLink.js";
+export { UiLink, type IUiLinkProps } from "./@ui/UiLink/UiLink.js";
 export type {
     IAccessibilityConfigBase,
     IMenuAccessibilityConfig,
@@ -274,10 +279,11 @@ export { getTypedUiTabsContextStore } from "./@ui/UiTabs/context.js";
 export { useUiTabsContextStoreValue } from "./@ui/UiTabs/useUiTabsContextStoreValue.js";
 export { UiTooltip } from "./@ui/UiTooltip/UiTooltip.js";
 export type { IUiTooltipProps, TooltipArrowPlacement } from "./@ui/UiTooltip/types.js";
-export { UiDropdownIconButton } from "./@ui/UiDropdownIconButton/UiDropdownIconButton.js";
-export type { IUiDropdownIconButtonProps } from "./@ui/UiDropdownIconButton/UiDropdownIconButton.js";
-export { UiBadge } from "./@ui/UiBadge/UiBadge.js";
-export type { IUiBadgeProps } from "./@ui/UiBadge/UiBadge.js";
+export {
+    UiDropdownIconButton,
+    type IUiDropdownIconButtonProps,
+} from "./@ui/UiDropdownIconButton/UiDropdownIconButton.js";
+export { UiBadge, type IUiBadgeProps } from "./@ui/UiBadge/UiBadge.js";
 
 export {
     makeMenuKeyboardNavigation,
@@ -286,10 +292,13 @@ export {
     makeTabsKeyboardNavigation,
     makeHorizontalKeyboardNavigation,
     modifierNegator,
+    type IHandleActionOptions,
+    type IModifier,
 } from "./@ui/@utils/keyboardNavigation.js";
-export type { IHandleActionOptions, IModifier } from "./@ui/@utils/keyboardNavigation.js";
-export { useKeyboardNavigationTarget } from "./@ui/@utils/useKeyboardNavigationTarget.js";
-export type { IUseKeyboardNavigationTargetProps } from "./@ui/@utils/useKeyboardNavigationTarget.js";
+export {
+    useKeyboardNavigationTarget,
+    type IUseKeyboardNavigationTargetProps,
+} from "./@ui/@utils/useKeyboardNavigationTarget.js";
 
 export {
     useListWithActionsKeyboardNavigation,
@@ -301,13 +310,13 @@ export {
     useScopedIdStoreValue,
     useScopedId,
     useScopedIdOptional,
+    type IScopedIdStoreValue,
 } from "./@ui/hooks/useScopedId.js";
-export type { IScopedIdStoreValue } from "./@ui/hooks/useScopedId.js";
 
-export { UiNavigationBypass } from "./@ui/UiNavigationBypass/UiNavigationBypass.js";
-export type {
-    IUiNavigationBypassProps,
-    IUiNavigationItem,
+export {
+    UiNavigationBypass,
+    type IUiNavigationBypassProps,
+    type IUiNavigationItem,
 } from "./@ui/UiNavigationBypass/UiNavigationBypass.js";
 
 export type {
@@ -342,11 +351,9 @@ export { useAsyncTableResponsiveColumns } from "./@ui/UiAsyncTable/UiAsyncTable/
 export { UiTags } from "./@ui/UiTags/UiTags.js";
 export type { IUiTagsProps, IUiTagDef } from "./@ui/UiTags/types.js";
 
-export { UiTag } from "./@ui/UiTag/UiTag.js";
-export type { UiTagProps, IUiTagAccessibilityConfig } from "./@ui/UiTag/UiTag.js";
+export { UiTag, type UiTagProps, type IUiTagAccessibilityConfig } from "./@ui/UiTag/UiTag.js";
 
-export { UiPopover } from "./@ui/UiPopover/UiPopover.js";
-export type { IUiPopoverProps } from "./@ui/UiPopover/UiPopover.js";
+export { UiPopover, type IUiPopoverProps } from "./@ui/UiPopover/UiPopover.js";
 
 export { UiFloatingElement } from "./@ui/UiFloatingElement/UiFloatingElement.js";
 export { useFloatingPosition } from "./@ui/UiFloatingElement/useFloatingPosition.js";
@@ -364,8 +371,11 @@ export {
     resolveAnchor,
 } from "./@ui/UiFloatingElement/utils.js";
 
-export { useCloseOnOutsideClick, FLOATING_ELEMENT_DATA_ATTR } from "./@ui/hooks/useCloseOnOutsideClick.js";
-export type { IUseCloseOnOutsideClickOptions } from "./@ui/hooks/useCloseOnOutsideClick.js";
+export {
+    useCloseOnOutsideClick,
+    FLOATING_ELEMENT_DATA_ATTR,
+    type IUseCloseOnOutsideClickOptions,
+} from "./@ui/hooks/useCloseOnOutsideClick.js";
 export { useCloseOnEscape } from "./@ui/hooks/useCloseOnEscape.js";
 export { useCloseOnParentScroll } from "./@ui/hooks/useCloseOnParentScroll.js";
 export { useCloseOnMouseDrag } from "./@ui/hooks/useCloseOnMouseDrag.js";
@@ -380,20 +390,17 @@ export type {
 export {
     UiSearchResultsAnnouncement,
     DETAILED_ANNOUNCEMENT_THRESHOLD,
+    type ISearchResultsAnnouncementProps,
 } from "./@ui/UiSearchResultsAnnouncement/UiSearchResultsAnnouncement.js";
-export type { ISearchResultsAnnouncementProps } from "./@ui/UiSearchResultsAnnouncement/UiSearchResultsAnnouncement.js";
 
-export { UiDate } from "./@ui/UiDate/UiDate.js";
-export type { IUiDateProps } from "./@ui/UiDate/UiDate.js";
+export { UiDate, type IUiDateProps } from "./@ui/UiDate/UiDate.js";
 
 export { UiDrawer } from "./@ui/UiDrawer/UiDrawer.js";
 export type { IUiDrawerProps, UiDrawerTransitionProps } from "./@ui/UiDrawer/types.js";
 
-export { UiCard } from "./@ui/UiCard/UiCard.js";
-export type { IUiCardProps } from "./@ui/UiCard/UiCard.js";
+export { UiCard, type IUiCardProps } from "./@ui/UiCard/UiCard.js";
 
-export { UiSubmenuHeader } from "./@ui/UiSubmenuHeader/UiSubmenuHeader.js";
-export type { IUiSubmenuHeaderProps } from "./@ui/UiSubmenuHeader/UiSubmenuHeader.js";
+export { UiSubmenuHeader, type IUiSubmenuHeaderProps } from "./@ui/UiSubmenuHeader/UiSubmenuHeader.js";
 
 export {
     UiCombobox,
@@ -416,5 +423,4 @@ export {
     useComboboxState,
 } from "./@ui/UiCombobox/index.js";
 
-export type { IUiCopyButtonProps } from "./@ui/UiCopyButton/UiCopyButton.js";
-export { UiCopyButton } from "./@ui/UiCopyButton/UiCopyButton.js";
+export { UiCopyButton, type IUiCopyButtonProps } from "./@ui/UiCopyButton/UiCopyButton.js";

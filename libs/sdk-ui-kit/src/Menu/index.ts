@@ -1,9 +1,7 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
-export type { IMenuProps } from "./Menu.js";
-export { Menu } from "./Menu.js";
-export type { ISubMenuProps } from "./SubMenu.js";
-export { SubMenu } from "./SubMenu.js";
+export { Menu, type IMenuProps } from "./Menu.js";
+export { SubMenu, type ISubMenuProps } from "./SubMenu.js";
 export type {
     OnOpenedChange,
     IOnOpenedChangeParams,

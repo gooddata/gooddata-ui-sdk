@@ -1,3 +1,3 @@
-// (C) 2020-2024 GoodData Corporation
-export type { ILoadingDotsProps } from "./LoadingDots.js";
-export { LoadingDots } from "./LoadingDots.js";
+// (C) 2020-2026 GoodData Corporation
+
+export { LoadingDots, type ILoadingDotsProps } from "./LoadingDots.js";

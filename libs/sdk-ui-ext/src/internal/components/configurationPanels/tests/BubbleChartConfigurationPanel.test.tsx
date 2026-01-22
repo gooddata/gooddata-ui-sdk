@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
@@ -237,18 +237,14 @@ describe("BubbleChartConfigurationPanel", () => {
                 });
 
                 await userEvent.click(screen.getByText("X-Axis"));
-                if (expectedXAxisSectionDisabled) {
-                    expect(screen.getByLabelText("xaxis name")).toBeDisabled();
-                } else {
-                    expect(screen.getByLabelText("xaxis name")).toBeEnabled();
-                }
+                expect(screen.getByLabelText<HTMLInputElement>("xaxis name").disabled).toBe(
+                    expectedXAxisSectionDisabled,
+                );
 
                 await userEvent.click(screen.getByText("Y-Axis"));
-                if (expectedYAxisSectionDisabled) {
-                    expect(screen.getByLabelText("yaxis name")).toBeDisabled();
-                } else {
-                    expect(screen.getByLabelText("yaxis name")).toBeEnabled();
-                }
+                expect(screen.getByLabelText<HTMLInputElement>("yaxis name").disabled).toBe(
+                    expectedYAxisSectionDisabled,
+                );
             },
         );
 

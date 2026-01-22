@@ -55,6 +55,7 @@ import {
 import { configurePercent } from "../../../utils/bucketConfig.js";
 import { limitNumberOfMeasuresInBuckets } from "../../../utils/bucketHelper.js";
 import { routeLocalIdRefFiltersToLayers } from "../../../utils/filters/routeLocalIdRefFiltersToLayers.js";
+import { sanitizeGeoReferencePointFilters } from "../../../utils/filters/sanitizeGeoReferencePointFilters.js";
 import { removeSort } from "../../../utils/sort.js";
 import { setGeoAreaUiConfig } from "../../../utils/uiConfigHelpers/geoAreaChartUiConfigHelper.js";
 import { GeoAreaConfigurationPanel } from "../../configurationPanels/GeoAreaConfigurationPanel.js";
@@ -108,7 +109,14 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
                 );
                 newReferencePoint = configurePercent(newReferencePoint, true);
                 newReferencePoint = removeSort(newReferencePoint);
-                return { ...newReferencePoint, filters: originalFilters };
+                const enableImprovedAdFilters = this.featureFlags?.enableImprovedAdFilters ?? true;
+                const sanitizedFilters = sanitizeGeoReferencePointFilters(
+                    originalFilters,
+                    referencePoint.buckets,
+                    newReferencePoint.buckets,
+                    enableImprovedAdFilters,
+                );
+                return { ...newReferencePoint, filters: sanitizedFilters };
             });
     }
 
@@ -240,6 +248,7 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
                     isError={this.getIsError()}
                     isLoading={this.isLoading}
                     featureFlags={this.featureFlags}
+                    permissions={this.permissions}
                     configurationPanelRenderers={options.custom?.configurationPanelRenderers}
                 />,
                 configPanelElement,

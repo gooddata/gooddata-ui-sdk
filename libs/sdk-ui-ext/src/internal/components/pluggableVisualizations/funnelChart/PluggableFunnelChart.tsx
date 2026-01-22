@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type IInsightDefinition } from "@gooddata/sdk-model";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
@@ -77,6 +77,7 @@ export class PluggableFunnelChart extends PluggablePieChart {
                     isError={this.getIsError()}
                     isLoading={this.isLoading}
                     featureFlags={this.featureFlags}
+                    permissions={this.permissions}
                     references={this.references}
                     panelConfig={panelConfig}
                     configurationPanelRenderers={options.custom?.configurationPanelRenderers}

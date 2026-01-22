@@ -39,6 +39,7 @@ import { ITheme } from '@gooddata/sdk-model';
 import { IUserWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
 import { IWidgetUrlBuilder } from '@gooddata/sdk-ui';
+import { IWorkspacePermissions } from '@gooddata/sdk-model';
 import { JSX } from 'react/jsx-runtime';
 import { LocalIdRef } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
@@ -567,6 +568,8 @@ export interface IInsightRendererProps extends Omit<IInsightViewProps, "insight"
     locale: ILocale;
     // (undocumented)
     onError?: OnError;
+    // (undocumented)
+    permissions?: IWorkspacePermissions;
     // (undocumented)
     settings: IUserWorkspaceSettings | undefined;
     // (undocumented)

@@ -1,20 +1,21 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 export { AppHeader } from "./Header.js";
-export type { IWorkspacePickerHomeFooterProps } from "./WorkspacePickerHomeFooter.js";
-export { WorkspacePickerHomeFooter } from "./WorkspacePickerHomeFooter.js";
-export type { IHeaderWorkspace, IHeaderWorkspacePickerProps } from "./HeaderWorkspacePicker.js";
-export { HeaderWorkspacePicker } from "./HeaderWorkspacePicker.js";
-export type { IHeaderDataMenuItem, IHeaderDataMenuProps } from "./HeaderDataMenu.js";
-export { HeaderDataMenu } from "./HeaderDataMenu.js";
-export type { IUiSettings } from "./generateHeaderAccountMenuItems.js";
-export { generateHeaderAccountMenuItems } from "./generateHeaderAccountMenuItems.js";
+export {
+    WorkspacePickerHomeFooter,
+    type IWorkspacePickerHomeFooterProps,
+} from "./WorkspacePickerHomeFooter.js";
+export {
+    HeaderWorkspacePicker,
+    type IHeaderWorkspace,
+    type IHeaderWorkspacePickerProps,
+} from "./HeaderWorkspacePicker.js";
+export { HeaderDataMenu, type IHeaderDataMenuItem, type IHeaderDataMenuProps } from "./HeaderDataMenu.js";
+export { generateHeaderAccountMenuItems, type IUiSettings } from "./generateHeaderAccountMenuItems.js";
 export { generateHeaderHelpMenuItems } from "./generateHeaderHelpMenuItems.js";
 export { generateHeaderStaticHelpMenuItems } from "./generateHeaderStaticHelpMenuItems.js";
-export type { IHeaderBadgeProps } from "./HeaderBadge.js";
-export { HeaderBadge } from "./HeaderBadge.js";
-export type { IHeaderBadgeWithModalProps } from "./HeaderBadgeWithModal.js";
-export { HeaderBadgeWithModal } from "./HeaderBadgeWithModal.js";
+export { HeaderBadge, type IHeaderBadgeProps } from "./HeaderBadge.js";
+export { HeaderBadgeWithModal, type IHeaderBadgeWithModalProps } from "./HeaderBadgeWithModal.js";
 export * from "./generateHeaderMenuItemsGroups.js";
 export * from "./activateHeaderMenuItems.js";
 export type * from "./typings.js";

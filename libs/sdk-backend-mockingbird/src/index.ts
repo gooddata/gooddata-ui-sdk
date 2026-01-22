@@ -1,4 +1,5 @@
-// (C) 2019-2024 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 /**
  * This package provides a mock Analytical Backend implementation used mainly for testing.
  *
@@ -34,8 +35,8 @@ export type {
     AttributeElementsFilteringPredicate,
 } from "./recordedBackend/types.js";
 
-export type { NamedDataView } from "./recordedBackend/execution.js";
 export {
+    type NamedDataView,
     recordedDataView,
     recordedDataViews,
     recordedInsight,
@@ -51,14 +52,14 @@ export {
     newMeasureLimitingItem,
 } from "./recordedBackend/elementsUtils.js";
 
-export type { CompositeBackendPart } from "./compositeBackend/index.js";
-export { compositeBackend } from "./compositeBackend/index.js";
+export { type CompositeBackendPart, compositeBackend } from "./compositeBackend/index.js";
 
-export type {
-    LegacyExecutionRecording,
-    LegacyRecordingIndex,
-    LegacyWorkspaceRecordings,
+export {
+    type LegacyExecutionRecording,
+    type LegacyRecordingIndex,
+    type LegacyWorkspaceRecordings,
+    legacyRecordedBackend,
+    legacyRecordedDataView,
 } from "./legacyRecordedBackend/index.js";
-export { legacyRecordedBackend, legacyRecordedDataView } from "./legacyRecordedBackend/index.js";
 
 export { objRefsToStringKey } from "./recordedBackend/utils.js";

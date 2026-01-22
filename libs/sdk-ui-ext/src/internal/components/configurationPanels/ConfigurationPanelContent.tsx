@@ -2,7 +2,12 @@
 
 import { PureComponent, type ReactNode } from "react";
 
-import { type IInsightDefinition, type ISettings, insightHasMeasures } from "@gooddata/sdk-model";
+import {
+    type IInsightDefinition,
+    type ISettings,
+    type IWorkspacePermissions,
+    insightHasMeasures,
+} from "@gooddata/sdk-model";
 import { type ChartType, DefaultLocale } from "@gooddata/sdk-ui";
 
 import { type SectionName } from "./sectionName.js";
@@ -42,6 +47,7 @@ export interface IConfigurationPanelContentProps<PanelConfig = any> {
     isLoading?: boolean;
     insight?: IInsightDefinition;
     featureFlags?: ISettings;
+    permissions?: IWorkspacePermissions;
     axis?: string;
     pushData?(data: any): void;
     panelConfig?: PanelConfig;
@@ -63,6 +69,7 @@ export abstract class ConfigurationPanelContent<
         insight: undefined,
         pushData: () => {},
         featureFlags: {},
+        permissions: undefined,
         axis: undefined,
         panelConfig: {},
     };
@@ -195,10 +202,22 @@ export abstract class ConfigurationPanelContent<
     }
 
     protected renderAnomaliesSection(): ReactNode {
-        const { pushData, properties, propertiesMeta, type, featureFlags, referencePoint, insight, colors } =
-            this.props;
+        const {
+            pushData,
+            properties,
+            permissions,
+            propertiesMeta,
+            type,
+            featureFlags,
+            referencePoint,
+            insight,
+            colors,
+        } = this.props;
 
         if (!featureFlags?.["enableAnomalyDetectionVisualization"]) {
+            return null;
+        }
+        if (!permissions?.canUseAiAssistant) {
             return null;
         }
 

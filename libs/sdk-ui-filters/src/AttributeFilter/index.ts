@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 export type {
     ParentFilterOverAttributeType,
     OnApplyCallbackType,
@@ -7,30 +8,28 @@ export type {
     IAttributeFilterCoreProps,
     IAttributeFilterCustomComponentProps,
 } from "./types.js";
-export type {
-    IAttributeDatasetInfoProps,
-    IAttributeFilterErrorProps,
-    IAttributeFilterLoadingProps,
-    IAttributeFilterDropdownButtonProps,
-    IAttributeFilterDropdownBodyProps,
-    IAttributeFilterDropdownActionsProps,
-    IAttributeFilterElementsSearchBarProps,
-    IAttributeFilterElementsSelectProps,
-    IAttributeFilterElementsSelectItemProps,
-    IAttributeFilterElementsSelectErrorProps,
-    IAttributeFilterElementsSelectLoadingProps,
-    IAttributeFilterElementsActionsProps,
-    IAttributeFilterEmptyResultProps,
-    IAttributeFilterStatusBarProps,
-    IAttributeDisplayFormSelectProps,
-    IAttributeFilterAllValuesFilteredResultProps,
-    IAttributeFilterConfigurationButtonProps,
-    IAttributeFilterDeleteButtonProps,
-    IAttributeFilterFilteredStatusProps,
-    IAttributeFilterSelectionStatusProps,
-    IAttributeFilterDependencyTooltipProps,
-} from "./Components/index.js";
 export {
+    type IAttributeDatasetInfoProps,
+    type IAttributeFilterErrorProps,
+    type IAttributeFilterLoadingProps,
+    type IAttributeFilterDropdownButtonProps,
+    type IAttributeFilterDropdownBodyProps,
+    type IAttributeFilterDropdownActionsProps,
+    type IAttributeFilterElementsSearchBarProps,
+    type IAttributeFilterElementsSelectProps,
+    type IAttributeFilterElementsSelectItemProps,
+    type IAttributeFilterElementsSelectErrorProps,
+    type IAttributeFilterElementsSelectLoadingProps,
+    type IAttributeFilterElementsActionsProps,
+    type IAttributeFilterEmptyResultProps,
+    type IAttributeFilterStatusBarProps,
+    type IAttributeDisplayFormSelectProps,
+    type IAttributeFilterAllValuesFilteredResultProps,
+    type IAttributeFilterConfigurationButtonProps,
+    type IAttributeFilterDeleteButtonProps,
+    type IAttributeFilterFilteredStatusProps,
+    type IAttributeFilterSelectionStatusProps,
+    type IAttributeFilterDependencyTooltipProps,
     AttributeDisplayFormSelect,
     AttributeFilterAllValuesFilteredResult,
     AttributeFilterConfigurationButton,
@@ -63,12 +62,12 @@ export {
     useOnCloseAttributeFilterDropdownButton,
     AttributeFilterDependencyTooltip,
 } from "./Components/index.js";
-export type { IAttributeFilterProps } from "./AttributeFilter.js";
-export { AttributeFilter } from "./AttributeFilter.js";
-export type { IAttributeFilterButtonProps } from "./AttributeFilterButton.js";
-export { AttributeFilterButton } from "./AttributeFilterButton.js";
-export type { IUseAttributeFilterControllerProps } from "./hooks/useAttributeFilterController.js";
-export { useAttributeFilterController } from "./hooks/useAttributeFilterController.js";
+export { type IAttributeFilterProps, AttributeFilter } from "./AttributeFilter.js";
+export { type IAttributeFilterButtonProps, AttributeFilterButton } from "./AttributeFilterButton.js";
+export {
+    type IUseAttributeFilterControllerProps,
+    useAttributeFilterController,
+} from "./hooks/useAttributeFilterController.js";
 
 export type {
     AttributeFilterController,
@@ -76,12 +75,15 @@ export type {
     AttributeFilterControllerCallbacks,
 } from "./hooks/types.js";
 
-export type { IUseAttributeFilterHandlerProps } from "./hooks/useAttributeFilterHandler.js";
-export { useAttributeFilterHandler } from "./hooks/useAttributeFilterHandler.js";
-export type { IAttributeFilterContext } from "./Context/AttributeFilterContext.js";
-export { useAttributeFilterContext } from "./Context/AttributeFilterContext.js";
+export {
+    type IUseAttributeFilterHandlerProps,
+    useAttributeFilterHandler,
+} from "./hooks/useAttributeFilterHandler.js";
+export { type IAttributeFilterContext, useAttributeFilterContext } from "./Context/AttributeFilterContext.js";
 
-export type { IUseAttributeFilterSearchProps } from "./hooks/useAttributeFilterSearch.js";
-export { useAttributeFilterSearch } from "./hooks/useAttributeFilterSearch.js";
+export {
+    type IUseAttributeFilterSearchProps,
+    useAttributeFilterSearch,
+} from "./hooks/useAttributeFilterSearch.js";
 
 export { getAttributeFilterSubtitle } from "./utils.js";

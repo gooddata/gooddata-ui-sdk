@@ -131,6 +131,10 @@
         "text": "Expand",
         "crowdinContext": "Tooltip for button that expands the AI chatbot interface"
     },
+    "gd.gen-ai.header.close-tooltip": {
+        "text": "Close assistant",
+        "crowdinContext": "Tooltip and accessibility label for close button in the AI assistant header"
+    },
     "gd.gen-ai.welcome.line-1": {
         "text": "Hi there,",
         "crowdinContext": "First line of the AI chatbot's welcome greeting"

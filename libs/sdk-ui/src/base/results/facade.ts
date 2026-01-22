@@ -39,7 +39,7 @@ import {
 import { type IResultDataMethods, newResultDataMethods } from "./internal/resultDataMethods.js";
 import { type IResultMetaMethods, newResultMetaMethods } from "./internal/resultMetaMethods.js";
 
-export type { CollectionItemsRequestOptions } from "./internal/collectionItemsHelpers.js";
+export type { CollectionItemsRequestOptions };
 
 /**
  * Wrapper for {@link @gooddata/sdk-backend-spi#IDataView}.

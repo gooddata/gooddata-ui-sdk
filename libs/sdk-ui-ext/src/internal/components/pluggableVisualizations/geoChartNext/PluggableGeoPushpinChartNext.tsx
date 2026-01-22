@@ -63,6 +63,7 @@ import {
 import { configurePercent } from "../../../utils/bucketConfig.js";
 import { limitNumberOfMeasuresInBuckets } from "../../../utils/bucketHelper.js";
 import { routeLocalIdRefFiltersToLayers } from "../../../utils/filters/routeLocalIdRefFiltersToLayers.js";
+import { sanitizeGeoReferencePointFilters } from "../../../utils/filters/sanitizeGeoReferencePointFilters.js";
 import { removeSort } from "../../../utils/sort.js";
 import { setGeoPushpinUiConfig } from "../../../utils/uiConfigHelpers/geoPushpinChartUiConfigHelper.js";
 import { GeoPushpinConfigurationPanel } from "../../configurationPanels/GeoPushpinConfigurationPanel.js";
@@ -124,7 +125,14 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
                 newReferencePoint = configurePercent(newReferencePoint, true);
                 newReferencePoint = removeSort(newReferencePoint);
                 const updated = this.updateSupportedProperties(newReferencePoint);
-                return { ...updated, filters: originalFilters };
+                const enableImprovedAdFilters = this.featureFlags?.enableImprovedAdFilters ?? true;
+                const sanitizedFilters = sanitizeGeoReferencePointFilters(
+                    originalFilters,
+                    referencePoint.buckets,
+                    updated.buckets,
+                    enableImprovedAdFilters,
+                );
+                return { ...updated, filters: sanitizedFilters };
             });
     }
 
@@ -308,6 +316,7 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
                     isError={this.getIsError()}
                     isLoading={this.isLoading}
                     featureFlags={this.featureFlags}
+                    permissions={this.permissions}
                     configurationPanelRenderers={options.custom?.configurationPanelRenderers}
                 />,
                 configPanelElement,

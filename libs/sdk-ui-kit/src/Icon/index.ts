@@ -1,9 +1,8 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 export * from "./Icon.js";
 
-export type { IInsightIconProps } from "./InsightIcon.js";
-export { InsightIcon } from "./InsightIcon.js";
+export { InsightIcon, type IInsightIconProps } from "./InsightIcon.js";
 
 export type { IIconProps, Color } from "./typings.js";
 
@@ -85,8 +84,7 @@ export { GenAI as IconGenAI } from "./icons/GenAI.js";
 
 export { GenAI2 as IconGenAI2 } from "./icons/GenAI2.js";
 
-export { Hash as IconHash } from "./icons/Hash.js";
-export type { IHashIconProps } from "./icons/Hash.js";
+export { Hash as IconHash, type IHashIconProps } from "./icons/Hash.js";
 
 export { Header as IconHeader } from "./icons/Header.js";
 
@@ -210,11 +208,9 @@ export { Trash as IconTrash } from "./icons/Trash.js";
 
 export { Undo as IconUndo } from "./icons/Undo.js";
 
-export { User as IconUser } from "./icons/User.js";
-export type { IUserIconProps } from "./icons/User.js";
+export { User as IconUser, type IUserIconProps } from "./icons/User.js";
 
-export { UserGroup as IconUserGroup } from "./icons/UserGroup.js";
-export type { IUserGroupIconProps } from "./icons/UserGroup.js";
+export { UserGroup as IconUserGroup, type IUserGroupIconProps } from "./icons/UserGroup.js";
 
 export { VisualizationSwitcher as IconVisualizationSwitcher } from "./icons/VisualizationSwitcher.js";
 

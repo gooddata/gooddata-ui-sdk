@@ -41,15 +41,16 @@ export const defaultEditAutomation = (
     );
 };
 
-export const getRecipientName = (recipient: IAutomationRecipient): string => {
-    if (recipient.name) {
-        return recipient.name ?? "";
-    }
-    if ("email" in recipient) {
-        return recipient.email ?? "";
-    }
-    return recipient.id ?? "";
+const trimString = (value: string | undefined): string | undefined => {
+    const trimmed = value?.trim();
+    return trimmed || undefined;
 };
+
+export const getRecipientName = (recipient: IAutomationRecipient): string =>
+    trimString(recipient.name) ||
+    ("email" in recipient ? trimString(recipient.email) : undefined) ||
+    trimString(recipient.id) ||
+    "";
 
 export const getNextRunFromCron = (cron: string | undefined) => {
     if (!cron) {

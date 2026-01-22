@@ -1,3 +1,3 @@
-// (C) 2007-2024 GoodData Corporation
-export type { IAutoSizeProps, IAutoSizeChildren } from "./AutoSize.js";
-export { AutoSize } from "./AutoSize.js";
+// (C) 2007-2026 GoodData Corporation
+
+export { AutoSize, type IAutoSizeProps, type IAutoSizeChildren } from "./AutoSize.js";

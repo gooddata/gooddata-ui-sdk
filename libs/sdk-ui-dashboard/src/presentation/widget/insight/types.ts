@@ -10,6 +10,7 @@ import {
     type IInsight,
     type IInsightWidget,
     type ISeparators,
+    type IWorkspacePermissions,
 } from "@gooddata/sdk-model";
 import {
     type ExplicitDrill,
@@ -293,6 +294,11 @@ export interface IInsightBodyProps extends Partial<IVisualizationCallbacks> {
      * The current user settings.
      */
     settings: IUserWorkspaceSettings | undefined;
+
+    /**
+     * The current workspace permissions.
+     */
+    permissions?: IWorkspacePermissions;
 
     /**
      * Contains configuration that should be part of insight execution

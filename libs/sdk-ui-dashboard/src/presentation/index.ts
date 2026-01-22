@@ -1,12 +1,15 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 export * from "./componentDefinition/index.js";
 export * from "./dashboard/index.js";
 // only export the types for this, not the actual code
 export type * from "./dashboardContexts/types.js";
 export * from "./dragAndDrop/types.js";
-export type { IDraggableCreatePanelItemProps } from "./dragAndDrop/index.js";
-export { DraggableCreatePanelItem, useWidgetDragEndHandler } from "./dragAndDrop/index.js";
+export {
+    type IDraggableCreatePanelItemProps,
+    DraggableCreatePanelItem,
+    useWidgetDragEndHandler,
+} from "./dragAndDrop/index.js";
 export * from "./drill/index.js";
 export * from "./filterBar/index.js";
 export * from "./flexibleLayout/index.js";

@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
 
@@ -97,6 +97,7 @@ export class PluggableBarChart extends PluggableColumnBarCharts {
                     isError={this.getIsError()}
                     isLoading={this.isLoading}
                     featureFlags={this.featureFlags}
+                    permissions={this.permissions}
                     axis={this.axis}
                     panelConfig={panelConfig}
                     configurationPanelRenderers={options.custom?.configurationPanelRenderers}

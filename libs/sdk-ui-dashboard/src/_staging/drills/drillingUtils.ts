@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { isEqual } from "lodash-es";
 
@@ -32,8 +32,8 @@ import {
     type IGlobalDrillDownAttributeHierarchyDefinition,
 } from "../../types.js";
 
-export type { IDrillToUrlPlaceholder } from "@gooddata/sdk-model/internal";
 export {
+    type IDrillToUrlPlaceholder,
     getAttributeIdentifiersPlaceholdersFromUrl,
     getDashboardAttributeFilterPlaceholdersFromUrl,
     getInsightAttributeFilterPlaceholdersFromUrl,

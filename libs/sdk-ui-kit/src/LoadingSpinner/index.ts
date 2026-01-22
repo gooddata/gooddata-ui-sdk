@@ -1,4 +1,3 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
-export type { ILoadingSpinner } from "./LoadingSpinner.js";
-export { LoadingSpinner } from "./LoadingSpinner.js";
+export { LoadingSpinner, type ILoadingSpinner } from "./LoadingSpinner.js";

@@ -400,6 +400,7 @@ export class PluggableRepeater extends AbstractPluggableVisualization {
                     isError={this.getIsError()}
                     isLoading={this.isLoading}
                     featureFlags={this.featureFlags}
+                    permissions={this.permissions}
                     configurationPanelRenderers={omit(
                         options.custom?.configurationPanelRenderers,
                         "InteractionsDetailRenderer",

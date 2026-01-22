@@ -38,22 +38,20 @@ export type {
     isDashboardItemVisualization,
     isDashboardItemVisualizationContent,
 } from "./types/commonTypes.js";
-export type {
-    ICustomWidget,
-    ICustomWidgetDefinition,
-    ICustomWidgetBase,
-    ExtendedDashboardItem,
-    ExtendedDashboardWidget,
-    DashboardItemDefinition,
-    StashedDashboardItemsId,
-    ExtendedDashboardLayoutSection,
-    RelativeIndex,
-    ExtendedDashboardItemType,
-    ExtendedDashboardItemTypes,
-    ExtendedDashboardLayoutWidget,
-    FilterableDashboardWidget,
-} from "./types/layoutTypes.js";
 export {
+    type ICustomWidget,
+    type ICustomWidgetDefinition,
+    type ICustomWidgetBase,
+    type ExtendedDashboardItem,
+    type ExtendedDashboardWidget,
+    type DashboardItemDefinition,
+    type StashedDashboardItemsId,
+    type ExtendedDashboardLayoutSection,
+    type RelativeIndex,
+    type ExtendedDashboardItemType,
+    type ExtendedDashboardItemTypes,
+    type ExtendedDashboardLayoutWidget,
+    type FilterableDashboardWidget,
     newCustomWidget,
     newDashboardItem,
     newDashboardSection,
@@ -79,13 +77,14 @@ export type {
     IWidgetDescription,
 } from "./types/widgetTypes.js";
 
-export type {
-    BrokenAlertType,
-    IBrokenAlertFilterBasicInfo,
-    BrokenAlertDateFilterInfo,
-    BrokenAlertAttributeFilterInfo,
+export {
+    type BrokenAlertType,
+    type IBrokenAlertFilterBasicInfo,
+    type BrokenAlertDateFilterInfo,
+    type BrokenAlertAttributeFilterInfo,
+    isBrokenAlertDateFilterInfo,
+    isBrokenAlertAttributeFilterInfo,
 } from "./types/alertTypes.js";
-export { isBrokenAlertDateFilterInfo, isBrokenAlertAttributeFilterInfo } from "./types/alertTypes.js";
 
 export type {
     ICsvExportConfig,
@@ -102,8 +101,10 @@ export type {
     IUseAttributeElements,
 } from "./types/attributeFilterTypes.js";
 
-export type { IDashboardDependentDateFilter } from "./types/dateFilterTypes.js";
-export { isDashboardDependentDateFilter } from "./types/dateFilterTypes.js";
+export {
+    type IDashboardDependentDateFilter,
+    isDashboardDependentDateFilter,
+} from "./types/dateFilterTypes.js";
 
 export { DRILL_TO_URL_PLACEHOLDER } from "./types/drillTypes.js";
 export type {
@@ -127,12 +128,10 @@ export {
 } from "./queryServices/index.js";
 
 export type { IRenderingWorkerConfiguration } from "./commandHandlers/render/types.js";
-export type {
-    DashboardEventHandler,
-    DashboardEventHandlerFn,
-    DashboardEventEvalFn,
-} from "./eventHandlers/eventHandler.js";
 export {
+    type DashboardEventHandler,
+    type DashboardEventHandlerFn,
+    type DashboardEventEvalFn,
     anyEventHandler,
     anyDashboardEventHandler,
     singleEventTypeHandler,

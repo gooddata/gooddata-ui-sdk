@@ -15,6 +15,7 @@ import { DefaultAlertingManagementDialogContentEnhanced } from "./DefaultAlertin
 import {
     selectDashboardId,
     selectEnableAutomationManagement,
+    selectExternalRecipient,
     selectIsEmbedded,
     useDashboardSelector,
 } from "../../../model/index.js";
@@ -41,6 +42,7 @@ export function DefaultAlertingManagementDialogNew({
     const enableAutomationManagement = useDashboardSelector(selectEnableAutomationManagement);
     const dashboardId = useDashboardSelector(selectDashboardId);
     const isEmbedded = useDashboardSelector(selectIsEmbedded);
+    const externalRecipientOverride = useDashboardSelector(selectExternalRecipient);
 
     const handleAlertDeleteOpen = useCallback((alert: IAutomationMetadataObject) => {
         setAlertToDelete(alert);
@@ -59,13 +61,16 @@ export function DefaultAlertingManagementDialogNew({
                         dashboardId: alert.dashboard?.id,
                         automationId: alert.id,
                         isEmbedded,
+                        queryParams: externalRecipientOverride
+                            ? { recipient: externalRecipientOverride }
+                            : undefined,
                     }),
                 );
                 return;
             }
             onEdit?.(alert);
         },
-        [onEdit, enableAutomationManagement, dashboardId, workspace, isEmbedded],
+        [onEdit, enableAutomationManagement, dashboardId, workspace, isEmbedded, externalRecipientOverride],
     );
 
     const handleAlertPause = useCallback((alert: IAutomationMetadataObject, pause: boolean) => {

@@ -1,13 +1,8 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 export type * from "./typings.js";
-export type { IBubbleAccessibilityConfig, IBubbleProps, IBubbleState } from "./Bubble.js";
-export { Bubble } from "./Bubble.js";
-export type { IBubbleTriggerProps, IBubbleTriggerState } from "./BubbleTrigger.js";
-export { BubbleTrigger } from "./BubbleTrigger.js";
-export type { IBubbleHoverTriggerProps } from "./BubbleHoverTrigger.js";
-export { BubbleHoverTrigger } from "./BubbleHoverTrigger.js";
-export type { BubbleFocusTriggerProps } from "./BubbleFocusTrigger.js";
-export { BubbleFocusTrigger } from "./BubbleFocusTrigger.js";
-export type { IWithBubbleProps } from "./withBubble.js";
-export { withBubble } from "./withBubble.js";
+export { Bubble, type IBubbleAccessibilityConfig, type IBubbleProps, type IBubbleState } from "./Bubble.js";
+export { BubbleTrigger, type IBubbleTriggerProps, type IBubbleTriggerState } from "./BubbleTrigger.js";
+export { BubbleHoverTrigger, type IBubbleHoverTriggerProps } from "./BubbleHoverTrigger.js";
+export { BubbleFocusTrigger, type BubbleFocusTriggerProps } from "./BubbleFocusTrigger.js";
+export { withBubble, type IWithBubbleProps } from "./withBubble.js";

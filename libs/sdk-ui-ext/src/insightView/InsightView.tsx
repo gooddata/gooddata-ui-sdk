@@ -37,6 +37,7 @@ import {
     colorPaletteDataLoaderFactory,
     insightDataLoaderFactory,
     userWorkspaceSettingsDataLoaderFactory,
+    workspacePermissionsDataLoaderFactory,
 } from "../dataLoaders/index.js";
 import { type IInsightViewProps } from "../internal/index.js";
 
@@ -144,6 +145,25 @@ export const IntlInsightView = withAgGridToken(
             );
 
             const {
+                error: permissionsError,
+                result: permissionsResult,
+                status: permissionsStatus,
+            } = useCancelablePromise(
+                {
+                    promise: async () => {
+                        return await workspacePermissionsDataLoaderFactory
+                            .forWorkspace(workspace!)
+                            .getWorkspacePermissions(backend!);
+                    },
+                    onError: (err) => {
+                        const sdkError = convertError(err);
+                        onError?.(sdkError);
+                    },
+                },
+                [backend, workspace, executeByReference],
+            );
+
+            const {
                 error: colorPaletteError,
                 result: colorPaletteResult,
                 status: colorPaletteStatus,
@@ -222,7 +242,9 @@ export const IntlInsightView = withAgGridToken(
                 colorPaletteStatus === "loading" ||
                 colorPaletteStatus === "pending" ||
                 workspaceSettingsStatus === "loading" ||
-                workspaceSettingsStatus === "pending";
+                workspaceSettingsStatus === "pending" ||
+                permissionsStatus === "loading" ||
+                permissionsStatus === "pending";
             const settingsResolved = workspaceSettingsStatus === "success";
 
             const resolveInsightTitle = (insight: IInsight | undefined): string | undefined => {
@@ -241,7 +263,11 @@ export const IntlInsightView = withAgGridToken(
 
             const isLoadingShown = isDataLoading || state.isVisualizationLoading;
             const error =
-                state.visualizationError || insightError || colorPaletteError || workspaceSettingsError;
+                state.visualizationError ||
+                insightError ||
+                colorPaletteError ||
+                workspaceSettingsError ||
+                permissionsError;
 
             const resolvedConfig = useMemo(
                 () => mergeInsightConfigWithSettings(config, workspaceSettingsResult),
@@ -273,6 +299,7 @@ export const IntlInsightView = withAgGridToken(
                                 filters={filters}
                                 locale={locale || resolveLocale(workspaceSettingsResult?.locale)}
                                 settings={workspaceSettingsResult}
+                                permissions={permissionsResult}
                                 ErrorComponent={ErrorComponent}
                                 LoadingComponent={LoadingComponent}
                                 onDrill={onDrill}
