@@ -15,6 +15,7 @@ import {
     type ICatalogDateAttributeHierarchy,
     type IDrillDownReference,
     type IDrillToAttributeUrl,
+    type IInsight,
     type ObjRef,
     type ObjRefInScope,
     areObjRefsEqual,
@@ -590,12 +591,23 @@ const selectKdaByWidgetRef: (ref: ObjRef) => DashboardSelector<IImplicitDrillWit
                     HeaderPredicates.localIdentifierMatch(date.attribute.attributeHeader.localIdentifier),
                 ];
                 const measurePredicates = compact(
-                    availableDrillTargets?.availableDrillTargets?.measures?.map((drillMeasure) =>
-                        HeaderPredicates.localIdentifierMatch(
+                    availableDrillTargets?.availableDrillTargets?.measures?.map((drillMeasure) => {
+                        const isMetricDisabled = getMetricDisabled(
+                            widgetInsight,
                             drillMeasure.measure.measureHeaderItem.localIdentifier,
-                        ),
-                    ),
+                        );
+                        if (isMetricDisabled) {
+                            return undefined;
+                        }
+                        return HeaderPredicates.localIdentifierMatch(
+                            drillMeasure.measure.measureHeaderItem.localIdentifier,
+                        );
+                    }),
                 );
+
+                if (measurePredicates.length === 0) {
+                    return undefined;
+                }
 
                 return {
                     drillDefinition: {
@@ -1056,3 +1068,9 @@ export const selectDrillableItemsByAvailableDrillTargets: (
             },
         ),
 );
+
+function getMetricDisabled(insight: IInsight | undefined | null, localIdentifier: string): boolean {
+    return (
+        insight?.insight.properties?.["controls"]?.["disableKeyDriveAnalysisOn"]?.[localIdentifier] ?? false
+    );
+}

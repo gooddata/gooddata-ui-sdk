@@ -172,6 +172,26 @@ $color-picker-spacing: 5px;
     }
 }
 
+.gd-interactions-section__kda_metrics_list {
+    border-left: 1px dashed kit-variables.$gd-border-color;
+    margin: 10px 0 0 5px;
+    padding-left: 10px;
+
+    &__item {
+        background-color: kit-variables.$is-focused-background;
+        padding: 5px 10px;
+    }
+
+    &__item__label {
+        display: flex;
+        gap: 5px;
+
+        svg path {
+            fill: #00c18d;
+        }
+    }
+}
+
 .gd-interactions-section__question-mark {
     color: kit-variables.$gd-color-state-blank;
 }

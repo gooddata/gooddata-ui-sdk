@@ -4,7 +4,8 @@ import { type ReactNode, memo } from "react";
 
 import { FormattedMessage } from "react-intl";
 
-import { Bubble, BubbleHoverTrigger, SeparatorLine } from "@gooddata/sdk-ui-kit";
+import { type IMeasure } from "@gooddata/sdk-model";
+import { Bubble, BubbleHoverTrigger, SeparatorLine, UiIcon } from "@gooddata/sdk-ui-kit";
 
 import { messages } from "../../../../locales.js";
 import { type IVisualizationProperties } from "../../../interfaces/Visualization.js";
@@ -13,6 +14,7 @@ import { CheckboxControl } from "../CheckboxControl.js";
 import { ConfigSection } from "../ConfigSection.js";
 
 export interface IInteractionsSectionProps {
+    metrics?: IMeasure[];
     controlsDisabled?: boolean;
     areControlsDisabledGetter?: (sectionName?: SectionName) => boolean;
     properties?: IVisualizationProperties;
@@ -39,6 +41,7 @@ export function QuestionMarkTooltip(props: { tooltipText: string }) {
 }
 
 export const InteractionsSection = memo(function InteractionsSection({
+    metrics,
     areControlsDisabledGetter,
     properties,
     propertiesMeta,
@@ -95,19 +98,49 @@ export const InteractionsSection = memo(function InteractionsSection({
                     <QuestionMarkTooltip tooltipText={messages["interactionsScheduledExportsTooltip"].id!} />
                 </div>
             ) : null}
-            {supportsKeyDriveAnalysis ? (
-                <div className="gd-interactions-section__control-with-tooltip">
-                    <CheckboxControl
-                        valuePath="disableKeyDriveAnalysis"
-                        labelText={messages["interactionsKda"].id}
-                        properties={properties}
-                        disabled={areControlsDisabledGetter?.("interactions.kda")}
-                        checked={!isKdaDisabled}
-                        pushData={pushData}
-                        isValueInverted
-                    />
-                    <QuestionMarkTooltip tooltipText={messages["interactionsKdaTooltip"].id!} />
-                </div>
+            {supportsKeyDriveAnalysis && metrics && metrics.length > 0 ? (
+                <>
+                    <div className="gd-interactions-section__control-with-tooltip">
+                        <CheckboxControl
+                            valuePath="disableKeyDriveAnalysis"
+                            labelText={messages["interactionsKda"].id}
+                            properties={properties}
+                            disabled={areControlsDisabledGetter?.("interactions.kda")}
+                            checked={!isKdaDisabled}
+                            pushData={pushData}
+                            isValueInverted
+                        />
+                        <QuestionMarkTooltip tooltipText={messages["interactionsKdaTooltip"].id!} />
+                    </div>
+                    <div className="gd-interactions-section__kda_metrics_list">
+                        {metrics.map((m) => {
+                            const isKdaMetricDisabled = getKdaMetricDisabled(properties, m);
+                            return (
+                                <div
+                                    key={m.measure.localIdentifier}
+                                    className="gd-interactions-section__kda_metrics_list__item"
+                                >
+                                    <CheckboxControl
+                                        valuePath={`disableKeyDriveAnalysisOn.${m.measure.localIdentifier}`}
+                                        labelContent={
+                                            <div className="gd-interactions-section__kda_metrics_list__item__label">
+                                                <UiIcon type="metric" color="currentColor" />{" "}
+                                                {m.measure.title}
+                                            </div>
+                                        }
+                                        properties={properties}
+                                        disabled={
+                                            areControlsDisabledGetter?.("interactions.kda") || isKdaDisabled
+                                        }
+                                        checked={!isKdaDisabled && !isKdaMetricDisabled}
+                                        pushData={pushData}
+                                        isValueInverted
+                                    />
+                                </div>
+                            );
+                        })}
+                    </div>
+                </>
             ) : null}
             {isSeparatorVisible ? <SeparatorLine mT={10} mB={10} /> : null}
             {supportsDrillDownConfiguration ? (
@@ -136,3 +169,7 @@ export const InteractionsSection = memo(function InteractionsSection({
         </ConfigSection>
     );
 });
+
+function getKdaMetricDisabled(properties: IVisualizationProperties | undefined, m: IMeasure): boolean {
+    return properties?.controls?.["disableKeyDriveAnalysisOn"]?.[m.measure.localIdentifier] ?? false;
+}

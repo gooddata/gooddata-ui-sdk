@@ -7,6 +7,7 @@ import {
     type ISettings,
     type IWorkspacePermissions,
     insightHasMeasures,
+    insightMeasures,
 } from "@gooddata/sdk-model";
 import { type ChartType, DefaultLocale } from "@gooddata/sdk-ui";
 
@@ -160,9 +161,11 @@ export abstract class ConfigurationPanelContent<
         const supportsAlertsConfiguration = insightSupportsAlerts && isAlertingEnabled;
         const supportsScheduledExportsConfiguration =
             insightSupportsScheduledExports && isScheduledExportsEnabled;
+        const metrics = insight ? insightMeasures(insight) : [];
 
         return supportsAlertsConfiguration || panelConfig?.supportsAttributeHierarchies ? (
             <InteractionsSection
+                metrics={metrics}
                 areControlsDisabledGetter={this.isControlDisabled}
                 properties={properties}
                 propertiesMeta={propertiesMeta}
