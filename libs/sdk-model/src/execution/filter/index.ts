@@ -304,6 +304,14 @@ export interface IMeasureValueFilterBody extends IIdentifiableFilter {
     measure: ObjRefInScope;
     dimensionality?: ObjRefInScope[];
     condition?: MeasureValueFilterCondition;
+    /**
+     * Optional list of conditions for measure value filtering. When provided, it represents multiple conditions
+     * that can be interpreted by backend-specific implementations (e.g. Tiger supports compound measure value
+     * filter with OR-ed conditions).
+     *
+     * @public
+     */
+    conditions?: MeasureValueFilterCondition[];
 }
 
 /**
@@ -953,6 +961,23 @@ export function measureValueFilterCondition(
     invariant(filter, "filter must be specified");
 
     return filter.measureValueFilter.condition;
+}
+
+/**
+ * Gets measure value filter conditions.
+ * @param filter - measure value filter to work with
+ * @returns filter conditions eother legacy condition or array of conditions
+ * @public
+ */
+export function measureValueFilterConditions(
+    filter: IMeasureValueFilter,
+): MeasureValueFilterCondition[] | undefined {
+    invariant(filter, "filter must be specified");
+
+    return (
+        filter.measureValueFilter.conditions ??
+        (filter.measureValueFilter.condition ? [filter.measureValueFilter.condition] : undefined)
+    );
 }
 
 /**

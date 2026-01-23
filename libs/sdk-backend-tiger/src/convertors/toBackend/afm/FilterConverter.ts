@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import {
     type AbsoluteDateFilter,
@@ -9,6 +9,7 @@ import {
     type PositiveAttributeFilter,
     type RankingFilter,
     type RelativeDateFilter,
+    type MeasureValueCondition as TigerMeasureValueCondition,
 } from "@gooddata/api-client-tiger";
 import {
     type IAbsoluteDateFilter,
@@ -210,12 +211,61 @@ function convertMeasureValueFilter(
     applyOnResultProp: ApplyOnResultProp,
 ): MeasureValueFilter | null {
     const { measureValueFilter } = filter;
-    const condition = measureValueFilter.condition;
+    const conditions = measureValueFilter.conditions;
     const localIdentifier = measureValueFilter.localIdentifier;
     const dimensionalityProp =
         (measureValueFilter.dimensionality?.length ?? 0) > 0
             ? { dimensionality: measureValueFilter.dimensionality?.map(toAfmIdentifier) }
             : {};
+
+    if (conditions && conditions.length > 1) {
+        // Tiger compound MVF supports just a single `treatNullValuesAs` for the entire filter.
+        // The model-level intent here is "treat nulls as zero" => if at least one condition requests it, turn it on.
+        const treatNullValuesAs = conditions.some((c) => {
+            return isComparisonCondition(c)
+                ? c.comparison.treatNullValuesAs !== undefined
+                : c.range.treatNullValuesAs !== undefined;
+        })
+            ? 0
+            : undefined;
+
+        const tigerConditions: TigerMeasureValueCondition[] = conditions.map((c) => {
+            if (isComparisonCondition(c)) {
+                return {
+                    comparison: {
+                        operator: c.comparison.operator,
+                        value: c.comparison.value,
+                    },
+                };
+            }
+
+            const originalFrom = c.range.from;
+            const originalTo = c.range.to;
+
+            return {
+                range: {
+                    operator: c.range.operator,
+                    // make sure the boundaries are always from <= to, because tiger backend cannot handle from > to in a user friendly way
+                    // this is effectively the same behavior as in bear
+                    from: Math.min(originalFrom, originalTo),
+                    to: Math.max(originalFrom, originalTo),
+                },
+            };
+        });
+
+        return {
+            compoundMeasureValueFilter: {
+                measure: toAfmIdentifier(measureValueFilter.measure),
+                conditions: tigerConditions,
+                ...(treatNullValuesAs === undefined ? {} : { treatNullValuesAs }),
+                localIdentifier,
+                ...dimensionalityProp,
+                ...applyOnResultProp,
+            },
+        };
+    }
+
+    const condition = conditions?.[0] ?? measureValueFilter.condition;
 
     if (isComparisonCondition(condition)) {
         const { operator, value, treatNullValuesAs } = condition.comparison;

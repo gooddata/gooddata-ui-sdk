@@ -1,4 +1,5 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
+
 import stringify from "json-stable-stringify";
 
 import {
@@ -6,6 +7,7 @@ import {
     attributeElementsIsEmpty,
     isMeasureValueFilter,
     isNegativeAttributeFilter,
+    measureValueFilterConditions,
 } from "./index.js";
 
 /**
@@ -22,7 +24,7 @@ import {
  */
 export function isFilterRelevantForFingerprinting(filter: IFilter): boolean {
     if (isMeasureValueFilter(filter)) {
-        return !!filter.measureValueFilter.condition;
+        return !!measureValueFilterConditions(filter);
     } else if (isNegativeAttributeFilter(filter)) {
         return !attributeElementsIsEmpty(filter.negativeAttributeFilter.notIn);
     }

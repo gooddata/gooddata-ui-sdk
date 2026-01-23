@@ -43,7 +43,7 @@ import {
     measureLocalId,
     measureMasterIdentifier,
     measureTitle,
-    measureValueFilterCondition,
+    measureValueFilterConditions,
     modifyAttribute,
     modifyMeasure,
 } from "@gooddata/sdk-model";
@@ -278,7 +278,7 @@ export class Normalizer {
             if (isAttributeFilter(f)) {
                 return !filterIsEmpty(f) || isPositiveAttributeFilter(f);
             } else if (isMeasureValueFilter(f)) {
-                return measureValueFilterCondition(f) !== undefined;
+                return measureValueFilterConditions(f) !== undefined;
             }
 
             return true;

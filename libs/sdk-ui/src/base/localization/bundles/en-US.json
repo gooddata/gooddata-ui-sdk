@@ -1427,6 +1427,22 @@
         "text": "Condition",
         "crowdinContext": "Measure value filter dropdown label"
     },
+    "mvf.addConditionTooltip": {
+        "text": "Add another condition",
+        "crowdinContext": "Tooltip for the button that adds another condition in the Measure Value Filter dropdown."
+    },
+    "mvf.addConditionTooltip.disabled": {
+        "text": "Adding another condition is disabled — select a condition other than “All” to enable.",
+        "crowdinContext": "Tooltip explaining that adding another condition is disabled when the 'All' operator is selected in the Measure Value Filter dropdown."
+    },
+    "mvf.removeConditionTooltip": {
+        "text": "Remove condition",
+        "crowdinContext": "Tooltip for the button that removes a condition in the Measure Value Filter dropdown."
+    },
+    "mvf.validation.valueCannotBeEmpty": {
+        "text": "Error: value can not be empty",
+        "crowdinContext": "Generic validation error shown in Measure Value Filter when a numeric input (comparison or range) is left empty."
+    },
     "mvf.operator.greaterThan": {
         "text": "greater than",
         "crowdinContext": "Filter operator that matches values greater than the specified value. Used in measure value filters to filter data points above a certain threshold."
@@ -1511,17 +1527,37 @@
         "text": "{metric} is <b>{condition}</b>",
         "crowdinContext": "Template for preview of the measure value filter without dimensionality. Example: 'Sales is greater than 1000'. Do not translate the {metric} and {condition}. These placeholders will be replaced with the actual metric and condition at runtime. <b> is used to bold the condition."
     },
+    "mvf.preview.filterWithoutDimensionalityNoMetric": {
+        "text": "<b>{condition}</b>",
+        "crowdinContext": "Template for preview of the measure value filter for the 'All' operator without dimensionality and without the metric title. Example: 'All'. Do not translate the {condition} placeholder. <b> is used to bold the condition."
+    },
     "mvf.preview.filterWithDimensionality": {
         "text": "{metric} is <b>{condition}</b> for each <b>{dimensionality}</b>",
         "crowdinContext": "Template for preview of the measure value filter with dimensionality. Example: 'Sales is greater than 1000 for each Product, Brand'. Do not translate the {metric}, {condition}, and {dimensionality} placeholders. These placeholders will be replaced with the actual metric, condition, and dimensionality at runtime. <b> is used to bold the condition and the dimensionality."
+    },
+    "mvf.preview.filterWithDimensionalityNoMetric": {
+        "text": "<b>{condition}</b> for each <b>{dimensionality}</b>",
+        "crowdinContext": "Template for preview of the measure value filter for the 'All' operator with dimensionality and without the metric title. Example: 'All for each Product, Brand'. Do not translate the {condition} and {dimensionality} placeholders. <b> is used to bold the condition and the dimensionality."
     },
     "mvf.preview.filterWithDimensionalityShortened": {
         "text": "{metric} is <b>{condition}</b> for each <b>{dimensionality}</b> ({count})",
         "crowdinContext": "Template for preview of the measure value filter with shortened dimensionality list. Example: 'Sales is greater than 1000 for each Product, Brand, Region... (5)'. The {count} shows how many additional items are hidden. Do not translate the placeholders. <b> is used to bold the condition and the dimensionality."
     },
+    "mvf.preview.filterWithDimensionalityShortenedNoMetric": {
+        "text": "<b>{condition}</b> for each <b>{dimensionality}</b> ({count})",
+        "crowdinContext": "Template for preview of the measure value filter for the 'All' operator with shortened dimensionality list and without the metric title. Example: 'All for each Product, Brand, Region... (5)'. Do not translate the placeholders. <b> is used to bold the condition and the dimensionality."
+    },
     "mvf.preview.title": {
         "text": "Preview:",
         "crowdinContext": "Section header for the measure value filter preview text that shows how the filter will be applied."
+    },
+    "mvf.preview.and": {
+        "text": "{from} and {to}",
+        "crowdinContext": "Pattern for displaying range values in measure value filter preview. {from} is the lower bound, {to} is the upper bound (e.g., '100 and 200' in 'between 100 and 200')."
+    },
+    "mvf.preview.or": {
+        "text": "{result1} or {result2}",
+        "crowdinContext": "Conjunction used in measure value filter preview to connect multiple conditions. {result1} is the first condition or group of conditions, {result2} is the next condition or group to be connected."
     },
     "mvf.dimensionality.backwardCompatibilityNote": {
         "text": "“For each” currently follows the visualization’s attributes. Editing the filter will stop this and let you choose which attributes it uses.",
@@ -1536,7 +1572,7 @@
         "crowdinContext": "Button that resets a list to its original state."
     },
     "mvf.dimensionality.reset.tooltip": {
-        "text": "Reset to all currently used attributes in the visualization.",
+        "text": "Reset to all attributes in the visualization.",
         "crowdinContext": "Tooltip for the reset button in the dimensionality section of the measure value filter."
     },
     "mvf.dimensionality.addButton.tooltip": {
@@ -1574,6 +1610,22 @@
     "mvf.attributePicker.noItems": {
         "text": "No items available.",
         "crowdinContext": "Message shown in the measure value filter dimensionality picker when there are no items to select and no search term is entered."
+    },
+    "mvf.applyButton.tooltip.noChanges": {
+        "text": "No changes to apply.",
+        "crowdinContext": "Tooltip shown on the Apply button when it is disabled because there are no changes to apply in the Measure Value Filter."
+    },
+    "mvf.applyButton.tooltip.emptyValues": {
+        "text": "One or more values in the condition are empty.",
+        "crowdinContext": "Tooltip shown on the Apply button when it is disabled because one or more condition values are empty in the Measure Value Filter."
+    },
+    "mvf.applyButton.tooltip.emptyDimensionality": {
+        "text": "For each attribute is not selected.",
+        "crowdinContext": "Tooltip shown on the Apply button when it is disabled because no attributes are selected for the 'For each' dimensionality in the Measure Value Filter."
+    },
+    "mvf.operator.all.disabled.tooltip": {
+        "text": "Option is not available with multiple conditions.",
+        "crowdinContext": "Tooltip shown when the 'All' operator is disabled in the Measure Value Filter dropdown because multiple conditions are enabled."
     },
     "input.unit.percent": {
         "text": "Value in percent",

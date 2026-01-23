@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
 
@@ -99,6 +99,14 @@ export interface IMeasureValueFilterCommonProps {
      * If true, the attribute picker can show a small loading indicator.
      */
     isLoadingCatalogDimensionality?: boolean;
+    /**
+     * Enables UI support for defining multiple measure value filter conditions.
+     * When set to `false` (default), only a single condition is shown/edited and, if the provided filter
+     * contains multiple conditions, only the first one is used.
+     *
+     * @beta
+     */
+    enableMultipleConditions?: boolean;
 }
 
 /**

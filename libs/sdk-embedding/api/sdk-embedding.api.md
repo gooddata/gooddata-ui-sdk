@@ -1243,6 +1243,8 @@ export interface IVisualizationObjectMeasureValueFilter {
     measureValueFilter: {
         measure: ObjQualifier | ILocalIdentifierQualifier;
         condition?: MeasureValueFilterCondition;
+        conditions?: MeasureValueFilterCondition[];
+        dimensionality?: Array<ObjQualifier | ILocalIdentifierQualifier>;
     };
 }
 

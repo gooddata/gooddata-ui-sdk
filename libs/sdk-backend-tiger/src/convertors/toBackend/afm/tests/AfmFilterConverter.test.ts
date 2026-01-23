@@ -1,8 +1,12 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import {
+    type IFilter,
+    type MeasureValueFilterCondition,
+    localIdRef,
     newMeasure,
     newMeasureValueFilter,
     newPositiveAttributeFilter,
@@ -34,5 +38,35 @@ describe("convertAfmFilters", () => {
     it("should keep non-measure based filter", () => {
         const positiveAttributeFilter = newPositiveAttributeFilter(ReferenceMd.Product.Name, ["value"]);
         expect(convertAfmFilters(afmMeasures, [positiveAttributeFilter])).toMatchSnapshot();
+    });
+
+    it("should convert compound measure value filter (conditions[]) to backend compoundMeasureValueFilter", () => {
+        const conditions: MeasureValueFilterCondition[] = [
+            { comparison: { operator: "GREATER_THAN", value: 128 } },
+            { range: { operator: "BETWEEN", from: 10, to: 20 } },
+        ];
+
+        const compoundFilter: IFilter = {
+            measureValueFilter: {
+                measure: localIdRef("ratio"),
+                conditions,
+            },
+        };
+
+        const result = convertAfmFilters(afmMeasures, [compoundFilter]);
+
+        // compute ratio MVFs are applied on source data (applyOnResult=false) and are re-bound to numerator measure
+        expect(result.filters).toMatchObject([
+            {
+                compoundMeasureValueFilter: {
+                    applyOnResult: false,
+                    measure: { localIdentifier: "m_test" },
+                    conditions: [
+                        { comparison: { operator: "GREATER_THAN", value: 128 } },
+                        { range: { operator: "BETWEEN", from: 10, to: 20 } },
+                    ],
+                },
+            },
+        ]);
     });
 });

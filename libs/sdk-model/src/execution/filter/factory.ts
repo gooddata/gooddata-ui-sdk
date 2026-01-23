@@ -14,6 +14,7 @@ import {
     type IRankingFilter,
     type IRelativeDateFilter,
     type IUpperBoundedFilter,
+    type MeasureValueFilterCondition,
     type RangeConditionOperator,
     type RankingFilterOperator,
 } from "./index.js";
@@ -394,6 +395,60 @@ export interface IMeasureValueFilterAllOptions {
 }
 
 /**
+ * Condition for comparison operator.
+ *
+ * @public
+ */
+export interface IOptionsComparisonCondition {
+    operator: ComparisonConditionOperator;
+    value: number;
+}
+/**
+ * Condition for range operator.
+ *
+ * @public
+ */
+export interface IOptionsRangeCondition {
+    operator: RangeConditionOperator;
+    from: number;
+    to: number;
+}
+
+/**
+ * Condition for ALL operator.
+ *
+ * @public
+ */
+export interface IOptionsAllCondition {
+    operator: "ALL";
+}
+
+/**
+ * Condition for measure value filter.
+ *
+ * @public
+ */
+export type OptionsCondition = IOptionsComparisonCondition | IOptionsRangeCondition | IOptionsAllCondition;
+
+/**
+ * Options for creating a measure value filter with multiple conditions.
+ *
+ * @public
+ */
+export interface IMeasureValueFilterConditionsOptions {
+    conditions: OptionsCondition[];
+    /**
+     * Optional value to use instead of null values
+     */
+    treatNullValuesAs?: number;
+    /**
+     * Optional array of attributes to define the dimensionality for the filter.
+     * If instance of attribute is provided, it will be referenced by its local identifier.
+     */
+    dimensionality?: Array<IAttribute | ObjRefInScope | string>;
+}
+
+/**
  * Options for creating a measure value filter.
  *
  * @public
@@ -401,14 +456,73 @@ export interface IMeasureValueFilterAllOptions {
 export type IMeasureValueFilterOptions =
     | IMeasureValueFilterComparisonOptions
     | IMeasureValueFilterRangeOptions
-    | IMeasureValueFilterAllOptions;
+    | IMeasureValueFilterAllOptions
+    | IMeasureValueFilterConditionsOptions;
+
+function getOperator(
+    options: IMeasureValueFilterOptions,
+): ComparisonConditionOperator | RangeConditionOperator | "ALL" {
+    if (isMultipleConditionsOptions(options)) {
+        return options.conditions[0]?.operator;
+    } else {
+        return options.operator;
+    }
+}
+
+function isMultipleConditionsOptions(
+    options: IMeasureValueFilterOptions,
+): options is IMeasureValueFilterConditionsOptions {
+    return options && "conditions" in options && Array.isArray(options.conditions);
+}
 
 function isAllOptions(options: IMeasureValueFilterOptions): options is IMeasureValueFilterAllOptions {
-    return options.operator === "ALL";
+    if (isMultipleConditionsOptions(options)) {
+        return false;
+    } else {
+        return getOperator(options) === "ALL";
+    }
+}
+
+function isComparisonCondition(condition: OptionsCondition): condition is IOptionsComparisonCondition {
+    return (
+        condition.operator === "GREATER_THAN" ||
+        condition.operator === "GREATER_THAN_OR_EQUAL_TO" ||
+        condition.operator === "LESS_THAN" ||
+        condition.operator === "LESS_THAN_OR_EQUAL_TO" ||
+        condition.operator === "EQUAL_TO" ||
+        condition.operator === "NOT_EQUAL_TO"
+    );
+}
+
+function isComparisonOptions(
+    options: IMeasureValueFilterOptions,
+): options is IMeasureValueFilterComparisonOptions {
+    if (isMultipleConditionsOptions(options)) {
+        return false;
+    } else {
+        const operator = getOperator(options);
+        return (
+            operator === "GREATER_THAN" ||
+            operator === "GREATER_THAN_OR_EQUAL_TO" ||
+            operator === "LESS_THAN" ||
+            operator === "LESS_THAN_OR_EQUAL_TO" ||
+            operator === "EQUAL_TO" ||
+            operator === "NOT_EQUAL_TO"
+        );
+    }
+}
+
+function isRangeCondition(condition: OptionsCondition): condition is IOptionsRangeCondition {
+    return condition.operator === "BETWEEN" || condition.operator === "NOT_BETWEEN";
 }
 
 function isRangeOptions(options: IMeasureValueFilterOptions): options is IMeasureValueFilterRangeOptions {
-    return options.operator === "BETWEEN" || options.operator === "NOT_BETWEEN";
+    if (isMultipleConditionsOptions(options)) {
+        return false;
+    } else {
+        const operator = getOperator(options);
+        return operator === "BETWEEN" || operator === "NOT_BETWEEN";
+    }
 }
 
 function getTreatNullValuesAsProp(options: IMeasureValueFilterOptions): Record<string, number> {
@@ -457,14 +571,7 @@ export function newMeasureValueFilterWithOptions(
                 },
             },
         };
-    } else if (isAllOptions(options)) {
-        return {
-            measureValueFilter: {
-                measure: measureRef,
-                ...dimensionalityProp,
-            },
-        };
-    } else {
+    } else if (isComparisonOptions(options)) {
         return {
             measureValueFilter: {
                 measure: measureRef,
@@ -476,6 +583,83 @@ export function newMeasureValueFilterWithOptions(
                         ...getTreatNullValuesAsProp(options),
                     },
                 },
+            },
+        };
+    } else if (isAllOptions(options)) {
+        return {
+            measureValueFilter: {
+                measure: measureRef,
+                ...dimensionalityProp,
+            },
+        };
+    } else {
+        if (options.conditions.length === 1) {
+            const condition = options.conditions[0];
+            if (isRangeCondition(condition)) {
+                return {
+                    measureValueFilter: {
+                        measure: measureRef,
+                        ...dimensionalityProp,
+                        condition: {
+                            range: {
+                                operator: condition.operator,
+                                from: condition.from,
+                                to: condition.to,
+                                ...getTreatNullValuesAsProp(options),
+                            },
+                        },
+                    },
+                };
+            } else if (isComparisonCondition(condition)) {
+                return newMeasureValueFilterWithOptions(measureOrRef, {
+                    operator: condition.operator,
+                    value: condition.value,
+                    ...getTreatNullValuesAsProp(options),
+                    ...dimensionalityProp,
+                });
+            } else {
+                return {
+                    measureValueFilter: {
+                        measure: measureRef,
+                        ...dimensionalityProp,
+                    },
+                };
+            }
+        }
+        const conditions = options.conditions.reduce((acc: MeasureValueFilterCondition[], condition) => {
+            if (isComparisonCondition(condition)) {
+                return [
+                    ...acc,
+                    {
+                        comparison: {
+                            operator: condition.operator,
+                            value: condition.value,
+                            ...getTreatNullValuesAsProp(options),
+                        },
+                    },
+                ];
+            }
+            if (isRangeCondition(condition)) {
+                return [
+                    ...acc,
+                    {
+                        range: {
+                            operator: condition.operator,
+                            from: condition.from,
+                            to: condition.to,
+                            ...getTreatNullValuesAsProp(options),
+                        },
+                    },
+                ];
+            }
+            return acc;
+        }, []);
+        const conditionsProp = conditions.length ? { conditions } : {};
+        return {
+            measureValueFilter: {
+                measure: measureRef,
+                ...dimensionalityProp,
+                ...conditionsProp,
             },
         };
     }

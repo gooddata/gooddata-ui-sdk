@@ -229,6 +229,14 @@ export interface ISettings {
     enableMultipleDateFilters?: boolean;
 
     /**
+     * Enable multiple conditions in measure value filters (MVF).
+     *
+     * @remarks
+     * Defaults to false when not provided by the backend.
+     */
+    enableMultipleMvfConditions?: boolean;
+
+    /**
      * Enables rich text widgets on dashboards.
      */
     enableKDRichText?: boolean;

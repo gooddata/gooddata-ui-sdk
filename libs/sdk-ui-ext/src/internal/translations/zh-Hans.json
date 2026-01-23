@@ -229,6 +229,7 @@
     "properties.points.size.min.title": "最小",
     "properties.points.size.max.title": "最大",
     "properties.map.title": "地图",
+    "properties.map.basemap.title": "底图",
     "properties.viewport.area.title": "默认视窗",
     "properties.viewport.area.auto_default": "包含所有数据",
     "properties.viewport.area.continents": "大洲",

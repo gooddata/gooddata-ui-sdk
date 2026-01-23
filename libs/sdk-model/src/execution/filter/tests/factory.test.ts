@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
@@ -181,6 +181,15 @@ describe("filter factory", () => {
                     operator: "EQUAL_TO",
                     value: 10,
                     dimensionality: [],
+                }),
+            ).toMatchSnapshot();
+        });
+
+        it("should ignore empty conditions", () => {
+            expect(
+                newMeasureValueFilterWithOptions(Won, {
+                    dimensionality: [Department, Account.Name],
+                    conditions: [],
                 }),
             ).toMatchSnapshot();
         });

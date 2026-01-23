@@ -44,6 +44,7 @@ export const MeasureValueFilter = memo(function MeasureValueFilter({
     catalogDimensionality,
     onDimensionalityChange,
     isLoadingCatalogDimensionality,
+    enableMultipleConditions = false,
     onApply,
 }: IMeasureValueFilterProps) {
     const [displayDropdown, setDisplayDropdown] = useState(false);
@@ -94,6 +95,7 @@ export const MeasureValueFilter = memo(function MeasureValueFilter({
                     catalogDimensionality={catalogDimensionality}
                     onDimensionalityChange={onDimensionalityChange}
                     isLoadingCatalogDimensionality={isLoadingCatalogDimensionality}
+                    enableMultipleConditions={enableMultipleConditions}
                     anchorEl={buttonRef.current ?? undefined}
                 />
             ) : null}

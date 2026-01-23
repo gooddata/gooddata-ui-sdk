@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { useCallback } from "react";
 
@@ -13,7 +13,7 @@ import {
     type TotalType,
     isMeasureValueFilter,
     isRankingFilter,
-    measureValueFilterCondition,
+    measureValueFilterConditions,
 } from "@gooddata/sdk-model";
 import {
     Bubble,
@@ -172,7 +172,7 @@ export function AggregationsMenu({
 
         // ignore measure value filters without condition, these are not yet specified by the user and are not sent as part of the execution
         return definition.filters.some(
-            (filter) => isMeasureValueFilter(filter) && !!measureValueFilterCondition(filter),
+            (filter) => isMeasureValueFilter(filter) && !!measureValueFilterConditions(filter),
         );
     }, [getExecutionDefinition]);
 

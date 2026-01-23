@@ -1,13 +1,13 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { memo, useCallback } from "react";
 
-import { type ObjRefInScope } from "@gooddata/sdk-model";
+import { type MeasureValueFilterCondition, type ObjRefInScope } from "@gooddata/sdk-model";
 import { type ISeparators, IntlWrapper } from "@gooddata/sdk-ui";
 import { Overlay } from "@gooddata/sdk-ui-kit";
 
 import { DropdownBody } from "./DropdownBody.js";
-import { type IMeasureValueFilterValue, type MeasureValueFilterOperator } from "./types.js";
+import { type MeasureValueFilterOperator } from "./types.js";
 import { type IDimensionalityItem, type WarningMessage } from "./typings.js";
 
 const alignPoints = ["bl tl", "tl bl", "br tr", "tr br"];
@@ -19,15 +19,11 @@ const alignPoints = ["bl tl", "tl bl", "br tr", "tr br"];
 const DROPDOWN_ALIGNMENTS = alignPoints.map((align) => ({ align, offset: { x: 1, y: 0 } }));
 
 interface IDropdownProps {
-    onApply: (
-        operator: MeasureValueFilterOperator | null,
-        value: IMeasureValueFilterValue,
-        treatNullValuesAsZero: boolean,
-        dimensionality?: ObjRefInScope[],
-    ) => void;
+    onApply: (conditions: MeasureValueFilterCondition[] | null, dimensionality?: ObjRefInScope[]) => void;
     onCancel: () => void;
     operator?: MeasureValueFilterOperator | null;
-    value?: IMeasureValueFilterValue | null;
+    conditions?: MeasureValueFilterCondition[];
+    enableMultipleConditions?: boolean;
     usePercentage?: boolean;
     warningMessage?: WarningMessage;
     locale?: string;
@@ -48,7 +44,6 @@ interface IDropdownProps {
 const DropdownWithIntl = memo(function DropdownWithIntl(props: IDropdownProps) {
     const {
         operator = "ALL",
-        value = {},
         usePercentage,
         warningMessage,
         locale,
@@ -66,16 +61,13 @@ const DropdownWithIntl = memo(function DropdownWithIntl(props: IDropdownProps) {
         catalogDimensionality,
         onDimensionalityChange,
         isLoadingCatalogDimensionality,
+        conditions = [],
+        enableMultipleConditions = false,
     } = props;
 
     const onApply = useCallback(
-        (
-            operator: MeasureValueFilterOperator | null,
-            value: IMeasureValueFilterValue,
-            treatNullValuesAsZero: boolean,
-            newDimensionality?: ObjRefInScope[],
-        ) => {
-            onApplyProp(operator, value, treatNullValuesAsZero, newDimensionality);
+        (conditions: MeasureValueFilterCondition[] | null, newDimensionality?: ObjRefInScope[]) => {
+            onApplyProp(conditions, newDimensionality);
         },
         [onApplyProp],
     );
@@ -93,7 +85,8 @@ const DropdownWithIntl = memo(function DropdownWithIntl(props: IDropdownProps) {
         >
             <DropdownBody
                 operator={selectedOperator}
-                value={value ?? {}}
+                conditions={conditions}
+                enableMultipleConditions={enableMultipleConditions}
                 usePercentage={usePercentage}
                 warningMessage={warningMessage}
                 locale={locale}

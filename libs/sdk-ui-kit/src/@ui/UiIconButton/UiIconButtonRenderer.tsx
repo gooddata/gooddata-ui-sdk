@@ -48,6 +48,10 @@ export interface IUiIconButtonPublicProps {
         | VariantDanger
         | VariantTable
         | VariantBare;
+    /**
+     * When `true` and `variant="tertiary"`, icon hover color uses the error palette color.
+     */
+    isDesctructive?: boolean;
     isDisabled?: boolean;
     isActive?: boolean;
 
@@ -81,6 +85,7 @@ export const UiIconButtonRenderer = forwardRef<HTMLButtonElement, UiIconButtonRe
             label,
             size = "medium",
             variant = "secondary",
+            isDesctructive,
             isDisabled,
             isActive,
             onClick,
@@ -104,6 +109,7 @@ export const UiIconButtonRenderer = forwardRef<HTMLButtonElement, UiIconButtonRe
                     size,
                     variant,
                     active: isActive ?? false,
+                    destructive: variant === "tertiary" && (isDesctructive ?? false),
                 })}
                 id={id}
                 disabled={isDisabled}

@@ -1,8 +1,8 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { action } from "storybook/actions";
 
-import { type IMeasureValueFilter, localIdRef } from "@gooddata/sdk-model";
+import { type IMeasureValueFilter, localIdRef, newMeasureValueFilterWithOptions } from "@gooddata/sdk-model";
 import { MeasureValueFilterDropdown } from "@gooddata/sdk-ui-filters";
 
 import "@gooddata/sdk-ui-filters/styles/css/measureValueFilter.css";
@@ -49,6 +49,40 @@ const filter: IMeasureValueFilter = {
     },
 };
 
+// Filter with multiple conditions (two BETWEEN conditions) and dimensionality enabled
+const filterWithMultipleConditionsAndDimensionality = newMeasureValueFilterWithOptions(
+    localIdRef("localIdentifier"),
+    {
+        conditions: [
+            {
+                operator: "BETWEEN",
+                from: 10,
+                to: 50,
+            },
+            {
+                operator: "BETWEEN",
+                from: 100,
+                to: 200,
+            },
+        ],
+        dimensionality: [localIdRef("attr1"), localIdRef("attr2")],
+    },
+);
+
+// Mock dimensionality items for the story
+const dimensionalityItems = [
+    {
+        identifier: localIdRef("attr1"),
+        title: "Attribute 1",
+        type: "attribute" as const,
+    },
+    {
+        identifier: localIdRef("attr2"),
+        title: "Attribute 2",
+        type: "attribute" as const,
+    },
+];
+
 // eslint-disable-next-line no-restricted-exports
 export default {
     title: "10 Filters/MeasureValueFilter",
@@ -58,11 +92,15 @@ export function FullFeatured() {
     return (
         <div style={wrapperStyle} className="screenshot-target">
             <MeasureValueFilterDropdown
-                filter={filter}
+                filter={filterWithMultipleConditionsAndDimensionality}
                 measureIdentifier="localIdentifier"
                 onApply={action("applyClick")}
                 onCancel={action("cancelClick")}
                 anchorEl="screenshot-target"
+                enableMultipleConditions
+                isDimensionalityEnabled
+                dimensionality={dimensionalityItems}
+                insightDimensionality={dimensionalityItems}
             />
         </div>
     );
