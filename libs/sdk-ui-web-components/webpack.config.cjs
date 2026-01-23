@@ -1,12 +1,14 @@
-// (C) 2022 GoodData Corporation
-/* eslint-disable @typescript-eslint/no-require-imports */
+// (C) 2022-2026 GoodData Corporation
+
+const path = require("path");
+
+const { EsbuildPlugin } = require("esbuild-loader");
+const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { EnvironmentPlugin, ContextReplacementPlugin, DefinePlugin } = require("webpack");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
-const path = require("path");
+
 const npmPackage = require("./package.json");
-const { EsbuildPlugin } = require("esbuild-loader");
 
 module.exports = (env, argv) => ({
     mode: argv.mode,

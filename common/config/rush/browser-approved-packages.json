@@ -751,6 +751,10 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
+      "name": "eslint-plugin-jsdoc",
+      "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
       "name": "eslint-plugin-no-only-tests",
       "allowedCategories": [ "examples", "production", "tools" ]
     },

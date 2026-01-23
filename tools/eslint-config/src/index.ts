@@ -11,6 +11,7 @@ import { header } from "./configurations/header.js";
 import { ignore } from "./configurations/ignore.js";
 import { importEsm } from "./configurations/import-esm.js";
 import { import_ } from "./configurations/import.js";
+import { jsdoc } from "./configurations/jsdoc.js";
 import { noOnlyTests } from "./configurations/no-only-tests.js";
 import { prettier } from "./configurations/prettier.js";
 import { reactHooks } from "./configurations/react-hooks.js";
@@ -28,6 +29,7 @@ export const common = [
     eslint,
     header,
     typescript,
+    jsdoc,
     import_,
     noOnlyTests,
     prettier,

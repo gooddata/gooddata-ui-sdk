@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-dashboard",
-    "version": "11.18.0-alpha.0",
+    "version": "11.18.0-alpha.1",
     "description": "GoodData SDK - Dashboard Component",
     "repository": {
         "type": "git",
@@ -134,6 +134,7 @@
         "eslint-plugin-header": "3.1.1",
         "eslint-plugin-import": "2.32.0",
         "eslint-plugin-import-esm": "1.2.1",
+        "eslint-plugin-jsdoc": "62.1.0",
         "eslint-plugin-no-only-tests": "2.6.0",
         "eslint-plugin-prettier": "5.5.4",
         "eslint-plugin-react": "7.37.5",

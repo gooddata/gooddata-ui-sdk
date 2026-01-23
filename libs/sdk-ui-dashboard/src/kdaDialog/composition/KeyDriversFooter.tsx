@@ -84,6 +84,9 @@ export function KeyDriversFooter() {
                         combinations: state.items.length,
                         attributes: state.selectedAttributes.length,
                         button: (chunks) => {
+                            const buttonLabel = chunks
+                                .filter((chunk): chunk is string => typeof chunk === "string")
+                                .join("");
                             return (
                                 <DropdownInvertableSelect
                                     closeOnEscape
@@ -159,14 +162,23 @@ export function KeyDriversFooter() {
                                             }}
                                         />
                                     )}
-                                    renderButton={({ buttonRef, isOpen, toggleDropdown }) => (
+                                    renderButton={({
+                                        buttonRef,
+                                        isOpen,
+                                        toggleDropdown,
+                                        accessibilityConfig,
+                                    }) => (
                                         <UiButton
                                             ref={buttonRef as RefObject<HTMLButtonElement>}
                                             variant="tertiary"
                                             iconAfter="settings"
                                             isSelected={isOpen}
-                                            label={chunks.join("")}
+                                            label={buttonLabel}
                                             onClick={toggleDropdown}
+                                            accessibilityConfig={{
+                                                ...accessibilityConfig,
+                                                ariaHaspopup: "dialog",
+                                            }}
                                         />
                                     )}
                                     renderListActions={() => {
