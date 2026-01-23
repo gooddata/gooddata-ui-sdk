@@ -1,5 +1,6 @@
 #!/usr/bin/env node
-// (C) 2022 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import fs from "fs";
 
 import dotenv from "dotenv";
@@ -38,7 +39,6 @@ async function main() {
         fs.writeFileSync(envFilePath, newEnvFileContent);
     } catch (e) {
         log(e.toString());
-        // eslint-disable-next-line no-console
         console.error(e);
         process.exit(1);
     }

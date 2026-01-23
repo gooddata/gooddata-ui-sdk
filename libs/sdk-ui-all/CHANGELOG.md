@@ -6,10 +6,6 @@ This log was last generated on Thu, 22 Jan 2026 10:30:55 GMT and should not be m
 
 Thu, 22 Jan 2026 10:30:55 GMT
 
-### Patches
-
-- Fix Key Driver Analysis date formatting by normalizing server patterns to ISO week tokens.
-
 ### Updates
 
 - sdk-ui-dashboard: Initialize new dashboard with default calendar.
@@ -46,13 +42,9 @@ Thu, 22 Jan 2026 10:30:55 GMT
 
 Thu, 15 Jan 2026 09:13:41 GMT
 
-### Patches
-
-- Fix Key Driver Analysis date formatting by normalizing server patterns to ISO week tokens.
-
 ### Updates
 
--   - sdk-ui-ext: Introduce TypeScript strict mode.
+- sdk-ui-ext: Introduce TypeScript strict mode.
 - sdk-ui-kit: Fix `UiAsyncTable` tab stop when there are no sortable columns in the header.
 - sdk-ui-kit: Make `EditableLabel` accessible by keyboard.
 - sdk-ui-kit: Restore focus on `UiDrawer` close and add `returnFocusTo` option.
@@ -90,10 +82,6 @@ Thu, 15 Jan 2026 09:13:41 GMT
 
 Thu, 08 Jan 2026 08:13:01 GMT
 
-### Patches
-
-- Fix Key Driver Analysis date formatting by normalizing server patterns to ISO week tokens.
-
 ### Updates
 
 - sdk-ui-filters: Add testable support for fiscal calendars.
@@ -112,6 +100,7 @@ Thu, 08 Jan 2026 08:13:01 GMT
 - sdk-ui-loaders: Fix dashboard plugin loader to support both named and default exports from plugin entry point, restoring backward compatibility with plugins built before the 'Ban default exports' change
 - sdk-ui-geo: Add support for measure drilling
 - revert Crowdin structure to investigate blocker
+- Fix Key Driver Analysis date formatting by normalizing server patterns to ISO week tokens.
 
 ## 11.14.0
 

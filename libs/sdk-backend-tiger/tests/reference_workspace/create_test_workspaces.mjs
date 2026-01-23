@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// (C) 2022 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import fs from "fs";
 
@@ -48,7 +48,6 @@ async function main() {
         log(`WORKSPACE_ID ${testWorkspaceId} added to the .env file\n`);
     } catch (e) {
         log(e.toString());
-        // eslint-disable-next-line no-console
         console.error(e);
         process.exit(1);
     }

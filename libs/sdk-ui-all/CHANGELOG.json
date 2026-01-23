@@ -269,11 +269,6 @@
                     {
                         "comment": "revert Crowdin structure to investigate blocker"
                     }
-                ],
-                "patch": [
-                    {
-                        "comment": "Fix Key Driver Analysis date formatting by normalizing server patterns to ISO week tokens."
-                    }
                 ]
             }
         },
@@ -348,11 +343,6 @@
                     },
                     {
                         "comment": "Added Reasoning to the chatbot"
-                    }
-                ],
-                "patch": [
-                    {
-                        "comment": "Fix Key Driver Analysis date formatting by normalizing server patterns to ISO week tokens."
                     }
                 ]
             }
@@ -476,9 +466,7 @@
                     },
                     {
                         "comment": "sdk-ui-all: Add metric format override features, currency settings management, and Analytics Catalog enhancements."
-                    }
-                ],
-                "patch": [
+                    },
                     {
                         "comment": "sdk-ui-dashboard: Fix Key Driver Analysis date formatting by normalizing server patterns to ISO week tokens."
                     }
