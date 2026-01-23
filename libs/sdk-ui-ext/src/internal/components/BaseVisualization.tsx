@@ -48,6 +48,7 @@ import {
     type IVisualization,
 } from "../interfaces/Visualization.js";
 import { type PluggableVisualizationFactory } from "../interfaces/VisualizationDescriptor.js";
+import { cleanupKeyDriverAnalysisOnMetrics } from "../utils/keyDriverAnalysis.js";
 
 export interface IBaseVisualizationProps extends IVisCallbacks {
     backend: IAnalyticalBackend;
@@ -392,7 +393,10 @@ export class BaseVisualization extends PureComponent<IBaseVisualizationProps> {
                 .then(async (extendedReferencePoint) => {
                     const sortConfig = await this.visualization!.getSortConfig(extendedReferencePoint);
                     // new sort config needs to be sent together with new reference point to avoid double executions with old invalid sort until new one arrives by its own handler
-                    onExtendedReferencePointChanged(extendedReferencePoint, sortConfig);
+                    onExtendedReferencePointChanged(
+                        cleanupKeyDriverAnalysisOnMetrics(extendedReferencePoint),
+                        sortConfig,
+                    );
                 });
         }
     }

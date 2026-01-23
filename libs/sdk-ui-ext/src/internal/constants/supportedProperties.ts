@@ -17,6 +17,7 @@ const BASE_PROPERTIES = [
     "disableAlerts",
     "disableScheduledExports",
     "disableKeyDriveAnalysis",
+    "disableKeyDriveAnalysisOn",
     "chartConfigOverride",
 ];
 
@@ -225,6 +226,7 @@ export const BUBBLE_CHART_SUPPORTED_PROPERTIES = [
     "disableAlerts",
     "disableScheduledExports",
     "disableKeyDriveAnalysis",
+    "disableKeyDriveAnalysisOn",
 ];
 
 export const SCATTERPLOT_SUPPORTED_PROPERTIES = [
@@ -255,6 +257,7 @@ export const SCATTERPLOT_SUPPORTED_PROPERTIES = [
     "disableAlerts",
     "disableScheduledExports",
     "disableKeyDriveAnalysis",
+    "disableKeyDriveAnalysisOn",
     "clustering.enabled",
     "clustering.numberOfClusters",
     "clustering.threshold",
@@ -271,6 +274,7 @@ export const PIECHART_SUPPORTED_PROPERTIES = [
     "disableAlerts",
     "disableScheduledExports",
     "disableKeyDriveAnalysis",
+    "disableKeyDriveAnalysisOn",
     "chartConfigOverride",
     "chartFill",
 ];
@@ -286,6 +290,7 @@ export const FUNNELCHART_SUPPORTED_PROPERTIES = [
     "disableAlerts",
     "disableScheduledExports",
     "disableKeyDriveAnalysis",
+    "disableKeyDriveAnalysisOn",
     "chartConfigOverride",
     "chartFill",
 ];
@@ -300,6 +305,7 @@ export const TREEMAP_SUPPORTED_PROPERTIES = [
     "disableAlerts",
     "disableScheduledExports",
     "disableKeyDriveAnalysis",
+    "disableKeyDriveAnalysisOn",
     "chartConfigOverride",
     "chartFill",
 ];
@@ -325,6 +331,7 @@ export const HEATMAP_SUPPORTED_PROPERTIES = [
     "disableAlerts",
     "disableScheduledExports",
     "disableKeyDriveAnalysis",
+    "disableKeyDriveAnalysisOn",
     "chartConfigOverride",
 ];
 
@@ -352,6 +359,7 @@ export const BULLET_CHART_SUPPORTED_PROPERTIES = [
     "disableAlerts",
     "disableScheduledExports",
     "disableKeyDriveAnalysis",
+    "disableKeyDriveAnalysisOn",
     "chartConfigOverride",
     "chartFill",
 ];
@@ -370,6 +378,7 @@ export const GEOPUSHPIN_SUPPORTED_PROPERTIES = [
     "disableAlerts",
     "disableScheduledExports",
     "disableKeyDriveAnalysis",
+    "disableKeyDriveAnalysisOn",
     "chartConfigOverride",
 ];
 
@@ -393,6 +402,7 @@ export const GEOAREA_SUPPORTED_PROPERTIES = [
     "disableAlerts",
     "disableScheduledExports",
     "disableKeyDriveAnalysis",
+    "disableKeyDriveAnalysisOn",
     "chartConfigOverride",
 ];
 
@@ -404,6 +414,7 @@ export const PIVOT_TABLE_SUPPORTED_PROPERTIES = [
     "disableAlerts",
     "disableScheduledExports",
     "disableKeyDriveAnalysis",
+    "disableKeyDriveAnalysisOn",
     "chartConfigOverride",
 ];
 
@@ -415,6 +426,7 @@ export const PIVOT_TABLE_NEXT_SUPPORTED_PROPERTIES = [
     "disableAlerts",
     "disableScheduledExports",
     "disableKeyDriveAnalysis",
+    "disableKeyDriveAnalysisOn",
     "chartConfigOverride",
     "textWrapping",
     "pagination",
@@ -430,6 +442,7 @@ export const SANKEY_CHART_SUPPORTED_PROPERTIES = [
     "disableAlerts",
     "disableScheduledExports",
     "disableKeyDriveAnalysis",
+    "disableKeyDriveAnalysisOn",
     "chartConfigOverride",
 ];
 
@@ -462,6 +475,7 @@ export const REPEATER_SUPPORTER_PROPERTIES_LIST = [
     "disableAlerts",
     "disableScheduledExports",
     "disableKeyDriveAnalysis",
+    "disableKeyDriveAnalysisOn",
 ];
 
 export const HEADLINE_SUPPORTED_PROPERTIES = [
@@ -469,6 +483,7 @@ export const HEADLINE_SUPPORTED_PROPERTIES = [
     "disableAlerts",
     "disableScheduledExports",
     "disableKeyDriveAnalysis",
+    "disableKeyDriveAnalysisOn",
 ];
 
 export const HEADLINE_DEFAULT_CONTROL_PROPERTIES: HeadlineControlProperties = {
