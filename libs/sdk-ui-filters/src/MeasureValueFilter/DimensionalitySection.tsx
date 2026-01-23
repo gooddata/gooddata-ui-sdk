@@ -227,6 +227,9 @@ export const DimensionalitySection = memo(function DimensionalitySection({
     );
 
     const addButtonTooltip = intl.formatMessage({ id: "mvf.dimensionality.addButton.tooltip" });
+    const resetButtonTooltip = intl.formatMessage({
+        id: "mvf.dimensionality.reset.tooltip",
+    });
 
     // Determine the actual anchor element to use
     const actualAnchor = anchorType === "inline" ? inlineAddButtonRef.current : standaloneAnchor;
@@ -238,21 +241,6 @@ export const DimensionalitySection = memo(function DimensionalitySection({
         >
             <div className="gd-mvf-dimensionality-header">
                 <label>{intl.formatMessage({ id: "mvf.dimensionality.forEach" })}</label>
-                {shouldShowResetButton ? (
-                    <span>
-                        <BubbleHoverTrigger>
-                            <UiButton
-                                size="small"
-                                variant="tertiary"
-                                label={intl.formatMessage({ id: "mvf.dimensionality.reset" })}
-                                onClick={handleResetDimensionality}
-                            />
-                            <Bubble alignPoints={[{ align: "bc tc" }]}>
-                                {intl.formatMessage({ id: "mvf.dimensionality.reset.tooltip" })}
-                            </Bubble>
-                        </BubbleHoverTrigger>
-                    </span>
-                ) : null}
             </div>
             {dimensionality.length > 0 ? (
                 <div className="gd-mvf-dimensionality-items">
@@ -286,15 +274,45 @@ export const DimensionalitySection = memo(function DimensionalitySection({
                             </WithAddButton>
                         );
                     })}
+                    {shouldShowResetButton ? (
+                        <div className="gd-mvf-dimensionality-reset-button">
+                            <BubbleHoverTrigger>
+                                <UiIconButton
+                                    icon="history"
+                                    size="small"
+                                    variant="tertiary"
+                                    onClick={handleResetDimensionality}
+                                    label={resetButtonTooltip}
+                                    dataTestId="mvf-dimensionality-reset"
+                                />
+                                <Bubble alignPoints={[{ align: "cr cl" }]}>{resetButtonTooltip}</Bubble>
+                            </BubbleHoverTrigger>
+                        </div>
+                    ) : null}
                 </div>
             ) : (
-                <UiButton
-                    label={intl.formatMessage({ id: "mvf.dimensionality.addAttributes" })}
-                    variant="tertiary"
-                    size="small"
-                    iconBefore="plus"
-                    onClick={handleOpenStandaloneAttributePicker}
-                />
+                <div className="gd-mvf-dimensionality-empty-actions">
+                    <UiButton
+                        label={intl.formatMessage({ id: "mvf.dimensionality.addAttributes" })}
+                        variant="tertiary"
+                        size="small"
+                        iconBefore="plus"
+                        onClick={handleOpenStandaloneAttributePicker}
+                    />
+                    {shouldShowResetButton ? (
+                        <BubbleHoverTrigger>
+                            <UiButton
+                                size="small"
+                                variant="tertiary"
+                                iconBefore="history"
+                                label={intl.formatMessage({ id: "mvf.dimensionality.reset" })}
+                                onClick={handleResetDimensionality}
+                                dataTestId="mvf-dimensionality-reset"
+                            />
+                            <Bubble alignPoints={[{ align: "cr cl" }]}>{resetButtonTooltip}</Bubble>
+                        </BubbleHoverTrigger>
+                    ) : null}
+                </div>
             )}
             {isMigratedFilter ? null : (
                 <div

@@ -141,11 +141,15 @@
             border-color: transparent;
 
             &:not(&:disabled) {
-                &:hover,
                 &:focus-visible,
-                &:active {
+                &:active,
+                &:hover {
                     --gd-icon-fill-color: var(--gd-palette-primary-base);
                 }
+            }
+
+            &#{$root}--destructive:not(&:disabled):hover {
+                --gd-icon-fill-color: var(--gd-palette-error-base);
             }
 
             &:disabled {

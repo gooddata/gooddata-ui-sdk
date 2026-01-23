@@ -2721,6 +2721,7 @@ export interface IMeasureValueFilterAllOptions {
 export interface IMeasureValueFilterBody extends IIdentifiableFilter {
     // (undocumented)
     condition?: MeasureValueFilterCondition;
+    conditions?: MeasureValueFilterCondition[];
     // (undocumented)
     dimensionality?: ObjRefInScope[];
     // (undocumented)
@@ -2736,7 +2737,15 @@ export interface IMeasureValueFilterComparisonOptions {
 }
 
 // @public
-export type IMeasureValueFilterOptions = IMeasureValueFilterComparisonOptions | IMeasureValueFilterRangeOptions | IMeasureValueFilterAllOptions;
+export interface IMeasureValueFilterConditionsOptions {
+    // (undocumented)
+    conditions: OptionsCondition[];
+    dimensionality?: Array<IAttribute | ObjRefInScope | string>;
+    treatNullValuesAs?: number;
+}
+
+// @public
+export type IMeasureValueFilterOptions = IMeasureValueFilterComparisonOptions | IMeasureValueFilterRangeOptions | IMeasureValueFilterAllOptions | IMeasureValueFilterConditionsOptions;
 
 // @public
 export interface IMeasureValueFilterRangeOptions {
@@ -3048,6 +3057,30 @@ export type INullableFilter = IFilter | undefined | null;
 export interface IOpenAiConfig {
     org: string;
     token: string;
+}
+
+// @public
+export interface IOptionsAllCondition {
+    // (undocumented)
+    operator: "ALL";
+}
+
+// @public
+export interface IOptionsComparisonCondition {
+    // (undocumented)
+    operator: ComparisonConditionOperator;
+    // (undocumented)
+    value: number;
+}
+
+// @public
+export interface IOptionsRangeCondition {
+    // (undocumented)
+    from: number;
+    // (undocumented)
+    operator: RangeConditionOperator;
+    // (undocumented)
+    to: number;
 }
 
 // @alpha (undocumented)
@@ -3857,6 +3890,7 @@ export interface ISettings {
     enableMotherDuckDataSource?: boolean;
     enableMultipleDataSourcesInWorkspace?: boolean;
     enableMultipleDateFilters?: boolean;
+    enableMultipleMvfConditions?: boolean;
     // (undocumented)
     enableMySqlDataSource?: boolean;
     enableNewGeoPushpin?: boolean;
@@ -5149,6 +5183,9 @@ export type MeasureValueFilterCondition = IComparisonCondition | IRangeCondition
 export function measureValueFilterCondition(filter: IMeasureValueFilter): MeasureValueFilterCondition | undefined;
 
 // @public
+export function measureValueFilterConditions(filter: IMeasureValueFilter): MeasureValueFilterCondition[] | undefined;
+
+// @public
 export function measureValueFilterDimensionality(filter: IMeasureValueFilter): ObjRefInScope[] | undefined;
 
 // @public
@@ -5318,6 +5355,9 @@ export type ObjRefInScope = ObjRef | LocalIdRef;
 
 // @public
 export function objRefToString(objRef: ObjRef | ObjRefInScope): string;
+
+// @public
+export type OptionsCondition = IOptionsComparisonCondition | IOptionsRangeCondition | IOptionsAllCondition;
 
 // @alpha (undocumented)
 export type OrganizationPermissionAssignment = (typeof OrganizationPermissionAssignmentValue)[keyof typeof OrganizationPermissionAssignmentValue];

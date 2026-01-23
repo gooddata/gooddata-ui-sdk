@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useIntl } from "react-intl";
 
@@ -9,7 +9,7 @@ import {
     type ITotal,
     isMeasureValueFilter,
     isRankingFilter,
-    measureValueFilterCondition,
+    measureValueFilterConditions,
 } from "@gooddata/sdk-model";
 import { BucketNames, isAttributeColumnDefinition } from "@gooddata/sdk-ui";
 
@@ -46,7 +46,7 @@ export const useHeaderMenuAggregations = (
             .map((columnDefinition) => columnDefinition.attributeDescriptor) ?? [];
 
     const hasMeasureValueFilter = execution.definition.filters.some(
-        (f) => isMeasureValueFilter(f) && !!measureValueFilterCondition(f),
+        (f) => isMeasureValueFilter(f) && !!measureValueFilterConditions(f),
     );
     const hasRankingFilter = execution.definition.filters.some(isRankingFilter);
     const disableRollupTotalTooltip = hasMeasureValueFilter

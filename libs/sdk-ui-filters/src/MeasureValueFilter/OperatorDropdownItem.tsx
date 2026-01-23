@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type MouseEvent, memo } from "react";
 
@@ -12,10 +12,14 @@ import { stringUtils } from "@gooddata/util";
 import { getOperatorIcon, getOperatorTranslationKey } from "./helpers/measureValueFilterOperator.js";
 import { type MeasureValueFilterOperator } from "./types.js";
 
+const BUBBLE_ALIGN_POINTS = [{ align: "cr cl" }, { align: "cl cr" }];
+
 interface IOperatorDropdownItemOwnProps {
     selectedOperator: MeasureValueFilterOperator;
     operator: MeasureValueFilterOperator;
     bubbleText?: string;
+    isDisabled?: boolean;
+    disabledTooltip?: string;
     onClick: (identifier: MeasureValueFilterOperator) => void;
 }
 
@@ -23,11 +27,17 @@ export const OperatorDropdownItem = memo(function OperatorDropdownItem({
     operator,
     selectedOperator,
     bubbleText,
+    isDisabled = false,
+    disabledTooltip,
     onClick = () => {},
 }: IOperatorDropdownItemOwnProps) {
     const intl = useIntl();
 
     const handleOnClick = (e: MouseEvent<HTMLDivElement>): void => {
+        if (isDisabled) {
+            e.preventDefault();
+            return;
+        }
         onClick(operator);
         e.preventDefault();
     };
@@ -51,6 +61,7 @@ export const OperatorDropdownItem = memo(function OperatorDropdownItem({
         `s-mvf-operator-${stringUtils.simplifyText(operator)}`,
         {
             "is-selected": selectedOperator === operator,
+            "is-disabled": isDisabled,
         },
     );
 
@@ -58,10 +69,11 @@ export const OperatorDropdownItem = memo(function OperatorDropdownItem({
     const title =
         operatorTranslationKey === undefined ? operator : intl.formatMessage({ id: operatorTranslationKey });
 
-    return (
+    const itemContent = (
         <div
             className={className}
             onClick={handleOnClick}
+            aria-disabled={isDisabled}
             data-testid={`mvf-operator-${stringUtils.simplifyText(operator)}`}
         >
             <div className={`gd-icon-${getOperatorIcon(operator)}`} title={title} />
@@ -69,4 +81,18 @@ export const OperatorDropdownItem = memo(function OperatorDropdownItem({
             {bubbleText ? renderBubble(bubbleText) : null}
         </div>
     );
+
+    // Wrap disabled item with tooltip if provided
+    if (isDisabled && disabledTooltip) {
+        return (
+            <BubbleHoverTrigger tagName={"div"} showDelay={400} hideDelay={200}>
+                {itemContent}
+                <Bubble className="bubble-primary" alignPoints={BUBBLE_ALIGN_POINTS}>
+                    {disabledTooltip}
+                </Bubble>
+            </BubbleHoverTrigger>
+        );
+    }
+
+    return itemContent;
 });

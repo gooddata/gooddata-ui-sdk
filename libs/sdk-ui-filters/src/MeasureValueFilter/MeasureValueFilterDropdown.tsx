@@ -4,17 +4,17 @@ import { memo, useCallback } from "react";
 
 import {
     type IMeasureValueFilter,
+    type MeasureValueFilterCondition,
     type ObjRefInScope,
+    type OptionsCondition,
     isComparisonCondition,
     isRangeCondition,
-    isRangeConditionOperator,
-    measureValueFilterCondition,
+    measureValueFilterConditions,
     measureValueFilterOperator,
     newMeasureValueFilterWithOptions,
 } from "@gooddata/sdk-model";
 
 import { Dropdown } from "./Dropdown.js";
-import { type IMeasureValueFilterValue, type MeasureValueFilterOperator } from "./types.js";
 import { type IMeasureValueFilterCommonProps } from "./typings.js";
 
 /**
@@ -25,35 +25,31 @@ export interface IMeasureValueFilterDropdownProps extends IMeasureValueFilterCom
     anchorEl?: HTMLElement | string;
 }
 
-const getFilterValue = (filter: IMeasureValueFilter | undefined): IMeasureValueFilterValue => {
+const getConditionsFromFilter = (
+    filter: IMeasureValueFilter | undefined,
+    enableMultipleConditions: boolean,
+): MeasureValueFilterCondition[] => {
     if (!filter) {
-        return {};
+        return [];
     }
-
-    const condition = measureValueFilterCondition(filter);
-    if (!condition) {
-        return {};
-    }
-
-    return isRangeCondition(condition)
-        ? { from: condition.range.from, to: condition.range.to }
-        : { value: condition.comparison.value };
+    const conditions = measureValueFilterConditions(filter);
+    return conditions?.length ? (enableMultipleConditions ? conditions : conditions.slice(0, 1)) : [];
 };
 
 const getTreatNullAsZeroValue = (
     filter: IMeasureValueFilter | undefined,
     treatNullAsZeroDefaultValue: boolean,
+    enableMultipleConditions: boolean,
 ): boolean => {
-    if (!filter || !measureValueFilterCondition(filter)) {
+    const conditions = getConditionsFromFilter(filter, enableMultipleConditions);
+    if (conditions.length === 0) {
         return treatNullAsZeroDefaultValue !== undefined && treatNullAsZeroDefaultValue;
     }
 
-    const condition = measureValueFilterCondition(filter);
-
-    return (
-        (isComparisonCondition(condition) && condition.comparison.treatNullValuesAs !== undefined) ||
-        (isRangeCondition(condition) && condition.range.treatNullValuesAs !== undefined) ||
-        false
+    return conditions.some(
+        (condition) =>
+            (isComparisonCondition(condition) && condition.comparison.treatNullValuesAs !== undefined) ||
+            (isRangeCondition(condition) && condition.range.treatNullValuesAs !== undefined),
     );
 };
 
@@ -80,15 +76,13 @@ export const MeasureValueFilterDropdown = memo(function MeasureValueFilterDropdo
     catalogDimensionality,
     onDimensionalityChange,
     isLoadingCatalogDimensionality,
+    enableMultipleConditions = false,
 }: IMeasureValueFilterDropdownProps) {
     const handleApply = useCallback(
-        (
-            operator: MeasureValueFilterOperator | null,
-            value: IMeasureValueFilterValue,
-            treatNullValuesAsZero: boolean,
-            newDimensionality?: ObjRefInScope[],
-        ) => {
-            if (operator === null || operator === "ALL") {
+        (conditions: MeasureValueFilterCondition[] | null, newDimensionality?: ObjRefInScope[]) => {
+            const effectiveConditions = enableMultipleConditions ? conditions : conditions?.slice(0, 1);
+
+            if (!effectiveConditions?.length) {
                 onApply(
                     newMeasureValueFilterWithOptions(
                         { localIdentifier: measureIdentifier },
@@ -101,18 +95,71 @@ export const MeasureValueFilterDropdown = memo(function MeasureValueFilterDropdo
                 return;
             }
 
+            const treatNullValuesAs = effectiveConditions.some((condition) =>
+                isComparisonCondition(condition)
+                    ? condition.comparison.treatNullValuesAs !== undefined
+                    : condition.range.treatNullValuesAs !== undefined,
+            )
+                ? 0
+                : undefined;
             const commonOptions = {
-                treatNullValuesAs: treatNullValuesAsZero ? 0 : undefined,
+                treatNullValuesAs,
                 ...(isDimensionalityEnabled ? { dimensionality: newDimensionality } : {}),
             };
 
-            const filterOptions = isRangeConditionOperator(operator)
-                ? { operator, from: value.from ?? 0, to: value.to ?? 0, ...commonOptions }
-                : { operator, value: value.value ?? 0, ...commonOptions };
+            if (effectiveConditions.length === 1) {
+                const condition = effectiveConditions[0];
+                if (isRangeCondition(condition)) {
+                    onApply(
+                        newMeasureValueFilterWithOptions(
+                            { localIdentifier: measureIdentifier },
+                            {
+                                operator: condition.range.operator,
+                                from: condition.range.from,
+                                to: condition.range.to,
+                                ...commonOptions,
+                            },
+                        ),
+                    );
+                    return;
+                }
 
-            onApply(newMeasureValueFilterWithOptions({ localIdentifier: measureIdentifier }, filterOptions));
+                onApply(
+                    newMeasureValueFilterWithOptions(
+                        { localIdentifier: measureIdentifier },
+                        {
+                            operator: condition.comparison.operator,
+                            value: condition.comparison.value,
+                            ...commonOptions,
+                        },
+                    ),
+                );
+                return;
+            }
+            const optionsConditions: OptionsCondition[] = effectiveConditions.map((condition) =>
+                isComparisonCondition(condition)
+                    ? {
+                          operator: condition.comparison.operator,
+                          value: condition.comparison.value,
+                      }
+                    : {
+                          operator: condition.range.operator,
+                          from: condition.range.from,
+                          to: condition.range.to,
+                      },
+            );
+
+            onApply(
+                newMeasureValueFilterWithOptions(
+                    { localIdentifier: measureIdentifier },
+                    {
+                        conditions: optionsConditions,
+                        ...commonOptions,
+                    },
+                ),
+            );
         },
-        [measureIdentifier, onApply, isDimensionalityEnabled],
+        [measureIdentifier, onApply, isDimensionalityEnabled, enableMultipleConditions],
     );
 
     return (
@@ -120,7 +167,7 @@ export const MeasureValueFilterDropdown = memo(function MeasureValueFilterDropdo
             onApply={handleApply}
             onCancel={onCancel}
             operator={(filter && measureValueFilterOperator(filter)) || null}
-            value={(filter && getFilterValue(filter)) || null}
+            conditions={getConditionsFromFilter(filter, enableMultipleConditions)}
             usePercentage={usePercentage}
             warningMessage={warningMessage}
             locale={locale}
@@ -128,7 +175,11 @@ export const MeasureValueFilterDropdown = memo(function MeasureValueFilterDropdo
             separators={separators}
             measureTitle={measureTitle}
             displayTreatNullAsZeroOption={displayTreatNullAsZeroOption}
-            treatNullAsZeroValue={getTreatNullAsZeroValue(filter, treatNullAsZeroDefaultValue)}
+            treatNullAsZeroValue={getTreatNullAsZeroValue(
+                filter,
+                treatNullAsZeroDefaultValue,
+                enableMultipleConditions,
+            )}
             enableOperatorSelection={enableOperatorSelection}
             dimensionality={dimensionality}
             insightDimensionality={insightDimensionality}
@@ -136,6 +187,7 @@ export const MeasureValueFilterDropdown = memo(function MeasureValueFilterDropdo
             catalogDimensionality={catalogDimensionality}
             onDimensionalityChange={onDimensionalityChange}
             isLoadingCatalogDimensionality={isLoadingCatalogDimensionality}
+            enableMultipleConditions={enableMultipleConditions}
         />
     );
 });

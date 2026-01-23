@@ -229,6 +229,7 @@
     "properties.points.size.min.title": "Kleinste",
     "properties.points.size.max.title": "Grootste",
     "properties.map.title": "Kaart",
+    "properties.map.basemap.title": "Basiskaart",
     "properties.viewport.area.title": "Standaard viewport",
     "properties.viewport.area.auto_default": "Alle gegevens insluiten",
     "properties.viewport.area.continents": "continenten",

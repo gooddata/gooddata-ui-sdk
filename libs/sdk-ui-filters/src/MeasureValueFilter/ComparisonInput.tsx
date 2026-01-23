@@ -13,6 +13,9 @@ interface IComparisonInputProps {
     disableAutofocus?: boolean;
     onValueChange: (value: number) => void;
     onEnterKeyPress?: () => void;
+    onBlur?: () => void;
+    hasError?: boolean;
+    ariaDescribedBy?: string;
     separators?: ISeparators;
 }
 
@@ -22,6 +25,9 @@ export function ComparisonInput({
     disableAutofocus,
     onValueChange,
     onEnterKeyPress,
+    onBlur,
+    hasError,
+    ariaDescribedBy,
     separators,
 }: IComparisonInputProps): ReactElement {
     const intl = useIntl();
@@ -33,6 +39,8 @@ export function ComparisonInput({
             value={value ?? undefined}
             onEnterKeyPress={onEnterKeyPress}
             onChange={(val) => onValueChange(val as number)}
+            onBlur={onBlur ? () => onBlur() : undefined}
+            hasError={hasError}
             isSmall
             autofocus={!disableAutofocus}
             suffix={usePercentage ? "%" : ""}
@@ -42,6 +50,8 @@ export function ComparisonInput({
                           id: "input.unit.percent",
                       })
                     : undefined,
+                ariaDescribedBy,
+                ariaInvalid: hasError ? true : undefined,
             }}
             separators={separators}
         />

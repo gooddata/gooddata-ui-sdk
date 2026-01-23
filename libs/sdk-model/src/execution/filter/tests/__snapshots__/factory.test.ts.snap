@@ -324,6 +324,24 @@ exports[`filter factory > newMeasureValueFilterWithOptions > should generate ran
 }
 `;
 
+exports[`filter factory > newMeasureValueFilterWithOptions > should ignore empty conditions 1`] = `
+{
+  "measureValueFilter": {
+    "dimensionality": [
+      {
+        "localIdentifier": "a_label.owner.department",
+      },
+      {
+        "localIdentifier": "a_label.account.id.name",
+      },
+    ],
+    "measure": {
+      "localIdentifier": "m_afSEwRwdbMeQ",
+    },
+  },
+}
+`;
+
 exports[`filter factory > newMeasureValueFilterWithOptions > should not include dimensionality when array is empty 1`] = `
 {
   "measureValueFilter": {

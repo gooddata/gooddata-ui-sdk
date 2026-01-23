@@ -229,6 +229,7 @@
     "properties.points.size.min.title": "Pienin",
     "properties.points.size.max.title": "Suurin",
     "properties.map.title": "Kartta",
+    "properties.map.basemap.title": "Taustakartta",
     "properties.viewport.area.title": "Oletusnäkymä",
     "properties.viewport.area.auto_default": "Sisällytä kaikki tiedot",
     "properties.viewport.area.continents": "maanosat",

@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { memo } from "react";
 
@@ -14,6 +14,7 @@ interface IOperatorDropdownBodyProps {
     onSelect: (operator: MeasureValueFilterOperator) => void;
     onClose: () => void;
     alignTo: string;
+    isAllOperatorDisabled?: boolean;
 }
 
 export const OperatorDropdownBody = memo(function OperatorDropdownBody({
@@ -21,8 +22,13 @@ export const OperatorDropdownBody = memo(function OperatorDropdownBody({
     onClose,
     selectedOperator,
     alignTo,
+    isAllOperatorDisabled = false,
 }: IOperatorDropdownBodyProps) {
     const intl = useIntl();
+
+    const allOperatorDisabledTooltip = isAllOperatorDisabled
+        ? intl.formatMessage({ id: "mvf.operator.all.disabled.tooltip" })
+        : undefined;
 
     return (
         <Overlay closeOnOutsideClick alignTo={alignTo} alignPoints={[{ align: "bl tl" }]} onClose={onClose}>
@@ -35,6 +41,8 @@ export const OperatorDropdownBody = memo(function OperatorDropdownBody({
                         operator="ALL"
                         selectedOperator={selectedOperator}
                         onClick={onSelect}
+                        isDisabled={isAllOperatorDisabled}
+                        disabledTooltip={allOperatorDisabledTooltip}
                     />
                     <Separator />
                     <OperatorDropdownItem

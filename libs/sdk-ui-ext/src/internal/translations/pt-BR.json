@@ -229,6 +229,7 @@
     "properties.points.size.min.title": "Menor",
     "properties.points.size.max.title": "Maior",
     "properties.map.title": "Mapa",
+    "properties.map.basemap.title": "Mapa base",
     "properties.viewport.area.title": "Janela de exibição padrão",
     "properties.viewport.area.auto_default": "Incluir todos os dados",
     "properties.viewport.area.continents": "continentes",

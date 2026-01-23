@@ -6047,6 +6047,7 @@ export interface IUiIconButtonPublicProps {
     id?: string;
     // (undocumented)
     isActive?: boolean;
+    isDesctructive?: boolean;
     // (undocumented)
     isDisabled?: boolean;
     // (undocumented)

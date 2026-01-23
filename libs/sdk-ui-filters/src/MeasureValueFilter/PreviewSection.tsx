@@ -2,6 +2,7 @@
 
 import { type ReactNode, memo, useMemo } from "react";
 
+import { capitalize } from "lodash-es";
 import { type IntlShape, useIntl } from "react-intl";
 
 import {
@@ -12,7 +13,10 @@ import {
 import { messages } from "@gooddata/sdk-ui";
 import { UiTooltip, formatNumberWithSeparators } from "@gooddata/sdk-ui-kit";
 
-import { getOperatorWithValueTranslationKey } from "./helpers/measureValueFilterOperator.js";
+import {
+    getOperatorTranslationKey,
+    getOperatorWithValueTranslationKey,
+} from "./helpers/measureValueFilterOperator.js";
 import { type MeasureValueFilterOperator } from "./types.js";
 import { type IDimensionalityItem } from "./typings.js";
 
@@ -69,7 +73,13 @@ const formatNumberForPreview = (
     return `${formattedNumber}${suffix}`;
 };
 
-const getConditionLabel = (
+interface IConditionPreviewParts {
+    operator: MeasureValueFilterOperator;
+    operatorLabel: string;
+    valueLabel?: string;
+}
+
+const getConditionPreviewParts = (
     operator: MeasureValueFilterOperator,
     value: NumberForPreview,
     from: NumberForPreview,
@@ -77,52 +87,82 @@ const getConditionLabel = (
     separators: ISeparators | undefined,
     suffix: string,
     intl: IntlShape,
-): string | undefined => {
+): IConditionPreviewParts | undefined => {
+    if (operator === "ALL") {
+        // Keep existing capitalization behavior for "All" even if translations are lower-cased.
+        const translationKey = getOperatorWithValueTranslationKey(operator);
+        if (!translationKey) {
+            return undefined;
+        }
+        const operatorLabel = capitalize(intl.formatMessage({ id: translationKey }));
+        return { operator, operatorLabel };
+    }
     if (isComparisonConditionOperator(operator)) {
+        const translationKey = getOperatorTranslationKey(operator);
+        if (!translationKey) {
+            return undefined;
+        }
+
         const formattedValue = formatNumberForPreview(value, separators, suffix);
-        return formattedValue == undefined
-            ? undefined
-            : intl.formatMessage(
-                  { id: getOperatorWithValueTranslationKey(operator) },
-                  { value: formattedValue },
-              );
+        if (formattedValue === undefined) {
+            return undefined;
+        }
+
+        const operatorLabel = intl.formatMessage({ id: translationKey });
+        return {
+            operator,
+            operatorLabel,
+            valueLabel: formattedValue,
+        };
     }
     if (isRangeConditionOperator(operator)) {
+        const translationKey = getOperatorTranslationKey(operator);
+        if (!translationKey) {
+            return undefined;
+        }
+
         const formattedFrom = formatNumberForPreview(from, separators, suffix);
         const formattedTo = formatNumberForPreview(to, separators, suffix);
-        return formattedFrom === undefined || formattedTo === undefined
-            ? undefined
-            : intl.formatMessage(
-                  { id: getOperatorWithValueTranslationKey(operator) },
-                  {
-                      from: formattedFrom,
-                      to: formattedTo,
-                  },
-              );
+        if (formattedFrom === undefined || formattedTo === undefined) {
+            return undefined;
+        }
+
+        const operatorLabel = intl.formatMessage({ id: translationKey });
+        return {
+            operator,
+            operatorLabel,
+            valueLabel: intl.formatMessage(
+                { id: "mvf.preview.and" },
+                { from: formattedFrom, to: formattedTo },
+            ),
+        };
     }
     return undefined;
 };
 
 interface IPreviewSectionProps {
-    operator: MeasureValueFilterOperator;
     measureTitle?: string;
     usePercentage?: boolean;
     separators?: ISeparators;
     dimensionality: IDimensionalityItem[];
-    value: number | undefined;
-    from: number | undefined;
-    to: number | undefined;
+    showAllPreview?: boolean;
+    conditions: Array<{
+        operator: MeasureValueFilterOperator;
+        value: {
+            value?: number;
+            from?: number;
+            to?: number;
+        };
+    }>;
 }
 
 export const PreviewSection = memo(function PreviewSection({
-    operator,
     measureTitle,
     usePercentage,
     separators,
     dimensionality,
-    value,
-    from,
-    to,
+    showAllPreview = false,
+    conditions,
 }: IPreviewSectionProps) {
     const intl = useIntl();
 
@@ -130,17 +170,90 @@ export const PreviewSection = memo(function PreviewSection({
         content: ReactNode;
         tooltip: string | undefined;
     } | null => {
-        if (operator === "ALL") {
-            return null;
-        }
         const suffix = usePercentage ? "%" : "";
-        const condition = getConditionLabel(operator, value, from, to, separators, suffix, intl);
-        if (!condition) {
+        const isAllOperatorSelected = conditions.length > 0 && conditions.every((c) => c.operator === "ALL");
+
+        // Hide "All" operator preview when multiple conditions feature flag is disabled
+        if (isAllOperatorSelected && !showAllPreview) {
             return null;
         }
-        if (!measureTitle) {
+
+        const conditionParts = conditions
+            .map((c) =>
+                getConditionPreviewParts(
+                    c.operator,
+                    c.value.value,
+                    c.value.from,
+                    c.value.to,
+                    separators,
+                    suffix,
+                    intl,
+                ),
+            )
+            .filter((c): c is IConditionPreviewParts => !!c);
+
+        if (conditionParts.length === 0) {
             return null;
         }
+        if (!measureTitle && !isAllOperatorSelected) {
+            return null;
+        }
+
+        const condition = isAllOperatorSelected
+            ? conditionParts[0].operatorLabel
+            : (() => {
+                  const groupsMap = new Map<MeasureValueFilterOperator, IConditionPreviewParts[]>();
+                  const groupOrder: MeasureValueFilterOperator[] = [];
+
+                  for (const part of conditionParts) {
+                      const existing = groupsMap.get(part.operator);
+                      if (existing) {
+                          existing.push(part);
+                      } else {
+                          groupsMap.set(part.operator, [part]);
+                          groupOrder.push(part.operator);
+                      }
+                  }
+
+                  let result = "";
+
+                  for (const operator of groupOrder) {
+                      const parts = groupsMap.get(operator) ?? [];
+                      const first = parts[0];
+                      if (!first) {
+                          continue;
+                      }
+
+                      const firstValueText = first.valueLabel ? ` ${first.valueLabel}` : "";
+                      const firstText = `${first.operatorLabel}${firstValueText}`;
+
+                      if (result) {
+                          result = intl.formatMessage(
+                              { id: "mvf.preview.or" },
+                              { result1: result, result2: firstText },
+                          );
+                      } else {
+                          result = firstText;
+                      }
+
+                      for (const part of parts.slice(1)) {
+                          // If the operator is the same as the previous one, don't repeat operator label.
+                          // (Safety fallback for unexpected conditions without valueLabel.)
+                          const useValueLabel = part.operator !== "ALL" && part.valueLabel;
+                          const valuLabelText = useValueLabel ? ` ${part.valueLabel}` : "";
+                          const fallbackText = `${part.operatorLabel}${valuLabelText}`;
+                          const itemText = useValueLabel ? part.valueLabel : fallbackText;
+
+                          result = intl.formatMessage(
+                              { id: "mvf.preview.or" },
+                              { result1: result, result2: itemText },
+                          );
+                      }
+                  }
+
+                  return result;
+              })();
+
         const { shortenedText, fullText, additionalCount } = buildShortenedDimensionality(dimensionality);
         const placeholderValues = {
             metric: measureTitle,
@@ -149,6 +262,36 @@ export const PreviewSection = memo(function PreviewSection({
             count: additionalCount,
             b: (chunk: ReactNode) => <b>{chunk}</b>,
         };
+
+        if (isAllOperatorSelected) {
+            if (dimensionality.length > 0 && shortenedText) {
+                if (additionalCount !== undefined) {
+                    return {
+                        content: intl.formatMessage(
+                            { id: "mvf.preview.filterWithDimensionalityShortenedNoMetric" },
+                            placeholderValues,
+                        ),
+                        tooltip: fullText,
+                    };
+                }
+                return {
+                    content: intl.formatMessage(
+                        { id: "mvf.preview.filterWithDimensionalityNoMetric" },
+                        placeholderValues,
+                    ),
+                    tooltip: fullText,
+                };
+            }
+
+            return {
+                content: intl.formatMessage(
+                    { id: "mvf.preview.filterWithoutDimensionalityNoMetric" },
+                    placeholderValues,
+                ),
+                tooltip: fullText,
+            };
+        }
+
         if (dimensionality.length > 0 && shortenedText) {
             // Use shortened variant when there are hidden items
             const message =
@@ -161,7 +304,7 @@ export const PreviewSection = memo(function PreviewSection({
             content: intl.formatMessage(messages["mvfPreviewFilterWithoutDimensionality"], placeholderValues),
             tooltip: fullText,
         };
-    }, [operator, dimensionality, separators, usePercentage, measureTitle, intl, value, from, to]);
+    }, [dimensionality, separators, usePercentage, measureTitle, intl, conditions, showAllPreview]);
 
     if (!textPreview) {
         return null;

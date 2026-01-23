@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { memo, useState } from "react";
 
@@ -17,6 +17,7 @@ interface IOperatorDropdownProps {
     onSelect: (operator: MeasureValueFilterOperator) => void;
     operator: MeasureValueFilterOperator;
     isDisabled?: boolean;
+    isAllOperatorDisabled?: boolean;
 }
 
 export const OperatorDropdown = memo(function OperatorDropdown(props: IOperatorDropdownProps) {
@@ -71,7 +72,7 @@ export const OperatorDropdown = memo(function OperatorDropdown(props: IOperatorD
 
     return (
         <>
-            <div className="gd-mvf-operator-dropdown">
+            <div className="gd-mvf-operator-dropdown" data-testid="mvf-operator-section">
                 <div className="gd-mvf-operator-dropdown-label">
                     {intl.formatMessage({ id: "mvf.condition" })}
                 </div>
@@ -83,6 +84,7 @@ export const OperatorDropdown = memo(function OperatorDropdown(props: IOperatorD
                     onSelect={handleOperatorSelected}
                     selectedOperator={props.operator}
                     onClose={closeOperatorDropdown}
+                    isAllOperatorDisabled={props.isAllOperatorDisabled}
                 />
             ) : null}
         </>

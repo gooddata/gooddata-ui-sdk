@@ -79,4 +79,6 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     mvfPreviewFilterWithoutDimensionality: { id: "mvf.preview.filterWithoutDimensionality" },
     mvfPreviewFilterWithDimensionality: { id: "mvf.preview.filterWithDimensionality" },
     mvfPreviewFilterWithDimensionalityShortened: { id: "mvf.preview.filterWithDimensionalityShortened" },
+    mvfPreviewAnd: { id: "mvf.preview.and" },
+    mvfPreviewOr: { id: "mvf.preview.or" },
 });

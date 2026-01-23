@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { compact } from "lodash-es";
 
@@ -85,10 +85,14 @@ export function convertAfmFilters(
                 computeRatioMeasureNumerators,
                 filter.measureValueFilter.measure,
             );
-            const { condition, dimensionality } = filter.measureValueFilter;
+            const { dimensionality, ...restMeasureValueFilter } = filter.measureValueFilter;
             const dimensionalityProp = dimensionality?.length ? { dimensionality } : {};
             const transformedFilter = {
-                measureValueFilter: { measure: filteredMeasure, condition, ...dimensionalityProp },
+                measureValueFilter: {
+                    ...restMeasureValueFilter,
+                    measure: filteredMeasure,
+                    ...dimensionalityProp,
+                },
             };
             return newFilterWithApplyOnResult(transformedFilter, applyOnResult);
         } else if (isRankingFilter(filter)) {

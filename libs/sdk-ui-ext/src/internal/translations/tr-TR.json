@@ -229,6 +229,7 @@
     "properties.points.size.min.title": "En küçük",
     "properties.points.size.max.title": "En Büyük",
     "properties.map.title": "Harita",
+    "properties.map.basemap.title": "Temel harita",
     "properties.viewport.area.title": "Varsayılan görünüm alanı",
     "properties.viewport.area.auto_default": "Tüm verileri dahil et",
     "properties.viewport.area.continents": "kıtalar",

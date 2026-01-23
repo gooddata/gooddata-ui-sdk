@@ -229,6 +229,7 @@
     "properties.points.size.min.title": "最少",
     "properties.points.size.max.title": "最大",
     "properties.map.title": "マップ",
+    "properties.map.basemap.title": "ベースマップ",
     "properties.viewport.area.title": "デフォルトのビューポート",
     "properties.viewport.area.auto_default": "全てのデータを含める",
     "properties.viewport.area.continents": "大陸",

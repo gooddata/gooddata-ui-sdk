@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { render } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 import {
@@ -69,6 +69,26 @@ describe("Measure value filter dropdown", () => {
         expect(component.getComparisonValueInput()).not.toBeInTheDocument();
     });
 
+    it("should disable All operator selection when there is more than one condition", async () => {
+        renderComponent({ enableMultipleConditions: true });
+
+        // switch from default ALL so we can add another condition
+        component.openOperatorDropdown(0).selectOperator("GREATER_THAN");
+
+        // add second condition
+        const addButton = screen.getByTestId("mvf-add-condition");
+        fireEvent.click(addButton);
+        await screen.findByTestId("mvf-condition-1");
+
+        // open operator dropdown for the second condition and verify ALL is disabled
+        component.openOperatorDropdown(1);
+        expect(component.getOperator("ALL")).toHaveClass("is-disabled");
+
+        // clicking "All" should not change current operator selection
+        component.selectOperator("ALL");
+        expect(component.getSelectedOperatorTitle(1)).toEqual("Greater than");
+    });
+
     it("should have given operator preselected and values filled if filter is provided", () => {
         const filter = newMeasureValueFilter(localIdRef("myMeasure"), "LESS_THAN", 100);
         renderComponent({ filter });
@@ -124,6 +144,31 @@ describe("Measure value filter dropdown", () => {
         expect(component.getOperatorDropdownButton()).toHaveClass("disabled");
     });
 
+    it("should hide multi-condition UI when enableMultipleConditions is false and use only the first provided condition", () => {
+        const onApply = vi.fn();
+        const filter: IMeasureValueFilter = {
+            measureValueFilter: {
+                measure: localIdRef("myMeasure"),
+                conditions: [
+                    { comparison: { operator: "GREATER_THAN", value: 100 } },
+                    { comparison: { operator: "LESS_THAN", value: 10 } },
+                ],
+            },
+        };
+
+        renderComponent({ filter, onApply, enableMultipleConditions: false });
+
+        // multi-condition management controls should be hidden
+        expect(screen.queryByTestId("mvf-add-condition")).not.toBeInTheDocument();
+        expect(screen.queryByTestId("mvf-remove-condition-1")).not.toBeInTheDocument();
+
+        // applying should use only the first condition
+        component.setComparisonValue("101");
+        component.clickApply();
+        const expectedFilter = newMeasureValueFilter(localIdRef("myMeasure"), "GREATER_THAN", 101);
+        expect(onApply).toBeCalledWith(expectedFilter);
+    });
+
     it("should render preview reflecting current form state including dimensionality titles concatenation", () => {
         renderComponent({
             measureTitle: "# of Returned",
@@ -140,6 +185,108 @@ describe("Measure value filter dropdown", () => {
         const preview = component.getPreview();
         expect(preview).toBeInTheDocument();
         expect(preview!.textContent).toContain("# of Returned is greater than 300 for each Product, Brand");
+    });
+
+    it("should group multiple conditions by operator in preview", async () => {
+        renderComponent({
+            measureTitle: "# of Returned",
+            isDimensionalityEnabled: true,
+            enableMultipleConditions: true,
+            dimensionality: [],
+        });
+
+        // Condition 0: BETWEEN 100 - 200
+        component.openOperatorDropdown(0).selectOperator("BETWEEN");
+        const fromInputsAfterFirstBetween = document.querySelectorAll(".s-mvf-range-from-input input");
+        const toInputsAfterFirstBetween = document.querySelectorAll(".s-mvf-range-to-input input");
+        fireEvent.change(fromInputsAfterFirstBetween.item(0), { target: { value: "100" } });
+        fireEvent.change(toInputsAfterFirstBetween.item(0), { target: { value: "200" } });
+
+        // Condition 1: GREATER_THAN 10000
+        fireEvent.click(screen.getByTestId("mvf-add-condition"));
+        await screen.findByTestId("mvf-condition-1");
+        component.openOperatorDropdown(1).selectOperator("GREATER_THAN");
+        const comparisonInputs = document.querySelectorAll(".s-mvf-comparison-value-input input");
+        fireEvent.change(comparisonInputs.item(0), { target: { value: "10000" } });
+
+        // Condition 2: BETWEEN 800 - 900
+        fireEvent.click(screen.getByTestId("mvf-add-condition"));
+        await screen.findByTestId("mvf-condition-2");
+        component.openOperatorDropdown(2).selectOperator("BETWEEN");
+        const fromInputsAfterSecondBetween = document.querySelectorAll(".s-mvf-range-from-input input");
+        const toInputsAfterSecondBetween = document.querySelectorAll(".s-mvf-range-to-input input");
+        fireEvent.change(fromInputsAfterSecondBetween.item(1), { target: { value: "800" } });
+        fireEvent.change(toInputsAfterSecondBetween.item(1), { target: { value: "900" } });
+
+        const preview = component.getPreview();
+        expect(preview).toBeInTheDocument();
+        expect(preview!.textContent).toContain(
+            "# of Returned is between 100 and 200 or 800 and 900 or greater than 10,000",
+        );
+    });
+
+    it("should keep same-operator conditions next to each other in preview even if other operators interleave", async () => {
+        renderComponent({
+            measureTitle: "# of Returned",
+            isDimensionalityEnabled: true,
+            enableMultipleConditions: true,
+            dimensionality: [],
+        });
+
+        // Condition 0: BETWEEN 100 - 200
+        component.openOperatorDropdown(0).selectOperator("BETWEEN");
+        let fromInputs = document.querySelectorAll(".s-mvf-range-from-input input");
+        let toInputs = document.querySelectorAll(".s-mvf-range-to-input input");
+        fireEvent.change(fromInputs.item(0), { target: { value: "100" } });
+        fireEvent.change(toInputs.item(0), { target: { value: "200" } });
+
+        // Condition 1: LESS_THAN 500
+        fireEvent.click(screen.getByTestId("mvf-add-condition"));
+        await screen.findByTestId("mvf-condition-1");
+        component.openOperatorDropdown(1).selectOperator("LESS_THAN");
+        const comparisonInputs = document.querySelectorAll(".s-mvf-comparison-value-input input");
+        fireEvent.change(comparisonInputs.item(0), { target: { value: "500" } });
+
+        // Condition 2: BETWEEN 800 - 900
+        fireEvent.click(screen.getByTestId("mvf-add-condition"));
+        await screen.findByTestId("mvf-condition-2");
+        component.openOperatorDropdown(2).selectOperator("BETWEEN");
+        fromInputs = document.querySelectorAll(".s-mvf-range-from-input input");
+        toInputs = document.querySelectorAll(".s-mvf-range-to-input input");
+        fireEvent.change(fromInputs.item(1), { target: { value: "800" } });
+        fireEvent.change(toInputs.item(1), { target: { value: "900" } });
+
+        // Condition 3: BETWEEN 1000 - 1100
+        fireEvent.click(screen.getByTestId("mvf-add-condition"));
+        await screen.findByTestId("mvf-condition-3");
+        component.openOperatorDropdown(3).selectOperator("BETWEEN");
+        fromInputs = document.querySelectorAll(".s-mvf-range-from-input input");
+        toInputs = document.querySelectorAll(".s-mvf-range-to-input input");
+        fireEvent.change(fromInputs.item(2), { target: { value: "1000" } });
+        fireEvent.change(toInputs.item(2), { target: { value: "1100" } });
+
+        const preview = component.getPreview();
+        expect(preview).toBeInTheDocument();
+        expect(preview!.textContent).toContain(
+            "# of Returned is between 100 and 200 or 800 and 900 or 1,000 and 1,100 or less than 500",
+        );
+    });
+
+    it("should render preview for All operator including dimensionality titles", () => {
+        renderComponent({
+            measureTitle: "# of Returned",
+            isDimensionalityEnabled: true,
+            enableMultipleConditions: true,
+            dimensionality: [
+                { identifier: localIdRef("product"), title: "Product", type: "attribute" },
+                { identifier: localIdRef("brand"), title: "Brand", type: "attribute" },
+            ],
+        });
+
+        // All operator is selected by default when filter is not provided.
+        const preview = component.getPreview();
+        expect(preview).toBeInTheDocument();
+        expect(preview!.textContent).toContain("All for each Product, Brand");
     });
 
     it("should render preview without dimensionality when all dimensionality titles are empty", () => {
@@ -465,7 +612,7 @@ describe("Measure value filter dropdown", () => {
                 const filter = newMeasureValueFilter(localIdRef("myMeasure"), "BETWEEN", 10, 10);
                 renderComponent({ filter });
 
-                component.setRangeFrom("100");
+                component.setRangeFrom("5");
 
                 expect(component.isApplyButtonDisabled()).toEqual(false);
             });

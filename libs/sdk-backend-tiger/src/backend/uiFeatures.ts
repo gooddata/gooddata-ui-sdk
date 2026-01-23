@@ -32,6 +32,7 @@ export enum TigerFeaturesNames {
     EnableKDCrossFiltering = "enableKDCrossFiltering",
     EnableChangeAnalysis = "enableChangeAnalysis",
     EnableMultipleDateFilters = "enableMultipleDateFilters",
+    EnableMultipleMvfConditions = "enableMultipleMvfConditions",
     EnableKDRichText = "enableKDRichText",
     EnableMySqlDataSource = "enableMySqlDataSource",
     EnableCreateUser = "enableCreateUser",
@@ -160,6 +161,7 @@ export type ITigerFeatureFlags = {
     enableKDCrossFiltering: (typeof FeatureFlagsValues)["enableKDCrossFiltering"][number];
     enableChangeAnalysis: (typeof FeatureFlagsValues)["enableChangeAnalysis"][number];
     enableMultipleDateFilters: (typeof FeatureFlagsValues)["enableMultipleDateFilters"][number];
+    enableMultipleMvfConditions: (typeof FeatureFlagsValues)["enableMultipleMvfConditions"][number];
     enableKDRichText: (typeof FeatureFlagsValues)["enableKDRichText"][number];
     enableMySqlDataSource: (typeof FeatureFlagsValues)["enableMySqlDataSource"][number];
     enableCreateUser: (typeof FeatureFlagsValues)["enableCreateUser"][number];
@@ -290,6 +292,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableKDCrossFiltering: true,
     enableChangeAnalysis: false,
     enableMultipleDateFilters: true,
+    enableMultipleMvfConditions: false,
     enableKDRichText: true,
     enableMySqlDataSource: false,
     enableCreateUser: true,
@@ -420,6 +423,7 @@ export const FeatureFlagsValues = {
     enableKDCrossFiltering: [true, false] as const,
     enableChangeAnalysis: [true, false] as const,
     enableMultipleDateFilters: [true, false] as const,
+    enableMultipleMvfConditions: [true, false] as const,
     enableKDRichText: [true, false] as const,
     enableMySqlDataSource: [true, false] as const,
     enableMotherDuckDataSource: [true, false] as const,

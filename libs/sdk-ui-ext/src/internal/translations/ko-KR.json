@@ -229,6 +229,7 @@
     "properties.points.size.min.title": "가장 작은",
     "properties.points.size.max.title": "가장 큰",
     "properties.map.title": "지도",
+    "properties.map.basemap.title": "베이스맵",
     "properties.viewport.area.title": "기본 뷰포트",
     "properties.viewport.area.auto_default": "모든 데이터 포함",
     "properties.viewport.area.continents": "대륙",

@@ -229,6 +229,7 @@
     "properties.points.size.min.title": "Наименьший",
     "properties.points.size.max.title": "Наибольший",
     "properties.map.title": "Карта",
+    "properties.map.basemap.title": "Базовая карта",
     "properties.viewport.area.title": "Окно просмотра по умолчанию",
     "properties.viewport.area.auto_default": "Включить все данные",
     "properties.viewport.area.continents": "континенты",

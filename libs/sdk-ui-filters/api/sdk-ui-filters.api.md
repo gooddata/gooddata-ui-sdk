@@ -1047,6 +1047,7 @@ export interface IMeasureValueFilterCommonProps {
     dimensionality?: IDimensionalityItem[];
     // (undocumented)
     displayTreatNullAsZeroOption?: boolean;
+    enableMultipleConditions?: boolean;
     // (undocumented)
     enableOperatorSelection?: boolean;
     // (undocumented)

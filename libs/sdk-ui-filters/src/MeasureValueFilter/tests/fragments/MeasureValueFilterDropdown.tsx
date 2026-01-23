@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { fireEvent, screen } from "@testing-library/react";
 
@@ -11,7 +11,9 @@ export class MeasureValueFilterFragment {
     public getOperatorDropdown = (): HTMLElement | null =>
         document.querySelector(CLASS_OPERATOR_DROPDOWN_BODY);
 
-    public getOperatorDropdownButton = () => document.querySelector(CLASS_OPERATOR_DROPDOWN_BUTTON);
+    public getOperatorDropdownButtons = () => document.querySelectorAll(CLASS_OPERATOR_DROPDOWN_BUTTON);
+
+    public getOperatorDropdownButton = (index = 0) => this.getOperatorDropdownButtons().item(index);
 
     public isOperatorDropdownOpen = () => !!this.getOperatorDropdown();
 
@@ -27,9 +29,9 @@ export class MeasureValueFilterFragment {
         return this;
     };
 
-    public openOperatorDropdown = () => {
+    public openOperatorDropdown = (index = 0) => {
         if (!this.isOperatorDropdownOpen()) {
-            fireEvent.click(this.getOperatorDropdownButton()!);
+            fireEvent.click(this.getOperatorDropdownButton(index));
         }
         return this;
     };
@@ -73,7 +75,7 @@ export class MeasureValueFilterFragment {
     public pressEnterInComparisonInput = () =>
         fireEvent.keyDown(this.getComparisonValueInput(), { keyCode: 13 });
 
-    public getSelectedOperatorTitle = () => this.getOperatorDropdownButton()!.textContent;
+    public getSelectedOperatorTitle = (index = 0) => this.getOperatorDropdownButton(index).textContent;
 
     public getInputSuffixes = () => document.querySelectorAll(".gd-input-suffix");
 
@@ -85,10 +87,13 @@ export class MeasureValueFilterFragment {
     public getPreview = (): HTMLElement | null => document.querySelector("[data-testid='mvf-preview-text']");
 
     public clickTreatNullAsCheckbox = () => {
-        fireEvent.click(this.getTreatNullAsCheckbox()!);
+        const checkbox = this.getTreatNullAsCheckbox()!;
+        const nextChecked = !checkbox.checked;
+        fireEvent.click(checkbox);
+        fireEvent.change(checkbox, { target: { checked: nextChecked } });
         return this;
     };
 
     public getTreatNullAsCheckbox = (): HTMLInputElement | null =>
-        screen.queryByRole("checkbox", { hidden: true }); //this.component.find(".s-treat-null-values-as-zero .input-checkbox");
+        document.querySelector("[data-testid='mvf-treat-null-values-as-zero'] input[type='checkbox']");
 }

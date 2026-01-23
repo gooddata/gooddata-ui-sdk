@@ -1,10 +1,12 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import {
     type AbsoluteDateFilter,
     type BoundedFilter,
     type ComparisonMeasureValueFilter,
+    type CompoundMeasureValueFilter,
     type FilterDefinition,
+    type MeasureValueCondition,
     type NegativeAttributeFilter,
     type PositiveAttributeFilter,
     type RangeMeasureValueFilter,
@@ -15,10 +17,13 @@ import {
 } from "@gooddata/api-client-tiger";
 import { NotSupported } from "@gooddata/sdk-backend-spi";
 import {
+    type ComparisonConditionOperator,
     type IFilter,
     type ILowerBoundedFilter,
     type IUpperBoundedFilter,
+    type MeasureValueFilterCondition,
     type ObjRefInScope,
+    type RangeConditionOperator,
 } from "@gooddata/sdk-model";
 
 import { toSdkGranularity } from "../dateGranularityConversions.js";
@@ -56,9 +61,60 @@ const isRangeMeasureValueFilter = (filter: unknown): filter is RangeMeasureValue
     return (filter as RangeMeasureValueFilter).rangeMeasureValueFilter !== undefined;
 };
 
+const isCompoundMeasureValueFilter = (filter: unknown): filter is CompoundMeasureValueFilter => {
+    return (filter as CompoundMeasureValueFilter).compoundMeasureValueFilter !== undefined;
+};
+
 const isRankingFilter = (filter: unknown): filter is RankingFilter => {
     return (filter as RankingFilter).rankingFilter !== undefined;
 };
+
+function convertTigerDimensionalityToSdk(dimensionality: unknown[] | undefined): ObjRefInScope[] | undefined {
+    const converted = dimensionality
+        ?.map((d) => {
+            if (isAfmObjectIdentifier(d)) {
+                return toObjRef(d);
+            }
+            if (isAfmObjectLocalIdentifier(d)) {
+                return toLocalRef(d);
+            }
+            return undefined;
+        })
+        .filter((d): d is ObjRefInScope => d !== undefined);
+
+    return converted?.length ? converted : undefined;
+}
+
+function convertTigerMeasureValueConditionsToSdk(
+    conditions: MeasureValueCondition[],
+    treatNullValuesAs: number | undefined,
+): MeasureValueFilterCondition[] {
+    type TigerComparisonCondition = { comparison: { operator: unknown; value: number } };
+    type TigerRangeCondition = { range: { operator: unknown; from: number; to: number } };
+
+    return conditions.map((c): MeasureValueFilterCondition => {
+        if ("comparison" in (c as any)) {
+            const { operator, value } = (c as TigerComparisonCondition).comparison;
+            return {
+                comparison: {
+                    operator: operator as ComparisonConditionOperator,
+                    value,
+                    ...(treatNullValuesAs === undefined ? {} : { treatNullValuesAs }),
+                },
+            };
+        }
+
+        const { operator, from, to } = (c as TigerRangeCondition).range;
+        return {
+            range: {
+                operator: operator as RangeConditionOperator,
+                from,
+                to,
+                ...(treatNullValuesAs === undefined ? {} : { treatNullValuesAs }),
+            },
+        };
+    });
+}
 
 export const convertFilter = (filter: FilterDefinition): IFilter => {
     if (isPositiveAttributeFilter(filter) && isAfmObjectIdentifier(filter.positiveAttributeFilter.label)) {
@@ -143,31 +199,52 @@ export const convertFilter = (filter: FilterDefinition): IFilter => {
                 ...(boundedFilter ? { boundedFilter } : {}),
             },
         };
-    } else if (isComparisonMeasureValueFilter(filter)) {
-        const measure = filter.comparisonMeasureValueFilter.measure;
+    } else if (isCompoundMeasureValueFilter(filter)) {
+        const { measure, localIdentifier, conditions, treatNullValuesAs, dimensionality } =
+            filter.compoundMeasureValueFilter;
+        const sdkDimensionality = convertTigerDimensionalityToSdk(dimensionality);
+
         return {
             measureValueFilter: {
                 measure: isAfmObjectIdentifier(measure) ? toObjRef(measure) : measure,
-                localIdentifier: filter.comparisonMeasureValueFilter.localIdentifier,
+                localIdentifier,
+                ...(sdkDimensionality ? { dimensionality: sdkDimensionality } : {}),
+                conditions: convertTigerMeasureValueConditionsToSdk(conditions, treatNullValuesAs),
+            },
+        };
+    } else if (isComparisonMeasureValueFilter(filter)) {
+        const { measure, localIdentifier, operator, value, treatNullValuesAs, dimensionality } =
+            filter.comparisonMeasureValueFilter;
+        const sdkDimensionality = convertTigerDimensionalityToSdk(dimensionality);
+        return {
+            measureValueFilter: {
+                measure: isAfmObjectIdentifier(measure) ? toObjRef(measure) : measure,
+                localIdentifier,
+                ...(sdkDimensionality ? { dimensionality: sdkDimensionality } : {}),
                 condition: {
                     comparison: {
-                        operator: filter.comparisonMeasureValueFilter.operator,
-                        value: filter.comparisonMeasureValueFilter.value,
+                        operator,
+                        value,
+                        treatNullValuesAs,
                     },
                 },
             },
         };
     } else if (isRangeMeasureValueFilter(filter)) {
-        const measure = filter.rangeMeasureValueFilter.measure;
+        const { measure, localIdentifier, operator, from, to, treatNullValuesAs, dimensionality } =
+            filter.rangeMeasureValueFilter;
+        const sdkDimensionality = convertTigerDimensionalityToSdk(dimensionality);
         return {
             measureValueFilter: {
                 measure: isAfmObjectIdentifier(measure) ? toObjRef(measure) : measure,
-                localIdentifier: filter.rangeMeasureValueFilter.localIdentifier,
+                localIdentifier,
+                ...(sdkDimensionality ? { dimensionality: sdkDimensionality } : {}),
                 condition: {
                     range: {
-                        operator: filter.rangeMeasureValueFilter.operator,
-                        from: filter.rangeMeasureValueFilter.from,
-                        to: filter.rangeMeasureValueFilter.to,
+                        operator,
+                        from,
+                        to,
+                        treatNullValuesAs,
                     },
                 },
             },
