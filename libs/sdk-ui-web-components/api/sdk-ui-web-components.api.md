@@ -20,4 +20,6 @@ export const getContext: () => Promise<CustomElementContext>;
 // @public
 export const setContext: (context: CustomElementContext) => void;
 
+// (No @packageDocumentation comment for this package)
+
 ```

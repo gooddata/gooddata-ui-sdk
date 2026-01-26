@@ -15,11 +15,13 @@ export const chaiFriendly: IConfiguration = {
         "no-unused-expressions": "off",
         "chai-friendly/no-unused-expressions": "error",
     },
-    override: {
-        parser: "@typescript-eslint/parser",
-        files: ["**/*.ts", "**/*.tsx"],
-        rules: {
-            "@typescript-eslint/no-unused-expressions": "off",
+    overrides: [
+        {
+            parser: "@typescript-eslint/parser",
+            files: ["**/*.ts", "**/*.tsx"],
+            rules: {
+                "@typescript-eslint/no-unused-expressions": "off",
+            },
         },
-    },
+    ],
 };

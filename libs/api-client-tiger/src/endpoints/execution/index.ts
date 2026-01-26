@@ -1,5 +1,7 @@
 // (C) 2025-2026 GoodData Corporation
 
+/* eslint-disable no-barrel-files/no-barrel-files */
+
 export {
     // Execution API
     ActionsApi_ComputeReport as ExecutionAPI_ComputeReport,

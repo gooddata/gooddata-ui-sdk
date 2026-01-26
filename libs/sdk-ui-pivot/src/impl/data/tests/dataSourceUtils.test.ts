@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { type IDimension } from "@gooddata/sdk-model";
@@ -8,36 +9,33 @@ import { type IGridTotalsRow } from "../resultTypes.js";
 
 describe("getGridDataSourceUtils", () => {
     describe("isInvalidGetRowsRequest", () => {
-        function mockGridApi(bottomRowIndex: number | null): any {
+        function mockGridApi(displayedRowCount: number | null): any {
             return {
-                paginationProxy: {
-                    bottomRowBounds: {
-                        rowIndex: bottomRowIndex,
-                    },
-                },
+                getDisplayedRowCount: () => displayedRowCount,
             };
         }
 
-        it("should return false is bottom row index is null", () => {
+        it("should return false when gridApi is undefined", () => {
             const startRow = 0;
-            const bottomRowIndex: null = null;
-            const gridApi = mockGridApi(bottomRowIndex);
+            const gridApi = undefined;
 
             expect(isInvalidGetRowsRequest(startRow, gridApi)).toEqual(false);
         });
 
         it("should return false is start row of request is below bottom row index", () => {
             const startRow = 0;
-            const bottomRowIndex = 1;
-            const gridApi = mockGridApi(bottomRowIndex);
+            // bottomRowIndex = displayedRowCount - 1 = 2 - 1 = 1
+            const displayedRowCount = 2;
+            const gridApi = mockGridApi(displayedRowCount);
 
             expect(isInvalidGetRowsRequest(startRow, gridApi)).toEqual(false);
         });
 
         it("should return true is start row of request is above bottom row index", () => {
             const startRow = 1;
-            const bottomRowIndex = 0;
-            const gridApi = mockGridApi(bottomRowIndex);
+            // bottomRowIndex = displayedRowCount - 1 = 1 - 1 = 0
+            const displayedRowCount = 1;
+            const gridApi = mockGridApi(displayedRowCount);
 
             expect(isInvalidGetRowsRequest(startRow, gridApi)).toEqual(true);
         });

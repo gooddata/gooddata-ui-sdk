@@ -1,5 +1,6 @@
-// (C) 2021-2025 GoodData Corporation
-import { describe, expect, test } from "vitest";
+// (C) 2021-2026 GoodData Corporation
+
+import { describe, expect, it } from "vitest";
 
 import { type TigerObjectType } from "../../types/index.js";
 import { type TigerCompatibleObjectType } from "../../types/refTypeMapping.js";
@@ -18,11 +19,11 @@ const mapping: [TigerCompatibleObjectType, TigerObjectType][] = [
 ];
 
 describe("ObjectConverters", () => {
-    test.each(mapping)(" toTigerAfmType(%s).toBe(%s)", (objectType, tigerType) => {
+    it.each(mapping)(" toTigerAfmType(%s).toBe(%s)", (objectType, tigerType) => {
         expect(toTigerType(objectType)).toBe(tigerType);
     });
 
-    test.each(mapping)(" toObjectType(%s).toBe(%s)", (objectType, tigerType) => {
+    it.each(mapping)(" toObjectType(%s).toBe(%s)", (objectType, tigerType) => {
         expect(toObjectType(tigerType)).toBe(objectType);
     });
 });

@@ -16,7 +16,7 @@ import {
     insightWithMultipleMeasureBuckets,
     insightWithPoP,
     insightWithPoPAndAlias,
-} from "../../../../__mocks__/fixtures.js";
+} from "../../../../testUtils/fixtures.js";
 import { fillMissingTitles } from "../fillMissingTitles.js";
 
 describe("measureTitleHelper", () => {

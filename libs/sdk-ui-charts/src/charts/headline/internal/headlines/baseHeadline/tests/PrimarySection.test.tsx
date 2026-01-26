@@ -3,7 +3,7 @@
 import { render } from "@testing-library/react";
 import { type MockInstance, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { mockUseBaseHeadline } from "./BaseHeadlineMock.js";
+import { mockUseBaseHeadline } from "./BaseHeadline.test.helpers.js";
 import { TEST_BASE_HEADLINE_ITEM } from "../../../tests/TestData.fixtures.js";
 import { PrimarySection } from "../PrimarySection.js";
 import * as PrimarySectionCompactContent from "../PrimarySectionCompactContent.js";

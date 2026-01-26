@@ -18,6 +18,7 @@ interface IEslintConfigurationCommon {
 
 interface IOverride extends IEslintConfigurationCommon {
     files: string[];
+    excludedFiles?: string[];
 }
 
 interface IEslintConfiguration extends IEslintConfigurationCommon {
@@ -49,7 +50,7 @@ function applyConfiguration(eslintConfiguration: IEslintConfiguration, configura
         newConfiguration.extends = [...newConfiguration.extends, ...configuration.extends];
     if (configuration.parserOptions) newConfiguration.parserOptions = configuration.parserOptions;
     if (configuration.rules) newConfiguration.rules = { ...newConfiguration.rules, ...configuration.rules };
-    if (configuration.override) newConfiguration.overrides?.push(configuration.override);
+    if (configuration.overrides) newConfiguration.overrides?.push(...configuration.overrides);
     if (configuration.settings)
         newConfiguration.settings = { ...newConfiguration.settings, ...configuration.settings };
     if (configuration.env) newConfiguration.env = { ...newConfiguration.env, ...configuration.env };

@@ -6,7 +6,7 @@ import { describe, expect, it, vi } from "vitest";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { DataViewFirstPage, type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 
-import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
+import { recordedDataFacade } from "../../../../../testUtils/recordings.js";
 import { TableDescriptor } from "../../tableDescriptor.js";
 import { HeaderCell } from "../HeaderCell.js";
 

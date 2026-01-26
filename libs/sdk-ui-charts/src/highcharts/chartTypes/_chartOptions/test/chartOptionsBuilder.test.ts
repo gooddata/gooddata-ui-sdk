@@ -14,8 +14,8 @@ import {
     getRgbString,
 } from "@gooddata/sdk-ui-vis-commons";
 
-import * as fixtures from "../../../../../__mocks__/fixtures.js";
-import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
+import * as fixtures from "../../../../../testUtils/fixtures.js";
+import { recordedDataFacade } from "../../../../../testUtils/recordings.js";
 import { type IChartConfig } from "../../../../interfaces/chartConfig.js";
 import {
     DEFAULT_CATEGORIES_LIMIT,

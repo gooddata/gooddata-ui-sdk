@@ -53,10 +53,11 @@ interface IConfigurationShared<RulePrefix extends string> {
 
 interface IOverride<RulePrefix extends string> extends IConfigurationShared<RulePrefix> {
     files: string[];
+    excludedFiles?: string[];
 }
 
 export interface IConfiguration<RulePrefix extends string = "">
     extends IConfigurationBase,
         IConfigurationShared<RulePrefix> {
-    override?: IOverride<RulePrefix>;
+    overrides?: IOverride<RulePrefix>[];
 }

@@ -1,5 +1,7 @@
 // (C) 2025-2026 GoodData Corporation
 
+/* eslint-disable no-barrel-files/no-barrel-files */
+
 // GenAI API - Export GenAI-related ActionsApi functions with GenAiApi_ prefix
 export {
     ActionsApi_AiSearch as GenAiApi_AiSearch,

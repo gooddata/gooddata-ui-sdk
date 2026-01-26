@@ -8,7 +8,7 @@ import { type IColorPalette, type IColorPaletteItem, type RgbType } from "@goodd
 import { type DataViewFacade, DefaultColorPalette, HeaderPredicates } from "@gooddata/sdk-ui";
 
 import { getColorsFromStrategy } from "./helper.js";
-import { recordedDataFacade } from "../../../__mocks__/recordings.js";
+import { recordedDataFacade } from "../../../testUtils/recordings.js";
 import { AttributeColorStrategy } from "../attribute.js";
 import { getRgbString } from "../color.js";
 import { type IColorMapping } from "../types.js";

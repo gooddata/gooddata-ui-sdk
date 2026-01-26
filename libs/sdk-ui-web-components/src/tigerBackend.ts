@@ -1,5 +1,7 @@
 // (C) 2022-2026 GoodData Corporation
 
+/* eslint-disable no-barrel-files/no-barrel-files */
+
 import { type IAnalyticalBackend, type IAnalyticalBackendConfig } from "@gooddata/sdk-backend-spi";
 import { tigerFactory } from "@gooddata/sdk-backend-tiger";
 

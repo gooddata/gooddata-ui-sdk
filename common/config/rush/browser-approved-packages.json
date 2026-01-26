@@ -755,6 +755,10 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
+      "name": "eslint-plugin-no-barrel-files",
+      "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
       "name": "eslint-plugin-no-only-tests",
       "allowedCategories": [ "examples", "production", "tools" ]
     },

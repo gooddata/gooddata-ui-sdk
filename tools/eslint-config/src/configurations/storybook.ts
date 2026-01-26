@@ -30,11 +30,13 @@ export const storybook: IConfiguration<"storybook"> = {
         },
     ],
     plugins: ["sonarjs"],
-    override: {
-        files: ["**/*.stories.tsx"],
-        extends: ["plugin:storybook/recommended"],
-        rules: {
-            "storybook/prefer-pascal-case": "error",
+    overrides: [
+        {
+            files: ["**/*.stories.tsx"],
+            extends: ["plugin:storybook/recommended"],
+            rules: {
+                "storybook/prefer-pascal-case": "error",
+            },
         },
-    },
+    ],
 };

@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { type ExplicitDrill, createIntlMock } from "@gooddata/sdk-ui";
 
-import { recordedDataFacade } from "../../../../../../__mocks__/recordings.js";
+import { recordedDataFacade } from "../../../../../../testUtils/recordings.js";
 import { type IComparison } from "../../../../../interfaces/comparison.js";
 import { TEST_COMPARISON_TRANSFORMATIONS, TEST_DEFAULT_COMPARISON } from "../../tests/TestData.fixtures.js";
 import { getComparisonBaseHeadlineData } from "../ComparisonTransformationUtils.js";

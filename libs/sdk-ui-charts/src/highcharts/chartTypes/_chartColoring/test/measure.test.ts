@@ -10,7 +10,7 @@ import { type IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 
 import { TwoColorPalette } from "./color.fixture.js";
 import { getColorsFromStrategy } from "./helper.js";
-import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
+import { recordedDataFacade } from "../../../../../testUtils/recordings.js";
 import { ColorFactory } from "../../_chartOptions/colorFactory.js";
 import { getMVS } from "../../_util/test/helper.js";
 import { MeasureColorStrategy } from "../measure.js";

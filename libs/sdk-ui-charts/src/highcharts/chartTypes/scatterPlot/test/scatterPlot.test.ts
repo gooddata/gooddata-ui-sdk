@@ -8,7 +8,7 @@ import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { HeaderPredicates } from "@gooddata/sdk-ui";
 import { type IColorMapping, type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
-import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
+import { recordedDataFacade } from "../../../../../testUtils/recordings.js";
 import { ColorFactory } from "../../_chartOptions/colorFactory.js";
 import { CUSTOM_COLOR_PALETTE } from "../../_util/test/colorPalette.fixture.js";
 import { getMVS } from "../../_util/test/helper.js";

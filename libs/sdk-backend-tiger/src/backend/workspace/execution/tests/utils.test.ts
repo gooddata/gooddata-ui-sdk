@@ -1,6 +1,6 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { describe, expect, test } from "vitest";
+import { describe, expect, it } from "vitest";
 
 import { type IExecutionDefinition } from "@gooddata/sdk-model";
 
@@ -88,12 +88,12 @@ describe("augmentCustomOverrideWithNormalizedKeys", () => {
         postProcessing: {},
     };
 
-    test("should return undefined when customOverride is undefined", () => {
+    it("should return undefined when customOverride is undefined", () => {
         const result = augmentCustomOverrideWithNormalizedKeys(undefined, simpleDefinition);
         expect(result).toMatchSnapshot();
     });
 
-    test("should augment labels with normalized keys", () => {
+    it("should augment labels with normalized keys", () => {
         const customOverride = {
             labels: {
                 a1: {
@@ -106,7 +106,7 @@ describe("augmentCustomOverrideWithNormalizedKeys", () => {
         expect(result).toMatchSnapshot();
     });
 
-    test("should augment metrics with normalized keys", () => {
+    it("should augment metrics with normalized keys", () => {
         const customOverride = {
             metrics: {
                 m1: {
@@ -120,7 +120,7 @@ describe("augmentCustomOverrideWithNormalizedKeys", () => {
         expect(result).toMatchSnapshot();
     });
 
-    test("should augment both labels and metrics with normalized keys", () => {
+    it("should augment both labels and metrics with normalized keys", () => {
         const customOverride = {
             labels: {
                 a1: {
@@ -139,14 +139,14 @@ describe("augmentCustomOverrideWithNormalizedKeys", () => {
         expect(result).toMatchSnapshot();
     });
 
-    test("should handle empty customOverride", () => {
+    it("should handle empty customOverride", () => {
         const customOverride = {};
 
         const result = augmentCustomOverrideWithNormalizedKeys(customOverride, simpleDefinition);
         expect(result).toMatchSnapshot();
     });
 
-    test("should preserve all original keys and add normalized ones", () => {
+    it("should preserve all original keys and add normalized ones", () => {
         const customOverride = {
             labels: {
                 original_key_1: {

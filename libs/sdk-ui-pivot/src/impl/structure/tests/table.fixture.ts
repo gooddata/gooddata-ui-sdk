@@ -2,7 +2,7 @@
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { DataViewFirstPage, type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 
-import { recordedDataFacade } from "../../../../__mocks__/recordings.js";
+import { recordedDataFacade } from "../../../../testUtils/recordings.js";
 
 export const SingleMeasureWithRowAttribute = recordedDataFacade(
     ReferenceRecordings.Scenarios.PivotTable.SingleMeasureWithRowAttribute as ScenarioRecording,

@@ -10,15 +10,9 @@ import {
 } from "@gooddata/sdk-ui";
 import { ThemeContextProvider } from "@gooddata/sdk-ui-theme-provider";
 
-import {
-    ChartTransformation,
-    type IChartTransformationProps,
-    type IHighChartsRendererProps,
-    getValidColorPalette,
-} from "../../highcharts/index.js";
+import { ChartTransformation, type IChartTransformationProps } from "../../highcharts/ChartTransformation.js";
+import { getValidColorPalette } from "../../highcharts/chartTypes/_util/color.js";
 import { getSanitizedStackingConfig } from "../_commons/sanitizeStacking.js";
-
-export type { IChartTransformationProps, IHighChartsRendererProps };
 
 /**
  * NOTE: exported to satisfy sdk-ui-ext; is internal, must not be used outside SDK

@@ -9,7 +9,7 @@ import { type IVisConstruct } from "../../../../interfaces/Visualization.js";
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import * as testMocks from "../../../../tests/mocks/testMocks.js";
 import { DEFAULT_MESSAGES } from "../../../../utils/translations.js";
-import { getLastRenderEl } from "../../tests/testHelpers.js";
+import { getLastRenderEl } from "../../tests/pluggableVisualizations.test.helpers.js";
 import { PluggableWaterfallChart } from "../PluggableWaterfallChart.js";
 
 describe("PluggableWaterfallChart", () => {

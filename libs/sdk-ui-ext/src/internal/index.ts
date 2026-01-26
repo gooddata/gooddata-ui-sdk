@@ -1,5 +1,7 @@
 // (C) 2019-2026 GoodData Corporation
 
+/* eslint-disable no-barrel-files/no-barrel-files */
+
 import { LabelRotationControl } from "./components/configurationControls/axis/LabelRotationControl.js";
 import { LabelSubsection } from "./components/configurationControls/axis/LabelSubsection.js";
 import { NamePositionControl } from "./components/configurationControls/axis/NamePositionControl.js";

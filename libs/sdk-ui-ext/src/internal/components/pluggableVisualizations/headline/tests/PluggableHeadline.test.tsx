@@ -19,7 +19,7 @@ import * as referencePointMocks from "../../../../tests/mocks/referencePointMock
 import * as testMocks from "../../../../tests/mocks/testMocks.js";
 import { getMeasureItems } from "../../../../utils/bucketHelper.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../../utils/translations.js";
-import { getLastRenderEl } from "../../tests/testHelpers.js";
+import { getLastRenderEl } from "../../tests/pluggableVisualizations.test.helpers.js";
 import { PluggableHeadline } from "../PluggableHeadline.js";
 
 describe("PluggableHeadline", () => {

@@ -1,5 +1,6 @@
-// (C) 2023-2025 GoodData Corporation
-import { describe, expect, test } from "vitest";
+// (C) 2023-2026 GoodData Corporation
+
+import { describe, expect, it } from "vitest";
 
 import { UnexpectedResponseError } from "@gooddata/sdk-backend-spi";
 
@@ -7,7 +8,7 @@ import { convertApiError } from "../errorHandling.js";
 
 describe("errorHandling", () => {
     describe("convertApiError", () => {
-        test("convert to UnexpectedResponseError correctly", () => {
+        it("convert to UnexpectedResponseError correctly", () => {
             const traceId = "adi_MSLFlr0ipb_74FAYdvoR1";
             const status = 500;
             const data = {

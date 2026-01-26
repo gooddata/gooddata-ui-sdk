@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 
 import { type IInsight, idMatchMeasure, insightMeasures, measureFormat } from "@gooddata/sdk-model";
 
-import { insightWithMultipleMeasureBucketsAndFormats } from "../../../../__mocks__/fixtures.js";
+import { insightWithMultipleMeasureBucketsAndFormats } from "../../../../testUtils/fixtures.js";
 import { fillMissingFormats } from "../fillMissingFormats.js";
 
 describe("fillMissingFormats", () => {

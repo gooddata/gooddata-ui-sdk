@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/reference-workspace",
-    "version": "11.18.0-alpha.3",
+    "version": "11.18.0-alpha.4",
     "description": "GoodData SDK - Reference Workspace for tests",
     "repository": {
         "type": "git",
@@ -26,9 +26,7 @@
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
         "clear-recordings": "rm -r src/recordings/uiTestScenarios",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
-        "dep-cruiser-ci": "mkdir -p ci/results && depcruise --validate .dependency-cruiser.cjs --output-type err-html src/ >./ci/results/dep-cruiser.html",
         "eslint": "eslint -c .eslintrc.cjs src/",
-        "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml -c .eslintrc.cjs src/",
         "eslint-fix": "eslint -c .eslintrc.cjs src/ --fix",
         "export-ref-workspace": "cd ../reference-workspace-mgmt && npm run export-ref-workspace",
         "import-ref-workspace": "cd ../reference-workspace-mgmt && npm run import-ref-workspace",
@@ -58,6 +56,7 @@
         "eslint-plugin-import": "2.32.0",
         "eslint-plugin-import-esm": "1.2.1",
         "eslint-plugin-jsdoc": "62.1.0",
+        "eslint-plugin-no-barrel-files": "1.2.2",
         "eslint-plugin-no-only-tests": "2.6.0",
         "eslint-plugin-prettier": "5.5.4",
         "eslint-plugin-regexp": "1.15.0",

@@ -1,5 +1,6 @@
-// (C) 2021-2025 GoodData Corporation
-import { describe, expect, test } from "vitest";
+// (C) 2021-2026 GoodData Corporation
+
+import { describe, expect, it } from "vitest";
 
 import { type JsonApiLabelOutAttributesValueTypeEnum } from "@gooddata/api-client-tiger";
 import { type AttributeDisplayFormType } from "@gooddata/sdk-model";
@@ -14,7 +15,7 @@ const mapping: [JsonApiLabelOutAttributesValueTypeEnum, AttributeDisplayFormType
 ];
 
 describe("LabelTypeConverter", () => {
-    test.each(mapping)(" convertLabelType(%s).toBe(%s)", (tigerType, modelType) => {
+    it.each(mapping)(" convertLabelType(%s).toBe(%s)", (tigerType, modelType) => {
         expect(convertLabelType(tigerType)).toBe(modelType);
     });
 });

@@ -1,5 +1,7 @@
 // (C) 2025-2026 GoodData Corporation
 
+/* eslint-disable no-barrel-files/no-barrel-files */
+
 // Automation API - Export ActionsAutomation functions with AutomationApi_ prefix
 export {
     ActionsAutomation_GetNotifications as AutomationApi_GetNotifications,

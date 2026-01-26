@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-loaders",
-    "version": "11.18.0-alpha.3",
+    "version": "11.18.0-alpha.4",
     "description": "GoodData SDK Runtime Component Loaders",
     "repository": {
         "type": "git",
@@ -32,9 +32,7 @@
         "build": "tsc -p tsconfig.build.json && npm run api-extractor",
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log styles/css tsconfig.tsbuildinfo",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
-        "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
         "eslint": "eslint -c .eslintrc.cjs --ignore-path ../.eslintignore .",
-        "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml -c .eslintrc.cjs --ignore-path ../.eslintignore .",
         "eslint-fix": "eslint -c .eslintrc.cjs --ignore-path ../.eslintignore . --fix",
         "prepack": "cp -f ../../NOTICE ./NOTICE",
         "prettier-check": "prettier --no-error-on-unmatched-pattern --check '{src,stories,styles,__mocks__}/**/*.{json,scss,md,yaml,html}'",
@@ -74,6 +72,7 @@
         "eslint-plugin-import": "2.32.0",
         "eslint-plugin-import-esm": "1.2.1",
         "eslint-plugin-jsdoc": "62.1.0",
+        "eslint-plugin-no-barrel-files": "1.2.2",
         "eslint-plugin-no-only-tests": "2.6.0",
         "eslint-plugin-prettier": "5.5.4",
         "eslint-plugin-react": "7.37.5",

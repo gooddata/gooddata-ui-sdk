@@ -112,6 +112,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -260,6 +263,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -384,6 +390,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -508,6 +517,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -632,6 +644,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -756,6 +771,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -880,6 +898,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -1004,6 +1025,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -1128,6 +1152,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -1261,6 +1288,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -1385,6 +1415,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -1509,6 +1542,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -1633,6 +1669,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -1757,6 +1796,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -1881,6 +1923,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -1990,6 +2035,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -2105,6 +2153,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -2202,6 +2253,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -2284,6 +2338,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -2420,6 +2477,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -2502,6 +2562,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -2599,6 +2662,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -2750,6 +2816,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -2880,6 +2949,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -3004,6 +3076,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -3224,6 +3299,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -3489,6 +3567,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -3766,6 +3847,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -3971,6 +4055,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -4215,6 +4302,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -4408,6 +4498,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -4691,6 +4784,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -4845,6 +4941,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -5011,6 +5110,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -5171,6 +5273,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -5390,6 +5495,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -5648,6 +5756,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -5835,6 +5946,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -5989,6 +6103,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -6158,6 +6275,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -6267,6 +6387,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -6340,6 +6463,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -6431,6 +6557,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -6600,6 +6729,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -6690,6 +6822,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -6829,6 +6964,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -6983,6 +7121,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -7097,6 +7238,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -7218,6 +7362,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -7330,6 +7477,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -7475,6 +7625,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -7611,6 +7764,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -7720,6 +7876,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -7799,6 +7958,9 @@ importers:
       eslint-plugin-jsdoc:
         specifier: 62.1.0
         version: 62.1.0(eslint@8.57.1)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@8.57.1)(typescript@5.9.3)
       eslint-plugin-no-only-tests:
         specifier: 2.6.0
         version: 2.6.0
@@ -15120,6 +15282,16 @@ packages:
       to-valid-identifier: 1.0.0
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /eslint-plugin-no-barrel-files@1.2.2(eslint@8.57.1)(typescript@5.9.3):
+    resolution: {integrity: sha512-DF2bnHuEHClmL1+maBO5TD2HnnRsLj8J69FFtVkjObkELyjCXaWBsk+URJkqBpdOWURlL+raGX9AEpWCAiOV0g==}
+    dependencies:
+      '@typescript-eslint/utils': 8.52.0(eslint@8.57.1)(typescript@5.9.3)
+    transitivePeerDependencies:
+      - eslint
+      - supports-color
+      - typescript
     dev: true
 
   /eslint-plugin-no-only-tests@2.6.0:

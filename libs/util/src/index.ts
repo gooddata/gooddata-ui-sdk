@@ -1,5 +1,7 @@
 // (C) 2019-2026 GoodData Corporation
 
+/* eslint-disable no-barrel-files/no-barrel-files */
+
 /**
  * This package contains utility functions used in production or test code of multiple different GoodData.UI packages.
  *

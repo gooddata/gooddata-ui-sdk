@@ -1,5 +1,7 @@
 // (C) 2019-2026 GoodData Corporation
 
+/* eslint-disable no-barrel-files/no-barrel-files */
+
 /**
  * This package defines APIs for embedding and interfacing with the embedded GoodData applications - Analytical Designer and Dashboards/KPI Dashboards.
  *

@@ -20,43 +20,11 @@ import { ThemeContextProvider, useTheme, withTheme } from "@gooddata/sdk-ui-them
 
 import { getWindowSize } from "./internal/repeaterAgGridDataSource.js";
 import { RepeaterChart } from "./internal/RepeaterChart.js";
-import type {
-    IRepeaterChartConfig,
-    IRepeaterChartProps,
-    IRepeaterColumnSizing,
-    RepeaterColumnResizedCallback,
-    RepeaterDefaultColumnWidth,
-} from "./publicTypes.js";
-import { ColorFactory, getValidColorPalette } from "../../highcharts/index.js";
+import type { RepeaterColumnResizedCallback } from "./publicTypes.js";
+import { ColorFactory } from "../../highcharts/chartTypes/_chartOptions/colorFactory.js";
+import { getValidColorPalette } from "../../highcharts/chartTypes/_util/color.js";
 import { type IChartConfig } from "../../interfaces/chartConfig.js";
 import { type ICoreChartProps } from "../../interfaces/chartProps.js";
-
-export type {
-    RepeaterColumnResizedCallback,
-    RepeaterDefaultColumnWidth,
-    IRepeaterColumnSizing,
-    IRepeaterChartConfig,
-    IRepeaterChartProps,
-};
-export type {
-    ColumnEventSourceType,
-    UIClick,
-    IRepeaterAbsoluteColumnWidth,
-    IRepeaterAutoColumnWidth,
-    RepeaterColumnWidth,
-    IRepeaterAttributeColumnWidthItemBody,
-    IRepeaterAttributeColumnWidthItem,
-    IRepeaterMeasureColumnWidthItemBody,
-    IRepeaterMeasureColumnWidthItem,
-    IRepeaterWeakMeasureColumnWidthItemBody,
-    IRepeaterWeakMeasureColumnWidthItem,
-    RepeaterColumnWidthItem,
-    RepeaterColumnLocator,
-    IRepeaterMeasureColumnLocatorBody,
-    IRepeaterMeasureColumnLocator,
-    IRepeaterAttributeColumnLocatorBody,
-    IRepeaterAttributeColumnLocator,
-} from "./columnWidths.js";
 
 /**
  * @internal
