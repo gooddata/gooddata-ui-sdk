@@ -1,5 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
+import { barrelFiles } from "./configurations/barrel-files.js";
 import { browserEnv } from "./configurations/browser-env.js";
 import { chaiFriendly } from "./configurations/chai-friendly.js";
 import { cypress } from "./configurations/cypress.js";
@@ -29,8 +30,9 @@ export const common = [
     eslint,
     header,
     typescript,
-    jsdoc,
+    barrelFiles,
     import_,
+    jsdoc,
     noOnlyTests,
     prettier,
     regexp,

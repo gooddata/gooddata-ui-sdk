@@ -32,15 +32,11 @@ const GdScriptsReplace = {
     clean: "rm -rf esm *.log",
     test: null,
     "test-once": null,
-    "test-ci": null,
     eslint: null,
-    "eslint-ci": null,
     "prettier-check": null,
     "prettier-write": null,
     "dep-cruiser": null,
-    "dep-cruiser-ci": null,
     validate: null,
-    "validate-ci": null,
 };
 
 const UnnecessaryDependencies = [

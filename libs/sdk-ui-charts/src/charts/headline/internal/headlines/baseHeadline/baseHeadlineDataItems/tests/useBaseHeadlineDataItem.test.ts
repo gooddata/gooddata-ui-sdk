@@ -3,7 +3,7 @@ import { renderHook } from "@testing-library/react";
 import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { TEST_DATA_ITEM } from "../../../../tests/TestData.fixtures.js";
-import { mockUseBaseHeadline } from "../../tests/BaseHeadlineMock.js";
+import { mockUseBaseHeadline } from "../../tests/BaseHeadline.test.helpers.js";
 import { useBaseHeadlineDataItem } from "../useBaseHeadlineDataItem.js";
 
 describe("useBaseHeadlineDataItem", () => {

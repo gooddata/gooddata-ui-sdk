@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-interactive-example-granularity",
-    "version": "11.18.0-alpha.3",
+    "version": "11.18.0-alpha.4",
     "private": false,
     "description": "This example exmplains DateFilter granularity ",
     "license": "LicenseRef-LICENSE",
@@ -11,7 +11,6 @@
         "_phase:validate": "npm run validate",
         "build": "tsc -p tsconfig.json",
         "build-example": "vite build",
-        "build-example-ci": "vite build -l error",
         "clean": "rm -rf esm dist *.log",
         "eslint": "eslint -c .eslintrc.cjs src/",
         "eslint-fix": "eslint -c .eslintrc.cjs src/ --fix",
@@ -54,6 +53,7 @@
         "eslint-plugin-import": "2.32.0",
         "eslint-plugin-import-esm": "1.2.1",
         "eslint-plugin-jsdoc": "62.1.0",
+        "eslint-plugin-no-barrel-files": "1.2.2",
         "eslint-plugin-no-only-tests": "2.6.0",
         "eslint-plugin-prettier": "5.5.4",
         "eslint-plugin-react": "7.37.5",

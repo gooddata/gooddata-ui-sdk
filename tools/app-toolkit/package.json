@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/app-toolkit",
-    "version": "11.18.0-alpha.3",
+    "version": "11.18.0-alpha.4",
     "description": "CLI with useful tools for creating and maintaining GoodData web applications.",
     "repository": {
         "type": "git",
@@ -33,16 +33,13 @@
         "build-dynamic-files": "bash scripts/build.sh --genFilesOnly",
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm build coverage *.log tsconfig.tsbuildinfo",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
-        "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
         "eslint": "eslint -c .eslintrc.cjs src/",
-        "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml -c .eslintrc.cjs src/",
         "eslint-fix": "eslint -c .eslintrc.cjs src/ --fix",
         "prepack": "cp -f ../../NOTICE ./NOTICE",
         "prepublishOnly": "npm run build",
         "prettier-check": "prettier --no-error-on-unmatched-pattern --check '{src,test}/**/*.{json,scss,md,yaml,html}'",
         "prettier-write": "prettier --no-error-on-unmatched-pattern --write '{src,test}/**/*.{json,scss,md,yaml,html}'",
         "test": "vitest watch --passWithNoTests",
-        "test-ci": "vitest run --reporter=junit --outputFile=./ci/results/test-results.xml --passWithNoTests",
         "test-once": "vitest run --passWithNoTests",
         "validate": "tsc && npm run dep-cruiser && npm run eslint && npm run prettier-check"
     },
@@ -91,6 +88,7 @@
         "eslint-plugin-import": "2.32.0",
         "eslint-plugin-import-esm": "1.2.1",
         "eslint-plugin-jsdoc": "62.1.0",
+        "eslint-plugin-no-barrel-files": "1.2.2",
         "eslint-plugin-no-only-tests": "2.6.0",
         "eslint-plugin-prettier": "5.5.4",
         "eslint-plugin-regexp": "1.15.0",

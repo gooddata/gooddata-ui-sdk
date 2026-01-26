@@ -1,4 +1,7 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
+
+/* eslint-disable no-barrel-files/no-barrel-files */
+
 export { blueLightTheme } from "./defaultThemes/blueLight.js";
 export { greenDarkTheme } from "./defaultThemes/greenDark.js";
 export { indigoTheme } from "./defaultThemes/indigo.js";

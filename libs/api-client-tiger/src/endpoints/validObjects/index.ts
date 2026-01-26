@@ -1,5 +1,7 @@
 // (C) 2025-2026 GoodData Corporation
 
+/* eslint-disable no-barrel-files/no-barrel-files */
+
 // Valid Objects API
 export {
     ActionsApi_ComputeValidObjects,

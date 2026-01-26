@@ -17,7 +17,7 @@ import {
 } from "@gooddata/sdk-model";
 import { createIntlMock } from "@gooddata/sdk-ui";
 
-import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
+import { recordedDataFacade } from "../../../../../testUtils/recordings.js";
 import { AVAILABLE_TOTALS } from "../../../base/constants.js";
 import { TableDescriptor } from "../../tableDescriptor.js";
 import { AggregationsMenu, type IAggregationsMenuProps } from "../AggregationsMenu.js";

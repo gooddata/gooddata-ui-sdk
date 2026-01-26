@@ -5,7 +5,7 @@ import { type RefObject } from "react";
 import { render } from "@testing-library/react";
 import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { mockUseBaseHeadline } from "./BaseHeadlineMock.js";
+import { mockUseBaseHeadline } from "./BaseHeadline.test.helpers.js";
 import { type BaseHeadlineItemAccepted, type IBaseHeadlineItem } from "../../../interfaces/BaseHeadlines.js";
 import { TEST_BASE_HEADLINE_ITEM } from "../../../tests/TestData.fixtures.js";
 import { CompareSectionItem } from "../CompareSectionItem.js";

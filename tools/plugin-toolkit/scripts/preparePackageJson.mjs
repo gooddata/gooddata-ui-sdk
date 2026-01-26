@@ -29,7 +29,7 @@ export function readJsonSync(file) {
  * this script to clean things up programatically.
  */
 
-const GdScriptsRemove = ["test-ci", "eslint-ci", "dep-cruiser", "dep-cruiser-ci", "validate", "validate-ci"];
+const GdScriptsRemove = ["dep-cruiser", "validate"];
 
 const UnnecessaryDevDependencies = ["@gooddata/eslint-config", "dependency-cruiser", "eslint-plugin-sonarjs"];
 

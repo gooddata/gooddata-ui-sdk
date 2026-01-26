@@ -1,5 +1,7 @@
 // (C) 2019-2026 GoodData Corporation
 
+/* eslint-disable no-barrel-files/no-barrel-files */
+
 /**
  * This package provides the components that you can use to visualize location-based data.
  *

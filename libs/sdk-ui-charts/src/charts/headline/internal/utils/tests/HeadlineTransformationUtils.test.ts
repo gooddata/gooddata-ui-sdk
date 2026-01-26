@@ -16,7 +16,7 @@ import {
     headlineWithTwoMeasuresSecondEmpty,
     headlineWithTwoMeasuresSecondZero,
     headlineWithTwoMeasuresWithIdentifier,
-} from "../../../../../../__mocks__/fixtures.js";
+} from "../../../../../../testUtils/fixtures.js";
 import { type IHeadlineData } from "../../interfaces/Headlines.js";
 import {
     type IHeadlineDrillItemContext,

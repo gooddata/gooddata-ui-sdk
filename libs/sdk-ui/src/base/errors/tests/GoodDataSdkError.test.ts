@@ -2,7 +2,7 @@
 
 import { describe, expect, it } from "vitest";
 
-import { InvalidInputTestCases } from "../../../../__mocks__/typeGuards.js";
+import { InvalidInputTestCases } from "../../../../testUtils/typeGuards.js";
 import { isGoodDataSdkError } from "../GoodDataSdkError.js";
 
 describe("sdk error type guard", () => {

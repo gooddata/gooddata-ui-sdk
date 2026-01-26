@@ -1,5 +1,7 @@
 // (C) 2025-2026 GoodData Corporation
 
+/* eslint-disable no-barrel-files/no-barrel-files */
+
 // Result API - Export ActionsApi functions with ResultApi_ prefix
 export {
     ActionsApi_AnalyzeCsv as ResultApi_AnalyzeCsv,

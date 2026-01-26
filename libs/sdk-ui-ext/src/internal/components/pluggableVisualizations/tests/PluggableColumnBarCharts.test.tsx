@@ -21,7 +21,11 @@ import {
     intersection,
     targetUri,
 } from "./getInsightWithDrillDownAppliedMock.js";
-import { createDrillDefinition, createDrillEvent, insightDefinitionToInsight } from "./testHelpers.js";
+import {
+    createDrillDefinition,
+    createDrillEvent,
+    insightDefinitionToInsight,
+} from "./pluggableVisualizations.test.helpers.js";
 import { AXIS } from "../../../constants/axis.js";
 import {
     COLUMN_CHART_SUPPORTED_PROPERTIES,

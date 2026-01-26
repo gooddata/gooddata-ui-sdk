@@ -1,6 +1,6 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { describe, expect, test } from "vitest";
+import { describe, expect, it } from "vitest";
 
 import { type IDimensionDescriptor, type IExecutionDefinition, type ObjRef } from "@gooddata/sdk-model";
 
@@ -336,7 +336,7 @@ describe("Export payload", () => {
         postProcessing: {},
     };
 
-    test("should resolve custom override step by step", () => {
+    it("should resolve custom override step by step", () => {
         const { metrics, labels } = prepareCustomOverride(dimensions);
         expect(metrics).toMatchSnapshot();
         expect(labels).toMatchSnapshot();
@@ -357,7 +357,7 @@ describe("Export payload", () => {
         });
     });
 
-    test("should resolve custom override with empty data", () => {
+    it("should resolve custom override with empty data", () => {
         const emptyDimensions: IDimensionDescriptor[] = [];
         const emptyDefinition: IExecutionDefinition = {
             attributes: [],

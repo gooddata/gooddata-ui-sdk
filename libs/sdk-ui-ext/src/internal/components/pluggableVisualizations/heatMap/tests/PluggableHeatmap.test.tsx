@@ -27,7 +27,7 @@ import {
     createDrillEvent,
     getLastRenderEl,
     insightDefinitionToInsight,
-} from "../../tests/testHelpers.js";
+} from "../../tests/pluggableVisualizations.test.helpers.js";
 import { PluggableHeatmap } from "../PluggableHeatmap.js";
 
 const { Department, Region } = ReferenceMd;

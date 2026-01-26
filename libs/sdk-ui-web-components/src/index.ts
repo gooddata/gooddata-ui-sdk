@@ -1,4 +1,7 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
+/* eslint-disable no-barrel-files/no-barrel-files */
+
 /**
  * This module registers GoodData's Custom Elements for Dashboard and Insight embedding.
  *

@@ -1,5 +1,7 @@
 // (C) 2025-2026 GoodData Corporation
 
+/* eslint-disable no-barrel-files/no-barrel-files */
+
 // Actions API - Export commonly used ActionsApi functions
 export {
     ActionsApi_ManageOrganizationPermissions,

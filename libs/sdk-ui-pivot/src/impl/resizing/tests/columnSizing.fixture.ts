@@ -4,7 +4,7 @@ import { type Column, type GridApi } from "ag-grid-community";
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { DataViewFirstPage, type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 
-import { recordedDataFacade } from "../../../../__mocks__/recordings.js";
+import { recordedDataFacade } from "../../../../testUtils/recordings.js";
 import { type ColumnWidthItem } from "../../../columnWidths.js";
 import { TableDescriptor } from "../../structure/tableDescriptor.js";
 import { ResizedColumnsStore } from "../columnSizing.js";

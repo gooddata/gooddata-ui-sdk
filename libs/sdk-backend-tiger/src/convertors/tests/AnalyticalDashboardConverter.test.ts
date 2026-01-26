@@ -1,6 +1,6 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
-import { describe, expect, test } from "vitest";
+import { describe, expect, it } from "vitest";
 
 import { type IDashboardLayout } from "@gooddata/sdk-model";
 
@@ -197,7 +197,7 @@ const layout: IDashboardLayout = {
 };
 
 describe("detect DrillToCustomUrl in layout", () => {
-    test("should find paths for drills ", () => {
+    it("should find paths for drills ", () => {
         const paths = getDrillToCustomUrlPaths(layout);
         expect(paths).toEqual([
             ["sections", 0, "items", 1, "widget", "drills", 0],

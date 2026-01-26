@@ -6,7 +6,7 @@ import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 
 import { DEFAULT_TOOLTIP_CONTENT_WIDTH } from "./sankeyChart.fixture.js";
-import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
+import { recordedDataFacade } from "../../../../../testUtils/recordings.js";
 import { generateTooltipSankeyChartFn } from "../../_chartOptions/chartTooltips.js";
 import { getMVSForViewByTwoAttributes } from "../../_util/test/helper.js";
 

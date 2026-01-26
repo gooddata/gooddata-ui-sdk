@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-backend-tiger",
-    "version": "11.18.0-alpha.3",
+    "version": "11.18.0-alpha.4",
     "description": "GoodData Backend SPI implementation for GoodData Cloud and GoodData.CN",
     "repository": {
         "type": "git",
@@ -33,9 +33,7 @@
         "create-ref-workspaces": "node ./tests/reference_workspace/create_test_workspaces.mjs",
         "delete-ref-workspaces": "node ./tests/reference_workspace/delete_test_workspaces.mjs",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
-        "dep-cruiser-ci": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
         "eslint": "eslint -c .eslintrc.cjs --ignore-path ../.eslintignore .",
-        "eslint-ci": "mkdir -p ./ci/results && eslint -f checkstyle -o ci/results/eslint-results.xml -c .eslintrc.cjs --ignore-path ../.eslintignore .",
         "eslint-fix": "eslint -c .eslintrc.cjs --ignore-path ../.eslintignore . --fix",
         "integrated-test": "./scripts/integrated-test.sh",
         "integrated-test-live-backend": "./scripts/integrated-test-live-backend.sh",
@@ -47,7 +45,6 @@
         "refresh-md": "./scripts/refresh-md.sh && npm run build",
         "remove-sensitive-data": "./tests/wiremock/remove_sensitive_data.sh",
         "test": "vitest watch",
-        "test-ci": "vitest run --silent",
         "test-isolated-ci": "./scripts/isolated-test.sh",
         "test-once": "vitest run",
         "validate": "tsc && npm run dep-cruiser && npm run eslint && npm run prettier-check",
@@ -92,6 +89,7 @@
         "eslint-plugin-import": "2.32.0",
         "eslint-plugin-import-esm": "1.2.1",
         "eslint-plugin-jsdoc": "62.1.0",
+        "eslint-plugin-no-barrel-files": "1.2.2",
         "eslint-plugin-no-only-tests": "2.6.0",
         "eslint-plugin-prettier": "5.5.4",
         "eslint-plugin-regexp": "1.15.0",

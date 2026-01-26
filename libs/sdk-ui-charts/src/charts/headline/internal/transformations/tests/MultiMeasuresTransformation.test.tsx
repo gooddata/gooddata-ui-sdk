@@ -6,7 +6,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { type ExplicitDrill, withIntl } from "@gooddata/sdk-ui";
 
-import { recordedDataFacade } from "../../../../../../__mocks__/recordings.js";
+import { recordedDataFacade } from "../../../../../../testUtils/recordings.js";
 import { type IHeadlineTransformationProps } from "../../../HeadlineProvider.js";
 import * as BaseHeadline from "../../headlines/baseHeadline/BaseHeadline.js";
 import { TEST_MULTI_MEASURE_TRANSFORMATION } from "../../tests/TestData.fixtures.js";

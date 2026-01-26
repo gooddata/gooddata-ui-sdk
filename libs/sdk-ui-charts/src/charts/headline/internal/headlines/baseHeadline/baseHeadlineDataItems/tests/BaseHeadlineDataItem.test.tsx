@@ -13,7 +13,7 @@ import {
     TEST_DATA_ITEM,
     TEST_RENDER_VALUE_SPECS,
 } from "../../../../tests/TestData.fixtures.js";
-import { mockUseBaseHeadline } from "../../tests/BaseHeadlineMock.js";
+import { mockUseBaseHeadline } from "../../tests/BaseHeadline.test.helpers.js";
 import { BaseHeadlineDataItem } from "../BaseHeadlineDataItem.js";
 
 describe("BaseHeadlineDataItem", () => {

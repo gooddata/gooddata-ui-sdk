@@ -49,7 +49,7 @@ import {
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import * as testMocks from "../../../../tests/mocks/testMocks.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../../utils/translations.js";
-import { createDrillEvent, getLastRenderEl } from "../../tests/testHelpers.js";
+import { createDrillEvent, getLastRenderEl } from "../../tests/pluggableVisualizations.test.helpers.js";
 import {
     PluggablePivotTable,
     createPivotTableConfig,

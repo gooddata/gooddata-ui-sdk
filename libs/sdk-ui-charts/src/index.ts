@@ -1,5 +1,7 @@
 // (C) 2007-2026 GoodData Corporation
 
+/* eslint-disable no-barrel-files/no-barrel-files */
+
 /**
  * This package provides a set of React-based chart visualizations that you can use to visualize your data.
  *
@@ -149,32 +151,30 @@ export {
     constructRepeaterDimensions,
 } from "./charts/repeater/internal/repeaterExecution.js";
 export { type IRepeaterProps, type IRepeaterBucketProps, Repeater } from "./charts/repeater/Repeater.js";
-export {
-    type ICoreRepeaterChartProps,
-    type RepeaterColumnResizedCallback,
-    type RepeaterColumnWidthItem,
-    type RepeaterColumnWidth,
-    type RepeaterDefaultColumnWidth,
-    type RepeaterColumnLocator,
-    type IRepeaterColumnSizing,
-    type IRepeaterAbsoluteColumnWidth,
-    type IRepeaterAutoColumnWidth,
-    type IRepeaterAttributeColumnWidthItem,
-    type IRepeaterMeasureColumnWidthItem,
-    type IRepeaterAttributeColumnWidthItemBody,
-    type IRepeaterMeasureColumnWidthItemBody,
-    type IRepeaterAttributeColumnLocator,
-    type IRepeaterAttributeColumnLocatorBody,
-    type IRepeaterMeasureColumnLocator,
-    type IRepeaterMeasureColumnLocatorBody,
-    CoreRepeater,
-} from "./charts/repeater/CoreRepeater.js";
+export { type ICoreRepeaterChartProps, CoreRepeater } from "./charts/repeater/CoreRepeater.js";
+export type {
+    RepeaterColumnResizedCallback,
+    RepeaterDefaultColumnWidth,
+    IRepeaterColumnSizing,
+} from "./charts/repeater/publicTypes.js";
+export type {
+    RepeaterColumnWidthItem,
+    RepeaterColumnWidth,
+    RepeaterColumnLocator,
+    IRepeaterAbsoluteColumnWidth,
+    IRepeaterAutoColumnWidth,
+    IRepeaterAttributeColumnWidthItem,
+    IRepeaterMeasureColumnWidthItem,
+    IRepeaterAttributeColumnWidthItemBody,
+    IRepeaterMeasureColumnWidthItemBody,
+    IRepeaterAttributeColumnLocator,
+    IRepeaterAttributeColumnLocatorBody,
+    IRepeaterMeasureColumnLocator,
+    IRepeaterMeasureColumnLocatorBody,
+} from "./charts/repeater/columnWidths.js";
 export { withJsxExport } from "./charts/withJsxExport.js";
+export { TOP, BOTTOM, MIDDLE } from "./highcharts/constants/alignments.js";
 export {
-    ColorUtils,
-    TOP,
-    BOTTOM,
-    MIDDLE,
     isAreaChart,
     isBarChart,
     isBubbleChart,
@@ -194,13 +194,14 @@ export {
     isDependencyWheel,
     isSankeyOrDependencyWheel,
     isWaterfall,
-    updateConfigWithSettings,
-    updateForecastWithSettings,
-    updateOutliersWithSettings,
-} from "./highcharts/index.js";
+} from "./highcharts/chartTypes/_util/common.js";
+export { updateConfigWithSettings } from "./highcharts/chartTypes/_chartOptions/chartOptionsForSettings.js";
+export { updateForecastWithSettings } from "./highcharts/chartTypes/_chartOptions/chartForecast.js";
+export { updateOutliersWithSettings } from "./highcharts/chartTypes/_chartOptions/chartOutliers.js";
 
 // export the getColorMappingPredicate so that users can import it directly without having to explicitly install vis-commons
 export {
+    ColorUtils,
     getColorMappingPredicate,
     getPatternFillByIndex,
     getPatternFillByName,

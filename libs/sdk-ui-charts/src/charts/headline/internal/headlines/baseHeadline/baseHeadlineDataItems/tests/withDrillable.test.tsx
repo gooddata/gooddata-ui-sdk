@@ -11,7 +11,7 @@ import {
 } from "../../../../interfaces/BaseHeadlines.js";
 import { type IHeadlineDataItem } from "../../../../interfaces/Headlines.js";
 import { HEADLINE_ITEM_LINK_SELECTOR, TEST_DATA_ITEM } from "../../../../tests/TestData.fixtures.js";
-import { mockUseBaseHeadline } from "../../tests/BaseHeadlineMock.js";
+import { mockUseBaseHeadline } from "../../tests/BaseHeadline.test.helpers.js";
 import { withDrillable } from "../withDrillable.js";
 
 describe("withDrillable", () => {

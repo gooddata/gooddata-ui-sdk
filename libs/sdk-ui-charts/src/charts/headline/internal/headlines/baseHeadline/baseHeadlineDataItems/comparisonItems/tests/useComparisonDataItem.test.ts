@@ -10,7 +10,7 @@ import {
     TEST_COMPARISON_PALETTE,
     createComparison,
 } from "../../../../../tests/TestData.fixtures.js";
-import { mockUseBaseHeadline } from "../../../tests/BaseHeadlineMock.js";
+import { mockUseBaseHeadline } from "../../../tests/BaseHeadline.test.helpers.js";
 import { useComparisonDataItem } from "../useComparisonDataItem.js";
 
 describe("useComparisonDataItem", () => {

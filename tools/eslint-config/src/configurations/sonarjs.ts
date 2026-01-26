@@ -17,11 +17,13 @@ export const sonarjs: IConfiguration<"sonarjs"> = {
         // some of these findings are not actionable in a reasonable time
         "sonarjs/cognitive-complexity": "warn",
     },
-    override: {
-        files: ["*.test.ts", "*.test.tsx", "*.spec.ts"],
-        rules: {
-            // we do not care about duplicate functions in test files, they often make sense (e.g. in different describe blocks)
-            "sonarjs/no-identical-functions": "off",
+    overrides: [
+        {
+            files: ["*.test.ts", "*.test.tsx", "*.spec.ts"],
+            rules: {
+                // we do not care about duplicate functions in test files, they often make sense (e.g. in different describe blocks)
+                "sonarjs/no-identical-functions": "off",
+            },
         },
-    },
+    ],
 };

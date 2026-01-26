@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 // (C) 2007-2026 GoodData Corporation
 
+/* eslint-disable no-barrel-files/no-barrel-files */
+
 import * as path from "path";
 import * as process from "process";
 

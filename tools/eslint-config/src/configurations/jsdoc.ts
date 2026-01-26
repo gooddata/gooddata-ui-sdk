@@ -9,16 +9,18 @@ export const jsdoc: IConfiguration<"jsdoc"> = {
             version: "62.1.0",
         },
     ],
-    override: {
-        files: ["**/*.{js,cjs,mjs,jsx}"],
-        plugins: ["jsdoc"],
-        settings: {
-            jsdoc: {
-                mode: "jsdoc",
+    overrides: [
+        {
+            files: ["**/*.{js,cjs,mjs,jsx}"],
+            plugins: ["jsdoc"],
+            settings: {
+                jsdoc: {
+                    mode: "jsdoc",
+                },
+            },
+            rules: {
+                "jsdoc/require-param": "error", // require @param for all params
             },
         },
-        rules: {
-            "jsdoc/require-param": "error", // require @param for all params
-        },
-    },
+    ],
 };

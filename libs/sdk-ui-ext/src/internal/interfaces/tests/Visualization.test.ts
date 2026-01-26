@@ -1,7 +1,7 @@
 // (C) 2019-2025 GoodData Corporation
 import { describe, expect, it } from "vitest";
 
-import { InvalidInputTestCases } from "../../../../__mocks__/typeGuards.js";
+import { InvalidInputTestCases } from "../../../../testUtils/typeGuards.js";
 import {
     attributeFilter,
     dateFilter,

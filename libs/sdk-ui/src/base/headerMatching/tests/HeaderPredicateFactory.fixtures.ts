@@ -6,7 +6,7 @@ import {
     uriRef,
 } from "@gooddata/sdk-model";
 
-import { barChartForDrillTests } from "../../../../__mocks__/fixtures.js";
+import { barChartForDrillTests } from "../../../../testUtils/fixtures.js";
 import { type IHeaderPredicateContext } from "../HeaderPredicate.js";
 
 export const measureDescriptors: { [key: string]: IMeasureDescriptor } = {

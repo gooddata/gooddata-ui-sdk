@@ -1,4 +1,6 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
+
+/* eslint-disable no-barrel-files/no-barrel-files */
 
 export { DEFAULT_LOCALE } from "./DateFilter/utils/FormattingUtils.js";
 export { AbsoluteDateFilterForm } from "./DateFilter/AbsoluteDateFilterForm/AbsoluteDateFilterForm.js";

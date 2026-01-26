@@ -42,9 +42,11 @@ export const import_: IConfiguration<"import"> = {
         ],
         "import/no-unassigned-import": "error",
     },
-    override: {
-        parser: "@typescript-eslint/parser",
-        files: ["**/*.ts", "**/*.tsx"],
-        extends: ["plugin:import/typescript"],
-    },
+    overrides: [
+        {
+            parser: "@typescript-eslint/parser",
+            files: ["**/*.ts", "**/*.tsx"],
+            extends: ["plugin:import/typescript"],
+        },
+    ],
 };

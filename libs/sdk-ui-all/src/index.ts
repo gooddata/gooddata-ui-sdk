@@ -1,5 +1,7 @@
 // (C) 2019-2026 GoodData Corporation
 
+/* eslint-disable no-barrel-files/no-barrel-files */
+
 /**
  * This is an all-in-one package that has all GoodData.UI packages as dependencies and re-exports their public API.
  *

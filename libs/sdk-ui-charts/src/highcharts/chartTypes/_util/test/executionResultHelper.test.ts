@@ -6,7 +6,7 @@ import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { type IAttributeDescriptor, type IMeasureGroupDescriptor } from "@gooddata/sdk-model";
 
-import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
+import { recordedDataFacade } from "../../../../../testUtils/recordings.js";
 import { findAttributeInDimension, findMeasureGroupInDimensions } from "../executionResultHelper.js";
 
 const TestRecording = recordedDataFacade(

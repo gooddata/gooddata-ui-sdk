@@ -14,8 +14,8 @@ import {
 } from "@gooddata/sdk-model";
 import { type IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
 
+import { insightDefinitionToInsight } from "./pluggableVisualizations.test.helpers.js";
 import { reverseAndTrimIntersectionMock } from "./reverseAndTrimIntersectionMock.js";
-import { insightDefinitionToInsight } from "./testHelpers.js";
 import { type IDrillDownDefinition } from "../../../interfaces/Visualization.js";
 import { modifyBucketsAttributesForDrillDown, reverseAndTrimIntersection } from "../drillDownUtil.js";
 

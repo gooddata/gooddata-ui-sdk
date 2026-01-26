@@ -5,7 +5,7 @@ import { type MockInstance, afterEach, beforeEach, describe, expect, it, vi } fr
 
 import { withIntl } from "@gooddata/sdk-ui";
 
-import { mockUseBaseHeadline } from "./BaseHeadlineMock.js";
+import { mockUseBaseHeadline } from "./BaseHeadline.test.helpers.js";
 import { type IBaseHeadlineItem } from "../../../interfaces/BaseHeadlines.js";
 import { type IHeadlineDataItem } from "../../../interfaces/Headlines.js";
 import {

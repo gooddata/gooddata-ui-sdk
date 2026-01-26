@@ -116,9 +116,9 @@ jobs:
         run: |
           # build libs first, then the app
           node common/scripts/install-run-rush.js build --parallelism 8
-      - name: Rush test-ci
+      - name: Rush test-once
         run: |
-          node common/scripts/install-run-rush.js test-ci --parallelism 8 --impacted-by git:origin/${TARGET_BRANCH}
+          node common/scripts/install-run-rush.js test-once --parallelism 8 --impacted-by git:origin/${TARGET_BRANCH}
       - name: Rush test-isolated-ci
         run: |
           node common/scripts/install-run-rush.js test-isolated-ci --parallelism 8 --impacted-by git:origin/${TARGET_BRANCH}

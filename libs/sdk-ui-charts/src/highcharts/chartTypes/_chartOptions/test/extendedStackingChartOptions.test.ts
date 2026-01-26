@@ -13,7 +13,7 @@ import {
 import { DefaultColorPalette, HeaderPredicates } from "@gooddata/sdk-ui";
 import { type ChartFillType } from "@gooddata/sdk-ui-vis-commons";
 
-import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
+import { recordedDataFacade } from "../../../../../testUtils/recordings.js";
 import { type IUnwrappedAttributeHeadersWithItems } from "../../../typings/mess.js";
 import { MeasureColorStrategy } from "../../_chartColoring/measure.js";
 import { getMVSForViewByTwoAttributes } from "../../_util/test/helper.js";

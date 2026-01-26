@@ -6,7 +6,7 @@ import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { DataViewFirstPage, type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { type IResultAttributeHeader } from "@gooddata/sdk-model";
 
-import { recordedDataFacade } from "../../../../__mocks__/recordings.js";
+import { recordedDataFacade } from "../../../../testUtils/recordings.js";
 import { type IGridRow } from "../../data/resultTypes.js";
 import { TableDescriptor } from "../../structure/tableDescriptor.js";
 

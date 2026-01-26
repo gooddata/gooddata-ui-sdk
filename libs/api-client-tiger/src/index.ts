@@ -1,5 +1,7 @@
 // (C) 2019-2026 GoodData Corporation
 
+/* eslint-disable no-barrel-files/no-barrel-files */
+
 /**
  * This package provides low-level functions for communication with GoodData Cloud and GoodData.CN.
  *

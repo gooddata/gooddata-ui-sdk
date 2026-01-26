@@ -9,7 +9,7 @@ import { type IExtendedReferencePoint, type IVisConstruct } from "../../../../in
 import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
 import * as testMocks from "../../../../tests/mocks/testMocks.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../../utils/translations.js";
-import { getLastRenderEl } from "../../tests/testHelpers.js";
+import { getLastRenderEl } from "../../tests/pluggableVisualizations.test.helpers.js";
 import { PluggableGeoPushpinChart } from "../PluggableGeoPushpinChart.js";
 
 describe("PluggableGeoPushpinChart", () => {

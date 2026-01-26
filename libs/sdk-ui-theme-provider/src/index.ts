@@ -1,5 +1,7 @@
 // (C) 2020-2026 GoodData Corporation
 
+/* eslint-disable no-barrel-files/no-barrel-files */
+
 /**
  * This package provides tools to make your application support themes.
  *

@@ -4,9 +4,6 @@ const { tsOverride } = require("@gooddata/eslint-config/tsOverride");
 
 module.exports = {
     extends: ["@gooddata/eslint-config/esm-react-vitest"],
-    rules: {
-        "@vitest/no-mocks-import": "warn",
-    },
     overrides: [
         tsOverride(__dirname, {
             "@typescript-eslint/no-unsafe-member-access": "warn",

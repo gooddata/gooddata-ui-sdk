@@ -6,7 +6,7 @@ import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
-import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
+import { recordedDataFacade } from "../../../../../testUtils/recordings.js";
 import { type StackingType } from "../../../constants/stacking.js";
 import { type ISeriesItem } from "../../../typings/unsafe.js";
 import { CHART_ORDER, getComboChartSeries, getComboChartStackingConfig } from "../comboChartOptions.js";

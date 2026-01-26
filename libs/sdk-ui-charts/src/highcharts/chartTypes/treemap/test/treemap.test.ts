@@ -8,7 +8,7 @@ import { type IColorPalette, type IColorPaletteItem } from "@gooddata/sdk-model"
 import { DefaultColorPalette, HeaderPredicates } from "@gooddata/sdk-ui";
 import { type IColorMapping, getRgbString } from "@gooddata/sdk-ui-vis-commons";
 
-import { recordedDataFacade } from "../../../../../__mocks__/recordings.js";
+import { recordedDataFacade } from "../../../../../testUtils/recordings.js";
 import { TwoColorPalette } from "../../_chartColoring/test/color.fixture.js";
 import { getColorsFromStrategy } from "../../_chartColoring/test/helper.js";
 import { ColorFactory } from "../../_chartOptions/colorFactory.js";

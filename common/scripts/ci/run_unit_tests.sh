@@ -82,7 +82,7 @@ RC=1
   fi
 
   if [ $RC -eq 0 ]; then
-    $_RUSH validate-ci $RUSH_SPECS
+    $_RUSH validate $RUSH_SPECS
     RC=$?
   fi
 
@@ -92,7 +92,7 @@ RC=1
     # per-project basis.
     #
 
-    $_RUSH test-ci $RUSH_SPECS --parallelism 4
+    $_RUSH test-once $RUSH_SPECS --parallelism 4
     RC=$?
   fi
 

@@ -1,5 +1,7 @@
 // (C) 2007-2026 GoodData Corporation
 
+/* eslint-disable no-barrel-files/no-barrel-files */
+
 export {
     type IScenarioGroup,
     type Viewport,

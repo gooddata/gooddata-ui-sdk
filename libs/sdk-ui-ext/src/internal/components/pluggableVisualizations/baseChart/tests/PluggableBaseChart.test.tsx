@@ -39,7 +39,7 @@ import {
     createDrillEvent,
     getLastRenderEl,
     insightDefinitionToInsight,
-} from "../../tests/testHelpers.js";
+} from "../../tests/pluggableVisualizations.test.helpers.js";
 import { PluggableBaseChart } from "../PluggableBaseChart.js";
 
 const { Region } = ReferenceMd;
