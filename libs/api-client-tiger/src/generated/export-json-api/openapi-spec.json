@@ -1142,6 +1142,11 @@
                         "description": "Set page orientation. (PDF)",
                         "default": "PORTRAIT",
                         "enum": ["PORTRAIT", "LANDSCAPE"]
+                    },
+                    "delimiter": {
+                        "maxLength": 1,
+                        "type": "string",
+                        "description": "Set column delimiter. (CSV)"
                     }
                 },
                 "description": "Additional settings."
@@ -2219,6 +2224,11 @@
                     },
                     "executionSettings": {
                         "$ref": "#/components/schemas/ExecutionSettings"
+                    },
+                    "delimiter": {
+                        "maxLength": 1,
+                        "type": "string",
+                        "description": "Set column delimiter. (CSV)"
                     }
                 },
                 "description": "Export request object describing the export properties and overrides for raw exports."

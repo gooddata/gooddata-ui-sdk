@@ -14,6 +14,7 @@ import { type IDropdownListNoDataRenderProps, type OverlayPositionType } from "@
 import { type IAddAttributeFilterButtonProps } from "./addAttributeFilter/AddAttributeFilterButton.js";
 import { type IDashboardAttributeFilterParentItem } from "../../../model/types/attributeFilterTypes.js";
 import { type IDashboardDependentDateFilter } from "../../../model/types/dateFilterTypes.js";
+import type { IFilterBarFilterGroupItem } from "../filterBar/useFiltersWithAddedPlaceholder.js";
 
 /**
  * @public
@@ -109,12 +110,41 @@ export interface IDashboardAttributeFilterProps {
      * multiple tabs need to be displayed simultaneously.
      */
     tabId?: string;
+
+    /**
+     * Controls whether the internal implementation of dashboard filter dropdown button should be used.
+     * When true (default), the AttributeFilterButton will receive a DropdownButtonComponent.
+     * When false, the AttributeFilterButton will not receive a DropdownButtonComponent
+     * and therefore can be overridden by the custom component.
+     *
+     * This is useful when extending DashboardAttributeFilterComponent
+     * and want to use a different default dropdown button component internally
+     * but still want to make possible to customize the dropdown button component by user.
+     * Note: It is used in DashboardFilterGroupComponent.
+     *
+     * @alpha
+     */
+    passDropdownButton?: boolean;
 }
 
 /**
  * @public
  */
 export type CustomDashboardAttributeFilterComponent = ComponentType<IDashboardAttributeFilterProps>;
+
+/**
+ * @public
+ */
+export interface IDashboardFilterGroupProps {
+    groupItem: IFilterBarFilterGroupItem;
+    onAttributeFilterChanged: (filter: IDashboardAttributeFilter) => void;
+    DashboardAttributeFilterComponent?: CustomDashboardAttributeFilterComponent;
+}
+
+/**
+ * @public
+ */
+export type CustomDashboardFilterGroupComponent = ComponentType<IDashboardFilterGroupProps>;
 
 /**
  * @internal

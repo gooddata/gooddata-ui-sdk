@@ -106,6 +106,7 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
         displayAsLabel,
         overlayPositionType,
         tabId,
+        passDropdownButton = true,
     } = props;
     const { parentFilters, parentFilterOverAttribute } = useParentFilters(filter, tabId);
     const { dependentDateFilters } = useDependentDateFilters(filter, tabId);
@@ -563,7 +564,7 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
                 parentFilterOverAttribute={parentFilterOverAttribute}
                 validateElementsBy={filter.attributeFilter.validateElementsBy}
                 locale={locale}
-                DropdownButtonComponent={CustomDropdownButton}
+                DropdownButtonComponent={passDropdownButton ? CustomDropdownButton : undefined}
                 DropdownActionsComponent={CustomDropdownActions}
                 ElementsSelectComponent={CustomElementsSelect}
                 fullscreenOnMobile

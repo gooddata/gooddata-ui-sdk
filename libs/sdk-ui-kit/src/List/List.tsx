@@ -1,10 +1,11 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type ReactElement, useCallback, useEffect, useMemo } from "react";
 
 import cx from "classnames";
 import { Cell, Column, Table } from "fixed-data-table-2";
 
+import { DROPDOWN_BODY_CLASS } from "../Dropdown/Dropdown.js";
 import { type IAccessibilityConfigBase } from "../typings/accessibility.js";
 
 // it configures max number of records due to
@@ -207,6 +208,13 @@ export function List<T>({
 }
 
 function preventDefault(e: Event) {
+    const wheelEvent = e;
+    const target = wheelEvent.target as HTMLElement | null;
+    const isDropdownBodyScroll = target?.closest?.(`.${DROPDOWN_BODY_CLASS}`);
+    if (isDropdownBodyScroll) {
+        // allow to scroll another lists placed in dropdowns (e.g. in Filter Groups)
+        return;
+    }
     e.preventDefault();
 }
 

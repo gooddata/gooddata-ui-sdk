@@ -109,6 +109,7 @@ export function DashboardRenderer(props: IDashboardProps) {
         dashboardOrRef,
         attributeFilterProvider,
         dateFilterProvider,
+        filterGroupProvider,
         widgetProvider,
         insightProvider,
         insightBodyProvider,
@@ -198,6 +199,7 @@ export function DashboardRenderer(props: IDashboardProps) {
                                         SaveAsDialogComponent={components.SaveAsDialogComponent}
                                         DashboardAttributeFilterComponentProvider={attributeFilterProvider}
                                         DashboardDateFilterComponentProvider={dateFilterProvider}
+                                        DashboardFilterGroupComponentProvider={filterGroupProvider}
                                         FilterBarComponent={components.FilterBarComponent}
                                         SidebarComponent={components.SidebarComponent}
                                         InsightWidgetComponentSet={insightWidgetComponentSet}

@@ -4,7 +4,12 @@ import { useId, useMemo } from "react";
 
 import cx from "classnames";
 
-import { Dialog, OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
+import {
+    Dialog,
+    OverlayController,
+    OverlayControllerProvider,
+    useOverlayController,
+} from "@gooddata/sdk-ui-kit";
 
 import { useKdaDialogAccessibility } from "./hooks/useKdaDialogAccessibility.js";
 import { KdaDialogFloatingStatusBar } from "./KdaDialogFloatingStatusBar.js";
@@ -37,6 +42,11 @@ const KDA_DIALOG_EXPANDED_DATA_TEST_ID = "kda-dialog-expanded";
 export function KdaDialog({ className, showCloseButton = true, onClose }: IKdaDialogProps) {
     const { state } = useKdaState();
     const { isMinimized } = state;
+    const parentOverlayController = useOverlayController();
+    const effectiveOverlayController = useMemo(
+        () => parentOverlayController ?? overlayController,
+        [parentOverlayController],
+    );
 
     const metric = state.definition?.metric.measure;
     const title = metric?.alias ?? metric?.title ?? "";
@@ -57,7 +67,7 @@ export function KdaDialog({ className, showCloseButton = true, onClose }: IKdaDi
     useKdaDialogTooltipsOverride();
 
     return (
-        <OverlayControllerProvider overlayController={overlayController}>
+        <OverlayControllerProvider overlayController={effectiveOverlayController}>
             {isMinimized ? (
                 <Dialog
                     className={cx(dialogBaseClassName, "gd-kda-dialog--minimized")}

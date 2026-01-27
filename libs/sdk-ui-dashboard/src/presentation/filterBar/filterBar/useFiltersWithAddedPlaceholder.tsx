@@ -69,6 +69,10 @@ export function isFilterBarAttributeFilter(object: any): object is FilterBarAttr
  * @internal
  */
 export type FilterBarAttributeItems = FilterBarAttributeItem[];
+
+/**
+ * @internal
+ */
 export type FilterBarDateFilterIndexed = {
     filter: IDashboardDateFilter;
     filterIndex: number;
@@ -91,6 +95,9 @@ export function isFilterBarDateFilterWithDimension(
     return false;
 }
 
+/**
+ * @alpha
+ */
 export interface IFilterBarFilterGroupItem {
     filterIndex: number;
     groupConfig: IDashboardFilterGroup;

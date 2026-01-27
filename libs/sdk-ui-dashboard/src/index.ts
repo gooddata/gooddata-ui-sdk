@@ -1889,7 +1889,17 @@ export type {
     OptionalDashboardContentComponentProvider,
     IDashboardContentBaseProps,
     CustomDashboardContentComponent,
+    OptionalFilterGroupComponentProvider,
+    FilterGroupComponentProvider,
 } from "./presentation/dashboardContexts/types.js";
+export { DefaultDashboardFilterGroup } from "./presentation/filterBar/filterBar/DefaultDashboardFilterGroup.js";
+export type {
+    IFilterBarFilterGroupItem,
+    FilterBarItem,
+    FilterBarFilterPlaceholder,
+    FilterBarAttributeFilterIndexed,
+    FilterBarDateFilterIndexed,
+} from "./presentation/filterBar/filterBar/useFiltersWithAddedPlaceholder.js";
 export {
     type DraggableContentItemType,
     type DraggableInternalItemType,
@@ -2023,8 +2033,10 @@ export { AttributesDropdown } from "./presentation/filterBar/attributeFilter/add
 export type {
     IDashboardAttributeFilterProps,
     CustomDashboardAttributeFilterComponent,
+    CustomDashboardFilterGroupComponent,
     IDashboardAttributeFilterAccessibilityConfig,
     IDashboardAttributeFilterPlaceholderProps,
+    IDashboardFilterGroupProps,
     ValuesLimitingItem,
 } from "./presentation/filterBar/attributeFilter/types.js";
 export {
@@ -2421,6 +2433,7 @@ export type {
     DashboardStateChangeCallback,
     FilterBarRenderingMode,
     IAttributeFiltersCustomizer,
+    IFilterGroupsCustomizer,
     IDateFiltersCustomizer,
     IFiltersCustomizer,
     ITitleCustomizer,

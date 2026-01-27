@@ -73,6 +73,7 @@ import { IDashboardDateFilterConfig as IDashboardDateFilterConfig_2 } from '@goo
 import { IDashboardDateFilterConfigItem } from '@gooddata/sdk-model';
 import { IDashboardDefinition } from '@gooddata/sdk-model';
 import { IDashboardExportPresentationOptions } from '@gooddata/sdk-backend-spi';
+import { IDashboardFilterGroup } from '@gooddata/sdk-model';
 import { IDashboardFilterGroupsConfig } from '@gooddata/sdk-model';
 import { IDashboardFilterReference } from '@gooddata/sdk-model';
 import { IDashboardFilterView } from '@gooddata/sdk-model';
@@ -664,6 +665,9 @@ export type CustomDashboardContentComponent = ComponentType<IDashboardContentBas
 
 // @public (undocumented)
 export type CustomDashboardDateFilterComponent = ComponentType<IDashboardDateFilterProps>;
+
+// @public (undocumented)
+export type CustomDashboardFilterGroupComponent = ComponentType<IDashboardFilterGroupProps>;
 
 // @public (undocumented)
 export type CustomDashboardInsightComponent = ComponentType<IDashboardInsightProps>;
@@ -1396,6 +1400,9 @@ export function DefaultDashboardDateFilterComponentSetFactory(dateFilterProvider
 // @alpha (undocumented)
 export function DefaultDashboardExportVariables({ renderMode }: IDefaultDashboardExportVariablesProps): JSX.Element | null;
 
+// @alpha (undocumented)
+export function DefaultDashboardFilterGroup(props: IDashboardFilterGroupProps): ReactNode;
+
 // @public
 export function DefaultDashboardInsight(props: IDashboardInsightProps): JSX.Element;
 
@@ -1790,8 +1797,32 @@ export type FilterableDashboardWidget = IWidget | ICustomWidget;
 // @internal (undocumented)
 export function FilterBar(props: IFilterBarProps): ReactElement;
 
+// @internal (undocumented)
+export type FilterBarAttributeFilterIndexed = {
+    filter: IDashboardAttributeFilter;
+    filterIndex: number;
+    workingFilter?: IDashboardAttributeFilter;
+};
+
 // @public (undocumented)
 export type FilterBarComponentProvider = (props: IFilterBarProps) => CustomFilterBarComponent;
+
+// @internal (undocumented)
+export type FilterBarDateFilterIndexed = {
+    filter: IDashboardDateFilter;
+    filterIndex: number;
+    workingFilter?: IDashboardDateFilter;
+};
+
+// @internal (undocumented)
+export type FilterBarFilterPlaceholder = {
+    type: "filterPlaceholder";
+    filterIndex: number;
+    displayForm?: ObjRef;
+};
+
+// @internal (undocumented)
+export type FilterBarItem = FilterBarFilterPlaceholder | FilterBarAttributeFilterIndexed | FilterBarDateFilterIndexed | IFilterBarFilterGroupItem;
 
 // @public
 export type FilterBarRenderingMode = "default" | "hidden";
@@ -1825,6 +1856,9 @@ export function filterContextToDashboardFiltersByDateDataSet(filterContext: IFil
 
 // @public
 export function filterContextToDashboardFiltersByWidget(filterContext: IFilterContextDefinition | IFilterContext | ITempFilterContext | undefined, widget: IWidgetDefinition): IDashboardFilter[];
+
+// @public (undocumented)
+export type FilterGroupComponentProvider = (filterGroup: IDashboardFilterGroup) => CustomDashboardFilterGroupComponent;
 
 // @beta (undocumented)
 export type FilterOperations = "enableDateFilter" | "disableDateFilter" | "replaceAttributeIgnores" | "ignoreAttributeFilter" | "unignoreAttributeFilter" | "ignoreDateFilter" | "unignoreDateFilter" | "replace";
@@ -2912,6 +2946,8 @@ export interface IDashboardAttributeFilterProps {
     onFilterChanged: (filter: IDashboardAttributeFilter, displayAsLabel?: ObjRef, isWorkingSelectionChange?: boolean, isResultOfMigration?: boolean, isSelectionInvalid?: boolean) => void;
     overlayPositionType?: OverlayPositionType;
     // @alpha
+    passDropdownButton?: boolean;
+    // @alpha
     readonly?: boolean;
     tabId?: string;
     workingFilter?: IDashboardAttributeFilter;
@@ -3076,6 +3112,8 @@ export interface IDashboardCustomComponentProps {
     DashboardContentComponentProvider?: OptionalDashboardContentComponentProvider;
     // @alpha
     DashboardDateFilterComponentProvider?: OptionalDateFilterComponentProvider;
+    // @alpha
+    DashboardFilterGroupComponentProvider?: OptionalFilterGroupComponentProvider;
     DashboardLayoutComponentProvider?: OptionalDashboardLayoutComponentProvider;
     // @internal
     DashboardSettingsDialogComponent?: CustomDashboardSettingsDialogComponent;
@@ -3617,6 +3655,16 @@ export type IDashboardFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPosi
 export interface IDashboardFilterContextSelectionReset extends IDashboardEvent {
     // (undocumented)
     readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.SELECTION.RESET";
+}
+
+// @public (undocumented)
+export interface IDashboardFilterGroupProps {
+    // (undocumented)
+    DashboardAttributeFilterComponent?: CustomDashboardAttributeFilterComponent;
+    // (undocumented)
+    groupItem: IFilterBarFilterGroupItem;
+    // (undocumented)
+    onAttributeFilterChanged: (filter: IDashboardAttributeFilter) => void;
 }
 
 // @alpha
@@ -5409,6 +5457,16 @@ export interface IFilterBarCustomizer {
 }
 
 // @alpha (undocumented)
+export interface IFilterBarFilterGroupItem {
+    // (undocumented)
+    filterIndex: number;
+    // (undocumented)
+    filters: FilterBarItem[];
+    // (undocumented)
+    groupConfig: IDashboardFilterGroup;
+}
+
+// @alpha (undocumented)
 export interface IFilterBarProps {
     DefaultFilterBar: ComponentType<IFilterBarProps>;
     filterGroupsConfig?: IDashboardFilterGroupsConfig;
@@ -5416,6 +5474,11 @@ export interface IFilterBarProps {
     onAttributeFilterChanged: (filter: IDashboardAttributeFilter, displayAsLabel?: ObjRef) => void;
     onDateFilterChanged: (filter: IDashboardDateFilter | undefined, dateFilterOptionLocalId?: string) => void;
     workingFilters?: FilterContextItem[];
+}
+
+// @public
+export interface IFilterGroupsCustomizer {
+    withCustomProvider(provider: OptionalFilterGroupComponentProvider): IFilterGroupsCustomizer;
 }
 
 // @beta (undocumented)
@@ -5485,6 +5548,7 @@ export interface IFilterOpUnignoreDateFilter extends IFilterOp {
 export interface IFiltersCustomizer {
     attribute(): IAttributeFiltersCustomizer;
     date(): IDateFiltersCustomizer;
+    filterGroup(): IFilterGroupsCustomizer;
 }
 
 // @alpha (undocumented)
@@ -8971,6 +9035,9 @@ export type OptionalDateFilterComponentProvider = OptionalProvider<DateFilterCom
 
 // @public (undocumented)
 export type OptionalFilterBarComponentProvider = OptionalProvider<FilterBarComponentProvider>;
+
+// @public (undocumented)
+export type OptionalFilterGroupComponentProvider = OptionalProvider<FilterGroupComponentProvider>;
 
 // @alpha (undocumented)
 export type OptionalInsightBodyComponentProvider = OptionalProvider<InsightBodyComponentProvider>;

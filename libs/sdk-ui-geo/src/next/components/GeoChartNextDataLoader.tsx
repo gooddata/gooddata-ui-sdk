@@ -1,10 +1,15 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ReactElement } from "react";
 
 import { useIntl } from "react-intl";
 
-import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import {
+    createExportErrorFunction,
+    createExportFunction,
+    useBackendStrict,
+    useWorkspaceStrict,
+} from "@gooddata/sdk-ui";
 
 import { GeoChartNextProviders } from "./GeoChartNextProviders.js";
 import { GeoErrorComponent } from "./GeoErrorComponent.js";
@@ -45,6 +50,27 @@ export function GeoChartNextDataLoader({
 
     useCallbackOnChange(isLoading, (loading) => onLoadingChanged?.({ isLoading: loading }));
     useCallbackOnChange(error, (err) => onError?.(err!), Boolean(error));
+
+    const primaryLayerId = layerExecutions[0]?.layerId;
+    const primaryDataView =
+        status === "success" && primaryLayerId ? layerOutputs.get(primaryLayerId)?.dataView : undefined;
+
+    useCallbackOnChange(
+        primaryDataView?.fingerprint(),
+        () => {
+            if (!primaryDataView) {
+                return;
+            }
+            props.onExportReady?.(createExportFunction(primaryDataView.result(), props.exportTitle));
+        },
+        status === "success" && Boolean(primaryDataView) && Boolean(props.onExportReady),
+    );
+
+    useCallbackOnChange(
+        error,
+        (err) => props.onExportReady?.(createExportErrorFunction(err!)),
+        Boolean(error) && Boolean(props.onExportReady),
+    );
 
     if (status === "error" && error) {
         return <GeoErrorComponent error={error} />;

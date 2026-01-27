@@ -1514,6 +1514,8 @@ export interface IDashboardFilterGroup {
     // (undocumented)
     filters: IDashboardFilterGroupItem[];
     // (undocumented)
+    localIdentifier?: string;
+    // (undocumented)
     title: string;
 }
 
@@ -5457,7 +5459,7 @@ export const SemanticQualityIssueCodeValues: {
 };
 
 // @internal
-export type SemanticQualityIssuesCalculationStatus = "RUNNING" | "COMPLETED" | "FAILED" | "NOT_FOUND" | "DISABLED";
+export type SemanticQualityIssuesCalculationStatus = "RUNNING" | "COMPLETED" | "FAILED" | "NOT_FOUND" | "SYNCING" | "DISABLED";
 
 // @internal
 export type SemanticQualityIssueSeverity = "WARNING" | "INFO";

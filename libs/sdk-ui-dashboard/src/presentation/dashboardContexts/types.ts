@@ -7,6 +7,7 @@ import {
     type IDashboard,
     type IDashboardAttributeFilter,
     type IDashboardDateFilter,
+    type IDashboardFilterGroup,
     type IDashboardLayout,
     type IInsight,
     type IInsightWidget,
@@ -20,7 +21,10 @@ import { type ILoadingProps } from "@gooddata/sdk-ui";
 import { type DashboardConfig } from "../../model/types/commonTypes.js";
 import { type ExtendedDashboardWidget } from "../../model/types/layoutTypes.js";
 import { type RenderMode } from "../../types.js";
-import { type CustomDashboardAttributeFilterComponent } from "../filterBar/attributeFilter/types.js";
+import {
+    type CustomDashboardAttributeFilterComponent,
+    type CustomDashboardFilterGroupComponent,
+} from "../filterBar/attributeFilter/types.js";
 import { type CustomDashboardDateFilterComponent } from "../filterBar/dateFilter/types.js";
 import { type CustomFilterBarComponent, type IFilterBarProps } from "../filterBar/filterBar/types.js";
 import { type CustomTitleComponent, type ITitleProps } from "../topBar/title/types.js";
@@ -257,6 +261,18 @@ export type AttributeFilterComponentProvider = (
  * @public
  */
 export type OptionalAttributeFilterComponentProvider = OptionalProvider<AttributeFilterComponentProvider>;
+
+/**
+ * @public
+ */
+export type FilterGroupComponentProvider = (
+    filterGroup: IDashboardFilterGroup,
+) => CustomDashboardFilterGroupComponent;
+
+/**
+ * @public
+ */
+export type OptionalFilterGroupComponentProvider = OptionalProvider<FilterGroupComponentProvider>;
 
 /**
  * @public

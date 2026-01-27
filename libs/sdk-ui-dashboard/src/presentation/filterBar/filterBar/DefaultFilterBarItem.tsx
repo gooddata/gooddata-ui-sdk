@@ -13,7 +13,7 @@ import {
     serializeObjRef,
 } from "@gooddata/sdk-model";
 
-import { DashboardFilterGroup } from "./DashboardFilterGroup.js";
+import { DefaultDashboardFilterGroup } from "./DefaultDashboardFilterGroup.js";
 import { type IFilterBarProps } from "./types.js";
 import {
     type FilterBarItem,
@@ -88,8 +88,11 @@ export function DefaultFilterBarItem(props: IFilterBarItemProps): ReactNode {
     const allDateDatasets = useDashboardSelector(selectCatalogDateDatasets);
     const attributes = useDashboardSelector(selectCatalogAttributes);
 
-    const { AttributeFilterComponentSet, DashboardDateFilterComponentProvider } =
-        useDashboardComponentsContext();
+    const {
+        AttributeFilterComponentSet,
+        DashboardDateFilterComponentProvider,
+        DashboardFilterGroupComponentProvider,
+    } = useDashboardComponentsContext();
     const supportElementUris = useDashboardSelector(selectSupportsElementUris);
     const displayFormsMap = useDashboardSelector(selectAttributeFilterDisplayFormsMap);
 
@@ -121,7 +124,14 @@ export function DefaultFilterBarItem(props: IFilterBarItemProps): ReactNode {
         if (!enableDashboardFilterGroups) {
             return null;
         }
-        return <DashboardFilterGroup item={item} onAttributeFilterChanged={onAttributeFilterChanged} />;
+        const CustomFilterGroupComponent =
+            DashboardFilterGroupComponentProvider?.(item.groupConfig) ?? DefaultDashboardFilterGroup;
+        return (
+            <CustomFilterGroupComponent
+                groupItem={item}
+                onAttributeFilterChanged={onAttributeFilterChanged}
+            />
+        );
     }
 
     if (isFilterBarAttributeFilter(item)) {

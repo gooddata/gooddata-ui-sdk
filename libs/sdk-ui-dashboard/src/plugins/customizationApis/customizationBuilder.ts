@@ -182,6 +182,9 @@ export class DashboardCustomizationBuilder implements IDashboardCustomizer {
                 .attribute()
                 .getAttributeFilterProvider(),
             DashboardDateFilterComponentProvider: this.filtersCustomizer.date().getDateFilterProvider(),
+            DashboardFilterGroupComponentProvider: this.filtersCustomizer
+                .filterGroup()
+                .getFilterGroupProvider(),
             RichTextComponentProvider: this.richTextCustomizer.getRichTextComponentProvider(),
             VisualizationSwitcherComponentProvider:
                 this.visualizationSwitcherCustomizer.getVisualizationSwitcherComponentProvider(),

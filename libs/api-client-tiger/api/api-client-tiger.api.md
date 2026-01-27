@@ -2311,7 +2311,7 @@ export interface AfmQualityIssuesCalculationStatusResponse {
 }
 
 // @public (undocumented)
-export type AfmQualityIssuesCalculationStatusResponseStatusEnum = "RUNNING" | "COMPLETED" | "FAILED" | "NOT_FOUND" | "DISABLED";
+export type AfmQualityIssuesCalculationStatusResponseStatusEnum = "RUNNING" | "SYNCING" | "COMPLETED" | "FAILED" | "NOT_FOUND" | "DISABLED";
 
 // @public
 export interface AfmRangeMeasureValueFilter {
@@ -4632,6 +4632,7 @@ export interface AutomationRawExport {
 export interface AutomationRawExportAutomationRequest {
     // (undocumented)
     customOverride?: AutomationRawCustomOverride;
+    delimiter?: string;
     // (undocumented)
     execution: AutomationAFM;
     // (undocumented)
@@ -5074,6 +5075,7 @@ export interface AutomationSchedule {
 
 // @public
 export interface AutomationSettings {
+    delimiter?: string;
     exportInfo?: boolean;
     mergeHeaders?: boolean;
     // Warning: (ae-forgotten-export) The symbol "AutomationSettingsPageOrientationEnum" needs to be exported by the entry point index.d.ts
@@ -13100,6 +13102,7 @@ export interface ExportRawCustomOverride {
 export interface ExportRawExportRequest {
     // (undocumented)
     customOverride?: ExportRawCustomOverride;
+    delimiter?: string;
     // (undocumented)
     execution: ExportAFM;
     // (undocumented)
@@ -13161,6 +13164,7 @@ export interface ExportRequestArgs {
 
 // @public
 export interface ExportSettings {
+    delimiter?: string;
     exportInfo?: boolean;
     mergeHeaders?: boolean;
     pageOrientation?: ExportSettingsPageOrientationEnum;
@@ -25206,8 +25210,12 @@ export interface SearchRelationshipObject {
 
 // @public (undocumented)
 export interface SearchRequest {
+    // Warning: (ae-forgotten-export) The symbol "AllowedRelationshipType" needs to be exported by the entry point index.d.ts
+    allowedRelationshipTypes?: Array<AllowedRelationshipType>;
     deepSearch?: boolean;
+    excludeTags?: Array<string>;
     includeHidden?: boolean;
+    includeTags?: Array<string>;
     limit?: number;
     objectTypes?: Array<SearchRequestObjectTypesEnum>;
     question: string;
@@ -25583,7 +25591,7 @@ export interface TestDefinitionRequest {
 }
 
 // @public (undocumented)
-export type TestDefinitionRequestTypeEnum = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE" | "ADS" | "BIGQUERY" | "MSSQL" | "PRESTO" | "DREMIO" | "DRILL" | "GREENPLUM" | "AZURESQL" | "SYNAPSESQL" | "DATABRICKS" | "GDSTORAGE" | "CLICKHOUSE" | "MYSQL" | "MARIADB" | "ORACLE" | "PINOT" | "SINGLESTORE" | "MOTHERDUCK" | "FLEXCONNECT" | "STARROCKS" | "ATHENA" | "MONGODB";
+export type TestDefinitionRequestTypeEnum = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE" | "ADS" | "BIGQUERY" | "MSSQL" | "PRESTO" | "DREMIO" | "DRILL" | "GREENPLUM" | "AZURESQL" | "SYNAPSESQL" | "DATABRICKS" | "GDSTORAGE" | "CLICKHOUSE" | "MYSQL" | "MARIADB" | "ORACLE" | "PINOT" | "SINGLESTORE" | "MOTHERDUCK" | "FLEXCONNECT" | "STARROCKS" | "ATHENA" | "MONGODB" | "CRATEDB";
 
 // @public
 export interface TestQueryDuration {

@@ -12,6 +12,8 @@ import {
     useRef,
 } from "react";
 
+import cx from "classnames";
+
 import { usePropState } from "@gooddata/sdk-ui";
 
 import { DropdownButtonKeyboardWrapper } from "./DropdownButtonKeyboardWrapper.js";
@@ -31,6 +33,8 @@ const MOBILE_DROPDOWN_ALIGN_POINTS: IAlignPoint[] = [
         align: "tl tl",
     },
 ];
+// this class is used in List component to allow scrolling inside dropdown body when list is present.
+export const DROPDOWN_BODY_CLASS = "dropdown-body";
 
 /**
  * Element.matches is only supported via prefix in IE11 and Edge.
@@ -356,7 +360,7 @@ export function Dropdown({
                     enableAutofocus={autofocusOnOpen ? { initialFocus } : false}
                     enableReturnFocusOnUnmount={{ returnFocusTo }}
                 >
-                    <div className="overlay dropdown-body">
+                    <div className={cx("overlay", DROPDOWN_BODY_CLASS)}>
                         {renderBody({
                             ...renderBodyProps,
                             isMobile: false,

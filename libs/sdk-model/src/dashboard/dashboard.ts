@@ -149,6 +149,7 @@ export interface IDashboardFilterGroupsConfig {
  */
 export interface IDashboardFilterGroup {
     title: string;
+    localIdentifier?: string;
     filters: IDashboardFilterGroupItem[];
 }
 
