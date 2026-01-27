@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -6,7 +6,7 @@ import cx from "classnames";
 
 import { type ICatalogDateDataset } from "@gooddata/sdk-model";
 import { ShortenedText } from "@gooddata/sdk-ui-kit";
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 interface IAttributeListItemProps {
     item: ICatalogDateDataset;
@@ -21,7 +21,7 @@ const TOOLTIP_ALIGN_POINT = [
 
 export function DateAttributeListItem({ item, title, onClick }: IAttributeListItemProps) {
     const classNames = useMemo(() => {
-        return cx(`s-${stringUtils.simplifyText(item.dataSet.title)}`, "gd-attribute-list-item", {
+        return cx(`s-${simplifyText(item.dataSet.title)}`, "gd-attribute-list-item", {
             "gd-list-item": true,
             "gd-list-item-shortened": true,
             "type-date": true,

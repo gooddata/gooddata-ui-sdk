@@ -1,12 +1,16 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 import { type IVisConstruct } from "../../../../interfaces/Visualization.js";
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
-import * as testMocks from "../../../../tests/mocks/testMocks.js";
+import {
+    attributeAndColumnsReferencePoint,
+    attributesAndColumnsReferencePoint,
+    attributesAndColumnsWithDatesReferencePoint,
+} from "../../../../tests/mocks/referencePointMocks.js";
+import { insightWithOneColumnAndOneAttribute } from "../../../../tests/mocks/testMocks.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../../utils/translations.js";
 import { getLastRenderEl } from "../../tests/pluggableVisualizations.test.helpers.js";
 import { PluggableRepeater } from "../PluggableRepeater.js";
@@ -50,7 +54,7 @@ describe("PluggableRepeater", () => {
     it("should return reference point with one attribute, columns and valid filters", async () => {
         const repeater = createComponent();
         const extendedReferencePoint = await repeater.getExtendedReferencePoint(
-            referencePointMocks.attributeAndColumnsReferencePoint,
+            attributeAndColumnsReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -59,7 +63,7 @@ describe("PluggableRepeater", () => {
     it("should reuse one attribute and measures", async () => {
         const repeater = createComponent();
         const extendedReferencePoint = await repeater.getExtendedReferencePoint(
-            referencePointMocks.attributesAndColumnsReferencePoint,
+            attributesAndColumnsReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -68,7 +72,7 @@ describe("PluggableRepeater", () => {
     it("repeater should not allow date attributes or different attribute than main attribute in columns bucket", async () => {
         const repeater = createComponent();
         const extendedReferencePoint = await repeater.getExtendedReferencePoint(
-            referencePointMocks.attributesAndColumnsWithDatesReferencePoint,
+            attributesAndColumnsWithDatesReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -78,12 +82,7 @@ describe("PluggableRepeater", () => {
         it("should mount on the element defined by the callback", () => {
             const visualization = createComponent();
 
-            visualization.update(
-                { messages },
-                testMocks.insightWithOneColumnAndOneAttribute,
-                {},
-                executionFactory,
-            );
+            visualization.update({ messages }, insightWithOneColumnAndOneAttribute, {}, executionFactory);
 
             // 1st call for rendering element
             // 2nd call for rendering config panel

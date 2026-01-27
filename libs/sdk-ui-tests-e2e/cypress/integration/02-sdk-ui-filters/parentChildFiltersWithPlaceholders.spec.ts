@@ -1,7 +1,7 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { AttributeFilterButtonParentChild } from "../../tools/attributeFilterButtonParentChild";
-import * as Navigation from "../../tools/navigation";
+import { visit } from "../../tools/navigation";
 
 const PARENT_FILTER_SELECTOR = ".s-attribute-filter.s-product";
 const CHILD_FILTER_SELECTOR = ".s-attribute-filter.s-department";
@@ -12,7 +12,7 @@ describe.skip(
     { tags: ["post-merge_integrated_bear"] },
     () => {
         beforeEach(() => {
-            Navigation.visit("filters/parent-child-filters-with-placeholder");
+            visit("filters/parent-child-filters-with-placeholder");
         });
 
         it("Parent and child filter loaded", () => {

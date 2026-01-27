@@ -1,11 +1,11 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { getProjectId } from "../../support/constants";
 import { DashboardMenu } from "../../tools/dashboardMenu";
 import { Dashboard } from "../../tools/dashboards";
 import { EditMode } from "../../tools/editMode";
 import { AttributeFilter, FilterBar } from "../../tools/filterBar";
-import * as Navigation from "../../tools/navigation";
+import { visit } from "../../tools/navigation";
 import { Widget } from "../../tools/widget";
 
 const dashboard = new Dashboard();
@@ -20,7 +20,7 @@ const isWon = new AttributeFilter("Is Won?");
 // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
 describe.skip("Dashboard dependent filter", { tags: ["pre-merge_isolated_bear"] }, () => {
     it("Apply dependence filter on Edit Mode", () => {
-        Navigation.visit("dashboard/stage-name");
+        visit("dashboard/stage-name");
         editMode.edit();
 
         widget.waitTableLoaded();
@@ -61,7 +61,7 @@ describe.skip("Dashboard dependent filter", { tags: ["pre-merge_isolated_bear"] 
     });
 
     it("Apply dependence filter on View Mode", () => {
-        Navigation.visit("dashboard/dependent-filter");
+        visit("dashboard/dependent-filter");
         widget.waitTableLoaded();
 
         account.open().selectAttributeWithoutSearch(".decimal");
@@ -83,7 +83,7 @@ describe.skip("Dashboard dependent filter", { tags: ["pre-merge_isolated_bear"] 
     });
 
     it("Remove parent filter", () => {
-        Navigation.visit("dashboard/dependent-filter");
+        visit("dashboard/dependent-filter");
         editMode.edit();
         widget.waitTableLoaded();
 
@@ -102,7 +102,7 @@ describe.skip("Dashboard dependent filter", { tags: ["pre-merge_isolated_bear"] 
     });
 
     it("Reset after change mode to edit or view", () => {
-        Navigation.visit("dashboard/dependent-filter-set");
+        visit("dashboard/dependent-filter-set");
 
         filterBar.hasAttributeFiltersWithValue([
             ["Account", "1-800 We Answer"],
@@ -144,7 +144,7 @@ describe.skip("Dashboard dependent filter", { tags: ["pre-merge_isolated_bear"] 
     });
 
     it("Reset after parent filter change", () => {
-        Navigation.visit("dashboard/dependent-filter-set");
+        visit("dashboard/dependent-filter-set");
 
         editMode.edit().isInEditMode();
 
@@ -165,7 +165,7 @@ describe.skip("Dashboard dependent filter", { tags: ["pre-merge_isolated_bear"] 
     });
 
     it("Do not refresh after update again", () => {
-        Navigation.visit("dashboard/dependent-filter-set");
+        visit("dashboard/dependent-filter-set");
 
         account.open().selectAttributesWithoutApply("1-800 Postcards");
 
@@ -179,7 +179,7 @@ describe.skip("Dashboard dependent filter", { tags: ["pre-merge_isolated_bear"] 
     });
 
     it("Send reset dasboard command ", () => {
-        Navigation.visit("dashboard/commands");
+        visit("dashboard/commands");
 
         filterBar.hasAttributeFiltersWithValue([
             ["Account", "1-800 We Answer"],
@@ -206,7 +206,7 @@ describe.skip("Dashboard dependent filter", { tags: ["pre-merge_isolated_bear"] 
 
     it("(SEPARATE) Export on View Mode", () => {
         cy.intercept("POST", "**/exportDashboard").as("exportDashboard");
-        Navigation.visit("dashboard/dependent-filter");
+        visit("dashboard/dependent-filter");
         widget.waitTableLoaded();
 
         account.open().selectAttributeWithoutSearch(".decimal");

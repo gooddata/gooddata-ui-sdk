@@ -1,10 +1,10 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type ReactElement, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import cx from "classnames";
 
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { Bubble } from "../Bubble/Bubble.js";
 import { BubbleHoverTrigger } from "../Bubble/BubbleHoverTrigger.js";
@@ -58,7 +58,7 @@ export function LegacySingleSelectListItem({
     });
 
     const classNames = useMemo((): string => {
-        const generatedSeleniumClass = `s-${stringUtils.simplifyText(source.title)}`;
+        const generatedSeleniumClass = `s-${simplifyText(source.title)}`;
 
         return cx("gd-list-item", generatedSeleniumClass, { "is-selected": selected });
     }, [source.title, selected]);

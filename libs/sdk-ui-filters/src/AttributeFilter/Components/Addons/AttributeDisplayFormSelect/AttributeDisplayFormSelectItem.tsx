@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type MouseEvent } from "react";
 
@@ -10,7 +10,7 @@ import {
     type ObjRef,
 } from "@gooddata/sdk-model";
 import { ShortenedText } from "@gooddata/sdk-ui-kit";
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 const getDisplayFormIcon = (type: AttributeDisplayFormType) => {
     switch (type) {
@@ -52,7 +52,7 @@ export function AttributeDisplayFormSelectItem(props: IAttributeDisplayFormSelec
         "gd-list-item",
         "gd-attribute-display-form",
         "s-attribute-display-form-name",
-        `s-attribute-display-form-name-${stringUtils.simplifyText(title)}`,
+        `s-attribute-display-form-name-${simplifyText(title)}`,
         getDisplayFormIcon(type as AttributeDisplayFormType),
         {
             "is-selected": selected,

@@ -4,7 +4,7 @@ import cx from "classnames";
 
 import { isInsightWidget, objRefToString } from "@gooddata/sdk-model";
 import { OverlayController, OverlayControllerProvider, ScrollablePanel } from "@gooddata/sdk-ui-kit";
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { AlertsList } from "./InsightAlertConfig/AlertsList.js";
 import { CreateAlert } from "./InsightAlertConfig/CreateAlert.js";
@@ -18,9 +18,7 @@ import { type IInsightMenuSubmenuComponentProps } from "../../insightMenu/types.
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
 
 export function InsightAlertsOld({ widget, onClose, onGoBack }: IInsightMenuSubmenuComponentProps) {
-    const widgetRefSuffix = isInsightWidget(widget)
-        ? stringUtils.simplifyText(objRefToString(widget.ref))
-        : "";
+    const widgetRefSuffix = isInsightWidget(widget) ? simplifyText(objRefToString(widget.ref)) : "";
     const classes = cx(
         "gd-alerts-configuration-panel",
         "configuration-scrollable-panel",

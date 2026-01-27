@@ -1,10 +1,10 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import cx from "classnames";
 
 import { type ObjRefInScope } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, Button } from "@gooddata/sdk-ui-kit";
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { type IAttributeDropdownItem, type ICustomGranularitySelection } from "../../types.js";
 
@@ -38,7 +38,7 @@ export function AttributeItem({
         },
         "gd-button-link",
         iconClass,
-        `s-rf-attribute-${stringUtils.simplifyText(title)}`,
+        `s-rf-attribute-${simplifyText(title)}`,
     );
 
     const onMouseOver = () => {

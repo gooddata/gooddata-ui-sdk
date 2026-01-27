@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import {
     DateGranularity,
@@ -10,22 +10,22 @@ import {
 } from "@gooddata/sdk-model";
 import { ComboChart } from "@gooddata/sdk-ui-charts";
 
-import * as Catalog from "../catalog.js";
+import { DateDatasets, GrossProfit, NrOfOrders } from "../catalog.js";
 import { Hint } from "../Hint.js";
 
-const primaryMeasures: IMeasure[] = [Catalog.GrossProfit];
-const secondaryMeasures: IMeasure[] = [Catalog.NrOfOrders];
+const primaryMeasures: IMeasure[] = [GrossProfit];
+const secondaryMeasures: IMeasure[] = [NrOfOrders];
 
 const viewBy: IAttribute[] = [
     // for viewBe we want to rename the attribute to see it on axis label "Date - Month"
     //👉 try to rename it to Date
-    modifyAttribute(Catalog.DateDatasets.CustomerCreatedDate.CustomerCreatedDateMonthYear.Default, (a) =>
+    modifyAttribute(DateDatasets.CustomerCreatedDate.CustomerCreatedDateMonthYear.Default, (a) =>
         a.alias("Date - Month"),
     ),
 ];
 
 const filters: IFilter[] = [
-    newRelativeDateFilter(Catalog.DateDatasets.CustomerCreatedDate, DateGranularity["month"], -11, 0), // 👉 Try -5, 0
+    newRelativeDateFilter(DateDatasets.CustomerCreatedDate, DateGranularity["month"], -11, 0), // 👉 Try -5, 0
 ];
 const style = { height: 400 };
 

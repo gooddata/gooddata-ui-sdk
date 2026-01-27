@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type ComponentType, type MouseEvent, useCallback, useEffect, useMemo, useRef } from "react";
 
@@ -6,7 +6,7 @@ import cx from "classnames";
 import { useIntl } from "react-intl";
 
 import { type IExecutionConfig, type IFilter, type ISeparators } from "@gooddata/sdk-model";
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { InsightListItemDate } from "./InsightListItemDate.js";
 import { Button } from "../Button/Button.js";
@@ -163,7 +163,7 @@ export function InsightListItem({
 
     const visualizationListItemClassname = useMemo(
         () =>
-            cx("gd-visualizations-list-item", `s-${stringUtils.simplifyText(title ?? "")}`, {
+            cx("gd-visualizations-list-item", `s-${simplifyText(title ?? "")}`, {
                 "is-selected": isSelected,
             }),
         [title, isSelected],

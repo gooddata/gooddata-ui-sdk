@@ -319,13 +319,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableFlexAi,
-            "enableFlexAi",
-            "BOOLEAN",
-            FeatureFlagsValues.enableFlexAi,
-        ),
-        ...loadFeature(
-            features,
             TigerFeaturesNames.EnableExperimentalFeaturesUI,
             "enableExperimentalFeaturesUI",
             "BOOLEAN",

@@ -19,7 +19,7 @@ import {
     measureTitle,
     modifyMeasure,
 } from "@gooddata/sdk-model";
-import { stringUtils } from "@gooddata/util";
+import { shortenText } from "@gooddata/util";
 
 import { ArithmeticMeasureTitleFactory } from "./ArithmeticMeasureTitleFactory.js";
 import { DerivedMeasureTitleSuffixFactory } from "./DerivedMeasureTitleSuffixFactory.js";
@@ -118,7 +118,7 @@ function buildArithmeticMeasureTitle(
                 return null;
             }
 
-            const title = stringUtils.shortenText(fullLengthTitle, {
+            const title = shortenText(fullLengthTitle, {
                 maxLength: maxArithmeticMeasureTitleLength,
             });
 

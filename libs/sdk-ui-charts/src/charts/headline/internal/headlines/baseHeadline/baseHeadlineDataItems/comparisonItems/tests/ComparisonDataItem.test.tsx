@@ -20,8 +20,16 @@ import {
     TEST_RENDER_COLOR_SPECS,
     createComparison,
 } from "../../../../../tests/TestData.fixtures.js";
-import { mockUseBaseHeadline } from "../../../tests/BaseHeadline.test.helpers.js";
+import { createMockUseBaseHeadline } from "../../../tests/BaseHeadline.test.helpers.js";
 import { ComparisonDataItem } from "../ComparisonDataItem.js";
+
+const useBaseHeadlineMock = vi.hoisted(() => vi.fn());
+
+vi.mock("../../../BaseHeadlineContext.js", () => ({
+    useBaseHeadline: useBaseHeadlineMock,
+}));
+
+const mockUseBaseHeadline = createMockUseBaseHeadline(useBaseHeadlineMock);
 
 describe("ComparisonDataItem", () => {
     const renderComparisonDataItem = (props: IBaseHeadlineDataItemProps<IComparisonDataItem>) => {

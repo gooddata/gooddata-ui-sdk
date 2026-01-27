@@ -17,7 +17,7 @@ import {
     isAttributeDescriptor,
 } from "@gooddata/sdk-model";
 import { messages } from "@gooddata/sdk-ui";
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { DrillIntersectionIgnoredAttributes } from "./DrillIntersectionIgnoredAttributes.js";
 import { DrillOriginItem } from "./DrillOriginItem.js";
@@ -84,13 +84,9 @@ export function DrillConfigItem({
         });
     };
 
-    const classNames = cx(
-        "s-drill-config-item",
-        `s-drill-config-item-${stringUtils.simplifyText(item.title)}`,
-        {
-            "s-drill-config-item-incomplete": !item.complete,
-        },
-    );
+    const classNames = cx("s-drill-config-item", `s-drill-config-item-${simplifyText(item.title)}`, {
+        "s-drill-config-item-incomplete": !item.complete,
+    });
 
     const targetClassNames = cx("s-drill-config-target", "drill-config-target", {
         "drill-config-target-with-warning": !!item.warning,

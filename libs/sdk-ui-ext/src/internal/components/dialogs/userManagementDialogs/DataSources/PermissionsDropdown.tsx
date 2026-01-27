@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { useCallback, useState } from "react";
 
@@ -6,7 +6,7 @@ import cx from "classnames";
 import { useIntl } from "react-intl";
 
 import { withBubble } from "@gooddata/sdk-ui-kit";
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { dataSourcePermissionMessages } from "./locales.js";
 import { PermissionsDropdownList } from "./PermissionsDropdownList.js";
@@ -102,7 +102,7 @@ function Dropdown({
                     "s-user-management-permission-button",
                     "gd-granular-permission-button",
                     "dropdown-button",
-                    `gd-granular-permission-button-${stringUtils.simplifyText(dataSource.id)}`,
+                    `gd-granular-permission-button-${simplifyText(dataSource.id)}`,
                     {
                         "is-active": isDropdownOpen,
                         "gd-icon-navigateup": !isDropdownDisabled && isDropdownOpen,
@@ -126,7 +126,7 @@ function Dropdown({
                 onDelete={handleOnDelete}
                 toggleDropdown={toggleDropdown}
                 isShowDropdown={isDropdownOpen}
-                alignTo={`.gd-granular-permission-button-${stringUtils.simplifyText(dataSource.id)}`}
+                alignTo={`.gd-granular-permission-button-${simplifyText(dataSource.id)}`}
             />
         </div>
     );

@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { render } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -16,9 +16,27 @@ import {
 } from "../../../../../tests/testDataProvider.js";
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
 import { COMPARISON_FORMAT_VALUE_PATH, COMPARISON_SUB_FORMAT_VALUE_PATH } from "../../ComparisonValuePath.js";
-import * as ComparisonPositionControl from "../ComparisonPositionControl.js";
-import * as NumberFormatControl from "../numberFormat/NumberFormatControl.js";
+import { ComparisonPositionControl } from "../ComparisonPositionControl.js";
+import { NumberFormatControl } from "../numberFormat/NumberFormatControl.js";
 import { ValueSubSection } from "../ValueSubSection.js";
+
+vi.mock("../ComparisonPositionControl.js", async (importOriginal) => {
+    // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+    const actual = await importOriginal<typeof import("../ComparisonPositionControl.js")>();
+    return {
+        ...actual,
+        ComparisonPositionControl: vi.fn(actual.ComparisonPositionControl),
+    };
+});
+
+vi.mock("../numberFormat/NumberFormatControl.js", async (importOriginal) => {
+    // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+    const actual = await importOriginal<typeof import("../numberFormat/NumberFormatControl.js")>();
+    return {
+        ...actual,
+        NumberFormatControl: vi.fn(actual.NumberFormatControl),
+    };
+});
 
 const TITLE_TEXT_QUERY = "Value";
 
@@ -65,7 +83,7 @@ describe("ValueSubSection", () => {
     });
 
     it("Should render number format control", () => {
-        const MockNumberFormatControl = vi.spyOn(NumberFormatControl, "NumberFormatControl");
+        const MockNumberFormatControl = vi.mocked(NumberFormatControl);
         renderValueSubSection();
 
         expect(MockNumberFormatControl).toHaveBeenCalledWith(
@@ -83,10 +101,7 @@ describe("ValueSubSection", () => {
     });
 
     it("Should render comparison position control", () => {
-        const MockComparisonPositionControl = vi.spyOn(
-            ComparisonPositionControl,
-            "ComparisonPositionControl",
-        );
+        const MockComparisonPositionControl = vi.mocked(ComparisonPositionControl);
         renderValueSubSection();
 
         expect(MockComparisonPositionControl).toHaveBeenCalledWith(
@@ -100,7 +115,7 @@ describe("ValueSubSection", () => {
     });
 
     it("Should select default format while format is empty", () => {
-        const MockNumberFormatControl = vi.spyOn(NumberFormatControl, "NumberFormatControl");
+        const MockNumberFormatControl = vi.mocked(NumberFormatControl);
         renderValueSubSection({
             properties: createTestProperties<IComparisonControlProperties>({
                 comparison: {
@@ -118,7 +133,7 @@ describe("ValueSubSection", () => {
     });
 
     it("Should render sub-format when calculation type is change (difference)", () => {
-        const MockNumberFormatControl = vi.spyOn(NumberFormatControl, "NumberFormatControl");
+        const MockNumberFormatControl = vi.mocked(NumberFormatControl);
         renderValueSubSection({
             properties: createTestProperties<IComparisonControlProperties>({
                 comparison: {

@@ -27,7 +27,7 @@ import {
     isObjectUriQualifier,
 } from "../iframe/legacyTypes.js";
 
-export const EXTERNAL_DATE_FILTER_FORMAT = "YYYY-MM-DD";
+const EXTERNAL_DATE_FILTER_FORMAT = "YYYY-MM-DD";
 
 export interface IExternalFiltersObject {
     attributeFilters: ITransformedAttributeFilterItem[];
@@ -75,7 +75,7 @@ function validateDataSet(dataSet: ObjQualifier | undefined): boolean {
     return typeof uri === "string" || typeof identifier === "string";
 }
 
-export function isValidDateFilterFormat(
+function isValidDateFilterFormat(
     filterItem: DateFilterItem,
     shouldValidateDataSet: boolean = true,
     isTimeSupported: boolean = false,
@@ -177,7 +177,7 @@ function isValidRankingFilterFormat(rankingFilterItem: IRankingFilter): boolean 
 // `dataSet` is required in AD only.
 // In AD, we call this function with `shouldValidateDataSet = true`
 // In KD, we call this function with `shouldValidateDataSet = false`
-export function isValidFilterItemFormat(
+function isValidFilterItemFormat(
     filterItem: unknown,
     shouldValidateDataSet: boolean = true,
     isTimeSupported: boolean = false,
@@ -192,7 +192,7 @@ export function isValidFilterItemFormat(
     return false;
 }
 
-export function isValidRemoveFilterItemFormat(filterItem: unknown): boolean {
+function isValidRemoveFilterItemFormat(filterItem: unknown): boolean {
     if (isRemoveDateFilter(filterItem)) {
         const { dataSet } = filterItem;
         const { uri, identifier } = getObjectUriIdentifier(dataSet);
@@ -223,7 +223,7 @@ export function isValidFiltersFormat(
     );
 }
 
-export function getObjectUriIdentifier(obj: ObjQualifier | undefined): {
+function getObjectUriIdentifier(obj: ObjQualifier | undefined): {
     uri?: string;
     identifier?: string;
 } {
@@ -349,14 +349,14 @@ export function transformFilterContext(filters: FilterItem[]): IExternalFiltersO
     );
 }
 
-export function isTransformedDateFilterItem(
+function isTransformedDateFilterItem(
     filterItem: ITransformedFilterItem,
 ): filterItem is ITransformedDateFilterItem {
     const { from, to } = filterItem as ITransformedDateFilterItem;
     return !isEmpty(filterItem) && from !== undefined && to !== undefined;
 }
 
-export function isTransformedAttributeFilterItem(
+function isTransformedAttributeFilterItem(
     filterItem: ITransformedFilterItem,
 ): filterItem is ITransformedAttributeFilterItem {
     const { attributeElements } = filterItem as ITransformedAttributeFilterItem;
@@ -377,3 +377,19 @@ export function isAllValueAttributeFilterItem(filterItem: ITransformedFilterItem
         !filterItem.attributeElements.length
     );
 }
+
+export const filterConverters = {
+    EXTERNAL_DATE_FILTER_FORMAT,
+    ALL_TIME_GRANULARITY,
+    isValidDateFilterFormat,
+    isValidFilterItemFormat,
+    isValidRemoveFilterItemFormat,
+    isValidRemoveFiltersFormat,
+    isValidFiltersFormat,
+    getObjectUriIdentifier,
+    transformFilterContext,
+    isTransformedDateFilterItem,
+    isTransformedAttributeFilterItem,
+    isAllTimeDateFilterItem,
+    isAllValueAttributeFilterItem,
+};

@@ -1,10 +1,19 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
+
 import { renderHook } from "@testing-library/react";
 import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { TEST_DATA_ITEM } from "../../../../tests/TestData.fixtures.js";
-import { mockUseBaseHeadline } from "../../tests/BaseHeadline.test.helpers.js";
+import { createMockUseBaseHeadline } from "../../tests/BaseHeadline.test.helpers.js";
 import { useBaseHeadlineDataItem } from "../useBaseHeadlineDataItem.js";
+
+const useBaseHeadlineMock = vi.hoisted(() => vi.fn());
+
+vi.mock("../../BaseHeadlineContext.js", () => ({
+    useBaseHeadline: useBaseHeadlineMock,
+}));
+
+const mockUseBaseHeadline = createMockUseBaseHeadline(useBaseHeadlineMock);
 
 describe("useBaseHeadlineDataItem", () => {
     beforeEach(() => {

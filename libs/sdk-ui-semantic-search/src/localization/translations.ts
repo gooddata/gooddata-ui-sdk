@@ -1,4 +1,5 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
+
 import { memoize, merge } from "lodash-es";
 
 import {
@@ -6,12 +7,12 @@ import {
     type ITranslations,
     resolveMessages as resolveMessagesSdkUi,
 } from "@gooddata/sdk-ui";
-import { translationUtils } from "@gooddata/util";
+import { removeMetadata } from "@gooddata/util";
 
 import { en_US } from "./bundles/en-US.localization-bundle.js";
 
 const asyncSemanticSearchTranslations: { [locale: string]: () => Promise<ITranslations> } = {
-    "en-US": () => Promise.resolve(translationUtils.removeMetadata(en_US)),
+    "en-US": () => Promise.resolve(removeMetadata(en_US)),
     "de-DE": () => import("./bundles/de-DE.localization-bundle.js").then((module) => module.de_DE),
     "en-AU": () => import("./bundles/en-AU.localization-bundle.js").then((module) => module.en_AU),
     "en-GB": () => import("./bundles/en-GB.localization-bundle.js").then((module) => module.en_GB),
@@ -64,7 +65,7 @@ export const resolveMessages: (locale: string) => Promise<ITranslations> = memoi
 export const DEFAULT_LANGUAGE = "en-US";
 export const DEFAULT_MESSAGES = {
     [DEFAULT_LANGUAGE]: {
-        ...translationUtils.removeMetadata(en_US),
+        ...removeMetadata(en_US),
         ...DEFAULT_MESSAGES_SDK_UI[DEFAULT_LANGUAGE],
     },
 };

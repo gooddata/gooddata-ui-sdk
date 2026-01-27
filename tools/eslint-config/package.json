@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/eslint-config",
-    "version": "11.18.0-alpha.4",
+    "version": "11.18.0-alpha.5",
     "repository": {
         "type": "git",
         "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
@@ -41,7 +41,7 @@
         "validate": "tsc && npm run eslint"
     },
     "devDependencies": {
-        "@testing-library/dom": "10.4.0",
+        "@testing-library/dom": "10.4.1",
         "@types/node": "^22.13.0",
         "@typescript-eslint/eslint-plugin": "8.52.0",
         "@typescript-eslint/parser": "8.52.0",
@@ -63,12 +63,12 @@
         "eslint-plugin-react-hooks": "4.6.0",
         "eslint-plugin-regexp": "1.15.0",
         "eslint-plugin-sonarjs": "0.16.0",
-        "eslint-plugin-storybook": "^10.0.6",
+        "eslint-plugin-storybook": "^10.1.11",
         "eslint-plugin-tsdoc": "0.2.14",
         "prettier": "^3.6.2",
         "react": "19.1.1",
         "react-dom": "19.1.1",
-        "storybook": "^10.0.6",
+        "storybook": "^10.1.11",
         "typescript": "5.9.3",
         "vite-node": "^5.2.0"
     },

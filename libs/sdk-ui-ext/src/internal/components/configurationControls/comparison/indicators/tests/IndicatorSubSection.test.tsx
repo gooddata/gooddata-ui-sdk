@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { render } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -8,9 +8,24 @@ import { DEFAULT_COMPARISON_PALETTE } from "@gooddata/sdk-ui-charts";
 import { type IComparisonControlProperties } from "../../../../../interfaces/ControlProperties.js";
 import { createTestProperties } from "../../../../../tests/testDataProvider.js";
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
-import * as ArrowControl from "../ArrowControl.js";
-import * as ColorsControl from "../colorsControl/ColorsControl.js";
+import { ArrowControl } from "../ArrowControl.js";
+import { ColorsControl } from "../colorsControl/ColorsControl.js";
 import { IndicatorSubSection } from "../IndicatorSubSection.js";
+
+vi.mock("../ArrowControl.js", async (importOriginal) => {
+    // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+    const actual = await importOriginal<typeof import("../ArrowControl.js")>();
+    return { ...actual, ArrowControl: vi.fn(actual.ArrowControl) };
+});
+
+vi.mock("../colorsControl/ColorsControl.js", async (importOriginal) => {
+    // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+    const actual = await importOriginal<typeof import("../colorsControl/ColorsControl.js")>();
+    return {
+        ...actual,
+        ColorsControl: vi.fn(actual.ColorsControl),
+    };
+});
 
 const TITLE_TEXT_QUERY = "Indicator";
 
@@ -50,7 +65,7 @@ describe("IndicatorSubSection", () => {
     });
 
     it("Should render arrow control", () => {
-        const MockArrowControl = vi.spyOn(ArrowControl, "ArrowControl");
+        const MockArrowControl = vi.mocked(ArrowControl);
         renderIndicatorSubSection();
 
         expect(MockArrowControl).toHaveBeenCalledWith(
@@ -64,7 +79,7 @@ describe("IndicatorSubSection", () => {
     });
 
     it("Should render color control", () => {
-        const MockColorControl = vi.spyOn(ColorsControl, "ColorsControl");
+        const MockColorControl = vi.mocked(ColorsControl);
         renderIndicatorSubSection();
 
         const { sectionDisabled, ...expected } = DEFAULT_PROPS;

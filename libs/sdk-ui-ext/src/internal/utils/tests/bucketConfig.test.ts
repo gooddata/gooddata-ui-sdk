@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { cloneDeep } from "lodash-es";
 import { describe, expect, it } from "vitest";
@@ -12,15 +12,25 @@ import {
     type IExtendedReferencePoint,
     type IFiltersBucketItem,
 } from "../../interfaces/Visualization.js";
-import * as referencePointMocks from "../../tests/mocks/referencePointMocks.js";
+import {
+    arithmeticMeasureItems,
+    attributeItems,
+    dateDatasetRef,
+    dateFilter,
+    dateFilterSamePeriodPreviousYear,
+    dateItem,
+    dateItemWithDateDataset,
+    derivedMeasureItems,
+    masterMeasureItems,
+} from "../../tests/mocks/referencePointMocks.js";
 import { configureOverTimeComparison, configurePercent } from "../bucketConfig.js";
 
 describe("configure Percent and Over Time Comparison helper functions", () => {
     const samePeriodPreviousYearFilter: IFiltersBucketItem = {
         attribute: DATE_DATASET_ATTRIBUTE,
         localIdentifier: "f1",
-        filters: [referencePointMocks.dateFilterSamePeriodPreviousYear],
-        dateDatasetRef: referencePointMocks.dateDatasetRef,
+        filters: [dateFilterSamePeriodPreviousYear],
+        dateDatasetRef: dateDatasetRef,
     };
 
     function getSingleMeasureNoFilterReferencePoint(numberOfMeasures: number): IExtendedReferencePoint {
@@ -28,11 +38,11 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
             buckets: [
                 {
                     localIdentifier: "measures",
-                    items: cloneDeep(referencePointMocks.masterMeasureItems.slice(0, numberOfMeasures)),
+                    items: cloneDeep(masterMeasureItems.slice(0, numberOfMeasures)),
                 },
                 {
                     localIdentifier: "attribute",
-                    items: [cloneDeep(referencePointMocks.dateItem)],
+                    items: [cloneDeep(dateItem)],
                 },
             ],
             filters: {
@@ -51,22 +61,22 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
             buckets: [
                 {
                     localIdentifier: "measures",
-                    items: referencePointMocks.masterMeasureItems
+                    items: masterMeasureItems
                         .slice(0, 2)
-                        .concat(referencePointMocks.derivedMeasureItems.slice(0, 2))
-                        .concat(referencePointMocks.arithmeticMeasureItems.slice(0, 2))
-                        .concat(referencePointMocks.arithmeticMeasureItems.slice(3, 4)),
+                        .concat(derivedMeasureItems.slice(0, 2))
+                        .concat(arithmeticMeasureItems.slice(0, 2))
+                        .concat(arithmeticMeasureItems.slice(3, 4)),
                 },
                 {
                     localIdentifier: "secondary_measures",
-                    items: referencePointMocks.masterMeasureItems
+                    items: masterMeasureItems
                         .slice(2, 4)
-                        .concat(referencePointMocks.derivedMeasureItems.slice(2, 4))
-                        .concat(referencePointMocks.arithmeticMeasureItems.slice(5, 6)),
+                        .concat(derivedMeasureItems.slice(2, 4))
+                        .concat(arithmeticMeasureItems.slice(5, 6)),
                 },
                 {
                     localIdentifier: "attribute",
-                    items: [referencePointMocks.dateItemWithDateDataset],
+                    items: [dateItemWithDateDataset],
                 },
             ],
             filters: {
@@ -140,15 +150,15 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
         const dateFilterBucketItem: IFiltersBucketItem = {
             attribute: DATE_DATASET_ATTRIBUTE,
             localIdentifier: "f1",
-            filters: [referencePointMocks.dateFilter],
-            dateDatasetRef: referencePointMocks.dateDatasetRef,
+            filters: [dateFilter],
+            dateDatasetRef: dateDatasetRef,
         };
 
         const dateFilterWithSamePeriodPreviousYear: IFiltersBucketItem = {
             attribute: DATE_DATASET_ATTRIBUTE,
             localIdentifier: "f1",
-            filters: [referencePointMocks.dateFilterSamePeriodPreviousYear],
-            dateDatasetRef: referencePointMocks.dateDatasetRef,
+            filters: [dateFilterSamePeriodPreviousYear],
+            dateDatasetRef: dateDatasetRef,
         };
 
         it("should keep all derived measures if over time comparison is available due to non-all-time date filter", () => {
@@ -159,16 +169,16 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
                     {
                         localIdentifier: "measures",
                         items: [
-                            referencePointMocks.masterMeasureItems[0],
-                            referencePointMocks.derivedMeasureItems[1],
-                            referencePointMocks.arithmeticMeasureItems[0],
-                            referencePointMocks.arithmeticMeasureItems[1],
-                            referencePointMocks.arithmeticMeasureItems[3],
+                            masterMeasureItems[0],
+                            derivedMeasureItems[1],
+                            arithmeticMeasureItems[0],
+                            arithmeticMeasureItems[1],
+                            arithmeticMeasureItems[3],
                         ],
                     },
                     {
                         localIdentifier: "attribute",
-                        items: [referencePointMocks.dateItemWithDateDataset],
+                        items: [dateItemWithDateDataset],
                     },
                 ],
                 filters: {
@@ -191,14 +201,14 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
                     {
                         localIdentifier: "measures",
                         items: [
-                            referencePointMocks.masterMeasureItems[0],
-                            referencePointMocks.masterMeasureItems[1],
-                            referencePointMocks.derivedMeasureItems[0],
-                            referencePointMocks.derivedMeasureItems[1],
-                            referencePointMocks.arithmeticMeasureItems[0],
-                            referencePointMocks.arithmeticMeasureItems[1],
-                            referencePointMocks.arithmeticMeasureItems[3],
-                            referencePointMocks.arithmeticMeasureItems[5],
+                            masterMeasureItems[0],
+                            masterMeasureItems[1],
+                            derivedMeasureItems[0],
+                            derivedMeasureItems[1],
+                            arithmeticMeasureItems[0],
+                            arithmeticMeasureItems[1],
+                            arithmeticMeasureItems[3],
+                            arithmeticMeasureItems[5],
                         ],
                     },
                     {
@@ -219,10 +229,10 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
             const newReferencePoint = configureOverTimeComparison(cloneDeep(referencePoint));
 
             expect(newReferencePoint.buckets[0].items).toEqual([
-                referencePointMocks.masterMeasureItems[0],
-                referencePointMocks.masterMeasureItems[1],
-                referencePointMocks.arithmeticMeasureItems[0],
-                referencePointMocks.arithmeticMeasureItems[1],
+                masterMeasureItems[0],
+                masterMeasureItems[1],
+                arithmeticMeasureItems[0],
+                arithmeticMeasureItems[1],
             ]);
         });
 
@@ -232,19 +242,19 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
                     {
                         localIdentifier: "measures",
                         items: [
-                            referencePointMocks.masterMeasureItems[0],
-                            referencePointMocks.masterMeasureItems[1],
-                            referencePointMocks.derivedMeasureItems[0],
-                            referencePointMocks.derivedMeasureItems[1],
-                            referencePointMocks.arithmeticMeasureItems[0],
-                            referencePointMocks.arithmeticMeasureItems[1],
-                            referencePointMocks.arithmeticMeasureItems[3],
-                            referencePointMocks.arithmeticMeasureItems[5],
+                            masterMeasureItems[0],
+                            masterMeasureItems[1],
+                            derivedMeasureItems[0],
+                            derivedMeasureItems[1],
+                            arithmeticMeasureItems[0],
+                            arithmeticMeasureItems[1],
+                            arithmeticMeasureItems[3],
+                            arithmeticMeasureItems[5],
                         ],
                     },
                     {
                         localIdentifier: "stack",
-                        items: [referencePointMocks.attributeItems[0]],
+                        items: [attributeItems[0]],
                     },
                 ],
                 filters: {
@@ -260,10 +270,10 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
             const newReferencePoint = configureOverTimeComparison(cloneDeep(referencePoint));
 
             expect(newReferencePoint.buckets[0].items).toEqual([
-                referencePointMocks.masterMeasureItems[0],
-                referencePointMocks.masterMeasureItems[1],
-                referencePointMocks.arithmeticMeasureItems[0],
-                referencePointMocks.arithmeticMeasureItems[1],
+                masterMeasureItems[0],
+                masterMeasureItems[1],
+                arithmeticMeasureItems[0],
+                arithmeticMeasureItems[1],
             ]);
         });
 
@@ -273,14 +283,14 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
                     {
                         localIdentifier: "measures",
                         items: [
-                            referencePointMocks.masterMeasureItems[0],
-                            referencePointMocks.masterMeasureItems[1],
-                            referencePointMocks.derivedMeasureItems[0],
-                            referencePointMocks.derivedMeasureItems[1],
-                            referencePointMocks.arithmeticMeasureItems[0],
-                            referencePointMocks.arithmeticMeasureItems[1],
-                            referencePointMocks.arithmeticMeasureItems[3],
-                            referencePointMocks.arithmeticMeasureItems[5],
+                            masterMeasureItems[0],
+                            masterMeasureItems[1],
+                            derivedMeasureItems[0],
+                            derivedMeasureItems[1],
+                            arithmeticMeasureItems[0],
+                            arithmeticMeasureItems[1],
+                            arithmeticMeasureItems[3],
+                            arithmeticMeasureItems[5],
                         ],
                     },
                     {
@@ -291,7 +301,7 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
                                 type: DATE,
                                 attribute: DATE_DATASET_ATTRIBUTE,
                                 granularity: GRANULARITY.week,
-                                dateDatasetRef: referencePointMocks.dateDatasetRef,
+                                dateDatasetRef: dateDatasetRef,
                             },
                         ],
                     },
@@ -309,14 +319,14 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
             const newReferencePoint = configureOverTimeComparison(cloneDeep(referencePoint));
 
             expect(newReferencePoint.buckets[0].items).toEqual([
-                referencePointMocks.masterMeasureItems[0],
-                referencePointMocks.masterMeasureItems[1],
-                referencePointMocks.derivedMeasureItems[0],
-                referencePointMocks.derivedMeasureItems[1],
-                referencePointMocks.arithmeticMeasureItems[0],
-                referencePointMocks.arithmeticMeasureItems[1],
-                referencePointMocks.arithmeticMeasureItems[3],
-                referencePointMocks.arithmeticMeasureItems[5],
+                masterMeasureItems[0],
+                masterMeasureItems[1],
+                derivedMeasureItems[0],
+                derivedMeasureItems[1],
+                arithmeticMeasureItems[0],
+                arithmeticMeasureItems[1],
+                arithmeticMeasureItems[3],
+                arithmeticMeasureItems[5],
             ]);
         });
 
@@ -326,10 +336,10 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
             const newReferencePoint = configureOverTimeComparison(cloneDeep(referencePoint));
 
             const expectedReferencePoint = cloneDeep(referencePoint);
-            expectedReferencePoint.buckets[0].items = referencePointMocks.masterMeasureItems
+            expectedReferencePoint.buckets[0].items = masterMeasureItems
                 .slice(0, 2)
-                .concat(referencePointMocks.arithmeticMeasureItems.slice(0, 2));
-            expectedReferencePoint.buckets[1].items = referencePointMocks.masterMeasureItems.slice(2, 4);
+                .concat(arithmeticMeasureItems.slice(0, 2));
+            expectedReferencePoint.buckets[1].items = masterMeasureItems.slice(2, 4);
 
             expect(newReferencePoint.buckets).toMatchObject(expectedReferencePoint.buckets);
         });
@@ -337,17 +347,17 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
         it("should remove all derived measures when compare type is NOTHING", () => {
             const dateFilterBucketItem: IFiltersBucketItem = {
                 localIdentifier: "f1",
-                filters: [referencePointMocks.dateFilter],
+                filters: [dateFilter],
             };
             const referencePoint = getOverTimeComparisonReferencePoint(dateFilterBucketItem);
 
             const newReferencePoint = configureOverTimeComparison(cloneDeep(referencePoint));
 
             const expectedReferencePoint = cloneDeep(referencePoint);
-            expectedReferencePoint.buckets[0].items = referencePointMocks.masterMeasureItems
+            expectedReferencePoint.buckets[0].items = masterMeasureItems
                 .slice(0, 2)
-                .concat(referencePointMocks.arithmeticMeasureItems.slice(0, 2));
-            expectedReferencePoint.buckets[1].items = referencePointMocks.masterMeasureItems.slice(2, 4);
+                .concat(arithmeticMeasureItems.slice(0, 2));
+            expectedReferencePoint.buckets[1].items = masterMeasureItems.slice(2, 4);
 
             expect(newReferencePoint.buckets).toMatchObject(expectedReferencePoint.buckets);
         });
@@ -370,20 +380,20 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
 
             const expectedReferencePoint = cloneDeep(referencePoint);
             expectedReferencePoint.buckets[0].items = [
-                referencePointMocks.masterMeasureItems[0],
-                referencePointMocks.masterMeasureItems[1],
-                referencePointMocks.derivedMeasureItems[0],
-                referencePointMocks.derivedMeasureItems[1],
-                referencePointMocks.arithmeticMeasureItems[0],
-                referencePointMocks.arithmeticMeasureItems[1],
-                referencePointMocks.arithmeticMeasureItems[3],
+                masterMeasureItems[0],
+                masterMeasureItems[1],
+                derivedMeasureItems[0],
+                derivedMeasureItems[1],
+                arithmeticMeasureItems[0],
+                arithmeticMeasureItems[1],
+                arithmeticMeasureItems[3],
             ];
             expectedReferencePoint.buckets[1].items = [
-                referencePointMocks.masterMeasureItems[2],
-                referencePointMocks.masterMeasureItems[3],
-                referencePointMocks.derivedMeasureItems[2],
-                referencePointMocks.derivedMeasureItems[3],
-                referencePointMocks.arithmeticMeasureItems[5],
+                masterMeasureItems[2],
+                masterMeasureItems[3],
+                derivedMeasureItems[2],
+                derivedMeasureItems[3],
+                arithmeticMeasureItems[5],
             ];
 
             expect(newReferencePoint.buckets).toMatchObject(expectedReferencePoint.buckets);
@@ -397,15 +407,12 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
 
             const expectedReferencePoint = cloneDeep(referencePoint);
             expectedReferencePoint.buckets[0].items = [
-                referencePointMocks.masterMeasureItems[0],
-                referencePointMocks.masterMeasureItems[1],
-                referencePointMocks.arithmeticMeasureItems[0],
-                referencePointMocks.arithmeticMeasureItems[1],
+                masterMeasureItems[0],
+                masterMeasureItems[1],
+                arithmeticMeasureItems[0],
+                arithmeticMeasureItems[1],
             ];
-            expectedReferencePoint.buckets[1].items = [
-                referencePointMocks.masterMeasureItems[2],
-                referencePointMocks.masterMeasureItems[3],
-            ];
+            expectedReferencePoint.buckets[1].items = [masterMeasureItems[2], masterMeasureItems[3]];
 
             expect(newReferencePoint.buckets).toMatchObject(expectedReferencePoint.buckets);
         });
@@ -418,15 +425,12 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
 
             const expectedReferencePoint = cloneDeep(referencePoint);
             expectedReferencePoint.buckets[0].items = [
-                referencePointMocks.masterMeasureItems[0],
-                referencePointMocks.masterMeasureItems[1],
-                referencePointMocks.arithmeticMeasureItems[0],
-                referencePointMocks.arithmeticMeasureItems[1],
+                masterMeasureItems[0],
+                masterMeasureItems[1],
+                arithmeticMeasureItems[0],
+                arithmeticMeasureItems[1],
             ];
-            expectedReferencePoint.buckets[1].items = [
-                referencePointMocks.masterMeasureItems[2],
-                referencePointMocks.masterMeasureItems[3],
-            ];
+            expectedReferencePoint.buckets[1].items = [masterMeasureItems[2], masterMeasureItems[3]];
 
             expect(newReferencePoint.buckets).toMatchObject(expectedReferencePoint.buckets);
         });
@@ -435,7 +439,7 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
             const dateFilterWithDifferentDateDataset: IFiltersBucketItem = {
                 attribute: DATE_DATASET_ATTRIBUTE,
                 localIdentifier: "f1",
-                filters: [referencePointMocks.dateFilterSamePeriodPreviousYear],
+                filters: [dateFilterSamePeriodPreviousYear],
                 dateDatasetRef: {
                     uri: "different.date.dataset",
                 },
@@ -444,16 +448,16 @@ describe("configure Percent and Over Time Comparison helper functions", () => {
             const expectedReferencePoint = cloneDeep(referencePoint);
             const newReferencePoint = configureOverTimeComparison(cloneDeep(referencePoint));
             expectedReferencePoint.buckets[0].items = [
-                referencePointMocks.masterMeasureItems[0],
-                referencePointMocks.masterMeasureItems[1],
-                referencePointMocks.arithmeticMeasureItems[0],
-                referencePointMocks.arithmeticMeasureItems[1],
-                referencePointMocks.arithmeticMeasureItems[3],
+                masterMeasureItems[0],
+                masterMeasureItems[1],
+                arithmeticMeasureItems[0],
+                arithmeticMeasureItems[1],
+                arithmeticMeasureItems[3],
             ];
             expectedReferencePoint.buckets[1].items = [
-                referencePointMocks.masterMeasureItems[2],
-                referencePointMocks.masterMeasureItems[3],
-                referencePointMocks.arithmeticMeasureItems[5],
+                masterMeasureItems[2],
+                masterMeasureItems[3],
+                arithmeticMeasureItems[5],
             ];
 
             expect(newReferencePoint.buckets).toMatchObject(expectedReferencePoint.buckets);

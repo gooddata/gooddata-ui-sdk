@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -12,9 +12,25 @@ import {
     widgetRef,
     widgetRefWithoutAvailableDrillTargets,
 } from "./widgetDrillSelectors.fixture.js";
-import * as drillTargetsSelectors from "../../drillTargets/drillTargetsSelectors.js";
-import * as layoutSelectors from "../../tabs/layout/layoutSelectors.js";
+import { selectDrillTargetsByWidgetRef } from "../../drillTargets/drillTargetsSelectors.js";
+import { selectIgnoredDrillDownHierarchiesByWidgetRef } from "../../tabs/layout/layoutSelectors.js";
 import { selectGlobalDrillsDownAttributeHierarchyByWidgetRef } from "../widgetDrillSelectors.js";
+
+vi.mock("../../drillTargets/drillTargetsSelectors.js", async (importOriginal) => {
+    const original = await importOriginal();
+    return {
+        ...(original as object),
+        selectDrillTargetsByWidgetRef: vi.fn(),
+    };
+});
+
+vi.mock("../../tabs/layout/layoutSelectors.js", async (importOriginal) => {
+    const original = await importOriginal();
+    return {
+        ...(original as object),
+        selectIgnoredDrillDownHierarchiesByWidgetRef: vi.fn(),
+    };
+});
 
 let isDisableDrillDown = false;
 vi.mock("../../insights/insightsSelectors.js", () => ({
@@ -50,25 +66,21 @@ describe("widgetDrillSelectors", () => {
         };
 
         beforeEach(() => {
-            vi.spyOn(drillTargetsSelectors, "selectDrillTargetsByWidgetRef").mockImplementation(
-                (widget: ObjRef) => {
-                    if (objRefToString(widget) === objRefToString(widgetRef)) {
-                        return () => availableDrillTargets;
-                    }
+            vi.mocked(selectDrillTargetsByWidgetRef).mockImplementation((widget: ObjRef) => {
+                if (objRefToString(widget) === objRefToString(widgetRef)) {
+                    return () => availableDrillTargets;
+                }
 
-                    return () => undefined;
-                },
-            );
+                return () => undefined;
+            });
 
-            vi.spyOn(layoutSelectors, "selectIgnoredDrillDownHierarchiesByWidgetRef").mockImplementation(
-                (widget: ObjRef) => {
-                    if (objRefToString(widget) === objRefToString(widgetRef)) {
-                        return () => ignoredHierarchies;
-                    }
+            vi.mocked(selectIgnoredDrillDownHierarchiesByWidgetRef).mockImplementation((widget: ObjRef) => {
+                if (objRefToString(widget) === objRefToString(widgetRef)) {
+                    return () => ignoredHierarchies;
+                }
 
-                    return () => [];
-                },
-            );
+                return () => [];
+            });
         });
 
         afterEach(() => {

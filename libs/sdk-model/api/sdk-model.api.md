@@ -644,6 +644,9 @@ export type GroupableCatalogItem = ICatalogAttribute | ICatalogMeasure | ICatalo
 export type GuidType = "guid";
 
 // @public
+export function hasMeasureValueFilterConditions(filter: IMeasureValueFilter): boolean;
+
+// @public
 export interface IAbsoluteDateFilter {
     // (undocumented)
     absoluteDateFilter: IAbsoluteDateFilterBody;
@@ -5179,7 +5182,7 @@ export function measureUri(measure: IMeasure): string | undefined;
 // @public (undocumented)
 export type MeasureValueFilterCondition = IComparisonCondition | IRangeCondition;
 
-// @public
+// @public @deprecated
 export function measureValueFilterCondition(filter: IMeasureValueFilter): MeasureValueFilterCondition | undefined;
 
 // @public
@@ -5193,6 +5196,9 @@ export function measureValueFilterMeasure(filter: IMeasureValueFilter): ObjRefIn
 
 // @public
 export function measureValueFilterOperator(filter: IMeasureValueFilter): ComparisonConditionOperator | RangeConditionOperator | undefined;
+
+// @public
+export function measureValueFilterOperators(filter: IMeasureValueFilter): Array<ComparisonConditionOperator | RangeConditionOperator> | undefined;
 
 // @public
 export type MemoryItemStrategy = "ALWAYS" | "AUTO";

@@ -2,11 +2,7 @@
 
 import { invariant } from "ts-invariant";
 
-import {
-    type ITigerClientBase,
-    type JsonApiDatasetOutWithLinks,
-    jsonApiHeaders,
-} from "@gooddata/api-client-tiger";
+import { type ITigerClientBase, type JsonApiDatasetOutWithLinks } from "@gooddata/api-client-tiger";
 import {
     EntitiesApi_GetEntityFacts,
     EntitiesApi_PatchEntityFacts,
@@ -47,18 +43,11 @@ export class TigerWorkspaceFacts implements IWorkspaceFactsService {
     public async getFact(ref: ObjRef, opts: { include?: ["dataset"] } = {}): Promise<IFactMetadataObject> {
         const id = objRefToIdentifier(ref, this.authCall);
         const result = await this.authCall((client) =>
-            EntitiesApi_GetEntityFacts(
-                client.axios,
-                client.basePath,
-                {
-                    objectId: id,
-                    workspaceId: this.workspace,
-                    include: [...(opts.include ?? [])],
-                },
-                {
-                    headers: jsonApiHeaders,
-                },
-            ),
+            EntitiesApi_GetEntityFacts(client.axios, client.basePath, {
+                objectId: id,
+                workspaceId: this.workspace,
+                include: [...(opts.include ?? [])],
+            }),
         );
 
         return convertFact(result.data);
@@ -72,31 +61,24 @@ export class TigerWorkspaceFacts implements IWorkspaceFactsService {
 
         return this.authCall(async (client) => {
             const objectId = ref.identifier;
-            const response = await EntitiesApi_PatchEntityFacts(
-                client.axios,
-                client.basePath,
-                {
-                    objectId,
-                    workspaceId: this.workspace,
-                    jsonApiFactPatchDocument: {
-                        data: {
-                            id: objectId,
-                            type: "fact",
-                            attributes: {
-                                ...(updatedFact.title === undefined ? {} : { title: updatedFact.title }),
-                                ...(updatedFact.description === undefined
-                                    ? {}
-                                    : { description: updatedFact.description }),
-                                ...(updatedFact.tags === undefined ? {} : { tags: updatedFact.tags }),
-                                ...(updatedFact.isHidden === undefined
-                                    ? {}
-                                    : { isHidden: updatedFact.isHidden }),
-                            },
+            const response = await EntitiesApi_PatchEntityFacts(client.axios, client.basePath, {
+                objectId,
+                workspaceId: this.workspace,
+                jsonApiFactPatchDocument: {
+                    data: {
+                        id: objectId,
+                        type: "fact",
+                        attributes: {
+                            ...(updatedFact.title === undefined ? {} : { title: updatedFact.title }),
+                            ...(updatedFact.description === undefined
+                                ? {}
+                                : { description: updatedFact.description }),
+                            ...(updatedFact.tags === undefined ? {} : { tags: updatedFact.tags }),
+                            ...(updatedFact.isHidden === undefined ? {} : { isHidden: updatedFact.isHidden }),
                         },
                     },
                 },
-                { headers: jsonApiHeaders },
-            );
+            });
 
             return convertFact(response.data);
         });
@@ -110,18 +92,11 @@ function loadFactDataset(
 ): Promise<IDataSetMetadataObject> {
     invariant(isIdentifierRef(ref), "tiger backend only supports referencing by identifier");
 
-    return EntitiesApi_GetEntityFacts(
-        client.axios,
-        client.basePath,
-        {
-            workspaceId: workspace,
-            objectId: ref.identifier,
-            include: ["datasets"],
-        },
-        {
-            headers: jsonApiHeaders,
-        },
-    ).then((res) => {
+    return EntitiesApi_GetEntityFacts(client.axios, client.basePath, {
+        workspaceId: workspace,
+        objectId: ref.identifier,
+        include: ["datasets"],
+    }).then((res) => {
         // if this happens then its either bad query parameterization or the backend is hosed badly
         invariant(
             res.data.included && res.data.included.length > 0,

@@ -14,7 +14,37 @@ import {
     getRgbString,
 } from "@gooddata/sdk-ui-vis-commons";
 
-import * as fixtures from "../../../../../testUtils/fixtures.js";
+import {
+    areaChartWith3MetricsAndViewByAttribute,
+    areaChartWithMeasureViewByAndStackBy,
+    barChartWith3MetricsAndViewByAttribute,
+    barChartWith3MetricsAndViewByAttributeFunformat,
+    barChartWith3MetricsAndViewByAttributePercInFormat,
+    barChartWith4MetricsAndViewByTwoAttributes,
+    barChartWithPopMeasureAndViewByAttribute,
+    barChartWithPopMeasureAndViewByAttributeX6,
+    barChartWithPreviousPeriodMeasure,
+    barChartWithPreviousPeriodMeasureX6,
+    barChartWithSingleMeasureAndNoAttributes,
+    barChartWithStackByAndViewByAttributes,
+    barChartWithViewByAttribute,
+    bubbleChartWith1Metric,
+    bubbleChartWith2MetricsAndAttributeNoPrimaries,
+    bubbleChartWith3MetricsAndAttribute,
+    bubbleChartWith3MetricsAndAttributeNullsInData,
+    comboChartWithTwoMeasuresViewByAttributeNoBuckets,
+    comboWithTwoMeasuresAndViewByAttribute,
+    heatMapWithEmptyCells,
+    heatMapWithMetricRowColumn,
+    pieChartWithMetricsOnly,
+    pieChartWithMetricsOnlyFundata,
+    scatterPlotWith2MetricsAndAttributeNullsInData,
+    scatterPlotWith2MetricsAndAttributeWithPrimary,
+    treemapWithMetricAndStackByAttribute,
+    treemapWithMetricAndViewByAttribute,
+    treemapWithMetricViewByAndStackByAttribute,
+    treemapWithTwoMetricsAndStackByAttribute,
+} from "../../../../../testUtils/fixtures.js";
 import { recordedDataFacade } from "../../../../../testUtils/recordings.js";
 import { type IChartConfig } from "../../../../interfaces/chartConfig.js";
 import {
@@ -78,7 +108,7 @@ describe("chartOptionsBuilder", () => {
     const barChartWithStackByAndViewByAttributesOptions = generateChartOptions();
 
     const barChartWith3MetricsAndViewByAttributeOptions = generateChartOptions(
-        fixtures.barChartWith3MetricsAndViewByAttribute,
+        barChartWith3MetricsAndViewByAttribute,
     );
 
     function getValues(str: string): string[] | null {
@@ -102,7 +132,7 @@ describe("chartOptionsBuilder", () => {
     }
 
     // fun dataset with negative values: [["-1", "38310753.45", "9011389.956"]]
-    const pieAndTreemapFunDataset = fixtures.pieChartWithMetricsOnlyFundata;
+    const pieAndTreemapFunDataset = pieChartWithMetricsOnlyFundata;
 
     const pieChartOptionsWithNegativeValue = generateChartOptions(pieAndTreemapFunDataset, { type: "pie" });
 
@@ -110,7 +140,7 @@ describe("chartOptionsBuilder", () => {
         type: "treemap",
     });
 
-    const pieChartWithMetricsOnlyOptions: any = generateChartOptions(fixtures.pieChartWithMetricsOnly, {
+    const pieChartWithMetricsOnlyOptions: any = generateChartOptions(pieChartWithMetricsOnly, {
         type: "pie",
     });
 
@@ -202,9 +232,7 @@ describe("chartOptionsBuilder", () => {
                 'should validate with "dataTooLarge: true" against default chart categories limit ' +
                     `of ${DEFAULT_CATEGORIES_LIMIT}`,
                 () => {
-                    const chartOptions = generateChartOptions(
-                        fixtures.barChartWith3MetricsAndViewByAttribute,
-                    );
+                    const chartOptions = generateChartOptions(barChartWith3MetricsAndViewByAttribute);
                     chartOptions.data!.categories = range(DEFAULT_CATEGORIES_LIMIT + 1).map((category) => [
                         category.toString(),
                     ]);
@@ -219,7 +247,7 @@ describe("chartOptionsBuilder", () => {
             );
 
             it('should validate with "dataTooLarge: true" against default pie chart series limit of 1', () => {
-                const chartOptions = generateChartOptions(fixtures.barChartWith3MetricsAndViewByAttribute, {
+                const chartOptions = generateChartOptions(barChartWith3MetricsAndViewByAttribute, {
                     type: "pie",
                 });
                 const validationResult = validateData(undefined, chartOptions);
@@ -234,7 +262,7 @@ describe("chartOptionsBuilder", () => {
                 'should validate with "dataTooLarge: true" against default' +
                     `pie chart categories limit of ${PIE_CHART_LIMIT}`,
                 () => {
-                    const chartOptions = generateChartOptions(fixtures.pieChartWithMetricsOnly, {
+                    const chartOptions = generateChartOptions(pieChartWithMetricsOnly, {
                         type: "pie",
                     });
                     chartOptions.data!.categories = range(PIE_CHART_LIMIT + 1).map((category) => [
@@ -293,12 +321,9 @@ describe("chartOptionsBuilder", () => {
         describe("Treemap filters out root nodes for dataPoints limit", () => {
             it('should validate with "dataTooLarge: false" against data points limit', () => {
                 // 2 roots + 4 leafs
-                const treemapOptions = generateChartOptions(
-                    fixtures.treemapWithMetricViewByAndStackByAttribute,
-                    {
-                        type: "treemap",
-                    },
-                );
+                const treemapOptions = generateChartOptions(treemapWithMetricViewByAndStackByAttribute, {
+                    type: "treemap",
+                });
                 const validationResult = validateData(
                     {
                         dataPoints: 4,
@@ -314,12 +339,9 @@ describe("chartOptionsBuilder", () => {
 
             it('should validate with "dataTooLarge: true" against data points limit', () => {
                 // 2 roots + 4 leafs
-                const treemapOptions = generateChartOptions(
-                    fixtures.treemapWithMetricViewByAndStackByAttribute,
-                    {
-                        type: "treemap",
-                    },
-                );
+                const treemapOptions = generateChartOptions(treemapWithMetricViewByAndStackByAttribute, {
+                    type: "treemap",
+                });
                 const validationResult = validateData(
                     {
                         dataPoints: 3,
@@ -371,7 +393,7 @@ describe("chartOptionsBuilder", () => {
         (chartFill: ChartFillType) => {
             describe("getSeriesItemData", () => {
                 describe("in usecase of bar chart with pop measure and view by attribute", () => {
-                    const dv = fixtures.barChartWithPopMeasureAndViewByAttribute;
+                    const dv = barChartWithPopMeasureAndViewByAttribute;
                     const parameters = getSeriesItemDataParameters(dv, 0);
                     const seriesItem = parameters[0];
                     const seriesIndex = parameters[1];
@@ -435,7 +457,7 @@ describe("chartOptionsBuilder", () => {
                 });
 
                 describe("in usecase of bar chart with previous period measure and view by attribute", () => {
-                    const dv = fixtures.barChartWithPreviousPeriodMeasure;
+                    const dv = barChartWithPreviousPeriodMeasure;
                     const parameters = getSeriesItemDataParameters(dv, 0);
                     const seriesItem = parameters[0];
                     const seriesIndex = parameters[1];
@@ -484,7 +506,7 @@ describe("chartOptionsBuilder", () => {
                 });
 
                 describe("in usecase of pie chart and treemap with metrics only", () => {
-                    const dv = fixtures.pieChartWithMetricsOnly;
+                    const dv = pieChartWithMetricsOnly;
                     const parameters = getSeriesItemDataParameters(dv, 0);
                     const seriesItem = parameters[0];
                     const seriesIndex = parameters[1];
@@ -579,7 +601,7 @@ describe("chartOptionsBuilder", () => {
                 });
 
                 describe("in usecase of pie chart with an attribute", () => {
-                    const dv = fixtures.barChartWithViewByAttribute;
+                    const dv = barChartWithViewByAttribute;
                     const parameters = getSeriesItemDataParameters(dv, 0);
                     const seriesItem = parameters[0];
                     const seriesIndex = parameters[1];
@@ -670,7 +692,7 @@ describe("chartOptionsBuilder", () => {
 
             describe("getSeries", () => {
                 describe("in usecase of bar chart with 3 measures and view by attribute", () => {
-                    const dv = fixtures.barChartWith3MetricsAndViewByAttribute;
+                    const dv = barChartWith3MetricsAndViewByAttribute;
                     const { measureGroup, viewByAttribute, stackByAttribute } = getMVS(dv);
 
                     const attributeColorStrategy = new AttributeColorStrategy(
@@ -744,7 +766,7 @@ describe("chartOptionsBuilder", () => {
                 });
 
                 describe("in usecase of bar chart with stack by and view by attributes", () => {
-                    const dv = fixtures.barChartWithStackByAndViewByAttributes;
+                    const dv = barChartWithStackByAndViewByAttributes;
                     const { measureGroup, viewByAttribute, stackByAttribute } = getMVS(dv);
                     const type = "column";
 
@@ -826,7 +848,7 @@ describe("chartOptionsBuilder", () => {
                     const type = "bubble";
 
                     it("should fill X, Y and Z with valid values when measure buckets are not empty", () => {
-                        const dv = fixtures.bubbleChartWith2MetricsAndAttributeNoPrimaries;
+                        const dv = bubbleChartWith2MetricsAndAttributeNoPrimaries;
                         const { measureGroup, stackByAttribute } = getMVS(dv);
 
                         const colorStrategy = new BubbleChartColorStrategy(
@@ -854,7 +876,7 @@ describe("chartOptionsBuilder", () => {
                     });
 
                     it("should update seriesIndex correctly when one of X, Y or Z has null data", () => {
-                        const dv = fixtures.bubbleChartWith3MetricsAndAttributeNullsInData;
+                        const dv = bubbleChartWith3MetricsAndAttributeNullsInData;
                         const { measureGroup, stackByAttribute } = getMVS(dv);
 
                         const colorStrategy = new BubbleChartColorStrategy(
@@ -1255,7 +1277,7 @@ describe("chartOptionsBuilder", () => {
 
                 describe("in use case of treemap", () => {
                     describe("with only one measure", () => {
-                        const dv = fixtures.barChartWithSingleMeasureAndNoAttributes;
+                        const dv = barChartWithSingleMeasureAndNoAttributes;
                         const { measureGroup, viewByAttribute, stackByAttribute } = getMVSTreemap(dv);
                         const type = "treemap";
 
@@ -1303,7 +1325,7 @@ describe("chartOptionsBuilder", () => {
                     });
 
                     describe("with one measure and view by attribute", () => {
-                        const dv = fixtures.treemapWithMetricAndViewByAttribute;
+                        const dv = treemapWithMetricAndViewByAttribute;
                         const { measureGroup, viewByAttribute, stackByAttribute } = getMVSTreemap(dv);
                         const type = "treemap";
                         const treeMapColorStrategy = new TreemapColorStrategy(
@@ -1344,7 +1366,7 @@ describe("chartOptionsBuilder", () => {
                     });
 
                     describe("with one measure and stack by attribute", () => {
-                        const dv = fixtures.treemapWithMetricAndStackByAttribute;
+                        const dv = treemapWithMetricAndStackByAttribute;
                         const { measureGroup, viewByAttribute, stackByAttribute } = getMVSTreemap(dv);
                         const type = "treemap";
 
@@ -1383,7 +1405,7 @@ describe("chartOptionsBuilder", () => {
                     });
 
                     describe("with one measure, view by and stack by attribute", () => {
-                        const dv = fixtures.treemapWithMetricViewByAndStackByAttribute;
+                        const dv = treemapWithMetricViewByAndStackByAttribute;
                         const { measureGroup, viewByAttribute, stackByAttribute } = getMVSTreemap(dv);
                         const type = "treemap";
                         const treeMapColorStrategy = new TreemapColorStrategy(
@@ -1420,7 +1442,7 @@ describe("chartOptionsBuilder", () => {
                     });
 
                     describe("with two measures and stack by attribute including client sorting", () => {
-                        const dv = fixtures.treemapWithTwoMetricsAndStackByAttribute;
+                        const dv = treemapWithTwoMetricsAndStackByAttribute;
                         const { measureGroup, viewByAttribute, stackByAttribute } = getMVSTreemap(dv);
                         const type = "treemap";
                         const treeMapColorStrategy = new TreemapColorStrategy(
@@ -1458,7 +1480,7 @@ describe("chartOptionsBuilder", () => {
                 });
 
                 describe("in use case of heatmap", () => {
-                    const dv = fixtures.heatMapWithEmptyCells;
+                    const dv = heatMapWithEmptyCells;
                     const { measureGroup } = getMVS(dv);
                     const heatmapSeries = getHeatmapSeries(dv, measureGroup);
                     const heatmapDataPoints = heatmapSeries[0].data;
@@ -1483,7 +1505,7 @@ describe("chartOptionsBuilder", () => {
 
             describe("getDrillableSeries", () => {
                 describe("in usecase of scatter plot with 2 measures and attribute", () => {
-                    const dv = fixtures.barChartWith3MetricsAndViewByAttribute;
+                    const dv = barChartWith3MetricsAndViewByAttribute;
                     const { measureGroup, viewByAttribute } = getMVS(dv);
                     const type = "scatter";
 
@@ -1529,7 +1551,7 @@ describe("chartOptionsBuilder", () => {
                     });
 
                     it("should fillter out points with one or both coordinates null", () => {
-                        const dv = fixtures.scatterPlotWith2MetricsAndAttributeNullsInData;
+                        const dv = scatterPlotWith2MetricsAndAttributeNullsInData;
                         const { measureGroup, viewByAttribute } = getMVS(dv);
                         const type = "scatter";
 
@@ -1571,7 +1593,7 @@ describe("chartOptionsBuilder", () => {
                 });
 
                 describe("in usecase of bubble chart with 3 measures and attribute", () => {
-                    const dv = fixtures.bubbleChartWith3MetricsAndAttribute;
+                    const dv = bubbleChartWith3MetricsAndAttribute;
                     const { measureGroup, viewByAttribute, stackByAttribute } = getMVS(dv);
                     const type = "bubble";
 
@@ -1618,7 +1640,7 @@ describe("chartOptionsBuilder", () => {
                     });
 
                     it("should fillter out points with some of measures are null", () => {
-                        const dv = fixtures.bubbleChartWith3MetricsAndAttributeNullsInData;
+                        const dv = bubbleChartWith3MetricsAndAttributeNullsInData;
                         const { measureGroup, viewByAttribute, stackByAttribute } = getMVS(dv);
                         const type = "bubble";
 
@@ -1659,7 +1681,7 @@ describe("chartOptionsBuilder", () => {
                 });
 
                 describe("in usecase of bar chart with 6 pop measures and view by attribute", () => {
-                    const dv = fixtures.barChartWithPopMeasureAndViewByAttributeX6;
+                    const dv = barChartWithPopMeasureAndViewByAttributeX6;
 
                     const { measureGroup, viewByAttribute, stackByAttribute } = getMVS(dv);
                     const type = "bar";
@@ -1713,7 +1735,7 @@ describe("chartOptionsBuilder", () => {
                 });
 
                 describe("in usecase of bar chart with 6 previous period measures", () => {
-                    const dv = fixtures.barChartWithPreviousPeriodMeasureX6;
+                    const dv = barChartWithPreviousPeriodMeasureX6;
                     const { measureGroup, viewByAttribute, stackByAttribute } = getMVS(dv);
                     const type = "bar";
                     const metricColorStrategy = new MeasureColorStrategy(
@@ -1765,7 +1787,7 @@ describe("chartOptionsBuilder", () => {
                 });
 
                 describe("in usecase of bar chart with 3 measures and view by attribute", () => {
-                    const dv = fixtures.barChartWith3MetricsAndViewByAttribute;
+                    const dv = barChartWith3MetricsAndViewByAttribute;
                     const { measureGroup, viewByAttribute, stackByAttribute } = getMVS(dv);
                     const type = "column";
 
@@ -1894,7 +1916,7 @@ describe("chartOptionsBuilder", () => {
                 });
 
                 describe("in usecase of bar chart with stack by and view by attributes", () => {
-                    const dv = fixtures.barChartWithStackByAndViewByAttributes;
+                    const dv = barChartWithStackByAndViewByAttributes;
                     const { measureGroup, viewByAttribute, stackByAttribute } = getMVS(dv);
                     const type = "column";
 
@@ -1979,7 +2001,7 @@ describe("chartOptionsBuilder", () => {
             });
 
             describe("buildTooltipFactory", () => {
-                const dv = fixtures.barChartWithViewByAttribute;
+                const dv = barChartWithViewByAttribute;
                 const { viewByAttribute } = getMVS(dv);
                 const pointData = {
                     y: 1,
@@ -2142,7 +2164,7 @@ describe("chartOptionsBuilder", () => {
             });
 
             describe("buildTooltipForTwoAttributesFactory", () => {
-                const dv = fixtures.barChartWith4MetricsAndViewByTwoAttributes;
+                const dv = barChartWith4MetricsAndViewByTwoAttributes;
                 const { viewByAttribute, viewByParentAttribute } = getMVSForViewByTwoAttributes(dv);
                 const pointData = {
                     y: 1,
@@ -2299,7 +2321,7 @@ describe("chartOptionsBuilder", () => {
             });
 
             describe("generateTooltipXYFn", () => {
-                const dv = fixtures.bubbleChartWith3MetricsAndAttribute;
+                const dv = bubbleChartWith3MetricsAndAttribute;
                 const { measureGroup, stackByAttribute } = getMVS(dv);
 
                 const point: IUnsafeHighchartsTooltipPoint = {
@@ -2449,7 +2471,7 @@ describe("chartOptionsBuilder", () => {
                 });
 
                 it("should generate valid tooltip for 1 measure and view by", () => {
-                    const dv = fixtures.treemapWithMetricAndViewByAttribute;
+                    const dv = treemapWithMetricAndViewByAttribute;
                     const { viewByAttribute, stackByAttribute } = getMVSTreemap(dv);
 
                     const tooltipFn = buildTooltipTreemapFactory(
@@ -2462,7 +2484,7 @@ describe("chartOptionsBuilder", () => {
                 });
 
                 it("should generate valid tooltip for 1 measure and stack by", () => {
-                    const dv = fixtures.treemapWithMetricAndStackByAttribute;
+                    const dv = treemapWithMetricAndStackByAttribute;
                     const { viewByAttribute, stackByAttribute } = getMVSTreemap(dv);
 
                     const tooltipFn = buildTooltipTreemapFactory(
@@ -2475,7 +2497,7 @@ describe("chartOptionsBuilder", () => {
                 });
 
                 it("should generate valid tooltip for 1 measure, view by and stack by", () => {
-                    const dv = fixtures.treemapWithMetricViewByAndStackByAttribute;
+                    const dv = treemapWithMetricViewByAndStackByAttribute;
                     const { viewByAttribute, stackByAttribute } = getMVSTreemap(dv);
 
                     const tooltipFn = buildTooltipTreemapFactory(
@@ -2498,7 +2520,7 @@ describe("chartOptionsBuilder", () => {
                     const chartConfig: IChartConfig = {
                         type: "treemap",
                     };
-                    const dv = fixtures.treemapWithMetricViewByAndStackByAttribute;
+                    const dv = treemapWithMetricViewByAndStackByAttribute;
                     const { viewByAttribute, stackByAttribute } = getMVSTreemap(dv);
 
                     const tooltipFn = buildTooltipTreemapFactory(
@@ -2526,7 +2548,7 @@ describe("chartOptionsBuilder", () => {
             });
 
             describe("getChartOptions", () => {
-                const dataSet = fixtures.barChartWith3MetricsAndViewByAttribute;
+                const dataSet = barChartWith3MetricsAndViewByAttribute;
                 const chartOptionsWithCustomOptions = generateChartOptions(dataSet, {
                     xLabel: "xLabel",
                     yLabel: "yLabel",
@@ -2560,9 +2582,7 @@ describe("chartOptionsBuilder", () => {
                 });
 
                 describe("getCategoriesForTwoAttributes", () => {
-                    const chartOptions = generateChartOptions(
-                        fixtures.barChartWith4MetricsAndViewByTwoAttributes,
-                    );
+                    const chartOptions = generateChartOptions(barChartWith4MetricsAndViewByTwoAttributes);
 
                     it("should assign two-level categories", () => {
                         expect(chartOptions.data!.categories).toEqual([
@@ -2582,17 +2602,13 @@ describe("chartOptionsBuilder", () => {
                     });
 
                     it('should turn off "isViewByTwoAttributes"', () => {
-                        const chartOptions = generateChartOptions(
-                            fixtures.barChartWith3MetricsAndViewByAttribute,
-                        );
+                        const chartOptions = generateChartOptions(barChartWith3MetricsAndViewByAttribute);
                         expect(chartOptions.isViewByTwoAttributes).toBeFalsy();
                     });
                 });
 
                 describe("in usecase of bar chart with 3 metrics", () => {
-                    const chartOptions = generateChartOptions(
-                        fixtures.barChartWith3MetricsAndViewByAttribute,
-                    );
+                    const chartOptions = generateChartOptions(barChartWith3MetricsAndViewByAttribute);
 
                     it("should assign a default legend format of horizontal", () => {
                         expect(chartOptions.legendLayout).toBe("horizontal");
@@ -2651,9 +2667,7 @@ describe("chartOptionsBuilder", () => {
                 });
 
                 describe("in usecase of stack bar chart", () => {
-                    const chartOptions = generateChartOptions(
-                        fixtures.barChartWithStackByAndViewByAttributes,
-                    );
+                    const chartOptions = generateChartOptions(barChartWithStackByAndViewByAttributes);
 
                     it("should assign stacking normal", () => {
                         expect(chartOptions.stacking).toBe("normal");
@@ -2669,7 +2683,7 @@ describe("chartOptionsBuilder", () => {
 
                     it("should assign correct tooltip function", () => {
                         const { viewByAttribute, stackByAttribute } = getMVS(
-                            fixtures.barChartWithStackByAndViewByAttributes,
+                            barChartWithStackByAndViewByAttributes,
                         );
                         const pointData: IUnsafeHighchartsTooltipPoint = {
                             y: 1,
@@ -2700,15 +2714,12 @@ describe("chartOptionsBuilder", () => {
                 });
 
                 describe("in usecase of pie chart and treemap with attribute", () => {
-                    const pieChartOptions = generateChartOptions(fixtures.barChartWithViewByAttribute, {
+                    const pieChartOptions = generateChartOptions(barChartWithViewByAttribute, {
                         type: "pie",
                     });
-                    const treemapOptions = generateChartOptions(
-                        fixtures.treemapWithMetricAndViewByAttribute,
-                        {
-                            type: "treemap",
-                        },
-                    );
+                    const treemapOptions = generateChartOptions(treemapWithMetricAndViewByAttribute, {
+                        type: "treemap",
+                    });
 
                     it("should assign stacking normal", () => {
                         expect(pieChartOptions.stacking).toBe(null);
@@ -2726,7 +2737,7 @@ describe("chartOptionsBuilder", () => {
                     });
 
                     it("should assign correct tooltip function", () => {
-                        const { viewByAttribute } = getMVS(fixtures.barChartWithStackByAndViewByAttributes);
+                        const { viewByAttribute } = getMVS(barChartWithStackByAndViewByAttributes);
                         const pointData: IUnsafeHighchartsTooltipPoint = {
                             node: {
                                 isLeaf: true,
@@ -2769,10 +2780,10 @@ describe("chartOptionsBuilder", () => {
                 });
 
                 describe("in usecase of pie chart and treemap with measures only", () => {
-                    const pieChartOptions = generateChartOptions(fixtures.pieChartWithMetricsOnly, {
+                    const pieChartOptions = generateChartOptions(pieChartWithMetricsOnly, {
                         type: "pie",
                     });
-                    const treemapOptions = generateChartOptions(fixtures.pieChartWithMetricsOnly, {
+                    const treemapOptions = generateChartOptions(pieChartWithMetricsOnly, {
                         type: "treemap",
                     });
 
@@ -2832,12 +2843,9 @@ describe("chartOptionsBuilder", () => {
                 });
 
                 describe("in usecase of bar chart with pop measure", () => {
-                    const chartOptions = generateChartOptions(
-                        fixtures.barChartWithPopMeasureAndViewByAttribute,
-                        {
-                            type: "column",
-                        },
-                    );
+                    const chartOptions = generateChartOptions(barChartWithPopMeasureAndViewByAttribute, {
+                        type: "column",
+                    });
 
                     it("should assign stacking normal", () => {
                         expect(chartOptions.stacking).toBe(null);
@@ -2864,7 +2872,7 @@ describe("chartOptionsBuilder", () => {
                     });
 
                     it("should assign correct tooltip function for pop measure", () => {
-                        const { viewByAttribute } = getMVS(fixtures.barChartWithPopMeasureAndViewByAttribute);
+                        const { viewByAttribute } = getMVS(barChartWithPopMeasureAndViewByAttribute);
                         const pointData: IUnsafeHighchartsTooltipPoint = {
                             y: 1,
                             format: "# ###",
@@ -2888,7 +2896,7 @@ describe("chartOptionsBuilder", () => {
                     });
 
                     it("should assign correct tooltip function for previous period measure", () => {
-                        const { viewByAttribute } = getMVS(fixtures.barChartWithPreviousPeriodMeasure);
+                        const { viewByAttribute } = getMVS(barChartWithPreviousPeriodMeasure);
                         const pointData = {
                             y: 1,
                             format: "# ###",
@@ -2914,47 +2922,35 @@ describe("chartOptionsBuilder", () => {
 
                 describe("in usecase of stacked area chart", () => {
                     it("should assign stacking normal", () => {
-                        const chartOptions = generateChartOptions(
-                            fixtures.areaChartWith3MetricsAndViewByAttribute,
-                            {
-                                type: "area",
-                            },
-                        );
+                        const chartOptions = generateChartOptions(areaChartWith3MetricsAndViewByAttribute, {
+                            type: "area",
+                        });
                         expect(chartOptions.stacking).toBe("normal");
                     });
 
                     it("should disable stacking by config", () => {
-                        const chartOptions = generateChartOptions(
-                            fixtures.areaChartWith3MetricsAndViewByAttribute,
-                            {
-                                type: "area",
-                                stacking: false,
-                            },
-                        );
+                        const chartOptions = generateChartOptions(areaChartWith3MetricsAndViewByAttribute, {
+                            type: "area",
+                            stacking: false,
+                        });
 
                         expect(chartOptions.stacking).toBeNull();
                     });
 
                     it("should enable stacking by config", () => {
-                        const chartOptions = generateChartOptions(
-                            fixtures.areaChartWith3MetricsAndViewByAttribute,
-                            {
-                                type: "area",
-                                stacking: true,
-                            },
-                        );
+                        const chartOptions = generateChartOptions(areaChartWith3MetricsAndViewByAttribute, {
+                            type: "area",
+                            stacking: true,
+                        });
 
                         expect(chartOptions.stacking).toBe("normal");
                     });
 
                     it("should disable stacking by config even with stack by attribute", () => {
-                        const chartOptions = generateChartOptions(
-                            fixtures.areaChartWithMeasureViewByAndStackBy,
-                            {
-                                type: "area",
-                                stacking: false,
-                            },
-                        );
+                        const chartOptions = generateChartOptions(areaChartWithMeasureViewByAndStackBy, {
+                            type: "area",
+                            stacking: false,
+                        });
 
                         expect(chartOptions.stacking).toBeNull();
                     });
@@ -2962,12 +2958,9 @@ describe("chartOptionsBuilder", () => {
 
                 describe("in usecase of combo chart", () => {
                     it("should assign `line` type to second series according mbObject", () => {
-                        const chartOptions = generateChartOptions(
-                            fixtures.comboWithTwoMeasuresAndViewByAttribute,
-                            {
-                                type: COMBO,
-                            },
-                        );
+                        const chartOptions = generateChartOptions(comboWithTwoMeasuresAndViewByAttribute, {
+                            type: COMBO,
+                        });
 
                         expect(chartOptions.data!.series![0].type).toBe(COLUMN);
                         expect(chartOptions.data!.series![1].type).toBe(LINE);
@@ -2975,7 +2968,7 @@ describe("chartOptionsBuilder", () => {
 
                     it("should handle missing buckets", () => {
                         const chartOptions = generateChartOptions(
-                            fixtures.comboChartWithTwoMeasuresViewByAttributeNoBuckets,
+                            comboChartWithTwoMeasuresViewByAttributeNoBuckets,
                             {
                                 type: COMBO,
                             },
@@ -2992,7 +2985,7 @@ describe("chartOptionsBuilder", () => {
                         "should return %s when column+line chart is single axis and 'Stack Measures' is %s",
                         (stackingValue: StackingType, stackMeasures: boolean) => {
                             const chartOptions = generateChartOptions(
-                                fixtures.comboWithTwoMeasuresAndViewByAttribute,
+                                comboWithTwoMeasuresAndViewByAttribute,
                                 {
                                     type: COMBO,
                                     stackMeasuresToPercent: true,
@@ -3012,7 +3005,7 @@ describe("chartOptionsBuilder", () => {
                         "should return %s when column+line chart is dual axis",
                         (stacking: StackingType, stackingConfig: any) => {
                             const chartOptions = generateChartOptions(
-                                fixtures.comboWithTwoMeasuresAndViewByAttribute,
+                                comboWithTwoMeasuresAndViewByAttribute,
                                 {
                                     type: COMBO,
                                     secondary_yaxis: {
@@ -3029,9 +3022,7 @@ describe("chartOptionsBuilder", () => {
 
                 describe("generate Y axes", () => {
                     it("should generate one axis with no label when there are more measures and in bar chart", () => {
-                        const chartOptions = generateChartOptions(
-                            fixtures.barChartWith3MetricsAndViewByAttribute,
-                        );
+                        const chartOptions = generateChartOptions(barChartWith3MetricsAndViewByAttribute);
                         const expectedAxes = [
                             {
                                 label: "",
@@ -3043,9 +3034,7 @@ describe("chartOptionsBuilder", () => {
                     });
 
                     it("should generate one axis with first measure label when there is one measure and in bar chart", () => {
-                        const chartOptions = generateChartOptions(
-                            fixtures.barChartWithSingleMeasureAndNoAttributes,
-                        );
+                        const chartOptions = generateChartOptions(barChartWithSingleMeasureAndNoAttributes);
                         const expectedAxes = [
                             {
                                 label: "Amount",
@@ -3059,9 +3048,7 @@ describe("chartOptionsBuilder", () => {
 
                 describe("generate X axes", () => {
                     it("should generate one axis with attribute label", () => {
-                        const chartOptions = generateChartOptions(
-                            fixtures.barChartWith3MetricsAndViewByAttribute,
-                        );
+                        const chartOptions = generateChartOptions(barChartWith3MetricsAndViewByAttribute);
                         const expectedAxes = [
                             {
                                 label: "Year created",
@@ -3071,18 +3058,15 @@ describe("chartOptionsBuilder", () => {
                     });
 
                     it("should generate one axis with no label if primary measures are empty for scatter plot", () => {
-                        const chartOptions = generateChartOptions(
-                            fixtures.barChartWith3MetricsAndViewByAttribute,
-                            {
-                                type: "scatter",
-                                mdObject: {
-                                    buckets: [
-                                        { localIdentifier: "measures", items: [] },
-                                        { localIdentifier: "secondary_measures", items: [{}] },
-                                    ],
-                                },
+                        const chartOptions = generateChartOptions(barChartWith3MetricsAndViewByAttribute, {
+                            type: "scatter",
+                            mdObject: {
+                                buckets: [
+                                    { localIdentifier: "measures", items: [] },
+                                    { localIdentifier: "secondary_measures", items: [{}] },
+                                ],
                             },
-                        );
+                        });
                         const expectedAxes = [
                             {
                                 label: "",
@@ -3094,7 +3078,7 @@ describe("chartOptionsBuilder", () => {
 
                     it("should generate one axis with label from primary measures for scatter plot", () => {
                         const chartOptions = generateChartOptions(
-                            fixtures.scatterPlotWith2MetricsAndAttributeWithPrimary,
+                            scatterPlotWith2MetricsAndAttributeWithPrimary,
                             {
                                 type: "scatter",
                             },
@@ -3110,12 +3094,9 @@ describe("chartOptionsBuilder", () => {
                     });
 
                     it("should generate one axis with no label if primary measures are empty for bubble chart", () => {
-                        const chartOptions = generateChartOptions(
-                            fixtures.barChartWith3MetricsAndViewByAttribute,
-                            {
-                                type: "bubble",
-                            },
-                        );
+                        const chartOptions = generateChartOptions(barChartWith3MetricsAndViewByAttribute, {
+                            type: "bubble",
+                        });
                         const expectedAxes = [
                             {
                                 label: "",
@@ -3126,7 +3107,7 @@ describe("chartOptionsBuilder", () => {
                     });
 
                     it("should generate one axis with label from primary measure for bubble chart", () => {
-                        const chartOptions = generateChartOptions(fixtures.bubbleChartWith1Metric, {
+                        const chartOptions = generateChartOptions(bubbleChartWith1Metric, {
                             type: "bubble",
                         });
                         const expectedAxes = [
@@ -3141,7 +3122,7 @@ describe("chartOptionsBuilder", () => {
 
                     it("should generate joined label when chart config 'enableJoinedAttributeAxisName' is true", () => {
                         const chartOptions = generateChartOptions(
-                            fixtures.barChartWith4MetricsAndViewByTwoAttributes,
+                            barChartWith4MetricsAndViewByTwoAttributes,
                             {
                                 type: "bar",
                                 enableJoinedAttributeAxisName: true,
@@ -3159,19 +3140,16 @@ describe("chartOptionsBuilder", () => {
 
                 describe("Bubble chart configuration", () => {
                     it("Should generate series from attribute elements", () => {
-                        const chartOptions = generateChartOptions(
-                            fixtures.bubbleChartWith3MetricsAndAttribute,
-                            {
-                                type: "bubble",
-                            },
-                        );
+                        const chartOptions = generateChartOptions(bubbleChartWith3MetricsAndAttribute, {
+                            type: "bubble",
+                        });
 
                         expect(chartOptions.data!.series!.length).toEqual(20);
                     });
 
                     it("should flip axis if primary measure bucket is empty", () => {
                         const chartOptions = generateChartOptions(
-                            fixtures.bubbleChartWith2MetricsAndAttributeNoPrimaries,
+                            bubbleChartWith2MetricsAndAttributeNoPrimaries,
                             {
                                 type: "bubble",
                             },
@@ -3181,12 +3159,9 @@ describe("chartOptionsBuilder", () => {
                     });
 
                     it("Should generate correct axes", () => {
-                        const chartOptions = generateChartOptions(
-                            fixtures.bubbleChartWith3MetricsAndAttribute,
-                            {
-                                type: "bubble",
-                            },
-                        );
+                        const chartOptions = generateChartOptions(bubbleChartWith3MetricsAndAttribute, {
+                            type: "bubble",
+                        });
 
                         expect(chartOptions.xAxes!.length).toEqual(1);
                         expect(chartOptions.yAxes!.length).toEqual(1);
@@ -3324,7 +3299,7 @@ describe("chartOptionsBuilder", () => {
                     describe("getChartOptions for heatmap", () => {
                         it("should generate correct series with enabled data labels", () => {
                             const chartOptions = generateChartOptions(
-                                fixtures.barChartWithStackByAndViewByAttributes,
+                                barChartWithStackByAndViewByAttributes,
                                 {
                                     type: "heatmap",
                                     stacking: false,
@@ -3355,7 +3330,7 @@ describe("chartOptionsBuilder", () => {
 
                         it("should generate valid categories", () => {
                             const chartOptions = generateChartOptions(
-                                fixtures.barChartWithStackByAndViewByAttributes,
+                                barChartWithStackByAndViewByAttributes,
                                 {
                                     type: "heatmap",
                                     stacking: false,
@@ -3372,7 +3347,7 @@ describe("chartOptionsBuilder", () => {
 
                         it("should generate categories with empty strings", () => {
                             const chartOptions = generateChartOptions(
-                                fixtures.barChartWithSingleMeasureAndNoAttributes,
+                                barChartWithSingleMeasureAndNoAttributes,
                                 {
                                     type: "heatmap",
                                     stacking: false,
@@ -3384,7 +3359,7 @@ describe("chartOptionsBuilder", () => {
 
                         it("should generate Yaxes without format from measure", () => {
                             const chartOptions = generateChartOptions(
-                                fixtures.barChartWithStackByAndViewByAttributes,
+                                barChartWithStackByAndViewByAttributes,
                                 {
                                     type: "heatmap",
                                 },
@@ -3398,7 +3373,7 @@ describe("chartOptionsBuilder", () => {
                         });
 
                         it("should generate Yaxes label from attribute name", () => {
-                            const chartOptions = generateChartOptions(fixtures.heatMapWithMetricRowColumn, {
+                            const chartOptions = generateChartOptions(heatMapWithMetricRowColumn, {
                                 type: "heatmap",
                             });
                             const expectedYAxis = [
@@ -3487,10 +3462,7 @@ describe("chartOptionsBuilder", () => {
                     },
                 };
 
-                const chartOptions = generateChartOptions(
-                    fixtures.barChartWith3MetricsAndViewByAttribute,
-                    config,
-                );
+                const chartOptions = generateChartOptions(barChartWith3MetricsAndViewByAttribute, config);
                 it("should generate right Y axis with correct properties", () => {
                     const expectedAxes = [
                         {
@@ -3516,14 +3488,14 @@ describe("chartOptionsBuilder", () => {
                 });
 
                 it("should generate % format for both Y axes", () => {
-                    const dv = fixtures.barChartWith3MetricsAndViewByAttributeFunformat;
+                    const dv = barChartWith3MetricsAndViewByAttributeFunformat;
                     const chartOptions = generateChartOptions(dv, config);
                     const formatValues = chartOptions.yAxes!.map(({ format }: any) => format);
                     expect(formatValues).toEqual(["#,##0.00%", "#,##0.00%"]);
                 });
 
                 it("should generate % format for right Y axis", () => {
-                    const dv = fixtures.barChartWith3MetricsAndViewByAttributePercInFormat;
+                    const dv = barChartWith3MetricsAndViewByAttributePercInFormat;
                     const chartOptions = generateChartOptions(dv, config);
                     const formatValues = chartOptions.yAxes!.map(({ format }: any) => format);
                     expect(formatValues).toEqual(["#,##0.00", "#,##0.00%"]);
@@ -3536,10 +3508,7 @@ describe("chartOptionsBuilder", () => {
                             measures: ["lostMetric", "expectedMetric", "wonMetric"],
                         },
                     };
-                    const chartOptions = generateChartOptions(
-                        fixtures.barChartWith3MetricsAndViewByAttribute,
-                        config,
-                    );
+                    const chartOptions = generateChartOptions(barChartWith3MetricsAndViewByAttribute, config);
 
                     const expectedAxis = [
                         {
@@ -3555,7 +3524,7 @@ describe("chartOptionsBuilder", () => {
                 it("should return number values in tooltip when point is on secondary axis", () => {
                     const newConfig = cloneDeep(config);
                     newConfig.stackMeasuresToPercent = true;
-                    const dataSet = fixtures.barChartWith3MetricsAndViewByAttribute;
+                    const dataSet = barChartWith3MetricsAndViewByAttribute;
                     const {
                         actions: { tooltip: tooltipFn },
                     } = generateChartOptions(dataSet, newConfig) as { actions: { tooltip: ITooltipFactory } };
@@ -3602,9 +3571,7 @@ describe("chartOptionsBuilder", () => {
                 };
 
                 it("should return grouped categories with viewing by 2 attributes", () => {
-                    const chartOptions = generateChartOptions(
-                        fixtures.barChartWith4MetricsAndViewByTwoAttributes,
-                    );
+                    const chartOptions = generateChartOptions(barChartWith4MetricsAndViewByTwoAttributes);
 
                     expect(chartOptions.isViewByTwoAttributes).toBeTruthy();
                     expect(chartOptions.data!.categories).toEqual([
@@ -3620,9 +3587,7 @@ describe("chartOptionsBuilder", () => {
                 });
 
                 it("should not return grouped categories with viewing by one attribute", () => {
-                    const chartOptions = generateChartOptions(
-                        fixtures.barChartWith3MetricsAndViewByAttribute,
-                    );
+                    const chartOptions = generateChartOptions(barChartWith3MetricsAndViewByAttribute);
 
                     expect(chartOptions.isViewByTwoAttributes).toBeFalsy();
                     expect(chartOptions.data!.categories).toEqual([
@@ -3637,7 +3602,7 @@ describe("chartOptionsBuilder", () => {
                 it("should return full information in tooltip with viewing by 2 attributes", () => {
                     const {
                         actions: { tooltip: tooltipFn },
-                    } = generateChartOptions(fixtures.barChartWith4MetricsAndViewByTwoAttributes) as {
+                    } = generateChartOptions(barChartWith4MetricsAndViewByTwoAttributes) as {
                         actions: { tooltip: ITooltipFactory };
                     };
 
@@ -3655,7 +3620,7 @@ describe("chartOptionsBuilder", () => {
                 it("should return percentage values in tooltip when stackMeasuresToPercent is true", () => {
                     const {
                         actions: { tooltip: tooltipFn },
-                    } = generateChartOptions(fixtures.barChartWith4MetricsAndViewByTwoAttributes, {
+                    } = generateChartOptions(barChartWith4MetricsAndViewByTwoAttributes, {
                         stackMeasuresToPercent: true,
                         type: COLUMN,
                     }) as { actions: { tooltip: ITooltipFactory } };
@@ -3682,13 +3647,10 @@ describe("chartOptionsBuilder", () => {
                 `(
                     "should return 'undefined' stacking with stack options are $description",
                     ({ config }: { config: any }) => {
-                        const { stacking } = generateChartOptions(
-                            fixtures.barChartWith3MetricsAndViewByAttribute,
-                            {
-                                type: COLUMN,
-                                ...config,
-                            },
-                        );
+                        const { stacking } = generateChartOptions(barChartWith3MetricsAndViewByAttribute, {
+                            type: COLUMN,
+                            ...config,
+                        });
                         expect(stacking).toBeFalsy();
                     },
                 );

@@ -2,7 +2,7 @@
 
 import { fireEvent, screen } from "@testing-library/react";
 
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 const OPERATOR_DROPDOWN_BUTTON = ".s-rf-operator-dropdown-button";
 const OPERATOR_DROPDOWN_BODY = ".s-rf-operator-dropdown-body";
@@ -42,7 +42,7 @@ export class RankingFilterDropdownFragment {
     };
 
     public setOperator = (value: string): RankingFilterDropdownFragment => {
-        fireEvent.click(document.querySelector(`.s-rf-operator-${stringUtils.simplifyText(value)}`)!);
+        fireEvent.click(document.querySelector(`.s-rf-operator-${simplifyText(value)}`)!);
         return this;
     };
 
@@ -87,7 +87,7 @@ export class RankingFilterDropdownFragment {
     };
 
     public getMeasureItem = (value: string) => {
-        return document.querySelector(`.s-rf-measure-${stringUtils.simplifyText(value)}`);
+        return document.querySelector(`.s-rf-measure-${simplifyText(value)}`);
     };
 
     public setMeasureItem = (value: string): RankingFilterDropdownFragment => {
@@ -114,7 +114,7 @@ export class RankingFilterDropdownFragment {
     };
 
     public getAttributeItem = (value: string) => {
-        return document.querySelector(`.s-rf-attribute-${stringUtils.simplifyText(value)}`);
+        return document.querySelector(`.s-rf-attribute-${simplifyText(value)}`);
     };
 
     public setAttributeItem = (value: string): RankingFilterDropdownFragment => {

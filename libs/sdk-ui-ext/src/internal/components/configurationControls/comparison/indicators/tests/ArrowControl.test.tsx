@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { fireEvent, render } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -7,9 +7,18 @@ import { type IComparisonControlProperties } from "../../../../../interfaces/Con
 import { type IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
 import { createTestProperties } from "../../../../../tests/testDataProvider.js";
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
-import * as CheckboxControl from "../../../CheckboxControl.js";
+import { CheckboxControl } from "../../../CheckboxControl.js";
 import { COMPARISON_IS_ARROW_ENABLED_PATH } from "../../ComparisonValuePath.js";
 import { ArrowControl } from "../ArrowControl.js";
+
+vi.mock("../../../CheckboxControl.js", async (importOriginal) => {
+    // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+    const actual = await importOriginal<typeof import("../../../CheckboxControl.js")>();
+    return {
+        ...actual,
+        CheckboxControl: vi.fn(actual.CheckboxControl),
+    };
+});
 
 const TITLE_TEXT_QUERY = "Arrow";
 const CHECKBOX_SELECTOR = "input";
@@ -56,7 +65,7 @@ describe("ArrowControl", () => {
     });
 
     it("Should render arrow control unchecked status", () => {
-        const MockCheckboxControl = vi.spyOn(CheckboxControl, "CheckboxControl");
+        const MockCheckboxControl = vi.mocked(CheckboxControl);
         renderArrowControl();
 
         expect(MockCheckboxControl).toHaveBeenCalledWith(
@@ -70,7 +79,7 @@ describe("ArrowControl", () => {
     });
 
     it("Should render arrow control checked status", () => {
-        const MockCheckboxControl = vi.spyOn(CheckboxControl, "CheckboxControl");
+        const MockCheckboxControl = vi.mocked(CheckboxControl);
         renderArrowControl({
             properties: createTestProperties<IComparisonControlProperties>({
                 comparison: {

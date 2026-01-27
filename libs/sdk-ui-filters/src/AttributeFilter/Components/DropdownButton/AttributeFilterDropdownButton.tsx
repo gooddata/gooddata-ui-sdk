@@ -16,7 +16,7 @@ import cx from "classnames";
 import { useIntl } from "react-intl";
 
 import { ShortenedText, UiTooltip, isActionKey, useIdPrefixed } from "@gooddata/sdk-ui-kit";
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { AttributeFilterButtonTooltip } from "./AttributeFilterButtonTooltip.js";
 import { FilterButtonCustomIcon } from "../../../shared/components/internal/FilterButtonCustomIcon.js";
@@ -263,7 +263,7 @@ export function AttributeFilterDropdownButton({
             className={cx(
                 "gd-attribute-filter-dropdown-button__next",
                 "s-attribute-filter",
-                `s-${stringUtils.simplifyText(title ?? "")}`,
+                `s-${simplifyText(title ?? "")}`,
                 {
                     "gd-message error": isError,
                     "gd-is-filtering": isFiltering,

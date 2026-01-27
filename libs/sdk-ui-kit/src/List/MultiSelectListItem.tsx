@@ -1,11 +1,11 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type MouseEvent, memo, useCallback, useMemo } from "react";
 
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 /**
  * @internal
@@ -33,7 +33,7 @@ export const MultiSelectListItem = memo(function MultiSelectListItem({
     const classNames = useMemo(() => {
         return cx({
             "gd-list-item": true,
-            [`s-${stringUtils.simplifyText(title ?? "")}`]: true,
+            [`s-${simplifyText(title ?? "")}`]: true,
             "has-only-visible": true,
             "is-selected": isSelected,
         });

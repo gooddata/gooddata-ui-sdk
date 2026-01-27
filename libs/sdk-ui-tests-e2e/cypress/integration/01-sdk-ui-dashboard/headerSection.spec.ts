@@ -5,7 +5,7 @@ import { DashboardMenu } from "../../tools/dashboardMenu";
 import { EditMode } from "../../tools/editMode";
 import { InsightsCatalog } from "../../tools/insightsCatalog";
 import { LayoutRow } from "../../tools/layoutRow";
-import * as Navigation from "../../tools/navigation";
+import { visit } from "../../tools/navigation";
 import { Widget } from "../../tools/widget";
 
 const editMode = new EditMode();
@@ -16,7 +16,7 @@ const layoutRow_02 = new LayoutRow(1);
 describe("Header section", () => {
     describe("Default language", () => {
         beforeEach(() => {
-            Navigation.visit("dashboard/header");
+            visit("dashboard/header");
             editMode.isInEditMode(false);
         });
 
@@ -82,7 +82,7 @@ describe("Header section", () => {
 
     describe("Localization", () => {
         beforeEach(() => {
-            Navigation.visit("dashboard/header-localization");
+            visit("dashboard/header-localization");
             editMode.isInEditMode(false).edit().isInEditMode();
             insightCatalog.waitForCatalogReload();
         });

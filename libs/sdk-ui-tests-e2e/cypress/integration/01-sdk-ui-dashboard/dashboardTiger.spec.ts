@@ -2,7 +2,7 @@
 
 import { Dashboard, FilterBar, TopBar } from "../../tools/dashboards";
 import { EditMode } from "../../tools/editMode";
-import * as Navigation from "../../tools/navigation";
+import { visit } from "../../tools/navigation";
 import { TableNew } from "../../tools/tableNew";
 import { Widget } from "../../tools/widget";
 import { WidgetConfiguration } from "../../tools/widgetConfiguration";
@@ -28,7 +28,7 @@ describe("Dashboard", () => {
         () => {
             //Cover ticket: RAIL-4702
             it("Should enable Save button when resize column", () => {
-                Navigation.visit("dashboard/stage-name");
+                visit("dashboard/stage-name");
                 editMode.edit();
                 const table = new TableNew(".s-dash-item");
                 table.waitLoaded().resizeColumn(0, 1, 500, true);
@@ -39,7 +39,7 @@ describe("Dashboard", () => {
             it("Should reload widget after check/uncheck attribute filter", () => {
                 const widgetConfig = new WidgetConfiguration(0);
 
-                Navigation.visit("dashboard/stage-name");
+                visit("dashboard/stage-name");
                 editMode.edit();
                 widget.waitTableLoaded().focus();
                 widgetConfig.openConfiguration().selectFilterCheckbox(STAGE_NAME_CHECKBOX);
@@ -51,7 +51,7 @@ describe("Dashboard", () => {
     );
     describe("TopBar rendering", { tags: ["pre-merge_isolated_tiger_fe"] }, () => {
         beforeEach(() => {
-            Navigation.visit("dashboard/dashboard-tiger");
+            visit("dashboard/dashboard-tiger");
         });
 
         it("should render topBar", () => {
@@ -82,7 +82,7 @@ describe("Dashboard", () => {
 
     describe("FilterBar rendering", { tags: ["pre-merge_isolated_tiger_fe"] }, () => {
         beforeEach(() => {
-            Navigation.visit("dashboard/dashboard-tiger");
+            visit("dashboard/dashboard-tiger");
         });
 
         it("should render filter bar", () => {
@@ -121,7 +121,7 @@ describe("Dashboard", () => {
 
     describe("Dashboard body rendering", { tags: ["pre-merge_isolated_tiger_fe"] }, () => {
         beforeEach(() => {
-            Navigation.visit("dashboard/kpis");
+            visit("dashboard/kpis");
         });
 
         it.skip("should render single insight", () => {
@@ -131,7 +131,7 @@ describe("Dashboard", () => {
 
     describe("Dashboard has too many data points insight", { tags: ["pre-merge_isolated_tiger_fe"] }, () => {
         beforeEach(() => {
-            Navigation.visit("dashboard/manydata");
+            visit("dashboard/manydata");
         });
 
         it("should render insight", () => {

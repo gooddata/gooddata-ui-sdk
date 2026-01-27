@@ -1,15 +1,15 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { DateFilter } from "../../tools/dateFilter";
 import { DateFilterAbsoluteForm } from "../../tools/dateFilterAbsoluteForm";
 import { DateFilterRelativeForm } from "../../tools/dateFilterRelativeForm";
-import * as Navigation from "../../tools/navigation";
+import { visit } from "../../tools/navigation";
 import { clickOutside } from "../../tools/utils";
 
 // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
 describe.skip("DateFilter", { tags: ["pre-merge_isolated_bear"] }, () => {
     beforeEach(() => {
-        Navigation.visit("filters/date-filter");
+        visit("filters/date-filter");
     });
 
     it("Filter should not be applied when we change filter and press cancel", () => {

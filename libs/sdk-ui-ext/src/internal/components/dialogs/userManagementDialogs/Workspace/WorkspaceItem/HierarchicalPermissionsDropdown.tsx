@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { useCallback, useState } from "react";
 
@@ -6,7 +6,7 @@ import cx from "classnames";
 import { useIntl } from "react-intl";
 
 import { withBubble } from "@gooddata/sdk-ui-kit";
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { PermissionsDropdownList } from "./HierarchicalPermissionsDropdownList.js";
 import { hierarchicalPermissionMessages } from "./locales.js";
@@ -79,7 +79,7 @@ function Dropdown({
                     "s-user-management-hierarchical-permission-button",
                     "gd-granular-permission-button",
                     "dropdown-button",
-                    `gd-granular-hierarchical-permission-button-${stringUtils.simplifyText(workspace.id)}`,
+                    `gd-granular-hierarchical-permission-button-${simplifyText(workspace.id)}`,
                     {
                         "is-active": isDropdownOpen,
                         "gd-icon-navigateup": !isDropdownDisabled && isDropdownOpen,
@@ -100,9 +100,7 @@ function Dropdown({
                 onSelect={handleOnSelect}
                 toggleDropdown={toggleDropdown}
                 isShowDropdown={isDropdownOpen}
-                alignTo={`.gd-granular-hierarchical-permission-button-${stringUtils.simplifyText(
-                    workspace.id,
-                )}`}
+                alignTo={`.gd-granular-hierarchical-permission-button-${simplifyText(workspace.id)}`}
             />
         </div>
     );

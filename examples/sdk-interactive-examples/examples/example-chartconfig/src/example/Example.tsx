@@ -1,8 +1,8 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { Treemap } from "@gooddata/sdk-ui-charts";
 
-import * as Catalog from "../catalog.js";
+import { CustomerCountry, GrossProfit, ProductCategory } from "../catalog.js";
 import { Hint } from "../Hint.js";
 
 export function Example() {
@@ -13,9 +13,9 @@ export function Example() {
             {/* Try editing the component below 👇 */}
             <div style={{ height: 300 }}>
                 <Treemap
-                    measures={[Catalog.GrossProfit]}
-                    viewBy={Catalog.ProductCategory}
-                    segmentBy={Catalog.CustomerCountry}
+                    measures={[GrossProfit]}
+                    viewBy={ProductCategory}
+                    segmentBy={CustomerCountry}
                     //config={{ legend: { position: "top" } }}
                 />
             </div>

@@ -5,7 +5,7 @@ import { DashboardMenu } from "../../tools/dashboardMenu";
 import { DateFilter } from "../../tools/dateFilter";
 import { EditMode } from "../../tools/editMode";
 import { FilterBar } from "../../tools/filterBar";
-import * as Navigation from "../../tools/navigation";
+import { visit } from "../../tools/navigation";
 import { Widget } from "../../tools/widget";
 import { WidgetConfiguration } from "../../tools/widgetConfiguration";
 
@@ -18,7 +18,7 @@ const dateFilter = new DateFilter();
 
 describe("Multitple date filters basic cases", { tags: ["pre-merge_isolated_tiger_fe"] }, () => {
     beforeEach(() => {
-        Navigation.visit("dashboard/multiple-date-filters");
+        visit("dashboard/multiple-date-filters");
         widget.waitChartLoaded();
     });
 

@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type CSSProperties } from "react";
 
@@ -9,8 +9,16 @@ import { withIntl } from "@gooddata/sdk-ui";
 
 import { type IBaseHeadlineValueItem } from "../../../../../interfaces/BaseHeadlines.js";
 import { TEST_DATA_ITEM, TEST_RENDER_VALUE_SPECS } from "../../../../../tests/TestData.fixtures.js";
-import { mockUseBaseHeadline } from "../../../tests/BaseHeadline.test.helpers.js";
+import { createMockUseBaseHeadline } from "../../../tests/BaseHeadline.test.helpers.js";
 import { ComparisonValue } from "../ComparisonValue.js";
+
+const useBaseHeadlineMock = vi.hoisted(() => vi.fn());
+
+vi.mock("../../../BaseHeadlineContext.js", () => ({
+    useBaseHeadline: useBaseHeadlineMock,
+}));
+
+const mockUseBaseHeadline = createMockUseBaseHeadline(useBaseHeadlineMock);
 
 describe("ComparisonValue", () => {
     const renderComparisonDataItem = (props: {

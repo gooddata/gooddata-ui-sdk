@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { afterEach, describe, expect, it, vi } from "vitest";
 
@@ -6,8 +6,17 @@ import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { DefaultLocale } from "@gooddata/sdk-ui";
 
 import { type IVisConstruct } from "../../../../interfaces/Visualization.js";
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
-import * as testMocks from "../../../../tests/mocks/testMocks.js";
+import {
+    arithmeticMeasureItems,
+    attributeItems,
+    emptyReferencePoint,
+    masterMeasureItems,
+    multipleMetricsNoCategoriesReferencePoint,
+    onePrimaryMetricAndOneViewByRefPoint,
+    overTimeComparisonDateItem,
+    simpleGeoPushpinReferencePoint,
+} from "../../../../tests/mocks/referencePointMocks.js";
+import { insightWithSingleMeasure } from "../../../../tests/mocks/testMocks.js";
 import { DEFAULT_MESSAGES } from "../../../../utils/translations.js";
 import { getLastRenderEl } from "../../tests/pluggableVisualizations.test.helpers.js";
 import { PluggableWaterfallChart } from "../PluggableWaterfallChart.js";
@@ -51,7 +60,7 @@ describe("PluggableWaterfallChart", () => {
         const waterfall = createComponent();
 
         const extendedReferencePoint = await waterfall.getExtendedReferencePoint(
-            referencePointMocks.multipleMetricsNoCategoriesReferencePoint,
+            multipleMetricsNoCategoriesReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -61,7 +70,7 @@ describe("PluggableWaterfallChart", () => {
         const waterfall = createComponent();
 
         const extendedReferencePoint = await waterfall.getExtendedReferencePoint(
-            referencePointMocks.onePrimaryMetricAndOneViewByRefPoint,
+            onePrimaryMetricAndOneViewByRefPoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -71,7 +80,7 @@ describe("PluggableWaterfallChart", () => {
         const waterfall = createComponent();
 
         const extendedReferencePoint = await waterfall.getExtendedReferencePoint(
-            referencePointMocks.simpleGeoPushpinReferencePoint,
+            simpleGeoPushpinReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -84,27 +93,27 @@ describe("PluggableWaterfallChart", () => {
             buckets: [
                 {
                     localIdentifier: "measures",
-                    items: [referencePointMocks.masterMeasureItems[0]],
+                    items: [masterMeasureItems[0]],
                 },
                 {
                     localIdentifier: "view",
-                    items: referencePointMocks.attributeItems,
+                    items: attributeItems,
                 },
             ],
             filters: {
                 localIdentifier: "filters",
-                items: [referencePointMocks.overTimeComparisonDateItem],
+                items: [overTimeComparisonDateItem],
             },
         });
 
         expect(extendedReferencePoint.buckets).toEqual([
             {
                 localIdentifier: "measures",
-                items: [referencePointMocks.masterMeasureItems[0]],
+                items: [masterMeasureItems[0]],
             },
             {
                 localIdentifier: "view",
-                items: [referencePointMocks.attributeItems[0]],
+                items: [attributeItems[0]],
             },
         ]);
     });
@@ -117,27 +126,19 @@ describe("PluggableWaterfallChart", () => {
                 buckets: [
                     {
                         localIdentifier: "measures",
-                        items: [
-                            referencePointMocks.masterMeasureItems[0],
-                            referencePointMocks.masterMeasureItems[1],
-                            referencePointMocks.arithmeticMeasureItems[0],
-                        ],
+                        items: [masterMeasureItems[0], masterMeasureItems[1], arithmeticMeasureItems[0]],
                     },
                 ],
                 filters: {
                     localIdentifier: "filters",
-                    items: [referencePointMocks.overTimeComparisonDateItem],
+                    items: [overTimeComparisonDateItem],
                 },
             });
 
             expect(extendedReferencePoint.buckets).toEqual([
                 {
                     localIdentifier: "measures",
-                    items: [
-                        referencePointMocks.masterMeasureItems[0],
-                        referencePointMocks.masterMeasureItems[1],
-                        referencePointMocks.arithmeticMeasureItems[0],
-                    ],
+                    items: [masterMeasureItems[0], masterMeasureItems[1], arithmeticMeasureItems[0]],
                 },
                 {
                     localIdentifier: "view",
@@ -151,9 +152,7 @@ describe("PluggableWaterfallChart", () => {
         it("should return reference point containing uiConfig with no supported comparison types", async () => {
             const component = createComponent();
 
-            const extendedReferencePoint = await component.getExtendedReferencePoint(
-                referencePointMocks.emptyReferencePoint,
-            );
+            const extendedReferencePoint = await component.getExtendedReferencePoint(emptyReferencePoint);
 
             expect(extendedReferencePoint.uiConfig!.supportedOverTimeComparisonTypes).toEqual([]);
         });
@@ -163,7 +162,7 @@ describe("PluggableWaterfallChart", () => {
         it("should mount on the element defined by the callback", () => {
             const visualization = createComponent();
 
-            visualization.update({ messages }, testMocks.insightWithSingleMeasure, {}, executionFactory);
+            visualization.update({ messages }, insightWithSingleMeasure, {}, executionFactory);
 
             // 1st call for rendering element
             // 2nd call for rendering config panel
@@ -182,9 +181,9 @@ describe("PluggableWaterfallChart", () => {
                     {
                         localIdentifier: "measures",
                         items: [
-                            referencePointMocks.masterMeasureItems[0],
+                            masterMeasureItems[0],
                             {
-                                ...referencePointMocks.masterMeasureItems[1],
+                                ...masterMeasureItems[1],
                                 isTotalMeasure: true,
                             },
                         ],
@@ -192,12 +191,12 @@ describe("PluggableWaterfallChart", () => {
                 ],
                 filters: {
                     localIdentifier: "filters",
-                    items: [referencePointMocks.overTimeComparisonDateItem],
+                    items: [overTimeComparisonDateItem],
                 },
             });
 
             expect(extendedReferencePoint.properties!.controls!["total"].measures).toEqual([
-                referencePointMocks.masterMeasureItems[1].localIdentifier,
+                masterMeasureItems[1].localIdentifier,
             ]);
         });
 
@@ -208,12 +207,12 @@ describe("PluggableWaterfallChart", () => {
                 buckets: [
                     {
                         localIdentifier: "measures",
-                        items: [referencePointMocks.masterMeasureItems[0]],
+                        items: [masterMeasureItems[0]],
                     },
                 ],
                 filters: {
                     localIdentifier: "filters",
-                    items: [referencePointMocks.overTimeComparisonDateItem],
+                    items: [overTimeComparisonDateItem],
                 },
                 properties: {
                     controls: {

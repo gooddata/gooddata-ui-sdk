@@ -5,27 +5,22 @@ export const getTigerAuthToken = (): string => Cypress.env("TIGER_API_TOKEN");
 
 interface IApiRequestOptions {
     failOnStatusCode?: boolean;
-    useVendorContentType?: boolean;
 }
 
 const defaultRequestOptions: IApiRequestOptions = {
     failOnStatusCode: true,
-    useVendorContentType: true,
 };
 
 export class Api {
     static request(method: string, url: string, body?: any, options: IApiRequestOptions = {}): any {
-        const { failOnStatusCode, useVendorContentType } = { ...defaultRequestOptions, ...options };
+        const { failOnStatusCode } = { ...defaultRequestOptions, ...options };
         return cy.request({
             method,
             failOnStatusCode,
             url: url.startsWith("/") ? `${getHost()}${url}` : url,
             headers: {
                 Authorization: `BEARER ${getTigerAuthToken()}`,
-                // use vendor specific content-type, described in https://www.gooddata.com/developers/cloud-native/doc/2.2/api-and-sdk/api/#entity-api-interface
-                "Content-Type": useVendorContentType
-                    ? "application/vnd.gooddata.api+json"
-                    : "application/json",
+                "Content-Type": "application/json",
             },
             body,
         });

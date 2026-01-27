@@ -15,10 +15,36 @@ import {
     TEST_RENDER_COLOR_SPECS,
     createComparison,
 } from "../../../../../tests/TestData.fixtures.js";
-import { mockUseBaseHeadline } from "../../../tests/BaseHeadline.test.helpers.js";
+import { createMockUseBaseHeadline } from "../../../tests/BaseHeadline.test.helpers.js";
 import { ComparisonDataWithSubItem } from "../ComparisonDataWithSubItem.js";
-import * as ComparisonValue from "../ComparisonValue.js";
-import * as useComparisonDataItem from "../useComparisonDataItem.js";
+import { ComparisonValue } from "../ComparisonValue.js";
+import { useComparisonDataItem } from "../useComparisonDataItem.js";
+
+const useBaseHeadlineMock = vi.hoisted(() => vi.fn());
+
+vi.mock("../../../BaseHeadlineContext.js", () => ({
+    useBaseHeadline: useBaseHeadlineMock,
+}));
+
+vi.mock("../ComparisonValue.js", async (importOriginal) => {
+    const original = await importOriginal();
+    return {
+        ...(original as object),
+        ComparisonValue: vi.fn((original as { ComparisonValue: () => void }).ComparisonValue),
+    };
+});
+
+vi.mock("../useComparisonDataItem.js", async (importOriginal) => {
+    const original = await importOriginal();
+    return {
+        ...(original as object),
+        useComparisonDataItem: vi.fn(
+            (original as { useComparisonDataItem: () => void }).useComparisonDataItem,
+        ),
+    };
+});
+
+const mockUseBaseHeadline = createMockUseBaseHeadline(useBaseHeadlineMock);
 
 describe("ComparisonDataWithSubItem", () => {
     const DEFAULT_PROPS = {
@@ -50,7 +76,7 @@ describe("ComparisonDataWithSubItem", () => {
             },
         });
 
-        const MockComparisonValue = vi.spyOn(ComparisonValue, "ComparisonValue");
+        const MockComparisonValue = vi.mocked(ComparisonValue);
         renderComparisonDataItem();
 
         expect(MockComparisonValue).toHaveBeenCalledTimes(2);
@@ -126,7 +152,7 @@ describe("ComparisonDataWithSubItem", () => {
             },
         });
         const MockIndicator = vi.fn();
-        vi.spyOn(useComparisonDataItem, "useComparisonDataItem").mockReturnValue({
+        vi.mocked(useComparisonDataItem).mockReturnValue({
             style: {},
             indicator: MockIndicator,
             comparisonAriaLabelFactory: vi.fn(),

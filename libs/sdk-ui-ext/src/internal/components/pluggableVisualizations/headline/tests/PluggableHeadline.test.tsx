@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { cloneDeep } from "lodash-es";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -15,8 +15,29 @@ import {
     type IVisConstruct,
     type IVisProps,
 } from "../../../../interfaces/Visualization.js";
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
-import * as testMocks from "../../../../tests/mocks/testMocks.js";
+import {
+    arithmeticMeasureItems,
+    attributeItems,
+    dateFilterBucketAllTime,
+    dateItem,
+    derivedMeasureItems,
+    emptyReferencePoint,
+    headlineWithMeasureInPrimaryBucket,
+    headlineWithMeasureInSecondaryBucket,
+    masterMeasureItems,
+    measureWithDerivedWithoutDateFilterRefPoint,
+    multipleMetricsAndCategoriesReferencePoint,
+    overTimeComparisonDateItem,
+    samePeriodPrevYearFiltersBucket,
+    simpleStackedReferencePoint,
+} from "../../../../tests/mocks/referencePointMocks.js";
+import {
+    emptyInsight,
+    insightWithSingleMeasure,
+    insightWithSinglePrimaryAndSecondaryMeasure,
+    insightWithSinglePrimaryAndSecondaryMeasureNoIdentifier,
+    insightWithSingleSecondaryMeasure,
+} from "../../../../tests/mocks/testMocks.js";
 import { getMeasureItems } from "../../../../utils/bucketHelper.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../../utils/translations.js";
 import { getLastRenderEl } from "../../tests/pluggableVisualizations.test.helpers.js";
@@ -56,7 +77,7 @@ describe("PluggableHeadline", () => {
     function createReferencePointWithDateFilter(buckets: IBucketOfFun[]): IExtendedReferencePoint {
         return {
             buckets,
-            filters: referencePointMocks.samePeriodPrevYearFiltersBucket,
+            filters: samePeriodPrevYearFiltersBucket,
             uiConfig: {
                 buckets: {},
             },
@@ -115,7 +136,7 @@ describe("PluggableHeadline", () => {
 
             const options: IVisProps = getTestOptions();
 
-            headline.update({ ...options }, testMocks.emptyInsight, emptyPropertiesMeta, executionFactory);
+            headline.update({ ...options }, emptyInsight, emptyPropertiesMeta, executionFactory);
 
             const renderEl = getLastRenderEl(mockRenderFun, mockElement);
             expect(renderEl).toBeUndefined();
@@ -135,7 +156,7 @@ describe("PluggableHeadline", () => {
 
             headline.update(
                 { ...options },
-                testMocks.insightWithSingleSecondaryMeasure,
+                insightWithSingleSecondaryMeasure,
                 emptyPropertiesMeta,
                 executionFactory,
             );
@@ -149,12 +170,7 @@ describe("PluggableHeadline", () => {
             const headline = createComponent(defaultProps);
             const options: IVisProps = getTestOptions();
 
-            headline.update(
-                options,
-                testMocks.insightWithSingleMeasure,
-                emptyPropertiesMeta,
-                executionFactory,
-            );
+            headline.update(options, insightWithSingleMeasure, emptyPropertiesMeta, executionFactory);
 
             const renderEl = getLastRenderEl<ICoreChartProps>(mockRenderFun, mockElement);
             expect(renderEl).toBeDefined();
@@ -171,12 +187,7 @@ describe("PluggableHeadline", () => {
 
             const options: IVisProps = getTestOptions();
 
-            headline.update(
-                options,
-                testMocks.insightWithSingleMeasure,
-                emptyPropertiesMeta,
-                executionFactory,
-            );
+            headline.update(options, insightWithSingleMeasure, emptyPropertiesMeta, executionFactory);
 
             const renderEl = getLastRenderEl<ICoreChartProps>(mockRenderFun, mockElement);
             expect(renderEl!.type).toBe(CoreHeadline);
@@ -187,7 +198,7 @@ describe("PluggableHeadline", () => {
     describe("getExtendedReferencePoint", () => {
         it("should return proper extended reference point", async () => {
             const extendedReferencePoint = await createComponent().getExtendedReferencePoint(
-                referencePointMocks.multipleMetricsAndCategoriesReferencePoint,
+                multipleMetricsAndCategoriesReferencePoint,
             );
 
             expect(extendedReferencePoint).toMatchSnapshot();
@@ -195,7 +206,7 @@ describe("PluggableHeadline", () => {
 
         it("should return extended reference point without any derived measures or arithmetic measures created from derived measures within measures bucket if there is no date filter", async () => {
             const extendedReferencePoint = await createComponent().getExtendedReferencePoint(
-                referencePointMocks.measureWithDerivedWithoutDateFilterRefPoint,
+                measureWithDerivedWithoutDateFilterRefPoint,
             );
 
             getMeasureItems(extendedReferencePoint.buckets).forEach((bucketItem) => {
@@ -210,14 +221,14 @@ describe("PluggableHeadline", () => {
                         localIdentifier: "measures",
                         items: [
                             {
-                                ...referencePointMocks.masterMeasureItems[0],
+                                ...masterMeasureItems[0],
                                 showInPercent: true,
                             },
                         ],
                     },
                     {
                         localIdentifier: "view",
-                        items: [referencePointMocks.attributeItems[0]],
+                        items: [attributeItems[0]],
                     },
                     {
                         localIdentifier: "stack",
@@ -236,9 +247,7 @@ describe("PluggableHeadline", () => {
 
         it("should remove invalid sort items in properties", async () => {
             const table = createComponent();
-            const extendedReferencePoint = await table.getExtendedReferencePoint(
-                referencePointMocks.simpleStackedReferencePoint,
-            );
+            const extendedReferencePoint = await table.getExtendedReferencePoint(simpleStackedReferencePoint);
 
             expect(extendedReferencePoint.properties).toEqual({});
         });
@@ -246,9 +255,7 @@ describe("PluggableHeadline", () => {
         it("should correctly process empty reference point", async () => {
             const headline = createComponent();
 
-            const extendedReferencePoint = await headline.getExtendedReferencePoint(
-                referencePointMocks.emptyReferencePoint,
-            );
+            const extendedReferencePoint = await headline.getExtendedReferencePoint(emptyReferencePoint);
 
             expect(extendedReferencePoint).toMatchSnapshot();
         });
@@ -256,7 +263,7 @@ describe("PluggableHeadline", () => {
         describe("known buckets", () => {
             it("should keep first bucket empty when primary measures bucket is empty and the second is not", async () => {
                 const headline = createComponent();
-                const referencePoint = cloneDeep(referencePointMocks.emptyReferencePoint);
+                const referencePoint = cloneDeep(emptyReferencePoint);
                 referencePoint.buckets = [
                     {
                         localIdentifier: "measures",
@@ -264,7 +271,7 @@ describe("PluggableHeadline", () => {
                     },
                     {
                         localIdentifier: "secondary_measures",
-                        items: [referencePointMocks.masterMeasureItems[0]],
+                        items: [masterMeasureItems[0]],
                     },
                 ];
                 const extendedReferencePoint = await headline.getExtendedReferencePoint(referencePoint);
@@ -282,7 +289,7 @@ describe("PluggableHeadline", () => {
                 const referencePoint = createReferencePointWithDateFilter([
                     {
                         localIdentifier: "measures",
-                        items: [referencePointMocks.masterMeasureItems[0]],
+                        items: [masterMeasureItems[0]],
                     },
                     {
                         localIdentifier: "secondary_measures",
@@ -299,11 +306,11 @@ describe("PluggableHeadline", () => {
                 const referencePoint = createReferencePointWithDateFilter([
                     {
                         localIdentifier: "measures",
-                        items: [referencePointMocks.masterMeasureItems[0]],
+                        items: [masterMeasureItems[0]],
                     },
                     {
                         localIdentifier: "secondary_measures",
-                        items: [referencePointMocks.masterMeasureItems[1]],
+                        items: [masterMeasureItems[1]],
                     },
                 ]);
                 const extendedReferencePoint =
@@ -316,10 +323,7 @@ describe("PluggableHeadline", () => {
                 const referencePoint = createReferencePointWithDateFilter([
                     {
                         localIdentifier: "measures",
-                        items: [
-                            referencePointMocks.masterMeasureItems[0],
-                            referencePointMocks.masterMeasureItems[1],
-                        ],
+                        items: [masterMeasureItems[0], masterMeasureItems[1]],
                     },
                     {
                         localIdentifier: "secondary_measures",
@@ -340,10 +344,7 @@ describe("PluggableHeadline", () => {
                     },
                     {
                         localIdentifier: "secondary_measures",
-                        items: [
-                            referencePointMocks.masterMeasureItems[0],
-                            referencePointMocks.masterMeasureItems[1],
-                        ],
+                        items: [masterMeasureItems[0], masterMeasureItems[1]],
                     },
                 ]);
                 const extendedReferencePoint =
@@ -358,7 +359,7 @@ describe("PluggableHeadline", () => {
                 const referencePoint = createReferencePointWithDateFilter([
                     {
                         localIdentifier: "unknown_measures",
-                        items: [referencePointMocks.masterMeasureItems[0]],
+                        items: [masterMeasureItems[0]],
                     },
                 ]);
                 const extendedReferencePoint =
@@ -371,11 +372,11 @@ describe("PluggableHeadline", () => {
                 const referencePoint = createReferencePointWithDateFilter([
                     {
                         localIdentifier: "unknown_measures",
-                        items: [referencePointMocks.masterMeasureItems[0]],
+                        items: [masterMeasureItems[0]],
                     },
                     {
                         localIdentifier: "unknown_secondary_measures",
-                        items: [referencePointMocks.masterMeasureItems[1]],
+                        items: [masterMeasureItems[1]],
                     },
                 ]);
                 const extendedReferencePoint =
@@ -388,14 +389,11 @@ describe("PluggableHeadline", () => {
                 const referencePoint = createReferencePointWithDateFilter([
                     {
                         localIdentifier: "unknown_measures",
-                        items: [
-                            referencePointMocks.masterMeasureItems[0],
-                            referencePointMocks.masterMeasureItems[1],
-                        ],
+                        items: [masterMeasureItems[0], masterMeasureItems[1]],
                     },
                     {
                         localIdentifier: "unknown_secondary_measures",
-                        items: [referencePointMocks.masterMeasureItems[2]],
+                        items: [masterMeasureItems[2]],
                     },
                 ]);
                 const extendedReferencePoint =
@@ -412,10 +410,7 @@ describe("PluggableHeadline", () => {
                     },
                     {
                         localIdentifier: "unknown_secondary_measures",
-                        items: [
-                            referencePointMocks.masterMeasureItems[0],
-                            referencePointMocks.masterMeasureItems[1],
-                        ],
+                        items: [masterMeasureItems[0], masterMeasureItems[1]],
                     },
                 ]);
                 const extendedReferencePoint =
@@ -432,11 +427,7 @@ describe("PluggableHeadline", () => {
                     },
                     {
                         localIdentifier: "unknown_secondary_measures",
-                        items: [
-                            referencePointMocks.masterMeasureItems[0],
-                            referencePointMocks.masterMeasureItems[1],
-                            referencePointMocks.masterMeasureItems[2],
-                        ],
+                        items: [masterMeasureItems[0], masterMeasureItems[1], masterMeasureItems[2]],
                     },
                 ]);
                 const extendedReferencePoint =
@@ -451,7 +442,7 @@ describe("PluggableHeadline", () => {
                 const referencePoint = createReferencePointWithDateFilter([
                     {
                         localIdentifier: "measures",
-                        items: [referencePointMocks.masterMeasureItems[0]],
+                        items: [masterMeasureItems[0]],
                     },
                     {
                         localIdentifier: "secondary_measures",
@@ -459,7 +450,7 @@ describe("PluggableHeadline", () => {
                     },
                     {
                         localIdentifier: "unknown_measures",
-                        items: [referencePointMocks.masterMeasureItems[1]],
+                        items: [masterMeasureItems[1]],
                     },
                 ]);
                 const extendedReferencePoint =
@@ -472,11 +463,11 @@ describe("PluggableHeadline", () => {
                 const referencePoint = createReferencePointWithDateFilter([
                     {
                         localIdentifier: "measures",
-                        items: [referencePointMocks.masterMeasureItems[0]],
+                        items: [masterMeasureItems[0]],
                     },
                     {
                         localIdentifier: "secondary_measures",
-                        items: [referencePointMocks.masterMeasureItems[1]],
+                        items: [masterMeasureItems[1]],
                     },
                     {
                         localIdentifier: "uknown_measures",
@@ -499,16 +490,16 @@ describe("PluggableHeadline", () => {
                         {
                             localIdentifier: "measures",
                             items: [
-                                referencePointMocks.arithmeticMeasureItems[3],
-                                referencePointMocks.derivedMeasureItems[0],
-                                referencePointMocks.masterMeasureItems[1],
-                                referencePointMocks.masterMeasureItems[0],
+                                arithmeticMeasureItems[3],
+                                derivedMeasureItems[0],
+                                masterMeasureItems[1],
+                                masterMeasureItems[0],
                             ],
                         },
                     ],
                     filters: {
                         localIdentifier: "filters",
-                        items: [referencePointMocks.overTimeComparisonDateItem],
+                        items: [overTimeComparisonDateItem],
                     },
                 });
 
@@ -523,16 +514,16 @@ describe("PluggableHeadline", () => {
                         {
                             localIdentifier: "measures",
                             items: [
-                                referencePointMocks.arithmeticMeasureItems[3],
-                                referencePointMocks.masterMeasureItems[0],
-                                referencePointMocks.masterMeasureItems[1],
-                                referencePointMocks.derivedMeasureItems[0],
+                                arithmeticMeasureItems[3],
+                                masterMeasureItems[0],
+                                masterMeasureItems[1],
+                                derivedMeasureItems[0],
                             ],
                         },
                     ],
                     filters: {
                         localIdentifier: "filters",
-                        items: [referencePointMocks.overTimeComparisonDateItem],
+                        items: [overTimeComparisonDateItem],
                     },
                 });
 
@@ -546,16 +537,12 @@ describe("PluggableHeadline", () => {
                     buckets: [
                         {
                             localIdentifier: "measures",
-                            items: [
-                                referencePointMocks.arithmeticMeasureItems[2],
-                                referencePointMocks.masterMeasureItems[0],
-                                referencePointMocks.masterMeasureItems[1],
-                            ],
+                            items: [arithmeticMeasureItems[2], masterMeasureItems[0], masterMeasureItems[1]],
                         },
                     ],
                     filters: {
                         localIdentifier: "filters",
-                        items: [referencePointMocks.overTimeComparisonDateItem],
+                        items: [overTimeComparisonDateItem],
                     },
                 });
 
@@ -566,9 +553,7 @@ describe("PluggableHeadline", () => {
         describe("Over Time Comparison", () => {
             it("should return reference point containing uiConfig with PP, SP supported comparison types", async () => {
                 const component = createComponent();
-                const extendedReferencePoint = await component.getExtendedReferencePoint(
-                    referencePointMocks.emptyReferencePoint,
-                );
+                const extendedReferencePoint = await component.getExtendedReferencePoint(emptyReferencePoint);
 
                 expect(extendedReferencePoint.uiConfig!.supportedOverTimeComparisonTypes).toMatchSnapshot();
             });
@@ -577,8 +562,8 @@ describe("PluggableHeadline", () => {
                 it("should place new derived bucket item after the master measure in the primary bucket", async () => {
                     const headline = createComponent();
                     const referencePointWithDerivedItems = await headline.addNewDerivedBucketItems(
-                        referencePointMocks.headlineWithMeasureInPrimaryBucket,
-                        [referencePointMocks.derivedMeasureItems[0]],
+                        headlineWithMeasureInPrimaryBucket,
+                        [derivedMeasureItems[0]],
                     );
 
                     expect(referencePointWithDerivedItems).toMatchSnapshot();
@@ -587,8 +572,8 @@ describe("PluggableHeadline", () => {
                 it("should place new derived bucket items before the master measure in the secondary bucket", async () => {
                     const headline = createComponent();
                     const referencePointWithDerivedItems = await headline.addNewDerivedBucketItems(
-                        referencePointMocks.headlineWithMeasureInSecondaryBucket,
-                        [referencePointMocks.derivedMeasureItems[0]],
+                        headlineWithMeasureInSecondaryBucket,
+                        [derivedMeasureItems[0]],
                     );
 
                     expect(referencePointWithDerivedItems).toMatchSnapshot();
@@ -599,11 +584,11 @@ describe("PluggableHeadline", () => {
                 const buckets: IBucketOfFun[] = [
                     {
                         localIdentifier: "measures",
-                        items: [referencePointMocks.masterMeasureItems[0]],
+                        items: [masterMeasureItems[0]],
                     },
                     {
                         localIdentifier: "secondary_measures",
-                        items: [referencePointMocks.derivedMeasureItems[0]],
+                        items: [derivedMeasureItems[0]],
                     },
                 ];
 
@@ -611,7 +596,7 @@ describe("PluggableHeadline", () => {
                     const headline = createComponent();
                     const referencePoint: IReferencePoint = {
                         buckets,
-                        filters: referencePointMocks.dateFilterBucketAllTime,
+                        filters: dateFilterBucketAllTime,
                     };
                     const extendedReferencePoint = await headline.getExtendedReferencePoint(referencePoint);
 
@@ -622,7 +607,7 @@ describe("PluggableHeadline", () => {
                     const headline = createComponent();
                     const referencePoint: IReferencePoint = {
                         buckets,
-                        filters: referencePointMocks.samePeriodPrevYearFiltersBucket,
+                        filters: samePeriodPrevYearFiltersBucket,
                     };
                     const extendedReferencePoint = await headline.getExtendedReferencePoint(referencePoint);
 
@@ -648,10 +633,7 @@ describe("PluggableHeadline", () => {
                     const referencePoint = createReferencePointWithDateFilter([
                         {
                             localIdentifier: "measures",
-                            items: [
-                                referencePointMocks.derivedMeasureItems[0],
-                                referencePointMocks.masterMeasureItems[0],
-                            ],
+                            items: [derivedMeasureItems[0], masterMeasureItems[0]],
                         },
                     ]);
                     const extendedReferencePoint = await headline.getExtendedReferencePoint(referencePoint);
@@ -668,10 +650,7 @@ describe("PluggableHeadline", () => {
                         },
                         {
                             localIdentifier: "secondary_measures",
-                            items: [
-                                referencePointMocks.derivedMeasureItems[0],
-                                referencePointMocks.masterMeasureItems[0],
-                            ],
+                            items: [derivedMeasureItems[0], masterMeasureItems[0]],
                         },
                     ]);
                     const extendedReferencePoint = await headline.getExtendedReferencePoint(referencePoint);
@@ -685,10 +664,10 @@ describe("PluggableHeadline", () => {
                         {
                             localIdentifier: "measures",
                             items: [
-                                referencePointMocks.derivedMeasureItems[0],
-                                referencePointMocks.derivedMeasureItems[1],
-                                referencePointMocks.masterMeasureItems[1],
-                                referencePointMocks.masterMeasureItems[0],
+                                derivedMeasureItems[0],
+                                derivedMeasureItems[1],
+                                masterMeasureItems[1],
+                                masterMeasureItems[0],
                             ],
                         },
                     ]);
@@ -703,10 +682,10 @@ describe("PluggableHeadline", () => {
                         {
                             localIdentifier: "measures",
                             items: [
-                                referencePointMocks.masterMeasureItems[1],
-                                referencePointMocks.masterMeasureItems[0],
-                                referencePointMocks.derivedMeasureItems[0],
-                                referencePointMocks.derivedMeasureItems[1],
+                                masterMeasureItems[1],
+                                masterMeasureItems[0],
+                                derivedMeasureItems[0],
+                                derivedMeasureItems[1],
                             ],
                         },
                     ]);
@@ -720,14 +699,11 @@ describe("PluggableHeadline", () => {
                     const referencePoint = createReferencePointWithDateFilter([
                         {
                             localIdentifier: "measures",
-                            items: [referencePointMocks.masterMeasureItems[0]],
+                            items: [masterMeasureItems[0]],
                         },
                         {
                             localIdentifier: "secondary_measures",
-                            items: [
-                                referencePointMocks.derivedMeasureItems[1],
-                                referencePointMocks.masterMeasureItems[1],
-                            ],
+                            items: [derivedMeasureItems[1], masterMeasureItems[1]],
                         },
                     ]);
                     const extendedReferencePoint = await headline.getExtendedReferencePoint(referencePoint);
@@ -740,14 +716,11 @@ describe("PluggableHeadline", () => {
                     const referencePoint = createReferencePointWithDateFilter([
                         {
                             localIdentifier: "measures",
-                            items: [
-                                referencePointMocks.derivedMeasureItems[1],
-                                referencePointMocks.masterMeasureItems[1],
-                            ],
+                            items: [derivedMeasureItems[1], masterMeasureItems[1]],
                         },
                         {
                             localIdentifier: "secondary_measures",
-                            items: [referencePointMocks.masterMeasureItems[0]],
+                            items: [masterMeasureItems[0]],
                         },
                     ]);
                     const extendedReferencePoint = await headline.getExtendedReferencePoint(referencePoint);
@@ -760,17 +733,11 @@ describe("PluggableHeadline", () => {
                     const referencePoint = createReferencePointWithDateFilter([
                         {
                             localIdentifier: "measures",
-                            items: [
-                                referencePointMocks.masterMeasureItems[1],
-                                referencePointMocks.masterMeasureItems[2],
-                            ],
+                            items: [masterMeasureItems[1], masterMeasureItems[2]],
                         },
                         {
                             localIdentifier: "another_measures",
-                            items: [
-                                referencePointMocks.derivedMeasureItems[1],
-                                referencePointMocks.derivedMeasureItems[2],
-                            ],
+                            items: [derivedMeasureItems[1], derivedMeasureItems[2]],
                         },
                     ]);
                     const extendedReferencePoint = await headline.getExtendedReferencePoint(referencePoint);
@@ -783,17 +750,11 @@ describe("PluggableHeadline", () => {
                     const referencePoint = createReferencePointWithDateFilter([
                         {
                             localIdentifier: "measures",
-                            items: [
-                                referencePointMocks.derivedMeasureItems[1],
-                                referencePointMocks.derivedMeasureItems[2],
-                            ],
+                            items: [derivedMeasureItems[1], derivedMeasureItems[2]],
                         },
                         {
                             localIdentifier: "another_measures",
-                            items: [
-                                referencePointMocks.masterMeasureItems[1],
-                                referencePointMocks.masterMeasureItems[2],
-                            ],
+                            items: [masterMeasureItems[1], masterMeasureItems[2]],
                         },
                     ]);
                     const extendedReferencePoint = await headline.getExtendedReferencePoint(referencePoint);
@@ -807,14 +768,11 @@ describe("PluggableHeadline", () => {
                     const bucketsWithViewBy: IBucketOfFun[] = [
                         {
                             localIdentifier: "measures",
-                            items: [
-                                referencePointMocks.derivedMeasureItems[1],
-                                referencePointMocks.masterMeasureItems[0],
-                            ],
+                            items: [derivedMeasureItems[1], masterMeasureItems[0]],
                         },
                         {
                             localIdentifier: "view",
-                            items: [referencePointMocks.dateItem],
+                            items: [dateItem],
                         },
                         {
                             localIdentifier: "stack",
@@ -839,17 +797,11 @@ describe("PluggableHeadline", () => {
                     const referencePoint = createReferencePointWithDateFilter([
                         {
                             localIdentifier: "measures",
-                            items: [
-                                referencePointMocks.masterMeasureItems[0],
-                                referencePointMocks.masterMeasureItems[1],
-                            ],
+                            items: [masterMeasureItems[0], masterMeasureItems[1]],
                         },
                         {
                             localIdentifier: "another_measures",
-                            items: [
-                                referencePointMocks.masterMeasureItems[2],
-                                referencePointMocks.derivedMeasureItems[0],
-                            ],
+                            items: [masterMeasureItems[2], derivedMeasureItems[0]],
                         },
                     ]);
                     const extendedReferencePoint = await headline.getExtendedReferencePoint(referencePoint);
@@ -862,17 +814,11 @@ describe("PluggableHeadline", () => {
                     const referencePoint = createReferencePointWithDateFilter([
                         {
                             localIdentifier: "measures",
-                            items: [
-                                referencePointMocks.masterMeasureItems[0],
-                                referencePointMocks.masterMeasureItems[1],
-                            ],
+                            items: [masterMeasureItems[0], masterMeasureItems[1]],
                         },
                         {
                             localIdentifier: "another_measures",
-                            items: [
-                                referencePointMocks.masterMeasureItems[2],
-                                referencePointMocks.derivedMeasureItems[0],
-                            ],
+                            items: [masterMeasureItems[2], derivedMeasureItems[0]],
                         },
                     ]);
                     const extendedReferencePoint = await headline.getExtendedReferencePoint(referencePoint);
@@ -911,7 +857,7 @@ describe("PluggableHeadline", () => {
 
             headline.update(
                 options,
-                testMocks.insightWithSinglePrimaryAndSecondaryMeasure,
+                insightWithSinglePrimaryAndSecondaryMeasure,
                 emptyPropertiesMeta,
                 executionFactory,
             );
@@ -932,7 +878,7 @@ describe("PluggableHeadline", () => {
 
             headline.update(
                 options,
-                testMocks.insightWithSinglePrimaryAndSecondaryMeasureNoIdentifier,
+                insightWithSinglePrimaryAndSecondaryMeasureNoIdentifier,
                 emptyPropertiesMeta,
                 executionFactory,
             );
@@ -962,7 +908,7 @@ describe("PluggableHeadline", () => {
 
             headline.update(
                 options,
-                testMocks.insightWithSinglePrimaryAndSecondaryMeasureNoIdentifier,
+                insightWithSinglePrimaryAndSecondaryMeasureNoIdentifier,
                 emptyPropertiesMeta,
                 executionFactory,
             );
@@ -991,7 +937,7 @@ describe("PluggableHeadline", () => {
 
             headline.update(
                 options,
-                testMocks.insightWithSinglePrimaryAndSecondaryMeasure,
+                insightWithSinglePrimaryAndSecondaryMeasure,
                 emptyPropertiesMeta,
                 executionFactory,
             );

@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { DashboardHeader } from "../../tools/dashboardHeader";
 import { DashboardMenu } from "../../tools/dashboardMenu";
@@ -6,7 +6,7 @@ import { Dashboard } from "../../tools/dashboards";
 import { EditMode } from "../../tools/editMode";
 import { WidgetDropZone } from "../../tools/enum/DropZone";
 import { AttributeFilter, FilterBar } from "../../tools/filterBar";
-import * as Navigation from "../../tools/navigation";
+import { visit } from "../../tools/navigation";
 import { Widget } from "../../tools/widget";
 import { WidgetConfiguration } from "../../tools/widgetConfiguration";
 
@@ -21,7 +21,7 @@ const dashboard = new Dashboard();
 describe.skip("Dashboard Drag and Drop", { tags: ["pre-merge_isolated_bear"] }, () => {
     describe("Delete attribute filter", () => {
         it("Display trash when performing filter drag", () => {
-            Navigation.visit("dashboard/attribute-filtering");
+            visit("dashboard/attribute-filtering");
             editMode.edit();
 
             widget.waitTableLoaded();
@@ -29,7 +29,7 @@ describe.skip("Dashboard Drag and Drop", { tags: ["pre-merge_isolated_bear"] }, 
         });
 
         it("Delete filter when having multiple attribute filters", () => {
-            Navigation.visit("dashboard/multiple-filters");
+            visit("dashboard/multiple-filters");
             editMode.edit();
 
             new AttributeFilter("Account").removeFilter();
@@ -37,7 +37,7 @@ describe.skip("Dashboard Drag and Drop", { tags: ["pre-merge_isolated_bear"] }, 
         });
 
         it("Add deleted attribute filter", () => {
-            Navigation.visit("dashboard/attribute-filtering");
+            visit("dashboard/attribute-filtering");
             editMode.edit();
 
             new AttributeFilter("Activity Type").removeFilter();
@@ -58,7 +58,7 @@ describe.skip("Dashboard Drag and Drop", { tags: ["pre-merge_isolated_bear"] }, 
         };
 
         it("(SEPARATE) Insight order after saving", () => {
-            Navigation.visit("dashboard/multiple-insights");
+            visit("dashboard/multiple-insights");
             dashboardMenu.toggle();
             dashboardHeader.saveAsNew("Clone");
             editMode.edit();
@@ -76,7 +76,7 @@ describe.skip("Dashboard Drag and Drop", { tags: ["pre-merge_isolated_bear"] }, 
         });
 
         it("Moving insight to first position", () => {
-            Navigation.visit("dashboard/multiple-insights");
+            visit("dashboard/multiple-insights");
             editMode.edit();
 
             widgetsAreLoaded();
@@ -88,7 +88,7 @@ describe.skip("Dashboard Drag and Drop", { tags: ["pre-merge_isolated_bear"] }, 
         });
 
         it("Moving insight to last position", () => {
-            Navigation.visit("dashboard/multiple-insights");
+            visit("dashboard/multiple-insights");
             editMode.edit();
 
             widgetsAreLoaded();
@@ -100,7 +100,7 @@ describe.skip("Dashboard Drag and Drop", { tags: ["pre-merge_isolated_bear"] }, 
         });
 
         it("Moving insight to middle position", () => {
-            Navigation.visit("dashboard/multiple-insights");
+            visit("dashboard/multiple-insights");
             editMode.edit();
 
             widgetsAreLoaded();

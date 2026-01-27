@@ -1,4 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { VisualizationTypes } from "@gooddata/sdk-ui";
@@ -8,7 +9,15 @@ import {
     type IUnsafeDataLabels,
     type UnsafeInternals,
 } from "../../../../typings/unsafe.js";
-import * as autohideColumnLabels from "../autohideColumnLabels.js";
+import {
+    areLabelsOverlappingColumns,
+    areNeighborsOverlapping,
+    getLabelOrDataLabelForPoints,
+    getStackItems,
+    getStackLabelPointsForDualAxis,
+    getStackTotalGroups,
+    isOverlappingWidth,
+} from "../autohideColumnLabels.js";
 
 describe("getStackLabelPointsForDualAxis", () => {
     it("should return points for column0 and column", () => {
@@ -16,7 +25,7 @@ describe("getStackLabelPointsForDualAxis", () => {
             { column0: { 0: { x: 0, total: 678 }, 1: { x: 1, total: 958 } } },
             { column: { 0: { x: 0, total: 907 }, 1: { x: 1, total: 525 } } },
         ];
-        const points = autohideColumnLabels.getStackLabelPointsForDualAxis(stacks);
+        const points = getStackLabelPointsForDualAxis(stacks);
 
         expect(points).toEqual([
             stacks[0].column0[0],
@@ -31,7 +40,7 @@ describe("getStackLabelPointsForDualAxis", () => {
             { column0: { 0: { x: 0, total: 678 }, 1: { x: 1, total: 958 } } },
             { column1: { 0: { x: 0, total: 907 }, 1: { x: 1, total: 525 } } },
         ];
-        const points = autohideColumnLabels.getStackLabelPointsForDualAxis(stacks);
+        const points = getStackLabelPointsForDualAxis(stacks);
 
         expect(points).toEqual([
             stacks[0].column0[0],
@@ -62,9 +71,7 @@ describe("isOverlappingWidth", () => {
                 },
             },
         ];
-        expect(
-            autohideColumnLabels.isOverlappingWidth(visiblePointsWithShape as any as Highcharts.Point[]),
-        ).toEqual(true);
+        expect(isOverlappingWidth(visiblePointsWithShape as any as Highcharts.Point[])).toEqual(true);
     });
 
     it("should return false when point has datalabel width less than shape width", () => {
@@ -76,11 +83,11 @@ describe("isOverlappingWidth", () => {
                 },
             },
         ] as any;
-        expect(autohideColumnLabels.isOverlappingWidth(visiblePointsWithShape)).toEqual(false);
+        expect(isOverlappingWidth(visiblePointsWithShape)).toEqual(false);
     });
 
     it("should return false when shapeArgs is undefined", () => {
-        expect(autohideColumnLabels.isOverlappingWidth(visiblePointsWithoutShape)).toEqual(false);
+        expect(isOverlappingWidth(visiblePointsWithoutShape)).toEqual(false);
     });
 });
 
@@ -125,7 +132,7 @@ describe("getLabelOrDataLabelForPoints", () => {
     ])(
         "should return label/dataLabel of data points",
         (visiblePoints: any[], expected: IUnsafeDataLabels[]) => {
-            const labels = autohideColumnLabels.getLabelOrDataLabelForPoints(visiblePoints as any);
+            const labels = getLabelOrDataLabelForPoints(visiblePoints as any);
             expect(labels).toEqual(expected);
         },
     );
@@ -151,7 +158,7 @@ describe("getStackTotalGroups", () => {
                 },
             },
         ] as any;
-        const stackLabels = autohideColumnLabels.getStackTotalGroups(yAxis);
+        const stackLabels = getStackTotalGroups(yAxis);
 
         expect(stackLabels).toEqual([stackTotalGroup]);
     });
@@ -170,7 +177,7 @@ describe("getStackTotalGroups", () => {
                 series: [{ dataLabelsGroup }],
             },
         ] as any;
-        const stackLabels = autohideColumnLabels.getStackTotalGroups(yAxis);
+        const stackLabels = getStackTotalGroups(yAxis);
 
         expect(stackLabels).toEqual([dataLabelsGroup]);
     });
@@ -190,7 +197,7 @@ describe("getStackItems", () => {
                 },
             },
         ] as any[];
-        const stackItems = autohideColumnLabels.getStackItems(yAxis);
+        const stackItems = getStackItems(yAxis);
 
         expect(stackItems).toEqual([(yAxis[0] as UnsafeInternals).stacking.stacks]);
     });
@@ -208,7 +215,7 @@ describe("getStackItems", () => {
                 series: [{ data, type: VisualizationTypes.COLUMN }],
             },
         ] as any;
-        const stackItems = autohideColumnLabels.getStackItems(yAxis);
+        const stackItems = getStackItems(yAxis);
 
         expect(stackItems).toEqual([
             {
@@ -244,8 +251,8 @@ describe("areNeighborsOverlapping", () => {
         [true, overlaplabels],
         [false, withoutOverlapLabel],
     ])("should return overlap is %s", (isOverlap: boolean, labels: IUnsafeDataLabels[][]) => {
-        const areNeighborsOverlapping = autohideColumnLabels.areNeighborsOverlapping(labels);
-        expect(areNeighborsOverlapping).toEqual(isOverlap);
+        const result = areNeighborsOverlapping(labels);
+        expect(result).toEqual(isOverlap);
     });
 });
 
@@ -302,7 +309,7 @@ describe("areLabelsOverlappingColumns", () => {
     ])(
         "should return overlap is %s",
         (isOverlap: boolean, labels: Highcharts.Point[], points: Highcharts.Point[]) => {
-            const areOverlappingColumns = autohideColumnLabels.areLabelsOverlappingColumns(labels, points);
+            const areOverlappingColumns = areLabelsOverlappingColumns(labels, points);
             expect(areOverlappingColumns).toEqual(isOverlap);
         },
     );

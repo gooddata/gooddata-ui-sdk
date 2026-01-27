@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { AttributeFilterButtonParentChild } from "../../tools/attributeFilterButtonParentChild";
 import { DashboardHeader } from "../../tools/dashboardHeader";
@@ -7,7 +7,7 @@ import { EditMode } from "../../tools/editMode";
 import { DropZone } from "../../tools/enum/DropZone";
 import { AttributeFilter, FilterBar } from "../../tools/filterBar";
 import { Headline } from "../../tools/headline";
-import * as Navigation from "../../tools/navigation";
+import { visit } from "../../tools/navigation";
 import { Widget } from "../../tools/widget";
 import { WidgetConfiguration } from "../../tools/widgetConfiguration";
 
@@ -24,7 +24,7 @@ const widget = new Widget(0);
 // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
 describe.skip("Dashboard Filtering", { tags: ["pre-merge_isolated_bear"] }, () => {
     it.skip("AttributeFilterButton on dashboard (SEPARATE)", () => {
-        Navigation.visit("dashboard/filtering");
+        visit("dashboard/filtering");
         const parentAttributeFilters = new AttributeFilterButtonParentChild(
             PARENT_FILTER_SELECTOR,
             CHILD_FILTER_SELECTOR,
@@ -54,7 +54,7 @@ describe.skip("Dashboard Filtering", { tags: ["pre-merge_isolated_bear"] }, () =
     });
 
     it.skip("Headline value changes after filters change (SEPARATE)", () => {
-        Navigation.visit("dashboard/filtering");
+        visit("dashboard/filtering");
         const parentAttributeFilters = new AttributeFilterButtonParentChild(
             PARENT_FILTER_SELECTOR,
             CHILD_FILTER_SELECTOR,
@@ -86,7 +86,7 @@ describe.skip("Dashboard Filtering", { tags: ["pre-merge_isolated_bear"] }, () =
     });
 
     it("(SEPARATE) Delete attribute filter", () => {
-        Navigation.visit("dashboard/attribute-filtering");
+        visit("dashboard/attribute-filtering");
         dashboardMenu.toggle();
         dashboardHeader.saveAsNew("Clone");
         editMode.edit();
@@ -100,7 +100,7 @@ describe.skip("Dashboard Filtering", { tags: ["pre-merge_isolated_bear"] }, () =
     });
 
     it("(SEPARATE) Update values on edit mode after making change on view mode", () => {
-        Navigation.visit("dashboard/attribute-filtering");
+        visit("dashboard/attribute-filtering");
         dashboardMenu.toggle();
         dashboardHeader.saveAsNew("Clone");
         filterBar.getAttributeSubTitleViewMode().eq(0).should("have.text", "Email");
@@ -116,7 +116,7 @@ describe.skip("Dashboard Filtering", { tags: ["pre-merge_isolated_bear"] }, () =
     });
 
     it("Discard changes when editing filter", () => {
-        Navigation.visit("dashboard/attribute-filtering");
+        visit("dashboard/attribute-filtering");
         editMode.edit();
         filterBar.getAttributeSubTitleViewMode().eq(0).should("have.text", "Email");
 
@@ -127,7 +127,7 @@ describe.skip("Dashboard Filtering", { tags: ["pre-merge_isolated_bear"] }, () =
     });
 
     it("Check attribute filter change value", () => {
-        Navigation.visit("dashboard/attribute-filtering");
+        visit("dashboard/attribute-filtering");
         editMode.edit();
         activityTypeFilter.open().selectAttribute(["Email", "In Person Meeting", "Phone Call"]);
 
@@ -135,7 +135,7 @@ describe.skip("Dashboard Filtering", { tags: ["pre-merge_isolated_bear"] }, () =
     });
 
     it("Delete attribute filter discarded", () => {
-        Navigation.visit("dashboard/attribute-filtering");
+        visit("dashboard/attribute-filtering");
         editMode.edit();
 
         new AttributeFilter("Activity Type").removeFilter();
@@ -145,39 +145,39 @@ describe.skip("Dashboard Filtering", { tags: ["pre-merge_isolated_bear"] }, () =
     });
 
     it("Expand and collapse filter", () => {
-        Navigation.visit("dashboard/attribute-filtering");
+        visit("dashboard/attribute-filtering");
         editMode.edit();
         activityTypeFilter.open().close();
     });
 
     it("Search non existence attribute", () => {
-        Navigation.visit("dashboard/attribute-filtering");
+        visit("dashboard/attribute-filtering");
         editMode.edit();
         filterBar.dragAttributeToFilterBar().searchAttributeName("No_exist").hasMatchingAttributeName(false);
     });
 
     it("Search on list of attributes", () => {
-        Navigation.visit("dashboard/attribute-filtering");
+        visit("dashboard/attribute-filtering");
         editMode.edit();
         filterBar.dragAttributeToFilterBar().searchAttributeName("Stage Name").hasMatchingAttributeName(true);
     });
 
     it("Verify attribute filter apply button is not disabled", () => {
-        Navigation.visit("dashboard/attribute-filtering");
+        visit("dashboard/attribute-filtering");
         editMode.edit();
 
         activityTypeFilter.open().selectAllValues().isApplyButtonEnabled(true);
     });
 
     it("Verify clear button is applied", () => {
-        Navigation.visit("dashboard/attribute-filtering");
+        visit("dashboard/attribute-filtering");
         editMode.edit();
 
         activityTypeFilter.open().clearAllValues().search("Email").isValueSelected("Email", false);
     });
 
     it("(SEPARATE) Verify selected values should be preserved", () => {
-        Navigation.visit("dashboard/attribute-filtering");
+        visit("dashboard/attribute-filtering");
         dashboardMenu.toggle();
         dashboardHeader.saveAsNew("Clone");
         editMode.edit();
@@ -202,7 +202,7 @@ describe.skip("Dashboard Filtering", { tags: ["pre-merge_isolated_bear"] }, () =
     });
 
     it("Test making no affect on widgets when using unconnected filter", () => {
-        Navigation.visit("dashboard/stage-name");
+        visit("dashboard/stage-name");
         editMode.edit();
 
         widget.waitTableLoaded();
@@ -216,7 +216,7 @@ describe.skip("Dashboard Filtering", { tags: ["pre-merge_isolated_bear"] }, () =
     });
 
     it("(SEPARATE) Apply multiple filters on insight", () => {
-        Navigation.visit("dashboard/stage-name");
+        visit("dashboard/stage-name");
         dashboardMenu.toggle();
         dashboardHeader.saveAsNew("Clone");
         editMode.edit();
@@ -232,7 +232,7 @@ describe.skip("Dashboard Filtering", { tags: ["pre-merge_isolated_bear"] }, () =
     });
 
     it("Test adding ignored checkboxes on configuration panel", () => {
-        Navigation.visit("dashboard/stage-name");
+        visit("dashboard/stage-name");
         editMode.edit();
 
         filterBar.addAttribute("Region").selectAttributeWithoutSearch("East Coast");
@@ -248,7 +248,7 @@ describe.skip("Dashboard Filtering", { tags: ["pre-merge_isolated_bear"] }, () =
     });
 
     it("Check attribute filter default state", () => {
-        Navigation.visit("dashboard/stage-name");
+        visit("dashboard/stage-name");
         editMode.edit();
 
         filterBar.addAttribute("Region");
@@ -256,7 +256,7 @@ describe.skip("Dashboard Filtering", { tags: ["pre-merge_isolated_bear"] }, () =
     });
 
     it("Change position attribute filter", () => {
-        Navigation.visit("dashboard/stage-name");
+        visit("dashboard/stage-name");
         editMode.edit();
 
         filterBar.addAttribute("Region").close();

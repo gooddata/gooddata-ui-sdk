@@ -1,11 +1,11 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type MouseEvent } from "react";
 
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { ShortenedText } from "../ShortenedText/ShortenedText.js";
 
@@ -44,7 +44,7 @@ export function DateDatasetsListItem({
         "gd-list-item",
         "gd-list-item-shortened",
         `s-${id}`,
-        `s-${stringUtils.simplifyText(title ?? "")}`,
+        `s-${simplifyText(title ?? "")}`,
         {
             "is-selected": isSelected,
             "is-unrelated": isUnrelated,

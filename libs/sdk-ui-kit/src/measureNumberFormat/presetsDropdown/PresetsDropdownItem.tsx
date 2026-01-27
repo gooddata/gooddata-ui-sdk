@@ -1,11 +1,11 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type MouseEvent, memo, useCallback, useMemo } from "react";
 
 import cx from "classnames";
 
 import { type ISeparators } from "@gooddata/sdk-ui";
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { FormattedPreview } from "../customFormatDialog/shared/FormattedPreview.js";
 import { type IFormatPreset } from "../typings.js";
@@ -31,7 +31,7 @@ export const PresetsDropdownItem = memo(function PresetsDropdownItem({
                 "gd-list-item",
                 "gd-format-preset",
                 `s-format-preset-${localIdentifier}`,
-                `s-format-preset-name-${stringUtils.simplifyText(name)}`,
+                `s-format-preset-name-${simplifyText(name)}`,
                 {
                     "is-selected": isSelected,
                 },

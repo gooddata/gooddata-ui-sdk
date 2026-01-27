@@ -3,7 +3,7 @@
 import open from "open";
 import ora from "ora";
 
-import { type ITigerClient, type JsonApiWorkspaceOutList, jsonApiHeaders } from "@gooddata/api-client-tiger";
+import { type ITigerClient, type JsonApiWorkspaceOutList } from "@gooddata/api-client-tiger";
 import { EntitiesApi_GetAllEntitiesWorkspaces } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import { ProfileApi_GetCurrent } from "@gooddata/api-client-tiger/endpoints/profile";
 
@@ -115,15 +115,10 @@ async function getTigerClient(config: CatalogExportConfig): Promise<ITigerClient
 }
 
 async function loadWorkspaces(client: ITigerClient): Promise<JsonApiWorkspaceOutList> {
-    const response = await EntitiesApi_GetAllEntitiesWorkspaces(
-        client.axios,
-        "",
-        {
-            page: 0,
-            size: 500,
-        },
-        { headers: jsonApiHeaders },
-    );
+    const response = await EntitiesApi_GetAllEntitiesWorkspaces(client.axios, "", {
+        page: 0,
+        size: 500,
+    });
 
     return response.data;
 }

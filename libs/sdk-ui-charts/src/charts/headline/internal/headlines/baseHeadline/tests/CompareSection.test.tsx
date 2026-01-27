@@ -1,11 +1,11 @@
 // (C) 2023-2026 GoodData Corporation
 
 import { render } from "@testing-library/react";
-import { type MockInstance, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { withIntl } from "@gooddata/sdk-ui";
 
-import { mockUseBaseHeadline } from "./BaseHeadline.test.helpers.js";
+import { createMockUseBaseHeadline } from "./BaseHeadline.test.helpers.js";
 import { type IBaseHeadlineItem } from "../../../interfaces/BaseHeadlines.js";
 import { type IHeadlineDataItem } from "../../../interfaces/Headlines.js";
 import {
@@ -13,10 +13,26 @@ import {
     TEST_BASE_HEADLINE_ITEM,
 } from "../../../tests/TestData.fixtures.js";
 import { CompareSection } from "../CompareSection.js";
-import * as CompareSectionItem from "../CompareSectionItem.js";
+import { CompareSectionItem } from "../CompareSectionItem.js";
+
+const useBaseHeadlineMock = vi.hoisted(() => vi.fn());
+
+vi.mock("../BaseHeadlineContext.js", () => ({
+    useBaseHeadline: useBaseHeadlineMock,
+}));
+
+vi.mock("../CompareSectionItem.js", async (importOriginal) => {
+    const original = await importOriginal();
+    return {
+        ...(original as object),
+        CompareSectionItem: vi.fn((original as { CompareSectionItem: () => void }).CompareSectionItem),
+    };
+});
+
+const mockUseBaseHeadline = createMockUseBaseHeadline(useBaseHeadlineMock);
 
 describe("CompareSection", () => {
-    let MockCompareItem: MockInstance;
+    const MockCompareItem = vi.mocked(CompareSectionItem);
     const secondaryItem: IBaseHeadlineItem<IHeadlineDataItem> = TEST_BASE_HEADLINE_ITEM;
     const tertiaryItem: IBaseHeadlineItem<IHeadlineDataItem> = {
         ...TEST_BASE_HEADLINE_ITEM,
@@ -37,7 +53,6 @@ describe("CompareSection", () => {
 
     beforeEach(() => {
         vi.clearAllMocks();
-        MockCompareItem = vi.spyOn(CompareSectionItem, "CompareSectionItem");
         mockUseBaseHeadline();
     });
 

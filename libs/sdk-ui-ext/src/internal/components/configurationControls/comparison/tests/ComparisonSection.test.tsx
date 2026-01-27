@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { fireEvent, render } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -9,9 +9,18 @@ import { type IComparisonControlProperties } from "../../../../interfaces/Contro
 import { type IVisualizationProperties } from "../../../../interfaces/Visualization.js";
 import { TEST_DEFAULT_SEPARATOR, createTestProperties } from "../../../../tests/testDataProvider.js";
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider.js";
-import * as ConfigSection from "../../ConfigSection.js";
+import { ConfigSection } from "../../ConfigSection.js";
 import { ComparisonSection } from "../ComparisonSection.js";
 import { COMPARISON_ENABLED_VALUE_PATH } from "../ComparisonValuePath.js";
+
+vi.mock("../../ConfigSection.js", async (importOriginal) => {
+    // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+    const actual = await importOriginal<typeof import("../../ConfigSection.js")>();
+    return {
+        ...actual,
+        ConfigSection: vi.fn(actual.ConfigSection),
+    };
+});
 
 const COMPARISON_TOGGLE_SELECTOR = ".s-config-section-comparison_section input";
 
@@ -20,7 +29,7 @@ describe("ComparisonSection", () => {
     const DEFAULT_DISABLED_BY_VISUALIZATION: boolean = false;
     const pushData = vi.fn();
 
-    const mockConfigSection = () => vi.spyOn(ConfigSection, "ConfigSection");
+    const mockConfigSection = () => vi.mocked(ConfigSection);
 
     const renderComparisonSection = (params?: {
         controlDisabled?: boolean;

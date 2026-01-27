@@ -211,7 +211,15 @@ export interface IMeasureValueFilter {
      * Used when the measure is NOT in the buckets (dragged from catalog to filter bar).
      */
     measureRef?: ObjRef;
+    /**
+     * Legacy single condition property.
+     * @deprecated use conditions instead
+     */
     condition?: IMeasureValueFilterCondition;
+    /**
+     * Array of conditions for measure value filtering.
+     */
+    conditions?: IMeasureValueFilterCondition[];
     /**
      * Attributes defining dimensionality for the filter.
      * Can be local identifiers (strings) for attributes in buckets,

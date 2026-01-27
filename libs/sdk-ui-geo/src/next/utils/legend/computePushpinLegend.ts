@@ -137,6 +137,7 @@ export interface IComputePushpinLegendParams {
     legendItems: IGeoLegendItem[];
     availableLegends: IAvailableLegends;
     numericSymbols?: string[];
+    colorScaleBaseColor?: string;
 }
 
 /**
@@ -154,7 +155,15 @@ export interface IComputePushpinLegendParams {
  * @alpha
  */
 export function computePushpinLegend(params: IComputePushpinLegendParams): ILegendSection | null {
-    const { layerId, layerName, geoData, legendItems, availableLegends, numericSymbols } = params;
+    const {
+        layerId,
+        layerName,
+        geoData,
+        legendItems,
+        availableLegends,
+        numericSymbols,
+        colorScaleBaseColor,
+    } = params;
 
     const groups: ILegendGroup[] = [];
 
@@ -173,7 +182,12 @@ export function computePushpinLegend(params: IComputePushpinLegendParams): ILege
     // Add numeric color scale group if available (Metric - Color, color measure without segment)
     // Order: Size -> Metric-Color -> Segment By
     if (availableLegends.hasColorLegend && geoData.color) {
-        const colorScale = computeColorScale(geoData.color.data, geoData.color.format, numericSymbols);
+        const colorScale = computeColorScale(
+            geoData.color.data,
+            geoData.color.format,
+            numericSymbols,
+            colorScaleBaseColor,
+        );
         if (colorScale) {
             groups.push({
                 kind: "colorScale",

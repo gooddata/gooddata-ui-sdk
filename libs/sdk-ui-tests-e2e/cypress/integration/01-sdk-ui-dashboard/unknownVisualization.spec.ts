@@ -1,12 +1,12 @@
 // (C) 2021-2026 GoodData Corporation
 
-import * as Navigation from "../../tools/navigation";
+import { visit } from "../../tools/navigation";
 import { Widget } from "../../tools/widget";
 
 describe("Dashboard with unknown visualization class", { tags: ["pre-merge_isolated_tiger_fe"] }, () => {
     describe("Basic case", () => {
         beforeEach(() => {
-            Navigation.visit("dashboard/dashboard-tiger-unknown-visualization");
+            visit("dashboard/dashboard-tiger-unknown-visualization");
         });
 
         it("should render dashboard even if it contains unknown visualization class", () => {

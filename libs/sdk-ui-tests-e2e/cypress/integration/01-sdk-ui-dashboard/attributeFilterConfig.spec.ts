@@ -1,10 +1,10 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { AttributeFilterButton } from "../../tools/attributeFilterButton";
 import { AttributeFilterButtonParentChild } from "../../tools/attributeFilterButtonParentChild";
 import { AttributeFilterConfiguration } from "../../tools/attributeFilterConfig";
 import { EditMode } from "../../tools/editMode";
-import * as Navigation from "../../tools/navigation";
+import { visit } from "../../tools/navigation";
 
 const ACCOUNT_FILTER_SELECTOR = ".s-attribute-filter.s-account";
 const SALES_REP_FILTER_SELECTOR = ".s-attribute-filter.s-sales_rep";
@@ -19,7 +19,7 @@ describe("Attribute filter", () => {
     // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
     describe.skip("Attribute filter Configuration", { tags: ["pre-merge_isolated_bear"] }, () => {
         beforeEach(() => {
-            Navigation.visit("filters/attribute-filter-config");
+            visit("filters/attribute-filter-config");
         });
 
         it("Change parent filtering configuration", () => {
@@ -91,7 +91,7 @@ describe("Attribute filter", () => {
                 ],
             },
             () => {
-                Navigation.visit("dashboard/stage-name");
+                visit("dashboard/stage-name");
 
                 new EditMode().edit();
 

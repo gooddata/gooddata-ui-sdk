@@ -16,7 +16,7 @@ import {
     objRefToString,
     sortDirection,
 } from "@gooddata/sdk-model";
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { Bubble } from "../../Bubble/Bubble.js";
 import { BubbleHoverTrigger } from "../../Bubble/BubbleHoverTrigger.js";
@@ -212,7 +212,7 @@ export function MeasureDropdown({
                                         {
                                             "is-selected": isSelected,
                                         },
-                                        `s-sorting-measure-${stringUtils.simplifyText(item.title)}`,
+                                        `s-sorting-measure-${simplifyText(item.title)}`,
                                         `s-sorting-measure-${rowIndex}`,
                                     );
 

@@ -195,7 +195,7 @@ vi.mock("highcharts/modules/sankey.js", () => ({}));
 vi.mock("highcharts/modules/dependency-wheel.js", () => ({}));
 
 // Now import the mocked modules
-import * as chartModule from "../Chart.js";
+import { Chart } from "../Chart.js";
 import { FLUID_LEGEND_THRESHOLD, HighChartsRenderer } from "../HighChartsRenderer.js";
 
 // Helper function to create component
@@ -257,7 +257,7 @@ describe("HighChartsRenderer", () => {
     });
 
     it("should have Chart component mocked", () => {
-        expect(chartModule.Chart).toBeDefined();
+        expect(Chart).toBeDefined();
     });
 
     it("should render without crashing", () => {

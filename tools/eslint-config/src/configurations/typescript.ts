@@ -103,6 +103,11 @@ export const typescript: IConfiguration = {
                         selector: "ExportAllDeclaration",
                         message: "Usage of `export * from` is forbidden.",
                     },
+                    {
+                        selector:
+                            "ImportDeclaration[source.value=/^(?!.*reference_workspace)\\./] ImportNamespaceSpecifier",
+                        message: "Do not use `import * as ...` from relative paths.",
+                    },
                 ],
                 "@typescript-eslint/consistent-type-imports": [
                     "error",

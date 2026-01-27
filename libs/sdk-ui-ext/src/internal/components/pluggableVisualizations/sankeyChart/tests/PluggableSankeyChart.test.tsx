@@ -1,12 +1,20 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 import { type IBucketOfFun, type IVisConstruct } from "../../../../interfaces/Visualization.js";
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
-import * as testMocks from "../../../../tests/mocks/testMocks.js";
+import {
+    dateAttributeOnStackBucketReferencePoint,
+    emptyReferencePoint,
+    firstMeasureArithmeticAlongWithAttributeReferencePoint,
+    masterMeasureItems,
+    metricAndAttributeFromAndTo,
+    mixOfMeasuresWithDerivedAndArithmeticFromDerivedHeatMapReferencePoint,
+    multipleMetricsAndCategoriesReferencePoint,
+} from "../../../../tests/mocks/referencePointMocks.js";
+import { insightWithSingleMeasure } from "../../../../tests/mocks/testMocks.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../../utils/translations.js";
 import { getLastRenderEl } from "../../tests/pluggableVisualizations.test.helpers.js";
 import { PluggableSankeyChart } from "../PluggableSankeyChart.js";
@@ -48,9 +56,7 @@ describe("PluggableSankeyChart", () => {
 
     it("should return reference point with one metric, attributeFrom, attributeTo and valid filters", async () => {
         const sankey = createComponent();
-        const extendedReferencePoint = await sankey.getExtendedReferencePoint(
-            referencePointMocks.metricAndAttributeFromAndTo,
-        );
+        const extendedReferencePoint = await sankey.getExtendedReferencePoint(metricAndAttributeFromAndTo);
 
         expect(extendedReferencePoint).toMatchSnapshot();
     });
@@ -58,7 +64,7 @@ describe("PluggableSankeyChart", () => {
     it("should reuse one measure and order attribute types", async () => {
         const sankey = createComponent();
         const extendedReferencePoint = await sankey.getExtendedReferencePoint(
-            referencePointMocks.multipleMetricsAndCategoriesReferencePoint,
+            multipleMetricsAndCategoriesReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -67,7 +73,7 @@ describe("PluggableSankeyChart", () => {
     it("sankey should allow date attribute in attribute (from/to)", async () => {
         const sankey = createComponent();
         const extendedReferencePoint = await sankey.getExtendedReferencePoint(
-            referencePointMocks.dateAttributeOnStackBucketReferencePoint,
+            dateAttributeOnStackBucketReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -76,8 +82,7 @@ describe("PluggableSankeyChart", () => {
     describe("Arithmetic measures", () => {
         it("should skip measures that cannot be placed together with their operands", async () => {
             const sankey = createComponent();
-            const originalRefPoint =
-                referencePointMocks.firstMeasureArithmeticAlongWithAttributeReferencePoint;
+            const originalRefPoint = firstMeasureArithmeticAlongWithAttributeReferencePoint;
 
             const extendedReferencePoint = await sankey.getExtendedReferencePoint(originalRefPoint);
 
@@ -103,9 +108,7 @@ describe("PluggableSankeyChart", () => {
         it("should return reference point containing uiConfig with no supported comparison types", async () => {
             const component = createComponent();
 
-            const extendedReferencePoint = await component.getExtendedReferencePoint(
-                referencePointMocks.emptyReferencePoint,
-            );
+            const extendedReferencePoint = await component.getExtendedReferencePoint(emptyReferencePoint);
 
             expect(extendedReferencePoint.uiConfig!.supportedOverTimeComparisonTypes).toEqual([]);
         });
@@ -114,12 +117,12 @@ describe("PluggableSankeyChart", () => {
             const component = createComponent();
 
             const extendedReferencePoint = await component.getExtendedReferencePoint(
-                referencePointMocks.mixOfMeasuresWithDerivedAndArithmeticFromDerivedHeatMapReferencePoint,
+                mixOfMeasuresWithDerivedAndArithmeticFromDerivedHeatMapReferencePoint,
             );
             expect(extendedReferencePoint.buckets).toEqual([
                 {
                     localIdentifier: "measures",
-                    items: [referencePointMocks.masterMeasureItems[0]],
+                    items: [masterMeasureItems[0]],
                 },
                 {
                     localIdentifier: "attribute_from",
@@ -137,7 +140,7 @@ describe("PluggableSankeyChart", () => {
         it("should mount on the element defined by the callback", () => {
             const visualization = createComponent();
 
-            visualization.update({ messages }, testMocks.insightWithSingleMeasure, {}, executionFactory);
+            visualization.update({ messages }, insightWithSingleMeasure, {}, executionFactory);
 
             // 1st call for rendering element
             // 2nd call for rendering config panel

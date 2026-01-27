@@ -9,7 +9,7 @@ import { type IDashboard, type IDashboardWidget, type ObjRef, isDashboard } from
 import { useBackendStrict, useClientWorkspaceIdentifiers, usePrevious, useWorkspace } from "@gooddata/sdk-ui";
 import { enrichMapboxToken, useMapboxToken } from "@gooddata/sdk-ui-geo";
 import { enrichAgGridToken, useAgGridToken } from "@gooddata/sdk-ui-pivot/next";
-import { objectUtils } from "@gooddata/util";
+import { shallowEqualObjects } from "@gooddata/util";
 
 import { type IDashboardStoreProviderProps } from "./types.js";
 import { newRenderingWorker } from "../commandHandlers/render/renderingWorker.js";
@@ -115,7 +115,7 @@ export const useInitializeDashboardStore = (
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
-        if (!objectUtils.shallowEqualObjects(previousInitProps, currentInitProps) || !dashboardStore) {
+        if (!shallowEqualObjects(previousInitProps, currentInitProps) || !dashboardStore) {
             if (dashboardStore) {
                 // Trigger the deinitialize event, we are going to initialize a whole ne store right away
                 // Use the previousInitProps: we want to notify the dashboard being discarded, not the new one.

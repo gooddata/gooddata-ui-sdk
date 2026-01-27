@@ -1,7 +1,7 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { AttributeFilterParentChild } from "../../tools/attributeFilterParentChild";
-import * as Navigation from "../../tools/navigation";
+import { visit } from "../../tools/navigation";
 
 const PARENT_FILTER_SELECTOR = "button.s-product";
 const CHILD_FILTER_SELECTOR = "button.s-department";
@@ -9,7 +9,7 @@ const CHILD_FILTER_SELECTOR = "button.s-department";
 // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
 describe.skip("Parent-child filtering on AttributeFilter", { tags: ["post-merge_integrated_bear"] }, () => {
     beforeEach(() => {
-        Navigation.visit("filters/attribute-filter-parent-child-example");
+        visit("filters/attribute-filter-parent-child-example");
     });
 
     it("check right resetting of children filters", () => {

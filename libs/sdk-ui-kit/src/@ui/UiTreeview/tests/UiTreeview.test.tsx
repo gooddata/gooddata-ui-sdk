@@ -1,10 +1,16 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 import { b, e } from "../treeviewBem.js";
-import type * as types from "../types.js";
+import {
+    type IUiLeveledTreeViewProps,
+    type IUiStaticTreeViewProps,
+    type UiLeveledTreeView,
+    type UiStaticTreeView,
+    type UiTreeViewAriaAttributes,
+} from "../types.js";
 import { UiLeveledTreeview, UiStaticTreeview } from "../UiTreeview.js";
 
 type StaticItem = { id: string; value: string };
@@ -25,7 +31,7 @@ type Level2Item = { level: 2; type: "dashboard" | "insight" | "metric"; id: stri
 // stringTitle: "File A5" //disabled
 // stringTitle: "File B5"
 
-const treeStatic: types.UiStaticTreeView<StaticItem>[] = [
+const treeStatic: UiStaticTreeView<StaticItem>[] = [
     {
         item: {
             id: "parent-a",
@@ -135,7 +141,7 @@ const treeStatic: types.UiStaticTreeView<StaticItem>[] = [
         },
     },
 ];
-const treeStatic1: types.UiStaticTreeView<StaticItem>[] = [
+const treeStatic1: UiStaticTreeView<StaticItem>[] = [
     {
         item: {
             id: "parent-a",
@@ -239,7 +245,7 @@ const treeStatic1: types.UiStaticTreeView<StaticItem>[] = [
 // stringTitle: "File A2"
 // stringTitle: "File B2"
 
-const treeLeveled: types.UiLeveledTreeView<[Level1Item, Level2Item]>[] = [
+const treeLeveled: UiLeveledTreeView<[Level1Item, Level2Item]>[] = [
     {
         item: {
             id: "parent-a",
@@ -331,14 +337,14 @@ const treeLeveled: types.UiLeveledTreeView<[Level1Item, Level2Item]>[] = [
 ];
 
 describe("UiTreeview", () => {
-    const defaultAriaAttributes: types.UiTreeViewAriaAttributes = {
+    const defaultAriaAttributes: UiTreeViewAriaAttributes = {
         id: "test-treeview",
         "aria-label": "test-treeview-label",
         "aria-labelledby": "test-treeview-labelledby",
     };
 
     const renderStaticTreeView = (
-        props: Omit<types.IUiStaticTreeViewProps<StaticItem>, "ariaAttributes" | "items"> = {},
+        props: Omit<IUiStaticTreeViewProps<StaticItem>, "ariaAttributes" | "items"> = {},
     ) => {
         return render(
             <UiStaticTreeview
@@ -352,7 +358,7 @@ describe("UiTreeview", () => {
     };
 
     const renderStaticTreeView1 = (
-        props: Omit<types.IUiStaticTreeViewProps<StaticItem>, "ariaAttributes" | "items"> = {},
+        props: Omit<IUiStaticTreeViewProps<StaticItem>, "ariaAttributes" | "items"> = {},
     ) => {
         return render(
             <UiStaticTreeview
@@ -366,7 +372,7 @@ describe("UiTreeview", () => {
     };
 
     const renderLeveledTreeView = (
-        props: Omit<types.IUiLeveledTreeViewProps<[Level1Item, Level2Item]>, "ariaAttributes" | "items"> = {},
+        props: Omit<IUiLeveledTreeViewProps<[Level1Item, Level2Item]>, "ariaAttributes" | "items"> = {},
     ) => {
         return render(
             <UiLeveledTreeview
@@ -380,7 +386,7 @@ describe("UiTreeview", () => {
     };
 
     const renderEmptyTreeView = (
-        props: Omit<types.IUiLeveledTreeViewProps<[Level1Item, Level2Item]>, "ariaAttributes" | "items"> = {},
+        props: Omit<IUiLeveledTreeViewProps<[Level1Item, Level2Item]>, "ariaAttributes" | "items"> = {},
     ) => {
         return render(
             <UiLeveledTreeview

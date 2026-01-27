@@ -1,5 +1,3 @@
-// (C) 2025-2026 GoodData Corporation
-
 /* eslint-disable */
 /**
  * OpenAPI definition
@@ -770,8 +768,8 @@ export interface ClusteringResult {
     xCoord?: Array<number | null>;
     yCoord?: Array<number | null>;
     clusters: Array<number | null>;
-    ycoord: Array<number>;
     xcoord: Array<number>;
+    ycoord: Array<number>;
 }
 
 /**
@@ -2597,7 +2595,11 @@ export async function ActionsApiAxiosParamCreator_AiChat(
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -2653,7 +2655,11 @@ export async function ActionsApiAxiosParamCreator_AiChatHistory(
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -2709,7 +2715,11 @@ export async function ActionsApiAxiosParamCreator_AiChatStream(
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -2809,7 +2819,11 @@ export async function ActionsApiAxiosParamCreator_AiSearch(
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -2875,7 +2889,11 @@ export async function ActionsApiAxiosParamCreator_AnomalyDetection(
         localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
     }
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -2991,7 +3009,11 @@ export async function ActionsApiAxiosParamCreator_CancelExecutions(
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -3047,7 +3069,11 @@ export async function ActionsApiAxiosParamCreator_ChangeAnalysis(
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -3160,7 +3186,11 @@ export async function ActionsApiAxiosParamCreator_Clustering(
         localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
     }
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -3294,7 +3324,11 @@ export async function ActionsApiAxiosParamCreator_ComputeLabelElementsPost(
         localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
     }
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -3362,7 +3396,11 @@ export async function ActionsApiAxiosParamCreator_ComputeReport(
         localVarHeaderParameter["timestamp"] = String(timestamp);
     }
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -3419,7 +3457,11 @@ export async function ActionsApiAxiosParamCreator_ComputeValidDescendants(
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -3475,7 +3517,11 @@ export async function ActionsApiAxiosParamCreator_ComputeValidObjects(
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -3592,7 +3638,11 @@ export async function ActionsApiAxiosParamCreator_ExplainAFM(
         localVarQueryParameter["explainType"] = explainType;
     }
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -3657,7 +3707,11 @@ export async function ActionsApiAxiosParamCreator_Forecast(
         localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
     }
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -3870,7 +3924,11 @@ export async function ActionsApiAxiosParamCreator_KeyDriverAnalysis(
         localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
     }
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -4036,7 +4094,11 @@ export async function ActionsApiAxiosParamCreator_OutlierDetection(
         localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
     }
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -4397,7 +4459,11 @@ export async function ActionsApiAxiosParamCreator_ValidateLLMEndpoint(
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -4451,7 +4517,11 @@ export async function ActionsApiAxiosParamCreator_ValidateLLMEndpointById(
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -7415,7 +7485,11 @@ export async function ComputationApiAxiosParamCreator_CancelExecutions(
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -7471,7 +7545,11 @@ export async function ComputationApiAxiosParamCreator_ChangeAnalysis(
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -7593,7 +7671,11 @@ export async function ComputationApiAxiosParamCreator_ComputeLabelElementsPost(
         localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
     }
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -7661,7 +7743,11 @@ export async function ComputationApiAxiosParamCreator_ComputeReport(
         localVarHeaderParameter["timestamp"] = String(timestamp);
     }
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -7718,7 +7804,11 @@ export async function ComputationApiAxiosParamCreator_ComputeValidDescendants(
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -7774,7 +7864,11 @@ export async function ComputationApiAxiosParamCreator_ComputeValidObjects(
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -7847,7 +7941,11 @@ export async function ComputationApiAxiosParamCreator_ExplainAFM(
         localVarQueryParameter["explainType"] = explainType;
     }
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -7909,7 +8007,11 @@ export async function ComputationApiAxiosParamCreator_KeyDriverAnalysis(
         localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
     }
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -8031,7 +8133,11 @@ export async function ComputationApiAxiosParamCreator_OutlierDetection(
         localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
     }
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -9566,7 +9672,11 @@ export async function SmartFunctionsApiAxiosParamCreator_AiChat(
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -9622,7 +9732,11 @@ export async function SmartFunctionsApiAxiosParamCreator_AiChatHistory(
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -9678,7 +9792,11 @@ export async function SmartFunctionsApiAxiosParamCreator_AiChatStream(
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -9778,7 +9896,11 @@ export async function SmartFunctionsApiAxiosParamCreator_AiSearch(
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -9844,7 +9966,11 @@ export async function SmartFunctionsApiAxiosParamCreator_AnomalyDetection(
         localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
     }
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -9969,7 +10095,11 @@ export async function SmartFunctionsApiAxiosParamCreator_Clustering(
         localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
     }
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -10138,7 +10268,11 @@ export async function SmartFunctionsApiAxiosParamCreator_Forecast(
         localVarHeaderParameter["skip-cache"] = String(JSON.stringify(skipCache));
     }
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -10514,7 +10648,11 @@ export async function SmartFunctionsApiAxiosParamCreator_ValidateLLMEndpoint(
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -10568,7 +10706,11 @@ export async function SmartFunctionsApiAxiosParamCreator_ValidateLLMEndpointById
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};

@@ -1,11 +1,11 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { Dashboard } from "../../tools/dashboards";
 import { DateFilter, type RelativePreset } from "../../tools/dateFilter";
 import { DateFilterRelativeForm } from "../../tools/dateFilterRelativeForm";
 import { EditMode } from "../../tools/editMode";
 import { KPIMeasureDropdown, KpiConfiguration } from "../../tools/kpiConfiguration";
-import * as Navigation from "../../tools/navigation";
+import { visit } from "../../tools/navigation";
 import { Widget } from "../../tools/widget";
 
 const editMode = new EditMode();
@@ -15,7 +15,7 @@ const kpiConfiguration = new KpiConfiguration(0);
 const kpiMeasureDropdown = new KPIMeasureDropdown();
 
 beforeEach(() => {
-    Navigation.visit("dashboard/kpis");
+    visit("dashboard/kpis");
 });
 
 // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.

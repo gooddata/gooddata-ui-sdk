@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import cx from "classnames";
 
@@ -8,7 +8,7 @@ import {
     type ObjRef,
 } from "@gooddata/sdk-model";
 import { ShortenedText } from "@gooddata/sdk-ui-kit";
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 const getDisplayFormIcon = (type?: AttributeDisplayFormType) => {
     switch (type) {
@@ -47,7 +47,7 @@ export function AttributeDisplayFormDropDownItem({
         "gd-list-item",
         "attribute-display-form-name",
         "s-attribute-display-form-name",
-        `s-attribute-display-form-name-${stringUtils.simplifyText(title)}`,
+        `s-attribute-display-form-name-${simplifyText(title)}`,
         getDisplayFormIcon(displayForm.displayFormType as AttributeDisplayFormType),
         {
             "is-selected": selected,

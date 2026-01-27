@@ -8,7 +8,7 @@ import { invariant } from "ts-invariant";
 
 import { areObjRefsEqual } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { useDashboardSelector } from "../../../../../../model/react/DashboardStoreProvider.js";
 import { selectCatalogAttributes } from "../../../../../../model/store/catalog/catalogSelectors.js";
@@ -45,7 +45,7 @@ export function ParentFiltersDisabledItem({
 
     const itemClasses = cx(
         "gd-list-item attribute-filter-item s-attribute-filter-dropdown-configuration-item",
-        `s-${stringUtils.simplifyText(itemTitle)}`,
+        `s-${simplifyText(itemTitle)}`,
     );
 
     return (

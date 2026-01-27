@@ -1,38 +1,45 @@
 {
-    "id": "ef1ecf3f-6b57-4464-85a4-f54567b072d2",
-    "name": "api_v1_entities_workspaces_9c71fe9a4fc944d7b7886c4d05ce0cf3_facts",
+    "id": "8a2ad524-add6-4fe9-a9d7-6738409cf0fa",
+    "name": "api_v1_actions_workspaces_9c71fe9a4fc944d7b7886c4d05ce0cf3_execution_collectlabelelements",
     "request": {
-        "urlPath": "/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/facts",
-        "method": "GET",
+        "urlPath": "/api/v1/actions/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/execution/collectLabelElements",
+        "method": "POST",
         "headers": {
             "Accept": {
-                "equalTo": "application/vnd.gooddata.api+json"
+                "equalTo": "application/json, text/plain, */*"
             },
             "Content-Type": {
-                "equalTo": "application/vnd.gooddata.api+json",
+                "equalTo": "application/json",
                 "caseInsensitive": true
             }
         },
         "queryParameters": {
-            "size": {
-                "hasExactly": [
-                    {
-                        "equalTo": "250"
-                    }
-                ]
-            },
-            "page": {
+            "offset": {
                 "hasExactly": [
                     {
                         "equalTo": "0"
                     }
                 ]
+            },
+            "limit": {
+                "hasExactly": [
+                    {
+                        "equalTo": "100"
+                    }
+                ]
             }
-        }
+        },
+        "bodyPatterns": [
+            {
+                "equalToJson": "{\"label\":\"attr.f_account.account\"}",
+                "ignoreArrayOrder": false,
+                "ignoreExtraElements": false
+            }
+        ]
     },
     "response": {
         "status": 200,
-        "bodyFileName": "api_v1_entities_workspaces_9c71fe9a4fc944d7b7886c4d05ce0cf3_facts-ef1ecf3f-6b57-4464-85a4-f54567b072d2.json",
+        "bodyFileName": "api_v1_actions_workspaces_9c71fe9a4fc944d7b7886c4d05ce0cf3_execution_collectlabelelements-8a2ad524-add6-4fe9-a9d7-6738409cf0fa.json",
         "headers": {
             "Referrer-Policy": "no-referrer",
             "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
@@ -47,10 +54,10 @@
             "Pragma": "no-cache",
             "Expires": "0",
             "X-XSS-Protection": "0",
-            "Content-Type": "application/vnd.gooddata.api+json"
+            "Content-Type": "application/json"
         }
     },
-    "uuid": "ef1ecf3f-6b57-4464-85a4-f54567b072d2",
+    "uuid": "8a2ad524-add6-4fe9-a9d7-6738409cf0fa",
     "persistent": true,
-    "insertionIndex": 14
+    "insertionIndex": 5
 }

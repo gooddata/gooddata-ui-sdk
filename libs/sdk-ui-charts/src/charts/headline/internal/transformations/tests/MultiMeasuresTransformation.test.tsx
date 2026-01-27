@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { render } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -8,11 +8,27 @@ import { type ExplicitDrill, withIntl } from "@gooddata/sdk-ui";
 
 import { recordedDataFacade } from "../../../../../../testUtils/recordings.js";
 import { type IHeadlineTransformationProps } from "../../../HeadlineProvider.js";
-import * as BaseHeadline from "../../headlines/baseHeadline/BaseHeadline.js";
+import { BaseHeadline } from "../../headlines/baseHeadline/BaseHeadline.js";
 import { TEST_MULTI_MEASURE_TRANSFORMATION } from "../../tests/TestData.fixtures.js";
 import { getBaseHeadlineData } from "../../utils/BaseHeadlineTransformationUtils.js";
 import { MultiMeasuresTransformation } from "../MultiMeasuresTransformation.js";
-import * as useFireDrillEvent from "../useFiredDrillEvent.js";
+import { useFireDrillEvent } from "../useFiredDrillEvent.js";
+
+vi.mock("../../headlines/baseHeadline/BaseHeadline.js", async (importOriginal) => {
+    const original = await importOriginal();
+    return {
+        ...(original as object),
+        BaseHeadline: vi.fn((original as { BaseHeadline: () => void }).BaseHeadline),
+    };
+});
+
+vi.mock("../useFiredDrillEvent.js", async (importOriginal) => {
+    const original = await importOriginal();
+    return {
+        ...(original as object),
+        useFireDrillEvent: vi.fn((original as { useFireDrillEvent: () => void }).useFireDrillEvent),
+    };
+});
 
 describe("MultiMeasuresTransformation", () => {
     const renderTransformation = (props: IHeadlineTransformationProps) => {
@@ -28,9 +44,9 @@ describe("MultiMeasuresTransformation", () => {
         "Should render transformation based on base-headline '%s' correctly",
         (_test: string, recorded: ScenarioRecording, drillableItems: ExplicitDrill[] = []) => {
             const mockOnAfterRender = vi.fn();
-            const MockBaseHeadline = vi.spyOn(BaseHeadline, "BaseHeadline");
+            const MockBaseHeadline = vi.mocked(BaseHeadline);
             const mockHandleFiredDrillEvent = vi.fn();
-            vi.spyOn(useFireDrillEvent, "useFireDrillEvent").mockReturnValue({
+            vi.mocked(useFireDrillEvent).mockReturnValue({
                 handleFiredDrillEvent: mockHandleFiredDrillEvent,
             });
 

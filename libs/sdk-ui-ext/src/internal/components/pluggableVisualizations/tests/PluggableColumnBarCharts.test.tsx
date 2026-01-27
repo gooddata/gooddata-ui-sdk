@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { describe, expect, it, vi } from "vitest";
 
@@ -38,8 +38,31 @@ import {
     type IVisConstruct,
     type IVisProps,
 } from "../../../interfaces/Visualization.js";
-import * as referencePointMocks from "../../../tests/mocks/referencePointMocks.js";
-import * as testMocks from "../../../tests/mocks/testMocks.js";
+import {
+    dateAsFirstCategoryReferencePoint,
+    dateAttributeOnRowsAndColumnsReferencePoint,
+    measureWithDerivedAsFirstWithDateInStackRefPoint,
+    measuresOnSecondaryAxisAndAttributeReferencePoint,
+    multipleDatesInRowsOnly,
+    multipleDatesNotAsFirstReferencePoint,
+    multipleDatesNotAsFirstReferencePointWithSingleMeasure,
+    multipleMeasureAndDateInRowsAndColumReferencePoint,
+    multipleMetricsAndCategoriesReferencePoint,
+    multipleMetricsOneStackByReferencePoint,
+    oneMeasuresOneCategoryOneStackItemWithStackMeasuresToPercent,
+    oneMeasuresOneCategoryWithStackMeasuresToPercent,
+    oneMetricAndCategoryAndStackReferencePoint,
+    oneMetricAndManyCategoriesAndOneStackRefPoint,
+    oneMetricAndManyCategoriesReferencePoint,
+    onlyStackTreemapMultipleMeasures,
+    threeDifferentDatesReferencePoint,
+    twoIdenticalDatesInRows,
+    twoMeasuresOneCategoryWithStackMeasuresToPercent,
+} from "../../../tests/mocks/referencePointMocks.js";
+import {
+    insightWithSingleMeasureAndTwoViewBy,
+    insightWithTwoMeasuresAndViewBy,
+} from "../../../tests/mocks/testMocks.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../utils/translations.js";
 import { PluggableColumnChart } from "../columnChart/PluggableColumnChart.js";
 
@@ -81,7 +104,7 @@ describe("PluggableColumnBarCharts", () => {
 
         it("should place third attribute to stack bucket", async () => {
             const columnChart = createComponent(defaultProps);
-            const mockRefPoint = referencePointMocks.oneMetricAndManyCategoriesReferencePoint;
+            const mockRefPoint = oneMetricAndManyCategoriesReferencePoint;
 
             const extendedReferencePoint = await columnChart.getExtendedReferencePoint(mockRefPoint);
 
@@ -90,7 +113,7 @@ describe("PluggableColumnBarCharts", () => {
 
         it("should reuse one measure, two categories and one category as stack", async () => {
             const columnChart = createComponent(defaultProps);
-            const mockRefPoint = referencePointMocks.oneMetricAndManyCategoriesAndOneStackRefPoint;
+            const mockRefPoint = oneMetricAndManyCategoriesAndOneStackRefPoint;
 
             const extendedReferencePoint = await columnChart.getExtendedReferencePoint(mockRefPoint);
 
@@ -99,7 +122,7 @@ describe("PluggableColumnBarCharts", () => {
 
         it("should reuse all measures, two categories and no stack", async () => {
             const columnChart = createComponent(defaultProps);
-            const mockRefPoint = referencePointMocks.multipleMetricsAndCategoriesReferencePoint;
+            const mockRefPoint = multipleMetricsAndCategoriesReferencePoint;
 
             const extendedReferencePoint = await columnChart.getExtendedReferencePoint(mockRefPoint);
 
@@ -108,7 +131,7 @@ describe("PluggableColumnBarCharts", () => {
 
         it("should return reference point without Date in stacks", async () => {
             const columnChart = createComponent(defaultProps);
-            const mockRefPoint = referencePointMocks.dateAsFirstCategoryReferencePoint;
+            const mockRefPoint = dateAsFirstCategoryReferencePoint;
 
             const extendedReferencePoint = await columnChart.getExtendedReferencePoint(mockRefPoint);
 
@@ -117,7 +140,7 @@ describe("PluggableColumnBarCharts", () => {
 
         it("should cut out measures tail when getting many measures, no category and one stack", async () => {
             const columnChart = createComponent(defaultProps);
-            const mockRefPoint = referencePointMocks.multipleMetricsOneStackByReferencePoint;
+            const mockRefPoint = multipleMetricsOneStackByReferencePoint;
 
             const extendedReferencePoint = await columnChart.getExtendedReferencePoint(mockRefPoint);
 
@@ -131,9 +154,7 @@ describe("PluggableColumnBarCharts", () => {
             };
             const chart = createComponent(mockProps);
 
-            await chart.getExtendedReferencePoint(
-                referencePointMocks.oneMetricAndCategoryAndStackReferencePoint,
-            );
+            await chart.getExtendedReferencePoint(oneMetricAndCategoryAndStackReferencePoint);
             // TODO avoid testing protected property
             expect((chart as any).supportedPropertiesList).toEqual(
                 COLUMN_CHART_SUPPORTED_PROPERTIES[AXIS.PRIMARY].filter(
@@ -141,17 +162,13 @@ describe("PluggableColumnBarCharts", () => {
                 ),
             );
 
-            await chart.getExtendedReferencePoint(
-                referencePointMocks.measuresOnSecondaryAxisAndAttributeReferencePoint,
-            );
+            await chart.getExtendedReferencePoint(measuresOnSecondaryAxisAndAttributeReferencePoint);
             // TODO avoid testing protected property
             expect((chart as any).supportedPropertiesList).toEqual(
                 COLUMN_CHART_SUPPORTED_PROPERTIES[AXIS.SECONDARY],
             );
 
-            await chart.getExtendedReferencePoint(
-                referencePointMocks.multipleMetricsAndCategoriesReferencePoint,
-            );
+            await chart.getExtendedReferencePoint(multipleMetricsAndCategoriesReferencePoint);
             // TODO avoid testing protected property
             expect((chart as any).supportedPropertiesList).toEqual(
                 COLUMN_CHART_SUPPORTED_PROPERTIES[AXIS.DUAL],
@@ -162,7 +179,7 @@ describe("PluggableColumnBarCharts", () => {
             const visualization = createComponent(defaultProps);
             visualization.update(
                 options,
-                testMocks.insightWithSingleMeasureAndTwoViewBy,
+                insightWithSingleMeasureAndTwoViewBy,
                 emptyPropertiesMeta,
                 executionFactory,
             );
@@ -180,7 +197,7 @@ describe("PluggableColumnBarCharts", () => {
                 },
             };
             const testInsight = insightSetProperties(
-                testMocks.insightWithTwoMeasuresAndViewBy,
+                insightWithTwoMeasuresAndViewBy,
                 visualizationProperties,
             );
 
@@ -199,7 +216,7 @@ describe("PluggableColumnBarCharts", () => {
                 },
             };
             const testInsight = insightSetProperties(
-                testMocks.insightWithTwoMeasuresAndViewBy,
+                insightWithTwoMeasuresAndViewBy,
                 visualizationProperties,
             );
 
@@ -213,7 +230,7 @@ describe("PluggableColumnBarCharts", () => {
 
             visualization.update(
                 options,
-                testMocks.insightWithTwoMeasuresAndViewBy,
+                insightWithTwoMeasuresAndViewBy,
                 emptyPropertiesMeta,
                 executionFactory,
             );
@@ -225,8 +242,7 @@ describe("PluggableColumnBarCharts", () => {
             const columnChart = createComponent(defaultProps);
 
             // step1: init column chart with 1M, 1VB, 1SB with 'Stack to 100%' enabled
-            const initialState =
-                referencePointMocks.oneMeasuresOneCategoryOneStackItemWithStackMeasuresToPercent;
+            const initialState = oneMeasuresOneCategoryOneStackItemWithStackMeasuresToPercent;
             let extendedReferencePoint = await columnChart.getExtendedReferencePoint(initialState);
             // 'Stack to 100%' checkbox is checked
             expect(extendedReferencePoint.properties!.controls).toEqual({
@@ -234,15 +250,13 @@ describe("PluggableColumnBarCharts", () => {
             });
 
             // step2: remove StackBy item
-            const stateWithStackByItemRemoved =
-                referencePointMocks.oneMeasuresOneCategoryWithStackMeasuresToPercent;
+            const stateWithStackByItemRemoved = oneMeasuresOneCategoryWithStackMeasuresToPercent;
             extendedReferencePoint = await columnChart.getExtendedReferencePoint(stateWithStackByItemRemoved);
             // 'Stack to 100%' and 'Stack Measures' checkboxes are hidden
             expect(extendedReferencePoint.properties!.controls).toBeFalsy();
 
             // step3: add one more measure
-            const stateWithNewMeasureAdded =
-                referencePointMocks.twoMeasuresOneCategoryWithStackMeasuresToPercent;
+            const stateWithNewMeasureAdded = twoMeasuresOneCategoryWithStackMeasuresToPercent;
             extendedReferencePoint = await columnChart.getExtendedReferencePoint(stateWithNewMeasureAdded);
             // column chart should be stacked in percent with 'Stack to 100%' and 'Stack Measures' checkboxes are checked
             expect(extendedReferencePoint.properties!.controls).toEqual({
@@ -257,13 +271,13 @@ describe("PluggableColumnBarCharts", () => {
             const inputs: [string, IReferencePoint, Partial<IExtendedReferencePoint>][] = [
                 [
                     "from table to column chart: date in rows only",
-                    referencePointMocks.dateAsFirstCategoryReferencePoint,
+                    dateAsFirstCategoryReferencePoint,
                     {
                         buckets: [
-                            referencePointMocks.dateAsFirstCategoryReferencePoint.buckets[0],
+                            dateAsFirstCategoryReferencePoint.buckets[0],
                             {
                                 localIdentifier: "view",
-                                items: referencePointMocks.dateAsFirstCategoryReferencePoint.buckets[1].items,
+                                items: dateAsFirstCategoryReferencePoint.buckets[1].items,
                             },
                             {
                                 localIdentifier: "stack",
@@ -274,79 +288,64 @@ describe("PluggableColumnBarCharts", () => {
                 ],
                 [
                     "from table to column chart: three different dates",
-                    referencePointMocks.threeDifferentDatesReferencePoint,
+                    threeDifferentDatesReferencePoint,
                     {
                         buckets: [
-                            referencePointMocks.threeDifferentDatesReferencePoint.buckets[0],
+                            threeDifferentDatesReferencePoint.buckets[0],
                             {
                                 localIdentifier: "view",
-                                items: referencePointMocks.threeDifferentDatesReferencePoint.buckets[1].items.slice(
-                                    0,
-                                    1,
-                                ),
+                                items: threeDifferentDatesReferencePoint.buckets[1].items.slice(0, 1),
                             },
                             {
                                 localIdentifier: "stack",
-                                items: referencePointMocks.threeDifferentDatesReferencePoint.buckets[1].items.slice(
-                                    1,
-                                    2,
-                                ),
+                                items: threeDifferentDatesReferencePoint.buckets[1].items.slice(1, 2),
                             },
                         ],
                     },
                 ],
                 [
                     "from table to column chart: two identical dates in rows",
-                    referencePointMocks.twoIdenticalDatesInRows,
+                    twoIdenticalDatesInRows,
                     {
                         buckets: [
-                            referencePointMocks.twoIdenticalDatesInRows.buckets[0],
+                            twoIdenticalDatesInRows.buckets[0],
                             {
                                 localIdentifier: "view",
-                                items: referencePointMocks.twoIdenticalDatesInRows.buckets[1].items,
+                                items: twoIdenticalDatesInRows.buckets[1].items,
                             },
                             {
                                 localIdentifier: "stack",
-                                items: referencePointMocks.twoIdenticalDatesInRows.buckets[2].items,
+                                items: twoIdenticalDatesInRows.buckets[2].items,
                             },
                         ],
                     },
                 ],
                 [
                     "from table to column chart: multiple dates in rows",
-                    referencePointMocks.multipleDatesInRowsOnly,
+                    multipleDatesInRowsOnly,
                     {
                         buckets: [
-                            referencePointMocks.multipleDatesInRowsOnly.buckets[0],
+                            multipleDatesInRowsOnly.buckets[0],
                             {
                                 localIdentifier: "view",
-                                items: referencePointMocks.multipleDatesInRowsOnly.buckets[1].items.slice(
-                                    0,
-                                    2,
-                                ),
+                                items: multipleDatesInRowsOnly.buckets[1].items.slice(0, 2),
                             },
                             {
                                 localIdentifier: "stack",
-                                items: referencePointMocks.multipleDatesInRowsOnly.buckets[1].items.slice(
-                                    2,
-                                    3,
-                                ),
+                                items: multipleDatesInRowsOnly.buckets[1].items.slice(2, 3),
                             },
                         ],
                     },
                 ],
                 [
                     "from chart to column chart: multiple dates in rows but not first (more measures)",
-                    referencePointMocks.multipleDatesNotAsFirstReferencePoint,
+                    multipleDatesNotAsFirstReferencePoint,
                     {
                         buckets: [
-                            referencePointMocks.multipleDatesNotAsFirstReferencePoint.buckets[0],
+                            multipleDatesNotAsFirstReferencePoint.buckets[0],
                             {
                                 localIdentifier: "view",
-                                items: referencePointMocks.multipleDatesNotAsFirstReferencePoint.buckets[1].items.slice(
-                                    0,
-                                    2,
-                                ),
+                                items: multipleDatesNotAsFirstReferencePoint.buckets[1].items.slice(0, 2),
                             },
                             {
                                 localIdentifier: "stack",
@@ -357,21 +356,20 @@ describe("PluggableColumnBarCharts", () => {
                 ],
                 [
                     "from chart to column chart: multiple dates in rows but not first (single measure)",
-                    referencePointMocks.multipleDatesNotAsFirstReferencePointWithSingleMeasure,
+                    multipleDatesNotAsFirstReferencePointWithSingleMeasure,
                     {
                         buckets: [
-                            referencePointMocks.multipleDatesNotAsFirstReferencePointWithSingleMeasure
-                                .buckets[0],
+                            multipleDatesNotAsFirstReferencePointWithSingleMeasure.buckets[0],
                             {
                                 localIdentifier: "view",
-                                items: referencePointMocks.multipleDatesNotAsFirstReferencePointWithSingleMeasure.buckets[1].items.slice(
+                                items: multipleDatesNotAsFirstReferencePointWithSingleMeasure.buckets[1].items.slice(
                                     0,
                                     2,
                                 ),
                             },
                             {
                                 localIdentifier: "stack",
-                                items: referencePointMocks.multipleDatesNotAsFirstReferencePointWithSingleMeasure.buckets[1].items.slice(
+                                items: multipleDatesNotAsFirstReferencePointWithSingleMeasure.buckets[1].items.slice(
                                     2,
                                 ),
                             },
@@ -380,14 +378,13 @@ describe("PluggableColumnBarCharts", () => {
                 ],
                 [
                     "from table to column chart: multiple measures and date in stack",
-                    referencePointMocks.multipleMeasureAndDateInRowsAndColumReferencePoint,
+                    multipleMeasureAndDateInRowsAndColumReferencePoint,
                     {
                         buckets: [
-                            referencePointMocks.multipleMeasureAndDateInRowsAndColumReferencePoint.buckets[0],
+                            multipleMeasureAndDateInRowsAndColumReferencePoint.buckets[0],
                             {
                                 localIdentifier: "view",
-                                items: referencePointMocks.multipleMeasureAndDateInRowsAndColumReferencePoint
-                                    .buckets[1].items,
+                                items: multipleMeasureAndDateInRowsAndColumReferencePoint.buckets[1].items,
                             },
                             {
                                 localIdentifier: "stack",
@@ -398,15 +395,12 @@ describe("PluggableColumnBarCharts", () => {
                 ],
                 [
                     "from treemap to column chart: multiple measures and date in stack: should limit measures to one",
-                    referencePointMocks.onlyStackTreemapMultipleMeasures,
+                    onlyStackTreemapMultipleMeasures,
                     {
                         buckets: [
                             {
                                 localIdentifier: "measures",
-                                items: referencePointMocks.onlyStackTreemapMultipleMeasures.buckets[0].items.slice(
-                                    0,
-                                    1,
-                                ),
+                                items: onlyStackTreemapMultipleMeasures.buckets[0].items.slice(0, 1),
                             },
                             {
                                 localIdentifier: "view",
@@ -414,32 +408,27 @@ describe("PluggableColumnBarCharts", () => {
                             },
                             {
                                 localIdentifier: "stack",
-                                items: referencePointMocks.onlyStackTreemapMultipleMeasures.buckets[2].items,
+                                items: onlyStackTreemapMultipleMeasures.buckets[2].items,
                             },
                         ],
                     },
                 ],
                 [
                     "Simulate adding pop measure:  With measure and derived measure and two date in view and date in stack",
-                    referencePointMocks.measureWithDerivedAsFirstWithDateInStackRefPoint,
+                    measureWithDerivedAsFirstWithDateInStackRefPoint,
                     {
                         buckets: [
                             {
                                 localIdentifier: "measures",
-                                items: [
-                                    referencePointMocks.measureWithDerivedAsFirstWithDateInStackRefPoint
-                                        .buckets[0].items[1],
-                                ],
+                                items: [measureWithDerivedAsFirstWithDateInStackRefPoint.buckets[0].items[1]],
                             },
                             {
                                 localIdentifier: "view",
-                                items: referencePointMocks.measureWithDerivedAsFirstWithDateInStackRefPoint
-                                    .buckets[1].items,
+                                items: measureWithDerivedAsFirstWithDateInStackRefPoint.buckets[1].items,
                             },
                             {
                                 localIdentifier: "stack",
-                                items: referencePointMocks.measureWithDerivedAsFirstWithDateInStackRefPoint
-                                    .buckets[2].items,
+                                items: measureWithDerivedAsFirstWithDateInStackRefPoint.buckets[2].items,
                             },
                         ],
                     },
@@ -462,7 +451,7 @@ describe("PluggableColumnBarCharts", () => {
 
         it("should keep two date attributes in view by bucket when coming from pivot table with only one dimension", async () => {
             const columnChart = createComponent(defaultProps);
-            const mockRefPoint = referencePointMocks.dateAttributeOnRowsAndColumnsReferencePoint;
+            const mockRefPoint = dateAttributeOnRowsAndColumnsReferencePoint;
             const expectedBuckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",

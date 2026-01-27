@@ -2,7 +2,7 @@
 
 import { type KeyboardEvent, type MouseEvent, forwardRef } from "react";
 
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { type IDropdownButtonRenderProps } from "../../Dropdown/Dropdown.js";
 import { accessibilityConfigToAttributes } from "../../typings/utilities.js";
@@ -100,7 +100,7 @@ export const UiIconButtonRenderer = forwardRef<HTMLButtonElement, UiIconButtonRe
         ref,
     ) => {
         const iconSize = getButtonIconSize(size);
-        const testId = dataTestId || `${stringUtils.simplifyText(label ?? "")}`;
+        const testId = dataTestId || `${simplifyText(label ?? "")}`;
         return (
             <button
                 ref={ref}

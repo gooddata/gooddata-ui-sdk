@@ -12,7 +12,7 @@ import {
     serializeObjRef,
 } from "@gooddata/sdk-model";
 import { DropdownList, NoData } from "@gooddata/sdk-ui-kit";
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { PopupHeader } from "./PopupHeader.js";
 import { WithDisabledParentFilterTooltip } from "./WithDisabledParentFilterTooltip.js";
@@ -105,7 +105,7 @@ function ParentFilter({
     const { attributeFilterInteraction } = useDashboardUserInteraction();
     const classNames = cx(
         "gd-list-item attribute-filter__limit__popup__item",
-        `s-dashboard-filter-${stringUtils.simplifyText(title ?? "unknown")}`,
+        `s-dashboard-filter-${simplifyText(title ?? "unknown")}`,
         {
             "is-disabled": isDisabled,
         },

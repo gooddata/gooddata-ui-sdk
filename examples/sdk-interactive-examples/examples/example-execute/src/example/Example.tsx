@@ -1,9 +1,9 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { Execute } from "@gooddata/sdk-ui";
 
 import { CustomVisualization } from "./CustomVisualization.js";
-import * as Catalog from "../catalog.js";
+import { CustomerCountry, GrossProfit, ProductCategory } from "../catalog.js";
 import { Hint } from "../Hint.js";
 
 export function Example() {
@@ -12,11 +12,8 @@ export function Example() {
             <h1>Custom Visualization</h1>
 
             <div style={{ height: 400 }}>
-                <Execute
-                    seriesBy={[Catalog.GrossProfit]}
-                    slicesBy={[Catalog.ProductCategory, Catalog.CustomerCountry]}
-                >
-                    {(props) => <CustomVisualization {...props} measure={Catalog.GrossProfit} />}
+                <Execute seriesBy={[GrossProfit]} slicesBy={[ProductCategory, CustomerCountry]}>
+                    {(props) => <CustomVisualization {...props} measure={GrossProfit} />}
                 </Execute>
             </div>
 

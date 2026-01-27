@@ -4,7 +4,7 @@ import { BubbleTooltip } from "../../tools/bubbleTooltip";
 import { DateFilter } from "../../tools/dateFilter";
 import { EditMode } from "../../tools/editMode";
 import { AttributeFilter } from "../../tools/filterBar";
-import * as Navigation from "../../tools/navigation";
+import { visit } from "../../tools/navigation";
 
 const dateFilter = new DateFilter();
 const editMode = new EditMode();
@@ -13,7 +13,7 @@ const interactiveAttributeFilter = new AttributeFilter("Activity");
 
 describe("Hide Filters Tooltips", { tags: ["pre-merge_isolated_tiger_fe"] }, () => {
     it("Tooltip hide filter displays on date configuration when hover on hidden option", () => {
-        Navigation.visit("dashboard/dashboard-tiger");
+        visit("dashboard/dashboard-tiger");
         editMode.edit().saveButtonEnabled(false);
 
         dateFilter.isVisible(true).open().openConfiguration().hoverOnConfigurationMode("hidden");
@@ -21,7 +21,7 @@ describe("Hide Filters Tooltips", { tags: ["pre-merge_isolated_tiger_fe"] }, () 
     });
 
     it("Tooltip hide filter displays on attribute configuration when hover on hidden option", () => {
-        Navigation.visit("dashboard/dashboard-tiger-hide-filters");
+        visit("dashboard/dashboard-tiger-hide-filters");
         editMode.edit().saveButtonEnabled(false);
 
         interactiveAttributeFilter
@@ -33,7 +33,7 @@ describe("Hide Filters Tooltips", { tags: ["pre-merge_isolated_tiger_fe"] }, () 
     });
 
     it("Tooltip hide filter displays on edit mode when hover on date filter hidden icon", () => {
-        Navigation.visit("dashboard/dashboard-tiger");
+        visit("dashboard/dashboard-tiger");
         editMode.edit().saveButtonEnabled(false);
 
         dateFilter
@@ -49,7 +49,7 @@ describe("Hide Filters Tooltips", { tags: ["pre-merge_isolated_tiger_fe"] }, () 
     });
 
     it("Tooltip hide filter displays on edit mode when hover on attribute filter hidden icon", () => {
-        Navigation.visit("dashboard/dashboard-tiger-hide-filters");
+        visit("dashboard/dashboard-tiger-hide-filters");
         editMode.edit().saveButtonEnabled(false);
 
         interactiveAttributeFilter
@@ -64,7 +64,7 @@ describe("Hide Filters Tooltips", { tags: ["pre-merge_isolated_tiger_fe"] }, () 
     });
 
     it("Tooltip locked filter displays on date configuration when hover on locked option", () => {
-        Navigation.visit("dashboard/dashboard-tiger");
+        visit("dashboard/dashboard-tiger");
         editMode.edit().saveButtonEnabled(false);
 
         dateFilter.isVisible(true).open().openConfiguration().hoverOnConfigurationMode("readonly");
@@ -72,7 +72,7 @@ describe("Hide Filters Tooltips", { tags: ["pre-merge_isolated_tiger_fe"] }, () 
     });
 
     it("Tooltip locked filter displays on attribute configuration when hover on locked option", () => {
-        Navigation.visit("dashboard/dashboard-tiger-hide-filters");
+        visit("dashboard/dashboard-tiger-hide-filters");
         editMode.edit().saveButtonEnabled(false);
 
         interactiveAttributeFilter
@@ -84,7 +84,7 @@ describe("Hide Filters Tooltips", { tags: ["pre-merge_isolated_tiger_fe"] }, () 
     });
 
     it("Tooltip locked filter displays on edit mode when hover on date filter locked icon", () => {
-        Navigation.visit("dashboard/dashboard-tiger");
+        visit("dashboard/dashboard-tiger");
         editMode.edit().saveButtonEnabled(false);
 
         dateFilter
@@ -99,7 +99,7 @@ describe("Hide Filters Tooltips", { tags: ["pre-merge_isolated_tiger_fe"] }, () 
     });
 
     it("Tooltip locked filter displays on view mode when hover on date filter locked icon", () => {
-        Navigation.visit("dashboard/dashboard-tiger-readonly-date-filter");
+        visit("dashboard/dashboard-tiger-readonly-date-filter");
 
         dateFilter.isVisible(true).isLockedIconVisible().hoverOnLockedIcon();
 

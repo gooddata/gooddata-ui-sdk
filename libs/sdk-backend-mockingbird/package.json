@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-backend-mockingbird",
-    "version": "11.18.0-alpha.4",
+    "version": "11.18.0-alpha.5",
     "description": "Mock GoodData Backend SPI implementation",
     "repository": {
         "type": "git",
@@ -51,7 +51,7 @@
         "@gooddata/eslint-config": "workspace:*",
         "@gooddata/reference-workspace": "workspace:*",
         "@microsoft/api-documenter": "^7.17.0",
-        "@microsoft/api-extractor": "^7.52.8",
+        "@microsoft/api-extractor": "^7.55.2",
         "@types/lodash-es": "^4.17.12",
         "@typescript-eslint/eslint-plugin": "8.52.0",
         "@typescript-eslint/parser": "8.52.0",

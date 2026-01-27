@@ -1,12 +1,17 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 import { type IVisConstruct } from "../../../../interfaces/Visualization.js";
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
-import * as testMocks from "../../../../tests/mocks/testMocks.js";
+import {
+    emptyReferencePoint,
+    multipleMetricsAndCategoriesReferencePoint,
+    multipleMetricsNoCategoriesReferencePoint,
+    oneMetricNoCategoriesReferencePoint,
+} from "../../../../tests/mocks/referencePointMocks.js";
+import { insightWithSingleMeasure } from "../../../../tests/mocks/testMocks.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../../utils/translations.js";
 import { PluggableFunnelChart } from "../PluggableFunnelChart.js";
 
@@ -49,7 +54,7 @@ describe("PluggableFunnelChart", () => {
         const funnelChart = createComponent();
 
         const extendedReferencePoint = await funnelChart.getExtendedReferencePoint(
-            referencePointMocks.multipleMetricsAndCategoriesReferencePoint,
+            multipleMetricsAndCategoriesReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -59,7 +64,7 @@ describe("PluggableFunnelChart", () => {
         const funnelChart = createComponent();
 
         const extendedReferencePoint = await funnelChart.getExtendedReferencePoint(
-            referencePointMocks.multipleMetricsNoCategoriesReferencePoint,
+            multipleMetricsNoCategoriesReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -68,7 +73,7 @@ describe("PluggableFunnelChart", () => {
     it("should return reference point with one metric and no category", async () => {
         const funnelChart = createComponent();
         const extendedReferencePoint = await funnelChart.getExtendedReferencePoint(
-            referencePointMocks.oneMetricNoCategoriesReferencePoint,
+            oneMetricNoCategoriesReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -78,9 +83,7 @@ describe("PluggableFunnelChart", () => {
         it("should return reference point containing uiConfig with no supported comparison types", async () => {
             const component = createComponent();
 
-            const extendedReferencePoint = await component.getExtendedReferencePoint(
-                referencePointMocks.emptyReferencePoint,
-            );
+            const extendedReferencePoint = await component.getExtendedReferencePoint(emptyReferencePoint);
 
             expect(extendedReferencePoint.uiConfig!.supportedOverTimeComparisonTypes).toEqual([]);
         });
@@ -90,7 +93,7 @@ describe("PluggableFunnelChart", () => {
         it("should mount on the element defined by the callback", () => {
             const visualization = createComponent();
 
-            visualization.update({ messages }, testMocks.insightWithSingleMeasure, {}, execution);
+            visualization.update({ messages }, insightWithSingleMeasure, {}, execution);
 
             // 1st call for rendering element
             // 2nd call for rendering config panel

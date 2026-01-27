@@ -1,6 +1,6 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
-import * as Navigation from "../../tools/navigation";
+import { visit } from "../../tools/navigation";
 import { Widget } from "../../tools/widget";
 
 describe(
@@ -15,7 +15,7 @@ describe(
     },
     () => {
         it("should render insight with multi format metrics correctly", () => {
-            Navigation.visit("dashboard/dashboard-pivot-table-scenario");
+            visit("dashboard/dashboard-pivot-table-scenario");
             const table = new Widget(0, 1).waitTableLoaded().getTableNew();
             table.waitLoaded();
             table.hasCellValue(6, 1, "Closed Won");

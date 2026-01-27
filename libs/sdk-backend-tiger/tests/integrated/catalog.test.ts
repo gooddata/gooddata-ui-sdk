@@ -1,10 +1,11 @@
-// (C) 2022 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { beforeAll, describe, expect, it } from "vitest";
 
 import { measureLocalId, newArithmeticMeasure, newPopMeasure } from "@gooddata/sdk-model";
 
 import { sanitizeWorkspace, sortToOrder, testBackend, testWorkspace } from "./backend.js";
-import * as Md from "../../src/fixtures/full.js";
+import { WinRate } from "../../src/fixtures/full.js";
 
 const backend = testBackend();
 
@@ -56,14 +57,14 @@ describe("tiger catalog", () => {
         const catalog = await backend.workspace(testWorkspace()).catalog().load();
 
         const arithmeticMeasure = newArithmeticMeasure(
-            [measureLocalId(Md.WinRate), measureLocalId(Md.WinRate)],
+            [measureLocalId(WinRate), measureLocalId(WinRate)],
             "sum",
         );
         const availability = await catalog
             .availableItems()
             .forItems([
-                newPopMeasure(Md.WinRate, "f_account.id", (m) => m.alias("PoP measure")),
-                Md.WinRate,
+                newPopMeasure(WinRate, "f_account.id", (m) => m.alias("PoP measure")),
+                WinRate,
                 arithmeticMeasure,
                 newPopMeasure(arithmeticMeasure, "f_account.id", (m) => m.alias("PoP measure")),
             ])

@@ -19,7 +19,7 @@ export class DashboardAccess {
             },
         ];
 
-        Api.request("POST", url, body, { useVendorContentType: false });
+        Api.request("POST", url, body);
     }
 
     static assignGroupPermissionToDashboard(
@@ -39,7 +39,7 @@ export class DashboardAccess {
             },
         ];
 
-        Api.request("POST", url, body, { useVendorContentType: false });
+        Api.request("POST", url, body);
     }
 
     static assignRulePermissionToDashboard(workspaceId: string, dashboardId: string, permission?: string) {
@@ -53,7 +53,7 @@ export class DashboardAccess {
             },
         ];
 
-        Api.request("POST", url, body, { useVendorContentType: false });
+        Api.request("POST", url, body);
     }
 }
 
@@ -75,6 +75,6 @@ export class WorkspaceAccess {
             }),
         };
 
-        Api.request("PUT", url, body, { useVendorContentType: false });
+        Api.request("PUT", url, body);
     }
 }

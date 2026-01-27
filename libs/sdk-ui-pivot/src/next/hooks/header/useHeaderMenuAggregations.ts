@@ -7,9 +7,9 @@ import {
     type IBucket,
     type IExecutionDefinition,
     type ITotal,
+    hasMeasureValueFilterConditions,
     isMeasureValueFilter,
     isRankingFilter,
-    measureValueFilterConditions,
 } from "@gooddata/sdk-model";
 import { BucketNames, isAttributeColumnDefinition } from "@gooddata/sdk-ui";
 
@@ -46,7 +46,7 @@ export const useHeaderMenuAggregations = (
             .map((columnDefinition) => columnDefinition.attributeDescriptor) ?? [];
 
     const hasMeasureValueFilter = execution.definition.filters.some(
-        (f) => isMeasureValueFilter(f) && !!measureValueFilterConditions(f),
+        (f) => isMeasureValueFilter(f) && hasMeasureValueFilterConditions(f),
     );
     const hasRankingFilter = execution.definition.filters.some(isRankingFilter);
     const disableRollupTotalTooltip = hasMeasureValueFilter

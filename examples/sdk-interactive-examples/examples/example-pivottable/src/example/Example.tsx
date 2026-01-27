@@ -1,11 +1,11 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type IPivotTableConfig, PivotTable } from "@gooddata/sdk-ui-pivot";
 
-import * as Catalog from "../catalog.js";
+import { GrossProfit, OrderAmount, ProductBrand, ProductCategory } from "../catalog.js";
 import { Hint } from "../Hint.js";
 
-const revenue = Catalog.GrossProfit;
+const revenue = GrossProfit;
 // Try uncomment lines below 👇
 const config: IPivotTableConfig = { columnSizing: { growToFit: true, defaultWidth: "viewport" } };
 
@@ -16,8 +16,8 @@ export function Example() {
 
             <div style={{ height: 400 }}>
                 <PivotTable
-                    measures={[revenue, Catalog.OrderAmount]}
-                    rows={[Catalog.ProductCategory, Catalog.ProductBrand]}
+                    measures={[revenue, OrderAmount]}
+                    rows={[ProductCategory, ProductBrand]}
                     // Try uncomment lines below 👇
                     config={config}
                 />

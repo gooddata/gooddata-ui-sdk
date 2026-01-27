@@ -1,8 +1,8 @@
 {
-    "id": "3bde5b0f-e308-4209-b0be-8ea6fc51a6f7",
-    "name": "api_v1_entities_workspaces_9c71fe9a4fc944d7b7886c4d05ce0cf3_visualizationobjects",
+    "id": "70bfb7e2-1462-408f-930d-007ff0f5833a",
+    "name": "api_v1_entities_workspaces_9c71fe9a4fc944d7b7886c4d05ce0cf3_attributes",
     "request": {
-        "urlPath": "/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/visualizationObjects",
+        "urlPath": "/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/attributes",
         "method": "GET",
         "headers": {
             "Accept": {
@@ -10,24 +10,10 @@
             }
         },
         "queryParameters": {
-            "page": {
+            "include": {
                 "hasExactly": [
                     {
-                        "equalTo": "0"
-                    }
-                ]
-            },
-            "size": {
-                "hasExactly": [
-                    {
-                        "equalTo": "50"
-                    }
-                ]
-            },
-            "sort": {
-                "hasExactly": [
-                    {
-                        "equalTo": "modifiedAt,createdAt,title,desc"
+                        "equalTo": "labels,defaultView,dataset,attributeHierarchies"
                     }
                 ]
             },
@@ -37,12 +23,26 @@
                         "equalTo": "page"
                     }
                 ]
+            },
+            "size": {
+                "hasExactly": [
+                    {
+                        "equalTo": "250"
+                    }
+                ]
+            },
+            "page": {
+                "hasExactly": [
+                    {
+                        "equalTo": "0"
+                    }
+                ]
             }
         }
     },
     "response": {
         "status": 200,
-        "bodyFileName": "api_v1_entities_workspaces_9c71fe9a4fc944d7b7886c4d05ce0cf3_visualizationobjects-3bde5b0f-e308-4209-b0be-8ea6fc51a6f7.json",
+        "bodyFileName": "api_v1_entities_workspaces_9c71fe9a4fc944d7b7886c4d05ce0cf3_attributes-70bfb7e2-1462-408f-930d-007ff0f5833a.json",
         "headers": {
             "Referrer-Policy": "no-referrer",
             "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
@@ -57,10 +57,10 @@
             "Pragma": "no-cache",
             "Expires": "0",
             "X-XSS-Protection": "0",
-            "Content-Type": "application/vnd.gooddata.api+json"
+            "Content-Type": "application/json"
         }
     },
-    "uuid": "3bde5b0f-e308-4209-b0be-8ea6fc51a6f7",
+    "uuid": "70bfb7e2-1462-408f-930d-007ff0f5833a",
     "persistent": true,
-    "insertionIndex": 13
+    "insertionIndex": 6
 }

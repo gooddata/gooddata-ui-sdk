@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type ReactElement, useState } from "react";
 
@@ -7,7 +7,7 @@ import { type IntlShape } from "react-intl";
 
 import { Bubble, Button } from "@gooddata/sdk-ui-kit";
 import { isDarkTheme, useTheme } from "@gooddata/sdk-ui-theme-provider";
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 interface IParameterProps {
     name: string;
@@ -23,9 +23,8 @@ export function Parameter({ name, description, detailContent, iconClassName, onA
     const theme = useTheme();
     const isDark = theme && isDarkTheme(theme);
 
-    const id = `${stringUtils.simplifyText(name)}${
-        description ? stringUtils.simplifyText(`_${description}`) : ""
-    }`;
+    const descriptionSuffix = description ? simplifyText("_" + description) : "";
+    const id = simplifyText(name) + descriptionSuffix;
     const itemClassNames = classNames("gd-list-item gd-menu-item", `s-parameter-${id}`, iconClassName);
     const addButtonLabel = intl.formatMessage({
         id: "configurationPanel.drillIntoUrl.editor.addParameterButtonLabel",

@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import {
     type FC,
@@ -14,7 +14,7 @@ import {
 
 import cx from "classnames";
 
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { Bubble } from "../Bubble/Bubble.js";
 import { BubbleHoverTrigger } from "../Bubble/BubbleHoverTrigger.js";
@@ -170,7 +170,7 @@ export const SingleSelectListItem = forwardRef<
     }, [title, checkOverflow]);
 
     const getClassNames = () => {
-        const testClassName = `s-${stringUtils.simplifyText(title ?? "")}`;
+        const testClassName = `s-${simplifyText(title ?? "")}`;
         return cx("gd-list-item", className, testClassName, {
             "is-selected": isSelected,
             "is-submenu": isMenu,

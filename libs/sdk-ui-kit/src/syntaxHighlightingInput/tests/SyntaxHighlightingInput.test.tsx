@@ -1,18 +1,40 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type ChangeEvent } from "react";
 
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import cx from "classnames";
-import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 // eslint-disable-next-line import/no-unassigned-import
 import "vitest-dom/extend-expect";
 
-import * as SyntaxHighlightingInput from "../SyntaxHighlightingInput.js";
+import { type ISyntaxHighlightingInputProps, SyntaxHighlightingInput } from "../SyntaxHighlightingInput.js";
 
-const defaultProps: SyntaxHighlightingInput.ISyntaxHighlightingInputProps = {
+const multiLineValue = "01234\n01234\n01234";
+
+vi.mock("../SyntaxHighlightingInput.js", () => ({
+    SyntaxHighlightingInput: ({ onChange, value, className, onCursor }: ISyntaxHighlightingInputProps) => {
+        const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
+            onChange(e.target.value);
+
+            if (value === multiLineValue && onCursor) {
+                onCursor(8, 8);
+            }
+        };
+
+        return (
+            <textarea
+                className={cx(className, "s-input-syntax-highlighting-input")}
+                value={value}
+                onChange={onChangeHandler}
+            />
+        );
+    },
+}));
+
+const defaultProps: ISyntaxHighlightingInputProps = {
     value: "",
     onChange: vi.fn(),
 };
@@ -24,44 +46,11 @@ const defaultProps: SyntaxHighlightingInput.ISyntaxHighlightingInputProps = {
     getClientRects: vi.fn(() => ({ length: null })),
 }));
 
-const renderComponent = (props?: Partial<SyntaxHighlightingInput.ISyntaxHighlightingInputProps>) => {
-    return render(<SyntaxHighlightingInput.SyntaxHighlightingInput {...defaultProps} {...props} />);
+const renderComponent = (props?: Partial<ISyntaxHighlightingInputProps>) => {
+    return render(<SyntaxHighlightingInput {...defaultProps} {...props} />);
 };
 
-const multiLineValue = "01234\n01234\n01234";
-
 describe("SyntaxHighlightingInput", () => {
-    beforeAll(() => {
-        vi.spyOn(SyntaxHighlightingInput, "SyntaxHighlightingInput").mockImplementation(
-            ({
-                onChange,
-                value,
-                className,
-                onCursor,
-            }: SyntaxHighlightingInput.ISyntaxHighlightingInputProps) => {
-                const onChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-                    onChange(e.target.value);
-
-                    if (value === multiLineValue && onCursor) {
-                        onCursor(8, 8);
-                    }
-                };
-
-                return (
-                    <textarea
-                        className={cx(className, "s-input-syntax-highlighting-input")}
-                        value={value}
-                        onChange={onChangeHandler}
-                    />
-                );
-            },
-        );
-    });
-
-    afterAll(() => {
-        vi.clearAllMocks();
-    });
-
     it("should render CodeMirrorInput component", () => {
         renderComponent();
 
@@ -69,7 +58,7 @@ describe("SyntaxHighlightingInput", () => {
     });
 
     it("should render correct value and classname", () => {
-        const props: SyntaxHighlightingInput.ISyntaxHighlightingInputProps = {
+        const props: ISyntaxHighlightingInputProps = {
             ...defaultProps,
             value: "this is a text content",
             className: "this-is-a-classname",

@@ -1,10 +1,10 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { attributeLocalId, measureLocalId } from "@gooddata/sdk-model";
 
 import * as Md from "../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_bear";
 import { getProjectId } from "../../support/constants";
-import * as Navigation from "../../tools/navigation";
+import { visit } from "../../tools/navigation";
 import { Table } from "../../tools/table";
 
 const TABLE_SELECTOR_STR_COMPLEX = ".s-pivot-table-sizing-complex";
@@ -108,7 +108,7 @@ const checkWidthWithTolerance = (width: Cypress.Chainable<JQuery<number>>, expec
 // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
 describe.skip("Pivot Table Sizing and Reset by double click", { tags: ["pre-merge_isolated_bear"] }, () => {
     beforeEach(() => {
-        Navigation.visit("visualizations/pivot-table/sizing/pivot-table-complex-reset");
+        visit("visualizations/pivot-table/sizing/pivot-table-complex-reset");
     });
 
     it("should reset first column with default width by double click to auto size and notify column as manually resized via props", () => {

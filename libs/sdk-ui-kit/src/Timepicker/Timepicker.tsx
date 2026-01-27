@@ -15,7 +15,7 @@ import moment from "moment";
 import { type WrappedComponentProps, injectIntl } from "react-intl";
 
 import { IntlWrapper } from "@gooddata/sdk-ui";
-import { translationUtils } from "@gooddata/util";
+import { sanitizeLocaleForMoment } from "@gooddata/util";
 
 import { type SelectedTime } from "./typings.js";
 import { HOURS_IN_DAY, TIME_ANCHOR, formatTime, normalizeTime, updateTime } from "./utils/timeUtilities.js";
@@ -67,7 +67,7 @@ export const WrappedTimepicker = memo(function WrappedTimepicker({
     const dropdownRef = useRef<HTMLDivElement | null>(null);
 
     const updateLocaleForMoment = useCallback(() => {
-        moment.locale(translationUtils.sanitizeLocaleForMoment(intl.locale));
+        moment.locale(sanitizeLocaleForMoment(intl.locale));
     }, [intl.locale]);
 
     updateLocaleForMoment();

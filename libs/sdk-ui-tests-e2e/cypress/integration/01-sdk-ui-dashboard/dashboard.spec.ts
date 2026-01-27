@@ -1,9 +1,9 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { DashboardHeader } from "../../tools/dashboardHeader";
 import { Dashboard, FilterBar, TopBar } from "../../tools/dashboards";
 import { EditMode } from "../../tools/editMode";
-import * as Navigation from "../../tools/navigation";
+import { visit, visitCopyOf } from "../../tools/navigation";
 import { TableNew } from "../../tools/tableNew";
 
 const topBar = new TopBar();
@@ -13,7 +13,7 @@ const dashboardHeader = new DashboardHeader();
 describe.skip("Dashboard", { tags: ["pre-merge_isolated_bear"] }, () => {
     describe("TopBar rendering", () => {
         beforeEach(() => {
-            Navigation.visit("dashboard/kpis");
+            visit("dashboard/kpis");
         });
 
         it("should render topBar", () => {
@@ -50,7 +50,7 @@ describe.skip("Dashboard", { tags: ["pre-merge_isolated_bear"] }, () => {
             "should display placeholder and focus title for new dashboard",
             { tags: ["checklist_integrated_tiger_be", "checklist_integrated_tiger_fe"] },
             () => {
-                Navigation.visit("dashboard/new-dashboard");
+                visit("dashboard/new-dashboard");
                 dashboardHeader.hasTitlePlaceholder();
                 dashboardHeader.isTitleFocused();
             },
@@ -59,7 +59,7 @@ describe.skip("Dashboard", { tags: ["pre-merge_isolated_bear"] }, () => {
 
     describe("FilterBar rendering", () => {
         beforeEach(() => {
-            Navigation.visit("dashboard/kpis");
+            visit("dashboard/kpis");
         });
 
         it("should render filter bar", () => {
@@ -98,7 +98,7 @@ describe.skip("Dashboard", { tags: ["pre-merge_isolated_bear"] }, () => {
 
     describe("Dashboard body rendering", () => {
         beforeEach(() => {
-            Navigation.visit("dashboard/kpis");
+            visit("dashboard/kpis");
         });
 
         it("should render single insight", () => {
@@ -123,7 +123,7 @@ describe("Dashboard actions", () => {
             ],
         },
         () => {
-            Navigation.visitCopyOf("dashboard/kpis");
+            visitCopyOf("dashboard/kpis");
 
             editMode.edit();
             new DashboardHeader()
@@ -148,7 +148,7 @@ describe("Dashboard actions", () => {
         () => {
             const table = new TableNew(".s-dash-item-0_0");
 
-            Navigation.visit("dashboard/dashboard-many-rows-columns");
+            visit("dashboard/dashboard-many-rows-columns");
             editMode.edit();
             table.scrollTo("right").scrollVerticalTo("bottom");
         },
@@ -166,7 +166,7 @@ describe("Dashboard actions", () => {
             ],
         },
         () => {
-            Navigation.visitCopyOf("dashboard/kpis");
+            visitCopyOf("dashboard/kpis");
             dashboardHeader.editButtonIsVisible(true).shareButtonExists(true);
         },
     );

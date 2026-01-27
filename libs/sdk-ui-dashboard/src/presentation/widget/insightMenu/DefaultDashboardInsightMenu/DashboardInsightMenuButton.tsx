@@ -7,7 +7,7 @@ import { useIntl } from "react-intl";
 
 import { objRefToString, widgetRef } from "@gooddata/sdk-model";
 import { UiTooltip, isActionKey } from "@gooddata/sdk-ui-kit";
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { getDashboardInsightMenuButtonId } from "../../../../_staging/accessibility/elementId.js";
 import { type IDashboardInsightMenuButtonProps } from "../types.js";
@@ -46,8 +46,8 @@ export function DashboardInsightMenuButton({
         "dash-item-action-options",
         "dash-item-action-widget-options",
         "s-dash-item-action-widget-options",
-        `dash-item-action-widget-options-${stringUtils.simplifyText(widgetRefAsString)}`,
-        `s-dash-item-action-widget-options-${stringUtils.simplifyText(widgetRefAsString)}`,
+        `dash-item-action-widget-options-${simplifyText(widgetRefAsString)}`,
+        `s-dash-item-action-widget-options-${simplifyText(widgetRefAsString)}`,
         {
             "dash-item-action-widget-options-active": isOpen,
         },

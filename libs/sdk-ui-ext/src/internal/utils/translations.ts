@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { memoize, merge } from "lodash-es";
 import type { IntlShape } from "react-intl";
 
@@ -8,7 +9,7 @@ import {
     resolveMessages as sdkUiresolveMessages,
 } from "@gooddata/sdk-ui";
 // eslint-disable-next-line import/order
-import { translationUtils } from "@gooddata/util";
+import { removeMetadata } from "@gooddata/util";
 // eslint-disable-next-line import/order
 import type { IDropdownItem } from "../interfaces/Dropdown.js";
 
@@ -34,7 +35,7 @@ export function getTranslatedDropdownItems(dropdownItems: IDropdownItem[], intl:
 import { en_US } from "../translations/en-US.localization-bundle.js";
 
 const asyncSdkUiExtTranslations: { [locale: string]: () => Promise<ITranslations> } = {
-    "en-US": () => Promise.resolve(translationUtils.removeMetadata(en_US)),
+    "en-US": () => Promise.resolve(removeMetadata(en_US)),
     "de-DE": () => import("../translations/de-DE.localization-bundle.js").then((module) => module.de_DE),
     "es-ES": () => import("../translations/es-ES.localization-bundle.js").then((module) => module.es_ES),
     "fr-FR": () => import("../translations/fr-FR.localization-bundle.js").then((module) => module.fr_FR),
@@ -88,7 +89,7 @@ export const resolveMessages: (locale: string) => Promise<ITranslations> = memoi
 export const DEFAULT_LANGUAGE = "en-US";
 export const DEFAULT_MESSAGES = {
     [DEFAULT_LANGUAGE]: {
-        ...translationUtils.removeMetadata(en_US),
+        ...removeMetadata(en_US),
         ...DEFAULT_MESSAGES_SDK_UI[DEFAULT_LANGUAGE],
     },
 };

@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -7,7 +7,7 @@ import { isEmpty } from "lodash-es";
 
 import { type ICatalogAttribute } from "@gooddata/sdk-model";
 import { ShortenedText } from "@gooddata/sdk-ui-kit";
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { AttributeListItemTooltip } from "./attributeListItemTooltip/AttributeListItemTooltip.js";
 
@@ -26,7 +26,7 @@ const TOOLTIP_ALIGN_POINT = [
 export function AttributeListItem({ item, title, isLocationIconEnabled, onClick }: IAttributeListItemProps) {
     const classNames = useMemo(() => {
         const isDisplayLocationIcon = isLocationIconEnabled && !isEmpty(item?.geoPinDisplayForms);
-        return cx(`s-${stringUtils.simplifyText(item.attribute.title)}`, "gd-attribute-list-item", {
+        return cx(`s-${simplifyText(item.attribute.title)}`, "gd-attribute-list-item", {
             "gd-list-item": true,
             "gd-list-item-shortened": true,
             "type-attribute": !isDisplayLocationIcon,

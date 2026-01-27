@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { type ChartType, VisualizationTypes } from "@gooddata/sdk-ui";
 
 export const AXIS = {
@@ -86,4 +87,12 @@ export const BAR_CHART_AXIS_CONFIG = {
         },
         BAR_Y_AXIS,
     ],
+};
+
+export const Axis = {
+    AXIS,
+    AXIS_NAME,
+    DUAL_AXES_SUPPORTED_CHARTS,
+    BASE_CHART_AXIS_CONFIG,
+    BAR_CHART_AXIS_CONFIG,
 };

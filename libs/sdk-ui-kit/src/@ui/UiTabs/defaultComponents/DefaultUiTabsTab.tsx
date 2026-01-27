@@ -1,8 +1,8 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useCallback, useState } from "react";
 
-import { type EmptyObject, stringUtils } from "@gooddata/util";
+import { type EmptyObject, simplifyText } from "@gooddata/util";
 
 import { ScopedIdStore } from "../../hooks/useScopedId.js";
 import { UiTooltip } from "../../UiTooltip/UiTooltip.js";
@@ -48,7 +48,7 @@ export function DefaultUiTabsTab<
             aria-label={tab.label}
             tabIndex={tabIndex}
             id={makeId?.({ item: tab, specifier: "tab" })}
-            data-testid={`s-tab-${stringUtils.simplifyText(tab.label)}`}
+            data-testid={`s-tab-${simplifyText(tab.label)}`}
         >
             <TabValue tab={tab} isSelected={isSelected} location={"tabs"} />
         </button>

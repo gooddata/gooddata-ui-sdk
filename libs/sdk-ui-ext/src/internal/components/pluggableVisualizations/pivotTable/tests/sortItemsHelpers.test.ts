@@ -20,7 +20,7 @@ import {
     type IBucketItem,
     type IExtendedReferencePoint,
 } from "../../../../interfaces/Visualization.js";
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
+import { simpleStackedReferencePoint } from "../../../../tests/mocks/referencePointMocks.js";
 import {
     adaptReferencePointSortItemsToPivotTable,
     addDefaultSort,
@@ -60,7 +60,7 @@ const germanyElement1Uri = "/attr.country/elements?id=1";
 const polandElement2Uri = "/attr.country/elements?id=2";
 
 describe("adaptReferencePointSortItemsToPivotTable", () => {
-    const sourceReferencePoint = referencePointMocks.simpleStackedReferencePoint;
+    const sourceReferencePoint = simpleStackedReferencePoint;
     const mockPivotTableReferencePoint: IExtendedReferencePoint = getMockReferencePoint(
         sourceReferencePoint.buckets[0].items,
         sourceReferencePoint.buckets[1].items,

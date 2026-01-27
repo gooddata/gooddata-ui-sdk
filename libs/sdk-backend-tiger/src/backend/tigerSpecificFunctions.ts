@@ -50,7 +50,6 @@ import {
     type ScanSqlResponse,
     type TestDefinitionRequestTypeEnum,
     type UploadFileResponse,
-    jsonApiHeaders,
 } from "@gooddata/api-client-tiger";
 import {
     AacApi_GetAnalyticsModelAac,
@@ -737,12 +736,10 @@ export const buildTigerSpecificFunctions = (
     isCommunityEdition: async () => {
         try {
             return await authApiCall(async (sdk) => {
-                const response = await EntitiesApi_GetAllEntitiesWorkspaces(
-                    sdk.axios,
-                    "",
-                    { page: 0, size: 1 },
-                    { headers: jsonApiHeaders },
-                );
+                const response = await EntitiesApi_GetAllEntitiesWorkspaces(sdk.axios, "", {
+                    page: 0,
+                    size: 1,
+                });
 
                 // the header name are all lowercase in this object
                 return response.headers["gooddata-deployment"] === "aio";

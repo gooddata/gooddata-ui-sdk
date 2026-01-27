@@ -1,12 +1,18 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 import { type IVisConstruct } from "../../../../interfaces/Visualization.js";
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
-import * as testMocks from "../../../../tests/mocks/testMocks.js";
+import {
+    arithmeticMeasureItems,
+    emptyReferencePoint,
+    firstMeasureArithmeticNoAttributeReferencePoint,
+    masterMeasureItems,
+    overTimeComparisonDateItem,
+} from "../../../../tests/mocks/referencePointMocks.js";
+import { insightWithSingleMeasure } from "../../../../tests/mocks/testMocks.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../../utils/translations.js";
 import { getLastRenderEl } from "../../tests/pluggableVisualizations.test.helpers.js";
 import { PluggableComboChartDeprecated } from "../PluggableComboChartDeprecated.js";
@@ -51,20 +57,17 @@ describe("PluggableComboChartDeprecated", () => {
             const combo = createComponent();
 
             const extendedReferencePoint = await combo.getExtendedReferencePoint(
-                referencePointMocks.firstMeasureArithmeticNoAttributeReferencePoint,
+                firstMeasureArithmeticNoAttributeReferencePoint,
             );
 
             expect(extendedReferencePoint.buckets).toEqual([
                 {
                     localIdentifier: "measures",
-                    items: [referencePointMocks.arithmeticMeasureItems[0]],
+                    items: [arithmeticMeasureItems[0]],
                 },
                 {
                     localIdentifier: "secondary_measures",
-                    items: [
-                        referencePointMocks.masterMeasureItems[0],
-                        referencePointMocks.masterMeasureItems[1],
-                    ],
+                    items: [masterMeasureItems[0], masterMeasureItems[1]],
                 },
                 {
                     localIdentifier: "view",
@@ -80,11 +83,7 @@ describe("PluggableComboChartDeprecated", () => {
                 buckets: [
                     {
                         localIdentifier: "measures",
-                        items: [
-                            referencePointMocks.arithmeticMeasureItems[0],
-                            referencePointMocks.masterMeasureItems[0],
-                            referencePointMocks.masterMeasureItems[1],
-                        ],
+                        items: [arithmeticMeasureItems[0], masterMeasureItems[0], masterMeasureItems[1]],
                     },
                     {
                         localIdentifier: "secondary_measures",
@@ -93,18 +92,14 @@ describe("PluggableComboChartDeprecated", () => {
                 ],
                 filters: {
                     localIdentifier: "filters",
-                    items: [referencePointMocks.overTimeComparisonDateItem],
+                    items: [overTimeComparisonDateItem],
                 },
             });
 
             expect(extendedReferencePoint.buckets).toEqual([
                 {
                     localIdentifier: "measures",
-                    items: [
-                        referencePointMocks.arithmeticMeasureItems[0],
-                        referencePointMocks.masterMeasureItems[0],
-                        referencePointMocks.masterMeasureItems[1],
-                    ],
+                    items: [arithmeticMeasureItems[0], masterMeasureItems[0], masterMeasureItems[1]],
                 },
                 {
                     localIdentifier: "secondary_measures",
@@ -122,9 +117,7 @@ describe("PluggableComboChartDeprecated", () => {
         it("should return reference point containing uiConfig with no supported comparison types", async () => {
             const component = createComponent();
 
-            const extendedReferencePoint = await component.getExtendedReferencePoint(
-                referencePointMocks.emptyReferencePoint,
-            );
+            const extendedReferencePoint = await component.getExtendedReferencePoint(emptyReferencePoint);
 
             expect(extendedReferencePoint.uiConfig!.supportedOverTimeComparisonTypes).toEqual([]);
         });
@@ -134,7 +127,7 @@ describe("PluggableComboChartDeprecated", () => {
         it("should mount on the element defined by the callback", () => {
             const visualization = createComponent();
 
-            visualization.update({ messages }, testMocks.insightWithSingleMeasure, {}, executionFactory);
+            visualization.update({ messages }, insightWithSingleMeasure, {}, executionFactory);
 
             // 1st call for rendering element
             // 2nd call for rendering config panel

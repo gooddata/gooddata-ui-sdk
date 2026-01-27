@@ -1,9 +1,9 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import cx from "classnames";
 
 import { type RankingFilterOperator } from "@gooddata/sdk-model";
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 interface IOperatorDropdownItemProps {
     title: string;
@@ -20,7 +20,7 @@ export function OperatorDropdownItem({ title, value, isSelected, onSelect }: IOp
             "is-selected": isSelected,
         },
         "gd-button-link",
-        `s-rf-operator-${stringUtils.simplifyText(title)}`,
+        `s-rf-operator-${simplifyText(title)}`,
     );
 
     return (

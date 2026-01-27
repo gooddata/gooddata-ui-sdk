@@ -17,7 +17,7 @@ import {
     ScrollablePanel,
     useToastMessage,
 } from "@gooddata/sdk-ui-kit";
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { AlertsList } from "./InsightAlertConfig/AlertsList.js";
 import { NoAvailableMeasures } from "./InsightAlertConfig/NoAvailableAlerts.js";
@@ -75,9 +75,7 @@ export function InsightAlertsNew({ widget, onClose, onGoBack }: IInsightMenuSubm
     const [isDeleteInProgress, setIsDeleteInProgress] = useState(false);
     const [alertToDelete, setAlertToDelete] = useState<null | IAutomationMetadataObject>(null);
 
-    const widgetRefSuffix = isInsightWidget(widget)
-        ? stringUtils.simplifyText(objRefToString(widget.ref))
-        : "";
+    const widgetRefSuffix = isInsightWidget(widget) ? simplifyText(objRefToString(widget.ref)) : "";
     const classes = cx(
         "gd-alerts-configuration-panel",
         "configuration-scrollable-panel",

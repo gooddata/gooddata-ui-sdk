@@ -1,7 +1,7 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { Headline } from "../../tools/headline";
-import * as Navigation from "../../tools/navigation";
+import { visit } from "../../tools/navigation";
 
 const pressButton = (buttonName: string) => {
     cy.get(`.s-${buttonName}-button`).click();
@@ -23,7 +23,7 @@ const scenarios = [
 // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
 describe.skip("Headline drilling", { tags: ["pre-merge_isolated_bear"] }, () => {
     beforeEach(() => {
-        Navigation.visit("visualizations/headline/headline-drilling");
+        visit("visualizations/headline/headline-drilling");
     });
 
     scenarios.forEach((item) => {

@@ -6,7 +6,7 @@ import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
 import { type ObjRef } from "@gooddata/sdk-model";
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { ParentFiltersDisabledItem } from "./ParentFiltersDisabledItem.js";
 import { useDashboardSelector } from "../../../../../../model/react/DashboardStoreProvider.js";
@@ -46,7 +46,7 @@ export function ParentFiltersListItem({
     const activeItemClasses = useMemo(() => {
         return cx(
             "gd-list-item attribute-filter-item s-attribute-filter-dropdown-configuration-item",
-            `s-${stringUtils.simplifyText(title)}`,
+            `s-${simplifyText(title)}`,
             {
                 "is-selected": isSelected,
             },

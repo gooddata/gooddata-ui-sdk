@@ -5,7 +5,7 @@ import { type KeyboardEvent, type MutableRefObject, type ReactNode, useCallback 
 import cx from "classnames";
 
 import { isActionKey } from "@gooddata/sdk-ui-kit";
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { FilterButtonCustomIcon } from "../../shared/components/internal/FilterButtonCustomIcon.js";
 import { type IFilterButtonCustomIcon } from "../../shared/interfaces/index.js";
@@ -55,7 +55,7 @@ export function DateFilterButton({
             className={cx(
                 "s-date-filter-button",
                 "gd-date-filter-button",
-                `s-date-filter-button-${stringUtils.simplifyText(customFilterName ?? "")}`,
+                `s-date-filter-button-${simplifyText(customFilterName ?? "")}`,
                 "dropdown-button",
                 isMobile && "gd-date-filter-button-mobile",
                 isOpen && "is-active",

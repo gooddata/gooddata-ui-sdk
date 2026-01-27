@@ -1,7 +1,23 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import { type IExecutionDefinition, type ITotal } from "@gooddata/sdk-model";
 
-import * as configUtils from "./tableConfigUtils.js";
+import {
+    checkIsColumnAutoresizeEnabled,
+    checkIsGrowToFitEnabled,
+    getColumnHeadersPosition,
+    getColumnTotals,
+    getColumnWidths,
+    getDefaultWidth,
+    getDefaultWidthFromProps,
+    getExecutionDefinition,
+    getGroupRows,
+    getMeasureGroupDimension,
+    getMenuConfig,
+    getRowTotals,
+    hasColumnWidths,
+    shouldAutoResizeColumns,
+} from "./tableConfigUtils.js";
 import { type ColumnWidthItem } from "../../columnWidths.js";
 import {
     type ColumnHeadersPosition,
@@ -29,64 +45,64 @@ export class TableConfigAccessors {
 
     // Column totals and row totals
     public getColumnTotals = (): ITotal[] => {
-        return configUtils.getColumnTotals(this.context.state);
+        return getColumnTotals(this.context.state);
     };
 
     public getRowTotals = (): ITotal[] => {
-        return configUtils.getRowTotals(this.context.state);
+        return getRowTotals(this.context.state);
     };
 
     // Execution definition
     public getExecutionDefinition = (): IExecutionDefinition => {
-        return configUtils.getExecutionDefinition(this.context.props);
+        return getExecutionDefinition(this.context.props);
     };
 
     // Table configuration
     public getGroupRows = (): boolean => {
-        return configUtils.getGroupRows(this.context.props);
+        return getGroupRows(this.context.props);
     };
 
     public getMeasureGroupDimension = (): MeasureGroupDimension => {
-        return configUtils.getMeasureGroupDimension(this.context.props);
+        return getMeasureGroupDimension(this.context.props);
     };
 
     public getColumnHeadersPosition = (): ColumnHeadersPosition => {
-        return configUtils.getColumnHeadersPosition(this.context.props);
+        return getColumnHeadersPosition(this.context.props);
     };
 
     public getMenuConfig = (): IMenu => {
-        return configUtils.getMenuConfig(this.context.props);
+        return getMenuConfig(this.context.props);
     };
 
     // Column sizing configuration
     public getDefaultWidth = (): number => {
-        return configUtils.getDefaultWidth();
+        return getDefaultWidth();
     };
 
     public isColumnAutoresizeEnabled = (): boolean => {
-        return configUtils.checkIsColumnAutoresizeEnabled(this.context.props);
+        return checkIsColumnAutoresizeEnabled(this.context.props);
     };
 
     public isGrowToFitEnabled = (props: ICorePivotTableProps = this.context.props): boolean => {
-        return configUtils.checkIsGrowToFitEnabled(props);
+        return checkIsGrowToFitEnabled(props);
     };
 
     public getColumnWidths = (
         props: ICorePivotTableProps = this.context.props,
     ): ColumnWidthItem[] | undefined => {
-        return configUtils.getColumnWidths(props);
+        return getColumnWidths(props);
     };
 
     public hasColumnWidths = (): boolean => {
-        return configUtils.hasColumnWidths(this.context.props);
+        return hasColumnWidths(this.context.props);
     };
 
     public getDefaultWidthFromProps = (props: ICorePivotTableProps): DefaultColumnWidth => {
-        return configUtils.getDefaultWidthFromProps(props);
+        return getDefaultWidthFromProps(props);
     };
 
     // Utility methods
     public shouldAutoResizeColumns = (): boolean => {
-        return configUtils.shouldAutoResizeColumns(this.context.props);
+        return shouldAutoResizeColumns(this.context.props);
     };
 }

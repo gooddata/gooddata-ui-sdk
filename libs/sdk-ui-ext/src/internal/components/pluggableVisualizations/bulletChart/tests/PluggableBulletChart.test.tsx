@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { cloneDeep } from "lodash-es";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -21,8 +21,33 @@ import {
     type IReferencePoint,
     type IVisConstruct,
 } from "../../../../interfaces/Visualization.js";
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
-import * as testMocks from "../../../../tests/mocks/testMocks.js";
+import {
+    arithmeticMeasureItems,
+    attributeFilterBucketItem,
+    attributeItems,
+    dateAttributeOnRowsAndColumnsReferencePoint,
+    dateItem,
+    derivedMeasureItems,
+    emptyReferencePoint,
+    justViewByReferencePoint,
+    masterMeasureItems,
+    multipleDatesNotAsFirstReferencePointWithSingleMeasureColumn,
+    multipleMetricsAndCategoriesReferencePoint,
+    multipleMetricsNoCategoriesReferencePoint,
+    oneMetricAndTwoCategoriesReferencePoint,
+    oneMetricNoCategoriesReferencePoint,
+    onePrimaryMetricAndOneViewByRefPoint,
+    overTimeComparisonDateItem,
+    secondaryAndTertiaryMeasuresWithTwoAttributesReferencePoint,
+    threeDifferentDatesReferencePoint,
+    threeIdenticalDatesInRowsAndColumns,
+    threeMeasuresBucketsReferencePoint,
+    threeMeasuresTwoViewByReferencePoint,
+    twoIdenticalDatesInRowsAndColumns,
+    twoMeasuresBucketsTwoViewByReferencePoint,
+    twoMetricsAndOneViewByRefPoint,
+} from "../../../../tests/mocks/referencePointMocks.js";
+import { insightWithSingleMeasure } from "../../../../tests/mocks/testMocks.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../../utils/translations.js";
 import {
     createDrillDefinition,
@@ -71,7 +96,7 @@ describe("PluggableBulletChart", () => {
 
     it("should return reference point with three measures and one category and only valid filters", async () => {
         const extendedReferencePoint = await bulletChart.getExtendedReferencePoint(
-            referencePointMocks.multipleMetricsAndCategoriesReferencePoint,
+            multipleMetricsAndCategoriesReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -79,7 +104,7 @@ describe("PluggableBulletChart", () => {
 
     it("should return reference point with three measures and no attribute", async () => {
         const extendedReferencePoint = await bulletChart.getExtendedReferencePoint(
-            referencePointMocks.multipleMetricsNoCategoriesReferencePoint,
+            multipleMetricsNoCategoriesReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -87,7 +112,7 @@ describe("PluggableBulletChart", () => {
 
     it("should return reference point with target and comparative measures and one category", async () => {
         const extendedReferencePoint = await bulletChart.getExtendedReferencePoint(
-            referencePointMocks.secondaryAndTertiaryMeasuresWithTwoAttributesReferencePoint,
+            secondaryAndTertiaryMeasuresWithTwoAttributesReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -98,12 +123,12 @@ describe("PluggableBulletChart", () => {
             const inputs: [string, IReferencePoint, Partial<IExtendedReferencePoint>][] = [
                 [
                     "from table to bullet chart: two same dates in view by (should ignore date with different date dimension)",
-                    referencePointMocks.twoIdenticalDatesInRowsAndColumns,
+                    twoIdenticalDatesInRowsAndColumns,
                     {
                         buckets: [
                             {
                                 localIdentifier: "measures",
-                                items: referencePointMocks.masterMeasureItems.slice(0, 1),
+                                items: masterMeasureItems.slice(0, 1),
                             },
                             {
                                 localIdentifier: "secondary_measures",
@@ -115,7 +140,7 @@ describe("PluggableBulletChart", () => {
                             },
                             {
                                 localIdentifier: "view",
-                                items: [referencePointMocks.dateItem, referencePointMocks.dateItem],
+                                items: [dateItem, dateItem],
                             },
                         ],
                         filters: {
@@ -126,12 +151,12 @@ describe("PluggableBulletChart", () => {
                 ],
                 [
                     "from table to bullet chart: one date in view by (view by should not contain dates with different date dimensions)",
-                    referencePointMocks.threeDifferentDatesReferencePoint,
+                    threeDifferentDatesReferencePoint,
                     {
                         buckets: [
                             {
                                 localIdentifier: "measures",
-                                items: referencePointMocks.masterMeasureItems.slice(0, 1),
+                                items: masterMeasureItems.slice(0, 1),
                             },
                             {
                                 localIdentifier: "secondary_measures",
@@ -143,7 +168,7 @@ describe("PluggableBulletChart", () => {
                             },
                             {
                                 localIdentifier: "view",
-                                items: [referencePointMocks.dateItem],
+                                items: [dateItem],
                             },
                         ],
                         filters: {
@@ -154,12 +179,12 @@ describe("PluggableBulletChart", () => {
                 ],
                 [
                     "from table to bullet chart: max two dates in view by",
-                    referencePointMocks.threeIdenticalDatesInRowsAndColumns,
+                    threeIdenticalDatesInRowsAndColumns,
                     {
                         buckets: [
                             {
                                 localIdentifier: "measures",
-                                items: referencePointMocks.masterMeasureItems.slice(0, 1),
+                                items: masterMeasureItems.slice(0, 1),
                             },
                             {
                                 localIdentifier: "secondary_measures",
@@ -171,7 +196,7 @@ describe("PluggableBulletChart", () => {
                             },
                             {
                                 localIdentifier: "view",
-                                items: [referencePointMocks.dateItem, referencePointMocks.dateItem],
+                                items: [dateItem, dateItem],
                             },
                         ],
                         filters: {
@@ -182,12 +207,12 @@ describe("PluggableBulletChart", () => {
                 ],
                 [
                     "from table to bullet chart: attribute and date in view by",
-                    referencePointMocks.multipleDatesNotAsFirstReferencePointWithSingleMeasureColumn,
+                    multipleDatesNotAsFirstReferencePointWithSingleMeasureColumn,
                     {
                         buckets: [
                             {
                                 localIdentifier: "measures",
-                                items: referencePointMocks.masterMeasureItems.slice(0, 1),
+                                items: masterMeasureItems.slice(0, 1),
                             },
                             {
                                 localIdentifier: "secondary_measures",
@@ -199,7 +224,7 @@ describe("PluggableBulletChart", () => {
                             },
                             {
                                 localIdentifier: "view",
-                                items: [referencePointMocks.attributeItems[0], referencePointMocks.dateItem],
+                                items: [attributeItems[0], dateItem],
                             },
                         ],
                         filters: {
@@ -228,9 +253,7 @@ describe("PluggableBulletChart", () => {
             const expectedBuckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",
-                    items: [
-                        ...referencePointMocks.dateAttributeOnRowsAndColumnsReferencePoint.buckets[0].items,
-                    ],
+                    items: [...dateAttributeOnRowsAndColumnsReferencePoint.buckets[0].items],
                 },
                 {
                     localIdentifier: "secondary_measures",
@@ -243,14 +266,14 @@ describe("PluggableBulletChart", () => {
                 {
                     localIdentifier: "view",
                     items: [
-                        ...referencePointMocks.dateAttributeOnRowsAndColumnsReferencePoint.buckets[1].items,
-                        ...referencePointMocks.dateAttributeOnRowsAndColumnsReferencePoint.buckets[2].items,
+                        ...dateAttributeOnRowsAndColumnsReferencePoint.buckets[1].items,
+                        ...dateAttributeOnRowsAndColumnsReferencePoint.buckets[2].items,
                     ],
                 },
             ];
 
             const extendedReferencePoint = await bulletChart.getExtendedReferencePoint(
-                referencePointMocks.dateAttributeOnRowsAndColumnsReferencePoint,
+                dateAttributeOnRowsAndColumnsReferencePoint,
             );
 
             expect(extendedReferencePoint).toMatchObject({
@@ -259,7 +282,7 @@ describe("PluggableBulletChart", () => {
         });
 
         it("should keep first Date item when items have different dimensions", async () => {
-            const mockRefPoint = cloneDeep(referencePointMocks.dateAttributeOnRowsAndColumnsReferencePoint);
+            const mockRefPoint = cloneDeep(dateAttributeOnRowsAndColumnsReferencePoint);
             mockRefPoint.buckets[2].items[0].dateDatasetRef = {
                 uri: "closed",
             };
@@ -298,31 +321,31 @@ describe("PluggableBulletChart", () => {
                     {
                         localIdentifier: "measures",
                         items: [
-                            referencePointMocks.arithmeticMeasureItems[3],
-                            referencePointMocks.derivedMeasureItems[0],
-                            referencePointMocks.masterMeasureItems[1],
-                            referencePointMocks.masterMeasureItems[0],
+                            arithmeticMeasureItems[3],
+                            derivedMeasureItems[0],
+                            masterMeasureItems[1],
+                            masterMeasureItems[0],
                         ],
                     },
                 ],
                 filters: {
                     localIdentifier: "filters",
-                    items: [referencePointMocks.overTimeComparisonDateItem],
+                    items: [overTimeComparisonDateItem],
                 },
             });
 
             expect(extendedReferencePoint.buckets).toEqual([
                 {
                     localIdentifier: "measures",
-                    items: [referencePointMocks.arithmeticMeasureItems[3]],
+                    items: [arithmeticMeasureItems[3]],
                 },
                 {
                     localIdentifier: "secondary_measures",
-                    items: [referencePointMocks.derivedMeasureItems[0]],
+                    items: [derivedMeasureItems[0]],
                 },
                 {
                     localIdentifier: "tertiary_measures",
-                    items: [referencePointMocks.masterMeasureItems[0]],
+                    items: [masterMeasureItems[0]],
                 },
                 {
                     localIdentifier: "view",
@@ -337,32 +360,32 @@ describe("PluggableBulletChart", () => {
                     {
                         localIdentifier: "measures",
                         items: [
-                            referencePointMocks.masterMeasureItems[0],
-                            referencePointMocks.arithmeticMeasureItems[6],
-                            referencePointMocks.masterMeasureItems[1],
-                            referencePointMocks.derivedMeasureItems[0],
-                            referencePointMocks.masterMeasureItems[2],
+                            masterMeasureItems[0],
+                            arithmeticMeasureItems[6],
+                            masterMeasureItems[1],
+                            derivedMeasureItems[0],
+                            masterMeasureItems[2],
                         ],
                     },
                 ],
                 filters: {
                     localIdentifier: "filters",
-                    items: [referencePointMocks.overTimeComparisonDateItem],
+                    items: [overTimeComparisonDateItem],
                 },
             });
 
             expect(extendedReferencePoint.buckets).toEqual([
                 {
                     localIdentifier: "measures",
-                    items: [referencePointMocks.masterMeasureItems[0]],
+                    items: [masterMeasureItems[0]],
                 },
                 {
                     localIdentifier: "secondary_measures",
-                    items: [referencePointMocks.masterMeasureItems[1]],
+                    items: [masterMeasureItems[1]],
                 },
                 {
                     localIdentifier: "tertiary_measures",
-                    items: [referencePointMocks.derivedMeasureItems[0]],
+                    items: [derivedMeasureItems[0]],
                 },
                 {
                     localIdentifier: "view",
@@ -376,31 +399,27 @@ describe("PluggableBulletChart", () => {
                 buckets: [
                     {
                         localIdentifier: "measures",
-                        items: [
-                            referencePointMocks.arithmeticMeasureItems[2],
-                            referencePointMocks.masterMeasureItems[0],
-                            referencePointMocks.masterMeasureItems[1],
-                        ],
+                        items: [arithmeticMeasureItems[2], masterMeasureItems[0], masterMeasureItems[1]],
                     },
                 ],
                 filters: {
                     localIdentifier: "filters",
-                    items: [referencePointMocks.overTimeComparisonDateItem],
+                    items: [overTimeComparisonDateItem],
                 },
             });
 
             expect(extendedReferencePoint.buckets).toEqual([
                 {
                     localIdentifier: "measures",
-                    items: [referencePointMocks.arithmeticMeasureItems[2]],
+                    items: [arithmeticMeasureItems[2]],
                 },
                 {
                     localIdentifier: "secondary_measures",
-                    items: [referencePointMocks.masterMeasureItems[0]],
+                    items: [masterMeasureItems[0]],
                 },
                 {
                     localIdentifier: "tertiary_measures",
-                    items: [referencePointMocks.masterMeasureItems[1]],
+                    items: [masterMeasureItems[1]],
                 },
                 {
                     localIdentifier: "view",
@@ -412,9 +431,7 @@ describe("PluggableBulletChart", () => {
 
     describe("Over Time Comparison", () => {
         it("should return reference point containing uiConfig with PP, SP supported comparison types", async () => {
-            const extendedReferencePoint = await bulletChart.getExtendedReferencePoint(
-                referencePointMocks.emptyReferencePoint,
-            );
+            const extendedReferencePoint = await bulletChart.getExtendedReferencePoint(emptyReferencePoint);
 
             expect(extendedReferencePoint.uiConfig!.supportedOverTimeComparisonTypes).toEqual([
                 OverTimeComparisonTypes.SAME_PERIOD_PREVIOUS_YEAR,
@@ -428,11 +445,11 @@ describe("PluggableBulletChart", () => {
                     buckets: [
                         {
                             localIdentifier: "measures",
-                            items: [referencePointMocks.masterMeasureItems[0]],
+                            items: [masterMeasureItems[0]],
                         },
                         {
                             localIdentifier: "secondary_measures",
-                            items: [referencePointMocks.masterMeasureItems[1]],
+                            items: [masterMeasureItems[1]],
                         },
                         {
                             localIdentifier: "tertiary_measures",
@@ -445,13 +462,13 @@ describe("PluggableBulletChart", () => {
                     ],
                     filters: {
                         localIdentifier: "filters",
-                        items: [referencePointMocks.overTimeComparisonDateItem],
+                        items: [overTimeComparisonDateItem],
                     },
                 };
 
                 const referencePointWithDerivedItems = await bulletChart.addNewDerivedBucketItems(
                     referencePoint,
-                    [referencePointMocks.derivedMeasureItems[0]],
+                    [derivedMeasureItems[0]],
                 );
 
                 const extendedReferencePoint = await bulletChart.getExtendedReferencePoint(
@@ -461,15 +478,15 @@ describe("PluggableBulletChart", () => {
                 expect(extendedReferencePoint.buckets).toEqual([
                     {
                         localIdentifier: "measures",
-                        items: [referencePointMocks.masterMeasureItems[0]],
+                        items: [masterMeasureItems[0]],
                     },
                     {
                         localIdentifier: "secondary_measures",
-                        items: [referencePointMocks.masterMeasureItems[1]],
+                        items: [masterMeasureItems[1]],
                     },
                     {
                         localIdentifier: "tertiary_measures",
-                        items: [referencePointMocks.derivedMeasureItems[0]],
+                        items: [derivedMeasureItems[0]],
                     },
                     {
                         localIdentifier: "view",
@@ -483,7 +500,7 @@ describe("PluggableBulletChart", () => {
                     buckets: [
                         {
                             localIdentifier: "measures",
-                            items: [referencePointMocks.masterMeasureItems[0]],
+                            items: [masterMeasureItems[0]],
                         },
                         {
                             localIdentifier: "secondary_measures",
@@ -500,13 +517,13 @@ describe("PluggableBulletChart", () => {
                     ],
                     filters: {
                         localIdentifier: "filters",
-                        items: [referencePointMocks.overTimeComparisonDateItem],
+                        items: [overTimeComparisonDateItem],
                     },
                 };
 
                 const referencePointWithDerivedItems = await bulletChart.addNewDerivedBucketItems(
                     referencePoint,
-                    [referencePointMocks.derivedMeasureItems[0]],
+                    [derivedMeasureItems[0]],
                 );
 
                 const extendedReferencePoint = await bulletChart.getExtendedReferencePoint(
@@ -516,11 +533,11 @@ describe("PluggableBulletChart", () => {
                 expect(extendedReferencePoint.buckets).toEqual([
                     {
                         localIdentifier: "measures",
-                        items: [referencePointMocks.masterMeasureItems[0]],
+                        items: [masterMeasureItems[0]],
                     },
                     {
                         localIdentifier: "secondary_measures",
-                        items: [referencePointMocks.derivedMeasureItems[0]],
+                        items: [derivedMeasureItems[0]],
                     },
                     {
                         localIdentifier: "tertiary_measures",
@@ -538,16 +555,13 @@ describe("PluggableBulletChart", () => {
                     buckets: [
                         {
                             localIdentifier: "measures",
-                            items: [
-                                referencePointMocks.derivedMeasureItems[0],
-                                referencePointMocks.masterMeasureItems[0],
-                            ],
+                            items: [derivedMeasureItems[0], masterMeasureItems[0]],
                         },
                         {
                             localIdentifier: "attribute",
                             items: [
                                 {
-                                    ...referencePointMocks.dateItem,
+                                    ...dateItem,
                                     dateDatasetRef: {
                                         uri: "/gdc/md/a1",
                                     },
@@ -558,7 +572,7 @@ describe("PluggableBulletChart", () => {
                             localIdentifier: "columns",
                             items: [
                                 {
-                                    ...referencePointMocks.dateItem,
+                                    ...dateItem,
                                     localIdentifier: "a2",
                                     dateDatasetRef: {
                                         uri: "/gdc/md/a2",
@@ -567,7 +581,7 @@ describe("PluggableBulletChart", () => {
                             ],
                         },
                     ],
-                    filters: referencePointMocks.attributeFilterBucketItem,
+                    filters: attributeFilterBucketItem,
                 };
 
                 const extendedReferencePoint = await bulletChart.getExtendedReferencePoint(referencePoint);
@@ -575,7 +589,7 @@ describe("PluggableBulletChart", () => {
                 expect(extendedReferencePoint.buckets).toEqual([
                     {
                         localIdentifier: "measures",
-                        items: [referencePointMocks.masterMeasureItems[0]],
+                        items: [masterMeasureItems[0]],
                     },
                     {
                         localIdentifier: "secondary_measures",
@@ -589,7 +603,7 @@ describe("PluggableBulletChart", () => {
                         localIdentifier: "view",
                         items: [
                             {
-                                ...referencePointMocks.dateItem,
+                                ...dateItem,
                                 localIdentifier: "a1",
                                 dateDatasetRef: {
                                     uri: "/gdc/md/a1",
@@ -655,15 +669,15 @@ describe("PluggableBulletChart", () => {
 
     describe("Sort config", () => {
         const scenarios: Array<[string, IReferencePoint]> = [
-            ["0 M + 0 VB", referencePointMocks.emptyReferencePoint],
-            ["1 M + 0 VB", referencePointMocks.oneMetricNoCategoriesReferencePoint],
-            ["0 M + 1 VB", referencePointMocks.justViewByReferencePoint],
-            ["1 M + 1 VB", referencePointMocks.onePrimaryMetricAndOneViewByRefPoint],
-            ["1 M + 2 VB", referencePointMocks.oneMetricAndTwoCategoriesReferencePoint],
-            ["2 M + 1 VB", referencePointMocks.twoMetricsAndOneViewByRefPoint],
-            ["2 M + 2 VB", referencePointMocks.twoMeasuresBucketsTwoViewByReferencePoint],
-            ["3 M + 1 VB", referencePointMocks.threeMeasuresBucketsReferencePoint],
-            ["3 M + 2 VB", referencePointMocks.threeMeasuresTwoViewByReferencePoint],
+            ["0 M + 0 VB", emptyReferencePoint],
+            ["1 M + 0 VB", oneMetricNoCategoriesReferencePoint],
+            ["0 M + 1 VB", justViewByReferencePoint],
+            ["1 M + 1 VB", onePrimaryMetricAndOneViewByRefPoint],
+            ["1 M + 2 VB", oneMetricAndTwoCategoriesReferencePoint],
+            ["2 M + 1 VB", twoMetricsAndOneViewByRefPoint],
+            ["2 M + 2 VB", twoMeasuresBucketsTwoViewByReferencePoint],
+            ["3 M + 1 VB", threeMeasuresBucketsReferencePoint],
+            ["3 M + 2 VB", threeMeasuresTwoViewByReferencePoint],
         ];
 
         it.each(scenarios)("should return expected sort config for %s", async (_name, referencePointMock) => {
@@ -679,7 +693,7 @@ describe("PluggableBulletChart", () => {
         it("should mount on the element defined by the callback", () => {
             const visualization = createComponent();
 
-            visualization.update({ messages }, testMocks.insightWithSingleMeasure, {}, executionFactory);
+            visualization.update({ messages }, insightWithSingleMeasure, {}, executionFactory);
 
             // 1st call for rendering element
             // 2nd call for rendering config panel

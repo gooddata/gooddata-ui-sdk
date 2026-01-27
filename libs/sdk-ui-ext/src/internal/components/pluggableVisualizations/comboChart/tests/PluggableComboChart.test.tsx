@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { cloneDeep, merge } from "lodash-es";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -16,8 +16,32 @@ import {
     type IUiConfig,
     type IVisConstruct,
 } from "../../../../interfaces/Visualization.js";
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
-import * as testMocks from "../../../../tests/mocks/testMocks.js";
+import {
+    arithmeticMeasureItems,
+    attributeItems,
+    derivedMeasureItems,
+    emptyReferencePoint,
+    firstMeasureArithmeticNoAttributeReferencePoint,
+    masterMeasureItems,
+    masterMeasuresWithPercentage,
+    measureWithDerivedAndPercentageRefPoint,
+    measuresOnSecondaryAxisAndAttributeReferencePoint,
+    multipleMeasuresWithPercentageRefPoint,
+    multipleMetricBucketsAndCategoryReferencePoint,
+    multipleMetricBucketsWithPercentageRefPoint,
+    multipleMetricsAndCategoriesReferencePoint,
+    multipleSecondaryMeasuresWithPercentageRefPoint,
+    noMetricInAnyBucketRefPoint,
+    oneMetricAndCategoryAndStackReferencePoint,
+    onePrimaryMetricAndOneViewByRefPoint,
+    oneSecondaryMetricAndOneViewByAreaChartComboRefPoint,
+    oneSecondaryMetricAndOneViewByRefPoint,
+    overTimeComparisonDateItem,
+    twoMetricNoViewByRefpoint,
+    twoMetricsAndOneViewByRefPoint,
+    twoPrimaryStackedMetricAndOneViewByReferencePoint,
+} from "../../../../tests/mocks/referencePointMocks.js";
+import { insightWithSingleMeasure } from "../../../../tests/mocks/testMocks.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../../utils/translations.js";
 import { getLastRenderEl } from "../../tests/pluggableVisualizations.test.helpers.js";
 import { PluggableComboChart } from "../PluggableComboChart.js";
@@ -74,7 +98,7 @@ describe("PluggableComboChart", () => {
 
     describe("Buckets transformation", () => {
         it("should reuse all primary measures and secondary measures in reference point", async () => {
-            const refPointMock = referencePointMocks.multipleMetricBucketsAndCategoryReferencePoint;
+            const refPointMock = multipleMetricBucketsAndCategoryReferencePoint;
             const extRefPoint: IExtendedReferencePoint = await getExtendedReferencePoint(refPointMock);
 
             expect(extRefPoint.buckets).toEqual([
@@ -82,7 +106,7 @@ describe("PluggableComboChart", () => {
                     ...primaryMeasureBucketProps,
                     items: [
                         {
-                            ...referencePointMocks.masterMeasureItems[0],
+                            ...masterMeasureItems[0],
                             showOnSecondaryAxis: false,
                         },
                     ],
@@ -91,11 +115,11 @@ describe("PluggableComboChart", () => {
                     ...secondaryMeasureBucketProps,
                     items: [
                         {
-                            ...referencePointMocks.masterMeasureItems[1],
+                            ...masterMeasureItems[1],
                             showOnSecondaryAxis: true,
                         },
                         {
-                            ...referencePointMocks.masterMeasureItems[2],
+                            ...masterMeasureItems[2],
                             showOnSecondaryAxis: true,
                         },
                     ],
@@ -105,43 +129,35 @@ describe("PluggableComboChart", () => {
         });
 
         it("should place all secondary measures from dual axis chart to secondary measures bucket", async () => {
-            const extRefPoint = await getExtendedReferencePoint(
-                referencePointMocks.multipleMetricsAndCategoriesReferencePoint,
-            );
+            const extRefPoint = await getExtendedReferencePoint(multipleMetricsAndCategoriesReferencePoint);
 
             expect(extRefPoint.buckets).toEqual([
                 {
                     ...primaryMeasureBucketProps,
                     items: [
                         {
-                            ...referencePointMocks.masterMeasureItems[0],
+                            ...masterMeasureItems[0],
                             showOnSecondaryAxis: false,
                         },
                         {
-                            ...referencePointMocks.masterMeasureItems[1],
+                            ...masterMeasureItems[1],
                             showOnSecondaryAxis: false,
                         },
                     ],
                 },
                 {
                     ...secondaryMeasureBucketProps,
-                    items: referencePointMocks.masterMeasureItems.slice(2, 4),
+                    items: masterMeasureItems.slice(2, 4),
                 },
                 {
                     localIdentifier: "view",
-                    items: referencePointMocks.attributeItems.slice(0, 1),
+                    items: attributeItems.slice(0, 1),
                 },
             ]);
         });
     });
 
     describe("Arithmetic measures", () => {
-        const {
-            firstMeasureArithmeticNoAttributeReferencePoint,
-            arithmeticMeasureItems,
-            masterMeasureItems,
-        } = referencePointMocks;
-
         it("should place all arithmetic measures into primary measures bucket", async () => {
             const combo = createComponent();
 
@@ -182,7 +198,7 @@ describe("PluggableComboChart", () => {
                 ],
                 filters: {
                     localIdentifier: "filters",
-                    items: [referencePointMocks.overTimeComparisonDateItem],
+                    items: [overTimeComparisonDateItem],
                 },
             });
 
@@ -190,9 +206,9 @@ describe("PluggableComboChart", () => {
                 {
                     ...primaryMeasureBucketProps,
                     items: [
-                        { ...referencePointMocks.arithmeticMeasureItems[0], showOnSecondaryAxis: false },
-                        { ...referencePointMocks.masterMeasureItems[0], showOnSecondaryAxis: false },
-                        { ...referencePointMocks.masterMeasureItems[1], showOnSecondaryAxis: false },
+                        { ...arithmeticMeasureItems[0], showOnSecondaryAxis: false },
+                        { ...masterMeasureItems[0], showOnSecondaryAxis: false },
+                        { ...masterMeasureItems[1], showOnSecondaryAxis: false },
                     ],
                 },
                 secondaryMeasureBucketProps,
@@ -205,12 +221,6 @@ describe("PluggableComboChart", () => {
     });
 
     describe("Dual Axis", () => {
-        const {
-            oneMetricAndCategoryAndStackReferencePoint,
-            multipleMetricsAndCategoriesReferencePoint,
-            measuresOnSecondaryAxisAndAttributeReferencePoint,
-        } = referencePointMocks;
-
         it.each([
             ["NOT", oneMetricAndCategoryAndStackReferencePoint, undefined],
             ["", multipleMetricsAndCategoriesReferencePoint, ["m3", "m4"]],
@@ -254,9 +264,7 @@ describe("PluggableComboChart", () => {
         it("should return reference point with uiConfig containing supportedOverTimeComparisonTypes", async () => {
             const component = createComponent();
 
-            const extendedReferencePoint = await component.getExtendedReferencePoint(
-                referencePointMocks.emptyReferencePoint,
-            );
+            const extendedReferencePoint = await component.getExtendedReferencePoint(emptyReferencePoint);
 
             expect(extendedReferencePoint.uiConfig!.supportedOverTimeComparisonTypes).toEqual([
                 OverTimeComparisonTypes.SAME_PERIOD_PREVIOUS_YEAR,
@@ -295,12 +303,6 @@ describe("PluggableComboChart", () => {
             VisualizationTypes.AREA,
             VisualizationTypes.LINE,
         ];
-
-        const {
-            oneMetricAndCategoryAndStackReferencePoint,
-            multipleMetricsAndCategoriesReferencePoint,
-            measuresOnSecondaryAxisAndAttributeReferencePoint,
-        } = referencePointMocks;
 
         it.each([
             [VisualizationTypes.COLUMN, COMBO_CHART_UICONFIG],
@@ -378,7 +380,7 @@ describe("PluggableComboChart", () => {
 
     describe("show in percent", () => {
         it("should keep percentage config if there is only one master measure", async () => {
-            const refPointMock: IReferencePoint = referencePointMocks.measureWithDerivedAndPercentageRefPoint;
+            const refPointMock: IReferencePoint = measureWithDerivedAndPercentageRefPoint;
             const extRefPoint: IExtendedReferencePoint = await getExtendedReferencePoint(refPointMock);
 
             expect(extRefPoint.buckets).toEqual([
@@ -386,12 +388,12 @@ describe("PluggableComboChart", () => {
                     ...primaryMeasureBucketProps,
                     items: [
                         {
-                            ...referencePointMocks.masterMeasureItems[0],
+                            ...masterMeasureItems[0],
                             showOnSecondaryAxis: false,
                             showInPercent: true,
                         },
                         {
-                            ...referencePointMocks.derivedMeasureItems[0],
+                            ...derivedMeasureItems[0],
                             showOnSecondaryAxis: false,
                             showInPercent: true,
                         },
@@ -403,7 +405,7 @@ describe("PluggableComboChart", () => {
         });
 
         it("should ignore percentage config if there are multiple master measures on primary measure bucket", async () => {
-            const refPointMock: IReferencePoint = referencePointMocks.multipleMeasuresWithPercentageRefPoint;
+            const refPointMock: IReferencePoint = multipleMeasuresWithPercentageRefPoint;
             const extRefPoint: IExtendedReferencePoint = await getExtendedReferencePoint(refPointMock);
 
             expect(extRefPoint.buckets).toEqual([
@@ -411,12 +413,12 @@ describe("PluggableComboChart", () => {
                     ...primaryMeasureBucketProps,
                     items: [
                         {
-                            ...referencePointMocks.masterMeasuresWithPercentage[0],
+                            ...masterMeasuresWithPercentage[0],
                             showOnSecondaryAxis: false,
                             showInPercent: null,
                         },
                         {
-                            ...referencePointMocks.masterMeasuresWithPercentage[1],
+                            ...masterMeasuresWithPercentage[1],
                             showOnSecondaryAxis: false,
                             showInPercent: null,
                         },
@@ -428,8 +430,7 @@ describe("PluggableComboChart", () => {
         });
 
         it("should ignore percentage config if there are multiple master measures on secondary measure bucket", async () => {
-            const refPointMock: IReferencePoint =
-                referencePointMocks.multipleSecondaryMeasuresWithPercentageRefPoint;
+            const refPointMock: IReferencePoint = multipleSecondaryMeasuresWithPercentageRefPoint;
             const extRefPoint: IExtendedReferencePoint = await getExtendedReferencePoint(refPointMock);
 
             expect(extRefPoint.buckets).toEqual([
@@ -438,11 +439,11 @@ describe("PluggableComboChart", () => {
                     ...secondaryMeasureBucketProps,
                     items: [
                         {
-                            ...referencePointMocks.masterMeasuresWithPercentage[2],
+                            ...masterMeasuresWithPercentage[2],
                             showInPercent: null,
                         },
                         {
-                            ...referencePointMocks.masterMeasuresWithPercentage[3],
+                            ...masterMeasuresWithPercentage[3],
                             showInPercent: null,
                         },
                     ],
@@ -452,8 +453,7 @@ describe("PluggableComboChart", () => {
         });
 
         it("should ignore percentage config if there is more than one master measure on each measure bucket", async () => {
-            const refPointMock: IReferencePoint =
-                referencePointMocks.multipleMetricBucketsWithPercentageRefPoint;
+            const refPointMock: IReferencePoint = multipleMetricBucketsWithPercentageRefPoint;
             const extRefPoint: IExtendedReferencePoint = await getExtendedReferencePoint(refPointMock);
 
             expect(extRefPoint.buckets).toEqual([
@@ -461,11 +461,11 @@ describe("PluggableComboChart", () => {
                     ...primaryMeasureBucketProps,
                     items: [
                         {
-                            ...referencePointMocks.masterMeasureItems[0],
+                            ...masterMeasureItems[0],
                             showOnSecondaryAxis: false,
                         },
                         {
-                            ...referencePointMocks.masterMeasureItems[1],
+                            ...masterMeasureItems[1],
                             showOnSecondaryAxis: false,
                         },
                     ],
@@ -474,11 +474,11 @@ describe("PluggableComboChart", () => {
                     ...secondaryMeasureBucketProps,
                     items: [
                         {
-                            ...referencePointMocks.masterMeasureItems[2],
+                            ...masterMeasureItems[2],
                             showOnSecondaryAxis: true,
                         },
                         {
-                            ...referencePointMocks.masterMeasureItems[3],
+                            ...masterMeasureItems[3],
                             showOnSecondaryAxis: true,
                         },
                     ],
@@ -490,7 +490,7 @@ describe("PluggableComboChart", () => {
 
     describe("default chart type", () => {
         it("should return default chart type", async () => {
-            const refPointMock = referencePointMocks.multipleMetricBucketsAndCategoryReferencePoint;
+            const refPointMock = multipleMetricBucketsAndCategoryReferencePoint;
             const extRefPoint: IExtendedReferencePoint = await getExtendedReferencePoint(refPointMock);
             const controls = extRefPoint?.properties?.controls ?? {};
 
@@ -499,26 +499,22 @@ describe("PluggableComboChart", () => {
         });
 
         it("should return chart type in bucket", async () => {
-            const refPointMock = merge(
-                {},
-                referencePointMocks.multipleMetricBucketsAndCategoryReferencePoint,
-                {
-                    buckets: [
-                        {
-                            chartType: VisualizationTypes.LINE,
-                        },
-                        {
-                            chartType: VisualizationTypes.COLUMN,
-                        },
-                    ],
-                    properties: {
-                        controls: {
-                            primaryChartType: VisualizationTypes.COLUMN,
-                            secondaryChartType: VisualizationTypes.AREA,
-                        },
+            const refPointMock = merge({}, multipleMetricBucketsAndCategoryReferencePoint, {
+                buckets: [
+                    {
+                        chartType: VisualizationTypes.LINE,
+                    },
+                    {
+                        chartType: VisualizationTypes.COLUMN,
+                    },
+                ],
+                properties: {
+                    controls: {
+                        primaryChartType: VisualizationTypes.COLUMN,
+                        secondaryChartType: VisualizationTypes.AREA,
                     },
                 },
-            );
+            });
             const extRefPoint: IExtendedReferencePoint = await getExtendedReferencePoint(refPointMock);
             const controls = extRefPoint?.properties?.controls ?? {};
 
@@ -527,18 +523,14 @@ describe("PluggableComboChart", () => {
         });
 
         it("should return chart type in properties.controls", async () => {
-            const refPointMock = merge(
-                {},
-                referencePointMocks.multipleMetricBucketsAndCategoryReferencePoint,
-                {
-                    properties: {
-                        controls: {
-                            primaryChartType: VisualizationTypes.LINE,
-                            secondaryChartType: VisualizationTypes.AREA,
-                        },
+            const refPointMock = merge({}, multipleMetricBucketsAndCategoryReferencePoint, {
+                properties: {
+                    controls: {
+                        primaryChartType: VisualizationTypes.LINE,
+                        secondaryChartType: VisualizationTypes.AREA,
                     },
                 },
-            );
+            });
             const extRefPoint: IExtendedReferencePoint = await getExtendedReferencePoint(refPointMock);
             const controls = extRefPoint?.properties?.controls ?? {};
 
@@ -551,7 +543,7 @@ describe("PluggableComboChart", () => {
         it("should create sort config with sorting supported but disabled when there is no view by attribute", async () => {
             const chart = createComponent(defaultProps);
 
-            const sortConfig = await chart.getSortConfig(referencePointMocks.twoMetricNoViewByRefpoint);
+            const sortConfig = await chart.getSortConfig(twoMetricNoViewByRefpoint);
 
             expect(sortConfig.supported).toBeTruthy();
             expect(sortConfig.disabled).toBeTruthy();
@@ -560,7 +552,7 @@ describe("PluggableComboChart", () => {
         it("should create sort config with sorting supported but disabled when there is no primary measure and no secondary measure", async () => {
             const chart = createComponent(defaultProps);
 
-            const sortConfig = await chart.getSortConfig(referencePointMocks.noMetricInAnyBucketRefPoint);
+            const sortConfig = await chart.getSortConfig(noMetricInAnyBucketRefPoint);
 
             expect(sortConfig.supported).toBeTruthy();
             expect(sortConfig.disabled).toBeTruthy();
@@ -569,9 +561,7 @@ describe("PluggableComboChart", () => {
         it("should provide attribute sort as default sort, attribute normal and measure sort as available sorts for 1 primary measure + 1 VB", async () => {
             const chart = createComponent(defaultProps);
 
-            const sortConfig = await chart.getSortConfig(
-                referencePointMocks.onePrimaryMetricAndOneViewByRefPoint,
-            );
+            const sortConfig = await chart.getSortConfig(onePrimaryMetricAndOneViewByRefPoint);
 
             expect(sortConfig).toMatchSnapshot();
         });
@@ -579,9 +569,7 @@ describe("PluggableComboChart", () => {
         it("should provide attribute sort as default sort, attribute normal and measue sort as available sorts for 1 seconday measure + 1 VB", async () => {
             const chart = createComponent(defaultProps);
 
-            const sortConfig = await chart.getSortConfig(
-                referencePointMocks.oneSecondaryMetricAndOneViewByRefPoint,
-            );
+            const sortConfig = await chart.getSortConfig(oneSecondaryMetricAndOneViewByRefPoint);
 
             expect(sortConfig).toMatchSnapshot();
         });
@@ -590,7 +578,7 @@ describe("PluggableComboChart", () => {
             const chart = createComponent(defaultProps);
 
             const sortConfig = await chart.getSortConfig(
-                referencePointMocks.oneSecondaryMetricAndOneViewByAreaChartComboRefPoint,
+                oneSecondaryMetricAndOneViewByAreaChartComboRefPoint,
             );
 
             expect(sortConfig).toMatchSnapshot();
@@ -599,7 +587,7 @@ describe("PluggableComboChart", () => {
         it("should provide attribute sort as default sort, attribute area and two measure sorts as available sorts for 2M + 1 VB", async () => {
             const chart = createComponent(defaultProps);
 
-            const sortConfig = await chart.getSortConfig(referencePointMocks.twoMetricsAndOneViewByRefPoint);
+            const sortConfig = await chart.getSortConfig(twoMetricsAndOneViewByRefPoint);
 
             expect(sortConfig).toMatchSnapshot();
         });
@@ -607,9 +595,7 @@ describe("PluggableComboChart", () => {
         it("should provide attribute sort as default sort, attribute area and two measures sorts as available sorts for 2 primary measures stacked + 1 VB", async () => {
             const chart = createComponent(defaultProps);
 
-            const sortConfig = await chart.getSortConfig(
-                referencePointMocks.twoPrimaryStackedMetricAndOneViewByReferencePoint,
-            );
+            const sortConfig = await chart.getSortConfig(twoPrimaryStackedMetricAndOneViewByReferencePoint);
 
             expect(sortConfig).toMatchSnapshot();
         });
@@ -619,7 +605,7 @@ describe("PluggableComboChart", () => {
         it("should mount on the element defined by the callback", () => {
             const visualization = createComponent();
 
-            visualization.update({ messages }, testMocks.insightWithSingleMeasure, {}, executionFactory);
+            visualization.update({ messages }, insightWithSingleMeasure, {}, executionFactory);
 
             // 1st call for rendering element
             // 2nd call for rendering config panel

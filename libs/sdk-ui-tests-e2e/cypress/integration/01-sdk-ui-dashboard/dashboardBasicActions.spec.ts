@@ -3,7 +3,7 @@
 import { TopBar } from "../../tools/dashboards";
 import { EditMode } from "../../tools/editMode";
 import { LayoutRow } from "../../tools/layoutRow";
-import * as Navigation from "../../tools/navigation";
+import { visit } from "../../tools/navigation";
 import { Widget } from "../../tools/widget";
 
 const editMode = new EditMode();
@@ -12,7 +12,7 @@ const layout = new LayoutRow(0);
 
 describe("Basic actions on dashboard", { tags: ["pre-merge_isolated_tiger_fe"] }, () => {
     beforeEach(() => {
-        Navigation.visit("dashboard/insight");
+        visit("dashboard/insight");
         editMode.edit().isInEditMode();
     });
 

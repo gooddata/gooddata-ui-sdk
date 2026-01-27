@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { render } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -15,14 +15,29 @@ import { type IComparisonControlProperties } from "../../../../../interfaces/Con
 import { type IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
 import { createTestProperties } from "../../../../../tests/testDataProvider.js";
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
-import * as CheckboxControl from "../../../CheckboxControl.js";
-import * as InputControl from "../../../InputControl.js";
+import { CheckboxControl } from "../../../CheckboxControl.js";
+import { InputControl } from "../../../InputControl.js";
 import {
     COMPARISON_LABEL_CONDITIONAL_ENABLED_VALUE_PATH,
     COMPARISON_LABEL_POSITIVE_VALUE_PATH,
     COMPARISON_LABEL_UNCONDITIONAL_VALUE_PATH,
 } from "../../ComparisonValuePath.js";
 import { LabelSubSection } from "../LabelSubSection.js";
+
+vi.mock("../../../CheckboxControl.js", async (importOriginal) => {
+    // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+    const actual = await importOriginal<typeof import("../../../CheckboxControl.js")>();
+    return {
+        ...actual,
+        CheckboxControl: vi.fn(actual.CheckboxControl),
+    };
+});
+
+vi.mock("../../../InputControl.js", async (importOriginal) => {
+    // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+    const actual = await importOriginal<typeof import("../../../InputControl.js")>();
+    return { ...actual, InputControl: vi.fn(actual.InputControl) };
+});
 
 const TITLE_TEXT_QUERY = "Label";
 
@@ -87,8 +102,8 @@ describe("LabelSubSection", () => {
     });
 
     it("Should render label input control with ratio calculation", () => {
-        const MockInputControl = vi.spyOn(InputControl, "InputControl");
-        const MockCheckboxControl = vi.spyOn(CheckboxControl, "CheckboxControl");
+        const MockInputControl = vi.mocked(InputControl);
+        const MockCheckboxControl = vi.mocked(CheckboxControl);
         renderLabelSubSection();
 
         expect(MockCheckboxControl).toHaveBeenCalledWith(
@@ -120,8 +135,8 @@ describe("LabelSubSection", () => {
     });
 
     it("Should render label input control with change calculation", () => {
-        const MockInputControl = vi.spyOn(InputControl, "InputControl");
-        const MockCheckboxControl = vi.spyOn(CheckboxControl, "CheckboxControl");
+        const MockInputControl = vi.mocked(InputControl);
+        const MockCheckboxControl = vi.mocked(CheckboxControl);
 
         const properties = createTestProperties<IComparisonControlProperties>({
             comparison: {
@@ -183,7 +198,7 @@ describe("LabelSubSection", () => {
     });
 
     it("Should disabled label input when position on top", () => {
-        const MockInputControl = vi.spyOn(InputControl, "InputControl");
+        const MockInputControl = vi.mocked(InputControl);
         const properties = createTestProperties<IComparisonControlProperties>({
             comparison: {
                 enabled: true,
@@ -206,7 +221,7 @@ describe("LabelSubSection", () => {
     });
 
     it("Should not show disabled message in case position is not on top", () => {
-        const MockInputControl = vi.spyOn(InputControl, "InputControl");
+        const MockInputControl = vi.mocked(InputControl);
         const properties = createTestProperties<IComparisonControlProperties>({
             comparison: {
                 enabled: true,
@@ -228,7 +243,7 @@ describe("LabelSubSection", () => {
     });
 
     it("Should show disabled message in case position is on top and control is disabled by configuration", () => {
-        const MockInputControl = vi.spyOn(InputControl, "InputControl");
+        const MockInputControl = vi.mocked(InputControl);
         const properties = createTestProperties<IComparisonControlProperties>({
             comparison: {
                 enabled: true,

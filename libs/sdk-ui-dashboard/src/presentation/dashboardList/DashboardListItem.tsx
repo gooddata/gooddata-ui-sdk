@@ -4,7 +4,7 @@ import cx from "classnames";
 import { type IntlShape, useIntl } from "react-intl";
 
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { type DashboardAccessibilityLimitation } from "./types.js";
 
@@ -38,7 +38,7 @@ function DropdownItem({
     isSelected = false,
 }: IDashboardsListItemProps) {
     const icon = accessibilityLimitation === undefined ? undefined : "gd-icon-circle-exclamation";
-    const generatedTestClass = `s-dashboard-item s-${stringUtils.simplifyText(title)}`;
+    const generatedTestClass = `s-dashboard-item s-${simplifyText(title)}`;
     const classNames = cx("gd-list-item gd-drill-dashboard-item", generatedTestClass, {
         "is-selected": isSelected,
     });

@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { DEFAULT_HEADLINE_UICONFIG } from "../../../../constants/uiConfig.js";
@@ -7,7 +8,12 @@ import {
     type IBucketOfFun,
     type IExtendedReferencePoint,
 } from "../../../../interfaces/Visualization.js";
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
+import {
+    attributeItems,
+    dateItem,
+    derivedMeasureItems,
+    masterMeasureItems,
+} from "../../../../tests/mocks/referencePointMocks.js";
 import {
     findComplementaryOverTimeComparisonMeasure,
     findSecondMasterMeasure,
@@ -78,7 +84,7 @@ describe("headlineBucketHelper", () => {
             const buckets = [
                 {
                     localIdentifier: "measures",
-                    items: [referencePointMocks.masterMeasureItems[0]],
+                    items: [masterMeasureItems[0]],
                 },
             ];
             const referencePoint = createReferencePoint(buckets, DEFAULT_HEADLINE_UICONFIG);
@@ -87,7 +93,7 @@ describe("headlineBucketHelper", () => {
             expect(newReferencePoint!.buckets).toEqual([
                 {
                     localIdentifier: "measures",
-                    items: [referencePointMocks.masterMeasureItems[0]],
+                    items: [masterMeasureItems[0]],
                 },
                 {
                     localIdentifier: "secondary_measures",
@@ -100,11 +106,11 @@ describe("headlineBucketHelper", () => {
             const buckets = [
                 {
                     localIdentifier: "measures",
-                    items: [referencePointMocks.masterMeasureItems[0]],
+                    items: [masterMeasureItems[0]],
                 },
                 {
                     localIdentifier: "secondary_measures",
-                    items: [referencePointMocks.masterMeasureItems[1]],
+                    items: [masterMeasureItems[1]],
                 },
             ];
             const referencePoint = createReferencePoint(buckets, DEFAULT_HEADLINE_UICONFIG);
@@ -113,11 +119,11 @@ describe("headlineBucketHelper", () => {
             expect(newReferencePoint!.buckets).toEqual([
                 {
                     localIdentifier: "measures",
-                    items: [referencePointMocks.masterMeasureItems[0]],
+                    items: [masterMeasureItems[0]],
                 },
                 {
                     localIdentifier: "secondary_measures",
-                    items: [referencePointMocks.masterMeasureItems[1]],
+                    items: [masterMeasureItems[1]],
                 },
             ]);
         });
@@ -126,11 +132,11 @@ describe("headlineBucketHelper", () => {
             const buckets = [
                 {
                     localIdentifier: "some_measures",
-                    items: [referencePointMocks.masterMeasureItems[0]],
+                    items: [masterMeasureItems[0]],
                 },
                 {
                     localIdentifier: "unknown_measures_bucket",
-                    items: [referencePointMocks.masterMeasureItems[1]],
+                    items: [masterMeasureItems[1]],
                 },
             ];
             const referencePoint = createReferencePoint(buckets, DEFAULT_HEADLINE_UICONFIG);
@@ -139,11 +145,11 @@ describe("headlineBucketHelper", () => {
             expect(newReferencePoint!.buckets).toEqual([
                 {
                     localIdentifier: "measures",
-                    items: [referencePointMocks.masterMeasureItems[0]],
+                    items: [masterMeasureItems[0]],
                 },
                 {
                     localIdentifier: "secondary_measures",
-                    items: [referencePointMocks.masterMeasureItems[1]],
+                    items: [masterMeasureItems[1]],
                 },
             ]);
         });
@@ -152,7 +158,7 @@ describe("headlineBucketHelper", () => {
             const buckets = [
                 {
                     localIdentifier: "measures",
-                    items: [referencePointMocks.masterMeasureItems[0]],
+                    items: [masterMeasureItems[0]],
                 },
                 {
                     localIdentifier: "some_other_measures",
@@ -169,7 +175,7 @@ describe("headlineBucketHelper", () => {
             expect(newReferencePoint!.buckets).toEqual([
                 {
                     localIdentifier: "measures",
-                    items: [referencePointMocks.masterMeasureItems[0]],
+                    items: [masterMeasureItems[0]],
                 },
                 {
                     localIdentifier: "secondary_measures",
@@ -182,11 +188,11 @@ describe("headlineBucketHelper", () => {
             const buckets = [
                 {
                     localIdentifier: "some_measures",
-                    items: [referencePointMocks.masterMeasureItems[0]],
+                    items: [masterMeasureItems[0]],
                 },
                 {
                     localIdentifier: "unknown_measures_bucket",
-                    items: [referencePointMocks.derivedMeasureItems[1]],
+                    items: [derivedMeasureItems[1]],
                 },
             ];
             const referencePoint = createReferencePoint(buckets, DEFAULT_HEADLINE_UICONFIG);
@@ -195,11 +201,11 @@ describe("headlineBucketHelper", () => {
             expect(newReferencePoint!.buckets).toEqual([
                 {
                     localIdentifier: "measures",
-                    items: [referencePointMocks.masterMeasureItems[0]],
+                    items: [masterMeasureItems[0]],
                 },
                 {
                     localIdentifier: "secondary_measures",
-                    items: [referencePointMocks.derivedMeasureItems[1]],
+                    items: [derivedMeasureItems[1]],
                 },
             ]);
         });
@@ -208,10 +214,7 @@ describe("headlineBucketHelper", () => {
             const buckets = [
                 {
                     localIdentifier: "measures",
-                    items: [
-                        referencePointMocks.masterMeasureItems[0],
-                        referencePointMocks.masterMeasureItems[1],
-                    ],
+                    items: [masterMeasureItems[0], masterMeasureItems[1]],
                 },
                 {
                     localIdentifier: "secondary_measures",
@@ -232,10 +235,7 @@ describe("headlineBucketHelper", () => {
                 },
                 {
                     localIdentifier: "secondary_measures",
-                    items: [
-                        referencePointMocks.masterMeasureItems[0],
-                        referencePointMocks.masterMeasureItems[1],
-                    ],
+                    items: [masterMeasureItems[0], masterMeasureItems[1]],
                 },
             ];
             const referencePoint = createReferencePoint(buckets, DEFAULT_HEADLINE_UICONFIG);
@@ -256,10 +256,7 @@ describe("headlineBucketHelper", () => {
                 },
                 {
                     localIdentifier: "unknown_measures_bucket",
-                    items: [
-                        referencePointMocks.masterMeasureItems[0],
-                        referencePointMocks.masterMeasureItems[1],
-                    ],
+                    items: [masterMeasureItems[0], masterMeasureItems[1]],
                 },
             ];
             const referencePoint = createReferencePoint(buckets, DEFAULT_HEADLINE_UICONFIG);
@@ -272,7 +269,7 @@ describe("headlineBucketHelper", () => {
             const buckets = [
                 {
                     localIdentifier: "measures",
-                    items: [referencePointMocks.masterMeasureItems[0]],
+                    items: [masterMeasureItems[0]],
                 },
                 {
                     localIdentifier: "secondary_measures",
@@ -280,7 +277,7 @@ describe("headlineBucketHelper", () => {
                 },
                 {
                     localIdentifier: "unknown_measures_bucket",
-                    items: [referencePointMocks.masterMeasureItems[1]],
+                    items: [masterMeasureItems[1]],
                 },
             ];
             const referencePoint = createReferencePoint(buckets, DEFAULT_HEADLINE_UICONFIG);
@@ -301,7 +298,7 @@ describe("headlineBucketHelper", () => {
                 },
                 {
                     localIdentifier: "uknown_measures_bucket",
-                    items: [referencePointMocks.masterMeasureItems[1]],
+                    items: [masterMeasureItems[1]],
                 },
             ];
             const referencePoint = createReferencePoint(buckets, DEFAULT_HEADLINE_UICONFIG);
@@ -314,11 +311,11 @@ describe("headlineBucketHelper", () => {
             const buckets = [
                 {
                     localIdentifier: "measures",
-                    items: [referencePointMocks.masterMeasureItems[1]],
+                    items: [masterMeasureItems[1]],
                 },
                 {
                     localIdentifier: "view",
-                    items: [referencePointMocks.attributeItems[0]],
+                    items: [attributeItems[0]],
                 },
             ];
             const referencePoint = createReferencePoint(buckets, DEFAULT_HEADLINE_UICONFIG);
@@ -331,11 +328,11 @@ describe("headlineBucketHelper", () => {
             const buckets = [
                 {
                     localIdentifier: "view",
-                    items: [referencePointMocks.attributeItems[0]],
+                    items: [attributeItems[0]],
                 },
                 {
                     localIdentifier: "measures",
-                    items: [referencePointMocks.masterMeasureItems[1]],
+                    items: [masterMeasureItems[1]],
                 },
             ];
             const referencePoint = createReferencePoint(buckets, DEFAULT_HEADLINE_UICONFIG);
@@ -348,7 +345,7 @@ describe("headlineBucketHelper", () => {
             const buckets = [
                 {
                     localIdentifier: "measures",
-                    items: [referencePointMocks.masterMeasureItems[1]],
+                    items: [masterMeasureItems[1]],
                 },
                 {
                     localIdentifier: "secondary_measures",
@@ -356,7 +353,7 @@ describe("headlineBucketHelper", () => {
                 },
                 {
                     localIdentifier: "view",
-                    items: [referencePointMocks.attributeItems[0]],
+                    items: [attributeItems[0]],
                 },
             ];
             const referencePoint = createReferencePoint(buckets, DEFAULT_HEADLINE_UICONFIG);
@@ -369,11 +366,11 @@ describe("headlineBucketHelper", () => {
             const buckets = [
                 {
                     localIdentifier: "measures",
-                    items: [referencePointMocks.masterMeasureItems[1]],
+                    items: [masterMeasureItems[1]],
                 },
                 {
                     localIdentifier: "view",
-                    items: [referencePointMocks.dateItem],
+                    items: [dateItem],
                 },
             ];
             const referencePoint = createReferencePoint(buckets, DEFAULT_HEADLINE_UICONFIG);
@@ -386,7 +383,7 @@ describe("headlineBucketHelper", () => {
             const buckets = [
                 {
                     localIdentifier: "measures",
-                    items: [referencePointMocks.masterMeasureItems[1]],
+                    items: [masterMeasureItems[1]],
                 },
                 {
                     localIdentifier: "secondary_measures",
@@ -394,7 +391,7 @@ describe("headlineBucketHelper", () => {
                 },
                 {
                     localIdentifier: "view",
-                    items: [referencePointMocks.dateItem],
+                    items: [dateItem],
                 },
             ];
             const referencePoint = createReferencePoint(buckets, DEFAULT_HEADLINE_UICONFIG);

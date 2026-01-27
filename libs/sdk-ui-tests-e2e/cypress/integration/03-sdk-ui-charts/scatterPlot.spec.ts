@@ -1,11 +1,11 @@
 // (C) 2024-2026 GoodData Corporation
 
 import { Chart } from "../../tools/chart";
-import * as Navigation from "../../tools/navigation";
+import { visit } from "../../tools/navigation";
 
 describe("Scatter Plot", { tags: ["pre-merge_isolated_tiger_fe"] }, () => {
     it("should group points by segment and customize color", () => {
-        Navigation.visit("visualizations/scatterplot/segmentation");
+        visit("visualizations/scatterplot/segmentation");
         const chart = new Chart(".s-scatter-plot");
         chart
             .waitLoaded()
@@ -19,7 +19,7 @@ describe("Scatter Plot", { tags: ["pre-merge_isolated_tiger_fe"] }, () => {
     });
 
     it("should group points by segment", () => {
-        Navigation.visit("visualizations/scatterplot/segmentation-insight-view");
+        visit("visualizations/scatterplot/segmentation-insight-view");
         const chart = new Chart(".s-scatter-plot");
         chart
             .waitLoaded()

@@ -5,7 +5,7 @@ import { useCallback, useMemo } from "react";
 import cx from "classnames";
 
 import { type ObjRef } from "@gooddata/sdk-model";
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { ParentFiltersDisabledItem } from "./ParentFiltersDisabledItem.js";
 import { type IDashboardAttributeFilterParentItem } from "../../../../../../model/types/attributeFilterTypes.js";
@@ -30,7 +30,7 @@ export function ParentFiltersListItemWithoutConnectingAttributes({
     const activeItemClasses = useMemo(() => {
         return cx(
             "gd-list-item attribute-filter-item s-attribute-filter-dropdown-configuration-item",
-            `s-${stringUtils.simplifyText(title)}`,
+            `s-${simplifyText(title)}`,
             {
                 "is-selected": isSelected,
             },

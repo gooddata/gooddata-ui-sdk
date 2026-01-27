@@ -39,3 +39,7 @@ export function convertPostMessageToDrillablePredicates({
         ...composedFromIdentifiers.map((identifier) => HeaderPredicates.composedFromIdentifier(identifier)),
     ];
 }
+
+export const DrillablePredicatesUtils = {
+    convertPostMessageToDrillablePredicates,
+};

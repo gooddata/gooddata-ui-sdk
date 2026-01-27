@@ -8,7 +8,7 @@ import {
     getIntersectionPartAfter,
 } from "@gooddata/sdk-ui";
 import { type IColumnChartProps } from "@gooddata/sdk-ui-charts";
-import { arrayUtils } from "@gooddata/util";
+import { shiftArrayRight } from "@gooddata/util";
 
 import { PluggableColumnChart } from "./PluggableColumnChart.js";
 import { type IDrillDownContext, type IDrillDownDefinition } from "../../../interfaces/Visualization.js";
@@ -88,7 +88,7 @@ export class ColumnChartDescriptor extends BaseChartDescriptor implements IVisua
         const hasStackByAttributes = stackBucket && !bucketIsEmpty(stackBucket);
 
         const intersection = event.drillContext.intersection ?? [];
-        return hasStackByAttributes ? arrayUtils.shiftArrayRight(intersection) : intersection;
+        return hasStackByAttributes ? shiftArrayRight(intersection) : intersection;
     }
 
     private addFiltersForColumnBar(

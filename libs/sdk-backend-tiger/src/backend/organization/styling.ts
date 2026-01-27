@@ -7,7 +7,6 @@ import {
     type JsonApiColorPaletteOutDocument,
     type JsonApiThemeOutDocument,
     MetadataUtilities,
-    jsonApiHeaders,
 } from "@gooddata/api-client-tiger";
 import {
     EntitiesApi_CreateEntityColorPalettes,
@@ -82,18 +81,11 @@ export class OrganizationStylingService implements IOrganizationStylingService {
 
     public async createTheme(theme: IThemeDefinition): Promise<IThemeMetadataObject> {
         return await this.authCall((client) =>
-            EntitiesApi_CreateEntityThemes(
-                client.axios,
-                client.basePath,
-                {
-                    jsonApiThemeInDocument: {
-                        data: convertThemeToBackend(theme.id || uuidv4(), theme),
-                    },
+            EntitiesApi_CreateEntityThemes(client.axios, client.basePath, {
+                jsonApiThemeInDocument: {
+                    data: convertThemeToBackend(theme.id || uuidv4(), theme),
                 },
-                {
-                    headers: jsonApiHeaders,
-                },
-            ).then(this.parseResult),
+            }).then(this.parseResult),
         );
     }
 
@@ -103,19 +95,12 @@ export class OrganizationStylingService implements IOrganizationStylingService {
         }
         const id = objRefToIdentifier(theme.ref, this.authCall);
         return await this.authCall((client) =>
-            EntitiesApi_UpdateEntityThemes(
-                client.axios,
-                client.basePath,
-                {
-                    id,
-                    jsonApiThemeInDocument: {
-                        data: convertThemeToBackend(id, theme),
-                    },
+            EntitiesApi_UpdateEntityThemes(client.axios, client.basePath, {
+                id,
+                jsonApiThemeInDocument: {
+                    data: convertThemeToBackend(id, theme),
                 },
-                {
-                    headers: jsonApiHeaders,
-                },
-            ).then(this.parseResult),
+            }).then(this.parseResult),
         );
     }
 
@@ -164,18 +149,11 @@ export class OrganizationStylingService implements IOrganizationStylingService {
     ): Promise<IColorPaletteMetadataObject> {
         if (isValidColorPalette(colorPalette.colorPalette)) {
             return await this.authCall((client) =>
-                EntitiesApi_CreateEntityColorPalettes(
-                    client.axios,
-                    client.basePath,
-                    {
-                        jsonApiColorPaletteInDocument: {
-                            data: convertColorPaletteToBackend(colorPalette.id || uuidv4(), colorPalette),
-                        },
+                EntitiesApi_CreateEntityColorPalettes(client.axios, client.basePath, {
+                    jsonApiColorPaletteInDocument: {
+                        data: convertColorPaletteToBackend(colorPalette.id || uuidv4(), colorPalette),
                     },
-                    {
-                        headers: jsonApiHeaders,
-                    },
-                ).then(this.parseColorPaletteResult),
+                }).then(this.parseColorPaletteResult),
             );
         }
         throw new Error("Invalid color palette format");
@@ -190,19 +168,12 @@ export class OrganizationStylingService implements IOrganizationStylingService {
         if (isValidColorPalette(colorPalette.colorPalette)) {
             const id = objRefToIdentifier(colorPalette.ref, this.authCall);
             return await this.authCall((client) =>
-                EntitiesApi_UpdateEntityColorPalettes(
-                    client.axios,
-                    client.basePath,
-                    {
-                        id,
-                        jsonApiColorPaletteInDocument: {
-                            data: convertColorPaletteToBackend(id, colorPalette),
-                        },
+                EntitiesApi_UpdateEntityColorPalettes(client.axios, client.basePath, {
+                    id,
+                    jsonApiColorPaletteInDocument: {
+                        data: convertColorPaletteToBackend(id, colorPalette),
                     },
-                    {
-                        headers: jsonApiHeaders,
-                    },
-                ).then(this.parseColorPaletteResult),
+                }).then(this.parseColorPaletteResult),
             );
         }
         throw new Error("Invalid color palette format");

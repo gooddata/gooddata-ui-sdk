@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { afterEach, describe, expect, it, vi } from "vitest";
 
@@ -15,8 +15,42 @@ import {
     type IReferencePoint,
     type IVisConstruct,
 } from "../../../../interfaces/Visualization.js";
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
-import * as testMocks from "../../../../tests/mocks/testMocks.js";
+import {
+    attributeInStackReferencePoint,
+    dateAsFirstCategoryReferencePoint,
+    dateAsSecondCategoryReferencePoint,
+    datesInViewByAndAttributeInStackBy,
+    emptyReferencePoint,
+    justTrendByRefPoint,
+    measureWithDateAfterOtherAttributes,
+    measuresOnSecondaryAxisAndAttributeReferencePoint,
+    multipleDatesNotAsFirstReferencePoint,
+    multipleDatesNotAsFirstReferencePointWithSingleMeasure,
+    multipleDatesNotAsFirstReferencePointWithSingleMeasureColumn,
+    multipleMetricsAndCategoriesReferencePoint,
+    multipleMetricsOneStackByReferencePoint,
+    oneMetricAndCategoryAndStackReferencePoint,
+    oneMetricAndManyCategoriesReferencePoint,
+    oneMetricAndOneTrendAndOneSegmentByRefPoint,
+    oneMetricAndTwoTrendByRefPoint,
+    oneMetricNoTrendByRefPoint,
+    oneMetricOneTrendBy,
+    oneStackAndNoCategoriesReferencePoint,
+    onlyStackColumnChart,
+    samePeriodPreviousYearAndAttributesRefPoint,
+    threeDatesInColumnChart,
+    twoAttributesInViewAndOneDateInColumnsReferencePoint,
+    twoDatesInColumnChart,
+    twoIdenticalDatesInRowsWithSingleMeasure,
+    twoMeasureBucketsReferencePoint,
+    twoMetricAndOneTrendAndOneSegmentByRefPoint,
+    twoMetricAndOneTrendByRefPoint,
+    twoMetricAndTwoTrendByRefPoint,
+    twoSegmentedMetricAndOneTrendByRefPoint,
+    twoSegmentedMetricAndTwoTrendByRefPoint,
+    wrongBucketsOrderInLineReferencePoint,
+} from "../../../../tests/mocks/referencePointMocks.js";
+import { insightWithSingleMeasure } from "../../../../tests/mocks/testMocks.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../../utils/translations.js";
 import {
     createDrillDefinition,
@@ -70,7 +104,7 @@ describe("PluggableLineChart", () => {
         const lineChart = createComponent();
 
         const extendedReferencePoint = await lineChart.getExtendedReferencePoint(
-            referencePointMocks.multipleMetricsAndCategoriesReferencePoint,
+            multipleMetricsAndCategoriesReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -80,7 +114,7 @@ describe("PluggableLineChart", () => {
         const lineChart = createComponent();
 
         const extendedReferencePoint = await lineChart.getExtendedReferencePoint(
-            referencePointMocks.oneMetricAndManyCategoriesReferencePoint,
+            oneMetricAndManyCategoriesReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -90,7 +124,7 @@ describe("PluggableLineChart", () => {
         const lineChart = createComponent();
 
         const extendedReferencePoint = await lineChart.getExtendedReferencePoint(
-            referencePointMocks.dateAsSecondCategoryReferencePoint,
+            dateAsSecondCategoryReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -100,7 +134,7 @@ describe("PluggableLineChart", () => {
         const lineChart = createComponent();
 
         const extendedReferencePoint = await lineChart.getExtendedReferencePoint(
-            referencePointMocks.oneMetricAndCategoryAndStackReferencePoint,
+            oneMetricAndCategoryAndStackReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -110,7 +144,7 @@ describe("PluggableLineChart", () => {
         const lineChart = createComponent();
 
         const extendedReferencePoint = await lineChart.getExtendedReferencePoint(
-            referencePointMocks.oneStackAndNoCategoriesReferencePoint,
+            oneStackAndNoCategoriesReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -120,7 +154,7 @@ describe("PluggableLineChart", () => {
         const lineChart = createComponent();
 
         const extendedReferencePoint = await lineChart.getExtendedReferencePoint(
-            referencePointMocks.multipleMetricsOneStackByReferencePoint,
+            multipleMetricsOneStackByReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -130,7 +164,7 @@ describe("PluggableLineChart", () => {
         const lineChart = createComponent();
 
         const extendedReferencePoint = await lineChart.getExtendedReferencePoint(
-            referencePointMocks.wrongBucketsOrderInLineReferencePoint,
+            wrongBucketsOrderInLineReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -145,26 +179,20 @@ describe("PluggableLineChart", () => {
             const expectedBuckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",
-                    items: [
-                        referencePointMocks.samePeriodPreviousYearAndAttributesRefPoint.buckets[0].items[0],
-                    ],
+                    items: [samePeriodPreviousYearAndAttributesRefPoint.buckets[0].items[0]],
                 },
                 {
                     localIdentifier: "trend",
-                    items: [
-                        referencePointMocks.samePeriodPreviousYearAndAttributesRefPoint.buckets[1].items[0],
-                    ],
+                    items: [samePeriodPreviousYearAndAttributesRefPoint.buckets[1].items[0]],
                 },
                 {
                     localIdentifier: "segment",
-                    items: [
-                        referencePointMocks.samePeriodPreviousYearAndAttributesRefPoint.buckets[1].items[1],
-                    ],
+                    items: [samePeriodPreviousYearAndAttributesRefPoint.buckets[1].items[1]],
                 },
             ];
 
             const extendedReferencePoint = await lineChart.getExtendedReferencePoint(
-                referencePointMocks.samePeriodPreviousYearAndAttributesRefPoint,
+                samePeriodPreviousYearAndAttributesRefPoint,
             );
 
             expect(extendedReferencePoint.buckets).toEqual(expectedBuckets);
@@ -181,20 +209,20 @@ describe("PluggableLineChart", () => {
             const expectedBuckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",
-                    items: [referencePointMocks.measureWithDateAfterOtherAttributes.buckets[0].items[0]],
+                    items: [measureWithDateAfterOtherAttributes.buckets[0].items[0]],
                 },
                 {
                     localIdentifier: "trend",
-                    items: [referencePointMocks.measureWithDateAfterOtherAttributes.buckets[1].items[2]],
+                    items: [measureWithDateAfterOtherAttributes.buckets[1].items[2]],
                 },
                 {
                     localIdentifier: "segment",
-                    items: [referencePointMocks.measureWithDateAfterOtherAttributes.buckets[1].items[0]],
+                    items: [measureWithDateAfterOtherAttributes.buckets[1].items[0]],
                 },
             ];
 
             const extendedReferencePoint = await lineChart.getExtendedReferencePoint(
-                referencePointMocks.measureWithDateAfterOtherAttributes,
+                measureWithDateAfterOtherAttributes,
             );
 
             expect(extendedReferencePoint.buckets).toEqual(expectedBuckets);
@@ -205,7 +233,7 @@ describe("PluggableLineChart", () => {
         const lineChart = createComponent();
 
         const extendedReferencePoint = await lineChart.getExtendedReferencePoint(
-            referencePointMocks.twoMeasureBucketsReferencePoint,
+            twoMeasureBucketsReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchObject(
@@ -226,7 +254,7 @@ describe("PluggableLineChart", () => {
             const lineChart = createComponent();
 
             const extendedReferencePoint = await lineChart.getExtendedReferencePoint(
-                referencePointMocks.attributeInStackReferencePoint,
+                attributeInStackReferencePoint,
             );
 
             expect(extendedReferencePoint).toMatchObject(
@@ -245,9 +273,7 @@ describe("PluggableLineChart", () => {
         it("should return reference point containing uiConfig with PP, SP supported comparison types", async () => {
             const component = createComponent();
 
-            const extendedReferencePoint = await component.getExtendedReferencePoint(
-                referencePointMocks.emptyReferencePoint,
-            );
+            const extendedReferencePoint = await component.getExtendedReferencePoint(emptyReferencePoint);
 
             expect(extendedReferencePoint.uiConfig!.supportedOverTimeComparisonTypes).toEqual([
                 OverTimeComparisonTypes.SAME_PERIOD_PREVIOUS_YEAR,
@@ -261,7 +287,7 @@ describe("PluggableLineChart", () => {
             const lineChart = createComponent(defaultProps);
 
             const extendedReferencePoint = await lineChart.getExtendedReferencePoint(
-                referencePointMocks.oneMetricAndCategoryAndStackReferencePoint,
+                oneMetricAndCategoryAndStackReferencePoint,
             );
 
             const measures = extendedReferencePoint?.properties?.controls?.["secondary_yaxis"].measures;
@@ -274,7 +300,7 @@ describe("PluggableLineChart", () => {
             const lineChart = createComponent(defaultProps);
 
             const extendedReferencePoint = await lineChart.getExtendedReferencePoint(
-                referencePointMocks.multipleMetricsAndCategoriesReferencePoint,
+                multipleMetricsAndCategoriesReferencePoint,
             );
 
             const measures = extendedReferencePoint?.properties?.controls?.["secondary_yaxis"].measures;
@@ -290,25 +316,19 @@ describe("PluggableLineChart", () => {
             };
             const chart = createComponent(mockProps);
 
-            await chart.getExtendedReferencePoint(
-                referencePointMocks.oneMetricAndCategoryAndStackReferencePoint,
-            );
+            await chart.getExtendedReferencePoint(oneMetricAndCategoryAndStackReferencePoint);
             // TODO avoid testing protected property
             expect((chart as any).supportedPropertiesList).toEqual(
                 LINE_CHART_SUPPORTED_PROPERTIES[AXIS.PRIMARY],
             );
 
-            await chart.getExtendedReferencePoint(
-                referencePointMocks.measuresOnSecondaryAxisAndAttributeReferencePoint,
-            );
+            await chart.getExtendedReferencePoint(measuresOnSecondaryAxisAndAttributeReferencePoint);
             // TODO avoid testing protected property
             expect((chart as any).supportedPropertiesList).toEqual(
                 LINE_CHART_SUPPORTED_PROPERTIES[AXIS.SECONDARY],
             );
 
-            await chart.getExtendedReferencePoint(
-                referencePointMocks.multipleMetricsAndCategoriesReferencePoint,
-            );
+            await chart.getExtendedReferencePoint(multipleMetricsAndCategoriesReferencePoint);
             // TODO avoid testing protected property
             expect((chart as any).supportedPropertiesList).toEqual(
                 LINE_CHART_SUPPORTED_PROPERTIES[AXIS.DUAL],
@@ -321,86 +341,67 @@ describe("PluggableLineChart", () => {
             const inputs: [string, IReferencePoint, Partial<IExtendedReferencePoint>][] = [
                 [
                     "from table to line chart: date in rows only",
-                    referencePointMocks.dateAsFirstCategoryReferencePoint,
+                    dateAsFirstCategoryReferencePoint,
                     {
                         buckets: [
-                            referencePointMocks.dateAsFirstCategoryReferencePoint.buckets[0],
+                            dateAsFirstCategoryReferencePoint.buckets[0],
                             {
                                 localIdentifier: "trend",
-                                items: referencePointMocks.dateAsFirstCategoryReferencePoint.buckets[1].items.slice(
-                                    0,
-                                    1,
-                                ),
+                                items: dateAsFirstCategoryReferencePoint.buckets[1].items.slice(0, 1),
                             },
                             {
                                 localIdentifier: "segment",
-                                items: referencePointMocks.dateAsFirstCategoryReferencePoint.buckets[1].items.slice(
-                                    1,
-                                    2,
-                                ),
+                                items: dateAsFirstCategoryReferencePoint.buckets[1].items.slice(1, 2),
                             },
                         ],
                     },
                 ],
                 [
                     "from table to line chart: two identical dates in rows",
-                    referencePointMocks.twoIdenticalDatesInRowsWithSingleMeasure,
+                    twoIdenticalDatesInRowsWithSingleMeasure,
                     {
                         buckets: [
-                            referencePointMocks.twoIdenticalDatesInRowsWithSingleMeasure.buckets[0],
+                            twoIdenticalDatesInRowsWithSingleMeasure.buckets[0],
                             {
                                 localIdentifier: "trend",
-                                items: referencePointMocks.twoIdenticalDatesInRowsWithSingleMeasure.buckets[1].items.slice(
-                                    0,
-                                    1,
-                                ),
+                                items: twoIdenticalDatesInRowsWithSingleMeasure.buckets[1].items.slice(0, 1),
                             },
                             {
                                 localIdentifier: "segment",
-                                items: referencePointMocks.twoIdenticalDatesInRowsWithSingleMeasure.buckets[1].items.slice(
-                                    1,
-                                    2,
-                                ),
+                                items: twoIdenticalDatesInRowsWithSingleMeasure.buckets[1].items.slice(1, 2),
                             },
                         ],
                     },
                 ],
                 [
                     "from table to line chart: multiple dates in rows but not first (date should get preference)",
-                    referencePointMocks.multipleDatesNotAsFirstReferencePointWithSingleMeasure,
+                    multipleDatesNotAsFirstReferencePointWithSingleMeasure,
                     {
                         buckets: [
-                            referencePointMocks.multipleDatesNotAsFirstReferencePointWithSingleMeasure
-                                .buckets[0],
+                            multipleDatesNotAsFirstReferencePointWithSingleMeasure.buckets[0],
                             {
                                 localIdentifier: "trend",
-                                items: referencePointMocks.multipleDatesNotAsFirstReferencePointWithSingleMeasure.buckets[1].items.slice(
+                                items: multipleDatesNotAsFirstReferencePointWithSingleMeasure.buckets[1].items.slice(
                                     1,
                                     2,
                                 ),
                             },
                             {
                                 localIdentifier: "segment",
-                                items: referencePointMocks.multipleDatesNotAsFirstReferencePoint.buckets[1].items.slice(
-                                    0,
-                                    1,
-                                ),
+                                items: multipleDatesNotAsFirstReferencePoint.buckets[1].items.slice(0, 1),
                             },
                         ],
                     },
                 ],
                 [
                     "from table to line chart: multiple dates in rows but not first, more measures",
-                    referencePointMocks.multipleDatesNotAsFirstReferencePoint,
+                    multipleDatesNotAsFirstReferencePoint,
                     {
                         buckets: [
-                            referencePointMocks.multipleDatesNotAsFirstReferencePoint.buckets[0],
+                            multipleDatesNotAsFirstReferencePoint.buckets[0],
                             {
                                 localIdentifier: "trend",
-                                items: referencePointMocks.multipleDatesNotAsFirstReferencePoint.buckets[1].items.slice(
-                                    1,
-                                    2,
-                                ),
+                                items: multipleDatesNotAsFirstReferencePoint.buckets[1].items.slice(1, 2),
                             },
                             {
                                 localIdentifier: "segment",
@@ -411,61 +412,54 @@ describe("PluggableLineChart", () => {
                 ],
                 [
                     "from column to line chart: two dates",
-                    referencePointMocks.twoDatesInColumnChart,
+                    twoDatesInColumnChart,
                     {
                         buckets: [
-                            referencePointMocks.twoDatesInColumnChart.buckets[0],
+                            twoDatesInColumnChart.buckets[0],
                             {
                                 localIdentifier: "trend",
-                                items: referencePointMocks.twoDatesInColumnChart.buckets[1].items.slice(0, 1),
+                                items: twoDatesInColumnChart.buckets[1].items.slice(0, 1),
                             },
                             {
                                 localIdentifier: "segment",
-                                items: referencePointMocks.twoDatesInColumnChart.buckets[2].items.slice(0, 1),
+                                items: twoDatesInColumnChart.buckets[2].items.slice(0, 1),
                             },
                         ],
                     },
                 ],
                 [
                     "from column to line chart: three dates",
-                    referencePointMocks.threeDatesInColumnChart,
+                    threeDatesInColumnChart,
                     {
                         buckets: [
-                            referencePointMocks.threeDatesInColumnChart.buckets[0],
+                            threeDatesInColumnChart.buckets[0],
                             {
                                 localIdentifier: "trend",
-                                items: referencePointMocks.threeDatesInColumnChart.buckets[1].items.slice(
-                                    0,
-                                    1,
-                                ),
+                                items: threeDatesInColumnChart.buckets[1].items.slice(0, 1),
                             },
                             {
                                 localIdentifier: "segment",
-                                items: referencePointMocks.threeDatesInColumnChart.buckets[2].items.slice(
-                                    0,
-                                    1,
-                                ),
+                                items: threeDatesInColumnChart.buckets[2].items.slice(0, 1),
                             },
                         ],
                     },
                 ],
                 [
                     "from column to line chart: first attribute is not date (date should get preference)",
-                    referencePointMocks.multipleDatesNotAsFirstReferencePointWithSingleMeasureColumn,
+                    multipleDatesNotAsFirstReferencePointWithSingleMeasureColumn,
                     {
                         buckets: [
-                            referencePointMocks.multipleDatesNotAsFirstReferencePointWithSingleMeasureColumn
-                                .buckets[0],
+                            multipleDatesNotAsFirstReferencePointWithSingleMeasureColumn.buckets[0],
                             {
                                 localIdentifier: "trend",
-                                items: referencePointMocks.multipleDatesNotAsFirstReferencePointWithSingleMeasureColumn.buckets[1].items.slice(
+                                items: multipleDatesNotAsFirstReferencePointWithSingleMeasureColumn.buckets[1].items.slice(
                                     1,
                                     2,
                                 ),
                             },
                             {
                                 localIdentifier: "segment",
-                                items: referencePointMocks.multipleDatesNotAsFirstReferencePointWithSingleMeasureColumn.buckets[2].items.slice(
+                                items: multipleDatesNotAsFirstReferencePointWithSingleMeasureColumn.buckets[2].items.slice(
                                     0,
                                     1,
                                 ),
@@ -475,21 +469,20 @@ describe("PluggableLineChart", () => {
                 ],
                 [
                     "from column to line chart: date should be moved to segment by (should not prioritize dates in stacks)",
-                    referencePointMocks.twoAttributesInViewAndOneDateInColumnsReferencePoint,
+                    twoAttributesInViewAndOneDateInColumnsReferencePoint,
                     {
                         buckets: [
-                            referencePointMocks.twoAttributesInViewAndOneDateInColumnsReferencePoint
-                                .buckets[0],
+                            twoAttributesInViewAndOneDateInColumnsReferencePoint.buckets[0],
                             {
                                 localIdentifier: "trend",
-                                items: referencePointMocks.twoAttributesInViewAndOneDateInColumnsReferencePoint.buckets[1].items.slice(
+                                items: twoAttributesInViewAndOneDateInColumnsReferencePoint.buckets[1].items.slice(
                                     0,
                                     1,
                                 ),
                             },
                             {
                                 localIdentifier: "segment",
-                                items: referencePointMocks.twoAttributesInViewAndOneDateInColumnsReferencePoint.buckets[2].items.slice(
+                                items: twoAttributesInViewAndOneDateInColumnsReferencePoint.buckets[2].items.slice(
                                     0,
                                     1,
                                 ),
@@ -499,40 +492,34 @@ describe("PluggableLineChart", () => {
                 ],
                 [
                     "from column to line chart: attribute should be moved to segment by",
-                    referencePointMocks.datesInViewByAndAttributeInStackBy,
+                    datesInViewByAndAttributeInStackBy,
                     {
                         buckets: [
-                            referencePointMocks.datesInViewByAndAttributeInStackBy.buckets[0],
+                            datesInViewByAndAttributeInStackBy.buckets[0],
                             {
                                 localIdentifier: "trend",
-                                items: referencePointMocks.datesInViewByAndAttributeInStackBy.buckets[1].items.slice(
-                                    0,
-                                    1,
-                                ),
+                                items: datesInViewByAndAttributeInStackBy.buckets[1].items.slice(0, 1),
                             },
                             {
                                 localIdentifier: "segment",
-                                items: referencePointMocks.datesInViewByAndAttributeInStackBy.buckets[2].items.slice(
-                                    0,
-                                    1,
-                                ),
+                                items: datesInViewByAndAttributeInStackBy.buckets[2].items.slice(0, 1),
                             },
                         ],
                     },
                 ],
                 [
                     "from column to line chart: date should not duplicate in view by",
-                    referencePointMocks.onlyStackColumnChart,
+                    onlyStackColumnChart,
                     {
                         buckets: [
-                            referencePointMocks.onlyStackColumnChart.buckets[0],
+                            onlyStackColumnChart.buckets[0],
                             {
                                 localIdentifier: "trend",
                                 items: [],
                             },
                             {
                                 localIdentifier: "segment",
-                                items: referencePointMocks.onlyStackColumnChart.buckets[2].items.slice(0, 1),
+                                items: onlyStackColumnChart.buckets[2].items.slice(0, 1),
                             },
                         ],
                     },
@@ -607,17 +594,17 @@ describe("PluggableLineChart", () => {
 
     describe("Sort config", () => {
         const scenarios: Array<[string, IReferencePoint]> = [
-            ["0 M + 0 VB", referencePointMocks.emptyReferencePoint],
-            ["1 M + 0 VB", referencePointMocks.oneMetricNoTrendByRefPoint],
-            ["0 M + 1 VB", referencePointMocks.justTrendByRefPoint],
-            ["1 M + 1 VB", referencePointMocks.oneMetricOneTrendBy],
-            ["1 M + 2 VB", referencePointMocks.oneMetricAndTwoTrendByRefPoint],
-            ["2 M + 1 VB", referencePointMocks.twoMetricAndOneTrendByRefPoint],
-            ["2 M + 2 VB", referencePointMocks.twoMetricAndTwoTrendByRefPoint],
-            ["2 stacked M + 1 VB", referencePointMocks.twoSegmentedMetricAndOneTrendByRefPoint],
-            ["2 stacked M + 2 VB", referencePointMocks.twoSegmentedMetricAndTwoTrendByRefPoint],
-            ["1 M + 1 VB + 1 SEG", referencePointMocks.oneMetricAndOneTrendAndOneSegmentByRefPoint],
-            ["2 M + 1 VB + 1 SEG", referencePointMocks.twoMetricAndOneTrendAndOneSegmentByRefPoint],
+            ["0 M + 0 VB", emptyReferencePoint],
+            ["1 M + 0 VB", oneMetricNoTrendByRefPoint],
+            ["0 M + 1 VB", justTrendByRefPoint],
+            ["1 M + 1 VB", oneMetricOneTrendBy],
+            ["1 M + 2 VB", oneMetricAndTwoTrendByRefPoint],
+            ["2 M + 1 VB", twoMetricAndOneTrendByRefPoint],
+            ["2 M + 2 VB", twoMetricAndTwoTrendByRefPoint],
+            ["2 stacked M + 1 VB", twoSegmentedMetricAndOneTrendByRefPoint],
+            ["2 stacked M + 2 VB", twoSegmentedMetricAndTwoTrendByRefPoint],
+            ["1 M + 1 VB + 1 SEG", oneMetricAndOneTrendAndOneSegmentByRefPoint],
+            ["2 M + 1 VB + 1 SEG", twoMetricAndOneTrendAndOneSegmentByRefPoint],
         ];
 
         it.each(scenarios)("should return expected sort config for %s", async (_name, referencePointMock) => {
@@ -633,7 +620,7 @@ describe("PluggableLineChart", () => {
         it("should mount on the element defined by the callback", () => {
             const visualization = createComponent();
 
-            visualization.update({ messages }, testMocks.insightWithSingleMeasure, {}, executionFactory);
+            visualization.update({ messages }, insightWithSingleMeasure, {}, executionFactory);
 
             // 1st call for rendering element
             // 2nd call for rendering config panel

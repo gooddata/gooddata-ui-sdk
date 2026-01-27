@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { afterEach, describe, expect, it, vi } from "vitest";
 
@@ -6,8 +6,18 @@ import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 import { type IInsightDefinition, newAttribute, newBucket, newInsightDefinition } from "@gooddata/sdk-model";
 
 import { type IExtendedReferencePoint, type IVisConstruct } from "../../../../interfaces/Visualization.js";
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
-import * as testMocks from "../../../../tests/mocks/testMocks.js";
+import {
+    firstMeasureArithmeticNoAttributeReferencePoint,
+    latitudeLongitudeGeoPushpinReferencePoint,
+    noLocationGeoPushpinReferencePoint,
+    oneMetricAndGeoCategoryAndStackReferencePoint,
+    samePeriodPreviousYearRefPoint,
+    simpleGeoPushpinReferencePoint,
+    twoMeasuresWithShowInPercentOnSecondaryAxisReferencePoint,
+    viewByWithDateAndGeoAttributeReferencePoint,
+    viewByWithNonGeoAndGeoAttributeReferencePoint,
+} from "../../../../tests/mocks/referencePointMocks.js";
+import { insightWithSingleMeasure } from "../../../../tests/mocks/testMocks.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../../utils/translations.js";
 import { getLastRenderEl } from "../../tests/pluggableVisualizations.test.helpers.js";
 import { PluggableGeoPushpinChart } from "../PluggableGeoPushpinChart.js";
@@ -49,7 +59,7 @@ describe("PluggableGeoPushpinChart", () => {
 
     describe("getExtendedReferencePoint", () => {
         const geoPushpin = createComponent();
-        const sourceReferencePoint = referencePointMocks.simpleGeoPushpinReferencePoint;
+        const sourceReferencePoint = simpleGeoPushpinReferencePoint;
         const extendedReferencePointPromise: Promise<IExtendedReferencePoint> =
             geoPushpin.getExtendedReferencePoint(sourceReferencePoint);
 
@@ -66,8 +76,6 @@ describe("PluggableGeoPushpinChart", () => {
         });
 
         it("should transform view by attribute to location attribute", async () => {
-            const { oneMetricAndGeoCategoryAndStackReferencePoint } = referencePointMocks;
-
             const newExtendedReferencePoint = await geoPushpin.getExtendedReferencePoint(
                 oneMetricAndGeoCategoryAndStackReferencePoint,
             );
@@ -121,8 +129,6 @@ describe("PluggableGeoPushpinChart", () => {
         });
 
         it("should transform geo attribute with attribute", async () => {
-            const { viewByWithDateAndGeoAttributeReferencePoint } = referencePointMocks;
-
             const newExtendedReferencePoint = await geoPushpin.getExtendedReferencePoint(
                 viewByWithDateAndGeoAttributeReferencePoint,
             );
@@ -166,8 +172,6 @@ describe("PluggableGeoPushpinChart", () => {
         });
 
         it("should not transform same location attribute on location and segment bucket", async () => {
-            const { viewByWithNonGeoAndGeoAttributeReferencePoint } = referencePointMocks;
-
             const newExtendedReferencePoint = await geoPushpin.getExtendedReferencePoint(
                 viewByWithNonGeoAndGeoAttributeReferencePoint,
             );
@@ -222,7 +226,7 @@ describe("PluggableGeoPushpinChart", () => {
 
         it("should reset showInPercent and showOnSecondaryAxis for size and color measures", async () => {
             const newExtendedReferencePoint = await geoPushpin.getExtendedReferencePoint(
-                referencePointMocks.twoMeasuresWithShowInPercentOnSecondaryAxisReferencePoint,
+                twoMeasuresWithShowInPercentOnSecondaryAxisReferencePoint,
             );
             expect(newExtendedReferencePoint.buckets).toEqual([
                 {
@@ -274,7 +278,7 @@ describe("PluggableGeoPushpinChart", () => {
         it("should return a new reference point with geoPushpin supported properties list", async () => {
             const geoPushpinChart = createComponent();
             const extendedReferencePoint = await geoPushpinChart.getExtendedReferencePoint(
-                referencePointMocks.simpleGeoPushpinReferencePoint,
+                simpleGeoPushpinReferencePoint,
             );
             expect(extendedReferencePoint.properties).toEqual({
                 controls: {
@@ -289,7 +293,7 @@ describe("PluggableGeoPushpinChart", () => {
         it("should remove all derived measures", async () => {
             const geoPushpinChart = createComponent();
             const extendedReferencePoint = await geoPushpinChart.getExtendedReferencePoint(
-                referencePointMocks.samePeriodPreviousYearRefPoint,
+                samePeriodPreviousYearRefPoint,
             );
 
             expect(extendedReferencePoint.buckets).toEqual([
@@ -324,7 +328,7 @@ describe("PluggableGeoPushpinChart", () => {
         it("should remove all arithmetic measures", async () => {
             const geoPushpinChart = createComponent();
             const extendedReferencePoint = await geoPushpinChart.getExtendedReferencePoint(
-                referencePointMocks.firstMeasureArithmeticNoAttributeReferencePoint,
+                firstMeasureArithmeticNoAttributeReferencePoint,
             );
 
             expect(extendedReferencePoint.buckets).toEqual([
@@ -373,7 +377,7 @@ describe("PluggableGeoPushpinChart", () => {
                 backend: withLatitudeLongitudeSupported,
             });
             const extendedReferencePoint = await geoPushpinChart.getExtendedReferencePoint(
-                referencePointMocks.latitudeLongitudeGeoPushpinReferencePoint,
+                latitudeLongitudeGeoPushpinReferencePoint,
             );
 
             expect(extendedReferencePoint.properties).toMatchSnapshot();
@@ -387,7 +391,7 @@ describe("PluggableGeoPushpinChart", () => {
                 backend: withLatitudeLongitudeSupported,
             });
             const extendedReferencePoint = await geoPushpinChart.getExtendedReferencePoint(
-                referencePointMocks.noLocationGeoPushpinReferencePoint,
+                noLocationGeoPushpinReferencePoint,
             );
 
             expect(extendedReferencePoint.properties).toMatchSnapshot();
@@ -398,7 +402,7 @@ describe("PluggableGeoPushpinChart", () => {
         it("should mount on the element defined by the callback", () => {
             const visualization = createComponent();
 
-            visualization.update({ messages }, testMocks.insightWithSingleMeasure, {}, executionFactory);
+            visualization.update({ messages }, insightWithSingleMeasure, {}, executionFactory);
 
             // 1st call for rendering element
             // 2nd call for rendering config panel

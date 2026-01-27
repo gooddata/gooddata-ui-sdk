@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
@@ -19,7 +19,7 @@ import { SORT_DIR_DESC } from "../../constants/sort.js";
 import { DEFAULT_BASE_CHART_UICONFIG } from "../../constants/uiConfig.js";
 import { newAvailableSortsGroup } from "../../interfaces/SortConfig.js";
 import { type IExtendedReferencePoint } from "../../interfaces/Visualization.js";
-import * as referencePointMocks from "../../tests/mocks/referencePointMocks.js";
+import { multipleMetricBucketsAndCategoryReferencePoint } from "../../tests/mocks/referencePointMocks.js";
 import {
     insightWithSingleMeasureAndStack,
     insightWithSingleMeasureAndTwoViewBy,
@@ -62,7 +62,7 @@ const measureSort: IMeasureSortItem = {
 };
 
 const referencePoint: IExtendedReferencePoint = {
-    ...referencePointMocks.multipleMetricBucketsAndCategoryReferencePoint,
+    ...multipleMetricBucketsAndCategoryReferencePoint,
     uiConfig: DEFAULT_BASE_CHART_UICONFIG,
     properties: {
         sortItems: [attributeSort, measureSort],

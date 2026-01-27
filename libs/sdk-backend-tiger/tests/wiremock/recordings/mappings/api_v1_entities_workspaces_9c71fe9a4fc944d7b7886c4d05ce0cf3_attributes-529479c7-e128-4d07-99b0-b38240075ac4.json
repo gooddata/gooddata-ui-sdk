@@ -1,16 +1,12 @@
 {
-    "id": "6f144cee-6432-4761-af4c-c90c98f7bf07",
+    "id": "529479c7-e128-4d07-99b0-b38240075ac4",
     "name": "api_v1_entities_workspaces_9c71fe9a4fc944d7b7886c4d05ce0cf3_attributes",
     "request": {
         "urlPath": "/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/attributes",
         "method": "GET",
         "headers": {
             "Accept": {
-                "equalTo": "application/vnd.gooddata.api+json"
-            },
-            "Content-Type": {
-                "equalTo": "application/vnd.gooddata.api+json",
-                "caseInsensitive": true
+                "equalTo": "application/json, text/plain, */*"
             }
         },
         "queryParameters": {
@@ -46,7 +42,7 @@
     },
     "response": {
         "status": 200,
-        "bodyFileName": "api_v1_entities_workspaces_9c71fe9a4fc944d7b7886c4d05ce0cf3_attributes-6f144cee-6432-4761-af4c-c90c98f7bf07.json",
+        "bodyFileName": "api_v1_entities_workspaces_9c71fe9a4fc944d7b7886c4d05ce0cf3_attributes-529479c7-e128-4d07-99b0-b38240075ac4.json",
         "headers": {
             "Referrer-Policy": "no-referrer",
             "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
@@ -61,10 +57,10 @@
             "Pragma": "no-cache",
             "Expires": "0",
             "X-XSS-Protection": "0",
-            "Content-Type": "application/vnd.gooddata.api+json"
+            "Content-Type": "application/json"
         }
     },
-    "uuid": "6f144cee-6432-4761-af4c-c90c98f7bf07",
+    "uuid": "529479c7-e128-4d07-99b0-b38240075ac4",
     "persistent": true,
-    "insertionIndex": 15
+    "insertionIndex": 11
 }

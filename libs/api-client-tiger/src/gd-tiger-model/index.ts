@@ -1,5 +1,7 @@
 // (C) 2007-2026 GoodData Corporation
 
+/* eslint-disable no-restricted-syntax */
+
 import * as AnalyticalDashboardModelV1 from "./AnalyticalDashboardModelV1.js";
 import * as AnalyticalDashboardModelV2 from "./AnalyticalDashboardModelV2.js";
 import * as VisualizationObjectModelV1 from "./VisualizationObjectModelV1.js";

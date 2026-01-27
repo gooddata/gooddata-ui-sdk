@@ -3,7 +3,7 @@
 import { DrillToModal } from "../../tools/drillToModal";
 import { EditMode } from "../../tools/editMode";
 import { AttributeFilter, FilterBar } from "../../tools/filterBar";
-import * as Navigation from "../../tools/navigation";
+import { visit } from "../../tools/navigation";
 import { Widget } from "../../tools/widget";
 
 const drillModal = new DrillToModal();
@@ -15,7 +15,7 @@ const secondWidget = new Widget(1);
 
 describe("Cross filtering", { tags: ["pre-merge_isolated_tiger_fe"] }, () => {
     beforeEach(() => {
-        Navigation.visit("dashboard/dashboard-cross-filtering");
+        visit("dashboard/dashboard-cross-filtering");
     });
 
     it("should add virtual filter when cross-filtering in view mode", () => {

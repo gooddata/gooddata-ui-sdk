@@ -1,7 +1,7 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { Dashboard } from "../../tools/dashboards";
-import * as Navigation from "../../tools/navigation";
+import { visit } from "../../tools/navigation";
 import { Widget } from "../../tools/widget";
 
 const LEGEND_NAME_CSS = ".series-name";
@@ -20,7 +20,7 @@ describe(
     },
     () => {
         beforeEach(() => {
-            Navigation.visit("dashboard/shorten-metric-name");
+            visit("dashboard/shorten-metric-name");
             dashboard.isLoaded();
         });
 

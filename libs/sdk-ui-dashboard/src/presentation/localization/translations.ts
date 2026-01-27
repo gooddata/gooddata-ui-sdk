@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { memoize, merge } from "lodash-es";
 
@@ -7,12 +7,12 @@ import {
     DEFAULT_MESSAGES as DEFAULT_MESSAGES_SDK_UI_EXT,
     resolveMessages as resolveMessagesSdkUiExt,
 } from "@gooddata/sdk-ui-ext/internal";
-import { translationUtils } from "@gooddata/util";
+import { removeMetadata } from "@gooddata/util";
 
 import { en_US } from "./bundles/en-US.localization-bundle.js";
 
 const asyncSdkUiDashboardTranslations: { [locale: string]: () => Promise<Record<string, string>> } = {
-    "en-US": () => Promise.resolve(translationUtils.removeMetadata(en_US)),
+    "en-US": () => Promise.resolve(removeMetadata(en_US)),
     "de-DE": () => import("./bundles/de-DE.localization-bundle.js").then((module) => module.de_DE),
     "es-ES": () => import("./bundles/es-ES.localization-bundle.js").then((module) => module.es_ES),
     "fr-FR": () => import("./bundles/fr-FR.localization-bundle.js").then((module) => module.fr_FR),
@@ -72,7 +72,7 @@ export const DEFAULT_LANGUAGE = "en-US";
  */
 export const DEFAULT_MESSAGES: Record<string, ITranslations> = {
     [DEFAULT_LANGUAGE]: {
-        ...translationUtils.removeMetadata(en_US),
+        ...removeMetadata(en_US),
         ...DEFAULT_MESSAGES_SDK_UI_EXT[DEFAULT_LANGUAGE],
     },
 };

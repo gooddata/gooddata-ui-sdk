@@ -1,12 +1,25 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 import { type IBucketOfFun, type IVisConstruct } from "../../../../interfaces/Visualization.js";
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
-import * as testMocks from "../../../../tests/mocks/testMocks.js";
+import {
+    arithmeticMeasureItems,
+    emptyReferencePoint,
+    firstMeasureArithmeticAlongWithAttributeReferencePoint,
+    firstMeasureArithmeticNoAttributeReferencePoint,
+    masterMeasureItems,
+    mixOfMeasuresWithDerivedAndArithmeticFromDerivedAreaReferencePoint,
+    mixOfMeasuresWithDerivedAndArithmeticFromDerivedPieReferencePoint,
+    multipleMetricsAndCategoriesReferencePoint,
+    multipleMetricsNoCategoriesReferencePoint,
+    oneMetricNoCategoriesReferencePoint,
+    oneMetricOneStackReferencePoint,
+    simpleStackedWithoutPropertiesReferencePoint,
+} from "../../../../tests/mocks/referencePointMocks.js";
+import { insightWithSingleMeasure } from "../../../../tests/mocks/testMocks.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../../utils/translations.js";
 import { getLastRenderEl } from "../../tests/pluggableVisualizations.test.helpers.js";
 import { PluggablePieChart } from "../PluggablePieChart.js";
@@ -51,7 +64,7 @@ describe("PluggablePieChart", () => {
         const pieChart = createComponent();
 
         const extendedReferencePoint = await pieChart.getExtendedReferencePoint(
-            referencePointMocks.multipleMetricsAndCategoriesReferencePoint,
+            multipleMetricsAndCategoriesReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -61,7 +74,7 @@ describe("PluggablePieChart", () => {
         const pieChart = createComponent();
 
         const extendedReferencePoint = await pieChart.getExtendedReferencePoint(
-            referencePointMocks.multipleMetricsNoCategoriesReferencePoint,
+            multipleMetricsNoCategoriesReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -71,7 +84,7 @@ describe("PluggablePieChart", () => {
         const pieChart = createComponent();
 
         const extendedReferencePoint = await pieChart.getExtendedReferencePoint(
-            referencePointMocks.oneMetricNoCategoriesReferencePoint,
+            oneMetricNoCategoriesReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -81,7 +94,7 @@ describe("PluggablePieChart", () => {
         const pieChart = createComponent();
 
         const extendedReferencePoint = await pieChart.getExtendedReferencePoint(
-            referencePointMocks.oneMetricOneStackReferencePoint,
+            oneMetricOneStackReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -90,8 +103,7 @@ describe("PluggablePieChart", () => {
     describe("Arithmetic measures", () => {
         it("should skip arithmetic measures that cannot be placed together with their operands", async () => {
             const pieChart = createComponent();
-            const originalRefPoint =
-                referencePointMocks.firstMeasureArithmeticAlongWithAttributeReferencePoint;
+            const originalRefPoint = firstMeasureArithmeticAlongWithAttributeReferencePoint;
 
             const extendedReferencePoint = await pieChart.getExtendedReferencePoint(originalRefPoint);
 
@@ -111,7 +123,7 @@ describe("PluggablePieChart", () => {
 
         it("should preserve arithmetic measures if there is no attribute so we keep all measures", async () => {
             const pieChart = createComponent();
-            const originalRefPoint = referencePointMocks.firstMeasureArithmeticNoAttributeReferencePoint;
+            const originalRefPoint = firstMeasureArithmeticNoAttributeReferencePoint;
 
             const extendedReferencePoint = await pieChart.getExtendedReferencePoint(originalRefPoint);
 
@@ -123,9 +135,7 @@ describe("PluggablePieChart", () => {
         it("should return reference point containing uiConfig with no supported comparison types", async () => {
             const component = createComponent();
 
-            const extendedReferencePoint = await component.getExtendedReferencePoint(
-                referencePointMocks.emptyReferencePoint,
-            );
+            const extendedReferencePoint = await component.getExtendedReferencePoint(emptyReferencePoint);
 
             expect(extendedReferencePoint.uiConfig!.supportedOverTimeComparisonTypes).toEqual([]);
         });
@@ -134,16 +144,16 @@ describe("PluggablePieChart", () => {
             const component = createComponent();
 
             const extendedReferencePoint = await component.getExtendedReferencePoint(
-                referencePointMocks.mixOfMeasuresWithDerivedAndArithmeticFromDerivedPieReferencePoint,
+                mixOfMeasuresWithDerivedAndArithmeticFromDerivedPieReferencePoint,
             );
             expect(extendedReferencePoint.buckets).toEqual([
                 {
                     localIdentifier: "measures",
                     items: [
-                        referencePointMocks.masterMeasureItems[0],
-                        referencePointMocks.masterMeasureItems[1],
-                        referencePointMocks.arithmeticMeasureItems[0],
-                        referencePointMocks.arithmeticMeasureItems[1],
+                        masterMeasureItems[0],
+                        masterMeasureItems[1],
+                        arithmeticMeasureItems[0],
+                        arithmeticMeasureItems[1],
                     ],
                 },
                 {
@@ -158,9 +168,7 @@ describe("PluggablePieChart", () => {
         it("should create sort config with sorting supported but disabled when there is no view by attribute", async () => {
             const chart = createComponent(defaultProps);
 
-            const sortConfig = await chart.getSortConfig(
-                referencePointMocks.multipleMetricsNoCategoriesReferencePoint,
-            );
+            const sortConfig = await chart.getSortConfig(multipleMetricsNoCategoriesReferencePoint);
 
             expect(sortConfig.supported).toBeTruthy();
             expect(sortConfig.disabled).toBeTruthy();
@@ -170,7 +178,7 @@ describe("PluggablePieChart", () => {
             const chart = createComponent(defaultProps);
 
             const sortConfig = await chart.getSortConfig(
-                referencePointMocks.mixOfMeasuresWithDerivedAndArithmeticFromDerivedAreaReferencePoint,
+                mixOfMeasuresWithDerivedAndArithmeticFromDerivedAreaReferencePoint,
             );
 
             expect(sortConfig.supported).toBeTruthy();
@@ -180,9 +188,7 @@ describe("PluggablePieChart", () => {
         it("should provide measure sort as default sort, measure sort as available sorts for 1M + 1 VB", async () => {
             const chart = createComponent(defaultProps);
 
-            const sortConfig = await chart.getSortConfig(
-                referencePointMocks.simpleStackedWithoutPropertiesReferencePoint,
-            );
+            const sortConfig = await chart.getSortConfig(simpleStackedWithoutPropertiesReferencePoint);
 
             expect(sortConfig).toMatchSnapshot();
         });
@@ -192,7 +198,7 @@ describe("PluggablePieChart", () => {
         it("should mount on the element defined by the callback", () => {
             const visualization = createComponent();
 
-            visualization.update({ messages }, testMocks.insightWithSingleMeasure, {}, executionFactory);
+            visualization.update({ messages }, insightWithSingleMeasure, {}, executionFactory);
 
             // 1st call for rendering element
             // 2nd call for rendering config panel

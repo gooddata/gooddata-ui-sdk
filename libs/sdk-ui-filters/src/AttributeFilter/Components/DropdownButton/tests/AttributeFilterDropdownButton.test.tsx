@@ -5,11 +5,15 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { withIntl } from "@gooddata/sdk-ui";
 
-import * as shared from "../../../../shared/components/internal/FilterButtonCustomIcon.js";
+import { FilterButtonCustomIcon as mockFilterButtonCustomIcon } from "../../../../shared/components/internal/FilterButtonCustomIcon.js";
 import {
     AttributeFilterDropdownButton,
     type IAttributeFilterDropdownButtonProps,
 } from "../AttributeFilterDropdownButton.js";
+
+vi.mock("../../../../shared/components/internal/FilterButtonCustomIcon.js", () => ({
+    FilterButtonCustomIcon: vi.fn(() => null),
+}));
 
 const ATTRIBUTE_FILTER_BUTTON_SELECTOR = ".s-attribute-filter";
 
@@ -45,14 +49,13 @@ describe("Test AttributeFilterDropdownButton", () => {
     });
 
     it("should render custom icon", () => {
-        const MockCustomIconComponent = vi.spyOn(shared, "FilterButtonCustomIcon");
         const customIcon = {
             icon: "icon",
             tooltip: "tooltip",
         };
 
         renderComponent({ customIcon });
-        expect(MockCustomIconComponent).toHaveBeenCalledWith({ customIcon }, undefined);
+        expect(mockFilterButtonCustomIcon).toHaveBeenCalledWith({ customIcon }, undefined);
     });
 
     it("should render the button as disabled", () => {

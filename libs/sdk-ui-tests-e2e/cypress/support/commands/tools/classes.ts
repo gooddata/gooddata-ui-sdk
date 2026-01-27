@@ -1,6 +1,7 @@
-// (C) 2021 GoodData Corporation
-import { stringUtils } from "@gooddata/util";
+// (C) 2021-2026 GoodData Corporation
+
+import { simplifyText } from "@gooddata/util";
 
 export function getTestClassByTitle(title: string, prefix = ""): string {
-    return `.s-${prefix}${stringUtils.simplifyText(title)}`;
+    return `.s-${prefix}${simplifyText(title)}`;
 }

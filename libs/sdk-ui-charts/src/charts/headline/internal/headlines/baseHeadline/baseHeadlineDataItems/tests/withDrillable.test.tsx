@@ -11,8 +11,16 @@ import {
 } from "../../../../interfaces/BaseHeadlines.js";
 import { type IHeadlineDataItem } from "../../../../interfaces/Headlines.js";
 import { HEADLINE_ITEM_LINK_SELECTOR, TEST_DATA_ITEM } from "../../../../tests/TestData.fixtures.js";
-import { mockUseBaseHeadline } from "../../tests/BaseHeadline.test.helpers.js";
+import { createMockUseBaseHeadline } from "../../tests/BaseHeadline.test.helpers.js";
 import { withDrillable } from "../withDrillable.js";
+
+const useBaseHeadlineMock = vi.hoisted(() => vi.fn());
+
+vi.mock("../../BaseHeadlineContext.js", () => ({
+    useBaseHeadline: useBaseHeadlineMock,
+}));
+
+const mockUseBaseHeadline = createMockUseBaseHeadline(useBaseHeadlineMock);
 
 describe("withDrillable", () => {
     const wrappedComponentClassName = "s-wrapped-component-class-name";

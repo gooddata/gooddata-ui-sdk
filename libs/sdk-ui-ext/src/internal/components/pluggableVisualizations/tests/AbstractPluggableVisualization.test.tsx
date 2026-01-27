@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { type IExecutionFactory } from "@gooddata/sdk-backend-spi";
@@ -11,7 +12,11 @@ import {
     type IVisConstruct,
     type IVisProps,
 } from "../../../interfaces/Visualization.js";
-import * as referencePointMocks from "../../../tests/mocks/referencePointMocks.js";
+import {
+    derivedMeasureItems,
+    masterMeasureItems,
+    multipleMetricsNoCategoriesReferencePoint,
+} from "../../../tests/mocks/referencePointMocks.js";
 import { AbstractPluggableVisualization } from "../AbstractPluggableVisualization.js";
 
 describe("AbstractPluggableVisualization", () => {
@@ -64,27 +69,27 @@ describe("AbstractPluggableVisualization", () => {
         const component = createComponent();
 
         const referencePointWithDerivedItems = await component.addNewDerivedBucketItems(
-            referencePointMocks.multipleMetricsNoCategoriesReferencePoint,
-            [referencePointMocks.derivedMeasureItems[0], referencePointMocks.derivedMeasureItems[1]],
+            multipleMetricsNoCategoriesReferencePoint,
+            [derivedMeasureItems[0], derivedMeasureItems[1]],
         );
 
         expect(referencePointWithDerivedItems).toEqual({
-            ...referencePointMocks.multipleMetricsNoCategoriesReferencePoint,
+            ...multipleMetricsNoCategoriesReferencePoint,
             ...{
                 buckets: [
                     {
                         localIdentifier: BucketNames.MEASURES,
                         items: [
-                            referencePointMocks.derivedMeasureItems[0],
-                            referencePointMocks.masterMeasureItems[0],
-                            referencePointMocks.derivedMeasureItems[1],
-                            referencePointMocks.masterMeasureItems[1],
-                            referencePointMocks.masterMeasureItems[2],
-                            referencePointMocks.masterMeasureItems[3],
+                            derivedMeasureItems[0],
+                            masterMeasureItems[0],
+                            derivedMeasureItems[1],
+                            masterMeasureItems[1],
+                            masterMeasureItems[2],
+                            masterMeasureItems[3],
                         ],
                     },
-                    referencePointMocks.multipleMetricsNoCategoriesReferencePoint.buckets[1],
-                    referencePointMocks.multipleMetricsNoCategoriesReferencePoint.buckets[2],
+                    multipleMetricsNoCategoriesReferencePoint.buckets[1],
+                    multipleMetricsNoCategoriesReferencePoint.buckets[2],
                 ],
             },
         });

@@ -9,7 +9,6 @@ import {
     type ITigerClientBase,
     type JsonApiDatasetOutWithLinks,
     MetadataUtilities,
-    jsonApiHeaders,
 } from "@gooddata/api-client-tiger";
 import {
     EntitiesApi_GetAllEntitiesAttributes,
@@ -89,36 +88,29 @@ export class TigerWorkspaceAttributes implements IWorkspaceAttributesService {
 
         return this.authCall(async (client) => {
             const objectId = ref.identifier;
-            const response = await EntitiesApi_PatchEntityAttributes(
-                client.axios,
-                client.basePath,
-                {
-                    objectId,
-                    workspaceId: this.workspace,
-                    include: ["labels", "defaultView"],
-                    jsonApiAttributePatchDocument: {
-                        data: {
-                            id: objectId,
-                            type: "attribute",
-                            attributes: {
-                                ...(updatedAttribute.title === undefined
-                                    ? {}
-                                    : { title: updatedAttribute.title }),
-                                ...(updatedAttribute.description === undefined
-                                    ? {}
-                                    : { description: updatedAttribute.description }),
-                                ...(updatedAttribute.tags === undefined
-                                    ? {}
-                                    : { tags: updatedAttribute.tags }),
-                                ...(updatedAttribute.isHidden === undefined
-                                    ? {}
-                                    : { isHidden: updatedAttribute.isHidden }),
-                            },
+            const response = await EntitiesApi_PatchEntityAttributes(client.axios, client.basePath, {
+                objectId,
+                workspaceId: this.workspace,
+                include: ["labels", "defaultView"],
+                jsonApiAttributePatchDocument: {
+                    data: {
+                        id: objectId,
+                        type: "attribute",
+                        attributes: {
+                            ...(updatedAttribute.title === undefined
+                                ? {}
+                                : { title: updatedAttribute.title }),
+                            ...(updatedAttribute.description === undefined
+                                ? {}
+                                : { description: updatedAttribute.description }),
+                            ...(updatedAttribute.tags === undefined ? {} : { tags: updatedAttribute.tags }),
+                            ...(updatedAttribute.isHidden === undefined
+                                ? {}
+                                : { isHidden: updatedAttribute.isHidden }),
                         },
                     },
                 },
-                { headers: jsonApiHeaders },
-            );
+            });
 
             return convertAttributeWithSideloadedLabels(response.data);
         });
@@ -311,18 +303,11 @@ function loadAttribute(
 ): Promise<IAttributeMetadataObject> {
     invariant(isIdentifierRef(ref), "tiger backend only supports referencing by identifier");
 
-    return EntitiesApi_GetEntityAttributes(
-        client.axios,
-        "",
-        {
-            workspaceId,
-            objectId: ref.identifier,
-            include: ["labels", "defaultView", ...(include ?? [])],
-        },
-        {
-            headers: jsonApiHeaders,
-        },
-    ).then((res: any) => convertAttributeWithSideloadedLabels(res.data));
+    return EntitiesApi_GetEntityAttributes(client.axios, "", {
+        workspaceId,
+        objectId: ref.identifier,
+        include: ["labels", "defaultView", ...(include ?? [])],
+    }).then((res: any) => convertAttributeWithSideloadedLabels(res.data));
 }
 
 function loadAttributeByDisplayForm(
@@ -368,18 +353,11 @@ function loadAttributeDataset(
 ): Promise<IDataSetMetadataObject> {
     invariant(isIdentifierRef(ref), "tiger backend only supports referencing by identifier");
 
-    return EntitiesApi_GetEntityAttributes(
-        client.axios,
-        "",
-        {
-            workspaceId: workspace,
-            objectId: ref.identifier,
-            include: ["datasets"],
-        },
-        {
-            headers: jsonApiHeaders,
-        },
-    ).then((res) => {
+    return EntitiesApi_GetEntityAttributes(client.axios, "", {
+        workspaceId: workspace,
+        objectId: ref.identifier,
+        include: ["datasets"],
+    }).then((res) => {
         // if this happens then its either bad query parameterization or the backend is hosed badly
         invariant(
             res.data.included && res.data.included.length > 0,
@@ -401,21 +379,14 @@ function getAllEntitiesAttributesWithFilter(
 ) {
     invariant(isIdentifierRef(ref), "tiger backend only supports referencing by identifier");
 
-    return EntitiesApi_GetAllEntitiesAttributes(
-        client.axios,
-        client.basePath,
-        {
-            workspaceId,
-            // to be able to get the defaultView value, we need to load the attribute itself and then find the appropriate label inside it
-            // otherwise, we would have to load the label first and then load its attribute to see the defaultView relation thus needing
-            // an extra network request
-            // tiger RSQL does not support prefixed ids, so we strip the prefix to load matches with or without prefix
-            // and then find the prefixed value in the results
-            filter: `labels.id==${getIdOrigin(ref.identifier).id}`,
-            include: includes,
-        },
-        {
-            headers: jsonApiHeaders,
-        },
-    );
+    return EntitiesApi_GetAllEntitiesAttributes(client.axios, client.basePath, {
+        workspaceId,
+        // to be able to get the defaultView value, we need to load the attribute itself and then find the appropriate label inside it
+        // otherwise, we would have to load the label first and then load its attribute to see the defaultView relation thus needing
+        // an extra network request
+        // tiger RSQL does not support prefixed ids, so we strip the prefix to load matches with or without prefix
+        // and then find the prefixed value in the results
+        filter: `labels.id==${getIdOrigin(ref.identifier).id}`,
+        include: includes,
+    });
 }

@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-backend-tiger",
-    "version": "11.18.0-alpha.4",
+    "version": "11.18.0-alpha.5",
     "description": "GoodData Backend SPI implementation for GoodData Cloud and GoodData.CN",
     "repository": {
         "type": "git",
@@ -75,7 +75,7 @@
         "@gooddata/fixtures": "3.3.4",
         "@gooddata/reference-workspace": "workspace:*",
         "@microsoft/api-documenter": "^7.17.0",
-        "@microsoft/api-extractor": "^7.52.8",
+        "@microsoft/api-extractor": "^7.55.2",
         "@types/lodash-es": "^4.17.12",
         "@types/spark-md5": "^3.0.1",
         "@typescript-eslint/eslint-plugin": "8.52.0",

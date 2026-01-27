@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { afterEach, describe, expect, it, vi } from "vitest";
 
@@ -19,8 +19,20 @@ import {
     type IReferencePoint,
     type IVisConstruct,
 } from "../../../../interfaces/Visualization.js";
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
-import * as testMocks from "../../../../tests/mocks/testMocks.js";
+import {
+    dateAttributeOnStackBucketReferencePoint,
+    emptyReferencePoint,
+    firstMeasureArithmeticAlongWithAttributeReferencePoint,
+    justViewByReferencePoint,
+    masterMeasureItems,
+    mixOfMeasuresWithDerivedAndArithmeticFromDerivedHeatMapReferencePoint,
+    multipleMetricsAndCategoriesReferencePoint,
+    oneMetricAndCategoryAndStackReferencePoint,
+    oneMetricNoCategoriesReferencePoint,
+    oneMetricOneCategory,
+    oneMetricOneStackReferencePoint,
+} from "../../../../tests/mocks/referencePointMocks.js";
+import { insightWithSingleMeasure } from "../../../../tests/mocks/testMocks.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../../utils/translations.js";
 import {
     createDrillDefinition,
@@ -71,7 +83,7 @@ describe("PluggableHeatmap", () => {
         const heatmap = createComponent();
 
         const extendedReferencePoint = await heatmap.getExtendedReferencePoint(
-            referencePointMocks.multipleMetricsAndCategoriesReferencePoint,
+            multipleMetricsAndCategoriesReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -81,7 +93,7 @@ describe("PluggableHeatmap", () => {
         const heatmap = createComponent();
 
         const extendedReferencePoint = await heatmap.getExtendedReferencePoint(
-            referencePointMocks.dateAttributeOnStackBucketReferencePoint,
+            dateAttributeOnStackBucketReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -90,33 +102,24 @@ describe("PluggableHeatmap", () => {
     it("heatmap should not support showInpercent", async () => {
         const heatmap = createComponent();
         const referencePoint: IReferencePoint = {
-            ...referencePointMocks.multipleMetricsAndCategoriesReferencePoint,
+            ...multipleMetricsAndCategoriesReferencePoint,
             buckets: [
                 {
                     localIdentifier: "measures",
                     items: [
                         {
-                            ...referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[0].items.slice(
-                                0,
-                                1,
-                            )[0],
+                            ...multipleMetricsAndCategoriesReferencePoint.buckets[0].items.slice(0, 1)[0],
                             showInPercent: true,
                         },
                     ],
                 },
                 {
                     localIdentifier: "view",
-                    items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[1].items.slice(
-                        0,
-                        1,
-                    ),
+                    items: multipleMetricsAndCategoriesReferencePoint.buckets[1].items.slice(0, 1),
                 },
                 {
                     localIdentifier: "stack",
-                    items: referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets[1].items.slice(
-                        1,
-                        2,
-                    ),
+                    items: multipleMetricsAndCategoriesReferencePoint.buckets[1].items.slice(1, 2),
                 },
             ],
         };
@@ -129,8 +132,7 @@ describe("PluggableHeatmap", () => {
     describe("Arithmetic measures", () => {
         it("should skip measures that cannot be placed together with their operands", async () => {
             const heatmap = createComponent();
-            const originalRefPoint =
-                referencePointMocks.firstMeasureArithmeticAlongWithAttributeReferencePoint;
+            const originalRefPoint = firstMeasureArithmeticAlongWithAttributeReferencePoint;
 
             const extendedReferencePoint = await heatmap.getExtendedReferencePoint(originalRefPoint);
 
@@ -156,9 +158,7 @@ describe("PluggableHeatmap", () => {
         it("should return reference point containing uiConfig with no supported comparison types", async () => {
             const component = createComponent();
 
-            const extendedReferencePoint = await component.getExtendedReferencePoint(
-                referencePointMocks.emptyReferencePoint,
-            );
+            const extendedReferencePoint = await component.getExtendedReferencePoint(emptyReferencePoint);
 
             expect(extendedReferencePoint.uiConfig!.supportedOverTimeComparisonTypes).toEqual([]);
         });
@@ -167,12 +167,12 @@ describe("PluggableHeatmap", () => {
             const component = createComponent();
 
             const extendedReferencePoint = await component.getExtendedReferencePoint(
-                referencePointMocks.mixOfMeasuresWithDerivedAndArithmeticFromDerivedHeatMapReferencePoint,
+                mixOfMeasuresWithDerivedAndArithmeticFromDerivedHeatMapReferencePoint,
             );
             expect(extendedReferencePoint.buckets).toEqual([
                 {
                     localIdentifier: "measures",
-                    items: [referencePointMocks.masterMeasureItems[0]],
+                    items: [masterMeasureItems[0]],
                 },
                 {
                     localIdentifier: "view",
@@ -239,9 +239,7 @@ describe("PluggableHeatmap", () => {
     describe("Sort config", () => {
         it("should create sort config with sorting supported but disabled when there is no view by attribute", async () => {
             const chart = createComponent(defaultProps);
-            const sortConfig = await chart.getSortConfig(
-                referencePointMocks.oneMetricNoCategoriesReferencePoint,
-            );
+            const sortConfig = await chart.getSortConfig(oneMetricNoCategoriesReferencePoint);
 
             expect(sortConfig.supported).toBeTruthy();
             expect(sortConfig.disabled).toBeTruthy();
@@ -249,7 +247,7 @@ describe("PluggableHeatmap", () => {
 
         it("should create sort config with sorting disabled when there is no measure", async () => {
             const chart = createComponent(defaultProps);
-            const sortConfig = await chart.getSortConfig(referencePointMocks.justViewByReferencePoint);
+            const sortConfig = await chart.getSortConfig(justViewByReferencePoint);
 
             expect(sortConfig.supported).toBeTruthy();
             expect(sortConfig.disabled).toBeTruthy();
@@ -257,23 +255,21 @@ describe("PluggableHeatmap", () => {
 
         it("should provide attribute normal as default sort, attribute normal and measuree sorts as available sorts for 1M + 1VB", async () => {
             const chart = createComponent(defaultProps);
-            const sortConfig = await chart.getSortConfig(referencePointMocks.oneMetricOneCategory);
+            const sortConfig = await chart.getSortConfig(oneMetricOneCategory);
 
             expect(sortConfig).toMatchSnapshot();
         });
 
         it("should provide attribute normal as default sort, attribute area sort as available sorts for 1M + 1SB", async () => {
             const chart = createComponent(defaultProps);
-            const sortConfig = await chart.getSortConfig(referencePointMocks.oneMetricOneStackReferencePoint);
+            const sortConfig = await chart.getSortConfig(oneMetricOneStackReferencePoint);
 
             expect(sortConfig).toMatchSnapshot();
         });
 
         it("should provide attribute normal as default sort, attribute are sorts as available sorts for 1M + 1VB + 1SB", async () => {
             const chart = createComponent(defaultProps);
-            const sortConfig = await chart.getSortConfig(
-                referencePointMocks.oneMetricAndCategoryAndStackReferencePoint,
-            );
+            const sortConfig = await chart.getSortConfig(oneMetricAndCategoryAndStackReferencePoint);
 
             expect(sortConfig).toMatchSnapshot();
         });
@@ -283,7 +279,7 @@ describe("PluggableHeatmap", () => {
         it("should mount on the element defined by the callback", () => {
             const visualization = createComponent();
 
-            visualization.update({ messages }, testMocks.insightWithSingleMeasure, {}, executionFactory);
+            visualization.update({ messages }, insightWithSingleMeasure, {}, executionFactory);
 
             // 1st call for rendering element
             // 2nd call for rendering config panel

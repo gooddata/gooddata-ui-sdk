@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type ReactElement, useState } from "react";
 
@@ -6,7 +6,7 @@ import cx from "classnames";
 import { useIntl } from "react-intl";
 
 import { type ObjRef } from "@gooddata/sdk-model";
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { Bubble } from "../../Bubble/Bubble.js";
 import { BubbleHoverTrigger } from "../../Bubble/BubbleHoverTrigger.js";
@@ -69,7 +69,7 @@ export function StylingSettingListItem<T extends StylingPickerItemContent>({
             className={cx(
                 "gd-styling-picker-list-item",
                 "s-styling-picker-list-item",
-                `s-styling-picker-list-item-${stringUtils.simplifyText(name ?? "")}`,
+                `s-styling-picker-list-item-${simplifyText(name ?? "")}`,
                 {
                     "is-selected": isSelected,
                 },
@@ -77,7 +77,7 @@ export function StylingSettingListItem<T extends StylingPickerItemContent>({
         >
             <label className="input-radio-label gd-styling-picker-list-item-content">
                 <input
-                    aria-label={stringUtils.simplifyText(name ?? "")}
+                    aria-label={simplifyText(name ?? "")}
                     type="radio"
                     className="input-radio"
                     readOnly

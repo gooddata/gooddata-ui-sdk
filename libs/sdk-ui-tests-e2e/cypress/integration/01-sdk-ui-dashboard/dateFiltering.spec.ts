@@ -1,10 +1,10 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { DateFilter } from "../../tools/dateFilter";
 import { EditMode } from "../../tools/editMode";
 import { DateFilterValue } from "../../tools/enum/DateFilterValue";
 import { Kpi } from "../../tools/kpi";
-import * as Navigation from "../../tools/navigation";
+import { visit, visitCopyOf } from "../../tools/navigation";
 
 const dateFilter = new DateFilter();
 const editMode = new EditMode();
@@ -21,7 +21,7 @@ describe("Date filtering", () => {
             ],
         },
         () => {
-            Navigation.visit("dashboard/new-dashboard");
+            visit("dashboard/new-dashboard");
             dateFilter.subtitleHasValue(DateFilterValue.THIS_MONTH);
         },
     );
@@ -37,7 +37,7 @@ describe("Date filtering", () => {
             ],
         },
         () => {
-            Navigation.visit("dashboard/dashboard-many-rows-columns");
+            visit("dashboard/dashboard-many-rows-columns");
             dateFilter.subtitleHasValue(DateFilterValue.ALL_TIME);
             dateFilter
                 .openAndSelectDateFilterByName(DateFilterValue.THIS_YEAR)
@@ -57,7 +57,7 @@ describe("Date filtering", () => {
             ],
         },
         () => {
-            Navigation.visit("dashboard/dashboard-many-rows-columns");
+            visit("dashboard/dashboard-many-rows-columns");
             dateFilter.open().isDateFilterMessageVisibled(false).cancel();
             editMode.edit().isInEditMode(true);
             dateFilter.open().isDateFilterMessageVisibled(true);
@@ -75,7 +75,7 @@ describe("Date filtering", () => {
             ],
         },
         () => {
-            Navigation.visit("dashboard/dashboard-many-rows-columns");
+            visit("dashboard/dashboard-many-rows-columns");
             dateFilter
                 .openAndSelectDateFilterByName(DateFilterValue.THIS_YEAR)
                 .apply()
@@ -96,7 +96,7 @@ describe("Date filtering", () => {
             ],
         },
         () => {
-            Navigation.visitCopyOf("dashboard/dashboard-many-rows-columns");
+            visitCopyOf("dashboard/dashboard-many-rows-columns");
 
             const dateFilterValues = [
                 DateFilterValue.THIS_MONTH,
@@ -117,7 +117,7 @@ describe("Date filtering", () => {
     );
 
     it.skip("should select date filter by preset", { tags: "checklist_integrated_bear" }, () => {
-        Navigation.visit("dashboard/for-date-filter");
+        visit("dashboard/for-date-filter");
 
         const dateFilterValues = [
             DateFilterValue.ALL_TIME,

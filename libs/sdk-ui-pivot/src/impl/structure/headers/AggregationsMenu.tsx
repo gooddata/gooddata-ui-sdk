@@ -11,9 +11,9 @@ import {
     type ITheme,
     type ITotal,
     type TotalType,
+    hasMeasureValueFilterConditions,
     isMeasureValueFilter,
     isRankingFilter,
-    measureValueFilterConditions,
 } from "@gooddata/sdk-model";
 import {
     Bubble,
@@ -172,7 +172,7 @@ export function AggregationsMenu({
 
         // ignore measure value filters without condition, these are not yet specified by the user and are not sent as part of the execution
         return definition.filters.some(
-            (filter) => isMeasureValueFilter(filter) && !!measureValueFilterConditions(filter),
+            (filter) => isMeasureValueFilter(filter) && hasMeasureValueFilterConditions(filter),
         );
     }, [getExecutionDefinition]);
 

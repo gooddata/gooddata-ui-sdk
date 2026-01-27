@@ -30,7 +30,7 @@ import {
     getInsightAttributeFilterPlaceholdersFromUrl,
 } from "@gooddata/sdk-model/internal";
 import { type IAvailableDrillTargets } from "@gooddata/sdk-ui";
-import { typesUtils } from "@gooddata/util";
+import { combineGuards } from "@gooddata/util";
 
 import { getDrillOriginLocalIdentifier } from "../../../../_staging/drills/drillingUtils.js";
 import { type ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
@@ -111,7 +111,7 @@ export function extractInsightRefs(items: ReadonlyArray<InsightDrillDefinition>)
 
 export function extractDisplayFormIdentifiers(drillDefinitions: InsightDrillDefinition[]): ObjRef[] {
     return drillDefinitions
-        .filter(typesUtils.combineGuards(isDrillToCustomUrl, isDrillToAttributeUrl))
+        .filter(combineGuards(isDrillToCustomUrl, isDrillToAttributeUrl))
         .flatMap((drillItem) => {
             if (isDrillToCustomUrl(drillItem)) {
                 const params = getAttributeIdentifiersPlaceholdersFromUrl(drillItem.target.url);

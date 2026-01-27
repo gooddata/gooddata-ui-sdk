@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { useState } from "react";
 
@@ -11,18 +11,18 @@ import {
 import { BarChart } from "@gooddata/sdk-ui-charts";
 import { AttributeFilter } from "@gooddata/sdk-ui-filters";
 
-import * as Catalog from "../catalog.js";
+import { CustomerCity, CustomerCountry, CustomerState, GrossProfit } from "../catalog.js";
 import { Hint } from "../Hint.js";
 
 export function Example() {
     const [filter1, setFilter1] = useState<IAttributeFilter>(
-        newNegativeAttributeFilter(Catalog.CustomerCountry, ["United States"]),
+        newNegativeAttributeFilter(CustomerCountry, ["United States"]),
     );
     const [filter2, setFilter2] = useState<IAttributeFilter>(
-        newPositiveAttributeFilter(Catalog.CustomerState, ["New Brunswick", "Quebec"]),
+        newPositiveAttributeFilter(CustomerState, ["New Brunswick", "Quebec"]),
     );
     const [filter3, setFilter3] = useState<IAttributeFilter>(
-        newNegativeAttributeFilter(Catalog.CustomerCity.Default, [
+        newNegativeAttributeFilter(CustomerCity.Default, [
             "Akron",
             "Atlanta",
             "Chicago",
@@ -34,7 +34,7 @@ export function Example() {
             "Sherbrooke",
         ]),
     );
-    const sortBy = [newMeasureSort(Catalog.GrossProfit, "desc")];
+    const sortBy = [newMeasureSort(GrossProfit, "desc")];
 
     return (
         <>
@@ -58,8 +58,8 @@ export function Example() {
 
             <div style={{ height: 480 }}>
                 <BarChart
-                    measures={[Catalog.GrossProfit]}
-                    viewBy={Catalog.CustomerCity.Default}
+                    measures={[GrossProfit]}
+                    viewBy={CustomerCity.Default}
                     filters={[filter1, filter2, filter3]}
                     config={{ legend: { enabled: false } }}
                     sortBy={sortBy}

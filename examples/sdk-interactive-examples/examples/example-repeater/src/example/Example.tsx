@@ -1,17 +1,15 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { measureLocalId, modifyAttribute } from "@gooddata/sdk-model";
 import { Repeater } from "@gooddata/sdk-ui-charts";
 
-import * as Catalog from "../catalog.js";
+import { DateDatasets, NrOfOrders, ProductCategory } from "../catalog.js";
 import { Hint } from "../Hint.js";
 
-const productCategoryRow = modifyAttribute(Catalog.ProductCategory, (a) => a.localId("productCategoryRow"));
-const productCategoryColumn = modifyAttribute(Catalog.ProductCategory, (a) =>
-    a.localId("productCategoryColumn"),
-);
-const numberOfOrdersColumn = Catalog.NrOfOrders;
-const orderDateMonthYear = Catalog.DateDatasets.OrderDate.OrderDateMonthYear.Default;
+const productCategoryRow = modifyAttribute(ProductCategory, (a) => a.localId("productCategoryRow"));
+const productCategoryColumn = modifyAttribute(ProductCategory, (a) => a.localId("productCategoryColumn"));
+const numberOfOrdersColumn = NrOfOrders;
+const orderDateMonthYear = DateDatasets.OrderDate.OrderDateMonthYear.Default;
 
 export function Example() {
     return (
