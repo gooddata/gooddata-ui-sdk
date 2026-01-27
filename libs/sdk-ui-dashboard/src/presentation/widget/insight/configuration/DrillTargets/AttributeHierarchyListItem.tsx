@@ -22,7 +22,7 @@ import {
     type IAttributeHierarchyDetailItem,
 } from "@gooddata/sdk-ui-ext";
 import { ShortenedText } from "@gooddata/sdk-ui-kit";
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { type ObjRefMap } from "../../../../../_staging/metadata/objRefMap.js";
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
@@ -79,7 +79,7 @@ export function AttributeHierarchyListItem(props: IAttributeHierarchyListItemPro
 
     const hierarchyListItemClassname = cx(
         "attribute-hierarchy-list-item s-attribute-hierarchy-list-item",
-        `s-${stringUtils.simplifyText(hierarchyTitle)}`,
+        `s-${simplifyText(hierarchyTitle)}`,
         {
             "is-disabled s-is-disable": isDisabled,
         },

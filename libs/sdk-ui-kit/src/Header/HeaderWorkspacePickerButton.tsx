@@ -1,10 +1,10 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type MouseEvent, type MutableRefObject } from "react";
 
 import cx from "classnames";
 
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { Button } from "../Button/Button.js";
 
@@ -25,7 +25,7 @@ export function HeaderWorkspacePickerButton({
 }: IHeaderWorkspacePickerButtonProps) {
     const classNames = cx({
         "gd-header-project": true,
-        [`s-${stringUtils.simplifyText(title)}`]: true,
+        [`s-${simplifyText(title)}`]: true,
         "is-expanded": isOpen,
         "is-collapsed": !isOpen,
     });

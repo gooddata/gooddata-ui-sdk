@@ -3,7 +3,7 @@
 import { DateFilter } from "../../tools/dateFilter";
 import { EditMode } from "../../tools/editMode";
 import { AttributeFilter, FilterBar } from "../../tools/filterBar";
-import * as Navigation from "../../tools/navigation";
+import { visit } from "../../tools/navigation";
 
 const filterBar = new FilterBar();
 const dateFilter = new DateFilter();
@@ -14,19 +14,19 @@ const lockedAttributeFilter = new AttributeFilter("Account");
 
 describe("Hide Filters", { tags: ["pre-merge_isolated_tiger_fe"] }, () => {
     it("Hide hidden date filter on view mode", () => {
-        Navigation.visit("dashboard/dashboard-tiger-hide-filters");
+        visit("dashboard/dashboard-tiger-hide-filters");
         editMode.editButtonVisible(true);
         dateFilter.isVisible(false);
     });
 
     it("Hide hidden attribute filter on view mode", () => {
-        Navigation.visit("dashboard/dashboard-tiger-hide-filters");
+        visit("dashboard/dashboard-tiger-hide-filters");
         editMode.editButtonVisible(true);
         hiddenAttributeFilter.isVisible(false);
     });
 
     it("User can select hide date filter option on configuration in edit mode", () => {
-        Navigation.visit("dashboard/dashboard-tiger");
+        visit("dashboard/dashboard-tiger");
         editMode.edit().saveButtonEnabled(false);
 
         dateFilter
@@ -39,7 +39,7 @@ describe("Hide Filters", { tags: ["pre-merge_isolated_tiger_fe"] }, () => {
     });
 
     it("User can select hide attribute filter option on configuration in edit mode", () => {
-        Navigation.visit("dashboard/dashboard-tiger-hide-filters");
+        visit("dashboard/dashboard-tiger-hide-filters");
         editMode.edit().saveButtonEnabled(false);
 
         interactiveAttributeFilter
@@ -52,17 +52,17 @@ describe("Hide Filters", { tags: ["pre-merge_isolated_tiger_fe"] }, () => {
     });
 
     it("User can not select and edit readonly date filter in view mode", () => {
-        Navigation.visit("dashboard/dashboard-tiger-readonly-date-filter");
+        visit("dashboard/dashboard-tiger-readonly-date-filter");
         dateFilter.open().hasDropdownBodyOpen(false);
     });
 
     it("User can not select and edit readonly attribute filter in view mode", () => {
-        Navigation.visit("dashboard/dashboard-tiger-hide-filters");
+        visit("dashboard/dashboard-tiger-hide-filters");
         lockedAttributeFilter.toggle().hasDropdownBodyOpen(false);
     });
 
     it("User can select and edit readonly date filter in edit mode", () => {
-        Navigation.visit("dashboard/dashboard-tiger-readonly-date-filter");
+        visit("dashboard/dashboard-tiger-readonly-date-filter");
         editMode.edit().saveButtonEnabled(false);
         dateFilter
             .open()
@@ -74,7 +74,7 @@ describe("Hide Filters", { tags: ["pre-merge_isolated_tiger_fe"] }, () => {
     });
 
     it("User can select and edit readonly attribute filter in edit mode", () => {
-        Navigation.visit("dashboard/dashboard-tiger-hide-filters");
+        visit("dashboard/dashboard-tiger-hide-filters");
         editMode.edit().saveButtonEnabled(false);
 
         lockedAttributeFilter
@@ -87,7 +87,7 @@ describe("Hide Filters", { tags: ["pre-merge_isolated_tiger_fe"] }, () => {
     });
 
     it("Should not reuse the config mode when re-added attribute filter", () => {
-        Navigation.visit("dashboard/dashboard-tiger-hide-filters");
+        visit("dashboard/dashboard-tiger-hide-filters");
         editMode.edit().saveButtonEnabled(false);
 
         lockedAttributeFilter.isVisible(true).isLockedIconVisible().removeFilter();
@@ -97,7 +97,7 @@ describe("Hide Filters", { tags: ["pre-merge_isolated_tiger_fe"] }, () => {
     });
 
     it("Should render correct mode in configuration overlay", () => {
-        Navigation.visit("dashboard/dashboard-tiger-hide-filters");
+        visit("dashboard/dashboard-tiger-hide-filters");
         editMode.edit().saveButtonEnabled(false);
 
         dateFilter.open().openConfiguration().hasConfigurationModeCheckedAt("hidden");
@@ -107,14 +107,14 @@ describe("Hide Filters", { tags: ["pre-merge_isolated_tiger_fe"] }, () => {
     });
 
     it("Should render correct date filter readonly mode in configuration overlay", () => {
-        Navigation.visit("dashboard/dashboard-tiger-readonly-date-filter");
+        visit("dashboard/dashboard-tiger-readonly-date-filter");
         editMode.edit().saveButtonEnabled(false);
 
         dateFilter.open().openConfiguration().hasConfigurationModeCheckedAt("readonly");
     });
 
     it("Use interactive mode as default for date filter mode in configuration overlay", () => {
-        Navigation.visit("dashboard/dashboard-tiger");
+        visit("dashboard/dashboard-tiger");
         editMode.edit().saveButtonEnabled(false);
 
         dateFilter.open().openConfiguration().hasConfigurationModeCheckedAt("active");

@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { useState } from "react";
 
@@ -6,13 +6,11 @@ import { type IAttributeFilter, newNegativeAttributeFilter } from "@gooddata/sdk
 import { Treemap } from "@gooddata/sdk-ui-charts";
 import { AttributeFilter } from "@gooddata/sdk-ui-filters";
 
-import * as Catalog from "../catalog.js";
+import { CustomerCountry, GrossProfit, ProductCategory } from "../catalog.js";
 import { Hint } from "../Hint.js";
 
 export function Example() {
-    const [filter, setFilter] = useState<IAttributeFilter>(
-        newNegativeAttributeFilter(Catalog.ProductCategory, []),
-    );
+    const [filter, setFilter] = useState<IAttributeFilter>(newNegativeAttributeFilter(ProductCategory, []));
     return (
         <>
             <h1>Attribute Filter Component</h1>
@@ -23,9 +21,9 @@ export function Example() {
 
             <div style={{ height: 300 }}>
                 <Treemap
-                    measures={[Catalog.GrossProfit]}
-                    viewBy={Catalog.ProductCategory}
-                    segmentBy={Catalog.CustomerCountry}
+                    measures={[GrossProfit]}
+                    viewBy={ProductCategory}
+                    segmentBy={CustomerCountry}
                     filters={[filter]}
                     config={{ legend: { enabled: false } }}
                 />

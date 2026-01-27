@@ -100,6 +100,7 @@ export function aggregateLegend(
         }
 
         const { geoData, baseLegendItems, availableLegends } = layerData;
+        const colorScaleBaseColor = layerData.colorStrategy?.getColorByIndex(0);
 
         // Skip layers without geoData - no legend to display
         if (!geoData) {
@@ -121,6 +122,7 @@ export function aggregateLegend(
                       legendItems,
                       availableLegends,
                       numericSymbols: options?.numericSymbols,
+                      colorScaleBaseColor,
                   })
                 : computeAreaLegend({
                       layerId,
@@ -129,6 +131,7 @@ export function aggregateLegend(
                       legendItems,
                       availableLegends,
                       numericSymbols: options?.numericSymbols,
+                      colorScaleBaseColor,
                   });
 
         // Only include sections with legend data

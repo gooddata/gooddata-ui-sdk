@@ -21,7 +21,13 @@ import {
     type PluggableVisualizationFactory,
 } from "../../interfaces/VisualizationDescriptor.js";
 import { emptyReferencePoint, justViewByReferencePoint } from "../../tests/mocks/referencePointMocks.js";
-import * as testMocks from "../../tests/mocks/testMocks.js";
+import {
+    dummyColumnVisualizationClass,
+    dummyInsight,
+    dummyTableVisualizationClass,
+    dummyUnknownTypeVisualizationClass,
+    emptyInsight,
+} from "../../tests/mocks/testMocks.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../utils/translations.js";
 import { BaseVisualization, type IBaseVisualizationProps } from "../BaseVisualization.js";
 import { AbstractPluggableVisualization } from "../pluggableVisualizations/AbstractPluggableVisualization.js";
@@ -93,9 +99,9 @@ describe("BaseVisualization", () => {
 
     const defaultProps: IBaseVisualizationProps = {
         projectId: "PROJECTID",
-        insight: testMocks.emptyInsight,
+        insight: emptyInsight,
         insightPropertiesMeta: {},
-        visualizationClass: testMocks.dummyTableVisualizationClass,
+        visualizationClass: dummyTableVisualizationClass,
         backend: dummyBackend(),
         referencePoint: emptyReferencePoint,
         drillableItems: [],
@@ -406,7 +412,7 @@ describe("BaseVisualization", () => {
         rerender(
             <BaseVisualization
                 {...defaultProps}
-                visualizationClass={testMocks.dummyColumnVisualizationClass}
+                visualizationClass={dummyColumnVisualizationClass}
                 onExtendedReferencePointChanged={onColumnBucketsChange}
             />,
         );
@@ -455,8 +461,8 @@ describe("BaseVisualization", () => {
             () =>
                 createComponent({
                     ...defaultProps,
-                    insight: testMocks.dummyInsight,
-                    visualizationClass: testMocks.dummyUnknownTypeVisualizationClass,
+                    insight: dummyInsight,
+                    visualizationClass: dummyUnknownTypeVisualizationClass,
                     onLoadingChanged,
                 }),
             ["error", "warn"],
@@ -493,7 +499,7 @@ describe("BaseVisualization", () => {
                 async () => {
                     createComponent({
                         ...defaultProps,
-                        visualizationClass: testMocks.dummyUnknownTypeVisualizationClass,
+                        visualizationClass: dummyUnknownTypeVisualizationClass,
                         visualizationCatalog,
                     });
 

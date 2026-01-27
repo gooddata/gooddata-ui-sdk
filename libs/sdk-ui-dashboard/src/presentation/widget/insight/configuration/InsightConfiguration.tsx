@@ -8,7 +8,7 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 import { OverlayController, OverlayControllerProvider, ScrollablePanel } from "@gooddata/sdk-ui-kit";
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { InsightDescriptionConfig } from "./InsightDescriptionConfig/InsightDescriptionConfig.js";
 import { InsightFilters } from "./InsightFilters.js";
@@ -31,9 +31,7 @@ export function InsightConfiguration({
     widget,
     enableTitleConfig = true,
 }: IInsightMenuSubmenuComponentProps) {
-    const widgetRefSuffix = isInsightWidget(widget)
-        ? stringUtils.simplifyText(objRefToString(widget.ref))
-        : "";
+    const widgetRefSuffix = isInsightWidget(widget) ? simplifyText(objRefToString(widget.ref)) : "";
 
     const settings = useDashboardSelector(selectSettings);
     const dispatch = useDashboardDispatch();

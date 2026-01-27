@@ -247,7 +247,11 @@ export async function ActionsApiAxiosParamCreator_ProcessInvitation(
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -385,7 +389,11 @@ export async function AuthenticationApiAxiosParamCreator_CreateUser(
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -602,7 +610,11 @@ export async function AuthenticationApiAxiosParamCreator_UpdateUser(
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -1042,7 +1054,11 @@ export async function UserAuthorizationApiAxiosParamCreator_CreateUser(
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -1252,7 +1268,11 @@ export async function UserAuthorizationApiAxiosParamCreator_ProcessInvitation(
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -1308,7 +1328,11 @@ export async function UserAuthorizationApiAxiosParamCreator_UpdateUser(
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};

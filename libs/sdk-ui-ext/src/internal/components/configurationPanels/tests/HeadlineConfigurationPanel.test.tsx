@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { render } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
@@ -10,14 +10,24 @@ import { type HeadlineControlProperties } from "../../../interfaces/ControlPrope
 import { type IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { createTestProperties, newInsight } from "../../../tests/testDataProvider.js";
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider.js";
-import * as ComparisonSection from "../../configurationControls/comparison/ComparisonSection.js";
+import { ComparisonSection } from "../../configurationControls/comparison/ComparisonSection.js";
 import { type IConfigurationPanelContentProps } from "../ConfigurationPanelContent.js";
 import { HeadlineConfigurationPanel } from "../HeadlineConfigurationPanel.js";
+
+vi.mock("../../configurationControls/comparison/ComparisonSection.js", async (importOriginal) => {
+    const actual =
+        // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+        await importOriginal<typeof import("../../configurationControls/comparison/ComparisonSection.js")>();
+    return {
+        ...actual,
+        ComparisonSection: vi.fn(actual.ComparisonSection),
+    };
+});
 
 describe("HeadlineComparisonPanel", () => {
     const mockPushData = vi.fn();
 
-    const mockComparisonSection = () => vi.spyOn(ComparisonSection, "ComparisonSection");
+    const mockComparisonSection = () => vi.mocked(ComparisonSection);
 
     const DEFAULT_PROPERTIES = createTestProperties<HeadlineControlProperties>({
         comparison: { enabled: true },

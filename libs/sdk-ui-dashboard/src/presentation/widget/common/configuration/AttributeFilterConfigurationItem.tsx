@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useState } from "react";
 
@@ -14,7 +14,7 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 import { type IAlignPoint, ShortenedText } from "@gooddata/sdk-ui-kit";
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { useAttributeFilterConfigurationHandling } from "./useAttributeFilterConfigurationHandling.js";
 import { useIsFilterNotApplied } from "./useIsFilterNotApplied.js";
@@ -61,7 +61,7 @@ export function AttributeFilterConfigurationItem({
 
     const classNames = cx(
         "s-attribute-filter-by-item",
-        `s-${stringUtils.simplifyText(title)}`,
+        `s-${simplifyText(title)}`,
         "input-checkbox-label",
         "filter-by-item",
         "attribute-filter-by-item",

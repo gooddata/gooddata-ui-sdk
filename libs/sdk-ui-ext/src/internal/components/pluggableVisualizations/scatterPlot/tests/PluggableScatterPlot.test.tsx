@@ -1,12 +1,23 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 import { type IVisConstruct } from "../../../../interfaces/Visualization.js";
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
-import * as testMocks from "../../../../tests/mocks/testMocks.js";
+import {
+    arithmeticMeasureItems,
+    emptyReferencePoint,
+    masterMeasureItems,
+    mixOfMeasuresWithDerivedAndArithmeticFromDerivedScatterReferencePoint,
+    multipleMetricsAndCategoriesReferencePoint,
+    multipleMetricsNoCategoriesReferencePoint,
+    oneMetricAndManyCategoriesReferencePoint,
+    overTimeComparisonDateItem,
+    secondaryMeasureReferencePoint,
+    simpleGeoPushpinReferencePoint,
+} from "../../../../tests/mocks/referencePointMocks.js";
+import { insightWithSingleMeasure } from "../../../../tests/mocks/testMocks.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../../utils/translations.js";
 import { getLastRenderEl } from "../../tests/pluggableVisualizations.test.helpers.js";
 import { PluggableScatterPlot } from "../PluggableScatterPlot.js";
@@ -50,7 +61,7 @@ describe("PluggableScatterPlot", () => {
         const scatterPlot = createComponent();
 
         const extendedReferencePoint = await scatterPlot.getExtendedReferencePoint(
-            referencePointMocks.multipleMetricsAndCategoriesReferencePoint,
+            multipleMetricsAndCategoriesReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -60,7 +71,7 @@ describe("PluggableScatterPlot", () => {
         const scatterPlot = createComponent();
 
         const extendedReferencePoint = await scatterPlot.getExtendedReferencePoint(
-            referencePointMocks.multipleMetricsNoCategoriesReferencePoint,
+            multipleMetricsNoCategoriesReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -70,7 +81,7 @@ describe("PluggableScatterPlot", () => {
         const scatterPlot = createComponent();
 
         const extendedReferencePoint = await scatterPlot.getExtendedReferencePoint(
-            referencePointMocks.secondaryMeasureReferencePoint,
+            secondaryMeasureReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -80,7 +91,7 @@ describe("PluggableScatterPlot", () => {
         const scatterPlot = createComponent();
 
         const extendedReferencePoint = await scatterPlot.getExtendedReferencePoint(
-            referencePointMocks.oneMetricAndManyCategoriesReferencePoint,
+            oneMetricAndManyCategoriesReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -90,7 +101,7 @@ describe("PluggableScatterPlot", () => {
         const scatterPlot = createComponent();
 
         const extendedReferencePoint = await scatterPlot.getExtendedReferencePoint(
-            referencePointMocks.simpleGeoPushpinReferencePoint,
+            simpleGeoPushpinReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -104,27 +115,23 @@ describe("PluggableScatterPlot", () => {
                 buckets: [
                     {
                         localIdentifier: "measures",
-                        items: [
-                            referencePointMocks.arithmeticMeasureItems[0],
-                            referencePointMocks.masterMeasureItems[0],
-                            referencePointMocks.masterMeasureItems[1],
-                        ],
+                        items: [arithmeticMeasureItems[0], masterMeasureItems[0], masterMeasureItems[1]],
                     },
                 ],
                 filters: {
                     localIdentifier: "filters",
-                    items: [referencePointMocks.overTimeComparisonDateItem],
+                    items: [overTimeComparisonDateItem],
                 },
             });
 
             expect(extendedReferencePoint.buckets).toEqual([
                 {
                     localIdentifier: "measures",
-                    items: [referencePointMocks.masterMeasureItems[0]],
+                    items: [masterMeasureItems[0]],
                 },
                 {
                     localIdentifier: "secondary_measures",
-                    items: [referencePointMocks.masterMeasureItems[1]],
+                    items: [masterMeasureItems[1]],
                 },
                 {
                     localIdentifier: "attribute",
@@ -144,27 +151,23 @@ describe("PluggableScatterPlot", () => {
                 buckets: [
                     {
                         localIdentifier: "measures",
-                        items: [
-                            referencePointMocks.arithmeticMeasureItems[2],
-                            referencePointMocks.masterMeasureItems[0],
-                            referencePointMocks.masterMeasureItems[1],
-                        ],
+                        items: [arithmeticMeasureItems[2], masterMeasureItems[0], masterMeasureItems[1]],
                     },
                 ],
                 filters: {
                     localIdentifier: "filters",
-                    items: [referencePointMocks.overTimeComparisonDateItem],
+                    items: [overTimeComparisonDateItem],
                 },
             });
 
             expect(extendedReferencePoint.buckets).toEqual([
                 {
                     localIdentifier: "measures",
-                    items: [referencePointMocks.arithmeticMeasureItems[2]],
+                    items: [arithmeticMeasureItems[2]],
                 },
                 {
                     localIdentifier: "secondary_measures",
-                    items: [referencePointMocks.masterMeasureItems[0]],
+                    items: [masterMeasureItems[0]],
                 },
                 {
                     localIdentifier: "attribute",
@@ -182,9 +185,7 @@ describe("PluggableScatterPlot", () => {
         it("should return reference point containing uiConfig with no supported comparison types", async () => {
             const component = createComponent();
 
-            const extendedReferencePoint = await component.getExtendedReferencePoint(
-                referencePointMocks.emptyReferencePoint,
-            );
+            const extendedReferencePoint = await component.getExtendedReferencePoint(emptyReferencePoint);
 
             expect(extendedReferencePoint.uiConfig!.supportedOverTimeComparisonTypes).toEqual([]);
         });
@@ -193,16 +194,16 @@ describe("PluggableScatterPlot", () => {
             const component = createComponent();
 
             const extendedReferencePoint = await component.getExtendedReferencePoint(
-                referencePointMocks.mixOfMeasuresWithDerivedAndArithmeticFromDerivedScatterReferencePoint,
+                mixOfMeasuresWithDerivedAndArithmeticFromDerivedScatterReferencePoint,
             );
             expect(extendedReferencePoint.buckets).toEqual([
                 {
                     localIdentifier: "measures",
-                    items: [referencePointMocks.masterMeasureItems[0]],
+                    items: [masterMeasureItems[0]],
                 },
                 {
                     localIdentifier: "secondary_measures",
-                    items: [referencePointMocks.masterMeasureItems[1]],
+                    items: [masterMeasureItems[1]],
                 },
                 {
                     localIdentifier: "attribute",
@@ -220,7 +221,7 @@ describe("PluggableScatterPlot", () => {
         it("should mount on the element defined by the callback", () => {
             const visualization = createComponent();
 
-            visualization.update({ messages }, testMocks.insightWithSingleMeasure, {}, executionFactory);
+            visualization.update({ messages }, insightWithSingleMeasure, {}, executionFactory);
 
             // 1st call for rendering element
             // 2nd call for rendering config panel

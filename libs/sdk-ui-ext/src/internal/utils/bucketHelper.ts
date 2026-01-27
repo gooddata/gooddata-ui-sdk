@@ -76,7 +76,7 @@ export function isActiveMeasureValueFilter(filter: IBucketFilter): boolean {
     if (!isMeasureValueFilter(filter)) {
         return false;
     }
-    return !!filter.condition;
+    return !!filter.condition || !!filter.conditions?.length;
 }
 
 export function isRankingFilter(filter: IBucketFilter | undefined): filter is IRankingFilter {

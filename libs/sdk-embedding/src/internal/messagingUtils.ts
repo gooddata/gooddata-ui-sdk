@@ -1,4 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import {
     type GdcMessageEventListener,
     type IGdcMessageEvent,
@@ -103,3 +104,11 @@ export function postEvent(product: string, name: string, data: object, contextId
         "*",
     );
 }
+
+export const messagingUtils = {
+    setHost,
+    setConfig,
+    addListener,
+    removeListener,
+    postEvent,
+};

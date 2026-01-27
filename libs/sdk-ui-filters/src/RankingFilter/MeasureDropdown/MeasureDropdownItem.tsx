@@ -1,9 +1,9 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import cx from "classnames";
 
 import { type ObjRefInScope } from "@gooddata/sdk-model";
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { type IMeasureDropdownItem } from "../types.js";
 
@@ -32,7 +32,7 @@ export function MeasureDropdownItem({
         },
         "gd-button-link",
         "gd-icon-metric",
-        `s-rf-measure-${stringUtils.simplifyText(title)}`,
+        `s-rf-measure-${simplifyText(title)}`,
     );
 
     const onMouseOver = () => {

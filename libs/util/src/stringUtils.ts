@@ -1,4 +1,4 @@
-// (C) 2007-2024 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 /**
  * @internal
@@ -108,7 +108,6 @@ export function parseStringToArray(str: string): string[] | null {
  *
  * @internal
  */
-
 export function hashCodeString(value: string): number {
     if (!value?.length) {
         return 0;

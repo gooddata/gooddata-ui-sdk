@@ -1,7 +1,7 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { TotalTypes } from "../../tools/enum/TotalTypes";
-import * as Navigation from "../../tools/navigation";
+import { visit } from "../../tools/navigation";
 import { Table, nonEmptyValue } from "../../tools/table";
 
 // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
@@ -10,7 +10,7 @@ describe.skip(
     { tags: ["pre-merge_isolated_bear"] },
     () => {
         beforeEach(() => {
-            Navigation.visit("visualizations/pivot-table/pivot-table-aggregations-menu");
+            visit("visualizations/pivot-table/pivot-table-aggregations-menu");
         });
 
         it("hovering over menu does not show sorting icon (SEPARATE)", () => {
@@ -166,7 +166,7 @@ describe.skip(
 // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
 describe.skip("Pivot Table Column Aggregations menu", { tags: ["pre-merge_isolated_bear"] }, () => {
     beforeEach(() => {
-        Navigation.visit("visualizations/pivot-table/pivot-table-column-aggregations-menu");
+        visit("visualizations/pivot-table/pivot-table-column-aggregations-menu");
     });
 
     it("should show aggregation sub menu for columns", () => {

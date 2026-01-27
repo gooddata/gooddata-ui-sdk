@@ -1,4 +1,5 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 
 import { isObjRef } from "@gooddata/sdk-model";
@@ -61,3 +62,7 @@ export function isValidSetFilterParentsCommandData(obj: unknown): obj is IKdSetF
 
     return filters.every(isValidSetFilterParentsItem);
 }
+
+export const validators = {
+    isValidSetFilterParentsCommandData,
+};

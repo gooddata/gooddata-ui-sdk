@@ -950,8 +950,9 @@ export function measureValueFilterMeasure(filter: IMeasureValueFilter): ObjRefIn
 }
 
 /**
- * Gets measure value filter condition.
+ * Gets measure value filter condition. Provides only legacy condition property.
  * @param filter - measure value filter to work with
+ * @deprecated use measureValueFilterConditions instead
  * @returns filter condition
  * @public
  */
@@ -978,6 +979,19 @@ export function measureValueFilterConditions(
         filter.measureValueFilter.conditions ??
         (filter.measureValueFilter.condition ? [filter.measureValueFilter.condition] : undefined)
     );
+}
+
+/**
+ * Checks if measure value filter has conditions.
+ * @param filter - measure value filter to work with
+ * @returns true if filter has conditions, false otherwise
+ * @public
+ */
+export function hasMeasureValueFilterConditions(filter: IMeasureValueFilter): boolean {
+    invariant(filter, "filter must be specified");
+
+    const conditions = measureValueFilterConditions(filter);
+    return !!conditions?.length;
 }
 
 /**
@@ -1011,4 +1025,37 @@ export function measureValueFilterOperator(
     }
 
     return undefined;
+}
+
+/**
+ * Gets operators used in measure value filter conditions.
+ * Supports both legacy single condition and new multiple conditions format.
+ *
+ * @param filter - filter to get operators from
+ * @returns array of operators or undefined if no conditions in the filter
+ * @public
+ */
+export function measureValueFilterOperators(
+    filter: IMeasureValueFilter,
+): Array<ComparisonConditionOperator | RangeConditionOperator> | undefined {
+    invariant(filter, "filter must be specified");
+
+    const conditions = measureValueFilterConditions(filter);
+    if (!conditions?.length) {
+        return undefined;
+    }
+
+    return conditions
+        .map((condition) => {
+            if (isComparisonCondition(condition)) {
+                return condition.comparison.operator;
+            } else if (isRangeCondition(condition)) {
+                return condition.range.operator;
+            }
+            return undefined;
+        })
+        .filter(
+            (operator): operator is ComparisonConditionOperator | RangeConditionOperator =>
+                operator !== undefined,
+        );
 }

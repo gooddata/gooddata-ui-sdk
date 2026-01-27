@@ -4,7 +4,6 @@ import {
     EntitiesApi_GetAllEntitiesDatasets,
     EntitiesApi_GetEntityDatasets,
     EntitiesApi_PatchEntityDatasets,
-    jsonApiHeaders,
 } from "@gooddata/api-client-tiger";
 import type { IDatasetsQuery, IWorkspaceDatasetsService } from "@gooddata/sdk-backend-spi";
 import {
@@ -59,19 +58,12 @@ export class TigerWorkspaceDataSets implements IWorkspaceDatasetsService {
         const objectId = objRefToIdentifier(ref, this.authCall);
 
         return this.authCall(async (client) => {
-            const result = await EntitiesApi_GetEntityDatasets(
-                client.axios,
-                client.basePath,
-                {
-                    workspaceId: this.workspace,
-                    objectId,
-                    include: ["attributes"],
-                    metaInclude: ["origin"],
-                },
-                {
-                    headers: jsonApiHeaders,
-                },
-            );
+            const result = await EntitiesApi_GetEntityDatasets(client.axios, client.basePath, {
+                workspaceId: this.workspace,
+                objectId,
+                include: ["attributes"],
+                metaInclude: ["origin"],
+            });
             return convertDataSetItem(result.data.data, result.data.included);
         });
     }
@@ -82,30 +74,23 @@ export class TigerWorkspaceDataSets implements IWorkspaceDatasetsService {
         const objectId = objRefToIdentifier(dataSet.ref, this.authCall);
 
         return this.authCall(async (client) => {
-            const result = await EntitiesApi_PatchEntityDatasets(
-                client.axios,
-                client.basePath,
-                {
-                    objectId,
-                    workspaceId: this.workspace,
-                    jsonApiDatasetPatchDocument: {
-                        data: {
-                            id: objectId,
-                            type: "dataset",
-                            attributes: {
-                                ...(dataSet.title === undefined ? {} : { title: dataSet.title }),
-                                ...(dataSet.description === undefined
-                                    ? {}
-                                    : { description: dataSet.description }),
-                                ...(dataSet.tags === undefined ? {} : { tags: dataSet.tags }),
-                            },
+            const result = await EntitiesApi_PatchEntityDatasets(client.axios, client.basePath, {
+                objectId,
+                workspaceId: this.workspace,
+                jsonApiDatasetPatchDocument: {
+                    data: {
+                        id: objectId,
+                        type: "dataset",
+                        attributes: {
+                            ...(dataSet.title === undefined ? {} : { title: dataSet.title }),
+                            ...(dataSet.description === undefined
+                                ? {}
+                                : { description: dataSet.description }),
+                            ...(dataSet.tags === undefined ? {} : { tags: dataSet.tags }),
                         },
                     },
                 },
-                {
-                    headers: jsonApiHeaders,
-                },
-            );
+            });
             return convertDataSetItem(result.data.data);
         });
     }

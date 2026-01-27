@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { afterEach, describe, expect, it, vi } from "vitest";
 
@@ -7,8 +7,11 @@ import { type IDrillableItem } from "@gooddata/sdk-ui";
 import { CoreXirr, type ICoreChartProps } from "@gooddata/sdk-ui-charts";
 
 import { type IVisConstruct, type IVisProps } from "../../../../interfaces/Visualization.js";
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
-import * as testMocks from "../../../../tests/mocks/testMocks.js";
+import {
+    emptyReferencePoint,
+    measuresAndDateReferencePoint,
+} from "../../../../tests/mocks/referencePointMocks.js";
+import { emptyInsight, insightWithSingleMeasure } from "../../../../tests/mocks/testMocks.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../../utils/translations.js";
 import { getLastRenderEl } from "../../tests/pluggableVisualizations.test.helpers.js";
 import { PluggableXirr } from "../PluggableXirr.js";
@@ -84,7 +87,7 @@ describe("PluggableXirr", () => {
             const xirr = createComponent();
             const options: IVisProps = getTestOptions();
 
-            xirr.update({ ...options }, testMocks.emptyInsight, emptyPropertiesMeta, executionFactory);
+            xirr.update({ ...options }, emptyInsight, emptyPropertiesMeta, executionFactory);
 
             const renderEl = getLastRenderEl(mockRenderFun, mockElement);
             expect(renderEl).toBeUndefined();
@@ -97,7 +100,7 @@ describe("PluggableXirr", () => {
             });
             const options: IVisProps = getTestOptions();
 
-            xirr.update(options, testMocks.insightWithSingleMeasure, emptyPropertiesMeta, executionFactory);
+            xirr.update(options, insightWithSingleMeasure, emptyPropertiesMeta, executionFactory);
 
             const renderEl = getLastRenderEl<ICoreChartProps>(mockRenderFun, mockElement);
             expect(renderEl!.type).toBe(CoreXirr);
@@ -114,7 +117,7 @@ describe("PluggableXirr", () => {
 
             const options: IVisProps = getTestOptions();
 
-            xirr.update(options, testMocks.insightWithSingleMeasure, emptyPropertiesMeta, executionFactory);
+            xirr.update(options, insightWithSingleMeasure, emptyPropertiesMeta, executionFactory);
 
             const renderEl = getLastRenderEl<ICoreChartProps>(mockRenderFun, mockElement);
             expect(renderEl!.type).toBe(CoreXirr);
@@ -125,7 +128,7 @@ describe("PluggableXirr", () => {
     describe("getExtendedReferencePoint", () => {
         it("should return proper extended reference point", async () => {
             const extendedReferencePoint = await createComponent().getExtendedReferencePoint(
-                referencePointMocks.measuresAndDateReferencePoint,
+                measuresAndDateReferencePoint,
             );
 
             expect(extendedReferencePoint).toMatchSnapshot();
@@ -134,9 +137,7 @@ describe("PluggableXirr", () => {
         it("should correctly process empty reference point", async () => {
             const headline = createComponent();
 
-            const extendedReferencePoint = await headline.getExtendedReferencePoint(
-                referencePointMocks.emptyReferencePoint,
-            );
+            const extendedReferencePoint = await headline.getExtendedReferencePoint(emptyReferencePoint);
 
             expect(extendedReferencePoint).toMatchSnapshot();
         });
@@ -146,7 +147,7 @@ describe("PluggableXirr", () => {
         it("should mount on the element defined by the callback", () => {
             const visualization = createComponent();
 
-            visualization.update({ messages }, testMocks.insightWithSingleMeasure, {}, executionFactory);
+            visualization.update({ messages }, insightWithSingleMeasure, {}, executionFactory);
 
             // 1st call for rendering element
             // 2nd call for rendering config panel

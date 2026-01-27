@@ -4,7 +4,6 @@ import { type AxiosInstance, type AxiosPromise, type GenericAbortSignal } from "
 import { merge, uniqBy } from "lodash-es";
 
 import { type ITigerClientBase } from "./client.js";
-import { jsonApiHeaders } from "./constants.js";
 import {
     type JsonApiAnalyticalDashboardOutList,
     type JsonApiApiTokenOutList,
@@ -27,7 +26,6 @@ import {
 
 const DefaultPageSize = 250;
 const DefaultOptions = {
-    headers: jsonApiHeaders,
     params: {
         size: DefaultPageSize,
     },

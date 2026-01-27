@@ -1,4 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { isAttributeDescriptor, isMeasureDescriptor, isResultAttributeHeader } from "@gooddata/sdk-model";
@@ -10,7 +11,7 @@ import {
     measureDescriptors,
 } from "./HeaderPredicateFactory.fixtures.js";
 import { isHeaderPredicate } from "../HeaderPredicate.js";
-import * as headerPredicateFactory from "../HeaderPredicateFactory.js";
+import { uriMatch } from "../HeaderPredicateFactory.js";
 import {
     getAttributeHeaderItemName,
     getMappingHeaderFormattedName,
@@ -113,7 +114,7 @@ describe("isMappingHeaderAttributeItem", () => {
 
 describe("isHeaderPredicate", () => {
     it("should return true when is header predicate", () => {
-        expect(isHeaderPredicate(headerPredicateFactory.uriMatch("/some-uri"))).toEqual(true);
+        expect(isHeaderPredicate(uriMatch("/some-uri"))).toEqual(true);
     });
 
     it("should return false when is legacy drillable item", () => {

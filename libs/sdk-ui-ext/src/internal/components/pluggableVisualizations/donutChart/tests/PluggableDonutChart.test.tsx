@@ -1,12 +1,19 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
 import { type IBucketOfFun, type IVisConstruct } from "../../../../interfaces/Visualization.js";
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
-import * as testMocks from "../../../../tests/mocks/testMocks.js";
+import {
+    emptyReferencePoint,
+    firstMeasureArithmeticAlongWithAttributeReferencePoint,
+    firstMeasureArithmeticNoAttributeReferencePoint,
+    multipleMetricsAndCategoriesReferencePoint,
+    multipleMetricsNoCategoriesReferencePoint,
+    oneMetricNoCategoriesReferencePoint,
+} from "../../../../tests/mocks/referencePointMocks.js";
+import { insightWithSingleMeasure } from "../../../../tests/mocks/testMocks.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../../utils/translations.js";
 import { getLastRenderEl } from "../../tests/pluggableVisualizations.test.helpers.js";
 import { PluggableDonutChart } from "../PluggableDonutChart.js";
@@ -50,7 +57,7 @@ describe("PluggableDonutChart", () => {
         const donutChart = createComponent();
 
         const extendedReferencePoint = await donutChart.getExtendedReferencePoint(
-            referencePointMocks.multipleMetricsAndCategoriesReferencePoint,
+            multipleMetricsAndCategoriesReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -60,7 +67,7 @@ describe("PluggableDonutChart", () => {
         const donutChart = createComponent();
 
         const extendedReferencePoint = await donutChart.getExtendedReferencePoint(
-            referencePointMocks.multipleMetricsNoCategoriesReferencePoint,
+            multipleMetricsNoCategoriesReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -70,7 +77,7 @@ describe("PluggableDonutChart", () => {
         const donutChart = createComponent();
 
         const extendedReferencePoint = await donutChart.getExtendedReferencePoint(
-            referencePointMocks.oneMetricNoCategoriesReferencePoint,
+            oneMetricNoCategoriesReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -79,8 +86,7 @@ describe("PluggableDonutChart", () => {
     describe("Arithmetic measures", () => {
         it("should skip arithmetic measures that cannot be placed together with their operands", async () => {
             const donutChart = createComponent();
-            const originalRefPoint =
-                referencePointMocks.firstMeasureArithmeticAlongWithAttributeReferencePoint;
+            const originalRefPoint = firstMeasureArithmeticAlongWithAttributeReferencePoint;
 
             const extendedReferencePoint = await donutChart.getExtendedReferencePoint(originalRefPoint);
 
@@ -102,11 +108,11 @@ describe("PluggableDonutChart", () => {
             const donutChart = createComponent();
 
             const extendedReferencePoint = await donutChart.getExtendedReferencePoint(
-                referencePointMocks.firstMeasureArithmeticNoAttributeReferencePoint,
+                firstMeasureArithmeticNoAttributeReferencePoint,
             );
 
             expect(extendedReferencePoint.buckets).toEqual(
-                referencePointMocks.firstMeasureArithmeticNoAttributeReferencePoint.buckets,
+                firstMeasureArithmeticNoAttributeReferencePoint.buckets,
             );
         });
     });
@@ -115,9 +121,7 @@ describe("PluggableDonutChart", () => {
         it("should return reference point containing uiConfig with no supported comparison types", async () => {
             const component = createComponent();
 
-            const extendedReferencePoint = await component.getExtendedReferencePoint(
-                referencePointMocks.emptyReferencePoint,
-            );
+            const extendedReferencePoint = await component.getExtendedReferencePoint(emptyReferencePoint);
 
             expect(extendedReferencePoint.uiConfig!.supportedOverTimeComparisonTypes).toEqual([]);
         });
@@ -127,7 +131,7 @@ describe("PluggableDonutChart", () => {
         it("should mount on the element defined by the callback", () => {
             const visualization = createComponent();
 
-            visualization.update({ messages }, testMocks.insightWithSingleMeasure, {}, executionFactory);
+            visualization.update({ messages }, insightWithSingleMeasure, {}, executionFactory);
 
             // 1st call for rendering element
             // 2nd call for rendering config panel

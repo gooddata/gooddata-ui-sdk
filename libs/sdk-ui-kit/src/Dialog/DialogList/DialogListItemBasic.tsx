@@ -1,10 +1,10 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { useCallback, useMemo } from "react";
 
 import cx from "classnames";
 
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { type IDialogListItemComponentProps } from "./typings.js";
 import { Bubble } from "../../Bubble/Bubble.js";
@@ -42,7 +42,7 @@ export function DialogListItemBasic({ item, className, onClick, onDelete }: IDia
             cx(
                 "gd-dialog-list-item-basic",
                 "s-dialog-list-item-basic",
-                `s-dialog-list-item-${stringUtils.simplifyText(id)}`,
+                `s-dialog-list-item-${simplifyText(id)}`,
                 {
                     clickable: !isDisabled && isClickable,
                     disabled: isDisabled,

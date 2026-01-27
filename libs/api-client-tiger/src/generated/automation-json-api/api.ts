@@ -1,5 +1,3 @@
-// (C) 2025-2026 GoodData Corporation
-
 /* eslint-disable */
 /**
  * OpenAPI definition
@@ -1967,7 +1965,11 @@ export async function ActionsAutomationAxiosParamCreator_TestExistingNotificatio
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -2022,7 +2024,11 @@ export async function ActionsAutomationAxiosParamCreator_TestNotificationChannel
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -2084,7 +2090,11 @@ export async function ActionsAutomationAxiosParamCreator_TriggerAutomation(
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -2782,7 +2792,11 @@ export async function AutomationsAutomationAxiosParamCreator_TriggerAutomation(
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -3218,7 +3232,11 @@ export async function NotificationChannelsAutomationAxiosParamCreator_TestExisti
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -3273,7 +3291,11 @@ export async function NotificationChannelsAutomationAxiosParamCreator_TestNotifi
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};

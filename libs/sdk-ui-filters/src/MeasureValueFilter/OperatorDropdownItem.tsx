@@ -7,7 +7,7 @@ import { capitalize } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { getOperatorIcon, getOperatorTranslationKey } from "./helpers/measureValueFilterOperator.js";
 import { type MeasureValueFilterOperator } from "./types.js";
@@ -58,7 +58,7 @@ export const OperatorDropdownItem = memo(function OperatorDropdownItem({
     const className = cx(
         "gd-list-item",
         "gd-list-item-shortened",
-        `s-mvf-operator-${stringUtils.simplifyText(operator)}`,
+        `s-mvf-operator-${simplifyText(operator)}`,
         {
             "is-selected": selectedOperator === operator,
             "is-disabled": isDisabled,
@@ -74,7 +74,7 @@ export const OperatorDropdownItem = memo(function OperatorDropdownItem({
             className={className}
             onClick={handleOnClick}
             aria-disabled={isDisabled}
-            data-testid={`mvf-operator-${stringUtils.simplifyText(operator)}`}
+            data-testid={`mvf-operator-${simplifyText(operator)}`}
         >
             <div className={`gd-icon-${getOperatorIcon(operator)}`} title={title} />
             <span title={title}>{capitalize(title)}</span>

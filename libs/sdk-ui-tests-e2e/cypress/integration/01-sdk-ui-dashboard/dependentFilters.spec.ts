@@ -1,9 +1,9 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { Dashboard, TopBar } from "../../tools/dashboards";
 import { AttributeFilter, FilterBar } from "../../tools/filterBar";
 import { InsightsCatalog } from "../../tools/insightsCatalog";
-import * as Navigation from "../../tools/navigation";
+import { visit } from "../../tools/navigation";
 import { TableNew } from "../../tools/tableNew";
 import { Widget } from "../../tools/widget";
 
@@ -18,7 +18,7 @@ const filterBar = new FilterBar();
 
 describe("Dependent filter", () => {
     beforeEach(() => {
-        Navigation.visit("dashboard/dashboard-dependent-filters");
+        visit("dashboard/dashboard-dependent-filters");
     });
 
     it(

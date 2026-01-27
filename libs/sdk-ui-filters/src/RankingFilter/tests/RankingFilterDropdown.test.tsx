@@ -7,7 +7,18 @@ import { newRankingFilter } from "@gooddata/sdk-model";
 import { withIntl } from "@gooddata/sdk-ui";
 
 import { RankingFilterDropdownFragment } from "./fragments/RankingFilterDropdown.js";
-import * as Mock from "./mocks.js";
+import {
+    attribute1Ref as mockAttribute1Ref,
+    attribute2Ref as mockAttribute2Ref,
+    attributeItems as mockAttributeItems,
+    date1Ref as mockDate1Ref,
+    defaultFilter as mockDefaultFilter,
+    filterWithRichSetting as mockFilterWithRichSetting,
+    measure1Ref as mockMeasure1Ref,
+    measure2Ref as mockMeasure2Ref,
+    measure3Ref as mockMeasure3Ref,
+    measureItems as mockMeasureItems,
+} from "./mocks.js";
 import {
     type IRankingFilterDropdownProps,
     RankingFilterDropdown,
@@ -16,9 +27,9 @@ import {
 
 const renderComponent = (props?: Partial<IRankingFilterDropdownProps>) => {
     const defaultProps: IRankingFilterDropdownProps = {
-        measureItems: Mock.measureItems,
-        attributeItems: Mock.attributeItems,
-        filter: Mock.defaultFilter,
+        measureItems: mockMeasureItems,
+        attributeItems: mockAttributeItems,
+        filter: mockDefaultFilter,
         onApply: () => {},
         onCancel: () => {},
     };
@@ -31,11 +42,11 @@ const component = new RankingFilterDropdownFragment();
 describe("RankingFilterDropdown", () => {
     describe("prepareRankingFilterState", () => {
         it("should return object without attributes when attributes not provided", () => {
-            const result = prepareRankingFilterState(Mock.defaultFilter);
+            const result = prepareRankingFilterState(mockDefaultFilter);
 
             expect(result).toEqual({
                 rankingFilter: {
-                    measure: Mock.measure1Ref,
+                    measure: mockMeasure1Ref,
                     operator: "TOP",
                     value: 10,
                 },
@@ -43,12 +54,12 @@ describe("RankingFilterDropdown", () => {
         });
 
         it("should return object with first attribute when attributes provided", () => {
-            const result = prepareRankingFilterState(Mock.filterWithRichSetting);
+            const result = prepareRankingFilterState(mockFilterWithRichSetting);
 
             expect(result).toEqual({
                 rankingFilter: {
-                    measure: Mock.measure3Ref,
-                    attributes: [Mock.attribute1Ref],
+                    measure: mockMeasure3Ref,
+                    attributes: [mockAttribute1Ref],
                     operator: "BOTTOM",
                     value: 100,
                 },
@@ -58,31 +69,31 @@ describe("RankingFilterDropdown", () => {
 
     describe("Filter", () => {
         it("should set correct OperatorDropdown value", () => {
-            renderComponent({ filter: Mock.filterWithRichSetting });
+            renderComponent({ filter: mockFilterWithRichSetting });
 
             expect(component.getOperator()).toEqual("Bottom");
         });
 
         it("should set correct ValueDropdown value", () => {
-            renderComponent({ filter: Mock.filterWithRichSetting });
+            renderComponent({ filter: mockFilterWithRichSetting });
 
             expect(component.getValue()).toEqual("100");
         });
 
         it("should set MeasureDropdown to first measure", () => {
-            renderComponent({ filter: Mock.filterWithRichSetting });
+            renderComponent({ filter: mockFilterWithRichSetting });
 
             expect(component.getMeasure()).toEqual("Measure 3");
         });
 
         it("should set AttributeDropdown to first attribute", () => {
-            renderComponent({ filter: Mock.filterWithRichSetting });
+            renderComponent({ filter: mockFilterWithRichSetting });
 
             expect(component.getAttribute()).toEqual("Attribute 1");
         });
 
         it("should set AttributeDropdown to 'All' when no attributes provided", () => {
-            renderComponent({ filter: Mock.defaultFilter });
+            renderComponent({ filter: mockDefaultFilter });
 
             expect(component.getAttribute()).toEqual("All");
         });
@@ -128,8 +139,8 @@ describe("RankingFilterDropdown", () => {
 
             expect(onApply).toHaveBeenCalledWith({
                 rankingFilter: {
-                    measure: Mock.measure3Ref,
-                    attributes: [Mock.attribute2Ref],
+                    measure: mockMeasure3Ref,
+                    attributes: [mockAttribute2Ref],
                     operator: "BOTTOM",
                     value: 100,
                 },
@@ -147,7 +158,7 @@ describe("RankingFilterDropdown", () => {
 
             expect(onApply).toHaveBeenCalledWith({
                 rankingFilter: {
-                    measure: Mock.measure3Ref,
+                    measure: mockMeasure3Ref,
                     operator: "BOTTOM",
                     value: 100,
                 },
@@ -308,7 +319,7 @@ describe("RankingFilterDropdown", () => {
             expect(component.getValue()).toEqual("42");
             expect(onApply).toHaveBeenCalledWith({
                 rankingFilter: {
-                    measure: Mock.measure1Ref,
+                    measure: mockMeasure1Ref,
                     operator: "TOP",
                     value: 42,
                 },
@@ -337,7 +348,7 @@ describe("RankingFilterDropdown", () => {
 
             expect(onApply).toHaveBeenCalledWith({
                 rankingFilter: {
-                    measure: Mock.measure1Ref,
+                    measure: mockMeasure1Ref,
                     operator: "TOP",
                     value: 42,
                 },
@@ -356,7 +367,7 @@ describe("RankingFilterDropdown", () => {
 
         it("should have set non default value", () => {
             renderComponent({
-                filter: newRankingFilter(Mock.measure1Ref, "TOP", 42),
+                filter: newRankingFilter(mockMeasure1Ref, "TOP", 42),
             });
             expect(component.getValue()).toEqual("42");
         });
@@ -364,23 +375,23 @@ describe("RankingFilterDropdown", () => {
 
     describe("AttributeDropdown button", () => {
         it("should be disabled when only one attribute item provided", () => {
-            renderComponent({ attributeItems: [Mock.attributeItems[0]] });
+            renderComponent({ attributeItems: [mockAttributeItems[0]] });
             expect(component.isAttributeButtonDisabled()).toEqual(true);
         });
     });
 
     describe("Preview", () => {
         it.each([
-            ["top of measure", newRankingFilter(Mock.measure1Ref, "TOP", 42), "Top 42 of Measure 1"],
+            ["top of measure", newRankingFilter(mockMeasure1Ref, "TOP", 42), "Top 42 of Measure 1"],
             [
                 "top out of attribute based on measure",
-                newRankingFilter(Mock.measure2Ref, [Mock.attribute1Ref], "TOP", 5),
+                newRankingFilter(mockMeasure2Ref, [mockAttribute1Ref], "TOP", 5),
                 "Top 5 out of Attribute 1 based on Measure 2",
             ],
-            ["bottom of measure", newRankingFilter(Mock.measure1Ref, "BOTTOM", 3), "Bottom 3 of Measure 1"],
+            ["bottom of measure", newRankingFilter(mockMeasure1Ref, "BOTTOM", 3), "Bottom 3 of Measure 1"],
             [
                 "bottom out of attribute based on measure",
-                newRankingFilter(Mock.measure2Ref, [Mock.date1Ref], "BOTTOM", 10),
+                newRankingFilter(mockMeasure2Ref, [mockDate1Ref], "BOTTOM", 10),
                 "Bottom 10 out of Date based on Measure 2",
             ],
         ])("should render expected preview for %s", (_, filter, expectedPreview) => {

@@ -10,11 +10,27 @@ import { recordedDataFacade } from "../../../../../../testUtils/recordings.js";
 import { type IChartConfig } from "../../../../../interfaces/chartConfig.js";
 import { type IComparison } from "../../../../../interfaces/comparison.js";
 import { type IHeadlineTransformationProps } from "../../../HeadlineProvider.js";
-import * as BaseHeadline from "../../headlines/baseHeadline/BaseHeadline.js";
+import { BaseHeadline } from "../../headlines/baseHeadline/BaseHeadline.js";
 import { TEST_COMPARISON_TRANSFORMATIONS, TEST_DEFAULT_COMPARISON } from "../../tests/TestData.fixtures.js";
 import { getComparisonBaseHeadlineData } from "../../utils/ComparisonTransformationUtils.js";
 import { ComparisonTransformation } from "../ComparisonTransformation.js";
-import * as useFireDrillEvent from "../useFiredDrillEvent.js";
+import { useFireDrillEvent } from "../useFiredDrillEvent.js";
+
+vi.mock("../../headlines/baseHeadline/BaseHeadline.js", async (importOriginal) => {
+    const original = await importOriginal();
+    return {
+        ...(original as object),
+        BaseHeadline: vi.fn((original as { BaseHeadline: () => void }).BaseHeadline),
+    };
+});
+
+vi.mock("../useFiredDrillEvent.js", async (importOriginal) => {
+    const original = await importOriginal();
+    return {
+        ...(original as object),
+        useFireDrillEvent: vi.fn((original as { useFireDrillEvent: () => void }).useFireDrillEvent),
+    };
+});
 
 describe("ComparisonTransformation", () => {
     const renderTransformation = (props: IHeadlineTransformationProps) => {
@@ -36,9 +52,9 @@ describe("ComparisonTransformation", () => {
         ) => {
             const mockOnAfterRender = vi.fn();
             const mockIntl = createIntlMock();
-            const MockBaseHeadline = vi.spyOn(BaseHeadline, "BaseHeadline");
+            const MockBaseHeadline = vi.mocked(BaseHeadline);
             const mockHandleFiredDrillEvent = vi.fn();
-            vi.spyOn(useFireDrillEvent, "useFireDrillEvent").mockReturnValue({
+            vi.mocked(useFireDrillEvent).mockReturnValue({
                 handleFiredDrillEvent: mockHandleFiredDrillEvent,
             });
 

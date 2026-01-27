@@ -1,11 +1,11 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { Dashboards } from "../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_tiger";
 import { getProjectId } from "../../support/constants";
 import { Api } from "../../tools/api";
 import { Dashboard, TopBar } from "../../tools/dashboards";
 import { Messages } from "../../tools/messages";
-import * as Navigation from "../../tools/navigation";
+import { visit } from "../../tools/navigation";
 import { DashboardAccess, WorkspaceAccess } from "../../tools/permissions";
 import { ShareDialog } from "../../tools/shareDialog";
 import { Users } from "../../tools/users";
@@ -18,7 +18,7 @@ describe("Dashboard", { tags: ["checklist_integrated_tiger_be", "checklist_integ
             Users.switchToDefaultUser();
             Api.setEarlyAccess(getProjectId(), permissionsFeatureFlagEarlyAccess);
 
-            Navigation.visit("dashboard/dashboard-tiger-permissions");
+            visit("dashboard/dashboard-tiger-permissions");
         });
 
         it("should render topBar with share button", () => {
@@ -61,7 +61,7 @@ describe("Dashboard", { tags: ["checklist_integrated_tiger_be", "checklist_integ
 
         it("should not show sharing for user who is only viewer", () => {
             Users.switchToUser(username);
-            Navigation.visit("dashboard/dashboard-tiger-permissions");
+            visit("dashboard/dashboard-tiger-permissions");
 
             const dashboard = new Dashboard();
             dashboard.topBarExist();
@@ -70,7 +70,7 @@ describe("Dashboard", { tags: ["checklist_integrated_tiger_be", "checklist_integ
         });
 
         it("should show sharing for user who is viewer but got permission to share", () => {
-            Navigation.visit("dashboard/dashboard-tiger-permissions");
+            visit("dashboard/dashboard-tiger-permissions");
 
             // share the dashboard with viewer user
             new TopBar().enterSharing();
@@ -85,7 +85,7 @@ describe("Dashboard", { tags: ["checklist_integrated_tiger_be", "checklist_integ
 
             // check that viewer can share
             Users.switchToUser(username);
-            Navigation.visit("dashboard/dashboard-tiger-permissions");
+            visit("dashboard/dashboard-tiger-permissions");
 
             const dashboard = new Dashboard();
             dashboard.topBarExist();
@@ -100,14 +100,14 @@ describe("Dashboard", { tags: ["checklist_integrated_tiger_be", "checklist_integ
                 "SHARE",
             );
             Users.switchToUser(username);
-            Navigation.visit("dashboard/dashboard-tiger-permissions");
+            visit("dashboard/dashboard-tiger-permissions");
 
             new Dashboard().topBarExist();
             new TopBar().shareButtonExists(true);
         });
 
         it("should be able to remove person from sharing list and that person should no longer be able to access", () => {
-            Navigation.visit("dashboard/dashboard-tiger-permissions");
+            visit("dashboard/dashboard-tiger-permissions");
             const topBar = new TopBar();
             topBar.enterSharing();
 
@@ -119,7 +119,7 @@ describe("Dashboard", { tags: ["checklist_integrated_tiger_be", "checklist_integ
 
             // check that the user cannot access
             Users.switchToUser(username);
-            Navigation.visit("dashboard/dashboard-tiger-permissions");
+            visit("dashboard/dashboard-tiger-permissions");
 
             new Dashboard().hasError();
         });
@@ -132,7 +132,7 @@ describe("Dashboard", { tags: ["checklist_integrated_tiger_be", "checklist_integ
                 "SHARE",
             );
             Users.switchToUser(username);
-            Navigation.visit("dashboard/dashboard-tiger-permissions");
+            visit("dashboard/dashboard-tiger-permissions");
             new TopBar().enterSharing();
 
             const shareDialog = new ShareDialog();
@@ -147,7 +147,7 @@ describe("Dashboard", { tags: ["checklist_integrated_tiger_be", "checklist_integ
                 "SHARE",
             );
             Users.switchToUser(username);
-            Navigation.visit("dashboard/dashboard-tiger-permissions");
+            visit("dashboard/dashboard-tiger-permissions");
             new TopBar().enterSharing();
 
             const shareDialog = new ShareDialog();
@@ -207,7 +207,7 @@ describe("Dashboard", { tags: ["checklist_integrated_tiger_be", "checklist_integ
             );
 
             Users.switchToUser(firstUser);
-            Navigation.visit("dashboard/dashboard-tiger-permissions");
+            visit("dashboard/dashboard-tiger-permissions");
             new TopBar().enterSharing();
             new ShareDialog()
                 .dialogExists(true)
@@ -230,7 +230,7 @@ describe("Dashboard", { tags: ["checklist_integrated_tiger_be", "checklist_integ
             );
 
             Users.switchToUser(firstUser);
-            Navigation.visit("dashboard/dashboard-tiger-permissions");
+            visit("dashboard/dashboard-tiger-permissions");
             new TopBar().enterSharing();
             new ShareDialog().dialogExists(true).hasPermissionSet(firstGroup, "Can view & share");
 

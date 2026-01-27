@@ -1,13 +1,13 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { TotalTypes } from "../../tools/enum/TotalTypes";
-import * as Navigation from "../../tools/navigation";
+import { visit } from "../../tools/navigation";
 import { Table, nonEmptyValue } from "../../tools/table";
 
 // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
 describe.skip("Pivot Table Aggregations remove all row totals", { tags: ["pre-merge_isolated_bear"] }, () => {
     beforeEach(() => {
-        Navigation.visit("visualizations/pivot-table/pivot-table-all-total-aggregations-menu");
+        visit("visualizations/pivot-table/pivot-table-all-total-aggregations-menu");
     });
 
     it("should remove row totals for one measure and one keep the other total (SEPARATE)", () => {

@@ -1,11 +1,11 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { Dashboards } from "../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_tiger";
 import { getProjectId } from "../../support/constants";
 import { Api } from "../../tools/api";
 import { TopBar } from "../../tools/dashboards";
 import { Messages } from "../../tools/messages";
-import * as Navigation from "../../tools/navigation";
+import { visit } from "../../tools/navigation";
 import { DashboardAccess, WorkspaceAccess } from "../../tools/permissions";
 import { ShareDialog } from "../../tools/shareDialog";
 import { Users } from "../../tools/users";
@@ -25,7 +25,7 @@ describe(
                 Users.switchToDefaultUser();
                 Api.setEarlyAccess(getProjectId(), permissionsFeatureFlagEarlyAccess);
 
-                Navigation.visit("dashboard/dashboard-tiger-permissions");
+                visit("dashboard/dashboard-tiger-permissions");
             });
 
             it("should not display All users when opening the share dialog", () => {
@@ -113,7 +113,7 @@ describe(
                     DashboardAccess.assignRulePermissionToDashboard(getProjectId(), Dashboards.KPIs);
                 });
                 it("should view user can access with view permission only the dashboard after sharing to everyone", () => {
-                    Navigation.visit("dashboard/dashboard-tiger-permissions");
+                    visit("dashboard/dashboard-tiger-permissions");
 
                     topBar.enterSharing();
                     shareDialog
@@ -127,7 +127,7 @@ describe(
                     message.hasSuccessMessage("Sharing updated.");
 
                     Users.switchToUser(viewUser);
-                    Navigation.visit("dashboard/dashboard-tiger-permissions");
+                    visit("dashboard/dashboard-tiger-permissions");
 
                     topBar.dashboardTitleExist(true);
                     topBar.shareButtonExists(false);
@@ -135,7 +135,7 @@ describe(
 
                 it("should share user can access the dashboard with view permission only after sharing to everyone", () => {
                     Users.switchToUser(shareUser);
-                    Navigation.visit("dashboard/dashboard-tiger-permissions");
+                    visit("dashboard/dashboard-tiger-permissions");
 
                     topBar.dashboardTitleExist(true);
                     topBar.shareButtonExists(false);
@@ -143,7 +143,7 @@ describe(
 
                 it("should edit user can access the dashboard after sharing to everyone", () => {
                     Users.switchToUser(editUser);
-                    Navigation.visit("dashboard/dashboard-tiger-permissions");
+                    visit("dashboard/dashboard-tiger-permissions");
 
                     topBar.shareButtonExists(true).enterSharing();
                     shareDialog.dialogExists(true).hasPermissionSet(allUsers, "Can view");
@@ -161,7 +161,7 @@ describe(
                 });
 
                 it("should view user can access the dashboard with view & share permissions after sharing to everyone", () => {
-                    Navigation.visit("dashboard/dashboard-tiger-permissions");
+                    visit("dashboard/dashboard-tiger-permissions");
                     topBar.enterSharing();
                     shareDialog
                         .dialogExists(true)
@@ -174,7 +174,7 @@ describe(
                     message.hasSuccessMessage("Sharing updated.");
 
                     Users.switchToUser(viewUser);
-                    Navigation.visit("dashboard/dashboard-tiger-permissions");
+                    visit("dashboard/dashboard-tiger-permissions");
 
                     topBar.shareButtonExists(true).enterSharing();
                     shareDialog
@@ -186,7 +186,7 @@ describe(
 
                 it("should share user can access the dashboard with view & share permissions after sharing to everyone", () => {
                     Users.switchToUser(shareUser);
-                    Navigation.visit("dashboard/dashboard-tiger-permissions");
+                    visit("dashboard/dashboard-tiger-permissions");
 
                     topBar.shareButtonExists(true).enterSharing();
                     shareDialog
@@ -198,7 +198,7 @@ describe(
 
                 it("should edit user can access the dashboard with full permissions after sharing to everyone", () => {
                     Users.switchToUser(editUser);
-                    Navigation.visit("dashboard/dashboard-tiger-permissions");
+                    visit("dashboard/dashboard-tiger-permissions");
 
                     topBar.shareButtonExists(true).enterSharing();
                     shareDialog.dialogExists(true).hasPermissionSet(allUsers, "Can view & share");
@@ -215,7 +215,7 @@ describe(
                     DashboardAccess.assignRulePermissionToDashboard(getProjectId(), Dashboards.KPIs);
                 });
                 it("should view user can access the dashboard with full permission after sharing to everyone", () => {
-                    Navigation.visit("dashboard/dashboard-tiger-permissions");
+                    visit("dashboard/dashboard-tiger-permissions");
                     topBar.enterSharing();
                     shareDialog
                         .dialogExists(true)
@@ -228,7 +228,7 @@ describe(
                     message.hasSuccessMessage("Sharing updated.");
 
                     Users.switchToUser(viewUser);
-                    Navigation.visit("dashboard/dashboard-tiger-permissions");
+                    visit("dashboard/dashboard-tiger-permissions");
 
                     topBar.shareButtonExists(true).enterSharing();
                     shareDialog
@@ -242,7 +242,7 @@ describe(
 
                 it("should share user can access the dashboard after sharing to everyone", () => {
                     Users.switchToUser(shareUser);
-                    Navigation.visit("dashboard/dashboard-tiger-permissions");
+                    visit("dashboard/dashboard-tiger-permissions");
 
                     topBar.shareButtonExists(true).enterSharing();
                     shareDialog
@@ -256,7 +256,7 @@ describe(
 
                 it("should edit user can access the dashboard with correct permissions after sharing to everyone", () => {
                     Users.switchToUser(editUser);
-                    Navigation.visit("dashboard/dashboard-tiger-permissions");
+                    visit("dashboard/dashboard-tiger-permissions");
 
                     topBar.shareButtonExists(true).enterSharing();
                     shareDialog

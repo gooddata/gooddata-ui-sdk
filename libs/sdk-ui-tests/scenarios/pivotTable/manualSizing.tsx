@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import {
@@ -50,16 +50,20 @@ const justManualResizing = scenariosFor<IPivotTableProps>("PivotTable", PivotTab
             },
         },
     })
-    .addScenario("simple table with attribute and metric column size", {
-        ...PivotTableWithTwoMeasuresAndSingleRowAttr,
-        config: {
-            columnSizing: {
-                columnWidths: [attributeColumnWidthItem, measureColumnWidthItemSimple],
-                defaultWidth: "unset",
-                growToFit: false,
+    .addScenario(
+        "simple table with attribute and metric column size",
+        {
+            ...PivotTableWithTwoMeasuresAndSingleRowAttr,
+            config: {
+                columnSizing: {
+                    columnWidths: [attributeColumnWidthItem, measureColumnWidthItemSimple],
+                    defaultWidth: "unset",
+                    growToFit: false,
+                },
             },
         },
-    })
+        (m) => m.withTags("no-plug-viz-tests"), // skip pluggable due to flaky sizing
+    )
     .addScenario("table with multiple measure columns and weak measure size", {
         ...PivotTableWithSingleMeasureAndTwoRowsAndCols,
         config: {

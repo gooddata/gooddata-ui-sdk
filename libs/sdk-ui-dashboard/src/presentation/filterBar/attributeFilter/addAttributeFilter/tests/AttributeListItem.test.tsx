@@ -1,10 +1,18 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { render } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { AttributeListItem } from "../AttributeListItem.js";
-import * as Tooltip from "../attributeListItemTooltip/AttributeListItemTooltip.js";
+import { AttributeListItemTooltip } from "../attributeListItemTooltip/AttributeListItemTooltip.js";
+
+vi.mock("../attributeListItemTooltip/AttributeListItemTooltip.js", async (importOriginal) => {
+    const original = await importOriginal();
+    return {
+        ...(original as object),
+        AttributeListItemTooltip: vi.fn(),
+    };
+});
 
 describe("AttributeListItem", () => {
     const renderAttributeListItem = (attribute: any, isLocationIconEnabled: boolean) => {
@@ -19,7 +27,7 @@ describe("AttributeListItem", () => {
 
     describe("Item icon", () => {
         beforeEach(() => {
-            vi.spyOn(Tooltip, "AttributeListItemTooltip").mockImplementation(() => null);
+            vi.mocked(AttributeListItemTooltip).mockImplementation(() => null);
         });
 
         afterEach(() => {

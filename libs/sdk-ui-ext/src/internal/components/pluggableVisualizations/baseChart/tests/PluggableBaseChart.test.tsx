@@ -30,8 +30,34 @@ import {
     type IVisConstruct,
     type IVisProps,
 } from "../../../../interfaces/Visualization.js";
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
-import * as testMocks from "../../../../tests/mocks/testMocks.js";
+import {
+    dateAsFirstCategoryReferencePoint,
+    dateAsSecondCategoryReferencePoint,
+    derivedMeasureItems,
+    emptyReferencePoint,
+    masterMeasureItems,
+    measureWithDateAfterOtherAttributes,
+    measureWithDerivedAsFirstWithStackRefPoint,
+    multipleAttributesReferencePoint,
+    multipleMetricBucketsAndCategoryReferencePoint,
+    multipleMetricsAndCategoriesReferencePoint,
+    multipleMetricsNoCategoriesReferencePoint,
+    multipleMetricsOneStackByReferencePoint,
+    oneMeasureWithInvalidOverTimeComparisonRefPoint,
+    oneMetricAndManyCategoriesReferencePoint,
+    oneMetricAndManyCategoriesReferencePointWithInvalidSort,
+    samePeriodPreviousYearAndAttributesRefPoint,
+    simpleStackedReferencePoint,
+    wrongBucketsOrderReferencePoint,
+} from "../../../../tests/mocks/referencePointMocks.js";
+import {
+    emptyInsight,
+    insightWithSingleAttribute,
+    insightWithSingleMeasure,
+    insightWithSingleMeasureAndStack,
+    insightWithSingleMeasureAndViewBy,
+    insightWithStacking,
+} from "../../../../tests/mocks/testMocks.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../../utils/translations.js";
 import { BaseChartConfigurationPanel } from "../../../configurationPanels/BaseChartConfigurationPanel.js";
 import {
@@ -124,7 +150,7 @@ describe("PluggableBaseChart", () => {
             messages,
         };
 
-        visualization.update(options, testMocks.emptyInsight, emptyPropertiesMeta, executionFactory);
+        visualization.update(options, emptyInsight, emptyPropertiesMeta, executionFactory);
 
         const renderEl = getLastRenderEl(mockRenderFun, mockElement);
 
@@ -150,12 +176,7 @@ describe("PluggableBaseChart", () => {
             messages,
         };
 
-        visualization.update(
-            options,
-            testMocks.insightWithSingleAttribute,
-            emptyPropertiesMeta,
-            executionFactory,
-        );
+        visualization.update(options, insightWithSingleAttribute, emptyPropertiesMeta, executionFactory);
 
         const renderEl = getLastRenderEl(mockRenderFun, mockElement);
 
@@ -182,7 +203,7 @@ describe("PluggableBaseChart", () => {
             },
         };
 
-        const testInsight = insightSetProperties(testMocks.insightWithStacking, visualizationProperties);
+        const testInsight = insightSetProperties(insightWithStacking, visualizationProperties);
 
         visualization.update(options, testInsight, emptyPropertiesMeta, executionFactory);
 
@@ -203,10 +224,8 @@ describe("PluggableBaseChart", () => {
             messages,
         };
 
-        visualization.update(options, testMocks.insightWithSingleMeasureAndViewBy, null, executionFactory);
-        const expectedConfigPanelElement = dummyConfigurationRenderer(
-            testMocks.insightWithSingleMeasureAndViewBy,
-        );
+        visualization.update(options, insightWithSingleMeasureAndViewBy, null, executionFactory);
+        const expectedConfigPanelElement = dummyConfigurationRenderer(insightWithSingleMeasureAndViewBy);
 
         // arguments of last called render method
         const renderEl = getLastRenderEl<IVisProps>(mockRenderFun, mockConfigElement);
@@ -256,10 +275,7 @@ describe("PluggableBaseChart", () => {
         };
 
         const visualizationProperties = { controls: { legend: {} } };
-        const testInsight = insightSetProperties(
-            testMocks.insightWithSingleMeasureAndViewBy,
-            visualizationProperties,
-        );
+        const testInsight = insightSetProperties(insightWithSingleMeasureAndViewBy, visualizationProperties);
 
         visualization.update(options, testInsight, emptyPropertiesMeta, executionFactory);
 
@@ -276,7 +292,7 @@ describe("PluggableBaseChart", () => {
             const baseChart = createComponent();
 
             const extendedReferencePoint = await baseChart.getExtendedReferencePoint(
-                referencePointMocks.oneMeasureWithInvalidOverTimeComparisonRefPoint,
+                oneMeasureWithInvalidOverTimeComparisonRefPoint,
             );
 
             expect(extendedReferencePoint).toMatchSnapshot();
@@ -287,7 +303,7 @@ describe("PluggableBaseChart", () => {
         const baseChart = createComponent();
 
         const extendedReferencePoint = await baseChart.getExtendedReferencePoint(
-            referencePointMocks.multipleMetricsAndCategoriesReferencePoint,
+            multipleMetricsAndCategoriesReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -297,7 +313,7 @@ describe("PluggableBaseChart", () => {
         const baseChart = createComponent();
 
         const extendedReferencePoint = await baseChart.getExtendedReferencePoint(
-            referencePointMocks.dateAsFirstCategoryReferencePoint,
+            dateAsFirstCategoryReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -306,9 +322,7 @@ describe("PluggableBaseChart", () => {
     it("should return reference point with one metric and only one category and stack", async () => {
         const baseChart = createComponent();
 
-        const extendedReferencePoint = await baseChart.getExtendedReferencePoint(
-            referencePointMocks.simpleStackedReferencePoint,
-        );
+        const extendedReferencePoint = await baseChart.getExtendedReferencePoint(simpleStackedReferencePoint);
 
         expect(extendedReferencePoint).toMatchSnapshot();
     });
@@ -322,26 +336,20 @@ describe("PluggableBaseChart", () => {
             const expectedBuckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",
-                    items: [
-                        referencePointMocks.samePeriodPreviousYearAndAttributesRefPoint.buckets[0].items[0],
-                    ],
+                    items: [samePeriodPreviousYearAndAttributesRefPoint.buckets[0].items[0]],
                 },
                 {
                     localIdentifier: "view",
-                    items: [
-                        referencePointMocks.samePeriodPreviousYearAndAttributesRefPoint.buckets[1].items[0],
-                    ],
+                    items: [samePeriodPreviousYearAndAttributesRefPoint.buckets[1].items[0]],
                 },
                 {
                     localIdentifier: "stack",
-                    items: [
-                        referencePointMocks.samePeriodPreviousYearAndAttributesRefPoint.buckets[1].items[1],
-                    ],
+                    items: [samePeriodPreviousYearAndAttributesRefPoint.buckets[1].items[1]],
                 },
             ];
 
             const extendedReferencePoint = await baseChart.getExtendedReferencePoint(
-                referencePointMocks.samePeriodPreviousYearAndAttributesRefPoint,
+                samePeriodPreviousYearAndAttributesRefPoint,
             );
 
             expect(extendedReferencePoint.buckets).toEqual(expectedBuckets);
@@ -356,20 +364,20 @@ describe("PluggableBaseChart", () => {
             const expectedBuckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",
-                    items: [referencePointMocks.measureWithDateAfterOtherAttributes.buckets[0].items[0]],
+                    items: [measureWithDateAfterOtherAttributes.buckets[0].items[0]],
                 },
                 {
                     localIdentifier: "view",
-                    items: [referencePointMocks.measureWithDateAfterOtherAttributes.buckets[1].items[0]],
+                    items: [measureWithDateAfterOtherAttributes.buckets[1].items[0]],
                 },
                 {
                     localIdentifier: "stack",
-                    items: [referencePointMocks.measureWithDateAfterOtherAttributes.buckets[1].items[1]],
+                    items: [measureWithDateAfterOtherAttributes.buckets[1].items[1]],
                 },
             ];
 
             const extendedReferencePoint = await baseChart.getExtendedReferencePoint(
-                referencePointMocks.measureWithDateAfterOtherAttributes,
+                measureWithDateAfterOtherAttributes,
             );
 
             expect(extendedReferencePoint.buckets).toEqual(expectedBuckets);
@@ -380,7 +388,7 @@ describe("PluggableBaseChart", () => {
         const baseChart = createComponent();
 
         const extendedReferencePoint = await baseChart.getExtendedReferencePoint(
-            referencePointMocks.multipleMetricBucketsAndCategoryReferencePoint,
+            multipleMetricBucketsAndCategoryReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -390,7 +398,7 @@ describe("PluggableBaseChart", () => {
         const baseChart = createComponent();
 
         const extendedReferencePoint = await baseChart.getExtendedReferencePoint(
-            referencePointMocks.oneMetricAndManyCategoriesReferencePoint,
+            oneMetricAndManyCategoriesReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -400,7 +408,7 @@ describe("PluggableBaseChart", () => {
         const baseChart = createComponent();
 
         const extendedReferencePoint = await baseChart.getExtendedReferencePoint(
-            referencePointMocks.dateAsSecondCategoryReferencePoint,
+            dateAsSecondCategoryReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -410,7 +418,7 @@ describe("PluggableBaseChart", () => {
         const baseChart = createComponent();
 
         const extendedReferencePoint = await baseChart.getExtendedReferencePoint(
-            referencePointMocks.wrongBucketsOrderReferencePoint,
+            wrongBucketsOrderReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -420,7 +428,7 @@ describe("PluggableBaseChart", () => {
         const baseChart = createComponent();
 
         const extendedReferencePoint = await baseChart.getExtendedReferencePoint(
-            referencePointMocks.multipleAttributesReferencePoint,
+            multipleAttributesReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -430,7 +438,7 @@ describe("PluggableBaseChart", () => {
         const baseChart = createComponent();
 
         const extendedReferencePoint = await baseChart.getExtendedReferencePoint(
-            referencePointMocks.multipleMetricsOneStackByReferencePoint,
+            multipleMetricsOneStackByReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -440,7 +448,7 @@ describe("PluggableBaseChart", () => {
         const baseChart = createComponent();
 
         const extendedReferencePoint = await baseChart.getExtendedReferencePoint(
-            referencePointMocks.oneMetricAndManyCategoriesReferencePointWithInvalidSort,
+            oneMetricAndManyCategoriesReferencePointWithInvalidSort,
         );
         expect(extendedReferencePoint.properties).toEqual({
             sortItems: [
@@ -457,12 +465,12 @@ describe("PluggableBaseChart", () => {
     it("should not return derived measures when stack-by is there", async () => {
         const baseChart = createComponent();
         const extendedReferencePoint = await baseChart.getExtendedReferencePoint(
-            referencePointMocks.measureWithDerivedAsFirstWithStackRefPoint,
+            measureWithDerivedAsFirstWithStackRefPoint,
         );
 
         const measures = extendedReferencePoint.buckets[0].items;
 
-        expect(measures).toEqual(referencePointMocks.masterMeasureItems.slice(0, 1));
+        expect(measures).toEqual(masterMeasureItems.slice(0, 1));
     });
 
     describe("Over Time Comparison", () => {
@@ -470,27 +478,27 @@ describe("PluggableBaseChart", () => {
             const baseChart = createComponent();
 
             const referencePointWithDerivedItems = await baseChart.addNewDerivedBucketItems(
-                referencePointMocks.multipleMetricsNoCategoriesReferencePoint,
-                [referencePointMocks.derivedMeasureItems[0], referencePointMocks.derivedMeasureItems[1]],
+                multipleMetricsNoCategoriesReferencePoint,
+                [derivedMeasureItems[0], derivedMeasureItems[1]],
             );
 
             expect(referencePointWithDerivedItems).toEqual({
-                ...referencePointMocks.multipleMetricsNoCategoriesReferencePoint,
+                ...multipleMetricsNoCategoriesReferencePoint,
                 ...{
                     buckets: [
                         {
                             localIdentifier: BucketNames.MEASURES,
                             items: [
-                                referencePointMocks.derivedMeasureItems[0],
-                                referencePointMocks.masterMeasureItems[0],
-                                referencePointMocks.derivedMeasureItems[1],
-                                referencePointMocks.masterMeasureItems[1],
-                                referencePointMocks.masterMeasureItems[2],
-                                referencePointMocks.masterMeasureItems[3],
+                                derivedMeasureItems[0],
+                                masterMeasureItems[0],
+                                derivedMeasureItems[1],
+                                masterMeasureItems[1],
+                                masterMeasureItems[2],
+                                masterMeasureItems[3],
                             ],
                         },
-                        referencePointMocks.multipleMetricsNoCategoriesReferencePoint.buckets[1],
-                        referencePointMocks.multipleMetricsNoCategoriesReferencePoint.buckets[2],
+                        multipleMetricsNoCategoriesReferencePoint.buckets[1],
+                        multipleMetricsNoCategoriesReferencePoint.buckets[2],
                     ],
                 },
             });
@@ -499,9 +507,7 @@ describe("PluggableBaseChart", () => {
         it("should return reference point containing uiConfig with no supported comparison types", async () => {
             const component = createComponent();
 
-            const extendedReferencePoint = await component.getExtendedReferencePoint(
-                referencePointMocks.emptyReferencePoint,
-            );
+            const extendedReferencePoint = await component.getExtendedReferencePoint(emptyReferencePoint);
 
             expect(extendedReferencePoint.uiConfig!.supportedOverTimeComparisonTypes).toEqual([]);
         });
@@ -539,7 +545,7 @@ describe("PluggableBaseChart", () => {
                     },
                 };
                 const insightWithProperties = insightSetProperties(
-                    testMocks.insightWithSingleMeasureAndStack,
+                    insightWithSingleMeasureAndStack,
                     visualizationProperties,
                 );
                 visualization.update(options, insightWithProperties, {}, executionFactory);
@@ -599,7 +605,7 @@ describe("PluggableBaseChart", () => {
         it("should mount on the element defined by the callback", () => {
             const visualization = createComponent();
 
-            visualization.update({ messages }, testMocks.insightWithSingleMeasure, {}, executionFactory);
+            visualization.update({ messages }, insightWithSingleMeasure, {}, executionFactory);
 
             // 1st call for rendering element
             // 2nd call for rendering config panel

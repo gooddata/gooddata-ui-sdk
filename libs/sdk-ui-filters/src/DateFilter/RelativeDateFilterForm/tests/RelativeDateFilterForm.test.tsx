@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { type ReactElement } from "react";
 
 import { fireEvent, render, screen } from "@testing-library/react";
@@ -7,9 +8,27 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { type DateFilterGranularity } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
-import * as rangePickerModule from "../../RelativeRangePicker/RelativeRangePicker.js";
-import * as granularityTabsModule from "../GranularityTabs.js";
+import { RelativeRangePicker as mockRelativeRangePicker } from "../../RelativeRangePicker/RelativeRangePicker.js";
+import { GranularityTabs as mockGranularityTabs } from "../GranularityTabs.js";
 import { type IRelativeDateFilterFormProps, RelativeDateFilterForm } from "../RelativeDateFilterForm.js";
+
+vi.mock("../../RelativeRangePicker/RelativeRangePicker.js", async () => {
+    const original = await vi.importActual("../../RelativeRangePicker/RelativeRangePicker.js");
+    return {
+        ...original,
+        RelativeRangePicker: vi.fn(
+            (original as { RelativeRangePicker: typeof mockRelativeRangePicker }).RelativeRangePicker,
+        ),
+    };
+});
+
+vi.mock("../GranularityTabs.js", async () => {
+    const original = await vi.importActual("../GranularityTabs.js");
+    return {
+        ...original,
+        GranularityTabs: vi.fn((original as { GranularityTabs: typeof mockGranularityTabs }).GranularityTabs),
+    };
+});
 
 const availableGranularities: DateFilterGranularity[] = [
     "GDC.time.date",
@@ -51,27 +70,34 @@ const createForm = (props?: Partial<IRelativeDateFilterFormProps>) => {
 // }));
 
 describe("RelativeDateFilterForm", () => {
-    beforeEach(() => {
-        vi.restoreAllMocks();
+    beforeEach(async () => {
+        // vi.restoreAllMocks() doesn't work with vi.fn(impl) - it sets implementation to undefined
+        // We need to manually restore the original implementations
+        const originalRangePicker = await vi.importActual<
+            // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+            typeof import("../../RelativeRangePicker/RelativeRangePicker.js")
+        >("../../RelativeRangePicker/RelativeRangePicker.js");
+        const originalTabs =
+            // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+            await vi.importActual<typeof import("../GranularityTabs.js")>("../GranularityTabs.js");
+
+        vi.mocked(mockRelativeRangePicker).mockImplementation(originalRangePicker.RelativeRangePicker);
+        vi.mocked(mockGranularityTabs).mockImplementation(originalTabs.GranularityTabs);
     });
 
     it("should render granularity tabs and relative range picker and pass them props", () => {
-        const granularityTabsMock = vi
-            .spyOn(granularityTabsModule, "GranularityTabs")
-            .mockImplementation(() => null as unknown as ReactElement);
-        const rangePickerMock = vi
-            .spyOn(rangePickerModule, "RelativeRangePicker")
-            .mockImplementation(() => null as unknown as ReactElement);
+        vi.mocked(mockGranularityTabs).mockImplementation(() => null as unknown as ReactElement);
+        vi.mocked(mockRelativeRangePicker).mockImplementation(() => null as unknown as ReactElement);
         createForm();
 
-        expect(granularityTabsMock).toHaveBeenCalledWith(
+        expect(mockGranularityTabs).toHaveBeenCalledWith(
             expect.objectContaining({
                 availableGranularities,
                 selectedGranularity: relativeFormOption.granularity,
             }),
             undefined,
         );
-        expect(rangePickerMock).toHaveBeenCalledWith(
+        expect(mockRelativeRangePicker).toHaveBeenCalledWith(
             expect.objectContaining({
                 selectedFilterOption: relativeFormOption,
             }),

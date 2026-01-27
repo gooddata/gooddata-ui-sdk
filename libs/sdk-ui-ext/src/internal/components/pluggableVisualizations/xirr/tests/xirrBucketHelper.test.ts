@@ -1,30 +1,33 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { BucketNames } from "@gooddata/sdk-ui";
 
 import { type IBucketOfFun, type IReferencePoint } from "../../../../interfaces/Visualization.js";
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
+import {
+    arithmeticMeasureItems,
+    attributeItems,
+    dateItem,
+    derivedMeasureItems,
+    masterMeasureItems,
+} from "../../../../tests/mocks/referencePointMocks.js";
 import { getXirrBuckets } from "../xirrBucketHelper.js";
 
 describe("xirrBucketHelper", () => {
     const validMeasureBucket: IBucketOfFun = {
         localIdentifier: BucketNames.MEASURES,
-        items: [referencePointMocks.masterMeasureItems[0]],
+        items: [masterMeasureItems[0]],
     };
 
     const arithmeticMeasureBucket: IBucketOfFun = {
         localIdentifier: BucketNames.MEASURES,
-        items: [
-            referencePointMocks.arithmeticMeasureItems[0],
-            referencePointMocks.masterMeasureItems[0],
-            referencePointMocks.masterMeasureItems[1],
-        ],
+        items: [arithmeticMeasureItems[0], masterMeasureItems[0], masterMeasureItems[1]],
     };
 
     const popMeasureBucket: IBucketOfFun = {
         localIdentifier: BucketNames.MEASURES,
-        items: [referencePointMocks.derivedMeasureItems[0], referencePointMocks.masterMeasureItems[0]],
+        items: [derivedMeasureItems[0], masterMeasureItems[0]],
     };
 
     const emptyMeasureBucket: IBucketOfFun = {
@@ -34,7 +37,7 @@ describe("xirrBucketHelper", () => {
 
     const validAttributeBucket: IBucketOfFun = {
         localIdentifier: BucketNames.ATTRIBUTE,
-        items: [referencePointMocks.dateItem],
+        items: [dateItem],
     };
 
     const emptyAttributeBucket: IBucketOfFun = {
@@ -71,7 +74,7 @@ describe("xirrBucketHelper", () => {
             const buckets = [
                 {
                     ...validMeasureBucket,
-                    items: [...validMeasureBucket.items, referencePointMocks.masterMeasureItems[1]],
+                    items: [...validMeasureBucket.items, masterMeasureItems[1]],
                 },
                 validAttributeBucket,
             ];
@@ -89,11 +92,11 @@ describe("xirrBucketHelper", () => {
                     validMeasureBucket,
                     {
                         localIdentifier: BucketNames.ATTRIBUTE,
-                        items: [referencePointMocks.attributeItems[0]],
+                        items: [attributeItems[0]],
                     },
                     {
                         localIdentifier: BucketNames.COLUMNS,
-                        items: [referencePointMocks.attributeItems[1]],
+                        items: [attributeItems[1]],
                     },
                 ],
                 [validMeasureBucket, emptyAttributeBucket],
@@ -104,11 +107,11 @@ describe("xirrBucketHelper", () => {
                     validMeasureBucket,
                     {
                         localIdentifier: BucketNames.ATTRIBUTE,
-                        items: [referencePointMocks.dateItem],
+                        items: [dateItem],
                     },
                     {
                         localIdentifier: BucketNames.COLUMNS,
-                        items: [referencePointMocks.attributeItems[1]],
+                        items: [attributeItems[1]],
                     },
                 ],
                 [validMeasureBucket, validAttributeBucket],
@@ -119,11 +122,11 @@ describe("xirrBucketHelper", () => {
                     validMeasureBucket,
                     {
                         localIdentifier: BucketNames.ATTRIBUTE,
-                        items: [referencePointMocks.attributeItems[0]],
+                        items: [attributeItems[0]],
                     },
                     {
                         localIdentifier: BucketNames.COLUMNS,
-                        items: [referencePointMocks.dateItem],
+                        items: [dateItem],
                     },
                 ],
                 [validMeasureBucket, validAttributeBucket],
@@ -134,11 +137,11 @@ describe("xirrBucketHelper", () => {
                     validMeasureBucket,
                     {
                         localIdentifier: BucketNames.ATTRIBUTE,
-                        items: [referencePointMocks.dateItem],
+                        items: [dateItem],
                     },
                     {
                         localIdentifier: BucketNames.COLUMNS,
-                        items: [{ ...referencePointMocks.dateItem, localIdentifier: "not matching" }],
+                        items: [{ ...dateItem, localIdentifier: "not matching" }],
                     },
                 ],
                 [validMeasureBucket, validAttributeBucket],
@@ -149,11 +152,11 @@ describe("xirrBucketHelper", () => {
                     validMeasureBucket,
                     {
                         localIdentifier: BucketNames.ATTRIBUTE,
-                        items: [referencePointMocks.attributeItems[0]],
+                        items: [attributeItems[0]],
                     },
                     {
                         localIdentifier: BucketNames.STACK,
-                        items: [referencePointMocks.attributeItems[1]],
+                        items: [attributeItems[1]],
                     },
                 ],
                 [validMeasureBucket, emptyAttributeBucket],
@@ -164,11 +167,11 @@ describe("xirrBucketHelper", () => {
                     validMeasureBucket,
                     {
                         localIdentifier: BucketNames.ATTRIBUTE,
-                        items: [referencePointMocks.dateItem],
+                        items: [dateItem],
                     },
                     {
                         localIdentifier: BucketNames.STACK,
-                        items: [referencePointMocks.attributeItems[1]],
+                        items: [attributeItems[1]],
                     },
                 ],
                 [validMeasureBucket, validAttributeBucket],
@@ -179,11 +182,11 @@ describe("xirrBucketHelper", () => {
                     validMeasureBucket,
                     {
                         localIdentifier: BucketNames.TREND,
-                        items: [referencePointMocks.attributeItems[0]],
+                        items: [attributeItems[0]],
                     },
                     {
                         localIdentifier: BucketNames.SEGMENT,
-                        items: [referencePointMocks.attributeItems[1]],
+                        items: [attributeItems[1]],
                     },
                 ],
                 [validMeasureBucket, emptyAttributeBucket],
@@ -194,11 +197,11 @@ describe("xirrBucketHelper", () => {
                     validMeasureBucket,
                     {
                         localIdentifier: BucketNames.TREND,
-                        items: [referencePointMocks.dateItem],
+                        items: [dateItem],
                     },
                     {
                         localIdentifier: BucketNames.SEGMENT,
-                        items: [referencePointMocks.attributeItems[1]],
+                        items: [attributeItems[1]],
                     },
                 ],
                 [validMeasureBucket, validAttributeBucket],
@@ -209,11 +212,11 @@ describe("xirrBucketHelper", () => {
                     validMeasureBucket,
                     {
                         localIdentifier: BucketNames.VIEW,
-                        items: [referencePointMocks.attributeItems[0]],
+                        items: [attributeItems[0]],
                     },
                     {
                         localIdentifier: BucketNames.STACK,
-                        items: [referencePointMocks.attributeItems[1]],
+                        items: [attributeItems[1]],
                     },
                 ],
                 [validMeasureBucket, emptyAttributeBucket],
@@ -224,11 +227,11 @@ describe("xirrBucketHelper", () => {
                     validMeasureBucket,
                     {
                         localIdentifier: BucketNames.VIEW,
-                        items: [referencePointMocks.dateItem],
+                        items: [dateItem],
                     },
                     {
                         localIdentifier: BucketNames.STACK,
-                        items: [referencePointMocks.attributeItems[0]],
+                        items: [attributeItems[0]],
                     },
                 ],
                 [validMeasureBucket, validAttributeBucket],
@@ -239,11 +242,11 @@ describe("xirrBucketHelper", () => {
                     validMeasureBucket,
                     {
                         localIdentifier: BucketNames.VIEW,
-                        items: [referencePointMocks.attributeItems[0]],
+                        items: [attributeItems[0]],
                     },
                     {
                         localIdentifier: BucketNames.STACK,
-                        items: [referencePointMocks.dateItem],
+                        items: [dateItem],
                     },
                 ],
                 [validMeasureBucket, validAttributeBucket],
@@ -254,11 +257,11 @@ describe("xirrBucketHelper", () => {
                     validMeasureBucket,
                     {
                         localIdentifier: BucketNames.SECONDARY_MEASURES,
-                        items: [referencePointMocks.masterMeasureItems[1]],
+                        items: [masterMeasureItems[1]],
                     },
                     {
                         localIdentifier: BucketNames.STACK,
-                        items: [referencePointMocks.attributeItems[1]],
+                        items: [attributeItems[1]],
                     },
                 ],
                 [validMeasureBucket, emptyAttributeBucket],
@@ -272,11 +275,11 @@ describe("xirrBucketHelper", () => {
                     },
                     {
                         localIdentifier: BucketNames.SECONDARY_MEASURES,
-                        items: [referencePointMocks.masterMeasureItems[0]],
+                        items: [masterMeasureItems[0]],
                     },
                     {
                         localIdentifier: BucketNames.STACK,
-                        items: [referencePointMocks.attributeItems[1]],
+                        items: [attributeItems[1]],
                     },
                 ],
                 [validMeasureBucket, emptyAttributeBucket],
@@ -287,11 +290,11 @@ describe("xirrBucketHelper", () => {
                     validMeasureBucket,
                     {
                         localIdentifier: BucketNames.SECONDARY_MEASURES,
-                        items: [referencePointMocks.masterMeasureItems[1]],
+                        items: [masterMeasureItems[1]],
                     },
                     {
                         localIdentifier: BucketNames.STACK,
-                        items: [referencePointMocks.dateItem],
+                        items: [dateItem],
                     },
                 ],
                 [validMeasureBucket, validAttributeBucket],
@@ -302,7 +305,7 @@ describe("xirrBucketHelper", () => {
                     validMeasureBucket,
                     {
                         localIdentifier: BucketNames.VIEW,
-                        items: [referencePointMocks.attributeItems[0]],
+                        items: [attributeItems[0]],
                     },
                 ],
                 [validMeasureBucket, emptyAttributeBucket],
@@ -313,7 +316,7 @@ describe("xirrBucketHelper", () => {
                     validMeasureBucket,
                     {
                         localIdentifier: BucketNames.VIEW,
-                        items: [referencePointMocks.dateItem],
+                        items: [dateItem],
                     },
                 ],
                 [validMeasureBucket, validAttributeBucket],
@@ -324,7 +327,7 @@ describe("xirrBucketHelper", () => {
                     validMeasureBucket,
                     {
                         localIdentifier: BucketNames.SECONDARY_MEASURES,
-                        items: [referencePointMocks.masterMeasureItems[1]],
+                        items: [masterMeasureItems[1]],
                     },
                 ],
                 [validMeasureBucket, emptyAttributeBucket],
@@ -335,11 +338,11 @@ describe("xirrBucketHelper", () => {
                     validMeasureBucket,
                     {
                         localIdentifier: BucketNames.SECONDARY_MEASURES,
-                        items: [referencePointMocks.masterMeasureItems[1]],
+                        items: [masterMeasureItems[1]],
                     },
                     {
                         localIdentifier: BucketNames.ATTRIBUTE,
-                        items: [referencePointMocks.attributeItems[1]],
+                        items: [attributeItems[1]],
                     },
                 ],
                 [validMeasureBucket, emptyAttributeBucket],
@@ -350,11 +353,11 @@ describe("xirrBucketHelper", () => {
                     validMeasureBucket,
                     {
                         localIdentifier: BucketNames.SECONDARY_MEASURES,
-                        items: [referencePointMocks.masterMeasureItems[1]],
+                        items: [masterMeasureItems[1]],
                     },
                     {
                         localIdentifier: BucketNames.ATTRIBUTE,
-                        items: [referencePointMocks.dateItem],
+                        items: [dateItem],
                     },
                 ],
                 [validMeasureBucket, validAttributeBucket],
@@ -365,15 +368,15 @@ describe("xirrBucketHelper", () => {
                     validMeasureBucket,
                     {
                         localIdentifier: BucketNames.SECONDARY_MEASURES,
-                        items: [referencePointMocks.masterMeasureItems[1]],
+                        items: [masterMeasureItems[1]],
                     },
                     {
                         localIdentifier: BucketNames.TERTIARY_MEASURES,
-                        items: [referencePointMocks.masterMeasureItems[2]],
+                        items: [masterMeasureItems[2]],
                     },
                     {
                         localIdentifier: BucketNames.ATTRIBUTE,
-                        items: [referencePointMocks.attributeItems[1]],
+                        items: [attributeItems[1]],
                     },
                 ],
                 [validMeasureBucket, emptyAttributeBucket],
@@ -387,15 +390,15 @@ describe("xirrBucketHelper", () => {
                     },
                     {
                         localIdentifier: BucketNames.SECONDARY_MEASURES,
-                        items: [referencePointMocks.masterMeasureItems[0]],
+                        items: [masterMeasureItems[0]],
                     },
                     {
                         localIdentifier: BucketNames.TERTIARY_MEASURES,
-                        items: [referencePointMocks.masterMeasureItems[1]],
+                        items: [masterMeasureItems[1]],
                     },
                     {
                         localIdentifier: BucketNames.ATTRIBUTE,
-                        items: [referencePointMocks.attributeItems[1]],
+                        items: [attributeItems[1]],
                     },
                 ],
                 [validMeasureBucket, emptyAttributeBucket],
@@ -413,11 +416,11 @@ describe("xirrBucketHelper", () => {
                     },
                     {
                         localIdentifier: BucketNames.TERTIARY_MEASURES,
-                        items: [referencePointMocks.masterMeasureItems[0]],
+                        items: [masterMeasureItems[0]],
                     },
                     {
                         localIdentifier: BucketNames.ATTRIBUTE,
-                        items: [referencePointMocks.attributeItems[1]],
+                        items: [attributeItems[1]],
                     },
                 ],
                 [validMeasureBucket, emptyAttributeBucket],
@@ -428,15 +431,15 @@ describe("xirrBucketHelper", () => {
                     validMeasureBucket,
                     {
                         localIdentifier: BucketNames.SECONDARY_MEASURES,
-                        items: [referencePointMocks.masterMeasureItems[1]],
+                        items: [masterMeasureItems[1]],
                     },
                     {
                         localIdentifier: BucketNames.TERTIARY_MEASURES,
-                        items: [referencePointMocks.masterMeasureItems[2]],
+                        items: [masterMeasureItems[2]],
                     },
                     {
                         localIdentifier: BucketNames.ATTRIBUTE,
-                        items: [referencePointMocks.attributeItems[1]],
+                        items: [attributeItems[1]],
                     },
                 ],
                 [validMeasureBucket, emptyAttributeBucket],
@@ -447,15 +450,15 @@ describe("xirrBucketHelper", () => {
                     validMeasureBucket,
                     {
                         localIdentifier: BucketNames.SECONDARY_MEASURES,
-                        items: [referencePointMocks.masterMeasureItems[1]],
+                        items: [masterMeasureItems[1]],
                     },
                     {
                         localIdentifier: BucketNames.TERTIARY_MEASURES,
-                        items: [referencePointMocks.masterMeasureItems[2]],
+                        items: [masterMeasureItems[2]],
                     },
                     {
                         localIdentifier: BucketNames.ATTRIBUTE,
-                        items: [referencePointMocks.dateItem],
+                        items: [dateItem],
                     },
                 ],
                 [validMeasureBucket, validAttributeBucket],
@@ -466,11 +469,11 @@ describe("xirrBucketHelper", () => {
                     validMeasureBucket,
                     {
                         localIdentifier: BucketNames.VIEW,
-                        items: [referencePointMocks.attributeItems[0]],
+                        items: [attributeItems[0]],
                     },
                     {
                         localIdentifier: BucketNames.SEGMENT,
-                        items: [referencePointMocks.attributeItems[1]],
+                        items: [attributeItems[1]],
                     },
                 ],
                 [validMeasureBucket, emptyAttributeBucket],
@@ -481,11 +484,11 @@ describe("xirrBucketHelper", () => {
                     validMeasureBucket,
                     {
                         localIdentifier: BucketNames.VIEW,
-                        items: [referencePointMocks.dateItem],
+                        items: [dateItem],
                     },
                     {
                         localIdentifier: BucketNames.SEGMENT,
-                        items: [referencePointMocks.attributeItems[0]],
+                        items: [attributeItems[0]],
                     },
                 ],
                 [validMeasureBucket, validAttributeBucket],
@@ -496,11 +499,11 @@ describe("xirrBucketHelper", () => {
                     validMeasureBucket,
                     {
                         localIdentifier: BucketNames.VIEW,
-                        items: [referencePointMocks.attributeItems[0]],
+                        items: [attributeItems[0]],
                     },
                     {
                         localIdentifier: BucketNames.SEGMENT,
-                        items: [referencePointMocks.dateItem],
+                        items: [dateItem],
                     },
                 ],
                 [validMeasureBucket, validAttributeBucket],
@@ -511,11 +514,11 @@ describe("xirrBucketHelper", () => {
                     arithmeticMeasureBucket,
                     {
                         localIdentifier: BucketNames.VIEW,
-                        items: [referencePointMocks.attributeItems[0]],
+                        items: [attributeItems[0]],
                     },
                     {
                         localIdentifier: BucketNames.SEGMENT,
-                        items: [referencePointMocks.dateItem],
+                        items: [dateItem],
                     },
                 ],
                 [validMeasureBucket, validAttributeBucket],
@@ -526,11 +529,11 @@ describe("xirrBucketHelper", () => {
                     popMeasureBucket,
                     {
                         localIdentifier: BucketNames.VIEW,
-                        items: [referencePointMocks.attributeItems[0]],
+                        items: [attributeItems[0]],
                     },
                     {
                         localIdentifier: BucketNames.SEGMENT,
-                        items: [referencePointMocks.dateItem],
+                        items: [dateItem],
                     },
                 ],
                 [validMeasureBucket, validAttributeBucket],

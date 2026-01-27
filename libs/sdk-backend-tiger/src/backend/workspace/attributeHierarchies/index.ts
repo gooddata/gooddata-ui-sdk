@@ -3,7 +3,7 @@
 import { uniqBy } from "lodash-es";
 import { v4 as uuid } from "uuid";
 
-import { type AfmObjectIdentifierAttribute, jsonApiHeaders } from "@gooddata/api-client-tiger";
+import { type AfmObjectIdentifierAttribute } from "@gooddata/api-client-tiger";
 import {
     EntitiesApi_CreateEntityAttributeHierarchies,
     EntitiesApi_DeleteEntityAttributeHierarchies,
@@ -40,28 +40,21 @@ export class TigerAttributeHierarchiesService implements IAttributeHierarchiesSe
     ): Promise<ICatalogAttributeHierarchy> => {
         const attributeHierarchy = await this.authCall((client) => {
             const attributeHierarchyId = uuid();
-            return EntitiesApi_CreateEntityAttributeHierarchies(
-                client.axios,
-                client.basePath,
-                {
-                    workspaceId: this.workspace,
-                    jsonApiAttributeHierarchyInDocument: {
-                        data: {
-                            id: attributeHierarchyId,
-                            type: "attributeHierarchy",
-                            attributes: {
-                                title: title,
-                                content: {
-                                    attributes: attributeRefs.map(this.objRefToObjIdentifier),
-                                },
+            return EntitiesApi_CreateEntityAttributeHierarchies(client.axios, client.basePath, {
+                workspaceId: this.workspace,
+                jsonApiAttributeHierarchyInDocument: {
+                    data: {
+                        id: attributeHierarchyId,
+                        type: "attributeHierarchy",
+                        attributes: {
+                            title: title,
+                            content: {
+                                attributes: attributeRefs.map(this.objRefToObjIdentifier),
                             },
                         },
                     },
                 },
-                {
-                    headers: jsonApiHeaders,
-                },
-            );
+            });
         });
 
         return convertAttributeHierarchyWithoutLinks(attributeHierarchy.data.data);
@@ -72,30 +65,23 @@ export class TigerAttributeHierarchiesService implements IAttributeHierarchiesSe
     ): Promise<ICatalogAttributeHierarchy> => {
         const { attributeHierarchy } = catalogAttributeHierarchy;
         await this.authCall((client) => {
-            return EntitiesApi_UpdateEntityAttributeHierarchies(
-                client.axios,
-                client.basePath,
-                {
-                    objectId: attributeHierarchy.id,
-                    workspaceId: this.workspace,
-                    jsonApiAttributeHierarchyInDocument: {
-                        data: {
-                            id: attributeHierarchy.id,
-                            type: "attributeHierarchy",
-                            attributes: {
-                                title: attributeHierarchy.title,
-                                description: attributeHierarchy.description,
-                                content: {
-                                    attributes: attributeHierarchy.attributes.map(this.objRefToObjIdentifier),
-                                },
+            return EntitiesApi_UpdateEntityAttributeHierarchies(client.axios, client.basePath, {
+                objectId: attributeHierarchy.id,
+                workspaceId: this.workspace,
+                jsonApiAttributeHierarchyInDocument: {
+                    data: {
+                        id: attributeHierarchy.id,
+                        type: "attributeHierarchy",
+                        attributes: {
+                            title: attributeHierarchy.title,
+                            description: attributeHierarchy.description,
+                            content: {
+                                attributes: attributeHierarchy.attributes.map(this.objRefToObjIdentifier),
                             },
                         },
                     },
                 },
-                {
-                    headers: jsonApiHeaders,
-                },
-            );
+            });
         });
 
         return catalogAttributeHierarchy;

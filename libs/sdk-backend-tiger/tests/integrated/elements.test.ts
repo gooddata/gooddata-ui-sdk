@@ -1,4 +1,5 @@
-// (C) 2022-2024 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { omit } from "lodash-es";
 import { beforeAll, describe, expect, it } from "vitest";
 
@@ -10,8 +11,8 @@ import {
 } from "@gooddata/sdk-model";
 
 import { testBackend, testWorkspace } from "./backend.js";
-import * as Md from "../../src/fixtures/full.js";
-import * as ReferenceRecords from "../../src/fixtures/referenceObjects.js";
+import { Account, AccountId, Product } from "../../src/fixtures/full.js";
+import { productName } from "../../src/fixtures/referenceObjects.js";
 
 const backend = testBackend();
 
@@ -26,7 +27,7 @@ describe("tiger elements", () => {
                 .workspace(testWorkspace())
                 .attributes()
                 .elements()
-                .forDisplayForm(attributeDisplayFormRef(Md.AccountId))
+                .forDisplayForm(attributeDisplayFormRef(AccountId))
                 .withLimit(20)
                 .query();
 
@@ -35,7 +36,7 @@ describe("tiger elements", () => {
     });
 
     describe("forFilter", () => {
-        const testAttributeElement = (ReferenceRecords.productName as IAttributeElement[]).find(
+        const testAttributeElement = (productName as IAttributeElement[]).find(
             (el) => el.title === "Educationly",
         );
 
@@ -45,7 +46,7 @@ describe("tiger elements", () => {
         );
 
         it("should load attribute filter elements for provided positive attribute filter", async () => {
-            const attributeFilter = newPositiveAttributeFilter(Md.Product.Name, {
+            const attributeFilter = newPositiveAttributeFilter(Product.Name, {
                 uris: [testAttributeElementUri],
             });
             const result = await backend
@@ -59,7 +60,7 @@ describe("tiger elements", () => {
         });
 
         it("should load attribute filter elements for provided negative attribute filter", async () => {
-            const testAttributeRef = attributeDisplayFormRef(Md.Product.Name);
+            const testAttributeRef = attributeDisplayFormRef(Product.Name);
             const attributeFilter = newNegativeAttributeFilter(testAttributeRef, {
                 uris: [testAttributeElementUri],
             });
@@ -74,7 +75,7 @@ describe("tiger elements", () => {
         });
 
         it("should load no attribute filter elements for provided ALL attribute filter", async () => {
-            const testAttributeRef = attributeDisplayFormRef(Md.Product.Name);
+            const testAttributeRef = attributeDisplayFormRef(Product.Name);
             const allAttributeFilter = newNegativeAttributeFilter(testAttributeRef, {
                 uris: [],
             });
@@ -89,7 +90,7 @@ describe("tiger elements", () => {
         });
 
         it("should return attribute filter elements for provided attribute filter with elements by value", async () => {
-            const testAttributeRef = attributeDisplayFormRef(Md.Product.Name);
+            const testAttributeRef = attributeDisplayFormRef(Product.Name);
             const attributeFilter = newNegativeAttributeFilter(testAttributeRef, {
                 values: ["Educationly"],
             });
@@ -108,7 +109,7 @@ describe("tiger elements", () => {
                 .workspace(testWorkspace())
                 .attributes()
                 .elements()
-                .forDisplayForm(attributeDisplayFormRef(Md.Account.Default))
+                .forDisplayForm(attributeDisplayFormRef(Account.Default))
                 .withLimit(2)
                 .query();
             const page = await result.goTo(3);
@@ -120,7 +121,7 @@ describe("tiger elements", () => {
                 .workspace(testWorkspace())
                 .attributes()
                 .elements()
-                .forDisplayForm(attributeDisplayFormRef(Md.Account.Default))
+                .forDisplayForm(attributeDisplayFormRef(Account.Default))
                 .withLimit(100)
                 .withOffset(5000)
                 .query();
@@ -133,7 +134,7 @@ describe("tiger elements", () => {
                 .workspace(testWorkspace())
                 .attributes()
                 .elements()
-                .forDisplayForm(attributeDisplayFormRef(Md.Account.Default))
+                .forDisplayForm(attributeDisplayFormRef(Account.Default))
                 .withLimit(100)
                 .query();
 
@@ -146,7 +147,7 @@ describe("tiger elements", () => {
                 .workspace(testWorkspace())
                 .attributes()
                 .elements()
-                .forDisplayForm(attributeDisplayFormRef(Md.Account.Default))
+                .forDisplayForm(attributeDisplayFormRef(Account.Default))
                 .withLimit(100)
                 .withOffset(4840)
                 .query();

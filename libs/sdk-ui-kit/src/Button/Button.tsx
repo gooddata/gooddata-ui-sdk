@@ -1,19 +1,19 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type MouseEventHandler, type ReactNode, forwardRef, useCallback, useMemo } from "react";
 
 import cx from "classnames";
 
 import { ValidationContextStore } from "@gooddata/sdk-ui";
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { type IButtonProps } from "./typings.js";
 
 const getGeneratedTestId = (effectiveValue: ReactNode, title: string, ariaLabel: string) => {
     if (effectiveValue && typeof effectiveValue === "string") {
-        return `${stringUtils.simplifyText(effectiveValue)}`;
+        return `${simplifyText(effectiveValue)}`;
     }
-    return ariaLabel ? `${stringUtils.simplifyText(ariaLabel)}` : `${stringUtils.simplifyText(title)}`;
+    return ariaLabel ? `${simplifyText(ariaLabel)}` : `${simplifyText(title)}`;
 };
 
 function Icon({ icon }: { icon: string | undefined }) {
@@ -104,9 +104,7 @@ export const Button = forwardRef<HTMLElement, IButtonProps>(function Button(
 
     const classNames = useMemo(() => {
         const generatedSeleniumClass =
-            effectiveValue && typeof effectiveValue === "string"
-                ? `s-${stringUtils.simplifyText(effectiveValue)}`
-                : "";
+            effectiveValue && typeof effectiveValue === "string" ? `s-${simplifyText(effectiveValue)}` : "";
 
         return cx([
             "gd-button",

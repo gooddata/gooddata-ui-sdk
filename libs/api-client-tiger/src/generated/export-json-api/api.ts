@@ -1,5 +1,3 @@
-// (C) 2025 GoodData Corporation
-
 /* eslint-disable */
 /**
  * OpenAPI definition
@@ -1245,7 +1243,11 @@ export async function ActionsExportAxiosParamCreator_CreateDashboardExportReques
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -1303,7 +1305,11 @@ export async function ActionsExportAxiosParamCreator_CreateImageExport(
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -1365,7 +1371,11 @@ export async function ActionsExportAxiosParamCreator_CreatePdfExport(
         localVarHeaderParameter["X-Gdc-Debug"] = String(JSON.stringify(xGdcDebug));
     }
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -1421,7 +1431,11 @@ export async function ActionsExportAxiosParamCreator_CreateRawExport(
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -1483,7 +1497,11 @@ export async function ActionsExportAxiosParamCreator_CreateSlidesExport(
         localVarHeaderParameter["X-Gdc-Debug"] = String(JSON.stringify(xGdcDebug));
     }
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -1539,7 +1557,11 @@ export async function ActionsExportAxiosParamCreator_CreateTabularExport(
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -3152,7 +3174,11 @@ export async function ImageExportExportAxiosParamCreator_CreateImageExport(
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -3563,7 +3589,11 @@ export async function RawExportExportAxiosParamCreator_CreateRawExport(
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -3848,7 +3878,11 @@ export async function SlidesExportExportAxiosParamCreator_CreateSlidesExport(
         localVarHeaderParameter["X-Gdc-Debug"] = String(JSON.stringify(xGdcDebug));
     }
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -4275,7 +4309,11 @@ export async function TabularExportExportAxiosParamCreator_CreateDashboardExport
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -4333,7 +4371,11 @@ export async function TabularExportExportAxiosParamCreator_CreateTabularExport(
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
@@ -4711,7 +4753,11 @@ export async function VisualExportExportAxiosParamCreator_CreatePdfExport(
         localVarHeaderParameter["X-Gdc-Debug"] = String(JSON.stringify(xGdcDebug));
     }
 
-    localVarHeaderParameter["Content-Type"] = "application/json";
+    const consumes = ["application/json"];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter["Content-Type"] = consumes.includes("application/json")
+        ? "application/json"
+        : consumes[0];
 
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};

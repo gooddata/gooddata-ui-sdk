@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import {
     isBadRequest,
     isDataTooLargeToCompute,
@@ -9,7 +10,7 @@ import {
     isUnknownSdkError,
 } from "@gooddata/sdk-ui";
 import { isEmptyAfm } from "@gooddata/sdk-ui-ext";
-import { typesUtils } from "@gooddata/util";
+import { combineGuards } from "@gooddata/util";
 
 /**
  * Returns true if the provided error should prevent exports.
@@ -20,7 +21,7 @@ import { typesUtils } from "@gooddata/util";
  *
  * @internal
  */
-export const isNonExportableError = typesUtils.combineGuards(
+export const isNonExportableError = combineGuards(
     isUnknownSdkError,
     isBadRequest,
     isNoDataSdkError,
@@ -32,7 +33,7 @@ export const isNonExportableError = typesUtils.combineGuards(
 /**
  * @internal
  */
-export const isNonExportableErrorExceptTooLarge = typesUtils.combineGuards(
+export const isNonExportableErrorExceptTooLarge = combineGuards(
     isUnknownSdkError,
     isNoDataSdkError,
     isProtectedReport,
@@ -42,7 +43,7 @@ export const isNonExportableErrorExceptTooLarge = typesUtils.combineGuards(
 /**
  * @internal
  */
-export const isDataError = typesUtils.combineGuards(
+export const isDataError = combineGuards(
     isUnknownSdkError,
     isBadRequest,
     isNoDataSdkError,
@@ -56,7 +57,7 @@ export const isDataError = typesUtils.combineGuards(
 /**
  * @internal
  */
-export const isDataErrorExceptTooLarge = typesUtils.combineGuards(
+export const isDataErrorExceptTooLarge = combineGuards(
     isUnknownSdkError,
     isNoDataSdkError,
     isProtectedReport,
@@ -67,4 +68,4 @@ export const isDataErrorExceptTooLarge = typesUtils.combineGuards(
 /**
  * @internal
  */
-export const isDataErrorTooLarge = typesUtils.combineGuards(isDataTooLargeToCompute, isDataTooLargeToDisplay);
+export const isDataErrorTooLarge = combineGuards(isDataTooLargeToCompute, isDataTooLargeToDisplay);

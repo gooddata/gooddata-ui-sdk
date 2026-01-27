@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
@@ -10,10 +10,27 @@ import { type IComparisonControlProperties } from "../../../../../interfaces/Con
 import { type IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
 import { createTestProperties } from "../../../../../tests/testDataProvider.js";
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
-import * as DropdownControl from "../../../DropdownControl.js";
+import { DropdownControl } from "../../../DropdownControl.js";
 import { CalculationControl } from "../CalculationControl.js";
 import { CalculationListItem } from "../CalculationListItem.js";
-import * as CalculationListItemModule from "../CalculationListItem.js";
+
+vi.mock("../../../DropdownControl.js", async (importOriginal) => {
+    // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+    const actual = await importOriginal<typeof import("../../../DropdownControl.js")>();
+    return {
+        ...actual,
+        DropdownControl: vi.fn(actual.DropdownControl),
+    };
+});
+
+vi.mock("../CalculationListItem.js", async (importOriginal) => {
+    // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+    const actual = await importOriginal<typeof import("../CalculationListItem.js")>();
+    return {
+        ...actual,
+        CalculationListItem: vi.fn(actual.CalculationListItem),
+    };
+});
 
 const CALCULATION_CONTROL_LABEL_TEXT_QUERY = "Calculated as";
 const CHANGE_ITEM_TEXT_QUERY = "Change";
@@ -45,7 +62,7 @@ describe("CalculationControl", () => {
     };
 
     it("Should render calculation control based on dropdown-control", () => {
-        const MockDropdownControl = vi.spyOn(DropdownControl, "DropdownControl");
+        const MockDropdownControl = vi.mocked(DropdownControl);
         const disabled = true;
         const properties = createTestProperties<IComparisonControlProperties>({
             comparison: {
@@ -96,7 +113,7 @@ describe("CalculationControl", () => {
     });
 
     it("Should render items correctly", () => {
-        const MockCalculationListItem = vi.spyOn(CalculationListItemModule, "CalculationListItem");
+        const MockCalculationListItem = vi.mocked(CalculationListItem);
         const { container } = renderCalculationControl();
         fireEvent.click(container.querySelector(DROPDOWN_BUTTON_SELECTOR)!);
 

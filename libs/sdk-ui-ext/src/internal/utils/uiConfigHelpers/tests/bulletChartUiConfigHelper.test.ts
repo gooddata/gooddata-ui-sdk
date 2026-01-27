@@ -1,10 +1,15 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { DEFAULT_BULLET_CHART_CONFIG } from "../../../constants/uiConfig.js";
-import * as referencePointMock from "../../../tests/mocks/referencePointMocks.js";
+import {
+    bulletChartWithMeasureInPrimaryBucket,
+    bulletChartWithMeasureInSecondaryBucket,
+    threeMeasuresBucketsReferencePoint,
+} from "../../../tests/mocks/referencePointMocks.js";
 import { createInternalIntl } from "../../internalIntlProvider.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../translations.js";
 import { getBulletChartUiConfig } from "../bulletChartUiConfigHelper.js";
@@ -16,7 +21,7 @@ describe("bulletChartUiConfigHelper", () => {
         const intl = createInternalIntl(DEFAULT_LANGUAGE, messages);
         const extendedReferencePoint = getBulletChartUiConfig(
             {
-                ...referencePointMock.bulletChartWithMeasureInPrimaryBucket,
+                ...bulletChartWithMeasureInPrimaryBucket,
                 uiConfig: DEFAULT_BULLET_CHART_CONFIG,
             },
             intl,
@@ -51,7 +56,7 @@ describe("bulletChartUiConfigHelper", () => {
             it("should set 'customError' property if there is a measure in 'secondary_measures' bucket, but 'measures' bucket is empty", () => {
                 const extendedReferencePoint = getBulletChartUiConfig(
                     {
-                        ...referencePointMock.bulletChartWithMeasureInSecondaryBucket,
+                        ...bulletChartWithMeasureInSecondaryBucket,
                         uiConfig: DEFAULT_BULLET_CHART_CONFIG,
                     },
                     intl,
@@ -65,7 +70,7 @@ describe("bulletChartUiConfigHelper", () => {
             it("should keep 'customError' property empty if there is a measure in bucket 'measure'", () => {
                 const extendedReferencePoint = getBulletChartUiConfig(
                     {
-                        ...referencePointMock.bulletChartWithMeasureInPrimaryBucket,
+                        ...bulletChartWithMeasureInPrimaryBucket,
                         uiConfig: DEFAULT_BULLET_CHART_CONFIG,
                     },
                     intl,
@@ -77,7 +82,7 @@ describe("bulletChartUiConfigHelper", () => {
 
         it("should return bullet chart ui config", () => {
             const refPointMock = {
-                ...referencePointMock.threeMeasuresBucketsReferencePoint,
+                ...threeMeasuresBucketsReferencePoint,
                 uiConfig: DEFAULT_BULLET_CHART_CONFIG,
             };
             const bulletChartUiConfig = getBulletChartUiConfig(refPointMock, intl, VisualizationTypes.BULLET);

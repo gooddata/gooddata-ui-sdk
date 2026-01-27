@@ -5,7 +5,7 @@ import { type MutableRefObject, type ReactNode, type RefObject } from "react";
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { UiIcon } from "../@ui/UiIcon/UiIcon.js";
 import { ShortenedText } from "../ShortenedText/ShortenedText.js";
@@ -171,7 +171,7 @@ export function FilterGroupItem({
             role="button"
             tabIndex={0}
             ref={buttonRef as RefObject<HTMLDivElement>}
-            data-testid={`s-filter-group-item-${stringUtils.simplifyText(title ?? null)}`}
+            data-testid={`s-filter-group-item-${simplifyText(title ?? null)}`}
         >
             {isError || icon ? (
                 <div className="gd-filter-group-item-icon">

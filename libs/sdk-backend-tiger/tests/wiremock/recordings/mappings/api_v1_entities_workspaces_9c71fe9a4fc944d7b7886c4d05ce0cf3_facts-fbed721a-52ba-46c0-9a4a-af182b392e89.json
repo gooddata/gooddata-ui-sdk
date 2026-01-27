@@ -1,45 +1,34 @@
 {
-    "id": "bf85d15e-b032-46b4-b8e1-694b822bcadb",
-    "name": "api_v1_actions_workspaces_9c71fe9a4fc944d7b7886c4d05ce0cf3_execution_collectlabelelements",
+    "id": "fbed721a-52ba-46c0-9a4a-af182b392e89",
+    "name": "api_v1_entities_workspaces_9c71fe9a4fc944d7b7886c4d05ce0cf3_facts",
     "request": {
-        "urlPath": "/api/v1/actions/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/execution/collectLabelElements",
-        "method": "POST",
+        "urlPath": "/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/facts",
+        "method": "GET",
         "headers": {
             "Accept": {
                 "equalTo": "application/json, text/plain, */*"
-            },
-            "Content-Type": {
-                "equalTo": "application/json",
-                "caseInsensitive": true
             }
         },
         "queryParameters": {
-            "offset": {
+            "size": {
+                "hasExactly": [
+                    {
+                        "equalTo": "250"
+                    }
+                ]
+            },
+            "page": {
                 "hasExactly": [
                     {
                         "equalTo": "0"
                     }
                 ]
-            },
-            "limit": {
-                "hasExactly": [
-                    {
-                        "equalTo": "100"
-                    }
-                ]
             }
-        },
-        "bodyPatterns": [
-            {
-                "equalToJson": "{\"label\":\"attr.f_account.account\"}",
-                "ignoreArrayOrder": false,
-                "ignoreExtraElements": false
-            }
-        ]
+        }
     },
     "response": {
         "status": 200,
-        "bodyFileName": "api_v1_actions_workspaces_9c71fe9a4fc944d7b7886c4d05ce0cf3_execution_collectlabelelements-bf85d15e-b032-46b4-b8e1-694b822bcadb.json",
+        "bodyFileName": "api_v1_entities_workspaces_9c71fe9a4fc944d7b7886c4d05ce0cf3_facts-fbed721a-52ba-46c0-9a4a-af182b392e89.json",
         "headers": {
             "Referrer-Policy": "no-referrer",
             "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
@@ -57,7 +46,7 @@
             "Content-Type": "application/json"
         }
     },
-    "uuid": "bf85d15e-b032-46b4-b8e1-694b822bcadb",
+    "uuid": "fbed721a-52ba-46c0-9a4a-af182b392e89",
     "persistent": true,
-    "insertionIndex": 5
+    "insertionIndex": 9
 }

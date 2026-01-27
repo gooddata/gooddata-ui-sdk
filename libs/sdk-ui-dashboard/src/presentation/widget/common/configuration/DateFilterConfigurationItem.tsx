@@ -14,7 +14,7 @@ import {
     objRefToString,
 } from "@gooddata/sdk-model";
 import { type IAlignPoint, ShortenedText } from "@gooddata/sdk-ui-kit";
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { useDateFilterConfigurationHandling } from "./useDateFilterConfigurationHandling.js";
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
@@ -59,7 +59,7 @@ export function DateFilterConfigurationItem({ widget, dataSetRef }: IDateFilterC
 
     const classNames = cx(
         "s-attribute-filter-by-item",
-        `s-${stringUtils.simplifyText(title)}`,
+        `s-${simplifyText(title)}`,
         "input-checkbox-label",
         "filter-by-item",
         "attribute-filter-by-item",

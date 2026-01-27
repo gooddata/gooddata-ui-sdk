@@ -4,7 +4,6 @@ import {
     type EntitiesApiGetAllEntitiesExportDefinitionsRequest,
     MetadataUtilities,
     ValidateRelationsHeader,
-    jsonApiHeaders,
 } from "@gooddata/api-client-tiger";
 import {
     EntitiesApi_CreateEntityExportDefinitions,
@@ -136,18 +135,11 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
             ? { include: ["createdBy" as const, "modifiedBy" as const] }
             : {};
         const response = await this.authCall((client) =>
-            EntitiesApi_GetEntityExportDefinitions(
-                client.axios,
-                client.basePath,
-                {
-                    objectId: id,
-                    workspaceId: this.workspace,
-                    ...includeUser,
-                },
-                {
-                    headers: jsonApiHeaders,
-                },
-            ),
+            EntitiesApi_GetEntityExportDefinitions(client.axios, client.basePath, {
+                objectId: id,
+                workspaceId: this.workspace,
+                ...includeUser,
+            }),
         );
 
         if (!response.data) {
@@ -167,21 +159,14 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
         const enableAutomationFilterContext = await this.getEnableAutomationFilterContext();
 
         const createResponse = await this.authCall((client) => {
-            return EntitiesApi_CreateEntityExportDefinitions(
-                client.axios,
-                client.basePath,
-                {
-                    workspaceId: this.workspace,
-                    jsonApiExportDefinitionPostOptionalIdDocument:
-                        convertExportDefinitionMdObjectDefinitionToBackend(
-                            exportDefinition,
-                            enableAutomationFilterContext,
-                        ),
-                },
-                {
-                    headers: jsonApiHeaders,
-                },
-            );
+            return EntitiesApi_CreateEntityExportDefinitions(client.axios, client.basePath, {
+                workspaceId: this.workspace,
+                jsonApiExportDefinitionPostOptionalIdDocument:
+                    convertExportDefinitionMdObjectDefinitionToBackend(
+                        exportDefinition,
+                        enableAutomationFilterContext,
+                    ),
+            });
         });
 
         return convertExportDefinitionMdObjectFromBackend(
@@ -199,22 +184,15 @@ export class TigerWorkspaceExportDefinitions implements IWorkspaceExportDefiniti
         const enableAutomationFilterContext = await this.getEnableAutomationFilterContext();
 
         const updateResponse = await this.authCall((client) => {
-            return EntitiesApi_UpdateEntityExportDefinitions(
-                client.axios,
-                client.basePath,
-                {
-                    objectId: id,
-                    workspaceId: this.workspace,
-                    jsonApiExportDefinitionInDocument: convertExportDefinitionMdObjectToBackend(
-                        exportDefinition,
-                        id,
-                        enableAutomationFilterContext,
-                    ),
-                },
-                {
-                    headers: jsonApiHeaders,
-                },
-            );
+            return EntitiesApi_UpdateEntityExportDefinitions(client.axios, client.basePath, {
+                objectId: id,
+                workspaceId: this.workspace,
+                jsonApiExportDefinitionInDocument: convertExportDefinitionMdObjectToBackend(
+                    exportDefinition,
+                    id,
+                    enableAutomationFilterContext,
+                ),
+            });
         });
 
         return convertExportDefinitionMdObjectFromBackend(

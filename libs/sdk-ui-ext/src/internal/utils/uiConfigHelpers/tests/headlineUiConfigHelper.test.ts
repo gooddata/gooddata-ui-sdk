@@ -15,7 +15,10 @@ import { CalculateAs, DEFAULT_COMPARISON_PALETTE, type IChartConfig } from "@goo
 
 import { type HeadlineControlProperties } from "../../../interfaces/ControlProperties.js";
 import { type IVisualizationProperties } from "../../../interfaces/Visualization.js";
-import * as referencePointMocks from "../../../tests/mocks/referencePointMocks.js";
+import {
+    headlineWithMeasureInPrimaryBucket,
+    headlineWithMeasureInSecondaryBucket,
+} from "../../../tests/mocks/referencePointMocks.js";
 import { createTestProperties, newInsight } from "../../../tests/testDataProvider.js";
 import { createInternalIntl } from "../../internalIntlProvider.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../translations.js";
@@ -35,11 +38,7 @@ describe("headlineUiConfigHelper", () => {
         const intl = createInternalIntl(DEFAULT_LANGUAGE, messages);
 
         describe("'canAddItems' property", () => {
-            const uiConfig = getHeadlineUiConfig(
-                referencePointMocks.headlineWithMeasureInPrimaryBucket,
-                undefined,
-                intl,
-            );
+            const uiConfig = getHeadlineUiConfig(headlineWithMeasureInPrimaryBucket, undefined, intl);
 
             it("should set 'canAddItems' bucket property falsy if it already contains a measure", () => {
                 expect(uiConfig.buckets["secondary_measures"].canAddItems).toBeTruthy();
@@ -52,11 +51,7 @@ describe("headlineUiConfigHelper", () => {
 
         describe("'icon' property", () => {
             it("should set 'icon' property in both 'measures' and 'secondary_measures' buckets", () => {
-                const uiConfig = getHeadlineUiConfig(
-                    referencePointMocks.headlineWithMeasureInPrimaryBucket,
-                    undefined,
-                    intl,
-                );
+                const uiConfig = getHeadlineUiConfig(headlineWithMeasureInPrimaryBucket, undefined, intl);
                 expect(uiConfig.buckets["measures"].icon).toBeDefined();
                 expect(uiConfig.buckets["secondary_measures"].icon).toBeDefined();
             });
@@ -64,32 +59,20 @@ describe("headlineUiConfigHelper", () => {
 
         describe("'customError' property", () => {
             it("should set 'customError' property if there is a measure in 'secondary_measures' bucket, but 'measures' bucket is empty", () => {
-                const uiConfig = getHeadlineUiConfig(
-                    referencePointMocks.headlineWithMeasureInSecondaryBucket,
-                    undefined,
-                    intl,
-                );
+                const uiConfig = getHeadlineUiConfig(headlineWithMeasureInSecondaryBucket, undefined, intl);
                 expect(uiConfig.customError).toHaveProperty("heading");
                 expect(uiConfig.customError).toHaveProperty("text");
             });
 
             it("should keep 'customError' property empty if one of buckets contains a measure", () => {
-                const uiConfig = getHeadlineUiConfig(
-                    referencePointMocks.headlineWithMeasureInPrimaryBucket,
-                    undefined,
-                    intl,
-                );
+                const uiConfig = getHeadlineUiConfig(headlineWithMeasureInPrimaryBucket, undefined, intl);
                 expect(uiConfig.customError).toBeUndefined();
             });
         });
 
         describe("measures bucket titles", () => {
             it("should set bucket titles", () => {
-                const uiConfig = getHeadlineUiConfig(
-                    referencePointMocks.headlineWithMeasureInPrimaryBucket,
-                    undefined,
-                    intl,
-                );
+                const uiConfig = getHeadlineUiConfig(headlineWithMeasureInPrimaryBucket, undefined, intl);
                 expect(uiConfig.buckets["measures"].title).toEqual("Metric");
                 expect(uiConfig.buckets["secondary_measures"].title).toEqual("Metric");
             });

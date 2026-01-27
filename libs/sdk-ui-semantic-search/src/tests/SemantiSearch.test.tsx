@@ -1,26 +1,27 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
 
-import * as perms from "../permissions/utils.js";
 import { SemanticSearch } from "../SemanticSearch.js";
+
+vi.mock("../permissions/utils.js", () => ({
+    emptyWorkspacePermissions: vi.fn(() => ({
+        canManageProject: true,
+    })),
+}));
 
 const backend = dummyBackend();
 
 describe("SemanticSearch component", () => {
     beforeEach(() => {
         vi.useFakeTimers();
-        vi.spyOn(perms, "emptyWorkspacePermissions").mockImplementation(() => ({
-            canManageProject: true,
-        }));
     });
 
     afterEach(() => {
         vi.useRealTimers();
-        vi.restoreAllMocks();
     });
 
     const DEBOUNCE_TIME = 300;

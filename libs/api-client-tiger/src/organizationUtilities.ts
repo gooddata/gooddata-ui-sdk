@@ -1,10 +1,9 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type AxiosInstance, type AxiosPromise, type AxiosRequestConfig } from "axios";
 import { merge, uniqBy } from "lodash-es";
 
 import { type ITigerClientBase } from "./client.js";
-import { jsonApiHeaders } from "./constants.js";
 import {
     type EntitiesApiGetAllEntitiesAnalyticalDashboardsRequest,
     type EntitiesApiGetAllEntitiesAttributesRequest,
@@ -21,9 +20,6 @@ import {
 } from "./generated/metadata-json-api/index.js";
 
 const DefaultPageSize = 250;
-const DefaultOptions = {
-    headers: jsonApiHeaders,
-};
 
 /**
  * All possible responses of API client getEntities* functions which support `included` field
@@ -114,7 +110,7 @@ export class OrganizationUtilities {
                 client.axios,
                 "",
                 { ...params, page: nextPage, size: pageSize },
-                merge({}, DefaultOptions, options),
+                merge({}, options),
             );
 
             results.push(result.data);

@@ -1,9 +1,16 @@
 // (C) 2020-2026 GoodData Corporation
 
-import * as filterConvertors from "./filterConvertors.js";
-import * as messagingUtils from "./messagingUtils.js";
-import * as validators from "./validators.js";
+import { messagingUtils } from "./messagingUtils.js";
+import { validators } from "./validators.js";
 
 /* eslint-disable no-barrel-files/no-barrel-files */
 
-export { filterConvertors, messagingUtils, validators };
+export { messagingUtils, validators };
+export {
+    filterConverters,
+    type IExternalFiltersObject,
+    type ITransformedAttributeFilterItem,
+    type ITransformedDateFilterItem,
+    type ITransformedFilterItem,
+    type ITransformedRankingFilter,
+} from "./filterConverters.js";

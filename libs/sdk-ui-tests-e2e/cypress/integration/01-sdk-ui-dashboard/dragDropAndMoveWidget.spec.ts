@@ -5,7 +5,7 @@ import { DashboardMenu } from "../../tools/dashboardMenu";
 import { Dashboard, FilterBar } from "../../tools/dashboards";
 import { EditMode } from "../../tools/editMode";
 import { InsightsCatalog } from "../../tools/insightsCatalog";
-import * as Navigation from "../../tools/navigation";
+import { visit } from "../../tools/navigation";
 import { Widget } from "../../tools/widget";
 
 const dashboard = new Dashboard();
@@ -14,7 +14,7 @@ const insightCatalog = new InsightsCatalog();
 
 describe("Insight on dashboard", () => {
     beforeEach(() => {
-        Navigation.visit("dashboard/drag-drop-widgets");
+        visit("dashboard/drag-drop-widgets");
         editMode.isInEditMode();
         insightCatalog.waitForCatalogReload();
     });
@@ -94,7 +94,7 @@ describe("Be able to resize widgeton dashboard", () => {
             ],
         },
         () => {
-            Navigation.visit("dashboard/insight");
+            visit("dashboard/insight");
             editMode.edit();
             new FilterBar().clickDateFilter().selectDateFilterOption(".s-all-time").clickApply();
             insightCatalog.waitForCatalogReload();

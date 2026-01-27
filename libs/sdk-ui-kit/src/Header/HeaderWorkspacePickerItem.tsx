@@ -1,11 +1,11 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type MouseEvent } from "react";
 
 import cx from "classnames";
 import { type IntlShape, injectIntl } from "react-intl";
 
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 export interface IHeaderWorkspacePickerItemProps {
     title: string;
@@ -37,7 +37,7 @@ function CoreHeaderWorkspacePickerItem({
     const classes = cx({
         "gd-list-item": true,
         "gd-project-list-item": true,
-        [`s-${stringUtils.simplifyText(title)}`]: true,
+        [`s-${simplifyText(title)}`]: true,
         "gd-is-selected": isSelected,
         "gd-is-demo": isDemo,
     });

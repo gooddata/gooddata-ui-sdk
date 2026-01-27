@@ -1,23 +1,33 @@
 {
-    "id": "9fe06483-b654-4118-adec-3272a973ea22",
-    "name": "api_v1_entities_workspaces_9c71fe9a4fc944d7b7886c4d05ce0cf3_attributes",
+    "id": "7af281f5-c08b-46f1-b423-e548a24fb76c",
+    "name": "api_v1_entities_workspaces_9c71fe9a4fc944d7b7886c4d05ce0cf3_visualizationobjects",
     "request": {
-        "urlPath": "/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/attributes",
+        "urlPath": "/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/visualizationObjects",
         "method": "GET",
         "headers": {
             "Accept": {
-                "equalTo": "application/vnd.gooddata.api+json"
-            },
-            "Content-Type": {
-                "equalTo": "application/vnd.gooddata.api+json",
-                "caseInsensitive": true
+                "equalTo": "application/json, text/plain, */*"
             }
         },
         "queryParameters": {
-            "include": {
+            "page": {
                 "hasExactly": [
                     {
-                        "equalTo": "labels,defaultView,dataset,attributeHierarchies"
+                        "equalTo": "0"
+                    }
+                ]
+            },
+            "size": {
+                "hasExactly": [
+                    {
+                        "equalTo": "50"
+                    }
+                ]
+            },
+            "sort": {
+                "hasExactly": [
+                    {
+                        "equalTo": "modifiedAt,createdAt,title,desc"
                     }
                 ]
             },
@@ -27,26 +37,12 @@
                         "equalTo": "page"
                     }
                 ]
-            },
-            "size": {
-                "hasExactly": [
-                    {
-                        "equalTo": "250"
-                    }
-                ]
-            },
-            "page": {
-                "hasExactly": [
-                    {
-                        "equalTo": "0"
-                    }
-                ]
             }
         }
     },
     "response": {
         "status": 200,
-        "bodyFileName": "api_v1_entities_workspaces_9c71fe9a4fc944d7b7886c4d05ce0cf3_attributes-9fe06483-b654-4118-adec-3272a973ea22.json",
+        "bodyFileName": "api_v1_entities_workspaces_9c71fe9a4fc944d7b7886c4d05ce0cf3_visualizationobjects-7af281f5-c08b-46f1-b423-e548a24fb76c.json",
         "headers": {
             "Referrer-Policy": "no-referrer",
             "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
@@ -61,10 +57,10 @@
             "Pragma": "no-cache",
             "Expires": "0",
             "X-XSS-Protection": "0",
-            "Content-Type": "application/vnd.gooddata.api+json"
+            "Content-Type": "application/json"
         }
     },
-    "uuid": "9fe06483-b654-4118-adec-3272a973ea22",
+    "uuid": "7af281f5-c08b-46f1-b423-e548a24fb76c",
     "persistent": true,
-    "insertionIndex": 11
+    "insertionIndex": 14
 }

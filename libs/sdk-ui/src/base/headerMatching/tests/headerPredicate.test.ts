@@ -1,4 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import { describe, expect, it, vi } from "vitest";
 
 import { dummyDataView } from "@gooddata/sdk-backend-mockingbird";
@@ -8,7 +9,7 @@ import { context, measureDescriptors } from "./HeaderPredicateFactory.fixtures.j
 import { DataViewFacade } from "../../results/facade.js";
 import { convertDrillableItemsToPredicates, isSomeHeaderPredicateMatched } from "../../vis/drilling.js";
 import { type IHeaderPredicate } from "../HeaderPredicate.js";
-import * as headerPredicateFactory from "../HeaderPredicateFactory.js";
+import { identifierMatch, uriMatch } from "../HeaderPredicateFactory.js";
 import { type IMappingHeader } from "../MappingHeader.js";
 
 const emptyFacade = DataViewFacade.for(dummyDataView(newDefForBuckets("testWorkspace", [])));
@@ -65,8 +66,8 @@ describe("convertDrillableItemsToPredicates", () => {
         const drillableItems = [
             { uri: "/some-uri" },
             { identifier: "some-identifier" },
-            headerPredicateFactory.uriMatch("/some-uri"),
-            headerPredicateFactory.identifierMatch("identifier"),
+            uriMatch("/some-uri"),
+            identifierMatch("identifier"),
         ];
 
         const drillablePredicates = convertDrillableItemsToPredicates(drillableItems);

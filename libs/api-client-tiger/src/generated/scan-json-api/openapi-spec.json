@@ -596,6 +596,10 @@
                         "type": "string",
                         "description": "Column description/comment from database",
                         "example": "Customer unique identifier"
+                    },
+                    "isNullable": {
+                        "type": "boolean",
+                        "description": "Column is nullable"
                     }
                 },
                 "description": "A table column."

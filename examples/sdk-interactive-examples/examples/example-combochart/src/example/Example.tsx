@@ -1,8 +1,8 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { ComboChart } from "@gooddata/sdk-ui-charts";
 
-import * as Catalog from "../catalog.js";
+import { DateDatasets, GrossProfit } from "../catalog.js";
 import { Hint } from "../Hint.js";
 
 export function Example() {
@@ -13,9 +13,9 @@ export function Example() {
             {/* Try editing the component below 👇 */}
             <div style={{ height: 300 }}>
                 <ComboChart
-                    primaryMeasures={[Catalog.GrossProfit]}
-                    //secondaryMeasures={[Catalog.NrOfOrders]}
-                    viewBy={[Catalog.DateDatasets.Date.DateMonthYear.Default]}
+                    primaryMeasures={[GrossProfit]}
+                    //secondaryMeasures={[NrOfOrders]}
+                    viewBy={[DateDatasets.Date.DateMonthYear.Default]}
                 />
             </div>
 

@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { afterEach, describe, expect, it, vi } from "vitest";
 
@@ -19,8 +19,26 @@ import {
     type IReferencePoint,
     type IVisConstruct,
 } from "../../../../interfaces/Visualization.js";
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
-import * as testMocks from "../../../../tests/mocks/testMocks.js";
+import {
+    arithmeticMeasureItems,
+    dateAsFirstCategoryReferencePoint,
+    emptyReferencePoint,
+    masterMeasureItems,
+    mixOfMeasuresWithDerivedAndArithmeticFromDerivedTreeMapReferencePoint,
+    multipleDatesNotAsFirstReferencePoint,
+    multipleDatesNotAsFirstReferencePointWithSingleMeasure,
+    multipleMetricsAndCategoriesReferencePoint,
+    multipleMetricsNoCategoriesReferencePoint,
+    multipleMetricsOneStackByReferencePoint,
+    oneMetricNoCategoriesReferencePoint,
+    onlyStackColumnChart,
+    samePeriodPreviousYearAndAttributesRefPoint,
+    simpleStackedReferencePoint,
+    threeDatesInColumnChart,
+    twoDatesInColumnChart,
+    twoIdenticalDatesInRowsWithSingleMeasure,
+} from "../../../../tests/mocks/referencePointMocks.js";
+import { insightWithSingleMeasure } from "../../../../tests/mocks/testMocks.js";
 import { DEFAULT_MESSAGES } from "../../../../utils/translations.js";
 import {
     createDrillDefinition,
@@ -70,9 +88,7 @@ describe("PluggableTreemap", () => {
     it("should return ref. point with 1 M, 1 Vb, 1 Sb and only valid filters for 1 M, 1 Vb, 1 Sb", async () => {
         const treemap = createComponent();
 
-        const extendedReferencePoint = await treemap.getExtendedReferencePoint(
-            referencePointMocks.simpleStackedReferencePoint,
-        );
+        const extendedReferencePoint = await treemap.getExtendedReferencePoint(simpleStackedReferencePoint);
 
         expect(extendedReferencePoint).toMatchSnapshot();
     });
@@ -81,7 +97,7 @@ describe("PluggableTreemap", () => {
         const treemap = createComponent();
 
         const extendedReferencePoint = await treemap.getExtendedReferencePoint(
-            referencePointMocks.multipleMetricsAndCategoriesReferencePoint,
+            multipleMetricsAndCategoriesReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -91,7 +107,7 @@ describe("PluggableTreemap", () => {
         const treemap = createComponent();
 
         const extendedReferencePoint = await treemap.getExtendedReferencePoint(
-            referencePointMocks.samePeriodPreviousYearAndAttributesRefPoint,
+            samePeriodPreviousYearAndAttributesRefPoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -101,7 +117,7 @@ describe("PluggableTreemap", () => {
         const treemap = createComponent();
 
         const extendedReferencePoint = await treemap.getExtendedReferencePoint(
-            referencePointMocks.multipleMetricsNoCategoriesReferencePoint,
+            multipleMetricsNoCategoriesReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -111,7 +127,7 @@ describe("PluggableTreemap", () => {
         const treemap = createComponent();
 
         const extendedReferencePoint = await treemap.getExtendedReferencePoint(
-            referencePointMocks.oneMetricNoCategoriesReferencePoint,
+            oneMetricNoCategoriesReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -121,7 +137,7 @@ describe("PluggableTreemap", () => {
         const treemap = createComponent();
 
         const extendedReferencePoint = await treemap.getExtendedReferencePoint(
-            referencePointMocks.multipleMetricsOneStackByReferencePoint,
+            multipleMetricsOneStackByReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -131,9 +147,7 @@ describe("PluggableTreemap", () => {
         it("should return reference point containing uiConfig with no supported comparison types", async () => {
             const component = createComponent();
 
-            const extendedReferencePoint = await component.getExtendedReferencePoint(
-                referencePointMocks.emptyReferencePoint,
-            );
+            const extendedReferencePoint = await component.getExtendedReferencePoint(emptyReferencePoint);
 
             expect(extendedReferencePoint.uiConfig!.supportedOverTimeComparisonTypes).toEqual([]);
         });
@@ -142,16 +156,16 @@ describe("PluggableTreemap", () => {
             const component = createComponent();
 
             const extendedReferencePoint = await component.getExtendedReferencePoint(
-                referencePointMocks.mixOfMeasuresWithDerivedAndArithmeticFromDerivedTreeMapReferencePoint,
+                mixOfMeasuresWithDerivedAndArithmeticFromDerivedTreeMapReferencePoint,
             );
             expect(extendedReferencePoint.buckets).toEqual([
                 {
                     localIdentifier: "measures",
                     items: [
-                        referencePointMocks.masterMeasureItems[0],
-                        referencePointMocks.masterMeasureItems[1],
-                        referencePointMocks.arithmeticMeasureItems[0],
-                        referencePointMocks.arithmeticMeasureItems[1],
+                        masterMeasureItems[0],
+                        masterMeasureItems[1],
+                        arithmeticMeasureItems[0],
+                        arithmeticMeasureItems[1],
                     ],
                 },
                 {
@@ -222,67 +236,54 @@ describe("PluggableTreemap", () => {
             const inputs: [string, IReferencePoint, Partial<IExtendedReferencePoint>][] = [
                 [
                     "from table to treemap chart: date in rows only",
-                    referencePointMocks.dateAsFirstCategoryReferencePoint,
+                    dateAsFirstCategoryReferencePoint,
                     {
                         buckets: [
-                            referencePointMocks.dateAsFirstCategoryReferencePoint.buckets[0],
+                            dateAsFirstCategoryReferencePoint.buckets[0],
                             {
                                 localIdentifier: "view",
-                                items: referencePointMocks.dateAsFirstCategoryReferencePoint.buckets[1].items.slice(
-                                    0,
-                                    1,
-                                ),
+                                items: dateAsFirstCategoryReferencePoint.buckets[1].items.slice(0, 1),
                             },
                             {
                                 localIdentifier: "segment",
-                                items: referencePointMocks.dateAsFirstCategoryReferencePoint.buckets[1].items.slice(
-                                    1,
-                                    2,
-                                ),
+                                items: dateAsFirstCategoryReferencePoint.buckets[1].items.slice(1, 2),
                             },
                         ],
                     },
                 ],
                 [
                     "from table to treemap chart: two identical dates in rows",
-                    referencePointMocks.twoIdenticalDatesInRowsWithSingleMeasure,
+                    twoIdenticalDatesInRowsWithSingleMeasure,
                     {
                         buckets: [
-                            referencePointMocks.twoIdenticalDatesInRowsWithSingleMeasure.buckets[0],
+                            twoIdenticalDatesInRowsWithSingleMeasure.buckets[0],
                             {
                                 localIdentifier: "view",
-                                items: referencePointMocks.twoIdenticalDatesInRowsWithSingleMeasure.buckets[1].items.slice(
-                                    0,
-                                    1,
-                                ),
+                                items: twoIdenticalDatesInRowsWithSingleMeasure.buckets[1].items.slice(0, 1),
                             },
                             {
                                 localIdentifier: "segment",
-                                items: referencePointMocks.twoIdenticalDatesInRowsWithSingleMeasure.buckets[1].items.slice(
-                                    1,
-                                    2,
-                                ),
+                                items: twoIdenticalDatesInRowsWithSingleMeasure.buckets[1].items.slice(1, 2),
                             },
                         ],
                     },
                 ],
                 [
                     "from table to treemap chart: multiple dates in rows but not first (date does not have preference)",
-                    referencePointMocks.multipleDatesNotAsFirstReferencePointWithSingleMeasure,
+                    multipleDatesNotAsFirstReferencePointWithSingleMeasure,
                     {
                         buckets: [
-                            referencePointMocks.multipleDatesNotAsFirstReferencePointWithSingleMeasure
-                                .buckets[0],
+                            multipleDatesNotAsFirstReferencePointWithSingleMeasure.buckets[0],
                             {
                                 localIdentifier: "view",
-                                items: referencePointMocks.multipleDatesNotAsFirstReferencePointWithSingleMeasure.buckets[1].items.slice(
+                                items: multipleDatesNotAsFirstReferencePointWithSingleMeasure.buckets[1].items.slice(
                                     0,
                                     1,
                                 ),
                             },
                             {
                                 localIdentifier: "segment",
-                                items: referencePointMocks.multipleDatesNotAsFirstReferencePointWithSingleMeasure.buckets[1].items.slice(
+                                items: multipleDatesNotAsFirstReferencePointWithSingleMeasure.buckets[1].items.slice(
                                     1,
                                     2,
                                 ),
@@ -292,86 +293,71 @@ describe("PluggableTreemap", () => {
                 ],
                 [
                     "from table to treemap chart: multiple dates in rows but not first, more measures",
-                    referencePointMocks.multipleDatesNotAsFirstReferencePoint,
+                    multipleDatesNotAsFirstReferencePoint,
                     {
                         buckets: [
                             {
                                 localIdentifier: "measures",
-                                items: referencePointMocks.multipleDatesNotAsFirstReferencePoint.buckets[0].items.slice(
-                                    0,
-                                    1,
-                                ),
+                                items: multipleDatesNotAsFirstReferencePoint.buckets[0].items.slice(0, 1),
                             },
                             {
                                 localIdentifier: "view",
-                                items: referencePointMocks.multipleDatesNotAsFirstReferencePoint.buckets[1].items.slice(
-                                    0,
-                                    1,
-                                ),
+                                items: multipleDatesNotAsFirstReferencePoint.buckets[1].items.slice(0, 1),
                             },
                             {
                                 localIdentifier: "segment",
-                                items: referencePointMocks.multipleDatesNotAsFirstReferencePoint.buckets[1].items.slice(
-                                    1,
-                                    2,
-                                ),
+                                items: multipleDatesNotAsFirstReferencePoint.buckets[1].items.slice(1, 2),
                             },
                         ],
                     },
                 ],
                 [
                     "from column to treemap chart: two dates",
-                    referencePointMocks.twoDatesInColumnChart,
+                    twoDatesInColumnChart,
                     {
                         buckets: [
-                            referencePointMocks.twoDatesInColumnChart.buckets[0],
+                            twoDatesInColumnChart.buckets[0],
                             {
                                 localIdentifier: "view",
-                                items: referencePointMocks.twoDatesInColumnChart.buckets[1].items.slice(0, 1),
+                                items: twoDatesInColumnChart.buckets[1].items.slice(0, 1),
                             },
                             {
                                 localIdentifier: "segment",
-                                items: referencePointMocks.twoDatesInColumnChart.buckets[2].items.slice(0, 1),
+                                items: twoDatesInColumnChart.buckets[2].items.slice(0, 1),
                             },
                         ],
                     },
                 ],
                 [
                     "from column to treemap chart: three dates",
-                    referencePointMocks.threeDatesInColumnChart,
+                    threeDatesInColumnChart,
                     {
                         buckets: [
-                            referencePointMocks.threeDatesInColumnChart.buckets[0],
+                            threeDatesInColumnChart.buckets[0],
                             {
                                 localIdentifier: "view",
-                                items: referencePointMocks.threeDatesInColumnChart.buckets[1].items.slice(
-                                    0,
-                                    1,
-                                ),
+                                items: threeDatesInColumnChart.buckets[1].items.slice(0, 1),
                             },
                             {
                                 localIdentifier: "segment",
-                                items: referencePointMocks.threeDatesInColumnChart.buckets[2].items.slice(
-                                    0,
-                                    1,
-                                ),
+                                items: threeDatesInColumnChart.buckets[2].items.slice(0, 1),
                             },
                         ],
                     },
                 ],
                 [
                     "from column to treemap chart: only stacks",
-                    referencePointMocks.onlyStackColumnChart,
+                    onlyStackColumnChart,
                     {
                         buckets: [
-                            referencePointMocks.onlyStackColumnChart.buckets[0],
+                            onlyStackColumnChart.buckets[0],
                             {
                                 localIdentifier: "view",
                                 items: [],
                             },
                             {
                                 localIdentifier: "segment",
-                                items: referencePointMocks.onlyStackColumnChart.buckets[2].items.slice(0, 1),
+                                items: onlyStackColumnChart.buckets[2].items.slice(0, 1),
                             },
                         ],
                     },
@@ -397,7 +383,7 @@ describe("PluggableTreemap", () => {
         it("should mount on the element defined by the callback", () => {
             const visualization = createComponent();
 
-            visualization.update({ messages }, testMocks.insightWithSingleMeasure, {}, executionFactory);
+            visualization.update({ messages }, insightWithSingleMeasure, {}, executionFactory);
 
             // 1st call for rendering element
             // 2nd call for rendering config panel

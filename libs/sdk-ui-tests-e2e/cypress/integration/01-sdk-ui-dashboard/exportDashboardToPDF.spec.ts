@@ -1,10 +1,10 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { DashboardMenu, ExportMenu } from "../../tools/dashboardMenu";
 import { TopBar } from "../../tools/dashboards";
 import { Export } from "../../tools/export";
 import { AttributeFilter } from "../../tools/filterBar";
-import * as Navigation from "../../tools/navigation";
+import { visit } from "../../tools/navigation";
 import { Widget } from "../../tools/widget";
 
 const dashboardMenu = new DashboardMenu();
@@ -25,7 +25,7 @@ describe(
     },
     () => {
         it("should be able to export dashboard with temporary filter to PDF", () => {
-            Navigation.visit("dashboard/nullvalue");
+            visit("dashboard/nullvalue");
             topBar.dashboardTitleExist().dashboardTitleHasValue("KD has null value");
             productFilter.open().selectAttributeWithoutSearch("PhoenixSoft");
             widget.waitTableLoaded();

@@ -21,11 +21,11 @@ import {
     validWeakMeasureColumnWidthItem,
 } from "./widthItemsMock.js";
 import { type IBucketFilter, type IBucketItem } from "../../../../interfaces/Visualization.js";
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
+import { simpleStackedReferencePoint } from "../../../../tests/mocks/referencePointMocks.js";
 import { adaptReferencePointWidthItemsToPivotTable } from "../widthItemsHelpers.js";
 
 describe("adaptReferencePointWidthItemsToPivotTable", () => {
-    const sourceReferencePoint = referencePointMocks.simpleStackedReferencePoint;
+    const sourceReferencePoint = simpleStackedReferencePoint;
 
     const sourceColumnWidths: ColumnWidthItem[] = [
         invalidAttributeColumnWidthItem,
@@ -238,7 +238,7 @@ describe("adaptReferencePointWidthItemsToPivotTable", () => {
 
 describe("adaptReferencePointWidthItemsToPivotTable transposed", () => {
     it("should remove invalid width items", () => {
-        const sourceReferencePoint = referencePointMocks.simpleStackedReferencePoint;
+        const sourceReferencePoint = simpleStackedReferencePoint;
 
         const sourceColumnWidths: ColumnWidthItem[] = [
             invalidSliceMeasureColumnWidthItem,

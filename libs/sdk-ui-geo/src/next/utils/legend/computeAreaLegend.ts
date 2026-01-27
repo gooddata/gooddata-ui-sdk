@@ -39,6 +39,7 @@ export interface IComputeAreaLegendParams {
     legendItems: IGeoLegendItem[];
     availableLegends: IAvailableLegends;
     numericSymbols?: string[];
+    colorScaleBaseColor?: string;
 }
 
 /**
@@ -57,7 +58,15 @@ export interface IComputeAreaLegendParams {
  * @alpha
  */
 export function computeAreaLegend(params: IComputeAreaLegendParams): ILegendSection | null {
-    const { layerId, layerName, geoData, legendItems, availableLegends, numericSymbols } = params;
+    const {
+        layerId,
+        layerName,
+        geoData,
+        legendItems,
+        availableLegends,
+        numericSymbols,
+        colorScaleBaseColor,
+    } = params;
 
     const groups: ILegendGroup[] = [];
 
@@ -73,7 +82,12 @@ export function computeAreaLegend(params: IComputeAreaLegendParams): ILegendSect
 
     // Add numeric color scale group if available (color measure)
     if (availableLegends.hasColorLegend && geoData.color) {
-        const colorScale = computeColorScale(geoData.color.data, geoData.color.format, numericSymbols);
+        const colorScale = computeColorScale(
+            geoData.color.data,
+            geoData.color.format,
+            numericSymbols,
+            colorScaleBaseColor,
+        );
         if (colorScale) {
             groups.push({
                 kind: "colorScale",

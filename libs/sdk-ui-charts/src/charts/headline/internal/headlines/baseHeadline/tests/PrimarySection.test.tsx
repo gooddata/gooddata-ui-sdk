@@ -1,17 +1,45 @@
 // (C) 2023-2026 GoodData Corporation
 
 import { render } from "@testing-library/react";
-import { type MockInstance, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { mockUseBaseHeadline } from "./BaseHeadline.test.helpers.js";
+import { createMockUseBaseHeadline } from "./BaseHeadline.test.helpers.js";
 import { TEST_BASE_HEADLINE_ITEM } from "../../../tests/TestData.fixtures.js";
 import { PrimarySection } from "../PrimarySection.js";
-import * as PrimarySectionCompactContent from "../PrimarySectionCompactContent.js";
-import * as PrimarySectionContent from "../PrimarySectionContent.js";
+import { PrimarySectionCompactContent } from "../PrimarySectionCompactContent.js";
+import { PrimarySectionContent } from "../PrimarySectionContent.js";
+
+const useBaseHeadlineMock = vi.hoisted(() => vi.fn());
+
+vi.mock("../BaseHeadlineContext.js", () => ({
+    useBaseHeadline: useBaseHeadlineMock,
+}));
+
+vi.mock("../PrimarySectionCompactContent.js", async (importOriginal) => {
+    const original = await importOriginal();
+    return {
+        ...(original as object),
+        PrimarySectionCompactContent: vi.fn(
+            (original as { PrimarySectionCompactContent: () => void }).PrimarySectionCompactContent,
+        ),
+    };
+});
+
+vi.mock("../PrimarySectionContent.js", async (importOriginal) => {
+    const original = await importOriginal();
+    return {
+        ...(original as object),
+        PrimarySectionContent: vi.fn(
+            (original as { PrimarySectionContent: () => void }).PrimarySectionContent,
+        ),
+    };
+});
+
+const mockUseBaseHeadline = createMockUseBaseHeadline(useBaseHeadlineMock);
 
 describe("PrimarySection", () => {
-    let MockContent: MockInstance;
-    let MockCompactContent: MockInstance;
+    const MockContent = vi.mocked(PrimarySectionContent);
+    const MockCompactContent = vi.mocked(PrimarySectionCompactContent);
 
     const renderPrimarySection = () => {
         const props = {
@@ -23,8 +51,6 @@ describe("PrimarySection", () => {
 
     beforeEach(() => {
         vi.clearAllMocks();
-        MockContent = vi.spyOn(PrimarySectionContent, "PrimarySectionContent");
-        MockCompactContent = vi.spyOn(PrimarySectionCompactContent, "PrimarySectionCompactContent");
     });
 
     afterEach(() => {

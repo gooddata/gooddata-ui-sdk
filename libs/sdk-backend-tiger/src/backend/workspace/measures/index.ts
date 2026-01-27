@@ -9,7 +9,6 @@ import {
     type JsonApiMetricOutDocument,
     type KeyDriversDimension,
     MetadataUtilities,
-    jsonApiHeaders,
 } from "@gooddata/api-client-tiger";
 import {
     EntitiesApi_CreateEntityMetrics,
@@ -117,18 +116,11 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
         }
 
         const metricMetadata = await this.authCall((client) =>
-            EntitiesApi_GetEntityMetrics(
-                client.axios,
-                client.basePath,
-                {
-                    objectId: ref.identifier,
-                    workspaceId: this.workspace,
-                    include: ["facts", "metrics", "attributes", "labels", "datasets"],
-                },
-                {
-                    headers: jsonApiHeaders,
-                },
-            ),
+            EntitiesApi_GetEntityMetrics(client.axios, client.basePath, {
+                objectId: ref.identifier,
+                workspaceId: this.workspace,
+                include: ["facts", "metrics", "attributes", "labels", "datasets"],
+            }),
         );
         const metric = metricMetadata.data;
         const maql = metric.data.attributes.content.maql || "";
@@ -198,23 +190,16 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
     async createMeasure(measure: IMeasureMetadataObjectDefinition): Promise<IMeasureMetadataObject> {
         const metricAttributes = convertMetricToBackend(measure);
         const result = await this.authCall((client) => {
-            return EntitiesApi_CreateEntityMetrics(
-                client.axios,
-                client.basePath,
-                {
-                    workspaceId: this.workspace,
-                    jsonApiMetricPostOptionalIdDocument: {
-                        data: {
-                            id: measure.id,
-                            type: "metric",
-                            attributes: metricAttributes,
-                        },
+            return EntitiesApi_CreateEntityMetrics(client.axios, client.basePath, {
+                workspaceId: this.workspace,
+                jsonApiMetricPostOptionalIdDocument: {
+                    data: {
+                        id: measure.id,
+                        type: "metric",
+                        attributes: metricAttributes,
                     },
                 },
-                {
-                    headers: jsonApiHeaders,
-                },
-            );
+            });
         });
 
         return convertMetricFromBackend(result.data, result.data.included);
@@ -224,24 +209,17 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
         const objectId = objRefToIdentifier(measure.ref, this.authCall);
         const metricAttributes = convertMetricToBackend(measure);
         const result = await this.authCall((client) => {
-            return EntitiesApi_UpdateEntityMetrics(
-                client.axios,
-                client.basePath,
-                {
-                    objectId,
-                    workspaceId: this.workspace,
-                    jsonApiMetricInDocument: {
-                        data: {
-                            id: objectId,
-                            type: "metric",
-                            attributes: metricAttributes,
-                        },
+            return EntitiesApi_UpdateEntityMetrics(client.axios, client.basePath, {
+                objectId,
+                workspaceId: this.workspace,
+                jsonApiMetricInDocument: {
+                    data: {
+                        id: objectId,
+                        type: "metric",
+                        attributes: metricAttributes,
                     },
                 },
-                {
-                    headers: jsonApiHeaders,
-                },
-            );
+            });
         });
 
         return convertMetricFromBackend(result.data, result.data.included);
@@ -252,31 +230,24 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
     ): Promise<IMeasureMetadataObject> {
         const objectId = objRefToIdentifier(measure.ref, this.authCall);
         const result = await this.authCall((client) => {
-            return EntitiesApi_PatchEntityMetrics(
-                client.axios,
-                client.basePath,
-                {
-                    objectId,
-                    workspaceId: this.workspace,
-                    jsonApiMetricPatchDocument: {
-                        data: {
-                            id: objectId,
-                            type: "metric",
-                            attributes: {
-                                ...(measure.title === undefined ? {} : { title: measure.title }),
-                                ...(measure.description === undefined
-                                    ? {}
-                                    : { description: measure.description }),
-                                ...(measure.tags === undefined ? {} : { tags: measure.tags }),
-                                ...(measure.isHidden === undefined ? {} : { isHidden: measure.isHidden }),
-                            },
+            return EntitiesApi_PatchEntityMetrics(client.axios, client.basePath, {
+                objectId,
+                workspaceId: this.workspace,
+                jsonApiMetricPatchDocument: {
+                    data: {
+                        id: objectId,
+                        type: "metric",
+                        attributes: {
+                            ...(measure.title === undefined ? {} : { title: measure.title }),
+                            ...(measure.description === undefined
+                                ? {}
+                                : { description: measure.description }),
+                            ...(measure.tags === undefined ? {} : { tags: measure.tags }),
+                            ...(measure.isHidden === undefined ? {} : { isHidden: measure.isHidden }),
                         },
                     },
                 },
-                {
-                    headers: jsonApiHeaders,
-                },
-            );
+            });
         });
 
         return convertMetricFromBackend(result.data, result.data.included);
@@ -339,18 +310,11 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
     public async getMeasure(ref: ObjRef, options: IGetMeasureOptions = {}): Promise<IMeasureMetadataObject> {
         const id = objRefToIdentifier(ref, this.authCall);
         const result = await this.authCall((client) =>
-            EntitiesApi_GetEntityMetrics(
-                client.axios,
-                client.basePath,
-                {
-                    objectId: id,
-                    workspaceId: this.workspace,
-                    include: options.loadUserData ? ["createdBy", "modifiedBy"] : [],
-                },
-                {
-                    headers: jsonApiHeaders,
-                },
-            ),
+            EntitiesApi_GetEntityMetrics(client.axios, client.basePath, {
+                objectId: id,
+                workspaceId: this.workspace,
+                include: options.loadUserData ? ["createdBy", "modifiedBy"] : [],
+            }),
         );
 
         return convertMetricFromBackend(result.data, result.data.included);

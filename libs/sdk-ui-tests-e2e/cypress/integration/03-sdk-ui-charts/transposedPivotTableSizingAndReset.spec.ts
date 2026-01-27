@@ -1,9 +1,9 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { measureLocalId } from "@gooddata/sdk-model";
 
 import * as Md from "../../../reference_workspace/workspace_objects/goodsales/current_reference_workspace_objects_bear";
-import * as Navigation from "../../tools/navigation";
+import { visit } from "../../tools/navigation";
 import { Table } from "../../tools/table";
 
 const TABLE_SELECTOR_STR_COMPLEX = ".s-pivot-table-sizing-complex";
@@ -85,7 +85,7 @@ describe.skip(
     { tags: ["pre-merge_isolated_bear"] },
     () => {
         beforeEach(() => {
-            Navigation.visit("visualizations/pivot-table/sizing/pivot-table-transposed-complex-reset");
+            visit("visualizations/pivot-table/sizing/pivot-table-transposed-complex-reset");
         });
 
         it("should set slice measure column with provided width and notify column as manually resized via props", () => {
@@ -271,7 +271,7 @@ describe.skip("Transposed Pivot Table resizing", { tags: ["checklist_integrated_
     const table = new Table(TABLE_SELECTOR_STR_COMPLEX);
 
     beforeEach(() => {
-        Navigation.visit("visualizations/pivot-table/sizing/pivot-table-transposed-complex-reset");
+        visit("visualizations/pivot-table/sizing/pivot-table-transposed-complex-reset");
         table.waitLoaded();
     });
 

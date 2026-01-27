@@ -1,11 +1,15 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
 import { type ITotal } from "@gooddata/sdk-model";
 
 import { type IBucketFilter } from "../../../../interfaces/Visualization.js";
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
+import {
+    attributeFilter,
+    measureValueFilter,
+    rankingFilter,
+} from "../../../../tests/mocks/referencePointMocks.js";
 import { removeInvalidTotals } from "../totalsHelpers.js";
 
 describe("removeInvalidTotals", () => {
@@ -26,19 +30,19 @@ describe("removeInvalidTotals", () => {
             [
                 "do nothing when measure value or ranking filter is not present",
                 [nativeTotal, sumTotal],
-                [referencePointMocks.attributeFilter],
+                [attributeFilter],
                 [nativeTotal, sumTotal],
             ],
             [
                 "remove native total when measure value filter is present",
                 [nativeTotal, sumTotal],
-                [referencePointMocks.attributeFilter, referencePointMocks.measureValueFilter],
+                [attributeFilter, measureValueFilter],
                 [sumTotal],
             ],
             [
                 "remove native total when ranking filter is present",
                 [nativeTotal, sumTotal],
-                [referencePointMocks.attributeFilter, referencePointMocks.rankingFilter],
+                [attributeFilter, rankingFilter],
                 [sumTotal],
             ],
         ];

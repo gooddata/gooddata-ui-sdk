@@ -1,10 +1,10 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type MouseEvent } from "react";
 
 import cx from "classnames";
 
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 interface IConnectingAttributeItemProps {
     title: string;
@@ -19,7 +19,7 @@ export function ConnectingAttributeItem({ title, icon, selected, onClick }: ICon
         e.preventDefault();
     };
 
-    const className = cx("gd-list-item", `s-${stringUtils.simplifyText(title)}`, {
+    const className = cx("gd-list-item", `s-${simplifyText(title)}`, {
         "is-selected": selected,
     });
 

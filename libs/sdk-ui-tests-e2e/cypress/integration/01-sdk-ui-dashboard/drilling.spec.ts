@@ -1,9 +1,9 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { DrillToModal } from "../../tools/drillToModal";
 import { EditMode } from "../../tools/editMode";
 import { Messages } from "../../tools/messages";
-import * as Navigation from "../../tools/navigation";
+import { visit, visitCopyOf } from "../../tools/navigation";
 import { Widget } from "../../tools/widget";
 import { CustomURLDialog, WidgetConfiguration } from "../../tools/widgetConfiguration";
 
@@ -26,7 +26,7 @@ describe("Interaction", () => {
             ],
         },
         () => {
-            Navigation.visitCopyOf("dashboard/drill-to-insight");
+            visitCopyOf("dashboard/drill-to-insight");
             editMode.edit();
             widget.waitChartLoaded().focus();
             widgetConfig.openInteractions().getDrillConfigItem("Created - Year").remove();
@@ -49,7 +49,7 @@ describe("Interaction", () => {
             ],
         },
         () => {
-            Navigation.visit("dashboard/drill-to-insight");
+            visit("dashboard/drill-to-insight");
             editMode.edit();
             widget.waitChartLoaded().focus();
 
@@ -84,7 +84,7 @@ describe("Interaction", () => {
             const widget1 = new Widget(0, 1);
             const message = new Messages();
 
-            Navigation.visit("dashboard/dashboard-many-rows-columns");
+            visit("dashboard/dashboard-many-rows-columns");
             editMode.edit();
             message
                 .hasWarningMessage(true)
@@ -109,7 +109,7 @@ describe("Interaction", () => {
 // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
 describe.skip("Drilling on Table with Metrics in Rows", { tags: ["post-merge_integrated_bear"] }, () => {
     beforeEach(() => {
-        Navigation.visit("dashboard/drill-to-insight-metrics-in-rows");
+        visit("dashboard/drill-to-insight-metrics-in-rows");
     });
 
     it("should drill on insight from table with no rows and metrics in rows", () => {

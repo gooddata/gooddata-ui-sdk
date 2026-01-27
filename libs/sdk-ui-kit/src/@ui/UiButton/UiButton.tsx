@@ -2,7 +2,7 @@
 
 import { type KeyboardEvent, type MouseEvent, type ReactNode, forwardRef } from "react";
 
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { type IAccessibilityConfigBase } from "../../typings/accessibility.js";
 import { type IconType } from "../@types/icon.js";
@@ -63,7 +63,7 @@ export interface IUiButtonProps {
 const { b, e } = bem("gd-ui-kit-button");
 
 const getGeneratedTestId = (label: string, ariaLabel: string) => {
-    return ariaLabel ? `${stringUtils.simplifyText(ariaLabel)}` : `${stringUtils.simplifyText(label)}`;
+    return ariaLabel ? `${simplifyText(ariaLabel)}` : `${simplifyText(label)}`;
 };
 
 /**

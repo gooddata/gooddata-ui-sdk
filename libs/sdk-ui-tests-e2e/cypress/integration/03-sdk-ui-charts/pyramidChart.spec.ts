@@ -1,7 +1,7 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { Chart } from "../../tools/chart";
-import * as Navigation from "../../tools/navigation";
+import { visit } from "../../tools/navigation";
 
 describe(
     "Pyramid Chart",
@@ -15,7 +15,7 @@ describe(
     },
     () => {
         beforeEach(() => {
-            Navigation.visit("visualizations/pyramidchart/pyramid-chart-scenario");
+            visit("visualizations/pyramidchart/pyramid-chart-scenario");
         });
 
         it(`check default sort of pyramid chart`, () => {

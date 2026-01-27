@@ -1,8 +1,8 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { EditMode } from "../../tools/editMode";
 import { AttributeFilter } from "../../tools/filterBar";
-import * as Navigation from "../../tools/navigation";
+import { visit } from "../../tools/navigation";
 import { Widget } from "../../tools/widget";
 
 const editMode = new EditMode();
@@ -18,7 +18,7 @@ const getChart = () => new Widget(2).waitChartLoaded().getChart();
 // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
 describe.skip("Single selection filters", () => {
     beforeEach(() => {
-        Navigation.visit("dashboard/single-select-filter-integration");
+        visit("dashboard/single-select-filter-integration");
     });
 
     it(

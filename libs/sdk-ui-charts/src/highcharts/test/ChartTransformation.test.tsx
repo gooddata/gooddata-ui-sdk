@@ -8,7 +8,7 @@ import { type ScenarioRecording } from "@gooddata/sdk-backend-mockingbird";
 import { measureLocalId } from "@gooddata/sdk-model";
 import { IntlWrapper, VisualizationTypes, withIntl } from "@gooddata/sdk-ui";
 
-import * as fixtures from "../../../testUtils/fixtures.js";
+import { pieChartWithMetricsOnlyFundata } from "../../../testUtils/fixtures.js";
 import { recordedDataFacade } from "../../../testUtils/recordings.js";
 import { type IChartConfig } from "../../interfaces/chartConfig.js";
 import { HighChartsRenderer } from "../adapter/HighChartsRenderer.js";
@@ -226,7 +226,7 @@ describe("ChartTransformation", () => {
 
     describe("onNegativeValues", () => {
         const pieChartPropsWithNegativeValue = {
-            dataView: fixtures.pieChartWithMetricsOnlyFundata.dataView,
+            dataView: pieChartWithMetricsOnlyFundata.dataView,
             config: {
                 ...defaultProps.config,
                 type: "pie",

@@ -6,7 +6,7 @@ import cx from "classnames";
 
 import { type IWidget, objRefToString, widgetRef } from "@gooddata/sdk-model";
 import { type ArrowDirections, type ArrowOffsets, Bubble, type IAlignPoint } from "@gooddata/sdk-ui-kit";
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { IGNORED_CONFIGURATION_MENU_CLICK_CLASS } from "../../../../constants/classes.js";
 
@@ -54,7 +54,7 @@ export function DashboardInsightMenuBubble({
 
     return (
         <Bubble
-            alignTo={`.dash-item-action-widget-options-${stringUtils.simplifyText(widgetRefAsString)}`}
+            alignTo={`.dash-item-action-widget-options-${simplifyText(widgetRefAsString)}`}
             alignPoints={alignPoints}
             arrowDirections={arrowDirections}
             arrowOffsets={flexibleArrowOffsets}

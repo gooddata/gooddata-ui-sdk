@@ -7,7 +7,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { type ICatalogDateDataset, type IDashboardDateFilter, serializeObjRef } from "@gooddata/sdk-model";
 import { DropdownList, ShortenedText } from "@gooddata/sdk-ui-kit";
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { PopupHeader } from "./PopupHeader.js";
 import { WithDisabledParentFilterTooltip } from "./WithDisabledParentFilterTooltip.js";
@@ -49,13 +49,9 @@ export function DateAttributeListItem({
 }: IAttributeListItemProps) {
     const { attributeFilterInteraction } = useDashboardUserInteraction();
     const classNames = useMemo(() => {
-        return cx(
-            "gd-list-item date-filter__limit__popup__item",
-            `s-${stringUtils.simplifyText(title ?? "unknown")}`,
-            {
-                "is-disabled": isDisabled,
-            },
-        );
+        return cx("gd-list-item date-filter__limit__popup__item", `s-${simplifyText(title ?? "unknown")}`, {
+            "is-disabled": isDisabled,
+        });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [item]);
 

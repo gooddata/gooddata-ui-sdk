@@ -1,7 +1,7 @@
 // (C) 2022-2026 GoodData Corporation
 
 import { objRefToString, widgetRef } from "@gooddata/sdk-model";
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { DescriptionClickTrigger } from "./DescriptionClickTrigger.js";
 import { type IInsightWidgetDescriptionTriggerProps } from "./types.js";
@@ -35,7 +35,7 @@ export function InsightWidgetDescriptionTrigger(props: IInsightWidgetDescription
     if (isVisible) {
         return (
             <DescriptionClickTrigger
-                className={`widget-description-${stringUtils.simplifyText(widgetRefAsString)}`}
+                className={`widget-description-${simplifyText(widgetRefAsString)}`}
                 description={description}
                 onOpen={() => userInteraction.descriptionTooltipOpened(eventPayload)}
                 useRichText={useRichText}

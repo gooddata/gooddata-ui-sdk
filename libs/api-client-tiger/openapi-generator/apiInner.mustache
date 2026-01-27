@@ -171,9 +171,19 @@ export async function {{classname}}AxiosParamCreator_{{operationIdCamelCase}}(
     {{^consumes}}
     localVarHeaderParameter['Content-Type'] = 'application/json';
     {{/consumes}}
-    {{#consumes.0}}
-    localVarHeaderParameter['Content-Type'] = '{{{mediaType}}}';
-    {{/consumes.0}}
+    {{#consumes}}
+    {{#-last}}
+    const consumes = [
+        {{#consumes}}
+        '{{{mediaType}}}'{{^-last}},{{/-last}}
+        {{/consumes}}
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+    {{/-last}}
+    {{/consumes}}
 
     {{/bodyParam}}
     setSearchParams(localVarUrlObj, localVarQueryParameter);

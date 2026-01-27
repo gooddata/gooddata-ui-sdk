@@ -18,7 +18,29 @@ import {
     type IMeasureValueFilter,
     type IUiConfig,
 } from "../../interfaces/Visualization.js";
-import * as referencePointMocks from "../../tests/mocks/referencePointMocks.js";
+import {
+    arithmeticMeasureItems,
+    attributeFilter,
+    attributeItems,
+    bucketsJustStackReferencePoint,
+    dateDatasetRef,
+    dateFilter,
+    dateFilterSamePeriodPreviousYear,
+    derivedMeasureItems,
+    emptyReferencePoint,
+    masterMeasureItems,
+    measureValueFilter,
+    measureValueFilterReferencePoint,
+    measureValueFilterWithDimensionality,
+    measureValueFilterWithDimensionalityRefs,
+    measureValueFilterWithMixedDimensionality,
+    measureWithDerivedAsFirstRefPoint,
+    measureWithDerivedAsFirstWithStackRefPoint,
+    multipleMetricsAndCategoriesReferencePoint,
+    oneAttributeTwoFiltersReferencePoint,
+    twoMeasureBucketsReferencePoint,
+    wrongBucketsOrderReferencePoint,
+} from "../../tests/mocks/referencePointMocks.js";
 import { oneMeasureOneStack, oneMeasureOneView } from "../../tests/mocks/visualizationObjectMocks.js";
 import {
     type IMeasureBucketItemsLimit,
@@ -127,7 +149,7 @@ const incompleteArithmeticMeasure = {
 describe("sanitizeFilters", () => {
     it("should keep just attribute filters that have corresponding attribute in buckets", () => {
         const extendedReferencePoint: IExtendedReferencePoint = {
-            ...referencePointMocks.oneAttributeTwoFiltersReferencePoint,
+            ...oneAttributeTwoFiltersReferencePoint,
             uiConfig: DEFAULT_BASE_CHART_UICONFIG,
         };
 
@@ -141,7 +163,7 @@ describe("sanitizeFilters", () => {
     });
 
     it("should keep attribute filters that are not auto-created even if the corresponding attribute is not in buckets", () => {
-        const newReferencePoint = cloneDeep(referencePointMocks.oneAttributeTwoFiltersReferencePoint);
+        const newReferencePoint = cloneDeep(oneAttributeTwoFiltersReferencePoint);
         newReferencePoint.filters.items[1].autoCreated = false;
         const extendedReferencePoint: IExtendedReferencePoint = {
             ...newReferencePoint,
@@ -158,7 +180,7 @@ describe("sanitizeFilters", () => {
     });
 
     it("should keep just measure value filters based on measures that exist in extended reference point", () => {
-        const newReferencePoint = cloneDeep(referencePointMocks.measureValueFilterReferencePoint);
+        const newReferencePoint = cloneDeep(measureValueFilterReferencePoint);
         newReferencePoint.buckets[0].items.splice(1);
         newReferencePoint.buckets[1].items = [];
         const extendedReferencePoint: IExtendedReferencePoint = {
@@ -176,7 +198,7 @@ describe("sanitizeFilters", () => {
     });
 
     it("should remove all measure value filters when there is no attribute or date in buckets", () => {
-        const newReferencePoint = cloneDeep(referencePointMocks.measureValueFilterReferencePoint);
+        const newReferencePoint = cloneDeep(measureValueFilterReferencePoint);
         newReferencePoint.buckets[2].items = [];
         const extendedReferencePoint: IExtendedReferencePoint = {
             ...newReferencePoint,
@@ -193,7 +215,7 @@ describe("sanitizeFilters", () => {
     });
 
     it("should keep measure value filters without dimensionality when there are no attributes when feature flag is enabled", () => {
-        const oldReferencePoint = cloneDeep(referencePointMocks.measureValueFilterReferencePoint);
+        const oldReferencePoint = cloneDeep(measureValueFilterReferencePoint);
         // Remove attributes from old reference point
         oldReferencePoint.buckets[2].items = [];
 
@@ -210,8 +232,8 @@ describe("sanitizeFilters", () => {
     });
 
     it("should handle reference point without filters", () => {
-        const newReferencePoint = cloneDeep(referencePointMocks.measureValueFilterReferencePoint);
-        delete (newReferencePoint as Partial<typeof newReferencePoint>).filters;
+        const newReferencePoint = cloneDeep(measureValueFilterReferencePoint);
+        delete (newReferencePoint as { filters?: IFilters }).filters;
         const extendedReferencePoint: IExtendedReferencePoint = {
             ...newReferencePoint,
             uiConfig: DEFAULT_BASE_CHART_UICONFIG,
@@ -230,12 +252,12 @@ describe("sanitizeFilters", () => {
     });
 
     it("should keep measure value filter with valid dimensionality local identifiers", () => {
-        const newReferencePoint = cloneDeep(referencePointMocks.measureValueFilterReferencePoint);
+        const newReferencePoint = cloneDeep(measureValueFilterReferencePoint);
         // Use filter with dimensionality pointing to valid attribute local identifiers
         newReferencePoint.filters.items = [
             {
                 localIdentifier: "fbv1",
-                filters: [referencePointMocks.measureValueFilterWithDimensionality],
+                filters: [measureValueFilterWithDimensionality],
             },
         ];
         const extendedReferencePoint: IExtendedReferencePoint = {
@@ -253,7 +275,7 @@ describe("sanitizeFilters", () => {
     });
 
     it("should keep measure value filter and resolve dimensionality local identifiers to ObjRefs using old reference point when attribute is removed from buckets (feature flag enabled)", () => {
-        const oldReferencePoint = cloneDeep(referencePointMocks.measureValueFilterReferencePoint);
+        const oldReferencePoint = cloneDeep(measureValueFilterReferencePoint);
         const newReferencePoint = cloneDeep(oldReferencePoint);
 
         // Remove attributes from buckets (e.g., user removed view-by), but MVF still references them by localIdentifier.
@@ -261,7 +283,7 @@ describe("sanitizeFilters", () => {
         newReferencePoint.filters.items = [
             {
                 localIdentifier: "fbv1",
-                filters: [referencePointMocks.measureValueFilterWithDimensionality],
+                filters: [measureValueFilterWithDimensionality],
             },
         ];
 
@@ -274,23 +296,20 @@ describe("sanitizeFilters", () => {
 
         expect(newExtendedReferencePoint.filters.items).toHaveLength(1);
         expect(newExtendedReferencePoint.filters.items[0].filters![0]).toMatchObject({
-            dimensionality: [
-                referencePointMocks.attributeItems[0].dfRef,
-                referencePointMocks.attributeItems[1].dfRef,
-            ],
+            dimensionality: [attributeItems[0].dfRef, attributeItems[1].dfRef],
         });
     });
 
     it("should transform only missing dimensionality local identifiers to ObjRefs and keep existing local identifiers (feature flag enabled)", () => {
-        const oldReferencePoint = cloneDeep(referencePointMocks.measureValueFilterReferencePoint);
+        const oldReferencePoint = cloneDeep(measureValueFilterReferencePoint);
         const newReferencePoint = cloneDeep(oldReferencePoint);
 
         // Keep only a1 in current buckets; a2 is removed but MVF still references it.
-        newReferencePoint.buckets[2].items = [referencePointMocks.attributeItems[0]];
+        newReferencePoint.buckets[2].items = [attributeItems[0]];
         newReferencePoint.filters.items = [
             {
                 localIdentifier: "fbv1",
-                filters: [referencePointMocks.measureValueFilterWithDimensionality],
+                filters: [measureValueFilterWithDimensionality],
             },
         ];
 
@@ -303,15 +322,15 @@ describe("sanitizeFilters", () => {
 
         expect(newExtendedReferencePoint.filters.items).toHaveLength(1);
         expect(newExtendedReferencePoint.filters.items[0].filters![0]).toMatchObject({
-            dimensionality: ["a1", referencePointMocks.attributeItems[1].dfRef],
+            dimensionality: ["a1", attributeItems[1].dfRef],
         });
     });
 
     it("should migrate measure value filter dimensionality from local IDs to ObjRefs when attribute is removed from new reference point", () => {
         // Setup: Old reference point has attributes a1 and a2, filter uses local IDs
-        const oldReferencePoint = cloneDeep(referencePointMocks.measureValueFilterReferencePoint);
+        const oldReferencePoint = cloneDeep(measureValueFilterReferencePoint);
         const filterWithLocalIds: IMeasureValueFilter = {
-            measureLocalIdentifier: referencePointMocks.masterMeasureItems[0].localIdentifier,
+            measureLocalIdentifier: masterMeasureItems[0].localIdentifier,
             condition: {
                 comparison: {
                     operator: "GREATER_THAN",
@@ -345,25 +364,23 @@ describe("sanitizeFilters", () => {
 
         // Verify that local IDs were migrated to ObjRefs from old reference point
         expect(transformedFilter.dimensionality).toHaveLength(2);
-        expect(transformedFilter.dimensionality![0]).toEqual(referencePointMocks.attributeItems[0].dfRef);
-        expect(transformedFilter.dimensionality![1]).toEqual(referencePointMocks.attributeItems[1].dfRef);
+        expect(transformedFilter.dimensionality![0]).toEqual(attributeItems[0].dfRef);
+        expect(transformedFilter.dimensionality![1]).toEqual(attributeItems[1].dfRef);
 
         // Verify filter is still valid and kept
-        expect(transformedFilter.measureLocalIdentifier).toBe(
-            referencePointMocks.masterMeasureItems[0].localIdentifier,
-        );
+        expect(transformedFilter.measureLocalIdentifier).toBe(masterMeasureItems[0].localIdentifier);
         expect(transformedFilter.condition).toEqual(filterWithLocalIds.condition);
     });
 
     it("should remove measure value filter with invalid dimensionality local identifiers", () => {
-        const newReferencePoint = cloneDeep(referencePointMocks.measureValueFilterReferencePoint);
+        const newReferencePoint = cloneDeep(measureValueFilterReferencePoint);
         // Use filter with dimensionality pointing to non-existent attribute local identifiers
         newReferencePoint.filters.items = [
             {
                 localIdentifier: "fbv1",
                 filters: [
                     {
-                        ...referencePointMocks.measureValueFilter,
+                        ...measureValueFilter,
                         dimensionality: ["non_existent_attr"],
                     },
                 ],
@@ -384,11 +401,11 @@ describe("sanitizeFilters", () => {
     });
 
     it("should remove measure value filter with dimensionality ObjRefs when feature flag is disabled", () => {
-        const newReferencePoint = cloneDeep(referencePointMocks.measureValueFilterReferencePoint);
+        const newReferencePoint = cloneDeep(measureValueFilterReferencePoint);
         newReferencePoint.filters.items = [
             {
                 localIdentifier: "fbv1",
-                filters: [referencePointMocks.measureValueFilterWithDimensionalityRefs],
+                filters: [measureValueFilterWithDimensionalityRefs],
             },
         ];
         const extendedReferencePoint: IExtendedReferencePoint = {
@@ -407,11 +424,11 @@ describe("sanitizeFilters", () => {
     });
 
     it("should keep measure value filter with dimensionality ObjRefs when feature flag is enabled", () => {
-        const newReferencePoint = cloneDeep(referencePointMocks.measureValueFilterReferencePoint);
+        const newReferencePoint = cloneDeep(measureValueFilterReferencePoint);
         newReferencePoint.filters.items = [
             {
                 localIdentifier: "fbv1",
-                filters: [referencePointMocks.measureValueFilterWithDimensionalityRefs],
+                filters: [measureValueFilterWithDimensionalityRefs],
             },
         ];
         const extendedReferencePoint: IExtendedReferencePoint = {
@@ -430,11 +447,11 @@ describe("sanitizeFilters", () => {
     });
 
     it("should handle mixed dimensionality with valid local IDs and ObjRefs when feature flag is enabled", () => {
-        const newReferencePoint = cloneDeep(referencePointMocks.measureValueFilterReferencePoint);
+        const newReferencePoint = cloneDeep(measureValueFilterReferencePoint);
         newReferencePoint.filters.items = [
             {
                 localIdentifier: "fbv1",
-                filters: [referencePointMocks.measureValueFilterWithMixedDimensionality],
+                filters: [measureValueFilterWithMixedDimensionality],
             },
         ];
         const extendedReferencePoint: IExtendedReferencePoint = {
@@ -453,13 +470,13 @@ describe("sanitizeFilters", () => {
     });
 
     it("should remove filter with mixed dimensionality when local ID is invalid (even with feature flag)", () => {
-        const newReferencePoint = cloneDeep(referencePointMocks.measureValueFilterReferencePoint);
+        const newReferencePoint = cloneDeep(measureValueFilterReferencePoint);
         newReferencePoint.filters.items = [
             {
                 localIdentifier: "fbv1",
                 filters: [
                     {
-                        ...referencePointMocks.measureValueFilter,
+                        ...measureValueFilter,
                         // Mix of invalid local ID and valid ObjRef
                         dimensionality: [
                             "non_existent_attr",
@@ -501,8 +518,8 @@ describe("Bucket title", () => {
         set(expectedUiconfig, ["buckets", "stack", "title"], "Stack by");
 
         const referencePoint: IExtendedReferencePoint = {
-            buckets: referencePointMocks.emptyReferencePoint.buckets,
-            filters: referencePointMocks.emptyReferencePoint.filters,
+            buckets: emptyReferencePoint.buckets,
+            filters: emptyReferencePoint.filters,
             uiConfig: DEFAULT_BASE_CHART_UICONFIG,
         };
 
@@ -518,8 +535,8 @@ describe("Bucket title", () => {
         set(expectedUiconfig, ["buckets", "stack", "title"], generateBucketTitleId("stack", "bar"));
 
         const referencePoint: IExtendedReferencePoint = {
-            buckets: referencePointMocks.emptyReferencePoint.buckets,
-            filters: referencePointMocks.emptyReferencePoint.filters,
+            buckets: emptyReferencePoint.buckets,
+            filters: emptyReferencePoint.filters,
             uiConfig: DEFAULT_BASE_CHART_UICONFIG,
         };
 
@@ -539,8 +556,8 @@ describe("Bucket title", () => {
         set(uiConfigWithDisabledBucket, ["buckets", "stack", "enabled"], false);
 
         const referencePoint: IExtendedReferencePoint = {
-            buckets: referencePointMocks.emptyReferencePoint.buckets,
-            filters: referencePointMocks.emptyReferencePoint.filters,
+            buckets: emptyReferencePoint.buckets,
+            filters: emptyReferencePoint.filters,
             uiConfig: uiConfigWithDisabledBucket,
         };
 
@@ -550,7 +567,7 @@ describe("Bucket title", () => {
 
 describe("getAllAttributeItemsWithPreference", () => {
     it("should return all attributes with prefered first", () => {
-        const buckets = cloneDeep(referencePointMocks.wrongBucketsOrderReferencePoint).buckets;
+        const buckets = cloneDeep(wrongBucketsOrderReferencePoint).buckets;
         expect(getAllAttributeItemsWithPreference(buckets, ["view", "stack"])).toEqual([
             {
                 localIdentifier: "a1",
@@ -576,7 +593,7 @@ describe("getAllAttributeItemsWithPreference", () => {
 
 describe("getAttributeItems", () => {
     it("should return all attributes", () => {
-        const buckets = cloneDeep(referencePointMocks.bucketsJustStackReferencePoint).buckets;
+        const buckets = cloneDeep(bucketsJustStackReferencePoint).buckets;
         expect(getAttributeItems(buckets)).toEqual([
             {
                 localIdentifier: "a2",
@@ -593,7 +610,7 @@ describe("getAttributeItems", () => {
 
 describe("getBucketItemsWithExcludeByType", () => {
     it("should return all measures when exclude is empty", () => {
-        const buckets = cloneDeep(referencePointMocks.twoMeasureBucketsReferencePoint).buckets;
+        const buckets = cloneDeep(twoMeasureBucketsReferencePoint).buckets;
         expect(getBucketItemsWithExcludeByType(buckets, [], ["metric"])).toEqual([
             {
                 localIdentifier: "m1",
@@ -631,7 +648,7 @@ describe("getBucketItemsWithExcludeByType", () => {
     });
 
     it("should return measures only from secondary measure bucket", () => {
-        const buckets = cloneDeep(referencePointMocks.twoMeasureBucketsReferencePoint).buckets;
+        const buckets = cloneDeep(twoMeasureBucketsReferencePoint).buckets;
         expect(getBucketItemsWithExcludeByType(buckets, ["measures"], ["metric"])).toEqual([
             {
                 localIdentifier: "m3",
@@ -653,7 +670,7 @@ describe("getBucketItemsWithExcludeByType", () => {
     });
 
     it("should return no attributes because viewBy is excluded", () => {
-        const buckets = cloneDeep(referencePointMocks.twoMeasureBucketsReferencePoint).buckets;
+        const buckets = cloneDeep(twoMeasureBucketsReferencePoint).buckets;
         expect(getBucketItemsWithExcludeByType(buckets, ["view"], ["attribute"])).toEqual([]);
     });
 });
@@ -700,16 +717,16 @@ describe("getDateFilter", () => {
             items: [
                 {
                     localIdentifier: "f1",
-                    filters: [referencePointMocks.attributeFilter],
+                    filters: [attributeFilter],
                 },
                 {
                     localIdentifier: "f1",
-                    filters: [referencePointMocks.dateFilter],
+                    filters: [dateFilter],
                 },
             ],
         };
 
-        expect(getDateFilter(filterBucket)).toBe(referencePointMocks.dateFilter);
+        expect(getDateFilter(filterBucket)).toBe(dateFilter);
     });
 
     it("should get comparison type NOTHING when date filter not present", () => {
@@ -718,7 +735,7 @@ describe("getDateFilter", () => {
             items: [
                 {
                     localIdentifier: "f1",
-                    filters: [referencePointMocks.attributeFilter],
+                    filters: [attributeFilter],
                 },
             ],
         };
@@ -744,11 +761,11 @@ describe("getUsedComparisonType", () => {
             items: [
                 {
                     localIdentifier: "f1",
-                    filters: [referencePointMocks.attributeFilter],
+                    filters: [attributeFilter],
                 },
                 {
                     localIdentifier: "f1",
-                    filters: [referencePointMocks.dateFilterSamePeriodPreviousYear],
+                    filters: [dateFilterSamePeriodPreviousYear],
                 },
             ],
         };
@@ -762,7 +779,7 @@ describe("getUsedComparisonType", () => {
             items: [
                 {
                     localIdentifier: "f1",
-                    filters: [referencePointMocks.attributeFilter],
+                    filters: [attributeFilter],
                 },
             ],
         };
@@ -785,11 +802,11 @@ describe("getUsedComparisonType", () => {
             items: [
                 {
                     localIdentifier: "f1",
-                    filters: [referencePointMocks.attributeFilter],
+                    filters: [attributeFilter],
                 },
                 {
                     localIdentifier: "f1",
-                    filters: [referencePointMocks.dateFilter],
+                    filters: [dateFilter],
                 },
             ],
         };
@@ -1258,78 +1275,72 @@ describe("filterOutIncompatibleArithmeticMeasures", () => {
 
 describe("applyUiConfig", () => {
     it("should apply itemsLimit=0", () => {
-        const buckets = cloneDeep(referencePointMocks.multipleMetricsAndCategoriesReferencePoint).buckets;
+        const buckets = cloneDeep(multipleMetricsAndCategoriesReferencePoint).buckets;
 
         const uiConfig = cloneDeep(DEFAULT_BASE_CHART_UICONFIG);
         uiConfig.buckets[BucketNames.MEASURES].itemsLimit = 0;
         uiConfig.buckets[BucketNames.VIEW].itemsLimit = 0;
 
-        const expectedBuckets = cloneDeep(
-            referencePointMocks.multipleMetricsAndCategoriesReferencePoint,
-        ).buckets;
+        const expectedBuckets = cloneDeep(multipleMetricsAndCategoriesReferencePoint).buckets;
         expectedBuckets[0].items = [];
         expectedBuckets[1].items = [];
 
         const referencePoint: IExtendedReferencePoint = {
             buckets,
-            filters: referencePointMocks.emptyReferencePoint.filters,
+            filters: emptyReferencePoint.filters,
             uiConfig,
         };
         expect(applyUiConfig(referencePoint).buckets).toEqual(expectedBuckets);
     });
 
     it("should apply itemsLimit=1", () => {
-        const buckets = cloneDeep(referencePointMocks.multipleMetricsAndCategoriesReferencePoint).buckets;
+        const buckets = cloneDeep(multipleMetricsAndCategoriesReferencePoint).buckets;
 
         const uiConfig = cloneDeep(DEFAULT_BASE_CHART_UICONFIG);
         uiConfig.buckets[BucketNames.MEASURES].itemsLimit = 1;
         uiConfig.buckets[BucketNames.VIEW].itemsLimit = 1;
 
-        const expectedBuckets = cloneDeep(
-            referencePointMocks.multipleMetricsAndCategoriesReferencePoint,
-        ).buckets;
+        const expectedBuckets = cloneDeep(multipleMetricsAndCategoriesReferencePoint).buckets;
         expectedBuckets[0].items = expectedBuckets[0].items.slice(0, 1);
         expectedBuckets[1].items = expectedBuckets[1].items.slice(0, 1);
 
         const referencePoint: IExtendedReferencePoint = {
             buckets,
-            filters: referencePointMocks.emptyReferencePoint.filters,
+            filters: emptyReferencePoint.filters,
             uiConfig,
         };
         expect(applyUiConfig(referencePoint).buckets).toEqual(expectedBuckets);
     });
 
     it("should NOT count derived items to itemsLimit", () => {
-        const buckets = cloneDeep(referencePointMocks.measureWithDerivedAsFirstRefPoint).buckets;
+        const buckets = cloneDeep(measureWithDerivedAsFirstRefPoint).buckets;
 
         const uiConfig = cloneDeep(DEFAULT_BASE_CHART_UICONFIG);
         uiConfig.buckets[BucketNames.MEASURES].itemsLimit = 1;
         uiConfig.buckets[BucketNames.VIEW].itemsLimit = 1;
 
-        const expectedBuckets = cloneDeep(referencePointMocks.measureWithDerivedAsFirstRefPoint).buckets;
+        const expectedBuckets = cloneDeep(measureWithDerivedAsFirstRefPoint).buckets;
 
         const referencePoint: IExtendedReferencePoint = {
             buckets,
-            filters: referencePointMocks.emptyReferencePoint.filters,
+            filters: emptyReferencePoint.filters,
             uiConfig,
         };
         expect(applyUiConfig(referencePoint).buckets).toEqual(expectedBuckets);
     });
 
     it("should handle undefined itemsLimit", () => {
-        const buckets = cloneDeep(referencePointMocks.multipleMetricsAndCategoriesReferencePoint).buckets;
+        const buckets = cloneDeep(multipleMetricsAndCategoriesReferencePoint).buckets;
 
         const uiConfig = cloneDeep(DEFAULT_BASE_CHART_UICONFIG);
         uiConfig.buckets[BucketNames.MEASURES].itemsLimit = undefined;
         uiConfig.buckets[BucketNames.VIEW].itemsLimit = undefined;
 
-        const expectedBuckets = cloneDeep(
-            referencePointMocks.multipleMetricsAndCategoriesReferencePoint,
-        ).buckets;
+        const expectedBuckets = cloneDeep(multipleMetricsAndCategoriesReferencePoint).buckets;
 
         const referencePoint: IExtendedReferencePoint = {
             buckets,
-            filters: referencePointMocks.emptyReferencePoint.filters,
+            filters: emptyReferencePoint.filters,
             uiConfig,
         };
         expect(applyUiConfig(referencePoint).buckets).toEqual(expectedBuckets);
@@ -1339,45 +1350,36 @@ describe("applyUiConfig", () => {
 describe("getFirstMasterHavingDerived", () => {
     it("should find first master measure and return it together with its derived measures", () => {
         const measures = [
-            referencePointMocks.derivedMeasureItems[1],
-            referencePointMocks.derivedMeasureItems[0],
-            referencePointMocks.masterMeasureItems[0],
-            referencePointMocks.masterMeasureItems[1],
+            derivedMeasureItems[1],
+            derivedMeasureItems[0],
+            masterMeasureItems[0],
+            masterMeasureItems[1],
         ];
 
         const result = getFirstMasterWithDerived(measures);
 
-        expect(result).toEqual([
-            referencePointMocks.derivedMeasureItems[0],
-            referencePointMocks.masterMeasureItems[0],
-        ]);
+        expect(result).toEqual([derivedMeasureItems[0], masterMeasureItems[0]]);
     });
 
     it("should keep the order of master and derived measures", () => {
         const measures = [
-            referencePointMocks.derivedMeasureItems[1],
-            referencePointMocks.masterMeasureItems[0],
-            referencePointMocks.derivedMeasureItems[0],
-            referencePointMocks.masterMeasureItems[1],
+            derivedMeasureItems[1],
+            masterMeasureItems[0],
+            derivedMeasureItems[0],
+            masterMeasureItems[1],
         ];
 
         const result = getFirstMasterWithDerived(measures);
 
-        expect(result).toEqual([
-            referencePointMocks.masterMeasureItems[0],
-            referencePointMocks.derivedMeasureItems[0],
-        ]);
+        expect(result).toEqual([masterMeasureItems[0], derivedMeasureItems[0]]);
     });
 
     it("should handle only masters", () => {
-        const measures: IBucketItem[] = [
-            referencePointMocks.masterMeasureItems[1],
-            referencePointMocks.masterMeasureItems[0],
-        ];
+        const measures: IBucketItem[] = [masterMeasureItems[1], masterMeasureItems[0]];
 
         const result = getFirstMasterWithDerived(measures);
 
-        expect(result).toEqual([referencePointMocks.masterMeasureItems[1]]);
+        expect(result).toEqual([masterMeasureItems[1]]);
     });
 
     it("should handle empty array", () => {
@@ -1396,19 +1398,19 @@ describe("removeAllDerivedMeasures", () => {
                 {
                     localIdentifier: "measures",
                     items: [
-                        referencePointMocks.derivedMeasureItems[1],
-                        referencePointMocks.derivedMeasureItems[0],
-                        referencePointMocks.masterMeasureItems[0],
-                        referencePointMocks.masterMeasureItems[1],
+                        derivedMeasureItems[1],
+                        derivedMeasureItems[0],
+                        masterMeasureItems[0],
+                        masterMeasureItems[1],
                     ],
                 },
                 {
                     localIdentifier: "secondary_measures",
-                    items: [referencePointMocks.masterMeasureItems[2]],
+                    items: [masterMeasureItems[2]],
                 },
                 {
                     localIdentifier: "tertiary_measures",
-                    items: [referencePointMocks.derivedMeasureItems[2]],
+                    items: [derivedMeasureItems[2]],
                 },
             ],
             filters: {
@@ -1425,11 +1427,11 @@ describe("removeAllDerivedMeasures", () => {
         expect(result.buckets).toEqual([
             {
                 localIdentifier: "measures",
-                items: [referencePointMocks.masterMeasureItems[0], referencePointMocks.masterMeasureItems[1]],
+                items: [masterMeasureItems[0], masterMeasureItems[1]],
             },
             {
                 localIdentifier: "secondary_measures",
-                items: [referencePointMocks.masterMeasureItems[2]],
+                items: [masterMeasureItems[2]],
             },
             {
                 localIdentifier: "tertiary_measures",
@@ -1521,31 +1523,25 @@ describe("removeAllArithmeticMeasuresFromDerived", () => {
 describe("findMasterBucketItem", () => {
     it("should find master measure", () => {
         const bucketItems: IBucketItem[] = [
-            referencePointMocks.derivedMeasureItems[1],
-            referencePointMocks.derivedMeasureItems[0],
-            referencePointMocks.masterMeasureItems[0],
-            referencePointMocks.masterMeasureItems[1],
+            derivedMeasureItems[1],
+            derivedMeasureItems[0],
+            masterMeasureItems[0],
+            masterMeasureItems[1],
         ];
 
-        const masterBucketItem = findMasterBucketItem(
-            referencePointMocks.derivedMeasureItems[0],
-            bucketItems,
-        );
-        expect(masterBucketItem).toEqual(referencePointMocks.masterMeasureItems[0]);
+        const masterBucketItem = findMasterBucketItem(derivedMeasureItems[0], bucketItems);
+        expect(masterBucketItem).toEqual(masterMeasureItems[0]);
     });
 
     it("should return undefined when master measure is not found", () => {
         const bucketItems: IBucketItem[] = [
-            referencePointMocks.derivedMeasureItems[1],
-            referencePointMocks.derivedMeasureItems[0],
-            referencePointMocks.masterMeasureItems[0],
-            referencePointMocks.masterMeasureItems[1],
+            derivedMeasureItems[1],
+            derivedMeasureItems[0],
+            masterMeasureItems[0],
+            masterMeasureItems[1],
         ];
 
-        const masterBucketItem = findMasterBucketItem(
-            referencePointMocks.derivedMeasureItems[2],
-            bucketItems,
-        );
+        const masterBucketItem = findMasterBucketItem(derivedMeasureItems[2], bucketItems);
         expect(masterBucketItem).toEqual(undefined);
     });
 });
@@ -1553,24 +1549,18 @@ describe("findMasterBucketItem", () => {
 describe("findMasterBucketItems", () => {
     it("should find all master measures", () => {
         const bucketItems: IBucketItem[] = [
-            referencePointMocks.derivedMeasureItems[1],
-            referencePointMocks.derivedMeasureItems[0],
-            referencePointMocks.masterMeasureItems[0],
-            referencePointMocks.masterMeasureItems[1],
+            derivedMeasureItems[1],
+            derivedMeasureItems[0],
+            masterMeasureItems[0],
+            masterMeasureItems[1],
         ];
 
         const masterBucketItems = findMasterBucketItems(bucketItems);
-        expect(masterBucketItems).toEqual([
-            referencePointMocks.masterMeasureItems[0],
-            referencePointMocks.masterMeasureItems[1],
-        ]);
+        expect(masterBucketItems).toEqual([masterMeasureItems[0], masterMeasureItems[1]]);
     });
 
     it("should return empty array when master measures are not found", () => {
-        const bucketItems: IBucketItem[] = [
-            referencePointMocks.derivedMeasureItems[1],
-            referencePointMocks.derivedMeasureItems[0],
-        ];
+        const bucketItems: IBucketItem[] = [derivedMeasureItems[1], derivedMeasureItems[0]];
 
         const masterBucketItems = findMasterBucketItems(bucketItems);
         expect(masterBucketItems).toEqual([]);
@@ -1580,63 +1570,42 @@ describe("findMasterBucketItems", () => {
 describe("findDerivedBucketItems", () => {
     it("should find all master measures", () => {
         const bucketItems: IBucketItem[] = [
-            referencePointMocks.masterMeasureItems[0],
-            referencePointMocks.masterMeasureItems[1],
-            referencePointMocks.derivedMeasureItems[3],
-            referencePointMocks.derivedMeasureItems[4],
-            referencePointMocks.masterMeasureItems[3],
+            masterMeasureItems[0],
+            masterMeasureItems[1],
+            derivedMeasureItems[3],
+            derivedMeasureItems[4],
+            masterMeasureItems[3],
         ];
 
-        const derivedBucketItems = findDerivedBucketItems(
-            referencePointMocks.masterMeasureItems[3],
-            bucketItems,
-        );
-        expect(derivedBucketItems).toEqual([
-            referencePointMocks.derivedMeasureItems[3],
-            referencePointMocks.derivedMeasureItems[4],
-        ]);
+        const derivedBucketItems = findDerivedBucketItems(masterMeasureItems[3], bucketItems);
+        expect(derivedBucketItems).toEqual([derivedMeasureItems[3], derivedMeasureItems[4]]);
     });
 
     it("should return empty array when derived measures are not found", () => {
         const bucketItems: IBucketItem[] = [
-            referencePointMocks.masterMeasureItems[0],
-            referencePointMocks.masterMeasureItems[1],
-            referencePointMocks.masterMeasureItems[3],
+            masterMeasureItems[0],
+            masterMeasureItems[1],
+            masterMeasureItems[3],
         ];
 
-        const derivedBucketItems = findDerivedBucketItems(
-            referencePointMocks.masterMeasureItems[3],
-            bucketItems,
-        );
+        const derivedBucketItems = findDerivedBucketItems(masterMeasureItems[3], bucketItems);
         expect(derivedBucketItems).toEqual([]);
     });
 });
 
 describe("findDerivedBucketItem", () => {
     it("should return undefined when there is no derived bucket item for the master measure", () => {
-        const bucketItems: IBucketItem[] = [
-            referencePointMocks.masterMeasureItems[0],
-            referencePointMocks.derivedMeasureItems[1],
-        ];
+        const bucketItems: IBucketItem[] = [masterMeasureItems[0], derivedMeasureItems[1]];
 
-        const derivedBucketItems = findDerivedBucketItem(
-            referencePointMocks.masterMeasureItems[0],
-            bucketItems,
-        );
+        const derivedBucketItems = findDerivedBucketItem(masterMeasureItems[0], bucketItems);
         expect(derivedBucketItems).toBeUndefined();
     });
 
     it("should return derived bucket item for the master measure when it exists", () => {
-        const bucketItems: IBucketItem[] = [
-            referencePointMocks.masterMeasureItems[0],
-            referencePointMocks.derivedMeasureItems[0],
-        ];
+        const bucketItems: IBucketItem[] = [masterMeasureItems[0], derivedMeasureItems[0]];
 
-        const derivedBucketItems = findDerivedBucketItem(
-            referencePointMocks.masterMeasureItems[0],
-            bucketItems,
-        );
-        expect(derivedBucketItems).toEqual(referencePointMocks.derivedMeasureItems[0]);
+        const derivedBucketItems = findDerivedBucketItem(masterMeasureItems[0], bucketItems);
+        expect(derivedBucketItems).toEqual(derivedMeasureItems[0]);
     });
 });
 
@@ -1645,18 +1614,15 @@ describe("hasDerivedBucketItems", () => {
         const buckets: IBucketOfFun[] = [
             {
                 localIdentifier: BucketNames.MEASURES,
-                items: [referencePointMocks.masterMeasureItems[0]],
+                items: [masterMeasureItems[0]],
             },
             {
                 localIdentifier: BucketNames.SECONDARY_MEASURES,
-                items: [referencePointMocks.masterMeasureItems[1]],
+                items: [masterMeasureItems[1]],
             },
         ];
 
-        const hasSomeDerivedBucketItems = hasDerivedBucketItems(
-            referencePointMocks.masterMeasureItems[0],
-            buckets,
-        );
+        const hasSomeDerivedBucketItems = hasDerivedBucketItems(masterMeasureItems[0], buckets);
         expect(hasSomeDerivedBucketItems).toEqual(false);
     });
 
@@ -1664,21 +1630,15 @@ describe("hasDerivedBucketItems", () => {
         const buckets: IBucketOfFun[] = [
             {
                 localIdentifier: BucketNames.MEASURES,
-                items: [
-                    referencePointMocks.masterMeasureItems[0],
-                    referencePointMocks.derivedMeasureItems[0],
-                ],
+                items: [masterMeasureItems[0], derivedMeasureItems[0]],
             },
             {
                 localIdentifier: BucketNames.SECONDARY_MEASURES,
-                items: [referencePointMocks.masterMeasureItems[1]],
+                items: [masterMeasureItems[1]],
             },
         ];
 
-        const hasSomeDerivedBucketItems = hasDerivedBucketItems(
-            referencePointMocks.masterMeasureItems[0],
-            buckets,
-        );
+        const hasSomeDerivedBucketItems = hasDerivedBucketItems(masterMeasureItems[0], buckets);
         expect(hasSomeDerivedBucketItems).toEqual(true);
     });
 
@@ -1686,60 +1646,47 @@ describe("hasDerivedBucketItems", () => {
         const buckets: IBucketOfFun[] = [
             {
                 localIdentifier: BucketNames.MEASURES,
-                items: [referencePointMocks.masterMeasureItems[0]],
+                items: [masterMeasureItems[0]],
             },
             {
                 localIdentifier: BucketNames.SECONDARY_MEASURES,
-                items: [
-                    referencePointMocks.masterMeasureItems[1],
-                    referencePointMocks.derivedMeasureItems[0],
-                ],
+                items: [masterMeasureItems[1], derivedMeasureItems[0]],
             },
         ];
 
-        const hasSomeDerivedBucketItems = hasDerivedBucketItems(
-            referencePointMocks.masterMeasureItems[0],
-            buckets,
-        );
+        const hasSomeDerivedBucketItems = hasDerivedBucketItems(masterMeasureItems[0], buckets);
         expect(hasSomeDerivedBucketItems).toEqual(true);
     });
 });
 
 describe("getFilteredMeasuresForStackedCharts", () => {
     it("should keep all measures when not stacking", () => {
-        const buckets = referencePointMocks.measureWithDerivedAsFirstRefPoint.buckets;
+        const buckets = measureWithDerivedAsFirstRefPoint.buckets;
         const result = getFilteredMeasuresForStackedCharts(buckets);
 
-        expect(result).toEqual([
-            referencePointMocks.derivedMeasureItems[0],
-            referencePointMocks.masterMeasureItems[0],
-        ]);
+        expect(result).toEqual([derivedMeasureItems[0], masterMeasureItems[0]]);
     });
 
     it("should use first master measure when stacking", () => {
-        const buckets = referencePointMocks.measureWithDerivedAsFirstWithStackRefPoint.buckets;
+        const buckets = measureWithDerivedAsFirstWithStackRefPoint.buckets;
         const result = getFilteredMeasuresForStackedCharts(buckets);
 
-        expect(result).toEqual([referencePointMocks.masterMeasureItems[0]]);
+        expect(result).toEqual([masterMeasureItems[0]]);
     });
 
     it("should use first measure without dependencies when AM is present", () => {
         const result = getFilteredMeasuresForStackedCharts([
             {
                 localIdentifier: "measures",
-                items: [
-                    referencePointMocks.arithmeticMeasureItems[0],
-                    referencePointMocks.masterMeasureItems[0],
-                    referencePointMocks.masterMeasureItems[1],
-                ],
+                items: [arithmeticMeasureItems[0], masterMeasureItems[0], masterMeasureItems[1]],
             },
             {
                 localIdentifier: "stack",
-                items: referencePointMocks.attributeItems.slice(0, 1),
+                items: attributeItems.slice(0, 1),
             },
         ]);
 
-        expect(result).toEqual([referencePointMocks.masterMeasureItems[0]]);
+        expect(result).toEqual([masterMeasureItems[0]]);
     });
 });
 
@@ -2847,10 +2794,8 @@ describe("limitNumberOfBucketItems", () => {
 
 describe("getAllMeasuresShowOnSecondaryAxis", () => {
     it("should return all measures which are showing on secondary axis", () => {
-        const { buckets } = referencePointMocks.multipleMetricsAndCategoriesReferencePoint;
-        expect(getAllMeasuresShowOnSecondaryAxis(buckets)).toEqual(
-            referencePointMocks.masterMeasureItems.slice(2),
-        );
+        const { buckets } = multipleMetricsAndCategoriesReferencePoint;
+        expect(getAllMeasuresShowOnSecondaryAxis(buckets)).toEqual(masterMeasureItems.slice(2));
     });
 });
 
@@ -2864,9 +2809,9 @@ describe("transformMeasureBuckets", () => {
         [
             "should keep the measures in original buckets if it fits",
             [
-                getBucket(BucketNames.MEASURES, [referencePointMocks.masterMeasureItems[0]]),
+                getBucket(BucketNames.MEASURES, [masterMeasureItems[0]]),
                 getBucket(BucketNames.SECONDARY_MEASURES, []),
-                getBucket(BucketNames.TERTIARY_MEASURES, [referencePointMocks.masterMeasureItems[1]]),
+                getBucket(BucketNames.TERTIARY_MEASURES, [masterMeasureItems[1]]),
             ],
             [
                 {
@@ -2883,16 +2828,16 @@ describe("transformMeasureBuckets", () => {
                 },
             ],
             [
-                getBucket(BucketNames.MEASURES, [referencePointMocks.masterMeasureItems[0]]),
+                getBucket(BucketNames.MEASURES, [masterMeasureItems[0]]),
                 getBucket(BucketNames.SECONDARY_MEASURES, []),
-                getBucket(BucketNames.TERTIARY_MEASURES, [referencePointMocks.masterMeasureItems[1]]),
+                getBucket(BucketNames.TERTIARY_MEASURES, [masterMeasureItems[1]]),
             ],
         ],
         [
             "should omit measure that doesn't fit",
             [
-                getBucket(BucketNames.MEASURES, [referencePointMocks.masterMeasureItems[0]]),
-                getBucket(BucketNames.SECONDARY_MEASURES, [referencePointMocks.masterMeasureItems[1]]),
+                getBucket(BucketNames.MEASURES, [masterMeasureItems[0]]),
+                getBucket(BucketNames.SECONDARY_MEASURES, [masterMeasureItems[1]]),
             ],
             [
                 {
@@ -2905,19 +2850,16 @@ describe("transformMeasureBuckets", () => {
                 },
             ],
             [
-                getBucket(BucketNames.MEASURES, [referencePointMocks.masterMeasureItems[0]]),
-                getBucket(BucketNames.SECONDARY_MEASURES, [
-                    referencePointMocks.masterMeasureItems[1],
-                    referencePointMocks.masterMeasureItems[2],
-                ]),
+                getBucket(BucketNames.MEASURES, [masterMeasureItems[0]]),
+                getBucket(BucketNames.SECONDARY_MEASURES, [masterMeasureItems[1], masterMeasureItems[2]]),
             ],
         ],
         [
             "should distribute measure that doesn't fit into empty measure buckets - case 1",
             [
-                getBucket(BucketNames.MEASURES, [referencePointMocks.masterMeasureItems[0]]),
-                getBucket(BucketNames.SECONDARY_MEASURES, [referencePointMocks.masterMeasureItems[1]]),
-                getBucket(BucketNames.TERTIARY_MEASURES, [referencePointMocks.masterMeasureItems[2]]),
+                getBucket(BucketNames.MEASURES, [masterMeasureItems[0]]),
+                getBucket(BucketNames.SECONDARY_MEASURES, [masterMeasureItems[1]]),
+                getBucket(BucketNames.TERTIARY_MEASURES, [masterMeasureItems[2]]),
             ],
             [
                 {
@@ -2934,18 +2876,15 @@ describe("transformMeasureBuckets", () => {
                 },
             ],
             [
-                getBucket(BucketNames.MEASURES, [referencePointMocks.masterMeasureItems[0]]),
-                getBucket(BucketNames.SECONDARY_MEASURES, [
-                    referencePointMocks.masterMeasureItems[1],
-                    referencePointMocks.masterMeasureItems[2],
-                ]),
+                getBucket(BucketNames.MEASURES, [masterMeasureItems[0]]),
+                getBucket(BucketNames.SECONDARY_MEASURES, [masterMeasureItems[1], masterMeasureItems[2]]),
             ],
         ],
         [
             "should distribute measure that doesn't fit into empty measure buckets - case 2",
             [
-                getBucket(BucketNames.MEASURES, [referencePointMocks.masterMeasureItems[1]]),
-                getBucket(BucketNames.SECONDARY_MEASURES, [referencePointMocks.masterMeasureItems[0]]),
+                getBucket(BucketNames.MEASURES, [masterMeasureItems[1]]),
+                getBucket(BucketNames.SECONDARY_MEASURES, [masterMeasureItems[0]]),
             ],
             [
                 {
@@ -2957,21 +2896,13 @@ describe("transformMeasureBuckets", () => {
                     itemsLimit: 1,
                 },
             ],
-            [
-                getBucket(BucketNames.SECONDARY_MEASURES, [
-                    referencePointMocks.masterMeasureItems[0],
-                    referencePointMocks.masterMeasureItems[1],
-                ]),
-            ],
+            [getBucket(BucketNames.SECONDARY_MEASURES, [masterMeasureItems[0], masterMeasureItems[1]])],
         ],
         [
             "should distribute measure that doesn't fit into empty measure buckets - case 3",
             [
-                getBucket(BucketNames.MEASURES, [referencePointMocks.masterMeasureItems[2]]),
-                getBucket(BucketNames.SECONDARY_MEASURES, [
-                    referencePointMocks.masterMeasureItems[0],
-                    referencePointMocks.masterMeasureItems[1],
-                ]),
+                getBucket(BucketNames.MEASURES, [masterMeasureItems[2]]),
+                getBucket(BucketNames.SECONDARY_MEASURES, [masterMeasureItems[0], masterMeasureItems[1]]),
             ],
             [
                 {
@@ -2985,18 +2916,18 @@ describe("transformMeasureBuckets", () => {
             ],
             [
                 getBucket(BucketNames.SECONDARY_MEASURES, [
-                    referencePointMocks.masterMeasureItems[0],
-                    referencePointMocks.masterMeasureItems[1],
-                    referencePointMocks.masterMeasureItems[2],
+                    masterMeasureItems[0],
+                    masterMeasureItems[1],
+                    masterMeasureItems[2],
                 ]),
             ],
         ],
         [
             "should distribute measure that doesn't fit into empty measure buckets - case 4",
             [
-                getBucket(BucketNames.MEASURES, [referencePointMocks.masterMeasureItems[2]]),
-                getBucket(BucketNames.SECONDARY_MEASURES, [referencePointMocks.masterMeasureItems[0]]),
-                getBucket(BucketNames.TERTIARY_MEASURES, [referencePointMocks.masterMeasureItems[1]]),
+                getBucket(BucketNames.MEASURES, [masterMeasureItems[2]]),
+                getBucket(BucketNames.SECONDARY_MEASURES, [masterMeasureItems[0]]),
+                getBucket(BucketNames.TERTIARY_MEASURES, [masterMeasureItems[1]]),
             ],
             [
                 {
@@ -3014,20 +2945,17 @@ describe("transformMeasureBuckets", () => {
             ],
             [
                 getBucket(BucketNames.SECONDARY_MEASURES, [
-                    referencePointMocks.masterMeasureItems[0],
-                    referencePointMocks.masterMeasureItems[1],
-                    referencePointMocks.masterMeasureItems[2],
+                    masterMeasureItems[0],
+                    masterMeasureItems[1],
+                    masterMeasureItems[2],
                 ]),
             ],
         ],
         [
             "should distribute measure that doesn't fit into empty measure buckets - case 5",
             [
-                getBucket(BucketNames.MEASURES, [
-                    referencePointMocks.masterMeasureItems[0],
-                    referencePointMocks.masterMeasureItems[2],
-                ]),
-                getBucket(BucketNames.SECONDARY_MEASURES, [referencePointMocks.masterMeasureItems[1]]),
+                getBucket(BucketNames.MEASURES, [masterMeasureItems[0], masterMeasureItems[2]]),
+                getBucket(BucketNames.SECONDARY_MEASURES, [masterMeasureItems[1]]),
             ],
             [
                 {
@@ -3040,19 +2968,19 @@ describe("transformMeasureBuckets", () => {
                 },
             ],
             [
-                getBucket(BucketNames.MEASURES, [referencePointMocks.masterMeasureItems[0]]),
+                getBucket(BucketNames.MEASURES, [masterMeasureItems[0]]),
                 getBucket(BucketNames.SECONDARY_MEASURES, [
-                    referencePointMocks.masterMeasureItems[1],
-                    referencePointMocks.masterMeasureItems[2],
-                    referencePointMocks.masterMeasureItems[3],
+                    masterMeasureItems[1],
+                    masterMeasureItems[2],
+                    masterMeasureItems[3],
                 ]),
             ],
         ],
         [
             "should distribute measures after switching from Geo Chart",
             [
-                getBucket(BucketNames.MEASURES, [referencePointMocks.masterMeasureItems[0]]),
-                getBucket(BucketNames.SECONDARY_MEASURES, [referencePointMocks.masterMeasureItems[1]]),
+                getBucket(BucketNames.MEASURES, [masterMeasureItems[0]]),
+                getBucket(BucketNames.SECONDARY_MEASURES, [masterMeasureItems[1]]),
             ],
             [
                 {
@@ -3065,8 +2993,8 @@ describe("transformMeasureBuckets", () => {
                 },
             ],
             [
-                getBucket(BucketNames.SIZE, [referencePointMocks.masterMeasureItems[0]]),
-                getBucket(BucketNames.COLOR, [referencePointMocks.masterMeasureItems[1]]),
+                getBucket(BucketNames.SIZE, [masterMeasureItems[0]]),
+                getBucket(BucketNames.COLOR, [masterMeasureItems[1]]),
             ],
         ],
     ])(
@@ -3086,8 +3014,8 @@ describe("isComparisonAvailable", () => {
     const dateFilterBucketItem: IFiltersBucketItem = {
         attribute: DATE_DATASET_ATTRIBUTE,
         localIdentifier: "f1",
-        filters: [referencePointMocks.dateFilter],
-        dateDatasetRef: referencePointMocks.dateDatasetRef,
+        filters: [dateFilter],
+        dateDatasetRef: dateDatasetRef,
     };
     const referencePoint: IExtendedReferencePoint = {
         buckets: [
@@ -3098,7 +3026,7 @@ describe("isComparisonAvailable", () => {
                         localIdentifier: "date",
                         type: DATE,
                         attribute: DATE_DATASET_ATTRIBUTE,
-                        dateDatasetRef: referencePointMocks.dateDatasetRef,
+                        dateDatasetRef: dateDatasetRef,
                     },
                 ],
             },
@@ -3123,7 +3051,7 @@ describe("isComparisonAvailable", () => {
                     {
                         attribute: DATE_DATASET_ATTRIBUTE,
                         localIdentifier: "f1",
-                        filters: [referencePointMocks.dateFilter],
+                        filters: [dateFilter],
                         dateDatasetRef: {
                             uri: "date.dataset.2",
                         },

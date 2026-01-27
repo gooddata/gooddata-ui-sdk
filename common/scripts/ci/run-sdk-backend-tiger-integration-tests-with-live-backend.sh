@@ -80,8 +80,8 @@ if [[ "$IS_AIO" == true ]]; then
   /bin/bash -c "/data_load/data_load.py -w goodsales -d pg_local --debug  --skip-download --no-schema-versioning -f"
 
   curl $HOST/api/v1/entities/dataSources \
-    -H "Content-Type: application/vnd.gooddata.api+json" \
-    -H "Accept: application/vnd.gooddata.api+json" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json" \
     -H "Authorization: Bearer $TIGER_API_TOKEN" \
     -H "Host: $CONTAINER_ID" \
     -X POST \

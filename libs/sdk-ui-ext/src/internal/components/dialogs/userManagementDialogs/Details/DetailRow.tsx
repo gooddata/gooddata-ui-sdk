@@ -1,10 +1,10 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
 import { Input } from "@gooddata/sdk-ui-kit";
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { messages } from "../locales.js";
 import { type ListMode } from "../types.js";
@@ -24,7 +24,7 @@ export function DetailRow({ labelText, value, mode, disabled, onChange }: IDetai
     });
     const inputClassNames = cx(
         "gd-user-management-dialog-detail-input",
-        `s-user-management-input-${stringUtils.simplifyText(labelText)}`,
+        `s-user-management-input-${simplifyText(labelText)}`,
     );
     return (
         <div className="gd-user-management-dialog-detail-row">

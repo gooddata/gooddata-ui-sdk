@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-kit",
-    "version": "11.18.0-alpha.4",
+    "version": "11.18.0-alpha.5",
     "description": "GoodData SDK - UI Building Components",
     "repository": {
         "type": "git",
@@ -112,8 +112,8 @@
         "@gooddata/sdk-backend-mockingbird": "workspace:*",
         "@gooddata/stylelint-config": "^5.0.0",
         "@microsoft/api-documenter": "^7.17.0",
-        "@microsoft/api-extractor": "^7.52.8",
-        "@testing-library/dom": "10.4.0",
+        "@microsoft/api-extractor": "^7.55.2",
+        "@testing-library/dom": "10.4.1",
         "@testing-library/react": "16.3.0",
         "@testing-library/user-event": "^14.6.1",
         "@types/debounce-promise": "^3.1.4",

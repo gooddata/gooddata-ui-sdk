@@ -6,17 +6,17 @@ export const storybook: IConfiguration<"storybook"> = {
     packages: [
         {
             name: "eslint-plugin-storybook",
-            version: "^10.0.6",
+            version: "^10.1.11",
         },
         {
             // peer
             name: "storybook",
-            version: "^10.0.6",
+            version: "^10.1.11",
         },
         {
             // peer
             name: "@testing-library/dom",
-            version: "10.4.0",
+            version: "10.4.1",
         },
         {
             // peer

@@ -2,7 +2,7 @@
 
 import { type KeyboardEvent, type MouseEvent, forwardRef } from "react";
 
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { type IAccessibilityConfigBase } from "../../typings/accessibility.js";
 import { accessibilityConfigToAttributes } from "../../typings/utilities.js";
@@ -131,7 +131,7 @@ export const UiPaginationButton = forwardRef<HTMLButtonElement, IUiPaginationBut
         ref,
     ) => {
         const icon = ICON_MAP[direction];
-        const testId = dataTestId ?? `pagination-button-${stringUtils.simplifyText(label)}`;
+        const testId = dataTestId ?? `pagination-button-${simplifyText(label)}`;
 
         return (
             <button

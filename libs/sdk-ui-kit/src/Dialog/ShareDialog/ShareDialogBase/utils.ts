@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { differenceWith, partition } from "lodash-es";
 import { type IntlShape } from "react-intl";
@@ -12,7 +12,7 @@ import {
     objRefToString,
     uriRef,
 } from "@gooddata/sdk-model";
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import {
     type GranteeItem,
@@ -199,7 +199,7 @@ export const getAppliedGrantees = (
 export const getGranteeItemTestId = (grantee: GranteeItem, prefix?: "option"): string => {
     const prefixValue = prefix ? `${prefix}-` : "";
     const id = objRefToString(grantee.id).split("/").pop() ?? "";
-    return `s-gd-grantee-item-id-${prefixValue}${stringUtils.simplifyText(id)}`;
+    return `s-gd-grantee-item-id-${prefixValue}${simplifyText(id)}`;
 };
 
 /**
@@ -207,7 +207,7 @@ export const getGranteeItemTestId = (grantee: GranteeItem, prefix?: "option"): s
  */
 export const getGranularGranteeClassNameId = (grantee: GranteeItem): string => {
     const id = objRefToString(grantee.id).split("/").pop() ?? "";
-    return `gd-granular-grantee-item-id-${stringUtils.simplifyText(id)}`;
+    return `gd-granular-grantee-item-id-${simplifyText(id)}`;
 };
 
 /**

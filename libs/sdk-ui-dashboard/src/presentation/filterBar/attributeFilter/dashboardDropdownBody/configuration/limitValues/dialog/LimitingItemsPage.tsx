@@ -7,7 +7,7 @@ import { useIntl } from "react-intl";
 
 import { type ObjRef, serializeObjRef } from "@gooddata/sdk-model";
 import { DropdownList, NoData } from "@gooddata/sdk-ui-kit";
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { PopupHeader } from "./PopupHeader.js";
 import { getTelemetryEventForLimitingItem } from "./telemetryUtils.js";
@@ -42,7 +42,7 @@ function LimitingItem({ item: { item, title }, onSelect, onClose }: ILimitingIte
     const { attributeFilterInteraction } = useDashboardUserInteraction();
     const classNames = cx(
         "gd-list-item attribute-filter__limit__popup__item",
-        `s-metric-${stringUtils.simplifyText(title ?? "unknown")}`,
+        `s-metric-${simplifyText(title ?? "unknown")}`,
     );
     const onClick = () => {
         onSelect(item);

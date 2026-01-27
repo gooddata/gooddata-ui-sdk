@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/api-client-tiger",
-    "version": "11.18.0-alpha.4",
+    "version": "11.18.0-alpha.5",
     "description": "API Client for GoodData Cloud and GoodData.CN",
     "repository": {
         "type": "git",
@@ -73,7 +73,7 @@
         "@gooddata/eslint-config": "workspace:*",
         "@gooddata/reference-workspace": "workspace:*",
         "@microsoft/api-documenter": "^7.17.0",
-        "@microsoft/api-extractor": "^7.52.8",
+        "@microsoft/api-extractor": "^7.55.2",
         "@openapitools/openapi-generator-cli": "^2.6.0",
         "@types/lodash-es": "^4.17.12",
         "@typescript-eslint/eslint-plugin": "8.52.0",

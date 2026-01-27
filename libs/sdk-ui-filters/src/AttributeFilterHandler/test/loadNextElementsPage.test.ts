@@ -15,7 +15,15 @@ import {
     positiveAttributeFilterDefaultDF,
 } from "./fixtures.js";
 import { waitForAsync } from "./testUtils.js";
-import * as elements from "../internal/redux/elements/loadElements.js";
+import { loadElements as mockLoadElements } from "../internal/redux/elements/loadElements.js";
+
+vi.mock("../internal/redux/elements/loadElements.js", async () => {
+    const original = await vi.importActual("../internal/redux/elements/loadElements.js");
+    return {
+        ...original,
+        loadElements: vi.fn((original as { loadElements: typeof mockLoadElements }).loadElements),
+    };
+});
 
 describe("AttributeFilterHandler", () => {
     it("loadNextElementsPage() should trigger onLoadNextElementsPageStart() callback", async () => {
@@ -83,7 +91,7 @@ describe("AttributeFilterHandler", () => {
         attributeFilterHandler.init();
         await waitForAsync();
 
-        vi.spyOn(elements, "loadElements").mockRejectedValueOnce(new BadRequestSdkError("Elements error"));
+        vi.mocked(mockLoadElements).mockRejectedValueOnce(new BadRequestSdkError("Elements error"));
         attributeFilterHandler.onLoadNextElementsPageError(onLoadNextElementsPageError);
         attributeFilterHandler.loadNextElementsPage("error");
 
@@ -283,7 +291,7 @@ describe("AttributeFilterHandler", () => {
         attributeFilterHandler.init();
         await waitForAsync();
 
-        vi.spyOn(elements, "loadElements").mockRejectedValueOnce(new BadRequestSdkError("Elements error"));
+        vi.mocked(mockLoadElements).mockRejectedValueOnce(new BadRequestSdkError("Elements error"));
         attributeFilterHandler.loadNextElementsPage();
 
         await suppressConsole(waitForAsync, "error", [

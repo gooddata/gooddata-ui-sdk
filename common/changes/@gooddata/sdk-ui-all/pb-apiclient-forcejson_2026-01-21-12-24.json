@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@gooddata/sdk-ui-all",
+      "comment": "Use `application/json` in request headers instead of vendor-specific `vnd.gooddata.api+json`",
+      "type": "none"
+    }
+  ],
+  "packageName": "@gooddata/sdk-ui-all"
+}

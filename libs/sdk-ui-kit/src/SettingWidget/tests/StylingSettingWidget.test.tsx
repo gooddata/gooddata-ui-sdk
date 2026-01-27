@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
@@ -8,11 +8,15 @@ import { type ITheme } from "@gooddata/sdk-model";
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
 import { customItemsMock, defaultItemMock } from "./mocks.js";
-import * as useMediaQuery from "../../responsive/useMediaQuery.js";
+import { useMediaQuery } from "../../responsive/useMediaQuery.js";
 import {
     type IStylingSettingWidgetProps,
     StylingSettingWidget,
 } from "../StylingSettingWidget/StylingSettingWidget.js";
+
+vi.mock("../../responsive/useMediaQuery.js", () => ({
+    useMediaQuery: vi.fn(() => false),
+}));
 
 const expectedButtonsState = (buttons: HTMLElement[], disabled = true) => {
     return buttons.forEach((item) => {
@@ -180,13 +184,13 @@ describe("StylingPicker", () => {
     });
 
     it("should not render list action link on mobile device", () => {
-        vi.spyOn(useMediaQuery, "useMediaQuery").mockReturnValue(true);
+        vi.mocked(useMediaQuery).mockReturnValue(true);
         renderComponent({});
         expect(screen.queryByText("Create")).not.toBeInTheDocument();
     });
 
     it("should not render list item Actions menu on mobile device", () => {
-        vi.spyOn(useMediaQuery, "useMediaQuery").mockReturnValue(true);
+        vi.mocked(useMediaQuery).mockReturnValue(true);
         const onItemEdit = vi.fn();
         const onItemDelete = vi.fn();
         renderComponent({ onItemEdit, onItemDelete });

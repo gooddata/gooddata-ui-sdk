@@ -7,7 +7,7 @@ import { useIntl } from "react-intl";
 
 import { objRefToString, widgetRef } from "@gooddata/sdk-model";
 import { UiIcon, UiTooltip, isActionKey, useIdPrefixed } from "@gooddata/sdk-ui-kit";
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { type IShowAsTableButtonProps } from "../types.js";
 
@@ -47,7 +47,7 @@ export function ShowAsTableButton({
     const asTableIconClasses = cx(
         "dash-item-action-options",
         "dash-item-action-as-table",
-        `s-dash-item-action-as-table-options-${stringUtils.simplifyText(widgetRefAsString)}`,
+        `s-dash-item-action-as-table-options-${simplifyText(widgetRefAsString)}`,
         {
             "s-dash-item-action-as-table": !isWidgetAsTable,
             "s-dash-item-action-as-original": isWidgetAsTable,

@@ -1,11 +1,11 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import moment from "moment";
 
-import { translationUtils } from "@gooddata/util";
+import { sanitizeLocaleForMoment } from "@gooddata/util";
 
 export const getLocalizedDateFormat = (locale: string): any => {
-    const localizedMoment = moment().locale(translationUtils.sanitizeLocaleForMoment(locale));
+    const localizedMoment = moment().locale(sanitizeLocaleForMoment(locale));
     const localeData = localizedMoment?.localeData && (localizedMoment.localeData() as any);
     return localeData?._longDateFormat?.L;
 };

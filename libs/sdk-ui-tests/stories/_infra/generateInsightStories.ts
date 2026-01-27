@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { existsSync, mkdirSync, rmSync, writeFileSync } from "fs";
 
@@ -9,7 +9,6 @@ import { type RecordingIndex } from "@gooddata/sdk-backend-mockingbird";
 import { type IInsight, insightId, insightVisualizationUrl } from "@gooddata/sdk-model";
 
 import { type INeobackstopScenarioConfig, type IStoryParameters, type State } from "./backstopScenario.js";
-import { ConfigurationPanelWrapper } from "./ConfigurationPanelWrapper.js";
 import { generateExportName, generateImports, header } from "./generateStories.js";
 import { ScreenshotReadyWrapper } from "./ScreenshotReadyWrapper.js";
 import { unquoteStateInJson } from "./stateReplacer.js";
@@ -184,7 +183,6 @@ ScenarioGroupsByVis.forEach((groups, groupsIndex) => {
             const screenshotConfig: INeobackstopScenarioConfig | undefined = group.testConfig.visual.skip
                 ? undefined
                 : {
-                      clickSelector: `.${ConfigurationPanelWrapper.DefaultExpandAllClassName}`,
                       readySelector: {
                           selector: `.${ScreenshotReadyWrapper.OnReadyClassName}`,
                           state: `State.Attached` as unknown as State,

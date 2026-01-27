@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { render } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -9,8 +9,17 @@ import { type IComparisonControlProperties } from "../../../../../interfaces/Con
 import { type IVisualizationProperties } from "../../../../../interfaces/Visualization.js";
 import { createTestProperties } from "../../../../../tests/testDataProvider.js";
 import { InternalIntlWrapper } from "../../../../../utils/internalIntlProvider.js";
-import * as DropdownControl from "../../../DropdownControl.js";
+import { DropdownControl } from "../../../DropdownControl.js";
 import { ComparisonPositionControl } from "../ComparisonPositionControl.js";
+
+vi.mock("../../../DropdownControl.js", async (importOriginal) => {
+    // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+    const actual = await importOriginal<typeof import("../../../DropdownControl.js")>();
+    return {
+        ...actual,
+        DropdownControl: vi.fn(actual.DropdownControl),
+    };
+});
 
 const TITLE_TEXT_QUERY = "Position";
 const DROPDOWN_BUTTON_SELECTOR = "button";
@@ -56,7 +65,7 @@ describe("ComparisonPositionControl", () => {
     });
 
     it("Should render based on dropdown-control", () => {
-        const MockDropdownControl = vi.spyOn(DropdownControl, "DropdownControl");
+        const MockDropdownControl = vi.mocked(DropdownControl);
 
         renderComparisonPositionControl();
         expect(MockDropdownControl).toHaveBeenCalledWith(

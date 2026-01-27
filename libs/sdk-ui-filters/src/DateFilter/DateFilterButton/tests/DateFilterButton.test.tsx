@@ -3,9 +3,13 @@
 import { render } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
-import * as shared from "../../../shared/components/internal/FilterButtonCustomIcon.js";
+import { FilterButtonCustomIcon as mockFilterButtonCustomIcon } from "../../../shared/components/internal/FilterButtonCustomIcon.js";
 import { type IFilterButtonCustomIcon } from "../../../shared/interfaces/index.js";
 import { DateFilterButton } from "../DateFilterButton.js";
+
+vi.mock("../../../shared/components/internal/FilterButtonCustomIcon.js", () => ({
+    FilterButtonCustomIcon: vi.fn(() => null),
+}));
 
 describe("DateFilterButton", () => {
     const renderComponent = (params: { customIcon?: IFilterButtonCustomIcon } = {}) => {
@@ -19,13 +23,12 @@ describe("DateFilterButton", () => {
     };
 
     it("should render custom icon", () => {
-        const MockCustomIconComponent = vi.spyOn(shared, "FilterButtonCustomIcon");
         const customIcon = {
             icon: "icon",
             tooltip: "tooltip",
         };
 
         renderComponent({ customIcon });
-        expect(MockCustomIconComponent).toHaveBeenCalledWith({ customIcon }, undefined);
+        expect(mockFilterButtonCustomIcon).toHaveBeenCalledWith({ customIcon }, undefined);
     });
 });

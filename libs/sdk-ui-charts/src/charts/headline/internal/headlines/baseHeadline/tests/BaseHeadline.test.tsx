@@ -1,7 +1,7 @@
 // (C) 2023-2026 GoodData Corporation
 
 import { render } from "@testing-library/react";
-import { type MockInstance, afterAll, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { withIntl } from "@gooddata/sdk-ui";
 
@@ -9,12 +9,28 @@ import { type BaseHeadlineItemAccepted, type IBaseHeadlineItem } from "../../../
 import { type IHeadlineDataItem } from "../../../interfaces/Headlines.js";
 import { TEST_BASE_HEADLINE_ITEM } from "../../../tests/TestData.fixtures.js";
 import { BaseHeadline } from "../BaseHeadline.js";
-import * as CompareSection from "../CompareSection.js";
-import * as PrimarySection from "../PrimarySection.js";
+import { CompareSection } from "../CompareSection.js";
+import { PrimarySection } from "../PrimarySection.js";
+
+vi.mock("../CompareSection.js", async (importOriginal) => {
+    const original = await importOriginal();
+    return {
+        ...(original as object),
+        CompareSection: vi.fn((original as { CompareSection: () => void }).CompareSection),
+    };
+});
+
+vi.mock("../PrimarySection.js", async (importOriginal) => {
+    const original = await importOriginal();
+    return {
+        ...(original as object),
+        PrimarySection: vi.fn((original as { PrimarySection: () => void }).PrimarySection),
+    };
+});
 
 describe("BaseHeadline", () => {
-    let MockPrimarySection: MockInstance;
-    let MockCompareSection: MockInstance;
+    const MockPrimarySection = vi.mocked(PrimarySection);
+    const MockCompareSection = vi.mocked(CompareSection);
 
     const primaryItem = TEST_BASE_HEADLINE_ITEM;
     const secondaryItem = {
@@ -55,8 +71,7 @@ describe("BaseHeadline", () => {
     };
 
     beforeEach(() => {
-        MockPrimarySection = vi.spyOn(PrimarySection, "PrimarySection");
-        MockCompareSection = vi.spyOn(CompareSection, "CompareSection");
+        vi.clearAllMocks();
     });
 
     afterAll(() => {

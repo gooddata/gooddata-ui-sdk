@@ -54,7 +54,6 @@ export enum TigerFeaturesNames {
     EnableLabsSmartFunctions = "enableLabsSmartFunctions",
     EnableKeyDriverAnalysis = "enableKeyDriverAnalysis",
     EnableDataProfiling = "enableDataProfiling",
-    EnableFlexAi = "enableFlexAi",
     EnableExperimentalFeaturesUI = "enableExperimentalFeaturesUI",
     EnableSingleStoreDataSource = "enableSingleStoreDataSource",
     EnableAthenaDataSource = "enableAthenaDataSource",
@@ -182,7 +181,6 @@ export type ITigerFeatureFlags = {
     enableStarrocksDataSource: (typeof FeatureFlagsValues)["enableStarrocksDataSource"][number];
     enableKeyDriverAnalysis: (typeof FeatureFlagsValues)["enableKeyDriverAnalysis"][number];
     enableDataProfiling: (typeof FeatureFlagsValues)["enableDataProfiling"][number];
-    enableFlexAi: (typeof FeatureFlagsValues)["enableFlexAi"][number];
     enableExperimentalFeaturesUI: (typeof FeatureFlagsValues)["enableExperimentalFeaturesUI"][number];
     enableSingleStoreDataSource: (typeof FeatureFlagsValues)["enableSingleStoreDataSource"][number];
     enableAthenaDataSource: (typeof FeatureFlagsValues)["enableAthenaDataSource"][number];
@@ -313,7 +311,6 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableSmartFunctions: true,
     enableKeyDriverAnalysis: false,
     enableDataProfiling: false,
-    enableFlexAi: false,
     enableExperimentalFeaturesUI: false,
     enableSingleStoreDataSource: false,
     enableAthenaDataSource: false,
@@ -444,7 +441,6 @@ export const FeatureFlagsValues = {
     enableSmartFunctions: [true, false] as const,
     enableKeyDriverAnalysis: [true, false] as const,
     enableDataProfiling: [true, false] as const,
-    enableFlexAi: [true, false] as const,
     enableExperimentalFeaturesUI: [true, false] as const,
     enableSingleStoreDataSource: [true, false] as const,
     enableAthenaDataSource: [true, false] as const,

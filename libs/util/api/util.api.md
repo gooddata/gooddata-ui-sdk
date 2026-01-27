@@ -4,15 +4,8 @@
 
 ```ts
 
-declare namespace arrayUtils {
-    export {
-        shiftArrayRight
-    }
-}
-export { arrayUtils }
-
 // @internal
-function combineGuards<T extends ((x: unknown) => x is unknown)[]>(...guards: T): (x: unknown) => x is GuardType<T[number]>;
+export function combineGuards<T extends ((x: unknown) => x is unknown)[]>(...guards: T): (x: unknown) => x is GuardType<T[number]>;
 
 // @internal
 export type ConsoleFunction = (...data: any[]) => void;
@@ -27,16 +20,16 @@ export function delay(timeout?: number): Promise<void>;
 export type EmptyObject = Record<never, never>;
 
 // @internal
-function escapeRegExp(value: string): string;
+export function escapeRegExp(value: string): string;
 
 // @internal (undocumented)
-type GuardType<T> = T extends (o: unknown) => o is infer U ? U : never;
+export type GuardType<T> = T extends (o: unknown) => o is infer U ? U : never;
 
 // @internal
-function hashCodeString(value: string): number;
+export function hashCodeString(value: string): number;
 
 // @internal (undocumented)
-interface IShortenTextOptions {
+export interface IShortenTextOptions {
     // (undocumented)
     maxLength?: number;
 }
@@ -53,74 +46,37 @@ export type Matcher = {
 // @internal
 export type MatcherFunction = (console: Record<ConsoleType, ConsoleFunction>, type: ConsoleType, message: string) => boolean;
 
-declare namespace objectUtils {
-    export {
-        shallowEqualObjects
-    }
-}
-export { objectUtils }
+// @internal
+export function parseStringToArray(str: string): string[] | null;
 
 // @internal
-function parseStringToArray(str: string): string[] | null;
+export function randomString(len: number): string;
 
 // @internal
-function randomString(len: number): string;
+export function removeMetadata(translationsWithMetadata: Record<string, any>): Record<string, string>;
 
 // @internal
-function removeMetadata(translationsWithMetadata: Record<string, any>): Record<string, string>;
-
-// @internal
-const sanitizeLocaleForMoment: (intlLocale: string) => string;
+export const sanitizeLocaleForMoment: (intlLocale: string) => string;
 
 // @internal (undocumented)
-function shallowEqualObjects(objA: Record<string, any>, objB: Record<string, any>): boolean;
+export function shallowEqualObjects(objA: Record<string, any>, objB: Record<string, any>): boolean;
 
 // @internal
-function shiftArrayRight<T>(array: Array<T>): Array<T>;
+export function shiftArrayRight<T>(array: Array<T>): Array<T>;
 
 // @internal
-function shortenText(value: string, options?: IShortenTextOptions): string;
+export function shortenText(value: string, options?: IShortenTextOptions): string;
 
 // @internal
-function simplifyText(value: string | number | null): string;
+export function simplifyText(value: string | number | null): string;
 
 // @internal
 export type SpecificMatcherFunction = (message: string) => boolean;
-
-declare namespace stringUtils {
-    export {
-        shortenText,
-        escapeRegExp,
-        randomString,
-        simplifyText,
-        parseStringToArray,
-        hashCodeString,
-        IShortenTextOptions
-    }
-}
-export { stringUtils }
 
 // @internal
 export function suppressConsole<T>(fn: () => T | Promise<T>, type?: ConsoleType | ConsoleType[], matchers?: Matcher[] | SpecificMatcherFunction): T | Promise<T>;
 
 // @internal
 export function suppressConsole<T>(fn: () => T | Promise<T>, matcherFn: MatcherFunction): T | Promise<T>;
-
-declare namespace translationUtils {
-    export {
-        removeMetadata,
-        sanitizeLocaleForMoment
-    }
-}
-export { translationUtils }
-
-declare namespace typesUtils {
-    export {
-        combineGuards,
-        GuardType,
-        EmptyObject
-    }
-}
-export { typesUtils }
 
 ```

@@ -1,11 +1,11 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { BackendProvider, WorkspaceProvider } from "@gooddata/sdk-ui";
 import { InsightView } from "@gooddata/sdk-ui-ext";
 
 import img from "./assets/gooddata-logo.svg";
 import { backend } from "./backend.js";
-import * as Md from "./catalog.js";
+import { Insights } from "./catalog.js";
 
 // Workspace ID is injected by WebPack based on the value in package.json
 const workspaceId = WORKSPACE_ID;
@@ -26,7 +26,7 @@ export function App() {
                         </code>
                     </pre>
                     <figure className="app-figure">
-                        <InsightView insight={Md.Insights.ProductCategoriesPieChart} showTitle />
+                        <InsightView insight={Insights.ProductCategoriesPieChart} showTitle />
                     </figure>
                     <footer className="app-footer">
                         <img src={img} alt="" />

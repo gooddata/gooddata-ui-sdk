@@ -1,7 +1,7 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { Chart } from "../../tools/chart";
-import * as Navigation from "../../tools/navigation";
+import { visit } from "../../tools/navigation";
 
 const pressButton = (buttonName: string) => {
     cy.get(`.s-${buttonName}-button`).click();
@@ -31,7 +31,7 @@ const scenarios = [
 // Can be removed once migrated to tiger or once decided that we don't want to migrate the test.
 describe.skip("BarChart drilling", { tags: ["pre-merge_isolated_bear"] }, () => {
     beforeEach(() => {
-        Navigation.visit("visualizations/barchart/bar-chart-drilling-scenario");
+        visit("visualizations/barchart/bar-chart-drilling-scenario");
     });
 
     scenarios.forEach((item) => {

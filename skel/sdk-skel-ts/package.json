@@ -49,7 +49,7 @@
     "devDependencies": {
         "@gooddata/eslint-config": "workspace:*",
         "@microsoft/api-documenter": "^7.17.0",
-        "@microsoft/api-extractor": "^7.52.8",
+        "@microsoft/api-extractor": "^7.55.2",
         "@types/lodash-es": "^4.17.12",
         "@typescript-eslint/eslint-plugin": "8.52.0",
         "@typescript-eslint/parser": "8.52.0",

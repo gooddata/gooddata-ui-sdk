@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import {
     type AccessGranteeDetail,
@@ -21,7 +21,7 @@ import {
     isUserAccess,
     isUserGroupAccess,
 } from "@gooddata/sdk-model";
-import { typesUtils } from "@gooddata/util";
+import { combineGuards } from "@gooddata/util";
 
 import {
     type GranteeItem,
@@ -139,7 +139,7 @@ export const mapGranteesToGranularAccessGrantees = (
     grantees: GranteeItem[],
     added?: boolean,
 ): IGranularAccessGrantee[] => {
-    const guard = typesUtils.combineGuards(isGranteeGroupAll, isGranteeUserInactive);
+    const guard = combineGuards(isGranteeGroupAll, isGranteeUserInactive);
     return grantees
         .filter((g) => !guard(g))
         .map((g) => {

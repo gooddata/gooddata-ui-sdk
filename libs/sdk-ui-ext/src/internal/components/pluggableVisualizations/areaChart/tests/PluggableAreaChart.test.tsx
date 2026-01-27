@@ -29,8 +29,49 @@ import {
     type IVisConstruct,
     type IVisProps,
 } from "../../../../interfaces/Visualization.js";
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
-import * as testMocks from "../../../../tests/mocks/testMocks.js";
+import {
+    arithmeticMeasureItems,
+    att1AndAtt2inViewByAndAtt3inStackBy,
+    attributeAndDateInViewByAndDateInStackByReferencePoint,
+    dateAndAttributeInViewByAndEmptyStackBy,
+    dateAsSecondViewByItemReferencePoint,
+    dateAsThirdCategoryReferencePointWithoutStack,
+    dateAttributeOnRowsAndColumnsReferencePoint,
+    dateAttributesOnRowsReferencePoint,
+    dateInColumnsAndMultipleMeasuresTable,
+    dateInColumnsAndMultipleMeasuresTreemap,
+    emptyReferencePoint,
+    justViewByReferencePoint,
+    masterMeasureItems,
+    mixOfMeasuresWithDerivedAndArithmeticFromDerivedAreaReferencePoint,
+    multipleMetricsAndCategoriesReferencePoint,
+    multipleMetricsOneStackByReferencePoint,
+    oneDateInRowsAndOneDateInColumnsReferencePoint,
+    oneDateInRowsAndSameOneDateInColumnsReferencePoint,
+    oneMetricAndManyCategoriesAndOneStackRefPoint,
+    oneMetricAndManyCategoriesReferencePoint,
+    oneMetricAndOneCategoryAndOneStackRefPoint,
+    oneMetricAndTwoCategoriesReferencePoint,
+    oneMetricNoCategoriesReferencePoint,
+    oneMetricOneCategory,
+    oneStackAndNoCategoriesReferencePoint,
+    stackMeasuresToPercentReferencePoint,
+    tableTotalsReferencePoint,
+    threeDatesInColumnsReferencePoint,
+    twoAttributesAndDateInRowsAndOneDateInColumnsReferencePoint,
+    twoDatesInRowsAndOneDateInColumnsReferencePoint,
+    twoMetricAndOneCategoryRefPoint,
+    twoMetricAndTwoCategoriesRefPoint,
+    twoMetricsAndOneCategoryAndOneStackRefPoint,
+    twoStackedMetricAndOneCategoryRefPoint,
+    twoStackedMetricAndTwoCategoriesRefPoint,
+} from "../../../../tests/mocks/referencePointMocks.js";
+import {
+    insightWithSingleMeasure,
+    insightWithSingleMeasureAndTwoViewBy,
+    insightWithSingleMeasureAndViewBy,
+    insightWithTwoMeasuresAndViewBy,
+} from "../../../../tests/mocks/testMocks.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../../utils/translations.js";
 import {
     createDrillDefinition,
@@ -76,7 +117,7 @@ describe("PluggableAreaChart", () => {
         const areaChart = createComponent();
 
         const extendedReferencePoint = await areaChart.getExtendedReferencePoint(
-            referencePointMocks.oneStackAndNoCategoriesReferencePoint,
+            oneStackAndNoCategoriesReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -86,7 +127,7 @@ describe("PluggableAreaChart", () => {
         const baseChart = createComponent();
 
         const extendedReferencePoint = await baseChart.getExtendedReferencePoint(
-            referencePointMocks.multipleMetricsOneStackByReferencePoint,
+            multipleMetricsOneStackByReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchSnapshot();
@@ -97,13 +138,13 @@ describe("PluggableAreaChart", () => {
             const inputs: [string, IReferencePoint, Partial<IExtendedReferencePoint>][] = [
                 [
                     "from table to area chart: date1 and date2 in rows ans date1 columns",
-                    referencePointMocks.twoDatesInRowsAndOneDateInColumnsReferencePoint,
+                    twoDatesInRowsAndOneDateInColumnsReferencePoint,
                     {
                         buckets: [
-                            referencePointMocks.twoDatesInRowsAndOneDateInColumnsReferencePoint.buckets[0],
+                            twoDatesInRowsAndOneDateInColumnsReferencePoint.buckets[0],
                             {
                                 localIdentifier: "view",
-                                items: referencePointMocks.twoDatesInRowsAndOneDateInColumnsReferencePoint.buckets[1].items.slice(
+                                items: twoDatesInRowsAndOneDateInColumnsReferencePoint.buckets[1].items.slice(
                                     0,
                                     2,
                                 ),
@@ -117,16 +158,13 @@ describe("PluggableAreaChart", () => {
                 ],
                 [
                     "from table to area chart: no dates but 2 attributes and 2 measures",
-                    referencePointMocks.tableTotalsReferencePoint,
+                    tableTotalsReferencePoint,
                     {
                         buckets: [
-                            referencePointMocks.tableTotalsReferencePoint.buckets[0],
+                            tableTotalsReferencePoint.buckets[0],
                             {
                                 localIdentifier: "view",
-                                items: referencePointMocks.tableTotalsReferencePoint.buckets[1].items.slice(
-                                    0,
-                                    1,
-                                ),
+                                items: tableTotalsReferencePoint.buckets[1].items.slice(0, 1),
                             },
                             {
                                 localIdentifier: "stack",
@@ -137,17 +175,15 @@ describe("PluggableAreaChart", () => {
                 ],
                 [
                     "from table to area chart: date1 in rows ans date2 columns",
-                    referencePointMocks.oneDateInRowsAndOneDateInColumnsReferencePoint,
+                    oneDateInRowsAndOneDateInColumnsReferencePoint,
                     {
                         buckets: [
-                            referencePointMocks.oneDateInRowsAndOneDateInColumnsReferencePoint.buckets[0],
+                            oneDateInRowsAndOneDateInColumnsReferencePoint.buckets[0],
                             {
                                 localIdentifier: "view",
                                 items: [
-                                    referencePointMocks.oneDateInRowsAndOneDateInColumnsReferencePoint
-                                        .buckets[1].items[0],
-                                    referencePointMocks.oneDateInRowsAndOneDateInColumnsReferencePoint
-                                        .buckets[2].items[0],
+                                    oneDateInRowsAndOneDateInColumnsReferencePoint.buckets[1].items[0],
+                                    oneDateInRowsAndOneDateInColumnsReferencePoint.buckets[2].items[0],
                                 ],
                             },
                             {
@@ -159,17 +195,15 @@ describe("PluggableAreaChart", () => {
                 ],
                 [
                     "from table to area chart: date1 in rows ans date1 columns",
-                    referencePointMocks.oneDateInRowsAndSameOneDateInColumnsReferencePoint,
+                    oneDateInRowsAndSameOneDateInColumnsReferencePoint,
                     {
                         buckets: [
-                            referencePointMocks.oneDateInRowsAndSameOneDateInColumnsReferencePoint.buckets[0],
+                            oneDateInRowsAndSameOneDateInColumnsReferencePoint.buckets[0],
                             {
                                 localIdentifier: "view",
                                 items: [
-                                    referencePointMocks.oneDateInRowsAndSameOneDateInColumnsReferencePoint
-                                        .buckets[1].items[0],
-                                    referencePointMocks.oneDateInRowsAndSameOneDateInColumnsReferencePoint
-                                        .buckets[2].items[0],
+                                    oneDateInRowsAndSameOneDateInColumnsReferencePoint.buckets[1].items[0],
+                                    oneDateInRowsAndSameOneDateInColumnsReferencePoint.buckets[2].items[0],
                                 ],
                             },
                             {
@@ -181,20 +215,17 @@ describe("PluggableAreaChart", () => {
                 ],
                 [
                     "from table to area chart: att1 and att2 and date1 in rows ans date2 in columns",
-                    referencePointMocks.twoAttributesAndDateInRowsAndOneDateInColumnsReferencePoint,
+                    twoAttributesAndDateInRowsAndOneDateInColumnsReferencePoint,
                     {
                         buckets: [
-                            referencePointMocks.twoAttributesAndDateInRowsAndOneDateInColumnsReferencePoint
-                                .buckets[0],
+                            twoAttributesAndDateInRowsAndOneDateInColumnsReferencePoint.buckets[0],
                             {
                                 localIdentifier: "view",
                                 items: [
-                                    referencePointMocks
-                                        .twoAttributesAndDateInRowsAndOneDateInColumnsReferencePoint
-                                        .buckets[1].items[0],
-                                    referencePointMocks
-                                        .twoAttributesAndDateInRowsAndOneDateInColumnsReferencePoint
-                                        .buckets[1].items[1],
+                                    twoAttributesAndDateInRowsAndOneDateInColumnsReferencePoint.buckets[1]
+                                        .items[0],
+                                    twoAttributesAndDateInRowsAndOneDateInColumnsReferencePoint.buckets[1]
+                                        .items[1],
                                 ],
                             },
                             {
@@ -206,15 +237,15 @@ describe("PluggableAreaChart", () => {
                 ],
                 [
                     "from table to area chart: date1 and date2 and date1 in columns",
-                    referencePointMocks.threeDatesInColumnsReferencePoint,
+                    threeDatesInColumnsReferencePoint,
                     {
                         buckets: [
-                            referencePointMocks.threeDatesInColumnsReferencePoint.buckets[0],
+                            threeDatesInColumnsReferencePoint.buckets[0],
                             {
                                 localIdentifier: "view",
                                 items: [
-                                    referencePointMocks.threeDatesInColumnsReferencePoint.buckets[2].items[0],
-                                    referencePointMocks.threeDatesInColumnsReferencePoint.buckets[2].items[1],
+                                    threeDatesInColumnsReferencePoint.buckets[2].items[0],
+                                    threeDatesInColumnsReferencePoint.buckets[2].items[1],
                                 ],
                             },
                             {
@@ -226,16 +257,13 @@ describe("PluggableAreaChart", () => {
                 ],
                 [
                     "from table to area chart: multiple measures and date in columns",
-                    referencePointMocks.dateInColumnsAndMultipleMeasuresTable,
+                    dateInColumnsAndMultipleMeasuresTable,
                     {
                         buckets: [
-                            referencePointMocks.dateInColumnsAndMultipleMeasuresTable.buckets[0],
+                            dateInColumnsAndMultipleMeasuresTable.buckets[0],
                             {
                                 localIdentifier: "view",
-                                items: [
-                                    referencePointMocks.dateInColumnsAndMultipleMeasuresTable.buckets[2]
-                                        .items[0],
-                                ],
+                                items: [dateInColumnsAndMultipleMeasuresTable.buckets[2].items[0]],
                             },
                             {
                                 localIdentifier: "stack",
@@ -246,15 +274,12 @@ describe("PluggableAreaChart", () => {
                 ],
                 [
                     "from treemap to area chart: multiple measures and date in segment",
-                    referencePointMocks.dateInColumnsAndMultipleMeasuresTreemap,
+                    dateInColumnsAndMultipleMeasuresTreemap,
                     {
                         buckets: [
                             {
                                 localIdentifier: "measures",
-                                items: referencePointMocks.dateInColumnsAndMultipleMeasuresTreemap.buckets[0].items.slice(
-                                    0,
-                                    1,
-                                ),
+                                items: dateInColumnsAndMultipleMeasuresTreemap.buckets[0].items.slice(0, 1),
                             },
                             {
                                 localIdentifier: "view",
@@ -262,33 +287,29 @@ describe("PluggableAreaChart", () => {
                             },
                             {
                                 localIdentifier: "stack",
-                                items: [
-                                    referencePointMocks.dateInColumnsAndMultipleMeasuresTreemap.buckets[2]
-                                        .items[0],
-                                ],
+                                items: [dateInColumnsAndMultipleMeasuresTreemap.buckets[2].items[0]],
                             },
                         ],
                     },
                 ],
                 [
                     "from colum chart to area chart: att1 and date1 in viewBy and date2 in stackBy",
-                    referencePointMocks.attributeAndDateInViewByAndDateInStackByReferencePoint,
+                    attributeAndDateInViewByAndDateInStackByReferencePoint,
                     {
                         buckets: [
-                            referencePointMocks.attributeAndDateInViewByAndDateInStackByReferencePoint
-                                .buckets[0],
+                            attributeAndDateInViewByAndDateInStackByReferencePoint.buckets[0],
                             {
                                 localIdentifier: "view",
                                 items: [
-                                    referencePointMocks.attributeAndDateInViewByAndDateInStackByReferencePoint
-                                        .buckets[1].items[0],
+                                    attributeAndDateInViewByAndDateInStackByReferencePoint.buckets[1]
+                                        .items[0],
                                 ],
                             },
                             {
                                 localIdentifier: "stack",
                                 items: [
-                                    referencePointMocks.attributeAndDateInViewByAndDateInStackByReferencePoint
-                                        .buckets[2].items[0],
+                                    attributeAndDateInViewByAndDateInStackByReferencePoint.buckets[2]
+                                        .items[0],
                                 ],
                             },
                         ],
@@ -296,17 +317,15 @@ describe("PluggableAreaChart", () => {
                 ],
                 [
                     "from colum chart to area chart: att1 and date1 in viewBy and empty stackBy",
-                    referencePointMocks.dateAsSecondViewByItemReferencePoint,
+                    dateAsSecondViewByItemReferencePoint,
                     {
                         buckets: [
-                            referencePointMocks.dateAsSecondViewByItemReferencePoint.buckets[0],
+                            dateAsSecondViewByItemReferencePoint.buckets[0],
                             {
                                 localIdentifier: "view",
                                 items: [
-                                    referencePointMocks.dateAsSecondViewByItemReferencePoint.buckets[1]
-                                        .items[0],
-                                    referencePointMocks.dateAsSecondViewByItemReferencePoint.buckets[1]
-                                        .items[1],
+                                    dateAsSecondViewByItemReferencePoint.buckets[1].items[0],
+                                    dateAsSecondViewByItemReferencePoint.buckets[1].items[1],
                                 ],
                             },
                             {
@@ -318,17 +337,15 @@ describe("PluggableAreaChart", () => {
                 ],
                 [
                     "from colum chart to area chart: date1 and att1 in viewBy and empty stackBy",
-                    referencePointMocks.dateAndAttributeInViewByAndEmptyStackBy,
+                    dateAndAttributeInViewByAndEmptyStackBy,
                     {
                         buckets: [
-                            referencePointMocks.dateAndAttributeInViewByAndEmptyStackBy.buckets[0],
+                            dateAndAttributeInViewByAndEmptyStackBy.buckets[0],
                             {
                                 localIdentifier: "view",
                                 items: [
-                                    referencePointMocks.dateAndAttributeInViewByAndEmptyStackBy.buckets[1]
-                                        .items[0],
-                                    referencePointMocks.dateAndAttributeInViewByAndEmptyStackBy.buckets[1]
-                                        .items[1],
+                                    dateAndAttributeInViewByAndEmptyStackBy.buckets[1].items[0],
+                                    dateAndAttributeInViewByAndEmptyStackBy.buckets[1].items[1],
                                 ],
                             },
                             {
@@ -340,23 +357,17 @@ describe("PluggableAreaChart", () => {
                 ],
                 [
                     "from colum chart to area chart: att1 and att2 in viewBy and att3 stackBy",
-                    referencePointMocks.att1AndAtt2inViewByAndAtt3inStackBy,
+                    att1AndAtt2inViewByAndAtt3inStackBy,
                     {
                         buckets: [
-                            referencePointMocks.att1AndAtt2inViewByAndAtt3inStackBy.buckets[0],
+                            att1AndAtt2inViewByAndAtt3inStackBy.buckets[0],
                             {
                                 localIdentifier: "view",
-                                items: [
-                                    referencePointMocks.att1AndAtt2inViewByAndAtt3inStackBy.buckets[1]
-                                        .items[0],
-                                ],
+                                items: [att1AndAtt2inViewByAndAtt3inStackBy.buckets[1].items[0]],
                             },
                             {
                                 localIdentifier: "stack",
-                                items: [
-                                    referencePointMocks.att1AndAtt2inViewByAndAtt3inStackBy.buckets[2]
-                                        .items[0],
-                                ],
+                                items: [att1AndAtt2inViewByAndAtt3inStackBy.buckets[2].items[0]],
                             },
                         ],
                     },
@@ -379,7 +390,7 @@ describe("PluggableAreaChart", () => {
 
         it("should keep two date attributes in view by bucket when comming from pivot table with only one dimension", async () => {
             const areaChart = createComponent(defaultProps);
-            const mockRefPoint = referencePointMocks.dateAttributeOnRowsAndColumnsReferencePoint;
+            const mockRefPoint = dateAttributeOnRowsAndColumnsReferencePoint;
             const expectedBuckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",
@@ -401,7 +412,7 @@ describe("PluggableAreaChart", () => {
 
         it("should keep two date attributes in view by bucket when coming from pivot table with date buckets with different date dimensions", async () => {
             const areaChart = createComponent(defaultProps);
-            const mockRefPoint = cloneDeep(referencePointMocks.dateAttributesOnRowsReferencePoint);
+            const mockRefPoint = cloneDeep(dateAttributesOnRowsReferencePoint);
             const expectedBuckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",
@@ -441,7 +452,7 @@ describe("PluggableAreaChart", () => {
                           },
                       };
             const testInsight = insightSetProperties(
-                testMocks.insightWithSingleMeasureAndViewBy,
+                insightWithSingleMeasureAndViewBy,
                 visualizationProperties,
             );
             const measureBucket = insightBucket(testInsight, BucketNames.MEASURES);
@@ -473,7 +484,7 @@ describe("PluggableAreaChart", () => {
             };
 
             const testInsight = insightSetProperties(
-                testMocks.insightWithSingleMeasureAndTwoViewBy,
+                insightWithSingleMeasureAndTwoViewBy,
                 visualizationProperties,
             );
 
@@ -499,7 +510,7 @@ describe("PluggableAreaChart", () => {
             });
 
             const testInsight = insightSetProperties(
-                testMocks.insightWithTwoMeasuresAndViewBy,
+                insightWithTwoMeasuresAndViewBy,
                 visualizationProperties,
             );
 
@@ -512,7 +523,7 @@ describe("PluggableAreaChart", () => {
 
         it("should reuse one measure, only one category and one category as stack", async () => {
             const areaChart = createComponent(defaultProps);
-            const mockRefPoint = referencePointMocks.oneMetricAndManyCategoriesAndOneStackRefPoint;
+            const mockRefPoint = oneMetricAndManyCategoriesAndOneStackRefPoint;
 
             const extendedReferencePoint = await areaChart.getExtendedReferencePoint(mockRefPoint);
 
@@ -521,7 +532,7 @@ describe("PluggableAreaChart", () => {
 
         it("should reuse one measure, two categories and no category as stack", async () => {
             const areaChart = createComponent(defaultProps);
-            const mockRefPoint = referencePointMocks.oneMetricAndManyCategoriesReferencePoint;
+            const mockRefPoint = oneMetricAndManyCategoriesReferencePoint;
 
             const extendedReferencePoint = await areaChart.getExtendedReferencePoint(mockRefPoint);
 
@@ -530,7 +541,7 @@ describe("PluggableAreaChart", () => {
 
         it("should reuse all measures, only one category and no stacks", async () => {
             const areaChart = createComponent(defaultProps);
-            const mockRefPoint = referencePointMocks.multipleMetricsAndCategoriesReferencePoint;
+            const mockRefPoint = multipleMetricsAndCategoriesReferencePoint;
 
             const extendedReferencePoint = await areaChart.getExtendedReferencePoint(mockRefPoint);
 
@@ -539,7 +550,7 @@ describe("PluggableAreaChart", () => {
 
         it("should return reference point with Date in categories even it was as third item", async () => {
             const areaChart = createComponent(defaultProps);
-            const mockRefPoint = referencePointMocks.dateAsThirdCategoryReferencePointWithoutStack;
+            const mockRefPoint = dateAsThirdCategoryReferencePointWithoutStack;
 
             const extendedReferencePoint = await areaChart.getExtendedReferencePoint(mockRefPoint);
 
@@ -548,7 +559,7 @@ describe("PluggableAreaChart", () => {
 
         it("stackMeasures should be selected when select stackMeasuresToPercent", async () => {
             const areaChart = createComponent(defaultProps);
-            const mockRefPoint = referencePointMocks.stackMeasuresToPercentReferencePoint;
+            const mockRefPoint = stackMeasuresToPercentReferencePoint;
 
             const extendedReferencePoint = await areaChart.getExtendedReferencePoint(mockRefPoint);
             expect(extendedReferencePoint.properties!.controls).toEqual({
@@ -559,7 +570,7 @@ describe("PluggableAreaChart", () => {
 
         it("should keep date item as second view by item", async () => {
             const areaChart = createComponent(defaultProps);
-            const mockRefPoint = referencePointMocks.dateAsSecondViewByItemReferencePoint;
+            const mockRefPoint = dateAsSecondViewByItemReferencePoint;
             const expectedBuckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",
@@ -584,9 +595,7 @@ describe("PluggableAreaChart", () => {
         it("should return reference point containing uiConfig with no supported comparison types", async () => {
             const component = createComponent();
 
-            const extendedReferencePoint = await component.getExtendedReferencePoint(
-                referencePointMocks.emptyReferencePoint,
-            );
+            const extendedReferencePoint = await component.getExtendedReferencePoint(emptyReferencePoint);
 
             expect(extendedReferencePoint.uiConfig!.supportedOverTimeComparisonTypes).toEqual([]);
         });
@@ -595,16 +604,16 @@ describe("PluggableAreaChart", () => {
             const component = createComponent();
 
             const extendedReferencePoint = await component.getExtendedReferencePoint(
-                referencePointMocks.mixOfMeasuresWithDerivedAndArithmeticFromDerivedAreaReferencePoint,
+                mixOfMeasuresWithDerivedAndArithmeticFromDerivedAreaReferencePoint,
             );
             expect(extendedReferencePoint.buckets).toEqual([
                 {
                     localIdentifier: "measures",
                     items: [
-                        referencePointMocks.masterMeasureItems[0],
-                        referencePointMocks.masterMeasureItems[1],
-                        referencePointMocks.arithmeticMeasureItems[0],
-                        referencePointMocks.arithmeticMeasureItems[1],
+                        masterMeasureItems[0],
+                        masterMeasureItems[1],
+                        arithmeticMeasureItems[0],
+                        arithmeticMeasureItems[1],
                     ],
                 },
                 {
@@ -672,17 +681,17 @@ describe("PluggableAreaChart", () => {
 
     describe("Sort config", () => {
         const scenarios: Array<[string, IReferencePoint]> = [
-            ["0 M + 0 VB", referencePointMocks.emptyReferencePoint],
-            ["1 M + 0 VB", referencePointMocks.oneMetricNoCategoriesReferencePoint],
-            ["0 M + 1 VB", referencePointMocks.justViewByReferencePoint],
-            ["1 M + 1 VB", referencePointMocks.oneMetricOneCategory],
-            ["1 M + 2 VB", referencePointMocks.oneMetricAndTwoCategoriesReferencePoint],
-            ["2 M + 1 VB", referencePointMocks.twoMetricAndOneCategoryRefPoint],
-            ["2 M + 2 VB", referencePointMocks.twoMetricAndTwoCategoriesRefPoint],
-            ["2 stacked M + 1 VB", referencePointMocks.twoStackedMetricAndOneCategoryRefPoint],
-            ["2 stacked M + 2 VB", referencePointMocks.twoStackedMetricAndTwoCategoriesRefPoint],
-            ["1 M + 1 VB + 1 ST", referencePointMocks.oneMetricAndOneCategoryAndOneStackRefPoint],
-            ["2 M + 1 VB + 1 ST", referencePointMocks.twoMetricsAndOneCategoryAndOneStackRefPoint],
+            ["0 M + 0 VB", emptyReferencePoint],
+            ["1 M + 0 VB", oneMetricNoCategoriesReferencePoint],
+            ["0 M + 1 VB", justViewByReferencePoint],
+            ["1 M + 1 VB", oneMetricOneCategory],
+            ["1 M + 2 VB", oneMetricAndTwoCategoriesReferencePoint],
+            ["2 M + 1 VB", twoMetricAndOneCategoryRefPoint],
+            ["2 M + 2 VB", twoMetricAndTwoCategoriesRefPoint],
+            ["2 stacked M + 1 VB", twoStackedMetricAndOneCategoryRefPoint],
+            ["2 stacked M + 2 VB", twoStackedMetricAndTwoCategoriesRefPoint],
+            ["1 M + 1 VB + 1 ST", oneMetricAndOneCategoryAndOneStackRefPoint],
+            ["2 M + 1 VB + 1 ST", twoMetricsAndOneCategoryAndOneStackRefPoint],
         ];
 
         it.each(scenarios)("should return expected sort config for %s", async (_name, referencePointMock) => {
@@ -700,7 +709,7 @@ describe("PluggableAreaChart", () => {
 
             visualization.update(
                 { messages: DEFAULT_MESSAGES[DEFAULT_LANGUAGE] },
-                testMocks.insightWithSingleMeasure,
+                insightWithSingleMeasure,
                 {},
                 executionFactory,
             );

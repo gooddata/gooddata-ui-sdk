@@ -5,10 +5,11 @@ import { useEffect } from "react";
 import {
     type AttributeDisplayFormType,
     type IAttributeDescriptor,
-    type IResultAttributeHeader,
+    type IDimensionItemDescriptor,
+    type ObjRef,
+    areObjRefsEqual,
     isAttributeDescriptor,
     isResultAttributeHeader,
-    objRefToString,
 } from "@gooddata/sdk-model";
 import {
     type DataViewFacade,
@@ -31,7 +32,6 @@ import { normalizeAttributeDescriptorLocalIdentifier } from "../../layers/common
 import type { IMapFacade, MapMouseEvent } from "../../layers/common/mapFacade.js";
 import { getTooltipProperties } from "../../layers/common/tooltipUtils.js";
 import { getPushpinLayerIds } from "../../layers/pushpin/operations.js";
-import type { IParentAttributeInfo } from "../../types/common/drilling.js";
 
 /**
  * Get the layer data by MapLibre layer ID.
@@ -79,51 +79,34 @@ function isGeoDisplayFormType(labelType: AttributeDisplayFormType | undefined): 
     return typeof labelType === "string" && labelType.startsWith("GDC.geo.");
 }
 
-/**
- * Extract parent attribute info from a coordinate display form descriptor.
- * Uses primaryLabel as ref if available, otherwise falls back to the descriptor's ref.
- */
-function getParentAttributeInfo(descriptor: IAttributeDescriptor): IParentAttributeInfo {
-    const { primaryLabel, formOf, ref } = descriptor.attributeHeader;
-    return {
-        ref: primaryLabel ?? ref,
-        name: formOf.name,
-        key: primaryLabel ? objRefToString(primaryLabel) : formOf.identifier,
-    };
-}
-
-function normalizeCoordinateAttribute(
+function resolveDrillIdentityDescriptor(
     descriptor: IAttributeDescriptor,
-    rowHeader: IResultAttributeHeader,
-    parentInfo: IParentAttributeInfo,
-): { descriptor: IAttributeDescriptor; rowHeader: IResultAttributeHeader } {
-    return {
-        descriptor: {
-            attributeHeader: {
-                ...descriptor.attributeHeader,
-                ref: parentInfo.ref,
-                name: parentInfo.name,
-            },
-        },
-        rowHeader: {
-            ...rowHeader,
-            attributeHeaderItem: {
-                ...rowHeader.attributeHeaderItem,
-                name: rowHeader.attributeHeaderItem.name, // Keep the value (e.g., "New York")
-            },
-        },
-    };
-}
+    preferredDisplayFormRef?: ObjRef,
+    descriptorsInGeoDimension?: IDimensionItemDescriptor[],
+): { key: string; descriptor: IAttributeDescriptor } {
+    const { primaryLabel, formOf } = descriptor.attributeHeader;
 
-function normalizeGeoDisplayFormAttribute(descriptor: IAttributeDescriptor): IAttributeDescriptor {
-    const parentInfo = getParentAttributeInfo(descriptor);
+    const findDescriptorByRef = (candidateRef: ObjRef | undefined): IAttributeDescriptor | undefined => {
+        if (!candidateRef || !descriptorsInGeoDimension) {
+            return undefined;
+        }
+        return descriptorsInGeoDimension.find(
+            (d): d is IAttributeDescriptor =>
+                isAttributeDescriptor(d) && areObjRefsEqual(d.attributeHeader.ref, candidateRef),
+        );
+    };
+
+    const resolvedDescriptor =
+        findDescriptorByRef(preferredDisplayFormRef) ?? findDescriptorByRef(primaryLabel) ?? descriptor;
+
     return {
-        ...descriptor,
-        attributeHeader: {
-            ...descriptor.attributeHeader,
-            // Use primary label (default display form) for cross-filter labeling and filter identity
-            ref: parentInfo.ref,
-            name: parentInfo.name,
+        key: formOf.identifier,
+        descriptor: {
+            ...resolvedDescriptor,
+            attributeHeader: {
+                ...resolvedDescriptor.attributeHeader,
+                name: formOf.name,
+            },
         },
     };
 }
@@ -147,6 +130,11 @@ function getDrillHeaders(
         typeof tooltipIndex === "number" &&
         isAttributeDescriptor(tooltipDescriptor) &&
         tooltipDescriptor.attributeHeader.localIdentifier === TOOLTIP_TEXT_ATTRIBUTE_LOCAL_ID;
+    const preferredDrillRef =
+        useTooltipValue && isAttributeDescriptor(tooltipDescriptor)
+            ? tooltipDescriptor.attributeHeader.ref
+            : undefined;
+
     const tooltipRowHeader = useTooltipValue
         ? headerItems[geoAttributesDimensionIndex]?.[tooltipIndex]?.[locationIndex]
         : undefined;
@@ -174,32 +162,24 @@ function getDrillHeaders(
                     ? resolvedTooltipRowHeader
                     : rowHeader;
 
-            // Handle coordinate display forms (lat/lon/pin) - deduplicate by parent attribute
-            if (isCoordinateFormType(labelType)) {
-                const parentInfo = getParentAttributeInfo(descriptor);
+            const drillIdentity = isGeoDisplayFormType(labelType)
+                ? resolveDrillIdentityDescriptor(descriptor, preferredDrillRef, descriptors)
+                : undefined;
+            const descriptorForDrill = drillIdentity ? drillIdentity.descriptor : descriptor;
+            const normalizedDescriptor = normalizeAttributeDescriptorLocalIdentifier(descriptorForDrill);
 
-                // Skip if we already processed a coordinate attribute from this parent
-                if (processedCoordinateParents.has(parentInfo.key)) {
+            // Coordinate display forms (lat/lon/pin) - deduplicate by resolved drill identity.
+            if (isCoordinateFormType(labelType)) {
+                if (drillIdentity && processedCoordinateParents.has(drillIdentity.key)) {
                     return;
                 }
-                processedCoordinateParents.add(parentInfo.key);
-
-                // Normalize to use parent attribute's name and primary display form
-                const normalized = normalizeCoordinateAttribute(descriptor, resolvedRowHeader, parentInfo);
-                const normalizedDescriptor = normalizeAttributeDescriptorLocalIdentifier(
-                    normalized.descriptor,
-                );
-                drillHeaders.push(normalized.rowHeader);
-                drillHeaders.push(normalizedDescriptor);
-            } else {
-                // Regular attributes - include as-is
-                drillHeaders.push(resolvedRowHeader);
-                const descriptorForDrill =
-                    isGeoDisplayFormType(labelType) && descriptor.attributeHeader.primaryLabel
-                        ? normalizeGeoDisplayFormAttribute(descriptor)
-                        : descriptor;
-                drillHeaders.push(normalizeAttributeDescriptorLocalIdentifier(descriptorForDrill));
+                if (drillIdentity) {
+                    processedCoordinateParents.add(drillIdentity.key);
+                }
             }
+
+            drillHeaders.push(resolvedRowHeader);
+            drillHeaders.push(normalizedDescriptor);
         }
     });
 

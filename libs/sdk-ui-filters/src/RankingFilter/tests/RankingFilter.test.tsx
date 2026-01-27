@@ -5,16 +5,20 @@ import { describe, expect, it } from "vitest";
 
 import { withIntl } from "@gooddata/sdk-ui";
 
-import * as Mock from "./mocks.js";
+import {
+    attributeItems as mockAttributeItems,
+    defaultFilter as mockDefaultFilter,
+    measureItems as mockMeasureItems,
+} from "./mocks.js";
 import { type IRankingFilterProps, RankingFilter } from "../RankingFilter.js";
 
 const DROPDOWN_BODY = ".s-rf-dropdown-body";
 
 const renderComponent = (props?: Partial<IRankingFilterProps>) => {
     const defaultProps: IRankingFilterProps = {
-        measureItems: Mock.measureItems,
-        attributeItems: Mock.attributeItems,
-        filter: Mock.defaultFilter,
+        measureItems: mockMeasureItems,
+        attributeItems: mockAttributeItems,
+        filter: mockDefaultFilter,
         onApply: () => {},
         onCancel: () => {},
         buttonTitle: "Ranking Filter",

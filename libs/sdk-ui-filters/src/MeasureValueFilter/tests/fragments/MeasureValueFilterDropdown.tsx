@@ -2,7 +2,7 @@
 
 import { fireEvent, screen } from "@testing-library/react";
 
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 const CLASS_OPERATOR_DROPDOWN_BUTTON = ".s-mvf-operator-dropdown-button";
 const CLASS_OPERATOR_DROPDOWN_BODY = ".s-mvf-operator-dropdown-body";
@@ -37,10 +37,10 @@ export class MeasureValueFilterFragment {
     };
 
     public getOperator = (operator: string) =>
-        document.querySelector(`.s-mvf-operator-${stringUtils.simplifyText(operator)}`);
+        document.querySelector(`.s-mvf-operator-${simplifyText(operator)}`);
 
     public getOperatorBubbles = (operator: string) =>
-        document.querySelectorAll(`.s-mvf-operator-${stringUtils.simplifyText(operator)} .tooltip-bubble`);
+        document.querySelectorAll(`.s-mvf-operator-${simplifyText(operator)} .tooltip-bubble`);
 
     public selectOperator = (operator: string) => {
         fireEvent.click(this.getOperator(operator)!);

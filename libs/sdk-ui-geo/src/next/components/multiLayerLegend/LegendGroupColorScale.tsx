@@ -24,9 +24,16 @@ export interface ILegendGroupColorScaleProps {
  * Renders the min-max color scale with gradient.
  */
 function ColorScaleItem({ item }: { item: ILegendColorScaleItem }): ReactElement {
+    const hasCustomColors = Boolean(item.minColor) && Boolean(item.maxColor);
+    const barStyle = hasCustomColors
+        ? {
+              background: `linear-gradient(to right, ${item.minColor}, ${item.maxColor})`,
+          }
+        : undefined;
+
     return (
         <div className="gd-geo-multi-layer-legend__color-scale">
-            <div className="gd-geo-multi-layer-legend__color-scale-bar" />
+            <div className="gd-geo-multi-layer-legend__color-scale-bar" style={barStyle} />
             <div className="gd-geo-multi-layer-legend__color-scale-labels">
                 <span className="gd-geo-multi-layer-legend__color-scale-min" title={item.minLabel}>
                     {item.minLabel}

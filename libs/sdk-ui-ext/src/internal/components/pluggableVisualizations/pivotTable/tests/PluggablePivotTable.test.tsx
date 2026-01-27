@@ -46,8 +46,23 @@ import {
     type IVisConstruct,
     type IVisProps,
 } from "../../../../interfaces/Visualization.js";
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
-import * as testMocks from "../../../../tests/mocks/testMocks.js";
+import {
+    emptyReferencePoint,
+    measureValueFilterAndInvalidNatTotal,
+    multipleMetricsAndCategoriesReferencePoint,
+    rankingFilterAndInvalidNatTotal,
+    sameCategoryAndStackReferencePoint,
+    simpleStackedReferencePoint,
+    tableGrandAndSubtotalsReferencePoint,
+    tableTotalsReferencePoint,
+    tableWith20MeasuresAndAttributesAnd1Column,
+    tableWith20MeasuresAndAttributesAndNoColumn,
+    tableWith20MeasuresAndDerivedMeasuresNoRowsAnd1Column,
+    tableWithMultipleMeasuresRowsAndColumns,
+    tableWithNativeTotal,
+    tableWithRowColTotalAndRankingFilter,
+} from "../../../../tests/mocks/referencePointMocks.js";
+import { dummyInsight, emptyInsight } from "../../../../tests/mocks/testMocks.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../../utils/translations.js";
 import { createDrillEvent, getLastRenderEl } from "../../tests/pluggableVisualizations.test.helpers.js";
 import {
@@ -149,7 +164,7 @@ describe("PluggablePivotTable", () => {
             const pivotTable = createComponent();
 
             const options = getDefaultOptions();
-            pivotTable.update({ ...options }, testMocks.emptyInsight, emptyPropertiesMeta, executionFactory);
+            pivotTable.update({ ...options }, emptyInsight, emptyPropertiesMeta, executionFactory);
 
             const renderEl = getLastRenderEl(mockRenderFun, mockElement);
             expect(renderEl).toBeUndefined();
@@ -159,7 +174,7 @@ describe("PluggablePivotTable", () => {
             const pivotTable = createComponent();
 
             const options = getDefaultOptions();
-            pivotTable.update(options, testMocks.dummyInsight, emptyPropertiesMeta, executionFactory);
+            pivotTable.update(options, dummyInsight, emptyPropertiesMeta, executionFactory);
 
             const renderEl = getLastRenderEl<ICorePivotTableProps>(mockRenderFun, mockElement);
             expect(renderEl).toBeDefined();
@@ -172,7 +187,7 @@ describe("PluggablePivotTable", () => {
             const pivotTable = createComponent();
 
             const options = getDefaultOptions();
-            pivotTable.update(options, testMocks.dummyInsight, emptyPropertiesMeta, executionFactory);
+            pivotTable.update(options, dummyInsight, emptyPropertiesMeta, executionFactory);
 
             const renderEl = getLastRenderEl<ICorePivotTableProps>(mockRenderFun, mockElement);
             expect(renderEl).toBeDefined();
@@ -185,7 +200,7 @@ describe("PluggablePivotTable", () => {
     describe("getExtendedReferencePoint", () => {
         describe("given simpleStackedReferencePoint", () => {
             const pivotTable = createComponent();
-            const sourceReferencePoint = referencePointMocks.simpleStackedReferencePoint;
+            const sourceReferencePoint = simpleStackedReferencePoint;
             const mockPivotTableReferencePoint = getMockReferencePoint(
                 sourceReferencePoint.buckets[0].items,
                 sourceReferencePoint.buckets[1].items,
@@ -227,7 +242,7 @@ describe("PluggablePivotTable", () => {
                 });
 
                 const extendedReferencePoint = await pivotTable.getExtendedReferencePoint(
-                    referencePointMocks.tableWithMultipleMeasuresRowsAndColumns,
+                    tableWithMultipleMeasuresRowsAndColumns,
                 );
 
                 expect(extendedReferencePoint).toMatchSnapshot();
@@ -242,7 +257,7 @@ describe("PluggablePivotTable", () => {
                 });
 
                 const extendedReferencePoint = await pivotTable.getExtendedReferencePoint(
-                    referencePointMocks.tableWith20MeasuresAndDerivedMeasuresNoRowsAnd1Column,
+                    tableWith20MeasuresAndDerivedMeasuresNoRowsAnd1Column,
                 );
 
                 expect(extendedReferencePoint).toMatchSnapshot();
@@ -257,7 +272,7 @@ describe("PluggablePivotTable", () => {
                 });
 
                 const extendedReferencePoint = await pivotTable.getExtendedReferencePoint(
-                    referencePointMocks.tableWith20MeasuresAndAttributesAndNoColumn,
+                    tableWith20MeasuresAndAttributesAndNoColumn,
                 );
 
                 expect(extendedReferencePoint).toMatchSnapshot();
@@ -272,7 +287,7 @@ describe("PluggablePivotTable", () => {
                 });
 
                 const extendedReferencePoint = await pivotTable.getExtendedReferencePoint(
-                    referencePointMocks.tableWith20MeasuresAndAttributesAnd1Column,
+                    tableWith20MeasuresAndAttributesAnd1Column,
                 );
 
                 expect(extendedReferencePoint).toMatchSnapshot();
@@ -312,7 +327,7 @@ describe("PluggablePivotTable", () => {
 
         describe("given multipleMetricsAndCategoriesReferencePoint", () => {
             const pivotTable = createComponent();
-            const sourceReferencePoint = referencePointMocks.multipleMetricsAndCategoriesReferencePoint;
+            const sourceReferencePoint = multipleMetricsAndCategoriesReferencePoint;
             const mockPivotTableReferencePoint = getMockReferencePoint(
                 sourceReferencePoint.buckets[0].items,
                 sourceReferencePoint.buckets[1].items,
@@ -352,7 +367,7 @@ describe("PluggablePivotTable", () => {
 
         it("should return a new reference point with invalid sortItems removed", () => {
             const pivotTable = createComponent();
-            const sourceReferencePoint = referencePointMocks.simpleStackedReferencePoint;
+            const sourceReferencePoint = simpleStackedReferencePoint;
             const mockPivotTableReferencePoint = getMockReferencePoint(
                 sourceReferencePoint.buckets[0].items,
                 sourceReferencePoint.buckets[1].items,
@@ -379,7 +394,7 @@ describe("PluggablePivotTable", () => {
 
         it("should return a new reference point with invalid columnWidths removed", () => {
             const pivotTable = createComponent();
-            const sourceReferencePoint = referencePointMocks.simpleStackedReferencePoint;
+            const sourceReferencePoint = simpleStackedReferencePoint;
             const mockPivotTableReferencePoint: IExtendedReferencePoint = getMockReferencePoint(
                 sourceReferencePoint.buckets[0].items,
                 sourceReferencePoint.buckets[1].items,
@@ -414,7 +429,7 @@ describe("PluggablePivotTable", () => {
 
         describe("given a reference point with duplicate attributes", () => {
             const pivotTable = createComponent();
-            const sourceReferencePoint = referencePointMocks.sameCategoryAndStackReferencePoint;
+            const sourceReferencePoint = sameCategoryAndStackReferencePoint;
             const mockReferencePoint = getMockReferencePoint(
                 sourceReferencePoint.buckets[0].items,
                 sourceReferencePoint.buckets[1].items,
@@ -438,9 +453,7 @@ describe("PluggablePivotTable", () => {
             const pivotTable = createComponent();
             const mockReferencePoint = getMockReferencePoint();
 
-            const extendedReferencePointPromise = pivotTable.getExtendedReferencePoint(
-                referencePointMocks.emptyReferencePoint,
-            );
+            const extendedReferencePointPromise = pivotTable.getExtendedReferencePoint(emptyReferencePoint);
 
             it("should return a new reference point with empty buckets", () => {
                 return extendedReferencePointPromise.then((extendedReferencePoint) => {
@@ -474,11 +487,11 @@ describe("PluggablePivotTable", () => {
             const expectedBuckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",
-                    items: cloneDeep(referencePointMocks.tableTotalsReferencePoint.buckets[0].items),
+                    items: cloneDeep(tableTotalsReferencePoint.buckets[0].items),
                 },
                 {
                     localIdentifier: "attribute",
-                    items: cloneDeep(referencePointMocks.tableTotalsReferencePoint.buckets[1].items),
+                    items: cloneDeep(tableTotalsReferencePoint.buckets[1].items),
                     totals: [
                         {
                             measureIdentifier: "m1",
@@ -500,10 +513,7 @@ describe("PluggablePivotTable", () => {
             ];
 
             return pivotTable
-                .getExtendedReferencePoint(
-                    referencePointMocks.tableGrandAndSubtotalsReferencePoint,
-                    referencePointMocks.tableTotalsReferencePoint,
-                )
+                .getExtendedReferencePoint(tableGrandAndSubtotalsReferencePoint, tableTotalsReferencePoint)
                 .then((extendedReferencePoint) => {
                     expect(extendedReferencePoint.buckets).toEqual(expectedBuckets);
                 });
@@ -523,10 +533,7 @@ describe("PluggablePivotTable", () => {
                 ];
 
                 return pivotTable
-                    .getExtendedReferencePoint(
-                        referencePointMocks.measureValueFilterAndInvalidNatTotal,
-                        referencePointMocks.tableWithNativeTotal,
-                    )
+                    .getExtendedReferencePoint(measureValueFilterAndInvalidNatTotal, tableWithNativeTotal)
                     .then((extendedReferencePoint) => {
                         expect(extendedReferencePoint.buckets[1].totals).toEqual(expectedTotals);
                     });
@@ -545,10 +552,7 @@ describe("PluggablePivotTable", () => {
                 ];
 
                 return pivotTable
-                    .getExtendedReferencePoint(
-                        referencePointMocks.rankingFilterAndInvalidNatTotal,
-                        referencePointMocks.tableWithNativeTotal,
-                    )
+                    .getExtendedReferencePoint(rankingFilterAndInvalidNatTotal, tableWithNativeTotal)
                     .then((extendedReferencePoint) => {
                         expect(extendedReferencePoint.buckets[1].totals).toEqual(expectedTotals);
                     });
@@ -560,8 +564,8 @@ describe("PluggablePivotTable", () => {
 
             return pivotTable
                 .getExtendedReferencePoint(
-                    referencePointMocks.tableWithRowColTotalAndRankingFilter,
-                    referencePointMocks.tableWithRowColTotalAndRankingFilter,
+                    tableWithRowColTotalAndRankingFilter,
+                    tableWithRowColTotalAndRankingFilter,
                 )
                 .then((extendedReferencePoint) => {
                     expect(extendedReferencePoint.buckets[1].totals).toBeUndefined();
@@ -573,15 +577,11 @@ describe("PluggablePivotTable", () => {
             const expectedBuckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",
-                    items: cloneDeep(
-                        referencePointMocks.tableGrandAndSubtotalsReferencePoint.buckets[0].items,
-                    ),
+                    items: cloneDeep(tableGrandAndSubtotalsReferencePoint.buckets[0].items),
                 },
                 {
                     localIdentifier: "attribute",
-                    items: cloneDeep(
-                        referencePointMocks.tableGrandAndSubtotalsReferencePoint.buckets[1].items,
-                    ),
+                    items: cloneDeep(tableGrandAndSubtotalsReferencePoint.buckets[1].items),
                     totals: [
                         {
                             measureIdentifier: "m1",
@@ -603,7 +603,7 @@ describe("PluggablePivotTable", () => {
             ];
 
             return createComponent()
-                .getExtendedReferencePoint(referencePointMocks.tableGrandAndSubtotalsReferencePoint)
+                .getExtendedReferencePoint(tableGrandAndSubtotalsReferencePoint)
                 .then((extendedReferencePoint) => {
                     expect(extendedReferencePoint.buckets).toEqual(expectedBuckets);
                 });
@@ -613,7 +613,7 @@ describe("PluggablePivotTable", () => {
             const pivotTable = createComponent();
 
             return pivotTable
-                .getExtendedReferencePoint(referencePointMocks.simpleStackedReferencePoint)
+                .getExtendedReferencePoint(simpleStackedReferencePoint)
                 .then((extendedReferencePoint) => {
                     expect(extendedReferencePoint.uiConfig).toMatchSnapshot();
                 });
@@ -623,7 +623,7 @@ describe("PluggablePivotTable", () => {
             const pivotTable = createComponent();
 
             return pivotTable
-                .getExtendedReferencePoint(referencePointMocks.simpleStackedReferencePoint)
+                .getExtendedReferencePoint(simpleStackedReferencePoint)
                 .then((extendedReferencePoint) => {
                     expect(extendedReferencePoint.uiConfig).toMatchSnapshot();
                 });

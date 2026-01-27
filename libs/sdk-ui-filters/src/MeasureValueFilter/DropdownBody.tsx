@@ -144,12 +144,15 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
     // use the prop. However, if the new filter is created for Headline or Pivot without rows and columns
     // (i.e., insight without dimensionality), the message would be shown even when it should not. Because
     // filters for these insights could not be created before the dimensionality feature was introduced,
-    // we can safely consider these filters as migrated.
+    // we can safely consider these filters as migrated. We also treat an "ALL" filter with no conditions
+    // as migrated to avoid showing the note when attributes are added after the filter was created.
     // Any change to the filter dimensionality will set the filter as migrated and will hide the message
     // until a user reopens the filter if he did not apply the change. If he did, the first part of the
     // condition will be true and the message will not be shown.
     const [isMigratedFilter, setIsMigratedFilter] = useState<boolean>(
-        (props.dimensionality?.length ?? 0) > 0 || (insightDimensionality?.length ?? 0) === 0,
+        (props.dimensionality?.length ?? 0) > 0 ||
+            (insightDimensionality?.length ?? 0) === 0 ||
+            (propsOperator === "ALL" && propsConditions.length === 0),
     );
 
     const trimToPrecision = useCallback(

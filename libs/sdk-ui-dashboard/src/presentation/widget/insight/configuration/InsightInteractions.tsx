@@ -4,7 +4,7 @@ import cx from "classnames";
 
 import { type IInsightWidget, isInsightWidget, objRefToString } from "@gooddata/sdk-model";
 import { OverlayController, OverlayControllerProvider, ScrollablePanel } from "@gooddata/sdk-ui-kit";
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { InsightDrillConfigPanel } from "./InsightDrillConfigPanel/InsightDrillConfigPanel.js";
 import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/zIndex.js";
@@ -16,9 +16,7 @@ interface IInsightConfigurationProps {
 }
 
 export function InsightInteractions({ widget }: IInsightConfigurationProps) {
-    const widgetRefSuffix = isInsightWidget(widget)
-        ? stringUtils.simplifyText(objRefToString(widget.ref))
-        : "";
+    const widgetRefSuffix = isInsightWidget(widget) ? simplifyText(objRefToString(widget.ref)) : "";
 
     const classes = cx(
         "configuration-scrollable-panel",

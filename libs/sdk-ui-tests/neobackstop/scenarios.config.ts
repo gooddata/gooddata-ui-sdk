@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 /*
  * BackstopJS global configuration for scenarios created for storybook stories.
@@ -77,9 +77,9 @@ const ScenarioConfig = [
     },
     {
         /*
-         * Tests for repeater stories - either created automatically for test scenarios or created manually.
+         * Tests for repeater stories - created automatically for test scenarios.
          */
-        idRegex: /(01).*Repeater.*/g,
+        idRegex: /(01|04).*Repeater.*/g,
         config: {
             delay: {
                 postReady: 2500,

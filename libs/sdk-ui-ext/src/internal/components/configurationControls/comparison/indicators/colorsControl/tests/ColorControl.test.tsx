@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { render } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -14,10 +14,34 @@ import {
     COMPARISON_COLOR_CONFIG_NEGATIVE,
     COMPARISON_COLOR_CONFIG_POSITIVE,
 } from "../../../ComparisonValuePath.js";
-import * as ColorCheckbox from "../ColorCheckbox.js";
-import * as ColorItem from "../ColorItem.js";
-import * as ColorResetButton from "../ColorResetButton.js";
+import { ColorCheckbox } from "../ColorCheckbox.js";
+import { ColorItem } from "../ColorItem.js";
+import { ColorResetButton } from "../ColorResetButton.js";
 import { ColorsControl } from "../ColorsControl.js";
+
+vi.mock("../ColorCheckbox.js", async (importOriginal) => {
+    // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+    const actual = await importOriginal<typeof import("../ColorCheckbox.js")>();
+    return {
+        ...actual,
+        ColorCheckbox: vi.fn(actual.ColorCheckbox),
+    };
+});
+
+vi.mock("../ColorItem.js", async (importOriginal) => {
+    // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+    const actual = await importOriginal<typeof import("../ColorItem.js")>();
+    return { ...actual, ColorItem: vi.fn(actual.ColorItem) };
+});
+
+vi.mock("../ColorResetButton.js", async (importOriginal) => {
+    // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+    const actual = await importOriginal<typeof import("../ColorResetButton.js")>();
+    return {
+        ...actual,
+        ColorResetButton: vi.fn(actual.ColorResetButton),
+    };
+});
 
 describe("ColorsControl", () => {
     const mockPushData = vi.fn();
@@ -73,7 +97,7 @@ describe("ColorsControl", () => {
     });
 
     it("Should render color checkbox is disabled when control is disabled", () => {
-        const MockColorCheckbox = vi.spyOn(ColorCheckbox, "ColorCheckbox");
+        const MockColorCheckbox = vi.mocked(ColorCheckbox);
         renderColorControls({
             disabled: true,
         });
@@ -89,7 +113,7 @@ describe("ColorsControl", () => {
     });
 
     it("Should render color reset button is disabled when control is disabled", () => {
-        const MockColorResetButton = vi.spyOn(ColorResetButton, "ColorResetButton");
+        const MockColorResetButton = vi.mocked(ColorResetButton);
         renderColorControls({
             disabled: true,
         });
@@ -105,7 +129,7 @@ describe("ColorsControl", () => {
     });
 
     it("Should render color checkbox is enabled when control is enabled", () => {
-        const MockColorCheckbox = vi.spyOn(ColorCheckbox, "ColorCheckbox");
+        const MockColorCheckbox = vi.mocked(ColorCheckbox);
         renderColorControls({
             disabled: false,
         });
@@ -125,7 +149,7 @@ describe("ColorsControl", () => {
         ["Should disabled color item when control disabled", true, false],
         ["Should disabled color item when color config disabled", false, true],
     ])("%s", (_test: string, isControlDisabled: boolean, isColorConfigDisabled: boolean) => {
-        const MockColorItem = vi.spyOn(ColorItem, "ColorItem");
+        const MockColorItem = vi.mocked(ColorItem);
 
         const properties = createTestProperties<IComparisonControlProperties>({
             comparison: {

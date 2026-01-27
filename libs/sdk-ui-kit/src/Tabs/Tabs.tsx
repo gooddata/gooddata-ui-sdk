@@ -1,11 +1,11 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type KeyboardEvent, type ReactElement, useCallback, useMemo, useState } from "react";
 
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { isActionKey } from "../utils/events.js";
 
@@ -75,7 +75,7 @@ export function Tabs({
             const tabClassName = cx({
                 "is-active": tab.id === selectedTabId,
                 "gd-tab": true,
-                [`s-${stringUtils.simplifyText(tab.id)}`]: true,
+                [`s-${simplifyText(tab.id)}`]: true,
             });
 
             const handleClick = () => {
@@ -91,7 +91,7 @@ export function Tabs({
 
             return (
                 <div
-                    aria-label={stringUtils.simplifyText(tab.id)}
+                    aria-label={simplifyText(tab.id)}
                     className={tabClassName}
                     key={tab.id}
                     onClick={handleClick}
@@ -99,7 +99,7 @@ export function Tabs({
                     role="tab"
                     aria-selected={tab.id === selectedTabId}
                     tabIndex={0}
-                    data-testid={`s-tab-${stringUtils.simplifyText(tab.id)}`}
+                    data-testid={`s-tab-${simplifyText(tab.id)}`}
                 >
                     <span>
                         {tab.icon ? <i className={tab.icon} /> : null}

@@ -1,5 +1,5 @@
 {
-    "id": "128f27a5-851a-4bb0-b17a-33a0e724fefe",
+    "id": "f15fb53f-2454-497c-871e-0b4928ea5ea4",
     "name": "api_v1_entities_workspaces_9c71fe9a4fc944d7b7886c4d05ce0cf3_visualizationobjects",
     "request": {
         "urlPath": "/api/v1/entities/workspaces/9c71fe9a4fc944d7b7886c4d05ce0cf3/visualizationObjects",
@@ -52,10 +52,10 @@
             "Expires": "0",
             "Pragma": "no-cache",
             "X-XSS-Protection": "0",
-            "Content-Type": "application/vnd.gooddata.api+json"
+            "Content-Type": "application/json"
         }
     },
-    "uuid": "128f27a5-851a-4bb0-b17a-33a0e724fefe",
+    "uuid": "f15fb53f-2454-497c-871e-0b4928ea5ea4",
     "persistent": true,
-    "insertionIndex": 9
+    "insertionIndex": 12
 }

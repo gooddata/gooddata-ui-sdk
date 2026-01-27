@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import {
     type IAttribute,
     type ObjRef,
@@ -11,7 +12,7 @@ import {
     newPreviousPeriodMeasure,
 } from "@gooddata/sdk-model";
 
-import * as ReferenceMd from "./full.js";
+import { Amount, Amount_1, DateDatasets, Won } from "./full.js";
 
 /*
  * This file contains our custom extensions on top of the reference LDM. Things such as arithmetic
@@ -19,20 +20,14 @@ import * as ReferenceMd from "./full.js";
  * when testing.
  */
 
-export const MinAmount = modifyMeasure(ReferenceMd.Amount_1.Min, (m) =>
-    m.alias("Min Amount").defaultLocalId(),
-);
-export const MedianAmount = modifyMeasure(ReferenceMd.Amount_1.Median, (m) =>
-    m.alias("Median Amount").defaultLocalId(),
-);
-export const MaxAmount = modifyMeasure(ReferenceMd.Amount_1.Max, (m) =>
-    m.alias("Max Amount").defaultLocalId(),
-);
+export const MinAmount = modifyMeasure(Amount_1.Min, (m) => m.alias("Min Amount").defaultLocalId());
+export const MedianAmount = modifyMeasure(Amount_1.Median, (m) => m.alias("Median Amount").defaultLocalId());
+export const MaxAmount = modifyMeasure(Amount_1.Max, (m) => m.alias("Max Amount").defaultLocalId());
 
 /**
  * Arithmetic measure doing difference of Amount and Won measures
  */
-export const CalculatedLost = newArithmeticMeasure([ReferenceMd.Amount, ReferenceMd.Won], "difference", (m) =>
+export const CalculatedLost = newArithmeticMeasure([Amount, Won], "difference", (m) =>
     m.alias("Calculated 'Lost' measure"),
 );
 
@@ -40,29 +35,27 @@ export const CalculatedLost = newArithmeticMeasure([ReferenceMd.Amount, Referenc
  * Arithmetic measure calculating ratio of calculated 'Lost' and
  * MAQL 'Won' measure
  */
-export const CalculatedWonLostRatio = newArithmeticMeasure([CalculatedLost, ReferenceMd.Won], "ratio", (m) =>
+export const CalculatedWonLostRatio = newArithmeticMeasure([CalculatedLost, Won], "ratio", (m) =>
     m.alias("Ratio of Won and Lost"),
 );
 
 /**
  * A PoP measure derived from 'Won' measure, comparing same period previous year
  */
-export const WonPopClosedYear = newPopMeasure(
-    ReferenceMd.Won,
-    ReferenceMd.DateDatasets.Closed.ClosedYear.ref,
-    (m) => m.alias("Won Last Year"),
+export const WonPopClosedYear = newPopMeasure(Won, DateDatasets.Closed.ClosedYear.ref, (m) =>
+    m.alias("Won Last Year"),
 );
 
 /**
  * A previous period measure derived from 'Won' measure
  */
-export const WonPreviousPeriod = newPreviousPeriodMeasure(ReferenceMd.Won, [
-    { dataSet: ReferenceMd.DateDatasets.Closed.identifier, periodsAgo: 1 },
+export const WonPreviousPeriod = newPreviousPeriodMeasure(Won, [
+    { dataSet: DateDatasets.Closed.identifier, periodsAgo: 1 },
 ]);
 /**
  * Measure that computes ratio
  */
-export const AmountWithRatio = modifySimpleMeasure(ReferenceMd.Amount, (m) =>
+export const AmountWithRatio = modifySimpleMeasure(Amount, (m) =>
     m.alias("Amount with Ratio").ratio().localId("Amount with Ratio"),
 );
 /**
@@ -72,7 +65,6 @@ export const StageHistoryAttributeRef: ObjRef = idRef("attr.stagehistory.id");
 /**
  * Copy of ClosedYear attribute
  */
-export const ModifiedClosedYear: IAttribute = modifyAttribute(
-    ReferenceMd.DateDatasets.Closed.ClosedYear.Default,
-    (m) => m.localId("closed.second"),
+export const ModifiedClosedYear: IAttribute = modifyAttribute(DateDatasets.Closed.ClosedYear.Default, (m) =>
+    m.localId("closed.second"),
 );

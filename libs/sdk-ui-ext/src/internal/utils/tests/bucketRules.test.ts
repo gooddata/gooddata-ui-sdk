@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { cloneDeep, set } from "lodash-es";
 import { describe, expect, it } from "vitest";
@@ -6,15 +6,46 @@ import { describe, expect, it } from "vitest";
 import { BucketNames } from "@gooddata/sdk-ui";
 
 import { type IBucketItem, type IBucketOfFun, type IFilters } from "../../interfaces/Visualization.js";
-import * as referencePointMocks from "../../tests/mocks/referencePointMocks.js";
-import * as bucketRules from "../bucketRules.js";
+import {
+    attributeFilterBucketItem,
+    comparisonAndTrendingRecommendationReferencePoint,
+    dateFilterBucketAllTime,
+    derivedMeasureItems,
+    masterMeasureItems,
+    measureValueFilterByDerivedReferencePoint,
+    measureValueFilterReferencePoint,
+    metricWithViewByDateAndDateFilterReferencePoint,
+    multipleMetricsAndCategoriesReferencePoint,
+    overTimeComparisonRecommendationRefPoint,
+    percentRecommendationReferencePoint,
+    rankingFilterBucketItem,
+    samePeriodPrevYearFiltersBucket,
+    sliceByWeekBucketItem,
+    thresholdMeasure,
+    twoDateFiltersBucket,
+} from "../../tests/mocks/referencePointMocks.js";
+import {
+    comparisonAndTrendingRecommendationEnabled,
+    getMasterMeasuresCount,
+    hasGlobalDateFilter,
+    hasGlobalDateFilterIgnoreAllTime,
+    hasOneMasterMeasureInBucket,
+    hasOneMeasureOrAlsoLineStyleControlMeasure,
+    hasSomeSegmentByItems,
+    hasUsedDate,
+    isShowInPercentAllowed,
+    noDerivedMeasurePresent,
+    overTimeComparisonRecommendationEnabled,
+    percentRecommendationEnabled,
+    previousPeriodRecommendationEnabled,
+} from "../bucketRules.js";
 
 describe("isShowInPercentAllowed", () => {
     it("should return true if buckets rules met", () => {
         expect(
-            bucketRules.isShowInPercentAllowed(
-                referencePointMocks.metricWithViewByDateAndDateFilterReferencePoint.buckets,
-                referencePointMocks.metricWithViewByDateAndDateFilterReferencePoint.filters,
+            isShowInPercentAllowed(
+                metricWithViewByDateAndDateFilterReferencePoint.buckets,
+                metricWithViewByDateAndDateFilterReferencePoint.filters,
                 BucketNames.MEASURES,
             ),
         ).toBeTruthy();
@@ -22,9 +53,9 @@ describe("isShowInPercentAllowed", () => {
 
     it("should return false if buckets rules doesn't met", () => {
         expect(
-            bucketRules.isShowInPercentAllowed(
-                referencePointMocks.multipleMetricsAndCategoriesReferencePoint.buckets,
-                referencePointMocks.multipleMetricsAndCategoriesReferencePoint.filters,
+            isShowInPercentAllowed(
+                multipleMetricsAndCategoriesReferencePoint.buckets,
+                multipleMetricsAndCategoriesReferencePoint.filters,
                 BucketNames.MEASURES,
             ),
         ).toBeFalsy();
@@ -32,9 +63,9 @@ describe("isShowInPercentAllowed", () => {
 
     it("should return true if measure value filter is present", () => {
         expect(
-            bucketRules.isShowInPercentAllowed(
-                referencePointMocks.measureValueFilterReferencePoint.buckets,
-                referencePointMocks.measureValueFilterReferencePoint.filters,
+            isShowInPercentAllowed(
+                measureValueFilterReferencePoint.buckets,
+                measureValueFilterReferencePoint.filters,
                 BucketNames.MEASURES,
             ),
         ).toBeTruthy();
@@ -42,22 +73,20 @@ describe("isShowInPercentAllowed", () => {
 
     it("should return false if measure value filter by derived measure is present", () => {
         expect(
-            bucketRules.isShowInPercentAllowed(
-                referencePointMocks.measureValueFilterByDerivedReferencePoint.buckets,
-                referencePointMocks.measureValueFilterByDerivedReferencePoint.filters,
+            isShowInPercentAllowed(
+                measureValueFilterByDerivedReferencePoint.buckets,
+                measureValueFilterByDerivedReferencePoint.filters,
                 BucketNames.MEASURES,
             ),
         ).toBeFalsy();
     });
 
     it("should return false if ranking filter is present", () => {
-        const editedReferencePoint = cloneDeep(
-            referencePointMocks.metricWithViewByDateAndDateFilterReferencePoint,
-        );
-        set(editedReferencePoint, ["filters", "items", 1], referencePointMocks.rankingFilterBucketItem);
+        const editedReferencePoint = cloneDeep(metricWithViewByDateAndDateFilterReferencePoint);
+        set(editedReferencePoint, ["filters", "items", 1], rankingFilterBucketItem);
 
         expect(
-            bucketRules.isShowInPercentAllowed(
+            isShowInPercentAllowed(
                 editedReferencePoint.buckets,
                 editedReferencePoint.filters,
                 BucketNames.MEASURES,
@@ -69,14 +98,12 @@ describe("isShowInPercentAllowed", () => {
 describe("overTimeComparisonRecommendationEnabled", () => {
     it("should return true if buckets rules met", () => {
         expect(
-            bucketRules.overTimeComparisonRecommendationEnabled(
-                referencePointMocks.overTimeComparisonRecommendationRefPoint,
-            ),
+            overTimeComparisonRecommendationEnabled(overTimeComparisonRecommendationRefPoint),
         ).toBeTruthy();
     });
 
     it("should return false if buckets rules doesn't met", () => {
-        const editedReferencePoint = cloneDeep(referencePointMocks.overTimeComparisonRecommendationRefPoint);
+        const editedReferencePoint = cloneDeep(overTimeComparisonRecommendationRefPoint);
         const newMetric: IBucketItem = {
             localIdentifier: "m2",
             type: "metric",
@@ -87,30 +114,28 @@ describe("overTimeComparisonRecommendationEnabled", () => {
 
         set(editedReferencePoint, ["buckets", 0, "items", 1], newMetric);
 
-        expect(bucketRules.overTimeComparisonRecommendationEnabled(editedReferencePoint)).toBeFalsy();
+        expect(overTimeComparisonRecommendationEnabled(editedReferencePoint)).toBeFalsy();
     });
 
     it("should return true if insight is sliced by weeks and week filters are enabled", () => {
-        const editedReferencePoint = cloneDeep(referencePointMocks.overTimeComparisonRecommendationRefPoint);
-        set(editedReferencePoint, ["buckets", 1, "items", 0], referencePointMocks.sliceByWeekBucketItem);
+        const editedReferencePoint = cloneDeep(overTimeComparisonRecommendationRefPoint);
+        set(editedReferencePoint, ["buckets", 1, "items", 0], sliceByWeekBucketItem);
 
-        expect(bucketRules.overTimeComparisonRecommendationEnabled(editedReferencePoint)).toBeTruthy();
+        expect(overTimeComparisonRecommendationEnabled(editedReferencePoint)).toBeTruthy();
     });
 });
 
 describe("comparisonAndTrendingRecommendationEnabled", () => {
     it("should return true if buckets rules met", () => {
         expect(
-            bucketRules.comparisonAndTrendingRecommendationEnabled(
-                referencePointMocks.comparisonAndTrendingRecommendationReferencePoint.buckets,
+            comparisonAndTrendingRecommendationEnabled(
+                comparisonAndTrendingRecommendationReferencePoint.buckets,
             ),
         ).toBeTruthy();
     });
 
     it("should return false if buckets rules doesn't met", () => {
-        const editedReferencePoint = cloneDeep(
-            referencePointMocks.comparisonAndTrendingRecommendationReferencePoint,
-        );
+        const editedReferencePoint = cloneDeep(comparisonAndTrendingRecommendationReferencePoint);
 
         const newCategory: IBucketItem = {
             localIdentifier: "v1",
@@ -121,24 +146,22 @@ describe("comparisonAndTrendingRecommendationEnabled", () => {
 
         set(editedReferencePoint, ["buckets", 1, "items", 0], newCategory);
 
-        expect(
-            bucketRules.comparisonAndTrendingRecommendationEnabled(editedReferencePoint.buckets),
-        ).toBeFalsy();
+        expect(comparisonAndTrendingRecommendationEnabled(editedReferencePoint.buckets)).toBeFalsy();
     });
 });
 
 describe("percentRecommendationEnabled", () => {
     it("should return true if buckets rules met", () => {
         expect(
-            bucketRules.percentRecommendationEnabled(
-                referencePointMocks.percentRecommendationReferencePoint.buckets,
-                referencePointMocks.percentRecommendationReferencePoint.filters,
+            percentRecommendationEnabled(
+                percentRecommendationReferencePoint.buckets,
+                percentRecommendationReferencePoint.filters,
             ),
         ).toBeTruthy();
     });
 
     it("should return false if buckets rules doesn't met", () => {
-        const editedReferencePoint = cloneDeep(referencePointMocks.percentRecommendationReferencePoint);
+        const editedReferencePoint = cloneDeep(percentRecommendationReferencePoint);
 
         const newStack: IBucketItem = {
             localIdentifier: "s1",
@@ -150,37 +173,27 @@ describe("percentRecommendationEnabled", () => {
         set(editedReferencePoint, ["buckets", 2, "items", 0], newStack);
 
         expect(
-            bucketRules.percentRecommendationEnabled(
-                editedReferencePoint.buckets,
-                editedReferencePoint.filters,
-            ),
+            percentRecommendationEnabled(editedReferencePoint.buckets, editedReferencePoint.filters),
         ).toBeFalsy();
     });
 
     it("should return false if ranking filter exists", () => {
-        const editedReferencePoint = cloneDeep(referencePointMocks.percentRecommendationReferencePoint);
-        set(editedReferencePoint, ["filters", "items", 0], referencePointMocks.rankingFilterBucketItem);
+        const editedReferencePoint = cloneDeep(percentRecommendationReferencePoint);
+        set(editedReferencePoint, ["filters", "items", 0], rankingFilterBucketItem);
 
         expect(
-            bucketRules.percentRecommendationEnabled(
-                editedReferencePoint.buckets,
-                editedReferencePoint.filters,
-            ),
+            percentRecommendationEnabled(editedReferencePoint.buckets, editedReferencePoint.filters),
         ).toBeFalsy();
     });
 });
 
 describe("previousPeriodRecommendationEnabled", () => {
     it("should return true if buckets rules met", () => {
-        expect(
-            bucketRules.previousPeriodRecommendationEnabled(
-                referencePointMocks.percentRecommendationReferencePoint.buckets,
-            ),
-        ).toBeTruthy();
+        expect(previousPeriodRecommendationEnabled(percentRecommendationReferencePoint.buckets)).toBeTruthy();
     });
 
     it("should return false if buckets rules doesn't met", () => {
-        const editedReferencePoint = cloneDeep(referencePointMocks.percentRecommendationReferencePoint);
+        const editedReferencePoint = cloneDeep(percentRecommendationReferencePoint);
 
         const newMetric: IBucketItem = {
             localIdentifier: "m2",
@@ -191,7 +204,7 @@ describe("previousPeriodRecommendationEnabled", () => {
 
         set(editedReferencePoint, ["buckets", 0, "items", 1], newMetric);
 
-        expect(bucketRules.previousPeriodRecommendationEnabled(editedReferencePoint.buckets)).toBeFalsy();
+        expect(previousPeriodRecommendationEnabled(editedReferencePoint.buckets)).toBeFalsy();
     });
 });
 
@@ -200,7 +213,7 @@ describe("partial rules", () => {
         it("should return true for no bucket", () => {
             const buckets: IBucketOfFun[] = [];
 
-            const result = bucketRules.noDerivedMeasurePresent(buckets);
+            const result = noDerivedMeasurePresent(buckets);
 
             expect(result).toBe(true);
         });
@@ -213,7 +226,7 @@ describe("partial rules", () => {
                 },
             ];
 
-            const result = bucketRules.noDerivedMeasurePresent(buckets);
+            const result = noDerivedMeasurePresent(buckets);
 
             expect(result).toBe(true);
         });
@@ -222,11 +235,11 @@ describe("partial rules", () => {
             const buckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "whatever",
-                    items: [referencePointMocks.masterMeasureItems[0]],
+                    items: [masterMeasureItems[0]],
                 },
             ];
 
-            const result = bucketRules.noDerivedMeasurePresent(buckets);
+            const result = noDerivedMeasurePresent(buckets);
 
             expect(result).toBe(true);
         });
@@ -235,14 +248,11 @@ describe("partial rules", () => {
             const buckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "whatever",
-                    items: [
-                        referencePointMocks.masterMeasureItems[0],
-                        referencePointMocks.derivedMeasureItems[0],
-                    ],
+                    items: [masterMeasureItems[0], derivedMeasureItems[0]],
                 },
             ];
 
-            const result = bucketRules.noDerivedMeasurePresent(buckets);
+            const result = noDerivedMeasurePresent(buckets);
 
             expect(result).toBe(false);
         });
@@ -257,7 +267,7 @@ describe("partial rules", () => {
                 },
             ];
 
-            const result = bucketRules.hasSomeSegmentByItems(buckets);
+            const result = hasSomeSegmentByItems(buckets);
 
             expect(result).toBe(false);
         });
@@ -270,7 +280,7 @@ describe("partial rules", () => {
                 },
             ];
 
-            const result = bucketRules.hasSomeSegmentByItems(buckets);
+            const result = hasSomeSegmentByItems(buckets);
 
             expect(result).toBe(false);
         });
@@ -290,7 +300,7 @@ describe("partial rules", () => {
                 },
             ];
 
-            const result = bucketRules.hasSomeSegmentByItems(buckets);
+            const result = hasSomeSegmentByItems(buckets);
 
             expect(result).toBe(true);
         });
@@ -316,7 +326,7 @@ describe("partial rules", () => {
                 },
             ];
 
-            const result = bucketRules.hasSomeSegmentByItems(buckets);
+            const result = hasSomeSegmentByItems(buckets);
 
             expect(result).toBe(true);
         });
@@ -331,7 +341,7 @@ describe("partial rules", () => {
                 },
             ];
 
-            const result = bucketRules.hasOneMasterMeasureInBucket(buckets, "measures");
+            const result = hasOneMasterMeasureInBucket(buckets, "measures");
 
             expect(result).toBe(false);
         });
@@ -340,11 +350,11 @@ describe("partial rules", () => {
             const buckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",
-                    items: [referencePointMocks.masterMeasureItems[0]],
+                    items: [masterMeasureItems[0]],
                 },
             ];
 
-            const result = bucketRules.hasOneMasterMeasureInBucket(buckets, "measures");
+            const result = hasOneMasterMeasureInBucket(buckets, "measures");
 
             expect(result).toBe(true);
         });
@@ -353,14 +363,11 @@ describe("partial rules", () => {
             const buckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",
-                    items: [
-                        referencePointMocks.masterMeasureItems[1],
-                        referencePointMocks.derivedMeasureItems[1],
-                    ],
+                    items: [masterMeasureItems[1], derivedMeasureItems[1]],
                 },
             ];
 
-            const result = bucketRules.hasOneMasterMeasureInBucket(buckets, "measures");
+            const result = hasOneMasterMeasureInBucket(buckets, "measures");
 
             expect(result).toBe(true);
         });
@@ -369,15 +376,11 @@ describe("partial rules", () => {
             const buckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "measures",
-                    items: [
-                        referencePointMocks.masterMeasureItems[1],
-                        referencePointMocks.derivedMeasureItems[1],
-                        referencePointMocks.masterMeasureItems[2],
-                    ],
+                    items: [masterMeasureItems[1], derivedMeasureItems[1], masterMeasureItems[2]],
                 },
             ];
 
-            const result = bucketRules.hasOneMasterMeasureInBucket(buckets, "measures");
+            const result = hasOneMasterMeasureInBucket(buckets, "measures");
 
             expect(result).toBe(false);
         });
@@ -392,7 +395,7 @@ describe("partial rules", () => {
                 },
             ];
 
-            const result = bucketRules.getMasterMeasuresCount(buckets, "bucketidentifier");
+            const result = getMasterMeasuresCount(buckets, "bucketidentifier");
 
             expect(result).toBe(0);
         });
@@ -401,11 +404,11 @@ describe("partial rules", () => {
             const buckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "bucketidentifier",
-                    items: [referencePointMocks.masterMeasureItems[0]],
+                    items: [masterMeasureItems[0]],
                 },
             ];
 
-            const result = bucketRules.getMasterMeasuresCount(buckets, "bucketidentifier");
+            const result = getMasterMeasuresCount(buckets, "bucketidentifier");
 
             expect(result).toBe(1);
         });
@@ -414,14 +417,11 @@ describe("partial rules", () => {
             const buckets: IBucketOfFun[] = [
                 {
                     localIdentifier: "bucketidentifier",
-                    items: [
-                        referencePointMocks.masterMeasureItems[0],
-                        referencePointMocks.derivedMeasureItems[0],
-                    ],
+                    items: [masterMeasureItems[0], derivedMeasureItems[0]],
                 },
             ];
 
-            const result = bucketRules.getMasterMeasuresCount(buckets, "bucketidentifier");
+            const result = getMasterMeasuresCount(buckets, "bucketidentifier");
 
             expect(result).toBe(1);
         });
@@ -431,23 +431,20 @@ describe("partial rules", () => {
                 {
                     localIdentifier: "bucketidentifier",
                     items: [
-                        referencePointMocks.masterMeasureItems[0],
-                        referencePointMocks.derivedMeasureItems[0],
-                        referencePointMocks.masterMeasureItems[1],
-                        referencePointMocks.derivedMeasureItems[2],
-                        referencePointMocks.masterMeasureItems[2],
+                        masterMeasureItems[0],
+                        derivedMeasureItems[0],
+                        masterMeasureItems[1],
+                        derivedMeasureItems[2],
+                        masterMeasureItems[2],
                     ],
                 },
                 {
                     localIdentifier: "bucketak",
-                    items: [
-                        referencePointMocks.masterMeasureItems[3],
-                        referencePointMocks.derivedMeasureItems[3],
-                    ],
+                    items: [masterMeasureItems[3], derivedMeasureItems[3]],
                 },
             ];
 
-            const result = bucketRules.getMasterMeasuresCount(buckets, "bucketidentifier");
+            const result = getMasterMeasuresCount(buckets, "bucketidentifier");
 
             expect(result).toBe(3);
         });
@@ -461,35 +458,28 @@ describe("partial rules", () => {
         };
 
         it("should return false when date filter is empty and no date in category", () => {
-            expect(bucketRules.hasUsedDate(bucketsEmpty, emptyFilters)).toBeFalsy();
+            expect(hasUsedDate(bucketsEmpty, emptyFilters)).toBeFalsy();
         });
 
         it("should return true when date filter is set to all time and no date in category", () => {
-            expect(
-                bucketRules.hasUsedDate(bucketsEmpty, referencePointMocks.dateFilterBucketAllTime),
-            ).toBeTruthy();
+            expect(hasUsedDate(bucketsEmpty, dateFilterBucketAllTime)).toBeTruthy();
         });
 
         it("should return true when date filter is set to last year and no date in category", () => {
-            expect(
-                bucketRules.hasUsedDate(bucketsEmpty, referencePointMocks.samePeriodPrevYearFiltersBucket),
-            ).toBeTruthy();
+            expect(hasUsedDate(bucketsEmpty, samePeriodPrevYearFiltersBucket)).toBeTruthy();
         });
 
         it("should return true when date filter is empty and date used in category", () => {
             expect(
-                bucketRules.hasUsedDate(
-                    referencePointMocks.metricWithViewByDateAndDateFilterReferencePoint.buckets,
-                    emptyFilters,
-                ),
+                hasUsedDate(metricWithViewByDateAndDateFilterReferencePoint.buckets, emptyFilters),
             ).toBeTruthy();
         });
 
         it("should return true when date filter is set and date used in category", () => {
             expect(
-                bucketRules.hasUsedDate(
-                    referencePointMocks.metricWithViewByDateAndDateFilterReferencePoint.buckets,
-                    referencePointMocks.samePeriodPrevYearFiltersBucket,
+                hasUsedDate(
+                    metricWithViewByDateAndDateFilterReferencePoint.buckets,
+                    samePeriodPrevYearFiltersBucket,
                 ),
             ).toBeTruthy();
         });
@@ -502,23 +492,19 @@ describe("partial rules", () => {
         };
 
         it("should return false when the filter bucket is empty", () => {
-            expect(bucketRules.hasGlobalDateFilter(emptyFilters)).toBeFalsy();
+            expect(hasGlobalDateFilter(emptyFilters)).toBeFalsy();
         });
 
         it("should return true when date filter is in the filter bucket and is set to all-time", () => {
-            expect(bucketRules.hasGlobalDateFilter(referencePointMocks.dateFilterBucketAllTime)).toBeTruthy();
+            expect(hasGlobalDateFilter(dateFilterBucketAllTime)).toBeTruthy();
         });
 
         it("should return true when date filter is in the filter bucket and is set to last year", () => {
-            expect(
-                bucketRules.hasGlobalDateFilter(referencePointMocks.samePeriodPrevYearFiltersBucket),
-            ).toBeTruthy();
+            expect(hasGlobalDateFilter(samePeriodPrevYearFiltersBucket)).toBeTruthy();
         });
 
         it("should return false when only attribute filter is in the filter bucket", () => {
-            expect(
-                bucketRules.hasGlobalDateFilter(referencePointMocks.attributeFilterBucketItem),
-            ).toBeFalsy();
+            expect(hasGlobalDateFilter(attributeFilterBucketItem)).toBeFalsy();
         });
     });
 
@@ -529,33 +515,23 @@ describe("partial rules", () => {
         };
 
         it("should return false when the filter bucket is empty", () => {
-            expect(bucketRules.hasGlobalDateFilterIgnoreAllTime(emptyFilters)).toBeFalsy();
+            expect(hasGlobalDateFilterIgnoreAllTime(emptyFilters)).toBeFalsy();
         });
 
         it("should return true when date filter is in the filter bucket and is set to all-time", () => {
-            expect(
-                bucketRules.hasGlobalDateFilterIgnoreAllTime(referencePointMocks.dateFilterBucketAllTime),
-            ).toBeFalsy();
+            expect(hasGlobalDateFilterIgnoreAllTime(dateFilterBucketAllTime)).toBeFalsy();
         });
 
         it("should return true when date filter is in the filter bucket and is set to last year", () => {
-            expect(
-                bucketRules.hasGlobalDateFilterIgnoreAllTime(
-                    referencePointMocks.samePeriodPrevYearFiltersBucket,
-                ),
-            ).toBeTruthy();
+            expect(hasGlobalDateFilterIgnoreAllTime(samePeriodPrevYearFiltersBucket)).toBeTruthy();
         });
 
         it("should return false when date filter set to last year is not first", () => {
-            expect(
-                bucketRules.hasGlobalDateFilterIgnoreAllTime(referencePointMocks.twoDateFiltersBucket),
-            ).toBeFalsy();
+            expect(hasGlobalDateFilterIgnoreAllTime(twoDateFiltersBucket)).toBeFalsy();
         });
 
         it("should return false when only attribute filter is in the filter bucket", () => {
-            expect(
-                bucketRules.hasGlobalDateFilterIgnoreAllTime(referencePointMocks.attributeFilterBucketItem),
-            ).toBeFalsy();
+            expect(hasGlobalDateFilterIgnoreAllTime(attributeFilterBucketItem)).toBeFalsy();
         });
     });
 
@@ -564,67 +540,50 @@ describe("partial rules", () => {
             const bucketsWithOneMeasure: IBucketOfFun[] = [
                 {
                     localIdentifier: BucketNames.MEASURES,
-                    items: [referencePointMocks.masterMeasureItems[0]],
+                    items: [masterMeasureItems[0]],
                 },
             ];
-            expect(
-                bucketRules.hasOneMeasureOrAlsoLineStyleControlMeasure(bucketsWithOneMeasure),
-            ).toBeTruthy();
+            expect(hasOneMeasureOrAlsoLineStyleControlMeasure(bucketsWithOneMeasure)).toBeTruthy();
         });
 
         it("should return false when there's two measures in bucket", () => {
             const bucketsWithTwoMeasures: IBucketOfFun[] = [
                 {
                     localIdentifier: BucketNames.MEASURES,
-                    items: [
-                        referencePointMocks.masterMeasureItems[0],
-                        referencePointMocks.masterMeasureItems[1],
-                    ],
+                    items: [masterMeasureItems[0], masterMeasureItems[1]],
                 },
             ];
-            expect(
-                bucketRules.hasOneMeasureOrAlsoLineStyleControlMeasure(bucketsWithTwoMeasures),
-            ).toBeFalsy();
+            expect(hasOneMeasureOrAlsoLineStyleControlMeasure(bucketsWithTwoMeasures)).toBeFalsy();
         });
 
         it("should return true when there's two measures in bucket but one is line style control metric", () => {
             const bucketsWithTwoMeasures: IBucketOfFun[] = [
                 {
                     localIdentifier: BucketNames.MEASURES,
-                    items: [referencePointMocks.masterMeasureItems[0], referencePointMocks.thresholdMeasure],
+                    items: [masterMeasureItems[0], thresholdMeasure],
                 },
             ];
-            expect(
-                bucketRules.hasOneMeasureOrAlsoLineStyleControlMeasure(bucketsWithTwoMeasures),
-            ).toBeTruthy();
+            expect(hasOneMeasureOrAlsoLineStyleControlMeasure(bucketsWithTwoMeasures)).toBeTruthy();
         });
 
         it("should return false when there's three measures in bucket but one is line style control metric", () => {
             const bucketsWithTwoMeasures: IBucketOfFun[] = [
                 {
                     localIdentifier: BucketNames.MEASURES,
-                    items: [
-                        referencePointMocks.masterMeasureItems[0],
-                        referencePointMocks.masterMeasureItems[1],
-                        referencePointMocks.thresholdMeasure,
-                    ],
+                    items: [masterMeasureItems[0], masterMeasureItems[1], thresholdMeasure],
                 },
             ];
-            expect(
-                bucketRules.hasOneMeasureOrAlsoLineStyleControlMeasure(bucketsWithTwoMeasures),
-            ).toBeFalsy();
+            expect(hasOneMeasureOrAlsoLineStyleControlMeasure(bucketsWithTwoMeasures)).toBeFalsy();
         });
 
         it("should return false when there's two measures in bucket, both are line style control metric", () => {
             const bucketsWithTwoMeasures: IBucketOfFun[] = [
                 {
                     localIdentifier: BucketNames.MEASURES,
-                    items: [referencePointMocks.thresholdMeasure, referencePointMocks.thresholdMeasure],
+                    items: [thresholdMeasure, thresholdMeasure],
                 },
             ];
-            expect(
-                bucketRules.hasOneMeasureOrAlsoLineStyleControlMeasure(bucketsWithTwoMeasures),
-            ).toBeFalsy();
+            expect(hasOneMeasureOrAlsoLineStyleControlMeasure(bucketsWithTwoMeasures)).toBeFalsy();
         });
     });
 });

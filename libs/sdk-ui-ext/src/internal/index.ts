@@ -2,28 +2,16 @@
 
 /* eslint-disable no-barrel-files/no-barrel-files */
 
-import { LabelRotationControl } from "./components/configurationControls/axis/LabelRotationControl.js";
-import { LabelSubsection } from "./components/configurationControls/axis/LabelSubsection.js";
-import { NamePositionControl } from "./components/configurationControls/axis/NamePositionControl.js";
-import { NameSubsection } from "./components/configurationControls/axis/NameSubsection.js";
-import { ColorDropdown } from "./components/configurationControls/colors/colorDropdown/ColorDropdown.js";
-import { ColoredItemContent } from "./components/configurationControls/colors/coloredItemsList/ColoredItemContent.js";
-import { LegendSection } from "./components/configurationControls/legend/LegendSection.js";
-import { MinMaxControl } from "./components/configurationControls/MinMaxControl.js";
-import * as Axis from "./constants/axis.js";
-import * as DrillablePredicatesUtils from "./utils/drillablePredicates.js";
-export {
-    Axis,
-    DrillablePredicatesUtils,
-    LabelRotationControl,
-    LabelSubsection,
-    NamePositionControl,
-    NameSubsection,
-    MinMaxControl,
-    ColorDropdown,
-    ColoredItemContent,
-    LegendSection,
-};
+export { Axis } from "./constants/axis.js";
+export { DrillablePredicatesUtils } from "./utils/drillablePredicates.js";
+export { LabelRotationControl } from "./components/configurationControls/axis/LabelRotationControl.js";
+export { LabelSubsection } from "./components/configurationControls/axis/LabelSubsection.js";
+export { NamePositionControl } from "./components/configurationControls/axis/NamePositionControl.js";
+export { NameSubsection } from "./components/configurationControls/axis/NameSubsection.js";
+export { ColorDropdown } from "./components/configurationControls/colors/colorDropdown/ColorDropdown.js";
+export { ColoredItemContent } from "./components/configurationControls/colors/coloredItemsList/ColoredItemContent.js";
+export { LegendSection } from "./components/configurationControls/legend/LegendSection.js";
+export { MinMaxControl } from "./components/configurationControls/MinMaxControl.js";
 
 export { BaseVisualization, type IBaseVisualizationProps } from "./components/BaseVisualization.js";
 

@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { afterEach, describe, expect, it, vi } from "vitest";
 
@@ -7,8 +7,25 @@ import { OverTimeComparisonTypes } from "@gooddata/sdk-ui";
 
 import { AXIS } from "../../../../constants/axis.js";
 import { type IReferencePoint, type IVisConstruct } from "../../../../interfaces/Visualization.js";
-import * as referencePointMocks from "../../../../tests/mocks/referencePointMocks.js";
-import * as testMocks from "../../../../tests/mocks/testMocks.js";
+import {
+    emptyReferencePoint,
+    justViewByReferencePoint,
+    multipleMetricsAndCategoriesReferencePoint,
+    multipleMetricsNoCategoriesReferencePoint,
+    oneMetricAndCategoryAndStackReferencePoint,
+    oneMetricAndManyCategoriesAndOneStackRefPoint,
+    oneMetricAndTwoCategoriesReferencePoint,
+    oneMetricNoCategoriesReferencePoint,
+    oneMetricOneCategory,
+    oneMetricReferencePoint,
+    samePeriodPreviousYearRefPoint,
+    simpleStackedReferencePoint,
+    twoMetricAndOneCategoryRefPoint,
+    twoMetricAndTwoCategoriesRefPoint,
+    twoStackedMetricAndOneCategoryRefPoint,
+    twoStackedMetricAndTwoCategoriesRefPoint,
+} from "../../../../tests/mocks/referencePointMocks.js";
+import { insightWithSingleMeasure } from "../../../../tests/mocks/testMocks.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../../utils/translations.js";
 import { getLastRenderEl } from "../../tests/pluggableVisualizations.test.helpers.js";
 import { PluggableBarChart } from "../PluggableBarChart.js";
@@ -46,9 +63,7 @@ describe("PluggableBarChart", () => {
     it("should return reference point with uiConfig containing supportedOverTimeComparisonTypes", async () => {
         const barChart = createComponent();
 
-        const extendedReferencePoint = await barChart.getExtendedReferencePoint(
-            referencePointMocks.oneMetricReferencePoint,
-        );
+        const extendedReferencePoint = await barChart.getExtendedReferencePoint(oneMetricReferencePoint);
 
         expect(extendedReferencePoint).toMatchObject(
             expect.objectContaining({
@@ -65,9 +80,7 @@ describe("PluggableBarChart", () => {
     it("should enable stack attribute bucket", async () => {
         const barChart = createComponent();
 
-        const extendedReferencePoint = await barChart.getExtendedReferencePoint(
-            referencePointMocks.oneMetricReferencePoint,
-        );
+        const extendedReferencePoint = await barChart.getExtendedReferencePoint(oneMetricReferencePoint);
 
         expect(extendedReferencePoint).toMatchObject(
             expect.objectContaining({
@@ -84,7 +97,7 @@ describe("PluggableBarChart", () => {
         const barChart = createComponent();
 
         const extendedReferencePoint = await barChart.getExtendedReferencePoint(
-            referencePointMocks.samePeriodPreviousYearRefPoint,
+            samePeriodPreviousYearRefPoint,
         );
 
         expect(extendedReferencePoint).toMatchObject(
@@ -102,7 +115,7 @@ describe("PluggableBarChart", () => {
         const barChart = createComponent();
 
         const extendedReferencePoint = await barChart.getExtendedReferencePoint(
-            referencePointMocks.multipleMetricsNoCategoriesReferencePoint,
+            multipleMetricsNoCategoriesReferencePoint,
         );
 
         expect(extendedReferencePoint).toMatchObject(
@@ -120,9 +133,7 @@ describe("PluggableBarChart", () => {
         it("should return reference point containing uiConfig with PP, SP supported comparison types", async () => {
             const component = createComponent();
 
-            const extendedReferencePoint = await component.getExtendedReferencePoint(
-                referencePointMocks.emptyReferencePoint,
-            );
+            const extendedReferencePoint = await component.getExtendedReferencePoint(emptyReferencePoint);
 
             expect(extendedReferencePoint.uiConfig!.supportedOverTimeComparisonTypes).toEqual([
                 OverTimeComparisonTypes.SAME_PERIOD_PREVIOUS_YEAR,
@@ -136,7 +147,7 @@ describe("PluggableBarChart", () => {
             const chart = createComponent(defaultProps);
 
             const extendedReferencePoint = await chart.getExtendedReferencePoint(
-                referencePointMocks.oneMetricAndCategoryAndStackReferencePoint,
+                oneMetricAndCategoryAndStackReferencePoint,
             );
 
             const measures = extendedReferencePoint?.properties?.controls?.["secondary_xaxis"].measures;
@@ -149,7 +160,7 @@ describe("PluggableBarChart", () => {
             const chart = createComponent(defaultProps);
 
             const extendedReferencePoint = await chart.getExtendedReferencePoint(
-                referencePointMocks.multipleMetricsAndCategoriesReferencePoint,
+                multipleMetricsAndCategoriesReferencePoint,
             );
 
             const measures = extendedReferencePoint?.properties?.controls?.["secondary_xaxis"].measures;
@@ -163,9 +174,7 @@ describe("PluggableBarChart", () => {
         it("should create sort config with sorting supported but disabled when there is no view by attribute", async () => {
             const chart = createComponent(defaultProps);
 
-            const sortConfig = await chart.getSortConfig(
-                referencePointMocks.oneMetricNoCategoriesReferencePoint,
-            );
+            const sortConfig = await chart.getSortConfig(oneMetricNoCategoriesReferencePoint);
 
             expect(sortConfig.supported).toBeTruthy();
             expect(sortConfig.disabled).toBeTruthy();
@@ -174,7 +183,7 @@ describe("PluggableBarChart", () => {
         it("should create sort config with sorting disabled when there is no measure", async () => {
             const chart = createComponent(defaultProps);
 
-            const sortConfig = await chart.getSortConfig(referencePointMocks.justViewByReferencePoint);
+            const sortConfig = await chart.getSortConfig(justViewByReferencePoint);
 
             expect(sortConfig.supported).toBeTruthy();
             expect(sortConfig.disabled).toBeTruthy();
@@ -183,9 +192,7 @@ describe("PluggableBarChart", () => {
         it("should create sort config with sorting enabled when there is view by attribute", async () => {
             const chart = createComponent(defaultProps);
 
-            const sortConfig = await chart.getSortConfig(
-                referencePointMocks.oneMetricAndCategoryAndStackReferencePoint,
-            );
+            const sortConfig = await chart.getSortConfig(oneMetricAndCategoryAndStackReferencePoint);
 
             expect(sortConfig.supported).toBeTruthy();
             expect(sortConfig.disabled).toBeFalsy();
@@ -194,7 +201,7 @@ describe("PluggableBarChart", () => {
         it("should provide measureSort as default sort for 1M + 1 VB", async () => {
             const chart = createComponent(defaultProps);
 
-            const sortConfig = await chart.getSortConfig(referencePointMocks.oneMetricOneCategory);
+            const sortConfig = await chart.getSortConfig(oneMetricOneCategory);
 
             expect(sortConfig.defaultSort).toMatchSnapshot();
         });
@@ -202,9 +209,7 @@ describe("PluggableBarChart", () => {
         it("should provide attribute area sort and measureSort as default sort for 1M + 2 VB", async () => {
             const chart = createComponent(defaultProps);
 
-            const sortConfig = await chart.getSortConfig(
-                referencePointMocks.oneMetricAndTwoCategoriesReferencePoint,
-            );
+            const sortConfig = await chart.getSortConfig(oneMetricAndTwoCategoriesReferencePoint);
 
             expect(sortConfig.defaultSort).toMatchSnapshot();
         });
@@ -212,9 +217,7 @@ describe("PluggableBarChart", () => {
         it("should provide two attribute area sorts as default sort for 1M + 2 VB + 1SB", async () => {
             const chart = createComponent(defaultProps);
 
-            const sortConfig = await chart.getSortConfig(
-                referencePointMocks.oneMetricAndManyCategoriesAndOneStackRefPoint,
-            );
+            const sortConfig = await chart.getSortConfig(oneMetricAndManyCategoriesAndOneStackRefPoint);
 
             expect(sortConfig.defaultSort).toMatchSnapshot();
         });
@@ -222,7 +225,7 @@ describe("PluggableBarChart", () => {
         it("should provide measureSort by first measure as default sort for 2M + 1 VB", async () => {
             const chart = createComponent(defaultProps);
 
-            const sortConfig = await chart.getSortConfig(referencePointMocks.twoMetricAndOneCategoryRefPoint);
+            const sortConfig = await chart.getSortConfig(twoMetricAndOneCategoryRefPoint);
 
             expect(sortConfig.defaultSort).toMatchSnapshot();
         });
@@ -230,9 +233,7 @@ describe("PluggableBarChart", () => {
         it("should provide attribute area sort as default sort for 2 stacked M + 1 VB", async () => {
             const chart = createComponent(defaultProps);
 
-            const sortConfig = await chart.getSortConfig(
-                referencePointMocks.twoStackedMetricAndOneCategoryRefPoint,
-            );
+            const sortConfig = await chart.getSortConfig(twoStackedMetricAndOneCategoryRefPoint);
 
             expect(sortConfig.defaultSort).toMatchSnapshot();
         });
@@ -240,9 +241,7 @@ describe("PluggableBarChart", () => {
         it("should provide areaSort+measureSort by first measure as default sort for 2M + 2 VB", async () => {
             const chart = createComponent(defaultProps);
 
-            const sortConfig = await chart.getSortConfig(
-                referencePointMocks.twoMetricAndTwoCategoriesRefPoint,
-            );
+            const sortConfig = await chart.getSortConfig(twoMetricAndTwoCategoriesRefPoint);
 
             expect(sortConfig.defaultSort).toMatchSnapshot();
         });
@@ -250,21 +249,19 @@ describe("PluggableBarChart", () => {
         it("should provide two areaSorts as default sort for 2 stacked M + 2 VB", async () => {
             const chart = createComponent(defaultProps);
 
-            const sortConfig = await chart.getSortConfig(
-                referencePointMocks.twoStackedMetricAndTwoCategoriesRefPoint,
-            );
+            const sortConfig = await chart.getSortConfig(twoStackedMetricAndTwoCategoriesRefPoint);
 
             expect(sortConfig.defaultSort).toMatchSnapshot();
         });
 
         const Scenarios: Array<[string, IReferencePoint]> = [
-            ["1M + 1 VB", referencePointMocks.oneMetricOneCategory],
-            ["1M + 1 VB + 1SB", referencePointMocks.simpleStackedReferencePoint],
-            ["1M + 2 VB + 1SB", referencePointMocks.oneMetricAndManyCategoriesAndOneStackRefPoint],
-            ["2M + 1 VB", referencePointMocks.twoMetricAndOneCategoryRefPoint],
-            ["2 stacked M + 1 VB", referencePointMocks.twoStackedMetricAndOneCategoryRefPoint],
-            ["2M + 2 VB", referencePointMocks.twoMetricAndTwoCategoriesRefPoint],
-            ["2 stacked M + 2 VB", referencePointMocks.twoStackedMetricAndTwoCategoriesRefPoint],
+            ["1M + 1 VB", oneMetricOneCategory],
+            ["1M + 1 VB + 1SB", simpleStackedReferencePoint],
+            ["1M + 2 VB + 1SB", oneMetricAndManyCategoriesAndOneStackRefPoint],
+            ["2M + 1 VB", twoMetricAndOneCategoryRefPoint],
+            ["2 stacked M + 1 VB", twoStackedMetricAndOneCategoryRefPoint],
+            ["2M + 2 VB", twoMetricAndTwoCategoriesRefPoint],
+            ["2 stacked M + 2 VB", twoStackedMetricAndTwoCategoriesRefPoint],
         ];
 
         it.each(Scenarios)(
@@ -283,7 +280,7 @@ describe("PluggableBarChart", () => {
         it("should mount on the element defined by the callback", () => {
             const visualization = createComponent();
 
-            visualization.update({ messages }, testMocks.insightWithSingleMeasure, {}, executionFactory);
+            visualization.update({ messages }, insightWithSingleMeasure, {}, executionFactory);
 
             // 1st call for rendering element
             // 2nd call for rendering config panel

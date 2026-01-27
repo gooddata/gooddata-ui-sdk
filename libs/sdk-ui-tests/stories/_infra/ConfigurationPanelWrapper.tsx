@@ -1,6 +1,6 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
-import { type ReactNode, useCallback, useRef } from "react";
+import { type ReactNode, useCallback, useRef, useState } from "react";
 
 import { ConfigPanelClassName } from "@gooddata/sdk-ui-ext/internal";
 
@@ -35,8 +35,11 @@ export function ConfigurationPanelWrapper({
     children,
 }: IConfigurationPanelWrapperProps) {
     const componentRef = useRef<HTMLDivElement>(null);
+    const [expanded, setExpanded] = useState(false);
 
     const expandAllSections = useCallback(() => {
+        setExpanded((pre) => !pre);
+
         const element = componentRef.current;
         const sections = element?.getElementsByClassName("adi-bucket-item-header collapsed");
 
@@ -45,14 +48,14 @@ export function ConfigurationPanelWrapper({
                 (section as HTMLElement).click();
             }
         }
-    }, [componentRef]);
+    }, [componentRef, setExpanded]);
 
     return (
         <>
             <div className={expandAllClassName} style={{ cursor: "pointer" }} onClick={expandAllSections}>
-                Expand all
+                {expanded ? "Collapse" : "Expand"}
             </div>
-            <div ref={componentRef} className={className}>
+            <div ref={componentRef} className={className} style={{ display: expanded ? "block" : "none" }}>
                 {children}
             </div>
         </>

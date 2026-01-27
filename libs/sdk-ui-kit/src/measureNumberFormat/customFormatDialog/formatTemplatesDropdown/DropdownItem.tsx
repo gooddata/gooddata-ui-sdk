@@ -1,11 +1,11 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { memo, useCallback, useMemo, useState } from "react";
 
 import { FormattedMessage } from "react-intl";
 
 import { type ISeparators } from "@gooddata/sdk-ui";
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { Bubble } from "../../../Bubble/Bubble.js";
 import { Typography } from "../../../Typography/Typography.js";
@@ -43,7 +43,7 @@ export const DropdownItem = memo(function DropdownItem({
                 id={useMemo(() => templateDropdownItemId(template), [template])}
                 className={useMemo(
                     () =>
-                        `gd-list-item gd-format-preset gd-format-template s-measure-format-template-${stringUtils.simplifyText(
+                        `gd-list-item gd-format-preset gd-format-template s-measure-format-template-${simplifyText(
                             template.name,
                         )}`,
                     [template.name],
@@ -62,7 +62,7 @@ export const DropdownItem = memo(function DropdownItem({
             {displayHelp ? (
                 <Bubble
                     alignTo={`#${templateDropdownItemId(template)}`}
-                    className={`gd-measure-format-template-preview-bubble bubble-light s-measure-format-template-help-bubble-${stringUtils.simplifyText(
+                    className={`gd-measure-format-template-preview-bubble bubble-light s-measure-format-template-help-bubble-${simplifyText(
                         template.name,
                     )}`}
                     alignPoints={[{ align: "cr cl" }, { align: "cr bl" }, { align: "cr tl" }]}
@@ -71,7 +71,7 @@ export const DropdownItem = memo(function DropdownItem({
                         {template.name}
                     </Typography>
                     <div
-                        className={`gd-measure-format-template-preview-bubble-subtitle s-measure-format-template-help-preview-${stringUtils.simplifyText(
+                        className={`gd-measure-format-template-preview-bubble-subtitle s-measure-format-template-help-preview-${simplifyText(
                             template.name,
                         )}`}
                     >

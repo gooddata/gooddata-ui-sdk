@@ -1,11 +1,11 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
-import * as Navigation from "../../tools/navigation";
+import { visit } from "../../tools/navigation";
 import { Repeater } from "../../tools/repeater";
 
 describe("Repeater", { tags: ["checklist_integrated_tiger_be", "checklist_integrated_tiger_fe"] }, () => {
     it(`Should render apply full customize configurations`, () => {
-        Navigation.visit("visualizations/repeater/repeater-full-configs");
+        visit("visualizations/repeater/repeater-full-configs");
         const repeater = new Repeater();
         repeater
             .hasHeaderCellsAmount(5)
@@ -24,7 +24,7 @@ describe("Repeater", { tags: ["checklist_integrated_tiger_be", "checklist_integr
     });
 
     it(`Should render insightView Repeater`, () => {
-        Navigation.visit("visualizations/repeater/repeater-insight-view");
+        visit("visualizations/repeater/repeater-insight-view");
         const repeater = new Repeater();
         repeater
             .hasHeaderCellsAmount(5)
@@ -46,7 +46,7 @@ describe("Repeater", { tags: ["checklist_integrated_tiger_be", "checklist_integr
         `Should render Dashboard Repeater`,
         { tags: ["checklist_integrated_tiger_releng_be", "checklist_integrated_tiger_releng_fe"] },
         () => {
-            Navigation.visit("visualizations/repeater/repeater-dashboard");
+            visit("visualizations/repeater/repeater-dashboard");
             const repeater = new Repeater();
             repeater
                 .hasHeaderCellsAmount(5)
@@ -67,13 +67,13 @@ describe("Repeater", { tags: ["checklist_integrated_tiger_be", "checklist_integr
     );
 
     it(`Should render Repeater doesn't have any metric`, () => {
-        Navigation.visit("visualizations/repeater/repeater-no-metric");
+        visit("visualizations/repeater/repeater-no-metric");
         const repeater = new Repeater();
         repeater.hasHeaderCellsAmount(1).hasHeaderLabel(["Product Image"]);
     });
 
     it(`Should show error when Repeater has no Column`, () => {
-        Navigation.visit("visualizations/repeater/repeater-no-column");
+        visit("visualizations/repeater/repeater-no-column");
         const repeater = new Repeater();
         repeater.shouldShowErorrMessage(
             "Sorry, we can't display this visualizationContact your administrator.",

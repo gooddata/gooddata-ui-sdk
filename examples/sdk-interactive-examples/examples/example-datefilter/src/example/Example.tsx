@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { useState } from "react";
 
@@ -10,7 +10,7 @@ import {
 } from "@gooddata/sdk-ui-filters";
 
 import { Filter } from "./DateFilter.js";
-import * as Catalog from "../catalog.js";
+import { DateDatasets, GrossProfit, NrOfOrders } from "../catalog.js";
 import { Hint } from "../Hint.js";
 
 export interface IDateFilterComponentExampleState {
@@ -36,7 +36,7 @@ export function Example() {
 
     const dateFilter = DateFilterHelpers.mapOptionToAfm(
         filter.selectedFilterOption,
-        Catalog.DateDatasets.Date.ref,
+        DateDatasets.Date.ref,
         filter.excludeCurrentPeriod,
     );
 
@@ -50,9 +50,9 @@ export function Example() {
 
             <div style={{ height: 300 }}>
                 <ComboChart
-                    primaryMeasures={[Catalog.GrossProfit]}
-                    secondaryMeasures={[Catalog.NrOfOrders]}
-                    viewBy={[Catalog.DateDatasets.Date.DateDayOfYear.Default]}
+                    primaryMeasures={[GrossProfit]}
+                    secondaryMeasures={[NrOfOrders]}
+                    viewBy={[DateDatasets.Date.DateDayOfYear.Default]}
                     filters={dateFilter ? [dateFilter] : []}
                 />
             </div>

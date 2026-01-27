@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { cloneDeep, set } from "lodash-es";
 
@@ -16,7 +16,7 @@ import {
     type IDrillEventIntersectionElement,
     getIntersectionPartAfter,
 } from "@gooddata/sdk-ui";
-import { arrayUtils } from "@gooddata/util";
+import { shiftArrayRight } from "@gooddata/util";
 
 import { PluggableBaseChart } from "./baseChart/PluggableBaseChart.js";
 import { addIntersectionFiltersToInsight, modifyBucketsAttributesForDrillDown } from "./drillDownUtil.js";
@@ -113,7 +113,7 @@ export class PluggableColumnBarCharts extends PluggableBaseChart {
         const hasStackByAttributes = stackBucket && !bucketIsEmpty(stackBucket);
 
         const intersection = event.drillContext.intersection ?? [];
-        return hasStackByAttributes ? arrayUtils.shiftArrayRight(intersection) : intersection;
+        return hasStackByAttributes ? shiftArrayRight(intersection) : intersection;
     }
 
     private addFiltersForColumnBar(

@@ -4,7 +4,7 @@ import cx from "classnames";
 
 import { isRichTextWidget, objRefToString } from "@gooddata/sdk-model";
 import { OverlayController, OverlayControllerProvider, ScrollablePanel } from "@gooddata/sdk-ui-kit";
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { RichTextFilters } from "./RichTextFilters.js";
 import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/zIndex.js";
@@ -13,9 +13,7 @@ import { type IRichTextMenuSubmenuComponentProps } from "../../richTextMenu/type
 const overlayController = OverlayController.getInstance(DASHBOARD_HEADER_OVERLAYS_Z_INDEX);
 
 export function RichTextConfiguration({ widget }: IRichTextMenuSubmenuComponentProps) {
-    const widgetRefSuffix = isRichTextWidget(widget)
-        ? stringUtils.simplifyText(objRefToString(widget.ref))
-        : "";
+    const widgetRefSuffix = isRichTextWidget(widget) ? simplifyText(objRefToString(widget.ref)) : "";
 
     const classes = cx(
         "configuration-scrollable-panel",

@@ -14,7 +14,6 @@ import {
     isFactItem,
     isLabelItem,
     isMetricItem,
-    jsonApiHeaders,
 } from "@gooddata/api-client-tiger";
 import { ActionsApi_GetDependentEntitiesGraphFromEntryPoints } from "@gooddata/api-client-tiger/endpoints/actions";
 import {
@@ -167,18 +166,11 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
             ...attrs.map((attr) => `id==${attr}`),
         ].join(",");
         const response = await this.authCall((client) => {
-            return EntitiesApi_GetAllEntitiesAttributes(
-                client.axios,
-                client.basePath,
-                {
-                    workspaceId: this.workspace,
-                    filter,
-                    include: ["labels", "defaultView", "dataset"],
-                },
-                {
-                    headers: jsonApiHeaders,
-                },
-            ).then((res: any) => res.data);
+            return EntitiesApi_GetAllEntitiesAttributes(client.axios, client.basePath, {
+                workspaceId: this.workspace,
+                filter,
+                include: ["labels", "defaultView", "dataset"],
+            }).then((res: any) => res.data);
         });
 
         const attributes: ICatalogAttribute[] = response.data.map((item: JsonApiAttributeOutWithLinks) => {
@@ -242,18 +234,11 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
         const id = objRefToIdentifier(ref, this.authCall);
         const includeObj = references.length ? { include: references } : {};
         const response = await this.authCall((client) =>
-            EntitiesApi_GetEntityVisualizationObjects(
-                client.axios,
-                client.basePath,
-                {
-                    objectId: id,
-                    workspaceId: this.workspace,
-                    ...includeObj,
-                },
-                {
-                    headers: jsonApiHeaders,
-                },
-            ),
+            EntitiesApi_GetEntityVisualizationObjects(client.axios, client.basePath, {
+                objectId: id,
+                workspaceId: this.workspace,
+                ...includeObj,
+            }),
         );
         return createInsightFromBackend(response.data, ref);
     };
@@ -267,27 +252,20 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
 
     public createInsight = async (insight: IInsightDefinition): Promise<IInsight> => {
         const createResponse = await this.authCall((client) => {
-            return EntitiesApi_CreateEntityVisualizationObjects(
-                client.axios,
-                client.basePath,
-                {
-                    workspaceId: this.workspace,
-                    jsonApiVisualizationObjectPostOptionalIdDocument: {
-                        data: {
-                            type: "visualizationObject",
-                            attributes: {
-                                description: insightSummary(insight),
-                                content: convertInsight(insight),
-                                title: insightTitle(insight),
-                                tags: insightTags(insight),
-                            },
+            return EntitiesApi_CreateEntityVisualizationObjects(client.axios, client.basePath, {
+                workspaceId: this.workspace,
+                jsonApiVisualizationObjectPostOptionalIdDocument: {
+                    data: {
+                        type: "visualizationObject",
+                        attributes: {
+                            description: insightSummary(insight),
+                            content: convertInsight(insight),
+                            title: insightTitle(insight),
+                            tags: insightTags(insight),
                         },
                     },
                 },
-                {
-                    headers: jsonApiHeaders,
-                },
-            );
+            });
         });
         const insightData = createResponse.data;
         return insightFromInsightDefinition(
@@ -306,29 +284,22 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
 
     public updateInsight = async (insight: IInsight): Promise<IInsight> => {
         await this.authCall((client) => {
-            return EntitiesApi_UpdateEntityVisualizationObjects(
-                client.axios,
-                client.basePath,
-                {
-                    objectId: insightId(insight),
-                    workspaceId: this.workspace,
-                    jsonApiVisualizationObjectInDocument: {
-                        data: {
-                            id: insightId(insight),
-                            type: "visualizationObject",
-                            attributes: {
-                                description: insightSummary(insight),
-                                content: convertInsight(insight),
-                                title: insightTitle(insight),
-                                tags: insightTags(insight),
-                            },
+            return EntitiesApi_UpdateEntityVisualizationObjects(client.axios, client.basePath, {
+                objectId: insightId(insight),
+                workspaceId: this.workspace,
+                jsonApiVisualizationObjectInDocument: {
+                    data: {
+                        id: insightId(insight),
+                        type: "visualizationObject",
+                        attributes: {
+                            description: insightSummary(insight),
+                            content: convertInsight(insight),
+                            title: insightTitle(insight),
+                            tags: insightTags(insight),
                         },
                     },
                 },
-                {
-                    headers: jsonApiHeaders,
-                },
-            );
+            });
         });
         return insight;
     };
@@ -338,33 +309,24 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
     ): Promise<IInsight> => {
         const objectId = objRefToIdentifier(insightMeta.ref, this.authCall);
         const response = await this.authCall((client) => {
-            return EntitiesApi_PatchEntityVisualizationObjects(
-                client.axios,
-                client.basePath,
-                {
-                    objectId,
-                    workspaceId: this.workspace,
-                    jsonApiVisualizationObjectPatchDocument: {
-                        data: {
-                            id: objectId,
-                            type: "visualizationObject",
-                            attributes: {
-                                ...(insightMeta.title === undefined ? {} : { title: insightMeta.title }),
-                                ...(insightMeta.description === undefined
-                                    ? {}
-                                    : { description: insightMeta.description }),
-                                ...(insightMeta.tags === undefined ? {} : { tags: insightMeta.tags }),
-                                ...(insightMeta.isHidden === undefined
-                                    ? {}
-                                    : { isHidden: insightMeta.isHidden }),
-                            },
+            return EntitiesApi_PatchEntityVisualizationObjects(client.axios, client.basePath, {
+                objectId,
+                workspaceId: this.workspace,
+                jsonApiVisualizationObjectPatchDocument: {
+                    data: {
+                        id: objectId,
+                        type: "visualizationObject",
+                        attributes: {
+                            ...(insightMeta.title === undefined ? {} : { title: insightMeta.title }),
+                            ...(insightMeta.description === undefined
+                                ? {}
+                                : { description: insightMeta.description }),
+                            ...(insightMeta.tags === undefined ? {} : { tags: insightMeta.tags }),
+                            ...(insightMeta.isHidden === undefined ? {} : { isHidden: insightMeta.isHidden }),
                         },
                     },
                 },
-                {
-                    headers: jsonApiHeaders,
-                },
-            );
+            });
         });
 
         const { insight } = createInsightFromBackend(response.data, insightMeta.ref);

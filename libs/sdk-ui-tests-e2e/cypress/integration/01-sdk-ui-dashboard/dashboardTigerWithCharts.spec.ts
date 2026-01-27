@@ -1,13 +1,13 @@
 // (C) 2021-2026 GoodData Corporation
 
 import { Dashboard } from "../../tools/dashboards";
-import * as Navigation from "../../tools/navigation";
+import { visit } from "../../tools/navigation";
 import { Widget } from "../../tools/widget";
 
 describe("Dashboard with charts", { tags: ["pre-merge_isolated_tiger_fe"] }, () => {
     describe("rendering", () => {
         beforeEach(() => {
-            Navigation.visit("dashboard/dashboard-tiger-charts");
+            visit("dashboard/dashboard-tiger-charts");
         });
 
         it("should render charts", () => {
@@ -41,7 +41,7 @@ describe(
     },
     () => {
         beforeEach(() => {
-            Navigation.visit("dashboard/dashboard-tiger-charts");
+            visit("dashboard/dashboard-tiger-charts");
         });
 
         it("should render default color legend of funnel and pyramid chart correctly", () => {

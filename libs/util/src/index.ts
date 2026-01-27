@@ -11,12 +11,19 @@
  * @packageDocumentation
  */
 
-import * as arrayUtils from "./arrayUtils.js";
-import * as objectUtils from "./objectUtils.js";
-import * as stringUtils from "./stringUtils.js";
-import * as translationUtils from "./translationUtils.js";
-import * as typesUtils from "./typesUtils.js";
-
+export { shiftArrayRight } from "./arrayUtils.js";
+export { shallowEqualObjects } from "./objectUtils.js";
+export {
+    type IShortenTextOptions,
+    hashCodeString,
+    randomString,
+    shortenText,
+    escapeRegExp,
+    simplifyText,
+    parseStringToArray,
+} from "./stringUtils.js";
+export { removeMetadata, sanitizeLocaleForMoment } from "./translationUtils.js";
+export { type GuardType, type EmptyObject, combineGuards } from "./typesUtils.js";
 export {
     type MatcherFunction,
     type ConsoleFunction,
@@ -26,5 +33,3 @@ export {
     delay,
     suppressConsole,
 } from "./testUtils.js";
-export { stringUtils, translationUtils, arrayUtils, objectUtils, typesUtils };
-export type { EmptyObject } from "./typesUtils.js";

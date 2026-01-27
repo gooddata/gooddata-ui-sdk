@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type ISettings } from "@gooddata/sdk-model";
 
@@ -8,7 +8,7 @@ import { DateFilterAbsoluteForm } from "../../tools/dateFilterAbsoluteForm";
 import { AttributeFilter } from "../../tools/filterBar";
 import { Headline } from "../../tools/headline";
 import { InsightsCatalog } from "../../tools/insightsCatalog";
-import * as Navigation from "../../tools/navigation";
+import { visit } from "../../tools/navigation";
 import { Widget } from "../../tools/widget";
 
 const headline = new Headline(".s-dash-item.viz-type-headline");
@@ -33,7 +33,7 @@ describe("Available value filter", () => {
             ],
         },
         () => {
-            Navigation.visit("dashboard/dashboard-tiger-hide-filters");
+            visit("dashboard/dashboard-tiger-hide-filters");
             new Dashboard().waitForDashboardLoaded();
 
             topBar.enterEditMode().editButtonIsVisible(false);
@@ -99,7 +99,7 @@ describe("Available value filter", () => {
             ],
         },
         () => {
-            Navigation.visit("dashboard/multiple-date-filters", featureFlags);
+            visit("dashboard/multiple-date-filters", featureFlags);
             cy.intercept("GET", "**/attributes**").as("attributes");
 
             cy.wait("@attributes", { timeout: 30000 }).then(() => {

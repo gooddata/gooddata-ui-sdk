@@ -6,7 +6,7 @@ import cx from "classnames";
 import { useIntl } from "react-intl";
 
 import { Separator, Typography } from "@gooddata/sdk-ui-kit";
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { PopupHeader } from "./PopupHeader.js";
 import { messages } from "../../../../../../../locales.js";
@@ -23,7 +23,7 @@ interface IActionProps {
 function Action({ title, description, onClick }: IActionProps) {
     const classNames = cx(
         "attribute-filter__limit__popup__action-select__option",
-        `s-add-limit-${stringUtils.simplifyText(title)}`,
+        `s-add-limit-${simplifyText(title)}`,
     );
     return (
         <div className={classNames} onClick={onClick}>

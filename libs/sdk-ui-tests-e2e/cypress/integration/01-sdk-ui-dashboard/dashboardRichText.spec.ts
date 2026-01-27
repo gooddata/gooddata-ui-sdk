@@ -4,7 +4,7 @@ import { DashboardHeader } from "../../tools/dashboardHeader";
 import { DashboardMenu } from "../../tools/dashboardMenu";
 import { EditMode } from "../../tools/editMode";
 import { LayoutRow } from "../../tools/layoutRow";
-import * as Navigation from "../../tools/navigation";
+import { visit } from "../../tools/navigation";
 import { Widget } from "../../tools/widget";
 
 const editMode = new EditMode();
@@ -16,7 +16,7 @@ const dashboardMenu = new DashboardMenu();
 
 describe("RichText - isolated", { tags: ["pre-merge_isolated_tiger_fe"] }, () => {
     beforeEach(() => {
-        Navigation.visit("dashboard/rich-text");
+        visit("dashboard/rich-text");
     });
 
     it("should render rich text in view mode", () => {
@@ -56,7 +56,7 @@ describe(
     },
     () => {
         beforeEach(() => {
-            Navigation.visit("dashboard/rich-text");
+            visit("dashboard/rich-text");
         });
 
         it("should remove rich text widget and save it", () => {

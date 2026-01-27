@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type MouseEvent, useCallback, useEffect, useRef, useState } from "react";
 
@@ -16,7 +16,7 @@ import {
     ShortenedText,
     isDateDatasetHeader,
 } from "@gooddata/sdk-ui-kit";
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import {
     getDateConfigurationDropdownHeight,
@@ -63,16 +63,10 @@ function DateDatasetsListItem({
         return <div className="gd-list-item gd-list-item-header">{title}</div>;
     }
 
-    const classNames = cx(
-        "gd-list-item",
-        "gd-list-item-shortened",
-        `s-${id}`,
-        `s-${stringUtils.simplifyText(title)}`,
-        {
-            "is-selected": isSelected,
-            "is-unrelated": isUnrelated,
-        },
-    );
+    const classNames = cx("gd-list-item", "gd-list-item-shortened", `s-${id}`, `s-${simplifyText(title)}`, {
+        "is-selected": isSelected,
+        "is-unrelated": isUnrelated,
+    });
 
     return (
         <div className={classNames} onClick={onClick}>

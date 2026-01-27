@@ -4,7 +4,7 @@ import { Dashboard } from "../../tools/dashboards";
 import { DateFilter } from "../../tools/dateFilter";
 import { EditMode } from "../../tools/editMode";
 import { InsightsCatalog } from "../../tools/insightsCatalog";
-import * as Navigation from "../../tools/navigation";
+import { visit } from "../../tools/navigation";
 import { Widget } from "../../tools/widget";
 import { WidgetConfiguration } from "../../tools/widgetConfiguration";
 
@@ -20,7 +20,7 @@ const DATASET_CREATED = "Created";
 
 describe("Insights on dashboard", () => {
     beforeEach(() => {
-        Navigation.visit("dashboard/insight");
+        visit("dashboard/insight");
         editMode.isInEditMode(false).edit().isInEditMode();
     });
 
@@ -92,7 +92,7 @@ describe("Insights on dashboard", () => {
 
 describe("Date filtering on insight", () => {
     beforeEach(() => {
-        Navigation.visit("dashboard/dashboard-date-filtering-on-insight-scenario");
+        visit("dashboard/dashboard-date-filtering-on-insight-scenario");
         editMode.isInEditMode(false).edit().isInEditMode();
     });
 

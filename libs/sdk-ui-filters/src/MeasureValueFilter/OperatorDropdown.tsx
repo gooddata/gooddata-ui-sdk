@@ -7,7 +7,7 @@ import { capitalize } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import { Button } from "@gooddata/sdk-ui-kit";
-import { stringUtils } from "@gooddata/util";
+import { simplifyText } from "@gooddata/util";
 
 import { getOperatorIcon, getOperatorTranslationKey } from "./helpers/measureValueFilterOperator.js";
 import { OperatorDropdownBody } from "./OperatorDropdownBody.js";
@@ -38,7 +38,7 @@ export const OperatorDropdown = memo(function OperatorDropdown(props: IOperatorD
         const buttonClasses = cx(
             "gd-mvf-operator-dropdown-button",
             "s-mvf-operator-dropdown-button",
-            `s-mvf-operator-dropdown-button-${stringUtils.simplifyText(operator)}`,
+            `s-mvf-operator-dropdown-button-${simplifyText(operator)}`,
             "gd-button-primary",
             "gd-button-small",
             {
