@@ -27,6 +27,7 @@ import {
     type OptionalDashboardContentComponentProvider,
     type OptionalDashboardLayoutComponentProvider,
     type OptionalDateFilterComponentProvider,
+    type OptionalFilterGroupComponentProvider,
     type OptionalInsightBodyComponentProvider,
     type OptionalInsightComponentProvider,
     type OptionalInsightMenuButtonComponentProvider,
@@ -378,6 +379,8 @@ export interface IDashboardCustomComponentProps {
      * -  If not provided, the default implementation {@link DefaultDashboardAttributeFilter} will be used.
      * -  If factory function is provided and it returns undefined, then the default implementation {@link DefaultDashboardAttributeFilter}.
      *    This is useful if you want to customize just one particular filter and keep all other filters the same.
+     * -  Note this only affects attribute filter directly placed in filter bar. Filters placed in filter groups are not affected.
+     *    To customize filters in filter groups, use DashboardFilterGroupComponentProvider.
      *
      * @example
      * Here is how to override the component for all filters:
@@ -395,6 +398,20 @@ export interface IDashboardCustomComponentProps {
      * @alpha
      */
     DashboardDateFilterComponentProvider?: OptionalDateFilterComponentProvider;
+
+    /**
+     * Specify custom component to use for rendering all filter groups or a factory function to customize the component
+     * per different filter group.
+     *
+     * -  If not provided, the default implementation {@link DefaultDashboardFilterGroup} will be used.
+     * -  If factory function is provided and it returns undefined, then the default implementation {@link DefaultDashboardFilterGroup}.
+     *    This is useful if you want to customize just one particular filter group and keep all other filter groups the same.
+     * -  If you want to customize each filter in a filter group, use this provider and customize DefaultDashboardFilterGroup in it.
+     *    It accepts some customization props fro deeper component.
+     *
+     * @alpha
+     */
+    DashboardFilterGroupComponentProvider?: OptionalFilterGroupComponentProvider;
 
     /**
      * Specify function to obtain custom component to use for extend rendering of dashboard content.

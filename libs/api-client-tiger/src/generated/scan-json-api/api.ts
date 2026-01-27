@@ -410,7 +410,8 @@ export type TestDefinitionRequestTypeEnum =
     | "FLEXCONNECT"
     | "STARROCKS"
     | "ATHENA"
-    | "MONGODB";
+    | "MONGODB"
+    | "CRATEDB";
 
 /**
  * A structure containing duration of the test queries run on a data source. It is omitted if an error happens.

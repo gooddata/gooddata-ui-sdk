@@ -2271,6 +2271,11 @@
                     "executionSettings": {
                         "$ref": "#/components/schemas/ExecutionSettings"
                     },
+                    "delimiter": {
+                        "maxLength": 1,
+                        "type": "string",
+                        "description": "Set column delimiter. (CSV)"
+                    },
                     "metadata": {
                         "$ref": "#/components/schemas/JsonNode"
                     }
@@ -2479,6 +2484,11 @@
                         "description": "Set page orientation. (PDF)",
                         "default": "PORTRAIT",
                         "enum": ["PORTRAIT", "LANDSCAPE"]
+                    },
+                    "delimiter": {
+                        "maxLength": 1,
+                        "type": "string",
+                        "description": "Set column delimiter. (CSV)"
                     }
                 },
                 "description": "Additional settings."

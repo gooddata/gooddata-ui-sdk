@@ -130,6 +130,12 @@
     padding-right: 5px;
 }
 
+.gd-is-mobile .gd-attribute-filter-dropdown-button-icon__next {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
 .gd-attribute-filter-dropdown-button-content__next {
     position: relative;
     z-index: 1;

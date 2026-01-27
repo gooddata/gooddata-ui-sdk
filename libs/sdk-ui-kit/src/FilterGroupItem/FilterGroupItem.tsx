@@ -1,6 +1,13 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { type MutableRefObject, type ReactNode, type RefObject } from "react";
+import {
+    type KeyboardEvent,
+    type KeyboardEventHandler,
+    type MutableRefObject,
+    type ReactNode,
+    type RefObject,
+    useCallback,
+} from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -8,7 +15,9 @@ import { useIntl } from "react-intl";
 import { simplifyText } from "@gooddata/util";
 
 import { UiIcon } from "../@ui/UiIcon/UiIcon.js";
+import { UiTooltip } from "../@ui/UiTooltip/UiTooltip.js";
 import { ShortenedText } from "../ShortenedText/ShortenedText.js";
+import { isActionKey } from "../utils/events.js";
 import { useIdPrefixed } from "../utils/useId.js";
 
 /**
@@ -111,6 +120,13 @@ export interface IFilterGroupItemProps {
      * @beta
      */
     dropdownId?: string;
+
+    /**
+     * Specifies the visibility mode of the filter.
+     *
+     * @alpha
+     */
+    disabled?: boolean;
 }
 
 export const ALIGN_POINT = [
@@ -137,6 +153,7 @@ export function FilterGroupItem({
     onClick,
     buttonRef,
     dropdownId,
+    disabled,
 }: IFilterGroupItemProps) {
     const intl = useIntl();
     let buttonTitle = title;
@@ -146,6 +163,15 @@ export function FilterGroupItem({
         buttonSubtitle = intl.formatMessage({ id: "loading" });
     }
     const tooltipId = useIdPrefixed("filter-group-item-locked-tooltip");
+    const onKeyDown = useCallback<KeyboardEventHandler<HTMLDivElement>>(
+        (event: KeyboardEvent<HTMLDivElement>) => {
+            if (disabled && isActionKey(event)) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+        },
+        [disabled],
+    );
 
     let itemsCountString: string | undefined;
     if (selectedItemsCount !== undefined && totalItemsCount !== undefined) {
@@ -156,17 +182,20 @@ export function FilterGroupItem({
         itemsCountString = `${totalItemsCount}`;
     }
 
-    return (
+    const buttonComponent = (
         <div
             className={cx("gd-filter-group-item", {
                 error: isError,
                 "gd-is-active": isOpen,
                 "gd-is-loaded": isLoaded,
+                "gd-is-disabled": disabled,
             })}
             aria-haspopup="dialog"
             aria-expanded={isOpen}
-            aria-describedby={tooltipId}
-            onClick={onClick}
+            aria-describedby={disabled ? tooltipId : undefined}
+            aria-disabled={disabled}
+            onClick={disabled ? undefined : onClick}
+            onKeyDown={onKeyDown}
             aria-controls={isOpen ? dropdownId : undefined}
             role="button"
             tabIndex={0}
@@ -190,7 +219,7 @@ export function FilterGroupItem({
                                 {`${buttonTitle}`}
                             </ShortenedText>
                         </div>
-                        {titleExtension}
+                        <div className="gd-filter-group-item-title-extension">{titleExtension}</div>
                     </div>
                     <div className="gd-filter-group-item-subtitle">
                         <span
@@ -211,5 +240,20 @@ export function FilterGroupItem({
                 </div>
             </div>
         </div>
+    );
+
+    return disabled ? (
+        <UiTooltip
+            id={tooltipId}
+            anchor={buttonComponent}
+            content={intl.formatMessage({ id: "filters.locked.filter.tooltip" })}
+            triggerBy={["focus"]}
+            arrowPlacement="top"
+            showArrow
+            width="same-as-anchor"
+            anchorWrapperStyles={{ width: "100%" }}
+        />
+    ) : (
+        buttonComponent
     );
 }

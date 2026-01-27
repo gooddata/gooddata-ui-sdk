@@ -1,3 +1,5 @@
+// (C) 2026 GoodData Corporation
+
 /* eslint-disable */
 /**
  * OpenAPI definition
@@ -941,6 +943,10 @@ export interface ExportRawExportRequest {
     fileName: string;
     customOverride?: ExportRawCustomOverride;
     executionSettings?: ExportExecutionSettings;
+    /**
+     * Set column delimiter. (CSV)
+     */
+    delimiter?: string;
 }
 
 export type ExportRawExportRequestFormatEnum = "ARROW_FILE" | "ARROW_STREAM" | "CSV";
@@ -1071,6 +1077,10 @@ export interface ExportSettings {
      * Set page orientation. (PDF)
      */
     pageOrientation?: ExportSettingsPageOrientationEnum;
+    /**
+     * Set column delimiter. (CSV)
+     */
+    delimiter?: string;
 }
 
 export type ExportSettingsPageSizeEnum = "A3" | "A4" | "LETTER";

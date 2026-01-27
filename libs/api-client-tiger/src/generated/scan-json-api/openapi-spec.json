@@ -986,7 +986,8 @@
                             "FLEXCONNECT",
                             "STARROCKS",
                             "ATHENA",
-                            "MONGODB"
+                            "MONGODB",
+                            "CRATEDB"
                         ]
                     },
                     "url": {

@@ -1,3 +1,5 @@
+// (C) 2026 GoodData Corporation
+
 /* eslint-disable */
 /**
  * OpenAPI definition
@@ -1337,6 +1339,10 @@ export interface AutomationRawExportAutomationRequest {
     customOverride?: AutomationRawCustomOverride;
     executionSettings?: AutomationExecutionSettings;
     /**
+     * Set column delimiter. (CSV)
+     */
+    delimiter?: string;
+    /**
      * Metadata definition in free-form JSON format.
      */
     metadata?: object | null;
@@ -1485,6 +1491,10 @@ export interface AutomationSettings {
      * Set page orientation. (PDF)
      */
     pageOrientation?: AutomationSettingsPageOrientationEnum;
+    /**
+     * Set column delimiter. (CSV)
+     */
+    delimiter?: string;
 }
 
 export type AutomationSettingsPageSizeEnum = "A3" | "A4" | "LETTER";

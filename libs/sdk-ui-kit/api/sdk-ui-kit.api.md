@@ -539,7 +539,7 @@ export const ExportDialogBase: NamedExoticComponent<IExportDialogBaseProps>;
 export const ExportTabularPdfDialog: NamedExoticComponent<IExportTabularPdfDialogProps>;
 
 // @internal (undocumented)
-export function FilterGroupItem({ title, subtitle, selectedItemsCount, totalItemsCount, showSelectionCount, isOpen, isLoading, isLoaded, isError, icon, titleExtension, onClick, buttonRef, dropdownId, }: IFilterGroupItemProps): JSX.Element;
+export function FilterGroupItem({ title, subtitle, selectedItemsCount, totalItemsCount, showSelectionCount, isOpen, isLoading, isLoaded, isError, icon, titleExtension, onClick, buttonRef, dropdownId, disabled, }: IFilterGroupItemProps): JSX.Element;
 
 // @internal (undocumented)
 export const FilterLabel: NamedExoticComponent<IFilterLabelProps>;
@@ -2542,6 +2542,8 @@ export interface IExportTabularPdfDialogProps {
 export interface IFilterGroupItemProps {
     // @beta
     buttonRef?: MutableRefObject<HTMLElement | null>;
+    // @alpha
+    disabled?: boolean;
     // @beta
     dropdownId?: string;
     // @beta

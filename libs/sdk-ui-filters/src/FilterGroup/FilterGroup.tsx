@@ -1,7 +1,18 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { type ComponentType, type ReactElement, useCallback, useMemo, useRef, useState } from "react";
+import {
+    type ComponentType,
+    type KeyboardEvent,
+    type KeyboardEventHandler,
+    type ReactElement,
+    type ReactNode,
+    useCallback,
+    useMemo,
+    useRef,
+    useState,
+} from "react";
 
+import cx from "classnames";
 import { isEqual } from "lodash-es";
 import { useIntl } from "react-intl";
 
@@ -12,8 +23,11 @@ import {
     DropdownList,
     FilterGroupItem,
     type IAlignPoint,
+    type IDropdownBodyRenderProps,
     type IDropdownButtonRenderProps,
     UiIcon,
+    isArrowKey,
+    useMediaQuery,
 } from "@gooddata/sdk-ui-kit";
 
 import { useFilterGroupStatus } from "./useFilterGroupStatus.js";
@@ -25,6 +39,7 @@ import {
     ATTRIBUTE_FILTER_DROPDOWN_BODY_CLASS,
     ATTRIBUTE_FILTER_DROPDOWN_BUBBLE_CLASS,
 } from "../AttributeFilter/constants.js";
+import { FilterButtonCustomIcon } from "../shared/components/internal/FilterButtonCustomIcon.js";
 
 /**
  * @public
@@ -34,6 +49,7 @@ export interface IFilterGroupProps<P> {
     filters: P[];
     getFilterIdentifier: (filter: P) => string;
     hasSelectedElements: (filter: P) => boolean;
+    getTitleExtension?: (filterIdentifier: string, filterTitle?: string) => ReactNode;
     renderFilter: (
         filter: P,
         AttributeFilterComponent?: ComponentType<IAttributeFilterProps>,
@@ -70,7 +86,8 @@ const IGNORE_CLICKS_ON_BY_CLASS = [
  * @public
  */
 export function FilterGroup<P>(props: IFilterGroupProps<P>) {
-    const { title, filters, getFilterIdentifier, hasSelectedElements, renderFilter } = props;
+    const { title, filters, getFilterIdentifier, hasSelectedElements, getTitleExtension, renderFilter } =
+        props;
     const intl = useIntl();
     const [isOpen, setIsOpen] = useState(false);
     const filtersIdentifiersUnstable = useMemo(
@@ -179,7 +196,26 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
                         alignPoints={ITEM_ALIGN_POINTS}
                         onError={onError}
                         onInitLoadingChanged={onInitLoadingChanged}
-                        DropdownButtonComponent={FilterGroupItem}
+                        DropdownButtonComponent={(props) => {
+                            const titleExtension = getTitleExtension?.(filterIdentifier, props.title);
+                            const CustomDropdownButtonComponent =
+                                attributeFilterProps.DropdownButtonComponent ?? FilterGroupItem;
+                            return (
+                                <CustomDropdownButtonComponent
+                                    {...props}
+                                    titleExtension={
+                                        <>
+                                            {props.titleExtension}
+                                            {titleExtension}
+                                            <FilterButtonCustomIcon
+                                                customIcon={props.customIcon}
+                                                disabled={props.disabled}
+                                            />
+                                        </>
+                                    }
+                                />
+                            );
+                        }}
                         LoadingComponent={() => <FilterGroupItem isLoading />}
                         ErrorComponent={() => <FilterGroupItem isError />}
                     />
@@ -190,7 +226,7 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
         });
 
         return result;
-    }, [errorHandler, availableFilterIdentifiers, initLoadingChangedHandler]);
+    }, [availableFilterIdentifiers, getTitleExtension, errorHandler, initLoadingChangedHandler]);
 
     const renderItem = useCallback(
         ({ item }: { item: P }) => {
@@ -201,37 +237,60 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
         [attributeFilterComponentsByIdentifier, getFilterIdentifier, renderFilter],
     );
 
+    const handleKeyDown = useCallback<KeyboardEventHandler<HTMLDivElement>>((e: KeyboardEvent) => {
+        //stop arrow keys from leaking to filter bar
+        if (isArrowKey(e)) {
+            e.stopPropagation();
+        }
+    }, []);
+
     const renderBody = useCallback(
-        () => (
-            <DropdownList
-                className="gd-filter-group-body"
-                items={filters}
-                itemHeight={53}
-                renderItem={renderItem}
-            />
+        ({ isMobile }: IDropdownBodyRenderProps) => (
+            <div onKeyDown={handleKeyDown}>
+                <DropdownList
+                    className="gd-filter-group-body"
+                    items={filters}
+                    maxHeight={450}
+                    itemHeight={53}
+                    renderItem={renderItem}
+                    isMobile={isMobile}
+                />
+            </div>
         ),
-        [filters, renderItem],
+        [filters, renderItem, handleKeyDown],
     );
+
+    const isMobile = useMediaQuery("mobileDevice");
 
     const renderButton = useCallback(
         ({ toggleDropdown, isOpen, buttonRef, dropdownId }: IDropdownButtonRenderProps) => (
-            <AttributeFilterDropdownButton
-                title={title}
-                subtitle={subtitle}
-                isLoaded={!isAnyFilterLoading && !isAnyFilterError}
-                isOpen={isOpen}
-                selectedItemsCount={selectedItemsCount}
-                totalItemsCount={totalItemsCount}
-                showSelectionCount={selectedItemsCount !== undefined || totalItemsCount !== undefined}
-                icon={<UiIcon type="folder" size={12} color="currentColor" />}
-                dropdownId={dropdownId}
-                buttonRef={buttonRef}
-                onClick={toggleDropdown}
-                isError={isAnyFilterError}
-                isLoading={isAnyFilterLoading}
-            />
+            <div className={cx({ "gd-is-mobile": isMobile && isOpen })}>
+                <AttributeFilterDropdownButton
+                    title={title}
+                    subtitle={subtitle}
+                    isLoaded={!isAnyFilterLoading && !isAnyFilterError}
+                    isOpen={isOpen}
+                    selectedItemsCount={selectedItemsCount}
+                    totalItemsCount={totalItemsCount}
+                    showSelectionCount={selectedItemsCount !== undefined || totalItemsCount !== undefined}
+                    icon={<UiIcon type="folder" size={12} color="currentColor" />}
+                    dropdownId={dropdownId}
+                    buttonRef={buttonRef}
+                    onClick={toggleDropdown}
+                    isError={isAnyFilterError}
+                    isLoading={isAnyFilterLoading}
+                />
+            </div>
         ),
-        [title, subtitle, isAnyFilterLoading, isAnyFilterError, selectedItemsCount, totalItemsCount],
+        [
+            title,
+            subtitle,
+            isAnyFilterLoading,
+            isAnyFilterError,
+            selectedItemsCount,
+            totalItemsCount,
+            isMobile,
+        ],
     );
 
     return (
@@ -241,6 +300,7 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
             closeOnParentScroll
             closeOnMouseDrag
             closeOnOutsideClick
+            closeOnEscape
             ignoreClicksOnByClass={IGNORE_CLICKS_ON_BY_CLASS}
             enableEventPropagation
             alignPoints={GROUP_ALIGN_POINTS}

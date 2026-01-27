@@ -14,6 +14,7 @@ import {
     type AttributeFilterComponentProvider,
     type DashboardContentComponentProvider,
     type DateFilterComponentProvider,
+    type FilterGroupComponentProvider,
     type InsightBodyComponentProvider,
     type InsightComponentProvider,
     type InsightMenuButtonComponentProvider,
@@ -89,6 +90,7 @@ interface IDashboardComponentsContext {
     SaveAsDialogComponent: CustomSaveAsDialogComponent;
     DashboardAttributeFilterComponentProvider: AttributeFilterComponentProvider;
     DashboardDateFilterComponentProvider: DateFilterComponentProvider;
+    DashboardFilterGroupComponentProvider: FilterGroupComponentProvider;
     FilterBarComponent: CustomFilterBarComponent;
     SidebarComponent: CustomSidebarComponent;
     InsightWidgetComponentSet: InsightWidgetComponentSet;
@@ -145,6 +147,9 @@ const DashboardComponentsContext = createContext<IDashboardComponentsContext>({
         "DashboardAttributeFilterComponentProvider",
     ),
     DashboardDateFilterComponentProvider: ThrowMissingComponentError("DashboardDateFilterComponentProvider"),
+    DashboardFilterGroupComponentProvider: ThrowMissingComponentError(
+        "DashboardFilterGroupComponentProvider",
+    ),
     FilterBarComponent: ThrowMissingComponentError("FilterBarComponent"),
     SidebarComponent: ThrowMissingComponentError("SidebarComponent"),
     InsightWidgetComponentSet: null as any, // TODO how to throw here

@@ -3859,6 +3859,46 @@
                 },
                 "description": "Any information related to cancellation."
             },
+            "AllowedRelationshipType": {
+                "required": ["sourceType", "targetType"],
+                "type": "object",
+                "properties": {
+                    "sourceType": {
+                        "type": "string",
+                        "description": "Source object type (e.g., 'dashboard', 'visualization', 'metric').",
+                        "enum": [
+                            "attribute",
+                            "metric",
+                            "fact",
+                            "label",
+                            "date",
+                            "dataset",
+                            "visualization",
+                            "dashboard"
+                        ]
+                    },
+                    "targetType": {
+                        "type": "string",
+                        "description": "Target object type (e.g., 'visualization', 'metric', 'attribute').",
+                        "enum": [
+                            "attribute",
+                            "metric",
+                            "fact",
+                            "label",
+                            "date",
+                            "dataset",
+                            "visualization",
+                            "dashboard"
+                        ]
+                    },
+                    "allowOrphans": {
+                        "type": "boolean",
+                        "description": "If true, allows target objects that are not part of any relationship (orphans) to be included in results. If false, orphan target objects will be excluded even if they directly match the search query. Default is true (orphans are allowed).",
+                        "default": true
+                    }
+                },
+                "description": "Allowed relationship type combination."
+            },
             "SearchRequest": {
                 "required": ["question"],
                 "type": "object",
@@ -3893,7 +3933,7 @@
                     },
                     "limit": {
                         "type": "integer",
-                        "description": "Maximum number of results to return. There is a hard limit and the actual number of returned results may be lower than what is requested.",
+                        "description": "Maximum number of results to return. There is a hard limit and the actual number of returned results may be lower than what is requested. This can happen when post-search filters are applied (e.g., reranker threshold filtering or allowedRelationshipTypes filtering), which may exclude some results after the initial search.",
                         "format": "int32",
                         "default": 10
                     },
@@ -3913,6 +3953,29 @@
                         "type": "boolean",
                         "description": "If true, includes hidden objects in search results. If false (default), excludes objects where isHidden=true.",
                         "default": false
+                    },
+                    "includeTags": {
+                        "type": "array",
+                        "description": "Include only objects that contain at least one of the specified tags (OR logic). This parameter only affects the search results. If an object has multiple tags, it will be included as long as it matches at least one tag from this parameter.",
+                        "items": {
+                            "type": "string",
+                            "description": "Tag to include."
+                        }
+                    },
+                    "excludeTags": {
+                        "type": "array",
+                        "description": "Exclude objects that contain any of the specified tags. This parameter only affects the search results. Objects with excluded tags are completely hidden from the results.",
+                        "items": {
+                            "type": "string",
+                            "description": "Tag to exclude."
+                        }
+                    },
+                    "allowedRelationshipTypes": {
+                        "type": "array",
+                        "description": "Filter relationships and results based on allowed relationship type combinations. When specified, only relationships matching the allowed types are returned, and results are filtered to include only direct matches or objects reachable via allowed relationships. When null or omitted, all relationships and results are returned (default behavior). Note: This filtering happens after the initial search, so the number of returned results may be lower than the requested limit if some results are filtered out.",
+                        "items": {
+                            "$ref": "#/components/schemas/AllowedRelationshipType"
+                        }
                     }
                 }
             },
@@ -5496,7 +5559,7 @@
                     "status": {
                         "type": "string",
                         "description": "Current status of the calculation",
-                        "enum": ["RUNNING", "COMPLETED", "FAILED", "NOT_FOUND", "DISABLED"]
+                        "enum": ["RUNNING", "SYNCING", "COMPLETED", "FAILED", "NOT_FOUND", "DISABLED"]
                     },
                     "issues": {
                         "type": "array",
@@ -5529,7 +5592,7 @@
                     "status": {
                         "type": "string",
                         "description": "Status of the latest triggered quality check process",
-                        "enum": ["RUNNING", "COMPLETED", "FAILED", "NOT_FOUND", "DISABLED"]
+                        "enum": ["RUNNING", "SYNCING", "COMPLETED", "FAILED", "NOT_FOUND", "DISABLED"]
                     }
                 }
             },

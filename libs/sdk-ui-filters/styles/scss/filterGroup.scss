@@ -1,7 +1,8 @@
 // (C) 2025 GoodData Corporation
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as variables;
 
-.dropdown-body .gd-list.gd-filter-group-body {
+.dropdown-body .gd-list.gd-filter-group-body,
+.gd-mobile-dropdown-content .gd-list.gd-filter-group-body {
     display: flex;
     flex-direction: column;
     border: 1px solid variables.$gd-border-color;
@@ -9,8 +10,6 @@
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     min-width: 150px;
-    max-width: 300px;
-    max-height: 450px;
     overflow-y: auto;
     margin: 0;
 
@@ -31,4 +30,8 @@
     & .fixedDataTableLayout_main {
         height: auto;
     }
+}
+
+.dropdown-body .gd-list.gd-filter-group-body {
+    max-width: 300px;
 }

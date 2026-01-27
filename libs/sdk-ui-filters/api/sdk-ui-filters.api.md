@@ -958,6 +958,8 @@ export interface IFilterGroupProps<P> {
     // (undocumented)
     getFilterIdentifier: (filter: P) => string;
     // (undocumented)
+    getTitleExtension?: (filterIdentifier: string, filterTitle?: string) => ReactNode;
+    // (undocumented)
     hasSelectedElements: (filter: P) => boolean;
     // (undocumented)
     renderFilter: (filter: P, AttributeFilterComponent?: ComponentType<IAttributeFilterProps>) => ReactElement;

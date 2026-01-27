@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import type { GenAIObjectType } from "./common.js";
 import type { Identifier } from "../objRef/index.js";
@@ -143,4 +143,5 @@ export type SemanticQualityIssuesCalculationStatus =
     | "COMPLETED"
     | "FAILED"
     | "NOT_FOUND"
+    | "SYNCING"
     | "DISABLED";

@@ -15,7 +15,7 @@
     display: flex;
     border-radius: 0;
 
-    &:not(.error) {
+    &:not(.error, .gd-is-disabled) {
         cursor: pointer;
     }
 
@@ -25,7 +25,7 @@
         color: variables.$gd-color-state-blank;
     }
 
-    &:not(.error):hover,
+    &:not(.error, .gd-is-disabled):hover,
     &.gd-is-active {
         background-color: variables.$is-focused-background;
 
@@ -50,12 +50,12 @@
             opacity 0.2s ease;
     }
 
-    &:not(.error):hover .gd-filter-group-item-chevron,
+    &:not(.error, .gd-is-disabled):hover .gd-filter-group-item-chevron,
     &.gd-is-active .gd-filter-group-item-chevron {
         transform: translateX(4px);
     }
 
-    &.gd-is-active:not(.error):hover {
+    &.gd-is-active:not(.error, .gd-is-disabled):hover {
         background-color: variables.$gd-palette-primary-dimmed;
 
         &::before {
@@ -125,9 +125,9 @@
 
 .gd-filter-group-item-title-content {
     display: flex;
-    align-items: baseline;
     justify-content: space-between;
     width: 100%;
+    max-height: 16px;
     gap: 5px;
     overflow: hidden;
 }
@@ -135,4 +135,8 @@
 .gd-filter-group-item-selected-items {
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.gd-filter-group-item-title-extension {
+    display: flex;
 }

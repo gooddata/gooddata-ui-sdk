@@ -22,6 +22,7 @@ import type {
     OptionalDashboardContentComponentProvider,
     OptionalDateFilterComponentProvider,
     OptionalFilterBarComponentProvider,
+    OptionalFilterGroupComponentProvider,
     OptionalInsightBodyComponentProvider,
     OptionalInsightComponentProvider,
     OptionalLayoutComponentProvider,
@@ -1131,6 +1132,11 @@ export interface IFiltersCustomizer {
      * Customize how rendering of attribute filters is done.
      */
     attribute(): IAttributeFiltersCustomizer;
+
+    /**
+     * Customize how rendering of filter groups is done.
+     */
+    filterGroup(): IFilterGroupsCustomizer;
 }
 
 /**
@@ -1233,6 +1239,18 @@ export interface IDateFiltersCustomizer {
      * @returns self, for call chaining sakes
      */
     withCustomProvider(provider: OptionalDateFilterComponentProvider): IDateFiltersCustomizer;
+}
+
+/**
+ * Set of functions you can use to customize how filter groups are rendered.
+ *
+ * @public
+ */
+export interface IFilterGroupsCustomizer {
+    /**
+     * Register a provider for React components to render filter groups.
+     */
+    withCustomProvider(provider: OptionalFilterGroupComponentProvider): IFilterGroupsCustomizer;
 }
 
 /**

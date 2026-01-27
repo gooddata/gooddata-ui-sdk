@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import fs from "fs";
 
 import axios from "axios";
@@ -10,7 +11,7 @@ export async function wiremockWait(wiremockHost) {
 
 export async function wiremockSettings(wiremockHost) {
     await axios.post(`http://${wiremockHost}/__admin/settings`, {
-        fixedDelay: 300,
+        fixedDelay: 0,
     });
 }
 
