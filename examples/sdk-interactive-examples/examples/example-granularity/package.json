@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-interactive-example-granularity",
-    "version": "11.18.0-alpha.6",
+    "version": "11.18.0-alpha.7",
     "private": false,
     "description": "This example exmplains DateFilter granularity ",
     "license": "LicenseRef-LICENSE",
@@ -64,7 +64,7 @@
         "prettier": "^3.6.2",
         "process": "^0.11.10",
         "typescript": "5.9.3",
-        "vite": "^6.3.6",
+        "vite": "^7.3.1",
         "vite-plugin-html": "~3.2.0"
     },
     "exampleDependencies": [],

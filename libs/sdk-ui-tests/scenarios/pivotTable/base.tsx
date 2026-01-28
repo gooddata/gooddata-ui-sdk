@@ -127,21 +127,13 @@ export const base = scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
         viewports: [{ label: "desktop", width: 1464, height: 768 }],
         misMatchThreshold: 0.01,
     })
-    .addScenario(
-        "single attribute",
-        {
-            rows: [ReferenceMd.Product.Name],
-        },
-        (m) => m.withTags("no-plug-viz-tests"), // skip pluggable due to flaky sizing
-    )
+    .addScenario("single attribute", {
+        rows: [ReferenceMd.Product.Name],
+    })
     .addScenario("single column", PivotTableWithSingleColumn)
-    .addScenario(
-        "single measure",
-        {
-            measures: [ReferenceMd.Amount],
-        },
-        (m) => m.withTags("no-plug-viz-tests"), // skip pluggable due to flaky sizing
-    )
+    .addScenario("single measure", {
+        measures: [ReferenceMd.Amount],
+    })
     .addScenario("single measure with row attribute", {
         measures: [ReferenceMd.Amount],
         rows: [ReferenceMd.Product.Name],

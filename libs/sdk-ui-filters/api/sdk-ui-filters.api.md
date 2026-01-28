@@ -1450,6 +1450,9 @@ export function SingleSelectionAttributeFilterElementsSelectItem({ item, onSelec
 // @beta
 export function SingleSelectionAttributeFilterStatusBar({ enableShowingFilteredElements, isFilteredByParentFilters, parentFilterTitles, totalElementsCountWithCurrentSettings, attributeTitle, onShowFilteredElements, irrelevantSelection, isFilteredByLimitingValidationItems, isFilteredByDependentDateFilters, }: IAttributeFilterStatusBarProps): JSX.Element;
 
+// @alpha
+export const STANDARD_GRANULARITIES_WITH_FISCAL_EQUIVALENT: DateFilterGranularity[];
+
 // @public (undocumented)
 export type Unsubscribe = () => void;
 
