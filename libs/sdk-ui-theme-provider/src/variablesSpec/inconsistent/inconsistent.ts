@@ -1,4 +1,5 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
+
 import { type ThemeInconsistentCssVariable } from "../types.js";
 
 export const inconsistentVariables: ThemeInconsistentCssVariable[] = [
@@ -198,6 +199,7 @@ export const inconsistentVariables: ThemeInconsistentCssVariable[] = [
             "#b4c0cf",
             "var(--gd-palette-complementary-5, #b0beca)",
             "inherit",
+            "initial",
             "#454e56",
             "#ccd8e2",
             "#808080",

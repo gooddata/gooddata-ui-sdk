@@ -3,6 +3,9 @@ import { defineConfig } from "vitest/config";
 
 // eslint-disable-next-line no-restricted-exports
 export default defineConfig({
+    resolve: {
+        preserveSymlinks: true,
+    },
     test: {
         // Use happy-dom for faster performance than jsdom
         environment: "happy-dom",

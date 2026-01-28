@@ -20,14 +20,10 @@ export const grouping = scenariosFor<IPivotTableProps>("PivotTable", PivotTable)
         viewports: [{ label: "desktop", width: 1464, height: 768 }],
         misMatchThreshold: 0.01,
     })
-    .addScenario(
-        "single measure pivot with grouping sorted by first row attr",
-        {
-            ...PivotTableWithMeasureAndTwoAttributesThatHasAdjacentCellsWhenSortedByMeasure,
-            sortBy: [newAttributeSort(ReferenceMd.Department.Default, "desc")],
-        },
-        (m) => m.withTags("no-plug-viz-tests"), // skip pluggable due to flaky sizing
-    )
+    .addScenario("single measure pivot with grouping sorted by first row attr", {
+        ...PivotTableWithMeasureAndTwoAttributesThatHasAdjacentCellsWhenSortedByMeasure,
+        sortBy: [newAttributeSort(ReferenceMd.Department.Default, "desc")],
+    })
     .addScenario("single measure pivot with grouping sorted by second row attr", {
         ...PivotTableWithMeasureAndTwoAttributesThatHasAdjacentCellsWhenSortedByMeasure,
         sortBy: [newAttributeSort(ReferenceMd.Product.Name, "desc")],

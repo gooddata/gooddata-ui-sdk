@@ -73,6 +73,7 @@ export {
     getTabForPreset,
     isFiscalGranularity,
     ensureCompatibleGranularity,
+    STANDARD_GRANULARITIES_WITH_FISCAL_EQUIVALENT,
 } from "./DateFilter/utils/presetFilterUtils.js";
 
 // DateFilter body types

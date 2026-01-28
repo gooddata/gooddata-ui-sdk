@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type CssVariableUsage } from "./types.js";
 import { groupByUnique } from "./utils.js";
@@ -254,7 +254,89 @@ function errorValidationResult(
 
 /**
  * Minified CSS can have 0. replaced with ., and missing white spaces, so we need to normalize the value.
+ * Also normalizes color values to handle rgba/hex equivalence.
  */
 function normalizeCssVariableValue(value: string) {
-    return value.replace("0.", ".").replace(/\s+/g, "");
+    // First normalize whitespace and leading zeros
+    let normalized = value.replace("0.", ".").replace(/\s+/g, "");
+
+    // Normalize all color values in the string (handles nested var() with colors)
+    normalized = normalizeColorsInValue(normalized);
+
+    return normalized;
+}
+
+/**
+ * CSS named colors that minifiers might use (maps to rgba values).
+ * Only includes colors likely to appear in our codebase.
+ */
+const CSS_NAMED_COLORS: Record<string, string> = {
+    gray: "rgba(128,128,128,1)",
+    grey: "rgba(128,128,128,1)",
+    white: "rgba(255,255,255,1)",
+    black: "rgba(0,0,0,1)",
+    red: "rgba(255,0,0,1)",
+    green: "rgba(0,128,0,1)",
+    blue: "rgba(0,0,255,1)",
+    transparent: "rgba(0,0,0,0)",
+    inherit: "inherit",
+    initial: "initial",
+};
+
+/**
+ * Normalize all color values in a CSS value string.
+ * Converts rgba(), hex colors, and named colors to a canonical rgba() format for comparison.
+ */
+function normalizeColorsInValue(value: string): string {
+    let result = value;
+
+    // Convert CSS named colors to rgba (must be done first, before other replacements)
+    for (const [name, rgba] of Object.entries(CSS_NAMED_COLORS)) {
+        // Handle exact match (standalone color name)
+        if (result.toLowerCase() === name.toLowerCase()) {
+            result = rgba;
+            break;
+        }
+        // Match named color in context (preceded by comma/paren, followed by paren/comma/end)
+        const pattern = new RegExp(`(,|\\()${name}(\\)|,|$)`, "gi");
+        result = result.replace(pattern, `$1${rgba}$2`);
+    }
+
+    // Convert 8-digit hex colors to rgba
+    result = result.replace(
+        /#([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})\b/g,
+        (_match, r: string, g: string, b: string, a: string) => {
+            const red = parseInt(r, 16);
+            const green = parseInt(g, 16);
+            const blue = parseInt(b, 16);
+            const alpha = parseInt(a, 16) / 255;
+            // Round alpha to 2 decimal places to match typical rgba precision
+            const alphaRounded = Math.round(alpha * 100) / 100;
+            return `rgba(${red},${green},${blue},${alphaRounded})`;
+        },
+    );
+
+    // Normalize rgba() values to consistent format (no spaces, consistent decimal)
+    result = result.replace(
+        /rgba\((\d+),(\d+),(\d+),([\d.]+)\)/g,
+        (_match, r: string, g: string, b: string, a: string) => {
+            const alpha = parseFloat(a);
+            // Round alpha to 2 decimal places for consistent comparison
+            const alphaRounded = Math.round(alpha * 100) / 100;
+            return `rgba(${r},${g},${b},${alphaRounded})`;
+        },
+    );
+
+    // Convert 6-digit hex to rgba (fully opaque)
+    result = result.replace(
+        /#([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})\b/g,
+        (_match, r: string, g: string, b: string) => {
+            const red = parseInt(r, 16);
+            const green = parseInt(g, 16);
+            const blue = parseInt(b, 16);
+            return `rgba(${red},${green},${blue},1)`;
+        },
+    );
+
+    return result;
 }

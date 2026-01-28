@@ -131,24 +131,20 @@ export const transposition = scenariosFor<IPivotTableProps>("PivotTable", PivotT
         drillableItems: [AmountMeasurePredicate, WonMeasurePredicate],
         onDrill: action("onDrill"),
     })
-    .addScenario(
-        "two measures in rows and column attrs on left, with totals",
-        {
-            ...PivotTableWithMeasuresAndColumnsOnly,
-            config: {
-                measureGroupDimension: "rows",
-                columnHeadersPosition: "left",
-                columnSizing: {
-                    defaultWidth: "autoresizeAll",
-                },
+    .addScenario("two measures in rows and column attrs on left, with totals", {
+        ...PivotTableWithMeasuresAndColumnsOnly,
+        config: {
+            measureGroupDimension: "rows",
+            columnHeadersPosition: "left",
+            columnSizing: {
+                defaultWidth: "autoresizeAll",
             },
-            totals: [
-                newTotal("sum", ReferenceMd.Amount, ReferenceMd.Department.Default),
-                newTotal("sum", ReferenceMd.Amount, ReferenceMd.Region.Default),
-            ],
         },
-        (m) => m.withTags("no-plug-viz-tests"), // skip pluggable due to flaky sizing
-    )
+        totals: [
+            newTotal("sum", ReferenceMd.Amount, ReferenceMd.Department.Default),
+            newTotal("sum", ReferenceMd.Amount, ReferenceMd.Region.Default),
+        ],
+    })
     .addScenario("two measures in rows and only column attrs on left, with totals", {
         ...PivotTableWithMeasuresAndColumnOnly,
         config: {

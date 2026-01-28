@@ -30,6 +30,7 @@ import {
     EntitiesApi_CreateEntityDashboardPlugins,
     EntitiesApi_DeleteEntityDashboardPlugins,
     EntitiesApi_GetAllEntitiesDashboardPlugins,
+    EntitiesApi_GetAllEntitiesLabels,
     EntitiesApi_GetEntityDashboardPlugins,
     EntitiesApi_GetEntityWorkspaces,
     FilterContextApi_CreateEntityFilterContexts,
@@ -756,6 +757,72 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         };
 
         return this.authCall(async (client) => {
+            // Raw CSV export headers come from `customOverride.labels`.
+            // Some executions contain attributes not present in the stored insight (e.g. injected at runtime),
+            // so their label titles may be missing; fill only missing titles and never override existing ones.
+            if (payload.customOverride?.labels) {
+                const labels = { ...payload.customOverride.labels };
+                const attributes = payload.execution.attributes ?? [];
+
+                // Prefer AFM attribute alias first.
+                for (const attr of attributes) {
+                    const localId = attr.localIdentifier;
+                    const withAlias: typeof attr & { alias?: string } = attr;
+                    const alias = withAlias.alias;
+                    if (localId && alias && !labels[localId]?.title) {
+                        labels[localId] = { title: alias };
+                    }
+                }
+
+                // Then fill remaining missing titles from label metadata (best-effort).
+                const missingLabelIds = attributes
+                    .map((attr) => {
+                        const localId = attr.localIdentifier;
+                        return labels[localId]?.title ? undefined : attr.label?.identifier?.id;
+                    })
+                    .filter((id): id is string => typeof id === "string" && id.length > 0)
+                    .filter((id, idx, arr) => arr.indexOf(id) === idx);
+
+                if (missingLabelIds.length > 0) {
+                    try {
+                        const filter = missingLabelIds.map((id) => `id==${id}`).join(",");
+                        const labelsResponse = await EntitiesApi_GetAllEntitiesLabels(
+                            client.axios,
+                            client.basePath,
+                            {
+                                workspaceId: this.workspace,
+                                origin: "ALL",
+                                filter,
+                                size: missingLabelIds.length,
+                            },
+                        );
+                        const titleByLabelId = new Map<string, string>();
+                        for (const item of labelsResponse?.data?.data ?? []) {
+                            const title = item.attributes?.title;
+                            if (item.id && title) {
+                                titleByLabelId.set(item.id, title);
+                            }
+                        }
+
+                        for (const attr of attributes) {
+                            const localId = attr.localIdentifier;
+                            if (labels[localId]?.title) {
+                                continue;
+                            }
+                            const labelId = attr.label?.identifier?.id;
+                            const title = labelId ? titleByLabelId.get(labelId) : undefined;
+                            if (title) {
+                                labels[localId] = { title };
+                            }
+                        }
+                    } catch {
+                        // Keep export behavior intact if enrichment fails.
+                    }
+                }
+
+                payload.customOverride.labels = labels;
+            }
+
             const rawExport = await ExportApi_CreateRawExport(client.axios, client.basePath, {
                 workspaceId: this.workspace,
                 exportRawExportRequest: payload,

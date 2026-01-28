@@ -175,19 +175,15 @@ const totalsForColumns = scenariosFor<IPivotTableProps>("PivotTable", PivotTable
         ...PivotTableWithSingleMeasureAndColumnGrandTotal,
         config: getCommonPivotTableSizingConfig([ReferenceMd.SalesRep.Default]),
     })
-    .addScenario(
-        "single measure and multiple column grand totals",
-        {
-            ...PivotTableWighSingleMeasureAndSingleRowColAttr,
-            totals: [
-                newTotal("sum", ReferenceMd.Amount, ReferenceMd.ForecastCategory),
-                newTotal("min", ReferenceMd.Amount, ReferenceMd.ForecastCategory),
-                newTotal("max", ReferenceMd.Amount, ReferenceMd.ForecastCategory),
-            ],
-            config: getCommonPivotTableSizingConfig(),
-        },
-        (m) => m.withTags("no-plug-viz-tests"), // skip pluggable due to flaky sizing
-    )
+    .addScenario("single measure and multiple column grand totals", {
+        ...PivotTableWighSingleMeasureAndSingleRowColAttr,
+        totals: [
+            newTotal("sum", ReferenceMd.Amount, ReferenceMd.ForecastCategory),
+            newTotal("min", ReferenceMd.Amount, ReferenceMd.ForecastCategory),
+            newTotal("max", ReferenceMd.Amount, ReferenceMd.ForecastCategory),
+        ],
+        config: getCommonPivotTableSizingConfig(),
+    })
     .addScenario("two measures and single column grand total for one", {
         ...PivotTableWighTwoMeasureAndSingleRowColAttr,
         totals: [newTotal("sum", ReferenceMd.Amount, ReferenceMd.ForecastCategory)],
@@ -279,18 +275,14 @@ const totalsForRowsAndColumns = scenariosFor<IPivotTableProps>("PivotTable", Piv
         ],
         config: getCommonPivotTableSizingConfig(),
     })
-    .addScenario(
-        "two measures and single column/row grand total for one",
-        {
-            ...PivotTableWighTwoMeasureAndSingleRowColAttr,
-            totals: [
-                newTotal("sum", ReferenceMd.Amount, ReferenceMd.SalesRep.Default),
-                newTotal("sum", ReferenceMd.Amount, ReferenceMd.ForecastCategory),
-            ],
-            config: getCommonPivotTableSizingConfig(),
-        },
-        (m) => m.withTags("no-plug-viz-tests"), // skip pluggable due to flaky sizing
-    )
+    .addScenario("two measures and single column/row grand total for one", {
+        ...PivotTableWighTwoMeasureAndSingleRowColAttr,
+        totals: [
+            newTotal("sum", ReferenceMd.Amount, ReferenceMd.SalesRep.Default),
+            newTotal("sum", ReferenceMd.Amount, ReferenceMd.ForecastCategory),
+        ],
+        config: getCommonPivotTableSizingConfig(),
+    })
     .addScenario("two measures and single column/row grand total for each", {
         ...PivotTableWighTwoMeasureAndSingleRowColAttr,
         totals: [

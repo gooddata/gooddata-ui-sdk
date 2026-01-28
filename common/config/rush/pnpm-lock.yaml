@@ -90,7 +90,7 @@ importers:
         version: 8.52.0(eslint@8.57.1)(typescript@5.9.3)
       '@vitejs/plugin-react':
         specifier: ^4.6.0
-        version: 4.7.0(vite@6.3.6)
+        version: 4.7.0(vite@7.3.1)
       eslint:
         specifier: ^8.57.1
         version: 8.57.1
@@ -167,8 +167,8 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
       vite:
-        specifier: ^6.3.6
-        version: 6.3.6(@types/node@22.18.5)(sass@1.70.0)
+        specifier: ^7.3.1
+        version: 7.3.1(@types/node@22.18.5)(sass@1.70.0)
 
   ../../examples/sdk-interactive-examples:
     devDependencies:
@@ -244,7 +244,7 @@ importers:
         version: 8.52.0(eslint@8.57.1)(typescript@5.9.3)
       '@vitejs/plugin-react-swc':
         specifier: ^3.11.0
-        version: 3.11.0(vite@6.3.6)
+        version: 3.11.0(vite@7.3.1)
       eslint:
         specifier: ^8.57.1
         version: 8.57.1
@@ -297,11 +297,11 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
       vite:
-        specifier: ^6.3.6
-        version: 6.3.6(@types/node@22.18.5)(sass@1.70.0)
+        specifier: ^7.3.1
+        version: 7.3.1(@types/node@22.18.5)(sass@1.70.0)
       vite-plugin-html:
         specifier: ~3.2.0
-        version: 3.2.2(vite@6.3.6)
+        version: 3.2.2(vite@7.3.1)
 
   ../../examples/sdk-interactive-examples/examples/example-attributefilter:
     dependencies:
@@ -371,7 +371,7 @@ importers:
         version: 8.52.0(eslint@8.57.1)(typescript@5.9.3)
       '@vitejs/plugin-react-swc':
         specifier: ^3.11.0
-        version: 3.11.0(vite@6.3.6)
+        version: 3.11.0(vite@7.3.1)
       eslint:
         specifier: ^8.57.1
         version: 8.57.1
@@ -424,11 +424,11 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
       vite:
-        specifier: ^6.3.6
-        version: 6.3.6(@types/node@22.18.5)(sass@1.70.0)
+        specifier: ^7.3.1
+        version: 7.3.1(@types/node@22.18.5)(sass@1.70.0)
       vite-plugin-html:
         specifier: ~3.2.0
-        version: 3.2.2(vite@6.3.6)
+        version: 3.2.2(vite@7.3.1)
 
   ../../examples/sdk-interactive-examples/examples/example-chartconfig:
     dependencies:
@@ -498,7 +498,7 @@ importers:
         version: 8.52.0(eslint@8.57.1)(typescript@5.9.3)
       '@vitejs/plugin-react-swc':
         specifier: ^3.11.0
-        version: 3.11.0(vite@6.3.6)
+        version: 3.11.0(vite@7.3.1)
       eslint:
         specifier: ^8.57.1
         version: 8.57.1
@@ -551,11 +551,11 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
       vite:
-        specifier: ^6.3.6
-        version: 6.3.6(@types/node@22.18.5)(sass@1.70.0)
+        specifier: ^7.3.1
+        version: 7.3.1(@types/node@22.18.5)(sass@1.70.0)
       vite-plugin-html:
         specifier: ~3.2.0
-        version: 3.2.2(vite@6.3.6)
+        version: 3.2.2(vite@7.3.1)
 
   ../../examples/sdk-interactive-examples/examples/example-columnchart:
     dependencies:
@@ -625,7 +625,7 @@ importers:
         version: 8.52.0(eslint@8.57.1)(typescript@5.9.3)
       '@vitejs/plugin-react-swc':
         specifier: ^3.11.0
-        version: 3.11.0(vite@6.3.6)
+        version: 3.11.0(vite@7.3.1)
       eslint:
         specifier: ^8.57.1
         version: 8.57.1
@@ -678,11 +678,11 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
       vite:
-        specifier: ^6.3.6
-        version: 6.3.6(@types/node@22.18.5)(sass@1.70.0)
+        specifier: ^7.3.1
+        version: 7.3.1(@types/node@22.18.5)(sass@1.70.0)
       vite-plugin-html:
         specifier: ~3.2.0
-        version: 3.2.2(vite@6.3.6)
+        version: 3.2.2(vite@7.3.1)
 
   ../../examples/sdk-interactive-examples/examples/example-combochart:
     dependencies:
@@ -752,7 +752,7 @@ importers:
         version: 8.52.0(eslint@8.57.1)(typescript@5.9.3)
       '@vitejs/plugin-react-swc':
         specifier: ^3.11.0
-        version: 3.11.0(vite@6.3.6)
+        version: 3.11.0(vite@7.3.1)
       eslint:
         specifier: ^8.57.1
         version: 8.57.1
@@ -805,11 +805,11 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
       vite:
-        specifier: ^6.3.6
-        version: 6.3.6(@types/node@22.18.5)(sass@1.70.0)
+        specifier: ^7.3.1
+        version: 7.3.1(@types/node@22.18.5)(sass@1.70.0)
       vite-plugin-html:
         specifier: ~3.2.0
-        version: 3.2.2(vite@6.3.6)
+        version: 3.2.2(vite@7.3.1)
 
   ../../examples/sdk-interactive-examples/examples/example-dashboard:
     dependencies:
@@ -879,7 +879,7 @@ importers:
         version: 8.52.0(eslint@8.57.1)(typescript@5.9.3)
       '@vitejs/plugin-react-swc':
         specifier: ^3.11.0
-        version: 3.11.0(vite@6.3.6)
+        version: 3.11.0(vite@7.3.1)
       eslint:
         specifier: ^8.57.1
         version: 8.57.1
@@ -932,11 +932,11 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
       vite:
-        specifier: ^6.3.6
-        version: 6.3.6(@types/node@22.18.5)(sass@1.70.0)
+        specifier: ^7.3.1
+        version: 7.3.1(@types/node@22.18.5)(sass@1.70.0)
       vite-plugin-html:
         specifier: ~3.2.0
-        version: 3.2.2(vite@6.3.6)
+        version: 3.2.2(vite@7.3.1)
 
   ../../examples/sdk-interactive-examples/examples/example-datefilter:
     dependencies:
@@ -1006,7 +1006,7 @@ importers:
         version: 8.52.0(eslint@8.57.1)(typescript@5.9.3)
       '@vitejs/plugin-react-swc':
         specifier: ^3.11.0
-        version: 3.11.0(vite@6.3.6)
+        version: 3.11.0(vite@7.3.1)
       eslint:
         specifier: ^8.57.1
         version: 8.57.1
@@ -1059,11 +1059,11 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
       vite:
-        specifier: ^6.3.6
-        version: 6.3.6(@types/node@22.18.5)(sass@1.70.0)
+        specifier: ^7.3.1
+        version: 7.3.1(@types/node@22.18.5)(sass@1.70.0)
       vite-plugin-html:
         specifier: ~3.2.0
-        version: 3.2.2(vite@6.3.6)
+        version: 3.2.2(vite@7.3.1)
 
   ../../examples/sdk-interactive-examples/examples/example-dependentfilters:
     dependencies:
@@ -1133,7 +1133,7 @@ importers:
         version: 8.52.0(eslint@8.57.1)(typescript@5.9.3)
       '@vitejs/plugin-react-swc':
         specifier: ^3.11.0
-        version: 3.11.0(vite@6.3.6)
+        version: 3.11.0(vite@7.3.1)
       eslint:
         specifier: ^8.57.1
         version: 8.57.1
@@ -1186,11 +1186,11 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
       vite:
-        specifier: ^6.3.6
-        version: 6.3.6(@types/node@22.18.5)(sass@1.70.0)
+        specifier: ^7.3.1
+        version: 7.3.1(@types/node@22.18.5)(sass@1.70.0)
       vite-plugin-html:
         specifier: ~3.2.0
-        version: 3.2.2(vite@6.3.6)
+        version: 3.2.2(vite@7.3.1)
 
   ../../examples/sdk-interactive-examples/examples/example-execute:
     dependencies:
@@ -1269,7 +1269,7 @@ importers:
         version: 8.52.0(eslint@8.57.1)(typescript@5.9.3)
       '@vitejs/plugin-react-swc':
         specifier: ^3.11.0
-        version: 3.11.0(vite@6.3.6)
+        version: 3.11.0(vite@7.3.1)
       eslint:
         specifier: ^8.57.1
         version: 8.57.1
@@ -1322,11 +1322,11 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
       vite:
-        specifier: ^6.3.6
-        version: 6.3.6(@types/node@22.18.5)(sass@1.70.0)
+        specifier: ^7.3.1
+        version: 7.3.1(@types/node@22.18.5)(sass@1.70.0)
       vite-plugin-html:
         specifier: ~3.2.0
-        version: 3.2.2(vite@6.3.6)
+        version: 3.2.2(vite@7.3.1)
 
   ../../examples/sdk-interactive-examples/examples/example-granularity:
     dependencies:
@@ -1396,7 +1396,7 @@ importers:
         version: 8.52.0(eslint@8.57.1)(typescript@5.9.3)
       '@vitejs/plugin-react-swc':
         specifier: ^3.11.0
-        version: 3.11.0(vite@6.3.6)
+        version: 3.11.0(vite@7.3.1)
       eslint:
         specifier: ^8.57.1
         version: 8.57.1
@@ -1449,11 +1449,11 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
       vite:
-        specifier: ^6.3.6
-        version: 6.3.6(@types/node@22.18.5)(sass@1.70.0)
+        specifier: ^7.3.1
+        version: 7.3.1(@types/node@22.18.5)(sass@1.70.0)
       vite-plugin-html:
         specifier: ~3.2.0
-        version: 3.2.2(vite@6.3.6)
+        version: 3.2.2(vite@7.3.1)
 
   ../../examples/sdk-interactive-examples/examples/example-headline:
     dependencies:
@@ -1523,7 +1523,7 @@ importers:
         version: 8.52.0(eslint@8.57.1)(typescript@5.9.3)
       '@vitejs/plugin-react-swc':
         specifier: ^3.11.0
-        version: 3.11.0(vite@6.3.6)
+        version: 3.11.0(vite@7.3.1)
       eslint:
         specifier: ^8.57.1
         version: 8.57.1
@@ -1576,11 +1576,11 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
       vite:
-        specifier: ^6.3.6
-        version: 6.3.6(@types/node@22.18.5)(sass@1.70.0)
+        specifier: ^7.3.1
+        version: 7.3.1(@types/node@22.18.5)(sass@1.70.0)
       vite-plugin-html:
         specifier: ~3.2.0
-        version: 3.2.2(vite@6.3.6)
+        version: 3.2.2(vite@7.3.1)
 
   ../../examples/sdk-interactive-examples/examples/example-pivottable:
     dependencies:
@@ -1650,7 +1650,7 @@ importers:
         version: 8.52.0(eslint@8.57.1)(typescript@5.9.3)
       '@vitejs/plugin-react-swc':
         specifier: ^3.11.0
-        version: 3.11.0(vite@6.3.6)
+        version: 3.11.0(vite@7.3.1)
       eslint:
         specifier: ^8.57.1
         version: 8.57.1
@@ -1703,11 +1703,11 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
       vite:
-        specifier: ^6.3.6
-        version: 6.3.6(@types/node@22.18.5)(sass@1.70.0)
+        specifier: ^7.3.1
+        version: 7.3.1(@types/node@22.18.5)(sass@1.70.0)
       vite-plugin-html:
         specifier: ~3.2.0
-        version: 3.2.2(vite@6.3.6)
+        version: 3.2.2(vite@7.3.1)
 
   ../../examples/sdk-interactive-examples/examples/example-relativedatefilter:
     dependencies:
@@ -1777,7 +1777,7 @@ importers:
         version: 8.52.0(eslint@8.57.1)(typescript@5.9.3)
       '@vitejs/plugin-react-swc':
         specifier: ^3.11.0
-        version: 3.11.0(vite@6.3.6)
+        version: 3.11.0(vite@7.3.1)
       eslint:
         specifier: ^8.57.1
         version: 8.57.1
@@ -1830,11 +1830,11 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
       vite:
-        specifier: ^6.3.6
-        version: 6.3.6(@types/node@22.18.5)(sass@1.70.0)
+        specifier: ^7.3.1
+        version: 7.3.1(@types/node@22.18.5)(sass@1.70.0)
       vite-plugin-html:
         specifier: ~3.2.0
-        version: 3.2.2(vite@6.3.6)
+        version: 3.2.2(vite@7.3.1)
 
   ../../examples/sdk-interactive-examples/examples/example-repeater:
     dependencies:
@@ -1904,7 +1904,7 @@ importers:
         version: 8.52.0(eslint@8.57.1)(typescript@5.9.3)
       '@vitejs/plugin-react-swc':
         specifier: ^3.11.0
-        version: 3.11.0(vite@6.3.6)
+        version: 3.11.0(vite@7.3.1)
       eslint:
         specifier: ^8.57.1
         version: 8.57.1
@@ -1957,11 +1957,11 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
       vite:
-        specifier: ^6.3.6
-        version: 6.3.6(@types/node@22.18.5)(sass@1.70.0)
+        specifier: ^7.3.1
+        version: 7.3.1(@types/node@22.18.5)(sass@1.70.0)
       vite-plugin-html:
         specifier: ~3.2.0
-        version: 3.2.2(vite@6.3.6)
+        version: 3.2.2(vite@7.3.1)
 
   ../../libs/api-client-tiger:
     dependencies:
@@ -5419,7 +5419,7 @@ importers:
         version: 10.1.11(storybook@10.1.11)
       '@storybook/builder-vite':
         specifier: ^10.1.11
-        version: 10.1.11(storybook@10.1.11)(vite@6.3.6)(webpack@5.93.0)
+        version: 10.1.11(storybook@10.1.11)(vite@7.3.1)(webpack@5.93.0)
       '@storybook/cli':
         specifier: ^10.1.11
         version: 10.1.11(@babel/preset-env@7.28.3)(@testing-library/dom@10.4.1)(prettier@3.6.2)(react-dom@19.1.1)(react@19.1.1)
@@ -5428,7 +5428,7 @@ importers:
         version: 1.0.3(css-loader@6.11.0)(sass-loader@10.5.2)(style-loader@3.3.4)
       '@storybook/react-vite':
         specifier: ^10.1.11
-        version: 10.1.11(react-dom@19.1.1)(react@19.1.1)(storybook@10.1.11)(typescript@5.9.3)(vite@6.3.6)(webpack@5.93.0)
+        version: 10.1.11(react-dom@19.1.1)(react@19.1.1)(storybook@10.1.11)(typescript@5.9.3)(vite@7.3.1)(webpack@5.93.0)
       '@testing-library/dom':
         specifier: 10.4.1
         version: 10.4.1
@@ -5598,14 +5598,14 @@ importers:
         specifier: ^11.1.0
         version: 11.1.0
       vite:
-        specifier: ^6.3.6
-        version: 6.3.6(@types/node@22.18.5)(sass@1.70.0)
+        specifier: ^7.3.1
+        version: 7.3.1(@types/node@22.18.5)(sass@1.70.0)
       vite-node:
         specifier: ^5.2.0
         version: 5.2.0(@types/node@22.18.5)
       vite-plugin-static-copy:
         specifier: ^3.1.1
-        version: 3.1.2(vite@6.3.6)
+        version: 3.1.2(vite@7.3.1)
       vitest:
         specifier: 4.0.8
         version: 4.0.8(@types/node@22.18.5)(happy-dom@18.0.1)
@@ -5704,7 +5704,7 @@ importers:
         version: 8.52.0(eslint@8.57.1)(typescript@5.9.3)
       '@vitejs/plugin-react':
         specifier: ^4.6.0
-        version: 4.7.0(vite@6.3.6)
+        version: 4.7.0(vite@7.3.1)
       axios:
         specifier: ^1.9.0
         version: 1.12.2
@@ -5829,8 +5829,8 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
       vite:
-        specifier: ^6.3.6
-        version: 6.3.6(@types/node@22.18.5)(sass@1.70.0)
+        specifier: ^7.3.1
+        version: 7.3.1(@types/node@22.18.5)(sass@1.70.0)
       wait-on:
         specifier: ^8.0.3
         version: 8.0.5
@@ -6318,17 +6318,17 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
       vite:
-        specifier: ^6.3.6
-        version: 6.3.6(@types/node@22.18.5)(sass@1.70.0)
+        specifier: ^7.3.1
+        version: 7.3.1(@types/node@22.18.5)(sass@1.70.0)
       vite-plugin-css-injected-by-js:
         specifier: 3.1.1
-        version: 3.1.1(vite@6.3.6)
+        version: 3.1.1(vite@7.3.1)
       vite-plugin-environment:
         specifier: ^1.1.3
-        version: 1.1.3(vite@6.3.6)
+        version: 1.1.3(vite@7.3.1)
       vite-plugin-static-copy:
         specifier: ^3.1.1
-        version: 3.1.2(vite@6.3.6)
+        version: 3.1.2(vite@7.3.1)
       vitest:
         specifier: 4.0.8
         version: 4.0.8(@types/node@22.18.5)(happy-dom@18.0.1)
@@ -9457,6 +9457,7 @@ packages:
     cpu: [ppc64]
     os: [aix]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/aix-ppc64@0.27.2:
@@ -9465,7 +9466,6 @@ packages:
     cpu: [ppc64]
     os: [aix]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/android-arm64@0.25.9:
@@ -9474,6 +9474,7 @@ packages:
     cpu: [arm64]
     os: [android]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/android-arm64@0.27.2:
@@ -9482,7 +9483,6 @@ packages:
     cpu: [arm64]
     os: [android]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/android-arm@0.25.9:
@@ -9491,6 +9491,7 @@ packages:
     cpu: [arm]
     os: [android]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/android-arm@0.27.2:
@@ -9499,7 +9500,6 @@ packages:
     cpu: [arm]
     os: [android]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/android-x64@0.25.9:
@@ -9508,6 +9508,7 @@ packages:
     cpu: [x64]
     os: [android]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/android-x64@0.27.2:
@@ -9516,7 +9517,6 @@ packages:
     cpu: [x64]
     os: [android]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/darwin-arm64@0.25.9:
@@ -9525,6 +9525,7 @@ packages:
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/darwin-arm64@0.27.2:
@@ -9533,7 +9534,6 @@ packages:
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/darwin-x64@0.25.9:
@@ -9542,6 +9542,7 @@ packages:
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/darwin-x64@0.27.2:
@@ -9550,7 +9551,6 @@ packages:
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/freebsd-arm64@0.25.9:
@@ -9559,6 +9559,7 @@ packages:
     cpu: [arm64]
     os: [freebsd]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/freebsd-arm64@0.27.2:
@@ -9567,7 +9568,6 @@ packages:
     cpu: [arm64]
     os: [freebsd]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/freebsd-x64@0.25.9:
@@ -9576,6 +9576,7 @@ packages:
     cpu: [x64]
     os: [freebsd]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/freebsd-x64@0.27.2:
@@ -9584,7 +9585,6 @@ packages:
     cpu: [x64]
     os: [freebsd]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/linux-arm64@0.25.9:
@@ -9593,6 +9593,7 @@ packages:
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/linux-arm64@0.27.2:
@@ -9601,7 +9602,6 @@ packages:
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/linux-arm@0.25.9:
@@ -9610,6 +9610,7 @@ packages:
     cpu: [arm]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/linux-arm@0.27.2:
@@ -9618,7 +9619,6 @@ packages:
     cpu: [arm]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/linux-ia32@0.25.9:
@@ -9627,6 +9627,7 @@ packages:
     cpu: [ia32]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/linux-ia32@0.27.2:
@@ -9635,7 +9636,6 @@ packages:
     cpu: [ia32]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/linux-loong64@0.25.9:
@@ -9644,6 +9644,7 @@ packages:
     cpu: [loong64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/linux-loong64@0.27.2:
@@ -9652,7 +9653,6 @@ packages:
     cpu: [loong64]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/linux-mips64el@0.25.9:
@@ -9661,6 +9661,7 @@ packages:
     cpu: [mips64el]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/linux-mips64el@0.27.2:
@@ -9669,7 +9670,6 @@ packages:
     cpu: [mips64el]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/linux-ppc64@0.25.9:
@@ -9678,6 +9678,7 @@ packages:
     cpu: [ppc64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/linux-ppc64@0.27.2:
@@ -9686,7 +9687,6 @@ packages:
     cpu: [ppc64]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/linux-riscv64@0.25.9:
@@ -9695,6 +9695,7 @@ packages:
     cpu: [riscv64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/linux-riscv64@0.27.2:
@@ -9703,7 +9704,6 @@ packages:
     cpu: [riscv64]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/linux-s390x@0.25.9:
@@ -9712,6 +9712,7 @@ packages:
     cpu: [s390x]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/linux-s390x@0.27.2:
@@ -9720,7 +9721,6 @@ packages:
     cpu: [s390x]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/linux-x64@0.25.9:
@@ -9729,6 +9729,7 @@ packages:
     cpu: [x64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/linux-x64@0.27.2:
@@ -9737,7 +9738,6 @@ packages:
     cpu: [x64]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/netbsd-arm64@0.25.9:
@@ -9746,6 +9746,7 @@ packages:
     cpu: [arm64]
     os: [netbsd]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/netbsd-arm64@0.27.2:
@@ -9754,7 +9755,6 @@ packages:
     cpu: [arm64]
     os: [netbsd]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/netbsd-x64@0.25.9:
@@ -9763,6 +9763,7 @@ packages:
     cpu: [x64]
     os: [netbsd]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/netbsd-x64@0.27.2:
@@ -9771,7 +9772,6 @@ packages:
     cpu: [x64]
     os: [netbsd]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/openbsd-arm64@0.25.9:
@@ -9780,6 +9780,7 @@ packages:
     cpu: [arm64]
     os: [openbsd]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/openbsd-arm64@0.27.2:
@@ -9788,7 +9789,6 @@ packages:
     cpu: [arm64]
     os: [openbsd]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/openbsd-x64@0.25.9:
@@ -9797,6 +9797,7 @@ packages:
     cpu: [x64]
     os: [openbsd]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/openbsd-x64@0.27.2:
@@ -9805,7 +9806,6 @@ packages:
     cpu: [x64]
     os: [openbsd]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/openharmony-arm64@0.25.9:
@@ -9814,6 +9814,7 @@ packages:
     cpu: [arm64]
     os: [openharmony]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/openharmony-arm64@0.27.2:
@@ -9822,7 +9823,6 @@ packages:
     cpu: [arm64]
     os: [openharmony]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/sunos-x64@0.25.9:
@@ -9831,6 +9831,7 @@ packages:
     cpu: [x64]
     os: [sunos]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/sunos-x64@0.27.2:
@@ -9839,7 +9840,6 @@ packages:
     cpu: [x64]
     os: [sunos]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/win32-arm64@0.25.9:
@@ -9848,6 +9848,7 @@ packages:
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/win32-arm64@0.27.2:
@@ -9856,7 +9857,6 @@ packages:
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/win32-ia32@0.25.9:
@@ -9865,6 +9865,7 @@ packages:
     cpu: [ia32]
     os: [win32]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/win32-ia32@0.27.2:
@@ -9873,7 +9874,6 @@ packages:
     cpu: [ia32]
     os: [win32]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@esbuild/win32-x64@0.25.9:
@@ -9882,6 +9882,7 @@ packages:
     cpu: [x64]
     os: [win32]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/win32-x64@0.27.2:
@@ -9890,7 +9891,6 @@ packages:
     cpu: [x64]
     os: [win32]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@eslint-community/eslint-utils@4.9.1(eslint@8.57.1):
@@ -10355,7 +10355,7 @@ packages:
       '@sinclair/typebox': 0.27.8
     dev: true
 
-  /@joshwooding/vite-plugin-react-docgen-typescript@0.6.3(typescript@5.9.3)(vite@6.3.6):
+  /@joshwooding/vite-plugin-react-docgen-typescript@0.6.3(typescript@5.9.3)(vite@7.3.1):
     resolution: {integrity: sha512-9TGZuAX+liGkNKkwuo3FYJu7gHWT0vkBcf7GkOe7s7fmC19XwH/4u5u7sDIFrMooe558ORcmuBvBz7Ur5PlbHw==}
     peerDependencies:
       typescript: '>= 4.3.x'
@@ -10367,7 +10367,7 @@ packages:
       glob: 11.1.0
       react-docgen-typescript: 2.4.0(typescript@5.9.3)
       typescript: 5.9.3
-      vite: 6.3.6(@types/node@22.18.5)(sass@1.70.0)
+      vite: 7.3.1(@types/node@22.18.5)(sass@1.70.0)
     dev: true
 
   /@jridgewell/gen-mapping@0.3.13:
@@ -11281,17 +11281,17 @@ packages:
       storybook: 10.1.11(@testing-library/dom@10.4.1)(prettier@3.6.2)(react-dom@19.1.1)(react@19.1.1)
     dev: true
 
-  /@storybook/builder-vite@10.1.11(storybook@10.1.11)(vite@6.3.6)(webpack@5.93.0):
+  /@storybook/builder-vite@10.1.11(storybook@10.1.11)(vite@7.3.1)(webpack@5.93.0):
     resolution: {integrity: sha512-MMD09Ap7FyzDfWG961pkIMv/w684XXe1bBEi+wCEpHxvrgAd3j3A9w/Rqp9Am2uRDPCEdi1QgSzS3SGW3aGThQ==}
     peerDependencies:
       storybook: ^10.1.11
       vite: ^5.0.0 || ^6.0.0 || ^7.0.0
     dependencies:
-      '@storybook/csf-plugin': 10.1.11(storybook@10.1.11)(vite@6.3.6)(webpack@5.93.0)
-      '@vitest/mocker': 3.2.4(vite@6.3.6)
+      '@storybook/csf-plugin': 10.1.11(storybook@10.1.11)(vite@7.3.1)(webpack@5.93.0)
+      '@vitest/mocker': 3.2.4(vite@7.3.1)
       storybook: 10.1.11(@testing-library/dom@10.4.1)(prettier@3.6.2)(react-dom@19.1.1)(react@19.1.1)
       ts-dedent: 2.2.0
-      vite: 6.3.6(@types/node@22.18.5)(sass@1.70.0)
+      vite: 7.3.1(@types/node@22.18.5)(sass@1.70.0)
     transitivePeerDependencies:
       - esbuild
       - msw
@@ -11342,7 +11342,7 @@ packages:
       - utf-8-validate
     dev: true
 
-  /@storybook/csf-plugin@10.1.11(storybook@10.1.11)(vite@6.3.6)(webpack@5.93.0):
+  /@storybook/csf-plugin@10.1.11(storybook@10.1.11)(vite@7.3.1)(webpack@5.93.0):
     resolution: {integrity: sha512-Ant0NhgqHKzQsseeVTSetZCuDHHs0W2HRkHt51Kg/sUl0T/sDtfVA+fWZT8nGzGZqYSFkxqYPWjauPmIhPtaRw==}
     peerDependencies:
       esbuild: '*'
@@ -11362,7 +11362,7 @@ packages:
     dependencies:
       storybook: 10.1.11(@testing-library/dom@10.4.1)(prettier@3.6.2)(react-dom@19.1.1)(react@19.1.1)
       unplugin: 2.3.10
-      vite: 6.3.6(@types/node@22.18.5)(sass@1.70.0)
+      vite: 7.3.1(@types/node@22.18.5)(sass@1.70.0)
       webpack: 5.93.0(webpack-cli@6.0.1)
     dev: true
 
@@ -11404,7 +11404,7 @@ packages:
       storybook: 10.1.11(@testing-library/dom@10.4.1)(prettier@3.6.2)(react-dom@19.1.1)(react@19.1.1)
     dev: true
 
-  /@storybook/react-vite@10.1.11(react-dom@19.1.1)(react@19.1.1)(storybook@10.1.11)(typescript@5.9.3)(vite@6.3.6)(webpack@5.93.0):
+  /@storybook/react-vite@10.1.11(react-dom@19.1.1)(react@19.1.1)(storybook@10.1.11)(typescript@5.9.3)(vite@7.3.1)(webpack@5.93.0):
     resolution: {integrity: sha512-qh1BCD25nIoiDfqwha+qBkl7pcG4WuzM+c8tsE63YEm8AFIbNKg5K8lVUoclF+4CpFz7IwBpWe61YUTDfp+91w==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
@@ -11412,9 +11412,9 @@ packages:
       storybook: ^10.1.11
       vite: ^5.0.0 || ^6.0.0 || ^7.0.0
     dependencies:
-      '@joshwooding/vite-plugin-react-docgen-typescript': 0.6.3(typescript@5.9.3)(vite@6.3.6)
+      '@joshwooding/vite-plugin-react-docgen-typescript': 0.6.3(typescript@5.9.3)(vite@7.3.1)
       '@rollup/pluginutils': 5.3.0
-      '@storybook/builder-vite': 10.1.11(storybook@10.1.11)(vite@6.3.6)(webpack@5.93.0)
+      '@storybook/builder-vite': 10.1.11(storybook@10.1.11)(vite@7.3.1)(webpack@5.93.0)
       '@storybook/react': 10.1.11(react-dom@19.1.1)(react@19.1.1)(storybook@10.1.11)(typescript@5.9.3)
       empathic: 2.0.0
       magic-string: 0.30.21
@@ -11424,7 +11424,7 @@ packages:
       resolve: 1.22.10
       storybook: 10.1.11(@testing-library/dom@10.4.1)(prettier@3.6.2)(react-dom@19.1.1)(react@19.1.1)
       tsconfig-paths: 4.2.0
-      vite: 6.3.6(@types/node@22.18.5)(sass@1.70.0)
+      vite: 7.3.1(@types/node@22.18.5)(sass@1.70.0)
     transitivePeerDependencies:
       - esbuild
       - msw
@@ -12532,19 +12532,19 @@ packages:
     dev: true
     optional: true
 
-  /@vitejs/plugin-react-swc@3.11.0(vite@6.3.6):
+  /@vitejs/plugin-react-swc@3.11.0(vite@7.3.1):
     resolution: {integrity: sha512-YTJCGFdNMHCMfjODYtxRNVAYmTWQ1Lb8PulP/2/f/oEEtglw8oKxKIZmmRkyXrVrHfsKOaVkAc3NT9/dMutO5w==}
     peerDependencies:
       vite: ^4 || ^5 || ^6 || ^7
     dependencies:
       '@rolldown/pluginutils': 1.0.0-beta.27
       '@swc/core': 1.13.5
-      vite: 6.3.6(@types/node@22.18.5)(sass@1.70.0)
+      vite: 7.3.1(@types/node@22.18.5)(sass@1.70.0)
     transitivePeerDependencies:
       - '@swc/helpers'
     dev: true
 
-  /@vitejs/plugin-react@4.7.0(vite@6.3.6):
+  /@vitejs/plugin-react@4.7.0(vite@7.3.1):
     resolution: {integrity: sha512-gUu9hwfWvvEDBBmgtAowQCojwZmJ5mcLn3aufeCsitijs3+f2NsrPtlAWIR6OPiqljl96GVCUbLe0HyqIpVaoA==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
@@ -12556,7 +12556,7 @@ packages:
       '@rolldown/pluginutils': 1.0.0-beta.27
       '@types/babel__core': 7.20.5
       react-refresh: 0.17.0
-      vite: 6.3.6(@types/node@22.18.5)(sass@1.70.0)
+      vite: 7.3.1(@types/node@22.18.5)(sass@1.70.0)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -12603,7 +12603,7 @@ packages:
       chai: 6.2.2
       tinyrainbow: 3.0.3
 
-  /@vitest/mocker@3.2.4(vite@6.3.6):
+  /@vitest/mocker@3.2.4(vite@7.3.1):
     resolution: {integrity: sha512-46ryTE9RZO/rfDd7pEqFl7etuyzekzEhUbTW3BvmeO/BcCMEgq59BKhek3dXDWgAj4oMK6OZi+vRr1wPW6qjEQ==}
     peerDependencies:
       msw: ^2.4.9
@@ -12617,10 +12617,10 @@ packages:
       '@vitest/spy': 3.2.4
       estree-walker: 3.0.3
       magic-string: 0.30.21
-      vite: 6.3.6(@types/node@22.18.5)(sass@1.70.0)
+      vite: 7.3.1(@types/node@22.18.5)(sass@1.70.0)
     dev: true
 
-  /@vitest/mocker@4.0.8(vite@6.3.6):
+  /@vitest/mocker@4.0.8(vite@7.3.1):
     resolution: {integrity: sha512-9FRM3MZCedXH3+pIh+ME5Up2NBBHDq0wqwhOKkN4VnvCiKbVxddqH9mSGPZeawjd12pCOGnl+lo/ZGHt0/dQSg==}
     peerDependencies:
       msw: ^2.4.9
@@ -12634,7 +12634,7 @@ packages:
       '@vitest/spy': 4.0.8
       estree-walker: 3.0.3
       magic-string: 0.30.21
-      vite: 6.3.6(@types/node@22.18.5)(sass@1.70.0)
+      vite: 7.3.1(@types/node@22.18.5)(sass@1.70.0)
 
   /@vitest/pretty-format@3.2.4:
     resolution: {integrity: sha512-IVNZik8IVRJRTr9fxlitMKeJeXFFFN0JaB9PHPGQ8NKQbGpfjlTx9zO4RefN8gp7eqjNy8nyK3NZmBzOPeIxtA==}
@@ -15102,6 +15102,7 @@ packages:
       '@esbuild/win32-arm64': 0.25.9
       '@esbuild/win32-ia32': 0.25.9
       '@esbuild/win32-x64': 0.25.9
+    dev: true
 
   /esbuild@0.27.2:
     resolution: {integrity: sha512-HyNQImnsOC7X9PMNaCIeAm4ISCQXs5a5YasTXVliKv4uuBo1dKrG0A+uQS8M5eXjVMnLg3WgXaKvprHlFJQffw==}
@@ -15135,7 +15136,6 @@ packages:
       '@esbuild/win32-arm64': 0.27.2
       '@esbuild/win32-ia32': 0.27.2
       '@esbuild/win32-x64': 0.27.2
-    dev: true
 
   /escalade@3.2.0:
     resolution: {integrity: sha512-WUj2qlxaQtO4g6Pq5c29GTcWGDyd8itL8zTlipgECz3JesAiiOKotd8JU6otB3PACgG6xkJUyVhboMS+bje/jA==}
@@ -22229,7 +22229,7 @@ packages:
       es-module-lexer: 1.7.0
       obug: 2.1.1
       pathe: 2.0.3
-      vite: 7.3.1(@types/node@22.18.5)
+      vite: 7.3.1(@types/node@22.18.5)(sass@1.70.0)
     transitivePeerDependencies:
       - '@types/node'
       - jiti
@@ -22244,23 +22244,23 @@ packages:
       - yaml
     dev: true
 
-  /vite-plugin-css-injected-by-js@3.1.1(vite@6.3.6):
+  /vite-plugin-css-injected-by-js@3.1.1(vite@7.3.1):
     resolution: {integrity: sha512-mwrFvEEy0TuH8Ul0cb2HgjmNboQ/JnEFy+kHCWqAJph3ikMOiIuyYVdx0JO4nEIWJyzSnc4TTdmoTulsikvJEg==}
     peerDependencies:
       vite: '>2.0.0-0'
     dependencies:
-      vite: 6.3.6(@types/node@22.18.5)(sass@1.70.0)
+      vite: 7.3.1(@types/node@22.18.5)(sass@1.70.0)
     dev: true
 
-  /vite-plugin-environment@1.1.3(vite@6.3.6):
+  /vite-plugin-environment@1.1.3(vite@7.3.1):
     resolution: {integrity: sha512-9LBhB0lx+2lXVBEWxFZC+WO7PKEyE/ykJ7EPWCq95NEcCpblxamTbs5Dm3DLBGzwODpJMEnzQywJU8fw6XGGGA==}
     peerDependencies:
       vite: '>= 2.7'
     dependencies:
-      vite: 6.3.6(@types/node@22.18.5)(sass@1.70.0)
+      vite: 7.3.1(@types/node@22.18.5)(sass@1.70.0)
     dev: true
 
-  /vite-plugin-html@3.2.2(vite@6.3.6):
+  /vite-plugin-html@3.2.2(vite@7.3.1):
     resolution: {integrity: sha512-vb9C9kcdzcIo/Oc3CLZVS03dL5pDlOFuhGlZYDCJ840BhWl/0nGeZWf3Qy7NlOayscY4Cm/QRgULCQkEZige5Q==}
     peerDependencies:
       vite: '>=2.0.0'
@@ -22277,10 +22277,10 @@ packages:
       html-minifier-terser: 6.1.0
       node-html-parser: 5.4.2
       pathe: 0.2.0
-      vite: 6.3.6(@types/node@22.18.5)(sass@1.70.0)
+      vite: 7.3.1(@types/node@22.18.5)(sass@1.70.0)
     dev: true
 
-  /vite-plugin-static-copy@3.1.2(vite@6.3.6):
+  /vite-plugin-static-copy@3.1.2(vite@7.3.1):
     resolution: {integrity: sha512-aVmYOzptLVOI2b1jL+cmkF7O6uhRv1u5fvOkQgbohWZp2CbR22kn9ZqkCUIt9umKF7UhdbsEpshn1rf4720QFg==}
     engines: {node: ^18.0.0 || >=20.0.0}
     peerDependencies:
@@ -22291,61 +22291,10 @@ packages:
       p-map: 7.0.3
       picocolors: 1.1.1
       tinyglobby: 0.2.15
-      vite: 6.3.6(@types/node@22.18.5)(sass@1.70.0)
+      vite: 7.3.1(@types/node@22.18.5)(sass@1.70.0)
     dev: true
 
-  /vite@6.3.6(@types/node@22.18.5)(sass@1.70.0):
-    resolution: {integrity: sha512-0msEVHJEScQbhkbVTb/4iHZdJ6SXp/AvxL2sjwYQFfBqleHtnCqv1J3sa9zbWz/6kW1m9Tfzn92vW+kZ1WV6QA==}
-    engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
-    hasBin: true
-    peerDependencies:
-      '@types/node': ^18.0.0 || ^20.0.0 || >=22.0.0
-      jiti: '>=1.21.0'
-      less: '*'
-      lightningcss: ^1.21.0
-      sass: '*'
-      sass-embedded: '*'
-      stylus: '*'
-      sugarss: '*'
-      terser: ^5.16.0
-      tsx: ^4.8.1
-      yaml: ^2.4.2
-    peerDependenciesMeta:
-      '@types/node':
-        optional: true
-      jiti:
-        optional: true
-      less:
-        optional: true
-      lightningcss:
-        optional: true
-      sass:
-        optional: true
-      sass-embedded:
-        optional: true
-      stylus:
-        optional: true
-      sugarss:
-        optional: true
-      terser:
-        optional: true
-      tsx:
-        optional: true
-      yaml:
-        optional: true
-    dependencies:
-      '@types/node': 22.18.5
-      esbuild: 0.25.9
-      fdir: 6.5.0(picomatch@4.0.3)
-      picomatch: 4.0.3
-      postcss: 8.5.6
-      rollup: 4.54.0
-      sass: 1.70.0
-      tinyglobby: 0.2.15
-    optionalDependencies:
-      fsevents: 2.3.3
-
-  /vite@7.3.1(@types/node@22.18.5):
+  /vite@7.3.1(@types/node@22.18.5)(sass@1.70.0):
     resolution: {integrity: sha512-w+N7Hifpc3gRjZ63vYBXA56dvvRlNWRczTdmCBBa+CotUzAPf5b7YMdMR/8CQoeYE5LX3W4wj6RYTgonm1b9DA==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
@@ -22391,10 +22340,10 @@ packages:
       picomatch: 4.0.3
       postcss: 8.5.6
       rollup: 4.54.0
+      sass: 1.70.0
       tinyglobby: 0.2.15
     optionalDependencies:
       fsevents: 2.3.3
-    dev: true
 
   /vitest-dom@0.1.1(vitest@4.0.8):
     resolution: {integrity: sha512-n/bonR2hcRHCE5hlzG/P0yTXTUXx/gPtsaeUWP86ADfwo/+dHDpnTTV14qY7+kevsUbOZFYECu77MXY7AA0QSA==}
@@ -22446,7 +22395,7 @@ packages:
     dependencies:
       '@types/node': 22.18.5
       '@vitest/expect': 4.0.8
-      '@vitest/mocker': 4.0.8(vite@6.3.6)
+      '@vitest/mocker': 4.0.8(vite@7.3.1)
       '@vitest/pretty-format': 4.0.8
       '@vitest/runner': 4.0.8
       '@vitest/snapshot': 4.0.8
@@ -22464,7 +22413,7 @@ packages:
       tinyexec: 0.3.2
       tinyglobby: 0.2.15
       tinyrainbow: 3.0.3
-      vite: 6.3.6(@types/node@22.18.5)(sass@1.70.0)
+      vite: 7.3.1(@types/node@22.18.5)(sass@1.70.0)
       why-is-node-running: 2.3.0
     transitivePeerDependencies:
       - jiti
@@ -22516,7 +22465,7 @@ packages:
     dependencies:
       '@types/node': 22.18.5
       '@vitest/expect': 4.0.8
-      '@vitest/mocker': 4.0.8(vite@6.3.6)
+      '@vitest/mocker': 4.0.8(vite@7.3.1)
       '@vitest/pretty-format': 4.0.8
       '@vitest/runner': 4.0.8
       '@vitest/snapshot': 4.0.8
@@ -22534,7 +22483,7 @@ packages:
       tinyexec: 0.3.2
       tinyglobby: 0.2.15
       tinyrainbow: 3.0.3
-      vite: 6.3.6(@types/node@22.18.5)(sass@1.70.0)
+      vite: 7.3.1(@types/node@22.18.5)(sass@1.70.0)
       why-is-node-running: 2.3.0
     transitivePeerDependencies:
       - jiti
@@ -22586,7 +22535,7 @@ packages:
         optional: true
     dependencies:
       '@vitest/expect': 4.0.8
-      '@vitest/mocker': 4.0.8(vite@6.3.6)
+      '@vitest/mocker': 4.0.8(vite@7.3.1)
       '@vitest/pretty-format': 4.0.8
       '@vitest/runner': 4.0.8
       '@vitest/snapshot': 4.0.8
@@ -22604,7 +22553,7 @@ packages:
       tinyexec: 0.3.2
       tinyglobby: 0.2.15
       tinyrainbow: 3.0.3
-      vite: 6.3.6(@types/node@22.18.5)(sass@1.70.0)
+      vite: 7.3.1(@types/node@22.18.5)(sass@1.70.0)
       why-is-node-running: 2.3.0
     transitivePeerDependencies:
       - jiti

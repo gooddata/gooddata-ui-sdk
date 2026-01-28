@@ -202,9 +202,9 @@ export function isFiscalGranularity(granularity: DateFilterGranularity): boolean
 }
 
 /**
- * Standard granularities that have fiscal equivalents.
- * Used for filtering granularities when switching between standard/fiscal tabs.
- * @internal
+ * Standard granularities that have fiscal equivalents (year, quarter, month).
+ * Used for determining which tab to show based on selected granularity.
+ * @alpha
  */
 export const STANDARD_GRANULARITIES_WITH_FISCAL_EQUIVALENT: DateFilterGranularity[] = [
     "GDC.time.year",

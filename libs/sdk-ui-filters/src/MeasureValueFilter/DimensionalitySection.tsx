@@ -80,6 +80,22 @@ export const areDimensionalitySetsEqual = (
     );
 };
 
+const areDimensionalityItemsDeepEqual = (
+    availableItem: IDimensionalityItem,
+    filterItem: IDimensionalityItem,
+): boolean => {
+    if (availableItem.ref && filterItem.ref) {
+        return areObjRefsEqual(availableItem.ref, filterItem.ref);
+    }
+    if (availableItem.ref) {
+        return areObjRefsEqual(availableItem.ref, filterItem.identifier);
+    }
+    if (filterItem.ref) {
+        return areObjRefsEqual(availableItem.identifier, filterItem.ref);
+    }
+    return areObjRefsEqual(availableItem.identifier, filterItem.identifier);
+};
+
 interface IDimensionalitySectionProps {
     /**
      * Current dimensionality items in the filter.
@@ -149,7 +165,7 @@ export const DimensionalitySection = memo(function DimensionalitySection({
         return (insightDimensionality ?? []).filter(
             (availableItem) =>
                 !dimensionality.some((filterItem) =>
-                    areObjRefsEqual(availableItem.identifier, filterItem.identifier),
+                    areDimensionalityItemsDeepEqual(availableItem, filterItem),
                 ),
         );
     }, [insightDimensionality, dimensionality]);
@@ -158,7 +174,7 @@ export const DimensionalitySection = memo(function DimensionalitySection({
         const selectedFilteredOut = (catalogDimensionality ?? []).filter(
             (availableItem) =>
                 !dimensionality.some((filterItem) =>
-                    areObjRefsEqual(availableItem.identifier, filterItem.ref),
+                    areDimensionalityItemsDeepEqual(availableItem, filterItem),
                 ),
         );
 

@@ -3,6 +3,9 @@ import { defineConfig } from "vitest/config";
 
 // eslint-disable-next-line no-restricted-exports
 export default defineConfig({
+    resolve: {
+        preserveSymlinks: true,
+    },
     test: {
         environment: "happy-dom",
     },
