@@ -1,10 +1,36 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 22 Jan 2026 10:30:55 GMT and should not be manually modified.
+This log was last generated on Thu, 29 Jan 2026 08:15:37 GMT and should not be manually modified.
+
+## 11.18.0
+
+Thu, 29 Jan 2026 08:15:37 GMT
+
+### Minor changes
+
+- Promote the MapLibre-based geo charts (GeoChart/GeoAreaChart/GeoPushpinChart) to the public API, add documentation for the new geo chart types and layers, keep the legacy MapBox-based pushpin implementation available as LegacyGeoPushpinChart for now.
+
+### Updates
+
+- sdk-ui-dashboard: Fix toast visibility when KDA is minimized.
+- sdk-ui-kit: Stabilize `UiButtonSegmentedControl` styling and add `layout="fill"` story coverage.
+- sdk-ui-ext: disable key driver analysis for a specific metric in visualisation
+- sdk-ui-all: Allow set hidden from KDA on metric in catalog, reflect this option in visualisation when adding metric to bucket
+- sdk-ui-catalog: fix converting of object type for analytical catalog
+- sdk-ui-all: Add support for measure value filter with multiple conditions.
+- sdk-ui-filters: Improve handling of multiple conditions to prevent excessive height of content.
+- Implement more features into Filter Groups like customazibility, mobile view, dependant, hidden and locked filters
+- Use `application/json` in request headers instead of vendor-specific `vnd.gooddata.api+json`
+- sdk-ui-filters: Do not display metric filter migration message needlessly when All operator is selected.
+- sdk-ui-filters: Allow application of metric value filter with ranking value filter if a feature flag is enabled.
 
 ## 11.17.0
 
 Thu, 22 Jan 2026 10:30:55 GMT
+
+### Patches
+
+- Fix Key Driver Analysis date formatting by normalizing server patterns to ISO week tokens.
 
 ### Updates
 
@@ -42,9 +68,13 @@ Thu, 22 Jan 2026 10:30:55 GMT
 
 Thu, 15 Jan 2026 09:13:41 GMT
 
+### Patches
+
+- Fix Key Driver Analysis date formatting by normalizing server patterns to ISO week tokens.
+
 ### Updates
 
-- sdk-ui-ext: Introduce TypeScript strict mode.
+-   - sdk-ui-ext: Introduce TypeScript strict mode.
 - sdk-ui-kit: Fix `UiAsyncTable` tab stop when there are no sortable columns in the header.
 - sdk-ui-kit: Make `EditableLabel` accessible by keyboard.
 - sdk-ui-kit: Restore focus on `UiDrawer` close and add `returnFocusTo` option.
@@ -100,15 +130,10 @@ Thu, 08 Jan 2026 08:13:01 GMT
 - sdk-ui-loaders: Fix dashboard plugin loader to support both named and default exports from plugin entry point, restoring backward compatibility with plugins built before the 'Ban default exports' change
 - sdk-ui-geo: Add support for measure drilling
 - revert Crowdin structure to investigate blocker
-- Fix Key Driver Analysis date formatting by normalizing server patterns to ISO week tokens.
 
 ## 11.14.0
 
 Thu, 18 Dec 2025 07:14:24 GMT
-
-### Patches
-
-- Fix Key Driver Analysis date formatting by normalizing server patterns to ISO week tokens.
 
 ### Updates
 
@@ -138,10 +163,6 @@ Thu, 18 Dec 2025 07:14:24 GMT
 ## 11.13.0
 
 Thu, 11 Dec 2025 17:13:20 GMT
-
-### Patches
-
-- sdk-ui-dashboard: Fix Key Driver Analysis date formatting by normalizing server patterns to ISO week tokens.
 
 ### Updates
 
@@ -183,6 +204,7 @@ Thu, 11 Dec 2025 17:13:20 GMT
 - sdk-backend-spi: Add support for measure value filter dimensionality.
 - sdk-ui-ext: Swap invalidation ref for invalidation id in automations.
 - sdk-ui-all: Add metric format override features, currency settings management, and Analytics Catalog enhancements.
+- sdk-ui-dashboard: Fix Key Driver Analysis date formatting by normalizing server patterns to ISO week tokens.
 
 ## 11.12.0
 
