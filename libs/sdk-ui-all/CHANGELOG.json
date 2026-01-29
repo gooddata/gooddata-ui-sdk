@@ -2,6 +2,53 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.18.0",
+            "tag": "@gooddata/sdk-ui-all_v11.18.0",
+            "date": "Thu, 29 Jan 2026 08:15:37 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "sdk-ui-dashboard: Fix toast visibility when KDA is minimized."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Stabilize `UiButtonSegmentedControl` styling and add `layout=\"fill\"` story coverage."
+                    },
+                    {
+                        "comment": "sdk-ui-ext: disable key driver analysis for a specific metric in visualisation"
+                    },
+                    {
+                        "comment": "sdk-ui-all: Allow set hidden from KDA on metric in catalog, reflect this option in visualisation when adding metric to bucket"
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: fix converting of object type for analytical catalog"
+                    },
+                    {
+                        "comment": "sdk-ui-all: Add support for measure value filter with multiple conditions."
+                    },
+                    {
+                        "comment": "sdk-ui-filters: Improve handling of multiple conditions to prevent excessive height of content."
+                    },
+                    {
+                        "comment": "Implement more features into Filter Groups like customazibility, mobile view, dependant, hidden and locked filters"
+                    },
+                    {
+                        "comment": "Use `application/json` in request headers instead of vendor-specific `vnd.gooddata.api+json`"
+                    },
+                    {
+                        "comment": "sdk-ui-filters: Do not display metric filter migration message needlessly when All operator is selected."
+                    },
+                    {
+                        "comment": "sdk-ui-filters: Allow application of metric value filter with ranking value filter if a feature flag is enabled."
+                    }
+                ],
+                "minor": [
+                    {
+                        "comment": "Promote the MapLibre-based geo charts (GeoChart/GeoAreaChart/GeoPushpinChart) to the public API, add documentation for the new geo chart types and layers, keep the legacy MapBox-based pushpin implementation available as LegacyGeoPushpinChart for now."
+                    }
+                ]
+            }
+        },
+        {
             "version": "11.17.0",
             "tag": "@gooddata/sdk-ui-all_v11.17.0",
             "date": "Thu, 22 Jan 2026 10:30:55 GMT",
