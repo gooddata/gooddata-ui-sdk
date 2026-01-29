@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import type { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { assertNever } from "@gooddata/sdk-model";
@@ -14,7 +14,7 @@ import type { IGeoAdapterContext } from "../registry/adapterTypes.js";
  *
  * @remarks
  * Each execution is tagged with the originating layer so that downstream consumers
- * (e.g., {@link GeoChartNextInternal}) can reconstruct layer/execution pairs from the
+ * (e.g., {@link GeoChartInternal}) can reconstruct layer/execution pairs from the
  * standard `execution` + `executions` props.
  *
  * @internal

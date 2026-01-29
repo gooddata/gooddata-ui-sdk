@@ -4,7 +4,7 @@ import type { IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import type { IBucket } from "@gooddata/sdk-model";
 import type { DataViewFacade } from "@gooddata/sdk-ui";
 
-import type { ILayerExecutionRecord } from "../types/props/geoChartNext/internal.js";
+import type { ILayerExecutionRecord } from "../types/props/geoChart/internal.js";
 
 /**
  * Sentinel value indicating data is not ready for fingerprinting.

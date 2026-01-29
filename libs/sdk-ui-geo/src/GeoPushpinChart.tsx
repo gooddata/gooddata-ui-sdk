@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ReactElement } from "react";
 
@@ -32,8 +32,8 @@ import { withTheme } from "@gooddata/sdk-ui-theme-provider";
 import { CoreGeoChart } from "./core/CoreGeoChart.js";
 import {
     type GeoPushpinChartPropsUnion,
-    type IGeoPushpinChartLatitudeLongitudeProps,
-    type IGeoPushpinChartProps,
+    type ILegacyGeoPushpinChartLatitudeLongitudeProps,
+    type ILegacyGeoPushpinChartProps,
     isGeoPushpinChartProps,
 } from "./GeoChart.js";
 
@@ -77,7 +77,7 @@ export function getGeoChartDimensions(def: IExecutionDefinition): IDimension[] {
  */
 const getNonCoreProps = (
     props: GeoPushpinChartPropsUnion,
-): Array<keyof IGeoPushpinChartProps | keyof IGeoPushpinChartLatitudeLongitudeProps> => {
+): Array<keyof ILegacyGeoPushpinChartProps | keyof ILegacyGeoPushpinChartLatitudeLongitudeProps> => {
     const base: Array<keyof GeoPushpinChartPropsUnion> = [
         "backend",
         "workspace",
@@ -130,7 +130,7 @@ function GeoPushpinChartInner(props: GeoPushpinChartPropsUnion): ReactElement {
 
 const WrappedGeoPushpinChart = withTheme(withContexts(GeoPushpinChartInner));
 
-function GeoPushpinChartLocation(props: IGeoPushpinChartProps) {
+function GeoPushpinChartLocation(props: ILegacyGeoPushpinChartProps) {
     const [location, size, color, segmentBy, filters, sortBy] = useResolveValuesWithPlaceholders(
         [props.location, props.size, props.color, props.segmentBy, props.filters, props.sortBy],
         props.placeholdersResolutionContext,
@@ -138,7 +138,7 @@ function GeoPushpinChartLocation(props: IGeoPushpinChartProps) {
     return <WrappedGeoPushpinChart {...props} {...{ location, size, color, segmentBy, filters, sortBy }} />;
 }
 
-function GeoPushpinChartLatitudeLongitude(props: IGeoPushpinChartLatitudeLongitudeProps) {
+function GeoPushpinChartLatitudeLongitude(props: ILegacyGeoPushpinChartLatitudeLongitudeProps) {
     const [longitude, latitude, size, color, segmentBy, filters, sortBy] = useResolveValuesWithPlaceholders(
         [
             props.longitude,
@@ -160,9 +160,16 @@ function GeoPushpinChartLatitudeLongitude(props: IGeoPushpinChartLatitudeLongitu
 }
 
 /**
+ * Legacy GeoPushpinChart implementation (Mapbox-based).
+ *
+ * @remarks
+ * Kept temporarily for backward compatibility and internal migration.
+ *
  * @public
  */
-export function GeoPushpinChart(props: IGeoPushpinChartProps | IGeoPushpinChartLatitudeLongitudeProps) {
+export function LegacyGeoPushpinChart(
+    props: ILegacyGeoPushpinChartProps | ILegacyGeoPushpinChartLatitudeLongitudeProps,
+) {
     if (isGeoPushpinChartProps(props)) {
         return <GeoPushpinChartLocation {...props} />;
     }

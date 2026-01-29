@@ -2717,6 +2717,7 @@ export interface IMeasureValueFilter {
 
 // @public
 export interface IMeasureValueFilterAllOptions {
+    applyOnResult?: boolean;
     dimensionality?: Array<IAttribute | ObjRefInScope | string>;
     // (undocumented)
     operator: "ALL";
@@ -2724,6 +2725,7 @@ export interface IMeasureValueFilterAllOptions {
 
 // @public
 export interface IMeasureValueFilterBody extends IIdentifiableFilter {
+    applyOnResult?: boolean;
     // (undocumented)
     condition?: MeasureValueFilterCondition;
     conditions?: MeasureValueFilterCondition[];
@@ -2735,6 +2737,7 @@ export interface IMeasureValueFilterBody extends IIdentifiableFilter {
 
 // @public
 export interface IMeasureValueFilterComparisonOptions {
+    applyOnResult?: boolean;
     dimensionality?: Array<IAttribute | ObjRefInScope | string>;
     operator: ComparisonConditionOperator;
     treatNullValuesAs?: number;
@@ -2743,6 +2746,7 @@ export interface IMeasureValueFilterComparisonOptions {
 
 // @public
 export interface IMeasureValueFilterConditionsOptions {
+    applyOnResult?: boolean;
     // (undocumented)
     conditions: OptionsCondition[];
     dimensionality?: Array<IAttribute | ObjRefInScope | string>;
@@ -2754,6 +2758,7 @@ export type IMeasureValueFilterOptions = IMeasureValueFilterComparisonOptions | 
 
 // @public
 export interface IMeasureValueFilterRangeOptions {
+    applyOnResult?: boolean;
     dimensionality?: Array<IAttribute | ObjRefInScope | string>;
     from: number;
     operator: RangeConditionOperator;
@@ -2789,6 +2794,7 @@ export interface IMetadataObjectBase {
     deprecated: boolean;
     description: string;
     isHidden?: boolean;
+    isHiddenFromKda?: boolean;
     production: boolean;
     tags?: string[];
     title: string;
@@ -3275,6 +3281,8 @@ export interface IRankingFilter {
 
 // @public
 export interface IRankingFilterBody extends IIdentifiableFilter {
+    // (undocumented)
+    applyOnResult?: boolean;
     // (undocumented)
     attributes?: ObjRefInScope[];
     // (undocumented)
@@ -3912,6 +3920,7 @@ export interface ISettings {
     enablePivotTableIncreaseBucketSize?: boolean;
     enablePivotTablePagination?: boolean;
     enablePreAggregationDatasets?: boolean;
+    enableRankingWithMvf?: boolean;
     enableRawExports?: boolean;
     enableRichTextDescriptions?: boolean;
     enableRichTextDynamicReferences?: boolean;

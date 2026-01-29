@@ -21,14 +21,16 @@ import {
 } from "@gooddata/sdk-model";
 import { BucketNames, GeoAreaMissingSdkError, VisualizationTypes } from "@gooddata/sdk-ui";
 import {
-    GeoChartNextInternal,
     type IGeoAreaChartConfig,
     type IGeoLayer,
-    buildLayerExecution,
     createAreaLayer,
-    insightLayersToGeoLayers,
     isGeoLayerPushpin,
-} from "@gooddata/sdk-ui-geo/next";
+} from "@gooddata/sdk-ui-geo";
+import {
+    GeoChartInternal,
+    buildLayerExecution,
+    insightLayersToGeoLayers,
+} from "@gooddata/sdk-ui-geo/internal";
 
 import {
     createAreaConfiguredBuckets,
@@ -61,7 +63,7 @@ import { setGeoAreaUiConfig } from "../../../utils/uiConfigHelpers/geoAreaChartU
 import { GeoAreaConfigurationPanel } from "../../configurationPanels/GeoAreaConfigurationPanel.js";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
 
-type GeoChartNextExecutionProps = Parameters<typeof GeoChartNextInternal>[0];
+type GeoChartNextExecutionProps = Parameters<typeof GeoChartInternal>[0];
 
 /**
  * Geo area charts support max 1 measure for color
@@ -307,7 +309,7 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
             onDrill: this.onDrill,
         };
 
-        this.renderFun(<GeoChartNextInternal {...geoChartProps} />, this.getElement());
+        this.renderFun(<GeoChartInternal {...geoChartProps} />, this.getElement());
     }
 
     private buildPrimaryLayerContext(

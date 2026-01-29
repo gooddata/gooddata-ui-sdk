@@ -2,32 +2,42 @@
 
 import { useMemo } from "react";
 
+import { type INullableFilter } from "@gooddata/sdk-model";
 import { useResolveValueWithPlaceholders } from "@gooddata/sdk-ui";
 
 import { EMPTY_DRILLS, EMPTY_FILTERS, EMPTY_OBJECT } from "../../constants/emptyDefaults.js";
 import { applyAreaConfigDefaults } from "../../layers/area/config/defaults.js";
 import { applyPushpinConfigDefaults } from "../../layers/pushpin/config/defaults.js";
 import { applySharedGeoConfigDefaults } from "../../map/style/sharedDefaults.js";
-import { type IGeoChartNextConfig } from "../../types/config/unified.js";
-import { type IGeoChartNextResolvedProps } from "../../types/props/geoChartNext/internal.js";
-import { type IGeoChartNextProps } from "../../types/props/geoChartNext/public.js";
+import { type IGeoChartConfig } from "../../types/config/unified.js";
+import { type IGeoChartResolvedProps } from "../../types/props/geoChart/internal.js";
+import { type IGeoChartProps } from "../../types/props/geoChart/public.js";
 
 /**
- * Resolves placeholders, applies defaults, and derives chart type for GeoChartNext.
+ * Resolves placeholders, applies defaults, and derives chart type for GeoChart.
  *
  * Pipeline: public props → placeholder resolution → defaults → resolved type → executions upstream.
  *
- * @param props - GeoChartNext props potentially containing placeholders
- * @returns Resolved props with placeholders replaced, defaults applied, and chart type derived
- *
  * @internal
  */
-export function useResolvedGeoChartNextProps(props: IGeoChartNextProps): IGeoChartNextResolvedProps {
-    const resolvedLayers = useResolveValueWithPlaceholders(props.layers);
-    const resolvedFilters = useResolveValueWithPlaceholders(props.filters ?? EMPTY_FILTERS);
+export function useResolvedGeoChartProps(props: IGeoChartProps): IGeoChartResolvedProps {
+    const resolvedLayers = useResolveValueWithPlaceholders(props.layers, props.placeholdersResolutionContext);
+    const resolvedFiltersValue = useResolveValueWithPlaceholders(
+        props.filters ?? EMPTY_FILTERS,
+        props.placeholdersResolutionContext,
+    );
+    const resolvedFilters = useMemo<INullableFilter[]>(
+        () =>
+            Array.isArray(resolvedFiltersValue)
+                ? resolvedFiltersValue
+                : resolvedFiltersValue
+                  ? [resolvedFiltersValue]
+                  : EMPTY_FILTERS,
+        [resolvedFiltersValue],
+    );
     const resolvedType = props.type ?? resolvedLayers[0]?.type ?? props.layers[0]?.type ?? "pushpin";
 
-    const config = useMemo(() => applyGeoChartNextConfigDefaults(props.config), [props.config]);
+    const config = useMemo(() => applyGeoChartConfigDefaults(props.config), [props.config]);
 
     return useMemo(
         () => ({
@@ -48,8 +58,6 @@ export function useResolvedGeoChartNextProps(props: IGeoChartNextProps): IGeoCha
  *
  * @internal
  */
-export function applyGeoChartNextConfigDefaults(
-    config: IGeoChartNextConfig | undefined,
-): IGeoChartNextConfig {
+export function applyGeoChartConfigDefaults(config: IGeoChartConfig | undefined): IGeoChartConfig {
     return applyAreaConfigDefaults(applyPushpinConfigDefaults(applySharedGeoConfigDefaults(config)));
 }

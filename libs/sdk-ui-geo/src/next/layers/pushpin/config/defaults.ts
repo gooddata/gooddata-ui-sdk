@@ -1,9 +1,9 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-import { type IGeoChartNextConfig } from "../../../types/config/unified.js";
+import { type IGeoChartConfig } from "../../../types/config/unified.js";
 
-type ConfigWithPoints = IGeoChartNextConfig & {
-    points: NonNullable<IGeoChartNextConfig["points"]>;
+type ConfigWithPoints = IGeoChartConfig & {
+    points: NonNullable<IGeoChartConfig["points"]>;
 };
 
 /**
@@ -11,7 +11,7 @@ type ConfigWithPoints = IGeoChartNextConfig & {
  *
  * @internal
  */
-export function applyPushpinConfigDefaults<T extends IGeoChartNextConfig>(config: T): T & ConfigWithPoints {
+export function applyPushpinConfigDefaults<T extends IGeoChartConfig>(config: T): T & ConfigWithPoints {
     const points = config.points ?? {};
 
     return {

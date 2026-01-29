@@ -1,9 +1,11 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type IGeoLayerPushpin } from "../../types/layers/index.js";
 
 /**
- * Default id for the primary pushpin layer produced by GeoPushpinChartNext.
+ * Default id for the primary pushpin layer produced by GeoPushpinChart wrappers.
+ *
+ * @public
  */
 export const PUSHPIN_LAYER_ID = "pushpin-layer";
 
@@ -11,14 +13,14 @@ export const PUSHPIN_LAYER_ID = "pushpin-layer";
  * Creates a pushpin layer configuration object.
  *
  * @remarks
- * Use this factory to create pushpin layer definitions for GeoChartNext.
+ * Use this factory to create pushpin layer definitions for GeoChart.
  * The factory ensures proper type and id assignment.
  *
  * @param layer - Layer configuration without type and id
  * @param id - Optional custom layer id, defaults to "pushpin-layer"
  * @returns Complete pushpin layer configuration
  *
- * @alpha
+ * @public
  */
 export function createPushpinLayer(
     layer: Omit<IGeoLayerPushpin, "type" | "id">,

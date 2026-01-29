@@ -9,12 +9,8 @@ import {
     insightProperties,
     insightSorts,
 } from "@gooddata/sdk-model";
-import {
-    type IGeoLayer,
-    type IGeoLayerArea,
-    type IGeoLayerPushpin,
-    insightLayerToGeoLayer,
-} from "@gooddata/sdk-ui-geo/next";
+import { type IGeoLayer, type IGeoLayerArea, type IGeoLayerPushpin } from "@gooddata/sdk-ui-geo";
+import { insightLayerToGeoLayer } from "@gooddata/sdk-ui-geo/internal";
 
 import { routeLocalIdRefFiltersToLayers } from "../../../utils/filters/routeLocalIdRefFiltersToLayers.js";
 

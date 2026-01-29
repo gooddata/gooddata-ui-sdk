@@ -1,19 +1,19 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { DefaultColorPalette } from "@gooddata/sdk-ui";
 
-import { type IGeoChartNextConfig } from "../../types/config/unified.js";
+import { type IGeoChartConfig } from "../../types/config/unified.js";
 
-type ConfigWithDefaults = IGeoChartNextConfig & {
-    legend: NonNullable<IGeoChartNextConfig["legend"]>;
+type ConfigWithDefaults = IGeoChartConfig & {
+    legend: NonNullable<IGeoChartConfig["legend"]>;
 };
 
 /**
- * Applies shared (layer-agnostic) defaults for GeoChartNext config.
+ * Applies shared (layer-agnostic) defaults for GeoChart config.
  *
  * @internal
  */
-export function applySharedGeoConfigDefaults(config: IGeoChartNextConfig | undefined): ConfigWithDefaults {
+export function applySharedGeoConfigDefaults(config: IGeoChartConfig | undefined): ConfigWithDefaults {
     const resolvedConfig = config ?? {};
     const legend = resolvedConfig.legend ?? {};
 

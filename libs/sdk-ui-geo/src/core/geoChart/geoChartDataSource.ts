@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
@@ -8,13 +8,8 @@ import {
     PUSHPIN_SIZE_OPTIONS_MAP,
 } from "./constants/geoChart.js";
 import { getPushpinColors } from "./geoChartColor.js";
-import {
-    type IGeoConfig,
-    type IGeoData,
-    type IGeoLngLat,
-    type IGeoPointsConfig,
-    type IPushpinColor,
-} from "../../GeoChart.js";
+import { type IGeoConfig, type IGeoData, type IGeoPointsConfig, type IPushpinColor } from "../../GeoChart.js";
+import type { IGeoLngLat } from "../../publicTypes/geoCommon.js";
 import { getMinMax } from "./helpers/geoChart/common.js";
 
 export interface IGeoDataSourceProps {

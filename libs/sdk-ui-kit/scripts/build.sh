@@ -22,7 +22,7 @@ _common-build() {
 build() {
     _common-build
 
-    tsc -p tsconfig.build.json
+    npm-run-all -p build-check build-ts
     npm run api-extractor
 }
 

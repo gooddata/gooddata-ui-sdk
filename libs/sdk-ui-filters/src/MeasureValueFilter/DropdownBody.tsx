@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { memo, useCallback, useMemo, useRef, useState } from "react";
+import { type ChangeEvent, memo, useCallback, useMemo, useRef, useState } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -31,14 +31,22 @@ interface IDropdownBodyProps {
     operator: MeasureValueFilterOperator;
     conditions: MeasureValueFilterCondition[];
     enableMultipleConditions?: boolean;
+    enableRankingWithMvf?: boolean;
+    applyOnResult?: boolean;
     usePercentage?: boolean;
     warningMessage?: WarningMessage;
     locale?: string;
     disableAutofocus?: boolean;
     onCancel?: () => void;
     measureTitle?: string;
-    onApply: (conditions: MeasureValueFilterCondition[] | null, dimensionality?: ObjRefInScope[]) => void;
+    onApply: (
+        conditions: MeasureValueFilterCondition[] | null,
+        dimensionality?: ObjRefInScope[],
+        applyOnResult?: boolean,
+    ) => void;
     separators?: ISeparators;
+    format?: string;
+    useShortFormat?: boolean;
     displayTreatNullAsZeroOption?: boolean;
     treatNullAsZeroValue?: boolean;
     valuePrecision?: number;
@@ -120,11 +128,16 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
     const removeConditionTooltip = intl.formatMessage({
         id: "mvf.removeConditionTooltip",
     });
+    const conditionsJoinerOr = intl.formatMessage({
+        id: "mvf.conditionsJoiner.or",
+    });
 
     const {
         operator: propsOperator,
         conditions: propsConditions,
         enableMultipleConditions = false,
+        enableRankingWithMvf = false,
+        applyOnResult: initialApplyOnResult,
         usePercentage,
         treatNullAsZeroValue,
         valuePrecision = DefaultValuePrecision,
@@ -144,13 +157,14 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
     // use the prop. However, if the new filter is created for Headline or Pivot without rows and columns
     // (i.e., insight without dimensionality), the message would be shown even when it should not. Because
     // filters for these insights could not be created before the dimensionality feature was introduced,
-    // we can safely consider these filters as migrated. We also treat an "ALL" filter with no conditions
-    // as migrated to avoid showing the note when attributes are added after the filter was created.
+    // we can safely consider these filters as migrated. Filters created after the feature was introduced
+    // may explicitly carry an empty dimensionality array to mark them as migrated even when created on an
+    // insight without attributes. Likewise, an "ALL" filter with no conditions is treated as migrated.
     // Any change to the filter dimensionality will set the filter as migrated and will hide the message
     // until a user reopens the filter if he did not apply the change. If he did, the first part of the
     // condition will be true and the message will not be shown.
     const [isMigratedFilter, setIsMigratedFilter] = useState<boolean>(
-        (props.dimensionality?.length ?? 0) > 0 ||
+        props.dimensionality !== undefined ||
             (insightDimensionality?.length ?? 0) === 0 ||
             (propsOperator === "ALL" && propsConditions.length === 0),
     );
@@ -224,6 +238,7 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
             dimensionality: initialDimensionality,
         };
     });
+    const [applyOnResult, setApplyOnResult] = useState<boolean>(initialApplyOnResult ?? true);
 
     // Keep the checkbox state in a ref to avoid edge cases where Apply is clicked
     // immediately after toggling the checkbox (before state update is reflected in callbacks).
@@ -278,9 +293,13 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
             );
         });
 
+        // When enableRankingWithMvf is enabled, also check if applyOnResult changed
+        const applyOnResultChanged = enableRankingWithMvf && applyOnResult !== (initialApplyOnResult ?? true);
+
         return (
             hasHiddenConditionsInProps ||
             anyConditionDiff ||
+            applyOnResultChanged ||
             (state.enabledTreatNullValuesAsZero ?? false) !== (props.treatNullAsZeroValue ?? false) ||
             !areDimensionalitySetsEqual(initialDimensionality, state.dimensionality)
         );
@@ -293,6 +312,9 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
         initialDimensionality,
         state.dimensionality,
         initialFormConditions,
+        enableRankingWithMvf,
+        applyOnResult,
+        initialApplyOnResult,
     ]);
 
     /*
@@ -577,7 +599,11 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
                 return { comparison: { operator: "EQUAL_TO", value: 0 } };
             });
 
-        props.onApply(finalConditions.length ? finalConditions : null, finalDimensionality);
+        props.onApply(
+            finalConditions.length ? finalConditions : null,
+            finalDimensionality,
+            enableRankingWithMvf ? applyOnResult : undefined,
+        );
     }, [
         isApplyButtonDisabled,
         state,
@@ -585,6 +611,8 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
         convertToRawValue,
         insightDimensionality,
         enableMultipleConditions,
+        enableRankingWithMvf,
+        applyOnResult,
     ]);
 
     const { onCancel, warningMessage, displayTreatNullAsZeroOption, enableOperatorSelection } = props;
@@ -651,6 +679,13 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
         }));
     }, []);
 
+    const handleApplyOnResultChange = useCallback(
+        (event: ChangeEvent<HTMLInputElement>) => {
+            setApplyOnResult(event.target.checked);
+        },
+        [setApplyOnResult],
+    );
+
     return (
         <div
             className="gd-mvf-dropdown-body gd-dialog gd-dropdown overlay s-mvf-dropdown-body"
@@ -662,99 +697,120 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
                         <WarningMessageComponent warningMessage={warningMessage} />
                     </div>
                 ) : null}
-                {(enableMultipleConditions ? state.conditions : state.conditions.slice(0, 1)).map(
-                    (c, idx) => (
-                        <div
-                            key={idx}
-                            className={cx("gd-mvf-dropdown-section", "gd-mvf-condition-section", {
-                                "gd-mvf-condition-section--multi": enableMultipleConditions,
-                            })}
-                        >
-                            <div className="gd-mvf-condition-header" data-testid={`mvf-condition-${idx}`}>
-                                <div className="gd-mvf-condition-operator">
-                                    <OperatorDropdown
-                                        onSelect={(op) => handleOperatorSelection(idx, op)}
-                                        operator={c.operator}
-                                        isDisabled={!enableOperatorSelection}
-                                        isAllOperatorDisabled={isAllOperatorDisabled}
-                                    />
-                                </div>
-
-                                {enableMultipleConditions ? (
-                                    <div className="gd-mvf-condition-action">
-                                        {idx === 0 ? (
-                                            <BubbleHoverTrigger>
-                                                <UiIconButton
-                                                    icon="plus"
-                                                    size="small"
-                                                    variant="tertiary"
-                                                    isDisabled={isAddConditionDisabled}
-                                                    onClick={handleAddCondition}
-                                                    dataTestId="mvf-add-condition"
-                                                    label={addConditionTooltip}
-                                                />
-                                                <Bubble alignPoints={ALIGN_POINTS}>
-                                                    {isAddConditionDisabled
-                                                        ? addConditionDisabledTooltip
-                                                        : addConditionTooltip}
-                                                </Bubble>
-                                            </BubbleHoverTrigger>
-                                        ) : (
-                                            <BubbleHoverTrigger>
-                                                <UiIconButton
-                                                    icon="cross"
-                                                    size="small"
-                                                    variant="tertiary"
-                                                    isDesctructive
-                                                    onClick={() => handleRemoveCondition(idx)}
-                                                    dataTestId={`mvf-remove-condition-${idx}`}
-                                                    label={removeConditionTooltip}
-                                                />
-                                                <Bubble alignPoints={ALIGN_POINTS}>
-                                                    {removeConditionTooltip}
-                                                </Bubble>
-                                            </BubbleHoverTrigger>
-                                        )}
-                                    </div>
-                                ) : null}
-                            </div>
-
-                            {c.operator === "ALL" ? null : (
-                                <div className="gd-mvf-condition-inputs">
-                                    <ConditionInputSection
-                                        index={idx}
-                                        condition={c}
-                                        usePercentage={props.usePercentage ?? false}
-                                        baseDisableAutofocus={props.disableAutofocus}
-                                        separators={props.separators}
-                                        onValueChange={handleValueChange}
-                                        onFromChange={handleFromChange}
-                                        onToChange={handleToChange}
-                                        onValueBlur={handleValueBlur}
-                                        onFromBlur={handleFromBlur}
-                                        onToBlur={handleToBlur}
-                                        onApply={onApply}
-                                    />
-                                    {idx === (enableMultipleConditions ? state.conditions.length - 1 : 0) &&
-                                    shouldShowTreatNullAsZeroCheckbox ? (
-                                        <TreatNullValuesAsZeroCheckbox
-                                            onChange={handleTreatNullAsZeroClicked}
-                                            checked={enabledTreatNullValuesAsZero}
-                                            intl={intl}
+                <div className="gd-mvf-conditions-scroll-container">
+                    {(enableMultipleConditions ? state.conditions : state.conditions.slice(0, 1)).map(
+                        (c, idx) => (
+                            <div
+                                key={idx}
+                                className={cx("gd-mvf-dropdown-section", "gd-mvf-condition-section", {
+                                    "gd-mvf-condition-section--multi": enableMultipleConditions,
+                                })}
+                            >
+                                <div className="gd-mvf-condition-header" data-testid={`mvf-condition-${idx}`}>
+                                    <div className="gd-mvf-condition-operator">
+                                        <OperatorDropdown
+                                            onSelect={(op) => handleOperatorSelection(idx, op)}
+                                            operator={c.operator}
+                                            isDisabled={!enableOperatorSelection}
+                                            isAllOperatorDisabled={isAllOperatorDisabled}
                                         />
+                                    </div>
+
+                                    {enableMultipleConditions ? (
+                                        <div className="gd-mvf-condition-action">
+                                            {idx === 0 ? (
+                                                <BubbleHoverTrigger>
+                                                    <UiIconButton
+                                                        icon="plus"
+                                                        size="small"
+                                                        variant="tertiary"
+                                                        isDisabled={isAddConditionDisabled}
+                                                        onClick={handleAddCondition}
+                                                        dataTestId="mvf-add-condition"
+                                                        label={addConditionTooltip}
+                                                    />
+                                                    <Bubble alignPoints={ALIGN_POINTS}>
+                                                        {isAddConditionDisabled
+                                                            ? addConditionDisabledTooltip
+                                                            : addConditionTooltip}
+                                                    </Bubble>
+                                                </BubbleHoverTrigger>
+                                            ) : (
+                                                <BubbleHoverTrigger>
+                                                    <UiIconButton
+                                                        icon="cross"
+                                                        size="small"
+                                                        variant="tertiary"
+                                                        isDesctructive
+                                                        onClick={() => handleRemoveCondition(idx)}
+                                                        dataTestId={`mvf-remove-condition-${idx}`}
+                                                        label={removeConditionTooltip}
+                                                    />
+                                                    <Bubble alignPoints={ALIGN_POINTS}>
+                                                        {removeConditionTooltip}
+                                                    </Bubble>
+                                                </BubbleHoverTrigger>
+                                            )}
+                                        </div>
                                     ) : null}
                                 </div>
-                            )}
 
-                            {enableMultipleConditions && idx < state.conditions.length - 1 ? (
-                                <div className="gd-mvf-conditions-joiner">or</div>
-                            ) : null}
-                        </div>
-                    ),
-                )}
+                                {c.operator === "ALL" ? null : (
+                                    <div className="gd-mvf-condition-inputs">
+                                        <ConditionInputSection
+                                            index={idx}
+                                            condition={c}
+                                            usePercentage={props.usePercentage ?? false}
+                                            baseDisableAutofocus={props.disableAutofocus}
+                                            separators={props.separators}
+                                            onValueChange={handleValueChange}
+                                            onFromChange={handleFromChange}
+                                            onToChange={handleToChange}
+                                            onValueBlur={handleValueBlur}
+                                            onFromBlur={handleFromBlur}
+                                            onToBlur={handleToBlur}
+                                            onApply={onApply}
+                                        />
+                                        {idx ===
+                                            (enableMultipleConditions ? state.conditions.length - 1 : 0) &&
+                                        shouldShowTreatNullAsZeroCheckbox ? (
+                                            <TreatNullValuesAsZeroCheckbox
+                                                onChange={handleTreatNullAsZeroClicked}
+                                                checked={enabledTreatNullValuesAsZero}
+                                                intl={intl}
+                                            />
+                                        ) : null}
+                                        {idx ===
+                                            (enableMultipleConditions ? state.conditions.length - 1 : 0) &&
+                                        enableRankingWithMvf ? (
+                                            <label
+                                                className="input-checkbox-label gd-mvf-apply-on-result-checkbox"
+                                                data-testid="mvf-apply-on-result"
+                                            >
+                                                <input
+                                                    type="checkbox"
+                                                    name="apply-on-result"
+                                                    className="input-checkbox"
+                                                    checked={applyOnResult}
+                                                    onChange={handleApplyOnResultChange}
+                                                />
+                                                <span className="input-label-text">
+                                                    {intl.formatMessage({
+                                                        id: "mvf.applyOnResultLabel",
+                                                    })}
+                                                </span>
+                                            </label>
+                                        ) : null}
+                                    </div>
+                                )}
 
-                {isDimensionalityEnabled ? (
-                    <>
+                                {enableMultipleConditions && idx < state.conditions.length - 1 ? (
+                                    <div className="gd-mvf-conditions-joiner">{conditionsJoinerOr}</div>
+                                ) : null}
+                            </div>
+                        ),
+                    )}
+                    {isDimensionalityEnabled ? (
                         <DimensionalitySection
                             dimensionality={dimensionality}
                             insightDimensionality={insightDimensionality}
@@ -763,15 +819,20 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
                             onDimensionalityChange={handleDimensionalityChange}
                             isMigratedFilter={isMigratedFilter}
                         />
-                        <PreviewSection
-                            measureTitle={props.measureTitle}
-                            usePercentage={props.usePercentage}
-                            separators={separators}
-                            dimensionality={dimensionality}
-                            showAllPreview={enableMultipleConditions}
-                            conditions={state.conditions.map(({ operator, value }) => ({ operator, value }))}
-                        />
-                    </>
+                    ) : null}
+                </div>
+
+                {isDimensionalityEnabled ? (
+                    <PreviewSection
+                        measureTitle={props.measureTitle}
+                        usePercentage={props.usePercentage}
+                        separators={separators}
+                        format={props.format}
+                        useShortFormat={props.useShortFormat}
+                        dimensionality={dimensionality}
+                        showAllPreview={enableMultipleConditions}
+                        conditions={state.conditions.map(({ operator, value }) => ({ operator, value }))}
+                    />
                 ) : null}
             </div>
             <div className="gd-mvf-dropdown-footer">

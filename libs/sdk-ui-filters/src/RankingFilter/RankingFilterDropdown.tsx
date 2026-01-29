@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { useState } from "react";
 
@@ -17,9 +17,10 @@ const alignPoints = ["bl tl", "tl bl", "br tr", "tr br"];
 const DROPDOWN_ALIGNMENTS = alignPoints.map((align) => ({ align, offset: { x: 1, y: 0 } }));
 
 export const prepareRankingFilterState = (filter: IRankingFilter): IRankingFilter => {
-    const { measure, attributes, operator, value } = filter.rankingFilter;
+    const { measure, attributes, operator, value, applyOnResult } = filter.rankingFilter;
     const firstAttribute = attributes?.[0];
     const attributesProp = firstAttribute ? { attributes: [firstAttribute] } : {};
+    const applyOnResultProp = applyOnResult === undefined ? {} : { applyOnResult };
 
     return {
         rankingFilter: {
@@ -27,6 +28,7 @@ export const prepareRankingFilterState = (filter: IRankingFilter): IRankingFilte
             value,
             measure,
             ...attributesProp,
+            ...applyOnResultProp,
         },
     };
 };
@@ -45,6 +47,7 @@ export interface IRankingFilterDropdownProps {
     anchorEl?: HTMLElement | string;
     customGranularitySelection?: ICustomGranularitySelection;
     locale?: string;
+    enableRankingWithMvf?: boolean;
 }
 
 function RankingFilterDropdownComponent({
@@ -57,6 +60,7 @@ function RankingFilterDropdownComponent({
     onDropDownItemMouseOver,
     onDropDownItemMouseOut,
     customGranularitySelection,
+    enableRankingWithMvf,
 }: IRankingFilterDropdownProps) {
     const [rankingFilter, setRankingFilter] = useState(prepareRankingFilterState(filter));
 
@@ -84,6 +88,7 @@ function RankingFilterDropdownComponent({
                 onDropDownItemMouseOver={onDropDownItemMouseOver}
                 onDropDownItemMouseOut={onDropDownItemMouseOut}
                 customGranularitySelection={customGranularitySelection}
+                enableRankingWithMvf={enableRankingWithMvf}
             />
         </Overlay>
     );

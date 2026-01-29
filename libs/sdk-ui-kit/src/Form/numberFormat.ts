@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ISeparators } from "@gooddata/sdk-model";
 
@@ -38,4 +38,41 @@ export function formatNumberWithSeparators(
     return decimalPart === undefined
         ? formattedInteger
         : `${formattedInteger}${separators.decimal}${decimalPart}`;
+}
+
+/**
+ * Shortens large numbers with K/M/B suffixes for compact display.
+ * Only shortens numbers that are evenly divisible by 100 at their scale.
+ *
+ * @param value - The number to shorten (null/undefined returns empty string)
+ * @param separators - Thousand and decimal separators to use
+ * @returns Shortened string with K/M/B suffix or full formatted number
+ *
+ * @example
+ * ```
+ * shortenNumber(1000, { thousand: ',', decimal: '.' })      // "1K"
+ * shortenNumber(1500, { thousand: ',', decimal: '.' })      // "1,500" (not evenly divisible)
+ * shortenNumber(2500000, { thousand: ',', decimal: '.' })   // "2.5M"
+ * shortenNumber(1000000000, { thousand: ',', decimal: '.' }) // "1B"
+ * ```
+ *
+ * @internal
+ */
+export function shortenNumber(
+    value: number | null | undefined,
+    separators: ISeparators = DEFAULT_SEPARATORS,
+): string {
+    if (value === null || value === undefined) {
+        return "";
+    }
+
+    if (Math.abs(value) >= 1000000000 && value % 100000000 === 0) {
+        return `${formatNumberWithSeparators(value / 1000000000, separators)}B`;
+    } else if (Math.abs(value) >= 1000000 && value % 100000 === 0) {
+        return `${formatNumberWithSeparators(value / 1000000, separators)}M`;
+    } else if (Math.abs(value) >= 1000 && value % 100 === 0) {
+        return `${formatNumberWithSeparators(value / 1000, separators)}K`;
+    }
+
+    return formatNumberWithSeparators(value, separators);
 }

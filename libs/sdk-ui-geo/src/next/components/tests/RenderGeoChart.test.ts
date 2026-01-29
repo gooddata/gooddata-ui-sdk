@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
@@ -66,31 +66,5 @@ describe("computeCombinedViewport", () => {
 
         expect(combined?.bounds?.southWest).toEqual({ lng: -10, lat: -5 });
         expect(combined?.bounds?.northEast).toEqual({ lng: 15, lat: 10 });
-    });
-
-    it("falls back to first viewport when no bounds exist", () => {
-        const fallbackViewport = { center: { lat: 1, lng: 2 }, zoom: 3 };
-        const layers = new Map<string, IGeoLayerData>([
-            [
-                "l1",
-                {
-                    ...baseLayer,
-                    layerId: "l1",
-                    initialViewport: fallbackViewport,
-                },
-            ],
-            [
-                "l2",
-                {
-                    ...baseLayer,
-                    layerId: "l2",
-                    initialViewport: null,
-                },
-            ],
-        ]);
-
-        const combined = computeCombinedViewport(layers);
-
-        expect(combined).toEqual(fallbackViewport);
     });
 });

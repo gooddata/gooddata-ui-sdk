@@ -109,6 +109,8 @@ export const convertMeasure = (
                     .expression(maql)
                     .format(format ?? "")
                     .isLocked(isInheritedObject(measure))
+                    .isHidden(measure.attributes?.isHidden)
+                    .isHiddenFromKda(measure.attributes?.isHiddenFromKda)
                     .tags(measure.attributes?.tags ?? [])
                     .metricType(metricType as MetricType | undefined)
                     .created(measure.attributes?.createdAt)

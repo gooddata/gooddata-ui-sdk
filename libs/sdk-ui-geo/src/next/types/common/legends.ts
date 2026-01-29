@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type IGeoCategoryLegendItem } from "@gooddata/sdk-ui-vis-commons";
 
@@ -9,14 +9,14 @@ import { type IGeoCategoryLegendItem } from "@gooddata/sdk-ui-vis-commons";
  * Type alias for IGeoCategoryLegendItem from sdk-ui-vis-commons.
  * Used by both pushpin and area layers for category legend rendering.
  *
- * @alpha
+ * @internal
  */
 export type IGeoLegendItem = IGeoCategoryLegendItem;
 
 /**
  * Represents a single item in the geo chart tooltip
  *
- * @alpha
+ * @internal
  */
 export interface IGeoTooltipItem {
     /**
@@ -39,7 +39,7 @@ export interface IGeoTooltipItem {
  * @remarks
  * Indicates which legends should be displayed based on the data configuration
  *
- * @alpha
+ * @internal
  */
 export interface IAvailableLegends {
     /**

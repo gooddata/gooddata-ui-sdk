@@ -141,7 +141,7 @@ export {
     type IInputWithNumberFormatOwnProps,
     type IInputWithNumberFormatState,
 } from "./Form/InputWithNumberFormat.js";
-export { DEFAULT_SEPARATORS, formatNumberWithSeparators } from "./Form/numberFormat.js";
+export { DEFAULT_SEPARATORS, formatNumberWithSeparators, shortenNumber } from "./Form/numberFormat.js";
 export type { ArrowOffset, ArrowOffsets, ArrowDirections } from "./Bubble/typings.js";
 export {
     Bubble,

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     DEFAULT_CLUSTER_LAYER_NAME,
@@ -14,8 +14,8 @@ import {
 import { getMinMax } from "./size/calculations.js";
 import { DEFAULT_CLUSTER_FILTER, DEFAULT_CLUSTER_LABELS_CONFIG } from "../../map/runtime/mapConfig.js";
 import { createSegmentFilter } from "../../map/style/sharedLayers.js";
-import { type IGeoPointsConfigNext, type PushpinSizeOptionNext } from "../../types/config/points.js";
-import { type IGeoPushpinChartNextConfig } from "../../types/config/pushpinChart.js";
+import { type GeoChartPushpinSizeOption, type IGeoChartPointsConfig } from "../../types/config/points.js";
+import { type IGeoPushpinChartConfig } from "../../types/config/pushpinChart.js";
 import { type IPushpinGeoData } from "../../types/geoData/pushpin.js";
 import type {
     CircleLayerSpecification,
@@ -94,7 +94,7 @@ function getPointSize(minSizeInPixel: number, base: number, exponent: number): n
  */
 function createPushpinSizeOptions(
     geoData: IPushpinGeoData,
-    geoPointsConfig: IGeoPointsConfigNext,
+    geoPointsConfig: IGeoChartPointsConfig,
 ): ExpressionSpecification | number {
     const { size } = geoData;
     const defaultRadius = PUSHPIN_SIZE_OPTIONS_MAP.min.default / 2;
@@ -108,8 +108,8 @@ function createPushpinSizeOptions(
         return defaultRadius;
     }
 
-    const minSizeFromConfig: PushpinSizeOptionNext = geoPointsConfig?.minSize ?? "default";
-    const maxSizeFromConfig: PushpinSizeOptionNext = geoPointsConfig?.maxSize ?? "default";
+    const minSizeFromConfig: GeoChartPushpinSizeOption = geoPointsConfig?.minSize ?? "default";
+    const maxSizeFromConfig: GeoChartPushpinSizeOption = geoPointsConfig?.maxSize ?? "default";
     const minSizeInPixel = PUSHPIN_SIZE_OPTIONS_MAP.min[minSizeFromConfig];
     const maxSizeInPixel = PUSHPIN_SIZE_OPTIONS_MAP.max[maxSizeFromConfig];
     const base = Math.pow(maxSizeInPixel / minSizeInPixel, 0.25);
@@ -141,7 +141,7 @@ function createPushpinSizeOptions(
  * @param selectedSegmentItems - Array of segment URIs to show
  * @returns MapLibre expression for filtering
  *
- * @alpha
+ * @internal
  */
 export function createPushpinFilter(selectedSegmentItems: string[]): FilterSpecification {
     return createSegmentFilter(selectedSegmentItems);
@@ -156,12 +156,12 @@ export function createPushpinFilter(selectedSegmentItems: string[]): FilterSpeci
  * @param layerId - Optional custom layer ID (defaults to DEFAULT_LAYER_NAME)
  * @returns MapLibre circle layer specification
  *
- * @alpha
+ * @internal
  */
 export function createPushpinDataLayer(
     dataSourceName: string,
     geoData: IPushpinGeoData,
-    config: IGeoPushpinChartNextConfig,
+    config: IGeoPushpinChartConfig,
     layerId: string = DEFAULT_LAYER_NAME,
 ): CircleLayerSpecification {
     const { selectedSegmentItems = [], points: geoPointsConfig = {} } = config || {};
@@ -190,7 +190,7 @@ export function createPushpinDataLayer(
  * @param layerId - Optional custom layer ID (defaults to DEFAULT_CLUSTER_LAYER_NAME)
  * @returns MapLibre circle layer specification for clusters
  *
- * @alpha
+ * @internal
  */
 export function createClusterPoints(
     dataSourceName: string,
@@ -216,7 +216,7 @@ export function createClusterPoints(
  * @param layerId - Optional custom layer ID (defaults to DEFAULT_CLUSTER_LABELS_CONFIG.id)
  * @returns MapLibre symbol layer specification for cluster labels
  *
- * @alpha
+ * @internal
  */
 export function createClusterLabels(dataSourceName: string, layerId?: string): SymbolLayerSpecification {
     return {
@@ -234,7 +234,7 @@ export function createClusterLabels(dataSourceName: string, layerId?: string): S
  * @param layerId - Optional custom layer ID (defaults to DEFAULT_LAYER_NAME)
  * @returns MapLibre circle layer specification for unclustered points
  *
- * @alpha
+ * @internal
  */
 export function createUnclusterPoints(
     dataSourceName: string,

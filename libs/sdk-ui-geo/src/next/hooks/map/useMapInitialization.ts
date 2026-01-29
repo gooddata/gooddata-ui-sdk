@@ -15,7 +15,7 @@ import {
     createPopupFacade,
 } from "../../layers/common/mapFacade.js";
 import { initializeMapLibreMap } from "../../map/runtime/mapInitialization.js";
-import { type IGeoChartNextConfig } from "../../types/config/unified.js";
+import { type IGeoChartConfig } from "../../types/config/unified.js";
 import { type IMapViewport } from "../../types/map/provider.js";
 import type { GeoTileset } from "../../types/map/tileset.js";
 import { generateMapLibreLocale } from "../../utils/mapLocale.js";
@@ -92,7 +92,7 @@ function cleanupMapResources(map: Map | null, tooltip: Popup | null): void {
  */
 export function useMapInitialization(
     containerRef: RefObject<HTMLDivElement | null>,
-    config?: IGeoChartNextConfig,
+    config?: IGeoChartConfig,
     initialViewport?: Partial<IMapViewport> | null,
     backend?: IAnalyticalBackend,
 ): IUseMapInitializationResult {

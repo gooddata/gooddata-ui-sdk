@@ -16,9 +16,9 @@ import { useMapCallbacks } from "../hooks/map/useMapCallbacks.js";
 import { useMapInitialization } from "../hooks/map/useMapInitialization.js";
 import { useMapResize } from "../hooks/map/useMapResize.js";
 import { type CenterPositionChangedCallback, type ZoomChangedCallback } from "../types/common/callbacks.js";
-import { type IGeoChartNextConfig } from "../types/config/unified.js";
+import { type IGeoChartConfig } from "../types/config/unified.js";
 import { type IMapViewport } from "../types/map/provider.js";
-import { type ILayerExecutionRecord } from "../types/props/geoChartNext/internal.js";
+import { type ILayerExecutionRecord } from "../types/props/geoChart/internal.js";
 
 export type MapControllerProps = {
     mapContainerRef: RefObject<HTMLDivElement | null>;
@@ -31,7 +31,7 @@ export type MapControllerProps = {
     onZoomChanged?: ZoomChangedCallback;
     onDrill?: OnFiredDrillEvent;
     afterRender?: () => void;
-    config: IGeoChartNextConfig | undefined;
+    config: IGeoChartConfig | undefined;
     backend?: IAnalyticalBackend;
 };
 
@@ -105,7 +105,7 @@ function MapLifecycleEffects({
     chartContainerRect: ContentRect | null;
     initialViewport: Partial<IMapViewport> | null;
     dataViewport: Partial<IMapViewport> | null;
-    config: IGeoChartNextConfig | undefined;
+    config: IGeoChartConfig | undefined;
     layerExecutions: ILayerExecutionRecord[];
     drillablePredicates: IHeaderPredicate[];
     onCenterPositionChanged?: CenterPositionChangedCallback;

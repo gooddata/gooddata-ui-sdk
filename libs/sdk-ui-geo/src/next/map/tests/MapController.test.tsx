@@ -9,7 +9,7 @@ import type { IGeoLayersContext } from "../../context/GeoLayersContext.js";
 import type { IMapFacade, IPopupFacade, StyleSpecification } from "../../layers/common/mapFacade.js";
 import type { IGeoAdapterContext } from "../../layers/registry/adapterTypes.js";
 import { type IGeoLayer } from "../../types/layers/index.js";
-import { type ILayerExecutionRecord } from "../../types/props/geoChartNext/internal.js";
+import { type ILayerExecutionRecord } from "../../types/props/geoChart/internal.js";
 import { MapController } from "../MapController.js";
 
 const initMock = vi.fn();

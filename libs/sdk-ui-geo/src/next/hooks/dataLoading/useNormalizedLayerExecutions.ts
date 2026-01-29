@@ -7,7 +7,7 @@ import { type IDataVisualizationProps } from "@gooddata/sdk-ui";
 
 import { hasGeoLayerContext } from "../../layers/execution/layerContext.js";
 import { type GeoLayerType, type IGeoLayer } from "../../types/layers/index.js";
-import { type ILayerExecutionRecord } from "../../types/props/geoChartNext/internal.js";
+import { type ILayerExecutionRecord } from "../../types/props/geoChart/internal.js";
 import { createExecutionBucketsFingerprint } from "../../utils/fingerprint.js";
 
 type WithoutExecutions<T> = Omit<T, "execution" | "executions">;

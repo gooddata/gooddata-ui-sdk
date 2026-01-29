@@ -7,18 +7,18 @@ import { getPushpinColors } from "./coloring/palette.js";
 import { DEFAULT_CLUSTER_MAX_ZOOM, DEFAULT_CLUSTER_RADIUS, PUSHPIN_SIZE_OPTIONS_MAP } from "./constants.js";
 import { getMinMax } from "./size/calculations.js";
 import { type IGeoLngLat } from "../../types/common/coordinates.js";
-import { type IGeoPointsConfigNext } from "../../types/config/points.js";
-import { type IGeoPushpinChartNextConfig } from "../../types/config/pushpinChart.js";
+import { type IGeoChartPointsConfig } from "../../types/config/points.js";
+import { type IGeoPushpinChartConfig } from "../../types/config/pushpinChart.js";
 import { type IPushpinColor, type IPushpinGeoData } from "../../types/geoData/pushpin.js";
 
 /**
  * Properties for creating a pushpin data source
  *
- * @alpha
+ * @internal
  */
 export interface IPushpinDataSourceProps {
     colorStrategy: IColorStrategy;
-    config: IGeoPushpinChartNextConfig;
+    config: IGeoPushpinChartConfig;
     geoData: IPushpinGeoData;
     hasClustering: boolean;
     tooltipAttrIds?: {
@@ -46,7 +46,7 @@ interface IPushpinFeatureContext {
     sizeData: number[];
     colorData: number[];
     pushpinColors: IPushpinColor[];
-    geoPointsConfig: IGeoPointsConfigNext;
+    geoPointsConfig: IGeoChartPointsConfig;
     minSizeFromData: number | undefined;
     maxSizeFromData: number | undefined;
     hasSize: boolean;
@@ -203,7 +203,7 @@ const calculateSizeInPixel = (
     dataValue: number | undefined,
     minSize: number,
     maxSize: number,
-    geoPointsConfig: IGeoPointsConfigNext,
+    geoPointsConfig: IGeoChartPointsConfig,
 ): number => {
     if (minSize === maxSize || dataValue === null || dataValue === undefined || !Number.isFinite(dataValue)) {
         return PUSHPIN_SIZE_OPTIONS_MAP.min.default;
@@ -226,7 +226,7 @@ const calculateSizeInPixel = (
  * @param dataSourceProps - Properties containing geo data, config, and styling
  * @returns GeoJSON source specification for MapLibre
  *
- * @alpha
+ * @internal
  */
 export function createPushpinDataSource(
     dataSourceProps: IPushpinDataSourceProps,

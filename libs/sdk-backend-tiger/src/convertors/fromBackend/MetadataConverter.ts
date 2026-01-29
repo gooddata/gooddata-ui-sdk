@@ -59,7 +59,8 @@ export const commonMetadataObjectModifications =
             .title(attributes?.title || "")
             .description(attributes?.description || "")
             .tags(attributes?.tags || [])
-            .isHidden(attributes && "isHidden" in attributes ? attributes.isHidden : undefined);
+            .isHidden(attributes && "isHidden" in attributes ? attributes.isHidden : undefined)
+            .isHiddenFromKda(attributes && "isHiddenFromKda" in attributes ? false : undefined);
     };
 
 export function createLabelMap(

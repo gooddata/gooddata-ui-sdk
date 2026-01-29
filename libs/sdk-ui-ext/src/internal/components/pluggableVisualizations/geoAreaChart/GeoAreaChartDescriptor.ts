@@ -1,7 +1,7 @@
 // (C) 2025-2026 GoodData Corporation
 
 import { type IInsightDefinition, type ISettings } from "@gooddata/sdk-model";
-import { type IGeoChartNextProps } from "@gooddata/sdk-ui-geo/next";
+import { type IGeoChartProps } from "@gooddata/sdk-ui-geo";
 
 import { PluggableGeoAreaChart } from "./PluggableGeoAreaChart.js";
 import { type IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor.js";
@@ -67,10 +67,10 @@ export class GeoAreaChartDescriptor extends BaseChartDescriptor implements IVisu
     private readonly geoChartEmbeddingCodeGenerator = getReactEmbeddingCodeGenerator({
         component: {
             importType: "named",
-            name: "GeoChartNext",
-            package: "@gooddata/sdk-ui-geo/next",
+            name: "GeoChart",
+            package: "@gooddata/sdk-ui-geo",
         },
-        insightToProps: getInsightToPropsConverter<IGeoChartNextProps>({
+        insightToProps: getInsightToPropsConverter<IGeoChartProps>({
             type: insightConversion("type", { cardinality: "scalar" }, () => "area"),
             layers: insightConversion(
                 "layers",
@@ -78,7 +78,7 @@ export class GeoAreaChartDescriptor extends BaseChartDescriptor implements IVisu
                     typeImport: {
                         importType: "named",
                         name: "IGeoLayer",
-                        package: "@gooddata/sdk-ui-geo/next",
+                        package: "@gooddata/sdk-ui-geo",
                     },
                     cardinality: "array",
                 },
@@ -95,7 +95,7 @@ export class GeoAreaChartDescriptor extends BaseChartDescriptor implements IVisu
                     typeImport: {
                         importType: "named",
                         name: "IGeoAreaChartConfig",
-                        package: "@gooddata/sdk-ui-geo/next",
+                        package: "@gooddata/sdk-ui-geo",
                     },
                     cardinality: "scalar",
                 },

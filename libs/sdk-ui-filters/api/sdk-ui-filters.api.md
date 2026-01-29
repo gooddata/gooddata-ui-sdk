@@ -238,16 +238,16 @@ export const DateFilterHelpers: {
     getDateFilterTitleUsingTranslator: (filter: DateFilterOption, translator: IDateAndMessageTranslator, dateFormat?: string, labelMode?: DateFilterLabelMode) => string;
     getDateFilterRepresentation: (filter: DateFilterOption, locale: ILocale, messages: ITranslations, dateFormat?: string, labelMode?: DateFilterLabelMode) => string;
     granularityIntlCodes: {
-        "GDC.time.year": GranularityIntlKey;
-        "GDC.time.fiscal_year": GranularityIntlKey;
+        "GDC.time.minute": GranularityIntlKey;
+        "GDC.time.hour": GranularityIntlKey;
+        "GDC.time.date": GranularityIntlKey;
         "GDC.time.week_us": GranularityIntlKey;
-        "GDC.time.quarter": GranularityIntlKey;
-        "GDC.time.fiscal_quarter": GranularityIntlKey;
         "GDC.time.month": GranularityIntlKey;
         "GDC.time.fiscal_month": GranularityIntlKey;
-        "GDC.time.date": GranularityIntlKey;
-        "GDC.time.hour": GranularityIntlKey;
-        "GDC.time.minute": GranularityIntlKey;
+        "GDC.time.quarter": GranularityIntlKey;
+        "GDC.time.fiscal_quarter": GranularityIntlKey;
+        "GDC.time.year": GranularityIntlKey;
+        "GDC.time.fiscal_year": GranularityIntlKey;
     };
     applyExcludeCurrentPeriod: (dateFilterOption: DateFilterOption | undefined, excludeCurrentPeriod: boolean) => DateFilterOption | undefined;
     defaultDateFilterOptions: IDateFilterOptionsByType;
@@ -1052,8 +1052,10 @@ export interface IMeasureValueFilterCommonProps {
     enableMultipleConditions?: boolean;
     // (undocumented)
     enableOperatorSelection?: boolean;
+    enableRankingWithMvf?: boolean;
     // (undocumented)
     filter?: IMeasureValueFilter;
+    format?: string;
     // (undocumented)
     insightDimensionality?: IDimensionalityItem[];
     // (undocumented)
@@ -1073,6 +1075,7 @@ export interface IMeasureValueFilterCommonProps {
     treatNullAsZeroDefaultValue?: boolean;
     // (undocumented)
     usePercentage?: boolean;
+    useShortFormat?: boolean;
     // (undocumented)
     warningMessage?: WarningMessage;
 }
@@ -1136,6 +1139,8 @@ export interface IRankingFilterDropdownProps {
     attributeItems: IAttributeDropdownItem[];
     // (undocumented)
     customGranularitySelection?: ICustomGranularitySelection;
+    // (undocumented)
+    enableRankingWithMvf?: boolean;
     // (undocumented)
     filter: IRankingFilter;
     // (undocumented)

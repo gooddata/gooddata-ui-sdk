@@ -31,7 +31,7 @@ import { type JsonValue } from "../../../utils/guards.js";
 import { getMinMax } from "../size/calculations.js";
 
 /**
- * Data transformation functions for GeoPushpinChartNext
+ * Data transformation functions for GeoPushpinChart
  *
  * @internal
  */
@@ -508,10 +508,10 @@ function parseGeoPropertyItem(item: JsonValue, propertyName: string): GeoJSON.Ge
             if (isGeoJsonProperties(parsed)) {
                 return parsed;
             }
-            console.warn(`[GeoChartNext] Parsed tooltip property "${propertyName}" is not an object.`);
+            console.warn(`[GeoChart] Parsed tooltip property "${propertyName}" is not an object.`);
             return {};
         } catch {
-            console.warn(`[GeoChartNext] Failed to parse tooltip property "${propertyName}".`);
+            console.warn(`[GeoChart] Failed to parse tooltip property "${propertyName}".`);
             return {};
         }
     }

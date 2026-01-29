@@ -251,6 +251,14 @@
         "text": "Include in Smart Search and AI Assistant results for all users.",
         "crowdinContext": "Tooltip content for the field indicating whether the object is hidden in AI results."
     },
+    "analyticsCatalog.column.title.isHiddenFromKda": {
+        "text": "Use for key driver analysis",
+        "crowdinContext": "Title of the field indicating whether the object is hidden from using in KDA."
+    },
+    "analyticsCatalog.column.isHiddenFromKda.field.tooltip": {
+        "text": "Analyze what factors drive changes in a selected metric. The system identifies and ranks the key drivers by impact, helping you understand performance shifts without manual effort.",
+        "crowdinContext": "Tooltip content for the field indicating whether the object is hidden from using in KDA."
+    },
     "analyticsCatalog.tags.manager.label.more": {
         "text": "More tags",
         "crowdinContext": "Label for the button that opens more tags  in tags manager component."

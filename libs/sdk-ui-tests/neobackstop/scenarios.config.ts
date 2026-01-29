@@ -107,6 +107,17 @@ const ScenarioConfig = [
     },
     {
         /*
+         * PivotTableNext only & in 04: give it smaller settle time.
+         */
+        idRegex: /(04).*PivotTableNext.*/g,
+        config: {
+            delay: {
+                postReady: 1000, // wait for column resizing to complete
+            },
+        },
+    },
+    {
+        /*
          * PivotTable only (not PivotTableNext): give it a small settle time.
          */
         idRegex: /(04).*PivotTable[^N].*/g,

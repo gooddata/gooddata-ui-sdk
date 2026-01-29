@@ -19,7 +19,7 @@ import { createPushpinDataSource } from "./source.js";
 import { createPushpinTooltipConfig } from "./tooltip/tooltipManagement.js";
 import { calculateViewport } from "../../map/viewport/viewportCalculation.js";
 import type { IGeoLngLat } from "../../types/common/coordinates.js";
-import type { IGeoPushpinChartNextConfig } from "../../types/config/pushpinChart.js";
+import type { IGeoPushpinChartConfig } from "../../types/config/pushpinChart.js";
 import type { IPushpinGeoData } from "../../types/geoData/pushpin.js";
 import type { IGeoLayerPushpin } from "../../types/layers/index.js";
 import type { IMapViewport } from "../../types/map/provider.js";
@@ -53,7 +53,7 @@ function computeInitialViewport(geoData: IPushpinGeoData): Partial<IMapViewport>
     // IMPORTANT: this must stay *data-derived* (i.e. independent of config).
     // If presets/center influenced this value, then switching from a preset -> "auto" would
     // keep using the preset viewport because "auto" falls back to this per-layer hint.
-    const dataViewportConfig: IGeoPushpinChartNextConfig = { viewport: { area: "auto" } };
+    const dataViewportConfig: IGeoPushpinChartConfig = { viewport: { area: "auto" } };
     return calculateViewport(validLocations, dataViewportConfig);
 }
 
@@ -144,7 +144,7 @@ export const pushpinAdapter: IGeoLayerAdapter<IGeoLayerPushpin, IPushpinLayerOut
         const colorStrategy = getPushpinColorStrategy(colorPalette, colorMapping, geoData, dataView);
 
         // Get pushpin-specific config with defaults
-        const pushpinConfig: IGeoPushpinChartNextConfig = {
+        const pushpinConfig: IGeoPushpinChartConfig = {
             ...context.config,
             points: context.config?.points,
         };

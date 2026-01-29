@@ -15,7 +15,7 @@ import {
 
 import { getLayerAdapter } from "../../layers/registry/adapterRegistry.js";
 import { type IGeoAdapterContext } from "../../layers/registry/adapterTypes.js";
-import type { ILayerExecutionRecord } from "../../types/props/geoChartNext/internal.js";
+import type { ILayerExecutionRecord } from "../../types/props/geoChart/internal.js";
 import { createExecutionsFingerprint, createLayersStructureFingerprint } from "../../utils/fingerprint.js";
 
 /**

@@ -5,21 +5,21 @@ import { type ISeparators } from "@gooddata/sdk-ui";
 import { type IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 
 import { type IGeoAreasConfig } from "./areas.js";
-import { type IGeoLegendConfigNext } from "./legend.js";
-import { type IGeoConfigViewportNext } from "./viewport.js";
+import { type IGeoChartLegendConfig } from "./legend.js";
+import { type IGeoChartViewport } from "./viewport.js";
+import type { IGeoLngLat } from "../../../publicTypes/geoCommon.js";
 import type { StyleSpecification } from "../../layers/common/mapFacade.js";
-import { type IGeoLngLat } from "../common/coordinates.js";
 import type { GeoTileset } from "../map/tileset.js";
 
 /**
  * Configuration for GeoAreaChart component
  *
- * @alpha
+ * @public
  */
 export interface IGeoAreaChartConfig {
     center?: IGeoLngLat;
     isExportMode?: boolean;
-    legend?: IGeoLegendConfigNext;
+    legend?: IGeoChartLegendConfig;
     limit?: number;
     selectedSegmentItems?: string[];
     zoom?: number; // in the 0-22 zoom range
@@ -30,6 +30,8 @@ export interface IGeoAreaChartConfig {
 
     /**
      * Selected basemap tileset.
+     *
+     * @alpha
      */
     tileset?: GeoTileset;
     /**
@@ -37,7 +39,7 @@ export interface IGeoAreaChartConfig {
      */
     maxZoomLevel?: number | null;
     separators?: ISeparators;
-    viewport?: IGeoConfigViewportNext;
+    viewport?: IGeoChartViewport;
     areas?: IGeoAreasConfig;
     colors?: string[];
     colorPalette?: IColorPalette;

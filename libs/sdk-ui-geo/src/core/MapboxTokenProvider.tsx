@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type ComponentType, type ReactNode, createContext, useContext } from "react";
 
@@ -7,14 +7,16 @@ import { invariant } from "ts-invariant";
 import { type IGeoConfig } from "../GeoChart.js";
 
 /**
- * @alpha
+ * @public
+ * @deprecated Kept only for the legacy Mapbox-based implementation.
  */
 export const MapboxTokenContext = createContext<{ mapboxToken: string | undefined }>({
     mapboxToken: undefined,
 });
 
 /**
- * @alpha
+ * @public
+ * @deprecated Kept only for the legacy Mapbox-based implementation.
  */
 export function MapboxTokenProvider({ token, children }: { token: string; children?: ReactNode }) {
     return (
@@ -23,7 +25,8 @@ export function MapboxTokenProvider({ token, children }: { token: string; childr
 }
 
 /**
- * @internal
+ * @public
+ * @deprecated Kept only for the legacy Mapbox-based implementation.
  */
 export function withMapboxToken<T extends { config?: IGeoConfig }>(
     InnerComponent: ComponentType<T>,
@@ -42,7 +45,8 @@ export function withMapboxToken<T extends { config?: IGeoConfig }>(
 }
 
 /**
- * @internal
+ * @public
+ * @deprecated Kept only for the legacy Mapbox-based implementation.
  */
 export function enrichMapboxToken<T>(
     config?: T & { mapboxToken?: string },
@@ -57,7 +61,8 @@ export function enrichMapboxToken<T>(
 }
 
 /**
- * @alpha
+ * @public
+ * @deprecated Kept only for the legacy Mapbox-based implementation.
  */
 export function useMapboxTokenStrict(mapboxToken?: string) {
     const context = useContext(MapboxTokenContext);
@@ -68,7 +73,8 @@ export function useMapboxTokenStrict(mapboxToken?: string) {
 }
 
 /**
- * @alpha
+ * @public
+ * @deprecated Kept only for the legacy Mapbox-based implementation.
  */
 export function useMapboxToken(mapboxToken?: string) {
     const context = useContext(MapboxTokenContext);

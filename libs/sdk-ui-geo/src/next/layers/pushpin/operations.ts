@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { isClusteringAllowed } from "./clustering/clustering.js";
 import {
@@ -9,7 +9,7 @@ import {
 } from "./layers.js";
 import { createStylePlan } from "../../map/styleReconciliation/planBuilder.js";
 import { reconcileStyle } from "../../map/styleReconciliation/reconcileStyle.js";
-import { type IGeoChartNextConfig } from "../../types/config/unified.js";
+import { type IGeoChartConfig } from "../../types/config/unified.js";
 import { type IPushpinGeoData } from "../../types/geoData/pushpin.js";
 import { removeLayerIfExists, removeSourceIfExists } from "../common/layerOps.js";
 import { type GeoJSONSourceSpecification, type IMapFacade } from "../common/mapFacade.js";
@@ -45,7 +45,7 @@ export function syncPushpinLayerToMap(
     layerId: string,
     source: GeoJSONSourceSpecification,
     geoData: IPushpinGeoData,
-    config: IGeoChartNextConfig,
+    config: IGeoChartConfig,
 ): void {
     const ids = getPushpinLayerIds(layerId);
     const { points: geoPointsConfig = {} } = config;

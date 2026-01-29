@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 @use "sass:color";
 @use "@gooddata/sdk-ui/styles/scss/settings";
 @use "@gooddata/sdk-ui-kit/styles/scss/SVGicons";
@@ -56,6 +56,15 @@ $mvf-condition-action-gap: 10px;
                 margin: 0 0 2px 5px;
                 font-size: 12px;
             }
+        }
+
+        .gd-mvf-apply-on-result-checkbox {
+            margin-top: 8px;
+            font-size: 12px;
+        }
+
+        .gd-mvf-treat-null-values-as-zero + .gd-mvf-apply-on-result-checkbox {
+            margin-top: 0;
         }
 
         &:last-child {
@@ -135,6 +144,11 @@ $mvf-condition-action-gap: 10px;
 // Keep the input row aligned with operator picker width (header action button should not "widen" the inputs).
 .gd-mvf-condition-section--multi .gd-mvf-condition-inputs {
     padding-right: $mvf-condition-action-width + $mvf-condition-action-gap;
+}
+
+.gd-mvf-conditions-scroll-container {
+    max-height: 322px;
+    overflow-y: auto;
 }
 
 .gd-mvf-conditions-joiner {
@@ -374,6 +388,22 @@ $mvf-condition-action-gap: 10px;
     .gd-mvf-preview-content {
         line-height: 16px;
     }
+
+    .gd-mvf-preview-content--truncated {
+        max-height: 48px; // 3 lines at 16px line-height
+        overflow: hidden;
+        text-overflow: ellipsis;
+        // stylelint-disable-next-line value-no-vendor-prefix
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        word-break: break-word;
+    }
+}
+
+.gd-mvf-preview-tooltip-content {
+    max-width: 300px;
+    word-wrap: break-word;
 }
 
 .gd-mvf-backward-compatibility-message {

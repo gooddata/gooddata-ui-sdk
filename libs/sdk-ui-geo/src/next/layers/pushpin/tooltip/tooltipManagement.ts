@@ -7,7 +7,7 @@ import { type ISeparators } from "@gooddata/sdk-model";
 import { type IHeaderPredicate } from "@gooddata/sdk-ui";
 
 import { getTooltipContentWidth } from "../../../map/style/tooltipFormatting.js";
-import { type IGeoPushpinChartNextConfig } from "../../../types/config/pushpinChart.js";
+import { type IGeoPushpinChartConfig } from "../../../types/config/pushpinChart.js";
 import { type JsonValue, type LngLatTuple, isGeoJsonPoint, isLngLatTuple } from "../../../utils/guards.js";
 import { type IPopupFacade } from "../../common/mapFacade.js";
 import {
@@ -55,7 +55,7 @@ const tooltipFormatConfig: TooltipFormatConfig = {
 };
 
 // Tooltips are now switched off in edit/export mode
-function isTooltipDisabled({ viewport = {} }: IGeoPushpinChartNextConfig): boolean {
+function isTooltipDisabled({ viewport = {} }: IGeoPushpinChartConfig): boolean {
     return Boolean(viewport.frozen);
 }
 
@@ -69,7 +69,7 @@ function isTooltipShownInFullScreen() {
  * @param geoProperties - GeoJSON feature properties
  * @returns True if tooltip should be shown
  *
- * @alpha
+ * @internal
  */
 export function shouldShowTooltip(geoProperties: GeoJSON.GeoJsonProperties | undefined): boolean {
     if (isEmpty(geoProperties)) {
@@ -103,7 +103,7 @@ function getInteractionMessage(drillableItems?: IHeaderPredicate[], intl?: IntlS
  * @param intl - Internationalization shape
  * @returns HTML string for tooltip
  *
- * @alpha
+ * @internal
  */
 export function getTooltipHtml(
     geoProperties: GeoJSON.GeoJsonProperties,
@@ -168,7 +168,7 @@ function resolveTooltipCoordinatesFromGeometry(
  */
 export function createPushpinTooltipConfig(
     tooltip: IPopupFacade,
-    config: IGeoPushpinChartNextConfig,
+    config: IGeoPushpinChartConfig,
     drillableItems: IHeaderPredicate[] | undefined,
     intl: IntlShape,
     layerIds: string[],

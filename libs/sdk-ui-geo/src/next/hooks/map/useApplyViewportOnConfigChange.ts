@@ -5,7 +5,7 @@ import { useEffect, useMemo, useRef } from "react";
 import type { IMapFacade } from "../../layers/common/mapFacade.js";
 import { applyViewport } from "../../map/viewport/viewportCalculation.js";
 import { computeViewportFromConfig, getViewportConfigKey } from "../../map/viewport/viewportResolution.js";
-import type { IGeoChartNextConfig } from "../../types/config/unified.js";
+import type { IGeoChartConfig } from "../../types/config/unified.js";
 import type { IMapViewport } from "../../types/map/provider.js";
 
 /**
@@ -27,7 +27,7 @@ import type { IMapViewport } from "../../types/map/provider.js";
 export function useApplyViewportOnConfigChange(
     map: IMapFacade | null,
     isMapReady: boolean,
-    config: IGeoChartNextConfig | undefined,
+    config: IGeoChartConfig | undefined,
     dataViewport: Partial<IMapViewport> | null,
 ): void {
     const configKey = useMemo(() => getViewportConfigKey(config), [config]);

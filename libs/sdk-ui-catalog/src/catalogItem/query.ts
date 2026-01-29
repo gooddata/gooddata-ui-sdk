@@ -234,6 +234,7 @@ function updateMeasureCatalogItem(
             description: item.description,
             tags: item.tags,
             isHidden: item.isHidden,
+            isHiddenFromKda: item.isHiddenFromKda,
         });
 }
 

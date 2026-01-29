@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -14,8 +14,8 @@ import {
 } from "@gooddata/sdk-ui";
 import { type IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 
-import { type IGeoChartNextConfig } from "../../types/config/unified.js";
-import { type ILayerExecutionRecord } from "../../types/props/geoChartNext/internal.js";
+import { type IGeoChartConfig } from "../../types/config/unified.js";
+import { type ILayerExecutionRecord } from "../../types/props/geoChart/internal.js";
 import { getDataPointsLimit, validateLayersDataSize } from "../../utils/dataValidation.js";
 import { useLayersData } from "../layers/useLayersData.js";
 import {
@@ -55,7 +55,7 @@ export function useGeoChartData(params: {
     layerExecutions: ILayerExecutionRecord[];
     backend: IAnalyticalBackend;
     workspace: string;
-    config?: IGeoChartNextConfig;
+    config?: IGeoChartConfig;
     execConfig?: IExecutionConfig;
     intl: IntlShape;
 }): IGeoChartDataResult {

@@ -1,8 +1,8 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { isEqual } from "lodash-es";
 
-import { usePrevious } from "@gooddata/sdk-ui";
+import { usePrevious } from "./usePrevious.js";
 
 /**
  * Debug hook that outputs a formatted table showing prop equality checks.

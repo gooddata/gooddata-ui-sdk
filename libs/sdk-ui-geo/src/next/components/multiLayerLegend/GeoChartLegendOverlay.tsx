@@ -10,20 +10,20 @@ import { useGeoLegend } from "../../context/GeoLegendContext.js";
 import { useLegendConfig } from "../../hooks/legend/useLegendConfig.js";
 import { useLegendDetails } from "../../hooks/legend/useLegendDetails.js";
 import { useMultiLayerLegend } from "../../hooks/legend/useMultiLayerLegend.js";
-import type { IGeoChartNextConfig } from "../../types/config/unified.js";
-import type { ILayerExecutionRecord } from "../../types/props/geoChartNext/internal.js";
+import type { IGeoChartConfig } from "../../types/config/unified.js";
+import type { ILayerExecutionRecord } from "../../types/props/geoChart/internal.js";
 
 /**
- * Internal container for GeoChartNext legend overlay.
+ * Internal container for GeoChart legend overlay.
  *
  * @remarks
  * Encapsulates legend wiring (model aggregation, config/position resolution, and context callbacks)
- * so `RenderGeoChartNext` stays focused on layout and map orchestration.
+ * so `RenderGeoChart` stays focused on layout and map orchestration.
  *
  * @internal
  */
-export interface IGeoChartNextLegendOverlayProps {
-    config: IGeoChartNextConfig | undefined;
+export interface IGeoChartLegendOverlayProps {
+    config: IGeoChartConfig | undefined;
     chartContainerRect: ContentRect | null;
     layers: Map<string, IGeoLayerData>;
     layerExecutions: ILayerExecutionRecord[];
@@ -36,14 +36,14 @@ export interface IGeoChartNextLegendOverlayProps {
  *
  * @internal
  */
-export function GeoChartNextLegendOverlay({
+export function GeoChartLegendOverlay({
     config,
     chartContainerRect,
     layers,
     layerExecutions,
     primaryLayer,
     numericSymbols,
-}: IGeoChartNextLegendOverlayProps): ReactElement | null {
+}: IGeoChartLegendOverlayProps): ReactElement | null {
     const { toggleLegendItem, toggleLayerVisibility, hiddenLayers } = useGeoLegend();
 
     const model = useMultiLayerLegend(layerExecutions, layers, { numericSymbols });

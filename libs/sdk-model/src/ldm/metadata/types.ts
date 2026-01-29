@@ -76,6 +76,11 @@ export interface IMetadataObjectBase {
      * Whether the metadata object is hidden from users.
      */
     isHidden?: boolean;
+
+    /**
+     * Whether the metadata object is hidden from key driver analysis.
+     */
+    isHiddenFromKda?: boolean;
 }
 
 /**

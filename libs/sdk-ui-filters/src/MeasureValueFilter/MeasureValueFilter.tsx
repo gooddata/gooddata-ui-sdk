@@ -35,6 +35,8 @@ export const MeasureValueFilter = memo(function MeasureValueFilter({
     warningMessage,
     locale,
     separators,
+    format,
+    useShortFormat,
     displayTreatNullAsZeroOption,
     treatNullAsZeroDefaultValue,
     enableOperatorSelection,
@@ -45,6 +47,7 @@ export const MeasureValueFilter = memo(function MeasureValueFilter({
     onDimensionalityChange,
     isLoadingCatalogDimensionality,
     enableMultipleConditions = false,
+    enableRankingWithMvf,
     onApply,
 }: IMeasureValueFilterProps) {
     const [displayDropdown, setDisplayDropdown] = useState(false);
@@ -86,6 +89,8 @@ export const MeasureValueFilter = memo(function MeasureValueFilter({
                     warningMessage={warningMessage}
                     locale={locale}
                     separators={separators}
+                    format={format}
+                    useShortFormat={useShortFormat}
                     displayTreatNullAsZeroOption={displayTreatNullAsZeroOption}
                     treatNullAsZeroDefaultValue={treatNullAsZeroDefaultValue}
                     enableOperatorSelection={enableOperatorSelection}
@@ -96,6 +101,7 @@ export const MeasureValueFilter = memo(function MeasureValueFilter({
                     onDimensionalityChange={onDimensionalityChange}
                     isLoadingCatalogDimensionality={isLoadingCatalogDimensionality}
                     enableMultipleConditions={enableMultipleConditions}
+                    enableRankingWithMvf={enableRankingWithMvf}
                     anchorEl={buttonRef.current ?? undefined}
                 />
             ) : null}

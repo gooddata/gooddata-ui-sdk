@@ -7,7 +7,7 @@ import type { IExecutionConfig, INullableFilter } from "@gooddata/sdk-model";
 import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 import { buildLayerExecution } from "../../layers/execution/buildLayerExecution.js";
-import type { IGeoChartNextConfig } from "../../types/config/unified.js";
+import type { IGeoChartConfig } from "../../types/config/unified.js";
 import type { IGeoLayer } from "../../types/layers/index.js";
 
 /**
@@ -29,7 +29,7 @@ export function useLayersExecutions(props: {
     layers: IGeoLayer[];
     backend?: IAnalyticalBackend;
     workspace?: string;
-    config?: IGeoChartNextConfig;
+    config?: IGeoChartConfig;
     execConfig?: IExecutionConfig;
     filters?: INullableFilter[];
 }): ILayerExecutionsResult {

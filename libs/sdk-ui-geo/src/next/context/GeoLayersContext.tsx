@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ReactNode, createContext, useContext, useMemo } from "react";
 
@@ -13,7 +13,7 @@ import { type IAreaGeoData } from "../types/geoData/area.js";
 import { type IPushpinGeoData } from "../types/geoData/pushpin.js";
 import { type GeoLayerType } from "../types/layers/index.js";
 import type { IMapViewport } from "../types/map/provider.js";
-import { type ILayerExecutionRecord } from "../types/props/geoChartNext/internal.js";
+import { type ILayerExecutionRecord } from "../types/props/geoChart/internal.js";
 
 const EMPTY_AVAILABLE_LEGENDS: IAvailableLegends = {
     hasCategoryLegend: false,

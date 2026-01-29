@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-backend-tiger",
-    "version": "11.18.0-alpha.7",
+    "version": "11.18.0-alpha.8",
     "description": "GoodData Backend SPI implementation for GoodData Cloud and GoodData.CN",
     "repository": {
         "type": "git",
@@ -27,7 +27,9 @@
         "_phase:validate": "npm run build-dynamic-files && npm run validate",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
         "build": "bash scripts/build.sh",
+        "build-check": "tsc",
         "build-dynamic-files": "bash scripts/build.sh --genFilesOnly",
+        "build-ts": "tsc -p tsconfig.build.json",
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
         "clear-recordings": "rm -rf ./tests/wiremock/recordings/mappings/* ./tests/wiremock/recordings/__files/*",
         "create-ref-workspaces": "node ./tests/reference_workspace/create_test_workspaces.mjs",
@@ -47,7 +49,7 @@
         "test": "vitest watch",
         "test-isolated-ci": "./scripts/isolated-test.sh",
         "test-once": "vitest run",
-        "validate": "tsc && npm run dep-cruiser && npm run eslint && npm run prettier-check",
+        "validate": "npm run dep-cruiser && npm run eslint && npm run prettier-check",
         "validate-esm": "node --input-type=module --eval 'import \"@gooddata/sdk-backend-tiger\"' "
     },
     "dependencies": {
@@ -84,7 +86,6 @@
         "dotenv": "16.0.3",
         "eslint": "^8.57.1",
         "eslint-config-prettier": "10.1.8",
-        "eslint-plugin-eslint-comments": "3.2.0",
         "eslint-plugin-header": "3.1.1",
         "eslint-plugin-import": "2.32.0",
         "eslint-plugin-import-esm": "1.2.1",
@@ -93,8 +94,9 @@
         "eslint-plugin-no-only-tests": "2.6.0",
         "eslint-plugin-prettier": "5.5.4",
         "eslint-plugin-regexp": "1.15.0",
-        "eslint-plugin-sonarjs": "0.16.0",
+        "eslint-plugin-sonarjs": "3.0.6",
         "eslint-plugin-tsdoc": "0.2.14",
+        "npm-run-all": "^4.1.5",
         "prettier": "^3.6.2",
         "typescript": "5.9.3",
         "vitest": "4.0.8"

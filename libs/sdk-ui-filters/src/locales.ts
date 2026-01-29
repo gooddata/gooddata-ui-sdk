@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type MessageDescriptor, defineMessages } from "react-intl";
 
@@ -76,6 +76,27 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     NOT_EQUAL_TO_WITH_VALUE: { id: "mvf.operator.notEqualTo.withValue" },
     BETWEEN_WITH_VALUE: { id: "mvf.operator.between.withValue" },
     NOT_BETWEEN_WITH_VALUE: { id: "mvf.operator.notBetween.withValue" },
+    mvfPreviewFilterWithoutDimensionalityNoMetric: {
+        id: "mvf.preview.filterWithoutDimensionalityNoMetric",
+    },
+    mvfPreviewFilterWithDimensionalityNoMetric: {
+        id: "mvf.preview.filterWithDimensionalityNoMetric",
+    },
+    mvfPreviewFilterWithDimensionalityShortenedNoMetric: {
+        id: "mvf.preview.filterWithDimensionalityShortenedNoMetric",
+    },
+    mvfPreviewFilterWithoutDimensionalityTooltip: {
+        id: "mvf.preview.filterWithoutDimensionality.tooltip",
+    },
+    mvfPreviewFilterWithoutDimensionalityNoMetricTooltip: {
+        id: "mvf.preview.filterWithoutDimensionalityNoMetric.tooltip",
+    },
+    mvfPreviewFilterWithDimensionalityTooltip: {
+        id: "mvf.preview.filterWithDimensionality.tooltip",
+    },
+    mvfPreviewFilterWithDimensionalityNoMetricTooltip: {
+        id: "mvf.preview.filterWithDimensionalityNoMetric.tooltip",
+    },
     thisMinute: { id: "filters.thisMinute.title" },
     lastMinute: { id: "filters.lastMinute.title" },
     nextMinute: { id: "filters.nextMinute.title" },

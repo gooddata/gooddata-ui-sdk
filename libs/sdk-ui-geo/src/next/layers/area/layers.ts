@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { BucketNames } from "@gooddata/sdk-ui";
 
@@ -24,7 +24,7 @@ import { EMPTY_SEGMENT_VALUE } from "../pushpin/constants.js";
  * @param selectedSegmentItems - Array of segment URIs to show
  * @returns MapLibre expression for filtering
  *
- * @alpha
+ * @internal
  */
 export function createAreaFilter(selectedSegmentItems: string[]): FilterSpecification {
     const urisToCheck = selectedSegmentItems.length ? selectedSegmentItems : [EMPTY_SEGMENT_VALUE];
@@ -57,7 +57,7 @@ export function createAreaFilter(selectedSegmentItems: string[]): FilterSpecific
  * @param layerId - Optional custom layer ID (defaults to DEFAULT_AREA_LAYER_NAME)
  * @returns MapLibre fill layer specification
  *
- * @alpha
+ * @internal
  */
 export function createAreaFillLayer(
     dataSourceName: string,
@@ -96,7 +96,7 @@ export function createAreaFillLayer(
  * @param layerId - Optional custom layer ID (defaults to DEFAULT_AREA_OUTLINE_LAYER_NAME)
  * @returns MapLibre line layer specification
  *
- * @alpha
+ * @internal
  */
 export function createAreaOutlineLayer(
     dataSourceName: string,

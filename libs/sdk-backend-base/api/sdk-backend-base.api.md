@@ -913,6 +913,7 @@ export interface IMetadataObjectBuilder<T extends IMetadataObject = IMetadataObj
     description(description: string): this;
     id(id: string): this;
     isHidden(isHidden?: boolean): this;
+    isHiddenFromKda(isHiddenFromKda?: boolean): this;
     production(isProduction: boolean): this;
     tags(tags: string[]): this;
     title(title: string): this;
@@ -1070,6 +1071,8 @@ export class MetadataObjectBuilder<T extends IMetadataObject = IMetadataObject> 
     id(identifier: string): this;
     // (undocumented)
     isHidden(isHidden?: boolean): this;
+    // (undocumented)
+    isHiddenFromKda(isHidden?: boolean): this;
     // (undocumented)
     production(isProduction: boolean): this;
     // (undocumented)

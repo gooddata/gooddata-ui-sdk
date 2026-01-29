@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
@@ -9,7 +9,7 @@ import { DEFAULT_AREA_FILL_COLOR } from "../constants.js";
 /**
  * Color for filled geographic areas
  *
- * @alpha
+ * @internal
  */
 export interface IAreaAreaColor {
     /**
@@ -40,7 +40,7 @@ function mapPushpinColorsToAreas(pushpinColors: IPushpinColor[]): IAreaAreaColor
  * @param colorStrategy - Color strategy to use
  * @returns Array of area colors matching the data
  *
- * @alpha
+ * @internal
  */
 export function getAreaAreaColors(
     colorData: number[],

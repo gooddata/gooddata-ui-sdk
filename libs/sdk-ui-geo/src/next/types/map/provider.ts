@@ -3,12 +3,12 @@
 import type { GeoTileset } from "./tileset.js";
 import type { StyleSpecification } from "../../layers/common/mapFacade.js";
 import { type IGeoLngLat, type IGeoLngLatBounds } from "../common/coordinates.js";
-import { type IGeoPushpinChartNextConfig } from "../config/pushpinChart.js";
+import { type IGeoPushpinChartConfig } from "../config/pushpinChart.js";
 
 /**
  * Configuration options for map initialization
  *
- * @alpha
+ * @internal
  */
 export interface IMapOptions {
     /**
@@ -68,11 +68,11 @@ export interface IMapOptions {
  * Configuration for map rendering and behavior
  *
  * @remarks
- * This extends the IGeoPushpinChartNextConfig with additional runtime configuration options.
+ * This extends the IGeoPushpinChartConfig with additional runtime configuration options.
  *
- * @alpha
+ * @internal
  */
-export interface IPushpinMapConfig extends IGeoPushpinChartNextConfig {
+export interface IPushpinMapConfig extends IGeoPushpinChartConfig {
     /**
      * Whether to show labels on map features
      */
@@ -87,7 +87,7 @@ export interface IPushpinMapConfig extends IGeoPushpinChartNextConfig {
 /**
  * Viewport configuration for the map
  *
- * @alpha
+ * @internal
  */
 export interface IMapViewport {
     /**

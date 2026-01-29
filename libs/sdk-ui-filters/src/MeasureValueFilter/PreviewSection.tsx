@@ -10,9 +10,10 @@ import {
     isComparisonConditionOperator,
     isRangeConditionOperator,
 } from "@gooddata/sdk-model";
-import { messages } from "@gooddata/sdk-ui";
-import { UiTooltip, formatNumberWithSeparators } from "@gooddata/sdk-ui-kit";
+import { createNumberJsFormatter, messages as sdkMessages } from "@gooddata/sdk-ui";
+import { UiTooltip, formatNumberWithSeparators, shortenNumber } from "@gooddata/sdk-ui-kit";
 
+import { messages } from "../locales.js";
 import {
     getOperatorTranslationKey,
     getOperatorWithValueTranslationKey,
@@ -25,6 +26,7 @@ import { type IDimensionalityItem } from "./typings.js";
  * When there are more items than this, the list is shortened with a count indicator.
  */
 const DIMENSIONALITY_SHORTEN_THRESHOLD = 3;
+const CONDITIONS_SHORTEN_THRESHOLD = 2;
 
 interface IShortenedDimensionality {
     /** The shortened text to display inline */
@@ -65,10 +67,26 @@ const formatNumberForPreview = (
     value: NumberForPreview,
     separators: ISeparators | undefined,
     suffix: string,
+    format?: string,
+    useShortFormat?: boolean,
 ): string | undefined => {
     if (value === null || value === undefined || isNaN(value)) {
         return undefined;
     }
+
+    // If useShortFormat is true, use K/M/B shortening for compact display
+    if (useShortFormat) {
+        const shortened = shortenNumber(value, separators);
+        return `${shortened}${suffix}`;
+    }
+
+    // If format is provided and suffix is empty (not percentage), use the full metric format
+    if (format && !suffix) {
+        const formatter = createNumberJsFormatter(separators);
+        return formatter(value, format);
+    }
+
+    // Otherwise, use simple number formatting with separators and suffix
     const formattedNumber = formatNumberWithSeparators(value, separators);
     return `${formattedNumber}${suffix}`;
 };
@@ -86,6 +104,8 @@ const getConditionPreviewParts = (
     to: NumberForPreview,
     separators: ISeparators | undefined,
     suffix: string,
+    format: string | undefined,
+    useShortFormat: boolean | undefined,
     intl: IntlShape,
 ): IConditionPreviewParts | undefined => {
     if (operator === "ALL") {
@@ -103,7 +123,7 @@ const getConditionPreviewParts = (
             return undefined;
         }
 
-        const formattedValue = formatNumberForPreview(value, separators, suffix);
+        const formattedValue = formatNumberForPreview(value, separators, suffix, format, useShortFormat);
         if (formattedValue === undefined) {
             return undefined;
         }
@@ -121,8 +141,8 @@ const getConditionPreviewParts = (
             return undefined;
         }
 
-        const formattedFrom = formatNumberForPreview(from, separators, suffix);
-        const formattedTo = formatNumberForPreview(to, separators, suffix);
+        const formattedFrom = formatNumberForPreview(from, separators, suffix, format, useShortFormat);
+        const formattedTo = formatNumberForPreview(to, separators, suffix, format, useShortFormat);
         if (formattedFrom === undefined || formattedTo === undefined) {
             return undefined;
         }
@@ -144,6 +164,12 @@ interface IPreviewSectionProps {
     measureTitle?: string;
     usePercentage?: boolean;
     separators?: ISeparators;
+    format?: string;
+    /**
+     * When true, uses K/M/B shortening for compact display (e.g., "1K" instead of "1,000").
+     * When false or undefined, uses full metric format.
+     */
+    useShortFormat?: boolean;
     dimensionality: IDimensionalityItem[];
     showAllPreview?: boolean;
     conditions: Array<{
@@ -160,6 +186,8 @@ export const PreviewSection = memo(function PreviewSection({
     measureTitle,
     usePercentage,
     separators,
+    format,
+    useShortFormat,
     dimensionality,
     showAllPreview = false,
     conditions,
@@ -168,7 +196,14 @@ export const PreviewSection = memo(function PreviewSection({
 
     const textPreview = useMemo((): {
         content: ReactNode;
-        tooltip: string | undefined;
+        tooltipDescriptor:
+            | {
+                  messageId: string;
+                  values: Record<string, string | number | undefined>;
+              }
+            | undefined;
+        tooltipText: string | undefined;
+        shouldTruncate: boolean;
     } | null => {
         const suffix = usePercentage ? "%" : "";
         const isAllOperatorSelected = conditions.length > 0 && conditions.every((c) => c.operator === "ALL");
@@ -187,6 +222,8 @@ export const PreviewSection = memo(function PreviewSection({
                     c.value.to,
                     separators,
                     suffix,
+                    format,
+                    useShortFormat,
                     intl,
                 ),
             )
@@ -198,6 +235,10 @@ export const PreviewSection = memo(function PreviewSection({
         if (!measureTitle && !isAllOperatorSelected) {
             return null;
         }
+
+        // Determine if we should truncate based on non-ALL conditions count
+        const nonAllConditionsCount = conditions.filter((c) => c.operator !== "ALL").length;
+        const shouldTruncateConditions = nonAllConditionsCount > CONDITIONS_SHORTEN_THRESHOLD;
 
         const condition = isAllOperatorSelected
             ? conditionParts[0].operatorLabel
@@ -263,72 +304,143 @@ export const PreviewSection = memo(function PreviewSection({
             b: (chunk: ReactNode) => <b>{chunk}</b>,
         };
 
+        // Helper to build tooltip descriptor (returns message ID and values for formatting at render time)
+        // Uses tooltip-specific messages without <b> tags to avoid ReactNode array parsing
+        const buildTooltipDescriptor = (
+            tooltipMessageId: string,
+        ): {
+            messageId: string;
+            values: Record<string, string | number | undefined>;
+        } => {
+            return {
+                messageId: tooltipMessageId,
+                values: {
+                    metric: measureTitle,
+                    condition,
+                    dimensionality: fullText || shortenedText, // Use full text for tooltip
+                    // No 'b' function needed - tooltip messages don't use <b> tags
+                },
+            };
+        };
+
         if (isAllOperatorSelected) {
             if (dimensionality.length > 0 && shortenedText) {
                 if (additionalCount !== undefined) {
+                    const contentMessageDescriptor =
+                        messages["mvfPreviewFilterWithDimensionalityShortenedNoMetric"];
+                    // For tooltip, use plain text variant without count and without <b> tags
+                    const tooltipMessageId =
+                        messages["mvfPreviewFilterWithDimensionalityNoMetricTooltip"].id!;
                     return {
-                        content: intl.formatMessage(
-                            { id: "mvf.preview.filterWithDimensionalityShortenedNoMetric" },
-                            placeholderValues,
-                        ),
-                        tooltip: fullText,
+                        content: intl.formatMessage(contentMessageDescriptor, placeholderValues),
+                        tooltipDescriptor: shouldTruncateConditions
+                            ? buildTooltipDescriptor(tooltipMessageId)
+                            : undefined,
+                        tooltipText: shouldTruncateConditions ? undefined : fullText,
+                        shouldTruncate: shouldTruncateConditions,
                     };
                 }
+                const messageDescriptor = messages["mvfPreviewFilterWithDimensionalityNoMetric"];
+                const tooltipMessageId = messages["mvfPreviewFilterWithDimensionalityNoMetricTooltip"].id!;
                 return {
-                    content: intl.formatMessage(
-                        { id: "mvf.preview.filterWithDimensionalityNoMetric" },
-                        placeholderValues,
-                    ),
-                    tooltip: fullText,
+                    content: intl.formatMessage(messageDescriptor, placeholderValues),
+                    tooltipDescriptor: shouldTruncateConditions
+                        ? buildTooltipDescriptor(tooltipMessageId)
+                        : undefined,
+                    tooltipText: shouldTruncateConditions ? undefined : fullText,
+                    shouldTruncate: shouldTruncateConditions,
                 };
             }
 
+            const messageDescriptor = messages["mvfPreviewFilterWithoutDimensionalityNoMetric"];
+            const tooltipMessageId = messages["mvfPreviewFilterWithoutDimensionalityNoMetricTooltip"].id!;
             return {
-                content: intl.formatMessage(
-                    { id: "mvf.preview.filterWithoutDimensionalityNoMetric" },
-                    placeholderValues,
-                ),
-                tooltip: fullText,
+                content: intl.formatMessage(messageDescriptor, placeholderValues),
+                tooltipDescriptor: shouldTruncateConditions
+                    ? buildTooltipDescriptor(tooltipMessageId)
+                    : undefined,
+                tooltipText: shouldTruncateConditions ? undefined : fullText,
+                shouldTruncate: shouldTruncateConditions,
             };
         }
 
         if (dimensionality.length > 0 && shortenedText) {
             // Use shortened variant when there are hidden items
-            const message =
+            const contentMessageDescriptor =
                 additionalCount === undefined
-                    ? messages["mvfPreviewFilterWithDimensionality"]
-                    : messages["mvfPreviewFilterWithDimensionalityShortened"];
-            return { content: intl.formatMessage(message, placeholderValues), tooltip: fullText };
+                    ? sdkMessages["mvfPreviewFilterWithDimensionality"]
+                    : sdkMessages["mvfPreviewFilterWithDimensionalityShortened"];
+            // For tooltip, use plain text variant without <b> tags
+            const tooltipMessageId = messages["mvfPreviewFilterWithDimensionalityTooltip"].id!;
+            return {
+                content: intl.formatMessage(contentMessageDescriptor, placeholderValues),
+                tooltipDescriptor: shouldTruncateConditions
+                    ? buildTooltipDescriptor(tooltipMessageId)
+                    : undefined,
+                tooltipText: shouldTruncateConditions ? undefined : fullText,
+                shouldTruncate: shouldTruncateConditions,
+            };
         }
+        const messageDescriptor = sdkMessages["mvfPreviewFilterWithoutDimensionality"];
+        const tooltipMessageId = messages["mvfPreviewFilterWithoutDimensionalityTooltip"].id!;
         return {
-            content: intl.formatMessage(messages["mvfPreviewFilterWithoutDimensionality"], placeholderValues),
-            tooltip: fullText,
+            content: intl.formatMessage(messageDescriptor, placeholderValues),
+            tooltipDescriptor: shouldTruncateConditions
+                ? buildTooltipDescriptor(tooltipMessageId)
+                : undefined,
+            tooltipText: shouldTruncateConditions ? undefined : fullText,
+            shouldTruncate: shouldTruncateConditions,
         };
-    }, [dimensionality, separators, usePercentage, measureTitle, intl, conditions, showAllPreview]);
+    }, [
+        dimensionality,
+        separators,
+        usePercentage,
+        format,
+        useShortFormat,
+        measureTitle,
+        intl,
+        conditions,
+        showAllPreview,
+    ]);
 
     if (!textPreview) {
         return null;
     }
 
+    const { content, tooltipDescriptor, tooltipText: plainTooltipText, shouldTruncate } = textPreview;
+
+    // Format tooltip text at render time from descriptor, or use plain text
+    // Tooltip messages don't use <b> tags, so formatMessage returns string directly
+    const tooltipText = tooltipDescriptor
+        ? String(intl.formatMessage({ id: tooltipDescriptor.messageId }, tooltipDescriptor.values))
+        : plainTooltipText;
+
     return (
         <div className="gd-mvf-preview">
-            <div className="gd-mvf-preview-header">{intl.formatMessage(messages["mvfPreviewTitle"])}</div>
-            {textPreview.tooltip ? (
+            <div className="gd-mvf-preview-header">{intl.formatMessage(sdkMessages["mvfPreviewTitle"])}</div>
+            {tooltipText ? (
                 <UiTooltip
                     anchor={
-                        <div className="gd-mvf-preview-content" data-testid="mvf-preview-text">
-                            {textPreview.content}
+                        <div
+                            className={
+                                shouldTruncate
+                                    ? "gd-mvf-preview-content gd-mvf-preview-content--truncated"
+                                    : "gd-mvf-preview-content"
+                            }
+                            data-testid="mvf-preview-text"
+                        >
+                            {content}
                         </div>
                     }
-                    content={textPreview.tooltip}
+                    content={<div className="gd-mvf-preview-tooltip-content">{tooltipText}</div>}
                     arrowPlacement="left"
                     triggerBy={["hover"]}
-                    width="same-as-anchor"
                     optimalPlacement
+                    width={shouldTruncate ? undefined : "same-as-anchor"}
                 />
             ) : (
                 <div className="gd-mvf-preview-content" data-testid="mvf-preview-text">
-                    {textPreview.content}
+                    {content}
                 </div>
             )}
         </div>

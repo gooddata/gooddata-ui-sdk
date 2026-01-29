@@ -7,12 +7,12 @@ import type { EnabledItemsByLayer } from "../../context/GeoLegendContext.js";
 import type { IAreaGeoData } from "../../types/geoData/area.js";
 import type { IPushpinGeoData } from "../../types/geoData/pushpin.js";
 import { type ILegendModel, type ILegendSection } from "../../types/legend/model.js";
-import type { ILayerExecutionRecord } from "../../types/props/geoChartNext/internal.js";
+import type { ILayerExecutionRecord } from "../../types/props/geoChart/internal.js";
 
 /**
  * Options for aggregating legend sections.
  *
- * @alpha
+ * @internal
  */
 export interface IAggregateLegendOptions {
     /**
@@ -54,7 +54,7 @@ export interface IAggregateLegendOptions {
  * @param options - Optional configuration including title
  * @returns Aggregated legend model with sections for each layer
  *
- * @alpha
+ * @internal
  */
 /**
  * Applies visibility state to legend items based on enabled items.

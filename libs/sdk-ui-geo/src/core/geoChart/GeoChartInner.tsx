@@ -35,7 +35,8 @@ import {
 
 import { GeoChartLegendRenderer, type IGeoChartLegendRendererProps } from "./GeoChartLegendRenderer.js";
 import { type IGeoChartRendererProps } from "./GeoChartRenderer.js";
-import { type IGeoConfig, type IGeoData, type IGeoLngLat } from "../../GeoChart.js";
+import { type IGeoConfig, type IGeoData } from "../../GeoChart.js";
+import type { IGeoLngLat } from "../../publicTypes/geoCommon.js";
 import { isColorAssignmentItemChanged, isFluidLegendEnabled } from "./helpers/geoChart/common.js";
 import { getAvailableLegends } from "./helpers/geoChart/data.js";
 import { getResponsiveInfo, isAutoPositionWithPopup } from "./helpers/geoChart/responsive.js";

@@ -81,6 +81,14 @@ export interface IMetadataObjectBuilder<T extends IMetadataObject = IMetadataObj
      * @returns this
      */
     isHidden(isHidden?: boolean): this;
+
+    /**
+     * Set metadata object isHiddenFromKda flag
+     *
+     * @param isHiddenFromKda - true if hidden from kda
+     * @returns this
+     */
+    isHiddenFromKda(isHiddenFromKda?: boolean): this;
 }
 
 /**
@@ -136,6 +144,11 @@ export class MetadataObjectBuilder<T extends IMetadataObject = IMetadataObject>
 
     public isHidden(isHidden?: boolean): this {
         this.item.isHidden = isHidden;
+        return this;
+    }
+
+    public isHiddenFromKda(isHidden?: boolean): this {
+        this.item.isHiddenFromKda = isHidden;
         return this;
     }
 }

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type GeoLayerType } from "../layers/index.js";
 
@@ -10,7 +10,7 @@ import { type GeoLayerType } from "../layers/index.js";
  * - `"color"` - Categorical color legend items with color swatches
  * - `"colorScale"` - Numeric color scale (gradient) for measure-based coloring
  *
- * @alpha
+ * @internal
  */
 export type LegendGroupKind = "size" | "color" | "colorScale";
 
@@ -21,7 +21,7 @@ export type LegendGroupKind = "size" | "color" | "colorScale";
  * Represents a representative size anchor (e.g., min, mid, max)
  * in the pushpin size legend.
  *
- * @alpha
+ * @internal
  */
 export interface ILegendSizeAnchorItem {
     /**
@@ -52,7 +52,7 @@ export interface ILegendSizeAnchorItem {
  * Represents a single category with its assigned color
  * in a categorical color legend.
  *
- * @alpha
+ * @internal
  */
 export interface ILegendColorCategoryItem {
     /**
@@ -95,7 +95,7 @@ export interface ILegendColorCategoryItem {
  * Represents the color scale for measure-based coloring,
  * showing the gradient from min to max values.
  *
- * @alpha
+ * @internal
  */
 export interface ILegendColorScaleItem {
     /**
@@ -127,7 +127,7 @@ export interface ILegendColorScaleItem {
 /**
  * Union type for all legend items.
  *
- * @alpha
+ * @internal
  */
 export type ILegendItem = ILegendSizeAnchorItem | ILegendColorCategoryItem | ILegendColorScaleItem;
 
@@ -137,7 +137,7 @@ export type ILegendItem = ILegendSizeAnchorItem | ILegendColorCategoryItem | ILe
  * @remarks
  * Groups legend items by type (size or color) with an optional title.
  *
- * @alpha
+ * @internal
  */
 export interface ILegendGroup {
     /**
@@ -163,7 +163,7 @@ export interface ILegendGroup {
  * Each section corresponds to one geo layer and contains
  * one or more groups of legend items.
  *
- * @alpha
+ * @internal
  */
 export interface ILegendSection {
     /**
@@ -208,7 +208,7 @@ export interface ILegendSection {
  * Contains all sections (one per layer) needed to render
  * a complete multi-layer legend.
  *
- * @alpha
+ * @internal
  */
 export interface ILegendModel {
     /**
@@ -228,7 +228,7 @@ export interface ILegendModel {
  * @param item - Legend item to check
  * @returns true if item is a size anchor item
  *
- * @alpha
+ * @internal
  */
 export function isLegendSizeAnchorItem(item: ILegendItem): item is ILegendSizeAnchorItem {
     return item.type === "sizeAnchor";
@@ -240,7 +240,7 @@ export function isLegendSizeAnchorItem(item: ILegendItem): item is ILegendSizeAn
  * @param item - Legend item to check
  * @returns true if item is a color category item
  *
- * @alpha
+ * @internal
  */
 export function isLegendColorCategoryItem(item: ILegendItem): item is ILegendColorCategoryItem {
     return item.type === "colorCategory";
@@ -252,7 +252,7 @@ export function isLegendColorCategoryItem(item: ILegendItem): item is ILegendCol
  * @param item - Legend item to check
  * @returns true if item is a color scale item
  *
- * @alpha
+ * @internal
  */
 export function isLegendColorScaleItem(item: ILegendItem): item is ILegendColorScaleItem {
     return item.type === "colorScale";

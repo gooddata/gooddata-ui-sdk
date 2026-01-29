@@ -1,14 +1,14 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { LoadingComponent as DefaultLoadingComponent } from "@gooddata/sdk-ui";
 
-import { useGeoChartNextProps } from "../context/GeoChartNextContext.js";
+import { useGeoChartProps } from "../context/GeoChartContext.js";
 
 /**
  * @internal
  */
 export function GeoLoadingComponent() {
-    const { LoadingComponent } = useGeoChartNextProps();
+    const { LoadingComponent } = useGeoChartProps();
     const Loading = LoadingComponent ?? DefaultLoadingComponent;
 
     return <Loading />;

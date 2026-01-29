@@ -1,7 +1,7 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 /**
- * Size calculation functions for GeoPushpinChartNext
+ * Size calculation functions for GeoPushpinChart
  *
  * @internal
  */

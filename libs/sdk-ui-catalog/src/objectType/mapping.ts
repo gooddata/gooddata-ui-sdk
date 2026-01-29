@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import type { GenAIObjectType } from "@gooddata/sdk-model";
 
@@ -36,7 +36,7 @@ export function mapObjectType(type: GenAIObjectType): ObjectType {
     if (type === "metric") {
         return "measure";
     }
-    if (type === "dataset") {
+    if (type === "dataset" || type === "date") {
         return "dataSet";
     }
     return type as ObjectType;

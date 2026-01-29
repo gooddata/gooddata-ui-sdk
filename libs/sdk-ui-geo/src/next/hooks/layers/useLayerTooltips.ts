@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useCallback, useEffect, useMemo, useRef } from "react";
 
@@ -9,7 +9,7 @@ import type { IMapFacade, IPopupFacade, MapMouseEvent } from "../../layers/commo
 import { getLayerAdapter } from "../../layers/registry/adapterRegistry.js";
 import type { IGeoAdapterContext, IGeoTooltipConfig } from "../../layers/registry/adapterTypes.js";
 import { buildOutputFromLayerData } from "../../layers/registry/output.js";
-import { type ILayerExecutionRecord } from "../../types/props/geoChartNext/internal.js";
+import { type ILayerExecutionRecord } from "../../types/props/geoChart/internal.js";
 
 interface IUseLayerTooltipsParams {
     /**

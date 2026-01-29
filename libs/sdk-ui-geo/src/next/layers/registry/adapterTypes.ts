@@ -8,7 +8,7 @@ import type { DataViewFacade, IHeaderPredicate } from "@gooddata/sdk-ui";
 import type { IColorMapping, IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
 import type { IAvailableLegends, IGeoLegendItem } from "../../types/common/legends.js";
-import type { IGeoChartNextConfig } from "../../types/config/unified.js";
+import type { IGeoChartConfig } from "../../types/config/unified.js";
 import type { IAreaGeoData } from "../../types/geoData/area.js";
 import type { IPushpinGeoData } from "../../types/geoData/pushpin.js";
 import type { GeoLayerType, IGeoLayer, IGeoLayerArea, IGeoLayerPushpin } from "../../types/layers/index.js";
@@ -43,7 +43,7 @@ export interface IGeoAdapterContext {
     /**
      * Optional chart configuration (colors, clustering, etc.).
      */
-    config?: IGeoChartNextConfig;
+    config?: IGeoChartConfig;
 
     /**
      * Optional execution configuration.

@@ -1,11 +1,11 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type IGeoCommonData, type IGeoDataItem } from "./common.js";
 
 /**
  * Represents a geographic area item with polygon/boundary data
  *
- * @alpha
+ * @internal
  */
 export interface IGeoAreaItem extends IGeoDataItem {
     /**
@@ -25,7 +25,7 @@ export interface IGeoAreaItem extends IGeoDataItem {
  * Contains all data needed to render the geo area chart including
  * geographic areas, color values, segments, and tooltip text
  *
- * @alpha
+ * @internal
  */
 export interface IAreaGeoData extends IGeoCommonData {
     /**

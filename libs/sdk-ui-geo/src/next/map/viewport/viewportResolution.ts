@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import type { IGeoChartNextConfig } from "../../types/config/unified.js";
+import type { IGeoChartConfig } from "../../types/config/unified.js";
 import type { IMapViewport } from "../../types/map/provider.js";
 import { DEFAULT_CENTER, DEFAULT_ZOOM, VIEWPORTS } from "../runtime/mapConfig.js";
 
@@ -21,7 +21,7 @@ import { DEFAULT_CENTER, DEFAULT_ZOOM, VIEWPORTS } from "../runtime/mapConfig.js
  * @internal
  */
 export function computeViewportFromConfig(
-    config: IGeoChartNextConfig | undefined,
+    config: IGeoChartConfig | undefined,
     dataViewport: Partial<IMapViewport> | null = null,
 ): Partial<IMapViewport> | null {
     if (!config) {
@@ -61,7 +61,7 @@ export function computeViewportFromConfig(
  *
  * @internal
  */
-export function getViewportConfigKey(config: IGeoChartNextConfig | undefined): string {
+export function getViewportConfigKey(config: IGeoChartConfig | undefined): string {
     if (config?.center) {
         const zoom = config.zoom ?? DEFAULT_ZOOM;
         return `center:${config.center.lat}:${config.center.lng}:${zoom}`;

@@ -13,7 +13,7 @@ import {
 /**
  * Props for LegendGroupColor component.
  *
- * @alpha
+ * @internal
  */
 export interface ILegendGroupColorProps {
     /**
@@ -91,7 +91,7 @@ function ColorCategoryItem({ item, onClick }: IColorCategoryItemProps): ReactEle
  * Used for segment/category-based coloring in both pushpin and area layers.
  * Supports click-to-toggle for segment filtering.
  *
- * @alpha
+ * @internal
  */
 export const LegendGroupColor = memo(function LegendGroupColor({
     group,

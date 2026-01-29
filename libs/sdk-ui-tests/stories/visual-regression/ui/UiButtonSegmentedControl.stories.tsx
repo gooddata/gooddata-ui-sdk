@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { UiButton, UiButtonSegmentedControl, UiIconButton } from "@gooddata/sdk-ui-kit";
 
@@ -12,13 +12,23 @@ export default {
 
 export function Buttons() {
     return (
-        <div className="screenshot-target" style={{ display: "grid", gap: 10 }}>
+        <div className="screenshot-target" style={{ display: "grid", gap: 10, width: 500 }}>
             <UiButtonSegmentedControl>
                 <UiButton label="Left" size="medium" variant="primary" />
                 <UiButton label="Center" size="medium" variant="primary" />
                 <UiButton label="Right" size="medium" variant="primary" />
             </UiButtonSegmentedControl>
             <UiButtonSegmentedControl>
+                <UiButton label="Left" size="medium" variant="secondary" />
+                <UiButton label="Center" size="medium" variant="secondary" />
+                <UiButton label="Right" size="medium" variant="secondary" />
+            </UiButtonSegmentedControl>
+            <UiButtonSegmentedControl layout="fill">
+                <UiButton label="Left" size="medium" variant="primary" />
+                <UiButton label="Center" size="medium" variant="primary" />
+                <UiButton label="Right" size="medium" variant="primary" />
+            </UiButtonSegmentedControl>
+            <UiButtonSegmentedControl layout="fill">
                 <UiButton label="Left" size="medium" variant="secondary" />
                 <UiButton label="Center" size="medium" variant="secondary" />
                 <UiButton label="Right" size="medium" variant="secondary" />
@@ -33,13 +43,23 @@ Buttons.parameters = {
 
 export function IconButtons() {
     return (
-        <div className="screenshot-target" style={{ display: "grid", gap: 10 }}>
+        <div className="screenshot-target" style={{ display: "grid", gap: 10, width: 500 }}>
             <UiButtonSegmentedControl>
                 <UiIconButton icon="chevronLeft" size="medium" variant="primary" />
                 <UiIconButton icon="ai" size="medium" variant="primary" />
                 <UiIconButton icon="chevronRight" size="medium" variant="primary" />
             </UiButtonSegmentedControl>
             <UiButtonSegmentedControl>
+                <UiIconButton icon="chevronLeft" size="medium" variant="secondary" />
+                <UiIconButton icon="ai" size="medium" variant="secondary" />
+                <UiIconButton icon="chevronRight" size="medium" variant="secondary" />
+            </UiButtonSegmentedControl>
+            <UiButtonSegmentedControl layout="fill">
+                <UiIconButton icon="chevronLeft" size="medium" variant="primary" />
+                <UiIconButton icon="ai" size="medium" variant="primary" />
+                <UiIconButton icon="chevronRight" size="medium" variant="primary" />
+            </UiButtonSegmentedControl>
+            <UiButtonSegmentedControl layout="fill">
                 <UiIconButton icon="chevronLeft" size="medium" variant="secondary" />
                 <UiIconButton icon="ai" size="medium" variant="secondary" />
                 <UiIconButton icon="chevronRight" size="medium" variant="secondary" />

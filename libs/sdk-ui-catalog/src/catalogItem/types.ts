@@ -55,6 +55,7 @@ export interface ICatalogItem extends ICatalogItemRef {
     isLocked: boolean;
     isEditable: boolean;
     isHidden?: boolean;
+    isHiddenFromKda?: boolean;
     visualizationType?: VisualizationType;
     dataSet?: IDataSetMetadataObject;
     format?: string | null;

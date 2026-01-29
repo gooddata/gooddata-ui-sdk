@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -6,7 +6,7 @@ import { useIntl } from "react-intl";
 
 import { DefaultColorPalette, useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
-import { useGeoChartNextProps } from "../../context/GeoChartNextContext.js";
+import { useGeoChartProps } from "../../context/GeoChartContext.js";
 import { useGeoLayers } from "../../context/GeoLayersContext.js";
 import type { IGeoAdapterContext } from "../../layers/registry/adapterTypes.js";
 
@@ -16,7 +16,7 @@ import type { IGeoAdapterContext } from "../../layers/registry/adapterTypes.js";
  * @internal
  */
 export function useGeoAdapterContext(): IGeoAdapterContext {
-    const props = useGeoChartNextProps();
+    const props = useGeoChartProps();
     const { colorPalette: contextColorPalette } = useGeoLayers();
     const intl = useIntl();
     const backend = useBackendStrict(props.backend, "useGeoAdapterContext");

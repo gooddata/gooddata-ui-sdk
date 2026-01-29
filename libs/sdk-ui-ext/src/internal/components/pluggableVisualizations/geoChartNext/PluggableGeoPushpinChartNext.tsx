@@ -24,14 +24,16 @@ import {
 } from "@gooddata/sdk-model";
 import { BucketNames, GeoLocationMissingSdkError, VisualizationTypes } from "@gooddata/sdk-ui";
 import {
-    GeoChartNextInternal,
+    type IGeoChartConfig,
     type IGeoLayer,
-    type IGeoPushpinChartNextConfig,
-    buildLayerExecution,
     createPushpinLayer,
-    insightLayersToGeoLayers,
     isGeoLayerPushpin,
-} from "@gooddata/sdk-ui-geo/next";
+} from "@gooddata/sdk-ui-geo";
+import {
+    GeoChartInternal,
+    buildLayerExecution,
+    insightLayersToGeoLayers,
+} from "@gooddata/sdk-ui-geo/internal";
 
 import {
     createAttributeRef,
@@ -69,7 +71,7 @@ import { setGeoPushpinUiConfig } from "../../../utils/uiConfigHelpers/geoPushpin
 import { GeoPushpinConfigurationPanel } from "../../configurationPanels/GeoPushpinConfigurationPanel.js";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
 
-type GeoChartNextExecutionProps = Parameters<typeof GeoChartNextInternal>[0];
+type GeoChartNextExecutionProps = Parameters<typeof GeoChartInternal>[0];
 
 /**
  * Geo pushpin charts support max 2 measures: one for size and one for color
@@ -335,7 +337,7 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
     protected override buildVisualizationConfig(
         options: IVisProps,
         supportedControls: IVisualizationProperties,
-    ): IGeoPushpinChartNextConfig {
+    ): IGeoChartConfig {
         const { colorMapping } = super.buildVisualizationConfig(options, supportedControls);
 
         return buildGeoVisualizationConfig({
@@ -379,13 +381,13 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
             onDrill: this.onDrill,
         };
 
-        this.renderFun(<GeoChartNextInternal {...geoChartProps} />, this.getElement());
+        this.renderFun(<GeoChartInternal {...geoChartProps} />, this.getElement());
     }
 
     private buildPrimaryLayerContext(
         options: IVisProps,
         insight: IInsightDefinition,
-    ): { primaryLayer: IGeoLayer; config: IGeoPushpinChartNextConfig; filters: IFilter[] } | undefined {
+    ): { primaryLayer: IGeoLayer; config: IGeoChartConfig; filters: IFilter[] } | undefined {
         const supportedControls = this.visualizationProperties.controls || {};
         const fullConfig = this.buildVisualizationConfig(options, supportedControls);
         const controlsWithFallback: Record<string, unknown> = {
@@ -448,7 +450,7 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
     private buildAdditionalLayerExecutions(
         layers: IGeoLayer[],
         options: IVisProps,
-        config: IGeoPushpinChartNextConfig,
+        config: IGeoChartConfig,
         globalFilters: IFilter[],
         routedByLayerId: Map<string, IFilter[]>,
         executionFactory: IExecutionFactory,

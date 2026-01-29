@@ -5,19 +5,19 @@ import { type ISeparators } from "@gooddata/sdk-ui";
 import { type IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 
 import { type IGeoAreasConfig } from "./areas.js";
-import { type IGeoLegendConfigNext } from "./legend.js";
-import { type IGeoPointsConfigNext } from "./points.js";
-import { type IGeoConfigViewportNext } from "./viewport.js";
+import { type IGeoChartLegendConfig } from "./legend.js";
+import { type IGeoChartPointsConfig } from "./points.js";
+import { type IGeoChartViewport } from "./viewport.js";
+import type { IGeoLngLat } from "../../../publicTypes/geoCommon.js";
 import type { StyleSpecification } from "../../layers/common/mapFacade.js";
-import { type IGeoLngLat } from "../common/coordinates.js";
 import type { GeoTileset } from "../map/tileset.js";
 
 /**
- * Unified configuration shared by {@link GeoChartNext} and its wrappers.
+ * Unified configuration shared by {@link GeoChart} and its wrappers.
  *
- * @alpha
+ * @public
  */
-export interface IGeoChartNextConfig {
+export interface IGeoChartConfig {
     /**
      * Initial map center. Defaults to auto-centering based on data.
      */
@@ -36,7 +36,7 @@ export interface IGeoChartNextConfig {
     /**
      * Legend configuration.
      */
-    legend?: IGeoLegendConfigNext;
+    legend?: IGeoChartLegendConfig;
 
     /**
      * Maximum number of rendered data points.
@@ -55,6 +55,8 @@ export interface IGeoChartNextConfig {
 
     /**
      * Selected basemap tileset.
+     *
+     * @alpha
      */
     tileset?: GeoTileset;
 
@@ -71,12 +73,12 @@ export interface IGeoChartNextConfig {
     /**
      * Viewport preset or explicit bounds.
      */
-    viewport?: IGeoConfigViewportNext;
+    viewport?: IGeoChartViewport;
 
     /**
      * Pushpin-specific options (size range, clustering, ...).
      */
-    points?: IGeoPointsConfigNext;
+    points?: IGeoChartPointsConfig;
 
     /**
      * Area-specific options (opacity, border styling, ...).

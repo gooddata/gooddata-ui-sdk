@@ -1,25 +1,24 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IExecutionConfig, type ITheme } from "@gooddata/sdk-model";
 import {
-    type IExecutionConfig,
-    type INullableFilter,
-    type ISortItem,
-    type ITheme,
-} from "@gooddata/sdk-model";
-import { type IVisualizationCallbacks, type IVisualizationProps } from "@gooddata/sdk-ui";
+    type IVisualizationCallbacks,
+    type IVisualizationProps,
+    type NullableFiltersOrPlaceholders,
+    type SortsOrPlaceholders,
+} from "@gooddata/sdk-ui";
 
-import { type CenterPositionChangedCallback, type ZoomChangedCallback } from "../common/callbacks.js";
+import {
+    type CenterPositionChangedCallback,
+    type ZoomChangedCallback,
+} from "../../../publicTypes/geoCommon.js";
 import { type IGeoLayer } from "../layers/index.js";
 
 /**
- * Common execution/host wiring props shared by all GeoChartNext-family components.
+ * Common execution/host wiring props shared by all GeoChart-family components.
  *
- * @remarks
- * This type is intended for internal composition of public props interfaces and is **not** exported
- * from `@gooddata/sdk-ui-geo/next` entrypoint.
- *
- * @alpha
+ * @public
  */
 export interface IGeoCommonExecutionProps extends IVisualizationProps, IVisualizationCallbacks {
     /**
@@ -44,7 +43,15 @@ export interface IGeoCommonExecutionProps extends IVisualizationProps, IVisualiz
      *   date dataset, measure value filters for the same measure). Other filter types may accumulate
      *   according to SDK merge semantics.
      */
-    filters?: INullableFilter[];
+    filters?: NullableFiltersOrPlaceholders;
+
+    /**
+     * Resolution context for composed placeholders.
+     *
+     * @remarks
+     * Required only when using composed placeholders.
+     */
+    placeholdersResolutionContext?: object;
 
     /**
      * Theme override. Defaults to the nearest ThemeProvider.
@@ -70,13 +77,13 @@ export interface IGeoCommonExecutionProps extends IVisualizationProps, IVisualiz
 /**
  * Shared props for wrappers that internally construct a primary layer and allow extra layers.
  *
- * @alpha
+ * @public
  */
 export interface IGeoSingleLayerWrapperProps extends IGeoCommonExecutionProps {
     /**
      * Sorting applied to the **primary layer** execution definition.
      */
-    sortBy?: ISortItem[];
+    sortBy?: SortsOrPlaceholders;
 
     /**
      * Layers rendered after the primary layer (e.g., overlays).

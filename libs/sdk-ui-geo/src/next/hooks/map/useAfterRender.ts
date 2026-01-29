@@ -1,9 +1,9 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useEffect, useRef } from "react";
 
 import type { IMapFacade } from "../../layers/common/mapFacade.js";
-import type { ILayerExecutionRecord } from "../../types/props/geoChartNext/internal.js";
+import type { ILayerExecutionRecord } from "../../types/props/geoChart/internal.js";
 
 /**
  * Check if map is fully idle (loaded and tiles ready)

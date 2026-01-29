@@ -15,7 +15,7 @@ import { getLayerAdapter } from "../../layers/registry/adapterRegistry.js";
 import type { IGeoAdapterContext } from "../../layers/registry/adapterTypes.js";
 import { buildOutputFromLayerData } from "../../layers/registry/output.js";
 import { createSegmentFilter } from "../../map/style/sharedLayers.js";
-import { type ILayerExecutionRecord } from "../../types/props/geoChartNext/internal.js";
+import { type ILayerExecutionRecord } from "../../types/props/geoChart/internal.js";
 
 interface IUseLayerSyncParams {
     /**

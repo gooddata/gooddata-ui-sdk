@@ -55,7 +55,7 @@ export interface IComputeAreaLegendParams {
  * @param params - Parameters for computation
  * @returns Legend section for the area layer, or null if no legend data
  *
- * @alpha
+ * @internal
  */
 export function computeAreaLegend(params: IComputeAreaLegendParams): ILegendSection | null {
     const {

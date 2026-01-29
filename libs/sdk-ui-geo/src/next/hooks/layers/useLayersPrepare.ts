@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -18,8 +18,8 @@ import type { IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 
 import { getLayerAdapter } from "../../layers/registry/adapterRegistry.js";
 import type { IGeoAdapterContext, IGeoLayerOutput } from "../../layers/registry/adapterTypes.js";
-import type { IGeoChartNextConfig } from "../../types/config/unified.js";
-import type { ILayerExecutionRecord } from "../../types/props/geoChartNext/internal.js";
+import type { IGeoChartConfig } from "../../types/config/unified.js";
+import type { ILayerExecutionRecord } from "../../types/props/geoChart/internal.js";
 import { createDataViewsFingerprint, createLayersStructureFingerprint } from "../../utils/fingerprint.js";
 
 /**
@@ -80,7 +80,7 @@ export interface ILayersPrepareResult {
 export interface ILayersPrepareContext {
     backend: IAnalyticalBackend;
     workspace: string;
-    config?: IGeoChartNextConfig;
+    config?: IGeoChartConfig;
     execConfig?: IExecutionConfig;
     colorPalette?: IColorPalette;
     colorMapping?: IColorMapping[];

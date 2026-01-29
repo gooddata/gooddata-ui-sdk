@@ -5,7 +5,6 @@ import { browserEnv } from "./configurations/browser-env.js";
 import { chaiFriendly } from "./configurations/chai-friendly.js";
 import { cypress } from "./configurations/cypress.js";
 import { env } from "./configurations/env.js";
-import { eslintComments } from "./configurations/eslint-comments.js";
 import { eslint } from "./configurations/eslint.js";
 import { esm } from "./configurations/esm.js";
 import { header } from "./configurations/header.js";
@@ -38,7 +37,6 @@ export const common = [
     regexp,
     sonarjs,
     tsdoc,
-    eslintComments,
     security,
     ignore,
 ];

@@ -237,6 +237,14 @@ export interface ISettings {
     enableMultipleMvfConditions?: boolean;
 
     /**
+     * Enable ranking filter to be used together with measure value filters (MVF).
+     *
+     * @remarks
+     * Defaults to false when not provided by the backend.
+     */
+    enableRankingWithMvf?: boolean;
+
+    /**
      * Enables rich text widgets on dashboards.
      */
     enableKDRichText?: boolean;

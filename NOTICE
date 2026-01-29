@@ -9,7 +9,7 @@ The following 3rd-party software packages may be used by or distributed with goo
 
 Date generated: 2026-1-28
 
-Revision ID: a61bddeb034dc2a7a6ebf9a9d3ced8af99cc690f
+Revision ID: da5a4d893353305dc07f87f44ff1818b565ec48d
 
 ================================================================================
 ================================================================================
@@ -339,7 +339,7 @@ Revision ID: a61bddeb034dc2a7a6ebf9a9d3ced8af99cc690f
 - bail (2.0.2) [MIT]
 - balanced-match (1.0.2) [MIT]
 - base64-js (1.5.1) [MIT]
-- baseline-browser-mapping (2.8.32) [Apache-2.0]
+- baseline-browser-mapping (2.9.19) [Apache-2.0]
 - batch (0.6.1) [MIT]
 - binary-extensions (2.3.0) [MIT]
 - bl (4.1.0) [MIT]
@@ -709,6 +709,7 @@ Revision ID: a61bddeb034dc2a7a6ebf9a9d3ced8af99cc690f
 - mimic-fn (2.1.0) [MIT]
 - minimalistic-assert (1.0.1) [ISC]
 - minimatch (10.0.3) [MIT]
+- minimatch (10.1.1) [MIT]
 - minimatch (3.1.2) [MIT]
 - minimist (1.2.8) [MIT]
 - minipass (3.3.6) [ISC]
@@ -4817,9 +4818,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: baseline-browser-mapping (2.8.32)
+Package Title: baseline-browser-mapping (2.9.19)
 
-Package Locator: npm+baseline-browser-mapping$2.8.32
+Package Locator: npm+baseline-browser-mapping$2.9.19
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -9268,6 +9269,18 @@ ISC
 Package Title: minimatch (10.0.3)
 
 Package Locator: npm+minimatch$10.0.3
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+--------------------------------------------------------------------------------
+Package Title: minimatch (10.1.1)
+
+Package Locator: npm+minimatch$10.1.1
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------

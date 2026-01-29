@@ -5,7 +5,7 @@ import { type ReactElement } from "react";
 import { type IColorPalette } from "@gooddata/sdk-model";
 import { type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
-import { useGeoChartNextProps } from "../context/GeoChartNextContext.js";
+import { useGeoChartProps } from "../context/GeoChartContext.js";
 import { useGeoPushData } from "../hooks/pushData/useGeoPushData.js";
 import { type IAvailableLegends } from "../types/common/legends.js";
 import { type GeoLayerType } from "../types/layers/index.js";
@@ -24,7 +24,7 @@ export function PushDataSync({
     geoLayerType,
 }: PushDataSyncProps): ReactElement | null {
     useGeoPushData(colorStrategy, colorPalette, {
-        useProps: useGeoChartNextProps,
+        useProps: useGeoChartProps,
         useLegendContext: () => ({
             availableLegends: availableLegends ?? {
                 hasCategoryLegend: false,

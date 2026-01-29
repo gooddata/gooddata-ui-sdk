@@ -1,6 +1,6 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { useCallback, useState } from "react";
+import { type ChangeEvent, useCallback, useState } from "react";
 
 import { isEmpty, isEqual, xorWith } from "lodash-es";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -24,7 +24,12 @@ import {
 } from "./types.js";
 import { ValueDropdown } from "./ValueDropdown/ValueDropdown.js";
 
-const isApplyButtonDisabled = (filter: IRankingFilter, filterState: IRankingFilter) => {
+const isApplyButtonDisabled = (
+    filter: IRankingFilter,
+    filterState: IRankingFilter,
+    enableRankingWithMvf: boolean,
+    applyOnResult: boolean,
+) => {
     const rankingFilter = filter.rankingFilter;
     const rankingFilterState = filterState.rankingFilter;
 
@@ -35,7 +40,17 @@ const isApplyButtonDisabled = (filter: IRankingFilter, filterState: IRankingFilt
     );
     const measureNotChanged = isEqual(rankingFilter.measure, rankingFilterState.measure);
 
-    return operatorNotChanged && valueNotChanged && attributesNotChanged && measureNotChanged;
+    // When flag is enabled, also check if applyOnResult changed
+    const applyOnResultNotChanged =
+        !enableRankingWithMvf || (rankingFilter.applyOnResult ?? true) === applyOnResult;
+
+    return (
+        operatorNotChanged &&
+        valueNotChanged &&
+        attributesNotChanged &&
+        measureNotChanged &&
+        applyOnResultNotChanged
+    );
 };
 
 interface IRankingFilterDropdownBodyComponentProps {
@@ -47,6 +62,7 @@ interface IRankingFilterDropdownBodyComponentProps {
     onDropDownItemMouseOver?: (ref: ObjRefInScope) => void;
     onDropDownItemMouseOut?: () => void;
     customGranularitySelection?: ICustomGranularitySelection;
+    enableRankingWithMvf?: boolean;
 }
 
 export function RankingFilterDropdownBody({
@@ -58,6 +74,7 @@ export function RankingFilterDropdownBody({
     onDropDownItemMouseOver,
     onDropDownItemMouseOut,
     customGranularitySelection,
+    enableRankingWithMvf = false,
 }: IRankingFilterDropdownBodyComponentProps) {
     const intl = useIntl();
 
@@ -66,20 +83,40 @@ export function RankingFilterDropdownBody({
     const [operator, setOperator] = useState(rankingFilter.operator);
     const [measure, setMeasureIdentifier] = useState(rankingFilter.measure);
     const [attribute, setAttributeIdentifier] = useState(rankingFilter.attributes?.[0]);
+    const [applyOnResult, setApplyOnResult] = useState(rankingFilter.applyOnResult ?? true);
 
     const selectedMeasure = measureItems.find((item) => areObjRefsEqual(item.ref, measure));
     const selectedAttribute = attributeItems.find((item) => areObjRefsEqual(item.ref, attribute));
 
-    const getFilterState = useCallback(() => {
-        return attribute
+    const getFilterState = useCallback((): IRankingFilter => {
+        const baseFilter = attribute
             ? newRankingFilter(measure, [attribute], operator, value)
             : newRankingFilter(measure, operator, value);
-    }, [measure, attribute, operator, value]);
+
+        // Add applyOnResult only when flag is enabled
+        if (enableRankingWithMvf) {
+            return {
+                rankingFilter: {
+                    ...baseFilter.rankingFilter,
+                    applyOnResult,
+                },
+            };
+        }
+
+        return baseFilter;
+    }, [measure, attribute, operator, value, enableRankingWithMvf, applyOnResult]);
 
     const applyHandler = () => {
         const filterState = getFilterState();
         onApply(filterState);
     };
+
+    const handleApplyOnResultChange = useCallback(
+        (event: ChangeEvent<HTMLInputElement>) => {
+            setApplyOnResult(event.target.checked);
+        },
+        [setApplyOnResult],
+    );
 
     return (
         <div className="gd-dialog gd-dropdown overlay gd-rf-dropdown-body s-rf-dropdown-body">
@@ -121,6 +158,27 @@ export function RankingFilterDropdownBody({
                     onDropDownItemMouseOver={onDropDownItemMouseOver}
                     onDropDownItemMouseOut={onDropDownItemMouseOut}
                 />
+                {enableRankingWithMvf ? (
+                    <div className="gd-rf-apply-on-result">
+                        <label
+                            className="input-checkbox-label gd-rf-apply-on-result-checkbox"
+                            data-testid="rf-apply-on-result"
+                        >
+                            <input
+                                type="checkbox"
+                                name="apply-on-result"
+                                className="input-checkbox"
+                                checked={applyOnResult}
+                                onChange={handleApplyOnResultChange}
+                            />
+                            <span className="input-label-text">
+                                {intl.formatMessage({
+                                    id: "rankingFilter.applyOnResultLabel",
+                                })}
+                            </span>
+                        </label>
+                    </div>
+                ) : null}
                 <div className="gd-rf-dropdown-section-title">
                     <FormattedMessage id="rankingFilter.preview" />
                 </div>
@@ -141,7 +199,12 @@ export function RankingFilterDropdownBody({
                     className="gd-button-action gd-button-small s-rf-dropdown-apply"
                     onClick={applyHandler}
                     value={intl.formatMessage({ id: "apply" })}
-                    disabled={isApplyButtonDisabled(filter, getFilterState())}
+                    disabled={isApplyButtonDisabled(
+                        filter,
+                        getFilterState(),
+                        enableRankingWithMvf,
+                        applyOnResult,
+                    )}
                 />
             </div>
         </div>

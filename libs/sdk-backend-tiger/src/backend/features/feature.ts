@@ -165,6 +165,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableRankingWithMvf,
+            "enableRankingWithMvf",
+            "BOOLEAN",
+            FeatureFlagsValues.enableRankingWithMvf,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableKDRichText,
             "enableKDRichText",
             "BOOLEAN",

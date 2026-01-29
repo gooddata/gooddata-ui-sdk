@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import type {
     CircleLayerSpecification as MapLibreCircleLayerSpecification,
@@ -20,6 +20,12 @@ import type {
 
 export type Map = MapLibreMap;
 export type Popup = MapLibrePopup;
+
+/**
+ * MapLibre style specification.
+ *
+ * @public
+ */
 export type StyleSpecification = MapLibreStyleSpecification;
 export type GeoJSONSourceSpecification = MapLibreGeoJSONSourceSpecification;
 export type FilterSpecification = MapLibreFilterSpecification;
@@ -61,7 +67,7 @@ type LoadedResult = ReturnType<MapLibreMap["loaded"]>;
 type TilesLoadedResult = ReturnType<MapLibreMap["areTilesLoaded"]>;
 
 /**
- * Minimal subset of MapLibre map APIs used across Geo Next logic and tests.
+ * Minimal subset of MapLibre map APIs used across Geo logic and tests.
  *
  * @internal
  */
@@ -115,7 +121,7 @@ export interface IPopupFacade {
 }
 
 /**
- * Wraps a MapLibre map into a lightweight facade with the subset of APIs used by Geo Next logic.
+ * Wraps a MapLibre map into a lightweight facade with the subset of APIs used by Geo logic.
  *
  * @param map - MapLibre map instance
  * @returns Facade object delegating calls to the underlying map

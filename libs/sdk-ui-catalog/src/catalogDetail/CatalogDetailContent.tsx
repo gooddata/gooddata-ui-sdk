@@ -111,6 +111,7 @@ export function CatalogDetailContent({
         updateItemDescription,
         updateItemTags,
         updateItemIsHidden,
+        updateItemIsHiddenFromKda,
         updateItemMetricType,
         updateItemFormat,
     } = useCatalogItemUpdate({
@@ -219,6 +220,9 @@ export function CatalogDetailContent({
                                 }}
                                 onIsHiddenChange={(isHidden) => {
                                     updateItemIsHidden(isHidden);
+                                }}
+                                onIsHiddenFromKdaChange={(isHiddenFromKda) => {
+                                    updateItemIsHiddenFromKda(isHiddenFromKda);
                                 }}
                                 onMetricTypeChange={(metricType) => {
                                     updateItemMetricType(metricType);

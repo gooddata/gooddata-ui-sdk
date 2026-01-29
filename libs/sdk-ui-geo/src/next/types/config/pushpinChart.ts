@@ -1,28 +1,49 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type IColorPalette } from "@gooddata/sdk-model";
+import { type IAttribute, type IColorPalette } from "@gooddata/sdk-model";
 import { type ISeparators } from "@gooddata/sdk-ui";
 import { type IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 
-import { type IGeoLegendConfigNext } from "./legend.js";
-import { type IGeoPointsConfigNext } from "./points.js";
-import { type IGeoConfigViewportNext } from "./viewport.js";
+import { type IGeoChartLegendConfig } from "./legend.js";
+import { type IGeoChartPointsConfig } from "./points.js";
+import { type IGeoChartViewport } from "./viewport.js";
+import type { IGeoLngLat } from "../../../publicTypes/geoCommon.js";
 import type { StyleSpecification } from "../../layers/common/mapFacade.js";
-import { type IGeoLngLat } from "../common/coordinates.js";
 import type { GeoTileset } from "../map/tileset.js";
 
 /**
- * Configuration for GeoPushpinChartNext component
+ * Configuration for MapLibre-based pushpin rendering.
  *
- * @alpha
+ * @remarks
+ * This config type is used by the MapLibre-based geo engine when rendering pushpin layers.
+ *
+ * @public
  */
-export interface IGeoPushpinChartNextConfig {
+export interface IGeoPushpinChartConfig {
     center?: IGeoLngLat;
     isExportMode?: boolean;
-    legend?: IGeoLegendConfigNext;
+    legend?: IGeoChartLegendConfig;
     limit?: number;
     selectedSegmentItems?: string[];
+    /**
+     * Location tooltip label attribute.
+     *
+     * @remarks
+     * Kept for backward compatibility with the legacy GeoPushpinChart API where this lived under `config`.
+     * Prefer `tooltipText` on pushpin layers when using {@link GeoChart}.
+     */
+    tooltipText?: IAttribute;
     zoom?: number; // in the 0-22 zoom range
+    /**
+     * Mapbox access token.
+     *
+     * @remarks
+     * Kept only for backward compatibility with the legacy Mapbox-based implementation.
+     * MapLibre-based geo charts ignore this value.
+     *
+     * @deprecated Kept only for backward compatibility. Not used by MapLibre-based geo charts.
+     */
+    mapboxToken?: string;
     /**
      * Custom MapLibre style URL or inline specification.
      */
@@ -30,6 +51,8 @@ export interface IGeoPushpinChartNextConfig {
 
     /**
      * Selected basemap tileset.
+     *
+     * @alpha
      */
     tileset?: GeoTileset;
     /**
@@ -37,8 +60,8 @@ export interface IGeoPushpinChartNextConfig {
      */
     maxZoomLevel?: number | null;
     separators?: ISeparators;
-    viewport?: IGeoConfigViewportNext;
-    points?: IGeoPointsConfigNext;
+    viewport?: IGeoChartViewport;
+    points?: IGeoChartPointsConfig;
     colors?: string[];
     colorPalette?: IColorPalette;
     colorMapping?: IColorMapping[];
@@ -46,4 +69,11 @@ export interface IGeoPushpinChartNextConfig {
     cooperativeGestures?: boolean;
     enableExecutionCancelling?: boolean;
     respectLegendPosition?: boolean;
+    /**
+     * Enables positioning of drill menu at the cursor click point (instead of default positioning).
+     *
+     * @remarks
+     * Feature flag. Default: false.
+     */
+    enableDrillMenuPositioningAtCursor?: boolean;
 }

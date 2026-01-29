@@ -109,6 +109,8 @@ export interface ICatalogItem extends ICatalogItemRef {
     // (undocumented)
     isHidden?: boolean;
     // (undocumented)
+    isHiddenFromKda?: boolean;
+    // (undocumented)
     isLocked: boolean;
     // (undocumented)
     metricType?: MetricType;
