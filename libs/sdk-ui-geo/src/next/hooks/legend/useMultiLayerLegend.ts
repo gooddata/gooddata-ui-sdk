@@ -5,13 +5,13 @@ import { useMemo } from "react";
 import type { IGeoLayerData } from "../../context/GeoLayersContext.js";
 import { useGeoLegend } from "../../context/GeoLegendContext.js";
 import { type ILegendModel } from "../../types/legend/model.js";
-import type { ILayerExecutionRecord } from "../../types/props/geoChartNext/internal.js";
+import type { ILayerExecutionRecord } from "../../types/props/geoChart/internal.js";
 import { aggregateLegend } from "../../utils/legend/aggregateLegend.js";
 
 /**
  * Options for the multi-layer legend hook.
  *
- * @alpha
+ * @internal
  */
 export interface IUseMultiLayerLegendOptions {
     /**
@@ -38,7 +38,7 @@ export interface IUseMultiLayerLegendOptions {
  * @param options - Optional configuration including title
  * @returns Multi-layer legend model
  *
- * @alpha
+ * @internal
  */
 export function useMultiLayerLegend(
     layerExecutions: ILayerExecutionRecord[],

@@ -12,7 +12,7 @@ import {
     insightHasMeasures,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
-import type { GeoTileset } from "@gooddata/sdk-ui-geo/next";
+import type { GeoTileset } from "@gooddata/sdk-ui-geo";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
 import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";

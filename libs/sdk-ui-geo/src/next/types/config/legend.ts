@@ -1,11 +1,11 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 /**
- * Legend configuration shared by GeoChartNext components.
+ * Legend configuration shared by GeoChart components.
  *
- * @alpha
+ * @public
  */
-export interface IGeoLegendConfigNext {
+export interface IGeoChartLegendConfig {
     /**
      * Enables legend rendering.
      *

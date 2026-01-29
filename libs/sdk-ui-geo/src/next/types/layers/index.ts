@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     type IAttribute,
@@ -8,14 +8,14 @@ import {
 } from "@gooddata/sdk-model";
 
 /**
- * Layer types supported by GeoChartNext.
+ * Layer types supported by GeoChart.
  *
  * @remarks
- * GeoChartNext supports two types of geographic layers:
+ * GeoChart supports two types of geographic layers:
  * - `"pushpin"` - Point data visualization using markers/pins
  * - `"area"` - Region visualization using filled polygons (choropleth maps)
  *
- * @alpha
+ * @public
  */
 export type GeoLayerType = "pushpin" | "area";
 
@@ -27,7 +27,7 @@ export type GeoLayerType = "pushpin" | "area";
  * Each layer operates independently with its own data execution, allowing
  * different data sources, filters, and configurations per layer.
  *
- * @alpha
+ * @public
  */
 export interface IGeoLayerBase {
     /**
@@ -35,7 +35,7 @@ export interface IGeoLayerBase {
      *
      * @remarks
      * Used internally to track layer state and for debugging purposes.
-     * Each layer in a GeoChartNext must have a unique id.
+     * Each layer in a GeoChart must have a unique id.
      */
     id: string;
 
@@ -89,7 +89,7 @@ export interface IGeoLayerBase {
      * @remarks
      * Array of filters applied only to this layer's data execution.
      *
-     * These filters are applied **before** any global/component-level filters (e.g. `GeoChartNext.filters`).
+     * These filters are applied **before** any global/component-level filters (e.g. `GeoChart.filters`).
      * When both layer and global filters are provided, the global filters are applied *after* the layer
      * filters and therefore take precedence for filter types with “last wins” merge rules (for example
      * date filters for the same date dataset or measure value filters for the same measure). Other filter
@@ -129,7 +129,7 @@ export interface IGeoLayerBase {
  * - **Color coding**: Use the `color` property for measure-based gradients or attribute-based categories
  * - **Segmentation**: Use `segmentBy` to group markers by category with distinct colors
  * - **Clustering**: Configure point clustering in the chart config for better performance with many points
- * @alpha
+ * @public
  */
 export interface IGeoLayerPushpin extends IGeoLayerBase {
     type: "pushpin";
@@ -186,7 +186,7 @@ export interface IGeoLayerPushpin extends IGeoLayerBase {
  * - **Color-coded regions**: Use the `color` property for data-driven fill colors
  * - **Segmentation**: Use `segmentBy` to categorize regions
  * - **Opacity control**: Configure fill opacity via chart config
- * @alpha
+ * @public
  */
 export interface IGeoLayerArea extends IGeoLayerBase {
     type: "area";
@@ -212,7 +212,7 @@ export interface IGeoLayerArea extends IGeoLayerBase {
  * Use this type when working with layers that could be either pushpin or area type.
  * Use the {@link isGeoLayerPushpin} and {@link isGeoLayerArea} type guards to
  * narrow the type in conditional logic.
- * @alpha
+ * @public
  */
 export type IGeoLayer = IGeoLayerPushpin | IGeoLayerArea;
 
@@ -226,7 +226,7 @@ export type IGeoLayer = IGeoLayerPushpin | IGeoLayerArea;
  *
  * @param layer - The layer to check
  * @returns true if the layer is a pushpin layer, false otherwise
- * @alpha
+ * @public
  */
 export function isGeoLayerPushpin(layer: IGeoLayer): layer is IGeoLayerPushpin {
     return layer.type === "pushpin";
@@ -241,7 +241,7 @@ export function isGeoLayerPushpin(layer: IGeoLayer): layer is IGeoLayerPushpin {
  *
  * @param layer - The layer to check
  * @returns true if the layer is an area layer, false otherwise
- * @alpha
+ * @public
  */
 export function isGeoLayerArea(layer: IGeoLayer): layer is IGeoLayerArea {
     return layer.type === "area";

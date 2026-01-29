@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type IGeoCommonData, type IGeoDataItem, type IGeoMeasureItem } from "./common.js";
 import { type IGeoLngLat } from "../common/coordinates.js";
@@ -6,7 +6,7 @@ import { type IGeoLngLat } from "../common/coordinates.js";
 /**
  * Represents a location item with coordinate data
  *
- * @alpha
+ * @internal
  */
 export interface IPushpinLocationItem extends IGeoDataItem {
     /**
@@ -21,7 +21,7 @@ export interface IPushpinLocationItem extends IGeoDataItem {
  * @remarks
  * Defines both border and background colors for map pushpins
  *
- * @alpha
+ * @internal
  */
 export interface IPushpinColor {
     /**
@@ -41,7 +41,7 @@ export interface IPushpinColor {
  * Contains all data needed to render the geo pushpin chart including
  * locations, sizes, colors, segments, and tooltip text
  *
- * @alpha
+ * @internal
  */
 export interface IPushpinGeoData extends IGeoCommonData {
     /**

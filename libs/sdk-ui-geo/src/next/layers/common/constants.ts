@@ -26,10 +26,10 @@ export const COORDINATE_FORM_TYPES: AttributeDisplayFormType[] = [
 ];
 
 /**
- * Local identifier used for the derived tooltip-text attribute in GeoChartNext executions.
+ * Local identifier used for the derived tooltip-text attribute in GeoChart executions.
  *
  * @remarks
- * GeoChartNext may inject a TOOLTIP_TEXT bucket (see `prepareExecutionWithTooltipText`) and uses
+ * GeoChart may inject a TOOLTIP_TEXT bucket (see `prepareExecutionWithTooltipText`) and uses
  * this localId to recognize the derived attribute across drill/tooltip handling.
  *
  * @internal

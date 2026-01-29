@@ -1,50 +1,73 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-import { type IAttribute, type IAttributeOrMeasure } from "@gooddata/sdk-model";
+import { type AttributeMeasureOrPlaceholder, type AttributeOrPlaceholder } from "@gooddata/sdk-ui";
 
-import { type IGeoPushpinChartNextConfig } from "../../config/pushpinChart.js";
+import { type IGeoPushpinChartConfig } from "../../config/pushpinChart.js";
 import { type IGeoSingleLayerWrapperProps } from "../shared.js";
 
 /**
- * Shared props for {@link GeoPushpinChartNext} before latitude/longitude are applied.
+ * Shared props for {@link GeoPushpinChart} before the location is specified.
  *
- * @alpha
+ * @public
  */
-export interface IGeoPushpinChartNextBaseProps extends IGeoSingleLayerWrapperProps {
+export interface IGeoPushpinChartBaseProps extends IGeoSingleLayerWrapperProps {
     /**
      * Optional segment attribute that drives category legend items.
      */
-    segmentBy?: IAttribute;
+    segmentBy?: AttributeOrPlaceholder;
 
     /**
      * Measure or attribute used for size encoding.
      */
-    size?: IAttributeOrMeasure;
+    size?: AttributeMeasureOrPlaceholder;
 
     /**
      * Measure or attribute used for color encoding.
      */
-    color?: IAttributeOrMeasure;
+    color?: AttributeMeasureOrPlaceholder;
 
     /**
      * Configuration specific to pushpin layers.
      */
-    config?: IGeoPushpinChartNextConfig;
+    config?: IGeoPushpinChartConfig;
 }
 
 /**
- * Props for {@link GeoPushpinChartNext}. Latitude and longitude are required.
+ * Props for {@link GeoPushpinChart} in the latitude/longitude mode.
  *
- * @alpha
+ * @public
  */
-export interface IGeoPushpinChartNextProps extends IGeoPushpinChartNextBaseProps {
+export interface IGeoPushpinChartLatitudeLongitudeProps extends IGeoPushpinChartBaseProps {
     /**
-     * Attribute containing latitude values in decimal degrees.
+     * The attribute definition or placeholder that determines the latitude of the pins.
      */
-    latitude: IAttribute;
+    latitude: AttributeOrPlaceholder;
 
     /**
-     * Attribute containing longitude values in decimal degrees.
+     * The attribute definition or placeholder that determines the longitude of the pins.
      */
-    longitude: IAttribute;
+    longitude: AttributeOrPlaceholder;
 }
+
+/**
+ * Props for {@link GeoPushpinChart} in the (legacy) single-attribute mode.
+ *
+ * @remarks
+ * The `location` prop is not supported on Tiger and will fail at runtime, but is kept for backward-compatible typing.
+ *
+ * @public
+ */
+export interface IGeoPushpinChartLocationProps extends IGeoPushpinChartBaseProps {
+    /**
+     * The attribute definition or placeholder that determines the longitude and latitude of the pins.
+     * Values expected in format lat;long.
+     */
+    location: AttributeOrPlaceholder;
+}
+
+/**
+ * Props for {@link GeoPushpinChart}.
+ *
+ * @public
+ */
+export type IGeoPushpinChartProps = IGeoPushpinChartLocationProps | IGeoPushpinChartLatitudeLongitudeProps;

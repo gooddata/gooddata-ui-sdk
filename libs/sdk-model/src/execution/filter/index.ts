@@ -303,6 +303,15 @@ export type MeasureValueFilterCondition = IComparisonCondition | IRangeCondition
 export interface IMeasureValueFilterBody extends IIdentifiableFilter {
     measure: ObjRefInScope;
     dimensionality?: ObjRefInScope[];
+    /**
+     * Indicates whether this filter should be applied on result.
+     *
+     * @remarks
+     * When undefined, backend defaults are used.
+     *
+     * @public
+     */
+    applyOnResult?: boolean;
     condition?: MeasureValueFilterCondition;
     /**
      * Optional list of conditions for measure value filtering. When provided, it represents multiple conditions
@@ -336,6 +345,7 @@ export interface IRankingFilterBody extends IIdentifiableFilter {
     attributes?: ObjRefInScope[];
     operator: RankingFilterOperator;
     value: number;
+    applyOnResult?: boolean;
 }
 
 /**

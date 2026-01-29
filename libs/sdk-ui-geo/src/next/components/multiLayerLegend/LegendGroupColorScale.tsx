@@ -11,7 +11,7 @@ import {
 /**
  * Props for LegendGroupColorScale component.
  *
- * @alpha
+ * @internal
  */
 export interface ILegendGroupColorScaleProps {
     /**
@@ -54,7 +54,7 @@ function ColorScaleItem({ item }: { item: ILegendColorScaleItem }): ReactElement
  * Used for measure-based coloring in area layers where values
  * are mapped to a color spectrum.
  *
- * @alpha
+ * @internal
  */
 export const LegendGroupColorScale = memo(function LegendGroupColorScale({
     group,

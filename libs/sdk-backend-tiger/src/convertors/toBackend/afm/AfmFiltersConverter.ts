@@ -100,9 +100,17 @@ export function convertAfmFilters(
                 computeRatioMeasureNumerators,
                 filter.rankingFilter.measure,
             );
-            const { attributes, operator, value } = filter.rankingFilter;
+            const { attributes, operator, value, applyOnResult: filterApplyOnResult } = filter.rankingFilter;
+            const applyOnResultProp =
+                filterApplyOnResult === undefined ? {} : { applyOnResult: filterApplyOnResult };
             const transformedFilter = {
-                rankingFilter: { measure: filteredMeasure, attributes, operator, value },
+                rankingFilter: {
+                    measure: filteredMeasure,
+                    attributes,
+                    operator,
+                    value,
+                    ...applyOnResultProp,
+                },
             };
             return newFilterWithApplyOnResult(transformedFilter, applyOnResult);
         } else {

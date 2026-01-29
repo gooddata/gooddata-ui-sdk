@@ -79,6 +79,22 @@ export interface IMeasureValueFilterCommonProps {
     warningMessage?: WarningMessage;
     locale?: string;
     separators?: ISeparators;
+    /**
+     * Number format pattern for the measure (e.g., "#,##0.00", "$#,##0", etc.).
+     * When provided, values in the preview section will be formatted using this pattern.
+     * If not provided, falls back to simple number formatting with separators.
+     *
+     * @beta
+     */
+    format?: string;
+    /**
+     * When true, uses K/M/B shortening for compact display in the preview (e.g., "1K" instead of "1,000").
+     * When false or undefined, uses full metric format.
+     * This provides consistency between the filter button and preview display.
+     *
+     * @beta
+     */
+    useShortFormat?: boolean;
     displayTreatNullAsZeroOption?: boolean;
     treatNullAsZeroDefaultValue?: boolean;
     enableOperatorSelection?: boolean;
@@ -107,6 +123,12 @@ export interface IMeasureValueFilterCommonProps {
      * @beta
      */
     enableMultipleConditions?: boolean;
+    /**
+     * Enables using ranking filters together with measure value filters (MVF).
+     *
+     * @beta
+     */
+    enableRankingWithMvf?: boolean;
 }
 
 /**

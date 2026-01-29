@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { readFileSync, writeFileSync } from "fs";
 
@@ -35,8 +35,8 @@ for (const variant of Object.values(variants)) {
     }
 }
 
-const peerKeys = Object.keys(peers).sort();
-const devDepsKeys = Object.keys(devDeps).sort();
+const peerKeys = Object.keys(peers).sort((a, b) => a.localeCompare(b));
+const devDepsKeys = Object.keys(devDeps).sort((a, b) => a.localeCompare(b));
 
 packageJson.peerDependencies = {};
 packageJson.devDependencies = {};

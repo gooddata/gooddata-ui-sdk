@@ -11,7 +11,7 @@ import {
     newAttribute,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
-import { type IGeoPushpinChartNextConfig } from "@gooddata/sdk-ui-geo/next";
+import { type IGeoChartConfig } from "@gooddata/sdk-ui-geo";
 import { type IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 
 import { ANALYTICAL_ENVIRONMENT, DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
@@ -38,7 +38,7 @@ export function buildGeoVisualizationConfig({
     supportedControls,
     colorMapping,
     environment,
-}: IBuildGeoConfigParams): IGeoPushpinChartNextConfig {
+}: IBuildGeoConfigParams): IGeoChartConfig {
     const { config = {}, customVisualizationConfig = {} } = options;
     const { center, legend, viewport = {} } = supportedControls;
     const { isInEditMode, isExportMode } = config;
@@ -74,7 +74,7 @@ export function buildGeoVisualizationConfig({
             : customVisualizationConfig.cooperativeGestures;
 
     // Merge all configuration
-    const geoConfig: IGeoPushpinChartNextConfig = {
+    const geoConfig: IGeoChartConfig = {
         ...supportedControls,
         ...config,
         ...centerProp,
@@ -83,7 +83,6 @@ export function buildGeoVisualizationConfig({
         ...customVisualizationConfig,
         separators: config.separators,
         colorPalette: config.colorPalette,
-        mapboxToken: config.mapboxToken,
         colorMapping,
         cooperativeGestures,
     };
@@ -91,7 +90,7 @@ export function buildGeoVisualizationConfig({
     return geoConfig;
 }
 
-const supportedGeoConfigProperties = new Set<keyof IGeoPushpinChartNextConfig>([
+const supportedGeoConfigProperties = new Set<keyof IGeoChartConfig>([
     "center",
     "colorMapping",
     "cooperativeGestures",
@@ -110,7 +109,7 @@ const supportedGeoConfigProperties = new Set<keyof IGeoPushpinChartNextConfig>([
 export function geoConfigFromInsight(
     insight: IInsightDefinition,
     ctx?: IEmbeddingCodeContext,
-): IGeoPushpinChartNextConfig {
+): IGeoChartConfig {
     const properties = insightProperties(insight);
     const controls = properties?.["controls"] ?? {};
     const withValuesFromContext = {
@@ -123,7 +122,7 @@ export function geoConfigFromInsight(
             ([key, value]) =>
                 supportedGeoConfigProperties.has(key as any) && !(value === null || value === undefined),
         ),
-    ) as unknown as IGeoPushpinChartNextConfig;
+    ) as unknown as IGeoChartConfig;
 }
 
 export function geoInsightConversion<TProps extends object, TPropKey extends keyof TProps>(

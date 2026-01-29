@@ -7477,6 +7477,7 @@ export interface DeclarativeMetric {
     description?: string;
     id: string;
     isHidden?: boolean;
+    isHiddenFromKda?: boolean;
     modifiedAt?: string | null;
     // (undocumented)
     modifiedBy?: DeclarativeUserIdentifier;
@@ -18650,6 +18651,8 @@ export interface JsonApiMetricInAttributes {
     // (undocumented)
     isHidden?: boolean;
     // (undocumented)
+    isHiddenFromKda?: boolean;
+    // (undocumented)
     tags?: Array<string>;
     // (undocumented)
     title?: string;
@@ -18699,6 +18702,8 @@ export interface JsonApiMetricOutAttributes {
     description?: string;
     // (undocumented)
     isHidden?: boolean;
+    // (undocumented)
+    isHiddenFromKda?: boolean;
     // (undocumented)
     modifiedAt?: string;
     // (undocumented)
@@ -18779,6 +18784,8 @@ export interface JsonApiMetricPatchAttributes {
     description?: string;
     // (undocumented)
     isHidden?: boolean;
+    // (undocumented)
+    isHiddenFromKda?: boolean;
     // (undocumented)
     tags?: Array<string>;
     // (undocumented)

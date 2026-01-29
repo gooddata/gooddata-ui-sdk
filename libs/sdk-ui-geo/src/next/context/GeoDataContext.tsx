@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type IColorPalette } from "@gooddata/sdk-model";
 import { type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
@@ -18,7 +18,7 @@ export interface IGeoDataContext<TGeoData extends IGeoCommonData = IGeoCommonDat
 /**
  * Hook to access geographic data derived from the primary layer.
  *
- * @alpha
+ * @internal
  */
 export function useGeoData(): IGeoDataContext {
     const { primaryLayer, colorPalette } = useGeoLayers();

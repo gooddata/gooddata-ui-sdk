@@ -2,12 +2,15 @@
 
 .gd-ui-kit-icon-button {
     $root: &;
-
-    border-radius: var(--gd-button-borderRadius);
+    width: var(--gd-button-width, auto);
     transition: var(--gd-transition-all);
     cursor: pointer;
     border-style: solid;
     border-width: 1px;
+    border-top-left-radius: var(--gd-button-borderRadiusTopLeft, var(--gd-button-borderRadius));
+    border-bottom-left-radius: var(--gd-button-borderRadiusBottomLeft, var(--gd-button-borderRadius));
+    border-top-right-radius: var(--gd-button-borderRadiusTopRight, var(--gd-button-borderRadius));
+    border-bottom-right-radius: var(--gd-button-borderRadiusBottomRight, var(--gd-button-borderRadius));
 
     &--type {
         &-button {
@@ -36,7 +39,7 @@
             height: var(--gd-button-S);
 
             &#{$root}--type-button {
-                width: var(--gd-button-S);
+                width: var(--gd-button-width, var(--gd-button-S));
             }
         }
 
@@ -44,7 +47,7 @@
             height: var(--gd-button-M);
 
             &#{$root}--type-button {
-                width: var(--gd-button-M);
+                width: var(--gd-button-width, var(--gd-button-M));
             }
         }
 
@@ -52,7 +55,7 @@
             height: var(--gd-button-L);
 
             &#{$root}--type-button {
-                width: var(--gd-button-L);
+                width: var(--gd-button-width, var(--gd-button-L));
             }
         }
 
@@ -60,7 +63,7 @@
             height: var(--gd-button-XL);
 
             &#{$root}--type-button {
-                width: var(--gd-button-XL);
+                width: var(--gd-button-width, var(--gd-button-XL));
             }
         }
 
@@ -68,7 +71,7 @@
             height: var(--gd-button-XXL);
 
             &#{$root}--type-button {
-                width: var(--gd-button-XXL);
+                width: var(--gd-button-width, var(--gd-button-XXL));
             }
         }
     }

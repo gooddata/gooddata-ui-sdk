@@ -1,15 +1,15 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
 import { type PositionType } from "@gooddata/sdk-ui-vis-commons";
 
-import { type IGeoChartNextConfig } from "../../types/config/unified.js";
+import { type IGeoChartConfig } from "../../types/config/unified.js";
 
 /**
  * Legend configuration computed from geo config.
  *
- * @alpha
+ * @internal
  */
 export interface ILegendConfig {
     /**
@@ -38,9 +38,9 @@ export interface ILegendConfig {
  * @param config - Geo chart configuration
  * @returns Normalized legend configuration
  *
- * @alpha
+ * @internal
  */
-export function useLegendConfig(config?: IGeoChartNextConfig): ILegendConfig {
+export function useLegendConfig(config?: IGeoChartConfig): ILegendConfig {
     return useMemo(() => {
         const legendConfig = config?.legend;
 

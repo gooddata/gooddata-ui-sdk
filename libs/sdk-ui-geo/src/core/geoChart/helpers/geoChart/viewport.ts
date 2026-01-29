@@ -1,12 +1,9 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
+
 import type mapboxgl from "mapbox-gl";
 
-import {
-    type IGeoConfig,
-    type IGeoConfigViewport,
-    type IGeoLngLat,
-    type IGeoLngLatBounds,
-} from "../../../../GeoChart.js";
+import { type IGeoConfig, type IGeoConfigViewport } from "../../../../GeoChart.js";
+import type { IGeoLngLat, IGeoLngLatBounds } from "../../../../publicTypes/geoCommon.js";
 import { DEFAULT_CENTER, DEFAULT_WORLD_BOUNDS, DEFAULT_ZOOM, VIEWPORTS } from "../../constants/geoChart.js";
 
 interface IGeoViewport {

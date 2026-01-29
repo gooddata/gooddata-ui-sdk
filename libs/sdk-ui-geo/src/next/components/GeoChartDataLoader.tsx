@@ -11,14 +11,14 @@ import {
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 
-import { GeoChartNextProviders } from "./GeoChartNextProviders.js";
+import { GeoChartProviders } from "./GeoChartProviders.js";
 import { GeoErrorComponent } from "./GeoErrorComponent.js";
 import { GeoLoadingComponent } from "./GeoLoadingComponent.js";
-import { RenderGeoChartNext } from "./RenderGeoChartNext.js";
-import { useGeoChartNextProps } from "../context/GeoChartNextContext.js";
+import { RenderGeoChart } from "./RenderGeoChart.js";
+import { useGeoChartProps } from "../context/GeoChartContext.js";
 import { useGeoChartData } from "../hooks/dataLoading/useGeoChartDataPipeline.js";
 import { useCallbackOnChange } from "../hooks/utils/useCallbackOnChange.js";
-import { type ILayerExecutionRecord } from "../types/props/geoChartNext/internal.js";
+import { type ILayerExecutionRecord } from "../types/props/geoChart/internal.js";
 
 /**
  * Component that loads all layer data before rendering.
@@ -26,12 +26,12 @@ import { type ILayerExecutionRecord } from "../types/props/geoChartNext/internal
  *
  * @internal
  */
-export function GeoChartNextDataLoader({
+export function GeoChartDataLoader({
     layerExecutions,
 }: {
     layerExecutions: ILayerExecutionRecord[];
 }): ReactElement {
-    const props = useGeoChartNextProps();
+    const props = useGeoChartProps();
     const intl = useIntl();
     const backend = useBackendStrict(props.backend, "GeoDataLoadingGate");
     const workspace = useWorkspaceStrict(props.workspace, "GeoDataLoadingGate");
@@ -81,12 +81,12 @@ export function GeoChartNextDataLoader({
     }
 
     return (
-        <GeoChartNextProviders
+        <GeoChartProviders
             layerExecutions={layerExecutions}
             layerOutputs={layerOutputs}
             colorPalette={colorPalette}
         >
-            <RenderGeoChartNext />
-        </GeoChartNextProviders>
+            <RenderGeoChart />
+        </GeoChartProviders>
     );
 }

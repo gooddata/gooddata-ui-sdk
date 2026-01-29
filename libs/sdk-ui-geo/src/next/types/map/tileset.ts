@@ -3,6 +3,6 @@
 /**
  * Supported basemap tileset identifiers.
  *
- * @internal
+ * @alpha
  */
 export type GeoTileset = "default" | "satellite";

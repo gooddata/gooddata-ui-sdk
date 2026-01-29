@@ -735,10 +735,6 @@
       "allowedCategories": [ "production", "tools" ]
     },
     {
-      "name": "eslint-plugin-eslint-comments",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
       "name": "eslint-plugin-header",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
@@ -1176,6 +1172,14 @@
     },
     {
       "name": "reselect",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "rolldown",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "rolldown-vite",
       "allowedCategories": [ "production" ]
     },
     {

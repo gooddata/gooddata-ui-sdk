@@ -17,7 +17,7 @@ import {
     uriRef,
 } from "@gooddata/sdk-model";
 import { BucketNames, GeoLocationMissingSdkError } from "@gooddata/sdk-ui";
-import { GeoChartNextInternal, PUSHPIN_LAYER_ID } from "@gooddata/sdk-ui-geo/next";
+import { GeoChartInternal, PUSHPIN_LAYER_ID } from "@gooddata/sdk-ui-geo/internal";
 
 import { type IReferencePoint, type IVisConstruct } from "../../../../interfaces/Visualization.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../../utils/translations.js";
@@ -220,7 +220,7 @@ describe("PluggableGeoPushpinChartNext", () => {
 
         expect(mockRenderFun).toHaveBeenCalled();
         const chartCall = mockRenderFun.mock.calls.find(
-            ([node]) => (node as ReactElement)?.type === GeoChartNextInternal,
+            ([node]) => (node as ReactElement)?.type === GeoChartInternal,
         );
 
         expect(chartCall).toBeDefined();
@@ -273,7 +273,7 @@ describe("PluggableGeoPushpinChartNext", () => {
         visualization.update({ messages }, insightWithLayerControls, {}, executionFactory);
 
         const chartCall = mockRenderFun.mock.calls.find(
-            ([node]) => (node as ReactElement)?.type === GeoChartNextInternal,
+            ([node]) => (node as ReactElement)?.type === GeoChartInternal,
         );
 
         expect(chartCall).toBeDefined();
@@ -342,7 +342,7 @@ describe("PluggableGeoPushpinChartNext", () => {
         visualization.update({ messages }, insightWithDimensionalityMvf, {}, executionFactory);
 
         const chartCall = mockRenderFun.mock.calls.find(
-            ([node]) => (node as ReactElement)?.type === GeoChartNextInternal,
+            ([node]) => (node as ReactElement)?.type === GeoChartInternal,
         );
 
         expect(chartCall).toBeDefined();
@@ -400,7 +400,7 @@ describe("PluggableGeoPushpinChartNext", () => {
         visualization.update({ messages }, insightWithSharedMeasureAndLayer, {}, executionFactory);
 
         const chartCall = mockRenderFun.mock.calls.find(
-            ([node]) => (node as ReactElement)?.type === GeoChartNextInternal,
+            ([node]) => (node as ReactElement)?.type === GeoChartInternal,
         );
 
         expect(chartCall).toBeDefined();

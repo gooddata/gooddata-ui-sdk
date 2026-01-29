@@ -2,26 +2,22 @@
 
 /* eslint-disable no-barrel-files/no-barrel-files */
 
-export { GeoPushpinChartNext } from "./GeoPushpinChartNext.js";
-export type {
-    IGeoPushpinChartNextBaseProps,
-    IGeoPushpinChartNextProps,
-} from "./types/props/pushpinChart/public.js";
-export type { ICoreGeoPushpinChartNextProps } from "./types/props/pushpinChart/internal.js";
-export type { IGeoPushpinChartNextConfig } from "./types/config/pushpinChart.js";
+export type { IGeoPushpinChartBaseProps, IGeoPushpinChartProps } from "./types/props/pushpinChart/public.js";
+export type { ICoreGeoPushpinChartProps } from "./types/props/pushpinChart/internal.js";
+export type { IGeoPushpinChartConfig } from "./types/config/pushpinChart.js";
 export {
     isValidViewportArea,
     VALID_VIEWPORT_AREAS,
-    type IGeoConfigViewportNext,
-    type IGeoConfigViewportAreaNext,
+    type IGeoChartViewport,
+    type IGeoChartViewportArea,
 } from "./types/config/viewport.js";
 export {
     isValidPushpinSizeOption,
     VALID_PUSHPIN_SIZE_OPTIONS,
-    type IGeoPointsConfigNext,
-    type PushpinSizeOptionNext,
+    type IGeoChartPointsConfig,
+    type GeoChartPushpinSizeOption,
 } from "./types/config/points.js";
-export type { IGeoLegendConfigNext } from "./types/config/legend.js";
+export type { IGeoChartLegendConfig } from "./types/config/legend.js";
 
 export { GeoAreaChart } from "./GeoAreaChart.js";
 export type { IGeoAreaChartBaseProps, IGeoAreaChartProps } from "./types/props/areaChart/public.js";
@@ -30,9 +26,9 @@ export type { IGeoAreaChartConfig } from "./types/config/areaChart.js";
 export type { IGeoAreasConfig } from "./types/config/areas.js";
 export type { GeoTileset } from "./types/map/tileset.js";
 
-export { GeoChartNext, GeoChartNextInternal } from "./GeoChartNext.js";
-export type { IGeoChartNextProps } from "./types/props/geoChartNext/public.js";
-export type { IGeoChartNextConfig } from "./types/config/unified.js";
+export { GeoChart, GeoChartInternal } from "./GeoChart.js";
+export type { IGeoChartProps } from "./types/props/geoChart/public.js";
+export type { IGeoChartConfig } from "./types/config/unified.js";
 export {
     isGeoLayerPushpin,
     isGeoLayerArea,

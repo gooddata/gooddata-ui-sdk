@@ -168,6 +168,34 @@ export function useCatalogItemUpdate({
         },
         [mounted, backend, currentUser, item, onError, onUpdate, status, workspace],
     );
+    const updateItemIsHiddenFromKda = useCallback(
+        (isHiddenFromKda: boolean) => {
+            updateItem(
+                backend,
+                workspace,
+                currentUser,
+                item,
+                status !== "success",
+                () => ({
+                    isHiddenFromKda,
+                }),
+                (newItem, changes) => {
+                    setItem(newItem);
+                    onUpdate?.(newItem, changes);
+                },
+                (err) => {
+                    if (!mounted.current || !item) {
+                        return;
+                    }
+                    // Revert changes
+                    setItem(item);
+                    onError?.(err);
+                    onUpdate?.(item, item);
+                },
+            );
+        },
+        [mounted, backend, currentUser, item, onError, onUpdate, status, workspace],
+    );
     const persistMeasureChanges = useCallback(
         (changes: Partial<ICatalogItem> & ICatalogItemRef) =>
             persistMeasureMetadata(backend, workspace, changes),
@@ -238,6 +266,7 @@ export function useCatalogItemUpdate({
         updateItemDescription,
         updateItemTags,
         updateItemIsHidden,
+        updateItemIsHiddenFromKda,
         updateItemMetricType,
         updateItemFormat,
     };

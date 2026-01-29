@@ -1,7 +1,7 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { DEFAULT_DATA_POINTS_LIMIT } from "../layers/pushpin/constants.js";
-import { type IGeoChartNextConfig } from "../types/config/unified.js";
+import { type IGeoChartConfig } from "../types/config/unified.js";
 import { type IAreaGeoData } from "../types/geoData/area.js";
 import { type IPushpinGeoData } from "../types/geoData/pushpin.js";
 import { isAreaGeoData, isPushpinGeoData } from "../types/geoData/typeGuards.js";
@@ -52,7 +52,7 @@ interface ILayerValidationOutput {
  *
  * @internal
  */
-export function getDataPointsLimit(config: IGeoChartNextConfig | undefined): number {
+export function getDataPointsLimit(config?: IGeoChartConfig): number {
     return config?.limit ?? DEFAULT_DATA_POINTS_LIMIT;
 }
 

@@ -3,7 +3,7 @@
 import { type MockedFunction, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { newAttribute, newInsightDefinition } from "@gooddata/sdk-model";
-import { type IGeoLayerArea, type IGeoLayerPushpin } from "@gooddata/sdk-ui-geo/next";
+import { type IGeoLayerArea, type IGeoLayerPushpin } from "@gooddata/sdk-ui-geo";
 
 import { GeoAreaChartDescriptor } from "../../geoAreaChart/GeoAreaChartDescriptor.js";
 import { buildGeoChartNextLayers } from "../geoEmbeddingLayers.js";
@@ -27,7 +27,7 @@ describe("Geo embedding code layers", () => {
         vi.clearAllMocks();
     });
 
-    it("generates GeoChartNext with layers for Geo Area descriptor", () => {
+    it("generates GeoChart with layers for Geo Area descriptor", () => {
         const areaLayer: IGeoLayerArea = {
             id: "primary",
             type: "area",
@@ -37,12 +37,12 @@ describe("Geo embedding code layers", () => {
 
         const code = areaDescriptor.getEmbeddingCode(dummyInsight);
 
-        expect(code).toContain("<GeoChartNext");
+        expect(code).toContain("<GeoChart");
         expect(code).toContain("const layers");
         expect(code).toContain('const type = "area"');
     });
 
-    it("generates GeoChartNext with layers for Geo Pushpin descriptor", () => {
+    it("generates GeoChart with layers for Geo Pushpin descriptor", () => {
         const pushpinLayer: IGeoLayerPushpin = {
             id: "primary",
             type: "pushpin",
@@ -53,7 +53,7 @@ describe("Geo embedding code layers", () => {
 
         const code = pushpinDescriptor.getEmbeddingCode(dummyInsight);
 
-        expect(code).toContain("<GeoChartNext");
+        expect(code).toContain("<GeoChart");
         expect(code).toContain("const layers");
         expect(code).toContain('const type = "pushpin"');
     });

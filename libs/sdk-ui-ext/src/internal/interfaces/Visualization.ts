@@ -263,6 +263,7 @@ export interface IBucketItem {
     showOnSecondaryAxis?: boolean | null;
     isTotalMeasure?: boolean;
     isThresholdMeasure?: boolean;
+    isKdaDisabled?: boolean;
     sort?: ISort;
     masterLocalIdentifier?: string;
     overTimeComparisonType?: OverTimeComparisonType;
@@ -278,6 +279,7 @@ export interface IBucketItem {
 
 export interface IFiltersBucketItem extends IBucketItem {
     autoCreated?: boolean;
+    applyOnResult?: boolean;
 }
 
 // TODO: SDK8: rename this :) the original name IBucket conflicted with what we have in model;

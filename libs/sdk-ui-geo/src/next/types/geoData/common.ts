@@ -1,9 +1,9 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 /**
  * Base interface for geo data items
  *
- * @alpha
+ * @internal
  */
 export interface IGeoDataItem {
     /**
@@ -19,7 +19,7 @@ export interface IGeoDataItem {
 /**
  * Represents an attribute item in geo data
  *
- * @alpha
+ * @internal
  */
 export interface IGeoAttributeItem extends IGeoDataItem {
     /**
@@ -31,7 +31,7 @@ export interface IGeoAttributeItem extends IGeoDataItem {
 /**
  * Represents a segment item with URIs for drilling
  *
- * @alpha
+ * @internal
  */
 export interface IGeoSegmentItem extends IGeoAttributeItem {
     /**
@@ -43,7 +43,7 @@ export interface IGeoSegmentItem extends IGeoAttributeItem {
 /**
  * Represents a measure item with numeric data
  *
- * @alpha
+ * @internal
  */
 export interface IGeoMeasureItem extends IGeoDataItem {
     /**
@@ -59,7 +59,7 @@ export interface IGeoMeasureItem extends IGeoDataItem {
 /**
  * Common subset of geo data used by legends
  *
- * @alpha
+ * @internal
  */
 export interface IGeoCommonData {
     /**

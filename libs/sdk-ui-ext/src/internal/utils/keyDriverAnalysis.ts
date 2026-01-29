@@ -39,3 +39,34 @@ export function cleanupKeyDriverAnalysisOnMetrics(
         },
     };
 }
+
+export function hideKeyDriverOnMetrics(extendedPoint: IExtendedReferencePoint): IExtendedReferencePoint {
+    const measures = getAllItemsByType(extendedPoint.buckets ?? [], [METRIC]);
+    const cloned = {
+        ...(extendedPoint.properties?.controls?.["disableKeyDriveAnalysisOn"] ?? {}),
+    };
+
+    measures.forEach((m) => {
+        const current = cloned[m.localIdentifier];
+        if (current === undefined && m.isKdaDisabled) {
+            cloned[m.localIdentifier] = true;
+        }
+    });
+
+    return {
+        ...extendedPoint,
+        properties: {
+            ...extendedPoint.properties,
+            controls: {
+                ...extendedPoint.properties?.controls,
+                ...(Object.keys(cloned).length > 0
+                    ? {
+                          disableKeyDriveAnalysisOn: cloned,
+                      }
+                    : {
+                          disableKeyDriveAnalysisOn: undefined,
+                      }),
+            },
+        },
+    };
+}

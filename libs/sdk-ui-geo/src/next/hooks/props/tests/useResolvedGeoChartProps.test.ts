@@ -1,14 +1,14 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
 import { DefaultColorPalette } from "@gooddata/sdk-ui";
 
-import { applyGeoChartNextConfigDefaults } from "../useResolvedGeoChartNextProps.js";
+import { applyGeoChartConfigDefaults } from "../useResolvedGeoChartProps.js";
 
-describe("applyGeoChartNextConfigDefaults", () => {
+describe("applyGeoChartConfigDefaults", () => {
     it("applies legend, points, areas, and palette defaults", () => {
-        const config = applyGeoChartNextConfigDefaults(undefined);
+        const config = applyGeoChartConfigDefaults(undefined);
 
         expect(config.colorPalette).toBe(DefaultColorPalette);
         expect(config.colorMapping).toEqual([]);

@@ -1,11 +1,11 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 /**
- * Viewport presets for GeoChartNext.
+ * Viewport presets for GeoChart.
  *
- * @alpha
+ * @public
  */
-export type IGeoConfigViewportAreaNext =
+export type IGeoChartViewportArea =
     | "auto"
     | "continent_af"
     | "continent_as"
@@ -16,17 +16,17 @@ export type IGeoConfigViewportAreaNext =
     | "world";
 
 /**
- * Viewport configuration shared by GeoChartNext components.
+ * Viewport configuration shared by GeoChart components.
  *
- * @alpha
+ * @public
  */
-export interface IGeoConfigViewportNext {
+export interface IGeoChartViewport {
     /**
      * Initial viewport preset.
      *
      * @defaultValue "auto"
      */
-    area?: IGeoConfigViewportAreaNext;
+    area?: IGeoChartViewportArea;
 
     /**
      * Locks user interaction when set to true.
@@ -39,9 +39,9 @@ export interface IGeoConfigViewportNext {
 /**
  * Valid viewport presets.
  *
- * @internal
+ * @public
  */
-export const VALID_VIEWPORT_AREAS: readonly IGeoConfigViewportAreaNext[] = [
+export const VALID_VIEWPORT_AREAS: readonly IGeoChartViewportArea[] = [
     "auto",
     "continent_af",
     "continent_as",
@@ -55,8 +55,17 @@ export const VALID_VIEWPORT_AREAS: readonly IGeoConfigViewportAreaNext[] = [
 /**
  * Type guard verifying supported viewport presets.
  *
- * @alpha
+ * @public
  */
-export function isValidViewportArea(value: string): value is IGeoConfigViewportAreaNext {
-    return VALID_VIEWPORT_AREAS.includes(value as IGeoConfigViewportAreaNext);
+export function isValidViewportArea(value: string): value is IGeoChartViewportArea {
+    return (
+        value === "auto" ||
+        value === "continent_af" ||
+        value === "continent_as" ||
+        value === "continent_au" ||
+        value === "continent_eu" ||
+        value === "continent_na" ||
+        value === "continent_sa" ||
+        value === "world"
+    );
 }

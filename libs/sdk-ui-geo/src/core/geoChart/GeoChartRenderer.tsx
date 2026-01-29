@@ -38,7 +38,8 @@ import {
 } from "./geoChartDataLayers.js";
 import { type IGeoDataSourceProps, createPushpinDataSource } from "./geoChartDataSource.js";
 import { handlePushpinMouseEnter, handlePushpinMouseLeave } from "./geoChartTooltip.js";
-import { type IGeoConfig, type IGeoData, type IGeoLngLat } from "../../GeoChart.js";
+import { type IGeoConfig, type IGeoData } from "../../GeoChart.js";
+import type { IGeoLngLat } from "../../publicTypes/geoCommon.js";
 import {
     isClusteringAllowed,
     isColorAssignmentItemChanged,
@@ -84,7 +85,7 @@ export function GeoChartRenderer({
 
     // Set mapbox token on mount and when it changes
     useEffect(() => {
-        mapboxgl.accessToken = config.mapboxToken;
+        mapboxgl.accessToken = config.mapboxToken ?? "";
     }, [config.mapboxToken]);
 
     const isViewportFrozen = useCallback((): boolean => {
@@ -571,7 +572,7 @@ export function GeoChartRenderer({
 
         if (prevConfig.mapboxToken !== config.mapboxToken) {
             removeMap();
-            mapboxgl.accessToken = config.mapboxToken;
+            mapboxgl.accessToken = config.mapboxToken ?? "";
             fullMapInit();
         }
 

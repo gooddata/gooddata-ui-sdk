@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import {
     type IAttributeDescriptor,
@@ -29,11 +29,11 @@ import {
     type IAvailableLegends,
     type IGeoAttributeItem,
     type IGeoData,
-    type IGeoLngLat,
     type IGeoLocationItem,
     type IGeoMeasureItem,
     type IGeoSegmentItem,
 } from "../../../../GeoChart.js";
+import type { IGeoLngLat } from "../../../../publicTypes/geoCommon.js";
 
 interface IBucketItemInfo {
     uri?: Identifier;

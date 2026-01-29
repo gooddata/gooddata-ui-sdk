@@ -2,18 +2,35 @@
 
 import { type ReactElement, useMemo } from "react";
 
-import { GeoChartNext } from "./GeoChartNext.js";
+import { useResolveValuesWithPlaceholders } from "@gooddata/sdk-ui";
+
+import { GeoChart } from "./GeoChart.js";
 import { createAreaLayer } from "./layers/area/layerFactory.js";
 import { type IGeoLayer } from "./types/layers/index.js";
 import { type IGeoAreaChartProps } from "./types/props/areaChart/public.js";
 
 /**
- * GeoAreaChart wraps {@link GeoChartNext} for the single area-layer scenario.
+ * GeoAreaChart wraps {@link GeoChart} for the single area-layer scenario.
  *
- * @alpha
+ * @public
  */
 export function GeoAreaChart(props: IGeoAreaChartProps): ReactElement {
-    const { area, color, segmentBy, filters, sortBy, config, additionalLayers, ...restProps } = props;
+    const {
+        area: areaInput,
+        color: colorInput,
+        segmentBy: segmentByInput,
+        sortBy: sortByInput,
+        filters,
+        config,
+        additionalLayers,
+        placeholdersResolutionContext,
+        ...restProps
+    } = props;
+
+    const [area, color, segmentBy, sortBy] = useResolveValuesWithPlaceholders(
+        [areaInput, colorInput, segmentByInput, sortByInput],
+        placeholdersResolutionContext,
+    );
 
     const primaryLayer = useMemo(
         () =>
@@ -31,5 +48,5 @@ export function GeoAreaChart(props: IGeoAreaChartProps): ReactElement {
         [primaryLayer, additionalLayers],
     );
 
-    return <GeoChartNext {...restProps} layers={allLayers} config={config} filters={filters} />;
+    return <GeoChart {...restProps} layers={allLayers} config={config} filters={filters} />;
 }

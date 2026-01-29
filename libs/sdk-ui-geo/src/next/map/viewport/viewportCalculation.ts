@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { getViewportOptions } from "./viewportPresets.js";
 import type { IMapFacade, LngLatBoundsLike, LngLatLike } from "../../layers/common/mapFacade.js";
@@ -13,7 +13,7 @@ import { DEFAULT_BOUNDS_PADDING } from "../runtime/mapConfig.js";
  * @param bbox - Array in the form [minLng, minLat, maxLng, maxLat]
  * @returns Viewport containing bounds or null if invalid
  *
- * @alpha
+ * @internal
  */
 export function bboxToViewport(
     bbox?: readonly [number, number, number, number],

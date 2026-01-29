@@ -1,12 +1,12 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-import type { PushpinSizeOptionNext } from "../types/config/points.js";
-import type { IGeoConfigViewportAreaNext } from "../types/config/viewport.js";
+import type { GeoChartPushpinSizeOption } from "../types/config/points.js";
+import type { IGeoChartViewportArea } from "../types/config/viewport.js";
 
 /**
- * Default configuration values consumed by GeoChartNext wrappers.
+ * Default configuration values consumed by GeoChart wrappers.
  *
- * @alpha
+ * @public
  */
 export const GEO_CHART_DEFAULTS = {
     /**
@@ -27,12 +27,12 @@ export const GEO_CHART_DEFAULTS = {
     /**
      * Default minimum pushpin size multiplier.
      */
-    PUSHPIN_MIN_SIZE: "normal" as PushpinSizeOptionNext,
+    PUSHPIN_MIN_SIZE: "normal" satisfies GeoChartPushpinSizeOption,
 
     /**
      * Default maximum pushpin size multiplier.
      */
-    PUSHPIN_MAX_SIZE: "normal" as PushpinSizeOptionNext,
+    PUSHPIN_MAX_SIZE: "normal" satisfies GeoChartPushpinSizeOption,
 
     /**
      * Whether pushpins cluster nearby points by default.
@@ -42,7 +42,7 @@ export const GEO_CHART_DEFAULTS = {
     /**
      * Default viewport preset.
      */
-    VIEWPORT_AREA: "auto" as IGeoConfigViewportAreaNext,
+    VIEWPORT_AREA: "auto" satisfies IGeoChartViewportArea,
 
     /**
      * Whether viewport interaction is locked by default.
@@ -68,6 +68,6 @@ export const GEO_CHART_DEFAULTS = {
 /**
  * Type for the GEO_CHART_DEFAULTS object.
  *
- * @alpha
+ * @public
  */
 export type IGeoChartDefaults = typeof GEO_CHART_DEFAULTS;

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type IAttributeDescriptor, type IAttributeDisplayFormGeoAreaConfig } from "@gooddata/sdk-model";
 import { type DataViewFacade } from "@gooddata/sdk-ui";
@@ -6,7 +6,7 @@ import { type DataViewFacade } from "@gooddata/sdk-ui";
 /**
  * Metadata describing a geo collection binding for an attribute.
  *
- * @alpha
+ * @internal
  */
 export interface IGeoCollectionMetadata {
     /**
@@ -49,7 +49,7 @@ export function resolveGeoCollectionMetadata(
  * @param dataView - Data view facade containing the execution result metadata
  * @returns geo collection metadata or undefined when not available
  *
- * @alpha
+ * @internal
  */
 export function getLocationCollectionMetadata(
     dataView: DataViewFacade | null,

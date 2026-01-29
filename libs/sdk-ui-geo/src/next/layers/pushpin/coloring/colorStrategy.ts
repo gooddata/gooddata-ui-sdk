@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { omit } from "lodash-es";
 
@@ -21,7 +21,7 @@ import {
 } from "../data/transformation.js";
 
 /**
- * Color strategy for GeoPushpinChartNext
+ * Color strategy for GeoPushpinChart
  *
  * @remarks
  * Manages color assignment for geo charts based on either location or segment attributes.

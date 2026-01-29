@@ -33,6 +33,7 @@ function renderComponent(enableMetricFormatOverrides = false) {
                 onTagAdd={noop}
                 onTagRemove={noop}
                 onIsHiddenChange={noop}
+                onIsHiddenFromKdaChange={noop}
                 onMetricTypeChange={noop}
                 onFormatChange={noop}
                 enableMetricFormatOverrides={enableMetricFormatOverrides}

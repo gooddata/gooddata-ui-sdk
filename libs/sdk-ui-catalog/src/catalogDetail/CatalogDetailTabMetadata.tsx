@@ -14,6 +14,7 @@ import { type ICatalogItem } from "../catalogItem/types.js";
 import type { ObjectType } from "../objectType/types.js";
 
 const TYPES_SUPPORTING_IS_HIDDEN: ObjectType[] = ["insight", "measure", "attribute", "fact"];
+const TYPES_SUPPORTING_IS_HIDDEN_FROM_KDA: ObjectType[] = ["measure"];
 
 type Props = {
     item: ICatalogItem;
@@ -22,6 +23,7 @@ type Props = {
     onTagAdd: (tag: IUiTagDef) => void;
     onTagRemove: (tag: IUiTagDef) => void;
     onIsHiddenChange: (isHidden: boolean) => void;
+    onIsHiddenFromKdaChange: (isHiddenFromKda: boolean) => void;
     onMetricTypeChange?: (metricType: MetricType | undefined) => void;
     onFormatChange?: (format: string | null) => void;
     separators?: ISeparators;
@@ -36,6 +38,7 @@ export function CatalogDetailTabMetadata({
     onTagAdd,
     onTagRemove,
     onIsHiddenChange,
+    onIsHiddenFromKdaChange,
     onMetricTypeChange,
     onFormatChange,
     separators,
@@ -112,6 +115,43 @@ export function CatalogDetailTabMetadata({
                                 })}
                                 onChange={(event) => {
                                     onIsHiddenChange(!event.target.checked);
+                                }}
+                                className={cx("s-checkbox-toggle", canEdit ? "s-enabled" : "s-disabled")}
+                            />
+                            <span className="input-label-text" />
+                        </label>
+                    }
+                />
+            ) : null}
+            {TYPES_SUPPORTING_IS_HIDDEN_FROM_KDA.includes(item.type) ? (
+                <CatalogDetailContentRow
+                    title={
+                        <>
+                            <FormattedMessage id="analyticsCatalog.column.title.isHiddenFromKda" />
+                            <UiTooltip
+                                anchor={<UiIcon type="question" size={12} color="complementary-6" />}
+                                content={
+                                    <FormattedMessage id="analyticsCatalog.column.isHiddenFromKda.field.tooltip" />
+                                }
+                                arrowPlacement="left"
+                                optimalPlacement
+                                offset={10}
+                                width={280}
+                                triggerBy={["hover", "click"]}
+                            />
+                        </>
+                    }
+                    content={
+                        <label className="input-checkbox-toggle">
+                            <input
+                                type="checkbox"
+                                checked={item.isHiddenFromKda !== true}
+                                disabled={!canEdit}
+                                aria-label={intl.formatMessage({
+                                    id: "analyticsCatalog.column.title.isHiddenFromKda",
+                                })}
+                                onChange={(event) => {
+                                    onIsHiddenFromKdaChange(!event.target.checked);
                                 }}
                                 className={cx("s-checkbox-toggle", canEdit ? "s-enabled" : "s-disabled")}
                             />

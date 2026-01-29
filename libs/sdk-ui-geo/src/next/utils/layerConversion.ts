@@ -286,7 +286,7 @@ function convertToAreaLayer(insightLayer: IInsightLayerDefinition): IGeoLayerAre
  * - "pushpin" - Converts to IGeoLayerPushpin
  * - "area" - Converts to IGeoLayerArea (requires area attribute)
  *
- * @alpha
+ * @internal
  */
 export function insightLayerToGeoLayer(insightLayer: IInsightLayerDefinition): IGeoLayer | null {
     const { type } = insightLayer;
@@ -310,7 +310,7 @@ export function insightLayerToGeoLayer(insightLayer: IInsightLayerDefinition): I
  * @remarks
  * Layers with unsupported types or invalid configurations are filtered out.
  *
- * @alpha
+ * @internal
  */
 export function insightLayersToGeoLayers(insightLayers: IInsightLayerDefinition[]): IGeoLayer[] {
     return insightLayers.map(insightLayerToGeoLayer).filter((layer): layer is IGeoLayer => layer !== null);

@@ -1,15 +1,15 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-import { type IGeoChartNextConfig } from "../../config/unified.js";
+import { type IGeoChartConfig } from "../../config/unified.js";
 import { type GeoLayerType, type IGeoLayer } from "../../layers/index.js";
 import { type IGeoCommonExecutionProps } from "../shared.js";
 
 /**
- * Props for {@link GeoChartNext}.
+ * Props for {@link GeoChart}.
  *
- * @alpha
+ * @public
  */
-export interface IGeoChartNextProps extends IGeoCommonExecutionProps {
+export interface IGeoChartProps extends IGeoCommonExecutionProps {
     /**
      * Visualization type reported through pushData callbacks. Defaults to the primary layer type.
      */
@@ -23,7 +23,7 @@ export interface IGeoChartNextProps extends IGeoCommonExecutionProps {
     /**
      * Unified configuration shared by all layers.
      */
-    config?: IGeoChartNextConfig;
+    config?: IGeoChartConfig;
 
     // host wiring props inherited from IGeoCommonExecutionProps
 }

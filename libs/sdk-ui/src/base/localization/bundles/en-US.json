@@ -1439,6 +1439,14 @@
         "text": "Remove condition",
         "crowdinContext": "Tooltip for the button that removes a condition in the Measure Value Filter dropdown."
     },
+    "mvf.conditionsJoiner.or": {
+        "text": "or",
+        "crowdinContext": "Text displayed between multiple conditions in the Measure Value Filter dropdown to indicate logical OR operation."
+    },
+    "mvf.applyOnResultLabel": {
+        "text": "Apply on result",
+        "crowdinContext": "Label for the checkbox that applies the filter on the result."
+    },
     "mvf.validation.valueCannotBeEmpty": {
         "text": "Error: value can not be empty",
         "crowdinContext": "Generic validation error shown in Measure Value Filter when a numeric input (comparison or range) is left empty."
@@ -1558,6 +1566,22 @@
     "mvf.preview.or": {
         "text": "{result1} or {result2}",
         "crowdinContext": "Conjunction used in measure value filter preview to connect multiple conditions. {result1} is the first condition or group of conditions, {result2} is the next condition or group to be connected."
+    },
+    "mvf.preview.filterWithoutDimensionality.tooltip": {
+        "text": "{metric} is {condition}",
+        "crowdinContext": "Tooltip text for the measure value filter preview without dimensionality. Plain text version without bold formatting. Example: 'Sales is greater than 1000'. Do not translate the {metric} and {condition} placeholders."
+    },
+    "mvf.preview.filterWithoutDimensionalityNoMetric.tooltip": {
+        "text": "{condition}",
+        "crowdinContext": "Tooltip text for the measure value filter preview for the 'All' operator without dimensionality and without the metric title. Plain text version without bold formatting. Example: 'All'. Do not translate the {condition} placeholder."
+    },
+    "mvf.preview.filterWithDimensionality.tooltip": {
+        "text": "{metric} is {condition} for each {dimensionality}",
+        "crowdinContext": "Tooltip text for the measure value filter preview with dimensionality. Plain text version without bold formatting. Example: 'Sales is greater than 1000 for each Product, Brand'. Do not translate the placeholders."
+    },
+    "mvf.preview.filterWithDimensionalityNoMetric.tooltip": {
+        "text": "{condition} for each {dimensionality}",
+        "crowdinContext": "Tooltip text for the measure value filter preview for the 'All' operator with dimensionality and without the metric title. Plain text version without bold formatting. Example: 'All for each Product, Brand'. Do not translate the placeholders."
     },
     "mvf.dimensionality.backwardCompatibilityNote": {
         "text": "“For each” currently follows the visualization’s attributes. Editing the filter will stop this and let you choose which attributes it uses.",
@@ -1874,6 +1898,10 @@
     "rankingFilter.valueTooltip": {
         "text": "If multiple items have the same value, the filter shows all items with this value. The visualization may then display more items than the number set.",
         "crowdinContext": "Tooltip with explanation of why ranking filter can return more rows than the number user entered in the filter."
+    },
+    "rankingFilter.applyOnResultLabel": {
+        "text": "Apply on result",
+        "crowdinContext": "Checkbox label in the ranking filter. When enabled, the filter is applied after measure value filters."
     },
     "attributesDropdown.itemsFiltered.tooltip": {
         "text": "Values are filtered by: <strong>{filters}</strong>",

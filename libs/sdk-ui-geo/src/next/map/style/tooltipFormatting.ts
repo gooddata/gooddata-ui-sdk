@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { escape, unescape } from "lodash-es";
 
@@ -6,7 +6,7 @@ import { ClientFormatterFacade } from "@gooddata/number-formatter";
 import { type ISeparators } from "@gooddata/sdk-model";
 
 /**
- * Formatting functions for GeoPushpinChartNext tooltips
+ * Formatting functions for GeoPushpinChart tooltips
  *
  * @internal
  */

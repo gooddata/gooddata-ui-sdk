@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -11,7 +11,7 @@ import {
     getLegendDetails,
 } from "@gooddata/sdk-ui-vis-commons";
 
-import { type IGeoChartNextConfig } from "../../types/config/unified.js";
+import { type IGeoChartConfig } from "../../types/config/unified.js";
 import { type IGeoCommonData } from "../../types/geoData/common.js";
 
 /**
@@ -33,10 +33,10 @@ import { type IGeoCommonData } from "../../types/geoData/common.js";
  * @param contentRect - Container dimensions from react-measure
  * @returns Legend details or null if cannot be determined
  *
- * @alpha
+ * @internal
  */
 export function useLegendDetails(
-    config: IGeoChartNextConfig | undefined,
+    config: IGeoChartConfig | undefined,
     geoData: IGeoCommonData | null,
     contentRect: ContentRect | undefined,
 ): ILegendDetails | null {

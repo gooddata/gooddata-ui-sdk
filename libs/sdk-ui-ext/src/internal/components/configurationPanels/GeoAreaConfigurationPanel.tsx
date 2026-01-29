@@ -4,7 +4,7 @@ import { type ReactElement, type ReactNode } from "react";
 
 import { type IInsightDefinition, bucketIsEmpty, insightBucket } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
-import type { GeoTileset } from "@gooddata/sdk-ui-geo/next";
+import type { GeoTileset } from "@gooddata/sdk-ui-geo";
 
 import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";
 import { messages } from "../../../locales.js";

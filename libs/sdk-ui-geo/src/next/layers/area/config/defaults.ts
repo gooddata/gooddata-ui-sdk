@@ -1,13 +1,13 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-import { type IGeoChartNextConfig } from "../../../types/config/unified.js";
+import { type IGeoChartConfig } from "../../../types/config/unified.js";
 
 /**
  * Applies area-specific defaults (fill/outline styling).
  *
  * @internal
  */
-export function applyAreaConfigDefaults(config: IGeoChartNextConfig): IGeoChartNextConfig {
+export function applyAreaConfigDefaults(config: IGeoChartConfig): IGeoChartConfig {
     const areas = config.areas ?? {};
 
     return {

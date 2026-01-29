@@ -1,9 +1,9 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { createAreaFillLayer, createAreaOutlineLayer } from "./layers.js";
 import { createStylePlan } from "../../map/styleReconciliation/planBuilder.js";
 import { applyStylePlan } from "../../map/styleReconciliation/reconcileStyle.js";
-import { type IGeoChartNextConfig } from "../../types/config/unified.js";
+import { type IGeoChartConfig } from "../../types/config/unified.js";
 import { removeLayerIfExists, removeSourceIfExists } from "../common/layerOps.js";
 import { type GeoJSONSourceSpecification, type IMapFacade } from "../common/mapFacade.js";
 
@@ -34,7 +34,7 @@ export function syncAreaLayerToMap(
     map: IMapFacade,
     layerId: string,
     source: GeoJSONSourceSpecification,
-    config: IGeoChartNextConfig,
+    config: IGeoChartConfig,
 ): void {
     const ids = getAreaLayerIds(layerId);
 

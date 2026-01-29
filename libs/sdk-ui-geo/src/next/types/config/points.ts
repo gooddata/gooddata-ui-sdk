@@ -1,31 +1,31 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 /**
  * Supported pushpin marker size multipliers.
  *
- * @alpha
+ * @public
  */
-export type PushpinSizeOptionNext = "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
+export type GeoChartPushpinSizeOption = "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
 
 /**
  * Pushpin-specific configuration.
  *
- * @alpha
+ * @public
  */
-export interface IGeoPointsConfigNext {
+export interface IGeoChartPointsConfig {
     /**
      * Minimum marker size multiplier used when size measure is present.
      *
      * @defaultValue "normal"
      */
-    minSize?: PushpinSizeOptionNext;
+    minSize?: GeoChartPushpinSizeOption;
 
     /**
      * Maximum marker size multiplier used when size measure is present.
      *
      * @defaultValue "normal"
      */
-    maxSize?: PushpinSizeOptionNext;
+    maxSize?: GeoChartPushpinSizeOption;
 
     /**
      * Groups nearby points into clusters.
@@ -38,9 +38,9 @@ export interface IGeoPointsConfigNext {
 /**
  * Valid pushpin size option values.
  *
- * @internal
+ * @public
  */
-export const VALID_PUSHPIN_SIZE_OPTIONS: readonly PushpinSizeOptionNext[] = [
+export const VALID_PUSHPIN_SIZE_OPTIONS: readonly GeoChartPushpinSizeOption[] = [
     "0.5x",
     "0.75x",
     "normal",
@@ -52,8 +52,15 @@ export const VALID_PUSHPIN_SIZE_OPTIONS: readonly PushpinSizeOptionNext[] = [
 /**
  * Type guard verifying allowed size option values.
  *
- * @alpha
+ * @public
  */
-export function isValidPushpinSizeOption(value: string): value is PushpinSizeOptionNext {
-    return VALID_PUSHPIN_SIZE_OPTIONS.includes(value as PushpinSizeOptionNext);
+export function isValidPushpinSizeOption(value: string): value is GeoChartPushpinSizeOption {
+    return (
+        value === "0.5x" ||
+        value === "0.75x" ||
+        value === "normal" ||
+        value === "1.25x" ||
+        value === "1.5x" ||
+        value === "default"
+    );
 }

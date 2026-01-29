@@ -152,7 +152,7 @@ export interface IComputePushpinLegendParams {
  * @param params - Parameters for computation
  * @returns Legend section for the pushpin layer, or null if no legend data
  *
- * @alpha
+ * @internal
  */
 export function computePushpinLegend(params: IComputePushpinLegendParams): ILegendSection | null {
     const {

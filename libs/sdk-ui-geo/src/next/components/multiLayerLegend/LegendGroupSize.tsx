@@ -11,7 +11,7 @@ import {
 /**
  * Props for LegendGroupSize component.
  *
- * @alpha
+ * @internal
  */
 export interface ILegendGroupSizeProps {
     /**
@@ -46,7 +46,7 @@ function SizeAnchorItem({ item }: { item: ILegendSizeAnchorItem }): ReactElement
  * map to marker sizes. Each anchor shows a circle of proportional
  * size and the corresponding formatted value.
  *
- * @alpha
+ * @internal
  */
 export const LegendGroupSize = memo(function LegendGroupSize({ group }: ILegendGroupSizeProps): ReactElement {
     const sizeItems = group.items.filter(isLegendSizeAnchorItem);

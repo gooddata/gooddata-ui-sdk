@@ -32,6 +32,7 @@ export function convertMetricFromBackend(
             .title(attributes?.title || "")
             .isLocked(isInheritedObject(object))
             .isHidden(attributes?.isHidden)
+            .isHiddenFromKda(attributes?.isHiddenFromKda)
             .tags(object.attributes.tags ?? [])
             .description(attributes?.description || "")
             .expression(attributes.content.maql)

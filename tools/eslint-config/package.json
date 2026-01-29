@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/eslint-config",
-    "version": "11.18.0-alpha.7",
+    "version": "11.18.0-alpha.8",
     "repository": {
         "type": "git",
         "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
@@ -51,7 +51,6 @@
         "eslint-import-resolver-typescript": "4.4.4",
         "eslint-plugin-chai-friendly": "1.1.0",
         "eslint-plugin-cypress": "3.6.0",
-        "eslint-plugin-eslint-comments": "3.2.0",
         "eslint-plugin-header": "3.1.1",
         "eslint-plugin-import": "2.32.0",
         "eslint-plugin-import-esm": "1.2.1",
@@ -62,7 +61,7 @@
         "eslint-plugin-react": "7.37.5",
         "eslint-plugin-react-hooks": "4.6.0",
         "eslint-plugin-regexp": "1.15.0",
-        "eslint-plugin-sonarjs": "0.16.0",
+        "eslint-plugin-sonarjs": "3.0.6",
         "eslint-plugin-storybook": "^10.1.11",
         "eslint-plugin-tsdoc": "0.2.14",
         "prettier": "^3.6.2",
@@ -78,7 +77,6 @@
         "eslint": "^8.57.1",
         "eslint-config-prettier": "10.1.8",
         "eslint-import-resolver-typescript": "4.4.4",
-        "eslint-plugin-eslint-comments": "3.2.0",
         "eslint-plugin-header": "3.1.1",
         "eslint-plugin-import": "2.32.0",
         "eslint-plugin-jsdoc": "62.1.0",
@@ -86,7 +84,7 @@
         "eslint-plugin-no-only-tests": "2.6.0",
         "eslint-plugin-prettier": "5.5.4",
         "eslint-plugin-regexp": "1.15.0",
-        "eslint-plugin-sonarjs": "0.16.0",
+        "eslint-plugin-sonarjs": "3.0.6",
         "eslint-plugin-tsdoc": "0.2.14",
         "prettier": "^3.6.2"
     }

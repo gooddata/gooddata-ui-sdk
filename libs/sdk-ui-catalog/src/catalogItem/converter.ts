@@ -106,6 +106,7 @@ export function convertMeasureToCatalogItem(measure: IMeasureMetadataObject): IC
         isLocked: measure.isLocked ?? false,
         isEditable: true,
         isHidden: measure.isHidden,
+        isHiddenFromKda: measure.isHiddenFromKda,
         format,
         metricType: measure.metricType,
     };

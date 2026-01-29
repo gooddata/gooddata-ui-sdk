@@ -12,6 +12,7 @@ import { ContentRect } from 'react-measure';
 import { getColorMappingPredicate } from '@gooddata/sdk-ui-vis-commons';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttribute } from '@gooddata/sdk-model';
+import { IAttributeOrMeasure } from '@gooddata/sdk-model';
 import { IColorMapping } from '@gooddata/sdk-ui-vis-commons';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IColorStrategy } from '@gooddata/sdk-ui-vis-commons';
@@ -23,8 +24,10 @@ import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IHeaderPredicate } from '@gooddata/sdk-ui';
 import { ILoadingInjectedProps } from '@gooddata/sdk-ui';
+import { INullableFilter } from '@gooddata/sdk-model';
 import { IPushpinCategoryLegendItem } from '@gooddata/sdk-ui-vis-commons';
 import { ISeparators } from '@gooddata/sdk-ui';
+import { ISortItem } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
 import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
 import { IVisualizationProps } from '@gooddata/sdk-ui';
@@ -35,23 +38,45 @@ import { PositionType } from '@gooddata/sdk-ui-vis-commons';
 import { ReactElement } from 'react';
 import { ReactNode } from 'react';
 import { SortsOrPlaceholders } from '@gooddata/sdk-ui';
+import type { StyleSpecification as StyleSpecification_2 } from 'maplibre-gl';
 import { WrappedComponentProps } from 'react-intl';
 
-// @public (undocumented)
+// @public
 export type CenterPositionChangedCallback = (center: IGeoLngLat) => void;
 
 // @internal (undocumented)
 export function CoreGeoChart(props: ICoreGeoChartProps & WrappedComponentProps): JSX.Element;
 
-// @internal (undocumented)
+// @public
+export function createAreaLayer(layer: Omit<IGeoLayerArea, "type" | "id">, id?: string): IGeoLayerArea;
+
+// @public
+export function createPushpinLayer(layer: Omit<IGeoLayerPushpin, "type" | "id">, id?: string): IGeoLayerPushpin;
+
+// @public @deprecated (undocumented)
 export function enrichMapboxToken<T>(config?: T & {
     mapboxToken?: string;
 }, mapboxToken?: string): (T & {
     mapboxToken?: string;
 }) | undefined;
 
-// @public (undocumented)
-export function GeoPushpinChart(props: IGeoPushpinChartProps | IGeoPushpinChartLatitudeLongitudeProps): JSX.Element;
+// @public
+export function GeoAreaChart(props: IGeoAreaChartProps): ReactElement;
+
+// @public
+export function GeoChart(props: IGeoChartProps): ReactElement;
+
+// @public
+export type GeoChartPushpinSizeOption = "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
+
+// @public
+export type GeoLayerType = "pushpin" | "area";
+
+// @public
+export function GeoPushpinChart(props: IGeoPushpinChartProps): ReactElement;
+
+// @alpha
+export type GeoTileset = "default" | "satellite";
 
 export { getColorMappingPredicate }
 
@@ -80,10 +105,95 @@ export interface ICoreGeoChartProps extends IDataVisualizationProps {
     theme?: ITheme;
 }
 
+// @public
+export interface IGeoAreaChartBaseProps extends IGeoSingleLayerWrapperProps {
+    color?: AttributeMeasureOrPlaceholder;
+    config?: IGeoAreaChartConfig;
+    segmentBy?: AttributeOrPlaceholder;
+}
+
+// @public
+export interface IGeoAreaChartConfig {
+    // (undocumented)
+    areas?: IGeoAreasConfig;
+    // (undocumented)
+    center?: IGeoLngLat;
+    // (undocumented)
+    colorMapping?: IColorMapping[];
+    // (undocumented)
+    colorPalette?: IColorPalette;
+    // (undocumented)
+    colors?: string[];
+    // (undocumented)
+    cooperativeGestures?: boolean;
+    // (undocumented)
+    enableExecutionCancelling?: boolean;
+    // (undocumented)
+    isExportMode?: boolean;
+    // (undocumented)
+    legend?: IGeoChartLegendConfig;
+    // (undocumented)
+    limit?: number;
+    mapStyle?: string | StyleSpecification;
+    maxZoomLevel?: number | null;
+    // (undocumented)
+    respectLegendPosition?: boolean;
+    // (undocumented)
+    selectedSegmentItems?: string[];
+    // (undocumented)
+    separators?: ISeparators;
+    // (undocumented)
+    showLabels?: boolean;
+    // @alpha
+    tileset?: GeoTileset;
+    // (undocumented)
+    viewport?: IGeoChartViewport;
+    // (undocumented)
+    zoom?: number;
+}
+
+// @public
+export interface IGeoAreaChartProps extends IGeoAreaChartBaseProps {
+    area: AttributeOrPlaceholder;
+}
+
+// @public
+export interface IGeoAreasConfig {
+    borderColor?: string;
+    borderWidth?: number;
+    fillOpacity?: number;
+}
+
 // @public (undocumented)
 export interface IGeoAttributeItem extends IGeoDataItem {
     // (undocumented)
     data: string[];
+}
+
+// @public
+export interface IGeoChartConfig {
+    areas?: IGeoAreasConfig;
+    center?: IGeoLngLat;
+    colorMapping?: IColorMapping[];
+    colorPalette?: IColorPalette;
+    colors?: string[];
+    cooperativeGestures?: boolean;
+    enableDrillMenuPositioningAtCursor?: boolean;
+    enableExecutionCancelling?: boolean;
+    isExportMode?: boolean;
+    legend?: IGeoChartLegendConfig;
+    limit?: number;
+    mapStyle?: string | StyleSpecification;
+    maxZoomLevel?: number | null;
+    points?: IGeoChartPointsConfig;
+    respectLegendPosition?: boolean;
+    selectedSegmentItems?: string[];
+    separators?: ISeparators;
+    showLabels?: boolean;
+    // @alpha
+    tileset?: GeoTileset;
+    viewport?: IGeoChartViewport;
+    zoom?: number;
 }
 
 // @internal (undocumented)
@@ -100,6 +210,13 @@ export interface IGeoChartInnerOptions {
 
 // @internal (undocumented)
 export type IGeoChartInnerProps = ICoreGeoChartProps & ILoadingInjectedProps & WrappedComponentProps;
+
+// @public
+export interface IGeoChartLegendConfig {
+    enabled?: boolean;
+    position?: "top" | "right" | "bottom" | "left" | "auto";
+    responsive?: boolean | "autoPositionWithPopup";
+}
 
 // @internal (undocumented)
 export interface IGeoChartLegendRendererProps {
@@ -139,6 +256,20 @@ export interface IGeoChartLegendRendererProps {
     responsive?: boolean | "autoPositionWithPopup";
 }
 
+// @public
+export interface IGeoChartPointsConfig {
+    groupNearbyPoints?: boolean;
+    maxSize?: GeoChartPushpinSizeOption;
+    minSize?: GeoChartPushpinSizeOption;
+}
+
+// @public
+export interface IGeoChartProps extends IGeoCommonExecutionProps {
+    config?: IGeoChartConfig;
+    layers: IGeoLayer[];
+    type?: GeoLayerType;
+}
+
 // @internal (undocumented)
 export interface IGeoChartRendererProps extends WrappedComponentProps {
     // (undocumented)
@@ -163,6 +294,27 @@ export interface IGeoChartRendererProps extends WrappedComponentProps {
     onZoomChanged(zoom: number): void;
 }
 
+// @public
+export interface IGeoChartViewport {
+    area?: IGeoChartViewportArea;
+    frozen?: boolean;
+}
+
+// @public
+export type IGeoChartViewportArea = "auto" | "continent_af" | "continent_as" | "continent_au" | "continent_eu" | "continent_na" | "continent_sa" | "world";
+
+// @public
+export interface IGeoCommonExecutionProps extends IVisualizationProps, IVisualizationCallbacks {
+    backend?: IAnalyticalBackend;
+    execConfig?: IExecutionConfig;
+    filters?: NullableFiltersOrPlaceholders;
+    onCenterPositionChanged?: CenterPositionChangedCallback;
+    onZoomChanged?: ZoomChangedCallback;
+    placeholdersResolutionContext?: object;
+    theme?: ITheme;
+    workspace?: string;
+}
+
 // @public (undocumented)
 export interface IGeoConfig {
     // (undocumented)
@@ -184,8 +336,8 @@ export interface IGeoConfig {
     legend?: IGeoLegendConfig;
     // (undocumented)
     limit?: number;
-    // (undocumented)
-    mapboxToken: string;
+    // @deprecated
+    mapboxToken?: string;
     // (undocumented)
     points?: IGeoPointsConfig;
     // (undocumented)
@@ -237,6 +389,37 @@ export interface IGeoDataItem {
     name: string;
 }
 
+// @public
+export type IGeoLayer = IGeoLayerPushpin | IGeoLayerArea;
+
+// @public
+export interface IGeoLayerArea extends IGeoLayerBase {
+    area: IAttribute;
+    // (undocumented)
+    type: "area";
+}
+
+// @public
+export interface IGeoLayerBase {
+    color?: IAttributeOrMeasure;
+    filters?: INullableFilter[];
+    id: string;
+    name?: string;
+    segmentBy?: IAttribute;
+    sortBy?: ISortItem[];
+    tooltipText?: IAttribute;
+    type: GeoLayerType;
+}
+
+// @public
+export interface IGeoLayerPushpin extends IGeoLayerBase {
+    latitude: IAttribute;
+    longitude: IAttribute;
+    size?: IAttributeOrMeasure;
+    // (undocumented)
+    type: "pushpin";
+}
+
 // @public (undocumented)
 export interface IGeoLegendConfig {
     enabled?: boolean;
@@ -244,12 +427,20 @@ export interface IGeoLegendConfig {
     responsive?: boolean | "autoPositionWithPopup";
 }
 
-// @public (undocumented)
+// @public
 export interface IGeoLngLat {
     // (undocumented)
     lat: number;
     // (undocumented)
     lng: number;
+}
+
+// @public
+export interface IGeoLngLatBounds {
+    // (undocumented)
+    northEast: IGeoLngLat;
+    // (undocumented)
+    southWest: IGeoLngLat;
 }
 
 // @public (undocumented)
@@ -276,8 +467,86 @@ export interface IGeoPointsConfig {
     minSize?: PushpinSizeOption;
 }
 
+// @public
+export interface IGeoPushpinChartBaseProps extends IGeoSingleLayerWrapperProps {
+    color?: AttributeMeasureOrPlaceholder;
+    config?: IGeoPushpinChartConfig;
+    segmentBy?: AttributeOrPlaceholder;
+    size?: AttributeMeasureOrPlaceholder;
+}
+
+// @public
+export interface IGeoPushpinChartConfig {
+    // (undocumented)
+    center?: IGeoLngLat;
+    // (undocumented)
+    colorMapping?: IColorMapping[];
+    // (undocumented)
+    colorPalette?: IColorPalette;
+    // (undocumented)
+    colors?: string[];
+    // (undocumented)
+    cooperativeGestures?: boolean;
+    enableDrillMenuPositioningAtCursor?: boolean;
+    // (undocumented)
+    enableExecutionCancelling?: boolean;
+    // (undocumented)
+    isExportMode?: boolean;
+    // (undocumented)
+    legend?: IGeoChartLegendConfig;
+    // (undocumented)
+    limit?: number;
+    // @deprecated
+    mapboxToken?: string;
+    mapStyle?: string | StyleSpecification;
+    maxZoomLevel?: number | null;
+    // (undocumented)
+    points?: IGeoChartPointsConfig;
+    // (undocumented)
+    respectLegendPosition?: boolean;
+    // (undocumented)
+    selectedSegmentItems?: string[];
+    // (undocumented)
+    separators?: ISeparators;
+    // (undocumented)
+    showLabels?: boolean;
+    // @alpha
+    tileset?: GeoTileset;
+    tooltipText?: IAttribute;
+    // (undocumented)
+    viewport?: IGeoChartViewport;
+    // (undocumented)
+    zoom?: number;
+}
+
+// @public
+export interface IGeoPushpinChartLatitudeLongitudeProps extends IGeoPushpinChartBaseProps {
+    latitude: AttributeOrPlaceholder;
+    longitude: AttributeOrPlaceholder;
+}
+
+// @public
+export interface IGeoPushpinChartLocationProps extends IGeoPushpinChartBaseProps {
+    location: AttributeOrPlaceholder;
+}
+
+// @public
+export type IGeoPushpinChartProps = IGeoPushpinChartLocationProps | IGeoPushpinChartLatitudeLongitudeProps;
+
 // @public (undocumented)
-export interface IGeoPushpinChartBaseProps extends IVisualizationProps, IVisualizationCallbacks {
+export interface IGeoSegmentItem extends IGeoAttributeItem {
+    // (undocumented)
+    uris: string[];
+}
+
+// @public
+export interface IGeoSingleLayerWrapperProps extends IGeoCommonExecutionProps {
+    additionalLayers?: IGeoLayer[];
+    sortBy?: SortsOrPlaceholders;
+}
+
+// @public @deprecated
+export interface ILegacyGeoPushpinChartBaseProps extends IVisualizationProps, IVisualizationCallbacks {
     backend?: IAnalyticalBackend;
     // (undocumented)
     color?: AttributeMeasureOrPlaceholder;
@@ -298,24 +567,33 @@ export interface IGeoPushpinChartBaseProps extends IVisualizationProps, IVisuali
     workspace?: string;
 }
 
-// @public (undocumented)
-export interface IGeoPushpinChartLatitudeLongitudeProps extends IGeoPushpinChartBaseProps {
+// @public @deprecated
+export interface ILegacyGeoPushpinChartLatitudeLongitudeProps extends ILegacyGeoPushpinChartBaseProps {
     latitude: AttributeOrPlaceholder;
     longitude: AttributeOrPlaceholder;
 }
 
-// @public (undocumented)
-export interface IGeoPushpinChartProps extends IGeoPushpinChartBaseProps {
+// @public @deprecated
+export interface ILegacyGeoPushpinChartProps extends ILegacyGeoPushpinChartBaseProps {
     location: AttributeOrPlaceholder;
 }
 
-// @public (undocumented)
-export interface IGeoSegmentItem extends IGeoAttributeItem {
-    // (undocumented)
-    uris: string[];
-}
+// @public
+export function isGeoLayerArea(layer: IGeoLayer): layer is IGeoLayerArea;
 
-// @alpha (undocumented)
+// @public
+export function isGeoLayerPushpin(layer: IGeoLayer): layer is IGeoLayerPushpin;
+
+// @public
+export function isValidPushpinSizeOption(value: string): value is GeoChartPushpinSizeOption;
+
+// @public
+export function isValidViewportArea(value: string): value is IGeoChartViewportArea;
+
+// @public
+export function LegacyGeoPushpinChart(props: ILegacyGeoPushpinChartProps | ILegacyGeoPushpinChartLatitudeLongitudeProps): JSX.Element;
+
+// @public @deprecated (undocumented)
 export function MapboxTokenProvider({ token, children }: {
     token: string;
     children?: ReactNode;
@@ -324,18 +602,21 @@ export function MapboxTokenProvider({ token, children }: {
 // @public (undocumented)
 export type PushpinSizeOption = "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
 
-// @alpha (undocumented)
+// @public
+export type StyleSpecification = StyleSpecification_2;
+
+// @public @deprecated (undocumented)
 export function useMapboxToken(mapboxToken?: string): string | undefined;
 
-// @alpha (undocumented)
+// @public @deprecated (undocumented)
 export function useMapboxTokenStrict(mapboxToken?: string): string;
 
-// @internal (undocumented)
+// @public @deprecated (undocumented)
 export function withMapboxToken<T extends {
     config?: IGeoConfig;
 }>(InnerComponent: ComponentType<T>): ComponentType<T>;
 
-// @public (undocumented)
+// @public
 export type ZoomChangedCallback = (zoom: number) => void;
 
 ```

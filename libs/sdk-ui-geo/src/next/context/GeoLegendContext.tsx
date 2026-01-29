@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ReactNode, createContext, useCallback, useContext, useState } from "react";
 
@@ -11,7 +11,7 @@ import { type ReactNode, createContext, useCallback, useContext, useState } from
  * - Empty array means all items are disabled
  * - Array with URIs means only those items are enabled
  *
- * @alpha
+ * @internal
  */
 export type EnabledItemsByLayer = Map<string, string[] | null>;
 
@@ -23,7 +23,7 @@ export type EnabledItemsByLayer = Map<string, string[] | null>;
  * Legend items are now tracked per-layer to allow independent filtering when multiple
  * layers share the same segment-by attribute.
  *
- * @alpha
+ * @internal
  */
 interface IGeoLegendContext {
     /**
@@ -112,7 +112,7 @@ export function computeNextEnabledItems(
  * This provider manages which legend items and layers are visible/enabled for filtering.
  * Legend items are tracked per-layer to allow independent filtering.
  *
- * @alpha
+ * @internal
  */
 export function GeoLegendProvider({ children }: { children: ReactNode }) {
     const [enabledItemsByLayer, setEnabledItemsByLayer] = useState<EnabledItemsByLayer>(new Map());
@@ -182,7 +182,7 @@ export function GeoLegendProvider({ children }: { children: ReactNode }) {
  * @returns Legend context
  * @throws Error if used outside of GeoLegendProvider
  *
- * @alpha
+ * @internal
  */
 export function useGeoLegend(): IGeoLegendContext {
     const context = useContext(GeoLegendContext);

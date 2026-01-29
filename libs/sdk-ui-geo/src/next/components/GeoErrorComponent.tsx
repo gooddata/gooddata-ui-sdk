@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useIntl } from "react-intl";
 
@@ -9,7 +9,7 @@ import {
     newErrorMapping,
 } from "@gooddata/sdk-ui";
 
-import { useGeoChartNextProps } from "../context/GeoChartNextContext.js";
+import { useGeoChartProps } from "../context/GeoChartContext.js";
 
 const UNKNOWN_ERROR_CODE = ErrorCodes.UNKNOWN_ERROR;
 
@@ -27,7 +27,7 @@ export function GeoErrorComponent({ error }: IGeoErrorComponentProps) {
     const intl = useIntl();
     const errorMap = newErrorMapping(intl);
 
-    const { ErrorComponent } = useGeoChartNextProps();
+    const { ErrorComponent } = useGeoChartProps();
     const Error = ErrorComponent ?? DefaultErrorComponent;
 
     const code = error.getErrorCode?.() ?? UNKNOWN_ERROR_CODE;

@@ -129,7 +129,7 @@ function useFlexibleHeightSections(sections: ILegendSection[], expandedState: Ex
 /**
  * Props for MultiLayerLegendPanel component.
  *
- * @alpha
+ * @internal
  */
 export interface IMultiLayerLegendPanelProps {
     /**
@@ -196,7 +196,7 @@ function initializeExpandedState(model: ILegendModel): ExpandedState {
  * Each section shows the layer's legend groups (size, color, etc.).
  * Supports expand/collapse for sections and visibility toggles for layers.
  *
- * @alpha
+ * @internal
  */
 const EMPTY_HIDDEN_LAYERS = new Set<string>();
 

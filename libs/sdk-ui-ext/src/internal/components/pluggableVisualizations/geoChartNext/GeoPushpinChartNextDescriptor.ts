@@ -1,7 +1,7 @@
 // (C) 2025-2026 GoodData Corporation
 
 import { type IInsightDefinition, type ISettings } from "@gooddata/sdk-model";
-import { type IGeoChartNextProps } from "@gooddata/sdk-ui-geo/next";
+import { type IGeoChartProps } from "@gooddata/sdk-ui-geo";
 
 import { PluggableGeoPushpinChartNext } from "./PluggableGeoPushpinChartNext.js";
 import { type IFluidLayoutDescriptor } from "../../../interfaces/LayoutDescriptor.js";
@@ -64,10 +64,10 @@ export class GeoPushpinChartNextDescriptor extends BaseChartDescriptor implement
     private readonly geoChartEmbeddingCodeGenerator = getReactEmbeddingCodeGenerator({
         component: {
             importType: "named",
-            name: "GeoChartNext",
-            package: "@gooddata/sdk-ui-geo/next",
+            name: "GeoChart",
+            package: "@gooddata/sdk-ui-geo",
         },
-        insightToProps: getInsightToPropsConverter<IGeoChartNextProps>({
+        insightToProps: getInsightToPropsConverter<IGeoChartProps>({
             type: insightConversion("type", { cardinality: "scalar" }, () => "pushpin"),
             layers: insightConversion(
                 "layers",
@@ -75,7 +75,7 @@ export class GeoPushpinChartNextDescriptor extends BaseChartDescriptor implement
                     typeImport: {
                         importType: "named",
                         name: "IGeoLayer",
-                        package: "@gooddata/sdk-ui-geo/next",
+                        package: "@gooddata/sdk-ui-geo",
                     },
                     cardinality: "array",
                 },
@@ -91,8 +91,8 @@ export class GeoPushpinChartNextDescriptor extends BaseChartDescriptor implement
                 {
                     typeImport: {
                         importType: "named",
-                        name: "IGeoPushpinChartNextConfig",
-                        package: "@gooddata/sdk-ui-geo/next",
+                        name: "IGeoPushpinChartConfig",
+                        package: "@gooddata/sdk-ui-geo",
                     },
                     cardinality: "scalar",
                 },
@@ -117,7 +117,7 @@ export class GeoPushpinChartNextDescriptor extends BaseChartDescriptor implement
     public getMeta(): IVisualizationMeta {
         return {
             documentationUrl:
-                "https://www.gooddata.com/docs/gooddata-ui/latest/references/visual_components/geo_pushpin_chart_next",
+                "https://www.gooddata.com/docs/gooddata-ui/latest/references/visual_components/geo_pushpin_chart",
             supportsExport: true,
             supportsZooming: false,
         };

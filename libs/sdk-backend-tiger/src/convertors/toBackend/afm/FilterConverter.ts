@@ -324,9 +324,15 @@ export function convertFilter(
     filter0: IFilter | IFilterWithApplyOnResult,
     keepEmptyAttributeFilters: boolean = false,
 ): FilterDefinition | null {
-    const [filter, applyOnResult] = isFilter(filter0)
+    const [filter, wrapperApplyOnResult] = isFilter(filter0)
         ? [filter0, undefined]
         : [filter0.filter, filter0.applyOnResult];
+    const filterApplyOnResult = isMeasureValueFilter(filter)
+        ? filter.measureValueFilter.applyOnResult
+        : isRankingFilter(filter)
+          ? filter.rankingFilter.applyOnResult
+          : undefined;
+    const applyOnResult = wrapperApplyOnResult ?? filterApplyOnResult;
     const applyOnResultProp: ApplyOnResultProp = applyOnResult === undefined ? {} : { applyOnResult };
     if (isAttributeFilter(filter)) {
         return convertAttributeFilter(filter, applyOnResultProp, keepEmptyAttributeFilters);

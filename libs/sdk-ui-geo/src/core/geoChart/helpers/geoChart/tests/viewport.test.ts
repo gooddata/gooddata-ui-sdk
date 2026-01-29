@@ -1,8 +1,10 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
+
 import type mapboxgl from "mapbox-gl";
 import { describe, expect, it } from "vitest";
 
-import { type IGeoConfig, type IGeoConfigViewportArea, type IGeoLngLat } from "../../../../../GeoChart.js";
+import { type IGeoConfig, type IGeoConfigViewportArea } from "../../../../../GeoChart.js";
+import { type IGeoLngLat } from "../../../../../publicTypes/geoCommon.js";
 import { getLngLatBounds, getViewportOptions } from "../viewport.js";
 
 describe("viewport", () => {

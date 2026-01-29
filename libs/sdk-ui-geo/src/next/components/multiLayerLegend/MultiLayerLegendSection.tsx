@@ -23,7 +23,7 @@ import { type ILegendGroup, type ILegendSection } from "../../types/legend/model
 /**
  * Props for MultiLayerLegendSection component.
  *
- * @alpha
+ * @internal
  */
 export interface IMultiLayerLegendSectionProps {
     /**
@@ -119,7 +119,7 @@ function renderGroup(
  * Displays the layer title with expand/collapse chevron and visibility toggle.
  * Shows legend groups (size, color, etc.) when expanded.
  *
- * @alpha
+ * @internal
  */
 export const MultiLayerLegendSection = memo(function MultiLayerLegendSection({
     section,

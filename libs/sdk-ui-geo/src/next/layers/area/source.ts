@@ -11,7 +11,7 @@ import { type IAreaGeoData } from "../../types/geoData/area.js";
 /**
  * Properties for creating a area data source
  *
- * @alpha
+ * @internal
  */
 export interface IAreaDataSourceProps {
     colorStrategy: IColorStrategy;
@@ -326,7 +326,7 @@ function createAreaFeatures({
  * @param dataSourceProps - Properties containing area data, config, and styling
  * @returns GeoJSON source specification for MapLibre
  *
- * @alpha
+ * @internal
  */
 export function createAreaDataSource(dataSourceProps: IAreaDataSourceProps): GeoJSONSourceSpecification {
     const features = createAreaFeatures(dataSourceProps);

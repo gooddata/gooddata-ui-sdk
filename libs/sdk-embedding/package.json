@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-embedding",
-    "version": "11.18.0-alpha.7",
+    "version": "11.18.0-alpha.8",
     "description": "GoodData Embedding APIs",
     "repository": {
         "type": "git",
@@ -30,7 +30,9 @@
         "_phase:test": "npm run test-once",
         "_phase:validate": "npm run validate",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",
-        "build": "tsc -p tsconfig.build.json && npm run api-extractor",
+        "build": "npm-run-all -p build-check build-ts && npm run api-extractor",
+        "build-check": "tsc",
+        "build-ts": "tsc -p tsconfig.build.json",
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
         "eslint": "eslint -c .eslintrc.cjs --ignore-path ../.eslintignore .",
@@ -39,7 +41,7 @@
         "prettier-write": "prettier --no-error-on-unmatched-pattern --write '{src,test}/**/*.{json,scss,md,yaml,html}'",
         "test": "vitest watch",
         "test-once": "vitest run",
-        "validate": "tsc && npm run dep-cruiser && npm run eslint && npm run prettier-check",
+        "validate": "npm run dep-cruiser && npm run eslint && npm run prettier-check",
         "validate-esm": "node --input-type=module --eval 'import \"@gooddata/sdk-embedding\"' "
     },
     "dependencies": {
@@ -58,7 +60,6 @@
         "dependency-cruiser": "^14.1.2",
         "eslint": "^8.57.1",
         "eslint-config-prettier": "10.1.8",
-        "eslint-plugin-eslint-comments": "3.2.0",
         "eslint-plugin-header": "3.1.1",
         "eslint-plugin-import": "2.32.0",
         "eslint-plugin-import-esm": "1.2.1",
@@ -67,8 +68,9 @@
         "eslint-plugin-no-only-tests": "2.6.0",
         "eslint-plugin-prettier": "5.5.4",
         "eslint-plugin-regexp": "1.15.0",
-        "eslint-plugin-sonarjs": "0.16.0",
+        "eslint-plugin-sonarjs": "3.0.6",
         "eslint-plugin-tsdoc": "0.2.14",
+        "npm-run-all": "^4.1.5",
         "prettier": "^3.6.2",
         "typescript": "5.9.3",
         "vitest": "4.0.8"

@@ -1,4 +1,5 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
+
 import { type ThemeInternalCssVariable } from "../types.js";
 
 export const internalButtonThemeVariables: ThemeInternalCssVariable[] = [
@@ -26,5 +27,30 @@ export const internalButtonThemeVariables: ThemeInternalCssVariable[] = [
         type: "internal",
         variableName: "--gd-button-S",
         defaultValue: "27px",
+    },
+    {
+        type: "internal",
+        variableName: "--gd-button-width",
+        defaultValue: null,
+    },
+    {
+        type: "internal",
+        variableName: "--gd-button-borderRadiusTopLeft",
+        defaultValue: null,
+    },
+    {
+        type: "internal",
+        variableName: "--gd-button-borderRadiusBottomLeft",
+        defaultValue: null,
+    },
+    {
+        type: "internal",
+        variableName: "--gd-button-borderRadiusTopRight",
+        defaultValue: null,
+    },
+    {
+        type: "internal",
+        variableName: "--gd-button-borderRadiusBottomRight",
+        defaultValue: null,
     },
 ];

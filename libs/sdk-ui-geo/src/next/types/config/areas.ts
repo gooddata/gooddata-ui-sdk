@@ -1,9 +1,9 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 /**
  * Configuration for area styling in area maps
  *
- * @alpha
+ * @public
  */
 export interface IGeoAreasConfig {
     /**

@@ -1,17 +1,17 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type IGeoLngLat } from "./coordinates.js";
 
 /**
  * Called when the map center changes.
  *
- * @alpha
+ * @internal
  */
 export type CenterPositionChangedCallback = (center: IGeoLngLat) => void;
 
 /**
  * Called when the map zoom level changes.
  *
- * @alpha
+ * @internal
  */
 export type ZoomChangedCallback = (zoom: number) => void;

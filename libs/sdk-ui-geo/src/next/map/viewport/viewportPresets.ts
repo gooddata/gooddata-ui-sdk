@@ -2,14 +2,14 @@
 
 import type { LngLatBoundsLike } from "../../layers/common/mapFacade.js";
 import { type IGeoLngLat, type IGeoLngLatBounds } from "../../types/common/coordinates.js";
-import { type IGeoPushpinChartNextConfig } from "../../types/config/pushpinChart.js";
-import { type IGeoConfigViewportNext } from "../../types/config/viewport.js";
+import { type IGeoPushpinChartConfig } from "../../types/config/pushpinChart.js";
+import { type IGeoChartViewport } from "../../types/config/viewport.js";
 import { DEFAULT_CENTER, DEFAULT_WORLD_BOUNDS, DEFAULT_ZOOM, VIEWPORTS } from "../runtime/mapConfig.js";
 
 /**
  * Viewport configuration for MapLibre
  *
- * @alpha
+ * @internal
  */
 interface IGeoViewport {
     bounds?: LngLatBoundsLike;
@@ -24,12 +24,12 @@ interface IGeoViewport {
  * @param config - Geo chart configuration
  * @returns Viewport configuration with bounds or center/zoom
  *
- * @alpha
+ * @internal
  */
-export function getViewportOptions(data: IGeoLngLat[], config: IGeoPushpinChartNextConfig): IGeoViewport {
+export function getViewportOptions(data: IGeoLngLat[], config: IGeoPushpinChartConfig): IGeoViewport {
     const center: IGeoLngLat | undefined = config?.center;
     const zoom: number = config?.zoom ?? DEFAULT_ZOOM;
-    const { area }: IGeoConfigViewportNext = config?.viewport ?? {};
+    const { area }: IGeoChartViewport = config?.viewport ?? {};
 
     if (!center) {
         if (area && area !== "auto") {

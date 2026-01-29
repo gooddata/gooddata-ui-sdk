@@ -67,6 +67,8 @@ export const MeasureValueFilterDropdown = memo(function MeasureValueFilterDropdo
     locale,
     anchorEl,
     separators,
+    format,
+    useShortFormat,
     displayTreatNullAsZeroOption = false,
     treatNullAsZeroDefaultValue = false,
     enableOperatorSelection = true,
@@ -77,9 +79,15 @@ export const MeasureValueFilterDropdown = memo(function MeasureValueFilterDropdo
     onDimensionalityChange,
     isLoadingCatalogDimensionality,
     enableMultipleConditions = false,
+    enableRankingWithMvf,
 }: IMeasureValueFilterDropdownProps) {
+    const applyOnResult = filter?.measureValueFilter.applyOnResult;
     const handleApply = useCallback(
-        (conditions: MeasureValueFilterCondition[] | null, newDimensionality?: ObjRefInScope[]) => {
+        (
+            conditions: MeasureValueFilterCondition[] | null,
+            newDimensionality?: ObjRefInScope[],
+            applyOnResult?: boolean,
+        ) => {
             const effectiveConditions = enableMultipleConditions ? conditions : conditions?.slice(0, 1);
 
             if (!effectiveConditions?.length) {
@@ -89,6 +97,7 @@ export const MeasureValueFilterDropdown = memo(function MeasureValueFilterDropdo
                         {
                             operator: "ALL",
                             ...(isDimensionalityEnabled ? { dimensionality: newDimensionality } : {}),
+                            ...(applyOnResult === undefined ? {} : { applyOnResult }),
                         },
                     ),
                 );
@@ -105,6 +114,7 @@ export const MeasureValueFilterDropdown = memo(function MeasureValueFilterDropdo
             const commonOptions = {
                 treatNullValuesAs,
                 ...(isDimensionalityEnabled ? { dimensionality: newDimensionality } : {}),
+                ...(applyOnResult === undefined ? {} : { applyOnResult }),
             };
 
             if (effectiveConditions.length === 1) {
@@ -173,6 +183,8 @@ export const MeasureValueFilterDropdown = memo(function MeasureValueFilterDropdo
             locale={locale}
             anchorEl={anchorEl}
             separators={separators}
+            format={format}
+            useShortFormat={useShortFormat}
             measureTitle={measureTitle}
             displayTreatNullAsZeroOption={displayTreatNullAsZeroOption}
             treatNullAsZeroValue={getTreatNullAsZeroValue(
@@ -188,6 +200,8 @@ export const MeasureValueFilterDropdown = memo(function MeasureValueFilterDropdo
             onDimensionalityChange={onDimensionalityChange}
             isLoadingCatalogDimensionality={isLoadingCatalogDimensionality}
             enableMultipleConditions={enableMultipleConditions}
+            enableRankingWithMvf={enableRankingWithMvf}
+            applyOnResult={applyOnResult}
         />
     );
 });

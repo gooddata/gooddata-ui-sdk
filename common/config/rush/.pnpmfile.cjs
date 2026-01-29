@@ -1,7 +1,7 @@
 "use strict";
 
 // baseline-browser-mapping needs to be updated to the latest version very 14 days
-const baselineBrowserMappingVersion = "2.8.32"
+const baselineBrowserMappingVersion = "2.9.19"
 
 /**
  * When using the PNPM package manager, you can use pnpmfile.js to workaround

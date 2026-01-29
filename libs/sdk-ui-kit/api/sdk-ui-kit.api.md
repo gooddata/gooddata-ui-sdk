@@ -7159,11 +7159,11 @@ export function LocaleSetting({ isChecked, selectedLocal, onChecked, onLocaleSel
 
 // @internal (undocumented)
 export const makeHorizontalKeyboardNavigation: <T extends KeyboardEvent_2 = KeyboardEvent_2<Element>>(handlers: {
+    onUnhandledKeyDown?: ((event: T) => void) | undefined;
     onFocusPrevious?: ((event: T) => void) | undefined;
     onFocusNext?: ((event: T) => void) | undefined;
     onFocusFirst?: ((event: T) => void) | undefined;
     onFocusLast?: ((event: T) => void) | undefined;
-    onUnhandledKeyDown?: ((event: T) => void) | undefined;
 }, options?: IHandleActionOptions) => (event: T) => void;
 
 // @internal (undocumented)
@@ -7176,36 +7176,36 @@ export const makeKeyboardNavigation: <ActionKeysMap extends {
 
 // @internal (undocumented)
 export const makeLinearKeyboardNavigation: <T extends KeyboardEvent_2 = KeyboardEvent_2<Element>>(handlers: {
-    onSelect?: ((event: T) => void) | undefined;
     onClose?: ((event: T) => void) | undefined;
+    onSelect?: ((event: T) => void) | undefined;
+    onUnhandledKeyDown?: ((event: T) => void) | undefined;
     onFocusPrevious?: ((event: T) => void) | undefined;
     onFocusNext?: ((event: T) => void) | undefined;
     onFocusFirst?: ((event: T) => void) | undefined;
     onFocusLast?: ((event: T) => void) | undefined;
-    onUnhandledKeyDown?: ((event: T) => void) | undefined;
 }, options?: IHandleActionOptions) => (event: T) => void;
 
 // @internal (undocumented)
 export const makeMenuKeyboardNavigation: <T extends KeyboardEvent_2 = KeyboardEvent_2<Element>>(handlers: {
-    onSelect?: ((event: T) => void) | undefined;
     onClose?: ((event: T) => void) | undefined;
+    onSelect?: ((event: T) => void) | undefined;
+    onUnhandledKeyDown?: ((event: T) => void) | undefined;
     onFocusPrevious?: ((event: T) => void) | undefined;
     onFocusNext?: ((event: T) => void) | undefined;
     onFocusFirst?: ((event: T) => void) | undefined;
     onFocusLast?: ((event: T) => void) | undefined;
     onEnterLevel?: ((event: T) => void) | undefined;
     onLeaveLevel?: ((event: T) => void) | undefined;
-    onUnhandledKeyDown?: ((event: T) => void) | undefined;
 }, options?: IHandleActionOptions) => (event: T) => void;
 
 // @internal (undocumented)
 export const makeTabsKeyboardNavigation: <T extends KeyboardEvent_2 = KeyboardEvent_2<Element>>(handlers: {
     onSelect?: ((event: T) => void) | undefined;
+    onUnhandledKeyDown?: ((event: T) => void) | undefined;
     onFocusPrevious?: ((event: T) => void) | undefined;
     onFocusNext?: ((event: T) => void) | undefined;
     onFocusFirst?: ((event: T) => void) | undefined;
     onFocusLast?: ((event: T) => void) | undefined;
-    onUnhandledKeyDown?: ((event: T) => void) | undefined;
 }, options?: IHandleActionOptions) => (event: T) => void;
 
 // @internal (undocumented)
@@ -7513,6 +7513,9 @@ export class ShortenedText extends PureComponent<IShortenedTextProps, IShortened
     // (undocumented)
     UNSAFE_componentWillReceiveProps(nextProps: IShortenedTextProps): void;
 }
+
+// @internal
+export function shortenNumber(value: number | null | undefined, separators?: ISeparators_3): string;
 
 // @internal (undocumented)
 export function shouldHidePPExperience(_featureFlags: ISettings): boolean;
@@ -8073,9 +8076,9 @@ export function useListWithActionsKeyboardNavigation<Item, Action extends string
 }): {
     onKeyboardNavigation: (event: KeyboardEvent_2<Element>) => void;
     onBlur: FocusEventHandler;
-    focusedAction: "selectItem" | Action;
+    focusedAction: Action | "selectItem";
     focusedItem: Item | undefined;
-    setFocusedAction: Dispatch<SetStateAction<"selectItem" | Action>>;
+    setFocusedAction: Dispatch<SetStateAction<Action | "selectItem">>;
     setFocusedIndex: Dispatch<SetStateAction<number | undefined>>;
 };
 

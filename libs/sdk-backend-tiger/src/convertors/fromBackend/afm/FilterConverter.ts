@@ -203,12 +203,17 @@ export const convertFilter = (filter: FilterDefinition): IFilter => {
         const { measure, localIdentifier, conditions, treatNullValuesAs, dimensionality } =
             filter.compoundMeasureValueFilter;
         const sdkDimensionality = convertTigerDimensionalityToSdk(dimensionality);
+        const applyOnResultProp =
+            filter.compoundMeasureValueFilter.applyOnResult === undefined
+                ? {}
+                : { applyOnResult: filter.compoundMeasureValueFilter.applyOnResult };
 
         return {
             measureValueFilter: {
                 measure: isAfmObjectIdentifier(measure) ? toObjRef(measure) : measure,
                 localIdentifier,
                 ...(sdkDimensionality ? { dimensionality: sdkDimensionality } : {}),
+                ...applyOnResultProp,
                 conditions: convertTigerMeasureValueConditionsToSdk(conditions, treatNullValuesAs),
             },
         };
@@ -216,11 +221,16 @@ export const convertFilter = (filter: FilterDefinition): IFilter => {
         const { measure, localIdentifier, operator, value, treatNullValuesAs, dimensionality } =
             filter.comparisonMeasureValueFilter;
         const sdkDimensionality = convertTigerDimensionalityToSdk(dimensionality);
+        const applyOnResultProp =
+            filter.comparisonMeasureValueFilter.applyOnResult === undefined
+                ? {}
+                : { applyOnResult: filter.comparisonMeasureValueFilter.applyOnResult };
         return {
             measureValueFilter: {
                 measure: isAfmObjectIdentifier(measure) ? toObjRef(measure) : measure,
                 localIdentifier,
                 ...(sdkDimensionality ? { dimensionality: sdkDimensionality } : {}),
+                ...applyOnResultProp,
                 condition: {
                     comparison: {
                         operator,
@@ -234,11 +244,16 @@ export const convertFilter = (filter: FilterDefinition): IFilter => {
         const { measure, localIdentifier, operator, from, to, treatNullValuesAs, dimensionality } =
             filter.rangeMeasureValueFilter;
         const sdkDimensionality = convertTigerDimensionalityToSdk(dimensionality);
+        const applyOnResultProp =
+            filter.rangeMeasureValueFilter.applyOnResult === undefined
+                ? {}
+                : { applyOnResult: filter.rangeMeasureValueFilter.applyOnResult };
         return {
             measureValueFilter: {
                 measure: isAfmObjectIdentifier(measure) ? toObjRef(measure) : measure,
                 localIdentifier,
                 ...(sdkDimensionality ? { dimensionality: sdkDimensionality } : {}),
+                ...applyOnResultProp,
                 condition: {
                     range: {
                         operator,
@@ -250,12 +265,17 @@ export const convertFilter = (filter: FilterDefinition): IFilter => {
             },
         };
     } else if (isRankingFilter(filter)) {
+        const applyOnResultProp =
+            filter.rankingFilter.applyOnResult === undefined
+                ? {}
+                : { applyOnResult: filter.rankingFilter.applyOnResult };
         return {
             rankingFilter: {
                 measure: filter.rankingFilter.measures[0] as ObjRefInScope,
                 localIdentifier: filter.rankingFilter.localIdentifier,
                 operator: filter.rankingFilter.operator,
                 value: filter.rankingFilter.value,
+                ...applyOnResultProp,
             },
         };
     } else {

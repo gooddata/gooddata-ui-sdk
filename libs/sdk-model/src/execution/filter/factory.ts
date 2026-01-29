@@ -349,6 +349,11 @@ export interface IMeasureValueFilterComparisonOptions {
      * If instance of attribute is provided, it will be referenced by its local identifier.
      */
     dimensionality?: Array<IAttribute | ObjRefInScope | string>;
+    /**
+     * Optional flag to apply the filter on result.
+     * When undefined, backend defaults are used.
+     */
+    applyOnResult?: boolean;
 }
 
 /**
@@ -378,6 +383,11 @@ export interface IMeasureValueFilterRangeOptions {
      * If instance of attribute is provided, it will be referenced by its local identifier.
      */
     dimensionality?: Array<IAttribute | ObjRefInScope | string>;
+    /**
+     * Optional flag to apply the filter on result.
+     * When undefined, backend defaults are used.
+     */
+    applyOnResult?: boolean;
 }
 
 /**
@@ -392,6 +402,11 @@ export interface IMeasureValueFilterAllOptions {
      * If instance of attribute is provided, it will be referenced by its local identifier.
      */
     dimensionality?: Array<IAttribute | ObjRefInScope | string>;
+    /**
+     * Optional flag to apply the filter on result.
+     * When undefined, backend defaults are used.
+     */
+    applyOnResult?: boolean;
 }
 
 /**
@@ -446,6 +461,11 @@ export interface IMeasureValueFilterConditionsOptions {
      * If instance of attribute is provided, it will be referenced by its local identifier.
      */
     dimensionality?: Array<IAttribute | ObjRefInScope | string>;
+    /**
+     * Optional flag to apply the filter on result.
+     * When undefined, backend defaults are used.
+     */
+    applyOnResult?: boolean;
 }
 
 /**
@@ -534,6 +554,10 @@ function getTreatNullValuesAsProp(options: IMeasureValueFilterOptions): Record<s
         : { treatNullValuesAs: options.treatNullValuesAs };
 }
 
+function getApplyOnResultProp(options: IMeasureValueFilterOptions): Record<string, boolean> {
+    return options.applyOnResult === undefined ? {} : { applyOnResult: options.applyOnResult };
+}
+
 /**
  * Creates a new measure value filter with options object.
  *
@@ -561,6 +585,7 @@ export function newMeasureValueFilterWithOptions(
             measureValueFilter: {
                 measure: measureRef,
                 ...dimensionalityProp,
+                ...getApplyOnResultProp(options),
                 condition: {
                     range: {
                         operator: options.operator,
@@ -576,6 +601,7 @@ export function newMeasureValueFilterWithOptions(
             measureValueFilter: {
                 measure: measureRef,
                 ...dimensionalityProp,
+                ...getApplyOnResultProp(options),
                 condition: {
                     comparison: {
                         operator: options.operator,
@@ -590,6 +616,7 @@ export function newMeasureValueFilterWithOptions(
             measureValueFilter: {
                 measure: measureRef,
                 ...dimensionalityProp,
+                ...getApplyOnResultProp(options),
             },
         };
     } else {
@@ -600,6 +627,7 @@ export function newMeasureValueFilterWithOptions(
                     measureValueFilter: {
                         measure: measureRef,
                         ...dimensionalityProp,
+                        ...getApplyOnResultProp(options),
                         condition: {
                             range: {
                                 operator: condition.operator,
@@ -616,12 +644,14 @@ export function newMeasureValueFilterWithOptions(
                     value: condition.value,
                     ...getTreatNullValuesAsProp(options),
                     ...dimensionalityProp,
+                    applyOnResult: options.applyOnResult,
                 });
             } else {
                 return {
                     measureValueFilter: {
                         measure: measureRef,
                         ...dimensionalityProp,
+                        ...getApplyOnResultProp(options),
                     },
                 };
             }
@@ -660,6 +690,7 @@ export function newMeasureValueFilterWithOptions(
                 measure: measureRef,
                 ...dimensionalityProp,
                 ...conditionsProp,
+                ...getApplyOnResultProp(options),
             },
         };
     }

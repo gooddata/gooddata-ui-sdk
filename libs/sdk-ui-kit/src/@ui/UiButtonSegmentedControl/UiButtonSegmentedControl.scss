@@ -3,111 +3,70 @@
 .gd-ui-kit-button-segmented-control {
     display: flex;
 
-    // Layout variants
+    /**
+     * Disable transitions for keyboard navigation to avoid "stale border" artifact.
+     */
+    &:has(:focus-visible) {
+        --gd-transition-all: none;
+    }
+
+    /**
+     * Per-segment defaults (apply to direct children; values are inherited by nested buttons).
+     */
+    > * {
+        --gd-button-borderRadiusTopLeft: 0;
+        --gd-button-borderRadiusBottomLeft: 0;
+        --gd-button-borderRadiusTopRight: 0;
+        --gd-button-borderRadiusBottomRight: 0;
+
+        position: relative;
+    }
+
+    /**
+     * Collapse borders between segments by overlapping neighboring segments.
+     * On hover/focus, raise the segment above its neighbors to ensure its border is visible.
+     */
+    > * + * {
+        margin-left: -1px;
+    }
+
+    /**
+     * Stacking order: keyboard focus should win over hover.
+     *
+     * This prevents visual glitches when focus moves between segments (old border "sticking")
+     * and avoids hover on a neighboring segment disrupting the currently focused segment.
+     */
+    > *:hover {
+        z-index: 1;
+    }
+
+    > *:focus-within {
+        z-index: 2;
+    }
+
+    /**
+     * Rounded corners for the first/last segment.
+     */
+    > :first-child {
+        --gd-button-borderRadiusTopLeft: var(--gd-button-borderRadius);
+        --gd-button-borderRadiusBottomLeft: var(--gd-button-borderRadius);
+    }
+
+    > :last-child {
+        --gd-button-borderRadiusTopRight: var(--gd-button-borderRadius);
+        --gd-button-borderRadiusBottomRight: var(--gd-button-borderRadius);
+    }
+
+    /**
+     * Layout variants.
+     */
     &--layout-fill {
         flex: 1;
 
-        // UiButton
-        .gd-ui-kit-button,
-        // UiIconButton
-        .gd-ui-kit-icon-button {
-            flex: 1;
+        > * {
+            flex: 1 1 0;
+
+            --gd-button-width: 100%;
         }
-    }
-
-    // Single border approach with nesting support for UiButton and UiIconButton
-    // 1. Remove left border from adjacent buttons
-    // 2. Set border radius for first and last buttons
-    // 3. Set right border color based on next button interaction
-
-    $button-border-radius: var(--gd-button-borderRadius, 3px);
-
-    // UiButton
-    .gd-ui-kit-button,
-    // UiIconButton
-    .gd-ui-kit-icon-button {
-        border-radius: 0;
-    }
-
-    // UiButton
-    > .gd-ui-kit-button + .gd-ui-kit-button,
-    > * + * .gd-ui-kit-button,
-    // UiIconButton
-    > .gd-ui-kit-icon-button + .gd-ui-kit-icon-button,
-    > * + * .gd-ui-kit-icon-button {
-        border-left: 0;
-    }
-
-    // UiButton
-    > .gd-ui-kit-button:first-child,
-    > :first-child:not(.gd-ui-kit-button) .gd-ui-kit-button,
-    // UiIconButton
-    > .gd-ui-kit-icon-button:first-child,
-    > :first-child:not(.gd-ui-kit-icon-button) .gd-ui-kit-icon-button {
-        border-top-left-radius: $button-border-radius;
-        border-bottom-left-radius: $button-border-radius;
-    }
-
-    // UiButton
-    > .gd-ui-kit-button:last-child,
-    > :last-child:not(.gd-ui-kit-button) .gd-ui-kit-button,
-    // UiIconButton
-    > .gd-ui-kit-icon-button:last-child,
-    > :last-child:not(.gd-ui-kit-icon-button) .gd-ui-kit-icon-button {
-        border-top-right-radius: $button-border-radius;
-        border-bottom-right-radius: $button-border-radius;
-    }
-
-    // Active state background for buttons inside segmented control
-    // UiButton
-    .gd-ui-kit-button--active,
-    // UiIconButton
-    .gd-ui-kit-icon-button--active {
-        background-color: var(--gd-palette-complementary-2);
-    }
-
-    // UiButton
-    > .gd-ui-kit-button:has(
-            + .gd-ui-kit-button--variant-primary:not(:disabled):is(:hover, :focus-visible, :active)
-        ),
-    > *:has(+ * .gd-ui-kit-button--variant-primary:not(:disabled):is(:hover, :focus-visible, :active))
-        .gd-ui-kit-button,
-    // UiIconButton
-    > .gd-ui-kit-icon-button:has(
-            + .gd-ui-kit-icon-button--variant-primary:not(:disabled):is(:hover, :focus-visible, :active)
-        ),
-    > *:has(+ * .gd-ui-kit-icon-button--variant-primary:not(:disabled):is(:hover, :focus-visible, :active))
-        .gd-ui-kit-icon-button {
-        border-right-color: var(--gd-palette-complementary-9-t80);
-    }
-
-    // UiButton
-    > .gd-ui-kit-button:has(
-            + .gd-ui-kit-button--variant-secondary:not(:disabled):is(:hover, :focus-visible, :active)
-        ),
-    > *:has(+ * .gd-ui-kit-button--variant-secondary:not(:disabled):is(:hover, :focus-visible, :active))
-        .gd-ui-kit-button,
-    // UiIconButton
-    > .gd-ui-kit-icon-button:has(
-            + .gd-ui-kit-icon-button--variant-secondary:not(:disabled):is(:hover, :focus-visible, :active)
-        ),
-    > *:has(+ * .gd-ui-kit-icon-button--variant-secondary:not(:disabled):is(:hover, :focus-visible, :active))
-        .gd-ui-kit-icon-button {
-        border-right-color: var(--gd-palette-complementary-5);
-    }
-
-    // UiButton
-    > .gd-ui-kit-button:has(
-            + .gd-ui-kit-button--variant-danger:not(:disabled):is(:hover, :focus-visible, :active)
-        ),
-    > *:has(+ * .gd-ui-kit-button--variant-danger:not(:disabled):is(:hover, :focus-visible, :active))
-        .gd-ui-kit-button,
-    // UiIconButton
-    > .gd-ui-kit-icon-button:has(
-            + .gd-ui-kit-icon-button--variant-danger:not(:disabled):is(:hover, :focus-visible, :active)
-        ),
-    > *:has(+ * .gd-ui-kit-icon-button--variant-danger:not(:disabled):is(:hover, :focus-visible, :active))
-        .gd-ui-kit-icon-button {
-        border-right-color: var(--gd-palette-complementary-9-t80);
     }
 }

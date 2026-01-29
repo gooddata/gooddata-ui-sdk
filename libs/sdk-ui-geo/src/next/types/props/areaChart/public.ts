@@ -1,6 +1,6 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-import { type IAttribute, type IAttributeOrMeasure } from "@gooddata/sdk-model";
+import { type AttributeMeasureOrPlaceholder, type AttributeOrPlaceholder } from "@gooddata/sdk-ui";
 
 import { type IGeoAreaChartConfig } from "../../config/areaChart.js";
 import { type IGeoSingleLayerWrapperProps } from "../shared.js";
@@ -8,18 +8,18 @@ import { type IGeoSingleLayerWrapperProps } from "../shared.js";
 /**
  * Shared props for {@link GeoAreaChart} before the required area attribute is applied.
  *
- * @alpha
+ * @public
  */
 export interface IGeoAreaChartBaseProps extends IGeoSingleLayerWrapperProps {
     /**
      * Measure or attribute used for color encoding.
      */
-    color?: IAttributeOrMeasure;
+    color?: AttributeMeasureOrPlaceholder;
 
     /**
      * Optional segment attribute that drives category legend items.
      */
-    segmentBy?: IAttribute;
+    segmentBy?: AttributeOrPlaceholder;
 
     /**
      * Configuration specific to area layers.
@@ -30,11 +30,11 @@ export interface IGeoAreaChartBaseProps extends IGeoSingleLayerWrapperProps {
 /**
  * Props for {@link GeoAreaChart}. The `area` attribute is required.
  *
- * @alpha
+ * @public
  */
 export interface IGeoAreaChartProps extends IGeoAreaChartBaseProps {
     /**
      * Attribute containing area identifiers (country, state, region, ...).
      */
-    area: IAttribute;
+    area: AttributeOrPlaceholder;
 }

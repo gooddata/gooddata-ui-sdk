@@ -2,14 +2,14 @@
 
 import type { FilterSpecification, MapOptions, PopupOptions } from "../../layers/common/mapFacade.js";
 import { type IGeoLngLat } from "../../types/common/coordinates.js";
-import type { IGeoConfigViewportAreaNext } from "../../types/config/viewport.js";
+import type { IGeoChartViewportArea } from "../../types/config/viewport.js";
 
 /**
  * Viewport preset keys (everything except the special "auto" value).
  *
  * @internal
  */
-type ViewportPresetKey = Exclude<IGeoConfigViewportAreaNext, "auto">;
+type ViewportPresetKey = Exclude<IGeoChartViewportArea, "auto">;
 
 /**
  * Bounds format used by our preset table.
@@ -24,14 +24,14 @@ export type ViewportPresetBounds = readonly [IGeoLngLat, IGeoLngLat];
 /**
  * Default world bounds for the map viewport
  *
- * @alpha
+ * @internal
  */
 export const DEFAULT_WORLD_BOUNDS = { northEast: { lat: 84, lng: 180 }, southWest: { lat: -84, lng: -180 } };
 
 /**
  * Predefined viewport areas for different continents and world view
  *
- * @alpha
+ * @internal
  */
 export const VIEWPORTS = {
     continent_af: [
@@ -64,14 +64,14 @@ export const VIEWPORTS = {
 /**
  * Filter for identifying clustered points
  *
- * @alpha
+ * @internal
  */
 export const DEFAULT_CLUSTER_FILTER: FilterSpecification = ["has", "point_count"];
 
 /**
  * Configuration for cluster labels layer
  *
- * @alpha
+ * @internal
  */
 export const DEFAULT_CLUSTER_LABELS_CONFIG = {
     id: "gdcClusterLabels",
@@ -99,7 +99,7 @@ export const DEFAULT_CENTER: IGeoLngLat = {
 /**
  * Default MapLibre map options
  *
- * @alpha
+ * @internal
  */
 export const DEFAULT_MAPLIBRE_OPTIONS: Partial<MapOptions> = {
     // If false, the "drag to rotate" interaction is disabled
@@ -121,7 +121,7 @@ export const DEFAULT_MAPLIBRE_OPTIONS: Partial<MapOptions> = {
 /**
  * Default tooltip popup options
  *
- * @alpha
+ * @internal
  */
 export const DEFAULT_TOOLTIP_OPTIONS: PopupOptions = {
     closeButton: false,

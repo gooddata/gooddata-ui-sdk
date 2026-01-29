@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { isEmpty, range } from "lodash-es";
 
@@ -15,7 +15,7 @@ import {
 import { getMinMax } from "../size/calculations.js";
 
 /**
- * Color palette functions for GeoPushpinChartNext
+ * Color palette functions for GeoPushpinChart
  *
  * @internal
  */

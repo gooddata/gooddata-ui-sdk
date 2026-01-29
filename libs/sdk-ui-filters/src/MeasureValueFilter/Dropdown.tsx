@@ -19,16 +19,24 @@ const alignPoints = ["bl tl", "tl bl", "br tr", "tr br"];
 const DROPDOWN_ALIGNMENTS = alignPoints.map((align) => ({ align, offset: { x: 1, y: 0 } }));
 
 interface IDropdownProps {
-    onApply: (conditions: MeasureValueFilterCondition[] | null, dimensionality?: ObjRefInScope[]) => void;
+    onApply: (
+        conditions: MeasureValueFilterCondition[] | null,
+        dimensionality?: ObjRefInScope[],
+        applyOnResult?: boolean,
+    ) => void;
     onCancel: () => void;
     operator?: MeasureValueFilterOperator | null;
     conditions?: MeasureValueFilterCondition[];
     enableMultipleConditions?: boolean;
+    enableRankingWithMvf?: boolean;
+    applyOnResult?: boolean;
     usePercentage?: boolean;
     warningMessage?: WarningMessage;
     locale?: string;
     anchorEl?: HTMLElement | string;
     separators?: ISeparators;
+    format?: string;
+    useShortFormat?: boolean;
     measureTitle?: string;
     displayTreatNullAsZeroOption?: boolean;
     treatNullAsZeroValue?: boolean;
@@ -50,6 +58,8 @@ const DropdownWithIntl = memo(function DropdownWithIntl(props: IDropdownProps) {
         onCancel,
         anchorEl,
         separators,
+        format,
+        useShortFormat,
         measureTitle,
         displayTreatNullAsZeroOption = false,
         treatNullAsZeroValue = false,
@@ -63,11 +73,17 @@ const DropdownWithIntl = memo(function DropdownWithIntl(props: IDropdownProps) {
         isLoadingCatalogDimensionality,
         conditions = [],
         enableMultipleConditions = false,
+        enableRankingWithMvf,
+        applyOnResult,
     } = props;
 
     const onApply = useCallback(
-        (conditions: MeasureValueFilterCondition[] | null, newDimensionality?: ObjRefInScope[]) => {
-            onApplyProp(conditions, newDimensionality);
+        (
+            conditions: MeasureValueFilterCondition[] | null,
+            newDimensionality?: ObjRefInScope[],
+            applyOnResult?: boolean,
+        ) => {
+            onApplyProp(conditions, newDimensionality, applyOnResult);
         },
         [onApplyProp],
     );
@@ -93,6 +109,8 @@ const DropdownWithIntl = memo(function DropdownWithIntl(props: IDropdownProps) {
                 onCancel={onCancel}
                 onApply={onApply}
                 separators={separators}
+                format={format}
+                useShortFormat={useShortFormat}
                 measureTitle={measureTitle}
                 displayTreatNullAsZeroOption={displayTreatNullAsZeroOption}
                 treatNullAsZeroValue={treatNullAsZeroValue}
@@ -103,6 +121,8 @@ const DropdownWithIntl = memo(function DropdownWithIntl(props: IDropdownProps) {
                 catalogDimensionality={catalogDimensionality}
                 onDimensionalityChange={onDimensionalityChange}
                 isLoadingCatalogDimensionality={isLoadingCatalogDimensionality}
+                enableRankingWithMvf={enableRankingWithMvf}
+                applyOnResult={applyOnResult}
             />
         </Overlay>
     );

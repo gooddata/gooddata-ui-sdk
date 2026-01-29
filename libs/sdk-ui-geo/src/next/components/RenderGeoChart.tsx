@@ -13,8 +13,8 @@ import {
     convertDrillableItemsToPredicates,
 } from "@gooddata/sdk-ui";
 
-import { GeoChartNextLegendOverlay } from "./multiLayerLegend/GeoChartNextLegendOverlay.js";
-import { useGeoChartNextProps } from "../context/GeoChartNextContext.js";
+import { GeoChartLegendOverlay } from "./multiLayerLegend/GeoChartLegendOverlay.js";
+import { useGeoChartProps } from "../context/GeoChartContext.js";
 import { useGeoLayers } from "../context/GeoLayersContext.js";
 import { MapController } from "../map/MapController.js";
 import { computeViewportFromConfig } from "../map/viewport/viewportResolution.js";
@@ -27,7 +27,7 @@ const Measure = defaultImport(ReactMeasure);
 const containerBaseId = "geo-chart-next";
 
 /**
- * Rendering component for GeoChartNext
+ * Rendering component for GeoChart.
  *
  * @remarks
  * This is the final rendering layer that:
@@ -41,8 +41,8 @@ const containerBaseId = "geo-chart-next";
  *
  * @internal
  */
-export function RenderGeoChartNext(): ReactElement {
-    const props = useGeoChartNextProps();
+export function RenderGeoChart(): ReactElement {
+    const props = useGeoChartProps();
     const { layers, layerExecutions, colorPalette, primaryLayer } = useGeoLayers();
     const mapContainerRef = useRef<HTMLDivElement>(null);
     const containerId = useMemo(() => `${containerBaseId}-${v4()}`, []);
@@ -86,7 +86,7 @@ export function RenderGeoChartNext(): ReactElement {
                     <div ref={mapContainerRef} className="gd-geo-chart-next__map">
                         <IntlTranslationsProvider>
                             {(translationProps: ITranslationsComponentProps) => (
-                                <GeoChartNextLegendOverlay
+                                <GeoChartLegendOverlay
                                     config={props.config}
                                     chartContainerRect={chartContainerRect}
                                     layers={layers}
