@@ -81,6 +81,18 @@ export function useSyncLayersToMap({
     const { layers, layerExecutions } = useGeoLayers();
     const { hiddenLayers, enabledItemsByLayer } = useGeoLegend();
 
+    // Key capturing adapter-declared config changes that require a full re-sync.
+    // Keeps this hook generic (no layer-specific config knowledge).
+    const mapSyncKey = useMemo(() => {
+        return layerExecutions
+            .map(({ layerId, layer }) => {
+                const adapter = getLayerAdapter(layer);
+                const key = adapter.getMapSyncKey?.(layer, adapterContext) ?? "";
+                return `${layerId}:${key}`;
+            })
+            .join("|");
+    }, [layerExecutions, adapterContext]);
+
     const layerCleanupsRef = useRef<Map<string, () => void>>(new Map());
 
     // Use ref for adapterContext in Effect 1 to avoid re-syncing layers when context updates
@@ -117,7 +129,7 @@ export function useSyncLayersToMap({
         }
 
         return cleanupLayers;
-    }, [map, isMapReady, layerExecutions, layers, cleanupLayers]);
+    }, [map, isMapReady, layerExecutions, layers, cleanupLayers, mapSyncKey]);
 
     // Effect 2: Toggle layer visibility using MapLibre's setLayoutProperty
     // This is much smoother than removing/re-adding layers

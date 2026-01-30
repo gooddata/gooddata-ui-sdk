@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-theme-provider",
-    "version": "11.19.0-alpha.0",
+    "version": "11.19.0-alpha.1",
     "description": "GoodData SDK - Theme provider",
     "repository": {
         "type": "git",
@@ -83,7 +83,7 @@
         "eslint-plugin-no-only-tests": "2.6.0",
         "eslint-plugin-prettier": "5.5.4",
         "eslint-plugin-react": "7.37.5",
-        "eslint-plugin-react-hooks": "4.6.0",
+        "eslint-plugin-react-hooks": "5.2.0",
         "eslint-plugin-regexp": "1.15.0",
         "eslint-plugin-sonarjs": "3.0.6",
         "eslint-plugin-tsdoc": "0.2.14",

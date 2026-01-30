@@ -350,6 +350,19 @@ export interface IGeoLayerAdapter<
     syncToMap(layer: TLayer, map: IMapFacade, output: TOutput, context: IGeoAdapterContext): void;
 
     /**
+     * Returns a stable key that identifies configuration changes requiring a full layer re-sync.
+     *
+     * @remarks
+     * Some configuration changes cannot be applied incrementally and require rebuilding MapLibre
+     * resources (e.g. the source definition or the set of rendered layers). In such cases, the
+     * adapter can provide a minimal key derived from `context.config` (and optionally the layer
+     * definition) so the core sync hook can re-run `syncToMap` (remove + add) when needed.
+     *
+     * If not provided, layers are re-synced only when their prepared data changes.
+     */
+    getMapSyncKey?(layer: TLayer, context: IGeoAdapterContext): string;
+
+    /**
      * Get tooltip configuration for unified tooltip handling.
      *
      * @remarks

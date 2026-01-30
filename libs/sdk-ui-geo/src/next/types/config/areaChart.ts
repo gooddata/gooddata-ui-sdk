@@ -35,7 +35,11 @@ export interface IGeoAreaChartConfig {
      */
     tileset?: GeoTileset;
     /**
-     * Maximum zoom level allowed on the map. Null/undefined keeps MapLibre defaults.
+     * Maximum zoom level allowed on the map.
+     *
+     * @remarks
+     * - `undefined` keeps default max zoom level
+     * - `null` switches to unrestricted zoom level
      */
     maxZoomLevel?: number | null;
     separators?: ISeparators;

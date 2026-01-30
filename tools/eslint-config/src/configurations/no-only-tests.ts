@@ -1,16 +1,30 @@
 // (C) 2025-2026 GoodData Corporation
 
-import type { IConfiguration } from "../types.js";
+import type { IDualConfiguration, IPackage } from "../types.js";
 
-export const noOnlyTests: IConfiguration<"no-only-tests"> = {
-    packages: [
-        {
-            name: "eslint-plugin-no-only-tests",
-            version: "2.6.0",
-        },
-    ],
-    plugins: ["no-only-tests"],
-    rules: {
-        "no-only-tests/no-only-tests": ["error", { block: ["fixture"], focus: ["only"] }],
+const noOnlyTestsPluginV8: IPackage = {
+    name: "eslint-plugin-no-only-tests",
+    version: "2.6.0",
+};
+
+const noOnlyTestsPluginV9: IPackage = {
+    name: "eslint-plugin-no-only-tests",
+    version: "3.3.0",
+};
+
+const rules = {
+    "no-only-tests/no-only-tests": ["error", { block: ["fixture"], focus: ["only"] }],
+};
+
+export const noOnlyTests: IDualConfiguration<"no-only-tests"> = {
+    v8: {
+        packages: [noOnlyTestsPluginV8],
+        plugins: ["no-only-tests"],
+        rules,
+    },
+    v9: {
+        packages: [noOnlyTestsPluginV9],
+        plugins: { "no-only-tests": noOnlyTestsPluginV9 },
+        rules,
     },
 };

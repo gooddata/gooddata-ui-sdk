@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type KeyboardEvent, type RefObject, useCallback, useMemo, useRef } from "react";
 
@@ -53,6 +53,7 @@ export function UiDropdown({
     ignoreClicksOnByClass = EMPTY_IGNORE_CLICKS_ON,
     zIndex,
     width,
+    fullWidthButton,
     enableFocusTrap = true,
     autofocusOnOpen = false,
     initialFocus,
@@ -166,7 +167,12 @@ export function UiDropdown({
 
     return (
         <>
-            <div ref={buttonWrapperRef} id={buttonId} className={e("button")} onKeyDown={handleKeyDown}>
+            <div
+                ref={buttonWrapperRef}
+                id={buttonId}
+                className={e("button", { fullWidth: !!fullWidthButton })}
+                onKeyDown={handleKeyDown}
+            >
                 {renderButton(buttonRenderProps)}
             </div>
 

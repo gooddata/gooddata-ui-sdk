@@ -3,7 +3,6 @@
 import type {
     AfmGetQualityIssuesResponse,
     AfmQualityIssue,
-    AfmQualityIssuesCalculationStatusResponseStatusEnum,
     AfmTriggerQualityIssuesCalculationResponse,
 } from "@gooddata/api-client-tiger";
 import {
@@ -14,7 +13,6 @@ import {
     type SemanticQualityIssueAttributeName,
     type SemanticQualityIssueCode,
     type SemanticQualityIssueSeverity,
-    type SemanticQualityIssuesCalculationStatus,
     SemanticQualityIssueSeverityOrder as SeverityOrder,
 } from "@gooddata/sdk-model";
 
@@ -78,27 +76,9 @@ export function convertQualityIssuesCalculationResponse(
     response: AfmTriggerQualityIssuesCalculationResponse,
 ): ISemanticQualityIssuesCalculation {
     return {
-        status: convertQualityIssuesCalculationStatus(response.status),
+        status: response.status,
         processId: response.processId,
     };
-}
-
-/**
- * Converts a quality issues calculation status enum from backend format to SDK model format.
- */
-function convertQualityIssuesCalculationStatus(
-    status: AfmQualityIssuesCalculationStatusResponseStatusEnum,
-): SemanticQualityIssuesCalculationStatus {
-    if (status.includes("RUNNING")) {
-        return "RUNNING";
-    }
-    if (status.includes("COMPLETED")) {
-        return "COMPLETED";
-    }
-    if (status.includes("FAILED")) {
-        return "FAILED";
-    }
-    return "NOT_FOUND";
 }
 
 /**

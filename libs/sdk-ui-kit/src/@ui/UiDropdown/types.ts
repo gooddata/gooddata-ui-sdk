@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ReactNode, type RefObject } from "react";
 
@@ -102,6 +102,12 @@ export interface IUiDropdownProps {
      * Width of the dropdown body.
      */
     width?: number | "same-as-anchor" | "auto";
+
+    /**
+     * Whether the dropdown button should take up the full width of the parent element.
+     * @defaultValue false
+     */
+    fullWidthButton?: boolean;
 
     /**
      * Whether to enable focus trap.

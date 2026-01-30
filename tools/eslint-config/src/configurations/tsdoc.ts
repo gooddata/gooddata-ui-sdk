@@ -1,8 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import type { IConfiguration } from "../types.js";
-
-export const tsdoc: IConfiguration = {
+export const tsdoc = {
     packages: [
         {
             name: "eslint-plugin-tsdoc",

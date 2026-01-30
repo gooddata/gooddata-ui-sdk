@@ -1,16 +1,21 @@
 // (C) 2026 GoodData Corporation
 
-import type { IConfiguration } from "../types.js";
+import type { IDualConfiguration, IPackage } from "../types.js";
 
-export const barrelFiles: IConfiguration<"no-barrel-files"> = {
-    packages: [
-        {
-            name: "eslint-plugin-no-barrel-files",
-            version: "1.2.2",
-        },
-    ],
+const noBarrelFilesPlugin: IPackage = {
+    name: "eslint-plugin-no-barrel-files",
+    version: "1.2.2",
+};
+
+const commonConfiguration = {
+    packages: [noBarrelFilesPlugin],
     plugins: ["no-barrel-files"],
     rules: {
         "no-barrel-files/no-barrel-files": "error",
     },
+};
+
+export const barrelFiles: IDualConfiguration<"no-barrel-files"> = {
+    v8: { ...commonConfiguration, plugins: ["no-barrel-files"] },
+    v9: { ...commonConfiguration, plugins: { "no-barrel-files": noBarrelFilesPlugin } },
 };

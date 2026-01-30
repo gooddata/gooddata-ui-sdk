@@ -1,9 +1,9 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 /* eslint-disable no-constant-condition */
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import type { ISemanticQualityReport } from "@gooddata/sdk-model";
+import type { ISemanticQualityIssuesCalculation, ISemanticQualityReport } from "@gooddata/sdk-model";
 
 const maxPollingInterval = 30 * 1000; // 30 seconds
 const maxPollingTime = 5 * 60 * 1000; // 5 minutes
@@ -14,7 +14,7 @@ type Options = {
     signal?: AbortSignal;
 };
 
-export async function getQualityReportQuery({
+async function getQualityReportQuery({
     backend,
     workspace,
     signal,
@@ -22,30 +22,37 @@ export async function getQualityReportQuery({
     return backend.workspace(workspace).genAI().getSemanticQuality().getQualityReport({ signal });
 }
 
-export async function triggerQualityIssuesCalculationQuery(
+export async function triggerQualityIssuesQuery(
     options: Options,
+    onStatusChange?: (status: ISemanticQualityIssuesCalculation["status"]) => void,
 ): Promise<ISemanticQualityReport> {
-    const { backend, workspace, signal } = options;
+    const { signal } = options;
 
-    const calculation = await backend
-        .workspace(workspace)
-        .genAI()
-        .getSemanticQuality()
-        .triggerQualityIssuesCalculation();
+    const report = await getQualityReportQuery(options);
 
-    let report: ISemanticQualityReport = {
-        issues: [],
-        updatedAt: undefined,
-        status: calculation.status,
-    };
+    // Poll for the report if necessary
+    return pollingForSemanticCheckStatus(options, report, signal, onStatusChange);
+}
 
-    // If the calculation is completed, fetch the report without polling
-    if (calculation.status === "COMPLETED") {
-        return await getQualityReportQuery(options);
-    }
+export async function triggerQualityIssuesCalculationQuery(options: Options): Promise<void> {
+    const { backend, workspace } = options;
+
+    await backend.workspace(workspace).genAI().getSemanticQuality().triggerQualityIssuesCalculation();
+}
+
+async function pollingForSemanticCheckStatus(
+    options: Options,
+    report: ISemanticQualityReport,
+    signal?: AbortSignal,
+    onStatusChange?: (status: ISemanticQualityIssuesCalculation["status"]) => void,
+) {
+    let currentReport: ISemanticQualityReport = report;
+
+    // Update status
+    onStatusChange?.(currentReport.status);
 
     // If the calculation is still running, poll for the report until it is completed or failed
-    if (calculation.status === "RUNNING") {
+    if (currentReport.status === "RUNNING" || currentReport.status === "SYNCING") {
         const startTime = Date.now();
         let pollingInterval = 2000; // 2 seconds
 
@@ -68,15 +75,17 @@ export async function triggerQualityIssuesCalculationQuery(
             // Increase polling interval
             pollingInterval = Math.min(pollingInterval * 1.5, maxPollingInterval);
 
-            report = await getQualityReportQuery(options);
+            currentReport = await getQualityReportQuery(options);
+            // Update status
+            onStatusChange?.(currentReport.status);
 
-            if (report.status === "COMPLETED" || report.status === "FAILED") {
+            if (currentReport.status === "COMPLETED" || currentReport.status === "FAILED") {
                 break;
             }
         }
     }
 
-    return report;
+    return currentReport;
 }
 
 export function createQueryId(): string {

@@ -32,7 +32,11 @@
      * This design avoids unnecessary churn in this file.
      */
     "allowedAlternativeVersions": {
-        "vite": ["npm:rolldown-vite@latest"]
+        "vite": ["npm:rolldown-vite@latest"],
+        "eslint": ["^8.57.1"],
+        "eslint-plugin-react-hooks": ["4.6.0"],
+        "eslint-plugin-no-only-tests": ["2.6.0"],
+        "eslint-plugin-regexp": ["1.15.0"]
         /**
          * For example, allow some projects to use an older TypeScript compiler
          * (in addition to whatever "usual" version is being used by other projects in the repo):

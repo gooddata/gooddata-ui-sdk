@@ -29,6 +29,7 @@ const defaultAccessibilityConfig: IAccessibilityConfigBase = {};
  * @internal
  */
 export interface IUiPopoverProps {
+    id?: string;
     anchor: ReactElement<any>;
     width?: "default" | number;
     disabled?: boolean;
@@ -61,6 +62,7 @@ export interface IUiPopoverProps {
  * @internal
  */
 export function UiPopover({
+    id,
     accessibilityConfig = defaultAccessibilityConfig,
     anchor,
     width = "default",
@@ -84,7 +86,7 @@ export function UiPopover({
     const returnFocus = useMemo(() => {
         return returnFocusTo ?? ref;
     }, [returnFocusTo]);
-    const id = useIdPrefixed("popover");
+    const currentId = useIdPrefixed("popover");
     const titleId = useIdPrefixed("popover-title");
 
     return (
@@ -125,7 +127,7 @@ export function UiPopover({
                         }
                     >
                         <div
-                            id={id}
+                            id={id ?? currentId}
                             tabIndex={0}
                             className={b()}
                             style={{ width: width === "default" ? undefined : width }}

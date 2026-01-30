@@ -75,7 +75,7 @@
         "eslint-plugin-no-only-tests": "^2.4.0",
         "eslint-plugin-prettier": "^5.5.1",
         "eslint-plugin-react": "^7.31.10",
-        "eslint-plugin-react-hooks": "^4.5.0",
+        "eslint-plugin-react-hooks": "5.2.0",
         "eslint-plugin-regexp": "^1.9.0",
         "eslint-plugin-tsdoc": "^0.2.14",
         "html-webpack-plugin": "^5.3.1",

@@ -128,7 +128,7 @@ export function useMapInitialization(
 
     const isExportMode = config?.isExportMode ?? false;
     const isViewportFrozen = Boolean(config?.viewport?.frozen);
-    const maxZoom = typeof config?.maxZoomLevel === "number" ? config.maxZoomLevel : undefined;
+    const maxZoom = config?.maxZoomLevel;
     const tileset: GeoTileset = config?.tileset ?? "default";
 
     useEffect(() => {

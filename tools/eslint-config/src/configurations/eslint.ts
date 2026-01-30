@@ -1,6 +1,11 @@
 // (C) 2025-2026 GoodData Corporation
 
-import type { IConfiguration } from "../types.js";
+import type { IDualConfiguration, IPackage } from "../types.js";
+
+const eslintJs: IPackage = {
+    name: "@eslint/js",
+    version: "9.28.0",
+};
 
 // Lodash-es imports that should be replaced with native alternatives
 // Maps import name(s) to the recommended alternative
@@ -84,87 +89,165 @@ const restrictedImportPaths = [
     },
 ];
 
-export const eslint: IConfiguration = {
-    extends: ["eslint:recommended"],
-    rules: {
-        "no-console": [2, { allow: ["warn", "error"] }],
-        "no-restricted-exports": [
-            2,
-            {
-                restrictDefaultExports: {
-                    direct: true,
-                    named: true,
-                    defaultFrom: true,
-                    namedFrom: true,
-                    namespaceFrom: true,
-                },
-            },
-        ],
-        "no-duplicate-imports": ["error", { includeExports: true }],
-        "no-restricted-imports": [
-            "error",
-            {
-                paths: restrictedImportPaths,
-                patterns: lodashEsPatterns,
-            },
-        ],
-        "no-restricted-syntax": [
-            "error",
-            {
-                selector: "MemberExpression[object.name='React']",
-                message: "Do not use `React.*`. Use named imports instead.",
-            },
-        ],
-        "sort-imports": [
-            "error",
-            { ignoreCase: false, ignoreDeclarationSort: true, ignoreMemberSort: false },
-        ],
-
-        // this rule is in direct conflict with the regexp plugin
-        "no-useless-escape": "off",
-
-        "no-negated-condition": "error",
-        "no-unneeded-ternary": ["error", { defaultAssignment: false }],
-        "no-extra-boolean-cast": "error",
-        "no-unexpected-multiline": "off",
-        "no-warning-comments": [
-            "warn",
-            {
-                terms: ["todo"],
-                location: "start",
-            },
-        ],
-    },
-    overrides: [
+const commonRules = {
+    "no-console": [2, { allow: ["warn", "error"] }],
+    "no-restricted-exports": [
+        2,
         {
-            files: ["**/*.ts", "**/*.tsx"],
-            excludedFiles: [
-                "**/vitest.config.ts",
-                "**/vitest.*.config.ts",
-                "**/vitest.setup.ts",
-                "**/vitest.setup.tsx",
-                "**/*.test.ts",
-                "**/*.test.tsx",
-                "**/*.test.utils.ts",
-                "**/*.test.utils.tsx",
-                "**/*.test.helpers.ts",
-                "**/*.test.helpers.tsx",
-            ],
-            rules: {
-                "no-restricted-imports": [
-                    "error",
-                    {
-                        paths: restrictedImportPaths,
-                        patterns: [
-                            ...lodashEsPatterns,
-                            {
-                                group: ["vitest"],
-                                message: "Importing from vitest is only allowed in test files.",
-                            },
-                        ],
-                    },
-                ],
+            restrictDefaultExports: {
+                direct: true,
+                named: true,
+                defaultFrom: true,
+                namedFrom: true,
+                namespaceFrom: true,
             },
         },
     ],
+    "no-duplicate-imports": ["error", { includeExports: true }],
+    "no-restricted-imports": [
+        "error",
+        {
+            paths: restrictedImportPaths,
+            patterns: lodashEsPatterns,
+        },
+    ],
+    "no-restricted-syntax": [
+        "error",
+        {
+            selector: "MemberExpression[object.name='React']",
+            message: "Do not use `React.*`. Use named imports instead.",
+        },
+    ],
+    "sort-imports": ["error", { ignoreCase: false, ignoreDeclarationSort: true, ignoreMemberSort: false }],
+
+    // this rule is in direct conflict with the regexp plugin
+    "no-useless-escape": "off",
+
+    "no-negated-condition": "error",
+    "no-unneeded-ternary": ["error", { defaultAssignment: false }],
+    "no-extra-boolean-cast": "error",
+    "no-unexpected-multiline": "off",
+    "no-warning-comments": [
+        "warn",
+        {
+            terms: ["todo"],
+            location: "start",
+        },
+    ],
+};
+
+const overrides = [
+    {
+        files: ["**/*.ts", "**/*.tsx"],
+        excludedFiles: [
+            "**/vitest.config.ts",
+            "**/vitest.*.config.ts",
+            "**/vitest.setup.ts",
+            "**/vitest.setup.tsx",
+            "**/*.test.ts",
+            "**/*.test.tsx",
+            "**/*.test.utils.ts",
+            "**/*.test.utils.tsx",
+            "**/*.test.helpers.ts",
+            "**/*.test.helpers.tsx",
+        ],
+        rules: {
+            "no-restricted-imports": [
+                "error",
+                {
+                    paths: restrictedImportPaths,
+                    patterns: [
+                        ...lodashEsPatterns,
+                        {
+                            group: ["vitest"],
+                            message: "Importing from vitest is only allowed in test files.",
+                        },
+                    ],
+                },
+            ],
+        },
+    },
+    {
+        // ESLint flat config files require default export
+        files: ["**/eslint.config.ts", "**/eslint.config.js"],
+        rules: {
+            "no-restricted-exports": "off",
+        },
+    },
+];
+
+export const eslint: IDualConfiguration = {
+    v8: {
+        extends: ["eslint:recommended"],
+        rules: commonRules,
+        overrides,
+    },
+    v9: {
+        packages: [eslintJs],
+        rules: {
+            "constructor-super": "error",
+            "for-direction": "error",
+            "getter-return": "error",
+            "no-async-promise-executor": "error",
+            "no-case-declarations": "error",
+            "no-class-assign": "error",
+            "no-compare-neg-zero": "error",
+            "no-cond-assign": "error",
+            "no-const-assign": "error",
+            "no-constant-binary-expression": "error",
+            "no-constant-condition": "error",
+            "no-control-regex": "error",
+            "no-debugger": "error",
+            "no-delete-var": "error",
+            "no-dupe-args": "error",
+            "no-dupe-class-members": "error",
+            "no-dupe-else-if": "error",
+            "no-dupe-keys": "error",
+            "no-duplicate-case": "error",
+            "no-empty": "error",
+            "no-empty-character-class": "error",
+            "no-empty-pattern": "error",
+            "no-empty-static-block": "error",
+            "no-ex-assign": "error",
+            "no-extra-boolean-cast": "error",
+            "no-fallthrough": "error",
+            "no-func-assign": "error",
+            "no-global-assign": "error",
+            "no-import-assign": "error",
+            "no-invalid-regexp": "error",
+            "no-irregular-whitespace": "error",
+            "no-loss-of-precision": "error",
+            "no-misleading-character-class": "error",
+            "no-new-native-nonconstructor": "error",
+            "no-nonoctal-decimal-escape": "error",
+            "no-obj-calls": "error",
+            "no-octal": "error",
+            "no-prototype-builtins": "error",
+            "no-redeclare": "error",
+            "no-regex-spaces": "error",
+            "no-self-assign": "error",
+            "no-setter-return": "error",
+            "no-shadow-restricted-names": "error",
+            "no-sparse-arrays": "error",
+            "no-this-before-super": "error",
+            "no-undef": "error",
+            "no-unexpected-multiline": "error",
+            "no-unreachable": "error",
+            "no-unsafe-finally": "error",
+            "no-unsafe-negation": "error",
+            "no-unsafe-optional-chaining": "error",
+            "no-unused-labels": "error",
+            "no-unused-private-class-members": "error",
+            "no-unused-vars": "error",
+            "no-useless-backreference": "error",
+            "no-useless-catch": "error",
+            "no-useless-escape": "error",
+            "no-with": "error",
+            "require-yield": "error",
+            "use-isnan": "error",
+            "valid-typeof": "error",
+            ...commonRules,
+        },
+        overrides,
+    },
 };

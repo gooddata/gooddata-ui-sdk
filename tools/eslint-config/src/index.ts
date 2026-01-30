@@ -20,11 +20,11 @@ import { regexp } from "./configurations/regexp.js";
 import { security } from "./configurations/security.js";
 import { sonarjs } from "./configurations/sonarjs.js";
 import { storybook } from "./configurations/storybook.js";
-import { tsdoc } from "./configurations/tsdoc.js";
 import { typescript } from "./configurations/typescript.js";
 import { vitest } from "./configurations/vitest.js";
+import { type IDualConfiguration } from "./types.js";
 
-export const common = [
+export const commonConfigurations: IDualConfiguration[] = [
     env,
     eslint,
     header,
@@ -33,21 +33,21 @@ export const common = [
     import_,
     jsdoc,
     noOnlyTests,
-    prettier,
+    prettier, // TODO: apply last somehow
     regexp,
     sonarjs,
-    tsdoc,
+    // tsdoc,
     security,
     ignore,
 ];
 
 // please note, if you modify keys in the following array, please run `npm run update-package` in addition to `npm run build`
-export const variants = {
+const commonVariants: Record<string, IDualConfiguration[]> = {
     browser: [browserEnv], // for any packages that uses document, but are not react libs
     "browser-esm": [browserEnv, esm, importEsm], // unsure if needed
     vitest: [vitest],
-    esm: [esm, importEsm], // for when we convert MAQL language server to ESM
-    "esm-vitest": [esm, importEsm, vitest], // for @gooddata/util
+    esm: [esm, importEsm], // used for this lib
+    "esm-vitest": [esm, importEsm, vitest], // for @gooddata/util and MAQL language server
     react: [browserEnv, esm, react, reactHooks], // for skel tsx
     "react-vitest": [browserEnv, esm, react, reactHooks, vitest], // for gdc-ui libs
     "react-cypress": [browserEnv, esm, react, reactHooks, cypress, chaiFriendly], // for sdk-ui-tests, and probably gdc-ui
@@ -56,3 +56,6 @@ export const variants = {
     "esm-react-vitest": [browserEnv, esm, react, reactHooks, importEsm, vitest], // for most sdk react libs with vitest
     "esm-react-vitest-storybook": [browserEnv, esm, react, reactHooks, importEsm, vitest, storybook], // for sdk-ui-tests
 };
+
+export const v8Variants = { ...commonVariants };
+export const v9Variants = { ...commonVariants };

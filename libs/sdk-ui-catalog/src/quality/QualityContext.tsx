@@ -3,11 +3,16 @@
 import { type PropsWithChildren, createContext, useCallback, useContext, useMemo, useState } from "react";
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import type { ISemanticQualityIssue, ISemanticQualityReport, Identifier } from "@gooddata/sdk-model";
+import type {
+    ISemanticQualityIssue,
+    ISemanticQualityReport,
+    Identifier,
+    SemanticQualityIssuesCalculationStatus,
+} from "@gooddata/sdk-model";
 import { type UseCancelablePromiseStatus, useCancelablePromise } from "@gooddata/sdk-ui";
 
 import { useIsCatalogQualityEnabled } from "./gate.js";
-import { createQueryId, getQualityReportQuery, triggerQualityIssuesCalculationQuery } from "./query.js";
+import { createQueryId, triggerQualityIssuesCalculationQuery, triggerQualityIssuesQuery } from "./query.js";
 
 type QualityQueryType = "fetch" | "trigger";
 
@@ -27,7 +32,7 @@ const initialState: IQualityState = {
     status: "pending",
     issues: [],
     updatedAt: undefined,
-    reportStatus: "NOT_FOUND",
+    reportStatus: "RUNNING",
 };
 const initialActions: IQualityActions = {
     fetchQualityReport: () => {},
@@ -47,15 +52,18 @@ export function QualityProvider({ backend, workspace, children }: Props) {
 
     const [queryType, setQueryType] = useState<QualityQueryType>("fetch");
     const [queryKey, setQueryKey] = useState<string>(createQueryId);
+    const [lastReportStatus, setLastReportStatus] = useState<SemanticQualityIssuesCalculationStatus>(
+        initialState.reportStatus,
+    );
 
     const qualityReport = useCancelablePromise(
         {
             promise: enabled
-                ? (signal) => {
+                ? async (signal) => {
                       if (queryType === "trigger") {
-                          return triggerQualityIssuesCalculationQuery({ backend, workspace, signal });
+                          await triggerQualityIssuesCalculationQuery({ backend, workspace, signal });
                       }
-                      return getQualityReportQuery({ backend, workspace, signal });
+                      return triggerQualityIssuesQuery({ backend, workspace, signal }, setLastReportStatus);
                   }
                 : null,
             onError: (error) => console.error(error),
@@ -80,9 +88,9 @@ export function QualityProvider({ backend, workspace, children }: Props) {
             status: qualityReport.status,
             issues: qualityReport.result?.issues ?? initialState.issues,
             updatedAt: qualityReport.result?.updatedAt,
-            reportStatus: qualityReport.result?.status ?? initialState.reportStatus,
+            reportStatus: qualityReport.result?.status ?? lastReportStatus ?? initialState.reportStatus,
         }),
-        [qualityReport],
+        [qualityReport, lastReportStatus],
     );
 
     // Exposed actions

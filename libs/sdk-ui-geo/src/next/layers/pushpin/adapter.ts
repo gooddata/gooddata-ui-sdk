@@ -72,6 +72,44 @@ function getDisplayFormId(attribute?: IAttribute): string | undefined {
     return undefined;
 }
 
+function createPushpinConfig(context: IGeoAdapterContext): IGeoPushpinChartConfig {
+    return {
+        ...context.config,
+        points: context.config?.points,
+    };
+}
+
+function createPushpinTooltipAttrIds(layer: IGeoLayerPushpin): {
+    locationName?: string;
+    segment?: string;
+} {
+    return {
+        locationName: getDisplayFormId(layer.tooltipText),
+        segment: getDisplayFormId(layer.segmentBy),
+    };
+}
+
+function createPushpinSource(
+    layer: IGeoLayerPushpin,
+    geoData: IPushpinGeoData,
+    colorStrategy: ReturnType<typeof getPushpinColorStrategy>,
+    context: IGeoAdapterContext,
+) {
+    const config = createPushpinConfig(context);
+    const hasClustering = isClusteringAllowed(geoData, config.points?.groupNearbyPoints);
+
+    return {
+        config,
+        source: createPushpinDataSource({
+            geoData,
+            colorStrategy,
+            config,
+            hasClustering,
+            tooltipAttrIds: createPushpinTooltipAttrIds(layer),
+        }),
+    };
+}
+
 function createExecution(layer: IGeoLayerPushpin, context: IGeoAdapterContext): IPreparedExecution {
     const { backend, workspace, execConfig, globalFilters, executionFactory } = context;
     const { latitude, longitude, size, color, segmentBy, filters = [], sortBy = [], tooltipText } = layer;
@@ -142,25 +180,7 @@ export const pushpinAdapter: IGeoLayerAdapter<IGeoLayerPushpin, IPushpinLayerOut
 
         const { colorPalette = [], colorMapping = [] } = context;
         const colorStrategy = getPushpinColorStrategy(colorPalette, colorMapping, geoData, dataView);
-
-        // Get pushpin-specific config with defaults
-        const pushpinConfig: IGeoPushpinChartConfig = {
-            ...context.config,
-            points: context.config?.points,
-        };
-        const hasClustering = isClusteringAllowed(geoData, pushpinConfig.points?.groupNearbyPoints);
-
-        // Create complete source with all features and styling
-        const source = createPushpinDataSource({
-            geoData,
-            colorStrategy,
-            config: pushpinConfig,
-            hasClustering,
-            tooltipAttrIds: {
-                locationName: getDisplayFormId(layer.tooltipText),
-                segment: getDisplayFormId(layer.segmentBy),
-            },
-        });
+        const { source } = createPushpinSource(layer, geoData, colorStrategy, context);
 
         const legend = computeLegend(geoData, colorStrategy, {
             layerType: "pushpin",
@@ -177,9 +197,21 @@ export const pushpinAdapter: IGeoLayerAdapter<IGeoLayerPushpin, IPushpinLayerOut
             return;
         }
 
-        const config = context.config ?? {};
-        // Use pre-computed source from output - no transformation needed
-        syncPushpinLayerToMap(map, layer.id, output.source, output.geoData, config);
+        // Rebuild MapLibre source from current config so AD toggles are respected without re-execution.
+        const { config, source } = createPushpinSource(layer, output.geoData, output.colorStrategy, context);
+        syncPushpinLayerToMap(map, layer.id, source, output.geoData, config);
+    },
+
+    getMapSyncKey(_layer, context): string {
+        // Only include settings configurable from AD that affect MapLibre source/feature props.
+        const points = context.config?.points;
+        return [
+            "pushpin",
+            "points",
+            String(points?.groupNearbyPoints),
+            String(points?.minSize),
+            String(points?.maxSize),
+        ].join(":");
     },
 
     removeFromMap(layer, map): void {

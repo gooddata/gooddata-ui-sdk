@@ -26,11 +26,11 @@ import { type IStoryInfo } from "../stories/_infra/toBackstop.js";
 const ScenarioConfig = [
     {
         /*
-         * Specific delay for the single measure bar chart scenario.
+         * Specific delay for bar charts scenarios
          * This is needed because the label on the bar chart changes colour after render,
          * from black to white.
          */
-        idRegex: /01.*BarChart.*base.*single_measure$/g,
+        idRegex: /(01|04).*(BarChart|ColumnChart|ComboChart)/g,
         config: {
             delay: {
                 postReady: 200,

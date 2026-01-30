@@ -11,6 +11,7 @@ This package consolidates ESLint configurations that were previously scattered a
 
 The new approach provides:
 
+- **ESLint v8 and v9 support** - Dual configuration format for both legacy and flat config
 - **Modular structure** - Rules organized by plugin/concern in separate files
 - **Easy to edit** - Find and modify rules in logical locations
 - **Unified configs** - Single source of truth for linting standards
@@ -31,10 +32,10 @@ The new approach provides:
     - `variants` object: Different combinations for specific use cases
 
 3. **Build Process** (`npm run build`)
-    - Merges configuration modules into JSON files in `dist/`
-    - Creates `base.json` (all common configs)
-    - Creates variant files: `browser.json`, `react.json`, `esm-react.json`, etc.
-    - Consumers import via: `@gooddata/eslint-config/react` � `dist/react.json`
+    - Generates both ESLint v8 (JSON) and v9 (JS flat config) formats
+    - Creates `base.json` + `base.js` (all common configs)
+    - Creates variant files: `browser.json`/`.js`, `react.json`/`.js`, etc.
+    - Package exports use conditional exports: `require` → JSON (v8), `import` → JS (v9)
 
 4. **Package Sync** (`npm run update-package`)
     - Auto-updates `package.json` dependencies and peer dependencies
@@ -43,24 +44,91 @@ The new approach provides:
 
 ## Available Variants
 
-- **base** (`.`) - Core rules for all packages
-- **browser** (`/browser`) - For packages using browser APIs (document, window)
-- **browser-esm** (`/browser-esm`) - Browser + ESM import rules
-- **esm** (`/esm`) - ESM-specific import rules
-- **esm-vitest** (`/esm-vitest`) - ESM + Vitest rules
-- **react** (`/react`) - Browser + React + React Hooks rules
-- **react-cypress** (`/react-cypress`) - Browser + React + React Hooks + Cypress rules
-- **esm-react** (`/esm-react`) - Browser + React + React Hooks + ESM rules (most React libraries)
-- **esm-react-cypress** (`/esm-react-cypress`) - Browser + React + React Hooks + ESM + Cypress rules
-- **esm-react-vitest** (`/esm-react-vitest`) - Browser + React + React Hooks + ESM + Vitest rules
+For a complete list of available variants and their required packages, see:
+
+- [PACKAGES_V8.md](./PACKAGES_V8.md) - Package requirements for ESLint v8 configurations
+- [PACKAGES_V9.md](./PACKAGES_V9.md) - Package requirements for ESLint v9 configurations
+
+## ESLint v8 vs v9 Support
+
+This package supports both ESLint v8 (legacy config) and ESLint v9 (flat config):
+
+| ESLint Version | Config Format | File Extension     | Import Type |
+| -------------- | ------------- | ------------------ | ----------- |
+| v8             | Legacy JSON   | `.eslintrc.js`     | `require()` |
+| v9             | Flat Config   | `eslint.config.js` | `import`    |
+
+The package uses conditional exports to automatically serve the correct format:
+
+- **CommonJS/require** → Returns JSON config for ESLint v8
+- **ESM/import** → Returns JS flat config for ESLint v9
+
+Some packages differ between v8 and v9 (e.g., `eslint-plugin-header` vs `eslint-plugin-headers`). See [PACKAGES_V8.md](./PACKAGES_V8.md) and [PACKAGES_V9.md](./PACKAGES_V9.md) for the complete list of required packages for each version.
 
 ## Usage
 
-### TypeScript Projects (Recommended)
+### ESLint v9 (Flat Config) - Recommended
 
-For TypeScript projects, use the `tsOverride` helper which automatically configures the TypeScript parser, import resolver, and other required settings:
+For ESLint v9 with flat config, create an `eslint.config.js` or `eslint.config.ts` file:
+
+```typescript
+// eslint.config.ts
+// (C) 2025 GoodData Corporation
+
+import config from "@gooddata/eslint-config/esm-react-vitest";
+
+export default config;
+```
+
+For TypeScript projects, use the `tsOverride` helper to configure the TypeScript parser with the correct `tsconfigRootDir`:
+
+```typescript
+// eslint.config.ts
+// (C) 2025 GoodData Corporation
+
+import config from "@gooddata/eslint-config/esm-react-vitest";
+import { tsOverride } from "@gooddata/eslint-config/tsOverride";
+
+export default [
+    ...config,
+    tsOverride(import.meta.dirname, {
+        // Optional: Add custom TypeScript rule overrides here
+        "@typescript-eslint/no-namespace": "off",
+    }),
+];
+```
+
+**What `tsOverride` does in v9:**
+
+- Configures `languageOptions.parserOptions.tsconfigRootDir` to point to your project directory
+- Applies to `**/*.ts` and `**/*.tsx` files
+- Allows you to pass custom rule overrides as the second parameter
+
+To add custom rules or overrides without TypeScript configuration:
+
+```typescript
+// eslint.config.ts
+// (C) 2025 GoodData Corporation
+
+import config from "@gooddata/eslint-config/esm-react-vitest";
+
+export default [
+    ...config,
+    {
+        rules: {
+            // Custom rule overrides
+            "@typescript-eslint/no-namespace": "off",
+        },
+    },
+];
+```
+
+### ESLint v8 (Legacy Config)
+
+For TypeScript projects using ESLint v8, use the `tsOverride` helper which automatically configures the TypeScript parser, import resolver, and other required settings:
 
 ```javascript
+// .eslintrc.js
 // (C) 2020 GoodData Corporation
 
 const { tsOverride } = require("@gooddata/eslint-config/tsOverride");
@@ -85,9 +153,9 @@ module.exports = {
 - Applies to `**/*.ts` and `**/*.tsx` files
 - Allows you to pass custom rule overrides as the second parameter
 
-### Non-TypeScript Projects
+### Non-TypeScript Projects (v8)
 
-For non-TypeScript projects, simply extend the configuration:
+For non-TypeScript projects using ESLint v8, simply extend the configuration:
 
 ```javascript
 module.exports = {
@@ -97,7 +165,7 @@ module.exports = {
 
 **Important Notes:**
 
-- **TypeScript Projects**: Using `tsOverride(__dirname, rules)` is **mandatory** for TypeScript projects. Without it, `@typescript-eslint/parser` won't know where to find your `tsconfig.json`, and import resolution will not work correctly.
+- **ESLint v8 TypeScript Projects**: Using `tsOverride(__dirname, rules)` is **mandatory** for TypeScript projects with ESLint v8. Without it, `@typescript-eslint/parser` won't know where to find your `tsconfig.json`, and import resolution will not work correctly.
 
 - **Peer Dependencies**: Only packages from the `common` configuration are listed in `peerDependencies`. Variant-specific packages (e.g., `eslint-plugin-react` for the `react` variant) are **not** included as peer dependencies since they're not required by all consumers.
 
@@ -209,6 +277,7 @@ rules: {
 - **`npm run update-package`** - Syncs dependencies and exports
     - Updates `devDependencies` and `peerDependencies` in `package.json`
     - Updates `exports` field based on available variants
+    - Generates `PACKAGES_V8.md` and `PACKAGES_V9.md` documentation files
     - **Must run after**: adding variants, adding configs, changing package versions
 
 - **`npm run validate`** - Type-checks TypeScript files
