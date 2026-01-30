@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type RefObject, useMemo, useRef } from "react";
+import { type RefObject, useId, useMemo, useRef, useState } from "react";
 
 import { useResponsiveTags } from "./hooks/useResponsiveTags.js";
 import { useTagsInteractions } from "./interactions.js";
@@ -50,8 +50,8 @@ export function UiTags({
     accessibilityConfig = defaultAccessibilityConfig,
 }: IUiTagsProps) {
     const inputRef = useRef<HTMLInputElement | null>(null);
-
-    const expanded = mode === "multi-line";
+    const [popupOpen, setPopupOpen] = useState(false);
+    const popupId = useId();
 
     const isDeletable = canDeleteTags && !readOnly;
     const isAddable = canCreateTag && !readOnly;
@@ -116,7 +116,6 @@ export function UiTags({
             aria-label={accessibilityConfig?.ariaLabel}
             aria-labelledby={accessibilityConfig?.ariaLabelledBy}
             aria-describedby={accessibilityConfig?.ariaDescribedBy}
-            aria-expanded={accessibilityConfig?.ariaExpanded ?? expanded}
             role={accessibilityConfig?.role ?? "list"}
         >
             <div className={e("shadow-container")} ref={allContainerRef}>
@@ -239,17 +238,26 @@ export function UiTags({
                         }}
                     >
                         <UiPopover
-                            onOpen={onAddOpen}
+                            id={popupId}
+                            onOpen={() => {
+                                onAddOpen();
+                                setPopupOpen(true);
+                            }}
                             onClose={() => {
                                 setTag("");
                                 onAddClose();
+                                setPopupOpen(false);
                             }}
                             enableFocusTrap
                             anchor={
                                 <UiButton
                                     label={showedTags.length > 0 ? "" : addLabel}
                                     accessibilityConfig={{
+                                        ariaHaspopup: true,
+                                        ariaControls: popupId,
                                         ariaLabel: showedTags.length > 0 ? addLabel : undefined,
+                                        ariaExpanded: popupOpen,
+                                        role: "listitem",
                                     }}
                                     size={"small"}
                                     iconBefore={"plus"}
@@ -287,7 +295,7 @@ export function UiTags({
                                         }}
                                     />
                                     <UiComboboxPopup>
-                                        <UiComboboxList>
+                                        <UiComboboxList role="none">
                                             {(option, index) => (
                                                 <UiComboboxListItem
                                                     key={option.id}

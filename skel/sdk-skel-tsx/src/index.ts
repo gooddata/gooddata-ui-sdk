@@ -1,5 +1,0 @@
-// (C) 2019-2026 GoodData Corporation
-
-/* eslint-disable no-barrel-files/no-barrel-files */
-
-export type { ISdkComponentProps, SdkComponent } from "./sdkComponent/SdkComponent";

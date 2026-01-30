@@ -33,8 +33,12 @@ export interface IMapOptions {
 
     /**
      * Maximum zoom level allowed on the map (0-22).
+     *
+     * @remarks
+     * - `undefined` keeps default max zoom level
+     * - `null` switches to unrestricted zoom level
      */
-    maxZoom?: number;
+    maxZoom?: number | null;
 
     /**
      * Whether the map should be interactive (pan, zoom, etc.)

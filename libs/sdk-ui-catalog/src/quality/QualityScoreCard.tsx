@@ -17,11 +17,12 @@ export function QualityScoreCard() {
     const intl = useIntl();
     const id = useId();
     const titleId = `quality-score-card-title/${id}`;
-    const { status, issues, updatedAt } = useQualityState();
+    const { status, issues, updatedAt, reportStatus } = useQualityState();
     const { createQualityIssuesCalculation } = useQualityActions();
     const { setQualityCodes } = useFilterActions();
 
     const isLoading = status === "pending" || status === "loading";
+    const isSyncing = reportStatus === "SYNCING";
 
     const handleActionClick = () => {
         const codes = getQualityIssueCodes(issues);
@@ -37,21 +38,22 @@ export function QualityScoreCard() {
         <section
             className="gd-analytics-catalog__quality-score-card"
             aria-labelledby={titleId}
-            aria-busy={isLoading}
+            aria-busy={isLoading || isSyncing}
         >
             <h3 id={titleId} className="gd-analytics-catalog__quality-score-card__title">
                 {intl.formatMessage({ id: "analyticsCatalog.quality.scoreCard.title" })}
             </h3>
             <QualityScoreCardAnnouncements isLoading={isLoading} />
             <QualityScoreCardMenu intl={intl} onRunCheck={handleRunCheck} isLoading={isLoading} />
-            <QualityScoreCardScore issues={issues} isLoading={isLoading} />
+            <QualityScoreCardScore issues={issues} isLoading={isLoading || isSyncing} />
             <QualityScoreCardAction
                 intl={intl}
                 isEmpty={issues.length === 0}
                 isLoading={isLoading}
+                isSyncing={isSyncing}
                 onActionClick={handleActionClick}
             />
-            {updatedAt ? <QualityScoreCardDate date={updatedAt} locale={intl.locale} /> : null}
+            {updatedAt && !isSyncing ? <QualityScoreCardDate date={updatedAt} locale={intl.locale} /> : null}
         </section>
     );
 }

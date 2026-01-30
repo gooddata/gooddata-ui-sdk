@@ -2,19 +2,27 @@
 
 @use "../../../styles/scss/variables";
 
-.gd-ui-kit-dropdown__body {
-    position: relative;
-    border-radius: 3px;
-    font-family: var(--gd-font-family), gdcustomfont, Avenir, "Helvetica Neue", arial, sans-serif;
-    background-color: var(--gd-palette-complementary-0, #fff);
-    box-shadow: 0 1px 20px var(--gd-shadow-color, rgba(20, 56, 93, 0.15));
+.gd-ui-kit-dropdown {
+    &__body {
+        position: relative;
+        border-radius: 3px;
+        font-family: var(--gd-font-family), gdcustomfont, Avenir, "Helvetica Neue", arial, sans-serif;
+        background-color: var(--gd-palette-complementary-0, #fff);
+        box-shadow: 0 1px 20px var(--gd-shadow-color, rgba(20, 56, 93, 0.15));
 
-    @media (forced-colors: active) {
-        // stylelint-disable-next-line declaration-no-important
-        border: 1px solid transparent !important;
+        @media (forced-colors: active) {
+            // stylelint-disable-next-line declaration-no-important
+            border: 1px solid transparent !important;
+        }
+
+        @media #{variables.$small-only} {
+            border-radius: 0;
+        }
     }
 
-    @media #{variables.$small-only} {
-        border-radius: 0;
+    &__button {
+        &--fullWidth {
+            width: 100%;
+        }
     }
 }

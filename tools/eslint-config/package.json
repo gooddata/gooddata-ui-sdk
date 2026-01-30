@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/eslint-config",
-    "version": "11.19.0-alpha.0",
+    "version": "11.19.0-alpha.1",
     "repository": {
         "type": "git",
         "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
@@ -11,59 +11,105 @@
     "sideEffects": false,
     "type": "module",
     "exports": {
-        ".": "./dist/base.json",
-        "./browser": "./dist/browser.json",
-        "./browser-esm": "./dist/browser-esm.json",
-        "./vitest": "./dist/vitest.json",
-        "./esm": "./dist/esm.json",
-        "./esm-vitest": "./dist/esm-vitest.json",
-        "./react": "./dist/react.json",
-        "./react-vitest": "./dist/react-vitest.json",
-        "./react-cypress": "./dist/react-cypress.json",
-        "./esm-react": "./dist/esm-react.json",
-        "./esm-react-cypress": "./dist/esm-react-cypress.json",
-        "./esm-react-vitest": "./dist/esm-react-vitest.json",
-        "./esm-react-vitest-storybook": "./dist/esm-react-vitest-storybook.json",
-        "./tsOverride": "./dist/tsOverride.cjs"
+        ".": {
+            "import": "./dist/base.js",
+            "require": "./dist/base.json"
+        },
+        "./browser": {
+            "import": "./dist/browser.js",
+            "require": "./dist/browser.json"
+        },
+        "./browser-esm": {
+            "import": "./dist/browser-esm.js",
+            "require": "./dist/browser-esm.json"
+        },
+        "./vitest": {
+            "import": "./dist/vitest.js",
+            "require": "./dist/vitest.json"
+        },
+        "./esm": {
+            "import": "./dist/esm.js",
+            "require": "./dist/esm.json"
+        },
+        "./esm-vitest": {
+            "import": "./dist/esm-vitest.js",
+            "require": "./dist/esm-vitest.json"
+        },
+        "./react": {
+            "import": "./dist/react.js",
+            "require": "./dist/react.json"
+        },
+        "./react-vitest": {
+            "import": "./dist/react-vitest.js",
+            "require": "./dist/react-vitest.json"
+        },
+        "./react-cypress": {
+            "import": "./dist/react-cypress.js",
+            "require": "./dist/react-cypress.json"
+        },
+        "./esm-react": {
+            "import": "./dist/esm-react.js",
+            "require": "./dist/esm-react.json"
+        },
+        "./esm-react-cypress": {
+            "import": "./dist/esm-react-cypress.js",
+            "require": "./dist/esm-react-cypress.json"
+        },
+        "./esm-react-vitest": {
+            "import": "./dist/esm-react-vitest.js",
+            "require": "./dist/esm-react-vitest.json"
+        },
+        "./esm-react-vitest-storybook": {
+            "import": "./dist/esm-react-vitest-storybook.js",
+            "require": "./dist/esm-react-vitest-storybook.json"
+        },
+        "./tsOverride": {
+            "import": "./dist/tsOverride.js",
+            "require": "./dist/tsOverride.cjs"
+        }
     },
     "files": [
         "dist/*.json",
-        "dist/*.cjs"
+        "dist/*.js",
+        "dist/*.d.ts",
+        "dist/*.cjs",
+        "*.md"
     ],
     "scripts": {
         "_phase:build": "npm run build",
         "_phase:validate": "npm run validate",
         "build": "rm -rf dist && mkdir dist && vite-node scripts/build.ts",
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
-        "eslint": "eslint ./**/*.ts",
-        "eslint-fix": "eslint ./**/*.ts --fix",
+        "eslint": "eslint .",
+        "eslint-fix": "eslint . --fix",
         "update-package": "vite-node scripts/updatePackage.ts",
         "validate": "tsc && npm run eslint"
     },
     "devDependencies": {
+        "@eslint/js": "9.28.0",
         "@testing-library/dom": "10.4.1",
         "@types/node": "^22.13.0",
         "@typescript-eslint/eslint-plugin": "8.52.0",
         "@typescript-eslint/parser": "8.52.0",
         "@vitest/eslint-plugin": "1.6.6",
-        "eslint": "^8.57.1",
+        "eslint": "^9.39.2",
         "eslint-config-prettier": "10.1.8",
         "eslint-import-resolver-typescript": "4.4.4",
         "eslint-plugin-chai-friendly": "1.1.0",
         "eslint-plugin-cypress": "3.6.0",
-        "eslint-plugin-header": "3.1.1",
+        "eslint-plugin-headers": "1.3.3",
         "eslint-plugin-import": "2.32.0",
         "eslint-plugin-import-esm": "1.2.1",
         "eslint-plugin-jsdoc": "62.1.0",
         "eslint-plugin-no-barrel-files": "1.2.2",
-        "eslint-plugin-no-only-tests": "2.6.0",
+        "eslint-plugin-no-only-tests": "3.3.0",
         "eslint-plugin-prettier": "5.5.4",
         "eslint-plugin-react": "7.37.5",
-        "eslint-plugin-react-hooks": "4.6.0",
-        "eslint-plugin-regexp": "1.15.0",
+        "eslint-plugin-react-hooks": "5.2.0",
         "eslint-plugin-sonarjs": "3.0.6",
-        "eslint-plugin-storybook": "^10.1.11",
-        "eslint-plugin-tsdoc": "0.2.14",
+        "eslint-plugin-storybook": "10.1.11",
+        "globals": "17.2.0",
+        "jiti": "2.6.1",
         "prettier": "^3.6.2",
         "react": "19.1.1",
         "react-dom": "19.1.1",
@@ -74,18 +120,15 @@
     "peerDependencies": {
         "@typescript-eslint/eslint-plugin": "8.52.0",
         "@typescript-eslint/parser": "8.52.0",
-        "eslint": "^8.57.1",
+        "eslint": "^8.57.1 || ^9.39.2",
         "eslint-config-prettier": "10.1.8",
         "eslint-import-resolver-typescript": "4.4.4",
-        "eslint-plugin-header": "3.1.1",
         "eslint-plugin-import": "2.32.0",
         "eslint-plugin-jsdoc": "62.1.0",
         "eslint-plugin-no-barrel-files": "1.2.2",
-        "eslint-plugin-no-only-tests": "2.6.0",
+        "eslint-plugin-no-only-tests": "2.6.0 || 3.3.0",
         "eslint-plugin-prettier": "5.5.4",
-        "eslint-plugin-regexp": "1.15.0",
         "eslint-plugin-sonarjs": "3.0.6",
-        "eslint-plugin-tsdoc": "0.2.14",
         "prettier": "^3.6.2"
     }
 }

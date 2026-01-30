@@ -2,83 +2,17 @@
 
 import { readFileSync, writeFileSync } from "fs";
 
-import { common, variants } from "../src/index.js";
-import type { IConfiguration, Rules } from "../src/types.js";
+import { commonConfigurations, v8Variants, v9Variants } from "../src/index.js";
+import { buildV8 } from "./build/v8.js";
+import { buildV9 } from "./build/v9.js";
 
-interface IEslintConfigurationCommon {
-    parser?: string;
-    plugins?: string[];
-    extends?: string[];
-    parserOptions?: Record<string, string | number>;
-    rules?: Rules;
-    settings?: Record<string, object>;
-    env?: Record<string, boolean>;
-    ignorePatterns?: string[];
-}
+// Build v8 eslintrc JSON configs
+buildV8(commonConfigurations, v8Variants);
 
-interface IOverride extends IEslintConfigurationCommon {
-    files: string[];
-    excludedFiles?: string[];
-}
+// Build v9 flat config JS files
+buildV9(commonConfigurations, v9Variants);
 
-interface IEslintConfiguration extends IEslintConfigurationCommon {
-    overrides?: IOverride[];
-}
-
-let commonConfig: IEslintConfiguration = {
-    plugins: [],
-    extends: [],
-    rules: {},
-    overrides: [],
-    settings: {},
-    env: {},
-    ignorePatterns: [],
-};
-
-function applyConfiguration(eslintConfiguration: IEslintConfiguration, configuration: IConfiguration) {
-    const newConfiguration: IEslintConfiguration = structuredClone(eslintConfiguration);
-
-    if (configuration.parser) newConfiguration.parser = configuration.parser;
-    if (configuration.plugins) {
-        for (const plugin of configuration.plugins) {
-            if (!newConfiguration.plugins?.includes(plugin)) {
-                newConfiguration.plugins?.push(plugin);
-            }
-        }
-    }
-    if (configuration.extends)
-        newConfiguration.extends = [...newConfiguration.extends, ...configuration.extends];
-    if (configuration.parserOptions) newConfiguration.parserOptions = configuration.parserOptions;
-    if (configuration.rules) newConfiguration.rules = { ...newConfiguration.rules, ...configuration.rules };
-    if (configuration.overrides) newConfiguration.overrides?.push(...configuration.overrides);
-    if (configuration.settings)
-        newConfiguration.settings = { ...newConfiguration.settings, ...configuration.settings };
-    if (configuration.env) newConfiguration.env = { ...newConfiguration.env, ...configuration.env };
-    if (configuration.ignorePatterns)
-        newConfiguration.ignorePatterns = [
-            ...newConfiguration.ignorePatterns,
-            ...configuration.ignorePatterns,
-        ];
-
-    return newConfiguration;
-}
-
-for (const configuration of common) {
-    commonConfig = applyConfiguration(commonConfig, configuration);
-}
-
-writeFileSync("dist/base.json", JSON.stringify(commonConfig, null, 4));
-
-for (const variantName in variants) {
-    const variant = variants[variantName as keyof typeof variants];
-
-    let variantConfig = structuredClone(commonConfig);
-
-    for (const configuration of variant) {
-        variantConfig = applyConfiguration(variantConfig, configuration);
-    }
-
-    writeFileSync(`dist/${variantName}.json`, JSON.stringify(variantConfig, null, 4));
-}
-
-writeFileSync(`dist/tsOverride.cjs`, readFileSync(`src/utils/tsOverride.cjs`));
+// Copy tsOverride helpers
+writeFileSync("dist/tsOverride.cjs", readFileSync("src/utils/tsOverride.cjs"));
+writeFileSync("dist/tsOverride.js", readFileSync("src/utils/tsOverride.js"));
+writeFileSync("dist/tsOverride.d.ts", readFileSync("src/utils/tsOverride.d.ts"));

@@ -588,18 +588,6 @@
             "shouldPublish": true
         },
         {
-            "packageName": "@gooddata/sdk-skel-tsx",
-            "projectFolder": "skel/sdk-skel-tsx",
-            "reviewCategory": "tools",
-            "shouldPublish": false
-        },
-        {
-            "packageName": "@gooddata/sdk-skel-ts",
-            "projectFolder": "skel/sdk-skel-ts",
-            "reviewCategory": "tools",
-            "shouldPublish": false
-        },
-        {
             "packageName": "@gooddata/playground",
             "projectFolder": "examples/playground",
             "reviewCategory": "examples",

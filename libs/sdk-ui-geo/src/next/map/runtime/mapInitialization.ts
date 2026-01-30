@@ -74,7 +74,9 @@ export async function initializeMapLibreMap(
         ...(cooperativeGestures && locale ? { locale } : {}),
     };
 
-    if (typeof maxZoom === "number") {
+    if (maxZoom === null) {
+        delete mapOptions.maxZoom;
+    } else if (typeof maxZoom === "number") {
         mapOptions.maxZoom = maxZoom;
     }
 

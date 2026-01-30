@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import type { PropsWithChildren } from "react";
 
@@ -10,10 +10,16 @@ type Props = {
     intl: IntlShape;
     isEmpty: boolean;
     isLoading: boolean;
+    isSyncing: boolean;
     onActionClick: () => void;
 };
 
-export function QualityScoreCardAction({ intl, isEmpty, isLoading, onActionClick }: Props) {
+export function QualityScoreCardAction({ intl, isEmpty, isLoading, isSyncing, onActionClick }: Props) {
+    if (isSyncing) {
+        return (
+            <Layout>{intl.formatMessage({ id: "analyticsCatalog.quality.scoreCard.action.syncing" })}</Layout>
+        );
+    }
     if (isLoading) {
         return (
             <Layout>{intl.formatMessage({ id: "analyticsCatalog.quality.scoreCard.action.loading" })}</Layout>

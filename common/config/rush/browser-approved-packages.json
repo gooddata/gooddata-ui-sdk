@@ -91,6 +91,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@eslint/js",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "@evil-internetmann/react-dnd",
       "allowedCategories": [ "production" ]
     },
@@ -739,6 +743,10 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
+      "name": "eslint-plugin-headers",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "eslint-plugin-import",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
@@ -843,6 +851,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "globals",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "happy-dom",
       "allowedCategories": [ "production", "tools" ]
     },
@@ -885,6 +897,10 @@
     {
       "name": "isomorphic-fetch",
       "allowedCategories": [ "examples", "production" ]
+    },
+    {
+      "name": "jiti",
+      "allowedCategories": [ "tools" ]
     },
     {
       "name": "js-object-pretty-print",

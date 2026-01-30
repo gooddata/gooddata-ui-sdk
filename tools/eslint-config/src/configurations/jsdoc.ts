@@ -1,26 +1,43 @@
 // (C) 2025-2026 GoodData Corporation
 
-import type { IConfiguration } from "../types.js";
+import type { IDualConfiguration, IPackage } from "../types.js";
 
-export const jsdoc: IConfiguration<"jsdoc"> = {
-    packages: [
-        {
-            name: "eslint-plugin-jsdoc",
-            version: "62.1.0",
-        },
-    ],
-    overrides: [
-        {
-            files: ["**/*.{js,cjs,mjs,jsx}"],
-            plugins: ["jsdoc"],
-            settings: {
-                jsdoc: {
-                    mode: "jsdoc",
-                },
+const jsdocPlugin: IPackage = {
+    name: "eslint-plugin-jsdoc",
+    version: "62.1.0",
+};
+
+const settings = {
+    jsdoc: {
+        mode: "jsdoc",
+    },
+};
+
+const rules = {
+    "jsdoc/require-param": "error", // require @param for all params
+};
+
+export const jsdoc: IDualConfiguration<"jsdoc"> = {
+    v8: {
+        packages: [jsdocPlugin],
+        overrides: [
+            {
+                files: ["**/*.{js,cjs,mjs,jsx}"],
+                plugins: ["jsdoc"],
+                settings,
+                rules,
             },
-            rules: {
-                "jsdoc/require-param": "error", // require @param for all params
+        ],
+    },
+    v9: {
+        packages: [jsdocPlugin],
+        overrides: [
+            {
+                files: ["**/*.{js,cjs,mjs,jsx}"],
+                plugins: { jsdoc: jsdocPlugin },
+                settings,
+                rules,
             },
-        },
-    ],
+        ],
+    },
 };

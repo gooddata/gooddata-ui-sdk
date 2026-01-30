@@ -65,6 +65,7 @@ export function DateBar(props: IDateBarProps) {
                                 label={label}
                                 iconBefore="date"
                                 isExpandable
+                                isDisabled={!props.isAvailable}
                                 isActive={isActive}
                                 accessibilityConfig={{
                                     isExpanded: isActive,

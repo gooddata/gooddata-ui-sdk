@@ -5943,6 +5943,7 @@ export interface IUiDropdownProps {
     closeOnOutsideClick?: boolean;
     closeOnParentScroll?: boolean;
     enableFocusTrap?: boolean;
+    fullWidthButton?: boolean;
     ignoreClicksOnByClass?: string[];
     initialFocus?: RefObject<HTMLElement> | string;
     isOpen?: boolean;
@@ -6579,6 +6580,8 @@ export interface IUiPopoverProps {
     footer?: ReactNode | ((args: {
         onClose: () => void;
     }) => ReactNode);
+    // (undocumented)
+    id?: string;
     // (undocumented)
     initialFocus?: RefObject<HTMLElement> | string;
     // (undocumented)
@@ -7806,7 +7809,7 @@ export type UiDrawerTransitionProps = {
 };
 
 // @internal
-export function UiDropdown({ renderButton, renderBody, isOpen: isOpenProp, onOpenChange, openOnInit, placement, offset, alignPoints, closeOnOutsideClick, closeOnEscape, closeOnParentScroll, closeOnMouseDrag, ignoreClicksOnByClass, zIndex, width, enableFocusTrap, autofocusOnOpen, initialFocus, returnFocusTo, onOpen, onClose, accessibilityConfig, }: IUiDropdownProps): JSX.Element;
+export function UiDropdown({ renderButton, renderBody, isOpen: isOpenProp, onOpenChange, openOnInit, placement, offset, alignPoints, closeOnOutsideClick, closeOnEscape, closeOnParentScroll, closeOnMouseDrag, ignoreClicksOnByClass, zIndex, width, fullWidthButton, enableFocusTrap, autofocusOnOpen, initialFocus, returnFocusTo, onOpen, onClose, accessibilityConfig, }: IUiDropdownProps): JSX.Element;
 
 // @internal (undocumented)
 export const UiDropdownIconButton: ForwardRefExoticComponent<IUiDropdownIconButtonProps & RefAttributes<HTMLButtonElement>>;
@@ -7869,7 +7872,7 @@ export type UiPaginationButtonDirection = "previous" | "next";
 export type UiPaginationButtonSize = "small" | "large";
 
 // @internal (undocumented)
-export function UiPopover({ accessibilityConfig, anchor, width, title, tabIndex, disabled, content, footer, closeText, closeVisible, initialFocus, returnFocusTo, triggerBy, returnFocusAfterClose, focusCheckFn, enableFocusTrap, onOpen, onClose, }: IUiPopoverProps): JSX.Element;
+export function UiPopover({ id, accessibilityConfig, anchor, width, title, tabIndex, disabled, content, footer, closeText, closeVisible, initialFocus, returnFocusTo, triggerBy, returnFocusAfterClose, focusCheckFn, enableFocusTrap, onOpen, onClose, }: IUiPopoverProps): JSX.Element;
 
 // @internal (undocumented)
 export type UiRefsTree = Record<string, HTMLDivElement | null>;
