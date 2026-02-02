@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import { type ISeparators } from "@gooddata/sdk-model";
 import type { IKdaDefinition } from "@gooddata/sdk-ui-dashboard";
 import { IntlWrapper, KdaDialogController, KdaStoreProvider } from "@gooddata/sdk-ui-dashboard/internal";
+import { useOverlayController } from "@gooddata/sdk-ui-kit";
 
 import {
     keyDriverAnalysisSelector,
@@ -29,6 +30,7 @@ interface IKeyDriverAnalysisProps {
 function KeyDriverAnalysisComponent(props: IKeyDriverAnalysisProps) {
     const { keyDriverAnalysis, separators, locale, includeTags, excludeTags, setKeyDriverAnalysis } = props;
     const intl = useIntl();
+    const parentOverlayController = useOverlayController();
 
     const config = useMemo(
         () => ({
@@ -56,6 +58,7 @@ function KeyDriverAnalysisComponent(props: IKeyDriverAnalysisProps) {
             <KdaStoreProvider config={config}>
                 <KdaDialogController
                     requestedDefinition={keyDriverAnalysis}
+                    parentOverlayController={parentOverlayController}
                     separators={separators}
                     showCloseButton
                     locale={locale ?? intl.locale}

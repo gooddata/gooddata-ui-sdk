@@ -377,14 +377,21 @@ export class DateFilter extends PureComponent<IDateFilterProps, IDateFilterState
         this.setState(
             (state) =>
                 DateFilter.getStateFromSelectedOption(selectedFilterOption, state.excludeCurrentPeriod),
-            this.handleSelectChange,
+            () => this.fireOnSelect(selectedFilterOption),
         );
     };
 
     private handleSelectChange = () => {
-        const normalizedSelectedFilterOption = normalizeSelectedFilterOption(this.state.selectedFilterOption);
-        if (isEmpty(validateFilterOption(normalizedSelectedFilterOption))) {
-            this.props.onSelect?.(normalizedSelectedFilterOption, this.state.excludeCurrentPeriod);
-        }
+        this.fireOnSelect();
     };
+
+    private fireOnSelect(
+        selectedFilterOption: DateFilterOption = this.state.selectedFilterOption,
+        excludeCurrentPeriod: boolean = this.state.excludeCurrentPeriod,
+    ) {
+        const normalizedSelectedFilterOption = normalizeSelectedFilterOption(selectedFilterOption);
+        if (isEmpty(validateFilterOption(normalizedSelectedFilterOption))) {
+            this.props.onSelect?.(normalizedSelectedFilterOption, excludeCurrentPeriod);
+        }
+    }
 }

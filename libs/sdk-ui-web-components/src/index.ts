@@ -20,7 +20,7 @@ if (window && typeof w.__GD_ASSET_PATH__ === "string") {
     __webpack_public_path__ = w.__GD_ASSET_PATH__;
 }
 
-// eslint-disable-next-line import/no-unassigned-import
+// eslint-disable-next-line import-x/no-unassigned-import
 import "./autoAuth.js";
 
 import { type CustomElementContext, getContext, setContext } from "./context.js";
@@ -29,9 +29,9 @@ import { Dashboard } from "./visualizations/Dashboard.js";
 import { Insight } from "./visualizations/Insight.js";
 
 // Include styles async to use native link injection from MiniCssExtractPlugin
-// eslint-disable-next-line import/no-unassigned-import
+// eslint-disable-next-line import-x/no-unassigned-import
 import "./visualizations/components.css";
-// eslint-disable-next-line import/no-unassigned-import
+// eslint-disable-next-line import-x/no-unassigned-import
 import "./gen-ai/components.css";
 
 // Register custom elements with the browser

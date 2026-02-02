@@ -257,9 +257,16 @@ describe("DatePicker", () => {
 
                     await openCalendar();
 
-                    const outsideDay = document.querySelector(".rdp-outside");
-                    const button = outsideDay?.querySelector("button");
-                    fireEvent.click(button || outsideDay!);
+                    // Navigate back until we find an outside day (some months don't have them)
+                    let outsideDay = document.querySelector(".rdp-outside");
+                    while (!outsideDay) {
+                        const prevButton = document.querySelector(".rdp-button_previous");
+                        fireEvent.click(prevButton!);
+                        outsideDay = document.querySelector(".rdp-outside");
+                    }
+
+                    const button = outsideDay.querySelector("button");
+                    fireEvent.click(button || outsideDay);
                     await waitFor(() => {
                         expect(onChange).toHaveBeenCalledWith(expect.any(Date));
                     });

@@ -10,9 +10,10 @@ import { esm } from "./configurations/esm.js";
 import { header } from "./configurations/header.js";
 import { ignore } from "./configurations/ignore.js";
 import { importEsm } from "./configurations/import-esm.js";
-import { import_ } from "./configurations/import.js";
+import { importX } from "./configurations/import-x.js";
 import { jsdoc } from "./configurations/jsdoc.js";
 import { noOnlyTests } from "./configurations/no-only-tests.js";
+import { oxfmt } from "./configurations/oxfmt.js";
 import { prettier } from "./configurations/prettier.js";
 import { reactHooks } from "./configurations/react-hooks.js";
 import { react } from "./configurations/react.js";
@@ -30,10 +31,9 @@ export const commonConfigurations: IDualConfiguration[] = [
     header,
     typescript,
     barrelFiles,
-    import_,
+    importX,
     jsdoc,
     noOnlyTests,
-    prettier, // TODO: apply last somehow
     regexp,
     sonarjs,
     // tsdoc,
@@ -42,10 +42,10 @@ export const commonConfigurations: IDualConfiguration[] = [
 ];
 
 // please note, if you modify keys in the following array, please run `npm run update-package` in addition to `npm run build`
-const commonVariants: Record<string, IDualConfiguration[]> = {
+const baseVariants: Record<string, IDualConfiguration[]> = {
     browser: [browserEnv], // for any packages that uses document, but are not react libs
     "browser-esm": [browserEnv, esm, importEsm], // unsure if needed
-    vitest: [vitest],
+    vitest: [vitest, prettier],
     esm: [esm, importEsm], // used for this lib
     "esm-vitest": [esm, importEsm, vitest], // for @gooddata/util and MAQL language server
     react: [browserEnv, esm, react, reactHooks], // for skel tsx
@@ -57,5 +57,21 @@ const commonVariants: Record<string, IDualConfiguration[]> = {
     "esm-react-vitest-storybook": [browserEnv, esm, react, reactHooks, importEsm, vitest, storybook], // for sdk-ui-tests
 };
 
-export const v8Variants = { ...commonVariants };
-export const v9Variants = { ...commonVariants };
+export const commonVariants: Record<string, IDualConfiguration[]> = {
+    ...Object.fromEntries(
+        Object.entries(baseVariants).map(([name, configurations]) => [name, [...configurations, prettier]]),
+    ),
+    prettier: [prettier],
+};
+
+export const v8Variants: Record<string, IDualConfiguration[]> = { ...commonVariants };
+export const v9Variants: Record<string, IDualConfiguration[]> = {
+    ...commonVariants,
+    ...Object.fromEntries(
+        Object.entries(baseVariants).map(([name, configurations]) => [
+            [`oxfmt-${name}`],
+            [...configurations, oxfmt],
+        ]),
+    ),
+    oxfmt: [oxfmt],
+};

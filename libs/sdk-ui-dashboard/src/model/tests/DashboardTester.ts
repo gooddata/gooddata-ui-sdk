@@ -133,7 +133,6 @@ export class DashboardTester extends HeadlessDashboard {
      * @param timeout - timeout after which the wait fails
      */
     public waitForAll(
-        // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
         actionTypes: ReadonlyArray<DashboardEventType | DashboardCommandType | string>,
         timeout: number = 1000,
     ): Promise<any> {

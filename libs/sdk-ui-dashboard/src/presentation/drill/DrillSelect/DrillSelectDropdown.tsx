@@ -264,7 +264,6 @@ function getRelativeOffset(child?: HTMLElement, ancestor?: HTMLElement | null) {
  * This positions the dropdown near the clicked element rather than the center of the visualization.
  */
 function calculateDrillEventOffset(anchorSelector: string, drillEvent?: IDrillEvent) {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
     const anchorElement = document.querySelector(anchorSelector) as HTMLElement | null;
     // Get the relative offset between the drill target element (e.g., chart container) and the anchor element
     const relativeOffset = getRelativeOffset(drillEvent?.target, anchorElement);

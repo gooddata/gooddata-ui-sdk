@@ -1,14 +1,15 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 /* eslint-disable no-console */
-import * as process from "process";
 import fs from "fs";
 import * as path from "path";
+import * as process from "process";
+
 import fse from "fs-extra";
 
 export function readJsonSync(file) {
     return JSON.parse(fse.readFileSync(file, { encoding: "utf-8" }));
 }
-
 
 /*
  * This script is used during build to clean up the contents of package.json that will be shipped with

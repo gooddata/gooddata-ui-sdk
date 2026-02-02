@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type SyntheticEvent } from "react";
 
@@ -55,7 +55,6 @@ describe("NumberFormatToggleButton", () => {
             expect(container.querySelector("button")).toHaveClass("disabled");
         });
 
-        // eslint-disable-next-line @vitest/no-identical-title
         it("Should disabled dropdown button", () => {
             const { container } = renderNumberFormatToggleButton();
             expect(container.querySelector("button")).not.toHaveClass("disabled");

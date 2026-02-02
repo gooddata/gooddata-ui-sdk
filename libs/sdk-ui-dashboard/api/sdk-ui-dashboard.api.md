@@ -183,6 +183,7 @@ import { OnError } from '@gooddata/sdk-ui';
 import { OnExportReady } from '@gooddata/sdk-ui';
 import { OnFiredDrillEvent } from '@gooddata/sdk-ui';
 import { OnLoadingChanged } from '@gooddata/sdk-ui';
+import { OverlayController } from '@gooddata/sdk-ui-kit';
 import { OverlayPositionType } from '@gooddata/sdk-ui-kit';
 import { Patch } from 'immer';
 import { PayloadAction } from '@reduxjs/toolkit';
@@ -5859,6 +5860,7 @@ export interface IKdaDialogProps {
     className?: string;
     locale?: string;
     onClose?: () => void;
+    parentOverlayController?: OverlayController;
     showCloseButton?: boolean;
 }
 

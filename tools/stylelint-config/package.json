@@ -1,0 +1,32 @@
+{
+    "name": "@gooddata/stylelint-config",
+    "version": "11.19.0-alpha.3",
+    "description": "GoodData CSS Style Guide",
+    "keywords": [
+        "stylelint",
+        "config"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
+        "directory": "sdk/tools/stylelint-config"
+    },
+    "license": "MIT",
+    "author": "GoodData Corporation",
+    "main": ".stylelintrc",
+    "files": [
+        ".stylelintrc",
+        "NOTICE"
+    ],
+    "dependencies": {
+        "postcss": "^8.4.49",
+        "postcss-scss": "^4.0.9",
+        "stylelint": "^15.11.0",
+        "stylelint-config-standard": "^32.0.0",
+        "stylelint-order": "^6.0.4",
+        "stylelint-scss": "^5.3.2"
+    },
+    "engines": {
+        "node": ">= 18"
+    }
+}

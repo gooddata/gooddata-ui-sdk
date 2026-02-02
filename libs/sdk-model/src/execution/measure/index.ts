@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
@@ -681,7 +681,6 @@ export function measureFormat(measure: IMeasure): string | undefined {
 export function isMeasureFormatInPercent(measureOrFormat: IMeasure | string | undefined): boolean {
     const format = isMeasure(measureOrFormat) ? measureFormat(measureOrFormat) : measureOrFormat;
     // no reasonable way to avoid the super-linear backtracking right now
-    // eslint-disable-next-line regexp/no-super-linear-backtracking
     return !!format && /^[^;]*%[^;]*;*$/.test(format.trim().replace(/\\%/g, ""));
 }
 

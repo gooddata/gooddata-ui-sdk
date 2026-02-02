@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 // removes attribute sortItems with invalid identifiers
 // removes measure sortItems with invalid identifiers and invalid number of locators
@@ -173,7 +173,6 @@ export function addDefaultSort(
         }
         // asc sort on row that was first until now is considered default as well
         // disabling the eslint rule to maintain readability
-        // eslint-disable-next-line sonarjs/prefer-single-boolean-return
         if (
             sortItem.attributeSortItem.attributeIdentifier === previousFirstRow?.localIdentifier &&
             sortItem.attributeSortItem.direction === "asc"

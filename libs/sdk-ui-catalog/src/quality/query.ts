@@ -1,7 +1,5 @@
 // (C) 2025-2026 GoodData Corporation
 
-/* eslint-disable no-constant-condition */
-
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import type { ISemanticQualityIssuesCalculation, ISemanticQualityReport } from "@gooddata/sdk-model";
 

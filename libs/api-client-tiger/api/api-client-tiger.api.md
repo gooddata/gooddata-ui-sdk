@@ -1687,6 +1687,7 @@ export interface AfmAbsoluteDateFilterAbsoluteDateFilter {
     dataset: AfmModelObjectIdentifierDataset;
     // (undocumented)
     from: string;
+    includeEmptyValues?: boolean;
     // (undocumented)
     localIdentifier?: string;
     // (undocumented)
@@ -2377,6 +2378,7 @@ export interface AfmRelativeDateFilterRelativeDateFilter {
     dataset: AfmModelObjectIdentifierDataset;
     from: number;
     granularity: AfmRelativeDateFilterRelativeDateFilterGranularityEnum;
+    includeEmptyValues?: boolean;
     // (undocumented)
     localIdentifier?: string;
     to: number;
@@ -3558,6 +3560,7 @@ export interface AutomationAbsoluteDateFilterAbsoluteDateFilter {
     dataset: AutomationAfmObjectIdentifierDataset;
     // (undocumented)
     from: string;
+    includeEmptyValues?: boolean;
     // (undocumented)
     localIdentifier?: string;
     // (undocumented)
@@ -4101,6 +4104,8 @@ export interface AutomationDashboardDateFilterDateFilter {
     from?: AutomationDashboardDateFilterDateFilterFrom;
     // (undocumented)
     granularity: AutomationDashboardDateFilterDateFilterGranularityEnum;
+    // (undocumented)
+    includeEmptyValues?: boolean;
     // (undocumented)
     localIdentifier?: string;
     // (undocumented)
@@ -4683,6 +4688,7 @@ export interface AutomationRelativeDateFilterRelativeDateFilter {
     dataset: AutomationAfmObjectIdentifierDataset;
     from: number;
     granularity: AutomationRelativeDateFilterRelativeDateFilterGranularityEnum;
+    includeEmptyValues?: boolean;
     // (undocumented)
     localIdentifier?: string;
     to: number;
@@ -12262,6 +12268,7 @@ export interface ExportAbsoluteDateFilterAbsoluteDateFilter {
     dataset: ExportAfmObjectIdentifierDataset;
     // (undocumented)
     from: string;
+    includeEmptyValues?: boolean;
     // (undocumented)
     localIdentifier?: string;
     // (undocumented)
@@ -12619,6 +12626,8 @@ export interface ExportDashboardDateFilterDateFilter {
     from?: ExportDashboardDateFilterDateFilterFrom;
     // (undocumented)
     granularity: ExportDashboardDateFilterDateFilterGranularityEnum;
+    // (undocumented)
+    includeEmptyValues?: boolean;
     // (undocumented)
     localIdentifier?: string;
     // (undocumented)
@@ -13144,6 +13153,7 @@ export interface ExportRelativeDateFilterRelativeDateFilter {
     dataset: ExportAfmObjectIdentifierDataset;
     from: number;
     granularity: ExportRelativeDateFilterRelativeDateFilterGranularityEnum;
+    includeEmptyValues?: boolean;
     // (undocumented)
     localIdentifier?: string;
     to: number;
