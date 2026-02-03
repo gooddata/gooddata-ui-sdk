@@ -1,11 +1,7 @@
 {
-  "title": "ComboChart",
-  "description": "Example demonstrates ComboChart secondaryMeasures definition. ",
-  "iconUrl": "https://www.gooddata.com/favicon.ico",
-  "tags": [
-    "react",
-    "typescript",
-    "gooddata-ui-sdk"
-  ],
-  "published": true
+    "title": "ComboChart",
+    "description": "Example demonstrates ComboChart secondaryMeasures definition. ",
+    "iconUrl": "https://www.gooddata.com/favicon.ico",
+    "tags": ["react", "typescript", "gooddata-ui-sdk"],
+    "published": true
 }

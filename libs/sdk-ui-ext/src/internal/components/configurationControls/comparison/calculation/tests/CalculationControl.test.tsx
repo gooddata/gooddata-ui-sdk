@@ -1,6 +1,7 @@
 // (C) 2023-2026 GoodData Corporation
 
-import { fireEvent, render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
+import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 
 import { CalculateAs, type CalculationType } from "@gooddata/sdk-ui-charts";
@@ -112,10 +113,14 @@ describe("CalculationControl", () => {
         expect(getByText(CALCULATION_CONTROL_LABEL_TEXT_QUERY)).toBeInTheDocument();
     });
 
-    it("Should render items correctly", () => {
+    it("Should render items correctly", async () => {
         const MockCalculationListItem = vi.mocked(CalculationListItem);
-        const { container } = renderCalculationControl();
-        fireEvent.click(container.querySelector(DROPDOWN_BUTTON_SELECTOR)!);
+        renderCalculationControl();
+        await userEvent.click(screen.getByRole("combobox"));
+
+        await waitFor(() => {
+            expect(screen.getByText(CHANGE_ITEM_TEXT_QUERY)).toBeInTheDocument();
+        });
 
         expect(MockCalculationListItem).toHaveBeenNthCalledWith(
             1,
@@ -160,12 +165,16 @@ describe("CalculationControl", () => {
         expect(screen.getByText(CHANGE_DIFFERENCE_ITEM_TEXT_QUERY)).toBeInTheDocument();
     });
 
-    it("Should update property calculation-type when select an item", () => {
-        const { container } = renderCalculationControl({
+    it("Should update property calculation-type when select an item", async () => {
+        renderCalculationControl({
             properties: createTestProperties<IComparisonControlProperties>({ comparison: { enabled: true } }),
         });
-        fireEvent.click(container.querySelector(DROPDOWN_BUTTON_SELECTOR)!);
-        fireEvent.click(screen.getByText(RATIO_ITEM_TEXT_QUERY));
+
+        await userEvent.click(screen.getByRole("combobox"));
+        await waitFor(() => {
+            expect(screen.getByText(RATIO_ITEM_TEXT_QUERY)).toBeInTheDocument();
+        });
+        await userEvent.click(screen.getByText(RATIO_ITEM_TEXT_QUERY));
         expect(mockPushData).toHaveBeenCalledWith(
             expect.objectContaining({
                 properties: createTestProperties<IComparisonControlProperties>({
@@ -174,8 +183,11 @@ describe("CalculationControl", () => {
             }),
         );
 
-        fireEvent.click(container.querySelector(DROPDOWN_BUTTON_SELECTOR)!);
-        fireEvent.click(screen.getByText(DIFFERENCE_ITEM_TEXT_QUERY));
+        await userEvent.click(screen.getByRole("combobox"));
+        await waitFor(() => {
+            expect(screen.getByText(DIFFERENCE_ITEM_TEXT_QUERY)).toBeInTheDocument();
+        });
+        await userEvent.click(screen.getByText(DIFFERENCE_ITEM_TEXT_QUERY));
         expect(mockPushData).toHaveBeenCalledWith(
             expect.objectContaining({
                 properties: createTestProperties<IComparisonControlProperties>({
@@ -184,8 +196,11 @@ describe("CalculationControl", () => {
             }),
         );
 
-        fireEvent.click(container.querySelector(DROPDOWN_BUTTON_SELECTOR)!);
-        fireEvent.click(screen.getByText(CHANGE_ITEM_TEXT_QUERY));
+        await userEvent.click(screen.getByRole("combobox"));
+        await waitFor(() => {
+            expect(screen.getByText(CHANGE_ITEM_TEXT_QUERY)).toBeInTheDocument();
+        });
+        await userEvent.click(screen.getByText(CHANGE_ITEM_TEXT_QUERY));
         expect(mockPushData).toHaveBeenCalledWith(
             expect.objectContaining({
                 properties: createTestProperties<IComparisonControlProperties>({

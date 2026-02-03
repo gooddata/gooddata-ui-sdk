@@ -70,7 +70,12 @@ describe("withDrillable", () => {
         const drillLink = container.querySelector(HEADLINE_ITEM_LINK_SELECTOR)!;
         fireEvent.click(drillLink);
 
-        expect(fireDrillEvent).toHaveBeenCalledWith(dataItem, elementType, expect.anything(), undefined);
+        expect(fireDrillEvent).toHaveBeenCalledWith(
+            dataItem,
+            elementType,
+            expect.anything(),
+            expect.anything(),
+        );
     });
 
     it("should not produce any event upon click when fire handler but data item is not drillable", () => {

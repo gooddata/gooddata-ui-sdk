@@ -15,7 +15,6 @@ import {
 
 import { type PivotTableNextAccessibilityConfig } from "./accessibility.js";
 import { type PivotTableNextCellSelectionConfig } from "./cellSelection.js";
-import { type PivotTableNextDrillMenuPositioningConfig } from "./drillMenuPositioning.js";
 import { type PivotTableNextExecutionCancellingConfig } from "./executionCancelling.js";
 import { type PivotTableNextExperimentalConfig } from "./experimental.js";
 import { type PivotTableNextFormattingConfig } from "./formatting.js";
@@ -39,7 +38,6 @@ export type PivotTableNextConfig = PivotTableNextTranspositionConfig &
     PivotTableNextMenuConfig &
     PivotTableNextFormattingConfig &
     PivotTableNextExecutionCancellingConfig &
-    PivotTableNextDrillMenuPositioningConfig &
     PivotTableNextLayoutConfig &
     PivotTableNextGrandTotalsPositionConfig &
     PivotTableNextCellSelectionConfig &

@@ -179,9 +179,9 @@ export type ITableValueColumnDefinition = {
     columnScope: ITableDataHeaderScope[];
 } & (
     | /**
-     * Handles case, when pivoting and measures are in rows.
-     */
-    {
+       * Handles case, when pivoting and measures are in rows.
+       */
+      {
           isEmpty: false;
           isTransposed: true;
           attributeHeader: IResultAttributeHeader;
@@ -258,8 +258,8 @@ export type ITableSubtotalColumnDefinition = {
     columnScope: ITableDataHeaderScope[];
 } & (
     | /**
-     * Handles case, when pivoting and measures are in rows.
-     */ {
+       * Handles case, when pivoting and measures are in rows.
+       */ {
           isEmpty: false;
           isTransposed: true;
           totalHeader: IResultTotalHeader;
@@ -327,16 +327,16 @@ export type ITableGrandTotalColumnDefinition = {
     columnScope: ITableDataHeaderScope[];
 } & (
     | /**
-     * Handles case, when pivoting and measures are in rows.
-     */ {
+       * Handles case, when pivoting and measures are in rows.
+       */ {
           isEmpty: false;
           isTransposed: true;
           totalHeader: IResultTotalHeader;
           attributeDescriptor: IAttributeDescriptor;
       }
     | /**
-     * Handles standard pivoting case without transposition.
-     */ {
+       * Handles standard pivoting case without transposition.
+       */ {
           isEmpty: false;
           isTransposed: false;
           totalHeader: IResultTotalHeader;

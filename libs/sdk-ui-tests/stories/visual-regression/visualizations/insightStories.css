@@ -5,6 +5,12 @@
     width: 100%;
 }
 
+/**
+ * In generated stories we need to align the top of colors dropdown caused by migration to new virtualized list
+ */
+.adi-color-configuration .gd-colored-items-list {
+    padding-top: 4px;
+}
 /*
  * inner styles of config panels are in SDK; outer style (containers) are in AD :/ adding some dumb
  * "styling" here so that the panels are in a row. the container visuals are not subject to testing

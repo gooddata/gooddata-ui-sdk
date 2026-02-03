@@ -351,7 +351,6 @@ export interface IChartConfig {
     enableAliasAttributeLabel?: boolean;
     enableChartSorting?: boolean;
     enableCompactSize?: boolean;
-    enableDrillMenuPositioningAtCursor?: boolean;
     // @internal
     enableExecutionCancelling?: boolean;
     // @internal

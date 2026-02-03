@@ -134,8 +134,8 @@ describe("cssProperties", () => {
                 },
             },
         };
-        // eslint-disable-next-line @vitest/valid-title
-        it("it should return '--gd-shadow-color' css property with black color if theme is dark", () => {
+
+        it("should return '--gd-shadow-color' css property with black color if theme is dark", () => {
             expect(generateShadowColor(theme.palette!, true)).toEqual([
                 {
                     key: "--gd-shadow-color",

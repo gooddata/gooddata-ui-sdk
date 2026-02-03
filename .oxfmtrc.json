@@ -1,0 +1,20 @@
+{
+    "$schema": "./common/autoinstallers/lint-staged/node_modules/oxfmt/configuration_schema.json",
+    "printWidth": 110,
+    "tabWidth": 4,
+    "trailingComma": "all",
+    "experimentalSortPackageJson": true,
+    "ignorePatterns": [
+        "**/*.api.md",
+        "**/node_modules/**",
+        "common/config/rush/**",
+        "common/scripts/**",
+        "common/temp/**",
+        "**/*.module.scss.d.ts",
+        ".cursor/**",
+        ".windsurf/**",
+        "**/dist/**",
+        "**/esm/**",
+        "**/temp/**"
+    ]
+}

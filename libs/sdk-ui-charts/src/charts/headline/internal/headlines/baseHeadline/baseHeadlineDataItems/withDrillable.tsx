@@ -11,12 +11,6 @@ import { type IWithDrillableItemProps } from "../../../interfaces/BaseHeadlines.
 import { type IHeadlineDataItem } from "../../../interfaces/Headlines.js";
 import { useBaseHeadline } from "../BaseHeadlineContext.js";
 
-type IDrillMenuPositioningConfig = { enableDrillMenuPositioningAtCursor?: boolean } | undefined;
-
-function isDrillMenuPositioningAtCursorEnabled(config: IDrillMenuPositioningConfig): boolean {
-    return config?.enableDrillMenuPositioningAtCursor ?? false;
-}
-
 function getCursorCoordinatesFromMouseEvent(event: MouseEvent<EventTarget>): IChartCoordinates {
     const element = event.target as HTMLElement | null;
     if (!element) {
@@ -46,31 +40,27 @@ export const withDrillable = <T extends IWithDrillableItemProps<IHeadlineDataIte
 ): ComponentType<T> => {
     function WithDrillable(props: T) {
         const { dataItem, elementType } = props;
-        const { fireDrillEvent, config } = useBaseHeadline();
+        const { fireDrillEvent } = useBaseHeadline();
         const drillId = useIdPrefixed("drill-hint");
 
         const handleDrillable = useCallback(
             (event: MouseEvent<EventTarget>) => {
                 if (dataItem?.isDrillable) {
-                    const chartCoordinates = isDrillMenuPositioningAtCursorEnabled(config)
-                        ? getCursorCoordinatesFromMouseEvent(event)
-                        : undefined;
+                    const chartCoordinates = getCursorCoordinatesFromMouseEvent(event);
                     fireDrillEvent(dataItem, elementType!, event.target, chartCoordinates);
                 }
             },
-            [dataItem, elementType, fireDrillEvent, config],
+            [dataItem, elementType, fireDrillEvent],
         );
 
         const handleKeyDown = useCallback(
             (event: KeyboardEvent<HTMLDivElement>) => {
                 if (dataItem?.isDrillable && isActionKey(event)) {
-                    const chartCoordinates = isDrillMenuPositioningAtCursorEnabled(config)
-                        ? getCenterCoordinatesFromTarget(event.target)
-                        : undefined;
+                    const chartCoordinates = getCenterCoordinatesFromTarget(event.target);
                     fireDrillEvent(dataItem, elementType!, event.target, chartCoordinates);
                 }
             },
-            [dataItem, elementType, fireDrillEvent, config],
+            [dataItem, elementType, fireDrillEvent],
         );
 
         return dataItem?.isDrillable ? (

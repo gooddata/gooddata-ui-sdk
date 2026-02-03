@@ -2,8 +2,9 @@
 
 /// <reference types="vite/client" />
 
-import { RenderMode } from "@gooddata/sdk-ui-dashboard";
+import type { RenderMode } from "@gooddata/sdk-ui-dashboard";
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 interface ImportMetaEnv {
     readonly VITE_BACKEND_URL: string;
     readonly VITE_TIGER_API_TOKEN: string;
@@ -15,6 +16,7 @@ interface ImportMetaEnv {
     readonly VITE_AG_GRID_TOKEN: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 interface ImportMeta {
     readonly env: ImportMetaEnv;
 }

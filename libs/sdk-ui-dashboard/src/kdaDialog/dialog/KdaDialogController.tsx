@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useId, useState } from "react";
 
 import { v4 as uuid } from "uuid";
 
@@ -49,6 +49,7 @@ export function KdaDialogController({
 }: IKdaDialogControllerProps) {
     const [activeDefinition, setActiveDefinition] = useState<IKdaDefinition | undefined>(undefined);
     const [pendingDefinition, setPendingDefinition] = useState<IKdaDefinition | undefined>(undefined);
+    const titleId = useId();
 
     const isReplaceConfirmationOpen = !!pendingDefinition;
 
@@ -102,7 +103,8 @@ export function KdaDialogController({
         if (activeDefinition) {
             onRequestedDefinitionChange?.(activeDefinition);
         }
-    }, [activeDefinition, onRequestedDefinitionChange]);
+        focusTitleElement(titleId);
+    }, [activeDefinition, onRequestedDefinitionChange, titleId]);
 
     const onConfirmReplace = useCallback(() => {
         if (!pendingDefinition) {
@@ -111,7 +113,8 @@ export function KdaDialogController({
         setActiveDefinition(pendingDefinition);
         setPendingDefinition(undefined);
         onRequestedDefinitionChange?.(pendingDefinition);
-    }, [onRequestedDefinitionChange, pendingDefinition]);
+        focusTitleElement(titleId);
+    }, [onRequestedDefinitionChange, pendingDefinition, titleId]);
 
     if (!activeDefinition) {
         return null;
@@ -130,8 +133,15 @@ export function KdaDialogController({
                 includeTags={includeTags}
                 excludeTags={excludeTags}
             >
-                <KdaDialog {...dialogProps} onClose={onCloseInternal} />
+                <KdaDialog {...dialogProps} titleElementId={titleId} onClose={onCloseInternal} />
             </KdaProvider>
         </>
     );
+}
+
+function focusTitleElement(titleElementId: string) {
+    const titleElement = document.getElementById(titleElementId);
+    if (titleElement) {
+        titleElement.focus();
+    }
 }

@@ -1,8 +1,8 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 const depCruiser = require("../../common/config/dep-cruiser/default.config");
 
-options = {
+const options = {
     forbidden: [...depCruiser.DefaultRules, ...depCruiser.DefaultSdkRules, ...depCruiser.PublicLibraryRules],
     options: depCruiser.DefaultOptions,
 };

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 const depCruiser = require("../../common/config/dep-cruiser/default.config");
 
@@ -35,7 +35,7 @@ const GeoNextOldSeparationRules = [
     },
 ];
 
-options = {
+const options = {
     forbidden: [
         ...depCruiser.DefaultRules,
         ...depCruiser.DefaultSdkRules,

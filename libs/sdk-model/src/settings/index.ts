@@ -329,6 +329,7 @@ export interface ISettings {
     enableStarrocksDataSource?: boolean;
     enableSingleStoreDataSource?: boolean;
     enableAthenaDataSource?: boolean;
+    enableCrateDbDataSource?: boolean;
 
     /**
      * Enable GenAI-powered functionality, such as semantic-search.
@@ -686,11 +687,6 @@ export interface ISettings {
      * This feature flag enables automatic drill to url setting feature.
      */
     enableImplicitDrillToUrl?: boolean;
-
-    /**
-     * Enables positioning of drill menu at the cursor click point (instead of default positioning).
-     */
-    enableDrillMenuPositioningAtCursor?: boolean;
 
     /**
      * Enable anomaly detection alert

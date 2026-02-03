@@ -3,6 +3,7 @@
 import { mkdirSync, rmSync, writeFileSync } from "fs";
 
 import { groupBy, sortBy } from "lodash-es";
+import { format } from "oxfmt";
 
 import { type INeobackstopScenarioConfig, State } from "./backstopScenario.js";
 import { generateExportName, generateImports, header } from "./generateStories.js";
@@ -37,7 +38,7 @@ ScenarioGroupsByVis.forEach((groups, groupsIndex) => {
     });
 });
 
-ScenarioGroupsByVis.forEach((groups, groupsIndex) => {
+for (const [groupsIndex, groups] of ScenarioGroupsByVis.entries()) {
     /*
      * Sort groups; the order in which stories for the group are created is important as that is the order
      * in which the groups appear in storybook.
@@ -51,7 +52,7 @@ ScenarioGroupsByVis.forEach((groups, groupsIndex) => {
         groupBy<ScenarioGroup<any>>(sortedGroups, (g) => g.groupNames.join("/")),
     );
 
-    groupedSortedGroups.forEach((groupedGroup, groupedGroupIndex) => {
+    for (const [groupedGroupIndex, groupedGroup] of groupedSortedGroups.entries()) {
         const firstGroup = groupedGroup[0];
 
         let groupNameParts = [firstGroup.vis, ...firstGroup.groupNames];
@@ -180,7 +181,7 @@ ${exportName}.parameters = { kind: "${name}", screenshot: ${group.testConfig.vis
             }
         });
 
-        if (storyExports.length === 0) return;
+        if (storyExports.length === 0) continue;
 
         helperFileNamedImports.sort();
 
@@ -196,8 +197,9 @@ ${exportName}.parameters = { kind: "${name}", screenshot: ${group.testConfig.vis
         ]);
 
         const fileContents = `${header}\n\n${requires}\n\n${defaultExport}\n\n${storyExports.join("\n\n")}\n`;
+        const formatted = await format(filePath, fileContents);
 
         mkdirSync(fileDirectory, { recursive: true });
-        writeFileSync(filePath, fileContents);
-    });
-});
+        writeFileSync(filePath, formatted.code);
+    }
+}

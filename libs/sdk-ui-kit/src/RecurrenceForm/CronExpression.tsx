@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type ChangeEvent, type FocusEvent, useCallback, useState } from "react";
 

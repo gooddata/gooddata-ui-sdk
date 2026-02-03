@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import {
     isAbsoluteDateFilterForm,
@@ -34,6 +34,9 @@ export const applyExcludeCurrentPeriod = (
 
         return {
             ...dateFilterOption,
+            // When exclusion is applied, the selection no longer matches the original preset interval,
+            // so the title should be computed from the adjusted interval instead of reusing preset's name.
+            name: shouldExcludeCurrent ? "" : dateFilterOption.name,
             from: shouldExcludeCurrent ? dateFilterOption.from - 1 : dateFilterOption.from,
             to: shouldExcludeCurrent ? -1 : to,
         };

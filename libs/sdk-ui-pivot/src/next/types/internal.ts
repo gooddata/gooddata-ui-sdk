@@ -66,8 +66,10 @@ export interface ITableColumnDefinitionByColId {
  *
  * @internal
  */
-export interface IPivotTableNextResolvedProps
-    extends Omit<IPivotTableNextProps, "rows" | "columns" | "measures" | "filters" | "sortBy" | "totals"> {
+export interface IPivotTableNextResolvedProps extends Omit<
+    IPivotTableNextProps,
+    "rows" | "columns" | "measures" | "filters" | "sortBy" | "totals"
+> {
     rows?: IAttribute[];
     columns?: IAttribute[];
     measures?: IMeasure[];

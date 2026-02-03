@@ -380,7 +380,8 @@ export interface IAccessControlAware {
  * @alpha
  */
 export interface IDashboard<TWidget = IDashboardWidget>
-    extends IDashboardBase,
+    extends
+        IDashboardBase,
         IDashboardObjectIdentity,
         Readonly<Required<IAuditableDates>>,
         Readonly<IAuditableUsers>,
@@ -469,9 +470,7 @@ export interface IDashboard<TWidget = IDashboardWidget>
  * @alpha
  */
 export interface IDashboardDefinition<TWidget = IDashboardWidget>
-    extends IDashboardBase,
-        IAccessControlAware,
-        Partial<IDashboardObjectIdentity> {
+    extends IDashboardBase, IAccessControlAware, Partial<IDashboardObjectIdentity> {
     readonly type: "IDashboard";
 
     /**
@@ -583,9 +582,7 @@ export type ListedDashboardAvailability = "full" | "viaLink";
  * @alpha
  */
 export interface IListedDashboard
-    extends Readonly<Required<IAuditableDates>>,
-        Readonly<IAuditableUsers>,
-        IAccessControlAware {
+    extends Readonly<Required<IAuditableDates>>, Readonly<IAuditableUsers>, IAccessControlAware {
     /**
      * Dashboard object ref
      */
@@ -610,6 +607,14 @@ export interface IListedDashboard
      * Dashboard description
      */
     readonly description: string;
+
+    /**
+     * AI-generated summary of the dashboard content.
+     *
+     * @remarks
+     * Optional for backward compatibility as not all backends/sources provide it.
+     */
+    readonly summary?: string;
 
     /**
      * Dashboard tags.

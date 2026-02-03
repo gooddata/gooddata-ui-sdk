@@ -166,8 +166,7 @@ export interface IExportDefinitionMetadataObject extends IExportDefinitionBase, 
  * @alpha
  */
 export interface IExportDefinitionMetadataObjectDefinition
-    extends IExportDefinitionBase,
-        IMetadataObjectDefinition {
+    extends IExportDefinitionBase, IMetadataObjectDefinition {
     type: "exportDefinition";
 }
 

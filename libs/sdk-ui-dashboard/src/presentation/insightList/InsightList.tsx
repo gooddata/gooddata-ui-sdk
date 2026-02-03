@@ -1,11 +1,9 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { type MouseEvent, useCallback, useEffect, useRef, useState } from "react";
+import { type MouseEvent, useCallback, useEffect, useRef } from "react";
 
-import { debounce, isEqual, range } from "lodash-es";
 import { useIntl } from "react-intl";
 
-import { type IInsightsQueryOptions } from "@gooddata/sdk-backend-spi";
 import {
     type IInsight,
     areObjRefsEqual,
@@ -16,8 +14,9 @@ import {
     insightUpdated,
     insightVisualizationType,
 } from "@gooddata/sdk-model";
-import { useBackendStrict, usePagedResource, useWorkspaceStrict } from "@gooddata/sdk-ui";
-import { DropdownList, type ITab, InsightListItem } from "@gooddata/sdk-ui-kit";
+import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import { type ITabsIds, useInsightPagedList } from "@gooddata/sdk-ui-ext";
+import { DropdownList, type ITab, InsightListItem, UiSkeleton } from "@gooddata/sdk-ui-kit";
 
 import { InsightListNoData } from "./InsightListNoData.js";
 import { type IInsightListProps } from "./types.js";
@@ -41,7 +40,6 @@ import { selectCurrentUser } from "../../model/store/user/userSelectors.js";
 import { getAuthor } from "../../model/utils/author.js";
 import { useDashboardComponentsContext } from "../dashboardContexts/DashboardComponentsContext.js";
 
-const ITEMS_PER_PAGE = 50;
 const ITEM_HEIGHT = 40;
 const LIST_WIDTH = 229;
 
@@ -67,6 +65,8 @@ const useAuthor = () => {
     return getAuthor(capabilities, currentUser);
 };
 
+const tabsIds: ITabsIds = { my: messages.tabsMy.id, all: messages.tabsAll.id };
+
 /**
  * @internal
  */
@@ -82,10 +82,6 @@ export function InsightList({
 
     const backend = useBackendStrict();
     const workspaceId = useWorkspaceStrict();
-    const [initialLoadCompleted, setInitialLoadCompleted] = useState(false);
-    const [pagesToLoad, setPagesToLoad] = useState<number[]>([0]); // first page loaded
-    const [search, setSearch] = useState("");
-    const [selectedTabId, setSelectedTabId] = useState(messages.tabsMy.id);
     const author = useAuthor();
     const insightListLastUpdateRequested = useDashboardSelector(selectInsightListLastUpdateRequested);
     const canCreateVisualization = useDashboardSelector(selectCanCreateVisualization);
@@ -95,67 +91,43 @@ export function InsightList({
     const useReferences = useDashboardSelector(selectEnableRichTextDynamicReferences);
     const executionTimestamp = useDashboardSelector(selectExecutionTimestamp);
     const { LoadingComponent } = useDashboardComponentsContext();
-    const previousSearch = useRef("");
-
-    const params = pagesToLoad.map((pageNumber) => ({
-        limit: ITEMS_PER_PAGE,
-        offset: pageNumber * ITEMS_PER_PAGE,
-        title: search,
-        author: selectedTabId === messages.tabsMy.id && !search ? author : undefined,
-    }));
 
     const {
         items: insights,
         totalItemsCount: totalInsightsCount,
         isLoading,
-    } = usePagedResource(
-        ({
-            limit,
-            offset,
-            title,
-            author,
-        }: {
-            limit: number;
-            offset: number;
-            title?: string;
-            author?: string;
-        }) => {
-            const options: IInsightsQueryOptions = {
-                limit,
-                offset,
-                author,
-                title,
-                orderBy: "updated",
-            };
-            previousSearch.current = title ?? "";
-            return backend.workspace(workspaceId).insights().getInsights(options);
-        },
-        params,
-        [backend, pagesToLoad, search, selectedTabId, insightListLastUpdateRequested],
-        [search, selectedTabId, pagesToLoad.length === 0, insightListLastUpdateRequested],
-        undefined,
-        undefined,
-        previousSearch.current !== search && isEqual(pagesToLoad, [0]),
-    );
+        isNextPageLoading,
+        initialLoadCompleted,
+        search,
+        selectedTabId,
+        hasNextPage,
+        skeletonItemsCount,
+        shouldLoadNextPage,
+        loadNextPage,
+        onSearch,
+        onTabSelect,
+        loadInitialItems,
+        resetItems,
+    } = useInsightPagedList({
+        backend,
+        workspaceId,
+        author,
+        tabsIds,
+    });
+
+    const prevInsightListLastUpdateRequestedRef = useRef(insightListLastUpdateRequested);
 
     useEffect(() => {
-        if (!initialLoadCompleted && typeof totalInsightsCount !== "undefined") {
-            setInitialLoadCompleted(true);
-            if (totalInsightsCount === 0) {
-                // when the user has no insights of their own, switch to the All tab
-                setSelectedTabId(messages.tabsAll.id);
-            }
-        }
-    }, [initialLoadCompleted, totalInsightsCount]);
+        loadInitialItems();
+    }, [loadInitialItems]);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const onSearch = useCallback(
-        debounce((searchString: string) => {
-            setPagesToLoad([0]);
-            setSearch(searchString);
-        }, 500),
-        [],
-    );
+    useEffect(() => {
+        // Only refresh when insightListLastUpdateRequested actually changed
+        if (insightListLastUpdateRequested !== prevInsightListLastUpdateRequestedRef.current) {
+            resetItems();
+        }
+        prevInsightListLastUpdateRequestedRef.current = insightListLastUpdateRequested;
+    }, [insightListLastUpdateRequested, resetItems]);
 
     const itemHeightGetter = (index: number) => {
         // Modify item heights for first/last item so that their hover states don't overlap.
@@ -203,13 +175,10 @@ export function InsightList({
             showTabs={showDropdownListTabs}
             tabs={backend.capabilities.supportsOwners && author ? dropdownTabsTranslationIds : undefined}
             selectedTabId={selectedTabId}
-            onTabSelect={({ id }) => {
-                setPagesToLoad([0]);
-                setSelectedTabId(id);
-            }}
+            onTabSelect={onTabSelect}
             itemHeight={ITEM_HEIGHT}
             itemHeightGetter={itemHeightGetter}
-            items={insights as IInsight[]}
+            items={insights}
             itemsCount={totalInsightsCount}
             renderItem={
                 renderItem ??
@@ -256,12 +225,21 @@ export function InsightList({
                     onCreateButtonClick={createInsightRequestedEvent}
                 />
             )}
-            onScrollEnd={(startIndex, endIndex) => {
-                const startPage = Math.floor(startIndex / ITEMS_PER_PAGE);
-                const endPage = Math.floor(endIndex / ITEMS_PER_PAGE);
-                const pagesToLoad = range(startPage, endPage + 1);
-                setPagesToLoad(pagesToLoad);
-            }}
+            loadNextPage={loadNextPage}
+            hasNextPage={hasNextPage}
+            skeletonItemsCount={skeletonItemsCount}
+            shouldLoadNextPage={shouldLoadNextPage}
+            isNextPageLoading={isNextPageLoading}
+            SkeletonItem={() => (
+                <UiSkeleton
+                    itemWidth={["100%"]}
+                    direction="row"
+                    itemPadding={15}
+                    itemHeight={30}
+                    itemsCount={1}
+                    itemsGap={0}
+                />
+            )}
         />
     );
 }

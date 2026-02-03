@@ -220,6 +220,9 @@ export type {
     IDashboardExportImageOptions,
     IDashboardExportPresentationOptions,
     FiltersByTab,
+    DashboardSummaryWorkflowStatus,
+    IDashboardSummaryWorkflowStartResult,
+    IDashboardSummaryWorkflowStatusResult,
 } from "./workspace/dashboards/index.js";
 export {
     type IWidgetWithLayoutPath,

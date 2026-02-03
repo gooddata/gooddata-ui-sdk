@@ -23,7 +23,7 @@ export type EmptyObject = Record<never, never>;
 export function escapeRegExp(value: string): string;
 
 // @internal (undocumented)
-export type GuardType<T> = T extends (o: unknown) => o is infer U ? U : never;
+export type GuardType<T> = T extends ((o: unknown) => o is infer U) ? U : never;
 
 // @internal
 export function hashCodeString(value: string): number;

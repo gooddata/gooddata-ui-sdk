@@ -16,8 +16,7 @@ import { type IconType } from "../@types/icon.js";
  * @internal
  */
 export interface IUiChipAccessibilityConfig
-    extends IAccessibilityConfigBase,
-        IDropdownButtonAccessibilityConfig {
+    extends IAccessibilityConfigBase, IDropdownButtonAccessibilityConfig {
     deleteAriaLabel?: string;
     deleteAriaDescribedBy?: string;
 }

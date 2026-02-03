@@ -1,19 +1,14 @@
 {
     "name": "@gooddata/plugin-toolkit",
-    "version": "11.19.0-alpha.2",
+    "version": "11.19.0-alpha.5",
     "description": "GoodData Set of Tools for working with Plugins",
+    "license": "LicenseRef-LICENSE",
+    "author": "GoodData",
     "repository": {
         "type": "git",
         "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
         "directory": "tools/plugin-toolkit"
     },
-    "license": "LicenseRef-LICENSE",
-    "author": "GoodData",
-    "sideEffects": false,
-    "type": "module",
-    "exports": "./esm/index.js",
-    "browser": "esm/index.js",
-    "types": "./esm/index.d.ts",
     "bin": {
         "gdc-plugins": "esm/index.js"
     },
@@ -25,6 +20,11 @@
         "esm/**/*.tgz",
         "NOTICE"
     ],
+    "type": "module",
+    "sideEffects": false,
+    "browser": "esm/index.js",
+    "types": "./esm/index.d.ts",
+    "exports": "./esm/index.js",
     "scripts": {
         "_phase:build": "npm run build",
         "_phase:post-build": "npm run build-dynamic-files",
@@ -34,15 +34,15 @@
         "build-dynamic-files": "bash scripts/build.sh --genFilesOnly",
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm build coverage *.log tsconfig.tsbuildinfo",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
-        "eslint": "eslint -c .eslintrc.cjs src/",
-        "eslint-fix": "eslint -c .eslintrc.cjs src/ --fix",
+        "eslint": "eslint src",
+        "eslint-fix": "eslint src --fix",
         "prepack": "cp -f ../../NOTICE ./NOTICE",
         "prepublishOnly": "npm run build",
-        "prettier-check": "prettier --no-error-on-unmatched-pattern --check '{src,test}/**/*.{json,scss,md,yaml,html}'",
-        "prettier-write": "prettier --no-error-on-unmatched-pattern --write '{src,test}/**/*.{json,scss,md,yaml,html}'",
+        "oxfmt-check": "oxfmt --check .",
+        "oxfmt-write": "oxfmt .",
         "test": "vitest watch",
         "test-once": "vitest run",
-        "validate": "tsc && npm run dep-cruiser && npm run eslint && npm run prettier-check"
+        "validate": "tsc && npm run dep-cruiser && npm run eslint && npm run oxfmt-check"
     },
     "dependencies": {
         "@babel/cli": "^7.23.4",
@@ -61,7 +61,7 @@
         "fast-glob": "3.3.3",
         "fs-extra": "^10.0.0",
         "inquirer": "^8.2.3",
-        "lodash-es": "^4.17.21",
+        "lodash-es": "^4.17.23",
         "ora": "^5.3.0",
         "strip-ansi": "^6.0.0",
         "tar": "^6.2.1",
@@ -80,19 +80,15 @@
         "@typescript-eslint/eslint-plugin": "8.52.0",
         "@typescript-eslint/parser": "8.52.0",
         "dependency-cruiser": "^14.1.2",
-        "eslint": "^8.57.1",
-        "eslint-config-prettier": "10.1.8",
+        "eslint": "^9.39.2",
         "eslint-plugin-header": "3.1.1",
-        "eslint-plugin-import": "2.32.0",
         "eslint-plugin-import-esm": "1.2.1",
+        "eslint-plugin-import-x": "4.16.1",
         "eslint-plugin-jsdoc": "62.1.0",
         "eslint-plugin-no-barrel-files": "1.2.2",
-        "eslint-plugin-no-only-tests": "2.6.0",
-        "eslint-plugin-prettier": "5.5.4",
-        "eslint-plugin-regexp": "1.15.0",
+        "eslint-plugin-no-only-tests": "3.3.0",
         "eslint-plugin-sonarjs": "3.0.6",
-        "eslint-plugin-tsdoc": "0.2.14",
-        "prettier": "^3.6.2",
+        "oxfmt": "0.27.0",
         "typescript": "5.9.3",
         "vitest": "4.0.8"
     }

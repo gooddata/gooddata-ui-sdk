@@ -73,7 +73,6 @@ export function AddFilterButton() {
                     addFilterDropdownOpen: false,
                 });
             }}
-            renderVirtualisedList
             accessibilityConfig={{
                 ariaLabelledBy,
                 searchAriaLabel,

@@ -1,6 +1,6 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-/* eslint-disable import/order */
+/* eslint-disable import-x/order */
 /* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2025-12-26T19:14:53.550Z; */
 
 import fp_004031cbc9081950b7284311b004fe11_definition from "./uiTestScenarios/executions/004031cbc9081950b7284311b004fe11/definition.json" with { type: "json" };

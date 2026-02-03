@@ -20,9 +20,9 @@ Tip: You can preview the full default theme with color previews in the storybook
 
 The theming system validates consistent usage of CSS properties and their defaults. Best practices:
 
--   Avoid using hardcoded defaults in component styles
--   Use CSS variables defined in the theme specification
--   Reference theme variables instead of creating new color values
+- Avoid using hardcoded defaults in component styles
+- Use CSS variables defined in the theme specification
+- Reference theme variables instead of creating new color values
 
 ## CSS Variable Generation
 
@@ -38,25 +38,21 @@ The [`ThemeProvider`](./src/ThemeProvider/ThemeProvider.tsx) automatically:
 Types of CSS variables in specification:
 
 1. **Theme Variables** (`type: "theme"`)
-
     - Directly configurable through the theme object
     - Defined in `@gooddata/sdk-model` ITheme interface
     - Example: `--gd-palette-primary-base`
 
 2. **Derived Variables** (`type: "derived"`)
-
     - Automatically calculated from theme variables
     - Cannot be set directly in theme object
     - Example: `--gd-palette-primary-base-t10` (10% transparent primary color)
 
 3. **Internal Variables** (`type: "internal"`)
-
     - Used internally by components
     - Not meant for public use/customization
     - Example: `--gd-button-L` (button size constants)
 
 4. **Deprecated Variables** (`type: "deprecated"`)
-
     - Legacy variables that should not be used
     - Will be removed in future versions
     - Example: `--gd-palette-primary-light`

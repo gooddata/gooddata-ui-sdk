@@ -1,9 +1,9 @@
 {
-    "extends": ["@gooddata/stylelint-config", "stylelint-config-prettier"],
+    "extends": ["@gooddata/stylelint-config"],
     "rules": {
         "order/properties-order": null,
         "max-nesting-depth": 4,
-        "value-keyword-case": ["lower", { "ignoreProperties": ["--gd-font-family"] }],
+        "value-keyword-case": ["lower", { "ignoreProperties": ["--gd-font-family"], "ignoreKeywords": ["currentColor", "sRGB"] }],
         "color-hex-length": null,
         "declaration-empty-line-before": null,
         "selector-pseudo-class-no-unknown": [

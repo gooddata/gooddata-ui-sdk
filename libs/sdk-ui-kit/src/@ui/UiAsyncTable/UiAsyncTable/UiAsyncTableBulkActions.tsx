@@ -55,7 +55,6 @@ export function UiAsyncTableBulkActions({ bulkActions }: IUiAsyncTableBulkAction
                                 />
                             )}
                             width={200}
-                            renderVirtualisedList
                             accessibilityConfig={{
                                 role: "menu",
                                 ariaLabelledBy: ASYNC_TABLE_BULK_ACTIONS_BUTTON_ID,

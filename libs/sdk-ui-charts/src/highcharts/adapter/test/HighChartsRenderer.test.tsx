@@ -10,7 +10,7 @@ import { type IDrillConfig, VisualizationTypes } from "@gooddata/sdk-ui";
 
 import { type IChartConfig } from "../../../interfaces/chartConfig.js";
 import { getHighchartsOptions } from "../../chartTypes/_chartCreators/highChartsCreators.js";
-// eslint-disable-next-line import/order
+// eslint-disable-next-line import-x/order
 import { BOTTOM, LEFT, RIGHT, TOP } from "../../typings/mess.js";
 
 // Mock the components directly before importing

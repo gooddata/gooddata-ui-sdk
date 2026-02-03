@@ -1,4 +1,4 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 module.exports = {
     paths: ["./src/internal/translations"],
@@ -17,13 +17,11 @@ module.exports = {
              remove it by solving critical https://gooddata.atlassian.net/browse/STL-702 afraid that it could cause duplication issues.
         */
         {
-            pattern: [
-                /^userManagement\./,
-            ],
+            pattern: [/^userManagement\./],
             ignore: true,
         },
         {
             pattern: [/.+/],
-        }
+        },
     ],
 };

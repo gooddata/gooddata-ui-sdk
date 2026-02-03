@@ -124,18 +124,17 @@ export interface IExportDialogProps extends IExportDialogBaseProps {
 /**
  * @internal
  */
-export interface IExportDialogBaseProps
-    extends Pick<
-        IConfirmDialogBaseProps,
-        | "className"
-        | "displayCloseButton"
-        | "isPositive"
-        | "isSubmitDisabled"
-        | "headline"
-        | "cancelButtonText"
-        | "submitButtonText"
-        | "onCancel"
-    > {
+export interface IExportDialogBaseProps extends Pick<
+    IConfirmDialogBaseProps,
+    | "className"
+    | "displayCloseButton"
+    | "isPositive"
+    | "isSubmitDisabled"
+    | "headline"
+    | "cancelButtonText"
+    | "submitButtonText"
+    | "onCancel"
+> {
     filterContextText?: string;
     filterContextTitle?: string | null;
     filterContextVisible?: boolean;

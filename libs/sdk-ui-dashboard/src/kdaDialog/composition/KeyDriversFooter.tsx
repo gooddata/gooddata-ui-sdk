@@ -2,7 +2,7 @@
 
 import { type RefObject, useId, useMemo } from "react";
 
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { type ICatalogAttribute, type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
 import { DropdownInvertableSelect, InvertableSelectItem, UiButton, UiSkeleton } from "@gooddata/sdk-ui-kit";
@@ -19,6 +19,7 @@ import { useKdaState } from "../providers/KdaState.js";
 export function KeyDriversFooter() {
     const { state, setState } = useKdaState();
     const list = useSummaryDrivers();
+    const intl = useIntl();
 
     const labelAttributeId = useId();
     const labelKeyDriversId = useId();
@@ -90,6 +91,13 @@ export function KeyDriversFooter() {
                             return (
                                 <DropdownInvertableSelect
                                     closeOnEscape
+                                    accessibilityConfig={{
+                                        triggerRole: "button",
+                                        popupRole: "dialog",
+                                        popupLabel: intl.formatMessage({
+                                            id: "kdaDialog.dialog.keyDrives.overview.summary.drivers.popupLabel",
+                                        }),
+                                    }}
                                     className="gd-kda-attributes-dropdown"
                                     initialValue={initialAttributes}
                                     overlayPositionType="sameAsTarget"

@@ -332,7 +332,6 @@ export interface IPivotTableConfig {
     // @alpha
     columnHeadersPosition?: ColumnHeadersPosition;
     columnSizing?: IColumnSizing;
-    enableDrillMenuPositioningAtCursor?: boolean;
     enableExecutionCancelling?: boolean;
     grandTotalsPosition?: GrandTotalsPosition;
     groupRows?: boolean;
@@ -538,12 +537,7 @@ export type PivotTableNextColumnsSizingConfig = {
 };
 
 // @public
-export type PivotTableNextConfig = PivotTableNextTranspositionConfig & PivotTableNextTextWrappingConfig & PivotTableNextColumnsSizingConfig & PivotTableNextMenuConfig & PivotTableNextFormattingConfig & PivotTableNextExecutionCancellingConfig & PivotTableNextDrillMenuPositioningConfig & PivotTableNextLayoutConfig & PivotTableNextGrandTotalsPositionConfig & PivotTableNextCellSelectionConfig & PivotTableNextAgGridLicenseConfig & PivotTableNextPaginationConfig & PivotTableNextAccessibilityConfig & PivotTableNextExperimentalConfig;
-
-// @public
-export type PivotTableNextDrillMenuPositioningConfig = {
-    enableDrillMenuPositioningAtCursor?: boolean;
-};
+export type PivotTableNextConfig = PivotTableNextTranspositionConfig & PivotTableNextTextWrappingConfig & PivotTableNextColumnsSizingConfig & PivotTableNextMenuConfig & PivotTableNextFormattingConfig & PivotTableNextExecutionCancellingConfig & PivotTableNextLayoutConfig & PivotTableNextGrandTotalsPositionConfig & PivotTableNextCellSelectionConfig & PivotTableNextAgGridLicenseConfig & PivotTableNextPaginationConfig & PivotTableNextAccessibilityConfig & PivotTableNextExperimentalConfig;
 
 // @public
 export type PivotTableNextExecutionCancellingConfig = {

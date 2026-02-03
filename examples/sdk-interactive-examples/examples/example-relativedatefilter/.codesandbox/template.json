@@ -1,11 +1,7 @@
 {
-  "title": "RelativeDateFilter",
-  "description": "Example demonstrates how to set relative DateFilter for visualization.",
-  "iconUrl": "https://www.gooddata.com/favicon.ico",
-  "tags": [
-    "react",
-    "typescript",
-    "gooddata-ui-sdk"
-  ],
-  "published": true
+    "title": "RelativeDateFilter",
+    "description": "Example demonstrates how to set relative DateFilter for visualization.",
+    "iconUrl": "https://www.gooddata.com/favicon.ico",
+    "tags": ["react", "typescript", "gooddata-ui-sdk"],
+    "published": true
 }

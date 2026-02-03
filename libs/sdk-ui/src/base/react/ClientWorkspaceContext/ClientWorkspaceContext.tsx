@@ -71,8 +71,7 @@ export interface IClientWorkspaceProviderWithWorkspaceProps extends IClientWorks
 /**
  * @alpha
  */
-export interface IClientWorkspaceProviderWithClientAndDataProductProps
-    extends IClientWorkspaceProviderCoreProps {
+export interface IClientWorkspaceProviderWithClientAndDataProductProps extends IClientWorkspaceProviderCoreProps {
     /**
      * Specify the data product identifier to use to obtain the LCM context.
      *

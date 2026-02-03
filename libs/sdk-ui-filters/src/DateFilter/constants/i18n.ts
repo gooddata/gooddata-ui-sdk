@@ -1,4 +1,5 @@
-// (C) 2019-2022 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { type DateFilterGranularity } from "@gooddata/sdk-model";
 
 /**
@@ -13,7 +14,7 @@ export type DateFilterLabelMode = "short" | "full";
  * Short-form intl keys for granularities.
  * @beta
  */
-export type GranularityIntlKey = "day" | "minute" | "hour" | "week" | "month" | "quarter" | "year";
+export type GranularityIntlKey = "day" | "minute" | "hour" | "week" | "month" | "quarter" | "year" | "period";
 
 /**
  * Full-form intl keys for granularities (includes fiscal variants).
@@ -34,7 +35,7 @@ export const granularityIntlCodes: {
     "GDC.time.date": "day",
     "GDC.time.week_us": "week",
     "GDC.time.month": "month",
-    "GDC.time.fiscal_month": "month",
+    "GDC.time.fiscal_month": "period",
     "GDC.time.quarter": "quarter",
     "GDC.time.fiscal_quarter": "quarter",
     "GDC.time.year": "year",

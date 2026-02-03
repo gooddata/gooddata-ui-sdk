@@ -2,22 +2,22 @@
     "name": "@gooddata/reference-workspace-mgmt",
     "version": "1.0.0",
     "description": "Command line tools for reference workspace management",
+    "license": "MIT",
+    "author": "GoodData",
     "repository": {
         "type": "git",
         "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
         "directory": "tools/reference-workspace-mgmt"
     },
-    "license": "MIT",
-    "author": "GoodData",
-    "type": "module",
-    "exports": "./esm/index.js",
-    "typings": "./esm/index.d.ts",
     "files": [
         "esm/**/*.js",
         "esm/**/*.json",
         "esm/**/*.d.ts",
         "esm/**/*.map"
     ],
+    "type": "module",
+    "typings": "./esm/index.d.ts",
+    "exports": "./esm/index.js",
     "scripts": {
         "_phase:build": "npm run build",
         "_phase:test": "npm run test-once",
@@ -25,17 +25,15 @@
         "build": "tsc -p tsconfig.json",
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
-        "eslint": "eslint $npm_package_config_eslint",
+        "eslint": "eslint src",
+        "eslint-fix": "eslint src --fix",
         "export-ref-workspace": "node ./bin/export_ref_workspace.js && npm run prettier-write",
         "import-ref-workspace": "node ./bin/import_ref_workspace.js",
-        "prettier-check": "prettier --no-error-on-unmatched-pattern --check '{src,test}/**/*.{json,scss,md,yaml,html}'",
-        "prettier-write": "prettier --no-error-on-unmatched-pattern --write '{src,test,fixtures}/**/*.{json,scss,md,yaml,html}'",
+        "oxfmt-check": "oxfmt --check .",
+        "oxfmt-write": "oxfmt .",
         "test": "vitest watch --passWithNoTests",
         "test-once": "vitest run --passWithNoTests",
-        "validate": "npm run dep-cruiser && npm run eslint && npm run prettier-check"
-    },
-    "config": {
-        "eslint": "-c .eslintrc.cjs --ext ts src/"
+        "validate": "npm run dep-cruiser && npm run eslint && npm run oxfmt-check"
     },
     "dependencies": {
         "@gooddata/catalog-export": "workspace:*",
@@ -52,18 +50,14 @@
         "@typescript-eslint/parser": "8.52.0",
         "dependency-cruiser": "^14.1.2",
         "dotenv": "16.0.3",
-        "eslint": "^8.57.1",
-        "eslint-config-prettier": "10.1.8",
+        "eslint": "^9.39.2",
         "eslint-plugin-header": "3.1.1",
-        "eslint-plugin-import": "2.32.0",
+        "eslint-plugin-import-x": "4.16.1",
         "eslint-plugin-jsdoc": "62.1.0",
         "eslint-plugin-no-barrel-files": "1.2.2",
-        "eslint-plugin-no-only-tests": "2.6.0",
-        "eslint-plugin-prettier": "5.5.4",
-        "eslint-plugin-regexp": "1.15.0",
+        "eslint-plugin-no-only-tests": "3.3.0",
         "eslint-plugin-sonarjs": "3.0.6",
-        "eslint-plugin-tsdoc": "0.2.14",
-        "prettier": "^3.6.2",
+        "oxfmt": "0.27.0",
         "typescript": "5.9.3",
         "vitest": "4.0.8"
     }

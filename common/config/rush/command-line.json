@@ -63,6 +63,24 @@
             "ignoreMissingScript": true
         },
         {
+            "commandKind": "bulk",
+            "name": "prettier-check",
+            "summary": "Run prettier-check across all apps",
+            "enableParallelism": true,
+            "ignoreDependencyOrder": true,
+            "ignoreMissingScript": true,
+            "allowWarningsInSuccessfulBuild": true
+        },
+        {
+            "commandKind": "bulk",
+            "name": "prettier-write",
+            "summary": "Run prettier-write across all apps",
+            "enableParallelism": true,
+            "ignoreDependencyOrder": true,
+            "ignoreMissingScript": true,
+            "allowWarningsInSuccessfulBuild": true
+        },
+        {
             "commandKind": "global",
             "name": "lint-staged-files",
             "summary": "Used by the pre-commit Git hook. This command invokes linters to reformat staged changes.",

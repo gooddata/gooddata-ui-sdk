@@ -278,7 +278,6 @@ export function GeoChartRenderer({
                 coordinates,
                 originalEvent.target,
                 originalEvent,
-                config.enableDrillMenuPositioningAtCursor ?? false,
             );
         },
         [config, drillableItems, drillConfig, dataView, geoData],

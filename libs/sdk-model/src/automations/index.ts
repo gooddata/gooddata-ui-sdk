@@ -195,9 +195,7 @@ export interface IAutomationVisibleFilter {
  * @alpha
  */
 export interface IAutomationMetadataObject
-    extends IAutomationMetadataObjectBase,
-        IMetadataObject,
-        IAuditable {
+    extends IAutomationMetadataObjectBase, IMetadataObject, IAuditable {
     type: "automation";
 }
 
@@ -212,9 +210,7 @@ export function isAutomationMetadataObject(obj: unknown): obj is IAutomationMeta
  * @alpha
  */
 export interface IAutomationMetadataObjectDefinition
-    extends Omit<IAutomationMetadataObjectBase, "exportDefinitions">,
-        IMetadataObjectDefinition,
-        IAuditable {
+    extends Omit<IAutomationMetadataObjectBase, "exportDefinitions">, IMetadataObjectDefinition, IAuditable {
     type: "automation";
     exportDefinitions?: (IExportDefinitionMetadataObjectDefinition | IExportDefinitionMetadataObject)[];
 }

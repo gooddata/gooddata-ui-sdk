@@ -216,8 +216,10 @@ export function MeasureDropdown({
                                         `s-sorting-measure-${rowIndex}`,
                                     );
 
+                                    // Set gd-measure-dropdown-list height to 28 to ensure that child elements with a larger height do not affect it.
+                                    // If an item’s height overflows 28px, it impacts the whole list And this is what we want to prevent.
                                     return (
-                                        <div className="gd-measure-dropdown-list">
+                                        <div className="gd-measure-dropdown-list" style={{ height: 28 }}>
                                             <button
                                                 className={className}
                                                 onClick={() => {

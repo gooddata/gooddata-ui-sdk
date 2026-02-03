@@ -112,7 +112,6 @@ describe("Drilldown Eventing", () => {
             target as any as EventTarget,
             "chartId",
             VisualizationTypes.LINE,
-            false,
         );
 
         vi.runAllTimers();
@@ -131,7 +130,6 @@ describe("Drilldown Eventing", () => {
             target as any as EventTarget,
             "chartId",
             VisualizationTypes.LINE,
-            false,
         );
 
         vi.runAllTimers();
@@ -197,7 +195,6 @@ describe("Drilldown Eventing", () => {
             target as any as EventTarget,
             "chartId",
             VisualizationTypes.TREEMAP,
-            false,
         );
 
         vi.runAllTimers();
@@ -212,7 +209,6 @@ describe("Drilldown Eventing", () => {
             target as any as EventTarget,
             "chartId",
             VisualizationTypes.HEATMAP,
-            false,
         );
 
         vi.runAllTimers();
@@ -235,7 +231,6 @@ describe("Drilldown Eventing", () => {
             target as any as EventTarget,
             "chartId",
             VisualizationTypes.BUBBLE,
-            false,
         );
 
         vi.runAllTimers();
@@ -302,7 +297,6 @@ describe("Drilldown Eventing", () => {
             target as any as EventTarget,
             "chartId",
             VisualizationTypes.LINE,
-            false,
         );
 
         vi.runAllTimers();
@@ -320,7 +314,6 @@ describe("Drilldown Eventing", () => {
             target as any as EventTarget,
             "chartId",
             VisualizationTypes.LINE,
-            false,
         );
 
         vi.runAllTimers();
@@ -339,7 +332,6 @@ describe("Drilldown Eventing", () => {
             target as any as EventTarget,
             "chartId",
             VisualizationTypes.LINE,
-            false,
         );
 
         vi.runAllTimers();
@@ -378,7 +370,6 @@ describe("Drilldown Eventing", () => {
             target as any as EventTarget,
             "chartId",
             VisualizationTypes.LINE,
-            false,
         );
 
         vi.runAllTimers();
@@ -467,7 +458,6 @@ describe("Drilldown Eventing", () => {
                 target as EventTarget,
                 "chartId",
                 VisualizationTypes.COMBO2,
-                false,
             );
 
             vi.runAllTimers();
@@ -510,7 +500,6 @@ describe("Drilldown Eventing", () => {
                 target as EventTarget,
                 "chartId",
                 VisualizationTypes.COMBO2,
-                false,
             );
 
             vi.runAllTimers();
@@ -546,7 +535,6 @@ describe("Drilldown Eventing", () => {
                 target as EventTarget,
                 "chartId",
                 VisualizationTypes.COLUMN,
-                false,
             );
 
             vi.runAllTimers();
@@ -582,7 +570,6 @@ describe("Drilldown Eventing", () => {
                 target as EventTarget,
                 "chartId",
                 VisualizationTypes.LINE,
-                false,
             );
 
             vi.runAllTimers();
@@ -669,7 +656,6 @@ describe("Drilldown Eventing", () => {
                 target as EventTarget,
                 "chartId",
                 VisualizationTypes.BULLET,
-                false,
             );
 
             vi.runAllTimers();
@@ -687,7 +673,6 @@ describe("Drilldown Eventing", () => {
                 target as EventTarget,
                 "chartId",
                 VisualizationTypes.BULLET,
-                false,
             );
 
             vi.runAllTimers();
@@ -705,7 +690,6 @@ describe("Drilldown Eventing", () => {
                 target as EventTarget,
                 "chartId",
                 VisualizationTypes.BULLET,
-                false,
             );
 
             vi.runAllTimers();
@@ -724,7 +708,6 @@ describe("Drilldown Eventing", () => {
                 target as EventTarget,
                 "chartId",
                 VisualizationTypes.BULLET,
-                false,
             );
 
             vi.runAllTimers();
@@ -748,7 +731,6 @@ describe("Drilldown Eventing", () => {
                 target as EventTarget,
                 "chartId",
                 VisualizationTypes.BULLET,
-                false,
             );
 
             vi.runAllTimers();

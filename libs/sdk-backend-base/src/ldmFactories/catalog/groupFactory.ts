@@ -9,8 +9,9 @@ import { Builder, type BuilderModifications, type IBuilder, builderFactory } fro
  *
  * @beta
  */
-export interface IGroupableCatalogItemBuilder<T extends IGroupableCatalogItemBase = IGroupableCatalogItemBase>
-    extends IBuilder<T> {
+export interface IGroupableCatalogItemBuilder<
+    T extends IGroupableCatalogItemBase = IGroupableCatalogItemBase,
+> extends IBuilder<T> {
     groups(tagRefs: ObjRef[]): this;
 }
 

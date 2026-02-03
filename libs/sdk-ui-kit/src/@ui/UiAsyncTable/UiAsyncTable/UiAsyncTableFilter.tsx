@@ -93,7 +93,6 @@ export function UiAsyncTableFilter(props: IUiAsyncTableFilterProps) {
                                 searchString={searchValue}
                                 searchFieldSize="small"
                                 onSearch={setSearchValue}
-                                renderVirtualisedList
                                 containerPadding={FILTER_ITEMS_OFFSET}
                                 onKeyDownSelect={(item) => onItemClick(item, closeDropdown)}
                                 onKeyDownConfirm={onApplyFactory(closeDropdown)}

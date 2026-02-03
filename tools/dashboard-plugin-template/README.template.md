@@ -13,10 +13,10 @@ vanilla GoodData KPI Dashboards (dashboards).
 Plugins are registered into the dashboard engine used to render a concrete dashboard. At the registration time the
 plugin code can use several customization APIs to:
 
--   deliver new custom widgets to render on the dashboard
--   alter how particular insights are rendered; this in effect allows you to inject custom data visualizations of
-    analytics computed by GoodData
--   listen to events occurring on the dashboard
+- deliver new custom widgets to render on the dashboard
+- alter how particular insights are rendered; this in effect allows you to inject custom data visualizations of
+  analytics computed by GoodData
+- listen to events occurring on the dashboard
 
 When developing your own plugin, you typically create custom React components and event handlers that interact with
 the rendered dashboard using available APIs and then register those components and handlers using the customization APIs.

@@ -93,8 +93,10 @@ export interface IWorkspaceCatalogWithAvailableItemsFactoryOptions extends IWork
  *
  * @public
  */
-export interface IWorkspaceCatalogFactory
-    extends IWorkspaceCatalogFactoryMethods<IWorkspaceCatalogFactory, IWorkspaceCatalogFactoryOptions> {
+export interface IWorkspaceCatalogFactory extends IWorkspaceCatalogFactoryMethods<
+    IWorkspaceCatalogFactory,
+    IWorkspaceCatalogFactoryOptions
+> {
     /**
      * Workspace whose catalog is being loaded.
      */
@@ -123,11 +125,10 @@ export interface IWorkspaceCatalogFactory
  *
  * @public
  */
-export interface IWorkspaceCatalogAvailableItemsFactory
-    extends IWorkspaceCatalogFactoryMethods<
-        IWorkspaceCatalogAvailableItemsFactory,
-        IWorkspaceCatalogWithAvailableItemsFactoryOptions
-    > {
+export interface IWorkspaceCatalogAvailableItemsFactory extends IWorkspaceCatalogFactoryMethods<
+    IWorkspaceCatalogAvailableItemsFactory,
+    IWorkspaceCatalogWithAvailableItemsFactoryOptions
+> {
     /**
      * Setup catalog to fetch only items that are valid for the provided execution items
      *

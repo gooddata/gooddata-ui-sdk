@@ -3,7 +3,7 @@
 /**
  * @internal
  */
-export type GuardType<T> = T extends (o: unknown) => o is infer U ? U : never;
+export type GuardType<T> = T extends ((o: unknown) => o is infer U) ? U : never;
 
 /**
  * Returns combine guard from input guards as a result type is union type of guarded types

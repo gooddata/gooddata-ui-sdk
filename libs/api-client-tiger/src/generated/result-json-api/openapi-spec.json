@@ -323,7 +323,7 @@
             "post": {
                 "tags": ["actions"],
                 "summary": "Upload a geo collection file to the staging area",
-                "description": "Provides a location for uploading staging files for custom geo collections.",
+                "description": "Provides a location for uploading staging files for custom geo collections. Supported file types: GeoParquet (.parquet), GeoJSON (.geojson, .json).",
                 "operationId": "customGeoCollectionStagingUpload",
                 "requestBody": {
                     "content": {
@@ -334,7 +334,7 @@
                                 "properties": {
                                     "file": {
                                         "type": "string",
-                                        "description": "The geo collection file to upload.",
+                                        "description": "The geo collection file to upload. Supported formats: GeoParquet (.parquet), GeoJSON (.geojson, .json).",
                                         "format": "binary"
                                     }
                                 }
@@ -349,6 +349,50 @@
                             "*/*": {
                                 "schema": {
                                     "$ref": "#/components/schemas/UploadGeoCollectionFileResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["MANAGE"],
+                    "description": "Minimal permission required to use this endpoint."
+                }
+            }
+        },
+        "/api/v1/actions/customGeoCollection/convert": {
+            "post": {
+                "tags": ["actions"],
+                "summary": "Convert a geo file to GeoParquet format",
+                "description": "Converts a geo file from the staging area to GeoParquet format. Supported source formats: GeoJSON (.geojson, .json). If the source file is already in GeoParquet format, the same location is returned without conversion.",
+                "operationId": "convertGeoFile",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ConvertGeoFileRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Conversion was successful.",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConvertGeoFileResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request or unsupported file format.",
+                        "content": {
+                            "*/*": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConvertGeoFileResponse"
                                 }
                             }
                         }
@@ -1090,6 +1134,28 @@
                     }
                 },
                 "description": "Information related to the geo collection file uploaded to the staging area."
+            },
+            "ConvertGeoFileRequest": {
+                "required": ["location"],
+                "type": "object",
+                "properties": {
+                    "location": {
+                        "type": "string",
+                        "description": "Location of the file in the staging area to convert."
+                    }
+                },
+                "description": "Request to convert a geo file to GeoParquet format."
+            },
+            "ConvertGeoFileResponse": {
+                "required": ["location"],
+                "type": "object",
+                "properties": {
+                    "location": {
+                        "type": "string",
+                        "description": "Location of the converted GeoParquet file in the staging area."
+                    }
+                },
+                "description": "Response after successfully converting a geo file."
             },
             "GeoJsonFeature": {
                 "required": ["properties", "type"],

@@ -19,7 +19,7 @@ set -e
 PACKAGE_DIR="$(echo $(cd $(dirname $0)/.. && pwd -P))"
 DIST_DIR="${PACKAGE_DIR}/esm"
 BABEL_BIN="${PACKAGE_DIR}/node_modules/.bin/babel"
-PRETTIER_BIN="${PACKAGE_DIR}/node_modules/.bin/prettier"
+OXFMT_BIN="${PACKAGE_DIR}/node_modules/.bin/oxfmt"
 PREPARE_PACKAGE_JSON="node ${PACKAGE_DIR}/scripts/preparePackageJson.mjs"
 
 REACT_APP_TEMPLATE_DIR="${PACKAGE_DIR}/../react-app-template"
@@ -85,11 +85,7 @@ find "${JS_BUILD_DIR}" -type f \( -iname \*.ts -o -iname \*.tsx -o -iname \*.d.j
 find "${TS_BUILD_DIR}" -type f -iname \*.tsx | cut -c $((${#TS_BUILD_DIR} + 2))- | cut -sd . -f 1 | xargs -I {} mv "${JS_BUILD_DIR}/{}.js" "${JS_BUILD_DIR}/{}.jsx"
 
 # format transpiled files as format was broken during transpile process
-$PRETTIER_BIN --write "${JS_BUILD_DIR}/**/*.{js,jsx}" \
-  --parser typescript \
-  --print-width 110 \
-  --tab-width 4 \
-  --trailing-comma all
+$OXFMT_BIN ${JS_BUILD_DIR}/**/*
 
 # build tar with JavaScript bootstrap files
 tar -czf "${JS_TAR}" -C "${JS_BUILD_DIR}" .

@@ -5,25 +5,25 @@ are desired for the component itself - these are driven primarily by the goal to
 
 The component must be:
 
--   Externally customizable & extendable
+- Externally customizable & extendable
 
     Clients must be able to comfortably customize, add new or completely customize existing presentation components. It
     is expected that client's custom presentational components will need to interact with the dashboard or other parts of
     the dashboard.
 
--   Observable
+- Observable
 
     Client's custom presentational components must know what is happening in the dashboard and must know how user
     interacts with the dashboard. It is expected that client's custom extensions will process this information and
     that client's custom presentational components will react to them.
 
--   Predictable
+- Predictable
 
     Developer building potentially complex extensions on top of the complex component must do so painlessly.
     Apart from documented APIs and code-to-code interaction patterns, the component must strive to provide predictable
     experience on top of them. No awkward errors, no racy behavior, no unexpected side-effects.
 
--   Maintainable
+- Maintainable
 
     On one hand, developers will build potentially complex extensions on top of the dashboard. On the other hand
     we have to keep enhancing and maintaining the component in a way where we eliminate or greatly minimize the risk
@@ -33,24 +33,22 @@ The component must be:
 
 The 'big' design decisions we have done while creating the component are these:
 
--   Component follows the Model-View-Controller pattern
+- Component follows the Model-View-Controller pattern
+    - The Model concentrates all the dashboard's domain logic
+    - The presentational React components form the View part
+    - The controller React components form the Controller part
 
-    -   The Model concentrates all the dashboard's domain logic
-    -   The presentational React components form the View part
-    -   The controller React components form the Controller part
-
--   Model uses opinionated design on top of Redux and Redux Sagas in order to implement domain logic in a way
-    that it can be reasonably and in a controlled fashion exposed to client code.
+- Model uses opinionated design on top of Redux and Redux Sagas in order to implement domain logic in a way
+  that it can be reasonably and in a controlled fashion exposed to client code.
 
     The model design takes some inspiration from the CQRS. A big part of the model wraps around actions that the
     client code may dispatch to get job done. The model divides these actions into two categories:
+    - **Commands** are used to trigger any change (write operation) on the dashboard. Commands encapsulate potentially
+      complex domain logic.
 
-    -   **Commands** are used to trigger any change (write operation) on the dashboard. Commands encapsulate potentially
-        complex domain logic.
-
-    -   **Queries** are used to trigger potentially complex read-only domain logic. Such logic typically needs to work
-        in the context of the dashboard, use multiple parts of its state, perform calculations and interact with the
-        analytical backend to get the job done.
+    - **Queries** are used to trigger potentially complex read-only domain logic. Such logic typically needs to work
+      in the context of the dashboard, use multiple parts of its state, perform calculations and interact with the
+      analytical backend to get the job done.
 
     Additionally the model also uses the **Events**. These are again actions that describe what has happened in the
     dashboard or during command processing.
@@ -58,8 +56,8 @@ The 'big' design decisions we have done while creating the component are these:
     Apart from this, the model also provides **Selectors** that can be used to synchronously query data to render
     in the presentational components.
 
--   The controller and view components can be completely replaced by the client code. Default implementations of
-    top-level components further allow customization or even complete replacement of their sub-components.
+- The controller and view components can be completely replaced by the client code. Default implementations of
+  top-level components further allow customization or even complete replacement of their sub-components.
 
 ## Model Design Details
 
@@ -69,19 +67,19 @@ easy-to-reason-about manner.
 
 The component uses Redux, Redux Toolkit and Redux Sagas as follows:
 
--   Redux state is sliced around data that makes up a dashboard; the data coming as prescribed by the sdk-backend-spi
-    is stored in the state without major transformations.
--   Redux reducers are 'dumb' and have fine granularity. They are essentially setters and modifiers of the data
--   Redux sagas are used to handle Commands and Queries and to dispatch Events:
-    -   Commands are picked from a command channel by the root command handler saga which then **calls** commands concrete
-        command handlers.
-    -   Queries are picked from query channel by the root query processor saga which then **spawns** concrete query processors.
-    -   Events to emit to registered event handlers are picked from event channel by the root event emitter saga which
-        **calls** the event handlers
--   Selectors expose dashboard data and different aggregations and views of the data
--   There is an emphasis to keep essential heavy-lifting logic used by the dashboard in SDK packages that that
-    are responsible for the particular 'sub domain'. E.g. complex manipulations of the date filter config and the
-    options for the date filters belongs to `sdk-ui-filters` as that is where all the essential data types live.
+- Redux state is sliced around data that makes up a dashboard; the data coming as prescribed by the sdk-backend-spi
+  is stored in the state without major transformations.
+- Redux reducers are 'dumb' and have fine granularity. They are essentially setters and modifiers of the data
+- Redux sagas are used to handle Commands and Queries and to dispatch Events:
+    - Commands are picked from a command channel by the root command handler saga which then **calls** commands concrete
+      command handlers.
+    - Queries are picked from query channel by the root query processor saga which then **spawns** concrete query processors.
+    - Events to emit to registered event handlers are picked from event channel by the root event emitter saga which
+      **calls** the event handlers
+- Selectors expose dashboard data and different aggregations and views of the data
+- There is an emphasis to keep essential heavy-lifting logic used by the dashboard in SDK packages that that
+  are responsible for the particular 'sub domain'. E.g. complex manipulations of the date filter config and the
+  options for the date filters belongs to `sdk-ui-filters` as that is where all the essential data types live.
 
 In this design, all the domain logic is implemented and exposed in command handlers, query processors and selectors.
 The redux state and its reducers are 'relegated' to a technical detail of how the data is stored an manipulated.
@@ -135,8 +133,8 @@ sources and one of those sources is also the analytical backend that requires ne
 
 The queries in the dashboard component also have two specifics:
 
--   They may be triggered during command handling
--   Their results may be stored in the state and be accessible to presentational components using selectors
+- They may be triggered during command handling
+- Their results may be stored in the state and be accessible to presentational components using selectors
 
 All queries start with `GDC.DASH/QUERY.` prefix that is followed with dot-separated segments of the query name all
 in upper case. For instance `GDC.DASH/QUERY.INSIGHT.ATTRIBUTES.META`. Queries are always imperative.
@@ -161,11 +159,11 @@ If a command handler needs to trigger a query and wait for its result the code c
 
 Event is a type of action that describes what has happened in the dashboard. The sources of events are multiple:
 
--   Command handling triggered either internally or from presentational components
--   Query processing triggered either internally or from presentational components
--   Presentational components emit events as described by dashboard component contract
--   Other user interactions with the presentational components
--   Presentational components emit events at their own discretion
+- Command handling triggered either internally or from presentational components
+- Query processing triggered either internally or from presentational components
+- Presentational components emit events as described by dashboard component contract
+- Other user interactions with the presentational components
+- Presentational components emit events at their own discretion
 
 All of these events always travel through the model and will be dispatched to registered event handlers - the handlers
 are typical functions provided by the client code.

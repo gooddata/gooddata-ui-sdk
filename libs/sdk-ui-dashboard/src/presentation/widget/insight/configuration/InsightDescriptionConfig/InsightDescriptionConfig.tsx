@@ -13,7 +13,6 @@ import {
     Typography,
 } from "@gooddata/sdk-ui-kit";
 
-import { IncludeMetrics } from "./IncludeMetrics.js";
 import { InsightDescription } from "./InsightDescription.js";
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
 import { useWidgetFilters } from "../../../../../model/react/useWidgetFilters.js";
@@ -158,21 +157,6 @@ export function InsightDescriptionConfig({
         ],
     );
 
-    const handleIncludeMetricChange = useCallback(
-        (includeMetrics: boolean) => {
-            const newConfigState = {
-                ...widgetDescriptionState,
-                includeMetrics,
-            };
-            setWidgetDescriptionState(newConfigState);
-            setDescriptionConfiguration(widget, {
-                ...descriptionConfig,
-                includeMetrics,
-            });
-        },
-        [descriptionConfig, setDescriptionConfiguration, widget, widgetDescriptionState],
-    );
-
     return (
         <>
             {isWidgetDescriptionEnabled ? (
@@ -223,16 +207,6 @@ export function InsightDescriptionConfig({
                             separators={separators}
                         />
                     ) : null}
-                    {
-                        // TODO INE: enable this section as part of TNT-1134
-                        // eslint-disable-next-line no-constant-condition, sonarjs/no-redundant-boolean
-                        false && widgetDescriptionState.config !== "none" ? (
-                            <IncludeMetrics
-                                onChange={handleIncludeMetricChange}
-                                value={widgetDescriptionState.includeMetrics}
-                            />
-                        ) : null
-                    }
                 </div>
             ) : null}
         </>

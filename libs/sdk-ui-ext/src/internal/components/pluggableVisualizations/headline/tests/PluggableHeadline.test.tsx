@@ -829,7 +829,6 @@ describe("PluggableHeadline", () => {
         });
     });
 
-    // eslint-disable-next-line @vitest/no-identical-title
     describe("update", () => {
         function getTestOptions(customProps: ICustomProps = {}): IVisProps {
             const drillableItems: IDrillableItem[] = [];

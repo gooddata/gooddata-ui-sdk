@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { type IRelativeDateFilterPreset } from "@gooddata/sdk-model";
@@ -157,7 +158,7 @@ describe("applyExcludeCurrentPeriod", () => {
                 to: -1,
                 granularity: "GDC.time.date",
                 type: "relativePreset",
-                name: "filters.last30days.title",
+                name: "",
                 localIdentifier: "LAST_30_DAYS",
                 visible: true,
             },

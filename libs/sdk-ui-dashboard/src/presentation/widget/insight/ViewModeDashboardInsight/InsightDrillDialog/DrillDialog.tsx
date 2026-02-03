@@ -28,11 +28,10 @@ import {
 } from "../../../../../model/store/config/configSelectors.js";
 import { selectCanExportTabular } from "../../../../../model/store/permissions/permissionsSelectors.js";
 
-export interface IDrillDialogProps
-    extends Pick<
-        IDialogBaseProps,
-        "initialFocus" | "returnFocusTo" | "focusCheckFn" | "accessibilityConfig" | "autofocusOnOpen"
-    > {
+export interface IDrillDialogProps extends Pick<
+    IDialogBaseProps,
+    "initialFocus" | "returnFocusTo" | "focusCheckFn" | "accessibilityConfig" | "autofocusOnOpen"
+> {
     insightTitle: string;
     breadcrumbs: string[];
     onCloseDialog: () => void;

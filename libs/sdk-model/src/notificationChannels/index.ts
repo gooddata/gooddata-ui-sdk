@@ -85,8 +85,7 @@ export interface INotificationChannelMetadataObjectBase {
  * @beta
  */
 export interface IWebhookNotificationChannelMetadataObject
-    extends INotificationChannelMetadataObjectBase,
-        IMdObject {
+    extends INotificationChannelMetadataObjectBase, IMdObject {
     type: "notificationChannel";
     destinationType: "webhook";
 
@@ -132,8 +131,7 @@ export interface IWebhookDestinationConfiguration {
  * @beta
  */
 export interface ISmtpNotificationChannelMetadataObject
-    extends INotificationChannelMetadataObjectBase,
-        IMdObject {
+    extends INotificationChannelMetadataObjectBase, IMdObject {
     type: "notificationChannel";
     destinationType: "smtp";
 
@@ -231,8 +229,7 @@ export type IDefaultSmtpDestinationConfiguration = {
  * @beta
  */
 export interface IInPlatformNotificationChannelMetadataObject
-    extends INotificationChannelMetadataObjectBase,
-        IMdObject {
+    extends INotificationChannelMetadataObjectBase, IMdObject {
     type: "notificationChannel";
     destinationType: "inPlatform";
 }

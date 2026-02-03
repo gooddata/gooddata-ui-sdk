@@ -79,8 +79,7 @@ export type ParentFilterOverAttributeType =
  * @public
  */
 export interface IAttributeFilterBaseProps
-    extends IAttributeFilterCoreProps,
-        IAttributeFilterCustomComponentProps {}
+    extends IAttributeFilterCoreProps, IAttributeFilterCustomComponentProps {}
 
 /**
  * @public

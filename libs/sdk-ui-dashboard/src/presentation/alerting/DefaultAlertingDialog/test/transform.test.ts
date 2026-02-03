@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
@@ -1627,7 +1627,6 @@ describe("alert transforms", () => {
             expect(data).toEqual(undefined);
         });
 
-        // eslint-disable-next-line @vitest/no-identical-title
         it("getAlertRelativeOperator - comparison", () => {
             const update = transformAlertByMetric(allMetrics, baseComparison, simpleMetric1);
             const data = getValueSuffix(update.alert);
@@ -1792,7 +1791,6 @@ describe("alert transforms", () => {
             expect(res).toEqual(true);
         });
 
-        // eslint-disable-next-line @vitest/no-identical-title
         it("isChangeOperator, baseRelative, change", () => {
             let update = transformAlertByMetric(allMetrics, baseRelative, previousPeriodMetric);
             update = transformAlertByRelativeOperator(
@@ -1825,7 +1823,6 @@ describe("alert transforms", () => {
             expect(res).toEqual(false);
         });
 
-        // eslint-disable-next-line @vitest/no-identical-title
         it("isDifferenceOperator, baseRelative, change", () => {
             let update = transformAlertByMetric(allMetrics, baseRelative, previousPeriodMetric);
             update = transformAlertByRelativeOperator(
@@ -1863,7 +1860,6 @@ describe("alert transforms", () => {
             expect(res).toEqual(true);
         });
 
-        // eslint-disable-next-line @vitest/no-identical-title
         it("isChangeOrDifferenceOperator, baseRelative, change", () => {
             let update = transformAlertByMetric(allMetrics, baseRelative, previousPeriodMetric);
             update = transformAlertByRelativeOperator(

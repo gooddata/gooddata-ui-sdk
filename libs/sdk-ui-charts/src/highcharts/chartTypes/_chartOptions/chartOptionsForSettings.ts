@@ -12,7 +12,6 @@ function getSettingsBasedConfig(settings: ISettings): Partial<IChartConfig> {
         ...(settings["separators"] ? { separators: settings["separators"] as ISeparators } : {}),
         ...(settings.enableVisualizationFineTuning ? { enableVisualizationFineTuning: true } : {}),
         ...(settings.enableExecutionCancelling ? { enableExecutionCancelling: true } : {}),
-        ...(settings.enableDrillMenuPositioningAtCursor ? { enableDrillMenuPositioningAtCursor: true } : {}),
         ...(settings.enableHighchartsAccessibility ? { enableHighchartsAccessibility: true } : {}),
         ...(settings.enableLineChartTrendThreshold ? { enableLineChartTrendThreshold: true } : {}),
         ...(settings.enableKDRespectLegendPosition ? { respectLegendPosition: true } : {}),

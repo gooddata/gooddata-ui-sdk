@@ -12,10 +12,11 @@ import { KdaDialogActionButtons } from "./KdaDialogActionButtons.js";
  * @internal
  */
 export const KdaDialogControls = memo(function KdaDialogControls(props: IDialogCloseButtonProps) {
-    const { className, onClose } = props;
+    const { className, accessibilityConfig, onClose } = props;
     return (
         <KdaDialogActionButtons
             className={cx("gd-dialog-close", "gd-kda-dialog-controls", className)}
+            titleElementId={accessibilityConfig?.descriptionElementId}
             size="medium"
             onClose={onClose}
         />

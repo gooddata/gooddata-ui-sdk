@@ -1,8 +1,6 @@
 {
-  "extends": [
-    "../../.stylelintrc"
-  ],
-  "rules": {
-    "max-nesting-depth": 4
-  }
+    "extends": ["../../.stylelintrc"],
+    "rules": {
+        "max-nesting-depth": 4
+    }
 }

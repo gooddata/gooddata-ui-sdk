@@ -1,7 +1,7 @@
-import fs from 'fs';
-import packageData from '../package.json' assert { type: "json" };
+import fs from "fs";
+import packageData from "../package.json" assert { type: "json" };
 
-const packageJsonPath = './package.json';
+const packageJsonPath = "./package.json";
 
 function updateDependencies(dependencies) {
     return Object.fromEntries(
@@ -10,7 +10,7 @@ function updateDependencies(dependencies) {
                 return [key, `${packageData.version}`];
             }
             return [key, value];
-        })
+        }),
     );
 }
 
@@ -22,4 +22,4 @@ packageData.devDependencies = updatedDevDependencies;
 
 await fs.promises.writeFile(packageJsonPath, JSON.stringify(packageData, null, 2));
 
-console.log('Updated package.json with version:', packageData.version);
+console.log("Updated package.json with version:", packageData.version);

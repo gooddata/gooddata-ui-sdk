@@ -10,7 +10,7 @@ To learn more, check [the source monorepo](https://github.com/gooddata/gooddata-
 This package implements GoodData Application Development Toolkit (ADT). The primary entry point to the toolkit is its
 CLI tool called `gdc-apps`. Through this CLI tool you can currently:
 
--   Create a new project to develop a GoodData.UI powered React application
+- Create a new project to develop a GoodData.UI powered React application
 
 ## License
 

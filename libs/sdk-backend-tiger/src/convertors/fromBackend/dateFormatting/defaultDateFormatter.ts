@@ -98,9 +98,7 @@ type PatternTransform = (pattern: string) => string;
  * of year do not shift.
  */
 const replaceWeekAndYearTokensByIsoTokens = (pattern: string) => {
-    // eslint-disable-next-line regexp/no-unused-capturing-group
     const searchForWeekPatternRegExp = /(w)(?=(?:[^']|'[^']*')*$)/g; // search for occurence of w not enclosed by ''
-    // eslint-disable-next-line regexp/no-unused-capturing-group
     const searchForYearPatternRegExp = /(y|Y)(?=(?:[^']|'[^']*')*$)/g; // search for occurence of y and Y not enclosed by ''
 
     return pattern.replace(searchForWeekPatternRegExp, "I").replace(searchForYearPatternRegExp, "R");

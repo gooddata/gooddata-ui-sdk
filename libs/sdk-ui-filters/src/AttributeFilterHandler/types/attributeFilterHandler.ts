@@ -35,8 +35,7 @@ export type InvertableAttributeElementSelection = InvertableSelection<AttributeE
  * @public
  */
 export interface IMultiSelectAttributeFilterHandler
-    extends IAttributeFilterLoader,
-        IStagedInvertableSelectionHandler<InvertableAttributeElementSelection> {}
+    extends IAttributeFilterLoader, IStagedInvertableSelectionHandler<InvertableAttributeElementSelection> {}
 
 /**
  * Core API for attribute filter components, that allows you to implement custom attribute filter components.
@@ -59,8 +58,7 @@ export interface IMultiSelectAttributeFilterHandler
  * @public
  */
 export interface ISingleSelectAttributeFilterHandler
-    extends IAttributeFilterLoader,
-        IStagedSingleSelectionHandler<AttributeElementKey | undefined> {}
+    extends IAttributeFilterLoader, IStagedSingleSelectionHandler<AttributeElementKey | undefined> {}
 
 /**
  * Core API for attribute filter components, that allows you to implement custom attribute filter components.

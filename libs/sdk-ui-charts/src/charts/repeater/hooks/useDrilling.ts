@@ -42,43 +42,37 @@ export function useDrilling(columnDefs: ColDef[], items: IAttributeOrMeasure[], 
         drillingState.current.dataView = props.dataView;
     }, [props.dataView, props.drillableItems, props.onDrill]);
 
-    const onCellClicked = useCallback(
-        (cellEvent: CellClickedEvent | CellKeyDownEvent) => {
-            const drillableItem = getDrillable(
-                drillingState.current.dataView,
-                drillingState.current.drillablePredicates,
-                cellEvent.colDef,
-            );
+    const onCellClicked = useCallback((cellEvent: CellClickedEvent | CellKeyDownEvent) => {
+        const drillableItem = getDrillable(
+            drillingState.current.dataView,
+            drillingState.current.drillablePredicates,
+            cellEvent.colDef,
+        );
 
-            if (!drillableItem) {
-                return false;
-            }
+        if (!drillableItem) {
+            return false;
+        }
 
-            const columnIndex = cellEvent.api
-                .getAllGridColumns()
-                .findIndex((col) => col === cellEvent.column);
-            const attributeHeaderItem = cellEvent.data[cellEvent.colDef.field!];
+        const columnIndex = cellEvent.api.getAllGridColumns().findIndex((col) => col === cellEvent.column);
+        const attributeHeaderItem = cellEvent.data[cellEvent.colDef.field!];
 
-            const intersectionElement: IDrillEventIntersectionElement = {
-                header: {
-                    ...drillableItem,
-                    attributeHeaderItem,
-                },
-            };
+        const intersectionElement: IDrillEventIntersectionElement = {
+            header: {
+                ...drillableItem,
+                attributeHeaderItem,
+            },
+        };
 
-            const drillEvent = createDrillEvent(
-                drillingState,
-                columnIndex,
-                cellEvent.rowIndex!,
-                attributeHeaderItem?.name,
-                intersectionElement,
-                cellEvent,
-                props.config?.enableDrillMenuPositioningAtCursor ?? false,
-            );
-            return fireDrillEvent(drillingState, drillEvent, cellEvent);
-        },
-        [props.config?.enableDrillMenuPositioningAtCursor],
-    );
+        const drillEvent = createDrillEvent(
+            drillingState,
+            columnIndex,
+            cellEvent.rowIndex!,
+            attributeHeaderItem?.name,
+            intersectionElement,
+            cellEvent,
+        );
+        return fireDrillEvent(drillingState, drillEvent, cellEvent);
+    }, []);
 
     const onCellKeyDown = useCallback(
         (cellEvent: CellKeyDownEvent) => {
@@ -143,7 +137,6 @@ function createDrillEvent(
     value: string | undefined,
     el: IDrillEventIntersectionElement,
     cellEvent: CellClickedEvent | CellKeyDownEvent,
-    enableDrillMenuPositioningAtCursor: boolean,
 ): IDrillEvent {
     const drillContext: IDrillEventContext = {
         type: VisualizationTypes.REPEATER,
@@ -154,16 +147,13 @@ function createDrillEvent(
         intersection: [el],
     };
 
-    // Calculate chart coordinates for drill popover positioning (only when enabled)
-    const chartCoordinates = enableDrillMenuPositioningAtCursor
-        ? getChartClickCoordinates(cellEvent.event?.target, ".ag-root-wrapper")
-        : {};
+    // Calculate chart coordinates for drill popover positioning
+    const chartCoordinates = getChartClickCoordinates(cellEvent.event?.target, ".ag-root-wrapper");
 
     return {
         dataView: drillingState.current.dataView.dataView,
         drillContext,
         ...chartCoordinates,
-        enableDrillMenuPositioningAtCursor: enableDrillMenuPositioningAtCursor ? true : undefined,
     };
 }
 

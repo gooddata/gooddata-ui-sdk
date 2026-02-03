@@ -126,9 +126,7 @@ class SealedVisualizationSwitcherCustomizerState implements IVisualizationSwitch
     };
 }
 
-class DefaultVisualizationSwitcherToolbarCustomizerState
-    implements IVisualizationSwitcherToolbarCustomizerState
-{
+class DefaultVisualizationSwitcherToolbarCustomizerState implements IVisualizationSwitcherToolbarCustomizerState {
     /*
      * Chain of 'core' providers. Core providers are evaluated from last to first. As soon as some provider
      * returns a Component, then that component will be used for rendering. If provider returns undefined,
@@ -195,9 +193,7 @@ class DefaultVisualizationSwitcherToolbarCustomizerState
  * Such a thing is not supported by the lifecycle and this sealing is in place to prevent plugins going into
  * that dangerous territory.
  */
-class SealedVisualizationSwitcherToolbarCustomizerState
-    implements IVisualizationSwitcherToolbarCustomizerState
-{
+class SealedVisualizationSwitcherToolbarCustomizerState implements IVisualizationSwitcherToolbarCustomizerState {
     constructor(
         private readonly logger: IDashboardCustomizationLogger,
         private readonly state: IVisualizationSwitcherToolbarCustomizerState,

@@ -172,7 +172,7 @@ function convertRelativeDateFilter(
 ): RelativeDateFilter | null {
     const { relativeDateFilter } = filter;
 
-    if (relativeDateFilter.from === undefined || !relativeDateFilter.to === undefined) {
+    if (relativeDateFilter.from === undefined) {
         return null;
     }
 

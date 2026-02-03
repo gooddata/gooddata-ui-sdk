@@ -37,9 +37,7 @@ export interface ICustomWidgetBase extends IBaseWidget {
  * @public
  */
 export interface ICustomWidget
-    extends ICustomWidgetBase,
-        IDashboardObjectIdentity,
-        Partial<IFilterableWidget> {}
+    extends ICustomWidgetBase, IDashboardObjectIdentity, Partial<IFilterableWidget> {}
 
 /**
  * Definition of custom widget. The definition may not specify identity. In that case a temporary identity
