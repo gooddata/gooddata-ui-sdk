@@ -15,6 +15,7 @@ import type { FilterContextItem } from '@gooddata/sdk-model';
 import type { GenAIChatInteractionUserFeedback } from '@gooddata/sdk-model';
 import type { GenAIChatInteractionUserVisualisation } from '@gooddata/sdk-model';
 import type { GenAIObjectType } from '@gooddata/sdk-model';
+import { GeoCollectionKind } from '@gooddata/sdk-model';
 import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
 import { IAccessGrantee } from '@gooddata/sdk-model';
 import { IActiveCalendars } from '@gooddata/sdk-model';
@@ -586,6 +587,7 @@ export interface IClusteringResult {
 export interface ICollectionItemsConfig {
     bbox?: string;
     collectionId: string;
+    kind?: GeoCollectionKind;
     limit?: number;
     values?: string[];
 }

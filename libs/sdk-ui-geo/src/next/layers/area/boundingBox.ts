@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type IGeoJsonFeature } from "@gooddata/sdk-model";
 
@@ -102,6 +102,22 @@ function geometryToBoundingBox(geometry?: GeoJSON.Geometry): NormalizedBBox | un
 }
 
 /**
+ * Extracts bounding box from a feature.
+ */
+function extractFeatureBbox(feature: IGeoJsonFeature): NormalizedBBox | undefined {
+    // Try standard GeoJSON bbox array format
+    if (feature.bbox) {
+        const normalized = normalizeBoundingBox(feature.bbox);
+        if (normalized) {
+            return normalized;
+        }
+    }
+
+    // Fall back to computing from geometry
+    return geometryToBoundingBox(feature.geometry);
+}
+
+/**
  * Resolves a bounding box for geo collection features.
  *
  * @remarks
@@ -126,7 +142,7 @@ export function deriveCollectionBoundingBox(
     }
 
     const resolved = features.reduce<NormalizedBBox | undefined>((acc, feature) => {
-        const featureBbox = normalizeBoundingBox(feature.bbox) ?? geometryToBoundingBox(feature.geometry);
+        const featureBbox = extractFeatureBbox(feature);
 
         if (!featureBbox) {
             return acc;

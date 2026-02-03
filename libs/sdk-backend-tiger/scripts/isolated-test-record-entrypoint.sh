@@ -13,4 +13,4 @@ fi
 ./tests/wiremock/stop_recording.sh
 ./tests/wiremock/remove_sensitive_data.sh
 
-npm run prettier-write
+npm run oxfmt-write

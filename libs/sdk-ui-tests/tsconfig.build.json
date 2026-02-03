@@ -4,7 +4,6 @@
     "include": ["src/**/*", "scenarios/**/*", "stories/**/*"],
     "compilerOptions": {
         "noCheck": true,
-        "baseUrl": ".",
         "rootDirs": ["./src", "./scenarios", "./stories"],
         "outDir": "./esm"
     }

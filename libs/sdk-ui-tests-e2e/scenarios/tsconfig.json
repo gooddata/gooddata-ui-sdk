@@ -16,7 +16,6 @@
         "strictNullChecks": true,
         "noUnusedParameters": true,
         "noImplicitReturns": true,
-        "baseUrl": "../../libs",
         "paths": {
             "@gooddata/sdk-backend-spi": ["sdk-backend-spi/src"],
             "@gooddata/sdk-backend-mockingbird": ["sdk-backend-mockingbird/src"],

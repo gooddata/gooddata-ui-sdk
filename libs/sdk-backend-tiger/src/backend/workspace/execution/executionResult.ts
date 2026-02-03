@@ -11,7 +11,10 @@ import {
 } from "@gooddata/api-client-tiger";
 import { ExecutionResultAPI_RetrieveResult } from "@gooddata/api-client-tiger/endpoints/execution";
 import { ExportApi_CreateTabularExport } from "@gooddata/api-client-tiger/endpoints/export";
-import { ResultApi_GetCollectionItems } from "@gooddata/api-client-tiger/endpoints/result";
+import {
+    ResultApi_GetCollectionItems,
+    ResultApi_GetCustomCollectionItems,
+} from "@gooddata/api-client-tiger/endpoints/result";
 import {
     SmartFunctionsApi_AnomalyDetection,
     SmartFunctionsApi_AnomalyDetectionResult,
@@ -622,22 +625,25 @@ class TigerDataView implements IDataView {
     }
 
     public async readCollectionItems(config: ICollectionItemsConfig): Promise<ICollectionItemsResult> {
+        const requestParams = {
+            collectionId: config.collectionId,
+            limit: config.limit,
+            bbox: config.bbox,
+            values: config.values,
+        };
+
+        const requestOptions = {
+            headers: {
+                Accept: "application/geo+json",
+            },
+        };
+
+        // Use different endpoint based on collection kind
+        const apiCall =
+            config.kind === "CUSTOM" ? ResultApi_GetCustomCollectionItems : ResultApi_GetCollectionItems;
+
         const response = await this._authCall((client) =>
-            ResultApi_GetCollectionItems(
-                client.axios,
-                client.basePath,
-                {
-                    collectionId: config.collectionId,
-                    limit: config.limit,
-                    bbox: config.bbox,
-                    values: config.values,
-                },
-                {
-                    headers: {
-                        Accept: "application/geo+json",
-                    },
-                },
-            ),
+            apiCall(client.axios, client.basePath, requestParams, requestOptions),
         );
 
         const { data } = response;

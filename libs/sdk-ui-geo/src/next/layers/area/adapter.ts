@@ -112,6 +112,7 @@ async function fetchAreaFeatures(
     try {
         const result = await dataView.getCollectionItemsForAttribute(areaAttribute, {
             collectionId: metadata.collectionId,
+            kind: metadata.kind,
         });
         return result?.features ?? [];
     } catch {

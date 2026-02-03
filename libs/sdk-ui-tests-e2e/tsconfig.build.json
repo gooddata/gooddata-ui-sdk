@@ -3,7 +3,6 @@
     "include": ["cypress/**/*.ts"],
     "compilerOptions": {
         "incremental": true,
-        "baseUrl": null,
         "paths": null,
         "declaration": true,
         "declarationMap": true

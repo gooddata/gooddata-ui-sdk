@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 /**
  * @internal
@@ -143,6 +143,7 @@ export type IconType =
     | "visualizationRepeater"
     | "visualizationXirr"
     | "link"
+    | "click"
     | "fileXlsx"
     | "filePptx"
     | "filePdf"

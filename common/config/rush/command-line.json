@@ -64,8 +64,8 @@
         },
         {
             "commandKind": "bulk",
-            "name": "prettier-check",
-            "summary": "Run prettier-check across all apps",
+            "name": "oxfmt-check",
+            "summary": "Run oxfmt-check across all apps",
             "enableParallelism": true,
             "ignoreDependencyOrder": true,
             "ignoreMissingScript": true,
@@ -73,8 +73,8 @@
         },
         {
             "commandKind": "bulk",
-            "name": "prettier-write",
-            "summary": "Run prettier-write across all apps",
+            "name": "oxfmt-write",
+            "summary": "Run oxfmt-write across all apps",
             "enableParallelism": true,
             "ignoreDependencyOrder": true,
             "ignoreMissingScript": true,

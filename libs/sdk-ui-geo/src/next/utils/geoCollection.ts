@@ -1,6 +1,10 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type IAttributeDescriptor, type IAttributeDisplayFormGeoAreaConfig } from "@gooddata/sdk-model";
+import {
+    type GeoCollectionKind,
+    type IAttributeDescriptor,
+    type IAttributeDisplayFormGeoAreaConfig,
+} from "@gooddata/sdk-model";
 import { type DataViewFacade } from "@gooddata/sdk-ui";
 
 /**
@@ -13,6 +17,12 @@ export interface IGeoCollectionMetadata {
      * Identifier of the geo collection to query.
      */
     collectionId: string;
+
+    /**
+     * Kind of geo collection - STATIC (default) or CUSTOM.
+     * STATIC collections are built-in, CUSTOM collections are organization-scoped.
+     */
+    kind?: GeoCollectionKind;
 }
 
 /**
@@ -36,6 +46,7 @@ export function resolveGeoCollectionMetadata(
 
     return {
         collectionId,
+        kind: geoAreaConfig.kind,
     };
 }
 

@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
@@ -10,6 +10,7 @@ import {
     newAttributeSort,
     newBucket,
     newInsightDefinition,
+    newMeasureValueFilterWithOptions,
     newRankingFilter,
 } from "@gooddata/sdk-model";
 import { type IDrillEventIntersectionElement } from "@gooddata/sdk-ui";
@@ -149,6 +150,64 @@ describe("drillDownUtil", () => {
             const result = modifyBucketsAttributesForDrillDown(sourceInsight, drillConfig);
 
             expect(insightFilters(result)).toEqual(filters.slice(0, 2));
+        });
+
+        it("should keep MVF dimensionality independent from drilled buckets by converting localIdRefs to ObjRefs from original insight", () => {
+            const mvf = newMeasureValueFilterWithOptions(Won, {
+                operator: "GREATER_THAN",
+                value: 10,
+                dimensionality: [
+                    localIdRef(Region.Default.attribute.localIdentifier),
+                    localIdRef(Department.Default.attribute.localIdentifier),
+                    localIdRef(Status.attribute.localIdentifier),
+                ],
+            });
+
+            const source = newInsightDefinition("visclass", (b) => {
+                return b
+                    .title("sourceInsight")
+                    .buckets([
+                        newBucket("measure", Won),
+                        newBucket("attribute", Region.Default, Department.Default, Status),
+                    ])
+                    .filters([mvf]);
+            });
+
+            const drillConfig: IDrillDownDefinition = {
+                type: "drillDown",
+                origin: localIdRef(Department.Default.attribute.localIdentifier),
+                target: Account.Default.attribute.displayForm,
+            };
+
+            const sourceInsight = insightDefinitionToInsight(source, "uri", "id");
+            const result = modifyBucketsAttributesForDrillDown(sourceInsight, drillConfig);
+
+            const replacedDepartmentToAccount = newAttribute(Account.Default.attribute.displayForm, (b) =>
+                b.localId(Department.Default.attribute.localIdentifier),
+            );
+
+            const expectedMvf = newMeasureValueFilterWithOptions(Won, {
+                operator: "GREATER_THAN",
+                value: 10,
+                dimensionality: [
+                    Region.Default.attribute.displayForm,
+                    Department.Default.attribute.displayForm,
+                    Status.attribute.displayForm,
+                ],
+            });
+
+            const expected = newInsightDefinition("visclass", (b) => {
+                return b
+                    .title("sourceInsight")
+                    .buckets([
+                        newBucket("measure", Won),
+                        newBucket("attribute", replacedDepartmentToAccount, Status),
+                    ])
+                    .filters([expectedMvf]);
+            });
+
+            const expectedInsight = insightDefinitionToInsight(expected, "uri", "id");
+            expect(result).toEqual(expectedInsight);
         });
     });
 

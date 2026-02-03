@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ReactNode } from "react";
 
@@ -14,13 +14,13 @@ interface IKdaFooterProps {
 
 export function KdaFooter({ content, onClose }: IKdaFooterProps) {
     const intl = useIntl();
-    const closeLabel = intl.formatMessage({ id: "kdaDialog.dialog.closeLabel" });
+    const closeLabel = intl.formatMessage({ id: "kdaDialog.dialog.close" });
 
     return (
         <div className={cx("gd-kda-dialog-footer")}>
             <div className={cx("gd-kda-dialog-footer-content")}>{content}</div>
             <div className={cx("gd-kda-dialog-footer-buttons")}>
-                <UiButton size="small" label={closeLabel} variant="secondary" onClick={onClose} />
+                <UiButton size="large" label={closeLabel} variant="secondary" onClick={onClose} />
             </div>
         </div>
     );

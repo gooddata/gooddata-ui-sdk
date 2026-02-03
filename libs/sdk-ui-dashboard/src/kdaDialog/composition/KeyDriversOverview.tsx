@@ -84,7 +84,7 @@ function KeyDriversDetail({ detailsId }: IKeyDriversDetailsProps) {
                 <KdaKeyDriverChart config={config} dataView={dataView} displayForm={displayForm} />
             </div>
             <div className={cx("gd-kda-key-drivers-detail-info")}>
-                <UiIcon type="questionMark" size={12} />{" "}
+                <UiIcon type="click" size={12} color="currentColor" />{" "}
                 {intl.formatMessage(
                     { id: "kdaDialog.dialog.keyDrives.overview.detail.tip" },
                     {

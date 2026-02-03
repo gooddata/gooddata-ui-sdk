@@ -3,7 +3,6 @@
     "exclude": ["**/tests", "**/test"],
     "include": ["src/**/*", "src/**/*.json"],
     "compilerOptions": {
-        "baseUrl": ".",
         "rootDir": "./src",
         "outDir": "./esm",
         "noUnusedLocals": true,

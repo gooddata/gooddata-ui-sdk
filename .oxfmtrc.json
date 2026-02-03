@@ -15,6 +15,7 @@
         ".windsurf/**",
         "**/dist/**",
         "**/esm/**",
-        "**/temp/**"
+        "**/temp/**",
+        "libs/api-client-tiger/src/generated/**"
     ]
 }

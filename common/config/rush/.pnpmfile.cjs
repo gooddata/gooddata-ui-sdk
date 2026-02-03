@@ -40,6 +40,7 @@ function readPackage(packageJson, context) {
 
     if (
         [
+            "@vitejs/plugin-react",
             "@storybook/builder-vite",
             "@vitest/mocker",
             "@storybook/react-vite",

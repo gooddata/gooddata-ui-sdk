@@ -104,17 +104,17 @@ and this will contain the full build output.
 
 On top of Rush built-in commands, we have added our own custom commands (see [command-line.json](common/config/rush/command-line.json)):
 
-| Command               | Description                                                                             |
-| --------------------- | --------------------------------------------------------------------------------------- |
-| `rush audit`          | Performs security audit of all packages listed in global lock file                      |
-| `rush purge`          | Delete all installed npm modules, clean temp and node_modules directories               |
-| `rush clean`          | Cleans up artifacts created by build and tests. Full 'rebuild' required after cleaning. |
-| `rush validate`       | Validates code in all projects.                                                         |
-| `rush test-once`      | Tests code in all projects.                                                             |
-| `rush dep-cruiser`    | Runs dependency-cruiser in all projects.                                                |
-| `rush prettier-check` | Verifies code formatting in all projects.                                               |
-| `rush prettier-write` | Formats code in all projects.                                                           |
-| `rush populate-ref`   | Makes projects populate reference workspace with recording definitions.                 |
+| Command             | Description                                                                             |
+| ------------------- | --------------------------------------------------------------------------------------- |
+| `rush audit`        | Performs security audit of all packages listed in global lock file                      |
+| `rush purge`        | Delete all installed npm modules, clean temp and node_modules directories               |
+| `rush clean`        | Cleans up artifacts created by build and tests. Full 'rebuild' required after cleaning. |
+| `rush validate`     | Validates code in all projects.                                                         |
+| `rush test-once`    | Tests code in all projects.                                                             |
+| `rush dep-cruiser`  | Runs dependency-cruiser in all projects.                                                |
+| `rush oxfmt-check`  | Verifies code formatting in all projects.                                               |
+| `rush oxfmt-write`  | Formats code in all projects.                                                           |
+| `rush populate-ref` | Makes projects populate reference workspace with recording definitions.                 |
 
 ## How do I...?
 
@@ -211,7 +211,7 @@ Must be one of the following:
 
 - `feat` - A new feature
 - `fix` - A bug fix of existing feature
-- `build` - Changes that affect the build system or auxiliary tools and libraries such as eslint or prettier
+- `build` - Changes that affect the build system or auxiliary tools and libraries such as eslint or oxfmt
 - `ci` - Changes to our CI configuration files and scripts
 - `docs` - Documentation changes, JSDoc, comments, changelog
 - `perf` - A code change that improves performance

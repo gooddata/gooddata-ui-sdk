@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { groupBy, keyBy, mapValues, uniqBy } from "lodash-es";
 
@@ -36,7 +36,10 @@ function transformDimension(
             if (isAttributeHeader(h)) {
                 const geoAreaConfig: IAttributeDisplayFormGeoAreaConfig | undefined = h.attributeHeader
                     .geoAreaConfig?.collection.id
-                    ? { collectionId: h.attributeHeader.geoAreaConfig.collection.id }
+                    ? {
+                          collectionId: h.attributeHeader.geoAreaConfig.collection.id,
+                          kind: h.attributeHeader.geoAreaConfig.collection.kind,
+                      }
                     : undefined;
                 return {
                     attributeHeader: {

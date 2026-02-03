@@ -620,6 +620,9 @@ export type GenAIRelativeDateFilter = {
 export type GenAIVisualizationType = "TABLE" | "HEADLINE" | "BAR" | "LINE" | "PIE" | "COLUMN";
 
 // @alpha
+export type GeoCollectionKind = "STATIC" | "CUSTOM";
+
+// @alpha
 export function geoFeatureId(feature: IGeoJsonFeature): string | undefined;
 
 // @internal
@@ -851,6 +854,7 @@ export interface IAttributeDescriptorBody {
 // @alpha
 export interface IAttributeDisplayFormGeoAreaConfig {
     collectionId?: string;
+    kind?: GeoCollectionKind;
 }
 
 // @public

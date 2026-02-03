@@ -1,10 +1,8 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 /* eslint-disable */
 import globalAxios, { AxiosInstance, AxiosPromise, AxiosRequestConfig } from "axios";
 
-// Some imports not used depending on template conditions, we also need prettier-ignore so that the import does not get split and ts-ignore still works
-// prettier-ignore
 // @ts-ignore
 import { BASE_PATH, BaseAPI, COLLECTION_FORMATS, RequestArgs, RequiredError } from './base.js';
 import {
@@ -19,8 +17,6 @@ import {
     setSearchParams,
     toPathString,
 } from "./common.js";
-// Some imports not used depending on template conditions, we also need prettier-ignore so that the import does not get split and ts-ignore still works
-// prettier-ignore
 import { Configuration } from "./configuration.js";
 
 export interface Invitation {
