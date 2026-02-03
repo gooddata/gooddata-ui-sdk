@@ -98,18 +98,13 @@ export function onCellKeyDownFactory(
             intersection: createDrillIntersection(event, table.tableDescriptor, rowNodes),
         };
 
-        const enableDrillMenuPositioningAtCursor = props.config?.enableDrillMenuPositioningAtCursor ?? false;
-
-        // Calculate chart coordinates for drill popover positioning (only when enabled)
-        const chartCoordinates = enableDrillMenuPositioningAtCursor
-            ? getChartClickCoordinates(event.event?.target, ".ag-root-wrapper")
-            : {};
+        // Calculate chart coordinates for drill popover positioning
+        const chartCoordinates = getChartClickCoordinates(event.event?.target, ".ag-root-wrapper");
 
         const drillEvent: IDrillEvent = {
             dataView: dv.dataView,
             drillContext,
             ...chartCoordinates,
-            enableDrillMenuPositioningAtCursor: enableDrillMenuPositioningAtCursor ? true : undefined,
         };
         if (typeof onDrill === "function") {
             onDrill(drillEvent);

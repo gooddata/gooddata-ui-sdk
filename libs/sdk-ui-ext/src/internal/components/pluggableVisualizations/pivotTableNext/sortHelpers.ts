@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
 
@@ -154,7 +154,6 @@ export const addDefaultSort = (
         }
         // asc sort on row that was first until now is considered default as well
         // disabling the eslint rule to maintain readability
-        // eslint-disable-next-line sonarjs/prefer-single-boolean-return
         if (
             sortItem.attributeSortItem.attributeIdentifier === previousFirstRow?.localIdentifier &&
             sortItem.attributeSortItem.direction === "asc"

@@ -523,6 +523,7 @@ export {
     LOADING_HEIGHT,
     type IDropdownListProps,
     type IDropdownListNoDataRenderProps,
+    type IRenderDropdownListItemProps,
 } from "./Dropdown/DropdownList.js";
 export { DropdownTabs, type IDropdownTagsProps } from "./Dropdown/DropdownTabs.js";
 export {
@@ -1099,3 +1100,16 @@ export { useComboboxState } from "./@ui/UiCombobox/UiComboboxContext.js";
 export type { IUiComboboxOption, IUiComboboxParams, IUiComboboxState } from "./@ui/UiCombobox/types.js";
 
 export { UiCopyButton, type IUiCopyButtonProps } from "./@ui/UiCopyButton/UiCopyButton.js";
+
+export { DomainHomepageLink, type IDomainHomepageLinkProps } from "./Header/HomepageLink.js";
+
+export { CatalogItemPicker } from "./CatalogItemPicker/CatalogItemPicker.js";
+
+export type {
+    CatalogItemPickerSelectionMode,
+    CatalogItemPickerType,
+    ICatalogItemPickerItem,
+    ICatalogItemPickerItems,
+    ICatalogItemPickerProps,
+    ICatalogGroup,
+} from "./CatalogItemPicker/types.js";

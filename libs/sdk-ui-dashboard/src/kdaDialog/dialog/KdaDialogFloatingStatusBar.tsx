@@ -39,11 +39,11 @@ export function KdaDialogFloatingStatusBar({ onClose, titleElementId }: IKdaDial
             </div>
             <div className="gd-kda-floating-status-bar__content">
                 <StatusIndicator status={status} />
-                <p className="gd-kda-floating-status-bar__text" id={titleElementId}>
+                <p className="gd-kda-floating-status-bar__text" id={titleElementId} tabIndex={0}>
                     {statusText}
                 </p>
             </div>
-            <KdaDialogActionButtons size="small" onClose={onClose} />
+            <KdaDialogActionButtons size="small" titleElementId={titleElementId} onClose={onClose} />
         </div>
     );
 }

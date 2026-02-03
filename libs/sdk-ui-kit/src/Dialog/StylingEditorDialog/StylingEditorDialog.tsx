@@ -38,8 +38,7 @@ export interface IStylingPickerItem<T extends StylingPickerItemContent> {
  * @internal
  */
 export interface IStylingEditorDialogProps<T extends StylingPickerItemContent>
-    extends TStylingEditorDialogFooterProps,
-        Pick<IDialogBaseProps, "onClose" | "className"> {
+    extends TStylingEditorDialogFooterProps, Pick<IDialogBaseProps, "onClose" | "className"> {
     title: string;
     tooltip?: string;
     stylingItem?: IStylingPickerItem<T>;

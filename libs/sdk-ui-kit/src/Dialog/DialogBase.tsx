@@ -68,7 +68,7 @@ export const DialogBase = memo<IDialogBaseProps>(function DialogBase({
     return (
         <UiFocusManager
             enableFocusTrap={isModal}
-            enableAutofocus={!!isModal && autofocusOnOpen ? { initialFocus, refocusKey } : false}
+            enableAutofocus={autofocusOnOpen ? { initialFocus, refocusKey } : false}
             enableReturnFocusOnUnmount={returnFocusAfterClose ? { returnFocusTo } : false}
             focusCheckFn={focusCheckFn}
         >

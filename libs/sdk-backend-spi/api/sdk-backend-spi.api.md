@@ -203,6 +203,9 @@ export class ContractExpired extends AnalyticalBackendError {
     constructor(message: string, cause?: Error);
 }
 
+// @internal
+export type DashboardSummaryWorkflowStatus = "RUNNING" | "COMPLETED" | "FAILED" | "CANCELLED";
+
 // @public
 export class DataTooLargeError extends AnalyticalBackendError {
     constructor(message: string, cause?: Error,
@@ -675,6 +678,26 @@ export interface IDashboardsQuery {
 
 // @public
 export type IDashboardsQueryResult = IPagedResource<IListedDashboard>;
+
+// @internal
+export interface IDashboardSummaryWorkflowStartResult {
+    // (undocumented)
+    message: string;
+    // (undocumented)
+    runId: string;
+    // (undocumented)
+    status: DashboardSummaryWorkflowStatus;
+}
+
+// @internal
+export interface IDashboardSummaryWorkflowStatusResult extends IDashboardSummaryWorkflowStartResult {
+    // (undocumented)
+    currentPhase?: "extraction" | "data_validation" | "ai_generation" | "guardrail_validation" | "complete" | null;
+    // (undocumented)
+    error?: string | null;
+    // (undocumented)
+    result?: Record<string, unknown> | null;
+}
 
 // @alpha
 export interface IDashboardWithReferences {
@@ -1916,6 +1939,7 @@ export interface IWorkspaceDashboardsService {
     getDashboardReferencedObjects(dashboard: IDashboard, types?: SupportedDashboardReferenceTypes[]): Promise<IDashboardReferences>;
     getDashboards(options?: IGetDashboardOptions): Promise<IListedDashboard[]>;
     getDashboardsQuery(): IDashboardsQuery;
+    getDashboardSummaryWorkflowStatus?(runId: string): Promise<IDashboardSummaryWorkflowStatusResult>;
     getDashboardWidgetAlertsForCurrentUser(ref: ObjRef): Promise<IWidgetAlert[]>;
     getDashboardWithReferences(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions, types?: SupportedDashboardReferenceTypes[]): Promise<IDashboardWithReferences>;
     getFilterContextByExportId(exportId: string, type: "visual" | "slides" | undefined, tabId?: string): Promise<{
@@ -1931,6 +1955,7 @@ export interface IWorkspaceDashboardsService {
     getWidgetAlertsCountForWidgets(refs: ObjRef[]): Promise<IWidgetAlertCount[]>;
     getWidgetReferencedObjects(widget: IWidget, types?: SupportedWidgetReferenceTypes[]): Promise<IWidgetReferences>;
     setFilterViewAsDefault(ref: ObjRef, isDefault: boolean): Promise<void>;
+    startDashboardSummaryWorkflow?(dashboardId: string): Promise<IDashboardSummaryWorkflowStartResult>;
     updateDashboard(dashboard: IDashboard, updatedDashboard: IDashboardDefinition): Promise<IDashboard>;
     updateDashboardMeta(updatedDashboard: IDashboardObjectIdentity & Partial<IDashboardBase>): Promise<IDashboard>;
     updateScheduledMail(ref: ObjRef, scheduledMail: IScheduledMailDefinition, filterContextRef?: ObjRef): Promise<void>;

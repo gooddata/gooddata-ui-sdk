@@ -338,3 +338,25 @@ interface IConfiguration<RulePrefix extends string = ""> {
 
 - The base configuration automatically ignores `**/dist/**/*.*` and `**/esm/**/*.*` files.
 - **ESM vs ImportESM**: The `esm` configuration sets `parserOptions.sourceType: "module"` to tell the parser to treat files as ES modules. The `importEsm` configuration adds the `eslint-plugin-import-esm` plugin which enforces ESM-specific import rules (e.g., requiring `.js` extensions in imports). Most ESM projects need both.
+
+## Formatting
+
+This package is **decoupled from formatters**. The `formatter` configuration (included in all variants by default) disables ESLint rules that conflict with code formatters, allowing you to use any formatter of your choice (Prettier, oxfmt, Biome, etc.) as a separate tool.
+
+**How it works:**
+
+- ESLint focuses solely on code quality and best practices
+- Formatting rules (indentation, spacing, quotes, etc.) are disabled
+- Run your formatter separately (e.g., `prettier --write` or `oxfmt`)
+
+**Recommended setup:**
+
+1. Install your preferred formatter (e.g., `prettier` or `oxfmt`)
+2. Configure it separately (e.g., `.prettierrc` or `oxfmt.json`)
+3. Run formatting as a separate step in your workflow or editor
+
+This approach provides:
+
+- **Flexibility** - Choose any formatter without changing ESLint config
+- **Performance** - Formatters run faster when not piped through ESLint
+- **Clarity** - Clear separation between linting (code quality) and formatting (code style)

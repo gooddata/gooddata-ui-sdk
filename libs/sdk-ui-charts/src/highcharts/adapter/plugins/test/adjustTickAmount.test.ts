@@ -37,7 +37,6 @@ const mockAxis = ({
     options,
     userOptions,
     hasData,
-    // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
 }: Partial<Highcharts.Axis | UnsafeInternals>): Highcharts.Axis | UnsafeInternals => ({
     tickInterval,
     tickAmount,

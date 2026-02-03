@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "Add CrateDB data source type support",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "Miroslav.Koldus@gmail.com"
+}

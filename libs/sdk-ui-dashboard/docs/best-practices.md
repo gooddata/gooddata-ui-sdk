@@ -12,8 +12,8 @@ Before continuing, read the [Dashboard Component Software Design](./design.md) d
 
 There are two ways of making changes to the data in the Redux store:
 
--   dispatching a command
--   dispatching an action
+- dispatching a command
+- dispatching an action
 
 Dispatching a command is the recommended way to do this: it ensures all the validations, side effects and so on
 are processed correctly.
@@ -56,7 +56,7 @@ When you need to load some data for your component/hook from the backend (except
 to just use the `useBackend` hook and call it directly. While this will work and is not inherently wrong,
 often, a better solution is to write a Query for this. That way the results
 
--   can be cached automatically between Query runs improving performance for repeated queries for the same items (see `createCachedQueryService`)
--   are reusable from anywhere in the Dashboard component
+- can be cached automatically between Query runs improving performance for repeated queries for the same items (see `createCachedQueryService`)
+- are reusable from anywhere in the Dashboard component
 
 To make using the Query simpler in your component/hook, there is the `useDashboardQueryProcessing` hook.

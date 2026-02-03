@@ -83,7 +83,6 @@ export function parseStringToArray(str: string): string[] | null {
             return [];
         }
 
-        // eslint-disable-next-line regexp/no-unused-capturing-group
         if (str.match(/^\[[a-zA-Z0-9 ]+(,(?=[^ ])[a-zA-Z0-9 ]+)*\]$/)) {
             // [foo], [foo,bar]
             return str.slice(1, -1).split(",");

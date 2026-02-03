@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     type IAttributeDescriptorBody,
@@ -6,6 +6,7 @@ import {
     type IMeasure,
     type ObjRef,
 } from "@gooddata/sdk-model";
+import { type OverlayController } from "@gooddata/sdk-ui-kit";
 
 /**
  * @internal
@@ -24,6 +25,17 @@ export interface IKdaDialogProps {
      * Whether to show the close button
      */
     showCloseButton?: boolean;
+
+    /**
+     * Parent overlay controller. If provided, the dialog will be rendered by this controller.
+     * Otherwise, the dialog will be rendered with na internal overlay controller.
+     */
+    parentOverlayController?: OverlayController;
+
+    /**
+     * Title element id
+     */
+    titleElementId?: string;
 
     /**
      * Custom close button handler

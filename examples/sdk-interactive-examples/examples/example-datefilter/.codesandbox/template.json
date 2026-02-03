@@ -1,11 +1,7 @@
 {
-  "title": "DateFilter",
-  "description": "Example demonstrates usage of Date Filter component.",
-  "iconUrl": "https://www.gooddata.com/favicon.ico",
-  "tags": [
-    "react",
-    "typescript",
-    "gooddata-ui-sdk"
-  ],
-  "published": true
+    "title": "DateFilter",
+    "description": "Example demonstrates usage of Date Filter component.",
+    "iconUrl": "https://www.gooddata.com/favicon.ico",
+    "tags": ["react", "typescript", "gooddata-ui-sdk"],
+    "published": true
 }

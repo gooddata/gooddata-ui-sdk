@@ -25,10 +25,7 @@ export type AnalyticalWidgetType = "kpi" | "insight" | "richText" | "visualizati
  * @public
  */
 export interface IAnalyticalWidget
-    extends IBaseWidget,
-        IWidgetDescription,
-        IFilterableWidget,
-        IDrillableWidget {
+    extends IBaseWidget, IWidgetDescription, IFilterableWidget, IDrillableWidget {
     readonly type: AnalyticalWidgetType;
 }
 
@@ -204,12 +201,10 @@ export interface IVisualizationSwitcherWidgetBase extends IAnalyticalWidget {
  * @public
  */
 export interface IVisualizationSwitcherWidget
-    extends IVisualizationSwitcherWidgetBase,
-        IDashboardObjectIdentity {}
+    extends IVisualizationSwitcherWidgetBase, IDashboardObjectIdentity {}
 
 /**
  * @public
  */
 export interface IVisualizationSwitcherWidgetDefinition
-    extends IVisualizationSwitcherWidgetBase,
-        Partial<IDashboardObjectIdentity> {}
+    extends IVisualizationSwitcherWidgetBase, Partial<IDashboardObjectIdentity> {}

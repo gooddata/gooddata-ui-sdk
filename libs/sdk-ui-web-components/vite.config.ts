@@ -1,11 +1,13 @@
-// (C) 2022-2025 GoodData Corporation
-import { defineConfig, loadEnv } from "vite";
+// (C) 2022-2026 GoodData Corporation
+
 import { createRequire } from "node:module";
-import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
-import environment from "vite-plugin-environment";
-import { OutputChunk } from "rollup";
+import { fileURLToPath } from "node:url";
+
+import { type OutputChunk } from "rollup";
+import { defineConfig, loadEnv } from "vite";
 import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
+import environment from "vite-plugin-environment";
 
 const require = createRequire(import.meta.url);
 const npmPackage = require("./package.json");
@@ -13,6 +15,7 @@ const sdkModelDependency = npmPackage.dependencies?.["@gooddata/sdk-model"] ?? "
 const sdkModelVersion = sdkModelDependency.replace(/[\^~]/, "");
 
 const projectDir = dirname(fileURLToPath(import.meta.url));
+// eslint-disable-next-line no-restricted-exports
 export default defineConfig(({ command, mode }) => {
     // Load env file based on `mode` in the current working directory.
     const env = loadEnv(mode, projectDir, "");
@@ -76,7 +79,7 @@ export default defineConfig(({ command, mode }) => {
                     // append auto-auth initialization to index.js so that import.meta.url is truly
                     // evaluated in the context of the index.js chunk and not put to a shared one
                     const indexChunk = bundle["index.js"];
-                    if (indexChunk && indexChunk.type === "chunk") {
+                    if (indexChunk?.type === "chunk") {
                         indexChunk.code += `
 if (typeof window !== "undefined") {
     window.__GD_INITIALIZE_AUTO_AUTH__(import.meta.url).catch((error) => {

@@ -784,18 +784,6 @@ export const selectEnableExecutionCancelling: DashboardSelector<boolean> = creat
 );
 
 /**
- * Selector for drill menu positioning at cursor feature flag.
- *
- * @internal
- */
-export const selectEnableDrillMenuPositioningAtCursor: DashboardSelector<boolean> = createSelector(
-    selectConfig,
-    (state) => {
-        return state.settings?.enableDrillMenuPositioningAtCursor ?? false;
-    },
-);
-
-/**
  * Selector for the dashboard share link feature flag
  *
  * @internal
@@ -803,7 +791,7 @@ export const selectEnableDrillMenuPositioningAtCursor: DashboardSelector<boolean
 export const selectEnableDashboardShareLink: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return Boolean(state.settings?.enableDashboardShareLink) ?? false;
+        return Boolean(state.settings?.enableDashboardShareLink);
     },
 );
 
@@ -815,7 +803,7 @@ export const selectEnableDashboardShareLink: DashboardSelector<boolean> = create
 export const selectEnableAutomationFilterContext: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return Boolean(state.settings?.enableAutomationFilterContext) ?? true;
+        return Boolean(state.settings?.enableAutomationFilterContext);
     },
 );
 
@@ -827,7 +815,7 @@ export const selectEnableAutomationFilterContext: DashboardSelector<boolean> = c
 export const selectEnableDateFilterIdentifiers: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return Boolean(state.settings?.enableDateFilterIdentifiersRollout) ?? true;
+        return Boolean(state.settings?.enableDateFilterIdentifiersRollout);
     },
 );
 
@@ -839,7 +827,7 @@ export const selectEnableDateFilterIdentifiers: DashboardSelector<boolean> = cre
 export const selectEnableSnapshotExportAccessibility: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return Boolean(state.settings?.enableSnapshotExportAccessibility) ?? false;
+        return Boolean(state.settings?.enableSnapshotExportAccessibility);
     },
 );
 
@@ -851,7 +839,7 @@ export const selectEnableSnapshotExportAccessibility: DashboardSelector<boolean>
 export const selectEnableWidgetExportPngImage: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return Boolean(state.settings?.enableWidgetExportPngImage) ?? true;
+        return Boolean(state.settings?.enableWidgetExportPngImage);
     },
 );
 
@@ -875,7 +863,7 @@ export const selectEnableExportToPdfTabular: DashboardSelector<boolean> = create
 export const selectEnableExportToDocumentStorage: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return Boolean(state.settings?.enableExportToDocumentStorage) ?? false;
+        return Boolean(state.settings?.enableExportToDocumentStorage);
     },
 );
 
@@ -899,7 +887,7 @@ export const selectExternalRecipient: DashboardSelector<string | undefined> = cr
 export const selectEnableNotificationChannelIdentifiers: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return Boolean(state.settings?.enableNotificationChannelIdentifiers) ?? false;
+        return Boolean(state.settings?.enableNotificationChannelIdentifiers);
     },
 );
 
@@ -911,7 +899,7 @@ export const selectEnableNotificationChannelIdentifiers: DashboardSelector<boole
 export const selectEnableDashboardShareDialogLink: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return Boolean(state.settings?.enableDashboardShareDialogLink) ?? false;
+        return Boolean(state.settings?.enableDashboardShareDialogLink);
     },
 );
 
@@ -923,7 +911,7 @@ export const selectEnableDashboardShareDialogLink: DashboardSelector<boolean> = 
 export const selectEnableNewScheduledExport: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return Boolean(state.settings?.enableNewScheduledExport) ?? false;
+        return Boolean(state.settings?.enableNewScheduledExport);
     },
 );
 
@@ -935,7 +923,7 @@ export const selectEnableNewScheduledExport: DashboardSelector<boolean> = create
 export const selectEnableAutomationManagement: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return Boolean(state.settings?.enableAutomationManagement) ?? true;
+        return Boolean(state.settings?.enableAutomationManagement);
     },
 );
 
@@ -947,7 +935,7 @@ export const selectEnableAutomationManagement: DashboardSelector<boolean> = crea
 export const selectEnableAutomationEvaluationMode: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return Boolean(state.settings?.enableAutomationEvaluationMode) ?? false;
+        return Boolean(state.settings?.enableAutomationEvaluationMode);
     },
 );
 
@@ -971,7 +959,7 @@ export const selectEnableSnapshotExport: DashboardSelector<boolean> = createSele
 export const selectEnableAccessibilityMode: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return Boolean(state.settings?.enableAccessibilityMode) ?? false;
+        return Boolean(state.settings?.enableAccessibilityMode);
     },
 );
 

@@ -7,13 +7,13 @@ import { cypress } from "./configurations/cypress.js";
 import { env } from "./configurations/env.js";
 import { eslint } from "./configurations/eslint.js";
 import { esm } from "./configurations/esm.js";
+import { formatter } from "./configurations/formatter.js";
 import { header } from "./configurations/header.js";
 import { ignore } from "./configurations/ignore.js";
 import { importEsm } from "./configurations/import-esm.js";
-import { import_ } from "./configurations/import.js";
+import { importX } from "./configurations/import-x.js";
 import { jsdoc } from "./configurations/jsdoc.js";
 import { noOnlyTests } from "./configurations/no-only-tests.js";
-import { prettier } from "./configurations/prettier.js";
 import { reactHooks } from "./configurations/react-hooks.js";
 import { react } from "./configurations/react.js";
 import { regexp } from "./configurations/regexp.js";
@@ -30,19 +30,19 @@ export const commonConfigurations: IDualConfiguration[] = [
     header,
     typescript,
     barrelFiles,
-    import_,
+    importX,
     jsdoc,
     noOnlyTests,
-    prettier, // TODO: apply last somehow
     regexp,
     sonarjs,
     // tsdoc,
     security,
     ignore,
+    formatter,
 ];
 
 // please note, if you modify keys in the following array, please run `npm run update-package` in addition to `npm run build`
-const commonVariants: Record<string, IDualConfiguration[]> = {
+export const commonVariants: Record<string, IDualConfiguration[]> = {
     browser: [browserEnv], // for any packages that uses document, but are not react libs
     "browser-esm": [browserEnv, esm, importEsm], // unsure if needed
     vitest: [vitest],

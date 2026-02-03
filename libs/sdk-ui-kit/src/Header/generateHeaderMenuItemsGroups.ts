@@ -249,7 +249,7 @@ function dataItemUrl(
 function canShowDataItem(featureFlags: ISettings, workspacePermissions: IWorkspacePermissions): boolean {
     return Boolean(
         featureFlags.enableDataSection &&
-            (workspacePermissions.canInitData || workspacePermissions.canRefreshData),
+        (workspacePermissions.canInitData || workspacePermissions.canRefreshData),
     );
 }
 

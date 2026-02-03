@@ -192,7 +192,6 @@ export function buildDrillEventData(
                   target: elementTarget as HTMLElement | undefined,
                   chartX: chartCoordinates?.chartX,
                   chartY: chartCoordinates?.chartY,
-                  enableDrillMenuPositioningAtCursor: true,
               }
             : {}),
     };

@@ -162,7 +162,6 @@ const chartClickDebounced = debounce(
         target: EventTarget,
         chartId: string,
         chartType: ChartType,
-        enableDrillMenuPositioningAtCursor: boolean,
     ) => {
         const originalEvent = event.originalEvent as PointerEvent | undefined;
         const { dataView, onDrill } = drillConfig;
@@ -192,14 +191,9 @@ const chartClickDebounced = debounce(
         const data: IDrillEvent = {
             dataView,
             drillContext,
-            ...(enableDrillMenuPositioningAtCursor
-                ? {
-                      chartX: originalEvent?.offsetX,
-                      chartY: originalEvent?.offsetY,
-                      target: event.target?.container,
-                      enableDrillMenuPositioningAtCursor: true,
-                  }
-                : {}),
+            chartX: originalEvent?.offsetX,
+            chartY: originalEvent?.offsetY,
+            target: event.target?.container,
         };
 
         fireEvent(onDrill, data, target);
@@ -212,9 +206,8 @@ export function chartClick(
     target: EventTarget,
     chartId: string,
     chartType: ChartType,
-    enableDrillMenuPositioningAtCursor: boolean,
 ): void {
-    chartClickDebounced(drillConfig, event, target, chartId, chartType, enableDrillMenuPositioningAtCursor);
+    chartClickDebounced(drillConfig, event, target, chartId, chartType);
 }
 
 const tickLabelClickDebounce = debounce(

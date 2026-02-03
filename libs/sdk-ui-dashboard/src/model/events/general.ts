@@ -91,8 +91,9 @@ export interface IDashboardCommandFailedPayload<TCommand extends IDashboardComma
  *
  * @beta
  */
-export interface IDashboardCommandFailed<TCommand extends IDashboardCommand = IDashboardCommand>
-    extends IDashboardEvent {
+export interface IDashboardCommandFailed<
+    TCommand extends IDashboardCommand = IDashboardCommand,
+> extends IDashboardEvent {
     readonly type: "GDC.DASH/EVT.COMMAND.FAILED";
     readonly payload: IDashboardCommandFailedPayload<TCommand>;
 }

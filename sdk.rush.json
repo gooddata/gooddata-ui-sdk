@@ -606,6 +606,13 @@
             "reviewCategory": "tools",
             "versionPolicyName": "sdk",
             "shouldPublish": true
+        },
+        {
+            "packageName": "@gooddata/stylelint-config",
+            "projectFolder": "tools/stylelint-config",
+            "reviewCategory": "tools",
+            "versionPolicyName": "sdk",
+            "shouldPublish": true
         }
         // {
         //   /**

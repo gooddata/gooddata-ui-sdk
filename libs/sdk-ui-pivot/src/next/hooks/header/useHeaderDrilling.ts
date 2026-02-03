@@ -76,18 +76,13 @@ export function useHeaderDrilling(params: AgGridHeaderParams | AgGridHeaderGroup
             };
 
             // Calculate chart coordinates for drill popover positioning
-            const chartCoordinates = config?.enableDrillMenuPositioningAtCursor
-                ? getChartClickCoordinates(event.target, "[grid-id]")
-                : {};
+            const chartCoordinates = getChartClickCoordinates(event.target, "[grid-id]");
 
             // Create drill event
             const drillEvent: IDrillEvent = {
                 dataView: currentDataView.dataView,
                 drillContext,
                 ...chartCoordinates,
-                enableDrillMenuPositioningAtCursor: config?.enableDrillMenuPositioningAtCursor
-                    ? true
-                    : undefined,
             };
 
             if (onDrill(drillEvent)) {
@@ -98,14 +93,7 @@ export function useHeaderDrilling(params: AgGridHeaderParams | AgGridHeaderGroup
 
             return false;
         },
-        [
-            isRegularHeader,
-            onDrill,
-            isDrillable,
-            params,
-            currentDataView,
-            config?.enableDrillMenuPositioningAtCursor,
-        ],
+        [isRegularHeader, onDrill, isDrillable, params, currentDataView],
     );
 
     return {

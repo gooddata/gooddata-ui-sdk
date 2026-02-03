@@ -1,11 +1,7 @@
 {
-  "title": "Chart config manipulation",
-  "description": "This interactive example demonstrates how to manipulate the chart config.",
-  "iconUrl": "https://www.gooddata.com/favicon.ico",
-  "tags": [
-    "react",
-    "typescript",
-    "gooddata-ui-sdk"
-  ],
-  "published": true
+    "title": "Chart config manipulation",
+    "description": "This interactive example demonstrates how to manipulate the chart config.",
+    "iconUrl": "https://www.gooddata.com/favicon.ico",
+    "tags": ["react", "typescript", "gooddata-ui-sdk"],
+    "published": true
 }

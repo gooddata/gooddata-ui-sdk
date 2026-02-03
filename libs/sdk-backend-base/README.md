@@ -54,10 +54,10 @@ notified.
 This decorator addresses the fact that two execution definitions may lead semantically same results but differ just
 in view-only details or technicalities. Before the execution is sent to the underlying backend this decorator will:
 
--   Strip alias, measure format and title from measures
--   Strip alias from attributes
--   Remove any noop filters
--   Normalize local identifiers
+- Strip alias, measure format and title from measures
+- Strip alias from attributes
+- Remove any noop filters
+- Normalize local identifiers
 
 The normalized execution is sent to the backend and before the results and data are passed back to the caller code,
 the decorator performs denormalization and restores the original values all in the right places in the result and

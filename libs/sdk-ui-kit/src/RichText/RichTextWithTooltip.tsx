@@ -14,12 +14,10 @@ import { type IAlignPoint } from "../typings/positioning.js";
 const alignPoints: IAlignPoint[] = [{ align: "bc tc" }, { align: "tc bc" }];
 const descriptionMarkdown = (
     <>
-        <br />
-        # Heading 1
+        <br /># Heading 1
         <br />
         **Bold**
-        <br />
-        * List
+        <br />* List
         <br />
         [link](http://thisisalink.com)
         <br />

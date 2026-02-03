@@ -72,8 +72,7 @@ export interface IDashboardEditLayoutContentWidgetKpiPlaceholder extends IDashbo
     type: "widgetKpiPlaceholder";
 }
 
-export interface IDashboardEditLayoutContentWidgetNewInsightPlaceholder
-    extends IDashboardEditLayoutContentBase {
+export interface IDashboardEditLayoutContentWidgetNewInsightPlaceholder extends IDashboardEditLayoutContentBase {
     /**
      * Type
      */

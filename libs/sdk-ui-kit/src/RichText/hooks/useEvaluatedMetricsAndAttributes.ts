@@ -66,7 +66,6 @@ export function useEvaluatedMetricsAndAttributes(
         error: loadError,
     } = useCancelablePromise(
         {
-            // eslint-disable-next-line @typescript-eslint/require-await
             promise: async () => {
                 if (!executionResult) {
                     return [];

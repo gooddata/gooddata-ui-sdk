@@ -135,12 +135,12 @@ export interface ISemanticSearchRelationship {
 export function isSemanticSearchRelationship(item: object): item is ISemanticSearchRelationship {
     return Boolean(
         "sourceWorkspaceId" in item &&
-            "sourceObjectId" in item &&
-            "sourceObjectType" in item &&
-            "sourceObjectTitle" in item &&
-            "targetWorkspaceId" in item &&
-            "targetObjectId" in item &&
-            "targetObjectType" in item &&
-            "targetObjectTitle" in item,
+        "sourceObjectId" in item &&
+        "sourceObjectType" in item &&
+        "sourceObjectTitle" in item &&
+        "targetWorkspaceId" in item &&
+        "targetObjectId" in item &&
+        "targetObjectType" in item &&
+        "targetObjectTitle" in item,
     );
 }

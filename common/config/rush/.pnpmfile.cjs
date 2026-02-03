@@ -1,7 +1,9 @@
+// (C) 2026 GoodData Corporation
+
 "use strict";
 
 // baseline-browser-mapping needs to be updated to the latest version very 14 days
-const baselineBrowserMappingVersion = "2.9.19"
+const baselineBrowserMappingVersion = "2.9.19";
 
 /**
  * When using the PNPM package manager, you can use pnpmfile.js to workaround
@@ -16,9 +18,9 @@ const baselineBrowserMappingVersion = "2.9.19"
  * "rush update --full" so that PNPM will recalculate all version selections.
  */
 module.exports = {
-  hooks: {
-    readPackage
-  }
+    hooks: {
+        readPackage,
+    },
 };
 
 /**
@@ -30,22 +32,38 @@ module.exports = {
  * The return value is the updated object.
  */
 function readPackage(packageJson, context) {
+    // // The karma types have a missing dependency on typings from the log4js package.
+    // if (packageJson.name === '@types/karma') {
+    //  context.log('Fixed up dependencies for @types/karma');
+    //  packageJson.dependencies['log4js'] = '0.6.38';
+    // }
 
-  // // The karma types have a missing dependency on typings from the log4js package.
-  // if (packageJson.name === '@types/karma') {
-  //  context.log('Fixed up dependencies for @types/karma');
-  //  packageJson.dependencies['log4js'] = '0.6.38';
-  // }
+    if (
+        [
+            "@storybook/builder-vite",
+            "@vitest/mocker",
+            "@storybook/react-vite",
+            "@joshwooding/vite-plugin-react-docgen-typescript",
+            "vite-plugin-static-copy",
+        ].includes(packageJson.name) &&
+        packageJson.peerDependencies["vite"]
+    ) {
+        context.log("Fixed up dependencies for " + packageJson.name);
+        packageJson.peerDependencies["vite"] += " || 8.0.0-beta.10";
+    }
 
-  if(packageJson.dependencies && packageJson.dependencies['baseline-browser-mapping']) {
-    context.log('Fixed up dependencies for baseline-browser-mapping');
-    packageJson.dependencies['baseline-browser-mapping'] = baselineBrowserMappingVersion;
-  }
+    if (packageJson.dependencies && packageJson.dependencies["baseline-browser-mapping"]) {
+        context.log("Fixed up dependencies for baseline-browser-mapping");
+        packageJson.dependencies["baseline-browser-mapping"] = baselineBrowserMappingVersion;
+    }
 
-  if(packageJson.devDependencies && packageJson.devDependencies['baseline-browser-mapping']) {
-    context.log('Fixed up dependencies for baseline-browser-mapping', packageJson.dependencies['baseline-browser-mapping']);
-   packageJson.devDependencies['baseline-browser-mapping'] = baselineBrowserMappingVersion;
-  }
+    if (packageJson.devDependencies && packageJson.devDependencies["baseline-browser-mapping"]) {
+        context.log(
+            "Fixed up dependencies for baseline-browser-mapping",
+            packageJson.dependencies["baseline-browser-mapping"],
+        );
+        packageJson.devDependencies["baseline-browser-mapping"] = baselineBrowserMappingVersion;
+    }
 
-  return packageJson;
+    return packageJson;
 }

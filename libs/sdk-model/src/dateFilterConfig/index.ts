@@ -168,8 +168,9 @@ export interface IRelativeDateFilterPreset extends IDateFilterOption {
  * Generic type to express relative date filter preset of a particular granularity
  * @alpha
  */
-export interface IRelativeDateFilterPresetOfGranularity<Key extends DateFilterGranularity>
-    extends IRelativeDateFilterPreset {
+export interface IRelativeDateFilterPresetOfGranularity<
+    Key extends DateFilterGranularity,
+> extends IRelativeDateFilterPreset {
     /**
      * Particular relative date filter preset granularity
      */

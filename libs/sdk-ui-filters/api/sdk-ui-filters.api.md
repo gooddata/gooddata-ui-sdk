@@ -324,7 +324,7 @@ export const getLocalizedIcuDateFormatPattern: (locale: string) => string;
 export function getTabForPreset(preset: DateFilterOption): CalendarTabType;
 
 // @beta
-export type GranularityIntlKey = "day" | "minute" | "hour" | "week" | "month" | "quarter" | "year";
+export type GranularityIntlKey = "day" | "minute" | "hour" | "week" | "month" | "quarter" | "year" | "period";
 
 // @alpha
 export function hasFiscalPresets(presets: DateFilterRelativeOptionGroup): boolean;

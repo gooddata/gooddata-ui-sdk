@@ -20,7 +20,7 @@ import { type ExecutionRecording } from "../recordings/execution.js";
 import { type InsightRecording } from "../recordings/insights.js";
 import { type VisClassesRecording } from "../recordings/visClasses.js";
 
-const FILE_HEADER = `/* eslint-disable import/order */\n/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: ${new Date().toISOString()}; */`;
+const FILE_HEADER = `/* eslint-disable import-x/order */\n/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: ${new Date().toISOString()}; */`;
 
 const MainIndexConstName = "Recordings";
 

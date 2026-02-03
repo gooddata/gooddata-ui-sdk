@@ -266,6 +266,11 @@
             --gd-icon-fill-color: var(--gd-palette-complementary-0);
         }
 
+        &#{$root}--variant-secondary {
+            background-color: var(--gd-palette-complementary-3);
+            border-color: var(--gd-palette-complementary-5);
+        }
+
         &#{$root}--variant-bare {
             --gd-icon-fill-color: var(--gd-palette-complementary-7);
         }

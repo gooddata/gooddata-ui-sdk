@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 export enum Browser {
     Chromium = "chromium",
@@ -130,6 +130,11 @@ export interface INeobackstopScenarioConfig {
      * Percentage of different pixels allowed to pass test
      */
     misMatchThreshold?: number;
+
+    /**
+     * Number of retries to perform on failed test
+     */
+    retryCount?: number;
 }
 
 export interface INeobackstopConfig {

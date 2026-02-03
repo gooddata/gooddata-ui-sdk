@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 /**
  * @alpha
@@ -20,6 +20,7 @@ export type DataSourceType =
     | "DATABRICKS"
     | "GDSTORAGE"
     | "CLICKHOUSE"
+    | "CRATEDB"
     | "MYSQL"
     | "MARIADB"
     | "ORACLE"

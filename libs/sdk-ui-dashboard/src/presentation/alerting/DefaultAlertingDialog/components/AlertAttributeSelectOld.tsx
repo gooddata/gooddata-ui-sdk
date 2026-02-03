@@ -264,8 +264,8 @@ export function AlertAttributeSelectOld({
                                                                 key={j}
                                                                 checked={Boolean(
                                                                     isSelected &&
-                                                                        value.value ===
-                                                                            selectedAttributeValue?.value,
+                                                                    value.value ===
+                                                                        selectedAttributeValue?.value,
                                                                 )}
                                                                 className="gd-alert-attribute-select__menu-item_wrapper"
                                                                 onClick={(e) => {

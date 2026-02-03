@@ -67,6 +67,26 @@
         "text": "Account",
         "crowdinContext": "Title for the user account menu in the header. Displays user-related options like profile settings and logout."
     },
+    "gs.header.projectPicker.home": {
+        "text": "Home",
+        "crowdinContext": "Label for the home button in the project picker. Clicking this navigates to the home page."
+    },
+    "gs.header.projectPicker.noMatchingWorkspaces": {
+        "text": "No matching workspaces.",
+        "crowdinContext": "Message when no workspaces match search criteria"
+    },
+    "gs.header.projectPicker.searchPlaceholder.aria": {
+        "text": "Search workspaces",
+        "crowdinContext": "Placeholder text for project/workspace and aria-label search input"
+    },
+    "gs.header.projectPicker.pickerName.aria": {
+        "text": "Workspace picker",
+        "crowdinContext": "Aria-label for workspace picker"
+    },
+    "gs.header.projectPicker.workspaces": {
+        "text": "Workspaces",
+        "crowdinContext": "Heading before list of workspaces"
+    },
     "gs.list.all": {
         "text": "All",
         "crowdinContext": "Option in filter controls to select all items. Used in various dropdown lists and filter components."
@@ -435,6 +455,10 @@
         "text": "Error when loading filter values.",
         "crowdinContext": "Error message shown when the application fails to load values for a filter from the server."
     },
+    "gs.list.back": {
+        "text": "Back",
+        "crowdinContext": "Catalog item picker back button aria label"
+    },
     "gs.header.upsellButtonText": {
         "text": "Upgrade",
         "crowdinContext": "Button text for upgrading to a higher tier or paid version of the product from a free or lower tier."
@@ -727,6 +751,22 @@
         "text": "Next month",
         "crowdinContext": "Filter option for the next month"
     },
+    "filters.thisPeriod.title": {
+        "text": "This period",
+        "crowdinContext": "Filter option for the current fiscal period"
+    },
+    "filters.thisPeriodToDate.title": {
+        "text": "This period to date (PTD)",
+        "crowdinContext": "Filter option for the current fiscal period to date"
+    },
+    "filters.lastPeriod.title": {
+        "text": "Last period",
+        "crowdinContext": "Filter option for the previous fiscal period"
+    },
+    "filters.nextPeriod.title": {
+        "text": "Next period",
+        "crowdinContext": "Filter option for the next fiscal period"
+    },
     "filters.thisQuarter.title": {
         "text": "This quarter",
         "crowdinContext": "Filter option for the current quarter"
@@ -827,6 +867,10 @@
         "text": "{n, plural, one {Last # month} other {Last # months}}",
         "crowdinContext": "Filter option for the last N months (singular/plural)"
     },
+    "filters.lastNPeriods": {
+        "text": "{n, plural, one {Last # period} other {Last # periods}}",
+        "crowdinContext": "Filter option for the last N fiscal periods (singular/plural)"
+    },
     "filters.lastNQuarters": {
         "text": "{n, plural, one {Last # quarter} other {Last # quarters}}",
         "crowdinContext": "Filter option for the last N quarters (singular/plural)"
@@ -866,6 +910,10 @@
     "filters.nextNMonths": {
         "text": "{n, plural, one {Next # month} other {Next # months}}",
         "crowdinContext": "Filter option for the next N months (singular/plural)"
+    },
+    "filters.nextNPeriods": {
+        "text": "{n, plural, one {Next # period} other {Next # periods}}",
+        "crowdinContext": "Filter option for the next N fiscal periods (singular/plural)"
     },
     "filters.nextNQuarters": {
         "text": "{n, plural, one {Next # quarter} other {Next # quarters}}",
@@ -986,6 +1034,26 @@
     "filters.interval.months.mixed": {
         "text": "From {from} {from, plural, one {month} other {months}} ago to {to} {to, plural, one {month} other {months}} ahead",
         "crowdinContext": "Time interval spanning both past and future months (e.g., 'From 1 month ago to 2 months ahead'). The placeholders {from} and {to} represent the number of months in the past and future respectively."
+    },
+    "filters.interval.periods.past": {
+        "text": "From {from} to {to} {to, plural, one {period} other {periods}} ago",
+        "crowdinContext": "Time interval for past fiscal periods with a range."
+    },
+    "filters.interval.periods.past.sameValue": {
+        "text": "{value} {value, plural, one {period} other {periods}} ago",
+        "crowdinContext": "Time interval for a single past fiscal period."
+    },
+    "filters.interval.periods.future": {
+        "text": "From {from} to {to} {to, plural, one {period} other {periods}} ahead",
+        "crowdinContext": "Time interval for future fiscal periods with a range."
+    },
+    "filters.interval.periods.future.sameValue": {
+        "text": "{value} {value, plural, one {period} other {periods}} ahead",
+        "crowdinContext": "Time interval for a single future fiscal period."
+    },
+    "filters.interval.periods.mixed": {
+        "text": "From {from} {from, plural, one {period} other {periods}} ago to {to} {to, plural, one {period} other {periods}} ahead",
+        "crowdinContext": "Time interval spanning both past and future fiscal periods."
     },
     "filters.interval.quarters.past": {
         "text": "From {from} to {to} {to, plural, one {quarter} other {quarters}} ago",
@@ -1275,6 +1343,18 @@
         "text": "{n, plural, one {next month} other {# months ahead}}",
         "crowdinContext": "Relative time expression using plural forms. Keep the {n, plural, ...} format and the # placeholder for numbers. Examples: 'last minute', '5 minutes ago', 'next hour', '3 days ahead'."
     },
+    "filters.floatingRange.option.period.offset.history": {
+        "text": "{n, plural, one {last period} other {# periods ago}}",
+        "crowdinContext": "Relative time expression for fiscal periods using plural forms. Keep the {n, plural, ...} format and the # placeholder for numbers."
+    },
+    "filters.floatingRange.option.period.offset.today": {
+        "text": "this period",
+        "crowdinContext": "Relative time filter option for the current fiscal period."
+    },
+    "filters.floatingRange.option.period.offset.future": {
+        "text": "{n, plural, one {next period} other {# periods ahead}}",
+        "crowdinContext": "Relative time expression for fiscal periods using plural forms. Keep the {n, plural, ...} format and the # placeholder for numbers."
+    },
     "filters.floatingRange.option.quarter.offset.history": {
         "text": "{n, plural, one {last quarter} other {# quarters ago}}",
         "crowdinContext": "Relative time expression using plural forms. Keep the {n, plural, ...} format and the # placeholder for numbers. Examples: 'last minute', '5 minutes ago', 'next hour', '3 days ahead'."
@@ -1374,6 +1454,10 @@
     "filters.period.title": {
         "text": "PERIOD",
         "crowdinContext": "Header label for fiscal month (period) time filter options."
+    },
+    "filters.period.excludeCurrentPeriod": {
+        "text": "Exclude current period",
+        "crowdinContext": "Option to exclude the current fiscal period from the filtered results."
     },
     "filters.excludeCurrentPeriod.unavailable": {
         "text": "Not available for the selected date range",
@@ -1634,6 +1718,54 @@
     "mvf.attributePicker.noItems": {
         "text": "No items available.",
         "crowdinContext": "Message shown in the measure value filter dimensionality picker when there are no items to select and no search term is entered."
+    },
+    "catalog.group_title.ungrouped": {
+        "text": "Ungrouped",
+        "crowdinContext": "This is name of group for items which don't have group. for example: Group1, Group2, Ungrouped"
+    },
+    "filter_bar_add_filter.menu.date": {
+        "text": "Date",
+        "crowdinContext": "Menu item label for adding a date filter"
+    },
+    "filter_bar_add_filter.menu.attribute": {
+        "text": "Attribute values",
+        "crowdinContext": "Menu item label for adding attribute value filters"
+    },
+    "filter_bar_add_filter.menu.metric": {
+        "text": "Metric values",
+        "crowdinContext": "Menu item label for adding metric value filters"
+    },
+    "filter_bar_add_filter.section.from_visualization": {
+        "text": "From visualization",
+        "crowdinContext": "Section title for items from current visualization in add filter picker"
+    },
+    "filter_bar_add_filter.attribute.title": {
+        "text": "Select attributes",
+        "crowdinContext": "Title for attribute values picker"
+    },
+    "filter_bar_add_filter.metric.title": {
+        "text": "Select metrics",
+        "crowdinContext": "Title for metric values picker"
+    },
+    "filter_bar_add_filter.button.add": {
+        "text": "Add",
+        "crowdinContext": "Add button label in add filter picker footer"
+    },
+    "filter_bar_add_filter.attribute.no_selection": {
+        "text": "No attribute is selected.",
+        "crowdinContext": "Tooltip shown when no attribute is selected in add filter picker"
+    },
+    "filter_bar_add_filter.metric.no_selection": {
+        "text": "No metric is selected.",
+        "crowdinContext": "Tooltip shown when no metric is selected in add filter picker"
+    },
+    "filter_bar_add_filter.no_results": {
+        "text": "No item matches the search term.",
+        "crowdinContext": "Empty state when search yields no results in add filter picker"
+    },
+    "filter_bar_add_filter.no_items": {
+        "text": "No items available.",
+        "crowdinContext": "Empty state when there are no items in add filter picker"
     },
     "mvf.applyButton.tooltip.noChanges": {
         "text": "No changes to apply.",

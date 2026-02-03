@@ -307,7 +307,7 @@ export class InputPure extends PureComponent<IInputPureProps> implements IDomNat
                     ref={(ref) => {
                         this.inputNodeRef = ref;
                     }}
-                    type={type}
+                    type={type ?? "text"}
                     id={id}
                     name={name}
                     required={required}

@@ -65,16 +65,17 @@ The `src/recordings/uiTestScenarios` directory defines recordings for storybook 
 The Logical Data Model (LDM) is stored in the [src/md](src/md) directory and consists of two files:
 
 - **full.ts**: An auto-generated file created by running the `npm run refresh-md` script.
-  > Note: The script is hardcoded with an existing workspace. You may need to request access to this workspace or modify the script to use your own.
+
+    > Note: The script is hardcoded with an existing workspace. You may need to request access to this workspace or modify the script to use your own.
 
 - **ext.ts**: A file holding extensions to the standard LDM. This file stores custom LDM and analytical objects built on top of standard objects, such as PoP measures, Previous Period Measures, and Arithmetic Measures.
-  > Note: Objects in `ext.ts` must be related to the reference workspace. Avoid using dummy or mock declarations.
+    > Note: Objects in `ext.ts` must be related to the reference workspace. Avoid using dummy or mock declarations.
 
 ## Working with Recordings
 
 ### Executions
 
-Execution recordings are in the [src/recordings/executions](src/recordings/executions) directory. Each execution recording must be stored in its own directory. The directories can be organized as needed. 
+Execution recordings are in the [src/recordings/executions](src/recordings/executions) directory. Each execution recording must be stored in its own directory. The directories can be organized as needed.
 
 > **Note:** The `uiTestScenarios` directory is managed via automation. Do not store custom recordings here, as they will be overwritten.
 
@@ -83,8 +84,8 @@ Rules for recording entries:
 - **Unique Recordings**: Must be stored in a directory named after the fingerprint of their execution definition (obtained using the `defFingerprint` function).
 - **definition.json**: Must exist and contain a valid execution definition (obtained by serializing the `IExecutionDefinition` to JSON).
 - **Optional Metadata Files**:
-  - `scenarios.json`: Contains an array of `{ vis: string, scenario: string }` objects to create a `Scenarios` mapping in the recording index.
-  - `requests.json`: This specifies which data views to obtain and store. Examples are in the `uiTestScenarios` directory.
+    - `scenarios.json`: Contains an array of `{ vis: string, scenario: string }` objects to create a `Scenarios` mapping in the recording index.
+    - `requests.json`: This specifies which data views to obtain and store. Examples are in the `uiTestScenarios` directory.
 
 After creating this, run the `npm run refresh-md` script to obtain data from the live reference workspace.
 

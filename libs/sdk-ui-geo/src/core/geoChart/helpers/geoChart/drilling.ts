@@ -100,7 +100,6 @@ export function handleGeoPushpinDrillEvent(
     pinCoordinates: number[],
     target: EventTarget,
     clickEvent?: MouseEvent,
-    enableDrillMenuPositioningAtCursor = false,
 ): void {
     const { locationIndex } = pinProperties || {};
     const drillIntersection: IDrillEventIntersectionElement[] | undefined = getDrillIntersectionForGeoChart(
@@ -136,14 +135,9 @@ export function handleGeoPushpinDrillEvent(
     const drillEventExtended: IDrillEvent = {
         dataView: dv.dataView,
         drillContext,
-        ...(enableDrillMenuPositioningAtCursor
-            ? {
-                  // Chart coordinates for drill popover positioning (relative to the map container)
-                  chartX: clickEvent?.offsetX,
-                  chartY: clickEvent?.offsetY,
-                  enableDrillMenuPositioningAtCursor: true,
-              }
-            : {}),
+        // Chart coordinates for drill popover positioning (relative to the map container)
+        chartX: clickEvent?.offsetX,
+        chartY: clickEvent?.offsetY,
     };
 
     if (onDrill) {

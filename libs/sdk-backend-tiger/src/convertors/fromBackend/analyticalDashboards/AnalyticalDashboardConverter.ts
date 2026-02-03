@@ -49,6 +49,9 @@ export const convertAnalyticalDashboard = (
     // Use type guard for safer access to dashboard content
     const content = attributes?.content;
     const tabs = AnalyticalDashboardModelV2.isAnalyticalDashboard(content) ? (content.tabs ?? []) : [];
+    // NOTE: `summary` is present on the backend response, but may not be reflected in older generated API typings.
+    const summary = (attributes as unknown as { summary?: unknown } | undefined)?.summary;
+    const normalizedSummary = typeof summary === "string" ? summary : undefined;
 
     return {
         ref: idRef(id, "analyticalDashboard"),
@@ -56,6 +59,7 @@ export const convertAnalyticalDashboard = (
         identifier: id,
         title: attributes?.title ?? "",
         description: attributes?.description ?? "",
+        ...(normalizedSummary === undefined ? {} : { summary: normalizedSummary }),
         created: createdAt ?? "",
         createdBy: convertUserIdentifier(createdBy, included),
         updated: modifiedAt ?? "",

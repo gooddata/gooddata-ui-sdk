@@ -18,9 +18,7 @@ export type ScreenSize = "xl" | "lg" | "md" | "sm" | "xs";
  * @public
  */
 export interface IDashboardLayoutWidget
-    extends IDashboardLayout<IDashboardWidget>,
-        IBaseWidget,
-        IDashboardObjectIdentity {
+    extends IDashboardLayout<IDashboardWidget>, IBaseWidget, IDashboardObjectIdentity {
     type: "IDashboardLayout";
 }
 

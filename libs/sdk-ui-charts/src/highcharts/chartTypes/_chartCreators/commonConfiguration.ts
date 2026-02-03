@@ -207,25 +207,13 @@ function getThemedConfiguration(theme: ITheme | undefined, config?: IChartConfig
     };
 }
 
-function registerDrilldownHandler(
-    configuration: any,
-    chartOptions: any,
-    drillConfig: IDrillConfig,
-    config?: IChartConfig,
-) {
+function registerDrilldownHandler(configuration: any, chartOptions: any, drillConfig: IDrillConfig) {
     set(
         configuration,
         "chart.events.drilldown",
         function chartDrilldownHandler(this: any, event: DrilldownEventObject) {
             this.tooltip?.hide();
-            chartClick(
-                drillConfig,
-                event,
-                this.container,
-                this.id,
-                chartOptions.type,
-                Boolean(config?.enableDrillMenuPositioningAtCursor),
-            );
+            chartClick(drillConfig, event, this.container, this.id, chartOptions.type);
         },
     );
 
@@ -262,7 +250,7 @@ export function getCommonConfiguration(
     const handlers = [registerDrilldownHandler, registerRenderHandler];
 
     return handlers.reduce(
-        (configuration, handler) => handler(configuration, chartOptions, drillConfig, config),
+        (configuration, handler) => handler(configuration, chartOptions, drillConfig),
         commonConfiguration,
     );
 }

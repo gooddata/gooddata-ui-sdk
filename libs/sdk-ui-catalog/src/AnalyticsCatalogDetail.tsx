@@ -64,8 +64,10 @@ export function AnalyticsCatalogDetail({
 /**
  * @internal
  */
-export interface IAnalyticsCatalogDetailContentProps
-    extends Omit<ICatalogDetailContentProps, "objectId" | "objectType"> {
+export interface IAnalyticsCatalogDetailContentProps extends Omit<
+    ICatalogDetailContentProps,
+    "objectId" | "objectType"
+> {
     /**
      * An object id of the catalog item.
      */

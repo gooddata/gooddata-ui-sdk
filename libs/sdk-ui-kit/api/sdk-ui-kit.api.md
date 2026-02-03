@@ -232,6 +232,15 @@ export class BubbleTrigger<P extends IBubbleTriggerProps> extends PureComponent<
 export const Button: ForwardRefExoticComponent<IButtonProps & RefAttributes<HTMLElement>>;
 
 // @internal (undocumented)
+export const CatalogItemPicker: MemoExoticComponent<(<TAttributePayload = unknown, TMetricPayload = unknown>({ itemTypes, selectionMode, attributeItems, metricItems, groups, maxListHeight, isOpen, isLoading, onBack, onClose, onAdd, onSelect, variant, }: ICatalogItemPickerProps<TAttributePayload, TMetricPayload>) => JSX.Element)>;
+
+// @internal
+export type CatalogItemPickerSelectionMode = "single" | "multiple";
+
+// @internal
+export type CatalogItemPickerType = "metric" | "attribute" | "date";
+
+// @internal (undocumented)
 export function ChartSortingDialog(props: IChartSortingOwnProps): JSX.Element;
 
 // @internal (undocumented)
@@ -489,6 +498,9 @@ export type DialogModeType = "ShareGrantee" | "AddGrantee";
 export function DocumentHeader({ pageTitle, brandTitle, appleTouchIconUrl, faviconUrl, }: IDocumentHeaderProps): null;
 
 // @internal (undocumented)
+export function DomainHomepageLink({ onClick }: IDomainHomepageLinkProps): JSX.Element;
+
+// @internal (undocumented)
 export function Dropdown({ isOpen: isOpenProp, onToggle, className, openOnInit, closeOnParentScroll, closeOnMouseDrag, closeOnOutsideClick, overlayPositionType, alignPoints, overlayZIndex, ignoreClicksOnByClass, renderBody, renderButton, onOpenStateChanged, fullscreenOnMobile, enableEventPropagation, closeOnEscape, autofocusOnOpen, initialFocus, returnFocusTo, accessibilityConfig, shouldTrapFocus, }: IDropdownProps): JSX.Element;
 
 // @internal (undocumented)
@@ -498,7 +510,7 @@ export function DropdownButton({ id, className, accessibilityConfig, value, titl
 export function DropdownInvertableSelect<T>(props: IDropdownInvertableSelectProps<T>): JSX.Element;
 
 // @internal
-export function DropdownList<T>({ title, className, tabsClassName, width, height, maxHeight, renderVirtualisedList, onKeyDownSelect, onKeyDownConfirm, isMobile, isLoading, items, itemsCount, itemHeight, containerPadding, mobileItemHeight, showSearch, disableAutofocus, searchString, searchLabel, searchPlaceholder, searchFieldSize, onSearch, showTabs, tabs, selectedTabId, onTabSelect, renderNoData, footer, closeDropdown, scrollToItem, scrollDirection, ...listProps }: IDropdownListProps<T>): ReactElement;
+export function DropdownList<T>({ id, title, className, tabsClassName, width, height, maxHeight, onKeyDownSelect, onKeyDownConfirm, isMobile, isLoading, items, itemsCount, itemHeight, containerPadding, mobileItemHeight, showSearch, disableAutofocus, searchString, searchLabel, searchPlaceholder, searchFieldSize, onSearch, showTabs, tabs, selectedTabId, onTabSelect, renderNoData, footer, closeDropdown, accessibilityConfig, renderItem, itemHeightGetter, itemTitleGetter, loadNextPage, hasNextPage, skeletonItemsCount, shouldLoadNextPage, isNextPageLoading, SkeletonItem, onScroll, scrollToItem, scrollToItemKeyExtractor, }: IDropdownListProps<T>): ReactElement;
 
 // @internal (undocumented)
 export function DropdownTabs({ tabs, selectedTabId, onTabSelect, className }: IDropdownTagsProps): JSX.Element;
@@ -1249,6 +1261,75 @@ export interface IButtonProps {
     value?: ReactNode;
     // (undocumented)
     variant?: "primary" | "secondary";
+}
+
+// @internal
+export interface ICatalogGroup {
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    title: string;
+}
+
+// @internal
+export interface ICatalogItemPickerItem<TPayload = unknown> {
+    // (undocumented)
+    dataset?: {
+        identifier: ObjRef;
+        title: string;
+    };
+    // (undocumented)
+    groupIds?: string[];
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    payload: TPayload;
+    // (undocumented)
+    ref?: ObjRef;
+    // (undocumented)
+    sequenceNumber?: string;
+    // (undocumented)
+    title: string;
+    // (undocumented)
+    type: CatalogItemPickerType;
+}
+
+// @internal
+export interface ICatalogItemPickerItems<TPayload = unknown> {
+    // (undocumented)
+    catalogItems: ICatalogItemPickerItem<TPayload>[];
+    // (undocumented)
+    insightItems: ICatalogItemPickerItem<TPayload>[];
+}
+
+// @internal
+export interface ICatalogItemPickerProps<TAttributePayload = unknown, TMetricPayload = unknown> {
+    // (undocumented)
+    attributeItems?: ICatalogItemPickerItems<TAttributePayload>;
+    // (undocumented)
+    groups?: ICatalogGroup[];
+    // (undocumented)
+    isLoading?: boolean;
+    // (undocumented)
+    isOpen?: boolean;
+    // (undocumented)
+    itemTypes: CatalogItemPickerType[];
+    // (undocumented)
+    maxListHeight?: number;
+    // (undocumented)
+    metricItems?: ICatalogItemPickerItems<TMetricPayload>;
+    // (undocumented)
+    onAdd?: (items: Array<TAttributePayload | TMetricPayload>) => void;
+    // (undocumented)
+    onBack?: () => void;
+    // (undocumented)
+    onClose: () => void;
+    // (undocumented)
+    onSelect?: (item: TAttributePayload | TMetricPayload) => void;
+    // (undocumented)
+    selectionMode: CatalogItemPickerSelectionMode;
+    // (undocumented)
+    variant?: "mvf" | "addFilter";
 }
 
 // @internal (undocumented)
@@ -2126,6 +2207,12 @@ export interface IDocumentHeaderProps {
 }
 
 // @internal (undocumented)
+export interface IDomainHomepageLinkProps {
+    // (undocumented)
+    onClick?: (e: MouseEvent_2<HTMLAnchorElement>) => void;
+}
+
+// @internal (undocumented)
 export interface IDomNative {
     // (undocumented)
     focus: (options?: {
@@ -2222,6 +2309,11 @@ export interface IDropdownButtonRenderProps {
 
 // @internal (undocumented)
 export interface IDropdownInvertableSelectProps<T> {
+    accessibilityConfig?: {
+        triggerRole?: "button" | "combobox";
+        popupRole?: "listbox" | "tree" | "grid" | "dialog";
+        popupLabel?: string;
+    };
     alignPoints?: IAlignPoint[];
     bodyClassName?: string;
     className?: string;
@@ -2255,7 +2347,9 @@ export interface IDropdownListNoDataRenderProps {
 }
 
 // @internal (undocumented)
-export interface IDropdownListProps<T> extends IListProps<T> {
+export interface IDropdownListProps<T> {
+    // (undocumented)
+    accessibilityConfig?: Pick<IAccessibilityConfigBase, "ariaLabel" | "ariaLabelledBy" | "role">;
     // (undocumented)
     className?: string;
     // (undocumented)
@@ -2267,11 +2361,29 @@ export interface IDropdownListProps<T> extends IListProps<T> {
     // (undocumented)
     footer?: ReactNode | ((closeDropdown: () => void) => ReactNode);
     // (undocumented)
+    hasNextPage?: boolean;
+    // (undocumented)
     height?: number;
+    // (undocumented)
+    id?: string;
     // (undocumented)
     isLoading?: boolean;
     // (undocumented)
     isMobile?: boolean;
+    // (undocumented)
+    isNextPageLoading?: boolean;
+    // (undocumented)
+    itemHeight?: number;
+    // (undocumented)
+    itemHeightGetter?: (index: number) => number;
+    // (undocumented)
+    items?: T[];
+    // (undocumented)
+    itemsCount?: number;
+    // (undocumented)
+    itemTitleGetter?: (item: T) => string;
+    // (undocumented)
+    loadNextPage?: () => void;
     // (undocumented)
     maxHeight?: number;
     // (undocumented)
@@ -2281,17 +2393,17 @@ export interface IDropdownListProps<T> extends IListProps<T> {
     // (undocumented)
     onKeyDownSelect?: (item: T) => void;
     // (undocumented)
+    onScroll?: () => void;
+    // (undocumented)
     onSearch?: (searchString: string) => void;
     // (undocumented)
     onTabSelect?: (tab: ITab) => void;
     // (undocumented)
+    renderItem: (props: IRenderDropdownListItemProps<T>) => ReactElement;
+    // (undocumented)
     renderNoData?: (props: IDropdownListNoDataRenderProps) => ReactNode;
-    // (undocumented)
-    renderVirtualisedList?: boolean;
-    // (undocumented)
-    scrollDirection?: -1 | 1;
-    // (undocumented)
     scrollToItem?: T;
+    scrollToItemKeyExtractor?: (item: T) => string | number;
     // (undocumented)
     searchFieldSize?: "small" | "normal";
     // (undocumented)
@@ -2303,9 +2415,15 @@ export interface IDropdownListProps<T> extends IListProps<T> {
     // (undocumented)
     selectedTabId?: string;
     // (undocumented)
+    shouldLoadNextPage?: (lastItemIndex: number, itemsCount: number, skeletonItemsCount: number) => boolean;
+    // (undocumented)
     showSearch?: boolean;
     // (undocumented)
     showTabs?: boolean;
+    // (undocumented)
+    SkeletonItem?: ComponentType<IUiPagedVirtualListSkeletonItemProps>;
+    // (undocumented)
+    skeletonItemsCount?: number;
     // (undocumented)
     tabs?: ITab[];
     // (undocumented)
@@ -2890,15 +3008,19 @@ export interface IHeaderWorkspacePickerProps {
     // (undocumented)
     className?: string;
     // (undocumented)
+    hasNextPage?: boolean;
+    // (undocumented)
     intl: IntlShape;
     // (undocumented)
     isLoading?: boolean;
     // (undocumented)
-    isRenamingProjectToWorkspaceEnabled?: boolean;
+    isNextPageLoading?: boolean;
+    // (undocumented)
+    loadNextPage?: () => void;
     // (undocumented)
     onOpen?: () => void;
     // (undocumented)
-    onScrollEnd?: (visibleRowsStartIndex: number, visibleRowsEndIndex: number) => void;
+    onOpenStateChanged?: (isOpen: boolean) => void;
     // (undocumented)
     onSearch?: (searchString: string) => void;
     // (undocumented)
@@ -2910,7 +3032,11 @@ export interface IHeaderWorkspacePickerProps {
     // (undocumented)
     selectedWorkspace?: IHeaderWorkspace;
     // (undocumented)
+    shouldLoadNextPage?: (lastItemIndex: number, itemsCount: number, skeletonItemsCount: number) => boolean;
+    // (undocumented)
     showSearch?: boolean;
+    // (undocumented)
+    skeletonItemsCount?: number;
     // (undocumented)
     totalWorkspacesCount?: number;
     // (undocumented)
@@ -4514,6 +4640,24 @@ export interface IRegion {
     right?: number;
     // (undocumented)
     top: number;
+    // (undocumented)
+    width: number;
+}
+
+// @internal (undocumented)
+export interface IRenderDropdownListItemProps<T> {
+    // (undocumented)
+    focused?: boolean;
+    // (undocumented)
+    height: number;
+    // (undocumented)
+    isFirst: boolean;
+    // (undocumented)
+    isLast: boolean;
+    // (undocumented)
+    item: T;
+    // (undocumented)
+    rowIndex: number;
     // (undocumented)
     width: number;
 }
@@ -6497,11 +6641,15 @@ export interface IUiPagedVirtualListProps<T> {
     // (undocumented)
     getIsItemSelected?: (item: T) => boolean;
     // (undocumented)
+    handleFocusIndexChange?: boolean;
+    // (undocumented)
     hasNextPage?: boolean;
     // (undocumented)
     isLoading?: boolean;
     // (undocumented)
     itemHeight: number;
+    // (undocumented)
+    itemHeightGetter?: (index: number) => number;
     // (undocumented)
     itemPadding: number;
     // (undocumented)
@@ -6518,6 +6666,8 @@ export interface IUiPagedVirtualListProps<T> {
     onKeyDownConfirm?: (item: T) => void;
     // (undocumented)
     onKeyDownSelect?: (item: T) => void;
+    // (undocumented)
+    onScroll?: () => void;
     // (undocumented)
     representAs?: "grid" | "listbox";
     // (undocumented)

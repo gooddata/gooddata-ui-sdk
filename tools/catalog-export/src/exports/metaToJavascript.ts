@@ -1,8 +1,9 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import * as fs from "fs";
 
 import { transform } from "@babel/core";
-import { format } from "prettier";
+import { format } from "oxfmt";
 
 import { type WorkspaceMetadata } from "../base/types.js";
 import { transformToTypescript } from "../transform/toTypescript.js";
@@ -23,9 +24,12 @@ export async function exportMetadataToJavascript(
     const output = transformToTypescript(projectMetadata, outputFile);
 
     const generatedTypescript = output.sourceFile.getFullText();
-    const formattedTypescript = await format(generatedTypescript, { parser: "typescript", printWidth: 120 });
+    const formattedTypescript = await format(outputFile, generatedTypescript, {
+        parser: "typescript",
+        printWidth: 120,
+    });
 
-    const javascript = transform(formattedTypescript, {
+    const javascript = transform(formattedTypescript.code, {
         plugins: ["@babel/plugin-transform-typescript"],
     });
 

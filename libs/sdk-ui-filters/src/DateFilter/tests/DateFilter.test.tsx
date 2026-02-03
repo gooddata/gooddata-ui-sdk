@@ -45,6 +45,7 @@ import {
 } from "./extendedDateFilters_helpers.js";
 import { DEFAULT_DATE_FORMAT } from "../constants/Platform.js";
 import { verifyDateFormat } from "../DateFilterCore.js";
+import type { IDateFilterOptionsByType } from "../interfaces/index.js";
 
 describe("DateFilter", () => {
     it("should render without crash", () => {
@@ -284,6 +285,36 @@ describe("DateFilter", () => {
             createDateFilterWithState({ onApply });
             clickDateFilterButton();
             clickStaticFilter("last-12-months");
+            clickExcludeCurrentPeriodCheckBox();
+            clickApplyButton();
+
+            expect(getDateFilterButtonText()).toEqual("From 12 to 1 month ago");
+        });
+
+        it("should use adjusted period as a title when exclude is on for named custom presets", () => {
+            const filterOptions: IDateFilterOptionsByType = {
+                ...defaultDateFilterOptions,
+                relativePreset: {
+                    ...defaultDateFilterOptions.relativePreset,
+                    "GDC.time.month": [
+                        ...(defaultDateFilterOptions.relativePreset?.["GDC.time.month"] ?? []),
+                        {
+                            localIdentifier: "CUSTOM_LAST_12_MONTHS",
+                            type: "relativePreset",
+                            granularity: "GDC.time.month",
+                            from: -11,
+                            to: 0,
+                            name: "Custom last 12 months",
+                            visible: true,
+                        },
+                    ],
+                },
+            };
+
+            createDateFilterWithState({ filterOptions });
+            clickDateFilterButton();
+            clickStaticFilter("custom-last-12-months");
+            expect(getSelectedItemText()).toEqual("Custom last 12 months");
             clickExcludeCurrentPeriodCheckBox();
             clickApplyButton();
 

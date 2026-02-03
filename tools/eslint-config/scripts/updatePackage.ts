@@ -70,6 +70,7 @@ for (const [name, versions] of Object.entries(packageVersions)) {
 // Build devDependencies (v9 packages only to avoid conflicts)
 const devDeps: Record<string, string> = {
     eslint: packageJson.devDependencies["eslint"],
+    oxfmt: packageJson.devDependencies["oxfmt"],
     "@types/node": packageJson.devDependencies["@types/node"],
     jiti: "2.6.1", // Required for ESLint to load TypeScript config files
     typescript: packageJson.devDependencies["typescript"],
@@ -228,7 +229,7 @@ function generatePackagesMarkdown(
     // Generate formatted markdown table
     const formattedHeader = headerRow.map((cell, i) => padCell(cell, columnWidths[i])).join(" | ");
     // Separator dashes need +2 for the leading/trailing spaces in header cells
-    const separatorRow = columnWidths.map((width) => "-".repeat(width + 2)).join("|");
+    const separatorRow = columnWidths.map((width) => "-".repeat(width)).join(" | ");
     const formattedDataRows = dataRows.map((row) =>
         row.map((cell, i) => padCell(cell, columnWidths[i])).join(" | "),
     );
@@ -239,7 +240,7 @@ function generatePackagesMarkdown(
         "This table shows which packages are required for each configuration.",
         "",
         `| ${formattedHeader} |`,
-        `|${separatorRow}|`,
+        `| ${separatorRow} |`,
         ...formattedDataRows.map((row) => `| ${row} |`),
         "",
     ];

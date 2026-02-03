@@ -172,7 +172,7 @@ export function AlertAttributeSelect({
                                 selectedAttribute.ref,
                                 attribute.attribute.attribute.displayForm,
                             )) ||
-                            hasSelectedChild,
+                        hasSelectedChild,
                     ),
                     subItems,
                 ),

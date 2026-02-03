@@ -11,6 +11,7 @@ export type KdaDialogActionButtonsSize = "small" | "medium";
 
 export interface IKdaDialogActionButtonsProps {
     size: KdaDialogActionButtonsSize;
+    titleElementId?: string;
     onClose?: () => void;
     className?: string;
 }
@@ -20,7 +21,12 @@ export interface IKdaDialogActionButtonsProps {
  *
  * @internal
  */
-export function KdaDialogActionButtons({ size, onClose, className }: IKdaDialogActionButtonsProps) {
+export function KdaDialogActionButtons({
+    size,
+    onClose,
+    className,
+    titleElementId,
+}: IKdaDialogActionButtonsProps) {
     const intl = useIntl();
     const { state, setState } = useKdaState();
     const { isMinimized } = state;
@@ -37,6 +43,7 @@ export function KdaDialogActionButtons({ size, onClose, className }: IKdaDialogA
         <KdaDialogActionButtonsView
             className={className}
             size={size}
+            titleElementId={titleElementId}
             isMinimized={isMinimized}
             expandLabel={expandLabel}
             shrinkLabel={shrinkLabel}
@@ -52,11 +59,22 @@ interface IKdaDialogActionButtonsViewProps extends IKdaDialogActionButtonsProps 
     expandLabel: string;
     shrinkLabel: string;
     closeLabel: string;
+    titleElementId?: string;
     onToggle: () => void;
 }
 
 function KdaDialogActionButtonsView(props: IKdaDialogActionButtonsViewProps) {
-    const { size, isMinimized, expandLabel, shrinkLabel, closeLabel, onToggle, onClose, className } = props;
+    const {
+        size,
+        isMinimized,
+        expandLabel,
+        titleElementId,
+        shrinkLabel,
+        closeLabel,
+        onToggle,
+        onClose,
+        className,
+    } = props;
     return (
         <div
             className={cx(
@@ -74,6 +92,9 @@ function KdaDialogActionButtonsView(props: IKdaDialogActionButtonsViewProps) {
                 <UiIconButton
                     label={isMinimized ? expandLabel : shrinkLabel}
                     icon={isMinimized ? "expand" : "shrink"}
+                    accessibilityConfig={{
+                        ariaDescribedBy: titleElementId,
+                    }}
                     iconColor="complementary-7"
                     variant="tertiary"
                     size={size}

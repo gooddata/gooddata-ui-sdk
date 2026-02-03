@@ -787,7 +787,8 @@ export interface IDashboardBaseProps {
  * @public
  */
 export interface IDashboardExtensionProps
-    extends IDashboardEventing,
+    extends
+        IDashboardEventing,
         IDashboardCustomizationProps,
         IDashboardWidgetsOverlayProps,
         IDashboardThemingProps {

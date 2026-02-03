@@ -73,6 +73,7 @@ export function DashboardList({ selected, dashboards, onSelect }: IDashboardList
                     showSearch
                     items={items}
                     scrollToItem={selectedDashboard}
+                    scrollToItemKeyExtractor={(item) => item.identifier}
                     onSearch={setSearchString}
                     renderItem={({ item }) => {
                         const isSelected = selectedDashboard && item.selected;
