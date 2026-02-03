@@ -723,10 +723,6 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
-      "name": "eslint-config-prettier",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
       "name": "eslint-import-resolver-typescript",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
@@ -752,6 +748,10 @@
     },
     {
       "name": "eslint-plugin-import-esm",
+      "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
+      "name": "eslint-plugin-import-x",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
@@ -1003,6 +1003,10 @@
       "allowedCategories": [ "tools" ]
     },
     {
+      "name": "oxfmt",
+      "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
       "name": "p-map",
       "allowedCategories": [ "tools" ]
     },
@@ -1016,7 +1020,11 @@
     },
     {
       "name": "postcss",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "production", "tools" ]
+    },
+    {
+      "name": "postcss-scss",
+      "allowedCategories": [ "tools" ]
     },
     {
       "name": "postcss-value-parser",
@@ -1195,10 +1203,6 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "rolldown-vite",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "rollup",
       "allowedCategories": [ "production" ]
     },
@@ -1248,15 +1252,19 @@
     },
     {
       "name": "stylelint",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
-      "name": "stylelint-checkstyle-formatter",
-      "allowedCategories": [ "production" ]
+      "name": "stylelint-config-standard",
+      "allowedCategories": [ "tools" ]
     },
     {
-      "name": "stylelint-config-prettier",
-      "allowedCategories": [ "production" ]
+      "name": "stylelint-order",
+      "allowedCategories": [ "tools" ]
+    },
+    {
+      "name": "stylelint-scss",
+      "allowedCategories": [ "tools" ]
     },
     {
       "name": "svgo",

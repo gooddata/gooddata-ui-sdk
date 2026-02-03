@@ -62,7 +62,6 @@ async function promptForMissingConfig(config: DataRecorderConfig): Promise<DataR
         clearLine();
         logError(`Unable to log in to platform. The error was: ${err}`);
 
-        // eslint-disable-next-line regexp/no-unused-capturing-group
         if ((err as Error).message?.search(/.*(certificate|self-signed).*/) > -1) {
             logError(
                 "It seems that this error is due to invalid certificates used on the server. " +

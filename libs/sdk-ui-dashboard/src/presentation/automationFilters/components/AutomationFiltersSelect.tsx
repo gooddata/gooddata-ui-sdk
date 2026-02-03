@@ -385,7 +385,6 @@ export function AutomationFiltersSelect({
                                                         tab.dateConfigs,
                                                     )
                                                 }
-                                                renderVirtualisedList
                                                 accessibilityConfig={{
                                                     ariaLabelledBy: AUTOMATION_FILTERS_DIALOG_TITLE_ID,
                                                     searchAriaLabel: searchAriaLabel,
@@ -505,7 +504,6 @@ export function AutomationFiltersSelect({
                                     getCustomItemTitle={(item) =>
                                         getCatalogItemCustomTitle(item, availableFilters, dateConfigs)
                                     }
-                                    renderVirtualisedList
                                     accessibilityConfig={{
                                         ariaLabelledBy: AUTOMATION_FILTERS_DIALOG_TITLE_ID,
                                         searchAriaLabel: searchAriaLabel,

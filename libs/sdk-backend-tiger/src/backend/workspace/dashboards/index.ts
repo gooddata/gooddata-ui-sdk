@@ -59,6 +59,8 @@ import {
     type IDashboardExportRawOptions,
     type IDashboardExportTabularOptions,
     type IDashboardReferences,
+    type IDashboardSummaryWorkflowStartResult,
+    type IDashboardSummaryWorkflowStatusResult,
     type IDashboardWithReferences,
     type IDashboardsQuery,
     type IExportResult,
@@ -485,6 +487,44 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
          */
         const { id, type } = result.data.data;
         return this.getDashboard(idRef(id, type));
+    };
+
+    /**
+     * Starts AI dashboard summary workflow.
+     *
+     * @remarks
+     * Tiger-specific extension (not part of SPI), intended for UI-side polling.
+     * The response type was generated from the gdc-nas repo.
+     */
+    public startDashboardSummaryWorkflow = async (
+        dashboardId: string,
+    ): Promise<IDashboardSummaryWorkflowStartResult> => {
+        const path = `/api/v1/actions/workspaces/${this.workspace}/ai/workflow/dashboardSummary`;
+
+        return this.authCall(async (client) => {
+            // TODO use a client call when available via some endpoint described in OpenAPI
+            const response = await client.axios.post(path, { dashboardId });
+            return response.data;
+        });
+    };
+
+    /**
+     * Gets AI dashboard summary workflow status.
+     *
+     * @remarks
+     * Tiger-specific extension (not part of SPI), intended for UI-side polling.
+     * The response type was generated from the gdc-nas repo.
+     */
+    public getDashboardSummaryWorkflowStatus = async (
+        runId: string,
+    ): Promise<IDashboardSummaryWorkflowStatusResult> => {
+        const path = `/api/v1/actions/workspaces/${this.workspace}/ai/workflow/${runId}/status`;
+
+        return this.authCall(async (client) => {
+            // TODO use a client call when available via some endpoint described in OpenAPI
+            const response = await client.axios.get(path);
+            return response.data;
+        });
     };
 
     public updateDashboardMeta = async (

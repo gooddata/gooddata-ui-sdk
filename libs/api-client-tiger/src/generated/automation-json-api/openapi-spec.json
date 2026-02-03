@@ -383,6 +383,10 @@
                             "applyOnResult": {
                                 "type": "boolean"
                             },
+                            "includeEmptyValues": {
+                                "type": "boolean",
+                                "description": "If true, rows with undefined (NULL) date values will be included in the result. The filter becomes: (date_condition) OR (date IS NULL). If false or not set, standard behavior applies (NULLs excluded by the date condition)."
+                            },
                             "dataset": {
                                 "$ref": "#/components/schemas/AfmObjectIdentifierDataset"
                             }
@@ -1388,6 +1392,9 @@
                             "boundedFilter": {
                                 "$ref": "#/components/schemas/RelativeBoundedDateFilter"
                             },
+                            "includeEmptyValues": {
+                                "type": "boolean"
+                            },
                             "localIdentifier": {
                                 "type": "string"
                             }
@@ -2273,6 +2280,8 @@
                     },
                     "delimiter": {
                         "maxLength": 1,
+                        "minLength": 1,
+                        "pattern": "^[^\r\n\"]$",
                         "type": "string",
                         "description": "Set column delimiter. (CSV)"
                     },
@@ -2399,6 +2408,10 @@
                             "boundedFilter": {
                                 "$ref": "#/components/schemas/BoundedFilter"
                             },
+                            "includeEmptyValues": {
+                                "type": "boolean",
+                                "description": "If true, rows with undefined (NULL) date values will be included in the result. The filter becomes: (date_condition) OR (date IS NULL). If false or not set, standard behavior applies (NULLs excluded by the date condition)."
+                            },
                             "dataset": {
                                 "$ref": "#/components/schemas/AfmObjectIdentifierDataset"
                             }
@@ -2487,6 +2500,8 @@
                     },
                     "delimiter": {
                         "maxLength": 1,
+                        "minLength": 1,
+                        "pattern": "^[^\r\n\"]$",
                         "type": "string",
                         "description": "Set column delimiter. (CSV)"
                     }

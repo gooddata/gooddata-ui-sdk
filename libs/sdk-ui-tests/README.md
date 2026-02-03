@@ -86,14 +86,15 @@ npm run storybook
 ```
 
 This will start Storybook on port 9001 with hot module replacement (HMR) enabled. Changes made to:
+
 - Stories in this package
 - Source code in any workspace SDK packages (sdk-ui, sdk-ui-charts, sdk-ui-kit, etc.)
 - SCSS/CSS files in any workspace SDK packages
 
 will be automatically reflected in the browser without requiring a rebuild or page refresh.
 
-**Note:** The Storybook configuration uses Vite with source file aliases pointing directly to the `src` 
-directories of workspace packages, similar to the playground. This enables instant updates when you 
+**Note:** The Storybook configuration uses Vite with source file aliases pointing directly to the `src`
+directories of workspace packages, similar to the playground. This enables instant updates when you
 modify SDK source code while developing and testing components.
 
 ## Dev guide - how-to use this infrastructure

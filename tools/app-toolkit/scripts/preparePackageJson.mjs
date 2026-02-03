@@ -1,14 +1,15 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 /* eslint-disable no-console */
-import * as process from "process";
 import fs from "fs";
 import * as path from "path";
+import * as process from "process";
+
 import fse from "fs-extra";
 
 export function readJsonSync(file) {
     return JSON.parse(fse.readFileSync(file, { encoding: "utf-8" }));
 }
-
 
 /*
  * This script is used during build to clean up the contents of package.json that will be shipped with
@@ -33,8 +34,9 @@ const GdScriptsReplace = {
     test: null,
     "test-once": null,
     eslint: null,
-    "prettier-check": null,
-    "prettier-write": null,
+    "eslint-fix": null,
+    "oxfmt-check": null,
+    "oxfmt-write": null,
     "dep-cruiser": null,
     validate: null,
 };
@@ -42,11 +44,10 @@ const GdScriptsReplace = {
 const UnnecessaryDependencies = [
     "@gooddata/eslint-config",
     "dependency-cruiser",
-    "eslint-plugin-sonarjs",
-    /^eslint/i,
-    "prettier",
+    /^eslint/i, // Matches eslint and all eslint-plugin-* packages
+    /^@typescript-eslint\//, // Matches @typescript-eslint/* packages
+    "oxfmt",
     "vitest",
-    /^@typescript-eslint\//,
 ];
 
 const TypeScriptDependencies = [

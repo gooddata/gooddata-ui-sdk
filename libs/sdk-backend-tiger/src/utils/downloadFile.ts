@@ -17,7 +17,6 @@ export function downloadFile(fileName: string, data: any) {
 
 export const parseNameFromContentDisposition = (response: Pick<AxiosResponse, "headers">) => {
     const contentDispositionHeader = response.headers["content-disposition"];
-    // eslint-disable-next-line regexp/no-unused-capturing-group
     const matches = /filename\*?=(?:UTF-8''([^;]+)|"([^"]+)")/.exec(contentDispositionHeader);
     const urlEncodedFileName = matches ? matches[2] : undefined;
     if (!urlEncodedFileName) {

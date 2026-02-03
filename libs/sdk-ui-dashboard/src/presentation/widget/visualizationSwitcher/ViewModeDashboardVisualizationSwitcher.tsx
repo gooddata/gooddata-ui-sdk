@@ -78,8 +78,7 @@ export function ViewModeDashboardVisualizationSwitcherEmpty() {
     return <div className="gd-visualization-switcher-widget-empty-content" />;
 }
 
-export interface IViewModeDashboardVisualizationSwitcherContentProps
-    extends IDashboardVisualizationSwitcherProps {
+export interface IViewModeDashboardVisualizationSwitcherContentProps extends IDashboardVisualizationSwitcherProps {
     insight: IInsight;
     activeVisualization: IInsightWidget;
     onActiveVisualizationChange: (activeVisualizationId: string) => void;

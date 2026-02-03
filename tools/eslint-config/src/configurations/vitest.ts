@@ -1,8 +1,7 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { scopeRules } from "src/utils/scopeRules.js";
-
 import type { IDualConfiguration, IPackage } from "../types.js";
+import { scopeRules } from "../utils/scopeRules.js";
 
 const vitestPlugin: IPackage = {
     name: "@vitest/eslint-plugin",

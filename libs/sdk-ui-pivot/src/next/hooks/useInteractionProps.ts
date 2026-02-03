@@ -70,7 +70,7 @@ const tableKeyboardNavigation = makeKeyboardNavigation({
  * @alpha
  */
 export function useInteractionProps(): (agGridReactProps: AgGridProps) => AgGridProps {
-    const { drillableItems, onDrill, config } = usePivotTableProps();
+    const { drillableItems, onDrill } = usePivotTableProps();
     const { currentDataView } = useCurrentDataView();
     const isDraggingRef = useRef<boolean>(false);
     const clickedCellRef = useRef<{ rowIndex: number; colId: string | undefined } | null>(null);
@@ -127,10 +127,7 @@ export function useInteractionProps(): (agGridReactProps: AgGridProps) => AgGrid
             const drillEvent: IDrillEvent = {
                 dataView: currentDataView.dataView,
                 drillContext,
-                ...(config?.enableDrillMenuPositioningAtCursor ? cord : {}),
-                enableDrillMenuPositioningAtCursor: config?.enableDrillMenuPositioningAtCursor
-                    ? true
-                    : undefined,
+                ...cord,
             };
 
             if (onDrill(drillEvent)) {
@@ -138,7 +135,7 @@ export function useInteractionProps(): (agGridReactProps: AgGridProps) => AgGrid
                 event.event?.target?.dispatchEvent(customEvent);
             }
         },
-        [onDrill, drillableItems, currentDataView, config?.enableDrillMenuPositioningAtCursor],
+        [onDrill, drillableItems, currentDataView],
     );
 
     const onCellMouseDown = useCallback((event: CellMouseDownEvent<AgGridRowData, string | null>) => {

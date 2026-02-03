@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type KeyboardEvent, act } from "react";
 
@@ -144,7 +144,6 @@ describe("UiTreeViewEvents", () => {
         }).not.toThrow();
     });
 
-    // eslint-disable-next-line @vitest/no-identical-title
     it("should not throw when used outside of provider", () => {
         const onEvent = vi.fn();
 

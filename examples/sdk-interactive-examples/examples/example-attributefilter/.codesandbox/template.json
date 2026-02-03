@@ -1,11 +1,7 @@
 {
-  "title": "Attribute Filter Example",
-  "description": "This example demonstrates how to use the AttributeFilter component to filter data in a visualization.",
-  "iconUrl": "https://www.gooddata.com/favicon.ico",
-  "tags": [
-    "react",
-    "typescript",
-    "gooddata-ui-sdk"
-  ],
-  "published": true
+    "title": "Attribute Filter Example",
+    "description": "This example demonstrates how to use the AttributeFilter component to filter data in a visualization.",
+    "iconUrl": "https://www.gooddata.com/favicon.ico",
+    "tags": ["react", "typescript", "gooddata-ui-sdk"],
+    "published": true
 }

@@ -171,7 +171,7 @@ const useRenderCellContent = <T extends { id: string }>({ isLarge }: { isLarge: 
                             />
                         );
                     }}
-                    alignPoints={[{ align: "br tr" }]}
+                    alignPoints={[{ align: "br tr" }, { align: "tr br" }]}
                     renderBody={({ closeDropdown }) => renderMenu(item, closeDropdown)}
                 />
             );

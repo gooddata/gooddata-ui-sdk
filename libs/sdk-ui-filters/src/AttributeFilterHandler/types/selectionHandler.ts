@@ -133,8 +133,10 @@ export interface IInvertableSelectionHandler<T extends InvertableSelection<any>>
  * Handles selection of keys with stages: working and committed.
  * @public
  */
-export interface IStagedInvertableSelectionHandler<T extends InvertableSelection<any>>
-    extends Omit<IInvertableSelectionHandler<T>, "getSelection"> {
+export interface IStagedInvertableSelectionHandler<T extends InvertableSelection<any>> extends Omit<
+    IInvertableSelectionHandler<T>,
+    "getSelection"
+> {
     /**
      * Commit the current working selection making it the new committed selection.
      */

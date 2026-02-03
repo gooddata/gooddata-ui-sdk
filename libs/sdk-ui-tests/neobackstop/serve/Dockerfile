@@ -1,5 +1,5 @@
 # Stage 1: Build the Go app
-FROM 020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/docker.io/library/golang:1.25.5-alpine AS builder
+FROM 020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/docker.io/library/golang:1.25.6-alpine AS builder
 WORKDIR /app
 
 # Copy Go module files and download dependencies

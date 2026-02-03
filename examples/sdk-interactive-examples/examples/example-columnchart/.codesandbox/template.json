@@ -1,11 +1,7 @@
 {
-  "title": "ColumnChart",
-  "description": "This example demonstrates the usage of the ColumnChart component with the viewBy and stackBy properties.",
-  "iconUrl": "https://www.gooddata.com/favicon.ico",
-  "tags": [
-    "react",
-    "typescript",
-    "gooddata-ui-sdk"
-  ],
-  "published": true
+    "title": "ColumnChart",
+    "description": "This example demonstrates the usage of the ColumnChart component with the viewBy and stackBy properties.",
+    "iconUrl": "https://www.gooddata.com/favicon.ico",
+    "tags": ["react", "typescript", "gooddata-ui-sdk"],
+    "published": true
 }

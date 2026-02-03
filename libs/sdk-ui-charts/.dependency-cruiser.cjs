@@ -2,7 +2,7 @@
 
 const depCruiser = require("../../common/config/dep-cruiser/default.config");
 
-options = {
+const options = {
     forbidden: [
         ...depCruiser.DefaultRules,
         ...depCruiser.DefaultSdkRules,

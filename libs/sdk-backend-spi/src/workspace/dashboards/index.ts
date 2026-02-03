@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import type {
     CatalogItem,
@@ -389,6 +389,41 @@ export interface IDashboardExportPresentationOptions {
 export type FiltersByTab = {
     [tabId: string]: FilterContextItem[];
 };
+
+/**
+ * Status of the dashboard summary workflow.
+ *
+ * @internal
+ */
+export type DashboardSummaryWorkflowStatus = "RUNNING" | "COMPLETED" | "FAILED" | "CANCELLED";
+
+/**
+ * Result returned when the dashboard summary workflow is started.
+ *
+ * @internal
+ */
+export interface IDashboardSummaryWorkflowStartResult {
+    runId: string;
+    status: DashboardSummaryWorkflowStatus;
+    message: string;
+}
+
+/**
+ * Result returned when querying the dashboard summary workflow status.
+ *
+ * @internal
+ */
+export interface IDashboardSummaryWorkflowStatusResult extends IDashboardSummaryWorkflowStartResult {
+    result?: Record<string, unknown> | null;
+    error?: string | null;
+    currentPhase?:
+        | "extraction"
+        | "data_validation"
+        | "ai_generation"
+        | "guardrail_validation"
+        | "complete"
+        | null;
+}
 
 /**
  * Service to list, create and update analytical dashboards
@@ -844,6 +879,19 @@ export interface IWorkspaceDashboardsService {
      *      as only one can be set as default at the same time.
      */
     setFilterViewAsDefault(ref: ObjRef, isDefault: boolean): Promise<void>;
+
+    /**
+     * Starts the process of generating AI summary for the dashboard.
+     * @param dashboardId - id of the dashboard for which summary should be generated
+     */
+    startDashboardSummaryWorkflow?(dashboardId: string): Promise<IDashboardSummaryWorkflowStartResult>;
+
+    /**
+     * Gets the status of the dashboard summary workflow.
+     * Used for polling the status of the workflow run.
+     * @param runId - id of the workflow run
+     */
+    getDashboardSummaryWorkflowStatus?(runId: string): Promise<IDashboardSummaryWorkflowStatusResult>;
 }
 
 /**

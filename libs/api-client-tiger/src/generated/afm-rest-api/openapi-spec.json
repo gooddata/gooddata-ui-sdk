@@ -12,11 +12,79 @@
     ],
     "tags": [
         {
+            "name": "AI Lake",
+            "description": "| APIs for interaction with the AI Lake"
+        },
+        {
             "name": "actions",
             "description": "| execution of some form of computation (RPC over JSON)"
         }
     ],
     "paths": {
+        "/api/v1/ailake/database/instance": {
+            "post": {
+                "tags": ["AI Lake"],
+                "summary": "(BETA) Create a new AILake Database instance",
+                "description": "(BETA) Creates a new database in the organization's AI Lake. Returns an operation-id in the operation-id header the client can use to poll for the progress.",
+                "operationId": "provisionAiLakeDatabaseInstance",
+                "parameters": [
+                    {
+                        "name": "operation-id",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ProvisionDatabaseInstanceRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "headers": {
+                            "operation-location": {
+                                "description": "Operation location URL that can be used for polling.",
+                                "required": true,
+                                "style": "simple",
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "/api/v1/ailake/operation/e9fd5d74-8a1b-46bd-ac60-bd91e9206897"
+                            },
+                            "operation-id": {
+                                "description": "Operation ID to use for polling.",
+                                "required": true,
+                                "style": "simple",
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "e9fd5d74-8a1b-46bd-ac60-bd91e9206897"
+                            }
+                        },
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unit"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["MANAGE"],
+                    "description": "Permissions required to provision an AI Lake database instance."
+                }
+            }
+        },
         "/api/v1/actions/workspaces/{workspaceId}/execution/functions/forecast/{resultId}": {
             "post": {
                 "tags": ["Smart Functions", "actions"],
@@ -622,8 +690,8 @@
                     }
                 },
                 "x-gdc-security-info": {
-                    "permissions": ["ANALYZE"],
-                    "description": "Permissions required to analyze data."
+                    "permissions": ["VIEW"],
+                    "description": "Permissions required to view data."
                 }
             }
         },
@@ -988,6 +1056,146 @@
                             }
                         }
                     }
+                }
+            }
+        },
+        "/api/v1/ailake/operation/{operationId}": {
+            "get": {
+                "tags": ["AI Lake"],
+                "summary": "(BETA) Get Long Running Operation details",
+                "description": "(BETA) Retrieves details of a Long Running Operation specified by the operation-id.",
+                "operationId": "getAiLakeOperation",
+                "parameters": [
+                    {
+                        "name": "operationId",
+                        "in": "path",
+                        "description": "Operation ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "e9fd5d74-8a1b-46bd-ac60-bd91e9206897"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "AI Lake Long Running Operation details successfully retrieved",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "oneOf": [
+                                        {
+                                            "$ref": "#/components/schemas/FailedOperation"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/PendingOperation"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/SucceededOperation"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["MANAGE"],
+                    "description": "Permissions required to get details of a Long Running Operation."
+                }
+            }
+        },
+        "/api/v1/ailake/database/instance/{instanceId}": {
+            "get": {
+                "tags": ["AI Lake"],
+                "summary": "(BETA) Get the specified AILake Database instance",
+                "description": "(BETA) Retrieve details of the specified AI Lake database instance in the organization's AI Lake.",
+                "operationId": "getAiLakeDatabaseInstance",
+                "parameters": [
+                    {
+                        "name": "instanceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "AI Lake database instance successfully retrieved",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DatabaseInstance"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["MANAGE"],
+                    "description": "Permissions required to get an AI Lake database instance."
+                }
+            },
+            "delete": {
+                "tags": ["AI Lake"],
+                "summary": "(BETA) Delete an existing AILake Database instance",
+                "description": "(BETA) Deletes an existing database in the organization's AI Lake. Returns an operation-id in the operation-id header the client can use to poll for the progress.",
+                "operationId": "deprovisionAiLakeDatabaseInstance",
+                "parameters": [
+                    {
+                        "name": "instanceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "operation-id",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "headers": {
+                            "operation-location": {
+                                "description": "Operation location URL that can be used for polling.",
+                                "required": true,
+                                "style": "simple",
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "/api/v1/ailake/operation/e9fd5d74-8a1b-46bd-ac60-bd91e9206897"
+                            },
+                            "operation-id": {
+                                "description": "Operation ID to use for polling.",
+                                "required": true,
+                                "style": "simple",
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "e9fd5d74-8a1b-46bd-ac60-bd91e9206897"
+                            }
+                        },
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unit"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": ["MANAGE"],
+                    "description": "Permissions required to provision an AI Lake database instance."
                 }
             }
         },
@@ -1718,6 +1926,29 @@
     },
     "components": {
         "schemas": {
+            "ProvisionDatabaseInstanceRequest": {
+                "required": ["name", "storageIds"],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the database instance"
+                    },
+                    "storageIds": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Set of ids of the storage instances this database instance should access.",
+                        "items": {
+                            "type": "string",
+                            "description": "Set of ids of the storage instances this database instance should access."
+                        }
+                    }
+                },
+                "description": "Request to provision a new AILake Database instance"
+            },
+            "Unit": {
+                "type": "object"
+            },
             "ForecastRequest": {
                 "required": ["forecastPeriod"],
                 "type": "object",
@@ -1818,6 +2049,10 @@
                             },
                             "applyOnResult": {
                                 "type": "boolean"
+                            },
+                            "includeEmptyValues": {
+                                "type": "boolean",
+                                "description": "If true, rows with undefined (NULL) date values will be included in the result. The filter becomes: (date_condition) OR (date IS NULL). If false or not set, standard behavior applies (NULLs excluded by the date condition)."
                             },
                             "dataset": {
                                 "$ref": "#/components/schemas/AfmObjectIdentifierDataset"
@@ -2752,6 +2987,10 @@
                             },
                             "boundedFilter": {
                                 "$ref": "#/components/schemas/BoundedFilter"
+                            },
+                            "includeEmptyValues": {
+                                "type": "boolean",
+                                "description": "If true, rows with undefined (NULL) date values will be included in the result. The filter becomes: (date_condition) OR (date IS NULL). If false or not set, standard behavior applies (NULLs excluded by the date condition)."
                             },
                             "dataset": {
                                 "$ref": "#/components/schemas/AfmObjectIdentifierDataset"
@@ -4918,6 +5157,124 @@
                         "description": "LLM model for the LLM endpoint validation"
                     }
                 }
+            },
+            "FailedOperation": {
+                "required": ["error", "id", "kind"],
+                "type": "object",
+                "description": "Operation that has failed",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Operation"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "error": {
+                                "$ref": "#/components/schemas/OperationError"
+                            }
+                        }
+                    }
+                ]
+            },
+            "Operation": {
+                "required": ["id", "kind", "status"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Id of the operation"
+                    },
+                    "kind": {
+                        "type": "string",
+                        "description": "Type of the long-running operation. \n* `provision-database` — Provisioning of an AI Lake database. \n* `deprovision-database` — Deprovisioning (deletion) of an AI Lake database.\n",
+                        "enum": ["provision-database", "deprovision-database"]
+                    },
+                    "status": {
+                        "type": "string"
+                    }
+                },
+                "description": "Represents a Long-Running Operation: a process that takes some time to complete.",
+                "discriminator": {
+                    "propertyName": "status",
+                    "mapping": {
+                        "pending": "#/components/schemas/PendingOperation",
+                        "succeeded": "#/components/schemas/SucceededOperation",
+                        "failed": "#/components/schemas/FailedOperation"
+                    }
+                }
+            },
+            "OperationError": {
+                "required": ["detail", "status", "title"],
+                "type": "object",
+                "properties": {
+                    "detail": {
+                        "type": "string",
+                        "description": "Human-readable error details"
+                    },
+                    "status": {
+                        "type": "integer",
+                        "description": "HTTP status code",
+                        "format": "int32"
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "Human-readable error name"
+                    }
+                },
+                "description": "Error information for a failed operation"
+            },
+            "PendingOperation": {
+                "required": ["id", "kind"],
+                "type": "object",
+                "description": "Operation that is still pending",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Operation"
+                    }
+                ]
+            },
+            "SucceededOperation": {
+                "required": ["id", "kind"],
+                "type": "object",
+                "description": "Operation that has succeeded",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Operation"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "result": {
+                                "type": "object",
+                                "description": "Operation-specific result payload, can be missing for operations like delete"
+                            }
+                        }
+                    }
+                ]
+            },
+            "DatabaseInstance": {
+                "required": ["id", "name", "storageIds"],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Id of the AI Lake Database instance"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the AI Lake Database instance"
+                    },
+                    "storageIds": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Set of ids of the storage instances this database instance should access.",
+                        "items": {
+                            "type": "string",
+                            "description": "Set of ids of the storage instances this database instance should access."
+                        }
+                    }
+                },
+                "description": "A single AI Lake Database instance"
             },
             "ForecastResult": {
                 "required": ["attribute", "lowerBound", "origin", "prediction", "upperBound"],

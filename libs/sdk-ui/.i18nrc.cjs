@@ -1,3 +1,5 @@
+// (C) 2026 GoodData Corporation
+
 module.exports = {
     paths: ["./src/base/localization/bundles"],
     structure: true,

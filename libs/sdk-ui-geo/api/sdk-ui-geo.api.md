@@ -178,7 +178,6 @@ export interface IGeoChartConfig {
     colorPalette?: IColorPalette;
     colors?: string[];
     cooperativeGestures?: boolean;
-    enableDrillMenuPositioningAtCursor?: boolean;
     enableExecutionCancelling?: boolean;
     isExportMode?: boolean;
     legend?: IGeoChartLegendConfig;
@@ -327,7 +326,6 @@ export interface IGeoConfig {
     colors?: string[];
     // (undocumented)
     cooperativeGestures?: boolean;
-    enableDrillMenuPositioningAtCursor?: boolean;
     // (undocumented)
     enableExecutionCancelling?: boolean;
     // (undocumented)
@@ -487,7 +485,6 @@ export interface IGeoPushpinChartConfig {
     colors?: string[];
     // (undocumented)
     cooperativeGestures?: boolean;
-    enableDrillMenuPositioningAtCursor?: boolean;
     // (undocumented)
     enableExecutionCancelling?: boolean;
     // (undocumented)

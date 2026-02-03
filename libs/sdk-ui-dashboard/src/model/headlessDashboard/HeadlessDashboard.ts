@@ -134,7 +134,6 @@ export class HeadlessDashboard {
      */
     public dispatchAndWaitFor(
         action: DashboardCommands | PayloadAction<any>,
-        // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
         actionType: DashboardEventType | DashboardCommandType | string,
         timeout: number = 1000,
     ): Promise<any> {
@@ -184,7 +183,6 @@ export class HeadlessDashboard {
      * @param timeout - timeout after which the wait fails, default is 1000
      */
     public waitFor(
-        // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
         actionType: DashboardEventType | DashboardCommandType | string,
         timeout: number = 1000,
     ): Promise<any> {

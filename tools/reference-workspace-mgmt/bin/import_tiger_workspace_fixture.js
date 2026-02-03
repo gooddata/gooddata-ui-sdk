@@ -1,14 +1,19 @@
 #!/usr/bin/env node
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
+import fs from "fs";
+import path from "path";
+
+import fs from "fs";
+import path from "path";
 
 import {
     createTigerWorkspaceWithPrefix,
     logLn,
     setTigerWorkspaceLayoutFromFixtures,
 } from "@gooddata/fixtures";
-import { E2E_SDK_WORKSPACE_PREFIX, FIXTURE_TYPES, BACKEND, DATA_SOURCE } from "./constants.js";
-import fs from "fs";
-import path from "path";
+
+import { BACKEND, DATA_SOURCE, E2E_SDK_WORKSPACE_PREFIX, FIXTURE_TYPES } from "./constants.js";
 
 function validateEnv() {
     const { PATH_TO_FIXTURES, HOST_NAME, TIGER_API_TOKEN } = process.env;
@@ -83,7 +88,6 @@ export async function import_fixture() {
         logLn("Import workspace fixtures successfully WORKSPACE_ID: " + createdWorkSpaceId);
     } catch (e) {
         logLn(e.toString());
-        // eslint-disable-next-line no-console
         console.error(e);
     }
 }

@@ -1,8 +1,9 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { type MouseEvent, type ReactNode } from "react";
 
 import cx from "classnames";
+import { useIntl } from "react-intl";
 
 import { type ITheme } from "@gooddata/sdk-model";
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
@@ -27,6 +28,7 @@ function WorkspacePickerHomeFooterComponent({
     onClick,
     theme,
 }: IWorkspacePickerHomeFooterProps) {
+    const intl = useIntl();
     const mergedClassNames = cx("gd-workspace-picker-home-footer", className);
 
     const HomeIcon = Icon["Home"];
@@ -37,6 +39,8 @@ function WorkspacePickerHomeFooterComponent({
             data-testid="s-workspace-picker-home-footer"
             href={href}
             onClick={onClick}
+            tabIndex={0}
+            aria-label={intl.formatMessage({ id: "gs.header.href.accessibility" })}
         >
             <HomeIcon
                 className="gd-icon-home"

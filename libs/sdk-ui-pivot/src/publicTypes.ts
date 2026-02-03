@@ -175,14 +175,6 @@ export interface IPivotTableConfig {
     enableExecutionCancelling?: boolean;
 
     /**
-     * Enables positioning of drill menu at the cursor click point (instead of default positioning).
-     *
-     * @remarks
-     * Feature flag. Default: false.
-     */
-    enableDrillMenuPositioningAtCursor?: boolean;
-
-    /**
      * Customize position of grand totals rows in the table.
      *
      * @remarks

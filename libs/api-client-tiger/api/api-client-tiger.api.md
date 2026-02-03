@@ -1687,6 +1687,7 @@ export interface AfmAbsoluteDateFilterAbsoluteDateFilter {
     dataset: AfmModelObjectIdentifierDataset;
     // (undocumented)
     from: string;
+    includeEmptyValues?: boolean;
     // (undocumented)
     localIdentifier?: string;
     // (undocumented)
@@ -2377,6 +2378,7 @@ export interface AfmRelativeDateFilterRelativeDateFilter {
     dataset: AfmModelObjectIdentifierDataset;
     from: number;
     granularity: AfmRelativeDateFilterRelativeDateFilterGranularityEnum;
+    includeEmptyValues?: boolean;
     // (undocumented)
     localIdentifier?: string;
     to: number;
@@ -3558,6 +3560,7 @@ export interface AutomationAbsoluteDateFilterAbsoluteDateFilter {
     dataset: AutomationAfmObjectIdentifierDataset;
     // (undocumented)
     from: string;
+    includeEmptyValues?: boolean;
     // (undocumented)
     localIdentifier?: string;
     // (undocumented)
@@ -4101,6 +4104,8 @@ export interface AutomationDashboardDateFilterDateFilter {
     from?: AutomationDashboardDateFilterDateFilterFrom;
     // (undocumented)
     granularity: AutomationDashboardDateFilterDateFilterGranularityEnum;
+    // (undocumented)
+    includeEmptyValues?: boolean;
     // (undocumented)
     localIdentifier?: string;
     // (undocumented)
@@ -4683,6 +4688,7 @@ export interface AutomationRelativeDateFilterRelativeDateFilter {
     dataset: AutomationAfmObjectIdentifierDataset;
     from: number;
     granularity: AutomationRelativeDateFilterRelativeDateFilterGranularityEnum;
+    includeEmptyValues?: boolean;
     // (undocumented)
     localIdentifier?: string;
     to: number;
@@ -7290,7 +7296,7 @@ export interface DeclarativeDataSources {
 }
 
 // @public (undocumented)
-export type DeclarativeDataSourceTypeEnum = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE" | "ADS" | "BIGQUERY" | "MSSQL" | "PRESTO" | "DREMIO" | "DRILL" | "GREENPLUM" | "AZURESQL" | "SYNAPSESQL" | "DATABRICKS" | "GDSTORAGE" | "CLICKHOUSE" | "MYSQL" | "MARIADB" | "ORACLE" | "PINOT" | "SINGLESTORE" | "MOTHERDUCK" | "FLEXCONNECT" | "STARROCKS" | "ATHENA" | "MONGODB";
+export type DeclarativeDataSourceTypeEnum = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE" | "ADS" | "BIGQUERY" | "MSSQL" | "PRESTO" | "DREMIO" | "DRILL" | "GREENPLUM" | "AZURESQL" | "SYNAPSESQL" | "DATABRICKS" | "GDSTORAGE" | "CLICKHOUSE" | "CRATEDB" | "MYSQL" | "MARIADB" | "ORACLE" | "PINOT" | "SINGLESTORE" | "MOTHERDUCK" | "FLEXCONNECT" | "STARROCKS" | "ATHENA" | "MONGODB";
 
 // @public
 export interface DeclarativeDateDataset {
@@ -12262,6 +12268,7 @@ export interface ExportAbsoluteDateFilterAbsoluteDateFilter {
     dataset: ExportAfmObjectIdentifierDataset;
     // (undocumented)
     from: string;
+    includeEmptyValues?: boolean;
     // (undocumented)
     localIdentifier?: string;
     // (undocumented)
@@ -12619,6 +12626,8 @@ export interface ExportDashboardDateFilterDateFilter {
     from?: ExportDashboardDateFilterDateFilterFrom;
     // (undocumented)
     granularity: ExportDashboardDateFilterDateFilterGranularityEnum;
+    // (undocumented)
+    includeEmptyValues?: boolean;
     // (undocumented)
     localIdentifier?: string;
     // (undocumented)
@@ -13144,6 +13153,7 @@ export interface ExportRelativeDateFilterRelativeDateFilter {
     dataset: ExportAfmObjectIdentifierDataset;
     from: number;
     granularity: ExportRelativeDateFilterRelativeDateFilterGranularityEnum;
+    includeEmptyValues?: boolean;
     // (undocumented)
     localIdentifier?: string;
     to: number;
@@ -16797,7 +16807,7 @@ export interface JsonApiDataSourceIdentifierOutAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiDataSourceIdentifierOutAttributesTypeEnum = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE" | "ADS" | "BIGQUERY" | "MSSQL" | "PRESTO" | "DREMIO" | "DRILL" | "GREENPLUM" | "AZURESQL" | "SYNAPSESQL" | "DATABRICKS" | "GDSTORAGE" | "CLICKHOUSE" | "MYSQL" | "MARIADB" | "ORACLE" | "PINOT" | "SINGLESTORE" | "MOTHERDUCK" | "FLEXCONNECT" | "STARROCKS" | "ATHENA" | "MONGODB";
+export type JsonApiDataSourceIdentifierOutAttributesTypeEnum = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE" | "ADS" | "BIGQUERY" | "MSSQL" | "PRESTO" | "DREMIO" | "DRILL" | "GREENPLUM" | "AZURESQL" | "SYNAPSESQL" | "DATABRICKS" | "GDSTORAGE" | "CLICKHOUSE" | "CRATEDB" | "MYSQL" | "MARIADB" | "ORACLE" | "PINOT" | "SINGLESTORE" | "MOTHERDUCK" | "FLEXCONNECT" | "STARROCKS" | "ATHENA" | "MONGODB";
 
 // @public (undocumented)
 export interface JsonApiDataSourceIdentifierOutDocument {
@@ -16873,7 +16883,7 @@ export interface JsonApiDataSourceInAttributesParametersInner {
 }
 
 // @public (undocumented)
-export type JsonApiDataSourceInAttributesTypeEnum = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE" | "ADS" | "BIGQUERY" | "MSSQL" | "PRESTO" | "DREMIO" | "DRILL" | "GREENPLUM" | "AZURESQL" | "SYNAPSESQL" | "DATABRICKS" | "GDSTORAGE" | "CLICKHOUSE" | "MYSQL" | "MARIADB" | "ORACLE" | "PINOT" | "SINGLESTORE" | "MOTHERDUCK" | "FLEXCONNECT" | "STARROCKS" | "ATHENA" | "MONGODB";
+export type JsonApiDataSourceInAttributesTypeEnum = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE" | "ADS" | "BIGQUERY" | "MSSQL" | "PRESTO" | "DREMIO" | "DRILL" | "GREENPLUM" | "AZURESQL" | "SYNAPSESQL" | "DATABRICKS" | "GDSTORAGE" | "CLICKHOUSE" | "CRATEDB" | "MYSQL" | "MARIADB" | "ORACLE" | "PINOT" | "SINGLESTORE" | "MOTHERDUCK" | "FLEXCONNECT" | "STARROCKS" | "ATHENA" | "MONGODB";
 
 // @public (undocumented)
 export interface JsonApiDataSourceInDocument {
@@ -16916,7 +16926,7 @@ export type JsonApiDataSourceOutAttributesAuthenticationTypeEnum = "USERNAME_PAS
 export type JsonApiDataSourceOutAttributesCacheStrategyEnum = "ALWAYS" | "NEVER";
 
 // @public (undocumented)
-export type JsonApiDataSourceOutAttributesTypeEnum = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE" | "ADS" | "BIGQUERY" | "MSSQL" | "PRESTO" | "DREMIO" | "DRILL" | "GREENPLUM" | "AZURESQL" | "SYNAPSESQL" | "DATABRICKS" | "GDSTORAGE" | "CLICKHOUSE" | "MYSQL" | "MARIADB" | "ORACLE" | "PINOT" | "SINGLESTORE" | "MOTHERDUCK" | "FLEXCONNECT" | "STARROCKS" | "ATHENA" | "MONGODB";
+export type JsonApiDataSourceOutAttributesTypeEnum = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE" | "ADS" | "BIGQUERY" | "MSSQL" | "PRESTO" | "DREMIO" | "DRILL" | "GREENPLUM" | "AZURESQL" | "SYNAPSESQL" | "DATABRICKS" | "GDSTORAGE" | "CLICKHOUSE" | "CRATEDB" | "MYSQL" | "MARIADB" | "ORACLE" | "PINOT" | "SINGLESTORE" | "MOTHERDUCK" | "FLEXCONNECT" | "STARROCKS" | "ATHENA" | "MONGODB";
 
 // @public (undocumented)
 export interface JsonApiDataSourceOutDocument {
@@ -16992,7 +17002,7 @@ export interface JsonApiDataSourcePatchAttributes {
 export type JsonApiDataSourcePatchAttributesCacheStrategyEnum = "ALWAYS" | "NEVER";
 
 // @public (undocumented)
-export type JsonApiDataSourcePatchAttributesTypeEnum = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE" | "ADS" | "BIGQUERY" | "MSSQL" | "PRESTO" | "DREMIO" | "DRILL" | "GREENPLUM" | "AZURESQL" | "SYNAPSESQL" | "DATABRICKS" | "GDSTORAGE" | "CLICKHOUSE" | "MYSQL" | "MARIADB" | "ORACLE" | "PINOT" | "SINGLESTORE" | "MOTHERDUCK" | "FLEXCONNECT" | "STARROCKS" | "ATHENA" | "MONGODB";
+export type JsonApiDataSourcePatchAttributesTypeEnum = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE" | "ADS" | "BIGQUERY" | "MSSQL" | "PRESTO" | "DREMIO" | "DRILL" | "GREENPLUM" | "AZURESQL" | "SYNAPSESQL" | "DATABRICKS" | "GDSTORAGE" | "CLICKHOUSE" | "CRATEDB" | "MYSQL" | "MARIADB" | "ORACLE" | "PINOT" | "SINGLESTORE" | "MOTHERDUCK" | "FLEXCONNECT" | "STARROCKS" | "ATHENA" | "MONGODB";
 
 // @public (undocumented)
 export interface JsonApiDataSourcePatchDocument {

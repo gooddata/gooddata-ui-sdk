@@ -1,0 +1,220 @@
+@use "../../styles/scss/variables" as variables;
+
+.gd-ui-kit-catalog-item-picker {
+    display: flex;
+    flex-direction: column;
+
+    &--variant {
+        &-mvf {
+            width: 250px;
+            font-size: 12px;
+            padding-bottom: 10px;
+
+            .gd-ui-kit-listbox {
+                padding: 0;
+                min-width: 0;
+                max-height: 200px;
+            }
+        }
+    }
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+
+        &--variant {
+            &-addFilter {
+                padding: 10px 0;
+                gap: 10px;
+            }
+
+            &-mvf {
+                flex: 1 1 auto;
+            }
+        }
+    }
+
+    &__search {
+        display: flex;
+
+        &--variant {
+            &-addFilter {
+                padding: 0 10px;
+                width: 100%;
+            }
+
+            &-mvf {
+                flex-shrink: 0;
+                padding: 10px;
+            }
+        }
+    }
+
+    &__search-input {
+        &--variant {
+            &-addFilter {
+                width: 100%;
+                min-width: 0;
+            }
+
+            &-mvf {
+                width: 100%;
+                min-width: 0;
+            }
+        }
+    }
+
+    &__type-filter {
+        display: flex;
+
+        &--variant {
+            &-mvf {
+                padding: 0 10px 10px;
+            }
+        }
+    }
+
+    &__list {
+        display: flex;
+        flex-direction: column;
+
+        &--variant {
+            &-mvf {
+                flex: 1 1 auto;
+            }
+        }
+    }
+
+    &__section-header {
+        padding: 10px 10px 0;
+        color: variables.$gd-color-state-blank;
+        font-size: 10px;
+        text-transform: uppercase;
+    }
+
+    &__divider {
+        border-top: 1px solid variables.$gd-border-color;
+        margin: 10px 0;
+
+        &--variant {
+            &-mvf {
+                padding: 0 10px;
+                margin: 0;
+                border-top: 0;
+
+                &::before {
+                    content: "";
+                    display: block;
+                    position: relative;
+                    top: 50%;
+                    border-top: 1px solid variables.$gd-border-color;
+                }
+            }
+        }
+    }
+
+    &__empty {
+        color: variables.$gd-color-state-blank;
+        padding: 20px 10px;
+        font-size: 14px;
+        text-align: center;
+    }
+
+    &__loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex: 1 1 auto;
+        padding: 40px 12px;
+
+        &--variant {
+            &-mvf {
+                padding: 30px 10px;
+            }
+        }
+    }
+
+    &__loading-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px;
+
+        &--variant {
+            &-mvf {
+                padding: 10px;
+            }
+        }
+    }
+
+    &__item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 5px 10px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: variables.$is-focused-background;
+        }
+
+        .gd-ui-kit-icon {
+            flex-shrink: 0;
+        }
+    }
+
+    &__item-title {
+        flex: 1 1 auto;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: 12px;
+        color: variables.$gd-color-text;
+    }
+
+    &__item-checkbox {
+        display: flex;
+    }
+
+    &__item-sequence {
+        font-size: 10px;
+        color: variables.$gd-color-state-blank;
+    }
+
+    &__footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        padding: 10px;
+        border-top: 1px solid variables.$gd-border-color;
+    }
+
+    &__date-dataset {
+        padding: 5px 10px 10px;
+    }
+
+    &__date-dataset-label {
+        color: variables.$gd-color-state-blank;
+        font-size: 12px;
+        margin-bottom: 5px;
+    }
+
+    &__date-dataset-control {
+        position: relative;
+
+        .gd-ui-kit-button {
+            width: 100%;
+            justify-content: space-between;
+        }
+    }
+
+    &__date-dataset-dropdown {
+        width: 230px;
+        background: variables.$gd-color-white;
+        border: 1px solid variables.$gd-border-color;
+        border-radius: 3px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+}

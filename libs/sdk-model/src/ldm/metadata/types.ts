@@ -103,5 +103,4 @@ export function isMetadataObject(obj: unknown): obj is IMetadataObject {
  * @public
  */
 export interface IMetadataObjectDefinition
-    extends Partial<IMetadataObjectBase>,
-        Partial<Pick<IMetadataObject, "id">> {}
+    extends Partial<IMetadataObjectBase>, Partial<Pick<IMetadataObject, "id">> {}

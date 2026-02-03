@@ -202,7 +202,6 @@ export function useLayerClickEvent(
     isMapReady: boolean,
     layers: Map<string, IGeoLayerData>,
     drillablePredicates: IHeaderPredicate[],
-    enableDrillMenuPositioningAtCursor: boolean,
     onDrill?: OnFiredDrillEvent,
 ): void {
     useEffect(() => {
@@ -260,14 +259,9 @@ export function useLayerClickEvent(
                     element: GEO_LAYER_DRILL_ELEMENT[layerType],
                     intersection,
                 },
-                ...(enableDrillMenuPositioningAtCursor
-                    ? {
-                          // Click coordinates relative to the map container
-                          chartX: e.point.x,
-                          chartY: e.point.y,
-                          enableDrillMenuPositioningAtCursor: true,
-                      }
-                    : {}),
+                // Click coordinates relative to the map container
+                chartX: e.point.x,
+                chartY: e.point.y,
             };
 
             onDrill(drillEvent);
@@ -278,5 +272,5 @@ export function useLayerClickEvent(
         return () => {
             map.off("click", handleClick);
         };
-    }, [map, isMapReady, layers, drillablePredicates, onDrill, enableDrillMenuPositioningAtCursor]);
+    }, [map, isMapReady, layers, drillablePredicates, onDrill]);
 }

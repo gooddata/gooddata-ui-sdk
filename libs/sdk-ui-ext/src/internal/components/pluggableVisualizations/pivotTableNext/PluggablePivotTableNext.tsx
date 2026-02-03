@@ -98,7 +98,6 @@ export function createPivotTableNextConfig(
     let tableConfig: PivotTableNextConfig = {
         separators: config.separators,
         enableExecutionCancelling: settings.enableExecutionCancelling ?? false,
-        ...(settings.enableDrillMenuPositioningAtCursor ? { enableDrillMenuPositioningAtCursor: true } : {}),
         agGridToken: config.agGridToken,
         enablePivotTableAutoSizeReset: settings.enablePivotTableAutoSizeReset ?? true,
         enablePivotTablePagination: settings.enablePivotTablePagination ?? true,

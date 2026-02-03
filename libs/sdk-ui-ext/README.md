@@ -11,19 +11,16 @@ This project implements extensions on top of stable components included in the S
 instead of their own project as part of their staged development. They typically meet one or more of
 the following criteria:
 
--   The code is production quality, however:
-
-    -   The public API is not yet stabilized and there MAY be breaking changes
-
-    or
-
-    -   There MAY be breaking changes in functionality
+- The code is production quality, however:
+    - The public API is not yet stabilized and there MAY be breaking changes
 
     or
+    - There MAY be breaking changes in functionality
 
-    -   It depends on another extension
+    or
+    - It depends on another extension
 
--   The code itself beta quality
+- The code itself beta quality
 
 Read on about different extensions to learn more about its stability and quality guarantees.
 

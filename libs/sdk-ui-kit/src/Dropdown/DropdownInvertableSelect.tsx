@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type ReactElement, type ReactNode, useMemo, useState } from "react";
 
@@ -147,6 +147,15 @@ export interface IDropdownInvertableSelectProps<T> {
      * Close on escape
      */
     closeOnEscape?: boolean;
+
+    /**
+     * Accessibility configuration for the dropdown.
+     */
+    accessibilityConfig?: {
+        triggerRole?: "button" | "combobox";
+        popupRole?: "listbox" | "tree" | "grid" | "dialog";
+        popupLabel?: string;
+    };
 }
 
 const messages = defineMessages({
@@ -179,6 +188,7 @@ export function DropdownInvertableSelect<T>(props: IDropdownInvertableSelectProp
         initialIsInverted,
         initialSearchString,
         overlayPositionType,
+        accessibilityConfig,
         header,
         renderStatusBar,
         renderSearchBar,
@@ -245,6 +255,7 @@ export function DropdownInvertableSelect<T>(props: IDropdownInvertableSelectProp
 
     return (
         <Dropdown
+            accessibilityConfig={accessibilityConfig}
             className={className}
             alignPoints={alignPoints}
             overlayPositionType={overlayPositionType}
@@ -259,12 +270,24 @@ export function DropdownInvertableSelect<T>(props: IDropdownInvertableSelectProp
             closeOnEscape={closeOnEscape}
             renderButton={renderButton}
             renderBody={(bodyProps) => {
-                const { closeDropdown } = bodyProps;
+                const { closeDropdown, ariaAttributes } = bodyProps;
                 const isEmptySelection = !isInverted && selection.length === 0;
                 const isSelectionEqual =
                     isEqual(selection, committedSelection) && isInverted === committedIsInverted;
+                const ariaAttrs = {
+                    ...ariaAttributes,
+                    ...(accessibilityConfig?.popupLabel
+                        ? {
+                              // We need to remove to aria-labelledby if
+                              // popupLabel is provided
+                              "aria-labelledby": undefined,
+                          }
+                        : {}),
+                    "aria-label": accessibilityConfig?.popupLabel,
+                };
+
                 return (
-                    <>
+                    <div {...ariaAttrs}>
                         {header}
                         <InvertableSelect
                             width={width}
@@ -297,7 +320,7 @@ export function DropdownInvertableSelect<T>(props: IDropdownInvertableSelectProp
                                 isApplyDisabled={isEmptySelection || isSelectionEqual}
                             />
                         )}
-                    </>
+                    </div>
                 );
             }}
         ></Dropdown>

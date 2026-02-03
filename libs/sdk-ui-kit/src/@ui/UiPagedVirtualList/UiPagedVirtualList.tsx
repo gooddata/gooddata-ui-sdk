@@ -74,6 +74,9 @@ export interface IUiPagedVirtualListProps<T> {
     focusedItem?: T;
     focusedAction?: string;
     getIsItemSelected?: (item: T) => boolean;
+    itemHeightGetter?: (index: number) => number;
+    onScroll?: () => void;
+    handleFocusIndexChange?: boolean; // this is internal flag that navigate focused item and trigger pagination default is true
 }
 
 /**
@@ -106,10 +109,30 @@ function UiPagedVirtualListNotWrapped<T>(
         focusedAction,
         listboxProps,
         getIsItemSelected,
+        itemHeightGetter,
+        onScroll,
+        // NOTE: UiPagedVirtualListNotWrapped has built-in keyboard navigation (keydown).
+        // When the user navigates to the last item and pagination is available,
+        // the next page is automatically loaded.
+        //
+        // This behavior is enabled by default.
+        // In case of issues with custom overrides, it can be disabled via this flag.
+        //
+        // TODO: Once keyboard navigation and virtual paging are unified,
+        // remove this flag entirely.
+        // For now, all lists use this behavior by default; set it to false if problems occur.
+        handleFocusIndexChange = true,
     } = props;
 
-    const { itemsCount, scrollContainerRef, height, hasScroll, rowVirtualizer, virtualItems } =
-        useVirtualList(props);
+    const {
+        itemsCount,
+        scrollContainerRef,
+        height,
+        hasScroll,
+        rowVirtualizer,
+        virtualItems,
+        scrollToIndexWithPagination,
+    } = useVirtualList(props);
 
     useImperativeHandle(ref, () => ({
         scrollToItem: (item: T) => {
@@ -124,17 +147,41 @@ function UiPagedVirtualListNotWrapped<T>(
     }));
 
     // when tabindex is -1 this keyboard navigation and focusIndex is not used at all
-    const { focusedIndex, onKeyboardNavigation } = useVirtualListKeyboardNavigation(
+    const { focusedIndex, onKeyboardNavigation, isKeyboardNavigationRef } = useVirtualListKeyboardNavigation(
         items ?? [],
         onKeyDownSelect,
         onKeyDownConfirm,
         closeDropdown,
+        handleFocusIndexChange,
     );
     const ListElement = representAs === "grid" ? "div" : "ul";
     const ItemElement = representAs === "grid" ? "div" : "li";
     const makeId = ScopedIdStore.useContextStoreOptional((ctx) => ctx.makeId);
     const focusedItemIndex = focusedItem ? items?.indexOf(focusedItem) : 0;
     const finalFocusedIndex = focusedItem ? focusedItemIndex : focusedIndex;
+
+    // Scroll to focused item when it changes via keyboard navigation
+    // and trigger pagination if the focused item is near the end of loaded items
+    // Only scroll if the focus change was caused by keyboard navigation, not by items loading
+    useEffect(() => {
+        if (
+            finalFocusedIndex !== undefined &&
+            finalFocusedIndex >= 0 &&
+            tabIndex >= 0 &&
+            isKeyboardNavigationRef.current &&
+            handleFocusIndexChange
+        ) {
+            scrollToIndexWithPagination(finalFocusedIndex);
+            // Reset the flag after scrolling
+            isKeyboardNavigationRef.current = false;
+        }
+    }, [
+        finalFocusedIndex,
+        scrollToIndexWithPagination,
+        tabIndex,
+        isKeyboardNavigationRef,
+        handleFocusIndexChange,
+    ]);
 
     return (
         <div
@@ -146,6 +193,7 @@ function UiPagedVirtualListNotWrapped<T>(
                 ref={scrollContainerRef}
                 className={e("scroll-container", { hover: scrollbarHoverEffect ?? false })}
                 style={{ height, paddingTop: itemsGap + containerPadding }}
+                onScroll={onScroll}
             >
                 <ListElement
                     className={e("list")}
@@ -158,12 +206,22 @@ function UiPagedVirtualListNotWrapped<T>(
                     onKeyDown={
                         tabIndex < 0 ? undefined : (customKeyboardNavigationHandler ?? onKeyboardNavigation)
                     }
-                    role={representAs === "grid" ? "rowgroup" : undefined}
+                    role={
+                        representAs === "grid"
+                            ? "rowgroup"
+                            : representAs === "listbox"
+                              ? "listbox"
+                              : undefined
+                    }
                     {...listboxProps}
                 >
                     {virtualItems.map((virtualRow) => {
                         const item = items?.[virtualRow.index];
                         const isSkeletonItem = virtualRow.index > itemsCount - 1;
+                        const baseItemHeight =
+                            virtualRow.index >= itemsCount
+                                ? itemHeight
+                                : (itemHeightGetter?.(virtualRow.index) ?? itemHeight);
 
                         const style: CSSProperties = {
                             width: `calc(100% + ${hasScroll ? "10px" : "0px"})`,
@@ -203,7 +261,7 @@ function UiPagedVirtualListNotWrapped<T>(
                                 {...itemProps}
                             >
                                 {isSkeletonItem ? (
-                                    <SkeletonItem key={virtualRow.index} itemHeight={itemHeight} />
+                                    <SkeletonItem key={virtualRow.index} itemHeight={baseItemHeight} />
                                 ) : (
                                     children(item!, virtualRow.index)
                                 )}
@@ -225,6 +283,7 @@ export const UiPagedVirtualList = forwardRefWithGenerics(UiPagedVirtualListNotWr
 function useVirtualList<T>({
     items,
     itemHeight,
+    itemHeightGetter,
     itemsGap,
     containerPadding = 0,
     skeletonItemsCount,
@@ -252,18 +311,47 @@ function useVirtualList<T>({
 
     const itemsCount = items ? items.length : 0;
 
-    let renderItemsCount = itemsCount;
-    if (hasNextPage) {
-        renderItemsCount = itemsCount + skeletonItemsCount;
-    } else if (itemsCount === 0 && isLoading) {
-        renderItemsCount = skeletonItemsCount;
-    }
+    const renderItemsCount = useMemo(() => {
+        if (hasNextPage) {
+            return itemsCount + skeletonItemsCount;
+        }
 
-    //
-    const realHeight =
-        itemsCount > 0
-            ? (itemHeight + itemsGap) * itemsCount + itemsGap
-            : skeletonItemsCount * (itemHeight + itemsGap) + itemsGap;
+        if (itemsCount === 0 && isLoading) {
+            return skeletonItemsCount;
+        }
+
+        return itemsCount;
+    }, [hasNextPage, itemsCount, isLoading, skeletonItemsCount]);
+
+    const getItemBaseHeight = useCallback(
+        (index: number) => {
+            if (index >= itemsCount) {
+                return itemHeight;
+            }
+
+            return itemHeightGetter?.(index) ?? itemHeight;
+        },
+        [itemHeightGetter, itemHeight, itemsCount],
+    );
+
+    const getItemSizeWithGap = useCallback(
+        (index: number) => getItemBaseHeight(index) + itemsGap,
+        [getItemBaseHeight, itemsGap],
+    );
+
+    const realHeight = useMemo(() => {
+        if (renderItemsCount === 0) {
+            return 0;
+        }
+
+        let totalHeight = itemsGap;
+
+        for (let index = 0; index < renderItemsCount; index += 1) {
+            totalHeight += getItemSizeWithGap(index);
+        }
+
+        return totalHeight;
+    }, [getItemSizeWithGap, itemsGap, renderItemsCount]);
 
     const height = Math.min(maxHeight, realHeight) + containerPadding;
 
@@ -275,7 +363,7 @@ function useVirtualList<T>({
     const rowVirtualizer = useVirtualizer({
         count: renderItemsCount,
         getScrollElement: () => scrollContainerRef.current,
-        estimateSize: () => itemHeight + itemsGap,
+        estimateSize: (index) => getItemSizeWithGap(index),
         overscan: 5,
     });
 
@@ -358,6 +446,32 @@ function useVirtualList<T>({
         }
     }, [scrollToIndex, rowVirtualizer]);
 
+    // Function to scroll to a specific index and trigger pagination if needed
+    const scrollToIndexWithPagination = useCallback(
+        (index: number) => {
+            if (index < 0) {
+                return;
+            }
+            rowVirtualizer.scrollToIndex(index, {
+                align: "auto",
+            });
+            // Also trigger pagination check - handles case when keyboard navigation
+            // moves focus faster than the scroll/virtualItems update cycle
+            if (shouldLoadNextPage(index, itemsCount, skeletonItemsCount) && hasNextPage && !isLoading) {
+                loadNextPage?.();
+            }
+        },
+        [
+            rowVirtualizer,
+            shouldLoadNextPage,
+            itemsCount,
+            skeletonItemsCount,
+            hasNextPage,
+            isLoading,
+            loadNextPage,
+        ],
+    );
+
     return {
         itemsCount,
         scrollContainerRef,
@@ -365,6 +479,7 @@ function useVirtualList<T>({
         hasScroll,
         rowVirtualizer,
         virtualItems,
+        scrollToIndexWithPagination,
     };
 }
 
@@ -373,17 +488,42 @@ function useVirtualListKeyboardNavigation<T>(
     onKeyDownSelect?: (item: T) => void,
     onKeyDownConfirm?: (item: T) => void,
     closeDropdown?: () => void,
+    handleFocusIndexChange?: boolean, // this is internal flag that navigate focuesed item and trigger pagination if needed
 ) {
     const [focusedIndex, setFocusedIndex] = useState<number>(0);
+    const prevItemsLengthRef = useRef<number>(items.length);
+    // Track if the last focus change was caused by keyboard navigation
+    // This prevents scrolling to focused item when items are loaded via pagination
+    const isKeyboardNavigationRef = useRef<boolean>(false);
 
+    // Handle focus index when items change:
+    // - If items grew (pagination), keep focus position
+    // - If items shrank or stayed same (search/filter), reset to 0
     useEffect(() => {
-        setFocusedIndex(0);
-    }, [items]);
+        const prevLength = prevItemsLengthRef.current;
+        const currentLength = items.length;
+        prevItemsLengthRef.current = currentLength;
+
+        // Items grew - likely pagination, keep current focus if valid
+        if (currentLength > prevLength && handleFocusIndexChange) {
+            setFocusedIndex((prevIndex) => {
+                if (prevIndex < currentLength) {
+                    return prevIndex;
+                }
+                return 0;
+            });
+        } else {
+            // Items shrank or replaced - reset to start
+            // that was previous implementation, and only focus to first when items changes
+            setFocusedIndex(0);
+        }
+    }, [items, handleFocusIndexChange]);
 
     const virtualListKeyboardNavigationHandler = useMemo(
         () =>
             makeLinearKeyboardNavigationWithConfirm({
                 onFocusNext: () => {
+                    isKeyboardNavigationRef.current = true;
                     setFocusedIndex((prevIndex) => {
                         const nextIndex = prevIndex + 1;
                         if (nextIndex >= items.length) {
@@ -393,6 +533,7 @@ function useVirtualListKeyboardNavigation<T>(
                     });
                 },
                 onFocusPrevious: () => {
+                    isKeyboardNavigationRef.current = true;
                     setFocusedIndex((prevIndex) => {
                         const nextIndex = prevIndex - 1;
                         if (nextIndex < 0) {
@@ -402,9 +543,11 @@ function useVirtualListKeyboardNavigation<T>(
                     });
                 },
                 onFocusFirst: () => {
+                    isKeyboardNavigationRef.current = true;
                     setFocusedIndex(0);
                 },
                 onFocusLast: () => {
+                    isKeyboardNavigationRef.current = true;
                     setFocusedIndex(items.length - 1);
                 },
                 onSelect: () => {
@@ -430,6 +573,7 @@ function useVirtualListKeyboardNavigation<T>(
     return {
         focusedIndex,
         onKeyboardNavigation: virtualListKeyboardNavigationHandler,
+        isKeyboardNavigationRef,
     };
 }
 

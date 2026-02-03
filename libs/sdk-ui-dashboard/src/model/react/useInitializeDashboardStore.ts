@@ -12,6 +12,7 @@ import { enrichAgGridToken, useAgGridToken } from "@gooddata/sdk-ui-pivot/next";
 import { shallowEqualObjects } from "@gooddata/util";
 
 import { type IDashboardStoreProviderProps } from "./types.js";
+import { newDashboardSummaryWorkflowWorker } from "../commandHandlers/dashboard/dashboardSummaryWorkflowWorker.js";
 import { newRenderingWorker } from "../commandHandlers/render/renderingWorker.js";
 import {
     InitialLoadCorrelationId,
@@ -144,6 +145,7 @@ export const useInitializeDashboardStore = (
                     asyncRenderExpectedCount,
                     isExport: config?.isExport,
                 }),
+                newDashboardSummaryWorkflowWorker(),
             ];
 
             // Create new store and fire load dashboard command.

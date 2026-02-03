@@ -246,13 +246,6 @@ export interface IDrillEvent {
     chartX?: number;
     chartY?: number;
     target?: HTMLElement;
-    /**
-     * Feature flag that enables drill menu positioning at the cursor click point.
-     *
-     * @remarks
-     * Default: false.
-     */
-    enableDrillMenuPositioningAtCursor?: boolean;
 }
 
 /**

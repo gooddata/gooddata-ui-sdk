@@ -4,12 +4,7 @@ import { useId, useMemo } from "react";
 
 import cx from "classnames";
 
-import {
-    Dialog,
-    OverlayController,
-    OverlayControllerProvider,
-    useOverlayController,
-} from "@gooddata/sdk-ui-kit";
+import { Dialog, OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
 
 import { useKdaDialogAccessibility } from "./hooks/useKdaDialogAccessibility.js";
 import { KdaDialogFloatingStatusBar } from "./KdaDialogFloatingStatusBar.js";
@@ -39,10 +34,15 @@ const KDA_DIALOG_EXPANDED_DATA_TEST_ID = "kda-dialog-expanded";
 /**
  * @internal
  */
-export function KdaDialog({ className, showCloseButton = true, onClose }: IKdaDialogProps) {
+export function KdaDialog({
+    className,
+    showCloseButton = true,
+    parentOverlayController,
+    onClose,
+    titleElementId,
+}: IKdaDialogProps) {
     const { state } = useKdaState();
     const { isMinimized } = state;
-    const parentOverlayController = useOverlayController();
     const effectiveOverlayController = useMemo(
         () => parentOverlayController ?? overlayController,
         [parentOverlayController],
@@ -57,7 +57,7 @@ export function KdaDialog({ className, showCloseButton = true, onClose }: IKdaDi
         [isMinimized],
     );
 
-    const accessibilityConfig = useKdaDialogAccessibility(title, isMinimized);
+    const accessibilityConfig = useKdaDialogAccessibility(title, isMinimized, titleElementId);
 
     const dialogBaseClassName = cx(accessibilityConfig.dialogId, className);
     const displayCloseButton = showCloseButton ? !isMinimized : undefined;
@@ -70,18 +70,23 @@ export function KdaDialog({ className, showCloseButton = true, onClose }: IKdaDi
         <OverlayControllerProvider overlayController={effectiveOverlayController}>
             {isMinimized ? (
                 <Dialog
+                    autofocusOnOpen
+                    initialFocus={accessibilityConfig.descriptionElementId}
                     className={cx(dialogBaseClassName, "gd-kda-dialog--minimized")}
                     closeOnEscape={false}
                     isModal={false}
                     alignPoints={minimizedAlignPoints}
-                    accessibilityConfig={accessibilityConfig}
+                    accessibilityConfig={{
+                        ...accessibilityConfig,
+                        title: undefined,
+                    }}
                     displayCloseButton={displayCloseButton}
                     onClose={onClose}
                     CloseButton={KdaDialogControls}
                     dataTestId={KDA_DIALOG_MINIMIZED_DATA_TEST_ID}
                 >
                     <KdaDialogFloatingStatusBar
-                        titleElementId={accessibilityConfig.titleElementId}
+                        titleElementId={accessibilityConfig.descriptionElementId}
                         onClose={onClose}
                     />
                 </Dialog>
@@ -90,7 +95,10 @@ export function KdaDialog({ className, showCloseButton = true, onClose }: IKdaDi
                     className={cx(dialogBaseClassName, "gd-kda-dialog--expanded")}
                     closeOnEscape={!state.attributesDropdownOpen && !state.addFilterDropdownOpen}
                     isModal
-                    accessibilityConfig={accessibilityConfig}
+                    accessibilityConfig={{
+                        ...accessibilityConfig,
+                        title: undefined,
+                    }}
                     displayCloseButton={displayCloseButton}
                     onClose={onClose}
                     CloseButton={KdaDialogControls}
@@ -99,7 +107,7 @@ export function KdaDialog({ className, showCloseButton = true, onClose }: IKdaDi
                     <KdaDialogSections
                         header={
                             <KdaHeader
-                                titleId={accessibilityConfig.titleElementId}
+                                titleId={accessibilityConfig.descriptionElementId}
                                 title={accessibilityConfig.title}
                                 bars={
                                     <>

@@ -1,7 +1,8 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import fs from "fs";
 
-import { format } from "prettier";
+import { format } from "oxfmt";
 
 import { type WorkspaceMetadata } from "../base/types.js";
 import { transformToTypescript } from "../transform/toTypescript.js";
@@ -19,7 +20,10 @@ export async function exportMetadataToTypescript(
     const output = transformToTypescript(projectMetadata, outputFile);
 
     const generatedTypescript = output.sourceFile.getFullText();
-    const formattedTypescript = await format(generatedTypescript, { parser: "typescript", printWidth: 120 });
+    const formattedTypescript = await format(outputFile, generatedTypescript, {
+        parser: "typescript",
+        printWidth: 120,
+    });
 
-    fs.writeFileSync(outputFile, formattedTypescript, { encoding: "utf-8" });
+    fs.writeFileSync(outputFile, formattedTypescript.code, { encoding: "utf-8" });
 }

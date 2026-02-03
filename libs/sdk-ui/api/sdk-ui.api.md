@@ -923,7 +923,6 @@ export interface IDrillEvent {
     dataView: IDataView;
     // (undocumented)
     drillContext: IDrillEventContext;
-    enableDrillMenuPositioningAtCursor?: boolean;
     // (undocumented)
     target?: HTMLElement;
 }

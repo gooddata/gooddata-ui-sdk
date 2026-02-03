@@ -28,6 +28,7 @@ import { type IUiState } from "./ui/uiState.js";
 import { type UserState } from "./user/userState.js";
 import { type IUsersState } from "./users/usersState.js";
 import { type IInaccessibleDashboard } from "../types/inaccessibleDashboardTypes.js";
+import { type DashboardSummaryWorkflowState } from "./dashboardSummaryWorkflow/dashboardSummaryWorkflowState.js";
 
 /*
  * This explicit typing is unfortunate but cannot find better way. Normally the typings get inferred from store,
@@ -88,6 +89,13 @@ export type DashboardState = {
     users: IUsersState;
     /** @alpha */
     notificationChannels: INotificationChannelsState;
+
+    /**
+     * Internal state for dashboard summary AI workflow.
+     *
+     * @internal
+     */
+    dashboardSummaryWorkflow: DashboardSummaryWorkflowState;
 
     /**
      * State controlling how exactly the dashboard is rendered.

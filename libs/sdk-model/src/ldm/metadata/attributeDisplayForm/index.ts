@@ -66,7 +66,6 @@ export interface IAttributeDisplayFormMetadataObject extends IMetadataObject {
      * Subtype of the display form
      * (e.g. GDC.geo.pin, or GDC.link, see constants above).
      */
-    // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
     displayFormType?: AttributeDisplayFormType | string;
 
     /**

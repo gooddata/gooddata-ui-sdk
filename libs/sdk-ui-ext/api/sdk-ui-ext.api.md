@@ -35,6 +35,7 @@ import { INotification } from '@gooddata/sdk-model';
 import { IntlShape } from 'react-intl';
 import { IPivotTableConfig } from '@gooddata/sdk-ui-pivot';
 import { ISettings } from '@gooddata/sdk-model';
+import { ITab } from '@gooddata/sdk-ui-kit';
 import { ITheme } from '@gooddata/sdk-model';
 import { IUserWorkspaceSettings } from '@gooddata/sdk-backend-spi';
 import { IVisualizationCallbacks } from '@gooddata/sdk-ui';
@@ -795,6 +796,71 @@ export function isSizeInfoDefault(obj: any): obj is ISizeInfoDefault;
 // @alpha
 export function isVisualizationDefaultSizeInfo(obj: any): obj is IVisualizationDefaultSizeInfo;
 
+// @internal
+export interface ITabsIds {
+    // (undocumented)
+    all: string;
+    // (undocumented)
+    my: string;
+}
+
+// @internal
+export interface IUsePagedDropdownConfig {
+    // (undocumented)
+    author: string | undefined;
+    // (undocumented)
+    backend: IAnalyticalBackend;
+    // (undocumented)
+    tabsIds: ITabsIds;
+    // (undocumented)
+    workspaceId: string;
+}
+
+// @internal
+export interface IUsePagedDropdownResult {
+    // (undocumented)
+    currentPage: number;
+    // (undocumented)
+    fetchItems: (params: {
+        page: number;
+        search: string;
+        tabId: string;
+        resetItems?: boolean;
+    }) => Promise<void>;
+    // (undocumented)
+    hasNextPage: boolean;
+    // (undocumented)
+    initialLoadCompleted: boolean;
+    // (undocumented)
+    isLoading: boolean;
+    // (undocumented)
+    isNextPageLoading: boolean;
+    // (undocumented)
+    items: IInsight[];
+    // (undocumented)
+    loadInitialItems: () => void;
+    // (undocumented)
+    loadNextPage: () => void;
+    // (undocumented)
+    onSearch: (searchString: string) => void;
+    // (undocumented)
+    onTabSelect?: (tab: ITab) => void;
+    // (undocumented)
+    reset: () => void;
+    // (undocumented)
+    resetItems: () => void;
+    // (undocumented)
+    search: string;
+    // (undocumented)
+    selectedTabId: string;
+    // (undocumented)
+    shouldLoadNextPage: (lastItemIndex: number, itemsCount: number) => boolean;
+    // (undocumented)
+    skeletonItemsCount: number;
+    // (undocumented)
+    totalItemsCount: number | undefined;
+}
+
 // @internal (undocumented)
 export interface IUserEditDialogProps extends IWithTelemetryProps {
     // (undocumented)
@@ -914,6 +980,9 @@ export type TelemetryEvent = "multiple-users-deleted" | "multiple-groups-deleted
 
 // @internal (undocumented)
 export type TrackEventCallback = (event: TelemetryEvent) => void;
+
+// @internal
+export function useInsightPagedList({ backend, workspaceId, author, tabsIds, }: IUsePagedDropdownConfig): IUsePagedDropdownResult;
 
 // @internal (undocumented)
 export const UserEditDialog: {

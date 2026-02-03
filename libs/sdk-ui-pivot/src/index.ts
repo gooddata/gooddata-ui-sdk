@@ -24,7 +24,6 @@ export {
     type PivotTableNextMenuConfig,
     type PivotTableNextFormattingConfig,
     type PivotTableNextExecutionCancellingConfig,
-    type PivotTableNextDrillMenuPositioningConfig,
     type PivotTableNextLayoutConfig,
     type PivotTableNextGrandTotalsPositionConfig,
     type PivotTableNextCellSelectionConfig,

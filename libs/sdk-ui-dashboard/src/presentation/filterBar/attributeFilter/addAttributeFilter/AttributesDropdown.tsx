@@ -82,7 +82,6 @@ export function AttributesDropdown({
     DropdownTitleComponent,
     renderNoData,
     overlayPositionType,
-    renderVirtualisedList,
     getCustomItemTitle,
     accessibilityConfig,
     returnFocusTo,
@@ -263,7 +262,6 @@ export function AttributesDropdown({
                                     ? getAttributeListItemTitle(item, getCustomItemTitle?.(item))
                                     : getDateAttributeListItemTitle(item, getCustomItemTitle?.(item))
                             }
-                            renderVirtualisedList={renderVirtualisedList}
                             renderNoData={renderNoData}
                             renderItem={({ item }) => {
                                 const title = getCustomItemTitle?.(item);

@@ -3,6 +3,7 @@
 import { existsSync, mkdirSync, rmSync, writeFileSync } from "fs";
 
 import { groupBy, keyBy, sortBy } from "lodash-es";
+import { format } from "oxfmt";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { type RecordingIndex } from "@gooddata/sdk-backend-mockingbird";
@@ -75,15 +76,14 @@ const ScenarioGroupsByVis = sortBy(
     (groups) => groups[0].vis,
 );
 
-ScenarioGroupsByVis.forEach((groups, groupsIndex) => {
+for (const [groupsIndex, groups] of ScenarioGroupsByVis.entries()) {
     /*
      * Sort groups; the order in which stories for the group are created is important as that is the order
      * in which the groups appear in storybook.
      */
     const sortedGroups = sortBy(groups, (g) => g.groupNames.join("/"));
 
-    // eslint-disable-next-line sonarjs/cognitive-complexity
-    sortedGroups.forEach((group, groupIndex) => {
+    for (const [groupIndex, group] of sortedGroups.entries()) {
         // because we have duplicate group names, and duplicate scenario names within those duplicate group names
         // we have to create a unique file if one with the same name exists, otherwise they will overwrite each other
 
@@ -158,7 +158,7 @@ ScenarioGroupsByVis.forEach((groups, groupsIndex) => {
 
         if (visualOnly.isEmpty()) {
             // it is completely valid that some groups have no scenarios for visual regression
-            return;
+            continue;
         }
 
         visualOnly.scenarioList.forEach((scenario, scenarioIndex) => {
@@ -226,11 +226,12 @@ ${exportName}.parameters = ${unquoteStateInJson(
             )} satisfies IStoryParameters;`);
         });
 
-        if (storyExports.length === 0) return;
+        if (storyExports.length === 0) continue;
 
         const fileContents = `${header}\n\n${requires}\n\n${defaultExport}\n\n${storyExports.join("\n\n")}\n`;
+        const formatted = await format(filePath, fileContents);
 
         mkdirSync(fileDirectory, { recursive: true });
-        writeFileSync(filePath, fileContents);
-    });
-});
+        writeFileSync(filePath, formatted.code);
+    }
+}

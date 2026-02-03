@@ -20,6 +20,13 @@ export interface ICheckboxControlProps {
     disabledMessageId?: string;
     pushData?(data: any): void;
     isValueInverted?: boolean;
+    /**
+     * The default value for this control. When the value matches the default,
+     * the property is removed from properties instead of being set.
+     * This prevents the Save button from staying enabled when the user
+     * toggles back to the default state.
+     */
+    defaultValue?: boolean;
 }
 
 export function CheckboxControl({
@@ -33,16 +40,21 @@ export function CheckboxControl({
     properties,
     pushData,
     isValueInverted = false,
+    defaultValue,
 }: ICheckboxControlProps) {
     const intl = useIntl();
     const onValueChanged = useCallback(
         (event: ChangeEvent<HTMLInputElement>) => {
             const clonedProperties = cloneDeep(properties);
             const value = isValueInverted ? !event.target.checked : event.target.checked;
-            set(clonedProperties!, `controls.${valuePath}`, value);
+            // When the value matches the default, set to undefined so the property gets removed
+            // during merge. This prevents the Save button from staying enabled when toggling
+            // back to the default state.
+            const valueToSet = value === defaultValue ? undefined : value;
+            set(clonedProperties!, `controls.${valuePath}`, valueToSet);
             pushData?.({ properties: clonedProperties });
         },
-        [properties, isValueInverted, pushData, valuePath],
+        [properties, isValueInverted, pushData, valuePath, defaultValue],
     );
 
     return (

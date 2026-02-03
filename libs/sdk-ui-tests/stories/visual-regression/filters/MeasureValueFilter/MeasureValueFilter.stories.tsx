@@ -11,13 +11,17 @@ import { type INeobackstopConfig, type IStoryParameters, State } from "../../../
 const wrapperStyle = { width: 400, height: 800, padding: "1em 1em" };
 
 const scenarios: INeobackstopConfig = {
-    closed: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
+    closed: {
+        readySelector: { selector: ".screenshot-target", state: State.Attached },
+        misMatchThreshold: 0.01,
+    },
     opened: {
         readySelector: { selector: ".s-mvf-operator-dropdown-button", state: State.Attached },
         clickSelector: ".s-mvf-operator-dropdown-button",
         delay: {
             postOperation: 200,
         },
+        misMatchThreshold: 0.01,
     },
     "between-selected": {
         readySelector: { selector: ".s-mvf-operator-dropdown-button", state: State.Attached },
@@ -28,6 +32,7 @@ const scenarios: INeobackstopConfig = {
         delay: {
             postOperation: 200,
         },
+        misMatchThreshold: 0.01,
     },
     "greater-than-selected": {
         readySelector: { selector: ".s-mvf-operator-dropdown-button", state: State.Attached },
@@ -38,6 +43,7 @@ const scenarios: INeobackstopConfig = {
         delay: {
             postOperation: 200,
         },
+        misMatchThreshold: 0.01,
     },
 };
 
@@ -91,12 +97,13 @@ export default {
 export function FullFeatured() {
     return (
         <div style={wrapperStyle} className="screenshot-target">
+            <span className="dropdown-anchor-test" />
             <MeasureValueFilterDropdown
                 filter={filterWithMultipleConditionsAndDimensionality}
                 measureIdentifier="localIdentifier"
                 onApply={action("applyClick")}
                 onCancel={action("cancelClick")}
-                anchorEl="screenshot-target"
+                anchorEl=".dropdown-anchor-test"
                 enableMultipleConditions
                 isDimensionalityEnabled
                 dimensionality={dimensionalityItems}
@@ -110,12 +117,13 @@ FullFeatured.parameters = { kind: "full-featured", screenshots: scenarios } sati
 export function WithTreatNullAsOptionEnabled() {
     return (
         <div style={wrapperStyle} className="screenshot-target">
+            <span className="dropdown-anchor-test" />
             <MeasureValueFilterDropdown
                 filter={filter}
                 measureIdentifier="localIdentifier"
                 onApply={action("applyClick")}
                 onCancel={action("cancelClick")}
-                anchorEl="screenshot-target"
+                anchorEl=".dropdown-anchor-test"
                 displayTreatNullAsZeroOption
             />
         </div>
@@ -129,12 +137,13 @@ WithTreatNullAsOptionEnabled.parameters = {
 export function WithTreatNullAsOptionEnabledAndCheckedByDefault() {
     return (
         <div style={wrapperStyle} className="screenshot-target">
+            <span className="dropdown-anchor-test" />
             <MeasureValueFilterDropdown
                 filter={filter}
                 measureIdentifier="localIdentifier"
                 onApply={action("applyClick")}
                 onCancel={action("cancelClick")}
-                anchorEl="screenshot-target"
+                anchorEl=".dropdown-anchor-test"
                 displayTreatNullAsZeroOption
                 treatNullAsZeroDefaultValue
             />
@@ -149,12 +158,13 @@ WithTreatNullAsOptionEnabledAndCheckedByDefault.parameters = {
 export function WithDisabledOperatorSelection() {
     return (
         <div style={wrapperStyle} className="screenshot-target">
+            <span className="dropdown-anchor-test" />
             <MeasureValueFilterDropdown
                 filter={filter}
                 measureIdentifier="localIdentifier"
                 onApply={action("applyClick")}
                 onCancel={action("cancelClick")}
-                anchorEl="screenshot-target"
+                anchorEl=".dropdown-anchor-test"
                 enableOperatorSelection={false}
             />
         </div>
@@ -168,13 +178,14 @@ WithDisabledOperatorSelection.parameters = {
 export function Localized() {
     return (
         <div style={wrapperStyle} className="screenshot-target">
+            <span className="dropdown-anchor-test" />
             <MeasureValueFilterDropdown
                 filter={filter}
                 measureIdentifier="localIdentifier"
                 onApply={action("applyClick")}
                 onCancel={action("cancelClick")}
                 locale="de-DE"
-                anchorEl="screenshot-target"
+                anchorEl=".dropdown-anchor-test"
             />
         </div>
     );

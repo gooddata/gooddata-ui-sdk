@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { invariant } from "ts-invariant";
 
 import { type DataValue } from "@gooddata/sdk-model";
@@ -12,7 +13,6 @@ import { type TableDescriptor } from "../structure/tableDescriptor.js";
  */
 function extractIdsFromAttributeElementUri(uri: string): (string | null)[] {
     // no reasonable way to avoid the super-linear backtracking right now
-    // eslint-disable-next-line regexp/no-super-linear-backtracking, regexp/no-unused-capturing-group
     const [, attributeId, , attributeValueId = null] = uri.match(/obj\/([^/]*)(\/elements\?id=)?(.*)$/)!;
 
     return [attributeId, attributeValueId];

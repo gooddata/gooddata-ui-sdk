@@ -190,14 +190,6 @@ export interface IGeoConfig {
     cooperativeGestures?: boolean;
     enableExecutionCancelling?: boolean;
     respectLegendPosition?: boolean;
-
-    /**
-     * Enables positioning of drill menu at the cursor click point (instead of default positioning).
-     *
-     * @remarks
-     * Feature flag. Default: false.
-     */
-    enableDrillMenuPositioningAtCursor?: boolean;
 }
 
 /**

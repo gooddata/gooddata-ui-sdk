@@ -7,21 +7,51 @@ import cx from "classnames";
 import { simplifyText } from "@gooddata/util";
 
 import { Button } from "../Button/Button.js";
+import { type IButtonAccessibilityConfig } from "../Button/typings.js";
 
-interface IHeaderWorkspacePickerButtonProps {
+export type IHeaderWorkspacePickerButtonAccessibilityConfig = Pick<
+    IButtonAccessibilityConfig,
+    | "role"
+    | "isExpanded"
+    | "popupId"
+    | "ariaLabel"
+    | "ariaDescribedBy"
+    | "ariaControls"
+    | "ariaExpanded"
+    | "ariaHaspopup"
+    | "ariaPressed"
+    | "popupType"
+>;
+
+export interface IHeaderWorkspacePickerButtonProps {
     title: string;
-    dropdownId: string;
     onClick: (e: MouseEvent<HTMLDivElement>) => void;
     isOpen?: boolean;
     buttonRef?: MutableRefObject<HTMLElement>;
+    /**
+     * Props supporting accessibility that can be passed down to a <Button/>
+     */
+    accessibilityConfig: Pick<
+        IButtonAccessibilityConfig,
+        | "role"
+        | "isExpanded"
+        | "popupId"
+        | "ariaLabel"
+        | "ariaDescribedBy"
+        | "ariaControls"
+        | "ariaExpanded"
+        | "ariaHaspopup"
+        | "ariaPressed"
+        | "popupType"
+    >;
 }
 
 export function HeaderWorkspacePickerButton({
     title,
     onClick,
     isOpen,
-    dropdownId,
     buttonRef,
+    accessibilityConfig,
 }: IHeaderWorkspacePickerButtonProps) {
     const classNames = cx({
         "gd-header-project": true,
@@ -36,12 +66,9 @@ export function HeaderWorkspacePickerButton({
             className="gd-header-button gd-workspace-picker-button"
             onClick={onClick}
             title={title}
-            accessibilityConfig={{
-                isExpanded: isOpen,
-                popupId: dropdownId,
-            }}
+            accessibilityConfig={accessibilityConfig}
         >
-            <div className={classNames}>{title}</div>
+            <div className={classNames}>{title?.trim().length > 0 ? title : <>&nbsp;</>}</div>
         </Button>
     );
 }

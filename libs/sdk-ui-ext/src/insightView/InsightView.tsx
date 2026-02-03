@@ -340,6 +340,5 @@ function useBackendWithVisualizationCorrelation({ backend, insight }: IInsightVi
         visualizationId = insight.uri;
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
     return useBackendWithCorrelation(backend, { visualizationId: visualizationId! });
 }

@@ -17,8 +17,7 @@ export interface IDropdownButtonAccessibilityConfig {
  * @internal
  */
 export interface IButtonAccessibilityConfig
-    extends IAccessibilityConfigBase,
-        IDropdownButtonAccessibilityConfig {}
+    extends IAccessibilityConfigBase, IDropdownButtonAccessibilityConfig {}
 
 /**
  * @internal

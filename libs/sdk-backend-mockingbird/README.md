@@ -15,23 +15,23 @@ This implementation of Analytical Backend SPI focuses on the execution branch of
 and sets up Prepared Execution just like any other implementation would. When the prepared execution
 is started (execute()) it either (based on configuration):
 
--   Returns an empty result which only contains execution definition and has the result dimensions empty.
-    Reading any data views from this result will return empty data views.
+- Returns an empty result which only contains execution definition and has the result dimensions empty.
+  Reading any data views from this result will return empty data views.
 
--   Returns an empty result which only contains execution definition and has the result dimensions empty.
-    Reading any data views from this result will yield NoDataError
+- Returns an empty result which only contains execution definition and has the result dimensions empty.
+  Reading any data views from this result will yield NoDataError
 
     (Note: this is closer to how real backend implementations behave)
 
 Purpose:
 
--   use in unit tests which need to verify whether the execution is prepared correctly
-    for instance functions which transform props => prepared execution
+- use in unit tests which need to verify whether the execution is prepared correctly
+  for instance functions which transform props => prepared execution
 
--   use in unit tests which need to verify whether code works correctly with execution definition
-    stored in result / data view / data view facade
+- use in unit tests which need to verify whether code works correctly with execution definition
+  stored in result / data view / data view facade
 
--   use in component-level 'smoke tests' (e.g. something renders or happens, we don't care about the details)
+- use in component-level 'smoke tests' (e.g. something renders or happens, we don't care about the details)
 
 ## Legacy Recorded Backend
 

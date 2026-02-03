@@ -10,11 +10,11 @@ constants that can be used to initialize a recorded backend instance.
 
 The mock tooling is invoked through command line and takes the following arguments:
 
--   `recordingDir` - directory where input and outputs of recordings live
--   `projectId` - identifier of project from which to capture data
--   `username` - username to authenticate as
--   `hostname` - GoodData backend hostname
--   `config` - optionally provide path to tool configuration (by default looks for .gdmockrc in current dir)
+- `recordingDir` - directory where input and outputs of recordings live
+- `projectId` - identifier of project from which to capture data
+- `username` - username to authenticate as
+- `hostname` - GoodData backend hostname
+- `config` - optionally provide path to tool configuration (by default looks for .gdmockrc in current dir)
 
 Config is a JSON file containing an object with pre-defined values of the command line arguments. The keys match
 names of command line arguments.
@@ -30,7 +30,7 @@ If the tool does not receive mandatory argument via either CLI or from config, t
 
 The recording directory passed to the tooling is expected to follow this layout:
 
--   `executions` subdir: this is where execution inputs and outputs are stored
+- `executions` subdir: this is where execution inputs and outputs are stored
 
     The `executions` directory can be further organized in any way you see fit. The only hard rule is that
     each unique execution is in its own subdirectory and the execution input is stored in `definition.json` file.

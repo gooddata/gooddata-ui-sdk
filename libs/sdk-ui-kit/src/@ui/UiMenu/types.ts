@@ -172,8 +172,10 @@ export interface IUiMenuPluggableComponents<T extends IUiMenuItemData = object> 
 /**
  * @internal
  */
-export interface IUiMenuContext<T extends IUiMenuItemData = object, M = object>
-    extends IUiMenuPluggableComponents<T> {
+export interface IUiMenuContext<
+    T extends IUiMenuItemData = object,
+    M = object,
+> extends IUiMenuPluggableComponents<T> {
     items: IUiMenuItem<T>[];
     size: SizeSmall | SizeMedium;
     focusedItem: IUiMenuFocusableItem<T> | undefined;
@@ -201,8 +203,9 @@ export interface IUiMenuContext<T extends IUiMenuItemData = object, M = object>
 /**
  * @internal
  */
-export interface IUiMenuProps<T extends IUiMenuItemData = object, M = object>
-    extends Partial<IUiMenuPluggableComponents<T>> {
+export interface IUiMenuProps<T extends IUiMenuItemData = object, M = object> extends Partial<
+    IUiMenuPluggableComponents<T>
+> {
     items: IUiMenuItem<T>[];
 
     size?: SizeSmall | SizeMedium;

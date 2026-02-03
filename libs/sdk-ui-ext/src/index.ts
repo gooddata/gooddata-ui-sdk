@@ -306,3 +306,10 @@ export function provideCreateRoot(_fn: any) {
     // eslint-disable-next-line no-console
     console.log("Info: no longer necessary to call provideCreateRoot");
 }
+
+export {
+    useInsightPagedList,
+    type IUsePagedDropdownConfig,
+    type IUsePagedDropdownResult,
+    type ITabsIds,
+} from "./internal/components/insightList/useInsightPagedList.js";

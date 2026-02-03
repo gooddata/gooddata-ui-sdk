@@ -58,8 +58,10 @@ import {
 /**
  * @internal
  */
-export interface IInsightRendererProps
-    extends Omit<IInsightViewProps, "insight" | "TitleComponent" | "onInsightLoaded" | "showTitle"> {
+export interface IInsightRendererProps extends Omit<
+    IInsightViewProps,
+    "insight" | "TitleComponent" | "onInsightLoaded" | "showTitle"
+> {
     insight: IInsightDefinition | undefined;
     locale: ILocale;
     settings: IUserWorkspaceSettings | undefined;
@@ -371,7 +373,6 @@ function useUpdatableCallback<T extends (...args: any[]) => any>(callback: T): T
         pushDataCached.current = callback;
     }, [callback]);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     return useCallback<T>(
         ((...args) => {
             if (pushDataCached.current) {
