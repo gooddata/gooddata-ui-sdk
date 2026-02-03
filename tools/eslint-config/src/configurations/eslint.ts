@@ -78,6 +78,11 @@ const restrictedImportPaths = [
         message: "Default import from React is not allowed. Use named imports instead.",
     },
     {
+        name: "react-dom",
+        importNames: ["default"],
+        message: "Default import from React DOM is not allowed. Use named imports instead.",
+    },
+    {
         name: "@gooddata/sdk-ui-kit",
         importNames: ["Icon"],
         message: "The Icon export cannot be tree-shaken, use {IconName}Icon imports instead.",
@@ -117,6 +122,10 @@ const commonRules = {
             selector: "MemberExpression[object.name='React']",
             message: "Do not use `React.*`. Use named imports instead.",
         },
+        {
+            selector: "MemberExpression[object.name='ReactDOM']",
+            message: "Do not use `ReactDOM.*`. Use named imports instead.",
+        },
     ],
     "sort-imports": ["error", { ignoreCase: false, ignoreDeclarationSort: true, ignoreMemberSort: false }],
 
@@ -127,13 +136,6 @@ const commonRules = {
     "no-unneeded-ternary": ["error", { defaultAssignment: false }],
     "no-extra-boolean-cast": "error",
     "no-unexpected-multiline": "off",
-    "no-warning-comments": [
-        "warn",
-        {
-            terms: ["todo"],
-            location: "start",
-        },
-    ],
 };
 
 const overrides = [

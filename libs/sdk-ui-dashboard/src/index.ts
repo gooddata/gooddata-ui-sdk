@@ -1695,6 +1695,10 @@ export type {
 export { DashboardStoreAccessor } from "./model/store/storeAccessors/DashboardStoreAccessor.js";
 export { DashboardStoreAccessorRepository } from "./model/store/storeAccessors/DashboardStoreAccessorRepository.js";
 export { SingleDashboardStoreAccessor } from "./model/store/storeAccessors/SingleDashboardStoreAccessor.js";
+export type {
+    DashboardSummaryWorkflowState,
+    DashboardSummaryWorkflowInfo,
+} from "./model/store/dashboardSummaryWorkflow/dashboardSummaryWorkflowState.js";
 export {
     selectNotificationChannels,
     selectNotificationChannelsCount,

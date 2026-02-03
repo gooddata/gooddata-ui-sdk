@@ -76,10 +76,10 @@ function createComponent(customProps: Partial<IColorsSectionProps> = {}) {
 
 describe("ColorsSection", () => {
     it("should render ColorSection control with 2 colors", () => {
-        createComponent();
+        const { container } = createComponent();
 
         expect(screen.getByText("Colors")).toBeInTheDocument();
-        expect(screen.getAllByRole("row")).toHaveLength(3); // including header row
+        expect(container.querySelectorAll(".s-colored-items-list-item")).toHaveLength(2);
     });
     it("should render ColorSection with fills", () => {
         createComponent({
@@ -90,11 +90,11 @@ describe("ColorsSection", () => {
     });
 
     it("should NOT render ColoredItemsList when no measure, unsupported color message is visible", () => {
-        createComponent({
+        const { container } = createComponent({
             hasMeasures: false,
         });
 
-        expect(screen.queryByRole("row")).not.toBeInTheDocument();
+        expect(container.querySelector(".s-colored-items-list-item")).not.toBeInTheDocument();
     });
 
     it("should render error message when no measure", () => {

@@ -1,1 +1,2 @@
-src/playground/*.*
+src/playground/*
+.rush/

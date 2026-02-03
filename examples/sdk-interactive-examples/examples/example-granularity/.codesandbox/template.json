@@ -1,11 +1,7 @@
 {
-  "title": "Granularity",
-  "description": "This example exmplains DateFilter granularity ",
-  "iconUrl": "https://www.gooddata.com/favicon.ico",
-  "tags": [
-    "react",
-    "typescript",
-    "gooddata-ui-sdk"
-  ],
-  "published": true
+    "title": "Granularity",
+    "description": "This example exmplains DateFilter granularity ",
+    "iconUrl": "https://www.gooddata.com/favicon.ico",
+    "tags": ["react", "typescript", "gooddata-ui-sdk"],
+    "published": true
 }

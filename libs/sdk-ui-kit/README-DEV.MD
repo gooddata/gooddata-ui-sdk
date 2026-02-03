@@ -32,6 +32,7 @@ Components **SHOULD NOT** accept a `className` prop for style overrides. Instead
 Styles should follow the [BEM](https://en.bem.info/methodology/quick-start/) methodology.
 
 Follow these rules:
+
 - Use prefixes for root elements to avoid class name collisions (e.g., `.gd-ui-kit-button`, `.gd-ui-kit-icon`).
 - Minimize nesting and overrides for better readability and maintainability
 - Avoid using margins for root elements; components must not affect the layout of their parent or sibling elements.
@@ -103,7 +104,8 @@ const { b } = bem("gd-ui-kit-button");
 ```
 
 ### Combined Style Overrides
-*Note: Avoid overrides when possible, as they reduce readability and maintainability. Prefer top-level derived styles, but use overrides if absolutely necessary.*
+
+_Note: Avoid overrides when possible, as they reduce readability and maintainability. Prefer top-level derived styles, but use overrides if absolutely necessary._
 
 ```tsx
 interface IProps {
@@ -148,7 +150,7 @@ const { b, e } = bem("gd-ui-kit-button");
 
 <button className={b()}>
     <span className={e("icon")} />
-</button>
+</button>;
 ```
 
 ```scss
@@ -166,14 +168,14 @@ const { b, e } = bem("gd-ui-kit-button");
 ```tsx
 interface IProps {
     isSelected: boolean;
-    style: "primary" | "secondary",
+    style: "primary" | "secondary";
 }
 
 const { b, e } = bem("gd-ui-kit-button");
 
 <button className={b()}>
     <span className={e("icon", { isSelected, style })} />
-</button>
+</button>;
 ```
 
 ```scss
@@ -201,7 +203,8 @@ const { b, e } = bem("gd-ui-kit-button");
 ```
 
 ### Nested Element Style Overrides
-*Note: Avoid overrides when possible, as they reduce readability and maintainability. Prefer top-level derived styles, but use overrides if necessary.*
+
+_Note: Avoid overrides when possible, as they reduce readability and maintainability. Prefer top-level derived styles, but use overrides if necessary._
 
 ```tsx
 interface IProps {
@@ -212,7 +215,7 @@ const { b, e } = bem("gd-ui-kit-button");
 
 <button className={b({ isSelected })}>
     <span className={e("icon")} />
-</button>
+</button>;
 ```
 
 ```scss
@@ -225,7 +228,7 @@ const { b, e } = bem("gd-ui-kit-button");
     }
 
     &--isSelected {
-         &#{$root}__icon {
+        &#{$root}__icon {
             // style overrides for icon when isSelected is true
         }
     }
@@ -235,7 +238,6 @@ const { b, e } = bem("gd-ui-kit-button");
             // style overrides for icon when active
         }
     }
-
 }
 ```
 
@@ -255,8 +257,8 @@ Component should care only about its own layout.
 
 Component must not specify any margins or care about its surroundings - this should be handled always by components upper in the component tree.
 
-
 ## Development & Testing
+
 Recommended workflow is to develop the component in the `/examples/playground.`
 
 Once you complete it, you should also prepare screenshot tests in `sdk-ui-tests`.
@@ -272,6 +274,7 @@ To support testability of interactive components add data-testid to native eleme
 Components should target [(WCAG) 2.1](https://www.w3.org/TR/WCAG21/) standard.
 
 In short, follow these simple rules:
+
 - **Assistive Tech Ready**: Use semantic HTML and ARIA roles appropriately.
 - **Keyboard-Friendly**: Ensure all functionality works via keyboard alone.
 - **Text Alternatives**: Provide alt text for images and captions for videos.

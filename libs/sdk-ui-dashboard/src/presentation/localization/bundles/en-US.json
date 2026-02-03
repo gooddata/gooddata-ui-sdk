@@ -2131,6 +2131,22 @@
         "text": "Formatting options",
         "crowdinContext": "Label for rich text formatting toolbar options"
     },
+    "richText.summaryDashboard.generating.reload": {
+        "text": "We are currently generating the dashboard summary. Please reload the page to see if the generation has completed.",
+        "crowdinContext": "Dashboard rich text widget (view mode): Fallback text substituted for the {summary.dashboard} token when the summary workflow status is not available yet; instructs the user to reload the page."
+    },
+    "richText.summaryDashboard.generating.shortly": {
+        "text": "We are currently generating the dashboard summary. It will be available shortly.",
+        "crowdinContext": "Dashboard rich text widget (view mode): Text substituted for the {summary.dashboard} token while the summary workflow is running."
+    },
+    "richText.summaryDashboard.failed": {
+        "text": "The dashboard summary generation failed. Please try again later.",
+        "crowdinContext": "Dashboard rich text widget (view mode): Text substituted for the {summary.dashboard} token when the summary workflow fails or is cancelled."
+    },
+    "richText.summaryDashboard.empty": {
+        "text": "(no dashboard summary available)",
+        "crowdinContext": "Dashboard rich text widget (view mode): Text substituted for the {summary.dashboard} token when the workflow completed but there is no summary content to display."
+    },
     "richText.deleteDialog.header": {
         "text": "Delete rich text?",
         "crowdinContext": "Title of confirmation dialog when deleting a rich text component"
@@ -2994,6 +3010,10 @@
     "kdaDialog.dialog.keyDrives.overview.summary.drivers.description": {
         "text": "Tested {combinations} variants with <button>{attributes} attributes</button>",
         "crowdinContext": "Key drivers overview summary drivers description in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.keyDrives.overview.summary.drivers.popupLabel": {
+        "text": "Change attribute selection",
+        "crowdinContext": "Change attribute selection button label in key driver analysis dialog"
     },
     "kdaDialog.dialog.keyDrives.overview.summary.drivers.attributes": {
         "text": "Attributes",

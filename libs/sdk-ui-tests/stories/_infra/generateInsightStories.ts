@@ -82,7 +82,6 @@ ScenarioGroupsByVis.forEach((groups, groupsIndex) => {
      */
     const sortedGroups = sortBy(groups, (g) => g.groupNames.join("/"));
 
-    // eslint-disable-next-line sonarjs/cognitive-complexity
     sortedGroups.forEach((group, groupIndex) => {
         // because we have duplicate group names, and duplicate scenario names within those duplicate group names
         // we have to create a unique file if one with the same name exists, otherwise they will overwrite each other

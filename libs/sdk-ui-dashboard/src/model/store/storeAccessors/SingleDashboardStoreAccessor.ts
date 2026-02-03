@@ -19,6 +19,25 @@ const DASHBOARD = serializeObjRef(idRef("SingleDashboardStoreAccessor_mock_dashb
  * The usage of this singleton is the same as for {@link DashboardStoreAccessorRepository} except functions
  * don't accept any parameters.
  *
+ *
+ * example:
+ * ```
+ * import { SingleDashboardStoreAccessor } from "@gooddata/sdk-ui-dashboard";
+ *  ...
+ *
+ * const dispatch = SingleDashboardStoreAccessor.getDashboardDispatch();
+ * if (dispatch) {
+ *     dispatch({
+ *         type: "GDC.DASH/CMD.SOME_COMMAND",
+ *         payload: {},
+ *     });
+ * }
+ *  ...
+ * <Dashboard
+ *     dashboard={dashboard}
+ *     onStateChange={SingleDashboardStoreAccessor.getOnChangeHandler()}
+ * />
+ * ```
  * @public
  */
 export class SingleDashboardStoreAccessor {

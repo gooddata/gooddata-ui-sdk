@@ -371,7 +371,6 @@ function useUpdatableCallback<T extends (...args: any[]) => any>(callback: T): T
         pushDataCached.current = callback;
     }, [callback]);
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     return useCallback<T>(
         ((...args) => {
             if (pushDataCached.current) {

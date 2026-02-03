@@ -1,0 +1,10 @@
+{
+  "changes": [
+    {
+      "packageName": "@gooddata/sdk-ui-all",
+      "comment": "chore: Move @gooddata/stylelint to this monorepo",
+      "type": "none"
+    }
+  ],
+  "packageName": "@gooddata/sdk-ui-all"
+}

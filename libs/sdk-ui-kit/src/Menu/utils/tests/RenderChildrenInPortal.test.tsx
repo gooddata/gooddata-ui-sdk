@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 
 import { render, screen } from "@testing-library/react";
-import ReactDOM from "react-dom";
+import { createPortal } from "react-dom";
 import { describe, expect, it } from "vitest";
 
 import { type IRenderChildrenInPortalProps } from "../RenderChildrenInPortal.js";
@@ -25,7 +25,7 @@ function MockedRenderChildrenInPortal({ targetElement }: IRenderChildrenInPortal
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    return ReactDOM.createPortal(<div className="child-element">Child Element</div>, portalNodeRef.current);
+    return createPortal(<div className="child-element">Child Element</div>, portalNodeRef.current);
 }
 
 const renderMockedPortal = () => {

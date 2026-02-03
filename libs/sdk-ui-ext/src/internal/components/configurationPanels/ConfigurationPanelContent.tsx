@@ -77,6 +77,13 @@ export abstract class ConfigurationPanelContent<
 
     protected supportedPropertiesList: string[] | undefined;
 
+    /**
+     * Whether the visualization supports implicit drill to URL.
+     * Override in subclasses to enable this feature for specific visualization types.
+     * Currently only pivot tables support this feature.
+     */
+    protected supportsImplicitDrillToUrl: boolean = false;
+
     constructor(props: T) {
         super(props);
         this.isControlDisabled = this.isControlDisabled.bind(this);
@@ -154,7 +161,8 @@ export abstract class ConfigurationPanelContent<
 
         const isAlertingEnabled = featureFlags?.enableAlerting;
         const isScheduledExportsEnabled = featureFlags?.enableScheduling;
-        const enableImplicitDrillToUrl = featureFlags?.enableImplicitDrillToUrl;
+        const showImplicitDrillToUrl =
+            this.supportsImplicitDrillToUrl && featureFlags?.enableImplicitDrillToUrl;
         const supportsKeyDriveAnalysis = featureFlags?.enableChangeAnalysis;
         const insightSupportsScheduledExports = isInsightSupportedForScheduledExports(insight);
         const insightSupportsAlerts = isInsightSupportedForAlerts(insight);
@@ -174,7 +182,7 @@ export abstract class ConfigurationPanelContent<
                 supportsDrillDownConfiguration={panelConfig?.supportsAttributeHierarchies}
                 supportsScheduledExportsConfiguration={!!supportsScheduledExportsConfiguration}
                 InteractionsDetailRenderer={configurationPanelRenderers?.InteractionsDetailRenderer}
-                enableImplicitDrillToUrl={enableImplicitDrillToUrl}
+                showImplicitDrillToUrl={showImplicitDrillToUrl}
                 supportsKeyDriveAnalysis={supportsKeyDriveAnalysis}
             />
         ) : null;

@@ -148,7 +148,7 @@ func main() {
 	}
 
 	// build internal scenarios
-	internalScenarios := converters.ScenariosToInternal(configuration.Browsers, configuration.Viewports, scenarios)
+	internalScenarios := converters.ScenariosToInternal(configuration.Browsers, configuration.Viewports, configuration.RetryCount, scenarios)
 
 	numInternalScenarios := len(internalScenarios)
 	fmt.Println("Generated", numInternalScenarios, "internal scenarios")

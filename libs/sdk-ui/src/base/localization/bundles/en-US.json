@@ -67,6 +67,26 @@
         "text": "Account",
         "crowdinContext": "Title for the user account menu in the header. Displays user-related options like profile settings and logout."
     },
+    "gs.header.projectPicker.home": {
+        "text": "Home",
+        "crowdinContext": "Label for the home button in the project picker. Clicking this navigates to the home page."
+    },
+    "gs.header.projectPicker.noMatchingWorkspaces": {
+        "text": "No matching workspaces.",
+        "crowdinContext": "Message when no workspaces match search criteria"
+    },
+    "gs.header.projectPicker.searchPlaceholder.aria": {
+        "text": "Search workspaces",
+        "crowdinContext": "Placeholder text for project/workspace and aria-label search input"
+    },
+    "gs.header.projectPicker.pickerName.aria": {
+        "text": "Workspace picker",
+        "crowdinContext": "Aria-label for workspace picker"
+    },
+    "gs.header.projectPicker.workspaces": {
+        "text": "Workspaces",
+        "crowdinContext": "Heading before list of workspaces"
+    },
     "gs.list.all": {
         "text": "All",
         "crowdinContext": "Option in filter controls to select all items. Used in various dropdown lists and filter components."

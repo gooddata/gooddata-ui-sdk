@@ -365,7 +365,7 @@ export type DataColumnType = "ATTRIBUTE" | "FACT" | "DATE";
 export type DatasetLoadStatus = "RUNNING" | "OK" | "ERROR" | "CANCELLED" | "ERROR_METADATA" | "REFRESHING";
 
 // @alpha (undocumented)
-export type DataSourceType = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE" | "ADS" | "BIGQUERY" | "MSSQL" | "PRESTO" | "DREMIO" | "DRILL" | "GREENPLUM" | "AZURESQL" | "SYNAPSESQL" | "DATABRICKS" | "GDSTORAGE" | "CLICKHOUSE" | "MYSQL" | "MARIADB" | "ORACLE" | "PINOT" | "STARROCKS" | "ATHENA" | "SINGLESTORE" | "MOTHERDUCK" | "MONGODB" | "FLEXCONNECT";
+export type DataSourceType = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE" | "ADS" | "BIGQUERY" | "MSSQL" | "PRESTO" | "DREMIO" | "DRILL" | "GREENPLUM" | "AZURESQL" | "SYNAPSESQL" | "DATABRICKS" | "GDSTORAGE" | "CLICKHOUSE" | "CRATEDB" | "MYSQL" | "MARIADB" | "ORACLE" | "PINOT" | "STARROCKS" | "ATHENA" | "SINGLESTORE" | "MOTHERDUCK" | "MONGODB" | "FLEXCONNECT";
 
 // @public
 export type DataValue = null | string | number;
@@ -2523,6 +2523,7 @@ export interface IListedDashboard extends Readonly<Required<IAuditableDates>>, R
     readonly description: string;
     readonly identifier: string;
     readonly ref: ObjRef;
+    readonly summary?: string;
     readonly tabs?: IDashboardTab[];
     readonly tags?: string[];
     readonly title: string;
@@ -3845,6 +3846,8 @@ export interface ISettings {
     enableChangeAnalysis?: boolean;
     enableComparisonInAlerting?: boolean;
     enableCompositeGrain?: boolean;
+    // (undocumented)
+    enableCrateDbDataSource?: boolean;
     enableCreateUser?: boolean;
     // @internal
     enableCrossFilteringAliasTitles?: boolean;

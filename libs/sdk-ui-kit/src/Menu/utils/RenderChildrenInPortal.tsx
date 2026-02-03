@@ -1,8 +1,8 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type ReactNode, useEffect, useMemo, useRef } from "react";
 
-import ReactDOM from "react-dom";
+import { createPortal } from "react-dom";
 
 export interface IRenderChildrenInPortalProps {
     targetElement: Element;
@@ -32,5 +32,5 @@ export function RenderChildrenInPortal(props: IRenderChildrenInPortalProps) {
         };
     }, [props.targetElement, portalElement]);
 
-    return ReactDOM.createPortal(props.children, portalElement);
+    return createPortal(props.children, portalElement);
 }

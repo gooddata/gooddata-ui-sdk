@@ -1,12 +1,12 @@
 // (C) 2025-2026 GoodData Corporation
 
-/* eslint-disable no-constant-condition */
-
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import type { ISemanticQualityIssuesCalculation, ISemanticQualityReport } from "@gooddata/sdk-model";
 
-const maxPollingInterval = 30 * 1000; // 30 seconds
-const maxPollingTime = 5 * 60 * 1000; // 5 minutes
+const maxPollingInterval = 15 * 60 * 1000; // 15 minutes
+const maxPollingTime = 7 * 24 * 60 * 60 * 1000; // 7 days
+const startPollingInterval = 2000; // 2 seconds
+const pollingIntervalIncreaseRatio = 1.25;
 
 type Options = {
     backend: IAnalyticalBackend;
@@ -54,7 +54,7 @@ async function pollingForSemanticCheckStatus(
     // If the calculation is still running, poll for the report until it is completed or failed
     if (currentReport.status === "RUNNING" || currentReport.status === "SYNCING") {
         const startTime = Date.now();
-        let pollingInterval = 2000; // 2 seconds
+        let pollingInterval = startPollingInterval;
 
         while (true) {
             // Check for cancellation
@@ -73,7 +73,7 @@ async function pollingForSemanticCheckStatus(
             await wait(pollingInterval);
 
             // Increase polling interval
-            pollingInterval = Math.min(pollingInterval * 1.5, maxPollingInterval);
+            pollingInterval = Math.min(pollingInterval * pollingIntervalIncreaseRatio, maxPollingInterval);
 
             currentReport = await getQualityReportQuery(options);
             // Update status

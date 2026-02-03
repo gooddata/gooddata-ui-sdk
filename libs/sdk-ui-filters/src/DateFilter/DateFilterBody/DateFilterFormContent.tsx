@@ -1,11 +1,16 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type KeyboardEvent, useCallback, useRef } from "react";
 
 import { isEmpty } from "lodash-es";
 import { useIntl } from "react-intl";
 
-import { type DateFilterGranularity, type WeekStart } from "@gooddata/sdk-model";
+import {
+    type DateFilterGranularity,
+    type WeekStart,
+    isAbsoluteDateFilterForm,
+    isRelativeDateFilterForm,
+} from "@gooddata/sdk-model";
 import { useId } from "@gooddata/sdk-ui-kit";
 
 import { DateFilterFormNavigationWrapper } from "./DateFilterFormNavigationWrapper.js";
@@ -71,6 +76,17 @@ export function DateFilterFormContent({
     const showStaticForm = activeForm === "absoluteForm" && filterOptions.absoluteForm;
     const showRelativeForm =
         activeForm === "relativeForm" && filterOptions.relativeForm && availableGranularities.length > 0;
+
+    const absoluteSelectedFilterOption =
+        filterOptions.absoluteForm && isAbsoluteDateFilterForm(selectedFilterOption)
+            ? selectedFilterOption
+            : filterOptions.absoluteForm;
+
+    const relativeSelectedFilterOption =
+        filterOptions.relativeForm && isRelativeDateFilterForm(selectedFilterOption)
+            ? selectedFilterOption
+            : filterOptions.relativeForm;
+
     const intl = useIntl();
     const relativeDateFilterRef = useRef<HTMLDivElement>(null);
     const tabGranularityRef = useRef<HTMLDivElement>(null);
@@ -105,7 +121,7 @@ export function DateFilterFormContent({
                         <AbsoluteDateFilterForm
                             dateFormat={dateFormat}
                             onSelectedFilterOptionChange={onSelectedFilterOptionChange}
-                            selectedFilterOption={selectedFilterOption as IUiAbsoluteDateFilterForm}
+                            selectedFilterOption={absoluteSelectedFilterOption as IUiAbsoluteDateFilterForm}
                             isMobile={isMobile}
                             isTimeEnabled={isTimeForAbsoluteRangeEnabled}
                             weekStart={weekStart}
@@ -134,7 +150,9 @@ export function DateFilterFormContent({
                         <DateFilterFormWrapper isMobile={isMobile}>
                             <RelativeDateFilterForm
                                 onSelectedFilterOptionChange={onSelectedFilterOptionChange}
-                                selectedFilterOption={selectedFilterOption as IUiRelativeDateFilterForm}
+                                selectedFilterOption={
+                                    relativeSelectedFilterOption as IUiRelativeDateFilterForm
+                                }
                                 availableGranularities={availableGranularities}
                                 isMobile={isMobile}
                                 ref={tabGranularityRef}

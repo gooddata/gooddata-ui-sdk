@@ -40,7 +40,6 @@ export class WidgetBaseBuilder<T extends IWidget> extends Builder<T> implements 
     ): this => {
         this.setWidget((w) => ({
             ...w,
-            // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
             [prop]: resolveValueOrUpdateCallback(valueOrUpdateCallback, w[prop]!),
         }));
         return this;

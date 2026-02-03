@@ -9,6 +9,7 @@ import { simplifyText } from "@gooddata/util";
 
 export interface IHeaderWorkspacePickerItemProps {
     title: string;
+    workspaceId: string;
     isDemo?: boolean;
     isSelected?: boolean;
     isLoading?: boolean;
@@ -18,6 +19,7 @@ export interface IHeaderWorkspacePickerItemProps {
 
 function CoreHeaderWorkspacePickerItem({
     intl,
+    workspaceId,
     title,
     isLoading,
     isSelected,
@@ -42,9 +44,11 @@ function CoreHeaderWorkspacePickerItem({
         "gd-is-demo": isDemo,
     });
 
+    const workspaceTitle = title || workspaceId;
+
     return (
-        <button className={classes} title={title} onClick={onClick}>
-            <span className="project-title">{title}</span>
+        <button className={classes} title={workspaceTitle} onClick={onClick} tabIndex={-1}>
+            <span className="project-title">{workspaceTitle}</span>
             {isDemo ? (
                 <span className="demo-sticker">{t({ id: "gs.header.projectPicker.demo" })}</span>
             ) : null}

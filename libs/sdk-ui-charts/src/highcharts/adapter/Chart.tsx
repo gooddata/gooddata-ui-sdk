@@ -1,6 +1,6 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
-/* eslint-disable import/no-unassigned-import */
+/* eslint-disable import-x/no-unassigned-import */
 
 import { Component } from "react";
 

@@ -347,6 +347,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableCrateDbDataSource,
+            "enableCrateDbDataSource",
+            "BOOLEAN",
+            FeatureFlagsValues.enableCrateDbDataSource,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableSnowflakeKeyPairAuthentication,
             "enableSnowflakeKeyPairAuthentication",
             "BOOLEAN",

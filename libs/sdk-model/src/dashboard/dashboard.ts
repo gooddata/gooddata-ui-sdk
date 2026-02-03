@@ -612,6 +612,14 @@ export interface IListedDashboard
     readonly description: string;
 
     /**
+     * AI-generated summary of the dashboard content.
+     *
+     * @remarks
+     * Optional for backward compatibility as not all backends/sources provide it.
+     */
+    readonly summary?: string;
+
+    /**
      * Dashboard tags.
      *
      * @remarks

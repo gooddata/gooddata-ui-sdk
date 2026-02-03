@@ -21,6 +21,7 @@ import { backendCapabilitiesSliceReducer } from "./backendCapabilities/index.js"
 import { catalogSliceReducer } from "./catalog/index.js";
 import { configSliceReducer } from "./config/index.js";
 import { dashboardPermissionsSliceReducer } from "./dashboardPermissions/index.js";
+import { dashboardSummaryWorkflowSliceReducer } from "./dashboardSummaryWorkflow/index.js";
 import { drillSliceReducer } from "./drill/index.js";
 import { drillTargetsReducer } from "./drillTargets/index.js";
 import { entitlementsSliceReducer } from "./entitlements/index.js";
@@ -54,7 +55,6 @@ import { type DashboardContext, type PrivateDashboardContext } from "../types/co
 // https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
 const createSagaMiddleware = defaultImport(defaultReduxSaga);
 
-// eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
 const nonSerializableEventsAndCommands: (DashboardEventType | DashboardCommandType | string)[] = [
     "GDC.DASH/EVT.COMMAND.STARTED",
     "GDC.DASH/EVT.COMMAND.FAILED",
@@ -327,6 +327,7 @@ export function createDashboardStore(config: IDashboardStoreConfig): IReduxedDas
         automations: automationsSliceReducer,
         users: usersSliceReducer,
         filterViews: filterViewsSliceReducer,
+        dashboardSummaryWorkflow: dashboardSummaryWorkflowSliceReducer,
         _queryCache: queryProcessing.queryCacheReducer,
     });
 

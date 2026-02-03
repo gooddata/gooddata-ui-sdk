@@ -21,6 +21,7 @@ export const useLoadAutomations = ({
     setState,
     onLoad,
 }: IUseLoadAutomationsProps) => {
+    // loading
     const { promiseGetAutomationsQuery } = useAutomationService(scope);
     const isInitial = state.page === 0 && state.invalidationId === 0;
 

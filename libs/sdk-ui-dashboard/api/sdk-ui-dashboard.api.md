@@ -20,6 +20,7 @@ import { DashboardAttributeFilterConfigMode } from '@gooddata/sdk-model';
 import { DashboardAttributeFilterSelectionMode } from '@gooddata/sdk-model';
 import { DashboardDateFilterConfigMode } from '@gooddata/sdk-model';
 import { DashboardFiltersApplyMode } from '@gooddata/sdk-model';
+import { DashboardSummaryWorkflowStatus } from '@gooddata/sdk-backend-spi';
 import { DataViewFacade } from '@gooddata/sdk-ui';
 import { DateAttributeGranularity } from '@gooddata/sdk-model';
 import { DateFilterGranularity } from '@gooddata/sdk-model';
@@ -183,6 +184,7 @@ import { OnError } from '@gooddata/sdk-ui';
 import { OnExportReady } from '@gooddata/sdk-ui';
 import { OnFiredDrillEvent } from '@gooddata/sdk-ui';
 import { OnLoadingChanged } from '@gooddata/sdk-ui';
+import { OverlayController } from '@gooddata/sdk-ui-kit';
 import { OverlayPositionType } from '@gooddata/sdk-ui-kit';
 import { Patch } from 'immer';
 import { PayloadAction } from '@reduxjs/toolkit';
@@ -332,7 +334,7 @@ export type AttributeHierarchiesInteractionType = "attributeHierarchyDrillDownSe
 export function attributeHierarchyModified(correlationId?: string): IAttributeHierarchyModified;
 
 // @internal (undocumented)
-export function AttributesDropdown({ id, className, bodyClassName, onClose, onOpen, onSelect, attributes, dateDatasets, openOnInit, DropdownButtonComponent, DropdownTitleComponent, renderNoData, overlayPositionType, renderVirtualisedList, getCustomItemTitle, accessibilityConfig, returnFocusTo, }: IDashboardAttributeFilterPlaceholderProps): JSX.Element;
+export function AttributesDropdown({ id, className, bodyClassName, onClose, onOpen, onSelect, attributes, dateDatasets, openOnInit, DropdownButtonComponent, DropdownTitleComponent, renderNoData, overlayPositionType, getCustomItemTitle, accessibilityConfig, returnFocusTo, }: IDashboardAttributeFilterPlaceholderProps): JSX.Element;
 
 // @alpha (undocumented)
 export type AutomationInteractionData = {
@@ -1225,6 +1227,7 @@ export type DashboardState = {
     automations: IAutomationsState;
     users: IUsersState;
     notificationChannels: INotificationChannelsState;
+    dashboardSummaryWorkflow: DashboardSummaryWorkflowState;
     renderMode: IRenderModeState;
     ui: IUiState;
     executionResults: EntityState<IExecutionResultEnvelope, EntityId>;
@@ -1263,6 +1266,19 @@ export class DashboardStoreAccessorRepository {
 
 // @internal (undocumented)
 export function DashboardStoreProvider(props: IDashboardStoreProviderProps): JSX.Element | null;
+
+// @internal (undocumented)
+export type DashboardSummaryWorkflowInfo = {
+    runId?: string;
+    status?: DashboardSummaryWorkflowStatus | "AWAITING_REFRESH";
+    startedAt?: number;
+    updatedAt?: number;
+};
+
+// @internal (undocumented)
+export type DashboardSummaryWorkflowState = {
+    byDashboardId: Record<string, DashboardSummaryWorkflowInfo>;
+};
 
 // @alpha
 export function dashboardTabConvertedFromDefault(ctx: DashboardContext, newTabId: string, index: number, correlationId?: string): IDashboardTabConvertedFromDefault;
@@ -2927,8 +2943,6 @@ export interface IDashboardAttributeFilterPlaceholderProps {
     overlayPositionType?: OverlayPositionType;
     // (undocumented)
     renderNoData?: (props: IDropdownListNoDataRenderProps) => ReactNode;
-    // (undocumented)
-    renderVirtualisedList?: boolean;
     // (undocumented)
     returnFocusTo?: RefObject<HTMLElement> | string;
 }
@@ -5859,6 +5873,7 @@ export interface IKdaDialogProps {
     className?: string;
     locale?: string;
     onClose?: () => void;
+    parentOverlayController?: OverlayController;
     showCloseButton?: boolean;
 }
 

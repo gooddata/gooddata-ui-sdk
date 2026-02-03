@@ -1,2 +1,5 @@
-#we ignore these files because they are generated after build
+esm/
+.rush/
+api/
+temp/
 src/base/localization/bundles/*.ts

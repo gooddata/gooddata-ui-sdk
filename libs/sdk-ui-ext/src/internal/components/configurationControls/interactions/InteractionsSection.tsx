@@ -25,7 +25,7 @@ export interface IInteractionsSectionProps {
     supportsDrillDownConfiguration?: boolean;
     supportsScheduledExportsConfiguration?: boolean;
     supportsKeyDriveAnalysis?: boolean;
-    enableImplicitDrillToUrl?: boolean;
+    showImplicitDrillToUrl?: boolean;
 }
 
 const TOOLTIP_ALIGN_POINTS = [{ align: "cr cl", offset: { x: 5, y: 0 } }];
@@ -51,7 +51,7 @@ export const InteractionsSection = memo(function InteractionsSection({
     supportsDrillDownConfiguration,
     supportsScheduledExportsConfiguration,
     supportsKeyDriveAnalysis,
-    enableImplicitDrillToUrl,
+    showImplicitDrillToUrl,
 }: IInteractionsSectionProps) {
     const isDrillDownDisabled = properties?.controls?.["disableDrillDown"] ?? false;
     const isDrillIntoURLDisabled = properties?.controls?.["disableDrillIntoURL"] ?? true;
@@ -155,7 +155,7 @@ export const InteractionsSection = memo(function InteractionsSection({
                 />
             ) : null}
             {InteractionsDetailRenderer ? InteractionsDetailRenderer() : null}
-            {enableImplicitDrillToUrl ? (
+            {showImplicitDrillToUrl ? (
                 <CheckboxControl
                     valuePath="disableDrillIntoURL"
                     labelText={messages["interactionsDrillIntoURL"].id}
@@ -164,6 +164,7 @@ export const InteractionsSection = memo(function InteractionsSection({
                     checked={!isDrillIntoURLDisabled}
                     pushData={pushData}
                     isValueInverted
+                    defaultValue
                 />
             ) : null}
         </ConfigSection>

@@ -19,7 +19,7 @@ const commonScenarios: INeobackstopConfig = {
     opened: {
         readySelector: { selector: ".screenshot-target", state: State.Attached },
         clickSelector: ".gd-button-primary",
-        postInteractionWait: { selector: ".gd-list" },
+        postInteractionWait: { selector: ".gd-infinite-list" },
         delay: {
             postOperation: 250, // element has .25s transition
         },

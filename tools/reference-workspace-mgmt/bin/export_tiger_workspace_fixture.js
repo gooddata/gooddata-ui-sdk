@@ -1,10 +1,12 @@
 #!/usr/bin/env node
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
-import { exportTigerFixtureExtension, logLn } from "@gooddata/fixtures";
-import { FIXTURE_TYPES, BACKEND } from "./constants.js";
 import fs from "fs";
 import path from "path";
+
+import { exportTigerFixtureExtension, logLn } from "@gooddata/fixtures";
+
+import { BACKEND, FIXTURE_TYPES } from "./constants.js";
 
 function validateEnv() {
     const { PATH_TO_FIXTURES, HOST_NAME, TIGER_API_TOKEN, WORKSPACE_ID } = process.env;
@@ -26,7 +28,6 @@ function validateEnv() {
     return true;
 }
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
 function replaceUserByAdmin() {
     const { PATH_TO_FIXTURES } = process.env;
 
@@ -92,7 +93,6 @@ export async function export_fixture() {
         logLn("Export workspace fixtures successfully");
     } catch (e) {
         logLn(e.toString());
-        // eslint-disable-next-line no-console
         console.error(e);
     }
 }

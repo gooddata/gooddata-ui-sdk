@@ -1,6 +1,6 @@
 # GoodData.UI SDK - Interactive Examples - ComboChart
 
-Example demonstrates ComboChart secondaryMeasures definition. 
+Example demonstrates ComboChart secondaryMeasures definition.
 
 You can run this example in [CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-combochart?file=/src/example/Example.tsx). Navigate [up](../../) for more information.
 

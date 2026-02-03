@@ -1,6 +1,7 @@
 // (C) 2007-2026 GoodData Corporation
 
 import {
+    type ComponentType,
     Fragment,
     type KeyboardEvent,
     type ReactElement,
@@ -14,17 +15,20 @@ import cx from "classnames";
 import { type WrappedComponentProps, injectIntl } from "react-intl";
 
 import { DropdownTabs } from "./DropdownTabs.js";
-import { UiPagedVirtualList } from "../@ui/UiPagedVirtualList/UiPagedVirtualList.js";
+import {
+    type IUiPagedVirtualListSkeletonItemProps,
+    UiPagedVirtualList,
+} from "../@ui/UiPagedVirtualList/UiPagedVirtualList.js";
 import {
     DETAILED_ANNOUNCEMENT_THRESHOLD,
     UiSearchResultsAnnouncement,
 } from "../@ui/UiSearchResultsAnnouncement/UiSearchResultsAnnouncement.js";
 import { AutoSize } from "../AutoSize/AutoSize.js";
 import { Input } from "../Form/Input.js";
-import { type IListProps, List } from "../List/List.js";
 import { LoadingMask } from "../LoadingMask/LoadingMask.js";
 import { NoData } from "../NoData/NoData.js";
 import { type ITab } from "../Tabs/Tabs.js";
+import { type IAccessibilityConfigBase } from "../typings/accessibility.js";
 import { isTypingKey } from "../utils/events.js";
 
 /**
@@ -37,7 +41,25 @@ export interface IDropdownListNoDataRenderProps {
 /**
  * @internal
  */
-export interface IDropdownListProps<T> extends IListProps<T> {
+export interface IRenderDropdownListItemProps<T> {
+    rowIndex: number;
+    item: T;
+    width: number;
+    height: number;
+    isFirst: boolean;
+    isLast: boolean;
+    focused?: boolean;
+}
+
+/**
+ * @internal
+ */
+export interface IDropdownListProps<T> {
+    id?: string;
+    items?: T[];
+    itemHeight?: number;
+    itemsCount?: number;
+
     title?: string;
     className?: string;
     tabsClassName?: string;
@@ -47,7 +69,6 @@ export interface IDropdownListProps<T> extends IListProps<T> {
     maxHeight?: number;
     containerPadding?: number;
 
-    renderVirtualisedList?: boolean;
     onKeyDownSelect?: (item: T) => void;
     onKeyDownConfirm?: (item: T) => void;
 
@@ -73,8 +94,33 @@ export interface IDropdownListProps<T> extends IListProps<T> {
     footer?: ReactNode | ((closeDropdown: () => void) => ReactNode);
     closeDropdown?: () => void;
 
+    loadNextPage?: () => void;
+    hasNextPage?: boolean;
+    skeletonItemsCount?: number;
+    shouldLoadNextPage?: (lastItemIndex: number, itemsCount: number, skeletonItemsCount: number) => boolean;
+    isNextPageLoading?: boolean;
+    SkeletonItem?: ComponentType<IUiPagedVirtualListSkeletonItemProps>;
+
+    renderItem: (props: IRenderDropdownListItemProps<T>) => ReactElement;
+    itemHeightGetter?: (index: number) => number;
+    itemTitleGetter?: (item: T) => string;
+
+    accessibilityConfig?: Pick<IAccessibilityConfigBase, "ariaLabel" | "ariaLabelledBy" | "role">;
+
+    onScroll?: () => void;
+
+    /**
+     * An item in the list that should be scrolled into view when the component renders.
+     * By default, items are compared by object identity (i.e., ===).
+     * To customize how the target item is found (e.g., by ID), provide a `scrollToItemKeyExtractor` as well.
+     */
     scrollToItem?: T;
-    scrollDirection?: -1 | 1;
+    /**
+     * A function that extracts a unique key from each item for comparison with `scrollToItem`.
+     * This is useful when the provided `scrollToItem` may not be the same object reference as items in the list.
+     * If not provided, object identity (===) is used for comparison.
+     */
+    scrollToItemKeyExtractor?: (item: T) => string | number;
 }
 
 /**
@@ -109,19 +155,12 @@ const defaultNoData: DefaultNoDataProps = (props) => {
 };
 
 /**
+ * Dropdown list component with paged virtual list implementation
  * @internal
  *
- * This component currently supports rendering both legacy and modern list implementations,
- * but there is an opportunity to simplify and improve maintainability by splitting it.
- *
- * TODO: Consider splitting this component into two separate implementations:
- *
- * 1. `List` — Maintained temporarily for backward compatibility with existing consumers that rely on
- *    the legacy `List` implementation based on `fixed-data-table-2`.
- *
- * 2. `UiPagedVirtualised` — Preferred implementation that uses our `UiPagedVirtualList` component
  */
 export function DropdownList<T>({
+    id,
     title,
     className = "",
     tabsClassName = "",
@@ -130,7 +169,6 @@ export function DropdownList<T>({
     height,
     maxHeight,
 
-    renderVirtualisedList = false,
     onKeyDownSelect,
     onKeyDownConfirm,
 
@@ -159,10 +197,19 @@ export function DropdownList<T>({
     renderNoData = defaultNoData,
     footer,
     closeDropdown,
-
+    accessibilityConfig,
+    renderItem,
+    itemHeightGetter,
+    itemTitleGetter,
+    loadNextPage,
+    hasNextPage,
+    skeletonItemsCount = 0,
+    shouldLoadNextPage,
+    isNextPageLoading = false,
+    SkeletonItem,
+    onScroll,
     scrollToItem,
-    scrollDirection,
-    ...listProps
+    scrollToItemKeyExtractor,
 }: IDropdownListProps<T>): ReactElement {
     const [currentSearchString, setCurrentSearchString] = useState(searchString);
     const hasNoData = !isLoading && itemsCount === 0;
@@ -240,8 +287,8 @@ export function DropdownList<T>({
                     <UiSearchResultsAnnouncement
                         totalResults={currentSearchString ? itemsCount : undefined}
                         resultValues={
-                            itemsCount <= DETAILED_ANNOUNCEMENT_THRESHOLD && listProps.itemTitleGetter
-                                ? items.map(listProps.itemTitleGetter)
+                            itemsCount <= DETAILED_ANNOUNCEMENT_THRESHOLD && itemTitleGetter
+                                ? items.map(itemTitleGetter)
                                 : undefined
                         }
                     />
@@ -262,20 +309,29 @@ export function DropdownList<T>({
             {!isLoading && itemsCount > 0 ? (
                 <AutoSize>
                     {(autoSize) => {
-                        const listWidth = isMobile ? autoSize.width : width;
+                        const listWidth = isMobile ? autoSize.width : (width ?? (autoSize.width || 200));
                         const listHeight = isMobile ? autoSize.height : height;
                         const effectiveItemHeight = isMobile
                             ? Math.max(mobileItemHeight, itemHeight)
                             : itemHeight;
                         const effectiveMaxHeight = maxHeight || listHeight || 300;
 
-                        return renderVirtualisedList ? (
+                        return (
                             <div
-                                id={listProps.id}
+                                data-testid="gd-dropdown-list"
+                                id={id}
                                 style={{ width: listWidth }}
                                 className={listClassNames}
-                                role={listProps.accessibilityConfig?.role}
-                                aria-labelledby={listProps.accessibilityConfig?.ariaLabelledBy}
+                                role={
+                                    accessibilityConfig?.role === "listbox"
+                                        ? undefined
+                                        : accessibilityConfig?.role
+                                }
+                                aria-labelledby={
+                                    accessibilityConfig?.role === "listbox"
+                                        ? undefined
+                                        : accessibilityConfig?.ariaLabelledBy
+                                }
                             >
                                 <UiPagedVirtualList<T>
                                     maxHeight={effectiveMaxHeight}
@@ -284,38 +340,48 @@ export function DropdownList<T>({
                                     itemsGap={0}
                                     itemPadding={0}
                                     containerPadding={containerPadding}
-                                    skeletonItemsCount={0}
                                     onKeyDownSelect={onKeyDownSelect}
                                     onKeyDownConfirm={onKeyDownConfirm}
                                     closeDropdown={closeDropdown}
+                                    itemHeightGetter={itemHeightGetter}
+                                    hasNextPage={hasNextPage}
+                                    loadNextPage={loadNextPage}
+                                    skeletonItemsCount={skeletonItemsCount}
+                                    SkeletonItem={SkeletonItem}
+                                    shouldLoadNextPage={shouldLoadNextPage}
+                                    isLoading={isNextPageLoading}
+                                    onScroll={onScroll}
+                                    scrollToItem={scrollToItem}
+                                    scrollToItemKeyExtractor={scrollToItemKeyExtractor}
+                                    representAs={
+                                        accessibilityConfig?.role === "listbox" ? "listbox" : undefined
+                                    }
+                                    listboxProps={
+                                        accessibilityConfig?.role === "listbox"
+                                            ? {
+                                                  "aria-label": accessibilityConfig?.ariaLabel,
+                                                  "aria-labelledby": accessibilityConfig?.ariaLabelledBy,
+                                              }
+                                            : undefined
+                                    }
                                 >
                                     {(item) => {
                                         const rowIndex = items.indexOf(item);
-                                        const listWidth = isMobile ? autoSize.width : (width ?? 0);
-                                        return listProps.renderItem({
+                                        const rowHeight = itemHeightGetter?.(rowIndex) ?? effectiveItemHeight;
+                                        const listWidth = isMobile
+                                            ? autoSize.width
+                                            : (width ?? (autoSize.width || 200));
+                                        return renderItem({
                                             rowIndex,
                                             item,
                                             width: listWidth,
-                                            height: effectiveItemHeight,
+                                            height: rowHeight,
                                             isFirst: rowIndex === 0,
                                             isLast: rowIndex === itemsCount - 1,
                                         });
                                     }}
                                 </UiPagedVirtualList>
                             </div>
-                        ) : (
-                            <List
-                                className={listClassNames}
-                                width={listWidth}
-                                height={listHeight}
-                                maxHeight={maxHeight}
-                                items={items}
-                                itemsCount={itemsCount}
-                                itemHeight={isMobile ? Math.max(mobileItemHeight, itemHeight) : itemHeight}
-                                scrollToItem={scrollToItem}
-                                scrollDirection={scrollDirection}
-                                {...listProps}
-                            />
                         );
                     }}
                 </AutoSize>

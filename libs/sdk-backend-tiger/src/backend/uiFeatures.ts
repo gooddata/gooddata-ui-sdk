@@ -58,6 +58,7 @@ export enum TigerFeaturesNames {
     EnableExperimentalFeaturesUI = "enableExperimentalFeaturesUI",
     EnableSingleStoreDataSource = "enableSingleStoreDataSource",
     EnableAthenaDataSource = "enableAthenaDataSource",
+    EnableCrateDbDataSource = "enableCrateDbDataSource",
     EnableSnowflakeKeyPairAuthentication = "enableSnowflakeKeyPairAuthentication",
     EnableMultipleDataSourcesInWorkspace = "enableMultipleDataSourcesInWorkspace",
     EnableScatterPlotSegmentation = "enableScatterPlotSegmentation",
@@ -186,6 +187,7 @@ export type ITigerFeatureFlags = {
     enableExperimentalFeaturesUI: (typeof FeatureFlagsValues)["enableExperimentalFeaturesUI"][number];
     enableSingleStoreDataSource: (typeof FeatureFlagsValues)["enableSingleStoreDataSource"][number];
     enableAthenaDataSource: (typeof FeatureFlagsValues)["enableAthenaDataSource"][number];
+    enableCrateDbDataSource: (typeof FeatureFlagsValues)["enableCrateDbDataSource"][number];
     enableSnowflakeKeyPairAuthentication: (typeof FeatureFlagsValues)["enableSnowflakeKeyPairAuthentication"][number];
     enableMultipleDataSourcesInWorkspace: (typeof FeatureFlagsValues)["enableMultipleDataSourcesInWorkspace"][number];
     enableScatterPlotSegmentation: (typeof FeatureFlagsValues)["enableScatterPlotSegmentation"][number];
@@ -317,6 +319,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableExperimentalFeaturesUI: false,
     enableSingleStoreDataSource: false,
     enableAthenaDataSource: false,
+    enableCrateDbDataSource: false,
     enableSnowflakeKeyPairAuthentication: true,
     enableMultipleDataSourcesInWorkspace: true,
     enableScatterPlotSegmentation: true,
@@ -448,6 +451,7 @@ export const FeatureFlagsValues = {
     enableExperimentalFeaturesUI: [true, false] as const,
     enableSingleStoreDataSource: [true, false] as const,
     enableAthenaDataSource: [true, false] as const,
+    enableCrateDbDataSource: [true, false] as const,
     enableSnowflakeKeyPairAuthentication: [true, false] as const,
     enableMultipleDataSourcesInWorkspace: [true, false] as const,
     enableScatterPlotSegmentation: [true, false] as const,

@@ -166,14 +166,12 @@ interface IOverrideV9<RulePrefix extends string> extends IConfigurationSharedV9<
 }
 
 export interface IConfigurationV8<RulePrefix extends string = "">
-    extends IConfigurationBase,
-        IConfigurationSharedV8<RulePrefix> {
+    extends IConfigurationBase, IConfigurationSharedV8<RulePrefix> {
     overrides?: IOverrideV8<RulePrefix>[];
 }
 
 export interface IConfigurationV9<RulePrefix extends string = "">
-    extends IConfigurationBase,
-        IConfigurationSharedV9<RulePrefix> {
+    extends IConfigurationBase, IConfigurationSharedV9<RulePrefix> {
     overrides?: IOverrideV9<RulePrefix>[];
 }
 

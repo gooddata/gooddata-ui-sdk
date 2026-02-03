@@ -110,3 +110,10 @@ export {
 } from "./components/dialogs/embedInsightDialog/EmbedInsightDialog.js";
 
 export type { IInsightTitleProps, IInsightViewProps } from "./interfaces/InsightView.js";
+
+export {
+    type ITabsIds,
+    type IUsePagedDropdownConfig,
+    type IUsePagedDropdownResult,
+    useInsightPagedList,
+} from "./components/insightList/useInsightPagedList.js";

@@ -329,6 +329,7 @@ export interface ISettings {
     enableStarrocksDataSource?: boolean;
     enableSingleStoreDataSource?: boolean;
     enableAthenaDataSource?: boolean;
+    enableCrateDbDataSource?: boolean;
 
     /**
      * Enable GenAI-powered functionality, such as semantic-search.

@@ -66,6 +66,10 @@ export interface AutomationAbsoluteDateFilterAbsoluteDateFilter {
     to: string;
     localIdentifier?: string;
     applyOnResult?: boolean;
+    /**
+     * If true, rows with undefined (NULL) date values will be included in the result. The filter becomes: (date_condition) OR (date IS NULL). If false or not set, standard behavior applies (NULLs excluded by the date condition).
+     */
+    includeEmptyValues?: boolean;
     dataset: AutomationAfmObjectIdentifierDataset;
 }
 
@@ -642,6 +646,7 @@ export interface AutomationDashboardDateFilterDateFilter {
     dataSet?: AutomationIdentifierRef;
     attribute?: AutomationIdentifierRef;
     boundedFilter?: AutomationRelativeBoundedDateFilter;
+    includeEmptyValues?: boolean;
     localIdentifier?: string;
 }
 
@@ -1418,6 +1423,10 @@ export interface AutomationRelativeDateFilterRelativeDateFilter {
     localIdentifier?: string;
     applyOnResult?: boolean;
     boundedFilter?: AutomationBoundedFilter;
+    /**
+     * If true, rows with undefined (NULL) date values will be included in the result. The filter becomes: (date_condition) OR (date IS NULL). If false or not set, standard behavior applies (NULLs excluded by the date condition).
+     */
+    includeEmptyValues?: boolean;
     dataset: AutomationAfmObjectIdentifierDataset;
 }
 

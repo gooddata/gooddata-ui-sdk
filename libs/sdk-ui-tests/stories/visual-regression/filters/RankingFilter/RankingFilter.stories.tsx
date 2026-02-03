@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { action } from "storybook/actions";
 
@@ -88,13 +88,14 @@ export default {
 export function Dropdown() {
     return (
         <div style={wrapperStyle} className="screenshot-target">
+            <span className="dropdown-anchor-test" />
             <RankingFilterDropdown
                 measureItems={measureDropdownItems}
                 attributeItems={attributeDropdownItems}
                 filter={rankingFilter}
                 onApply={action("apply")}
                 onCancel={action("cancel")}
-                anchorEl="screenshot-target"
+                anchorEl=".dropdown-anchor-test"
             />
         </div>
     );
@@ -104,13 +105,14 @@ Dropdown.parameters = { kind: "dropdown", screenshots: dropdownScenarios } satis
 export function DropdownWithOneAttributeItem() {
     return (
         <div style={wrapperStyle} className="screenshot-target">
+            <span className="dropdown-anchor-test" />
             <RankingFilterDropdown
                 measureItems={measureDropdownItems}
                 attributeItems={[attributeDropdownItems[0]]}
                 filter={rankingFilter}
                 onApply={action("apply")}
                 onCancel={action("cancel")}
-                anchorEl="screenshot-target"
+                anchorEl=".dropdown-anchor-test"
             />
         </div>
     );
@@ -123,13 +125,14 @@ DropdownWithOneAttributeItem.parameters = {
 export function DropdownWithNonDefaultValueAndLongItemsSelected() {
     return (
         <div style={wrapperStyle} className="screenshot-target">
+            <span className="dropdown-anchor-test" />
             <RankingFilterDropdown
                 measureItems={measureDropdownItems}
                 attributeItems={attributeDropdownItems}
                 filter={nonStandardRankingFilter}
                 onApply={action("apply")}
                 onCancel={action("cancel")}
-                anchorEl="screenshot-target"
+                anchorEl=".dropdown-anchor-test"
             />
         </div>
     );
@@ -142,13 +145,14 @@ DropdownWithNonDefaultValueAndLongItemsSelected.parameters = {
 export function DropdownWithCustomGranularitySelectionDisabled() {
     return (
         <div style={wrapperStyle} className="screenshot-target">
+            <span className="dropdown-anchor-test" />
             <RankingFilterDropdown
                 measureItems={measureDropdownItems}
                 attributeItems={attributeDropdownItems}
                 filter={rankingFilter}
                 onApply={action("apply")}
                 onCancel={action("cancel")}
-                anchorEl="screenshot-target"
+                anchorEl=".dropdown-anchor-test"
                 customGranularitySelection={{
                     enable: false,
                     warningMessage: "This item is disabled.",

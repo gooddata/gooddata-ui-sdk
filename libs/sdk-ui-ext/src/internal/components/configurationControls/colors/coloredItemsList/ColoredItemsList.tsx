@@ -10,7 +10,7 @@ import { ColoredItem } from "./ColoredItem.js";
 import { type IColoredItem } from "../../../../interfaces/Colors.js";
 import { getSearchedItems } from "../../../../utils/colors.js";
 
-const VISIBLE_ITEMS_COUNT = 5;
+const DROPDOWN_MAX_HEIGHT = 150;
 const SEARCH_FIELD_VISIBILITY_THRESHOLD = 7;
 const DROPDOWN_BODY_WIDTH = 218;
 
@@ -92,10 +92,10 @@ export const ColoredItemsList = memo(function ColoredItemsList(props: IColoredIt
                 showSearch={isSearchFieldVisible()}
                 searchString={searchStringToUse}
                 onSearch={onSearch}
-                onScrollStart={onScroll}
+                onScroll={onScroll}
                 items={items}
                 className="gd-colored-items-list"
-                maxVisibleItemsCount={VISIBLE_ITEMS_COUNT}
+                maxHeight={DROPDOWN_MAX_HEIGHT}
                 isLoading={isLoading}
                 renderItem={({ item, rowIndex }) => {
                     const appliedChartFill = isChartFillIgnoredMeasure(item, chartFillIgnoredMeasures)

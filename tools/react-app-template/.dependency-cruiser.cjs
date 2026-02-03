@@ -1,3 +1,4 @@
+// (C) 2026 GoodData Corporation
 const depCruiser = require("../../common/config/dep-cruiser/default.config");
 
 options = {

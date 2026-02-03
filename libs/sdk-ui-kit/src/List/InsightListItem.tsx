@@ -105,9 +105,11 @@ export function InsightListItem({
 }: IInsightListItemProps) {
     const intl = useIntl();
     const shortenedTextRef = useRef<ShortenedText>(null);
+    const currentWidthRef = useRef<number | undefined>(width);
 
     useEffect(() => {
-        if (shortenedTextRef.current) {
+        if (shortenedTextRef.current && currentWidthRef.current !== width) {
+            currentWidthRef.current = width;
             shortenedTextRef.current.recomputeShortening();
         }
     }, [width]);
@@ -192,15 +194,17 @@ export function InsightListItem({
             <div className="gd-visualizations-list-item-content">
                 <div className="gd-visualizations-list-item-content-name">
                     {lockElement}
-                    <ShortenedText
-                        ref={shortenedTextRef}
-                        tooltipAlignPoints={tooltipAlignPoints}
-                        displayTooltip={!showDescriptionPanel}
-                    >
-                        {isLoading
-                            ? intl.formatMessage({ id: "gs.visualizationsList.loading" })
-                            : (title ?? "")}
-                    </ShortenedText>
+                    <div style={{ maxWidth: "100%", whiteSpace: "nowrap" }}>
+                        <ShortenedText
+                            ref={shortenedTextRef}
+                            tooltipAlignPoints={tooltipAlignPoints}
+                            displayTooltip={!showDescriptionPanel}
+                        >
+                            {isLoading
+                                ? intl.formatMessage({ id: "gs.visualizationsList.loading" })
+                                : (title ?? "")}
+                        </ShortenedText>
+                    </div>
                 </div>
                 <div className="gd-visualizations-list-item-content-date">
                     {renderUpdatedDateTime(updated)}
