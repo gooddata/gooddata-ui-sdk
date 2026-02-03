@@ -1,8 +1,9 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react-swc";
+import react from "@vitejs/plugin-react";
 import { createHtmlPlugin } from "vite-plugin-html";
-import packageJson from "./package.json";
+import packageJson from "./package.json" with { type: "json" };
 
 const backendUrl = packageJson.gooddata.hostname;
 const workspaceId = packageJson.gooddata.workspaceId;
@@ -10,7 +11,6 @@ const workspaceId = packageJson.gooddata.workspaceId;
 console.log("backendUrl: ", backendUrl);
 
 export default defineConfig({
-    entry: "src/index.tsx",
     plugins: [
         react(),
         createHtmlPlugin({

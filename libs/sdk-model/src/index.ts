@@ -725,6 +725,7 @@ export {
 export { type IAttributeMetadataObject, isAttributeMetadataObject } from "./ldm/metadata/attribute/index.js";
 export {
     type AttributeDisplayFormType,
+    type GeoCollectionKind,
     type IAttributeDisplayFormGeoAreaConfig,
     type IAttributeDisplayFormMetadataObject,
     attributeDisplayFormMetadataObjectAttributeRef,

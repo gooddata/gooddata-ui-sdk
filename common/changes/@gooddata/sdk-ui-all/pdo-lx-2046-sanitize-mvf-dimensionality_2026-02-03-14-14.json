@@ -1,0 +1,10 @@
+{
+    "changes": [
+        {
+            "packageName": "@gooddata/sdk-ui-all",
+            "comment": "sdk-ui-ext: sanitize dimensionality of metric value filter during drilling by migrating attributes identified by local id to obj ref when a linked attribute is removed from the insight buckets",
+            "type": "none"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all"
+}

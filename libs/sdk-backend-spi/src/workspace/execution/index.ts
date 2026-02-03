@@ -3,6 +3,7 @@
 import {
     type DataValue,
     type DimensionGenerator,
+    type GeoCollectionKind,
     type IAttributeOrMeasure,
     type IBucket,
     type IDimension,
@@ -130,6 +131,12 @@ export interface ICollectionItemsConfig {
      * Collection identifier.
      */
     collectionId: string;
+    /**
+     * Kind of geo collection - STATIC (default) or CUSTOM.
+     * STATIC collections use /api/v1/location/collections/\{collectionId\}/items
+     * CUSTOM collections use /api/v1/location/custom/collections/\{collectionId\}/items
+     */
+    kind?: GeoCollectionKind;
     /**
      * List of values to filter features by.
      */

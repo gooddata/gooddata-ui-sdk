@@ -1,3 +1,5 @@
+// (C) 2026 GoodData Corporation
+
 import fs from "fs";
 import path from "path";
 import { execSync } from "child_process";
@@ -21,15 +23,7 @@ const TEMPLATE_DIR = path.join(__dirname, "../", "examples-template");
 const EXAMPLES_DIR = path.join(__dirname, "../", "examples");
 
 const RUSH_JSON_PATH = path.join(__dirname, "../../..", "rush.json");
-const PATH_TO_PRETTIER = path.join(
-    __dirname,
-    "../../..",
-    "common",
-    "temp",
-    "node_modules",
-    ".bin",
-    "prettier",
-);
+const PATH_TO_OXFMT = path.join(__dirname, "../../..", "common", "temp", "node_modules", ".bin", "oxfmt");
 
 let exampleName, exampleTitle, exampleDescription;
 
@@ -126,8 +120,8 @@ rl.question('Enter example directory name (should have prefix "example-"): ', (n
 
             fs.writeFileSync(RUSH_JSON_PATH, updatedContent);
 
-            // Format the JSON file using prettier
-            execSync(PATH_TO_PRETTIER + " --write " + RUSH_JSON_PATH);
+            // Format the JSON file using oxfmt
+            execSync(`${PATH_TO_OXFMT} ${RUSH_JSON_PATH}`);
 
             console.log("Example created successfully.");
             rl.close();

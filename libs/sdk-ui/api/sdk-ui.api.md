@@ -13,6 +13,7 @@ import { DependencyList } from 'react';
 import { Dispatch } from 'react';
 import { FC } from 'react';
 import { ForecastDataValue } from '@gooddata/sdk-model';
+import { GeoCollectionKind } from '@gooddata/sdk-model';
 import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttribute } from '@gooddata/sdk-model';
@@ -209,6 +210,7 @@ export function clusterTitleFromIntl(intl: IntlShape): string;
 // @alpha (undocumented)
 export type CollectionItemsRequestOptions = {
     collectionId: string;
+    kind?: GeoCollectionKind;
     limit?: number;
     bbox?: string;
     datetime?: string;

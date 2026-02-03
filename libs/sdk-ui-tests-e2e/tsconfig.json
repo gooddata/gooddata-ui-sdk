@@ -15,7 +15,6 @@
         "noUnusedParameters": true,
         "outDir": "dist",
         "sourceMap": false,
-        "baseUrl": "..",
         "types": ["cypress-real-events", "node", "@cypress/grep"],
         "paths": {
             "gooddata/util": ["util/src"]

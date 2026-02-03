@@ -415,10 +415,6 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "@types/prettier",
-      "allowedCategories": [ "tools" ]
-    },
-    {
       "name": "@types/qs",
       "allowedCategories": [ "production" ]
     },
@@ -767,10 +763,6 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
-      "name": "eslint-plugin-prettier",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
       "name": "eslint-plugin-react",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
@@ -1031,14 +1023,6 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "prettier",
-      "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "prettier-loader",
-      "allowedCategories": [ "examples", "production" ]
-    },
-    {
       "name": "process",
       "allowedCategories": [ "examples", "tools" ]
     },
@@ -1200,7 +1184,7 @@
     },
     {
       "name": "rolldown",
-      "allowedCategories": [ "production" ]
+      "allowedCategories": [ "examples", "production" ]
     },
     {
       "name": "rollup",

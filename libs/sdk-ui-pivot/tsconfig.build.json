@@ -10,7 +10,6 @@
     "include": ["src/**/*"],
     "compilerOptions": {
         "noCheck": true,
-        "baseUrl": ".",
         "rootDir": "./src",
         "outDir": "./esm",
         "composite": false

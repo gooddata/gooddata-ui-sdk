@@ -38,6 +38,13 @@ export type AttributeDisplayFormType =
     | "GDC.geo.area";
 
 /**
+ * Kind of geo collection.
+ *
+ * @alpha
+ */
+export type GeoCollectionKind = "STATIC" | "CUSTOM";
+
+/**
  * Additional configuration for geo area display forms.
  *
  * @alpha
@@ -47,6 +54,14 @@ export interface IAttributeDisplayFormGeoAreaConfig {
      * Geo collection id binding for this display form.
      */
     collectionId?: string;
+
+    /**
+     * Kind of geo collection - STATIC (default) or CUSTOM.
+     * STATIC collections are built-in, CUSTOM collections are organization-scoped.
+     *
+     * @alpha
+     */
+    kind?: GeoCollectionKind;
 }
 
 /**

@@ -5,6 +5,7 @@ import {
     type IAttributeOrMeasure,
     type IFilter,
     type IInsight,
+    type ObjRefInScope,
     type VisualizationProperties,
     areObjRefsEqual,
     attributeIdentifier,
@@ -24,6 +25,7 @@ import {
     isAttribute,
     isIdentifierRef,
     isLocalIdRef,
+    isMeasureValueFilter,
     isRankingFilter,
     isUriRef,
     modifyAttribute,
@@ -54,6 +56,14 @@ export function modifyBucketsAttributesForDrillDown(
     insight: IInsight,
     drillDefinition: IDrillDownDefinition,
 ): IInsight {
+    const originalAttributeLocalIdToDisplayForm = new Map<string, ObjRefInScope>();
+    insightAttributes(insight).forEach((attribute) => {
+        originalAttributeLocalIdToDisplayForm.set(
+            attributeLocalId(attribute),
+            attribute.attribute.displayForm,
+        );
+    });
+
     const removedLeftAttributes = insightReduceItems(
         insight,
         (acc: IAttributeOrMeasure[], cur: IAttributeOrMeasure): IAttributeOrMeasure[] => {
@@ -96,8 +106,61 @@ export function modifyBucketsAttributesForDrillDown(
         insightSorts(removedDuplicateAttributes),
     );
 
+    const withRewrittenMvfDimensionality = rewriteMeasureValueFilterDimensionalityToObjRefs(
+        removedInvalidSorts,
+        originalAttributeLocalIdToDisplayForm,
+    );
+
     // remove ranking filters that are related to any of the removed attributes
-    return removeRankingFiltersForRemovedAttributes(removedInvalidSorts);
+    return removeRankingFiltersForRemovedAttributes(withRewrittenMvfDimensionality);
+}
+
+function rewriteMeasureValueFilterDimensionalityToObjRefs(
+    insight: IInsight,
+    originalAttributeLocalIdToDisplayForm: Map<string, ObjRefInScope>,
+): IInsight {
+    const filters = insightFilters(insight);
+    let hasChanges = false;
+
+    const rewrittenFilters = filters.map((filter) => {
+        if (!isMeasureValueFilter(filter)) {
+            return filter;
+        }
+
+        const originalDimensionality = filter.measureValueFilter.dimensionality;
+        if (!originalDimensionality?.length) {
+            return filter;
+        }
+
+        const rewrittenDimensionality = originalDimensionality.map((dimensionalityItem) => {
+            if (!isLocalIdRef(dimensionalityItem)) {
+                return dimensionalityItem;
+            }
+
+            return (
+                originalAttributeLocalIdToDisplayForm.get(dimensionalityItem.localIdentifier) ??
+                dimensionalityItem
+            );
+        });
+
+        const dimensionalityChanged = originalDimensionality.some(
+            (item, index) => item !== rewrittenDimensionality[index],
+        );
+        if (!dimensionalityChanged) {
+            return filter;
+        }
+
+        hasChanges = true;
+        return {
+            ...filter,
+            measureValueFilter: {
+                ...filter.measureValueFilter,
+                dimensionality: rewrittenDimensionality,
+            },
+        };
+    });
+
+    return hasChanges ? insightSetFilters(insight, rewrittenFilters) : insight;
 }
 
 function filterValidColumnWidths(columnWidths: ColumnWidthItem[] | undefined, identifiers: string[]) {

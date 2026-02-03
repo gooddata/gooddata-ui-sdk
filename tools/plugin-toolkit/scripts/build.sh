@@ -65,7 +65,7 @@ $PREPARE_PACKAGE_JSON remove-gd-stuff "${TS_BUILD_DIR}"
 # 'fork-off' the JS template build dir at this point before adding TypeScript specific configs
 cp -R "${TS_BUILD_DIR}" "${JS_BUILD_DIR}"
 
-# copy over the eslint, prettier and jest config files for the TypeScript project
+# copy over the eslint, oxfmt and jest config files for the TypeScript project
 cp ${TS_CONFIG_TEMPLATES} "${TS_BUILD_DIR}"
 cp ${TS_CONFIG_TEMPLATES_DOT} "${TS_BUILD_DIR}"
 
@@ -78,7 +78,7 @@ tar -czf "${TS_TAR}" -C "${TS_BUILD_DIR}" .
 
 $PREPARE_PACKAGE_JSON remove-ts "${JS_BUILD_DIR}"
 
-# copy over the eslint, prettier and jest config files for the JavaScript project
+# copy over the eslint, oxfmt and jest config files for the JavaScript project
 cp ${JS_CONFIG_TEMPLATES} "${JS_BUILD_DIR}"
 cp ${JS_CONFIG_TEMPLATES_DOT} "${JS_BUILD_DIR}"
 

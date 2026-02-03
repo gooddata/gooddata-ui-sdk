@@ -2931,6 +2931,10 @@
         "text": "Close the analysis",
         "crowdinContext": "Dialog close button label"
     },
+    "kdaDialog.dialog.close": {
+        "text": "Close",
+        "crowdinContext": "Dialog close footer button label"
+    },
     "kdaDialog.floatingStatus.step1": {
         "text": "Using AI to select key attributes…",
         "crowdinContext": "Status message shown in the minimized floating status bar while the system is selecting relevant attributes for the analysis."

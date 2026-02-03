@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
@@ -37,6 +37,7 @@ describe("geoCollection utils", () => {
     it("resolveGeoCollectionMetadata returns collection identifier when geoAreaConfig is present", () => {
         expect(resolveGeoCollectionMetadata(descriptorWithGeoArea)).toEqual({
             collectionId: geoAreaConfig.collectionId,
+            kind: geoAreaConfig.kind,
         });
     });
 
@@ -47,6 +48,9 @@ describe("geoCollection utils", () => {
             }),
         } as unknown as DataViewFacade;
 
-        expect(getLocationCollectionMetadata(dataView)).toEqual({ collectionId: geoAreaConfig.collectionId });
+        expect(getLocationCollectionMetadata(dataView)).toEqual({
+            collectionId: geoAreaConfig.collectionId,
+            kind: geoAreaConfig.kind,
+        });
     });
 });

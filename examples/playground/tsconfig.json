@@ -3,7 +3,6 @@
     "exclude": ["**/tests", "**/test"],
     "include": ["src/**/*.tsx", "src/**/*.ts", "typings", "*.ts"],
     "compilerOptions": {
-        "baseUrl": ".",
         "rootDir": ".",
         "outDir": "./esm",
         "noEmit": true

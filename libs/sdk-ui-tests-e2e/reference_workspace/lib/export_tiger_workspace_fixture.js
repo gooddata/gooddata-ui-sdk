@@ -1,10 +1,10 @@
 #!/usr/bin/env node
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import "../../scripts/env.js";
 import { exportTigerFixtureExtension, logLn } from "@gooddata/fixtures";
 
-import { runPrettierOnFile } from "./prettierUtils.js";
+import { runOxfmtOnFile } from "./prettierUtils.js";
 import { TIGER_FIXTURE_METADATA_EXTENSIONS } from "../constant.js";
 import { exportCatalogTiger } from "../export_catalog.js";
 
@@ -26,7 +26,7 @@ async function main() {
             "TIGER",
             outputFile,
         );
-        runPrettierOnFile(outputFile);
+        runOxfmtOnFile(outputFile);
 
         if (FIXTURE_TYPE === "goodsales") {
             exportCatalogTiger(HOST, TEST_WORKSPACE_ID, TIGER_API_TOKEN);
