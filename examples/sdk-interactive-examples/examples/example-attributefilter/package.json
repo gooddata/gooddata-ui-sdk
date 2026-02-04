@@ -21,7 +21,7 @@
         "preview": "vite preview",
         "refresh-md": "gdc-catalog-export && npm run oxfmt-write",
         "start": "vite serve",
-        "update-version": "node ./scripts/updateWorkspaceVersion.mjs",
+        "update-version": "node ./scripts/updateWorkspaceVersion.mjs && node ./scripts/updateViteVersion.mjs",
         "validate": "npm run eslint && npm run oxfmt-check"
     },
     "dependencies": {
