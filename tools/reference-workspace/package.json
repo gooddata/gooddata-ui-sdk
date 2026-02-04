@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/reference-workspace",
-    "version": "11.19.0-alpha.7",
+    "version": "11.19.0-alpha.8",
     "description": "GoodData SDK - Reference Workspace for tests",
     "license": "MIT",
     "author": "GoodData",
@@ -22,7 +22,7 @@
     "scripts": {
         "_phase:build": "npm run build",
         "_phase:validate": "npm run validate",
-        "build": "tsc -p tsconfig.json",
+        "build": "tsgo -p tsconfig.json",
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
         "clear-recordings": "rm -r src/recordings/uiTestScenarios",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
@@ -48,6 +48,7 @@
         "@types/node": "^22.13.0",
         "@typescript-eslint/eslint-plugin": "8.52.0",
         "@typescript-eslint/parser": "8.52.0",
+        "@typescript/native-preview": "7.0.0-dev.20260202.1",
         "dependency-cruiser": "^14.1.2",
         "eslint": "^9.39.2",
         "eslint-import-resolver-typescript": "4.4.4",

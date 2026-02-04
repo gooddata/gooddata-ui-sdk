@@ -188,6 +188,11 @@ function generateConfigObject(
             if (config.languageOptions.sourceType) {
                 langProps.push(`${langInner}sourceType: "${config.languageOptions.sourceType}"`);
             }
+            if (config.languageOptions.parserOptions) {
+                langProps.push(
+                    `${langInner}parserOptions: ${renderValue(config.languageOptions.parserOptions, indent + 2)}`,
+                );
+            }
         }
 
         if (langProps.length > 0) {
@@ -275,6 +280,11 @@ function generateOverrideObjects(
                 }
                 if (override.languageOptions.sourceType) {
                     langProps.push(`${langInner}sourceType: "${override.languageOptions.sourceType}"`);
+                }
+                if (override.languageOptions.parserOptions) {
+                    langProps.push(
+                        `${langInner}parserOptions: ${renderValue(override.languageOptions.parserOptions, indent + 2)}`,
+                    );
                 }
             }
 

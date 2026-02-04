@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/plugin-toolkit",
-    "version": "11.19.0-alpha.7",
+    "version": "11.19.0-alpha.8",
     "description": "GoodData Set of Tools for working with Plugins",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData",
@@ -30,7 +30,7 @@
         "_phase:post-build": "npm run build-dynamic-files",
         "_phase:test": "npm run build-dynamic-files && npm run test-once",
         "_phase:validate": "npm run build-dynamic-files && npm run validate",
-        "build": "bash scripts/build.sh",
+        "build": "bash scripts/build.sh && tsgo",
         "build-dynamic-files": "bash scripts/build.sh --genFilesOnly",
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm build coverage *.log tsconfig.tsbuildinfo",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
@@ -42,7 +42,7 @@
         "oxfmt-write": "oxfmt .",
         "test": "vitest watch",
         "test-once": "vitest run",
-        "validate": "tsc && npm run dep-cruiser && npm run eslint && npm run oxfmt-check"
+        "validate": "npm run dep-cruiser && npm run eslint && npm run oxfmt-check"
     },
     "dependencies": {
         "@babel/cli": "^7.23.4",
@@ -79,6 +79,7 @@
         "@types/tar": "^6.1.0",
         "@typescript-eslint/eslint-plugin": "8.52.0",
         "@typescript-eslint/parser": "8.52.0",
+        "@typescript/native-preview": "7.0.0-dev.20260202.1",
         "dependency-cruiser": "^14.1.2",
         "eslint": "^9.39.2",
         "eslint-import-resolver-typescript": "4.4.4",

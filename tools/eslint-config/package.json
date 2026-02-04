@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/eslint-config",
-    "version": "11.19.0-alpha.7",
+    "version": "11.19.0-alpha.8",
     "license": "MIT",
     "author": "GoodData",
     "repository": {
@@ -70,23 +70,19 @@
         "./esm-react-vitest-storybook": {
             "import": "./dist/esm-react-vitest-storybook.js",
             "require": "./dist/esm-react-vitest-storybook.json"
-        },
-        "./tsOverride": {
-            "import": "./dist/tsOverride.js",
-            "require": "./dist/tsOverride.cjs"
         }
     },
     "scripts": {
         "_phase:build": "npm run build",
         "_phase:validate": "npm run validate",
-        "build": "rm -rf dist && mkdir dist && vite-node scripts/build.ts",
+        "build": "rm -rf dist && mkdir dist && vite-node scripts/build.ts && tsgo",
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
         "eslint": "eslint .",
         "eslint-fix": "eslint . --fix",
         "oxfmt-check": "oxfmt --check .",
         "oxfmt-write": "oxfmt .",
         "update-package": "vite-node scripts/updatePackage.ts",
-        "validate": "tsc && npm run eslint && npm run oxfmt-check"
+        "validate": "npm run eslint && npm run oxfmt-check"
     },
     "devDependencies": {
         "@eslint/js": "9.28.0",
@@ -94,6 +90,7 @@
         "@types/node": "^22.13.0",
         "@typescript-eslint/eslint-plugin": "8.52.0",
         "@typescript-eslint/parser": "8.52.0",
+        "@typescript/native-preview": "7.0.0-dev.20260202.1",
         "@vitest/eslint-plugin": "1.6.6",
         "eslint": "^9.39.2",
         "eslint-import-resolver-typescript": "4.4.4",

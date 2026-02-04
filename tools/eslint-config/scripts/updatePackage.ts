@@ -135,12 +135,6 @@ for (const variantName of allVariantNames) {
     exports[`./${variantName}`] = buildExport(variantName, hasV8, hasV9);
 }
 
-// Add tsOverride helper with conditional exports
-exports["./tsOverride"] = {
-    import: "./dist/tsOverride.js",
-    require: "./dist/tsOverride.cjs",
-};
-
 packageJson.exports = exports;
 
 writeFileSync("./package.json", JSON.stringify(packageJson, null, 4));

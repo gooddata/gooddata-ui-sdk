@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/mock-handling",
-    "version": "11.19.0-alpha.7",
+    "version": "11.19.0-alpha.8",
     "description": "GoodData SDK Mock data capture and management tool",
     "license": "MIT",
     "author": "GoodData",
@@ -27,6 +27,8 @@
         "_phase:test": "npm run build-dynamic-files && npm run test-once",
         "_phase:validate": "npm run build-dynamic-files && npm run validate",
         "build": "bash scripts/build.sh",
+        "build-check": "tsgo",
+        "build-ts": "tsgo -p tsconfig.build.json",
         "build-dynamic-files": "bash scripts/build.sh --genFilesOnly",
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
@@ -36,7 +38,7 @@
         "oxfmt-write": "oxfmt .",
         "test": "vitest watch",
         "test-once": "vitest run",
-        "validate": "tsc && npm run dep-cruiser && npm run eslint && npm run oxfmt-check",
+        "validate": "npm run dep-cruiser && npm run eslint && npm run oxfmt-check",
         "validate-esm": "node --input-type=module --eval 'import \"@gooddata/mock-handling\"'"
     },
     "dependencies": {
@@ -59,6 +61,7 @@
         "@types/node": "^22.13.0",
         "@typescript-eslint/eslint-plugin": "8.52.0",
         "@typescript-eslint/parser": "8.52.0",
+        "@typescript/native-preview": "7.0.0-dev.20260202.1",
         "dependency-cruiser": "^14.1.2",
         "eslint": "^9.39.2",
         "eslint-import-resolver-typescript": "4.4.4",
@@ -69,6 +72,7 @@
         "eslint-plugin-no-barrel-files": "1.2.2",
         "eslint-plugin-no-only-tests": "3.3.0",
         "eslint-plugin-sonarjs": "3.0.6",
+        "npm-run-all": "^4.1.5",
         "oxfmt": "0.27.0",
         "typescript": "5.9.3",
         "vitest": "4.0.8"

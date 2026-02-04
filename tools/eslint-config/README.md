@@ -80,31 +80,7 @@ import config from "@gooddata/eslint-config/esm-react-vitest";
 export default config;
 ```
 
-For TypeScript projects, use the `tsOverride` helper to configure the TypeScript parser with the correct `tsconfigRootDir`:
-
-```typescript
-// eslint.config.ts
-// (C) 2025 GoodData Corporation
-
-import config from "@gooddata/eslint-config/esm-react-vitest";
-import { tsOverride } from "@gooddata/eslint-config/tsOverride";
-
-export default [
-    ...config,
-    tsOverride(import.meta.dirname, {
-        // Optional: Add custom TypeScript rule overrides here
-        "@typescript-eslint/no-namespace": "off",
-    }),
-];
-```
-
-**What `tsOverride` does in v9:**
-
-- Configures `languageOptions.parserOptions.tsconfigRootDir` to point to your project directory
-- Applies to `**/*.ts` and `**/*.tsx` files
-- Allows you to pass custom rule overrides as the second parameter
-
-To add custom rules or overrides without TypeScript configuration:
+To add custom rules or overrides:
 
 ```typescript
 // eslint.config.ts
@@ -116,8 +92,29 @@ export default [
     ...config,
     {
         rules: {
-            // Custom rule overrides
+            // Custom rule overrides (applies to all files)
+            "no-console": "warn",
+        },
+    },
+];
+```
+
+To add TypeScript-specific rule overrides, specify a `files` pattern:
+
+```typescript
+// eslint.config.ts
+// (C) 2025 GoodData Corporation
+
+import config from "@gooddata/eslint-config/esm-react-vitest";
+
+export default [
+    ...config,
+    {
+        files: ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts"],
+        rules: {
+            // TypeScript rule overrides (applies only to TS files)
             "@typescript-eslint/no-namespace": "off",
+            "@typescript-eslint/no-explicit-any": "warn",
         },
     },
 ];
@@ -125,33 +122,25 @@ export default [
 
 ### ESLint v8 (Legacy Config)
 
-For TypeScript projects using ESLint v8, use the `tsOverride` helper which automatically configures the TypeScript parser, import resolver, and other required settings:
+For ESLint v8, use the legacy JSON-based configuration:
 
 ```javascript
 // .eslintrc.js
 // (C) 2020 GoodData Corporation
 
-const { tsOverride } = require("@gooddata/eslint-config/tsOverride");
-
 module.exports = {
     extends: ["@gooddata/eslint-config/react"],
     overrides: [
-        tsOverride(__dirname, {
-            // Optional: Add custom TypeScript rule overrides here
-            "@typescript-eslint/no-namespace": "off",
-            "@typescript-eslint/no-unsafe-assignment": "off",
-        }),
+        {
+            files: ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts"],
+            rules: {
+                // Custom TypeScript rule overrides
+                "@typescript-eslint/no-namespace": "off",
+            },
+        },
     ],
 };
 ```
-
-**What `tsOverride` does:**
-
-- Sets up the TypeScript parser (`@typescript-eslint/parser`)
-- Configures `tsconfigRootDir` to point to your project directory
-- Configures the import resolver to handle TypeScript imports correctly
-- Applies to `**/*.ts` and `**/*.tsx` files
-- Allows you to pass custom rule overrides as the second parameter
 
 ### Non-TypeScript Projects (v8)
 
@@ -164,8 +153,6 @@ module.exports = {
 ```
 
 **Important Notes:**
-
-- **ESLint v8 TypeScript Projects**: Using `tsOverride(__dirname, rules)` is **mandatory** for TypeScript projects with ESLint v8. Without it, `@typescript-eslint/parser` won't know where to find your `tsconfig.json`, and import resolution will not work correctly.
 
 - **Peer Dependencies**: Only packages from the `common` configuration are listed in `peerDependencies`. Variant-specific packages (e.g., `eslint-plugin-react` for the `react` variant) are **not** included as peer dependencies since they're not required by all consumers.
 
