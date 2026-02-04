@@ -1,8 +1,20 @@
 {
-    "extends": "../tsconfig.base.json",
+    "extends": "../../tsconfig.strict.json",
     "exclude": ["**/tests", "**/test"],
     "include": ["src/**/*.tsx", "src/**/*.ts", "typings", "*.ts"],
     "compilerOptions": {
+        "target": "ES2022",
+        "lib": ["ES2022", "dom"],
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "jsx": "react-jsx",
+        "importHelpers": true,
+        "incremental": false,
+        "resolveJsonModule": true,
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "strictNullChecks": false,
         "rootDir": ".",
         "outDir": "./esm",
         "noEmit": true

@@ -7,7 +7,7 @@ import cx from "classnames";
 import { Dialog, OverlayController, OverlayControllerProvider } from "@gooddata/sdk-ui-kit";
 
 import { useKdaDialogAccessibility } from "./hooks/useKdaDialogAccessibility.js";
-import { KdaDialogFloatingStatusBar } from "./KdaDialogFloatingStatusBar.js";
+import { KdaDialogFloatingStatusBar, getFloatingStatus } from "./KdaDialogFloatingStatusBar.js";
 import { KdaDialogSections } from "./KdaDialogSections.js";
 import { KdaContent } from "../components/KdaContent.js";
 import { KdaFooter } from "../components/KdaFooter.js";
@@ -62,6 +62,8 @@ export function KdaDialog({
     const dialogBaseClassName = cx(accessibilityConfig.dialogId, className);
     const displayCloseButton = showCloseButton ? !isMinimized : undefined;
 
+    const status = getFloatingStatus(state.relevantStatus, state.itemsStatus, state.selectedStatus);
+
     useChangeAnalysis();
     useValidAttributes();
     useKdaDialogTooltipsOverride();
@@ -72,7 +74,9 @@ export function KdaDialog({
                 <Dialog
                     autofocusOnOpen
                     initialFocus={accessibilityConfig.descriptionElementId}
-                    className={cx(dialogBaseClassName, "gd-kda-dialog--minimized")}
+                    className={cx(dialogBaseClassName, "gd-kda-dialog--minimized", {
+                        [`gd-kda-dialog--minimized--${status}`]: true,
+                    })}
                     closeOnEscape={false}
                     isModal={false}
                     alignPoints={minimizedAlignPoints}
@@ -87,6 +91,7 @@ export function KdaDialog({
                 >
                     <KdaDialogFloatingStatusBar
                         titleElementId={accessibilityConfig.descriptionElementId}
+                        status={status}
                         onClose={onClose}
                     />
                 </Dialog>

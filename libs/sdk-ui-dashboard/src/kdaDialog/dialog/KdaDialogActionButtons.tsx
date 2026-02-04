@@ -1,9 +1,9 @@
 // (C) 2025-2026 GoodData Corporation
 
 import cx from "classnames";
-import { useIntl } from "react-intl";
+import { type MessageDescriptor, defineMessages, useIntl } from "react-intl";
 
-import { UiIconButton } from "@gooddata/sdk-ui-kit";
+import { UiButton, UiIconButton } from "@gooddata/sdk-ui-kit";
 
 import { useKdaState } from "../providers/KdaState.js";
 
@@ -11,6 +11,7 @@ export type KdaDialogActionButtonsSize = "small" | "medium";
 
 export interface IKdaDialogActionButtonsProps {
     size: KdaDialogActionButtonsSize;
+    status?: "done" | "error" | string;
     titleElementId?: string;
     onClose?: () => void;
     className?: string;
@@ -25,6 +26,7 @@ export function KdaDialogActionButtons({
     size,
     onClose,
     className,
+    status,
     titleElementId,
 }: IKdaDialogActionButtonsProps) {
     const intl = useIntl();
@@ -42,6 +44,7 @@ export function KdaDialogActionButtons({
     return (
         <KdaDialogActionButtonsView
             className={className}
+            status={status}
             size={size}
             titleElementId={titleElementId}
             isMinimized={isMinimized}
@@ -53,6 +56,11 @@ export function KdaDialogActionButtons({
         />
     );
 }
+
+const buttonMessages: Record<"done" | "error" | string, MessageDescriptor> = defineMessages({
+    done: { id: "kdaDialog.floatingStatus.done.opener" },
+    error: { id: "kdaDialog.floatingStatus.error.opener" },
+});
 
 interface IKdaDialogActionButtonsViewProps extends IKdaDialogActionButtonsProps {
     isMinimized: boolean;
@@ -66,6 +74,7 @@ interface IKdaDialogActionButtonsViewProps extends IKdaDialogActionButtonsProps 
 function KdaDialogActionButtonsView(props: IKdaDialogActionButtonsViewProps) {
     const {
         size,
+        status,
         isMinimized,
         expandLabel,
         titleElementId,
@@ -75,6 +84,10 @@ function KdaDialogActionButtonsView(props: IKdaDialogActionButtonsViewProps) {
         onClose,
         className,
     } = props;
+    const intl = useIntl();
+    const text = status && buttonMessages[status] ? intl.formatMessage(buttonMessages[status]) : "";
+    const isFinished = status === "done" || status === "error";
+
     return (
         <div
             className={cx(
@@ -87,35 +100,51 @@ function KdaDialogActionButtonsView(props: IKdaDialogActionButtonsViewProps) {
                 className={cx(
                     "gd-kda-dialog-action-buttons__button",
                     isMinimized ? "s-kda-dialog-expand-button" : "s-kda-dialog-minimize-button",
+                    status,
                 )}
             >
-                <UiIconButton
-                    label={isMinimized ? expandLabel : shrinkLabel}
-                    icon={isMinimized ? "expand" : "shrink"}
-                    accessibilityConfig={{
-                        ariaDescribedBy: titleElementId,
-                    }}
-                    iconColor="complementary-7"
-                    variant="tertiary"
-                    size={size}
-                    onClick={onToggle}
-                />
+                {isMinimized && isFinished ? (
+                    <div className="gd-kda-dialog-action-buttons__button__open">
+                        <UiButton
+                            label={text}
+                            accessibilityConfig={{
+                                ariaDescribedBy: titleElementId,
+                            }}
+                            variant="tooltip"
+                            size="medium"
+                            onClick={onToggle}
+                        />
+                    </div>
+                ) : (
+                    <UiIconButton
+                        label={isMinimized ? expandLabel : shrinkLabel}
+                        icon={isMinimized ? "expand" : "shrink"}
+                        accessibilityConfig={{
+                            ariaDescribedBy: titleElementId,
+                        }}
+                        iconColor="complementary-7"
+                        variant="tertiary"
+                        size={size}
+                        onClick={onToggle}
+                    />
+                )}
             </div>
-            <div className="gd-kda-dialog-action-buttons__divider" />
+            <div className={cx("gd-kda-dialog-action-buttons__divider", status)} />
             <div
                 className={cx(
                     "gd-kda-dialog-action-buttons__button",
                     "s-dialog-close-button",
                     "s-kda-dialog-close-button",
+                    status,
                 )}
             >
                 <UiIconButton
                     label={closeLabel}
                     icon="cross"
-                    iconColor="complementary-7"
                     variant="tertiary"
                     size={size}
                     onClick={onClose}
+                    iconColor={isFinished ? "complementary-0" : "complementary-7"}
                 />
             </div>
         </div>

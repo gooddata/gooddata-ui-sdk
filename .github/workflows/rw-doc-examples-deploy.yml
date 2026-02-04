@@ -39,7 +39,6 @@ jobs:
         env:
             EXAMPLES_BUILD_TYPE: public
             EXAMPLE_MAPBOX_ACCESS_TOKEN: ${{secrets.MAPBOX_TOKEN}}
-            BROWSERSLIST_IGNORE_OLD_DATA: true
         run: |
             rush build -t @gooddata/sdk-examples
 

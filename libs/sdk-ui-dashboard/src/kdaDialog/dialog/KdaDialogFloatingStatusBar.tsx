@@ -6,7 +6,6 @@ import { LoadingSpinner, UiIcon } from "@gooddata/sdk-ui-kit";
 
 import type { KdaAsyncStatus } from "../internalTypes.js";
 import { KdaDialogActionButtons } from "./KdaDialogActionButtons.js";
-import { useKdaState } from "../providers/KdaState.js";
 
 type KdaFloatingStatus = "step01" | "step02" | "done" | "error";
 
@@ -19,17 +18,20 @@ const floatingStatusMessages: Record<KdaFloatingStatus, MessageDescriptor> = def
 
 interface IKdaDialogFloatingStatusBarProps {
     titleElementId: string;
+    status: KdaFloatingStatus;
     onClose?: () => void;
 }
 
 /**
  * @internal
  */
-export function KdaDialogFloatingStatusBar({ onClose, titleElementId }: IKdaDialogFloatingStatusBarProps) {
+export function KdaDialogFloatingStatusBar({
+    onClose,
+    status,
+    titleElementId,
+}: IKdaDialogFloatingStatusBarProps) {
     const intl = useIntl();
-    const { state } = useKdaState();
 
-    const status = getFloatingStatus(state.relevantStatus, state.itemsStatus, state.selectedStatus);
     const statusText = intl.formatMessage(floatingStatusMessages[status]);
 
     return (
@@ -43,22 +45,27 @@ export function KdaDialogFloatingStatusBar({ onClose, titleElementId }: IKdaDial
                     {statusText}
                 </p>
             </div>
-            <KdaDialogActionButtons size="small" titleElementId={titleElementId} onClose={onClose} />
+            <KdaDialogActionButtons
+                size="small"
+                status={status}
+                titleElementId={titleElementId}
+                onClose={onClose}
+            />
         </div>
     );
 }
 
 function StatusIndicator({ status }: { status: KdaFloatingStatus }) {
     if (status === "error") {
-        return <UiIcon type="crossCircle" color="error" size={16} layout="block" />;
+        return <UiIcon type="crossCircle" color="currentColor" size={16} layout="block" />;
     }
     if (status === "done") {
-        return <UiIcon type="checkCircle" color="success" size={16} layout="block" />;
+        return <UiIcon type="checkCircle" color="currentColor" size={16} layout="block" />;
     }
-    return <LoadingSpinner className="small gd-kda-floating-status-bar__spinner" color="#6d7680" />;
+    return <LoadingSpinner className="small gd-kda-floating-status-bar__spinner" color="currentColor" />;
 }
 
-function getFloatingStatus(
+export function getFloatingStatus(
     relevantStatus: KdaAsyncStatus,
     itemsStatus: KdaAsyncStatus,
     selectedStatus: KdaAsyncStatus,
