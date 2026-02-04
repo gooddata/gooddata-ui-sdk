@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { darken, lighten, mix, setLightness, transparentize } from "polished";
 
@@ -285,6 +285,9 @@ const getComplementaryPaletteDerivedColors = (palette: IThemePalette): (CssPrope
         : null,
     palette?.complementary?.c0
         ? getCssProperty("palette-complementary-0-t10", transparentize(0.1, palette.complementary.c0))
+        : null,
+    palette?.complementary?.c0
+        ? getCssProperty("palette-complementary-0-t70", transparentize(0.7, palette.complementary.c0))
         : null,
     palette?.complementary?.c5
         ? getCssProperty("palette-complementary-5-t40", transparentize(0.4, palette.complementary.c5))

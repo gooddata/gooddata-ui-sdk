@@ -55,9 +55,25 @@
             padding: 4px 5px 4px 10px;
             border-radius: 4px;
             border-width: 1px;
-            border-color: var(--gd-palette-complementary-3);
             box-shadow: 0 2px 10px 0 rgb(0 0 0 / 10%);
             animation: gd-kda-dialog-enter-minimized 200ms cubic-bezier(0.22, 1, 0.36, 1) 50ms both;
+        }
+
+        &#{&}--done {
+            background: var(--gd-toastMessage-success-backgroundColor);
+            border-color: var(--gd-toastMessage-success-borderColor);
+            color: var(--gd-toastMessage-success-textColor);
+        }
+
+        &#{&}--error {
+            background: var(--gd-toastMessage-error-backgroundColor);
+            border-color: var(--gd-toastMessage-error-borderColor);
+            color: var(--gd-toastMessage-error-textColor);
+        }
+
+        &#{&}--step1,
+        &#{&}--step2 {
+            border-color: var(--gd-palette-complementary-3);
         }
     }
 
@@ -85,11 +101,20 @@
         &__button {
             display: flex;
             cursor: pointer;
+
+            &__open {
+                margin-right: 7px;
+            }
         }
 
         &__divider {
             width: 1px;
             background-color: var(--gd-palette-complementary-3);
+
+            &.done,
+            &.error {
+                background-color: var(--gd-palette-complementary-0-t70);
+            }
         }
 
         &--size-small {
@@ -156,6 +181,15 @@
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+        }
+    }
+    &.gd-kda-dialog--minimized--done,
+    &.gd-kda-dialog--minimized--error {
+        .gd-kda-floating-status-bar {
+            &__text {
+                color: var(--gd-palette-complementary-0);
+                font-weight: 700;
+            }
         }
     }
 

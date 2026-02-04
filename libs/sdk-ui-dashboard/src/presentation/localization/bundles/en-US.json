@@ -2947,8 +2947,16 @@
         "text": "Analysis is ready",
         "crowdinContext": "Status message shown in the minimized floating status bar when the analysis results are ready to be viewed."
     },
+    "kdaDialog.floatingStatus.done.opener": {
+        "text": "Open",
+        "crowdinContext": "Status message shown in the minimized floating status bar when the analysis results are ready to be viewed."
+    },
     "kdaDialog.floatingStatus.error": {
-        "text": "Analysis failed — expand for more details",
+        "text": "Analysis failed",
+        "crowdinContext": "Status message shown in the minimized floating status bar when the analysis fails. Instructs the user to expand the dialog to see error details."
+    },
+    "kdaDialog.floatingStatus.error.opener": {
+        "text": "See details",
         "crowdinContext": "Status message shown in the minimized floating status bar when the analysis fails. Instructs the user to expand the dialog to see error details."
     },
     "kdaDialog.floatingStatus.expand": {
