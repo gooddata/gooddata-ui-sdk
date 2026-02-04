@@ -5,32 +5,31 @@ Here are basic usage examples of [GoodData.UI](https://github.com/gooddata/goodd
 ## List of Examples
 
 <!---{LIST-START}-->
-* Attribute Filter Example - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-attributefilter?file=/src/example/Example.tsx)
+- Attribute Filter Example - [open in StackBlitz](https://stackblitz.com/github/gooddata/gooddata-ui-sdk/tree/mnaj-examples-stackblitz/examples/sdk-interactive-examples/examples/example-attributefilter?file=/src/example/Example.tsx)
 
-* Chart config manipulation - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-chartconfig?file=/src/example/Example.tsx)
+- Chart config manipulation - [open in StackBlitz](https://stackblitz.com/github/gooddata/gooddata-ui-sdk/tree/mnaj-examples-stackblitz/examples/sdk-interactive-examples/examples/example-chartconfig?file=/src/example/Example.tsx)
 
-* ColumnChart - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-columnchart?file=/src/example/Example.tsx)
+- ColumnChart - [open in StackBlitz](https://stackblitz.com/github/gooddata/gooddata-ui-sdk/tree/mnaj-examples-stackblitz/examples/sdk-interactive-examples/examples/example-columnchart?file=/src/example/Example.tsx)
 
-* ComboChart - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-combochart?file=/src/example/Example.tsx)
+- ComboChart - [open in StackBlitz](https://stackblitz.com/github/gooddata/gooddata-ui-sdk/tree/mnaj-examples-stackblitz/examples/sdk-interactive-examples/examples/example-combochart?file=/src/example/Example.tsx)
 
-* Dashboard component - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-dashboard?file=/src/example/Example.tsx)
+- Dashboard component - [open in StackBlitz](https://stackblitz.com/github/gooddata/gooddata-ui-sdk/tree/mnaj-examples-stackblitz/examples/sdk-interactive-examples/examples/example-dashboard?file=/src/example/Example.tsx)
 
-* DateFilter - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-datefilter?file=/src/example/Example.tsx)
+- DateFilter - [open in StackBlitz](https://stackblitz.com/github/gooddata/gooddata-ui-sdk/tree/mnaj-examples-stackblitz/examples/sdk-interactive-examples/examples/example-datefilter?file=/src/example/Example.tsx)
 
-* Dependent Filters Example - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-dependentfilters?file=/src/example/Example.tsx)
+- Dependent Filters Example - [open in StackBlitz](https://stackblitz.com/github/gooddata/gooddata-ui-sdk/tree/mnaj-examples-stackblitz/examples/sdk-interactive-examples/examples/example-dependentfilters?file=/src/example/Example.tsx)
 
-* Execute - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-execute?file=/src/example/Example.tsx)
+- Execute - [open in StackBlitz](https://stackblitz.com/github/gooddata/gooddata-ui-sdk/tree/mnaj-examples-stackblitz/examples/sdk-interactive-examples/examples/example-execute?file=/src/example/Example.tsx)
 
-* Granularity - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-granularity?file=/src/example/Example.tsx)
+- Granularity - [open in StackBlitz](https://stackblitz.com/github/gooddata/gooddata-ui-sdk/tree/mnaj-examples-stackblitz/examples/sdk-interactive-examples/examples/example-granularity?file=/src/example/Example.tsx)
 
-* Headline - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-headline?file=/src/example/Example.tsx)
+- Headline - [open in StackBlitz](https://stackblitz.com/github/gooddata/gooddata-ui-sdk/tree/mnaj-examples-stackblitz/examples/sdk-interactive-examples/examples/example-headline?file=/src/example/Example.tsx)
 
-* PivotTable - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-pivottable?file=/src/example/Example.tsx)
+- PivotTable - [open in StackBlitz](https://stackblitz.com/github/gooddata/gooddata-ui-sdk/tree/mnaj-examples-stackblitz/examples/sdk-interactive-examples/examples/example-pivottable?file=/src/example/Example.tsx)
 
-* RelativeDateFilter - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-relativedatefilter?file=/src/example/Example.tsx)
+- RelativeDateFilter - [open in StackBlitz](https://stackblitz.com/github/gooddata/gooddata-ui-sdk/tree/mnaj-examples-stackblitz/examples/sdk-interactive-examples/examples/example-relativedatefilter?file=/src/example/Example.tsx)
 
-* Repeater Example - [open in CodeSandbox](https://codesandbox.io/p/sandbox/github/gooddata/gooddata-ui-sdk/tree/master/examples/sdk-interactive-examples/examples/example-repeater?file=/src/example/Example.tsx)
-
+- Repeater Example - [open in StackBlitz](https://stackblitz.com/github/gooddata/gooddata-ui-sdk/tree/mnaj-examples-stackblitz/examples/sdk-interactive-examples/examples/example-repeater?file=/src/example/Example.tsx)
 
 <!---{LIST-END}}-->
 

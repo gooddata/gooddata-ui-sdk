@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { EXAMPLE_CODESANDBOX_PATH_TEMPLATE } from './constants.mjs';
+import { EXAMPLE_STACKBLITZ_PATH_TEMPLATE } from './constants.mjs';
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 const TEMPLATE_DIR = path.join(__dirname, '../', 'examples-template');
@@ -41,9 +41,9 @@ fs.readdirSync(EXAMPLES_DIR, { withFileTypes: true })
         const originalTitle = originalPackageJson.title;
         const originalDescription = originalPackageJson.description;
 
-        const exampleSandBoxPath = EXAMPLE_CODESANDBOX_PATH_TEMPLATE.replace('{EXAMPLE-DIR}', dirent.name);
+        const exampleStackBlitzPath = EXAMPLE_STACKBLITZ_PATH_TEMPLATE.replace("{EXAMPLE-DIR}", dirent.name);
 
-        exampleListResult += `* ${originalTitle} - [open in CodeSandbox](${exampleSandBoxPath})\n\n`;
+        exampleListResult += `* ${originalTitle} - [open in StackBlitz](${exampleStackBlitzPath})\n\n`;
     });
 
 // Update the root README.md with the list of examples

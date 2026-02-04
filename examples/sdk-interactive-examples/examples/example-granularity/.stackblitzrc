@@ -1,0 +1,4 @@
+{
+  "installDependencies": false,
+  "startCommand": "npm run update-version && npm install --force && npm run start"
+}
