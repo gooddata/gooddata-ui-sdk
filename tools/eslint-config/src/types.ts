@@ -32,7 +32,7 @@ interface IConfigurationSharedV8<RulePrefix extends string> {
     /**
      * Parser options to be set when this configuration is active
      */
-    parserOptions?: Record<string, number | string>;
+    parserOptions?: Record<string, unknown>;
     /**
      * Rules for this configuration
      */
@@ -121,6 +121,10 @@ interface ILanguageOptionsV9 {
      * Source type for the code.
      */
     sourceType?: SourceType;
+    /**
+     * Parser options to be set when this configuration is active
+     */
+    parserOptions?: Record<string, unknown>;
 }
 
 interface IConfigurationSharedV9<RulePrefix extends string> {

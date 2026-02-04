@@ -535,6 +535,10 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
+      "name": "@typescript/native-preview",
+      "allowedCategories": [ "examples", "tools" ]
+    },
+    {
       "name": "@vitejs/plugin-react",
       "allowedCategories": [ "examples", "production" ]
     },
@@ -984,7 +988,7 @@
     },
     {
       "name": "npm-run-all",
-      "allowedCategories": [ "examples", "production" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "open",

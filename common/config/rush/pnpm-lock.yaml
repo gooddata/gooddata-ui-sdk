@@ -233,6 +233,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: ^5.1.2
         version: 5.1.3(vite@8.0.0-beta.10)
@@ -360,6 +363,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: ^5.1.2
         version: 5.1.3(vite@8.0.0-beta.10)
@@ -487,6 +493,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: ^5.1.2
         version: 5.1.3(vite@8.0.0-beta.10)
@@ -614,6 +623,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: ^5.1.2
         version: 5.1.3(vite@8.0.0-beta.10)
@@ -741,6 +753,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: ^5.1.2
         version: 5.1.3(vite@8.0.0-beta.10)
@@ -868,6 +883,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: ^5.1.2
         version: 5.1.3(vite@8.0.0-beta.10)
@@ -995,6 +1013,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: ^5.1.2
         version: 5.1.3(vite@8.0.0-beta.10)
@@ -1122,6 +1143,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: ^5.1.2
         version: 5.1.3(vite@8.0.0-beta.10)
@@ -1258,6 +1282,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: ^5.1.2
         version: 5.1.3(vite@8.0.0-beta.10)
@@ -1385,6 +1412,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: ^5.1.2
         version: 5.1.3(vite@8.0.0-beta.10)
@@ -1512,6 +1542,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: ^5.1.2
         version: 5.1.3(vite@8.0.0-beta.10)
@@ -1639,6 +1672,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: ^5.1.2
         version: 5.1.3(vite@8.0.0-beta.10)
@@ -1766,6 +1802,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: ^5.1.2
         version: 5.1.3(vite@8.0.0-beta.10)
@@ -1893,6 +1932,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: ^5.1.2
         version: 5.1.3(vite@8.0.0-beta.10)
@@ -3083,7 +3125,7 @@ importers:
         specifier: ^3.3.0
         version: 3.3.2
       js-yaml:
-        specifier: ^4.1.0
+        specifier: ^4.1.1
         version: 4.1.1
       json-stable-stringify:
         specifier: 1.3.0
@@ -3577,7 +3619,7 @@ importers:
         specifier: ^2.0.22
         version: 2.0.22(react-dom@19.1.1)(react@19.1.1)
       js-yaml:
-        specifier: ^4.1.0
+        specifier: ^4.1.1
         version: 4.1.1
       json-stable-stringify:
         specifier: 1.3.0
@@ -6157,6 +6199,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       dependency-cruiser:
         specifier: ^14.1.2
         version: 14.1.2
@@ -6229,6 +6274,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       blessed:
         specifier: ^0.1.81
         version: 0.1.81
@@ -6277,6 +6325,9 @@ importers:
       lodash-es:
         specifier: ^4.17.23
         version: 4.17.23
+      npm-run-all:
+        specifier: ^4.1.5
+        version: 4.1.5
       oxfmt:
         specifier: 0.27.0
         version: 0.27.0
@@ -6365,6 +6416,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       dependency-cruiser:
         specifier: ^14.1.2
         version: 14.1.2
@@ -6398,6 +6452,9 @@ importers:
       happy-dom:
         specifier: 18.0.1
         version: 18.0.1
+      npm-run-all:
+        specifier: ^4.1.5
+        version: 4.1.5
       typescript:
         specifier: 5.9.3
         version: 5.9.3
@@ -6492,6 +6549,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       babel-loader:
         specifier: ^8.0.5
         version: 8.4.1(@babel/core@7.29.0)(webpack@5.93.0)
@@ -6609,6 +6669,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       '@vitest/eslint-plugin':
         specifier: 1.6.6
         version: 1.6.6(eslint@9.39.2)(typescript@5.9.3)(vitest@4.0.8)
@@ -6730,6 +6793,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       dependency-cruiser:
         specifier: ^14.1.2
         version: 14.1.2
@@ -6766,6 +6832,9 @@ importers:
       mkdirp:
         specifier: ^1.0.4
         version: 1.0.4
+      npm-run-all:
+        specifier: ^4.1.5
+        version: 4.1.5
       oxfmt:
         specifier: 0.27.0
         version: 0.27.0
@@ -6830,6 +6899,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       dependency-cruiser:
         specifier: ^14.1.2
         version: 14.1.2
@@ -6860,6 +6932,9 @@ importers:
       eslint-plugin-sonarjs:
         specifier: 3.0.6
         version: 3.0.6(eslint@9.39.2)
+      npm-run-all:
+        specifier: ^4.1.5
+        version: 4.1.5
       oxfmt:
         specifier: 0.27.0
         version: 0.27.0
@@ -6969,6 +7044,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       dependency-cruiser:
         specifier: ^14.1.2
         version: 14.1.2
@@ -7196,6 +7274,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       dependency-cruiser:
         specifier: ^14.1.2
         version: 14.1.2
@@ -7266,6 +7347,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       dependency-cruiser:
         specifier: ^14.1.2
         version: 14.1.2
@@ -9771,7 +9855,7 @@ packages:
     resolution: {integrity: sha512-9TGZuAX+liGkNKkwuo3FYJu7gHWT0vkBcf7GkOe7s7fmC19XwH/4u5u7sDIFrMooe558ORcmuBvBz7Ur5PlbHw==}
     peerDependencies:
       typescript: '>= 4.3.x'
-      vite: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || 8.0.0-beta.10
+      vite: ^7.3.1 || 8.0.0-beta.10
     peerDependenciesMeta:
       typescript:
         optional: true
@@ -10885,7 +10969,7 @@ packages:
     resolution: {integrity: sha512-MMD09Ap7FyzDfWG961pkIMv/w684XXe1bBEi+wCEpHxvrgAd3j3A9w/Rqp9Am2uRDPCEdi1QgSzS3SGW3aGThQ==}
     peerDependencies:
       storybook: ^10.1.11
-      vite: ^5.0.0 || ^6.0.0 || ^7.0.0 || 8.0.0-beta.10
+      vite: ^7.3.1 || 8.0.0-beta.10
     dependencies:
       '@storybook/csf-plugin': 10.1.11(storybook@10.1.11)(vite@8.0.0-beta.10)
       '@vitest/mocker': 3.2.4(vite@8.0.0-beta.10)
@@ -10997,7 +11081,7 @@ packages:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
       storybook: ^10.1.11
-      vite: ^5.0.0 || ^6.0.0 || ^7.0.0 || 8.0.0-beta.10
+      vite: ^7.3.1 || 8.0.0-beta.10
     dependencies:
       '@joshwooding/vite-plugin-react-docgen-typescript': 0.6.3(typescript@5.9.3)(vite@8.0.0-beta.10)
       '@rollup/pluginutils': 5.3.0
@@ -11796,6 +11880,75 @@ packages:
       eslint-visitor-keys: 4.2.1
     dev: true
 
+  /@typescript/native-preview-darwin-arm64@7.0.0-dev.20260202.1:
+    resolution: {integrity: sha512-a5ts3Z5+HeMS6PJgGkEuQyvzivZJ5bXQ+shzajbfojR+OzOALzTh9sBtFaD54e010e6S1k5QoWHlL/KQ8tgBrA==}
+    cpu: [arm64]
+    os: [darwin]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@typescript/native-preview-darwin-x64@7.0.0-dev.20260202.1:
+    resolution: {integrity: sha512-bFnY6l7oJ2oDFQWAI1smKOm42KOBaEGNBGC84b9YpdWHJ1GlUwbKz0nM/oWI9NndbVJrYbrSqkifl19Oux60kQ==}
+    cpu: [x64]
+    os: [darwin]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@typescript/native-preview-linux-arm64@7.0.0-dev.20260202.1:
+    resolution: {integrity: sha512-LB6DfiqKWM3vf2kLzY7gbHHsVY9fLU2cUpaDpaX9VGBZjNy4bX3t5ZCj+yryCy8ybMxn2seagjG9lydZ4gHlNw==}
+    cpu: [arm64]
+    os: [linux]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@typescript/native-preview-linux-arm@7.0.0-dev.20260202.1:
+    resolution: {integrity: sha512-GU4zJ29o3f0ZEHeApdgiK+TFDBzJwTMedWLHhZlFbU3svUwhftuBBWBQjg2isLLYnZBXsAPuL90J+Ng2hF/ktg==}
+    cpu: [arm]
+    os: [linux]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@typescript/native-preview-linux-x64@7.0.0-dev.20260202.1:
+    resolution: {integrity: sha512-ldIj+xiEq+VwCs8pwn8UlZdD8CsL52jeEN/i5qTOVtSOmFHHk2KbBR+8YHAD0jaTv4vZDn3/7BRH1g9gYV+FMg==}
+    cpu: [x64]
+    os: [linux]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@typescript/native-preview-win32-arm64@7.0.0-dev.20260202.1:
+    resolution: {integrity: sha512-aGpOCUh6suYFztiXBmsNtqfsViIz1E0bvV/Wa3UrUHPsJPx9cm7+yvvLIChe5OzzggjDOa+dRTDGfbXFGlDXPQ==}
+    cpu: [arm64]
+    os: [win32]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@typescript/native-preview-win32-x64@7.0.0-dev.20260202.1:
+    resolution: {integrity: sha512-IH40xp560GZ0Ko46Pz/G9aCCVNsAn/KnYLusZRH+iQSs4E641Oh5rKG0q7iIFDpIcw5m5SWKEYC2YZxOULBntg==}
+    cpu: [x64]
+    os: [win32]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@typescript/native-preview@7.0.0-dev.20260202.1:
+    resolution: {integrity: sha512-y88eLksVZDxSCvt/02cgaYGhYYvROS+vjOWGLQH7QvfLiMtrH+q8jFPgoDsCm85+H5ctWBtoCATZwwpY3/hYSw==}
+    hasBin: true
+    optionalDependencies:
+      '@typescript/native-preview-darwin-arm64': 7.0.0-dev.20260202.1
+      '@typescript/native-preview-darwin-x64': 7.0.0-dev.20260202.1
+      '@typescript/native-preview-linux-arm': 7.0.0-dev.20260202.1
+      '@typescript/native-preview-linux-arm64': 7.0.0-dev.20260202.1
+      '@typescript/native-preview-linux-x64': 7.0.0-dev.20260202.1
+      '@typescript/native-preview-win32-arm64': 7.0.0-dev.20260202.1
+      '@typescript/native-preview-win32-x64': 7.0.0-dev.20260202.1
+    dev: true
+
   /@ungap/structured-clone@1.3.0:
     resolution: {integrity: sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g==}
     dev: false
@@ -11958,7 +12111,7 @@ packages:
     resolution: {integrity: sha512-NVUnA6gQCl8jfoYqKqQU5Clv0aPw14KkZYCsX6T9Lfu9slI0LOU10OTwFHS/WmptsMMpshNd/1tuWsHQ2Uk+cg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
-      vite: ^4.2.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || 8.0.0-beta.10
+      vite: ^7.3.1 || 8.0.0-beta.10
     dependencies:
       '@babel/core': 7.29.0
       '@babel/plugin-transform-react-jsx-self': 7.27.1(@babel/core@7.29.0)
@@ -11975,7 +12128,7 @@ packages:
     resolution: {integrity: sha512-NVUnA6gQCl8jfoYqKqQU5Clv0aPw14KkZYCsX6T9Lfu9slI0LOU10OTwFHS/WmptsMMpshNd/1tuWsHQ2Uk+cg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
-      vite: ^4.2.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || 8.0.0-beta.10
+      vite: ^7.3.1 || 8.0.0-beta.10
     dependencies:
       '@babel/core': 7.29.0
       '@babel/plugin-transform-react-jsx-self': 7.27.1(@babel/core@7.29.0)
@@ -12034,7 +12187,7 @@ packages:
     resolution: {integrity: sha512-46ryTE9RZO/rfDd7pEqFl7etuyzekzEhUbTW3BvmeO/BcCMEgq59BKhek3dXDWgAj4oMK6OZi+vRr1wPW6qjEQ==}
     peerDependencies:
       msw: ^2.4.9
-      vite: ^5.0.0 || ^6.0.0 || ^7.0.0-0 || 8.0.0-beta.10
+      vite: ^7.3.1 || 8.0.0-beta.10
     peerDependenciesMeta:
       msw:
         optional: true
@@ -12051,7 +12204,7 @@ packages:
     resolution: {integrity: sha512-9FRM3MZCedXH3+pIh+ME5Up2NBBHDq0wqwhOKkN4VnvCiKbVxddqH9mSGPZeawjd12pCOGnl+lo/ZGHt0/dQSg==}
     peerDependencies:
       msw: ^2.4.9
-      vite: ^6.0.0 || ^7.0.0-0 || 8.0.0-beta.10
+      vite: ^7.3.1 || 8.0.0-beta.10
     peerDependenciesMeta:
       msw:
         optional: true
@@ -15556,6 +15709,7 @@ packages:
 
   /glob@10.4.5:
     resolution: {integrity: sha512-7Bv8RF0k6xjo7d4A/PxYLbUCfb6c+Vpd2/mB2yRDlew7Jb5hEXiCD9ibfO7wpk8i4sevK6DFny9h7EYbM3/sHg==}
+    deprecated: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
     hasBin: true
     dependencies:
       foreground-child: 3.3.1
@@ -15569,6 +15723,7 @@ packages:
   /glob@11.0.3:
     resolution: {integrity: sha512-2Nim7dha1KVkaiF4q6Dj+ngPPMdfvLJEOpZk/jKiUAkqKebpGAWQXAq9z1xu9HKu5lWfqw/FASuccEjyznjPaA==}
     engines: {node: 20 || >=22}
+    deprecated: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
     hasBin: true
     dependencies:
       foreground-child: 3.3.1
@@ -15582,6 +15737,7 @@ packages:
   /glob@11.1.0:
     resolution: {integrity: sha512-vuNwKSaKiqm7g0THUBu2x7ckSs3XJLXE+2ssL7/MfTGPLLcrJQ/4Uq1CjPTtO5cCIiRxqvN6Twy1qOwhL0Xjcw==}
     engines: {node: 20 || >=22}
+    deprecated: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
     hasBin: true
     dependencies:
       foreground-child: 3.3.1
@@ -15593,7 +15749,7 @@ packages:
 
   /glob@7.2.3:
     resolution: {integrity: sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==}
-    deprecated: Glob versions prior to v9 are no longer supported
+    deprecated: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
     dependencies:
       fs.realpath: 1.0.0
       inflight: 1.0.6
@@ -20639,7 +20795,7 @@ packages:
   /tar@6.2.1:
     resolution: {integrity: sha512-DZ4yORTwrbTj/7MZYq2w+/ZFdI6OZ/f9SFHR+71gIVUZhOQPHzVCLpvRnPgyaMpfWxxk/4ONva3GQSyNIKRv6A==}
     engines: {node: '>=10'}
-    deprecated: Old versions of tar are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exhorbitant rates) by contacting i@izs.me
+    deprecated: Old versions of tar are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
     dependencies:
       chownr: 2.0.0
       fs-minipass: 2.1.0
@@ -21428,7 +21584,7 @@ packages:
     resolution: {integrity: sha512-aVmYOzptLVOI2b1jL+cmkF7O6uhRv1u5fvOkQgbohWZp2CbR22kn9ZqkCUIt9umKF7UhdbsEpshn1rf4720QFg==}
     engines: {node: ^18.0.0 || >=20.0.0}
     peerDependencies:
-      vite: ^5.0.0 || ^6.0.0 || ^7.0.0 || 8.0.0-beta.10
+      vite: ^7.3.1 || 8.0.0-beta.10
     dependencies:
       chokidar: 3.6.0
       fs-extra: 11.3.2
@@ -21442,7 +21598,7 @@ packages:
     resolution: {integrity: sha512-aVmYOzptLVOI2b1jL+cmkF7O6uhRv1u5fvOkQgbohWZp2CbR22kn9ZqkCUIt9umKF7UhdbsEpshn1rf4720QFg==}
     engines: {node: ^18.0.0 || >=20.0.0}
     peerDependencies:
-      vite: ^5.0.0 || ^6.0.0 || ^7.0.0 || 8.0.0-beta.10
+      vite: ^7.3.1 || 8.0.0-beta.10
     dependencies:
       chokidar: 3.6.0
       fs-extra: 11.3.2

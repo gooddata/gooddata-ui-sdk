@@ -107,11 +107,12 @@ export const typescript: IDualConfiguration<"@typescript-eslint" | "no-restricte
         overrides: [
             {
                 parser: "@typescript-eslint/parser",
-                files: ["**/*.ts", "**/*.tsx"],
+                files: ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts"],
                 extends: ["plugin:@typescript-eslint/recommended-type-checked"],
                 parserOptions: {
                     ecmaVersion: 2022,
                     sourceType: "module",
+                    projectService: true,
                 },
                 rules: commonRules,
             },
@@ -121,12 +122,19 @@ export const typescript: IDualConfiguration<"@typescript-eslint" | "no-restricte
         packages: [typescriptEslintParser, typescriptEslintPlugin],
         plugins: { "@typescript-eslint": typescriptEslintPlugin },
         parser: "@typescript-eslint/parser",
-        languageOptions: { sourceType: "module" },
+        languageOptions: {
+            sourceType: "module",
+        },
         // Our additional rules in an override for TS files only
         // (plugin already registered by the spread configs above)
         overrides: [
             {
                 files: ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts"],
+                languageOptions: {
+                    parserOptions: {
+                        projectService: true,
+                    },
+                },
                 rules: {
                     "constructor-super": "off",
                     "getter-return": "off",

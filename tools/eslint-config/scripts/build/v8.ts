@@ -9,7 +9,7 @@ interface IEslintConfigurationCommon {
     parser?: string;
     plugins?: string[];
     extends?: string[];
-    parserOptions?: Record<string, string | number>;
+    parserOptions?: Record<string, unknown>;
     rules?: Rules;
     settings?: Record<string, object>;
     env?: Record<string, boolean>;

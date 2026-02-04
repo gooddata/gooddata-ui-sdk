@@ -47,7 +47,7 @@
         "test-once": "vitest run --passWithNoTests",
         "unlink-plugin": "gdc-plugins dashboard-plugin unlink",
         "update-plugin-params": "gdc-plugins dashboard-plugin update-params",
-        "validate": "tsc && npm run dep-cruiser && npm run eslint && npm run oxfmt-check"
+        "validate": "tsgo && npm run dep-cruiser && npm run eslint && npm run oxfmt-check"
     },
     "dependencies": {
         "json-stable-stringify": "1.3.0",
@@ -80,6 +80,7 @@
         "@types/react-dom": "19.1.7",
         "@typescript-eslint/eslint-plugin": "8.52.0",
         "@typescript-eslint/parser": "8.52.0",
+        "@typescript/native-preview": "7.0.0-dev.20260202.1",
         "babel-loader": "^8.0.5",
         "case-sensitive-paths-webpack-plugin": "^2.4.0",
         "css-loader": "^6.7.1",
