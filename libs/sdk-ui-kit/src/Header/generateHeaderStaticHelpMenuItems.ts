@@ -1,5 +1,13 @@
-// (C) 2022-2023 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
+import { defineMessage } from "react-intl";
+
 import { type IHeaderMenuItem, type TUTMContent } from "./typings.js";
+
+const HEADER_STATIC_HELP_MENU_ITEM_ID_SLACK = defineMessage({ id: "gs.header.slack" }).id;
+const HEADER_STATIC_HELP_MENU_ITEM_ID_COMMUNITY = defineMessage({ id: "gs.header.community" }).id;
+const HEADER_STATIC_HELP_MENU_ITEM_ID_UNIVERSITY = defineMessage({ id: "gs.header.university" }).id;
+const HEADER_STATIC_HELP_MENU_ITEM_ID_DOCUMENTATION = defineMessage({ id: "gs.header.documentation" }).id;
 
 /**
  * @internal
@@ -26,28 +34,28 @@ export function generateHeaderStaticHelpMenuItems(
 
     return [
         {
-            key: "gs.header.slack",
+            key: HEADER_STATIC_HELP_MENU_ITEM_ID_SLACK,
             className: "s-slack",
             iconName: "gd-icon-slack",
             href: addUTMParameters(slackLink, "main_menu_help_slack"),
             target: "_blank",
         },
         {
-            key: "gs.header.community",
+            key: HEADER_STATIC_HELP_MENU_ITEM_ID_COMMUNITY,
             className: "s-community",
             iconName: "gd-icon-community",
             href: addUTMParameters(communityLink, "main_menu_help_community"),
             target: "_blank",
         },
         {
-            key: "gs.header.university",
+            key: HEADER_STATIC_HELP_MENU_ITEM_ID_UNIVERSITY,
             className: "s-university",
             iconName: "gd-icon-university",
             href: addUTMParameters(universityLink, "main_menu_help_university"),
             target: "_blank",
         },
         {
-            key: "gs.header.documentation",
+            key: HEADER_STATIC_HELP_MENU_ITEM_ID_DOCUMENTATION,
             className: "s-documentation",
             iconName: "gd-icon-documentation",
             href: addUTMParameters(documentationLink, "main_menu_help_documentation"),

@@ -3,8 +3,10 @@
 import { useState } from "react";
 
 import { isEmpty } from "lodash-es";
+import { useIntl } from "react-intl";
 
 import { type DateFilterGranularity, type IActiveCalendars, type WeekStart } from "@gooddata/sdk-model";
+import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 import { AbsolutePresetFilterItems } from "./AbsolutePresetFilterItems.js";
 import { CalendarTypeTabs } from "./CalendarTypeTabs.js";
@@ -68,11 +70,20 @@ export function DateFilterBodyContent({
     onSelectedFilterOptionChange,
     activeCalendars,
 }: IDateFilterBodyContentProps) {
+    const intl = useIntl();
+    const listboxLabel = intl.formatMessage({ id: "dateFilterDropdown.label" });
     const fiscalTabsConfig = getFiscalTabsConfig(filterOptions.relativePreset, activeCalendars);
 
     const [selectedTab, setSelectedTab] = useState<CalendarTabType>(() =>
         getDefaultCalendarTab(activeCalendars, selectedFilterOption),
     );
+    const tabsIdBase = useIdPrefixed("calendar-tabs");
+    const tabIds = {
+        standard: `${tabsIdBase}-standard-tab`,
+        fiscal: `${tabsIdBase}-fiscal-tab`,
+    };
+    const panelId = `${tabsIdBase}-panel`;
+    const activeTabId = selectedTab === "fiscal" ? tabIds.fiscal : tabIds.standard;
 
     const filteredRelativePreset = getFilteredPresets(
         filterOptions.relativePreset,
@@ -85,11 +96,8 @@ export function DateFilterBodyContent({
         selectedTab,
     );
 
-    return (
+    const listContent = (
         <>
-            {fiscalTabsConfig.showTabs ? (
-                <CalendarTypeTabs selectedTab={selectedTab} onTabSelect={setSelectedTab} />
-            ) : null}
             <AllTimeFilterSection
                 filterOptions={filterOptions}
                 selectedFilterOption={selectedFilterOption}
@@ -143,6 +151,30 @@ export function DateFilterBodyContent({
                     className={isMobile ? ITEM_CLASS_MOBILE : undefined}
                 />
             ) : null}
+        </>
+    );
+
+    return (
+        <>
+            {fiscalTabsConfig.showTabs ? (
+                <CalendarTypeTabs
+                    selectedTab={selectedTab}
+                    onTabSelect={setSelectedTab}
+                    tabIds={tabIds}
+                    panelId={panelId}
+                />
+            ) : null}
+            {fiscalTabsConfig.showTabs ? (
+                <div role="tabpanel" id={panelId} aria-labelledby={activeTabId} tabIndex={0}>
+                    <div role="listbox" aria-label={listboxLabel}>
+                        {listContent}
+                    </div>
+                </div>
+            ) : (
+                <div role="listbox" aria-label={listboxLabel}>
+                    {listContent}
+                </div>
+            )}
         </>
     );
 }

@@ -5,7 +5,7 @@ import { type MouseEvent, type ReactElement, useCallback, useEffect, useMemo, us
 import cx from "classnames";
 import { differenceInCalendarDays, differenceInMonths, format } from "date-fns";
 import { debounce } from "lodash-es";
-import { FormattedMessage, defineMessages, useIntl } from "react-intl";
+import { FormattedMessage, defineMessage, defineMessages, useIntl } from "react-intl";
 import { v4 as uuid } from "uuid";
 
 import { withTheme } from "@gooddata/sdk-ui-theme-provider";
@@ -18,6 +18,7 @@ import {
     getTextColor,
     getWorkspacePickerHoverColor,
 } from "./colors.js";
+import { LOGOUT_MENU_ITEM_ID } from "./generateHeaderAccountMenuItems.js";
 import { HeaderAccount } from "./HeaderAccount.js";
 import { HeaderChatButton } from "./HeaderChatButton.js";
 import { HeaderHelp } from "./HeaderHelp.js";
@@ -51,6 +52,8 @@ const messages = defineMessages({
     search: { id: "gs.header.search" },
     notifications: { id: "gs.header.notifications" },
 });
+
+const HEADER_HELP_MENU_ITEM_ID = defineMessage({ id: "gs.header.help" }).id;
 
 /**
  * @internal
@@ -295,7 +298,7 @@ export const AppHeader = withTheme(function AppHeader({
     const getHelpMenuLink = (icon = "gd-icon-header-help") => {
         const shouldOpenDropdown = state.responsiveMode && helpMenuItems.length > 0;
         return {
-            key: "gs.header.help",
+            key: HEADER_HELP_MENU_ITEM_ID,
             className: `s-menu-help ${icon}`,
             href: shouldOpenDropdown ? undefined : documentationUrl,
             onClick: shouldOpenDropdown ? toggleHelpMenu : undefined,
@@ -471,7 +474,7 @@ export const AppHeader = withTheme(function AppHeader({
     };
 
     const renderLogoutButton = () => {
-        const [logoutMenuItem] = accountMenuItems.filter((item) => item.key === "gs.header.logout");
+        const [logoutMenuItem] = accountMenuItems.filter((item) => item.key === LOGOUT_MENU_ITEM_ID);
         const LogoutIcon = Icon["Logout"];
         return logoutMenuItem ? (
             <button

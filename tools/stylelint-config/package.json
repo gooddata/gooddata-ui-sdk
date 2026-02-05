@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/stylelint-config",
-    "version": "11.19.0-alpha.9",
+    "version": "11.19.0-alpha.10",
     "description": "GoodData CSS Style Guide",
     "keywords": [
         "config",

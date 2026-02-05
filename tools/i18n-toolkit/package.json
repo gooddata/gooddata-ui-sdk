@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/i18n-toolkit",
-    "version": "11.19.0-alpha.9",
+    "version": "11.19.0-alpha.10",
     "description": "Localization validator to validate localization complexity and intl and html format.",
     "license": "MIT",
     "author": "GoodData",
@@ -39,8 +39,12 @@
         "run": "node ./esm/index.js",
         "test": "vitest watch",
         "test-once": "vitest run",
-        "validate": "npm run dep-cruiser && npm run eslint && npm run oxfmt-check",
-        "validate-esm": "node validate-esm.cjs"
+        "validate": "npm run dep-cruiser && npm run lint && npm run oxfmt-check",
+        "validate-esm": "node validate-esm.cjs",
+        "lint": "npm run oxlint && npm run eslint",
+        "lint-fix": "npm run oxlint-fix && npm run eslint-fix",
+        "oxlint": "oxlint .",
+        "oxlint-fix": "oxlint . --fix"
     },
     "dependencies": {
         "@formatjs/cli-lib": "^6.1.1",
@@ -57,6 +61,7 @@
     },
     "devDependencies": {
         "@gooddata/eslint-config": "workspace:*",
+        "@gooddata/oxlint-config": "workspace:*",
         "@types/lodash-es": "^4.17.12",
         "@types/node": "^22.13.0",
         "@typescript-eslint/eslint-plugin": "8.52.0",
@@ -71,11 +76,11 @@
         "eslint-plugin-import-x": "4.16.1",
         "eslint-plugin-jsdoc": "62.1.0",
         "eslint-plugin-no-barrel-files": "1.2.2",
-        "eslint-plugin-no-only-tests": "3.3.0",
         "eslint-plugin-sonarjs": "3.0.6",
         "mkdirp": "^1.0.4",
         "npm-run-all": "^4.1.5",
         "oxfmt": "0.27.0",
+        "oxlint": "^1.43.0",
         "typescript": "5.9.3",
         "vitest": "4.0.8"
     }

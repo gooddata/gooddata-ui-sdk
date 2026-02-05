@@ -31,7 +31,10 @@
     "paths": {
         "/api/v1/actions/fileStorage/staging/upload": {
             "post": {
-                "tags": ["Data source staging location", "actions"],
+                "tags": [
+                    "Data source staging location",
+                    "actions"
+                ],
                 "summary": "Upload a file to the staging area",
                 "description": "Provides a location for uploading staging files.",
                 "operationId": "stagingUpload",
@@ -39,7 +42,9 @@
                     "content": {
                         "multipart/form-data": {
                             "schema": {
-                                "required": ["file"],
+                                "required": [
+                                    "file"
+                                ],
                                 "type": "object",
                                 "properties": {
                                     "file": {
@@ -65,14 +70,19 @@
                     }
                 },
                 "x-gdc-security-info": {
-                    "permissions": ["MANAGE"],
+                    "permissions": [
+                        "MANAGE"
+                    ],
                     "description": "Minimal permission required to use this endpoint."
                 }
             }
         },
         "/api/v1/actions/fileStorage/staging/analyzeCsv": {
             "post": {
-                "tags": ["Data source files analysis", "actions"],
+                "tags": [
+                    "Data source files analysis",
+                    "actions"
+                ],
                 "summary": "Analyze CSV",
                 "description": "Analyzes CSV files at the given locations",
                 "operationId": "analyzeCsv",
@@ -102,14 +112,19 @@
                     }
                 },
                 "x-gdc-security-info": {
-                    "permissions": ["MANAGE"],
+                    "permissions": [
+                        "MANAGE"
+                    ],
                     "description": "Minimal permission required to use this endpoint."
                 }
             }
         },
         "/api/v1/actions/fileStorage/dataSources/{dataSourceId}/readCsvFileManifests": {
             "post": {
-                "tags": ["Data source files manifest read", "actions"],
+                "tags": [
+                    "Data source files manifest read",
+                    "actions"
+                ],
                 "summary": "Read CSV file manifests",
                 "description": "Read the manifests of the CSV files in the given data source.",
                 "operationId": "readCsvFileManifests",
@@ -149,14 +164,19 @@
                     }
                 },
                 "x-gdc-security-info": {
-                    "permissions": ["MANAGE"],
+                    "permissions": [
+                        "MANAGE"
+                    ],
                     "description": "Minimal permission required to use this endpoint."
                 }
             }
         },
         "/api/v1/actions/fileStorage/dataSources/{dataSourceId}/listFiles": {
             "post": {
-                "tags": ["Data source files listing", "actions"],
+                "tags": [
+                    "Data source files listing",
+                    "actions"
+                ],
                 "summary": "List datasource files",
                 "description": "List all the files in the given data source.",
                 "operationId": "listFiles",
@@ -186,14 +206,19 @@
                     }
                 },
                 "x-gdc-security-info": {
-                    "permissions": ["MANAGE"],
+                    "permissions": [
+                        "MANAGE"
+                    ],
                     "description": "Minimal permission required to use this endpoint."
                 }
             }
         },
         "/api/v1/actions/fileStorage/dataSources/{dataSourceId}/importCsv": {
             "post": {
-                "tags": ["Data source files import", "actions"],
+                "tags": [
+                    "Data source files import",
+                    "actions"
+                ],
                 "summary": "Import CSV",
                 "description": "Import the CSV files at the given locations in the staging area to the final location.",
                 "operationId": "importCsv",
@@ -233,14 +258,19 @@
                     }
                 },
                 "x-gdc-security-info": {
-                    "permissions": ["MANAGE"],
+                    "permissions": [
+                        "MANAGE"
+                    ],
                     "description": "Minimal permission required to use this endpoint."
                 }
             }
         },
         "/api/v1/actions/fileStorage/dataSources/{dataSourceId}/deleteFiles": {
             "post": {
-                "tags": ["Data source files deletion", "actions"],
+                "tags": [
+                    "Data source files deletion",
+                    "actions"
+                ],
                 "summary": "Delete datasource files",
                 "description": "Delete the files in the given data source.",
                 "operationId": "deleteFiles",
@@ -270,14 +300,18 @@
                     }
                 },
                 "x-gdc-security-info": {
-                    "permissions": ["MANAGE"],
+                    "permissions": [
+                        "MANAGE"
+                    ],
                     "description": "Minimal permission required to use this endpoint."
                 }
             }
         },
         "/api/v1/actions/customGeoCollection/{collectionId}/import": {
             "post": {
-                "tags": ["actions"],
+                "tags": [
+                    "actions"
+                ],
                 "summary": "Import custom geo collection",
                 "description": "Import a geo collection file from the staging area to be available for use.",
                 "operationId": "importCustomGeoCollection",
@@ -314,14 +348,18 @@
                     }
                 },
                 "x-gdc-security-info": {
-                    "permissions": ["MANAGE"],
+                    "permissions": [
+                        "MANAGE"
+                    ],
                     "description": "Minimal permission required to use this endpoint."
                 }
             }
         },
         "/api/v1/actions/customGeoCollection/staging/upload": {
             "post": {
-                "tags": ["actions"],
+                "tags": [
+                    "actions"
+                ],
                 "summary": "Upload a geo collection file to the staging area",
                 "description": "Provides a location for uploading staging files for custom geo collections. Supported file types: GeoParquet (.parquet), GeoJSON (.geojson, .json).",
                 "operationId": "customGeoCollectionStagingUpload",
@@ -329,7 +367,9 @@
                     "content": {
                         "multipart/form-data": {
                             "schema": {
-                                "required": ["file"],
+                                "required": [
+                                    "file"
+                                ],
                                 "type": "object",
                                 "properties": {
                                     "file": {
@@ -355,14 +395,18 @@
                     }
                 },
                 "x-gdc-security-info": {
-                    "permissions": ["MANAGE"],
+                    "permissions": [
+                        "MANAGE"
+                    ],
                     "description": "Minimal permission required to use this endpoint."
                 }
             }
         },
         "/api/v1/actions/customGeoCollection/convert": {
             "post": {
-                "tags": ["actions"],
+                "tags": [
+                    "actions"
+                ],
                 "summary": "Convert a geo file to GeoParquet format",
                 "description": "Converts a geo file from the staging area to GeoParquet format. Supported source formats: GeoJSON (.geojson, .json). If the source file is already in GeoParquet format, the same location is returned without conversion.",
                 "operationId": "convertGeoFile",
@@ -399,14 +443,18 @@
                     }
                 },
                 "x-gdc-security-info": {
-                    "permissions": ["MANAGE"],
+                    "permissions": [
+                        "MANAGE"
+                    ],
                     "description": "Minimal permission required to use this endpoint."
                 }
             }
         },
         "/api/v1/location/custom/collections/{collectionId}/items": {
             "get": {
-                "tags": ["OGC API Features"],
+                "tags": [
+                    "OGC API Features"
+                ],
                 "summary": "Get custom collection features",
                 "description": "Retrieve features from a custom (organization-scoped) GeoCollections collection as GeoJSON",
                 "operationId": "getCustomCollectionItems",
@@ -480,14 +528,18 @@
                     }
                 },
                 "x-gdc-security-info": {
-                    "permissions": ["VIEW"],
+                    "permissions": [
+                        "VIEW"
+                    ],
                     "description": "Minimal permission required to use this endpoint."
                 }
             }
         },
         "/api/v1/location/collections/{collectionId}/items": {
             "get": {
-                "tags": ["OGC API Features"],
+                "tags": [
+                    "OGC API Features"
+                ],
                 "summary": "Get collection features",
                 "description": "Retrieve features from a GeoCollections collection as GeoJSON",
                 "operationId": "getCollectionItems",
@@ -561,14 +613,19 @@
                     }
                 },
                 "x-gdc-security-info": {
-                    "permissions": ["VIEW"],
+                    "permissions": [
+                        "VIEW"
+                    ],
                     "description": "Minimal permission required to use this endpoint."
                 }
             }
         },
         "/api/v1/actions/collectCacheUsage": {
             "get": {
-                "tags": ["Cache usage", "actions"],
+                "tags": [
+                    "Cache usage",
+                    "actions"
+                ],
                 "summary": "Collect data about the current cache usage",
                 "description": "Get the detailed data about how much cache your organization is currently using, broken down by individual workspaces.",
                 "operationId": "collectCacheUsage",
@@ -585,7 +642,9 @@
                     }
                 },
                 "x-gdc-security-info": {
-                    "permissions": ["MANAGE"],
+                    "permissions": [
+                        "MANAGE"
+                    ],
                     "description": "Minimal permission required to use this endpoint."
                 }
             }
@@ -594,7 +653,9 @@
     "components": {
         "schemas": {
             "UploadFileResponse": {
-                "required": ["location"],
+                "required": [
+                    "location"
+                ],
                 "type": "object",
                 "properties": {
                     "location": {
@@ -605,7 +666,9 @@
                 "description": "Information related to the file uploaded to the staging area."
             },
             "AnalyzeCsvRequest": {
-                "required": ["analyzeRequests"],
+                "required": [
+                    "analyzeRequests"
+                ],
                 "type": "object",
                 "properties": {
                     "analyzeRequests": {
@@ -619,7 +682,9 @@
                 "description": "Bulk CSV analysis request."
             },
             "AnalyzeCsvRequestItem": {
-                "required": ["location"],
+                "required": [
+                    "location"
+                ],
                 "type": "object",
                 "properties": {
                     "location": {
@@ -662,7 +727,11 @@
                 "description": "CSV analysis request config."
             },
             "AnalyzeCsvResponse": {
-                "required": ["columns", "location", "previewData"],
+                "required": [
+                    "columns",
+                    "location",
+                    "previewData"
+                ],
                 "type": "object",
                 "properties": {
                     "location": {
@@ -695,7 +764,10 @@
                 "description": "Describes the results of a CSV analysis of a single file."
             },
             "AnalyzeCsvResponseColumn": {
-                "required": ["name", "type"],
+                "required": [
+                    "name",
+                    "type"
+                ],
                 "type": "object",
                 "properties": {
                     "name": {
@@ -904,7 +976,9 @@
                 "description": "Options for reading CSV files."
             },
             "ReadCsvFileManifestsRequest": {
-                "required": ["manifestRequests"],
+                "required": [
+                    "manifestRequests"
+                ],
                 "type": "object",
                 "properties": {
                     "manifestRequests": {
@@ -918,7 +992,9 @@
                 "description": "Request to read the manifests of the specified CSV files."
             },
             "ReadCsvFileManifestsRequestItem": {
-                "required": ["fileName"],
+                "required": [
+                    "fileName"
+                ],
                 "type": "object",
                 "properties": {
                     "fileName": {
@@ -961,7 +1037,11 @@
                 "description": "Body of the CSV manifest."
             },
             "ReadCsvFileManifestsResponse": {
-                "required": ["manifest", "name", "version"],
+                "required": [
+                    "manifest",
+                    "name",
+                    "version"
+                ],
                 "type": "object",
                 "properties": {
                     "name": {
@@ -980,7 +1060,12 @@
                 "description": "Describes the results of a CSV manifest read of a single file."
             },
             "GdStorageFile": {
-                "required": ["modifiedAt", "name", "size", "type"],
+                "required": [
+                    "modifiedAt",
+                    "name",
+                    "size",
+                    "type"
+                ],
                 "type": "object",
                 "properties": {
                     "name": {
@@ -1000,13 +1085,17 @@
                     "type": {
                         "type": "string",
                         "description": "Type of the file.",
-                        "enum": ["CSV"]
+                        "enum": [
+                            "CSV"
+                        ]
                     }
                 },
                 "description": "File stored in GD Storage."
             },
             "ImportCsvRequest": {
-                "required": ["tables"],
+                "required": [
+                    "tables"
+                ],
                 "type": "object",
                 "properties": {
                     "tables": {
@@ -1020,7 +1109,10 @@
                 "description": "Request containing the information necessary to import one or more CSV files from the staging area."
             },
             "ImportCsvRequestTable": {
-                "required": ["name", "source"],
+                "required": [
+                    "name",
+                    "source"
+                ],
                 "type": "object",
                 "properties": {
                     "name": {
@@ -1034,7 +1126,10 @@
                 "description": "Information about a particular table."
             },
             "ImportCsvRequestTableSource": {
-                "required": ["config", "location"],
+                "required": [
+                    "config",
+                    "location"
+                ],
                 "type": "object",
                 "properties": {
                     "location": {
@@ -1071,7 +1166,10 @@
                 "description": "Config to use when accessing the data for executions, etc."
             },
             "ImportCsvResponse": {
-                "required": ["name", "version"],
+                "required": [
+                    "name",
+                    "version"
+                ],
                 "type": "object",
                 "properties": {
                     "name": {
@@ -1087,7 +1185,9 @@
                 "description": "Response containing the information about the imported CSV file."
             },
             "DeleteFilesRequest": {
-                "required": ["fileNames"],
+                "required": [
+                    "fileNames"
+                ],
                 "type": "object",
                 "properties": {
                     "fileNames": {
@@ -1102,7 +1202,9 @@
                 "description": "Request to delete files from the storage."
             },
             "ImportGeoCollectionRequest": {
-                "required": ["location"],
+                "required": [
+                    "location"
+                ],
                 "type": "object",
                 "properties": {
                     "location": {
@@ -1113,7 +1215,9 @@
                 "description": "Request to import a geo collection file from the staging area."
             },
             "ImportGeoCollectionResponse": {
-                "required": ["version"],
+                "required": [
+                    "version"
+                ],
                 "type": "object",
                 "properties": {
                     "version": {
@@ -1125,7 +1229,9 @@
                 "description": "Response after successfully importing a geo collection."
             },
             "UploadGeoCollectionFileResponse": {
-                "required": ["location"],
+                "required": [
+                    "location"
+                ],
                 "type": "object",
                 "properties": {
                     "location": {
@@ -1136,7 +1242,9 @@
                 "description": "Information related to the geo collection file uploaded to the staging area."
             },
             "ConvertGeoFileRequest": {
-                "required": ["location"],
+                "required": [
+                    "location"
+                ],
                 "type": "object",
                 "properties": {
                     "location": {
@@ -1147,7 +1255,9 @@
                 "description": "Request to convert a geo file to GeoParquet format."
             },
             "ConvertGeoFileResponse": {
-                "required": ["location"],
+                "required": [
+                    "location"
+                ],
                 "type": "object",
                 "properties": {
                     "location": {
@@ -1158,7 +1268,10 @@
                 "description": "Response after successfully converting a geo file."
             },
             "GeoJsonFeature": {
-                "required": ["properties", "type"],
+                "required": [
+                    "properties",
+                    "type"
+                ],
                 "type": "object",
                 "properties": {
                     "type": {
@@ -1180,7 +1293,10 @@
                 "description": "GeoJSON Feature"
             },
             "GeoJsonFeatureCollection": {
-                "required": ["features", "type"],
+                "required": [
+                    "features",
+                    "type"
+                ],
                 "type": "object",
                 "properties": {
                     "type": {
@@ -1203,7 +1319,10 @@
                 "description": "GeoJSON FeatureCollection"
             },
             "GeoJsonGeometry": {
-                "required": ["coordinates", "type"],
+                "required": [
+                    "coordinates",
+                    "type"
+                ],
                 "type": "object",
                 "properties": {
                     "type": {
@@ -1216,7 +1335,11 @@
                 "description": "GeoJSON Geometry"
             },
             "CacheRemovalInterval": {
-                "required": ["from", "removed", "to"],
+                "required": [
+                    "from",
+                    "removed",
+                    "to"
+                ],
                 "type": "object",
                 "properties": {
                     "from": {
@@ -1238,7 +1361,10 @@
                 "description": "Information about a period in time and how much cached data was removed."
             },
             "CacheUsageData": {
-                "required": ["organizationCacheUsage", "workspaceCacheUsages"],
+                "required": [
+                    "organizationCacheUsage",
+                    "workspaceCacheUsages"
+                ],
                 "type": "object",
                 "properties": {
                     "organizationCacheUsage": {
@@ -1255,7 +1381,9 @@
                 "description": "Result of scan of data source physical model."
             },
             "OrganizationCacheSettings": {
-                "required": ["extraCacheBudget"],
+                "required": [
+                    "extraCacheBudget"
+                ],
                 "type": "object",
                 "properties": {
                     "extraCacheBudget": {
@@ -1267,7 +1395,11 @@
                 "description": "Settings for organization cache."
             },
             "OrganizationCacheUsage": {
-                "required": ["current", "removalIntervals", "settings"],
+                "required": [
+                    "current",
+                    "removalIntervals",
+                    "settings"
+                ],
                 "type": "object",
                 "properties": {
                     "settings": {
@@ -1287,7 +1419,10 @@
                 "description": "Data about the whole organization's cache usage."
             },
             "OrganizationCurrentCacheUsage": {
-                "required": ["cacheUsed", "removedSinceStart"],
+                "required": [
+                    "cacheUsed",
+                    "removedSinceStart"
+                ],
                 "type": "object",
                 "properties": {
                     "cacheUsed": {
@@ -1309,7 +1444,9 @@
                 "description": "Current cache usage of the organization."
             },
             "WorkspaceCacheSettings": {
-                "required": ["extraCache"],
+                "required": [
+                    "extraCache"
+                ],
                 "type": "object",
                 "properties": {
                     "extraCache": {
@@ -1321,7 +1458,11 @@
                 "description": "Cache settings for the workspace."
             },
             "WorkspaceCacheUsage": {
-                "required": ["current", "removalIntervals", "settings"],
+                "required": [
+                    "current",
+                    "removalIntervals",
+                    "settings"
+                ],
                 "type": "object",
                 "properties": {
                     "settings": {
@@ -1341,7 +1482,12 @@
                 "description": "Data about a particular workspace cache usage."
             },
             "WorkspaceCurrentCacheUsage": {
-                "required": ["cacheAvailable", "cacheUsed", "removalPeriodStart", "removedSinceStart"],
+                "required": [
+                    "cacheAvailable",
+                    "cacheUsed",
+                    "removalPeriodStart",
+                    "removedSinceStart"
+                ],
                 "type": "object",
                 "properties": {
                     "cacheUsed": {

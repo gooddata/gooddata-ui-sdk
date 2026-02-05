@@ -17,6 +17,18 @@ const rules = {
     "jsdoc/require-param": "error", // require @param for all params
 };
 
+const v9 = {
+    packages: [jsdocPlugin],
+    overrides: [
+        {
+            files: ["**/*.{js,cjs,mjs,jsx}"],
+            plugins: { jsdoc: jsdocPlugin },
+            settings,
+            rules,
+        },
+    ],
+};
+
 export const jsdoc: IDualConfiguration<"jsdoc"> = {
     v8: {
         packages: [jsdocPlugin],
@@ -29,15 +41,6 @@ export const jsdoc: IDualConfiguration<"jsdoc"> = {
             },
         ],
     },
-    v9: {
-        packages: [jsdocPlugin],
-        overrides: [
-            {
-                files: ["**/*.{js,cjs,mjs,jsx}"],
-                plugins: { jsdoc: jsdocPlugin },
-                settings,
-                rules,
-            },
-        ],
-    },
+    v9,
+    ox: v9,
 };

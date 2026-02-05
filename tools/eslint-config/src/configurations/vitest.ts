@@ -1,7 +1,8 @@
 // (C) 2025-2026 GoodData Corporation
 
+import { scopeRules } from "@gooddata/lint-config";
+
 import type { IDualConfiguration, IPackage } from "../types.js";
-import { scopeRules } from "../utils/scopeRules.js";
 
 const vitestPlugin: IPackage = {
     name: "@vitest/eslint-plugin",
@@ -9,6 +10,17 @@ const vitestPlugin: IPackage = {
 };
 
 const commonRules = {
+    "no-conditional-expect": "error",
+    "no-import-node-test": "error",
+    "no-interpolation-in-snapshots": "error",
+    "no-mocks-import": "error",
+    "no-standalone-expect": "error",
+    "no-unneeded-async-expect-function": "error",
+    "prefer-called-exactly-once-with": "error",
+    "require-local-test-context-for-concurrent-snapshots": "error",
+    "valid-describe-callback": "error",
+    "valid-expect-in-promise": "error",
+
     "expect-expect": "off",
     "no-commented-out-tests": "warn",
     "valid-title": "error",
@@ -18,36 +30,20 @@ const commonRules = {
     "valid-expect": "warn",
 };
 
+const packages = [vitestPlugin];
+
+const v9 = {
+    packages,
+    plugins: { vitest: vitestPlugin },
+    rules: scopeRules(commonRules, "vitest"),
+};
+
 export const vitest: IDualConfiguration<"@vitest", "vitest"> = {
     v8: {
-        packages: [vitestPlugin],
+        packages,
         plugins: ["@vitest"],
-        extends: ["plugin:@vitest/legacy-recommended"],
         rules: scopeRules(commonRules, "@vitest"),
     },
-    v9: {
-        packages: [vitestPlugin],
-        plugins: { vitest: vitestPlugin },
-        rules: {
-            "vitest/expect-expect": "error",
-            "vitest/no-conditional-expect": "error",
-            "vitest/no-disabled-tests": "warn",
-            "vitest/no-focused-tests": "error",
-            "vitest/no-commented-out-tests": "error",
-            "vitest/no-identical-title": "error",
-            "vitest/no-import-node-test": "error",
-            "vitest/no-interpolation-in-snapshots": "error",
-            "vitest/no-mocks-import": "error",
-            "vitest/no-standalone-expect": "error",
-            "vitest/no-unneeded-async-expect-function": "error",
-            "vitest/prefer-called-exactly-once-with": "error",
-            "vitest/require-local-test-context-for-concurrent-snapshots": "error",
-            "vitest/valid-describe-callback": "error",
-            "vitest/valid-expect": "error",
-            "vitest/valid-expect-in-promise": "error",
-            "vitest/valid-title": "error",
-
-            ...scopeRules(commonRules, "vitest"),
-        },
-    },
+    v9,
+    ox: v9,
 };

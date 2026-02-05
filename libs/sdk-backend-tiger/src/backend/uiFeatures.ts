@@ -396,7 +396,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDashboardSectionHeadersDateDataSet: false,
     enableAnomalyDetectionAlert: false,
     enableAnomalyDetectionVisualization: false,
-    enableFiscalCalendars: false,
+    enableFiscalCalendars: true,
     enablePivotTablePagination: true,
     enableImplicitDrillToUrl: false,
     enableDashboardFilterGroups: false,

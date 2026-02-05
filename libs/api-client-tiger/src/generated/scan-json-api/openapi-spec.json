@@ -19,7 +19,10 @@
     "paths": {
         "/api/v1/actions/dataSources/{dataSourceId}/test": {
             "post": {
-                "tags": ["Test Connection", "actions"],
+                "tags": [
+                    "Test Connection",
+                    "actions"
+                ],
                 "summary": "Test data source connection by data source id",
                 "description": "Test if it is possible to connect to a database using an existing data source definition.",
                 "operationId": "testDataSource",
@@ -78,14 +81,19 @@
                     }
                 },
                 "x-gdc-security-info": {
-                    "permissions": ["USE"],
+                    "permissions": [
+                        "USE"
+                    ],
                     "description": "Permissions required to test a data source."
                 }
             }
         },
         "/api/v1/actions/dataSources/{dataSourceId}/scanSql": {
             "post": {
-                "tags": ["Scanning", "actions"],
+                "tags": [
+                    "Scanning",
+                    "actions"
+                ],
                 "summary": "Collect metadata about SQL query",
                 "description": "It executes SQL query against specified data source and extracts metadata. Metadata consist of column names and column data types. It can optionally provide also preview of data returned by SQL query",
                 "operationId": "scanSql",
@@ -139,8 +147,16 @@
                                                 }
                                             ],
                                             "dataPreview": [
-                                                ["1000", "campaign1", "458.8"],
-                                                ["1800", "campaign2", "144"]
+                                                [
+                                                    "1000",
+                                                    "campaign1",
+                                                    "458.8"
+                                                ],
+                                                [
+                                                    "1800",
+                                                    "campaign2",
+                                                    "144"
+                                                ]
                                             ]
                                         }
                                     }
@@ -150,14 +166,19 @@
                     }
                 },
                 "x-gdc-security-info": {
-                    "permissions": ["MANAGE"],
+                    "permissions": [
+                        "MANAGE"
+                    ],
                     "description": "Minimal permission required to use this endpoint."
                 }
             }
         },
         "/api/v1/actions/dataSources/{dataSourceId}/scan": {
             "post": {
-                "tags": ["Scanning", "actions"],
+                "tags": [
+                    "Scanning",
+                    "actions"
+                ],
                 "summary": "Scan a database to get a physical data model (PDM)",
                 "description": "It scans a database and transforms its metadata to a declarative definition of the physical data model (PDM). The result of the request contains the mentioned physical data model (PDM) of a database within warning, for example, about unsupported columns.",
                 "operationId": "scanDataSource",
@@ -217,7 +238,10 @@
                                                             }
                                                         ],
                                                         "id": "campaign_channels",
-                                                        "path": ["demo", "campaign_channels"],
+                                                        "path": [
+                                                            "demo",
+                                                            "campaign_channels"
+                                                        ],
                                                         "type": "TABLE"
                                                     }
                                                 ]
@@ -231,14 +255,19 @@
                     }
                 },
                 "x-gdc-security-info": {
-                    "permissions": ["USE"],
+                    "permissions": [
+                        "USE"
+                    ],
                     "description": "Minimal permission required to use this endpoint."
                 }
             }
         },
         "/api/v1/actions/dataSources/{dataSourceId}/computeColumnStatistics": {
             "post": {
-                "tags": ["Computation", "actions"],
+                "tags": [
+                    "Computation",
+                    "actions"
+                ],
                 "summary": "(EXPERIMENTAL) Compute column statistics",
                 "description": "(EXPERIMENTAL) Computes the requested statistical parameters of a column in a data source.",
                 "operationId": "columnStatistics",
@@ -278,7 +307,10 @@
         },
         "/api/v1/actions/dataSource/test": {
             "post": {
-                "tags": ["Test Connection", "actions"],
+                "tags": [
+                    "Test Connection",
+                    "actions"
+                ],
                 "summary": "Test connection by data source definition",
                 "description": "Test if it is possible to connect to a database using a connection provided by the data source definition in the request body.",
                 "operationId": "testDataSourceDefinition",
@@ -324,14 +356,19 @@
                     }
                 },
                 "x-gdc-security-info": {
-                    "permissions": ["MANAGE"],
+                    "permissions": [
+                        "MANAGE"
+                    ],
                     "description": "Minimal organization permission required to use this endpoint."
                 }
             }
         },
         "/api/v1/actions/dataSources/{dataSourceId}/scanSchemata": {
             "get": {
-                "tags": ["Scanning", "actions"],
+                "tags": [
+                    "Scanning",
+                    "actions"
+                ],
                 "summary": "Get a list of schema names of a database",
                 "description": "It scans a database and reads metadata. The result of the request contains a list of schema names of a database.",
                 "operationId": "getDataSourceSchemata",
@@ -360,7 +397,10 @@
                                     "An example of a successful scan": {
                                         "description": "An example of a successful scan",
                                         "value": {
-                                            "schemaNames": ["demo", "public"]
+                                            "schemaNames": [
+                                                "demo",
+                                                "public"
+                                            ]
                                         }
                                     }
                                 }
@@ -369,7 +409,9 @@
                     }
                 },
                 "x-gdc-security-info": {
-                    "permissions": ["MANAGE"],
+                    "permissions": [
+                        "MANAGE"
+                    ],
                     "description": "Minimal permission required to use this endpoint."
                 }
             }
@@ -378,7 +420,9 @@
     "components": {
         "schemas": {
             "TestQueryDuration": {
-                "required": ["simpleSelect"],
+                "required": [
+                    "simpleSelect"
+                ],
                 "type": "object",
                 "properties": {
                     "simpleSelect": {
@@ -397,7 +441,9 @@
                 "description": "A structure containing duration of the test queries run on a data source. It is omitted if an error happens."
             },
             "TestResponse": {
-                "required": ["successful"],
+                "required": [
+                    "successful"
+                ],
                 "type": "object",
                 "properties": {
                     "successful": {
@@ -417,7 +463,10 @@
                 "description": "Response from data source testing."
             },
             "DataSourceParameter": {
-                "required": ["name", "value"],
+                "required": [
+                    "name",
+                    "value"
+                ],
                 "type": "object",
                 "properties": {
                     "name": {
@@ -484,7 +533,9 @@
                 "description": "A request containing all information for testing existing data source."
             },
             "ScanSqlResponse": {
-                "required": ["columns"],
+                "required": [
+                    "columns"
+                ],
                 "type": "object",
                 "properties": {
                     "columns": {
@@ -509,7 +560,10 @@
                 "description": "Result of scanSql. Consists of array of query columns including type. Sql query result data preview can be attached optionally"
             },
             "SqlColumn": {
-                "required": ["dataType", "name"],
+                "required": [
+                    "dataType",
+                    "name"
+                ],
                 "type": "object",
                 "properties": {
                     "name": {
@@ -521,7 +575,15 @@
                         "type": "string",
                         "description": "Column type",
                         "example": "INT",
-                        "enum": ["INT", "STRING", "DATE", "NUMERIC", "TIMESTAMP", "TIMESTAMP_TZ", "BOOLEAN"]
+                        "enum": [
+                            "INT",
+                            "STRING",
+                            "DATE",
+                            "NUMERIC",
+                            "TIMESTAMP",
+                            "TIMESTAMP_TZ",
+                            "BOOLEAN"
+                        ]
                     },
                     "description": {
                         "type": "string",
@@ -532,7 +594,9 @@
                 "description": "A SQL query result column."
             },
             "ScanSqlRequest": {
-                "required": ["sql"],
+                "required": [
+                    "sql"
+                ],
                 "type": "object",
                 "properties": {
                     "sql": {
@@ -544,7 +608,10 @@
                 "description": "A request with SQL query to by analyzed."
             },
             "ColumnWarning": {
-                "required": ["message", "name"],
+                "required": [
+                    "message",
+                    "name"
+                ],
                 "type": "object",
                 "properties": {
                     "name": {
@@ -559,7 +626,10 @@
                 "description": "Warning related to single column."
             },
             "DeclarativeColumn": {
-                "required": ["dataType", "name"],
+                "required": [
+                    "dataType",
+                    "name"
+                ],
                 "type": "object",
                 "properties": {
                     "name": {
@@ -573,7 +643,15 @@
                         "type": "string",
                         "description": "Column type",
                         "example": "INT",
-                        "enum": ["INT", "STRING", "DATE", "NUMERIC", "TIMESTAMP", "TIMESTAMP_TZ", "BOOLEAN"]
+                        "enum": [
+                            "INT",
+                            "STRING",
+                            "DATE",
+                            "NUMERIC",
+                            "TIMESTAMP",
+                            "TIMESTAMP_TZ",
+                            "BOOLEAN"
+                        ]
                     },
                     "isPrimaryKey": {
                         "type": "boolean",
@@ -605,7 +683,12 @@
                 "description": "A table column."
             },
             "DeclarativeTable": {
-                "required": ["columns", "id", "path", "type"],
+                "required": [
+                    "columns",
+                    "id",
+                    "path",
+                    "type"
+                ],
                 "type": "object",
                 "properties": {
                     "id": {
@@ -617,7 +700,10 @@
                     "path": {
                         "type": "array",
                         "description": "Path to table.",
-                        "example": ["table_schema", "table_name"],
+                        "example": [
+                            "table_schema",
+                            "table_name"
+                        ],
                         "items": {
                             "type": "string",
                             "example": "table_name"
@@ -645,7 +731,9 @@
                 "description": "A database table."
             },
             "DeclarativeTables": {
-                "required": ["tables"],
+                "required": [
+                    "tables"
+                ],
                 "type": "object",
                 "properties": {
                     "tables": {
@@ -659,7 +747,10 @@
                 "description": "A physical data model (PDM) tables."
             },
             "ScanResultPdm": {
-                "required": ["pdm", "warnings"],
+                "required": [
+                    "pdm",
+                    "warnings"
+                ],
                 "type": "object",
                 "properties": {
                     "pdm": {
@@ -675,7 +766,10 @@
                 "description": "Result of scan of data source physical model."
             },
             "TableWarning": {
-                "required": ["columns", "name"],
+                "required": [
+                    "columns",
+                    "name"
+                ],
                 "type": "object",
                 "properties": {
                     "name": {
@@ -696,7 +790,11 @@
                 "description": "Warnings related to single table."
             },
             "ScanRequest": {
-                "required": ["scanTables", "scanViews", "separator"],
+                "required": [
+                    "scanTables",
+                    "scanViews",
+                    "separator"
+                ],
                 "type": "object",
                 "properties": {
                     "separator": {
@@ -717,7 +815,10 @@
                     "schemata": {
                         "type": "array",
                         "description": "What schemata will be scanned.",
-                        "example": ["tpch", "demo"],
+                        "example": [
+                            "tpch",
+                            "demo"
+                        ],
                         "items": {
                             "type": "string"
                         }
@@ -739,7 +840,10 @@
                 "type": "object"
             },
             "ColumnStatisticsRequest": {
-                "required": ["columnName", "from"],
+                "required": [
+                    "columnName",
+                    "from"
+                ],
                 "type": "object",
                 "properties": {
                     "from": {
@@ -795,7 +899,9 @@
                 }
             },
             "HistogramProperties": {
-                "required": ["bucketCount"],
+                "required": [
+                    "bucketCount"
+                ],
                 "type": "object",
                 "properties": {
                     "bucketCount": {
@@ -805,7 +911,9 @@
                 }
             },
             "SqlQuery": {
-                "required": ["sql"],
+                "required": [
+                    "sql"
+                ],
                 "type": "object",
                 "allOf": [
                     {
@@ -822,7 +930,9 @@
                 ]
             },
             "Table": {
-                "required": ["tableName"],
+                "required": [
+                    "tableName"
+                ],
                 "type": "object",
                 "allOf": [
                     {
@@ -839,7 +949,9 @@
                 ]
             },
             "ColumnStatistic": {
-                "required": ["type"],
+                "required": [
+                    "type"
+                ],
                 "type": "object",
                 "properties": {
                     "type": {
@@ -863,7 +975,10 @@
                 }
             },
             "ColumnStatisticWarning": {
-                "required": ["action", "message"],
+                "required": [
+                    "action",
+                    "message"
+                ],
                 "type": "object",
                 "properties": {
                     "action": {
@@ -898,7 +1013,9 @@
                 }
             },
             "Frequency": {
-                "required": ["buckets"],
+                "required": [
+                    "buckets"
+                ],
                 "type": "object",
                 "properties": {
                     "buckets": {
@@ -910,7 +1027,9 @@
                 }
             },
             "FrequencyBucket": {
-                "required": ["count"],
+                "required": [
+                    "count"
+                ],
                 "type": "object",
                 "properties": {
                     "count": {
@@ -923,7 +1042,9 @@
                 }
             },
             "Histogram": {
-                "required": ["buckets"],
+                "required": [
+                    "buckets"
+                ],
                 "type": "object",
                 "properties": {
                     "buckets": {
@@ -935,7 +1056,11 @@
                 }
             },
             "HistogramBucket": {
-                "required": ["count", "lowerBound", "upperBound"],
+                "required": [
+                    "count",
+                    "lowerBound",
+                    "upperBound"
+                ],
                 "type": "object",
                 "properties": {
                     "count": {
@@ -953,7 +1078,9 @@
                 }
             },
             "TestDefinitionRequest": {
-                "required": ["type"],
+                "required": [
+                    "type"
+                ],
                 "type": "object",
                 "properties": {
                     "type": {
@@ -1040,7 +1167,9 @@
                 "description": "A request containing all information for testing data source definition."
             },
             "DataSourceSchemata": {
-                "required": ["schemaNames"],
+                "required": [
+                    "schemaNames"
+                ],
                 "type": "object",
                 "properties": {
                     "schemaNames": {

@@ -221,7 +221,7 @@ export function getValidDateFilterConfig(
     let validConfig = FallbackToDefault.includes(configValidation) ? defaultDateFilterConfig : config;
 
     validConfig = conditionallyStripToDateFilters(validConfig, settings.enableToDateFilters ?? true);
-    validConfig = conditionallyHandleFiscalFilters(validConfig, settings.enableFiscalCalendars ?? false);
+    validConfig = conditionallyHandleFiscalFilters(validConfig, settings.enableFiscalCalendars ?? true);
 
     return [validConfig, configValidation];
 }

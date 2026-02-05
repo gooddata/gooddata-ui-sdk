@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-geo",
-    "version": "11.19.0-alpha.9",
+    "version": "11.19.0-alpha.10",
     "description": "GoodData.UI SDK - Geo Charts",
     "license": "MIT",
     "author": "GoodData Corporation",
@@ -50,10 +50,14 @@
         "stylelint-fix": "stylelint '**/*.scss' --fix",
         "test": "vitest watch",
         "test-once": "vitest run",
-        "validate": "npm run eslint && npm run dep-cruiser && npm run stylelint && npm run validate-locales && npm run oxfmt-check && npm run validate-theming",
+        "validate": "npm run lint && npm run dep-cruiser && npm run stylelint && npm run validate-locales && npm run oxfmt-check && npm run validate-theming",
         "validate-esm": "node --input-type=module --eval 'import \"@gooddata/sdk-ui-geo\"'",
         "validate-locales": "cd ../sdk-ui && npm run validate-locales",
-        "validate-theming": "npm run scss && node scripts/validateCss.js"
+        "validate-theming": "npm run scss && node scripts/validateCss.js",
+        "lint": "npm run oxlint && npm run eslint",
+        "lint-fix": "npm run oxlint-fix && npm run eslint-fix",
+        "oxlint": "oxlint .",
+        "oxlint-fix": "oxlint . --fix"
     },
     "dependencies": {
         "@gooddata/number-formatter": "^1.0.6",
@@ -76,6 +80,7 @@
     },
     "devDependencies": {
         "@gooddata/eslint-config": "workspace:*",
+        "@gooddata/oxlint-config": "workspace:*",
         "@gooddata/sdk-backend-mockingbird": "workspace:*",
         "@gooddata/stylelint-config": "workspace:*",
         "@microsoft/api-documenter": "^7.17.0",
@@ -107,6 +112,7 @@
         "eslint-plugin-sonarjs": "3.0.6",
         "npm-run-all": "^4.1.5",
         "oxfmt": "0.27.0",
+        "oxlint": "^1.43.0",
         "raf": "^3.4.1",
         "react": "19.1.1",
         "react-dom": "19.1.1",

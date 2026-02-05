@@ -937,5 +937,21 @@
     "dialogs.export.pdf.pageOrientation.option.portrait": "ポートレート",
     "dialogs.export.pdf.pageOrientation.option.landscape": "横向き",
     "dialogs.export.submit": "エクスポート",
-    "gs.header.mainMenu.ariaLabel": "メインメニュー"
+    "gs.header.mainMenu.ariaLabel": "メインメニュー",
+    "gs.header.analyze": "分析",
+    "gs.header.catalog": "カタログ",
+    "gs.header.community": "コミュニティー",
+    "gs.header.data": "データ",
+    "gs.header.documentation": "文書",
+    "gs.header.kpis.new": "ダッシュボード",
+    "gs.header.metrics": "メトリック",
+    "gs.header.slack": "Slack",
+    "gs.header.submitTicket": "チケットを送信",
+    "gs.header.university": "大学",
+    "gs.header.visitSupportPortal": "サポートポータルに移動",
+    "gs.header.dashboards": "ダッシュボード",
+    "gs.header.kpis": "KPIs",
+    "gs.header.load": "ロード",
+    "gs.header.manage": "管理",
+    "gs.header.reports": "レポート"
 }

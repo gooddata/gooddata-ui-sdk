@@ -1,14 +1,16 @@
-// (C) 2007-2025 GoodData Corporation
-import { defineMessages } from "react-intl";
+// (C) 2007-2026 GoodData Corporation
+
+import { defineMessage } from "react-intl";
 
 import { type ISettings, type IWorkspacePermissions } from "@gooddata/sdk-model";
 
 import { type IHeaderMenuItem } from "./typings.js";
 
-const messages = defineMessages({
-    workspaceSettingsMenuItem: { id: "gs.header.workspaceSettings" },
-    logoutMenuItem: { id: "gs.header.logout" },
-});
+const WORKSPACE_SETTINGS_MENU_ITEM_ID = defineMessage({ id: "gs.header.workspaceSettings" }).id;
+/**
+ * @internal
+ */
+export const LOGOUT_MENU_ITEM_ID = defineMessage({ id: "gs.header.logout" }).id;
 
 /**
  * @internal
@@ -29,12 +31,12 @@ export function generateHeaderAccountMenuItems(
     const accountMenuItems: IHeaderMenuItem[] = [];
 
     const workspaceSettingsItem = {
-        key: messages.workspaceSettingsMenuItem.id,
+        key: WORKSPACE_SETTINGS_MENU_ITEM_ID,
         className: "s-workspace-settings",
         href: `/workspaces/${workspaceId}/settings`,
     };
     const logoutItem = {
-        key: messages.logoutMenuItem.id,
+        key: LOGOUT_MENU_ITEM_ID,
         className: "s-logout",
     };
 

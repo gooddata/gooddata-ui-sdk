@@ -1,4 +1,5 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 /* eslint-disable no-console */
 import fs from "fs";
 import * as path from "path";
@@ -45,7 +46,6 @@ function resolveCurrentPackageVersion() {
     //we need current version of app-toolkit
     const parenPackagePath = path.resolve("./", "package.json");
     const parentPackage = readJsonSync(parenPackagePath);
-    parentPackage.peerDependen;
     return parentPackage.version;
 }
 

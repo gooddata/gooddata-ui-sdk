@@ -608,6 +608,19 @@
             "shouldPublish": true
         },
         {
+            "packageName": "@gooddata/oxlint-config",
+            "projectFolder": "tools/oxlint-config",
+            "reviewCategory": "tools",
+            "versionPolicyName": "sdk",
+            "shouldPublish": true
+        },
+        {
+            "packageName": "@gooddata/lint-config",
+            "projectFolder": "tools/lint-config",
+            "reviewCategory": "tools",
+            "shouldPublish": false
+        },
+        {
             "packageName": "@gooddata/stylelint-config",
             "projectFolder": "tools/stylelint-config",
             "reviewCategory": "tools",

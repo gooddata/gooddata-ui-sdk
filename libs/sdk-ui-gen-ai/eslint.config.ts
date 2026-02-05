@@ -1,6 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
-import config from "@gooddata/eslint-config/esm-react-vitest";
+import config from "@gooddata/eslint-config/oxlint-esm-react-vitest";
 
 export default [
     ...config,

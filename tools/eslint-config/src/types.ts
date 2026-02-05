@@ -26,10 +26,6 @@ interface IConfigurationSharedV8<RulePrefix extends string> {
      */
     plugins?: string[];
     /**
-     * Configurations to extend as port of this configuration
-     */
-    extends?: string[];
-    /**
      * Parser options to be set when this configuration is active
      */
     parserOptions?: Record<string, unknown>;
@@ -185,4 +181,5 @@ export interface IDualConfiguration<
 > {
     v8: IConfigurationV8<RulePrefixV8>;
     v9: IConfigurationV9<RulePrefixV9>;
+    ox: IConfigurationV9<RulePrefixV9>;
 }

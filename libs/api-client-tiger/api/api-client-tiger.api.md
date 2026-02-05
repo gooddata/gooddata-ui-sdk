@@ -1025,7 +1025,7 @@ export interface ActionsApiDeleteWorkspaceAutomationsRequest {
 // @public
 export interface ActionsApiExplainAFMRequest {
     readonly afmExecution: AfmExecution;
-    readonly explainType?: "MAQL" | "GRPC_MODEL" | "GRPC_MODEL_SVG" | "WDF" | "QT" | "QT_SVG" | "OPT_QT" | "OPT_QT_SVG" | "SQL" | "SETTINGS" | "COMPRESSED_SQL";
+    readonly explainType?: 'MAQL' | 'GRPC_MODEL' | 'GRPC_MODEL_SVG' | 'WDF' | 'QT' | 'QT_SVG' | 'OPT_QT' | 'OPT_QT_SVG' | 'SQL' | 'SETTINGS' | 'COMPRESSED_SQL';
     readonly workspaceId: string;
 }
 
@@ -1391,7 +1391,7 @@ export class ActionsAutomation extends AutomationBaseAPI implements ActionsAutom
 // @public
 export interface ActionsAutomationGetNotificationsRequest {
     readonly isRead?: boolean;
-    readonly metaInclude?: Array<"total" | "ALL">;
+    readonly metaInclude?: Array<'total' | 'ALL'>;
     readonly page?: string;
     readonly size?: string;
     readonly workspaceId?: string;
@@ -1660,9 +1660,9 @@ export class ActionsUtilities {
 
 // @public
 export interface ActiveObjectIdentification {
-    id: string;
-    type: string;
-    workspaceId: string;
+    'id': string;
+    'type': string;
+    'workspaceId': string;
 }
 
 // @public
@@ -1676,22 +1676,22 @@ export interface AFM {
 // @public
 export interface AfmAbsoluteDateFilter {
     // (undocumented)
-    absoluteDateFilter: AfmAbsoluteDateFilterAbsoluteDateFilter;
+    'absoluteDateFilter': AfmAbsoluteDateFilterAbsoluteDateFilter;
 }
 
 // @public (undocumented)
 export interface AfmAbsoluteDateFilterAbsoluteDateFilter {
     // (undocumented)
-    applyOnResult?: boolean;
+    'applyOnResult'?: boolean;
     // (undocumented)
-    dataset: AfmModelObjectIdentifierDataset;
+    'dataset': AfmModelObjectIdentifierDataset;
     // (undocumented)
-    from: string;
-    includeEmptyValues?: boolean;
+    'from': string;
+    'includeEmptyValues'?: boolean;
     // (undocumented)
-    localIdentifier?: string;
+    'localIdentifier'?: string;
     // (undocumented)
-    to: string;
+    'to': string;
 }
 
 // @public
@@ -1799,112 +1799,112 @@ export interface AfmActionsApiTriggerQualityIssuesCalculationRequest {
 
 // @public (undocumented)
 export interface AfmAnalyticsCatalogCreatedBy {
-    reasoning: string;
-    users: Array<AfmAnalyticsCatalogUser>;
+    'reasoning': string;
+    'users': Array<AfmAnalyticsCatalogUser>;
 }
 
 // @public (undocumented)
 export interface AfmAnalyticsCatalogTags {
     // (undocumented)
-    tags: Array<string>;
+    'tags': Array<string>;
 }
 
 // @public
 export interface AfmAnalyticsCatalogUser {
-    firstname: string;
-    lastname: string;
-    userId: string;
+    'firstname': string;
+    'lastname': string;
+    'userId': string;
 }
 
 // @public
 export interface AfmArithmeticMeasureDefinition {
     // (undocumented)
-    arithmeticMeasure: AfmArithmeticMeasureDefinitionArithmeticMeasure;
+    'arithmeticMeasure': AfmArithmeticMeasureDefinitionArithmeticMeasure;
 }
 
 // @public (undocumented)
 export interface AfmArithmeticMeasureDefinitionArithmeticMeasure {
-    measureIdentifiers: Array<AfmModelLocalIdentifier>;
-    operator: AfmArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum;
+    'measureIdentifiers': Array<AfmModelLocalIdentifier>;
+    'operator': AfmArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum;
 }
 
 // @public (undocumented)
-export type AfmArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum = "SUM" | "DIFFERENCE" | "MULTIPLICATION" | "RATIO" | "CHANGE";
+export type AfmArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum = 'SUM' | 'DIFFERENCE' | 'MULTIPLICATION' | 'RATIO' | 'CHANGE';
 
 // @public
 export type AfmAttributeFilter = AfmNegativeAttributeFilter | AfmPositiveAttributeFilter;
 
 // @public
 export interface AfmAttributeFilterElements {
-    values: Array<string | null>;
+    'values': Array<string | null>;
 }
 
 // @public (undocumented)
 export interface AfmAttributeItem {
     // (undocumented)
-    label: AfmModelObjectIdentifierLabel;
-    localIdentifier: string;
-    showAllValues?: boolean;
+    'label': AfmModelObjectIdentifierLabel;
+    'localIdentifier': string;
+    'showAllValues'?: boolean;
 }
 
 // @public
 export interface AfmBoundedFilter {
-    from?: number | null;
-    granularity: AfmBoundedFilterGranularityEnum;
-    to?: number | null;
+    'from'?: number | null;
+    'granularity': AfmBoundedFilterGranularityEnum;
+    'to'?: number | null;
 }
 
 // @public (undocumented)
-export type AfmBoundedFilterGranularityEnum = "MINUTE" | "HOUR" | "DAY" | "WEEK" | "MONTH" | "QUARTER" | "YEAR" | "MINUTE_OF_HOUR" | "HOUR_OF_DAY" | "DAY_OF_WEEK" | "DAY_OF_MONTH" | "DAY_OF_QUARTER" | "DAY_OF_YEAR" | "WEEK_OF_YEAR" | "MONTH_OF_YEAR" | "QUARTER_OF_YEAR" | "FISCAL_MONTH" | "FISCAL_QUARTER" | "FISCAL_YEAR";
+export type AfmBoundedFilterGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
 
 // @public
 export interface AfmCancelTokens {
-    resultIdToCancelTokenPairs: {
+    'resultIdToCancelTokenPairs': {
         [key: string]: string;
     };
 }
 
 // @public
 export interface AfmChangeAnalysisRequest {
-    analyzedPeriod: string;
-    attributes?: Array<AfmAttributeItem>;
-    auxMeasures?: Array<AfmMeasureItem>;
+    'analyzedPeriod': string;
+    'attributes'?: Array<AfmAttributeItem>;
+    'auxMeasures'?: Array<AfmMeasureItem>;
     // (undocumented)
-    dateAttribute: AfmAttributeItem;
-    excludeTags?: Array<string>;
+    'dateAttribute': AfmAttributeItem;
+    'excludeTags'?: Array<string>;
     // Warning: (ae-forgotten-export) The symbol "OutlierDetectionRequestFiltersInner" needs to be exported by the entry point index.d.ts
-    filters?: Array<OutlierDetectionRequestFiltersInner>;
-    includeTags?: Array<string>;
+    'filters'?: Array<OutlierDetectionRequestFiltersInner>;
+    'includeTags'?: Array<string>;
     // (undocumented)
-    measure: AfmMeasureItem;
-    referencePeriod: string;
-    useSmartAttributeSelection?: boolean;
+    'measure': AfmMeasureItem;
+    'referencePeriod': string;
+    'useSmartAttributeSelection'?: boolean;
 }
 
 // @public
 export interface AfmComparisonMeasureValueFilter {
     // (undocumented)
-    comparisonMeasureValueFilter: AfmComparisonMeasureValueFilterComparisonMeasureValueFilter;
+    'comparisonMeasureValueFilter': AfmComparisonMeasureValueFilterComparisonMeasureValueFilter;
 }
 
 // @public (undocumented)
 export interface AfmComparisonMeasureValueFilterComparisonMeasureValueFilter {
     // (undocumented)
-    applyOnResult?: boolean;
-    dimensionality?: Array<AfmModelIdentifier>;
+    'applyOnResult'?: boolean;
+    'dimensionality'?: Array<AfmModelIdentifier>;
     // (undocumented)
-    localIdentifier?: string;
+    'localIdentifier'?: string;
     // (undocumented)
-    measure: AfmModelIdentifier;
+    'measure': AfmModelIdentifier;
     // (undocumented)
-    operator: AfmComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum;
-    treatNullValuesAs?: number;
+    'operator': AfmComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum;
+    'treatNullValuesAs'?: number;
     // (undocumented)
-    value: number;
+    'value': number;
 }
 
 // @public (undocumented)
-export type AfmComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum = "GREATER_THAN" | "GREATER_THAN_OR_EQUAL_TO" | "LESS_THAN" | "LESS_THAN_OR_EQUAL_TO" | "EQUAL_TO" | "NOT_EQUAL_TO";
+export type AfmComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum = 'GREATER_THAN' | 'GREATER_THAN_OR_EQUAL_TO' | 'LESS_THAN' | 'LESS_THAN_OR_EQUAL_TO' | 'EQUAL_TO' | 'NOT_EQUAL_TO';
 
 // @public
 export type AfmDateFilter = AfmAbsoluteDateFilter | AfmRelativeDateFilter;
@@ -1912,23 +1912,23 @@ export type AfmDateFilter = AfmAbsoluteDateFilter | AfmRelativeDateFilter;
 // @public (undocumented)
 export interface AfmExecution {
     // (undocumented)
-    execution: AfmModel;
+    'execution': AfmModel;
     // (undocumented)
-    resultSpec: ResultSpec;
+    'resultSpec': ResultSpec;
     // (undocumented)
-    settings?: AfmExecutionSettings;
+    'settings'?: AfmExecutionSettings;
 }
 
 // @public
 export interface AfmExecutionResponse {
     // (undocumented)
-    executionResponse: ExecutionResponse;
+    'executionResponse': ExecutionResponse;
 }
 
 // @public
 export interface AfmExecutionSettings {
-    dataSamplingPercentage?: number;
-    timestamp?: string;
+    'dataSamplingPercentage'?: number;
+    'timestamp'?: string;
 }
 
 // @public
@@ -1939,10 +1939,10 @@ export type AfmFilterDefinitionForSimpleMeasure = AfmAttributeFilter | AfmDateFi
 
 // @public (undocumented)
 export interface AfmGetQualityIssuesResponse {
-    issues: Array<AfmQualityIssue>;
+    'issues': Array<AfmQualityIssue>;
     // Warning: (ae-forgotten-export) The symbol "GetQualityIssuesResponseStatusEnum" needs to be exported by the entry point index.d.ts
-    status: GetQualityIssuesResponseStatusEnum;
-    updatedAt?: string;
+    'status': GetQualityIssuesResponseStatusEnum;
+    'updatedAt'?: string;
 }
 
 // @public
@@ -1951,27 +1951,27 @@ export type AfmIdentifier = AfmLocalIdentifier | AfmObjectIdentifier;
 // @public
 export interface AfmInlineFilterDefinition {
     // (undocumented)
-    inline: AfmInlineFilterDefinitionInline;
+    'inline': AfmInlineFilterDefinitionInline;
 }
 
 // @public (undocumented)
 export interface AfmInlineFilterDefinitionInline {
     // (undocumented)
-    applyOnResult?: boolean;
-    filter: string;
+    'applyOnResult'?: boolean;
+    'filter': string;
     // (undocumented)
-    localIdentifier?: string;
+    'localIdentifier'?: string;
 }
 
 // @public
 export interface AfmInlineMeasureDefinition {
     // (undocumented)
-    inline: AfmInlineMeasureDefinitionInline;
+    'inline': AfmInlineMeasureDefinitionInline;
 }
 
 // @public (undocumented)
 export interface AfmInlineMeasureDefinitionInline {
-    maql: string;
+    'maql': string;
 }
 
 // @public (undocumented)
@@ -1986,44 +1986,44 @@ export type AfmMeasureDefinition = AfmArithmeticMeasureDefinition | AfmInlineMea
 // @public
 export interface AfmMeasureItem {
     // (undocumented)
-    definition: AfmMeasureDefinition;
-    localIdentifier: string;
+    'definition': AfmMeasureDefinition;
+    'localIdentifier': string;
 }
 
 // @public (undocumented)
 export interface AfmMemoryItemCreatedByUsers {
-    reasoning: string;
-    users: Array<AfmMemoryItemUser>;
+    'reasoning': string;
+    'users': Array<AfmMemoryItemUser>;
 }
 
 // @public
 export interface AfmMemoryItemUser {
-    firstname: string;
-    lastname: string;
-    userId: string;
+    'firstname': string;
+    'lastname': string;
+    'userId': string;
 }
 
 // @public
 export interface AfmMetricValueChange {
-    attributeName: string;
-    attributeValue: string;
-    attributeValuesChangeMean: number;
-    attributeValuesChangeStd: number;
-    isSignificantChange: boolean;
-    metricValueDelta: number;
-    metricValueDeltaAbs: number;
-    metricValueInAnalyzedPeriod: number;
-    metricValueInReferencePeriod: number;
-    overallMetricValueInAnalyzedPeriod: number;
-    overallMetricValueInReferencePeriod: number;
+    'attributeName': string;
+    'attributeValue': string;
+    'attributeValuesChangeMean': number;
+    'attributeValuesChangeStd': number;
+    'isSignificantChange': boolean;
+    'metricValueDelta': number;
+    'metricValueDeltaAbs': number;
+    'metricValueInAnalyzedPeriod': number;
+    'metricValueInReferencePeriod': number;
+    'overallMetricValueInAnalyzedPeriod': number;
+    'overallMetricValueInReferencePeriod': number;
 }
 
 // @public
 export interface AfmModel {
-    attributes: Array<AfmAttributeItem>;
-    auxMeasures?: Array<AfmMeasureItem>;
-    filters: Array<AfmFilterDefinition>;
-    measures: Array<AfmMeasureItem>;
+    'attributes': Array<AfmAttributeItem>;
+    'auxMeasures'?: Array<AfmMeasureItem>;
+    'filters': Array<AfmFilterDefinition>;
+    'measures': Array<AfmMeasureItem>;
 }
 
 // @public
@@ -2032,110 +2032,110 @@ export type AfmModelIdentifier = AfmModelLocalIdentifier | AfmModelObjectIdentif
 // @public (undocumented)
 export interface AfmModelLocalIdentifier {
     // (undocumented)
-    localIdentifier: string;
+    'localIdentifier': string;
 }
 
 // @public
 export interface AfmModelObjectIdentifier {
     // (undocumented)
-    identifier: AfmModelObjectIdentifierIdentifier;
+    'identifier': AfmModelObjectIdentifierIdentifier;
 }
 
 // @public
 export interface AfmModelObjectIdentifierAttribute {
     // (undocumented)
-    identifier: AfmModelObjectIdentifierAttributeIdentifier;
+    'identifier': AfmModelObjectIdentifierAttributeIdentifier;
 }
 
 // @public (undocumented)
 export interface AfmModelObjectIdentifierAttributeIdentifier {
     // (undocumented)
-    id: string;
+    'id': string;
     // (undocumented)
-    type: AfmModelObjectIdentifierAttributeIdentifierTypeEnum;
+    'type': AfmModelObjectIdentifierAttributeIdentifierTypeEnum;
 }
 
 // @public (undocumented)
-export type AfmModelObjectIdentifierAttributeIdentifierTypeEnum = "attribute";
+export type AfmModelObjectIdentifierAttributeIdentifierTypeEnum = 'attribute';
 
 // @public
 export interface AfmModelObjectIdentifierCore {
     // (undocumented)
-    identifier: AfmModelObjectIdentifierCoreIdentifier;
+    'identifier': AfmModelObjectIdentifierCoreIdentifier;
 }
 
 // @public (undocumented)
 export interface AfmModelObjectIdentifierCoreIdentifier {
     // (undocumented)
-    id: string;
+    'id': string;
     // (undocumented)
-    type: AfmModelObjectIdentifierCoreIdentifierTypeEnum;
+    'type': AfmModelObjectIdentifierCoreIdentifierTypeEnum;
 }
 
 // @public (undocumented)
-export type AfmModelObjectIdentifierCoreIdentifierTypeEnum = "attribute" | "label" | "fact" | "metric";
+export type AfmModelObjectIdentifierCoreIdentifierTypeEnum = 'attribute' | 'label' | 'fact' | 'metric';
 
 // @public
 export interface AfmModelObjectIdentifierDataset {
     // (undocumented)
-    identifier: AfmModelObjectIdentifierDatasetIdentifier;
+    'identifier': AfmModelObjectIdentifierDatasetIdentifier;
 }
 
 // @public (undocumented)
 export interface AfmModelObjectIdentifierDatasetIdentifier {
     // (undocumented)
-    id: string;
+    'id': string;
     // (undocumented)
-    type: AfmModelObjectIdentifierDatasetIdentifierTypeEnum;
+    'type': AfmModelObjectIdentifierDatasetIdentifierTypeEnum;
 }
 
 // @public (undocumented)
-export type AfmModelObjectIdentifierDatasetIdentifierTypeEnum = "dataset";
+export type AfmModelObjectIdentifierDatasetIdentifierTypeEnum = 'dataset';
 
 // @public (undocumented)
 export interface AfmModelObjectIdentifierIdentifier {
     // (undocumented)
-    id: string;
+    'id': string;
     // (undocumented)
-    type: AfmModelObjectIdentifierIdentifierTypeEnum;
+    'type': AfmModelObjectIdentifierIdentifierTypeEnum;
 }
 
 // @public (undocumented)
-export type AfmModelObjectIdentifierIdentifierTypeEnum = "analyticalDashboard" | "attribute" | "dashboardPlugin" | "dataset" | "fact" | "label" | "metric" | "prompt" | "visualizationObject" | "filterContext";
+export type AfmModelObjectIdentifierIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'dashboardPlugin' | 'dataset' | 'fact' | 'label' | 'metric' | 'prompt' | 'visualizationObject' | 'filterContext';
 
 // @public (undocumented)
 export interface AfmModelObjectIdentifierLabel {
     // (undocumented)
-    identifier: AfmModelObjectIdentifierLabelIdentifier;
+    'identifier': AfmModelObjectIdentifierLabelIdentifier;
 }
 
 // @public (undocumented)
 export interface AfmModelObjectIdentifierLabelIdentifier {
     // (undocumented)
-    id: string;
+    'id': string;
     // (undocumented)
-    type: AfmModelObjectIdentifierLabelIdentifierTypeEnum;
+    'type': AfmModelObjectIdentifierLabelIdentifierTypeEnum;
 }
 
 // @public (undocumented)
-export type AfmModelObjectIdentifierLabelIdentifierTypeEnum = "label";
+export type AfmModelObjectIdentifierLabelIdentifierTypeEnum = 'label';
 
 // @public
 export interface AfmNegativeAttributeFilter {
     // (undocumented)
-    negativeAttributeFilter: AfmNegativeAttributeFilterNegativeAttributeFilter;
+    'negativeAttributeFilter': AfmNegativeAttributeFilterNegativeAttributeFilter;
 }
 
 // @public (undocumented)
 export interface AfmNegativeAttributeFilterNegativeAttributeFilter {
     // (undocumented)
-    applyOnResult?: boolean;
+    'applyOnResult'?: boolean;
     // (undocumented)
-    label: AfmModelIdentifier;
+    'label': AfmModelIdentifier;
     // (undocumented)
-    localIdentifier?: string;
+    'localIdentifier'?: string;
     // (undocumented)
-    notIn: AfmAttributeFilterElements;
+    'notIn': AfmAttributeFilterElements;
 }
 
 // @public
@@ -2226,41 +2226,41 @@ export type AfmObjectIdentifierLabelIdentifierTypeEnum = "label";
 // @public
 export interface AfmPopDataset {
     // (undocumented)
-    dataset: AfmModelObjectIdentifierDataset;
-    periodsAgo: number;
+    'dataset': AfmModelObjectIdentifierDataset;
+    'periodsAgo': number;
 }
 
 // @public
 export interface AfmPopDatasetMeasureDefinition {
     // (undocumented)
-    previousPeriodMeasure: AfmPopDatasetMeasureDefinitionPreviousPeriodMeasure;
+    'previousPeriodMeasure': AfmPopDatasetMeasureDefinitionPreviousPeriodMeasure;
 }
 
 // @public (undocumented)
 export interface AfmPopDatasetMeasureDefinitionPreviousPeriodMeasure {
-    dateDatasets: Array<AfmPopDataset>;
+    'dateDatasets': Array<AfmPopDataset>;
     // (undocumented)
-    measureIdentifier: AfmModelLocalIdentifier;
+    'measureIdentifier': AfmModelLocalIdentifier;
 }
 
 // @public
 export interface AfmPopDate {
     // (undocumented)
-    attribute: AfmModelObjectIdentifierAttribute;
-    periodsAgo: number;
+    'attribute': AfmModelObjectIdentifierAttribute;
+    'periodsAgo': number;
 }
 
 // @public
 export interface AfmPopDateMeasureDefinition {
     // (undocumented)
-    overPeriodMeasure: AfmPopDateMeasureDefinitionOverPeriodMeasure;
+    'overPeriodMeasure': AfmPopDateMeasureDefinitionOverPeriodMeasure;
 }
 
 // @public (undocumented)
 export interface AfmPopDateMeasureDefinitionOverPeriodMeasure {
-    dateAttributes: Array<AfmPopDate>;
+    'dateAttributes': Array<AfmPopDate>;
     // (undocumented)
-    measureIdentifier: AfmModelLocalIdentifier;
+    'measureIdentifier': AfmModelLocalIdentifier;
 }
 
 // @public
@@ -2269,157 +2269,157 @@ export type AfmPopMeasureDefinition = AfmPopDatasetMeasureDefinition | AfmPopDat
 // @public
 export interface AfmPositiveAttributeFilter {
     // (undocumented)
-    positiveAttributeFilter: AfmPositiveAttributeFilterPositiveAttributeFilter;
+    'positiveAttributeFilter': AfmPositiveAttributeFilterPositiveAttributeFilter;
 }
 
 // @public (undocumented)
 export interface AfmPositiveAttributeFilterPositiveAttributeFilter {
     // (undocumented)
-    applyOnResult?: boolean;
+    'applyOnResult'?: boolean;
     // (undocumented)
-    in: AfmAttributeFilterElements;
+    'in': AfmAttributeFilterElements;
     // (undocumented)
-    label: AfmModelIdentifier;
+    'label': AfmModelIdentifier;
     // (undocumented)
-    localIdentifier?: string;
+    'localIdentifier'?: string;
 }
 
 // @public
 export interface AfmQualityIssue {
-    code: string;
-    detail: {
+    'code': string;
+    'detail': {
         [key: string]: object;
     };
-    id: string;
-    objects: Array<AfmQualityIssueObject>;
+    'id': string;
+    'objects': Array<AfmQualityIssueObject>;
     // Warning: (ae-forgotten-export) The symbol "QualityIssueSeverityEnum" needs to be exported by the entry point index.d.ts
-    severity: QualityIssueSeverityEnum;
+    'severity': QualityIssueSeverityEnum;
 }
 
 // @public
 export interface AfmQualityIssueObject {
-    id: string;
-    title: string;
-    type: string;
-    workspaceId: string;
+    'id': string;
+    'title': string;
+    'type': string;
+    'workspaceId': string;
 }
 
 // @public (undocumented)
 export interface AfmQualityIssuesCalculationStatusResponse {
-    error?: string;
-    issues?: Array<AfmQualityIssue>;
-    status: AfmQualityIssuesCalculationStatusResponseStatusEnum;
+    'error'?: string;
+    'issues'?: Array<AfmQualityIssue>;
+    'status': AfmQualityIssuesCalculationStatusResponseStatusEnum;
 }
 
 // @public (undocumented)
-export type AfmQualityIssuesCalculationStatusResponseStatusEnum = "RUNNING" | "SYNCING" | "COMPLETED" | "FAILED" | "NOT_FOUND" | "DISABLED";
+export type AfmQualityIssuesCalculationStatusResponseStatusEnum = 'RUNNING' | 'SYNCING' | 'COMPLETED' | 'FAILED' | 'NOT_FOUND' | 'DISABLED';
 
 // @public
 export interface AfmRangeMeasureValueFilter {
     // (undocumented)
-    rangeMeasureValueFilter: AfmRangeMeasureValueFilterRangeMeasureValueFilter;
+    'rangeMeasureValueFilter': AfmRangeMeasureValueFilterRangeMeasureValueFilter;
 }
 
 // @public (undocumented)
 export interface AfmRangeMeasureValueFilterRangeMeasureValueFilter {
     // (undocumented)
-    applyOnResult?: boolean;
-    dimensionality?: Array<AfmModelIdentifier>;
+    'applyOnResult'?: boolean;
+    'dimensionality'?: Array<AfmModelIdentifier>;
     // (undocumented)
-    from: number;
+    'from': number;
     // (undocumented)
-    localIdentifier?: string;
+    'localIdentifier'?: string;
     // (undocumented)
-    measure: AfmModelIdentifier;
+    'measure': AfmModelIdentifier;
     // (undocumented)
-    operator: AfmRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum;
+    'operator': AfmRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum;
     // (undocumented)
-    to: number;
-    treatNullValuesAs?: number;
+    'to': number;
+    'treatNullValuesAs'?: number;
 }
 
 // @public (undocumented)
-export type AfmRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum = "BETWEEN" | "NOT_BETWEEN";
+export type AfmRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum = 'BETWEEN' | 'NOT_BETWEEN';
 
 // @public
 export interface AfmRankingFilter {
     // (undocumented)
-    rankingFilter: AfmRankingFilterRankingFilter;
+    'rankingFilter': AfmRankingFilterRankingFilter;
 }
 
 // @public (undocumented)
 export interface AfmRankingFilterRankingFilter {
     // (undocumented)
-    applyOnResult?: boolean;
-    dimensionality?: Array<AfmModelIdentifier>;
+    'applyOnResult'?: boolean;
+    'dimensionality'?: Array<AfmModelIdentifier>;
     // (undocumented)
-    localIdentifier?: string;
-    measures: Array<AfmModelIdentifier>;
-    operator: AfmRankingFilterRankingFilterOperatorEnum;
-    value: number;
+    'localIdentifier'?: string;
+    'measures': Array<AfmModelIdentifier>;
+    'operator': AfmRankingFilterRankingFilterOperatorEnum;
+    'value': number;
 }
 
 // @public (undocumented)
-export type AfmRankingFilterRankingFilterOperatorEnum = "TOP" | "BOTTOM";
+export type AfmRankingFilterRankingFilterOperatorEnum = 'TOP' | 'BOTTOM';
 
 // @public
 export interface AfmRelativeDateFilter {
     // (undocumented)
-    relativeDateFilter: AfmRelativeDateFilterRelativeDateFilter;
+    'relativeDateFilter': AfmRelativeDateFilterRelativeDateFilter;
 }
 
 // @public (undocumented)
 export interface AfmRelativeDateFilterRelativeDateFilter {
     // (undocumented)
-    applyOnResult?: boolean;
+    'applyOnResult'?: boolean;
     // (undocumented)
-    boundedFilter?: AfmBoundedFilter;
+    'boundedFilter'?: AfmBoundedFilter;
     // (undocumented)
-    dataset: AfmModelObjectIdentifierDataset;
-    from: number;
-    granularity: AfmRelativeDateFilterRelativeDateFilterGranularityEnum;
-    includeEmptyValues?: boolean;
+    'dataset': AfmModelObjectIdentifierDataset;
+    'from': number;
+    'granularity': AfmRelativeDateFilterRelativeDateFilterGranularityEnum;
+    'includeEmptyValues'?: boolean;
     // (undocumented)
-    localIdentifier?: string;
-    to: number;
+    'localIdentifier'?: string;
+    'to': number;
 }
 
 // @public (undocumented)
-export type AfmRelativeDateFilterRelativeDateFilterGranularityEnum = "MINUTE" | "HOUR" | "DAY" | "WEEK" | "MONTH" | "QUARTER" | "YEAR" | "MINUTE_OF_HOUR" | "HOUR_OF_DAY" | "DAY_OF_WEEK" | "DAY_OF_MONTH" | "DAY_OF_QUARTER" | "DAY_OF_YEAR" | "WEEK_OF_YEAR" | "MONTH_OF_YEAR" | "QUARTER_OF_YEAR" | "FISCAL_MONTH" | "FISCAL_QUARTER" | "FISCAL_YEAR";
+export type AfmRelativeDateFilterRelativeDateFilterGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
 
 // @public
 export interface AfmSimpleMeasureDefinition {
     // (undocumented)
-    measure: AfmSimpleMeasureDefinitionMeasure;
+    'measure': AfmSimpleMeasureDefinitionMeasure;
 }
 
 // @public (undocumented)
 export interface AfmSimpleMeasureDefinitionMeasure {
-    aggregation?: AfmSimpleMeasureDefinitionMeasureAggregationEnum;
-    computeRatio?: boolean;
-    filters?: Array<AfmFilterDefinitionForSimpleMeasure>;
+    'aggregation'?: AfmSimpleMeasureDefinitionMeasureAggregationEnum;
+    'computeRatio'?: boolean;
+    'filters'?: Array<AfmFilterDefinitionForSimpleMeasure>;
     // (undocumented)
-    item: AfmModelObjectIdentifierCore;
+    'item': AfmModelObjectIdentifierCore;
 }
 
 // @public (undocumented)
-export type AfmSimpleMeasureDefinitionMeasureAggregationEnum = "SUM" | "COUNT" | "AVG" | "MIN" | "MAX" | "MEDIAN" | "RUNSUM" | "APPROXIMATE_COUNT";
+export type AfmSimpleMeasureDefinitionMeasureAggregationEnum = 'SUM' | 'COUNT' | 'AVG' | 'MIN' | 'MAX' | 'MEDIAN' | 'RUNSUM' | 'APPROXIMATE_COUNT';
 
 // @public (undocumented)
 export interface AfmTriggerQualityIssuesCalculationResponse {
-    processId: string;
+    'processId': string;
     // Warning: (ae-forgotten-export) The symbol "TriggerQualityIssuesCalculationResponseStatusEnum" needs to be exported by the entry point index.d.ts
-    status: TriggerQualityIssuesCalculationResponseStatusEnum;
+    'status': TriggerQualityIssuesCalculationResponseStatusEnum;
 }
 
 // @public
 export interface AfmValidDescendantsQuery {
-    attributes: Array<AfmModelObjectIdentifierAttribute>;
+    'attributes': Array<AfmModelObjectIdentifierAttribute>;
 }
 
 // @public
 export interface AfmValidDescendantsResponse {
-    validDescendants: {
+    'validDescendants': {
         [key: string]: Array<AfmModelObjectIdentifierAttribute>;
     };
 }
@@ -2427,18 +2427,18 @@ export interface AfmValidDescendantsResponse {
 // @public
 export interface AfmValidObjectsQuery {
     // (undocumented)
-    afm: AfmModel;
+    'afm': AfmModel;
     // (undocumented)
-    types: Array<AfmValidObjectsQueryTypesEnum>;
+    'types': Array<AfmValidObjectsQueryTypesEnum>;
 }
 
 // @public (undocumented)
-export type AfmValidObjectsQueryTypesEnum = "facts" | "attributes" | "measures";
+export type AfmValidObjectsQueryTypesEnum = 'facts' | 'attributes' | 'measures';
 
 // @public
 export interface AfmValidObjectsResponse {
     // (undocumented)
-    items: Array<RestApiIdentifier>;
+    'items': Array<RestApiIdentifier>;
 }
 
 // @public
@@ -2884,17 +2884,17 @@ export type AnomalyDetectionGranularityEnum = "HOUR" | "DAY" | "WEEK" | "MONTH" 
 
 // @public (undocumented)
 export interface AnomalyDetectionRequest {
-    sensitivity: number;
+    'sensitivity': number;
 }
 
 // @public (undocumented)
 export interface AnomalyDetectionResult {
     // (undocumented)
-    anomalyFlag: Array<boolean | null>;
+    'anomalyFlag': Array<boolean | null>;
     // (undocumented)
-    attribute: Array<string>;
+    'attribute': Array<string>;
     // (undocumented)
-    values: Array<number | null>;
+    'values': Array<number | null>;
 }
 
 // @public (undocumented)
@@ -3236,7 +3236,7 @@ export interface AttributeElementsByValue {
 // @public (undocumented)
 export interface AttributeExecutionResultHeader {
     // (undocumented)
-    attributeHeader: AttributeResultHeader;
+    'attributeHeader': AttributeResultHeader;
 }
 
 // @public
@@ -3265,43 +3265,43 @@ export interface AttributeFilterParent {
 
 // @public
 export interface AttributeFormat {
-    locale: string;
-    pattern: string;
-    timezone?: string;
+    'locale': string;
+    'pattern': string;
+    'timezone'?: string;
 }
 
 // @public (undocumented)
 export interface AttributeHeader {
     // (undocumented)
-    attributeHeader: AttributeHeaderAttributeHeader;
+    'attributeHeader': AttributeHeaderAttributeHeader;
 }
 
 // @public (undocumented)
 export interface AttributeHeaderAttributeHeader {
     // (undocumented)
-    attribute: RestApiIdentifier;
-    attributeName: string;
+    'attribute': RestApiIdentifier;
+    'attributeName': string;
     // (undocumented)
-    format?: AttributeFormat;
+    'format'?: AttributeFormat;
     // Warning: (ae-forgotten-export) The symbol "GeoAreaConfig_2" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    geoAreaConfig?: GeoAreaConfig_2;
-    granularity?: AttributeHeaderAttributeHeaderGranularityEnum;
+    'geoAreaConfig'?: GeoAreaConfig_2;
+    'granularity'?: AttributeHeaderAttributeHeaderGranularityEnum;
     // (undocumented)
-    label: RestApiIdentifier;
-    labelName: string;
-    localIdentifier: string;
+    'label': RestApiIdentifier;
+    'labelName': string;
+    'localIdentifier': string;
     // (undocumented)
-    primaryLabel: RestApiIdentifier;
-    valueType?: AttributeHeaderAttributeHeaderValueTypeEnum;
+    'primaryLabel': RestApiIdentifier;
+    'valueType'?: AttributeHeaderAttributeHeaderValueTypeEnum;
 }
 
 // @public (undocumented)
-export type AttributeHeaderAttributeHeaderGranularityEnum = "MINUTE" | "HOUR" | "DAY" | "WEEK" | "MONTH" | "QUARTER" | "YEAR" | "MINUTE_OF_HOUR" | "HOUR_OF_DAY" | "DAY_OF_WEEK" | "DAY_OF_MONTH" | "DAY_OF_QUARTER" | "DAY_OF_YEAR" | "WEEK_OF_YEAR" | "MONTH_OF_YEAR" | "QUARTER_OF_YEAR" | "FISCAL_MONTH" | "FISCAL_QUARTER" | "FISCAL_YEAR";
+export type AttributeHeaderAttributeHeaderGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
 
 // @public (undocumented)
-export type AttributeHeaderAttributeHeaderValueTypeEnum = "TEXT" | "HYPERLINK" | "GEO" | "GEO_LONGITUDE" | "GEO_LATITUDE" | "GEO_AREA" | "IMAGE";
+export type AttributeHeaderAttributeHeaderValueTypeEnum = 'TEXT' | 'HYPERLINK' | 'GEO' | 'GEO_LONGITUDE' | 'GEO_LATITUDE' | 'GEO_AREA' | 'IMAGE';
 
 // @public
 export class AttributeHierarchiesApi extends MetadataBaseApi implements AttributeHierarchiesApiInterface {
@@ -3442,23 +3442,23 @@ export interface AttributeItem {
 // @public (undocumented)
 export interface AttributeNegativeFilter {
     // (undocumented)
-    exclude: Array<string>;
+    'exclude': Array<string>;
     // (undocumented)
-    using: string;
+    'using': string;
 }
 
 // @public (undocumented)
 export interface AttributePositiveFilter {
     // (undocumented)
-    include: Array<string>;
+    'include': Array<string>;
     // (undocumented)
-    using: string;
+    'using': string;
 }
 
 // @public
 export interface AttributeResultHeader {
-    labelValue: string;
-    primaryLabelValue: string;
+    'labelValue': string;
+    'primaryLabelValue': string;
 }
 
 // @public
@@ -3549,22 +3549,22 @@ export interface AuthActionsApiInterface {
 // @public
 export interface AutomationAbsoluteDateFilter {
     // (undocumented)
-    absoluteDateFilter: AutomationAbsoluteDateFilterAbsoluteDateFilter;
+    'absoluteDateFilter': AutomationAbsoluteDateFilterAbsoluteDateFilter;
 }
 
 // @public (undocumented)
 export interface AutomationAbsoluteDateFilterAbsoluteDateFilter {
     // (undocumented)
-    applyOnResult?: boolean;
+    'applyOnResult'?: boolean;
     // (undocumented)
-    dataset: AutomationAfmObjectIdentifierDataset;
+    'dataset': AutomationAfmObjectIdentifierDataset;
     // (undocumented)
-    from: string;
-    includeEmptyValues?: boolean;
+    'from': string;
+    'includeEmptyValues'?: boolean;
     // (undocumented)
-    localIdentifier?: string;
+    'localIdentifier'?: string;
     // (undocumented)
-    to: string;
+    'to': string;
 }
 
 // Warning: (ae-forgotten-export) The symbol "AutomationCompoundMeasureValueFilter" needs to be exported by the entry point index.d.ts
@@ -3575,44 +3575,44 @@ export type AutomationAbstractMeasureValueFilter = AutomationComparisonMeasureVa
 // @public (undocumented)
 export interface AutomationAdHocAutomation {
     // (undocumented)
-    alert?: AutomationAutomationAlert;
+    'alert'?: AutomationAutomationAlert;
     // (undocumented)
-    analyticalDashboard?: AutomationDeclarativeAnalyticalDashboardIdentifier;
+    'analyticalDashboard'?: AutomationDeclarativeAnalyticalDashboardIdentifier;
     // (undocumented)
-    dashboardTabularExports?: Array<AutomationAutomationDashboardTabularExport>;
+    'dashboardTabularExports'?: Array<AutomationAutomationDashboardTabularExport>;
     // (undocumented)
-    description?: string;
-    details?: {
+    'description'?: string;
+    'details'?: {
         [key: string]: string;
     };
-    externalRecipients?: Array<AutomationAutomationExternalRecipient>;
+    'externalRecipients'?: Array<AutomationAutomationExternalRecipient>;
     // (undocumented)
-    imageExports?: Array<AutomationAutomationImageExport>;
+    'imageExports'?: Array<AutomationAutomationImageExport>;
     // (undocumented)
-    metadata?: AutomationAutomationMetadata | null;
+    'metadata'?: AutomationAutomationMetadata | null;
     // (undocumented)
-    notificationChannel?: AutomationDeclarativeNotificationChannelIdentifier;
+    'notificationChannel'?: AutomationDeclarativeNotificationChannelIdentifier;
     // (undocumented)
-    rawExports?: Array<AutomationAutomationRawExport>;
+    'rawExports'?: Array<AutomationAutomationRawExport>;
     // (undocumented)
-    recipients?: Array<AutomationDeclarativeUserIdentifier>;
+    'recipients'?: Array<AutomationDeclarativeUserIdentifier>;
     // (undocumented)
-    slidesExports?: Array<AutomationAutomationSlidesExport>;
+    'slidesExports'?: Array<AutomationAutomationSlidesExport>;
     // (undocumented)
-    tabularExports?: Array<AutomationAutomationTabularExport>;
-    tags?: Array<string>;
+    'tabularExports'?: Array<AutomationAutomationTabularExport>;
+    'tags'?: Array<string>;
     // (undocumented)
-    title?: string;
+    'title'?: string;
     // (undocumented)
-    visualExports?: Array<AutomationAutomationVisualExport>;
+    'visualExports'?: Array<AutomationAutomationVisualExport>;
 }
 
 // @public
 export interface AutomationAFM {
-    attributes: Array<AutomationAttributeItem>;
-    auxMeasures?: Array<AutomationMeasureItem>;
-    filters: Array<AutomationAFMFiltersInner>;
-    measures: Array<AutomationMeasureItem>;
+    'attributes': Array<AutomationAttributeItem>;
+    'auxMeasures'?: Array<AutomationMeasureItem>;
+    'filters': Array<AutomationAFMFiltersInner>;
+    'measures': Array<AutomationMeasureItem>;
 }
 
 // @public
@@ -3624,93 +3624,93 @@ export type AutomationAfmIdentifier = AutomationAfmLocalIdentifier | AutomationA
 // @public (undocumented)
 export interface AutomationAfmLocalIdentifier {
     // (undocumented)
-    localIdentifier: string;
+    'localIdentifier': string;
 }
 
 // @public
 export interface AutomationAfmObjectIdentifier {
     // (undocumented)
-    identifier: AutomationAfmObjectIdentifierIdentifier;
+    'identifier': AutomationAfmObjectIdentifierIdentifier;
 }
 
 // @public
 export interface AutomationAfmObjectIdentifierAttribute {
     // (undocumented)
-    identifier: AutomationAfmObjectIdentifierAttributeIdentifier;
+    'identifier': AutomationAfmObjectIdentifierAttributeIdentifier;
 }
 
 // @public (undocumented)
 export interface AutomationAfmObjectIdentifierAttributeIdentifier {
     // (undocumented)
-    id: string;
+    'id': string;
     // (undocumented)
-    type: AutomationAfmObjectIdentifierAttributeIdentifierTypeEnum;
+    'type': AutomationAfmObjectIdentifierAttributeIdentifierTypeEnum;
 }
 
 // @public (undocumented)
-export type AutomationAfmObjectIdentifierAttributeIdentifierTypeEnum = "attribute";
+export type AutomationAfmObjectIdentifierAttributeIdentifierTypeEnum = 'attribute';
 
 // @public
 export interface AutomationAfmObjectIdentifierCore {
     // (undocumented)
-    identifier: AutomationAfmObjectIdentifierCoreIdentifier;
+    'identifier': AutomationAfmObjectIdentifierCoreIdentifier;
 }
 
 // @public (undocumented)
 export interface AutomationAfmObjectIdentifierCoreIdentifier {
     // (undocumented)
-    id: string;
+    'id': string;
     // (undocumented)
-    type: AutomationAfmObjectIdentifierCoreIdentifierTypeEnum;
+    'type': AutomationAfmObjectIdentifierCoreIdentifierTypeEnum;
 }
 
 // @public (undocumented)
-export type AutomationAfmObjectIdentifierCoreIdentifierTypeEnum = "attribute" | "label" | "fact" | "metric";
+export type AutomationAfmObjectIdentifierCoreIdentifierTypeEnum = 'attribute' | 'label' | 'fact' | 'metric';
 
 // @public
 export interface AutomationAfmObjectIdentifierDataset {
     // (undocumented)
-    identifier: AutomationAfmObjectIdentifierDatasetIdentifier;
+    'identifier': AutomationAfmObjectIdentifierDatasetIdentifier;
 }
 
 // @public (undocumented)
 export interface AutomationAfmObjectIdentifierDatasetIdentifier {
     // (undocumented)
-    id: string;
+    'id': string;
     // (undocumented)
-    type: AutomationAfmObjectIdentifierDatasetIdentifierTypeEnum;
+    'type': AutomationAfmObjectIdentifierDatasetIdentifierTypeEnum;
 }
 
 // @public (undocumented)
-export type AutomationAfmObjectIdentifierDatasetIdentifierTypeEnum = "dataset";
+export type AutomationAfmObjectIdentifierDatasetIdentifierTypeEnum = 'dataset';
 
 // @public (undocumented)
 export interface AutomationAfmObjectIdentifierIdentifier {
     // (undocumented)
-    id: string;
+    'id': string;
     // (undocumented)
-    type: AutomationAfmObjectIdentifierIdentifierTypeEnum;
+    'type': AutomationAfmObjectIdentifierIdentifierTypeEnum;
 }
 
 // @public (undocumented)
-export type AutomationAfmObjectIdentifierIdentifierTypeEnum = "analyticalDashboard" | "attribute" | "dashboardPlugin" | "dataset" | "fact" | "label" | "metric" | "prompt" | "visualizationObject" | "filterContext";
+export type AutomationAfmObjectIdentifierIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'dashboardPlugin' | 'dataset' | 'fact' | 'label' | 'metric' | 'prompt' | 'visualizationObject' | 'filterContext';
 
 // @public (undocumented)
 export interface AutomationAfmObjectIdentifierLabel {
     // (undocumented)
-    identifier: AutomationAfmObjectIdentifierLabelIdentifier;
+    'identifier': AutomationAfmObjectIdentifierLabelIdentifier;
 }
 
 // @public (undocumented)
 export interface AutomationAfmObjectIdentifierLabelIdentifier {
     // (undocumented)
-    id: string;
+    'id': string;
     // (undocumented)
-    type: AutomationAfmObjectIdentifierLabelIdentifierTypeEnum;
+    'type': AutomationAfmObjectIdentifierLabelIdentifierTypeEnum;
 }
 
 // @public (undocumented)
-export type AutomationAfmObjectIdentifierLabelIdentifierTypeEnum = "label";
+export type AutomationAfmObjectIdentifierLabelIdentifierTypeEnum = 'label';
 
 // @public (undocumented)
 export interface AutomationAlert {
@@ -3725,10 +3725,10 @@ export interface AutomationAlert {
 
 // @public (undocumented)
 export interface AutomationAlertAfm {
-    attributes?: Array<AutomationAttributeItem>;
-    auxMeasures?: Array<AutomationMeasureItem>;
-    filters: Array<AutomationFilterDefinition>;
-    measures: Array<AutomationMeasureItem>;
+    'attributes'?: Array<AutomationAttributeItem>;
+    'auxMeasures'?: Array<AutomationMeasureItem>;
+    'filters': Array<AutomationFilterDefinition>;
+    'measures': Array<AutomationMeasureItem>;
 }
 
 // Warning: (ae-forgotten-export) The symbol "AutomationAnomalyDetectionWrapper" needs to be exported by the entry point index.d.ts
@@ -3742,50 +3742,50 @@ export type AutomationAlertConditionOperand = AutomationLocalIdentifier | Automa
 // @public (undocumented)
 export interface AutomationAlertDescription {
     // (undocumented)
-    attribute?: string;
+    'attribute'?: string;
     // (undocumented)
-    condition: string;
+    'condition': string;
     // (undocumented)
-    currentValues?: Array<AutomationAlertEvaluationRow>;
+    'currentValues'?: Array<AutomationAlertEvaluationRow>;
     // (undocumented)
-    errorMessage?: string;
+    'errorMessage'?: string;
     // (undocumented)
-    formattedThreshold?: string;
+    'formattedThreshold'?: string;
     // (undocumented)
-    lowerThreshold?: number;
+    'lowerThreshold'?: number;
     // (undocumented)
-    metric: string;
+    'metric': string;
     // (undocumented)
-    remainingAlertEvaluationCount?: number;
+    'remainingAlertEvaluationCount'?: number;
     // (undocumented)
-    status?: AutomationAlertDescriptionStatusEnum;
+    'status'?: AutomationAlertDescriptionStatusEnum;
     // (undocumented)
-    threshold?: number;
+    'threshold'?: number;
     // (undocumented)
-    totalValueCount?: number;
+    'totalValueCount'?: number;
     // (undocumented)
-    traceId?: string;
+    'traceId'?: string;
     // (undocumented)
-    triggeredAt?: string;
+    'triggeredAt'?: string;
     // (undocumented)
-    triggeredCount?: number;
+    'triggeredCount'?: number;
     // (undocumented)
-    upperThreshold?: number;
+    'upperThreshold'?: number;
 }
 
 // @public (undocumented)
-export type AutomationAlertDescriptionStatusEnum = "SUCCESS" | "ERROR" | "INTERNAL_ERROR" | "TIMEOUT";
+export type AutomationAlertDescriptionStatusEnum = 'SUCCESS' | 'ERROR' | 'INTERNAL_ERROR' | 'TIMEOUT';
 
 // @public (undocumented)
 export interface AutomationAlertEvaluationRow {
     // (undocumented)
-    computedMetric?: AutomationMetricRecord;
+    'computedMetric'?: AutomationMetricRecord;
     // (undocumented)
-    labelValue?: string;
+    'labelValue'?: string;
     // (undocumented)
-    primaryMetric?: AutomationMetricRecord;
+    'primaryMetric'?: AutomationMetricRecord;
     // (undocumented)
-    secondaryMetric?: AutomationMetricRecord;
+    'secondaryMetric'?: AutomationMetricRecord;
 }
 
 // @public (undocumented)
@@ -3794,41 +3794,41 @@ export type AutomationAlertTriggerEnum = "ALWAYS" | "ONCE";
 // @public (undocumented)
 export interface AutomationArithmeticMeasure {
     // (undocumented)
-    left: AutomationLocalIdentifier;
-    operator: AutomationArithmeticMeasureOperatorEnum;
+    'left': AutomationLocalIdentifier;
+    'operator': AutomationArithmeticMeasureOperatorEnum;
     // (undocumented)
-    right: AutomationLocalIdentifier;
+    'right': AutomationLocalIdentifier;
 }
 
 // @public
 export interface AutomationArithmeticMeasureDefinition {
     // (undocumented)
-    arithmeticMeasure: AutomationArithmeticMeasureDefinitionArithmeticMeasure;
+    'arithmeticMeasure': AutomationArithmeticMeasureDefinitionArithmeticMeasure;
 }
 
 // @public (undocumented)
 export interface AutomationArithmeticMeasureDefinitionArithmeticMeasure {
-    measureIdentifiers: Array<AutomationAfmLocalIdentifier>;
-    operator: AutomationArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum;
+    'measureIdentifiers': Array<AutomationAfmLocalIdentifier>;
+    'operator': AutomationArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum;
 }
 
 // @public (undocumented)
-export type AutomationArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum = "SUM" | "DIFFERENCE" | "MULTIPLICATION" | "RATIO" | "CHANGE";
+export type AutomationArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum = 'SUM' | 'DIFFERENCE' | 'MULTIPLICATION' | 'RATIO' | 'CHANGE';
 
 // @public (undocumented)
-export type AutomationArithmeticMeasureOperatorEnum = "DIFFERENCE" | "CHANGE";
+export type AutomationArithmeticMeasureOperatorEnum = 'DIFFERENCE' | 'CHANGE';
 
 // @public
 export type AutomationAttributeElements = AutomationAttributeElementsByRef | AutomationAttributeElementsByValue;
 
 // @public (undocumented)
 export interface AutomationAttributeElementsByRef {
-    uris: Array<string | null>;
+    'uris': Array<string | null>;
 }
 
 // @public (undocumented)
 export interface AutomationAttributeElementsByValue {
-    values: Array<string | null>;
+    'values': Array<string | null>;
 }
 
 // @public
@@ -3837,62 +3837,62 @@ export type AutomationAttributeFilter = AutomationNegativeAttributeFilter | Auto
 // @public (undocumented)
 export interface AutomationAttributeFilterByDate {
     // (undocumented)
-    filterLocalIdentifier: string;
+    'filterLocalIdentifier': string;
     // (undocumented)
-    isCommonDate: boolean;
+    'isCommonDate': boolean;
 }
 
 // @public
 export interface AutomationAttributeFilterElements {
-    values: Array<string | null>;
+    'values': Array<string | null>;
 }
 
 // @public (undocumented)
 export interface AutomationAttributeFilterParent {
     // (undocumented)
-    filterLocalIdentifier: string;
+    'filterLocalIdentifier': string;
     // (undocumented)
-    over: AutomationOver;
+    'over': AutomationOver;
 }
 
 // @public (undocumented)
 export interface AutomationAttributeItem {
     // (undocumented)
-    label: AutomationAfmObjectIdentifierLabel;
-    localIdentifier: string;
-    showAllValues?: boolean;
+    'label': AutomationAfmObjectIdentifierLabel;
+    'localIdentifier': string;
+    'showAllValues'?: boolean;
 }
 
 // @public (undocumented)
 export interface AutomationAutomationAlert {
     // (undocumented)
-    condition: AutomationAutomationAlertCondition;
+    'condition': AutomationAutomationAlertCondition;
     // (undocumented)
-    execution: AutomationAlertAfm;
-    trigger?: AutomationAutomationAlertTriggerEnum;
+    'execution': AutomationAlertAfm;
+    'trigger'?: AutomationAutomationAlertTriggerEnum;
 }
 
 // @public
 export type AutomationAutomationAlertCondition = AutomationAnomalyDetectionWrapper | AutomationComparisonWrapper | AutomationRangeWrapper | AutomationRelativeWrapper;
 
 // @public (undocumented)
-export type AutomationAutomationAlertTriggerEnum = "ALWAYS" | "ONCE";
+export type AutomationAutomationAlertTriggerEnum = 'ALWAYS' | 'ONCE';
 
 // @public (undocumented)
 export interface AutomationAutomationDashboardTabularExport {
     // (undocumented)
-    requestPayload: AutomationDashboardTabularExportRequestV2;
+    'requestPayload': AutomationDashboardTabularExportRequestV2;
 }
 
 // @public (undocumented)
 export interface AutomationAutomationExternalRecipient {
-    email: string;
+    'email': string;
 }
 
 // @public (undocumented)
 export interface AutomationAutomationImageExport {
     // (undocumented)
-    requestPayload: AutomationImageExportRequest;
+    'requestPayload': AutomationImageExportRequest;
 }
 
 // @public
@@ -3900,39 +3900,39 @@ export interface AutomationAutomationMetadata {
     // (undocumented)
     [key: string]: any;
     // (undocumented)
-    visibleFilters?: Array<AutomationVisibleFilter>;
+    'visibleFilters'?: Array<AutomationVisibleFilter>;
     // (undocumented)
-    widget?: string;
+    'widget'?: string;
 }
 
 // @public (undocumented)
 export interface AutomationAutomationNotification extends AutomationNotificationContent {
     // (undocumented)
-    content: AutomationWebhookMessage;
+    'content': AutomationWebhookMessage;
 }
 
 // @public (undocumented)
 export interface AutomationAutomationRawExport {
     // (undocumented)
-    requestPayload: AutomationRawExportAutomationRequest;
+    'requestPayload': AutomationRawExportAutomationRequest;
 }
 
 // @public (undocumented)
 export interface AutomationAutomationSlidesExport {
     // (undocumented)
-    requestPayload: AutomationSlidesExportRequest;
+    'requestPayload': AutomationSlidesExportRequest;
 }
 
 // @public (undocumented)
 export interface AutomationAutomationTabularExport {
     // (undocumented)
-    requestPayload: AutomationTabularExportRequest;
+    'requestPayload': AutomationTabularExportRequest;
 }
 
 // @public (undocumented)
 export interface AutomationAutomationVisualExport {
     // (undocumented)
-    requestPayload: AutomationVisualExportRequest;
+    'requestPayload': AutomationVisualExportRequest;
 }
 
 // @public (undocumented)
@@ -3948,56 +3948,56 @@ export class AutomationBaseAPI {
 
 // @public
 export interface AutomationBoundedFilter {
-    from?: number | null;
-    granularity: AutomationBoundedFilterGranularityEnum;
-    to?: number | null;
+    'from'?: number | null;
+    'granularity': AutomationBoundedFilterGranularityEnum;
+    'to'?: number | null;
 }
 
 // @public (undocumented)
-export type AutomationBoundedFilterGranularityEnum = "MINUTE" | "HOUR" | "DAY" | "WEEK" | "MONTH" | "QUARTER" | "YEAR" | "MINUTE_OF_HOUR" | "HOUR_OF_DAY" | "DAY_OF_WEEK" | "DAY_OF_MONTH" | "DAY_OF_QUARTER" | "DAY_OF_YEAR" | "WEEK_OF_YEAR" | "MONTH_OF_YEAR" | "QUARTER_OF_YEAR" | "FISCAL_MONTH" | "FISCAL_QUARTER" | "FISCAL_YEAR";
+export type AutomationBoundedFilterGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
 
 // @public (undocumented)
 export interface AutomationComparison {
     // (undocumented)
-    left: AutomationLocalIdentifier;
+    'left': AutomationLocalIdentifier;
     // (undocumented)
-    operator: AutomationComparisonOperatorEnum;
+    'operator': AutomationComparisonOperatorEnum;
     // (undocumented)
-    right: AutomationAlertConditionOperand;
+    'right': AutomationAlertConditionOperand;
 }
 
 // @public
 export interface AutomationComparisonMeasureValueFilter {
     // (undocumented)
-    comparisonMeasureValueFilter: AutomationComparisonMeasureValueFilterComparisonMeasureValueFilter;
+    'comparisonMeasureValueFilter': AutomationComparisonMeasureValueFilterComparisonMeasureValueFilter;
 }
 
 // @public (undocumented)
 export interface AutomationComparisonMeasureValueFilterComparisonMeasureValueFilter {
     // (undocumented)
-    applyOnResult?: boolean;
-    dimensionality?: Array<AutomationAfmIdentifier>;
+    'applyOnResult'?: boolean;
+    'dimensionality'?: Array<AutomationAfmIdentifier>;
     // (undocumented)
-    localIdentifier?: string;
+    'localIdentifier'?: string;
     // (undocumented)
-    measure: AutomationAfmIdentifier;
+    'measure': AutomationAfmIdentifier;
     // (undocumented)
-    operator: AutomationComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum;
-    treatNullValuesAs?: number;
+    'operator': AutomationComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum;
+    'treatNullValuesAs'?: number;
     // (undocumented)
-    value: number;
+    'value': number;
 }
 
 // @public (undocumented)
-export type AutomationComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum = "GREATER_THAN" | "GREATER_THAN_OR_EQUAL_TO" | "LESS_THAN" | "LESS_THAN_OR_EQUAL_TO" | "EQUAL_TO" | "NOT_EQUAL_TO";
+export type AutomationComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum = 'GREATER_THAN' | 'GREATER_THAN_OR_EQUAL_TO' | 'LESS_THAN' | 'LESS_THAN_OR_EQUAL_TO' | 'EQUAL_TO' | 'NOT_EQUAL_TO';
 
 // @public (undocumented)
-export type AutomationComparisonOperatorEnum = "GREATER_THAN" | "GREATER_THAN_OR_EQUAL_TO" | "LESS_THAN" | "LESS_THAN_OR_EQUAL_TO" | "EQUAL_TO" | "NOT_EQUAL_TO";
+export type AutomationComparisonOperatorEnum = 'GREATER_THAN' | 'GREATER_THAN_OR_EQUAL_TO' | 'LESS_THAN' | 'LESS_THAN_OR_EQUAL_TO' | 'EQUAL_TO' | 'NOT_EQUAL_TO';
 
 // @public (undocumented)
 export interface AutomationComparisonWrapper {
     // (undocumented)
-    comparison: AutomationComparison;
+    'comparison': AutomationComparison;
 }
 
 // @public (undocumented)
@@ -4036,21 +4036,21 @@ export interface AutomationConfigurationParameters {
 
 // @public
 export interface AutomationCustomLabel {
-    title: string;
+    'title': string;
 }
 
 // @public
 export interface AutomationCustomMetric {
-    format: string;
-    title: string;
+    'format': string;
+    'title': string;
 }
 
 // @public
 export interface AutomationCustomOverride {
-    labels?: {
+    'labels'?: {
         [key: string]: AutomationCustomLabel;
     };
-    metrics?: {
+    'metrics'?: {
         [key: string]: AutomationCustomMetric;
     };
 }
@@ -4058,79 +4058,79 @@ export interface AutomationCustomOverride {
 // @public (undocumented)
 export interface AutomationDashboardAttributeFilter {
     // (undocumented)
-    attributeFilter: AutomationDashboardAttributeFilterAttributeFilter;
+    'attributeFilter': AutomationDashboardAttributeFilterAttributeFilter;
 }
 
 // @public (undocumented)
 export interface AutomationDashboardAttributeFilterAttributeFilter {
     // (undocumented)
-    attributeElements: AutomationAttributeElements;
+    'attributeElements': AutomationAttributeElements;
     // (undocumented)
-    displayForm: AutomationIdentifierRef;
+    'displayForm': AutomationIdentifierRef;
     // (undocumented)
-    filterElementsBy?: Array<AutomationAttributeFilterParent>;
+    'filterElementsBy'?: Array<AutomationAttributeFilterParent>;
     // (undocumented)
-    filterElementsByDate?: Array<AutomationAttributeFilterByDate>;
+    'filterElementsByDate'?: Array<AutomationAttributeFilterByDate>;
     // (undocumented)
-    localIdentifier?: string;
+    'localIdentifier'?: string;
     // (undocumented)
-    negativeSelection: boolean;
+    'negativeSelection': boolean;
     // (undocumented)
-    selectionMode?: AutomationDashboardAttributeFilterAttributeFilterSelectionModeEnum;
+    'selectionMode'?: AutomationDashboardAttributeFilterAttributeFilterSelectionModeEnum;
     // (undocumented)
-    title?: string;
+    'title'?: string;
     // (undocumented)
-    validateElementsBy?: Array<AutomationIdentifierRef>;
+    'validateElementsBy'?: Array<AutomationIdentifierRef>;
 }
 
 // @public (undocumented)
-export type AutomationDashboardAttributeFilterAttributeFilterSelectionModeEnum = "single" | "multi";
+export type AutomationDashboardAttributeFilterAttributeFilterSelectionModeEnum = 'single' | 'multi';
 
 // @public (undocumented)
 export interface AutomationDashboardDateFilter {
     // (undocumented)
-    dateFilter: AutomationDashboardDateFilterDateFilter;
+    'dateFilter': AutomationDashboardDateFilterDateFilter;
 }
 
 // @public (undocumented)
 export interface AutomationDashboardDateFilterDateFilter {
     // (undocumented)
-    attribute?: AutomationIdentifierRef;
+    'attribute'?: AutomationIdentifierRef;
     // (undocumented)
-    boundedFilter?: AutomationRelativeBoundedDateFilter;
+    'boundedFilter'?: AutomationRelativeBoundedDateFilter;
     // (undocumented)
-    dataSet?: AutomationIdentifierRef;
+    'dataSet'?: AutomationIdentifierRef;
     // (undocumented)
-    from?: AutomationDashboardDateFilterDateFilterFrom;
+    'from'?: AutomationDashboardDateFilterDateFilterFrom;
     // (undocumented)
-    granularity: AutomationDashboardDateFilterDateFilterGranularityEnum;
+    'granularity': AutomationDashboardDateFilterDateFilterGranularityEnum;
     // (undocumented)
-    includeEmptyValues?: boolean;
+    'includeEmptyValues'?: boolean;
     // (undocumented)
-    localIdentifier?: string;
+    'localIdentifier'?: string;
     // (undocumented)
-    to?: AutomationDashboardDateFilterDateFilterFrom;
+    'to'?: AutomationDashboardDateFilterDateFilterFrom;
     // (undocumented)
-    type: AutomationDashboardDateFilterDateFilterTypeEnum;
+    'type': AutomationDashboardDateFilterDateFilterTypeEnum;
 }
 
 // @public
 export type AutomationDashboardDateFilterDateFilterFrom = number | string;
 
 // @public (undocumented)
-export type AutomationDashboardDateFilterDateFilterGranularityEnum = "ALL_TIME_GRANULARITY" | "GDC.time.year" | "GDC.time.week_us" | "GDC.time.week_in_year" | "GDC.time.week_in_quarter" | "GDC.time.week" | "GDC.time.euweek_in_year" | "GDC.time.euweek_in_quarter" | "GDC.time.quarter" | "GDC.time.quarter_in_year" | "GDC.time.month" | "GDC.time.month_in_quarter" | "GDC.time.month_in_year" | "GDC.time.day_in_year" | "GDC.time.day_in_quarter" | "GDC.time.day_in_month" | "GDC.time.day_in_week" | "GDC.time.day_in_euweek" | "GDC.time.date" | "GDC.time.hour" | "GDC.time.hour_in_day" | "GDC.time.minute" | "GDC.time.minute_in_hour" | "GDC.time.fiscal_month" | "GDC.time.fiscal_quarter" | "GDC.time.fiscal_year";
+export type AutomationDashboardDateFilterDateFilterGranularityEnum = 'ALL_TIME_GRANULARITY' | 'GDC.time.year' | 'GDC.time.week_us' | 'GDC.time.week_in_year' | 'GDC.time.week_in_quarter' | 'GDC.time.week' | 'GDC.time.euweek_in_year' | 'GDC.time.euweek_in_quarter' | 'GDC.time.quarter' | 'GDC.time.quarter_in_year' | 'GDC.time.month' | 'GDC.time.month_in_quarter' | 'GDC.time.month_in_year' | 'GDC.time.day_in_year' | 'GDC.time.day_in_quarter' | 'GDC.time.day_in_month' | 'GDC.time.day_in_week' | 'GDC.time.day_in_euweek' | 'GDC.time.date' | 'GDC.time.hour' | 'GDC.time.hour_in_day' | 'GDC.time.minute' | 'GDC.time.minute_in_hour' | 'GDC.time.fiscal_month' | 'GDC.time.fiscal_quarter' | 'GDC.time.fiscal_year';
 
 // @public (undocumented)
-export type AutomationDashboardDateFilterDateFilterTypeEnum = "relative" | "absolute";
+export type AutomationDashboardDateFilterDateFilterTypeEnum = 'relative' | 'absolute';
 
 // @public
 export interface AutomationDashboardExportSettings {
-    exportInfo?: boolean;
-    mergeHeaders?: boolean;
+    'exportInfo'?: boolean;
+    'mergeHeaders'?: boolean;
     // Warning: (ae-forgotten-export) The symbol "AutomationDashboardExportSettingsPageOrientationEnum" needs to be exported by the entry point index.d.ts
-    pageOrientation?: AutomationDashboardExportSettingsPageOrientationEnum;
+    'pageOrientation'?: AutomationDashboardExportSettingsPageOrientationEnum;
     // Warning: (ae-forgotten-export) The symbol "AutomationDashboardExportSettingsPageSizeEnum" needs to be exported by the entry point index.d.ts
-    pageSize?: AutomationDashboardExportSettingsPageSizeEnum;
+    'pageSize'?: AutomationDashboardExportSettingsPageSizeEnum;
 }
 
 // @public
@@ -4144,20 +4144,20 @@ export interface AutomationDashboardTabularExport {
 
 // @public
 export interface AutomationDashboardTabularExportRequestV2 {
-    dashboardFiltersOverride?: Array<AutomationDashboardFilter>;
-    dashboardId: string;
-    dashboardTabsFiltersOverrides?: {
+    'dashboardFiltersOverride'?: Array<AutomationDashboardFilter>;
+    'dashboardId': string;
+    'dashboardTabsFiltersOverrides'?: {
         [key: string]: Array<AutomationDashboardFilter>;
     };
-    fileName: string;
-    format: AutomationDashboardTabularExportRequestV2FormatEnum;
+    'fileName': string;
+    'format': AutomationDashboardTabularExportRequestV2FormatEnum;
     // (undocumented)
-    settings?: AutomationDashboardExportSettings;
-    widgetIds?: Array<string>;
+    'settings'?: AutomationDashboardExportSettings;
+    'widgetIds'?: Array<string>;
 }
 
 // @public (undocumented)
-export type AutomationDashboardTabularExportRequestV2FormatEnum = "XLSX" | "PDF";
+export type AutomationDashboardTabularExportRequestV2FormatEnum = 'XLSX' | 'PDF';
 
 // @public
 export type AutomationDateFilter = AutomationAbsoluteDateFilter | AutomationRelativeDateFilter;
@@ -4165,76 +4165,76 @@ export type AutomationDateFilter = AutomationAbsoluteDateFilter | AutomationRela
 // @public (undocumented)
 export interface AutomationDateValue {
     // (undocumented)
-    value: string;
+    'value': string;
 }
 
 // @public
 export interface AutomationDeclarativeAnalyticalDashboardIdentifier {
-    id: string;
-    type: AutomationDeclarativeAnalyticalDashboardIdentifierTypeEnum;
+    'id': string;
+    'type': AutomationDeclarativeAnalyticalDashboardIdentifierTypeEnum;
 }
 
 // @public (undocumented)
-export type AutomationDeclarativeAnalyticalDashboardIdentifierTypeEnum = "analyticalDashboard";
+export type AutomationDeclarativeAnalyticalDashboardIdentifierTypeEnum = 'analyticalDashboard';
 
 // @public
 export interface AutomationDeclarativeNotificationChannelIdentifier {
-    id: string;
-    type: AutomationDeclarativeNotificationChannelIdentifierTypeEnum;
+    'id': string;
+    'type': AutomationDeclarativeNotificationChannelIdentifierTypeEnum;
 }
 
 // @public (undocumented)
-export type AutomationDeclarativeNotificationChannelIdentifierTypeEnum = "notificationChannel";
+export type AutomationDeclarativeNotificationChannelIdentifierTypeEnum = 'notificationChannel';
 
 // @public
 export interface AutomationDeclarativeUserIdentifier {
-    id: string;
-    type: AutomationDeclarativeUserIdentifierTypeEnum;
+    'id': string;
+    'type': AutomationDeclarativeUserIdentifierTypeEnum;
 }
 
 // @public (undocumented)
-export type AutomationDeclarativeUserIdentifierTypeEnum = "user";
+export type AutomationDeclarativeUserIdentifierTypeEnum = 'user';
 
 // @public
 export interface AutomationDefaultSmtp {
-    fromEmail?: string;
-    fromEmailName?: string;
-    type: AutomationDefaultSmtpTypeEnum;
+    'fromEmail'?: string;
+    'fromEmailName'?: string;
+    'type': AutomationDefaultSmtpTypeEnum;
 }
 
 // @public (undocumented)
-export type AutomationDefaultSmtpTypeEnum = "DEFAULT_SMTP";
+export type AutomationDefaultSmtpTypeEnum = 'DEFAULT_SMTP';
 
 // @public
 export interface AutomationExecutionSettings {
-    dataSamplingPercentage?: number;
-    timestamp?: string;
+    'dataSamplingPercentage'?: number;
+    'timestamp'?: string;
 }
 
 // @public (undocumented)
 export interface AutomationExportResult {
     // (undocumented)
-    errorMessage?: string;
+    'errorMessage'?: string;
     // (undocumented)
-    expiresAt?: string;
+    'expiresAt'?: string;
     // (undocumented)
-    exportId: string;
+    'exportId': string;
     // (undocumented)
-    fileName: string;
+    'fileName': string;
     // (undocumented)
-    fileSize?: number;
+    'fileSize'?: number;
     // (undocumented)
-    fileUri?: string;
+    'fileUri'?: string;
     // (undocumented)
-    status: AutomationExportResultStatusEnum;
+    'status': AutomationExportResultStatusEnum;
     // (undocumented)
-    traceId?: string;
+    'traceId'?: string;
     // (undocumented)
-    triggeredAt?: string;
+    'triggeredAt'?: string;
 }
 
 // @public (undocumented)
-export type AutomationExportResultStatusEnum = "SUCCESS" | "ERROR" | "INTERNAL_ERROR" | "TIMEOUT";
+export type AutomationExportResultStatusEnum = 'SUCCESS' | 'ERROR' | 'INTERNAL_ERROR' | 'TIMEOUT';
 
 // @public (undocumented)
 export interface AutomationExternalRecipient {
@@ -4250,19 +4250,19 @@ export type AutomationFilterDefinitionForSimpleMeasure = AutomationAttributeFilt
 // @public (undocumented)
 export interface AutomationIdentifierRef {
     // (undocumented)
-    identifier?: AutomationIdentifierRefIdentifier;
+    'identifier'?: AutomationIdentifierRefIdentifier;
 }
 
 // @public (undocumented)
 export interface AutomationIdentifierRefIdentifier {
     // (undocumented)
-    id: string;
+    'id': string;
     // (undocumented)
-    type: AutomationIdentifierRefIdentifierTypeEnum;
+    'type': AutomationIdentifierRefIdentifierTypeEnum;
 }
 
 // @public (undocumented)
-export type AutomationIdentifierRefIdentifierTypeEnum = "analyticalDashboard" | "attribute" | "attributeHierarchy" | "dashboardPlugin" | "dataset" | "fact" | "aggregatedFact" | "label" | "metric" | "userDataFilter" | "exportDefinition" | "automation" | "automationResult" | "memoryItem" | "knowledgeRecommendation" | "prompt" | "visualizationObject" | "filterContext" | "workspaceSettings" | "customApplicationSetting" | "workspaceDataFilter" | "workspaceDataFilterSetting" | "filterView";
+export type AutomationIdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'userDataFilter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView';
 
 // @public (undocumented)
 export interface AutomationImageExport {
@@ -4272,55 +4272,55 @@ export interface AutomationImageExport {
 
 // @public
 export interface AutomationImageExportRequest {
-    dashboardId: string;
-    fileName: string;
-    format: AutomationImageExportRequestFormatEnum;
-    metadata?: object | null;
-    widgetIds: Array<string>;
+    'dashboardId': string;
+    'fileName': string;
+    'format': AutomationImageExportRequestFormatEnum;
+    'metadata'?: object | null;
+    'widgetIds': Array<string>;
 }
 
 // @public (undocumented)
-export type AutomationImageExportRequestFormatEnum = "PNG";
+export type AutomationImageExportRequestFormatEnum = 'PNG';
 
 // @public
 export interface AutomationInlineFilterDefinition {
     // (undocumented)
-    inline: AutomationInlineFilterDefinitionInline;
+    'inline': AutomationInlineFilterDefinitionInline;
 }
 
 // @public (undocumented)
 export interface AutomationInlineFilterDefinitionInline {
     // (undocumented)
-    applyOnResult?: boolean;
-    filter: string;
+    'applyOnResult'?: boolean;
+    'filter': string;
     // (undocumented)
-    localIdentifier?: string;
+    'localIdentifier'?: string;
 }
 
 // @public
 export interface AutomationInlineMeasureDefinition {
     // (undocumented)
-    inline: AutomationInlineMeasureDefinitionInline;
+    'inline': AutomationInlineMeasureDefinitionInline;
 }
 
 // @public (undocumented)
 export interface AutomationInlineMeasureDefinitionInline {
-    maql: string;
+    'maql': string;
 }
 
 // @public
 export interface AutomationInPlatform {
-    type: AutomationInPlatformTypeEnum;
+    'type': AutomationInPlatformTypeEnum;
 }
 
 // @public (undocumented)
-export type AutomationInPlatformTypeEnum = "IN_PLATFORM";
+export type AutomationInPlatformTypeEnum = 'IN_PLATFORM';
 
 // @public (undocumented)
 export interface AutomationLocalIdentifier {
-    format?: string | null;
-    localIdentifier: string;
-    title?: string | null;
+    'format'?: string | null;
+    'localIdentifier': string;
+    'title'?: string | null;
 }
 
 // @public
@@ -4329,8 +4329,8 @@ export type AutomationMeasureDefinition = AutomationArithmeticMeasureDefinition 
 // @public
 export interface AutomationMeasureItem {
     // (undocumented)
-    definition: AutomationMeasureItemDefinition;
-    localIdentifier: string;
+    'definition': AutomationMeasureItemDefinition;
+    'localIdentifier': string;
 }
 
 // @public
@@ -4352,43 +4352,43 @@ export interface AutomationMetadata {
 // @public (undocumented)
 export interface AutomationMetricRecord {
     // (undocumented)
-    formattedValue?: string;
+    'formattedValue'?: string;
     // (undocumented)
-    value: number;
+    'value': number;
 }
 
 // @public
 export interface AutomationNegativeAttributeFilter {
     // (undocumented)
-    negativeAttributeFilter: AutomationNegativeAttributeFilterNegativeAttributeFilter;
+    'negativeAttributeFilter': AutomationNegativeAttributeFilterNegativeAttributeFilter;
 }
 
 // @public (undocumented)
 export interface AutomationNegativeAttributeFilterNegativeAttributeFilter {
     // (undocumented)
-    applyOnResult?: boolean;
+    'applyOnResult'?: boolean;
     // (undocumented)
-    label: AutomationAfmIdentifier;
+    'label': AutomationAfmIdentifier;
     // (undocumented)
-    localIdentifier?: string;
+    'localIdentifier'?: string;
     // (undocumented)
-    notIn: AutomationAttributeFilterElements;
+    'notIn': AutomationAttributeFilterElements;
 }
 
 // @public (undocumented)
 export interface AutomationNotification {
     // (undocumented)
-    automationId?: string;
+    'automationId'?: string;
     // (undocumented)
-    createdAt: string;
+    'createdAt': string;
     // (undocumented)
-    data: AutomationNotificationData;
+    'data': AutomationNotificationData;
     // (undocumented)
-    id: string;
+    'id': string;
     // (undocumented)
-    isRead: boolean;
+    'isRead': boolean;
     // (undocumented)
-    workspaceId?: string;
+    'workspaceId'?: string;
 }
 
 // @public
@@ -4397,7 +4397,7 @@ export type AutomationNotificationChannelDestination = AutomationDefaultSmtp | A
 // @public (undocumented)
 export interface AutomationNotificationContent {
     // (undocumented)
-    type: string;
+    'type': string;
 }
 
 // @public
@@ -4406,31 +4406,31 @@ export type AutomationNotificationData = AutomationAutomationNotification | Auto
 // @public (undocumented)
 export interface AutomationNotificationFilter {
     // (undocumented)
-    filter: string;
+    'filter': string;
     // (undocumented)
-    title: string;
+    'title': string;
 }
 
 // @public (undocumented)
 export interface AutomationNotifications {
     // (undocumented)
-    data: Array<AutomationNotification>;
+    'data': Array<AutomationNotification>;
     // (undocumented)
-    meta: AutomationNotificationsMeta;
+    'meta': AutomationNotificationsMeta;
 }
 
 // @public (undocumented)
 export interface AutomationNotificationsMeta {
     // (undocumented)
-    total?: AutomationNotificationsMetaTotal;
+    'total'?: AutomationNotificationsMetaTotal;
 }
 
 // @public (undocumented)
 export interface AutomationNotificationsMetaTotal {
     // (undocumented)
-    all: number;
+    'all': number;
     // (undocumented)
-    unread: number;
+    'unread': number;
 }
 
 // @public
@@ -4462,59 +4462,59 @@ export interface AutomationOrganizationViewControllerApiInterface {
 // @public (undocumented)
 export interface AutomationOver {
     // (undocumented)
-    attributes: Array<AutomationIdentifierRef>;
+    'attributes': Array<AutomationIdentifierRef>;
 }
 
 // @public
 export interface AutomationPdfTableStyle {
-    properties?: Array<AutomationPdfTableStyleProperty>;
-    selector: string;
+    'properties'?: Array<AutomationPdfTableStyleProperty>;
+    'selector': string;
 }
 
 // @public
 export interface AutomationPdfTableStyleProperty {
-    key: string;
-    value: string;
+    'key': string;
+    'value': string;
 }
 
 // @public
 export interface AutomationPopDataset {
     // (undocumented)
-    dataset: AutomationAfmObjectIdentifierDataset;
-    periodsAgo: number;
+    'dataset': AutomationAfmObjectIdentifierDataset;
+    'periodsAgo': number;
 }
 
 // @public
 export interface AutomationPopDatasetMeasureDefinition {
     // (undocumented)
-    previousPeriodMeasure: AutomationPopDatasetMeasureDefinitionPreviousPeriodMeasure;
+    'previousPeriodMeasure': AutomationPopDatasetMeasureDefinitionPreviousPeriodMeasure;
 }
 
 // @public (undocumented)
 export interface AutomationPopDatasetMeasureDefinitionPreviousPeriodMeasure {
-    dateDatasets: Array<AutomationPopDataset>;
+    'dateDatasets': Array<AutomationPopDataset>;
     // (undocumented)
-    measureIdentifier: AutomationAfmLocalIdentifier;
+    'measureIdentifier': AutomationAfmLocalIdentifier;
 }
 
 // @public
 export interface AutomationPopDate {
     // (undocumented)
-    attribute: AutomationAfmObjectIdentifierAttribute;
-    periodsAgo: number;
+    'attribute': AutomationAfmObjectIdentifierAttribute;
+    'periodsAgo': number;
 }
 
 // @public
 export interface AutomationPopDateMeasureDefinition {
     // (undocumented)
-    overPeriodMeasure: AutomationPopDateMeasureDefinitionOverPeriodMeasure;
+    'overPeriodMeasure': AutomationPopDateMeasureDefinitionOverPeriodMeasure;
 }
 
 // @public (undocumented)
 export interface AutomationPopDateMeasureDefinitionOverPeriodMeasure {
-    dateAttributes: Array<AutomationPopDate>;
+    'dateAttributes': Array<AutomationPopDate>;
     // (undocumented)
-    measureIdentifier: AutomationAfmLocalIdentifier;
+    'measureIdentifier': AutomationAfmLocalIdentifier;
 }
 
 // @public
@@ -4523,106 +4523,106 @@ export type AutomationPopMeasureDefinition = AutomationPopDatasetMeasureDefiniti
 // @public
 export interface AutomationPositiveAttributeFilter {
     // (undocumented)
-    positiveAttributeFilter: AutomationPositiveAttributeFilterPositiveAttributeFilter;
+    'positiveAttributeFilter': AutomationPositiveAttributeFilterPositiveAttributeFilter;
 }
 
 // @public (undocumented)
 export interface AutomationPositiveAttributeFilterPositiveAttributeFilter {
     // (undocumented)
-    applyOnResult?: boolean;
+    'applyOnResult'?: boolean;
     // (undocumented)
-    in: AutomationAttributeFilterElements;
+    'in': AutomationAttributeFilterElements;
     // (undocumented)
-    label: AutomationAfmIdentifier;
+    'label': AutomationAfmIdentifier;
     // (undocumented)
-    localIdentifier?: string;
+    'localIdentifier'?: string;
 }
 
 // @public (undocumented)
 export interface AutomationRange {
     // (undocumented)
-    from: AutomationValue;
+    'from': AutomationValue;
     // (undocumented)
-    measure: AutomationLocalIdentifier;
+    'measure': AutomationLocalIdentifier;
     // (undocumented)
-    operator: AutomationRangeOperatorEnum;
+    'operator': AutomationRangeOperatorEnum;
     // (undocumented)
-    to: AutomationValue;
+    'to': AutomationValue;
 }
 
 // @public
 export interface AutomationRangeMeasureValueFilter {
     // (undocumented)
-    rangeMeasureValueFilter: AutomationRangeMeasureValueFilterRangeMeasureValueFilter;
+    'rangeMeasureValueFilter': AutomationRangeMeasureValueFilterRangeMeasureValueFilter;
 }
 
 // @public (undocumented)
 export interface AutomationRangeMeasureValueFilterRangeMeasureValueFilter {
     // (undocumented)
-    applyOnResult?: boolean;
-    dimensionality?: Array<AutomationAfmIdentifier>;
+    'applyOnResult'?: boolean;
+    'dimensionality'?: Array<AutomationAfmIdentifier>;
     // (undocumented)
-    from: number;
+    'from': number;
     // (undocumented)
-    localIdentifier?: string;
+    'localIdentifier'?: string;
     // (undocumented)
-    measure: AutomationAfmIdentifier;
+    'measure': AutomationAfmIdentifier;
     // (undocumented)
-    operator: AutomationRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum;
+    'operator': AutomationRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum;
     // (undocumented)
-    to: number;
-    treatNullValuesAs?: number;
+    'to': number;
+    'treatNullValuesAs'?: number;
 }
 
 // @public (undocumented)
-export type AutomationRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum = "BETWEEN" | "NOT_BETWEEN";
+export type AutomationRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum = 'BETWEEN' | 'NOT_BETWEEN';
 
 // @public (undocumented)
-export type AutomationRangeOperatorEnum = "BETWEEN" | "NOT_BETWEEN";
+export type AutomationRangeOperatorEnum = 'BETWEEN' | 'NOT_BETWEEN';
 
 // @public (undocumented)
 export interface AutomationRangeWrapper {
     // (undocumented)
-    range: AutomationRange;
+    'range': AutomationRange;
 }
 
 // @public
 export interface AutomationRankingFilter {
     // (undocumented)
-    rankingFilter: AutomationRankingFilterRankingFilter;
+    'rankingFilter': AutomationRankingFilterRankingFilter;
 }
 
 // @public (undocumented)
 export interface AutomationRankingFilterRankingFilter {
     // (undocumented)
-    applyOnResult?: boolean;
-    dimensionality?: Array<AutomationAfmIdentifier>;
+    'applyOnResult'?: boolean;
+    'dimensionality'?: Array<AutomationAfmIdentifier>;
     // (undocumented)
-    localIdentifier?: string;
-    measures: Array<AutomationAfmIdentifier>;
-    operator: AutomationRankingFilterRankingFilterOperatorEnum;
-    value: number;
+    'localIdentifier'?: string;
+    'measures': Array<AutomationAfmIdentifier>;
+    'operator': AutomationRankingFilterRankingFilterOperatorEnum;
+    'value': number;
 }
 
 // @public (undocumented)
-export type AutomationRankingFilterRankingFilterOperatorEnum = "TOP" | "BOTTOM";
+export type AutomationRankingFilterRankingFilterOperatorEnum = 'TOP' | 'BOTTOM';
 
 // @public
 export interface AutomationRawCustomLabel {
-    title: string;
+    'title': string;
 }
 
 // @public
 export interface AutomationRawCustomMetric {
-    title: string;
+    'title': string;
 }
 
 // @public
 export interface AutomationRawCustomOverride {
-    labels?: {
+    'labels'?: {
         [key: string]: AutomationRawCustomLabel;
     };
-    metrics?: {
+    'metrics'?: {
         [key: string]: AutomationRawCustomMetric;
     };
 }
@@ -4636,74 +4636,74 @@ export interface AutomationRawExport {
 // @public
 export interface AutomationRawExportAutomationRequest {
     // (undocumented)
-    customOverride?: AutomationRawCustomOverride;
-    delimiter?: string;
+    'customOverride'?: AutomationRawCustomOverride;
+    'delimiter'?: string;
     // (undocumented)
-    execution: AutomationAFM;
+    'execution': AutomationAFM;
     // (undocumented)
-    executionSettings?: AutomationExecutionSettings;
-    fileName: string;
-    format: AutomationRawExportAutomationRequestFormatEnum;
-    metadata?: object | null;
+    'executionSettings'?: AutomationExecutionSettings;
+    'fileName': string;
+    'format': AutomationRawExportAutomationRequestFormatEnum;
+    'metadata'?: object | null;
 }
 
 // @public (undocumented)
-export type AutomationRawExportAutomationRequestFormatEnum = "ARROW_FILE" | "ARROW_STREAM" | "CSV";
+export type AutomationRawExportAutomationRequestFormatEnum = 'ARROW_FILE' | 'ARROW_STREAM' | 'CSV';
 
 // @public (undocumented)
 export interface AutomationRelative {
     // (undocumented)
-    measure: AutomationArithmeticMeasure;
-    operator: AutomationRelativeOperatorEnum;
+    'measure': AutomationArithmeticMeasure;
+    'operator': AutomationRelativeOperatorEnum;
     // (undocumented)
-    threshold: AutomationValue;
+    'threshold': AutomationValue;
 }
 
 // @public (undocumented)
 export interface AutomationRelativeBoundedDateFilter {
     // (undocumented)
-    from?: number;
+    'from'?: number;
     // (undocumented)
-    granularity: AutomationRelativeBoundedDateFilterGranularityEnum;
+    'granularity': AutomationRelativeBoundedDateFilterGranularityEnum;
     // (undocumented)
-    to?: number;
+    'to'?: number;
 }
 
 // @public (undocumented)
-export type AutomationRelativeBoundedDateFilterGranularityEnum = "ALL_TIME_GRANULARITY" | "GDC.time.year" | "GDC.time.week_us" | "GDC.time.week_in_year" | "GDC.time.week_in_quarter" | "GDC.time.week" | "GDC.time.euweek_in_year" | "GDC.time.euweek_in_quarter" | "GDC.time.quarter" | "GDC.time.quarter_in_year" | "GDC.time.month" | "GDC.time.month_in_quarter" | "GDC.time.month_in_year" | "GDC.time.day_in_year" | "GDC.time.day_in_quarter" | "GDC.time.day_in_month" | "GDC.time.day_in_week" | "GDC.time.day_in_euweek" | "GDC.time.date" | "GDC.time.hour" | "GDC.time.hour_in_day" | "GDC.time.minute" | "GDC.time.minute_in_hour" | "GDC.time.fiscal_month" | "GDC.time.fiscal_quarter" | "GDC.time.fiscal_year";
+export type AutomationRelativeBoundedDateFilterGranularityEnum = 'ALL_TIME_GRANULARITY' | 'GDC.time.year' | 'GDC.time.week_us' | 'GDC.time.week_in_year' | 'GDC.time.week_in_quarter' | 'GDC.time.week' | 'GDC.time.euweek_in_year' | 'GDC.time.euweek_in_quarter' | 'GDC.time.quarter' | 'GDC.time.quarter_in_year' | 'GDC.time.month' | 'GDC.time.month_in_quarter' | 'GDC.time.month_in_year' | 'GDC.time.day_in_year' | 'GDC.time.day_in_quarter' | 'GDC.time.day_in_month' | 'GDC.time.day_in_week' | 'GDC.time.day_in_euweek' | 'GDC.time.date' | 'GDC.time.hour' | 'GDC.time.hour_in_day' | 'GDC.time.minute' | 'GDC.time.minute_in_hour' | 'GDC.time.fiscal_month' | 'GDC.time.fiscal_quarter' | 'GDC.time.fiscal_year';
 
 // @public
 export interface AutomationRelativeDateFilter {
     // (undocumented)
-    relativeDateFilter: AutomationRelativeDateFilterRelativeDateFilter;
+    'relativeDateFilter': AutomationRelativeDateFilterRelativeDateFilter;
 }
 
 // @public (undocumented)
 export interface AutomationRelativeDateFilterRelativeDateFilter {
     // (undocumented)
-    applyOnResult?: boolean;
+    'applyOnResult'?: boolean;
     // (undocumented)
-    boundedFilter?: AutomationBoundedFilter;
+    'boundedFilter'?: AutomationBoundedFilter;
     // (undocumented)
-    dataset: AutomationAfmObjectIdentifierDataset;
-    from: number;
-    granularity: AutomationRelativeDateFilterRelativeDateFilterGranularityEnum;
-    includeEmptyValues?: boolean;
+    'dataset': AutomationAfmObjectIdentifierDataset;
+    'from': number;
+    'granularity': AutomationRelativeDateFilterRelativeDateFilterGranularityEnum;
+    'includeEmptyValues'?: boolean;
     // (undocumented)
-    localIdentifier?: string;
-    to: number;
+    'localIdentifier'?: string;
+    'to': number;
 }
 
 // @public (undocumented)
-export type AutomationRelativeDateFilterRelativeDateFilterGranularityEnum = "MINUTE" | "HOUR" | "DAY" | "WEEK" | "MONTH" | "QUARTER" | "YEAR" | "MINUTE_OF_HOUR" | "HOUR_OF_DAY" | "DAY_OF_WEEK" | "DAY_OF_MONTH" | "DAY_OF_QUARTER" | "DAY_OF_YEAR" | "WEEK_OF_YEAR" | "MONTH_OF_YEAR" | "QUARTER_OF_YEAR" | "FISCAL_MONTH" | "FISCAL_QUARTER" | "FISCAL_YEAR";
+export type AutomationRelativeDateFilterRelativeDateFilterGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
 
 // @public (undocumented)
-export type AutomationRelativeOperatorEnum = "INCREASES_BY" | "DECREASES_BY" | "CHANGES_BY";
+export type AutomationRelativeOperatorEnum = 'INCREASES_BY' | 'DECREASES_BY' | 'CHANGES_BY';
 
 // @public (undocumented)
 export interface AutomationRelativeWrapper {
     // (undocumented)
-    relative: AutomationRelative;
+    'relative': AutomationRelative;
 }
 
 // @public (undocumented)
@@ -5081,42 +5081,42 @@ export interface AutomationSchedule {
 
 // @public
 export interface AutomationSettings {
-    delimiter?: string;
-    exportInfo?: boolean;
-    mergeHeaders?: boolean;
+    'delimiter'?: string;
+    'exportInfo'?: boolean;
+    'mergeHeaders'?: boolean;
     // Warning: (ae-forgotten-export) The symbol "AutomationSettingsPageOrientationEnum" needs to be exported by the entry point index.d.ts
-    pageOrientation?: AutomationSettingsPageOrientationEnum;
+    'pageOrientation'?: AutomationSettingsPageOrientationEnum;
     // Warning: (ae-forgotten-export) The symbol "AutomationSettingsPageSizeEnum" needs to be exported by the entry point index.d.ts
-    pageSize?: AutomationSettingsPageSizeEnum;
+    'pageSize'?: AutomationSettingsPageSizeEnum;
     // @deprecated
-    pdfPageSize?: string;
+    'pdfPageSize'?: string;
     // @deprecated
-    pdfTableStyle?: Array<AutomationPdfTableStyle>;
+    'pdfTableStyle'?: Array<AutomationPdfTableStyle>;
     // @deprecated
-    pdfTopLeftContent?: string;
+    'pdfTopLeftContent'?: string;
     // @deprecated
-    pdfTopRightContent?: string;
+    'pdfTopRightContent'?: string;
     // @deprecated
-    showFilters?: boolean;
+    'showFilters'?: boolean;
 }
 
 // @public
 export interface AutomationSimpleMeasureDefinition {
     // (undocumented)
-    measure: AutomationSimpleMeasureDefinitionMeasure;
+    'measure': AutomationSimpleMeasureDefinitionMeasure;
 }
 
 // @public (undocumented)
 export interface AutomationSimpleMeasureDefinitionMeasure {
-    aggregation?: AutomationSimpleMeasureDefinitionMeasureAggregationEnum;
-    computeRatio?: boolean;
-    filters?: Array<AutomationFilterDefinitionForSimpleMeasure>;
+    'aggregation'?: AutomationSimpleMeasureDefinitionMeasureAggregationEnum;
+    'computeRatio'?: boolean;
+    'filters'?: Array<AutomationFilterDefinitionForSimpleMeasure>;
     // (undocumented)
-    item: AutomationAfmObjectIdentifierCore;
+    'item': AutomationAfmObjectIdentifierCore;
 }
 
 // @public (undocumented)
-export type AutomationSimpleMeasureDefinitionMeasureAggregationEnum = "SUM" | "COUNT" | "AVG" | "MIN" | "MAX" | "MEDIAN" | "RUNSUM" | "APPROXIMATE_COUNT";
+export type AutomationSimpleMeasureDefinitionMeasureAggregationEnum = 'SUM' | 'COUNT' | 'AVG' | 'MIN' | 'MAX' | 'MEDIAN' | 'RUNSUM' | 'APPROXIMATE_COUNT';
 
 // @public (undocumented)
 export interface AutomationSlidesExport {
@@ -5126,34 +5126,34 @@ export interface AutomationSlidesExport {
 
 // @public
 export interface AutomationSlidesExportRequest {
-    dashboardId?: string;
-    fileName: string;
-    format: AutomationSlidesExportRequestFormatEnum;
-    metadata?: object | null;
-    templateId?: string | null;
-    visualizationIds?: Array<string>;
-    widgetIds?: Array<string>;
+    'dashboardId'?: string;
+    'fileName': string;
+    'format': AutomationSlidesExportRequestFormatEnum;
+    'metadata'?: object | null;
+    'templateId'?: string | null;
+    'visualizationIds'?: Array<string>;
+    'widgetIds'?: Array<string>;
 }
 
 // @public (undocumented)
-export type AutomationSlidesExportRequestFormatEnum = "PDF" | "PPTX";
+export type AutomationSlidesExportRequestFormatEnum = 'PDF' | 'PPTX';
 
 // @public
 export interface AutomationSmtp {
-    fromEmail?: string;
-    fromEmailName?: string;
-    host?: string;
-    password?: string;
-    port?: AutomationSmtpPortEnum;
-    type: AutomationSmtpTypeEnum;
-    username?: string;
+    'fromEmail'?: string;
+    'fromEmailName'?: string;
+    'host'?: string;
+    'password'?: string;
+    'port'?: AutomationSmtpPortEnum;
+    'type': AutomationSmtpTypeEnum;
+    'username'?: string;
 }
 
 // @public (undocumented)
 export type AutomationSmtpPortEnum = 25 | 465 | 587 | 2525;
 
 // @public (undocumented)
-export type AutomationSmtpTypeEnum = "SMTP";
+export type AutomationSmtpTypeEnum = 'SMTP';
 
 // @public (undocumented)
 export interface AutomationTabularExport {
@@ -5164,26 +5164,26 @@ export interface AutomationTabularExport {
 // @public
 export interface AutomationTabularExportRequest {
     // (undocumented)
-    customOverride?: AutomationCustomOverride;
-    executionResult?: string;
-    fileName: string;
-    format: AutomationTabularExportRequestFormatEnum;
-    metadata?: object | null;
-    relatedDashboardId?: string;
+    'customOverride'?: AutomationCustomOverride;
+    'executionResult'?: string;
+    'fileName': string;
+    'format': AutomationTabularExportRequestFormatEnum;
+    'metadata'?: object | null;
+    'relatedDashboardId'?: string;
     // (undocumented)
-    settings?: AutomationSettings;
-    visualizationObject?: string;
-    visualizationObjectCustomFilters?: Array<object>;
+    'settings'?: AutomationSettings;
+    'visualizationObject'?: string;
+    'visualizationObjectCustomFilters'?: Array<object>;
 }
 
 // @public (undocumented)
-export type AutomationTabularExportRequestFormatEnum = "CSV" | "XLSX" | "HTML" | "PDF";
+export type AutomationTabularExportRequestFormatEnum = 'CSV' | 'XLSX' | 'HTML' | 'PDF';
 
 // @public
 export interface AutomationTestDestinationRequest {
     // (undocumented)
-    destination: AutomationTestDestinationRequestDestination;
-    externalRecipients?: Array<AutomationAutomationExternalRecipient> | null;
+    'destination': AutomationTestDestinationRequestDestination;
+    'externalRecipients'?: Array<AutomationAutomationExternalRecipient> | null;
 }
 
 // @public
@@ -5192,33 +5192,33 @@ export type AutomationTestDestinationRequestDestination = AutomationDefaultSmtp 
 // @public (undocumented)
 export interface AutomationTestNotification extends AutomationNotificationContent {
     // (undocumented)
-    message: string;
+    'message': string;
 }
 
 // @public
 export interface AutomationTestResponse {
-    error?: string;
-    successful: boolean;
+    'error'?: string;
+    'successful': boolean;
 }
 
 // @public (undocumented)
 export interface AutomationTriggerAutomationRequest {
     // (undocumented)
-    automation: AutomationAdHocAutomation;
+    'automation': AutomationAdHocAutomation;
 }
 
 // @public (undocumented)
 export interface AutomationValue {
-    value: number;
+    'value': number;
 }
 
 // @public (undocumented)
 export interface AutomationVisibleFilter {
-    isAllTimeDateFilter?: boolean;
+    'isAllTimeDateFilter'?: boolean;
     // (undocumented)
-    localIdentifier?: string;
+    'localIdentifier'?: string;
     // (undocumented)
-    title?: string;
+    'title'?: string;
 }
 
 // @public (undocumented)
@@ -5229,90 +5229,90 @@ export interface AutomationVisualExport {
 
 // @public
 export interface AutomationVisualExportRequest {
-    dashboardId: string;
-    fileName: string;
-    metadata?: object;
+    'dashboardId': string;
+    'fileName': string;
+    'metadata'?: object;
 }
 
 // @public
 export interface AutomationWebhook {
-    hasSecretKey?: boolean | null;
-    hasToken?: boolean | null;
-    secretKey?: string | null;
-    token?: string | null;
-    type: AutomationWebhookTypeEnum;
-    url?: string;
+    'hasSecretKey'?: boolean | null;
+    'hasToken'?: boolean | null;
+    'secretKey'?: string | null;
+    'token'?: string | null;
+    'type': AutomationWebhookTypeEnum;
+    'url'?: string;
 }
 
 // @public (undocumented)
 export interface AutomationWebhookAutomationInfo {
     // (undocumented)
-    dashboardTitle?: string;
+    'dashboardTitle'?: string;
     // (undocumented)
-    dashboardURL: string;
+    'dashboardURL': string;
     // (undocumented)
-    id: string;
+    'id': string;
     // (undocumented)
-    isCustomDashboardURL: boolean;
+    'isCustomDashboardURL': boolean;
     // (undocumented)
-    title?: string;
+    'title'?: string;
 }
 
 // @public (undocumented)
 export interface AutomationWebhookMessage {
     // (undocumented)
-    data: AutomationWebhookMessageData;
+    'data': AutomationWebhookMessageData;
     // (undocumented)
-    timestamp: string;
+    'timestamp': string;
     // (undocumented)
-    type: AutomationWebhookMessageTypeEnum;
+    'type': AutomationWebhookMessageTypeEnum;
 }
 
 // @public (undocumented)
 export interface AutomationWebhookMessageData {
     // (undocumented)
-    alert?: AutomationAlertDescription;
+    'alert'?: AutomationAlertDescription;
     // (undocumented)
-    automation: AutomationWebhookAutomationInfo;
+    'automation': AutomationWebhookAutomationInfo;
     // (undocumented)
-    dashboardTabularExports?: Array<AutomationExportResult>;
+    'dashboardTabularExports'?: Array<AutomationExportResult>;
     // (undocumented)
-    details?: {
+    'details'?: {
         [key: string]: string;
     };
     // (undocumented)
-    filters?: Array<AutomationNotificationFilter>;
+    'filters'?: Array<AutomationNotificationFilter>;
     // (undocumented)
-    imageExports?: Array<AutomationExportResult>;
+    'imageExports'?: Array<AutomationExportResult>;
     // (undocumented)
-    notificationSource?: string;
+    'notificationSource'?: string;
     // (undocumented)
-    rawExports?: Array<AutomationExportResult>;
+    'rawExports'?: Array<AutomationExportResult>;
     // (undocumented)
-    recipients?: Array<AutomationWebhookRecipient>;
+    'recipients'?: Array<AutomationWebhookRecipient>;
     // (undocumented)
-    remainingActionCount?: number;
+    'remainingActionCount'?: number;
     // (undocumented)
-    slidesExports?: Array<AutomationExportResult>;
+    'slidesExports'?: Array<AutomationExportResult>;
     // (undocumented)
-    tabularExports?: Array<AutomationExportResult>;
+    'tabularExports'?: Array<AutomationExportResult>;
     // (undocumented)
-    visualExports?: Array<AutomationExportResult>;
+    'visualExports'?: Array<AutomationExportResult>;
 }
 
 // @public (undocumented)
-export type AutomationWebhookMessageTypeEnum = "automation-task.completed" | "automation-task.limit-exceeded";
+export type AutomationWebhookMessageTypeEnum = 'automation-task.completed' | 'automation-task.limit-exceeded';
 
 // @public (undocumented)
 export interface AutomationWebhookRecipient {
     // (undocumented)
-    email: string;
+    'email': string;
     // (undocumented)
-    id: string;
+    'id': string;
 }
 
 // @public (undocumented)
-export type AutomationWebhookTypeEnum = "WEBHOOK";
+export type AutomationWebhookTypeEnum = 'WEBHOOK';
 
 // @public (undocumented)
 export interface AvailableAssignees {
@@ -5373,125 +5373,127 @@ export interface ChatHistoryInteraction {
     // Warning: (ae-forgotten-export) The symbol "ChangeAnalysisParams" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    changeAnalysisParams?: ChangeAnalysisParams;
-    chatHistoryInteractionId: string;
+    'changeAnalysisParams'?: ChangeAnalysisParams;
+    'chatHistoryInteractionId': string;
     // (undocumented)
-    createdVisualizations?: CreatedVisualizations;
-    errorResponse?: string;
+    'createdVisualizations'?: CreatedVisualizations;
+    'errorResponse'?: string;
     // (undocumented)
-    foundObjects?: FoundObjects;
-    interactionFinished: boolean;
-    question: string;
+    'foundObjects'?: FoundObjects;
+    'interactionFinished': boolean;
+    'question': string;
     // Warning: (ae-forgotten-export) The symbol "Reasoning" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    reasoning?: Reasoning;
+    'reasoning'?: Reasoning;
     // (undocumented)
-    routing: RouteResult;
+    'routing': RouteResult;
     // (undocumented)
-    semanticSearch?: SearchResult;
-    textResponse?: string;
-    threadIdSuffix?: string;
-    userFeedback?: ChatHistoryInteractionUserFeedbackEnum;
+    'semanticSearch'?: SearchResult;
+    'textResponse'?: string;
+    'threadIdSuffix'?: string;
+    'userFeedback'?: ChatHistoryInteractionUserFeedbackEnum;
 }
 
 // @public (undocumented)
-export type ChatHistoryInteractionUserFeedbackEnum = "POSITIVE" | "NEGATIVE" | "NONE";
+export type ChatHistoryInteractionUserFeedbackEnum = 'POSITIVE' | 'NEGATIVE' | 'NONE';
 
 // @public (undocumented)
 export interface ChatHistoryRequest {
-    chatHistoryInteractionId?: string;
-    reset?: boolean;
-    responseState?: ChatHistoryRequestResponseStateEnum;
+    'chatHistoryInteractionId'?: string;
+    'reset'?: boolean;
+    'responseState'?: ChatHistoryRequestResponseStateEnum;
     // (undocumented)
-    savedVisualization?: SavedVisualization;
-    threadIdSuffix?: string;
-    userFeedback?: ChatHistoryRequestUserFeedbackEnum;
-    userTextFeedback?: string;
+    'savedVisualization'?: SavedVisualization;
+    'threadIdSuffix'?: string;
+    'userFeedback'?: ChatHistoryRequestUserFeedbackEnum;
+    'userTextFeedback'?: string;
 }
 
 // @public (undocumented)
-export type ChatHistoryRequestResponseStateEnum = "SUCCESSFUL" | "UNEXPECTED_ERROR" | "NOT_FOUND_ATTRIBUTES" | "TOO_MANY_DATA_POINTS" | "NO_DATA" | "NO_RESULTS" | "OUT_OF_TOPIC";
+export type ChatHistoryRequestResponseStateEnum = 'SUCCESSFUL' | 'UNEXPECTED_ERROR' | 'NOT_FOUND_ATTRIBUTES' | 'TOO_MANY_DATA_POINTS' | 'NO_DATA' | 'NO_RESULTS' | 'OUT_OF_TOPIC';
 
 // @public (undocumented)
-export type ChatHistoryRequestUserFeedbackEnum = "POSITIVE" | "NEGATIVE" | "NONE";
+export type ChatHistoryRequestUserFeedbackEnum = 'POSITIVE' | 'NEGATIVE' | 'NONE';
 
 // @public (undocumented)
 export interface ChatHistoryResult {
-    interactions: Array<ChatHistoryInteraction>;
-    threadId: string;
+    'interactions': Array<ChatHistoryInteraction>;
+    'threadId': string;
 }
 
 // @public (undocumented)
 export interface ChatRequest {
-    includeHidden?: boolean;
-    limitCreate?: number;
-    limitCreateContext?: number;
-    limitSearch?: number;
+    // Warning: (ae-forgotten-export) The symbol "AllowedRelationshipType" needs to be exported by the entry point index.d.ts
+    'allowedRelationshipTypes'?: Array<AllowedRelationshipType>;
+    'includeHidden'?: boolean;
+    'limitCreate'?: number;
+    'limitCreateContext'?: number;
+    'limitSearch'?: number;
     // Warning: (ae-forgotten-export) The symbol "ChatRequestObjectTypesEnum" needs to be exported by the entry point index.d.ts
-    objectTypes?: Array<ChatRequestObjectTypesEnum>;
-    question: string;
-    relevantScoreThreshold?: number;
-    searchScoreThreshold?: number;
-    threadIdSuffix?: string;
-    titleToDescriptorRatio?: number;
+    'objectTypes'?: Array<ChatRequestObjectTypesEnum>;
+    'question': string;
+    'relevantScoreThreshold'?: number;
+    'searchScoreThreshold'?: number;
+    'threadIdSuffix'?: string;
+    'titleToDescriptorRatio'?: number;
     // (undocumented)
-    userContext?: UserContext;
+    'userContext'?: UserContext;
 }
 
 // @public (undocumented)
 export interface ChatResult {
     // (undocumented)
-    changeAnalysisParams?: ChangeAnalysisParams;
-    chatHistoryInteractionId?: string;
+    'changeAnalysisParams'?: ChangeAnalysisParams;
+    'chatHistoryInteractionId'?: string;
     // (undocumented)
-    createdVisualizations?: CreatedVisualizations;
-    errorResponse?: string;
+    'createdVisualizations'?: CreatedVisualizations;
+    'errorResponse'?: string;
     // (undocumented)
-    foundObjects?: FoundObjects;
+    'foundObjects'?: FoundObjects;
     // (undocumented)
-    reasoning?: Reasoning;
+    'reasoning'?: Reasoning;
     // (undocumented)
-    routing?: RouteResult;
+    'routing'?: RouteResult;
     // (undocumented)
-    semanticSearch?: SearchResult;
-    textResponse?: string;
-    threadIdSuffix?: string;
+    'semanticSearch'?: SearchResult;
+    'textResponse'?: string;
+    'threadIdSuffix'?: string;
 }
 
 // @public
 export interface ChatSuggestion {
-    label: string;
-    query: string;
+    'label': string;
+    'query': string;
 }
 
 // @public (undocumented)
 export interface ChatUsageResponse {
-    interactionCount: number;
-    interactionLimit: number;
-    timeWindowHours: number;
+    'interactionCount': number;
+    'interactionLimit': number;
+    'timeWindowHours': number;
 }
 
 // @public (undocumented)
 export interface ClusteringRequest {
-    numberOfClusters: number;
-    threshold?: number;
+    'numberOfClusters': number;
+    'threshold'?: number;
 }
 
 // @public (undocumented)
 export interface ClusteringResult {
     // (undocumented)
-    attribute: Array<object>;
+    'attribute': Array<object>;
     // (undocumented)
-    clusters: Array<number | null>;
+    'clusters': Array<number | null>;
     // (undocumented)
-    xCoord?: Array<number | null>;
+    'xCoord'?: Array<number | null>;
     // (undocumented)
-    xcoord: Array<number>;
+    'xcoord': Array<number>;
     // (undocumented)
-    yCoord?: Array<number | null>;
+    'yCoord'?: Array<number | null>;
     // (undocumented)
-    ycoord: Array<number>;
+    'ycoord': Array<number>;
 }
 
 // @public
@@ -5511,58 +5513,58 @@ export type ColumnOverrideLdmTypeOverrideEnum = "FACT" | "LABEL";
 // @public (undocumented)
 export interface ColumnStatistic {
     // (undocumented)
-    type: ColumnStatisticTypeEnum;
+    'type': ColumnStatisticTypeEnum;
     // (undocumented)
-    value?: string;
+    'value'?: string;
 }
 
 // @public
 export interface ColumnStatisticsRequest {
     // (undocumented)
-    columnName: string;
+    'columnName': string;
     // (undocumented)
-    frequency?: FrequencyProperties;
+    'frequency'?: FrequencyProperties;
     // (undocumented)
-    from: ColumnStatisticsRequestFrom;
+    'from': ColumnStatisticsRequestFrom;
     // (undocumented)
-    histogram?: HistogramProperties;
+    'histogram'?: HistogramProperties;
     // (undocumented)
-    statistics?: Array<ColumnStatisticsRequestStatisticsEnum>;
+    'statistics'?: Array<ColumnStatisticsRequestStatisticsEnum>;
 }
 
 // @public
 export type ColumnStatisticsRequestFrom = SqlQuery | Table;
 
 // @public (undocumented)
-export type ColumnStatisticsRequestStatisticsEnum = "COUNT" | "COUNT_NULL" | "COUNT_UNIQUE" | "AVG" | "STDDEV" | "MIN" | "MAX" | "PERCENTILE_25" | "PERCENTILE_50" | "PERCENTILE_75";
+export type ColumnStatisticsRequestStatisticsEnum = 'COUNT' | 'COUNT_NULL' | 'COUNT_UNIQUE' | 'AVG' | 'STDDEV' | 'MIN' | 'MAX' | 'PERCENTILE_25' | 'PERCENTILE_50' | 'PERCENTILE_75';
 
 // @public (undocumented)
 export interface ColumnStatisticsResponse {
     // (undocumented)
-    frequency?: Frequency;
+    'frequency'?: Frequency;
     // (undocumented)
-    histogram?: Histogram;
+    'histogram'?: Histogram;
     // (undocumented)
-    statistics?: Array<ColumnStatistic>;
+    'statistics'?: Array<ColumnStatistic>;
     // (undocumented)
-    warnings?: Array<ColumnStatisticWarning>;
+    'warnings'?: Array<ColumnStatisticWarning>;
 }
 
 // @public (undocumented)
-export type ColumnStatisticTypeEnum = "COUNT" | "COUNT_NULL" | "COUNT_UNIQUE" | "AVG" | "STDDEV" | "MIN" | "MAX" | "PERCENTILE_25" | "PERCENTILE_50" | "PERCENTILE_75";
+export type ColumnStatisticTypeEnum = 'COUNT' | 'COUNT_NULL' | 'COUNT_UNIQUE' | 'AVG' | 'STDDEV' | 'MIN' | 'MAX' | 'PERCENTILE_25' | 'PERCENTILE_50' | 'PERCENTILE_75';
 
 // @public (undocumented)
 export interface ColumnStatisticWarning {
     // (undocumented)
-    action: string;
+    'action': string;
     // (undocumented)
-    message: string;
+    'message': string;
 }
 
 // @public
 export interface ColumnWarning {
-    message: string;
-    name: string;
+    'message': string;
+    'name': string;
 }
 
 // @public (undocumented)
@@ -5754,14 +5756,14 @@ export interface CoverSlideTemplate {
 
 // @public
 export interface CreatedVisualization {
-    dimensionality: Array<DimAttribute>;
-    filters: Array<CreatedVisualizationFiltersInner>;
-    id: string;
-    metrics: Array<Metric>;
-    savedVisualizationId?: string;
-    suggestions: Array<ChatSuggestion>;
-    title: string;
-    visualizationType: CreatedVisualizationVisualizationTypeEnum;
+    'dimensionality': Array<DimAttribute>;
+    'filters': Array<CreatedVisualizationFiltersInner>;
+    'id': string;
+    'metrics': Array<Metric>;
+    'savedVisualizationId'?: string;
+    'suggestions': Array<ChatSuggestion>;
+    'title': string;
+    'visualizationType': CreatedVisualizationVisualizationTypeEnum;
 }
 
 // @public
@@ -5769,13 +5771,13 @@ export type CreatedVisualizationFiltersInner = AttributeNegativeFilter | Attribu
 
 // @public
 export interface CreatedVisualizations {
-    objects: Array<CreatedVisualization>;
-    reasoning: string;
-    suggestions: Array<ChatSuggestion>;
+    'objects': Array<CreatedVisualization>;
+    'reasoning': string;
+    'suggestions': Array<ChatSuggestion>;
 }
 
 // @public (undocumented)
-export type CreatedVisualizationVisualizationTypeEnum = "TABLE" | "HEADLINE" | "BAR" | "LINE" | "PIE" | "COLUMN";
+export type CreatedVisualizationVisualizationTypeEnum = 'TABLE' | 'HEADLINE' | 'BAR' | 'LINE' | 'PIE' | 'COLUMN';
 
 // @public
 export class CSPDirectivesApi extends MetadataBaseApi implements CSPDirectivesApiInterface {
@@ -6215,14 +6217,14 @@ export type DashboardTabularExportRequestV2FormatEnum = "XLSX" | "PDF";
 
 // @public
 export interface DataColumnLocator {
-    properties: {
+    'properties': {
         [key: string]: string;
     };
 }
 
 // @public
 export interface DataColumnLocators {
-    properties?: {
+    'properties'?: {
         [key: string]: DataColumnLocator;
     };
 }
@@ -6888,8 +6890,8 @@ export interface DataSourceEntityAPIsApiUpdateEntityDataSourcesRequest {
 
 // @public
 export interface DataSourceParameter {
-    name: string;
-    value: string;
+    'name': string;
+    'value': string;
 }
 
 // @public
@@ -6906,7 +6908,7 @@ export type DataSourcePermissionAssignmentPermissionsEnum = "MANAGE" | "USE";
 // @public
 export interface DataSourceSchemata {
     // (undocumented)
-    schemaNames: Array<string>;
+    'schemaNames': Array<string>;
 }
 
 // @public
@@ -6923,11 +6925,11 @@ export type DataSourceTableIdentifierTypeEnum = "dataSource";
 // @public (undocumented)
 export interface DateAbsoluteFilter {
     // (undocumented)
-    from: string;
+    'from': string;
     // (undocumented)
-    to: string;
+    'to': string;
     // (undocumented)
-    using: string;
+    'using': string;
 }
 
 // @public
@@ -6936,17 +6938,17 @@ export type DateFilter = AbsoluteDateFilter | RelativeDateFilter;
 // @public (undocumented)
 export interface DateRelativeFilter {
     // (undocumented)
-    from: number;
+    'from': number;
     // (undocumented)
-    granularity: DateRelativeFilterGranularityEnum;
+    'granularity': DateRelativeFilterGranularityEnum;
     // (undocumented)
-    to: number;
+    'to': number;
     // (undocumented)
-    using: string;
+    'using': string;
 }
 
 // @public (undocumented)
-export type DateRelativeFilterGranularityEnum = "MINUTE" | "HOUR" | "DAY" | "WEEK" | "MONTH" | "QUARTER" | "YEAR" | "MINUTE_OF_HOUR" | "HOUR_OF_DAY" | "DAY_OF_WEEK" | "DAY_OF_MONTH" | "DAY_OF_QUARTER" | "DAY_OF_YEAR" | "WEEK_OF_YEAR" | "MONTH_OF_YEAR" | "QUARTER_OF_YEAR" | "FISCAL_MONTH" | "FISCAL_QUARTER" | "FISCAL_YEAR";
+export type DateRelativeFilterGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
 
 // @public (undocumented)
 export interface DateValue {
@@ -8025,84 +8027,84 @@ export interface DependentEntitiesResponse {
 
 // @public
 export interface DependsOn {
-    complementFilter?: boolean;
-    label: string;
-    values: Array<string | null>;
+    'complementFilter'?: boolean;
+    'label': string;
+    'values': Array<string | null>;
 }
 
 // @public
 export interface DependsOnDateFilter {
     // (undocumented)
-    dateFilter: AfmDateFilter;
+    'dateFilter': AfmDateFilter;
 }
 
 // @public
 export interface DimAttribute {
-    id: string;
-    title: string;
-    type: DimAttributeTypeEnum;
+    'id': string;
+    'title': string;
+    'type': DimAttributeTypeEnum;
 }
 
 // @public (undocumented)
-export type DimAttributeTypeEnum = "attribute";
+export type DimAttributeTypeEnum = 'attribute';
 
 // @public
 export interface Dimension {
-    itemIdentifiers: Array<string>;
-    localIdentifier?: string;
-    sorting?: Array<SortKey>;
+    'itemIdentifiers': Array<string>;
+    'localIdentifier'?: string;
+    'sorting'?: Array<SortKey>;
 }
 
 // @public
 export interface DimensionHeader {
-    headerGroups: Array<HeaderGroup>;
+    'headerGroups': Array<HeaderGroup>;
 }
 
 // @public
 interface Element_2 {
-    primaryTitle: string | null;
-    title: string | null;
+    'primaryTitle': string | null;
+    'title': string | null;
 }
 export { Element_2 as Element }
 
 // @public (undocumented)
 export interface ElementsRequest {
-    cacheId?: string;
-    complementFilter?: boolean;
+    'cacheId'?: string;
+    'complementFilter'?: boolean;
     // @deprecated
-    dataSamplingPercentage?: number;
-    dependsOn?: Array<ElementsRequestDependsOnInner>;
-    exactFilter?: Array<string | null>;
-    excludePrimaryLabel?: boolean;
+    'dataSamplingPercentage'?: number;
+    'dependsOn'?: Array<ElementsRequestDependsOnInner>;
+    'exactFilter'?: Array<string | null>;
+    'excludePrimaryLabel'?: boolean;
     // (undocumented)
-    filterBy?: FilterBy;
-    label: string;
-    patternFilter?: string;
-    sortOrder?: ElementsRequestSortOrderEnum;
-    validateBy?: Array<ValidateByItem>;
+    'filterBy'?: FilterBy;
+    'label': string;
+    'patternFilter'?: string;
+    'sortOrder'?: ElementsRequestSortOrderEnum;
+    'validateBy'?: Array<ValidateByItem>;
 }
 
 // @public
 export type ElementsRequestDependsOnInner = DependsOn | DependsOnDateFilter;
 
 // @public (undocumented)
-export type ElementsRequestSortOrderEnum = "ASC" | "DESC";
+export type ElementsRequestSortOrderEnum = 'ASC' | 'DESC';
 
 // @public
 export interface ElementsResponse {
-    cacheId?: string;
-    elements: Array<Element_2>;
+    'cacheId'?: string;
+    'elements': Array<Element_2>;
     // (undocumented)
-    format?: AttributeFormat;
-    granularity?: ElementsResponseGranularityEnum;
+    'format'?: AttributeFormat;
+    'granularity'?: ElementsResponseGranularityEnum;
     // (undocumented)
-    paging: Paging;
+    'paging': Paging;
     // (undocumented)
-    primaryLabel: RestApiIdentifier;
+    'primaryLabel': RestApiIdentifier;
 }
 
 // @public (undocumented)
-export type ElementsResponseGranularityEnum = "MINUTE" | "HOUR" | "DAY" | "WEEK" | "MONTH" | "QUARTER" | "YEAR" | "MINUTE_OF_HOUR" | "HOUR_OF_DAY" | "DAY_OF_WEEK" | "DAY_OF_MONTH" | "DAY_OF_QUARTER" | "DAY_OF_YEAR" | "WEEK_OF_YEAR" | "MONTH_OF_YEAR" | "QUARTER_OF_YEAR" | "FISCAL_MONTH" | "FISCAL_QUARTER" | "FISCAL_YEAR";
+export type ElementsResponseGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
 
 // @public
 export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface {
@@ -12196,41 +12198,41 @@ export type EntitySearchSortDirectionEnum = "ASC" | "DESC";
 
 // @public
 export interface ExecutionLinks {
-    executionResult: string;
+    'executionResult': string;
 }
 
 // @public
 export interface ExecutionResponse {
-    dimensions: Array<ResultDimension>;
+    'dimensions': Array<ResultDimension>;
     // (undocumented)
-    links: ExecutionLinks;
+    'links': ExecutionLinks;
 }
 
 // @public
 export interface ExecutionResult {
-    data: Array<object>;
-    dimensionHeaders: Array<DimensionHeader>;
+    'data': Array<object>;
+    'dimensionHeaders': Array<DimensionHeader>;
     // (undocumented)
-    grandTotals: Array<ExecutionResultGrandTotal>;
+    'grandTotals': Array<ExecutionResultGrandTotal>;
     // (undocumented)
-    metadata: ExecutionResultMetadata;
+    'metadata': ExecutionResultMetadata;
     // (undocumented)
-    paging: ExecutionResultPaging;
+    'paging': ExecutionResultPaging;
 }
 
 // @public
 export interface ExecutionResultDataSourceMessage {
-    correlationId: string;
-    data?: object;
-    source: string;
-    type: string;
+    'correlationId': string;
+    'data'?: object;
+    'source': string;
+    'type': string;
 }
 
 // @public
 export interface ExecutionResultGrandTotal {
-    data: Array<object>;
-    dimensionHeaders: Array<DimensionHeader>;
-    totalDimensions: Array<string>;
+    'data': Array<object>;
+    'dimensionHeaders': Array<DimensionHeader>;
+    'totalDimensions': Array<string>;
 }
 
 // @public
@@ -12238,14 +12240,14 @@ export type ExecutionResultHeader = AttributeExecutionResultHeader | MeasureExec
 
 // @public
 export interface ExecutionResultMetadata {
-    dataSourceMessages: Array<ExecutionResultDataSourceMessage>;
+    'dataSourceMessages': Array<ExecutionResultDataSourceMessage>;
 }
 
 // @public
 export interface ExecutionResultPaging {
-    count: Array<number>;
-    offset: Array<number>;
-    total: Array<number>;
+    'count': Array<number>;
+    'offset': Array<number>;
+    'total': Array<number>;
 }
 
 // @public
@@ -12257,22 +12259,22 @@ export interface ExecutionSettings {
 // @public
 export interface ExportAbsoluteDateFilter {
     // (undocumented)
-    absoluteDateFilter: ExportAbsoluteDateFilterAbsoluteDateFilter;
+    'absoluteDateFilter': ExportAbsoluteDateFilterAbsoluteDateFilter;
 }
 
 // @public (undocumented)
 export interface ExportAbsoluteDateFilterAbsoluteDateFilter {
     // (undocumented)
-    applyOnResult?: boolean;
+    'applyOnResult'?: boolean;
     // (undocumented)
-    dataset: ExportAfmObjectIdentifierDataset;
+    'dataset': ExportAfmObjectIdentifierDataset;
     // (undocumented)
-    from: string;
-    includeEmptyValues?: boolean;
+    'from': string;
+    'includeEmptyValues'?: boolean;
     // (undocumented)
-    localIdentifier?: string;
+    'localIdentifier'?: string;
     // (undocumented)
-    to: string;
+    'to': string;
 }
 
 // @public
@@ -12280,10 +12282,10 @@ export type ExportAbstractMeasureValueFilter = ExportComparisonMeasureValueFilte
 
 // @public
 export interface ExportAFM {
-    attributes: Array<ExportAttributeItem>;
-    auxMeasures?: Array<ExportMeasureItem>;
-    filters: Array<ExportFilterDefinition>;
-    measures: Array<ExportMeasureItem>;
+    'attributes': Array<ExportAttributeItem>;
+    'auxMeasures'?: Array<ExportMeasureItem>;
+    'filters': Array<ExportFilterDefinition>;
+    'measures': Array<ExportMeasureItem>;
 }
 
 // @public
@@ -12292,120 +12294,120 @@ export type ExportAfmIdentifier = ExportAfmLocalIdentifier | ExportAfmObjectIden
 // @public (undocumented)
 export interface ExportAfmLocalIdentifier {
     // (undocumented)
-    localIdentifier: string;
+    'localIdentifier': string;
 }
 
 // @public
 export interface ExportAfmObjectIdentifier {
     // (undocumented)
-    identifier: ExportAfmObjectIdentifierIdentifier;
+    'identifier': ExportAfmObjectIdentifierIdentifier;
 }
 
 // @public
 export interface ExportAfmObjectIdentifierAttribute {
     // (undocumented)
-    identifier: ExportAfmObjectIdentifierAttributeIdentifier;
+    'identifier': ExportAfmObjectIdentifierAttributeIdentifier;
 }
 
 // @public (undocumented)
 export interface ExportAfmObjectIdentifierAttributeIdentifier {
     // (undocumented)
-    id: string;
+    'id': string;
     // (undocumented)
-    type: ExportAfmObjectIdentifierAttributeIdentifierTypeEnum;
+    'type': ExportAfmObjectIdentifierAttributeIdentifierTypeEnum;
 }
 
 // @public (undocumented)
-export type ExportAfmObjectIdentifierAttributeIdentifierTypeEnum = "attribute";
+export type ExportAfmObjectIdentifierAttributeIdentifierTypeEnum = 'attribute';
 
 // @public
 export interface ExportAfmObjectIdentifierCore {
     // (undocumented)
-    identifier: ExportAfmObjectIdentifierCoreIdentifier;
+    'identifier': ExportAfmObjectIdentifierCoreIdentifier;
 }
 
 // @public (undocumented)
 export interface ExportAfmObjectIdentifierCoreIdentifier {
     // (undocumented)
-    id: string;
+    'id': string;
     // (undocumented)
-    type: ExportAfmObjectIdentifierCoreIdentifierTypeEnum;
+    'type': ExportAfmObjectIdentifierCoreIdentifierTypeEnum;
 }
 
 // @public (undocumented)
-export type ExportAfmObjectIdentifierCoreIdentifierTypeEnum = "attribute" | "label" | "fact" | "metric";
+export type ExportAfmObjectIdentifierCoreIdentifierTypeEnum = 'attribute' | 'label' | 'fact' | 'metric';
 
 // @public
 export interface ExportAfmObjectIdentifierDataset {
     // (undocumented)
-    identifier: ExportAfmObjectIdentifierDatasetIdentifier;
+    'identifier': ExportAfmObjectIdentifierDatasetIdentifier;
 }
 
 // @public (undocumented)
 export interface ExportAfmObjectIdentifierDatasetIdentifier {
     // (undocumented)
-    id: string;
+    'id': string;
     // (undocumented)
-    type: ExportAfmObjectIdentifierDatasetIdentifierTypeEnum;
+    'type': ExportAfmObjectIdentifierDatasetIdentifierTypeEnum;
 }
 
 // @public (undocumented)
-export type ExportAfmObjectIdentifierDatasetIdentifierTypeEnum = "dataset";
+export type ExportAfmObjectIdentifierDatasetIdentifierTypeEnum = 'dataset';
 
 // @public (undocumented)
 export interface ExportAfmObjectIdentifierIdentifier {
     // (undocumented)
-    id: string;
+    'id': string;
     // (undocumented)
-    type: ExportAfmObjectIdentifierIdentifierTypeEnum;
+    'type': ExportAfmObjectIdentifierIdentifierTypeEnum;
 }
 
 // @public (undocumented)
-export type ExportAfmObjectIdentifierIdentifierTypeEnum = "analyticalDashboard" | "attribute" | "dashboardPlugin" | "dataset" | "fact" | "label" | "metric" | "prompt" | "visualizationObject" | "filterContext";
+export type ExportAfmObjectIdentifierIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'dashboardPlugin' | 'dataset' | 'fact' | 'label' | 'metric' | 'prompt' | 'visualizationObject' | 'filterContext';
 
 // @public (undocumented)
 export interface ExportAfmObjectIdentifierLabel {
     // (undocumented)
-    identifier: ExportAfmObjectIdentifierLabelIdentifier;
+    'identifier': ExportAfmObjectIdentifierLabelIdentifier;
 }
 
 // @public (undocumented)
 export interface ExportAfmObjectIdentifierLabelIdentifier {
     // (undocumented)
-    id: string;
+    'id': string;
     // (undocumented)
-    type: ExportAfmObjectIdentifierLabelIdentifierTypeEnum;
+    'type': ExportAfmObjectIdentifierLabelIdentifierTypeEnum;
 }
 
 // @public (undocumented)
-export type ExportAfmObjectIdentifierLabelIdentifierTypeEnum = "label";
+export type ExportAfmObjectIdentifierLabelIdentifierTypeEnum = 'label';
 
 // @public
 export interface ExportArithmeticMeasureDefinition {
     // (undocumented)
-    arithmeticMeasure: ExportArithmeticMeasureDefinitionArithmeticMeasure;
+    'arithmeticMeasure': ExportArithmeticMeasureDefinitionArithmeticMeasure;
 }
 
 // @public (undocumented)
 export interface ExportArithmeticMeasureDefinitionArithmeticMeasure {
-    measureIdentifiers: Array<ExportAfmLocalIdentifier>;
-    operator: ExportArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum;
+    'measureIdentifiers': Array<ExportAfmLocalIdentifier>;
+    'operator': ExportArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum;
 }
 
 // @public (undocumented)
-export type ExportArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum = "SUM" | "DIFFERENCE" | "MULTIPLICATION" | "RATIO" | "CHANGE";
+export type ExportArithmeticMeasureDefinitionArithmeticMeasureOperatorEnum = 'SUM' | 'DIFFERENCE' | 'MULTIPLICATION' | 'RATIO' | 'CHANGE';
 
 // @public
 export type ExportAttributeElements = ExportAttributeElementsByRef | ExportAttributeElementsByValue;
 
 // @public (undocumented)
 export interface ExportAttributeElementsByRef {
-    uris: Array<string | null>;
+    'uris': Array<string | null>;
 }
 
 // @public (undocumented)
 export interface ExportAttributeElementsByValue {
-    values: Array<string | null>;
+    'values': Array<string | null>;
 }
 
 // @public
@@ -12414,30 +12416,30 @@ export type ExportAttributeFilter = ExportNegativeAttributeFilter | ExportPositi
 // @public (undocumented)
 export interface ExportAttributeFilterByDate {
     // (undocumented)
-    filterLocalIdentifier: string;
+    'filterLocalIdentifier': string;
     // (undocumented)
-    isCommonDate: boolean;
+    'isCommonDate': boolean;
 }
 
 // @public
 export interface ExportAttributeFilterElements {
-    values: Array<string | null>;
+    'values': Array<string | null>;
 }
 
 // @public (undocumented)
 export interface ExportAttributeFilterParent {
     // (undocumented)
-    filterLocalIdentifier: string;
+    'filterLocalIdentifier': string;
     // (undocumented)
-    over: ExportOver;
+    'over': ExportOver;
 }
 
 // @public (undocumented)
 export interface ExportAttributeItem {
     // (undocumented)
-    label: ExportAfmObjectIdentifierLabel;
-    localIdentifier: string;
-    showAllValues?: boolean;
+    'label': ExportAfmObjectIdentifierLabel;
+    'localIdentifier': string;
+    'showAllValues'?: boolean;
 }
 
 // @public (undocumented)
@@ -12453,73 +12455,73 @@ export class ExportBaseAPI {
 
 // @public
 export interface ExportBoundedFilter {
-    from?: number | null;
-    granularity: ExportBoundedFilterGranularityEnum;
-    to?: number | null;
+    'from'?: number | null;
+    'granularity': ExportBoundedFilterGranularityEnum;
+    'to'?: number | null;
 }
 
 // @public (undocumented)
-export type ExportBoundedFilterGranularityEnum = "MINUTE" | "HOUR" | "DAY" | "WEEK" | "MONTH" | "QUARTER" | "YEAR" | "MINUTE_OF_HOUR" | "HOUR_OF_DAY" | "DAY_OF_WEEK" | "DAY_OF_MONTH" | "DAY_OF_QUARTER" | "DAY_OF_YEAR" | "WEEK_OF_YEAR" | "MONTH_OF_YEAR" | "QUARTER_OF_YEAR" | "FISCAL_MONTH" | "FISCAL_QUARTER" | "FISCAL_YEAR";
+export type ExportBoundedFilterGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
 
 // @public
 export interface ExportComparisonCondition {
     // (undocumented)
-    comparison: ExportComparisonConditionComparison;
+    'comparison': ExportComparisonConditionComparison;
 }
 
 // @public (undocumented)
 export interface ExportComparisonConditionComparison {
     // (undocumented)
-    operator: ExportComparisonConditionComparisonOperatorEnum;
+    'operator': ExportComparisonConditionComparisonOperatorEnum;
     // (undocumented)
-    value: number;
+    'value': number;
 }
 
 // @public (undocumented)
-export type ExportComparisonConditionComparisonOperatorEnum = "GREATER_THAN" | "GREATER_THAN_OR_EQUAL_TO" | "LESS_THAN" | "LESS_THAN_OR_EQUAL_TO" | "EQUAL_TO" | "NOT_EQUAL_TO";
+export type ExportComparisonConditionComparisonOperatorEnum = 'GREATER_THAN' | 'GREATER_THAN_OR_EQUAL_TO' | 'LESS_THAN' | 'LESS_THAN_OR_EQUAL_TO' | 'EQUAL_TO' | 'NOT_EQUAL_TO';
 
 // @public
 export interface ExportComparisonMeasureValueFilter {
     // (undocumented)
-    comparisonMeasureValueFilter: ExportComparisonMeasureValueFilterComparisonMeasureValueFilter;
+    'comparisonMeasureValueFilter': ExportComparisonMeasureValueFilterComparisonMeasureValueFilter;
 }
 
 // @public (undocumented)
 export interface ExportComparisonMeasureValueFilterComparisonMeasureValueFilter {
     // (undocumented)
-    applyOnResult?: boolean;
-    dimensionality?: Array<ExportAfmIdentifier>;
+    'applyOnResult'?: boolean;
+    'dimensionality'?: Array<ExportAfmIdentifier>;
     // (undocumented)
-    localIdentifier?: string;
+    'localIdentifier'?: string;
     // (undocumented)
-    measure: ExportAfmIdentifier;
+    'measure': ExportAfmIdentifier;
     // (undocumented)
-    operator: ExportComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum;
-    treatNullValuesAs?: number;
+    'operator': ExportComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum;
+    'treatNullValuesAs'?: number;
     // (undocumented)
-    value: number;
+    'value': number;
 }
 
 // @public (undocumented)
-export type ExportComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum = "GREATER_THAN" | "GREATER_THAN_OR_EQUAL_TO" | "LESS_THAN" | "LESS_THAN_OR_EQUAL_TO" | "EQUAL_TO" | "NOT_EQUAL_TO";
+export type ExportComparisonMeasureValueFilterComparisonMeasureValueFilterOperatorEnum = 'GREATER_THAN' | 'GREATER_THAN_OR_EQUAL_TO' | 'LESS_THAN' | 'LESS_THAN_OR_EQUAL_TO' | 'EQUAL_TO' | 'NOT_EQUAL_TO';
 
 // @public
 export interface ExportCompoundMeasureValueFilter {
     // (undocumented)
-    compoundMeasureValueFilter: ExportCompoundMeasureValueFilterCompoundMeasureValueFilter;
+    'compoundMeasureValueFilter': ExportCompoundMeasureValueFilterCompoundMeasureValueFilter;
 }
 
 // @public (undocumented)
 export interface ExportCompoundMeasureValueFilterCompoundMeasureValueFilter {
     // (undocumented)
-    applyOnResult?: boolean;
-    conditions: Array<ExportMeasureValueCondition>;
-    dimensionality?: Array<ExportAfmIdentifier>;
+    'applyOnResult'?: boolean;
+    'conditions': Array<ExportMeasureValueCondition>;
+    'dimensionality'?: Array<ExportAfmIdentifier>;
     // (undocumented)
-    localIdentifier?: string;
+    'localIdentifier'?: string;
     // (undocumented)
-    measure: ExportAfmIdentifier;
-    treatNullValuesAs?: number;
+    'measure': ExportAfmIdentifier;
+    'treatNullValuesAs'?: number;
 }
 
 // @public (undocumented)
@@ -12558,21 +12560,21 @@ export interface ExportConfigurationParameters {
 
 // @public
 export interface ExportCustomLabel {
-    title: string;
+    'title': string;
 }
 
 // @public
 export interface ExportCustomMetric {
-    format: string;
-    title: string;
+    'format': string;
+    'title': string;
 }
 
 // @public
 export interface ExportCustomOverride {
-    labels?: {
+    'labels'?: {
         [key: string]: ExportCustomLabel;
     };
-    metrics?: {
+    'metrics'?: {
         [key: string]: ExportCustomMetric;
     };
 }
@@ -12580,103 +12582,103 @@ export interface ExportCustomOverride {
 // @public (undocumented)
 export interface ExportDashboardAttributeFilter {
     // (undocumented)
-    attributeFilter: ExportDashboardAttributeFilterAttributeFilter;
+    'attributeFilter': ExportDashboardAttributeFilterAttributeFilter;
 }
 
 // @public (undocumented)
 export interface ExportDashboardAttributeFilterAttributeFilter {
     // (undocumented)
-    attributeElements: ExportAttributeElements;
+    'attributeElements': ExportAttributeElements;
     // (undocumented)
-    displayForm: ExportIdentifierRef;
+    'displayForm': ExportIdentifierRef;
     // (undocumented)
-    filterElementsBy?: Array<ExportAttributeFilterParent>;
+    'filterElementsBy'?: Array<ExportAttributeFilterParent>;
     // (undocumented)
-    filterElementsByDate?: Array<ExportAttributeFilterByDate>;
+    'filterElementsByDate'?: Array<ExportAttributeFilterByDate>;
     // (undocumented)
-    localIdentifier?: string;
+    'localIdentifier'?: string;
     // (undocumented)
-    negativeSelection: boolean;
+    'negativeSelection': boolean;
     // (undocumented)
-    selectionMode?: ExportDashboardAttributeFilterAttributeFilterSelectionModeEnum;
+    'selectionMode'?: ExportDashboardAttributeFilterAttributeFilterSelectionModeEnum;
     // (undocumented)
-    title?: string;
+    'title'?: string;
     // (undocumented)
-    validateElementsBy?: Array<ExportIdentifierRef>;
+    'validateElementsBy'?: Array<ExportIdentifierRef>;
 }
 
 // @public (undocumented)
-export type ExportDashboardAttributeFilterAttributeFilterSelectionModeEnum = "single" | "multi";
+export type ExportDashboardAttributeFilterAttributeFilterSelectionModeEnum = 'single' | 'multi';
 
 // @public (undocumented)
 export interface ExportDashboardDateFilter {
     // (undocumented)
-    dateFilter: ExportDashboardDateFilterDateFilter;
+    'dateFilter': ExportDashboardDateFilterDateFilter;
 }
 
 // @public (undocumented)
 export interface ExportDashboardDateFilterDateFilter {
     // (undocumented)
-    attribute?: ExportIdentifierRef;
+    'attribute'?: ExportIdentifierRef;
     // (undocumented)
-    boundedFilter?: ExportRelativeBoundedDateFilter;
+    'boundedFilter'?: ExportRelativeBoundedDateFilter;
     // (undocumented)
-    dataSet?: ExportIdentifierRef;
+    'dataSet'?: ExportIdentifierRef;
     // (undocumented)
-    from?: ExportDashboardDateFilterDateFilterFrom;
+    'from'?: ExportDashboardDateFilterDateFilterFrom;
     // (undocumented)
-    granularity: ExportDashboardDateFilterDateFilterGranularityEnum;
+    'granularity': ExportDashboardDateFilterDateFilterGranularityEnum;
     // (undocumented)
-    includeEmptyValues?: boolean;
+    'includeEmptyValues'?: boolean;
     // (undocumented)
-    localIdentifier?: string;
+    'localIdentifier'?: string;
     // (undocumented)
-    to?: ExportDashboardDateFilterDateFilterFrom;
+    'to'?: ExportDashboardDateFilterDateFilterFrom;
     // (undocumented)
-    type: ExportDashboardDateFilterDateFilterTypeEnum;
+    'type': ExportDashboardDateFilterDateFilterTypeEnum;
 }
 
 // @public
 export type ExportDashboardDateFilterDateFilterFrom = number | string;
 
 // @public (undocumented)
-export type ExportDashboardDateFilterDateFilterGranularityEnum = "ALL_TIME_GRANULARITY" | "GDC.time.year" | "GDC.time.week_us" | "GDC.time.week_in_year" | "GDC.time.week_in_quarter" | "GDC.time.week" | "GDC.time.euweek_in_year" | "GDC.time.euweek_in_quarter" | "GDC.time.quarter" | "GDC.time.quarter_in_year" | "GDC.time.month" | "GDC.time.month_in_quarter" | "GDC.time.month_in_year" | "GDC.time.day_in_year" | "GDC.time.day_in_quarter" | "GDC.time.day_in_month" | "GDC.time.day_in_week" | "GDC.time.day_in_euweek" | "GDC.time.date" | "GDC.time.hour" | "GDC.time.hour_in_day" | "GDC.time.minute" | "GDC.time.minute_in_hour" | "GDC.time.fiscal_month" | "GDC.time.fiscal_quarter" | "GDC.time.fiscal_year";
+export type ExportDashboardDateFilterDateFilterGranularityEnum = 'ALL_TIME_GRANULARITY' | 'GDC.time.year' | 'GDC.time.week_us' | 'GDC.time.week_in_year' | 'GDC.time.week_in_quarter' | 'GDC.time.week' | 'GDC.time.euweek_in_year' | 'GDC.time.euweek_in_quarter' | 'GDC.time.quarter' | 'GDC.time.quarter_in_year' | 'GDC.time.month' | 'GDC.time.month_in_quarter' | 'GDC.time.month_in_year' | 'GDC.time.day_in_year' | 'GDC.time.day_in_quarter' | 'GDC.time.day_in_month' | 'GDC.time.day_in_week' | 'GDC.time.day_in_euweek' | 'GDC.time.date' | 'GDC.time.hour' | 'GDC.time.hour_in_day' | 'GDC.time.minute' | 'GDC.time.minute_in_hour' | 'GDC.time.fiscal_month' | 'GDC.time.fiscal_quarter' | 'GDC.time.fiscal_year';
 
 // @public (undocumented)
-export type ExportDashboardDateFilterDateFilterTypeEnum = "relative" | "absolute";
+export type ExportDashboardDateFilterDateFilterTypeEnum = 'relative' | 'absolute';
 
 // @public
 export interface ExportDashboardExportSettings {
-    exportInfo?: boolean;
-    mergeHeaders?: boolean;
-    pageOrientation?: ExportDashboardExportSettingsPageOrientationEnum;
-    pageSize?: ExportDashboardExportSettingsPageSizeEnum;
+    'exportInfo'?: boolean;
+    'mergeHeaders'?: boolean;
+    'pageOrientation'?: ExportDashboardExportSettingsPageOrientationEnum;
+    'pageSize'?: ExportDashboardExportSettingsPageSizeEnum;
 }
 
 // @public (undocumented)
-export type ExportDashboardExportSettingsPageOrientationEnum = "PORTRAIT" | "LANDSCAPE";
+export type ExportDashboardExportSettingsPageOrientationEnum = 'PORTRAIT' | 'LANDSCAPE';
 
 // @public (undocumented)
-export type ExportDashboardExportSettingsPageSizeEnum = "A3" | "A4" | "LETTER";
+export type ExportDashboardExportSettingsPageSizeEnum = 'A3' | 'A4' | 'LETTER';
 
 // @public
 export type ExportDashboardFilter = ExportDashboardAttributeFilter | ExportDashboardDateFilter;
 
 // @public
 export interface ExportDashboardTabularExportRequest {
-    dashboardFiltersOverride?: Array<ExportDashboardFilter>;
-    dashboardTabsFiltersOverrides?: {
+    'dashboardFiltersOverride'?: Array<ExportDashboardFilter>;
+    'dashboardTabsFiltersOverrides'?: {
         [key: string]: Array<ExportDashboardFilter>;
     };
-    fileName: string;
-    format: ExportDashboardTabularExportRequestFormatEnum;
+    'fileName': string;
+    'format': ExportDashboardTabularExportRequestFormatEnum;
     // (undocumented)
-    settings?: ExportDashboardExportSettings;
-    widgetIds?: Array<string>;
+    'settings'?: ExportDashboardExportSettings;
+    'widgetIds'?: Array<string>;
 }
 
 // @public (undocumented)
-export type ExportDashboardTabularExportRequestFormatEnum = "XLSX" | "PDF";
+export type ExportDashboardTabularExportRequestFormatEnum = 'XLSX' | 'PDF';
 
 // @public
 export type ExportDateFilter = ExportAbsoluteDateFilter | ExportRelativeDateFilter;
@@ -12684,7 +12686,7 @@ export type ExportDateFilter = ExportAbsoluteDateFilter | ExportRelativeDateFilt
 // @public (undocumented)
 export interface ExportDateValue {
     // (undocumented)
-    value: string;
+    'value': string;
 }
 
 // @public
@@ -12817,14 +12819,14 @@ export interface ExportDefinitionsApiUpdateEntityExportDefinitionsRequest {
 
 // @public
 export interface ExportExecutionSettings {
-    dataSamplingPercentage?: number;
-    timestamp?: string;
+    'dataSamplingPercentage'?: number;
+    'timestamp'?: string;
 }
 
 // @public (undocumented)
 export interface ExportExportResponse {
     // (undocumented)
-    exportResult: string;
+    'exportResult': string;
 }
 
 // @public
@@ -12836,76 +12838,76 @@ export type ExportFilterDefinitionForSimpleMeasure = ExportAttributeFilter | Exp
 // @public (undocumented)
 export interface ExportGetSlidesExport202ResponseInner {
     // (undocumented)
-    char?: string;
+    'char'?: string;
     // (undocumented)
-    direct?: boolean;
+    'direct'?: boolean;
     // (undocumented)
-    double?: number;
+    'double'?: number;
     // (undocumented)
-    float?: number;
+    'float'?: number;
     // (undocumented)
-    int?: number;
+    'int'?: number;
     // (undocumented)
-    long?: number;
+    'long'?: number;
     // (undocumented)
-    readOnly?: boolean;
+    'readOnly'?: boolean;
     // (undocumented)
-    short?: number;
+    'short'?: number;
 }
 
 // @public (undocumented)
 export interface ExportIdentifierRef {
     // (undocumented)
-    identifier?: ExportIdentifierRefIdentifier;
+    'identifier'?: ExportIdentifierRefIdentifier;
 }
 
 // @public (undocumented)
 export interface ExportIdentifierRefIdentifier {
     // (undocumented)
-    id: string;
+    'id': string;
     // (undocumented)
-    type: ExportIdentifierRefIdentifierTypeEnum;
+    'type': ExportIdentifierRefIdentifierTypeEnum;
 }
 
 // @public (undocumented)
-export type ExportIdentifierRefIdentifierTypeEnum = "analyticalDashboard" | "attribute" | "attributeHierarchy" | "dashboardPlugin" | "dataset" | "fact" | "aggregatedFact" | "label" | "metric" | "userDataFilter" | "exportDefinition" | "automation" | "automationResult" | "memoryItem" | "knowledgeRecommendation" | "prompt" | "visualizationObject" | "filterContext" | "workspaceSettings" | "customApplicationSetting" | "workspaceDataFilter" | "workspaceDataFilterSetting" | "filterView";
+export type ExportIdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'userDataFilter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView';
 
 // @public
 export interface ExportImageExportRequest {
-    dashboardId: string;
-    fileName: string;
-    format: ExportImageExportRequestFormatEnum;
-    metadata?: object | null;
-    widgetIds: Array<string>;
+    'dashboardId': string;
+    'fileName': string;
+    'format': ExportImageExportRequestFormatEnum;
+    'metadata'?: object | null;
+    'widgetIds': Array<string>;
 }
 
 // @public (undocumented)
-export type ExportImageExportRequestFormatEnum = "PNG";
+export type ExportImageExportRequestFormatEnum = 'PNG';
 
 // @public
 export interface ExportInlineFilterDefinition {
     // (undocumented)
-    inline: ExportInlineFilterDefinitionInline;
+    'inline': ExportInlineFilterDefinitionInline;
 }
 
 // @public (undocumented)
 export interface ExportInlineFilterDefinitionInline {
     // (undocumented)
-    applyOnResult?: boolean;
-    filter: string;
+    'applyOnResult'?: boolean;
+    'filter': string;
     // (undocumented)
-    localIdentifier?: string;
+    'localIdentifier'?: string;
 }
 
 // @public
 export interface ExportInlineMeasureDefinition {
     // (undocumented)
-    inline: ExportInlineMeasureDefinitionInline;
+    'inline': ExportInlineMeasureDefinitionInline;
 }
 
 // @public (undocumented)
 export interface ExportInlineMeasureDefinitionInline {
-    maql: string;
+    'maql': string;
 }
 
 // @public
@@ -12914,8 +12916,8 @@ export type ExportMeasureDefinition = ExportArithmeticMeasureDefinition | Export
 // @public
 export interface ExportMeasureItem {
     // (undocumented)
-    definition: ExportMeasureDefinition;
-    localIdentifier: string;
+    'definition': ExportMeasureDefinition;
+    'localIdentifier': string;
 }
 
 // @public
@@ -12927,77 +12929,77 @@ export type ExportMeasureValueFilter = ExportComparisonMeasureValueFilter | Expo
 // @public
 export interface ExportNegativeAttributeFilter {
     // (undocumented)
-    negativeAttributeFilter: ExportNegativeAttributeFilterNegativeAttributeFilter;
+    'negativeAttributeFilter': ExportNegativeAttributeFilterNegativeAttributeFilter;
 }
 
 // @public (undocumented)
 export interface ExportNegativeAttributeFilterNegativeAttributeFilter {
     // (undocumented)
-    applyOnResult?: boolean;
+    'applyOnResult'?: boolean;
     // (undocumented)
-    label: ExportAfmIdentifier;
+    'label': ExportAfmIdentifier;
     // (undocumented)
-    localIdentifier?: string;
+    'localIdentifier'?: string;
     // (undocumented)
-    notIn: ExportAttributeFilterElements;
+    'notIn': ExportAttributeFilterElements;
 }
 
 // @public (undocumented)
 export interface ExportOver {
     // (undocumented)
-    attributes: Array<ExportIdentifierRef>;
+    'attributes': Array<ExportIdentifierRef>;
 }
 
 // @public
 export interface ExportPdfTableStyle {
-    properties?: Array<ExportPdfTableStyleProperty>;
-    selector: string;
+    'properties'?: Array<ExportPdfTableStyleProperty>;
+    'selector': string;
 }
 
 // @public
 export interface ExportPdfTableStyleProperty {
-    key: string;
-    value: string;
+    'key': string;
+    'value': string;
 }
 
 // @public
 export interface ExportPopDataset {
     // (undocumented)
-    dataset: ExportAfmObjectIdentifierDataset;
-    periodsAgo: number;
+    'dataset': ExportAfmObjectIdentifierDataset;
+    'periodsAgo': number;
 }
 
 // @public
 export interface ExportPopDatasetMeasureDefinition {
     // (undocumented)
-    previousPeriodMeasure: ExportPopDatasetMeasureDefinitionPreviousPeriodMeasure;
+    'previousPeriodMeasure': ExportPopDatasetMeasureDefinitionPreviousPeriodMeasure;
 }
 
 // @public (undocumented)
 export interface ExportPopDatasetMeasureDefinitionPreviousPeriodMeasure {
-    dateDatasets: Array<ExportPopDataset>;
+    'dateDatasets': Array<ExportPopDataset>;
     // (undocumented)
-    measureIdentifier: ExportAfmLocalIdentifier;
+    'measureIdentifier': ExportAfmLocalIdentifier;
 }
 
 // @public
 export interface ExportPopDate {
     // (undocumented)
-    attribute: ExportAfmObjectIdentifierAttribute;
-    periodsAgo: number;
+    'attribute': ExportAfmObjectIdentifierAttribute;
+    'periodsAgo': number;
 }
 
 // @public
 export interface ExportPopDateMeasureDefinition {
     // (undocumented)
-    overPeriodMeasure: ExportPopDateMeasureDefinitionOverPeriodMeasure;
+    'overPeriodMeasure': ExportPopDateMeasureDefinitionOverPeriodMeasure;
 }
 
 // @public (undocumented)
 export interface ExportPopDateMeasureDefinitionOverPeriodMeasure {
-    dateAttributes: Array<ExportPopDate>;
+    'dateAttributes': Array<ExportPopDate>;
     // (undocumented)
-    measureIdentifier: ExportAfmLocalIdentifier;
+    'measureIdentifier': ExportAfmLocalIdentifier;
 }
 
 // @public
@@ -13006,104 +13008,104 @@ export type ExportPopMeasureDefinition = ExportPopDatasetMeasureDefinition | Exp
 // @public
 export interface ExportPositiveAttributeFilter {
     // (undocumented)
-    positiveAttributeFilter: ExportPositiveAttributeFilterPositiveAttributeFilter;
+    'positiveAttributeFilter': ExportPositiveAttributeFilterPositiveAttributeFilter;
 }
 
 // @public (undocumented)
 export interface ExportPositiveAttributeFilterPositiveAttributeFilter {
     // (undocumented)
-    applyOnResult?: boolean;
+    'applyOnResult'?: boolean;
     // (undocumented)
-    in: ExportAttributeFilterElements;
+    'in': ExportAttributeFilterElements;
     // (undocumented)
-    label: ExportAfmIdentifier;
+    'label': ExportAfmIdentifier;
     // (undocumented)
-    localIdentifier?: string;
+    'localIdentifier'?: string;
 }
 
 // @public
 export interface ExportRangeCondition {
     // (undocumented)
-    range: ExportRangeConditionRange;
+    'range': ExportRangeConditionRange;
 }
 
 // @public (undocumented)
 export interface ExportRangeConditionRange {
     // (undocumented)
-    from: number;
+    'from': number;
     // (undocumented)
-    operator: ExportRangeConditionRangeOperatorEnum;
+    'operator': ExportRangeConditionRangeOperatorEnum;
     // (undocumented)
-    to: number;
+    'to': number;
 }
 
 // @public (undocumented)
-export type ExportRangeConditionRangeOperatorEnum = "BETWEEN" | "NOT_BETWEEN";
+export type ExportRangeConditionRangeOperatorEnum = 'BETWEEN' | 'NOT_BETWEEN';
 
 // @public
 export interface ExportRangeMeasureValueFilter {
     // (undocumented)
-    rangeMeasureValueFilter: ExportRangeMeasureValueFilterRangeMeasureValueFilter;
+    'rangeMeasureValueFilter': ExportRangeMeasureValueFilterRangeMeasureValueFilter;
 }
 
 // @public (undocumented)
 export interface ExportRangeMeasureValueFilterRangeMeasureValueFilter {
     // (undocumented)
-    applyOnResult?: boolean;
-    dimensionality?: Array<ExportAfmIdentifier>;
+    'applyOnResult'?: boolean;
+    'dimensionality'?: Array<ExportAfmIdentifier>;
     // (undocumented)
-    from: number;
+    'from': number;
     // (undocumented)
-    localIdentifier?: string;
+    'localIdentifier'?: string;
     // (undocumented)
-    measure: ExportAfmIdentifier;
+    'measure': ExportAfmIdentifier;
     // (undocumented)
-    operator: ExportRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum;
+    'operator': ExportRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum;
     // (undocumented)
-    to: number;
-    treatNullValuesAs?: number;
+    'to': number;
+    'treatNullValuesAs'?: number;
 }
 
 // @public (undocumented)
-export type ExportRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum = "BETWEEN" | "NOT_BETWEEN";
+export type ExportRangeMeasureValueFilterRangeMeasureValueFilterOperatorEnum = 'BETWEEN' | 'NOT_BETWEEN';
 
 // @public
 export interface ExportRankingFilter {
     // (undocumented)
-    rankingFilter: ExportRankingFilterRankingFilter;
+    'rankingFilter': ExportRankingFilterRankingFilter;
 }
 
 // @public (undocumented)
 export interface ExportRankingFilterRankingFilter {
     // (undocumented)
-    applyOnResult?: boolean;
-    dimensionality?: Array<ExportAfmIdentifier>;
+    'applyOnResult'?: boolean;
+    'dimensionality'?: Array<ExportAfmIdentifier>;
     // (undocumented)
-    localIdentifier?: string;
-    measures: Array<ExportAfmIdentifier>;
-    operator: ExportRankingFilterRankingFilterOperatorEnum;
-    value: number;
+    'localIdentifier'?: string;
+    'measures': Array<ExportAfmIdentifier>;
+    'operator': ExportRankingFilterRankingFilterOperatorEnum;
+    'value': number;
 }
 
 // @public (undocumented)
-export type ExportRankingFilterRankingFilterOperatorEnum = "TOP" | "BOTTOM";
+export type ExportRankingFilterRankingFilterOperatorEnum = 'TOP' | 'BOTTOM';
 
 // @public
 export interface ExportRawCustomLabel {
-    title: string;
+    'title': string;
 }
 
 // @public
 export interface ExportRawCustomMetric {
-    title: string;
+    'title': string;
 }
 
 // @public
 export interface ExportRawCustomOverride {
-    labels?: {
+    'labels'?: {
         [key: string]: ExportRawCustomLabel;
     };
-    metrics?: {
+    'metrics'?: {
         [key: string]: ExportRawCustomMetric;
     };
 }
@@ -13111,56 +13113,56 @@ export interface ExportRawCustomOverride {
 // @public
 export interface ExportRawExportRequest {
     // (undocumented)
-    customOverride?: ExportRawCustomOverride;
-    delimiter?: string;
+    'customOverride'?: ExportRawCustomOverride;
+    'delimiter'?: string;
     // (undocumented)
-    execution: ExportAFM;
+    'execution': ExportAFM;
     // (undocumented)
-    executionSettings?: ExportExecutionSettings;
-    fileName: string;
-    format: ExportRawExportRequestFormatEnum;
+    'executionSettings'?: ExportExecutionSettings;
+    'fileName': string;
+    'format': ExportRawExportRequestFormatEnum;
 }
 
 // @public (undocumented)
-export type ExportRawExportRequestFormatEnum = "ARROW_FILE" | "ARROW_STREAM" | "CSV";
+export type ExportRawExportRequestFormatEnum = 'ARROW_FILE' | 'ARROW_STREAM' | 'CSV';
 
 // @public (undocumented)
 export interface ExportRelativeBoundedDateFilter {
     // (undocumented)
-    from?: number;
+    'from'?: number;
     // (undocumented)
-    granularity: ExportRelativeBoundedDateFilterGranularityEnum;
+    'granularity': ExportRelativeBoundedDateFilterGranularityEnum;
     // (undocumented)
-    to?: number;
+    'to'?: number;
 }
 
 // @public (undocumented)
-export type ExportRelativeBoundedDateFilterGranularityEnum = "ALL_TIME_GRANULARITY" | "GDC.time.year" | "GDC.time.week_us" | "GDC.time.week_in_year" | "GDC.time.week_in_quarter" | "GDC.time.week" | "GDC.time.euweek_in_year" | "GDC.time.euweek_in_quarter" | "GDC.time.quarter" | "GDC.time.quarter_in_year" | "GDC.time.month" | "GDC.time.month_in_quarter" | "GDC.time.month_in_year" | "GDC.time.day_in_year" | "GDC.time.day_in_quarter" | "GDC.time.day_in_month" | "GDC.time.day_in_week" | "GDC.time.day_in_euweek" | "GDC.time.date" | "GDC.time.hour" | "GDC.time.hour_in_day" | "GDC.time.minute" | "GDC.time.minute_in_hour" | "GDC.time.fiscal_month" | "GDC.time.fiscal_quarter" | "GDC.time.fiscal_year";
+export type ExportRelativeBoundedDateFilterGranularityEnum = 'ALL_TIME_GRANULARITY' | 'GDC.time.year' | 'GDC.time.week_us' | 'GDC.time.week_in_year' | 'GDC.time.week_in_quarter' | 'GDC.time.week' | 'GDC.time.euweek_in_year' | 'GDC.time.euweek_in_quarter' | 'GDC.time.quarter' | 'GDC.time.quarter_in_year' | 'GDC.time.month' | 'GDC.time.month_in_quarter' | 'GDC.time.month_in_year' | 'GDC.time.day_in_year' | 'GDC.time.day_in_quarter' | 'GDC.time.day_in_month' | 'GDC.time.day_in_week' | 'GDC.time.day_in_euweek' | 'GDC.time.date' | 'GDC.time.hour' | 'GDC.time.hour_in_day' | 'GDC.time.minute' | 'GDC.time.minute_in_hour' | 'GDC.time.fiscal_month' | 'GDC.time.fiscal_quarter' | 'GDC.time.fiscal_year';
 
 // @public
 export interface ExportRelativeDateFilter {
     // (undocumented)
-    relativeDateFilter: ExportRelativeDateFilterRelativeDateFilter;
+    'relativeDateFilter': ExportRelativeDateFilterRelativeDateFilter;
 }
 
 // @public (undocumented)
 export interface ExportRelativeDateFilterRelativeDateFilter {
     // (undocumented)
-    applyOnResult?: boolean;
+    'applyOnResult'?: boolean;
     // (undocumented)
-    boundedFilter?: ExportBoundedFilter;
+    'boundedFilter'?: ExportBoundedFilter;
     // (undocumented)
-    dataset: ExportAfmObjectIdentifierDataset;
-    from: number;
-    granularity: ExportRelativeDateFilterRelativeDateFilterGranularityEnum;
-    includeEmptyValues?: boolean;
+    'dataset': ExportAfmObjectIdentifierDataset;
+    'from': number;
+    'granularity': ExportRelativeDateFilterRelativeDateFilterGranularityEnum;
+    'includeEmptyValues'?: boolean;
     // (undocumented)
-    localIdentifier?: string;
-    to: number;
+    'localIdentifier'?: string;
+    'to': number;
 }
 
 // @public (undocumented)
-export type ExportRelativeDateFilterRelativeDateFilterGranularityEnum = "MINUTE" | "HOUR" | "DAY" | "WEEK" | "MONTH" | "QUARTER" | "YEAR" | "MINUTE_OF_HOUR" | "HOUR_OF_DAY" | "DAY_OF_WEEK" | "DAY_OF_MONTH" | "DAY_OF_QUARTER" | "DAY_OF_YEAR" | "WEEK_OF_YEAR" | "MONTH_OF_YEAR" | "QUARTER_OF_YEAR" | "FISCAL_MONTH" | "FISCAL_QUARTER" | "FISCAL_YEAR";
+export type ExportRelativeDateFilterRelativeDateFilterGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
 
 // @public
 export type ExportRequest = TabularExportRequest | VisualExportRequest;
@@ -13175,78 +13177,78 @@ export interface ExportRequestArgs {
 
 // @public
 export interface ExportSettings {
-    delimiter?: string;
-    exportInfo?: boolean;
-    mergeHeaders?: boolean;
-    pageOrientation?: ExportSettingsPageOrientationEnum;
-    pageSize?: ExportSettingsPageSizeEnum;
+    'delimiter'?: string;
+    'exportInfo'?: boolean;
+    'mergeHeaders'?: boolean;
+    'pageOrientation'?: ExportSettingsPageOrientationEnum;
+    'pageSize'?: ExportSettingsPageSizeEnum;
     // @deprecated
-    pdfPageSize?: string;
+    'pdfPageSize'?: string;
     // @deprecated
-    pdfTableStyle?: Array<ExportPdfTableStyle>;
+    'pdfTableStyle'?: Array<ExportPdfTableStyle>;
     // @deprecated
-    pdfTopLeftContent?: string;
+    'pdfTopLeftContent'?: string;
     // @deprecated
-    pdfTopRightContent?: string;
+    'pdfTopRightContent'?: string;
     // @deprecated
-    showFilters?: boolean;
+    'showFilters'?: boolean;
 }
 
 // @public (undocumented)
-export type ExportSettingsPageOrientationEnum = "PORTRAIT" | "LANDSCAPE";
+export type ExportSettingsPageOrientationEnum = 'PORTRAIT' | 'LANDSCAPE';
 
 // @public (undocumented)
-export type ExportSettingsPageSizeEnum = "A3" | "A4" | "LETTER";
+export type ExportSettingsPageSizeEnum = 'A3' | 'A4' | 'LETTER';
 
 // @public
 export interface ExportSimpleMeasureDefinition {
     // (undocumented)
-    measure: ExportSimpleMeasureDefinitionMeasure;
+    'measure': ExportSimpleMeasureDefinitionMeasure;
 }
 
 // @public (undocumented)
 export interface ExportSimpleMeasureDefinitionMeasure {
-    aggregation?: ExportSimpleMeasureDefinitionMeasureAggregationEnum;
-    computeRatio?: boolean;
-    filters?: Array<ExportFilterDefinitionForSimpleMeasure>;
+    'aggregation'?: ExportSimpleMeasureDefinitionMeasureAggregationEnum;
+    'computeRatio'?: boolean;
+    'filters'?: Array<ExportFilterDefinitionForSimpleMeasure>;
     // (undocumented)
-    item: ExportAfmObjectIdentifierCore;
+    'item': ExportAfmObjectIdentifierCore;
 }
 
 // @public (undocumented)
-export type ExportSimpleMeasureDefinitionMeasureAggregationEnum = "SUM" | "COUNT" | "AVG" | "MIN" | "MAX" | "MEDIAN" | "RUNSUM" | "APPROXIMATE_COUNT";
+export type ExportSimpleMeasureDefinitionMeasureAggregationEnum = 'SUM' | 'COUNT' | 'AVG' | 'MIN' | 'MAX' | 'MEDIAN' | 'RUNSUM' | 'APPROXIMATE_COUNT';
 
 // @public
 export interface ExportSlidesExportRequest {
-    dashboardId?: string;
-    fileName: string;
-    format: ExportSlidesExportRequestFormatEnum;
-    metadata?: object | null;
-    templateId?: string | null;
-    visualizationIds?: Array<string>;
-    widgetIds?: Array<string>;
+    'dashboardId'?: string;
+    'fileName': string;
+    'format': ExportSlidesExportRequestFormatEnum;
+    'metadata'?: object | null;
+    'templateId'?: string | null;
+    'visualizationIds'?: Array<string>;
+    'widgetIds'?: Array<string>;
 }
 
 // @public (undocumented)
-export type ExportSlidesExportRequestFormatEnum = "PDF" | "PPTX";
+export type ExportSlidesExportRequestFormatEnum = 'PDF' | 'PPTX';
 
 // @public
 export interface ExportTabularExportRequest {
     // (undocumented)
-    customOverride?: ExportCustomOverride;
-    executionResult?: string;
-    fileName: string;
-    format: ExportTabularExportRequestFormatEnum;
-    metadata?: object | null;
-    relatedDashboardId?: string;
+    'customOverride'?: ExportCustomOverride;
+    'executionResult'?: string;
+    'fileName': string;
+    'format': ExportTabularExportRequestFormatEnum;
+    'metadata'?: object | null;
+    'relatedDashboardId'?: string;
     // (undocumented)
-    settings?: ExportSettings;
-    visualizationObject?: string;
-    visualizationObjectCustomFilters?: Array<object>;
+    'settings'?: ExportSettings;
+    'visualizationObject'?: string;
+    'visualizationObjectCustomFilters'?: Array<object>;
 }
 
 // @public (undocumented)
-export type ExportTabularExportRequestFormatEnum = "CSV" | "XLSX" | "HTML" | "PDF";
+export type ExportTabularExportRequestFormatEnum = 'CSV' | 'XLSX' | 'HTML' | 'PDF';
 
 // @public
 export class ExportTemplatesApi extends MetadataBaseApi implements ExportTemplatesApiInterface {
@@ -13346,9 +13348,9 @@ export interface ExportTemplatesApiUpdateEntityExportTemplatesRequest {
 
 // @public
 export interface ExportVisualExportRequest {
-    dashboardId: string;
-    fileName: string;
-    metadata?: object;
+    'dashboardId': string;
+    'fileName': string;
+    'metadata'?: object;
 }
 
 // @public
@@ -13510,11 +13512,11 @@ export type FeatureContext = {
 
 // @public
 export interface FilterBy {
-    labelType?: FilterByLabelTypeEnum;
+    'labelType'?: FilterByLabelTypeEnum;
 }
 
 // @public (undocumented)
-export type FilterByLabelTypeEnum = "PRIMARY" | "REQUESTED";
+export type FilterByLabelTypeEnum = 'PRIMARY' | 'REQUESTED';
 
 // @public
 export class FilterContextApi extends MetadataBaseApi implements FilterContextApiInterface {
@@ -13806,48 +13808,48 @@ export interface FilterViewsApiUpdateEntityFilterViewsRequest {
 
 // @public (undocumented)
 export interface ForecastRequest {
-    confidenceLevel?: number;
-    forecastPeriod: number;
-    seasonal?: boolean;
+    'confidenceLevel'?: number;
+    'forecastPeriod': number;
+    'seasonal'?: boolean;
 }
 
 // @public (undocumented)
 export interface ForecastResult {
     // (undocumented)
-    attribute: Array<string>;
+    'attribute': Array<string>;
     // (undocumented)
-    lowerBound: Array<number | null>;
+    'lowerBound': Array<number | null>;
     // (undocumented)
-    origin: Array<number | null>;
+    'origin': Array<number | null>;
     // (undocumented)
-    prediction: Array<number | null>;
+    'prediction': Array<number | null>;
     // (undocumented)
-    upperBound: Array<number | null>;
+    'upperBound': Array<number | null>;
 }
 
 // @public
 export interface FoundObjects {
-    objects: Array<SearchResultObject>;
-    reasoning: string;
+    'objects': Array<SearchResultObject>;
+    'reasoning': string;
 }
 
 // @public (undocumented)
 export interface Frequency {
     // (undocumented)
-    buckets: Array<FrequencyBucket>;
+    'buckets': Array<FrequencyBucket>;
 }
 
 // @public (undocumented)
 export interface FrequencyBucket {
     // (undocumented)
-    count: number;
+    'count': number;
     // (undocumented)
-    value?: string;
+    'value'?: string;
 }
 
 // @public (undocumented)
 export interface FrequencyProperties {
-    valueLimit?: number;
+    'valueLimit'?: number;
 }
 
 // @public
@@ -14070,7 +14072,7 @@ export interface GranularitiesFormatting {
 
 // @public
 export interface HeaderGroup {
-    headers: Array<ExecutionResultHeader>;
+    'headers': Array<ExecutionResultHeader>;
 }
 
 // @public
@@ -14148,23 +14150,23 @@ export type HierarchyObjectIdentificationTypeEnum = "analyticalDashboard" | "att
 // @public (undocumented)
 export interface Histogram {
     // (undocumented)
-    buckets: Array<HistogramBucket>;
+    'buckets': Array<HistogramBucket>;
 }
 
 // @public (undocumented)
 export interface HistogramBucket {
     // (undocumented)
-    count: number;
+    'count': number;
     // (undocumented)
-    lowerBound: number;
+    'lowerBound': number;
     // (undocumented)
-    upperBound: number;
+    'upperBound': number;
 }
 
 // @public (undocumented)
 export interface HistogramProperties {
     // (undocumented)
-    bucketCount: number;
+    'bucketCount': number;
 }
 
 // @public
@@ -14694,14 +14696,14 @@ export interface InvalidateCacheApiRegisterUploadNotificationRequest {
 // @public (undocumented)
 export interface Invitation {
     // (undocumented)
-    email: string;
+    'email': string;
     // (undocumented)
-    firstName?: string;
-    forceSend?: boolean;
+    'firstName'?: string;
+    'forceSend'?: boolean;
     // (undocumented)
-    lastName?: string;
+    'lastName'?: string;
     // (undocumented)
-    userId: string;
+    'userId': string;
 }
 
 // @public (undocumented)
@@ -20738,50 +20740,50 @@ export interface JWKSApiUpdateEntityJwksRequest {
 // @public (undocumented)
 export interface KeyDriversDimension {
     // (undocumented)
-    attribute: RestApiIdentifier;
+    'attribute': RestApiIdentifier;
     // (undocumented)
-    attributeName: string;
+    'attributeName': string;
     // (undocumented)
-    format?: AttributeFormat;
+    'format'?: AttributeFormat;
     // (undocumented)
-    granularity?: KeyDriversDimensionGranularityEnum;
+    'granularity'?: KeyDriversDimensionGranularityEnum;
     // (undocumented)
-    label: RestApiIdentifier;
+    'label': RestApiIdentifier;
     // (undocumented)
-    labelName: string;
+    'labelName': string;
     // (undocumented)
-    valueType?: KeyDriversDimensionValueTypeEnum;
+    'valueType'?: KeyDriversDimensionValueTypeEnum;
 }
 
 // @public (undocumented)
-export type KeyDriversDimensionGranularityEnum = "MINUTE" | "HOUR" | "DAY" | "WEEK" | "MONTH" | "QUARTER" | "YEAR" | "MINUTE_OF_HOUR" | "HOUR_OF_DAY" | "DAY_OF_WEEK" | "DAY_OF_MONTH" | "DAY_OF_QUARTER" | "DAY_OF_YEAR" | "WEEK_OF_YEAR" | "MONTH_OF_YEAR" | "QUARTER_OF_YEAR" | "FISCAL_MONTH" | "FISCAL_QUARTER" | "FISCAL_YEAR";
+export type KeyDriversDimensionGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
 
 // @public (undocumented)
-export type KeyDriversDimensionValueTypeEnum = "TEXT" | "HYPERLINK" | "GEO" | "GEO_LONGITUDE" | "GEO_LATITUDE" | "GEO_AREA" | "IMAGE";
+export type KeyDriversDimensionValueTypeEnum = 'TEXT' | 'HYPERLINK' | 'GEO' | 'GEO_LONGITUDE' | 'GEO_LATITUDE' | 'GEO_AREA' | 'IMAGE';
 
 // @public (undocumented)
 export interface KeyDriversRequest {
-    auxMetrics?: Array<AfmMeasureItem>;
+    'auxMetrics'?: Array<AfmMeasureItem>;
     // (undocumented)
-    metric: AfmMeasureItem;
-    sortDirection?: KeyDriversRequestSortDirectionEnum;
+    'metric': AfmMeasureItem;
+    'sortDirection'?: KeyDriversRequestSortDirectionEnum;
 }
 
 // @public (undocumented)
-export type KeyDriversRequestSortDirectionEnum = "ASC" | "DESC";
+export type KeyDriversRequestSortDirectionEnum = 'ASC' | 'DESC';
 
 // @public (undocumented)
 export interface KeyDriversResponse {
     // (undocumented)
-    dimensions: Array<KeyDriversDimension>;
+    'dimensions': Array<KeyDriversDimension>;
     // (undocumented)
-    links: ExecutionLinks;
+    'links': ExecutionLinks;
 }
 
 // @public (undocumented)
 export interface KeyDriversResult {
     // (undocumented)
-    data: object;
+    'data': object;
 }
 
 // @public (undocumented)
@@ -21689,20 +21691,20 @@ export type MeasureDefinition = ArithmeticMeasureDefinition | InlineMeasureDefin
 // @public (undocumented)
 export interface MeasureExecutionResultHeader {
     // (undocumented)
-    measureHeader: MeasureResultHeader;
+    'measureHeader': MeasureResultHeader;
 }
 
 // @public
 export interface MeasureGroupHeaders {
     // (undocumented)
-    measureGroupHeaders?: Array<MeasureHeader>;
+    'measureGroupHeaders'?: Array<MeasureHeader>;
 }
 
 // @public (undocumented)
 export interface MeasureHeader {
-    format?: string;
-    localIdentifier: string;
-    name?: string;
+    'format'?: string;
+    'localIdentifier': string;
+    'name'?: string;
 }
 
 // @public
@@ -21714,7 +21716,7 @@ export interface MeasureItem {
 
 // @public
 export interface MeasureResultHeader {
-    measureIndex: number;
+    'measureIndex': number;
 }
 
 // @public
@@ -21878,14 +21880,14 @@ export class MetadataUtilities {
 
 // @public
 export interface Metric {
-    aggFunction?: MetricAggFunctionEnum;
-    id: string;
-    title: string;
-    type: MetricTypeEnum;
+    'aggFunction'?: MetricAggFunctionEnum;
+    'id': string;
+    'title': string;
+    'type': MetricTypeEnum;
 }
 
 // @public (undocumented)
-export type MetricAggFunctionEnum = "COUNT" | "SUM" | "MIN" | "MAX" | "AVG" | "MEDIAN";
+export type MetricAggFunctionEnum = 'COUNT' | 'SUM' | 'MIN' | 'MAX' | 'AVG' | 'MEDIAN';
 
 // @public
 export class MetricsApi extends MetadataBaseApi implements MetricsApiInterface {
@@ -22016,7 +22018,7 @@ export interface MetricsApiUpdateEntityMetricsRequest {
 }
 
 // @public (undocumented)
-export type MetricTypeEnum = "metric" | "fact" | "attribute";
+export type MetricTypeEnum = 'metric' | 'fact' | 'attribute';
 
 // @public (undocumented)
 export interface ModelFile {
@@ -22298,7 +22300,7 @@ export class NotificationChannelsAutomation extends AutomationBaseAPI implements
 // @public
 export interface NotificationChannelsAutomationGetNotificationsRequest {
     readonly isRead?: boolean;
-    readonly metaInclude?: Array<"total" | "ALL">;
+    readonly metaInclude?: Array<'total' | 'ALL'>;
     readonly page?: string;
     readonly size?: string;
     readonly workspaceId?: string;
@@ -24179,10 +24181,10 @@ export interface PageMetadata {
 
 // @public
 export interface Paging {
-    count: number;
-    next?: string;
-    offset: number;
-    total: number;
+    'count': number;
+    'next'?: string;
+    'offset': number;
+    'total': number;
 }
 
 // @public (undocumented)
@@ -24952,14 +24954,14 @@ export interface ReportingSettingsApiResolveSettingsWithoutWorkspaceRequest {
 
 // @public (undocumented)
 export interface ResolvedLlmEndpoint {
-    id: string;
-    title: string;
+    'id': string;
+    'title': string;
 }
 
 // @public (undocumented)
 export interface ResolvedLlmEndpoints {
     // (undocumented)
-    data: Array<ResolvedLlmEndpoint>;
+    'data': Array<ResolvedLlmEndpoint>;
 }
 
 // @public
@@ -24981,9 +24983,9 @@ export interface ResolveSettingsRequest {
 // @public
 export interface RestApiIdentifier {
     // (undocumented)
-    id: string;
+    'id': string;
     // (undocumented)
-    type: string;
+    'type': string;
 }
 
 // @public
@@ -25000,20 +25002,20 @@ export interface ResultActionsApiInterface {
 // @public
 export interface ResultCacheMetadata {
     // (undocumented)
-    afm: AfmModel;
+    'afm': AfmModel;
     // (undocumented)
-    executionResponse: ExecutionResponse;
+    'executionResponse': ExecutionResponse;
     // (undocumented)
-    resultSize: number;
+    'resultSize': number;
     // (undocumented)
-    resultSpec: ResultSpec;
+    'resultSpec': ResultSpec;
 }
 
 // @public
 export interface ResultDimension {
     // (undocumented)
-    headers: Array<ResultDimensionHeader>;
-    localIdentifier: string;
+    'headers': Array<ResultDimensionHeader>;
+    'localIdentifier': string;
 }
 
 // @public
@@ -25022,19 +25024,19 @@ export type ResultDimensionHeader = AttributeHeader | MeasureGroupHeaders;
 // @public
 export interface ResultSpec {
     // (undocumented)
-    dimensions: Array<Dimension>;
+    'dimensions': Array<Dimension>;
     // (undocumented)
-    totals?: Array<Total>;
+    'totals'?: Array<Total>;
 }
 
 // @public
 export interface RouteResult {
-    reasoning: string;
-    useCase: RouteResultUseCaseEnum;
+    'reasoning': string;
+    'useCase': RouteResultUseCaseEnum;
 }
 
 // @public (undocumented)
-export type RouteResultUseCaseEnum = "INVALID" | "GENERAL" | "SEARCH" | "CREATE_VISUALIZATION" | "EXTEND_VISUALIZATION" | "HOWTO" | "CHANGE_ANALYSIS" | "ALERT";
+export type RouteResultUseCaseEnum = 'INVALID' | 'GENERAL' | 'SEARCH' | 'CREATE_VISUALIZATION' | 'EXTEND_VISUALIZATION' | 'HOWTO' | 'CHANGE_ANALYSIS' | 'ALERT';
 
 // @public (undocumented)
 export interface RsaSpecification {
@@ -25079,19 +25081,19 @@ export interface RunningSection {
 
 // @public
 export interface SavedVisualization {
-    createdVisualizationId: string;
-    savedVisualizationId: string;
+    'createdVisualizationId': string;
+    'savedVisualizationId': string;
 }
 
 // @public
 export interface ScanApiSqlColumn {
-    dataType: ScanApiSqlColumnDataTypeEnum;
-    description?: string;
-    name: string;
+    'dataType': ScanApiSqlColumnDataTypeEnum;
+    'description'?: string;
+    'name': string;
 }
 
 // @public (undocumented)
-export type ScanApiSqlColumnDataTypeEnum = "INT" | "STRING" | "DATE" | "NUMERIC" | "TIMESTAMP" | "TIMESTAMP_TZ" | "BOOLEAN";
+export type ScanApiSqlColumnDataTypeEnum = 'INT' | 'STRING' | 'DATE' | 'NUMERIC' | 'TIMESTAMP' | 'TIMESTAMP_TZ' | 'BOOLEAN';
 
 // @public
 export interface ScanModelActionsApiInterface {
@@ -25150,30 +25152,30 @@ export interface ScanModelConfigurationParameters {
 
 // @public
 export interface ScanModelDeclarativeColumn {
-    dataType: ScanModelDeclarativeColumnDataTypeEnum;
-    description?: string;
-    isNullable?: boolean;
-    isPrimaryKey?: boolean;
-    name: string;
-    referencedTableColumn?: string;
-    referencedTableId?: string;
+    'dataType': ScanModelDeclarativeColumnDataTypeEnum;
+    'description'?: string;
+    'isNullable'?: boolean;
+    'isPrimaryKey'?: boolean;
+    'name': string;
+    'referencedTableColumn'?: string;
+    'referencedTableId'?: string;
 }
 
 // @public (undocumented)
-export type ScanModelDeclarativeColumnDataTypeEnum = "INT" | "STRING" | "DATE" | "NUMERIC" | "TIMESTAMP" | "TIMESTAMP_TZ" | "BOOLEAN";
+export type ScanModelDeclarativeColumnDataTypeEnum = 'INT' | 'STRING' | 'DATE' | 'NUMERIC' | 'TIMESTAMP' | 'TIMESTAMP_TZ' | 'BOOLEAN';
 
 // @public
 export interface ScanModelDeclarativeTable {
-    columns: Array<ScanModelDeclarativeColumn>;
-    id: string;
-    namePrefix?: string;
-    path: Array<string>;
-    type: string;
+    'columns': Array<ScanModelDeclarativeColumn>;
+    'id': string;
+    'namePrefix'?: string;
+    'path': Array<string>;
+    'type': string;
 }
 
 // @public
 export interface ScanModelDeclarativeTables {
-    tables: Array<ScanModelDeclarativeTable>;
+    'tables': Array<ScanModelDeclarativeTable>;
 }
 
 // @public (undocumented)
@@ -25186,89 +25188,88 @@ export interface ScanModelRequestArgs {
 
 // @public
 export interface ScanRequest {
-    scanTables: boolean;
-    scanViews: boolean;
-    schemata?: Array<string>;
-    separator: string;
-    tablePrefix?: string;
-    viewPrefix?: string;
+    'scanTables': boolean;
+    'scanViews': boolean;
+    'schemata'?: Array<string>;
+    'separator': string;
+    'tablePrefix'?: string;
+    'viewPrefix'?: string;
 }
 
 // @public
 export interface ScanResultPdm {
     // (undocumented)
-    pdm: ScanModelDeclarativeTables;
+    'pdm': ScanModelDeclarativeTables;
     // (undocumented)
-    warnings: Array<TableWarning>;
+    'warnings': Array<TableWarning>;
 }
 
 // @public
 export interface ScanSqlRequest {
-    sql: string;
+    'sql': string;
 }
 
 // @public
 export interface ScanSqlResponse {
-    columns: Array<ScanApiSqlColumn>;
-    dataPreview?: Array<Array<string | null>>;
+    'columns': Array<ScanApiSqlColumn>;
+    'dataPreview'?: Array<Array<string | null>>;
 }
 
 // @public (undocumented)
 export interface SearchRelationshipObject {
-    sourceObjectId: string;
-    sourceObjectTitle: string;
-    sourceObjectType: string;
-    sourceWorkspaceId: string;
-    targetObjectId: string;
-    targetObjectTitle: string;
-    targetObjectType: string;
-    targetWorkspaceId: string;
+    'sourceObjectId': string;
+    'sourceObjectTitle': string;
+    'sourceObjectType': string;
+    'sourceWorkspaceId': string;
+    'targetObjectId': string;
+    'targetObjectTitle': string;
+    'targetObjectType': string;
+    'targetWorkspaceId': string;
 }
 
 // @public (undocumented)
 export interface SearchRequest {
-    // Warning: (ae-forgotten-export) The symbol "AllowedRelationshipType" needs to be exported by the entry point index.d.ts
-    allowedRelationshipTypes?: Array<AllowedRelationshipType>;
-    deepSearch?: boolean;
-    excludeTags?: Array<string>;
-    includeHidden?: boolean;
-    includeTags?: Array<string>;
-    limit?: number;
-    objectTypes?: Array<SearchRequestObjectTypesEnum>;
-    question: string;
-    relevantScoreThreshold?: number;
-    titleToDescriptorRatio?: number;
+    'allowedRelationshipTypes'?: Array<AllowedRelationshipType>;
+    'deepSearch'?: boolean;
+    'excludeTags'?: Array<string>;
+    'includeHidden'?: boolean;
+    'includeTags'?: Array<string>;
+    'limit'?: number;
+    'objectTypes'?: Array<SearchRequestObjectTypesEnum>;
+    'question': string;
+    'relevantScoreThreshold'?: number;
+    'titleToDescriptorRatio'?: number;
 }
 
 // @public (undocumented)
-export type SearchRequestObjectTypesEnum = "attribute" | "metric" | "fact" | "label" | "date" | "dataset" | "visualization" | "dashboard";
+export type SearchRequestObjectTypesEnum = 'attribute' | 'metric' | 'fact' | 'label' | 'date' | 'dataset' | 'visualization' | 'dashboard';
 
 // @public (undocumented)
 export interface SearchResult {
-    reasoning: string;
+    'reasoning': string;
     // (undocumented)
-    relationships: Array<SearchRelationshipObject>;
+    'relationships': Array<SearchRelationshipObject>;
     // (undocumented)
-    results: Array<SearchResultObject>;
+    'results': Array<SearchResultObject>;
 }
 
 // @public (undocumented)
 export interface SearchResultObject {
-    createdAt?: string;
-    description?: string;
-    id: string;
-    isHidden?: boolean;
-    modifiedAt?: string;
-    score?: number;
-    scoreDescriptor?: number;
-    scoreExactMatch?: number;
-    scoreTitle?: number;
+    'createdAt'?: string;
+    'description'?: string;
+    'id': string;
+    'isHidden'?: boolean;
+    'modifiedAt'?: string;
+    'score'?: number;
+    'scoreDescriptor'?: number;
+    'scoreExactMatch'?: number;
+    'scoreTitle'?: number;
     // (undocumented)
-    tags?: Array<string>;
-    title: string;
-    type: string;
-    visualizationUrl?: string;
-    workspaceId: string;
+    'tags'?: Array<string>;
+    'title': string;
+    'type': string;
+    'visualizationUrl'?: string;
+    'workspaceId': string;
 }
 
 // @public
@@ -25404,7 +25405,7 @@ export type SlidesExportRequestFormatEnum = "PDF" | "PPTX";
 // @public (undocumented)
 export interface SmartFunctionResponse {
     // (undocumented)
-    links: ExecutionLinks;
+    'links': ExecutionLinks;
 }
 
 // @public
@@ -25433,54 +25434,54 @@ type SortKey_2 = SortKeyAttribute | SortKeyValue;
 // @public
 export interface SortKeyAttribute {
     // (undocumented)
-    attribute: SortKeyAttributeAttribute;
+    'attribute': SortKeyAttributeAttribute;
 }
 
 // @public (undocumented)
 export interface SortKeyAttributeAttribute {
-    attributeIdentifier: string;
-    direction?: SortKeyAttributeAttributeDirectionEnum;
-    sortType?: SortKeyAttributeAttributeSortTypeEnum;
+    'attributeIdentifier': string;
+    'direction'?: SortKeyAttributeAttributeDirectionEnum;
+    'sortType'?: SortKeyAttributeAttributeSortTypeEnum;
 }
 
 // @public (undocumented)
-export type SortKeyAttributeAttributeDirectionEnum = "ASC" | "DESC";
+export type SortKeyAttributeAttributeDirectionEnum = 'ASC' | 'DESC';
 
 // @public (undocumented)
-export type SortKeyAttributeAttributeSortTypeEnum = "DEFAULT" | "LABEL" | "ATTRIBUTE" | "AREA";
+export type SortKeyAttributeAttributeSortTypeEnum = 'DEFAULT' | 'LABEL' | 'ATTRIBUTE' | 'AREA';
 
 // @public
 export interface SortKeyTotal {
     // (undocumented)
-    total: SortKeyTotalTotal;
+    'total': SortKeyTotalTotal;
 }
 
 // @public (undocumented)
 export interface SortKeyTotalTotal {
     // (undocumented)
-    dataColumnLocators?: DataColumnLocators;
-    direction?: SortKeyTotalTotalDirectionEnum;
-    totalIdentifier: string;
+    'dataColumnLocators'?: DataColumnLocators;
+    'direction'?: SortKeyTotalTotalDirectionEnum;
+    'totalIdentifier': string;
 }
 
 // @public (undocumented)
-export type SortKeyTotalTotalDirectionEnum = "ASC" | "DESC";
+export type SortKeyTotalTotalDirectionEnum = 'ASC' | 'DESC';
 
 // @public
 export interface SortKeyValue {
     // (undocumented)
-    value: SortKeyValueValue;
+    'value': SortKeyValueValue;
 }
 
 // @public (undocumented)
 export interface SortKeyValueValue {
     // (undocumented)
-    dataColumnLocators: DataColumnLocators;
-    direction?: SortKeyValueValueDirectionEnum;
+    'dataColumnLocators': DataColumnLocators;
+    'direction'?: SortKeyValueValueDirectionEnum;
 }
 
 // @public (undocumented)
-export type SortKeyValueValueDirectionEnum = "ASC" | "DESC";
+export type SortKeyValueValueDirectionEnum = 'ASC' | 'DESC';
 
 // @public
 export interface SqlColumn {
@@ -25494,7 +25495,7 @@ export type SqlColumnDataTypeEnum = "INT" | "STRING" | "DATE" | "NUMERIC" | "TIM
 // @public (undocumented)
 export interface SqlQuery {
     // (undocumented)
-    sql: string;
+    'sql': string;
 }
 
 // @public (undocumented)
@@ -25505,7 +25506,7 @@ export interface SwitchIdentityProviderRequest {
 // @public (undocumented)
 export interface Table {
     // (undocumented)
-    tableName: string;
+    'tableName': string;
 }
 
 // @public
@@ -25517,9 +25518,9 @@ export interface TableOverride {
 // @public
 export interface TableWarning {
     // (undocumented)
-    columns: Array<ColumnWarning>;
-    message?: string;
-    name: string;
+    'columns': Array<ColumnWarning>;
+    'message'?: string;
+    'name': string;
 }
 
 // @public
@@ -25593,50 +25594,50 @@ export type TabularExportRequestFormatEnum = "CSV" | "XLSX" | "HTML" | "PDF";
 
 // @public
 export interface TestDefinitionRequest {
-    clientId?: string;
-    clientSecret?: string;
+    'clientId'?: string;
+    'clientSecret'?: string;
     // (undocumented)
-    parameters?: Array<DataSourceParameter>;
-    password?: string;
-    privateKey?: string;
-    privateKeyPassphrase?: string;
-    schema?: string;
-    token?: string;
-    type: TestDefinitionRequestTypeEnum;
-    url?: string;
-    username?: string;
+    'parameters'?: Array<DataSourceParameter>;
+    'password'?: string;
+    'privateKey'?: string;
+    'privateKeyPassphrase'?: string;
+    'schema'?: string;
+    'token'?: string;
+    'type': TestDefinitionRequestTypeEnum;
+    'url'?: string;
+    'username'?: string;
 }
 
 // @public (undocumented)
-export type TestDefinitionRequestTypeEnum = "POSTGRESQL" | "REDSHIFT" | "VERTICA" | "SNOWFLAKE" | "ADS" | "BIGQUERY" | "MSSQL" | "PRESTO" | "DREMIO" | "DRILL" | "GREENPLUM" | "AZURESQL" | "SYNAPSESQL" | "DATABRICKS" | "GDSTORAGE" | "CLICKHOUSE" | "MYSQL" | "MARIADB" | "ORACLE" | "PINOT" | "SINGLESTORE" | "MOTHERDUCK" | "FLEXCONNECT" | "STARROCKS" | "ATHENA" | "MONGODB" | "CRATEDB";
+export type TestDefinitionRequestTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'GREENPLUM' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB';
 
 // @public
 export interface TestQueryDuration {
-    createCacheTable?: number;
-    simpleSelect: number;
+    'createCacheTable'?: number;
+    'simpleSelect': number;
 }
 
 // @public
 export interface TestRequest {
-    clientId?: string;
-    clientSecret?: string;
+    'clientId'?: string;
+    'clientSecret'?: string;
     // (undocumented)
-    parameters?: Array<DataSourceParameter>;
-    password?: string;
-    privateKey?: string;
-    privateKeyPassphrase?: string;
-    schema?: string;
-    token?: string;
-    url?: string;
-    username?: string;
+    'parameters'?: Array<DataSourceParameter>;
+    'password'?: string;
+    'privateKey'?: string;
+    'privateKeyPassphrase'?: string;
+    'schema'?: string;
+    'token'?: string;
+    'url'?: string;
+    'username'?: string;
 }
 
 // @public
 export interface TestResponse {
-    error?: string;
+    'error'?: string;
     // (undocumented)
-    queryDurationMillis?: TestQueryDuration;
-    successful: boolean;
+    'queryDurationMillis'?: TestQueryDuration;
+    'successful': boolean;
 }
 
 // @public (undocumented)
@@ -25701,32 +25702,32 @@ export const tigerValidObjectsClientFactory: (axios: AxiosInstance) => Pick<AfmA
 
 // @public
 export interface Total {
-    function: TotalFunctionEnum;
-    localIdentifier: string;
-    metric: string;
+    'function': TotalFunctionEnum;
+    'localIdentifier': string;
+    'metric': string;
     // (undocumented)
-    totalDimensions: Array<TotalDimension>;
+    'totalDimensions': Array<TotalDimension>;
 }
 
 // @public
 export interface TotalDimension {
-    dimensionIdentifier: string;
-    totalDimensionItems: Array<string>;
+    'dimensionIdentifier': string;
+    'totalDimensionItems': Array<string>;
 }
 
 // @public (undocumented)
 export interface TotalExecutionResultHeader {
     // (undocumented)
-    totalHeader: TotalResultHeader;
+    'totalHeader': TotalResultHeader;
 }
 
 // @public (undocumented)
-export type TotalFunctionEnum = "SUM" | "MIN" | "MAX" | "AVG" | "MED" | "NAT";
+export type TotalFunctionEnum = 'SUM' | 'MIN' | 'MAX' | 'AVG' | 'MED' | 'NAT';
 
 // @public
 export interface TotalResultHeader {
     // (undocumented)
-    function: string;
+    'function': string;
 }
 
 // @public (undocumented)
@@ -25840,7 +25841,7 @@ export interface UserAssignee {
 // @public
 export interface UserContext {
     // (undocumented)
-    activeObject: ActiveObjectIdentification;
+    'activeObject': ActiveObjectIdentification;
 }
 
 // @public
@@ -26796,32 +26797,32 @@ export interface UserSettingsApiUpdateEntityUserSettingsRequest {
 
 // @public (undocumented)
 export interface ValidateByItem {
-    id: string;
-    type: string;
+    'id': string;
+    'type': string;
 }
 
 // @public (undocumented)
 export interface ValidateLLMEndpointByIdRequest {
-    baseUrl?: string;
-    llmModel?: string;
-    llmOrganization?: string;
-    provider?: string;
-    token?: string;
+    'baseUrl'?: string;
+    'llmModel'?: string;
+    'llmOrganization'?: string;
+    'provider'?: string;
+    'token'?: string;
 }
 
 // @public (undocumented)
 export interface ValidateLLMEndpointRequest {
-    baseUrl?: string;
-    llmModel?: string;
-    llmOrganization?: string;
-    provider: string;
-    token: string;
+    'baseUrl'?: string;
+    'llmModel'?: string;
+    'llmOrganization'?: string;
+    'provider': string;
+    'token': string;
 }
 
 // @public (undocumented)
 export interface ValidateLLMEndpointResponse {
-    message: string;
-    successful: boolean;
+    'message': string;
+    'successful': boolean;
 }
 
 // @public (undocumented)

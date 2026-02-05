@@ -1,0 +1,67 @@
+{
+    "name": "@gooddata/oxlint-config",
+    "version": "11.19.0-alpha.10",
+    "license": "MIT",
+    "author": "GoodData",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
+        "directory": "tools/oxlint-config"
+    },
+    "files": [
+        "dist/*.json",
+        "dist/*.js",
+        "dist/*.d.ts",
+        "dist/*.cjs",
+        "*.md",
+        "LICENSE"
+    ],
+    "type": "module",
+    "sideEffects": false,
+    "exports": {
+        ".": "./dist/base.json",
+        "./cypress": "./dist/cypress.json"
+    },
+    "scripts": {
+        "_phase:build": "npm run build",
+        "_phase:validate": "npm run validate",
+        "build": "rm -rf dist && mkdir dist && vite-node scripts/build.ts && tsgo",
+        "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
+        "eslint": "eslint .",
+        "eslint-fix": "eslint . --fix",
+        "lint": "npm run oxlint && npm run eslint",
+        "lint-fix": "npm run oxlint-fix && npm run eslint-fix",
+        "oxfmt-check": "oxfmt --check .",
+        "oxfmt-write": "oxfmt .",
+        "oxlint": "oxlint .",
+        "oxlint-fix": "oxlint . --fix",
+        "update-package": "vite-node scripts/updatePackage.ts",
+        "validate": "npm run lint && npm run oxfmt-check"
+    },
+    "devDependencies": {
+        "@eslint/js": "9.28.0",
+        "@gooddata/eslint-config": "workspace:*",
+        "@gooddata/lint-config": "workspace:*",
+        "@types/node": "^22.13.0",
+        "@typescript-eslint/eslint-plugin": "8.52.0",
+        "@typescript-eslint/parser": "8.52.0",
+        "@typescript/native-preview": "7.0.0-dev.20260202.1",
+        "eslint": "^9.39.2",
+        "eslint-import-resolver-typescript": "4.4.4",
+        "eslint-plugin-chai-friendly": "1.1.0",
+        "eslint-plugin-headers": "1.3.3",
+        "eslint-plugin-import-esm": "1.2.1",
+        "eslint-plugin-import-x": "4.16.1",
+        "eslint-plugin-no-barrel-files": "1.2.2",
+        "eslint-plugin-sonarjs": "3.0.6",
+        "globals": "17.2.0",
+        "jiti": "2.6.1",
+        "oxfmt": "0.27.0",
+        "oxlint": "^1.43.0",
+        "typescript": "5.9.3",
+        "vite-node": "^5.2.0"
+    },
+    "peerDependencies": {
+        "oxlint": "^1.43.0"
+    }
+}

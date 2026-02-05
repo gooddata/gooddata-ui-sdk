@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
@@ -25,7 +25,7 @@ function generateGooddataSharePackagesEntries() {
     // this makes redux related contexts work for example
     return [...Object.entries(deps), ...Object.entries(peerDeps)]
         .filter(([pkgName]) => pkgName.startsWith("@gooddata"))
-        .reduce((acc, [pkgName, version]) => {
+        .reduce((acc, [pkgName, _version]) => {
             acc[pkgName] = {
                 singleton: true,
                 requiredVersion: false,

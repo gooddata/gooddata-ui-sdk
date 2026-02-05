@@ -143,12 +143,20 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "@gooddata/lint-config",
+      "allowedCategories": [ "tools" ]
+    },
+    {
       "name": "@gooddata/mock-handling",
       "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "@gooddata/number-formatter",
       "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@gooddata/oxlint-config",
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "@gooddata/plugin-toolkit",
@@ -1000,6 +1008,10 @@
     },
     {
       "name": "oxfmt",
+      "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
+      "name": "oxlint",
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {

@@ -848,5 +848,21 @@
     "dialogs.export.pdf.pageOrientation.option.portrait": "Pokončno",
     "dialogs.export.pdf.pageOrientation.option.landscape": "Ležeče",
     "dialogs.export.submit": "Izvozi",
-    "gs.header.mainMenu.ariaLabel": "Glavni meni"
+    "gs.header.mainMenu.ariaLabel": "Glavni meni",
+    "gs.header.analyze": "Analiziraj",
+    "gs.header.catalog": "Katalog",
+    "gs.header.community": "Skupnost",
+    "gs.header.data": "Podatki",
+    "gs.header.documentation": "Dokumentacija",
+    "gs.header.kpis.new": "Nadzorne plošče",
+    "gs.header.metrics": "Metrike",
+    "gs.header.slack": "Slack",
+    "gs.header.submitTicket": "Pošlji zahtevek",
+    "gs.header.university": "Univerza",
+    "gs.header.visitSupportPortal": "Obišči podporni portal",
+    "gs.header.dashboards": "Nadzorne plošče",
+    "gs.header.kpis": "KPI-ji",
+    "gs.header.load": "Nalaganje",
+    "gs.header.manage": "Upravljanje",
+    "gs.header.reports": "Poročila"
 }

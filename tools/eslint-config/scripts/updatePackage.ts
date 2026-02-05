@@ -69,11 +69,13 @@ for (const [name, versions] of Object.entries(packageVersions)) {
 
 // Build devDependencies (v9 packages only to avoid conflicts)
 const devDeps: Record<string, string> = {
+    "@gooddata/lint-config": packageJson.devDependencies["@gooddata/lint-config"],
     eslint: packageJson.devDependencies["eslint"],
     oxfmt: packageJson.devDependencies["oxfmt"],
     "@types/node": packageJson.devDependencies["@types/node"],
     jiti: "2.6.1", // Required for ESLint to load TypeScript config files
     typescript: packageJson.devDependencies["typescript"],
+    "@typescript/native-preview": "7.0.0-dev.20260202.1",
     "vite-node": packageJson.devDependencies["vite-node"],
 };
 
@@ -133,6 +135,9 @@ for (const variantName of allVariantNames) {
     const hasV8 = v8VariantNames.has(variantName);
     const hasV9 = v9VariantNames.has(variantName);
     exports[`./${variantName}`] = buildExport(variantName, hasV8, hasV9);
+    exports[`./oxlint-${variantName}`] = {
+        import: `./dist/oxlint-${variantName}.js`,
+    };
 }
 
 packageJson.exports = exports;
@@ -140,7 +145,10 @@ packageJson.exports = exports;
 writeFileSync("./package.json", JSON.stringify(packageJson, null, 4));
 
 // Generate PACKAGES_V8.md and PACKAGES_V9.md
-function collectConfigPackages(configs: IDualConfiguration[], version: "v8" | "v9"): Map<string, string> {
+function collectConfigPackages(
+    configs: IDualConfiguration[],
+    version: "v8" | "v9" | "ox",
+): Map<string, string> {
     const packages = new Map<string, string>();
     for (const config of configs) {
         const pkgs = config[version].packages ?? [];
@@ -152,9 +160,11 @@ function collectConfigPackages(configs: IDualConfiguration[], version: "v8" | "v
 }
 
 function generatePackagesMarkdown(
-    version: "v8" | "v9",
+    version: "v8" | "v9" | "ox",
     variants: Record<string, IDualConfiguration[]>,
 ): string {
+    const prefix = version === "ox" ? "oxlint-" : "";
+
     // Collect all config names: base + variants
     const configNames = ["base", ...Object.keys(variants).sort()];
 
@@ -198,7 +208,7 @@ function generatePackagesMarkdown(
     const sortedPackages = [...allPackages].sort();
 
     // Build table data to calculate column widths
-    const headerRow = ["Package", ...configNames];
+    const headerRow = ["Package", ...configNames.map((name) => `${prefix}${name}`)];
     const dataRows: string[][] = sortedPackages.map((pkgName) => {
         const cells = configNames.map((configName) => {
             const packages = configPackages.get(configName);
@@ -229,7 +239,7 @@ function generatePackagesMarkdown(
     );
 
     const lines: string[] = [
-        `# ESLint ${version.toUpperCase()} Packages`,
+        `# ESLint ${version === "ox" ? "V9 OxLint" : version.toUpperCase()} Packages`,
         "",
         "This table shows which packages are required for each configuration.",
         "",
@@ -245,6 +255,8 @@ function generatePackagesMarkdown(
 // Generate v8 and v9 markdown files
 const v8Markdown = generatePackagesMarkdown("v8", v8Variants);
 const v9Markdown = generatePackagesMarkdown("v9", v9Variants);
+const v9OxMarkdown = generatePackagesMarkdown("ox", v9Variants);
 
 writeFileSync("./PACKAGES_V8.md", v8Markdown);
 writeFileSync("./PACKAGES_V9.md", v9Markdown);
+writeFileSync("./PACKAGES_V9_OXLINT.md", v9OxMarkdown);

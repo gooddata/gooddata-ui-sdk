@@ -7,7 +7,9 @@ const cypressPlugin: IPackage = {
     version: "3.6.0",
 };
 
-const commonRules = {
+const rules = {
+    "cypress/no-async-tests": "error",
+
     // todo: this will be nice to fixed
     "cypress/no-unnecessary-waiting": "warn",
 
@@ -17,32 +19,28 @@ const commonRules = {
     "cypress/unsafe-to-chain-command": "warn",
 };
 
+const v9 = {
+    packages: [cypressPlugin],
+    plugins: { cypress: cypressPlugin },
+    languageOptions: {
+        globalsPresets: ["mocha" as const],
+        globals: {
+            cy: "readonly" as const,
+            Cypress: "readonly" as const,
+            expect: "readonly" as const,
+            assert: "readonly" as const,
+            chai: "readonly" as const,
+        },
+    },
+    rules,
+};
+
 export const cypress: IDualConfiguration<"cypress"> = {
     v8: {
         packages: [cypressPlugin],
         plugins: ["cypress"],
-        extends: ["plugin:cypress/recommended"],
-        rules: commonRules,
+        rules,
     },
-    v9: {
-        packages: [cypressPlugin],
-        plugins: { cypress: cypressPlugin },
-        languageOptions: {
-            globalsPresets: ["mocha"],
-            globals: {
-                cy: "readonly",
-                Cypress: "readonly",
-                expect: "readonly",
-                assert: "readonly",
-                chai: "readonly",
-            },
-        },
-        rules: {
-            "cypress/no-assigning-return-values": "error",
-            "cypress/no-unnecessary-waiting": "error",
-            "cypress/no-async-tests": "error",
-            "cypress/unsafe-to-chain-command": "error",
-            ...commonRules,
-        },
-    },
+    v9,
+    ox: v9,
 };

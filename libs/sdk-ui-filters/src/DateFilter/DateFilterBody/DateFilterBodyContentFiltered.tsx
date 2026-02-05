@@ -1,4 +1,8 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
+
+import { useIntl } from "react-intl";
+
+import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 import { AbsolutePresetFilterItems } from "./AbsolutePresetFilterItems.js";
 import { CalendarTypeTabs } from "./CalendarTypeTabs.js";
@@ -40,9 +44,18 @@ export function DateFilterBodyContentFiltered({
     onTabSelect,
     filteredRelativePreset,
 }: IDateFilterBodyContentFilteredProps) {
-    return (
+    const intl = useIntl();
+    const listboxLabel = intl.formatMessage({ id: "dateFilterDropdown.label" });
+    const tabsIdBase = useIdPrefixed("calendar-tabs");
+    const tabIds = {
+        standard: `${tabsIdBase}-standard-tab`,
+        fiscal: `${tabsIdBase}-fiscal-tab`,
+    };
+    const panelId = `${tabsIdBase}-panel`;
+    const activeTabId = selectedTab === "fiscal" ? tabIds.fiscal : tabIds.standard;
+
+    const listContent = (
         <>
-            {showTabs ? <CalendarTypeTabs selectedTab={selectedTab} onTabSelect={onTabSelect} /> : null}
             <AllTimeFilterSection
                 filterOptions={filterOptions}
                 selectedFilterOption={selectedFilterOption}
@@ -71,6 +84,30 @@ export function DateFilterBodyContentFiltered({
                     className={isMobile ? ITEM_CLASS_MOBILE : undefined}
                 />
             ) : null}
+        </>
+    );
+
+    return (
+        <>
+            {showTabs ? (
+                <CalendarTypeTabs
+                    selectedTab={selectedTab}
+                    onTabSelect={onTabSelect}
+                    tabIds={tabIds}
+                    panelId={panelId}
+                />
+            ) : null}
+            {showTabs ? (
+                <div role="tabpanel" id={panelId} aria-labelledby={activeTabId} tabIndex={0}>
+                    <div role="listbox" aria-label={listboxLabel}>
+                        {listContent}
+                    </div>
+                </div>
+            ) : (
+                <div role="listbox" aria-label={listboxLabel}>
+                    {listContent}
+                </div>
+            )}
         </>
     );
 }

@@ -27,4 +27,5 @@ const commonConfiguration = {
 export const ignore: IDualConfiguration = {
     v8: commonConfiguration,
     v9: commonConfiguration,
+    ox: commonConfiguration,
 };

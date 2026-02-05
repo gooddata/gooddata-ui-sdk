@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     type ComponentProps,
@@ -57,6 +57,18 @@ export type IUiTab<
      * @defaultValue "default"
      */
     variant?: "default" | "placeholder";
+    /**
+     * Optional DOM id for the tab button.
+     */
+    tabId?: string;
+    /**
+     * Optional id of the tabpanel controlled by this tab.
+     */
+    panelId?: string;
+    /**
+     * When true, focusing the tab will select it.
+     */
+    autoSelectOnFocus?: boolean;
     actions?: Array<IUiTabAction<TTabProps, TTabActionProps> | typeof separatorStaticItem>;
 } & TTabProps;
 

@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-loaders",
-    "version": "11.19.0-alpha.9",
+    "version": "11.19.0-alpha.10",
     "description": "GoodData SDK Runtime Component Loaders",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData Corporation",
@@ -39,8 +39,12 @@
         "prepack": "cp -f ../../NOTICE ./NOTICE",
         "oxfmt-check": "oxfmt --check .",
         "oxfmt-write": "oxfmt .",
-        "validate": "npm run eslint && npm run dep-cruiser && npm run oxfmt-check",
-        "validate-esm": "node --input-type=module --eval 'import \"@gooddata/sdk-ui-loaders\"'"
+        "validate": "npm run lint && npm run dep-cruiser && npm run oxfmt-check",
+        "validate-esm": "node --input-type=module --eval 'import \"@gooddata/sdk-ui-loaders\"'",
+        "lint": "npm run oxlint && npm run eslint",
+        "lint-fix": "npm run oxlint-fix && npm run eslint-fix",
+        "oxlint": "oxlint .",
+        "oxlint-fix": "oxlint . --fix"
     },
     "dependencies": {
         "@gooddata/sdk-backend-spi": "workspace:*",
@@ -56,6 +60,7 @@
     },
     "devDependencies": {
         "@gooddata/eslint-config": "workspace:*",
+        "@gooddata/oxlint-config": "workspace:*",
         "@microsoft/api-documenter": "^7.17.0",
         "@microsoft/api-extractor": "^7.55.2",
         "@types/lodash-es": "^4.17.12",
@@ -80,6 +85,7 @@
         "eslint-plugin-sonarjs": "3.0.6",
         "npm-run-all": "^4.1.5",
         "oxfmt": "0.27.0",
+        "oxlint": "^1.43.0",
         "raf": "^3.4.1",
         "react": "19.1.1",
         "react-dom": "19.1.1",

@@ -1,0 +1,42 @@
+{
+    "name": "@gooddata/lint-config",
+    "version": "11.19.0-alpha.10",
+    "description": "Linter-agnostic shared rules for @gooddata/eslint-config and @gooddata/oxlint-config",
+    "license": "MIT",
+    "author": "GoodData",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
+        "directory": "tools/lint-config"
+    },
+    "files": [
+        "esm/**/*",
+        "*.md",
+        "LICENSE"
+    ],
+    "type": "module",
+    "sideEffects": false,
+    "exports": {
+        ".": {
+            "types": "./esm/index.d.ts",
+            "import": "./esm/index.js"
+        }
+    },
+    "scripts": {
+        "_phase:build": "npm run build",
+        "_phase:validate": "npm run validate",
+        "build": "rm -rf esm && npm-run-all -p build-check build-ts",
+        "build-check": "tsgo",
+        "build-ts": "tsgo -p tsconfig.build.json",
+        "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo tsconfig.check.tsbuildinfo",
+        "oxfmt-check": "oxfmt --check .",
+        "oxfmt-write": "oxfmt .",
+        "validate": "npm run oxfmt-check"
+    },
+    "devDependencies": {
+        "@typescript/native-preview": "7.0.0-dev.20260202.1",
+        "npm-run-all": "^4.1.5",
+        "oxfmt": "0.27.0",
+        "typescript": "5.9.3"
+    }
+}

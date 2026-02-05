@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-interactive-example-repeater",
-    "version": "11.19.0-alpha.9",
+    "version": "11.19.0-alpha.10",
     "private": false,
     "description": "This example demonstrates how to use Repeater component.",
     "license": "LicenseRef-LICENSE",
@@ -22,7 +22,11 @@
         "refresh-md": "gdc-catalog-export && npm run oxfmt-write",
         "start": "vite serve",
         "update-version": "node ./scripts/updateWorkspaceVersion.mjs",
-        "validate": "npm run eslint && npm run oxfmt-check"
+        "validate": "npm run lint && npm run oxfmt-check",
+        "lint": "npm run oxlint && npm run eslint",
+        "lint-fix": "npm run oxlint-fix && npm run eslint-fix",
+        "oxlint": "oxlint .",
+        "oxlint-fix": "oxlint . --fix"
     },
     "dependencies": {
         "@gooddata/sdk-backend-base": "workspace:*",
@@ -44,6 +48,7 @@
     "devDependencies": {
         "@gooddata/catalog-export": "workspace:*",
         "@gooddata/eslint-config": "workspace:*",
+        "@gooddata/oxlint-config": "workspace:*",
         "@types/node": "^22.13.0",
         "@types/react": "19.1.11",
         "@types/react-dom": "19.1.7",
@@ -58,12 +63,12 @@
         "eslint-plugin-import-x": "4.16.1",
         "eslint-plugin-jsdoc": "62.1.0",
         "eslint-plugin-no-barrel-files": "1.2.2",
-        "eslint-plugin-no-only-tests": "3.3.0",
         "eslint-plugin-react": "7.37.5",
         "eslint-plugin-react-hooks": "5.2.0",
         "eslint-plugin-sonarjs": "3.0.6",
         "npm-run-all": "^4.1.5",
         "oxfmt": "0.27.0",
+        "oxlint": "^1.43.0",
         "process": "^0.11.10",
         "rolldown": "1.0.0-rc.1",
         "typescript": "5.9.3",

@@ -937,5 +937,21 @@
     "dialogs.export.pdf.pageOrientation.option.portrait": "Pystysuuntainen",
     "dialogs.export.pdf.pageOrientation.option.landscape": "Vaakasuuntainen",
     "dialogs.export.submit": "Vie",
-    "gs.header.mainMenu.ariaLabel": "Päävalikko"
+    "gs.header.mainMenu.ariaLabel": "Päävalikko",
+    "gs.header.analyze": "Analysoi",
+    "gs.header.catalog": "Luettelo",
+    "gs.header.community": "Yhteisö",
+    "gs.header.data": "Data",
+    "gs.header.documentation": "Dokumentaatio",
+    "gs.header.kpis.new": "Kojelaudat",
+    "gs.header.metrics": "Mittarit",
+    "gs.header.slack": "Slack",
+    "gs.header.submitTicket": "Lähetä tiketti",
+    "gs.header.university": "Yliopisto",
+    "gs.header.visitSupportPortal": "Vieraile tukipalvelussa",
+    "gs.header.dashboards": "Kojelaudat",
+    "gs.header.kpis": "KPI: t",
+    "gs.header.load": "Lataa",
+    "gs.header.manage": "Hallinnoi",
+    "gs.header.reports": "Raportit"
 }

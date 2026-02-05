@@ -48,7 +48,11 @@
         "proxy": "node ./scripts/proxy.js",
         "test": "vitest watch",
         "test-once": "vitest run",
-        "validate": "npm run eslint && npm run dep-cruiser && npm run oxfmt-check"
+        "validate": "npm run lint && npm run dep-cruiser && npm run oxfmt-check",
+        "lint": "npm run oxlint && npm run eslint",
+        "lint-fix": "npm run oxlint-fix && npm run eslint-fix",
+        "oxlint": "oxlint .",
+        "oxlint-fix": "oxlint . --fix"
     },
     "dependencies": {
         "@gooddata/sdk-backend-spi": "workspace:*",
@@ -70,6 +74,7 @@
     },
     "devDependencies": {
         "@gooddata/eslint-config": "workspace:*",
+        "@gooddata/oxlint-config": "workspace:*",
         "@gooddata/sdk-backend-mockingbird": "workspace:*",
         "@microsoft/api-documenter": "^7.17.0",
         "@microsoft/api-extractor": "^7.55.2",
@@ -94,6 +99,7 @@
         "eslint-plugin-react-hooks": "5.2.0",
         "eslint-plugin-sonarjs": "3.0.6",
         "oxfmt": "0.27.0",
+        "oxlint": "^1.43.0",
         "raf": "^3.4.1",
         "react": "19.1.1",
         "react-dom": "19.1.1",

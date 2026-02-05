@@ -48,6 +48,28 @@ For a complete list of available variants and their required packages, see:
 
 - [PACKAGES_V8.md](./PACKAGES_V8.md) - Package requirements for ESLint v8 configurations
 - [PACKAGES_V9.md](./PACKAGES_V9.md) - Package requirements for ESLint v9 configurations
+- [PACKAGES_V9_OXLINT.md](./PACKAGES_V9_OXLINT.md) - Package requirements for ESLint v9 + oxlint configurations
+
+## OxLint Migration Variants
+
+This package also provides `oxlint-*` variants designed to be used alongside `@gooddata/oxlint-config`. These variants have certain ESLint plugins disabled because those rules are handled by oxlint instead, providing faster linting performance.
+
+**How it works:**
+
+- **eslint-config `oxlint-*` variants** contain ESLint rules that oxlint does not support
+- **oxlint-config** contains the equivalent rules handled by oxlint
+- Together, they provide the same coverage as the standard ESLint variants, but with oxlint handling the bulk of the work for better performance
+
+**Example usage:**
+
+```typescript
+// eslint.config.ts
+import config from "@gooddata/eslint-config/oxlint-esm-react-vitest";
+
+export default config;
+```
+
+See `@gooddata/oxlint-config` for the corresponding oxlint configuration and detailed setup instructions.
 
 ## ESLint v8 vs v9 Support
 

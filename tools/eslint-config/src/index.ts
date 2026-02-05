@@ -32,7 +32,6 @@ export const commonConfigurations: IDualConfiguration[] = [
     barrelFiles,
     importX,
     jsdoc,
-    noOnlyTests,
     regexp,
     sonarjs,
     // tsdoc,
@@ -45,16 +44,25 @@ export const commonConfigurations: IDualConfiguration[] = [
 export const commonVariants: Record<string, IDualConfiguration[]> = {
     browser: [browserEnv], // for any packages that uses document, but are not react libs
     "browser-esm": [browserEnv, esm, importEsm], // unsure if needed
-    vitest: [vitest],
+    vitest: [vitest, noOnlyTests],
     esm: [esm, importEsm], // used for this lib
-    "esm-vitest": [esm, importEsm, vitest], // for @gooddata/util and MAQL language server
+    "esm-vitest": [esm, importEsm, vitest, noOnlyTests], // for @gooddata/util and MAQL language server
     react: [browserEnv, esm, react, reactHooks], // for skel tsx
-    "react-vitest": [browserEnv, esm, react, reactHooks, vitest], // for gdc-ui libs
-    "react-cypress": [browserEnv, esm, react, reactHooks, cypress, chaiFriendly], // for sdk-ui-tests, and probably gdc-ui
+    "react-vitest": [browserEnv, esm, react, reactHooks, vitest, noOnlyTests], // for gdc-ui libs
+    "react-cypress": [browserEnv, esm, react, reactHooks, cypress, chaiFriendly, noOnlyTests], // for sdk-ui-tests, and probably gdc-ui
     "esm-react": [browserEnv, esm, react, reactHooks, importEsm], // for most react libs
-    "esm-react-cypress": [browserEnv, esm, react, reactHooks, importEsm, cypress, chaiFriendly], // probably unused
-    "esm-react-vitest": [browserEnv, esm, react, reactHooks, importEsm, vitest], // for most sdk react libs with vitest
-    "esm-react-vitest-storybook": [browserEnv, esm, react, reactHooks, importEsm, vitest, storybook], // for sdk-ui-tests
+    "esm-react-cypress": [browserEnv, esm, react, reactHooks, importEsm, cypress, chaiFriendly, noOnlyTests], // probably unused
+    "esm-react-vitest": [browserEnv, esm, react, reactHooks, importEsm, vitest, noOnlyTests], // for most sdk react libs with vitest
+    "esm-react-vitest-storybook": [
+        browserEnv,
+        esm,
+        react,
+        reactHooks,
+        importEsm,
+        vitest,
+        noOnlyTests,
+        storybook,
+    ], // for sdk-ui-tests
 };
 
 export const v8Variants = { ...commonVariants };

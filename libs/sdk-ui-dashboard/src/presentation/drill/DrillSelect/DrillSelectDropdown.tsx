@@ -3,7 +3,7 @@
 import { type KeyboardEvent, type UIEvent, useCallback, useEffect, useMemo, useRef } from "react";
 
 import stringify from "json-stable-stringify";
-import { compact, groupBy } from "lodash-es";
+import { compact, groupBy, uniqBy } from "lodash-es";
 import { type IntlShape, useIntl } from "react-intl";
 import { invariant } from "ts-invariant";
 
@@ -18,6 +18,7 @@ import {
     isAttributeDescriptor,
     isCrossFiltering,
     isDrillFromAttribute,
+    isDrillToAttributeUrl,
     isDrillToCustomUrl,
     isDrillToDashboard,
     isDrillToInsight,
@@ -134,7 +135,7 @@ export function DrillSelectDropdown({
     const drillSelectItems = useMemo(
         () =>
             createDrillSelectItems({
-                drillDefinitions,
+                drillDefinitions: deduplicateDrillIntoUrlItems(drillDefinitions),
                 drillEvent,
                 insights,
                 dashboardList,
@@ -223,7 +224,9 @@ export function DrillSelectDropdown({
                             containerBottomPadding="medium"
                             ariaAttributes={{
                                 id: "drill-select-menu",
-                                "aria-label": intl.formatMessage({ id: "drill_modal_picker.label" }),
+                                "aria-label": intl.formatMessage({
+                                    id: "drill_modal_picker.label",
+                                }),
                             }}
                             InteractiveItem={DrillSelectDropdownMenuItem}
                         />
@@ -419,14 +422,18 @@ export const createDrillSelectItems = ({
             const isDisabled = missingAttributes.length > 0;
             const tooltipText = isDisabled
                 ? intl.formatMessage(
-                      { id: "drill_modal_picker.drill_to_url.disabled.missing_attributes" },
+                      {
+                          id: "drill_modal_picker.drill_to_url.disabled.missing_attributes",
+                      },
                       { attributes: missingAttributes.join(", ") },
                   )
                 : undefined;
 
             return {
                 type: DrillType.DRILL_TO_URL,
-                name: intl.formatMessage({ id: "drill_modal_picker.more.details" }),
+                name: intl.formatMessage({
+                    id: "drill_modal_picker.more.details",
+                }),
                 drillDefinition,
                 attributeValue,
                 id: stringify(drillDefinition) || "undefined",
@@ -469,3 +476,28 @@ export const createDrillSelectItems = ({
         throw new UnexpectedSdkError(`Unhandled drill definition: ${JSON.stringify(unhandledDefinition)}`);
     });
 };
+
+/**
+ * Returns a new array of unique drill definitions
+ *
+ * two drill definitions are considered equal if they have the same
+ * type, transition, origin, and target
+ *
+ * Note: They can differ in localIdentifier and are treated as same.
+ *
+ * It let other types of drill definitions as it is.
+ */
+function deduplicateDrillIntoUrlItems(
+    drillDefinitions: DashboardDrillDefinition[],
+): DashboardDrillDefinition[] {
+    return uniqBy(drillDefinitions, (drillDefinition) => {
+        if (!isDrillToAttributeUrl(drillDefinition)) {
+            return drillDefinition;
+        }
+        return stringify({
+            origin: drillDefinition.origin,
+            target: drillDefinition.target,
+            transition: drillDefinition.transition,
+        });
+    });
+}

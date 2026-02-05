@@ -15,7 +15,10 @@ const commonConfiguration = {
     },
 };
 
+const v9 = { ...commonConfiguration, plugins: { "no-barrel-files": noBarrelFilesPlugin } };
+
 export const barrelFiles: IDualConfiguration<"no-barrel-files"> = {
     v8: { ...commonConfiguration, plugins: ["no-barrel-files"] },
-    v9: { ...commonConfiguration, plugins: { "no-barrel-files": noBarrelFilesPlugin } },
+    v9,
+    ox: v9,
 };

@@ -1,4 +1,6 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
+import { defineMessage } from "react-intl";
 
 import { type ISettings, type IWorkspacePermissions } from "@gooddata/sdk-model";
 
@@ -8,44 +10,44 @@ import { isFreemiumEdition } from "../utils/featureFlags.js";
 /**
  * @internal
  */
-export const HEADER_ITEM_ID_DASHBOARDS = "gs.header.dashboards";
+export const HEADER_ITEM_ID_DASHBOARDS = defineMessage({ id: "gs.header.dashboards" }).id;
 /**
  * @internal
  */
-export const HEADER_ITEM_ID_REPORTS = "gs.header.reports";
+export const HEADER_ITEM_ID_REPORTS = defineMessage({ id: "gs.header.reports" }).id;
 /**
  * @internal
  */
-export const HEADER_ITEM_ID_KPIS_NEW = "gs.header.kpis.new";
+export const HEADER_ITEM_ID_KPIS_NEW = defineMessage({ id: "gs.header.kpis.new" }).id;
 /**
  * @internal
  */
-export const HEADER_ITEM_ID_KPIS = "gs.header.kpis";
+export const HEADER_ITEM_ID_KPIS = defineMessage({ id: "gs.header.kpis" }).id;
 /**
  * @internal
  */
-export const HEADER_ITEM_ID_ANALYZE = "gs.header.analyze";
+export const HEADER_ITEM_ID_ANALYZE = defineMessage({ id: "gs.header.analyze" }).id;
 /**
  * @internal
  */
-export const HEADER_ITEM_ID_METRICS = "gs.header.metrics";
+export const HEADER_ITEM_ID_METRICS = defineMessage({ id: "gs.header.metrics" }).id;
 /**
  * @internal
  */
-export const HEADER_ITEM_ID_LOAD = "gs.header.load";
+export const HEADER_ITEM_ID_LOAD = defineMessage({ id: "gs.header.load" }).id;
 /**
  * @internal
  */
-export const HEADER_ITEM_ID_DATA = "gs.header.data";
+export const HEADER_ITEM_ID_DATA = defineMessage({ id: "gs.header.data" }).id;
 /**
  * @internal
  */
-export const HEADER_ITEM_ID_MANAGE = "gs.header.manage";
+export const HEADER_ITEM_ID_MANAGE = defineMessage({ id: "gs.header.manage" }).id;
 
 /**
  * @internal
  */
-export const HEADER_ITEM_ID_CATALOG = "gs.header.catalog";
+export const HEADER_ITEM_ID_CATALOG = defineMessage({ id: "gs.header.catalog" }).id;
 
 /**
  * @internal

@@ -1,4 +1,5 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
+
 import { type CatalogItem, type ICatalogDateAttribute } from "@gooddata/sdk-model";
 
 import { getCatalogItemId, getCatalogItemTitle, getCatalogItemType } from "./utils.js";

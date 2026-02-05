@@ -1,5 +1,5 @@
 {
-    "./**/*.{ts,js,cjs,mjs,tsx,jsx}": ["oxfmt", "gdc-fix-copyright"],
-    "./**/*.{json,md,yaml,html}": "oxfmt",
-    "./**/*.{scss}": ["stylelint --fix", "oxfmt", "common/autoinstallers/lint-staged/node_modules/.bin/gdc-fix-copyright"]
+    "./**/*.{ts,cts,mts,tsx,js,cjs,mjs,jsx}": ["oxfmt --no-error-on-unmatched-pattern", "gdc-fix-copyright"],
+    "./**/*.{json,md,yaml,html}": "oxfmt --no-error-on-unmatched-pattern",
+    "./**/*.{scss}": ["stylelint --fix", "oxfmt --no-error-on-unmatched-pattern", "common/autoinstallers/lint-staged/node_modules/.bin/gdc-fix-copyright"]
 }

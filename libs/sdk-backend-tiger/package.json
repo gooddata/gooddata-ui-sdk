@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-backend-tiger",
-    "version": "11.19.0-alpha.9",
+    "version": "11.19.0-alpha.10",
     "description": "GoodData Backend SPI implementation for GoodData Cloud and GoodData.CN",
     "license": "MIT",
     "author": "GoodData",
@@ -49,8 +49,12 @@
         "test": "vitest watch",
         "test-isolated-ci": "./scripts/isolated-test.sh",
         "test-once": "vitest run",
-        "validate": "npm run eslint && npm run dep-cruiser && npm run oxfmt-check",
-        "validate-esm": "node --input-type=module --eval 'import \"@gooddata/sdk-backend-tiger\"' "
+        "validate": "npm run lint && npm run dep-cruiser && npm run oxfmt-check",
+        "validate-esm": "node --input-type=module --eval 'import \"@gooddata/sdk-backend-tiger\"' ",
+        "lint": "npm run oxlint && npm run eslint",
+        "lint-fix": "npm run oxlint-fix && npm run eslint-fix",
+        "oxlint": "oxlint .",
+        "oxlint-fix": "oxlint . --fix"
     },
     "dependencies": {
         "@gooddata/api-client-tiger": "workspace:*",
@@ -75,6 +79,7 @@
         "@gooddata/catalog-export": "workspace:*",
         "@gooddata/eslint-config": "workspace:*",
         "@gooddata/fixtures": "3.3.5",
+        "@gooddata/oxlint-config": "workspace:*",
         "@gooddata/reference-workspace": "workspace:*",
         "@microsoft/api-documenter": "^7.17.0",
         "@microsoft/api-extractor": "^7.55.2",
@@ -91,10 +96,10 @@
         "eslint-plugin-import-x": "4.16.1",
         "eslint-plugin-jsdoc": "62.1.0",
         "eslint-plugin-no-barrel-files": "1.2.2",
-        "eslint-plugin-no-only-tests": "3.3.0",
         "eslint-plugin-sonarjs": "3.0.6",
         "npm-run-all": "^4.1.5",
         "oxfmt": "0.27.0",
+        "oxlint": "^1.43.0",
         "typescript": "5.9.3",
         "vitest": "4.0.8"
     }

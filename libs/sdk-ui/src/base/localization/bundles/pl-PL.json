@@ -937,5 +937,21 @@
     "dialogs.export.pdf.pageOrientation.option.portrait": "Pionowo",
     "dialogs.export.pdf.pageOrientation.option.landscape": "Poziomo",
     "dialogs.export.submit": "Eksportuj",
-    "gs.header.mainMenu.ariaLabel": "Główne menu"
+    "gs.header.mainMenu.ariaLabel": "Główne menu",
+    "gs.header.analyze": "Analizuj",
+    "gs.header.catalog": "Katalog",
+    "gs.header.community": "Społeczność",
+    "gs.header.data": "Dane",
+    "gs.header.documentation": "Dokumentacja",
+    "gs.header.kpis.new": "Pulpity nawigacyjne",
+    "gs.header.metrics": "Metryki",
+    "gs.header.slack": "Luz",
+    "gs.header.submitTicket": "Zgłoś zgłoszenie",
+    "gs.header.university": "Uniwersytet",
+    "gs.header.visitSupportPortal": "Odwiedź Portal Wsparcia",
+    "gs.header.dashboards": "Pulpity nawigacyjne",
+    "gs.header.kpis": "KPI",
+    "gs.header.load": "Załaduj",
+    "gs.header.manage": "Zarządzaj",
+    "gs.header.reports": "Raporty"
 }
