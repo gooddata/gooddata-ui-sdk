@@ -272,8 +272,6 @@ export const DateFilterBodyRedesigned = forwardRef<HTMLDivElement, IDateFilterBo
             {route ? null : (
                 <div
                     ref={ref}
-                    role="listbox"
-                    aria-label={intl.formatMessage({ id: "dateFilterDropdown.label" })}
                     className={cx("gd-extended-date-filter-body-wrapper", {
                         "gd-extended-date-filter-body-wrapper-wide":
                             isRelativeDateFilterForm(selectedFilterOption),

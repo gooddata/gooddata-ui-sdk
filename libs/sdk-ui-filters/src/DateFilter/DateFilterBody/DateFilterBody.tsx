@@ -4,7 +4,6 @@ import { type CSSProperties, type ReactElement, forwardRef, useEffect, useState 
 
 import cx from "classnames";
 import { isEmpty } from "lodash-es";
-import { useIntl } from "react-intl";
 
 import {
     type DateFilterGranularity,
@@ -77,7 +76,6 @@ export interface IDateFilterBodyProps {
 export const DateFilterBody = forwardRef<HTMLDivElement, IDateFilterBodyProps>((props, ref) => {
     const [route, setRoute] = useState<DateFilterRoute>(null);
 
-    const intl = useIntl();
     const changeRoute = (newRoute: DateFilterRoute = null): void => {
         setRoute(newRoute);
     };
@@ -166,8 +164,6 @@ export const DateFilterBody = forwardRef<HTMLDivElement, IDateFilterBodyProps>((
             ) : null}
             <div
                 ref={ref}
-                role="listbox"
-                aria-label={intl.formatMessage({ id: "dateFilterDropdown.label" })}
                 className={cx("gd-extended-date-filter-body-wrapper", {
                     "gd-extended-date-filter-body-wrapper-wide":
                         isRelativeDateFilterForm(selectedFilterOption),

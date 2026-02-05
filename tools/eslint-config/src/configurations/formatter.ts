@@ -10,7 +10,7 @@ const commonConfig = {
         "@typescript-eslint/quotes": 0,
         "unicorn/template-indent": 0,
 
-        // The rest are rules that you never need to enable when using Prettier.
+        // The rest are rules that you never need to enable when using a formatter.
         "@typescript-eslint/block-spacing": "off",
         "@typescript-eslint/brace-style": "off",
         "@typescript-eslint/comma-dangle": "off",
@@ -52,4 +52,5 @@ const commonConfig = {
 export const formatter: IDualConfiguration = {
     v8: commonConfig,
     v9: commonConfig,
+    ox: commonConfig,
 };

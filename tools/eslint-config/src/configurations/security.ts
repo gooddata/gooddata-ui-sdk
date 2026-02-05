@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import type { IDualConfiguration } from "../types.js";
 
@@ -14,4 +14,5 @@ const commonConfiguration = {
 export const security: IDualConfiguration = {
     v8: commonConfiguration,
     v9: commonConfiguration,
+    ox: commonConfiguration,
 };

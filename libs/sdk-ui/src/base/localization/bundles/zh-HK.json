@@ -937,5 +937,21 @@
     "dialogs.export.pdf.pageOrientation.option.portrait": "縱向",
     "dialogs.export.pdf.pageOrientation.option.landscape": "橫向",
     "dialogs.export.submit": "匯出",
-    "gs.header.mainMenu.ariaLabel": "主餐"
+    "gs.header.mainMenu.ariaLabel": "主餐",
+    "gs.header.analyze": "分析",
+    "gs.header.catalog": "目錄",
+    "gs.header.community": "社區",
+    "gs.header.data": "數據",
+    "gs.header.documentation": "文檔",
+    "gs.header.kpis.new": "儀錶板",
+    "gs.header.metrics": "計量",
+    "gs.header.slack": "鬆弛",
+    "gs.header.submitTicket": "提交票證",
+    "gs.header.university": "大學",
+    "gs.header.visitSupportPortal": "訪問支援入口",
+    "gs.header.dashboards": "儀錶板",
+    "gs.header.kpis": "關鍵績效指標",
+    "gs.header.load": "載入",
+    "gs.header.manage": "管理",
+    "gs.header.reports": "報告"
 }

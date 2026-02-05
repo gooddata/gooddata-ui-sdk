@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/eslint-config",
-    "version": "11.19.0-alpha.9",
+    "version": "11.19.0-alpha.10",
     "license": "MIT",
     "author": "GoodData",
     "repository": {
@@ -27,49 +27,85 @@
             "import": "./dist/browser.js",
             "require": "./dist/browser.json"
         },
+        "./oxlint-browser": {
+            "import": "./dist/oxlint-browser.js"
+        },
         "./browser-esm": {
             "import": "./dist/browser-esm.js",
             "require": "./dist/browser-esm.json"
+        },
+        "./oxlint-browser-esm": {
+            "import": "./dist/oxlint-browser-esm.js"
         },
         "./vitest": {
             "import": "./dist/vitest.js",
             "require": "./dist/vitest.json"
         },
+        "./oxlint-vitest": {
+            "import": "./dist/oxlint-vitest.js"
+        },
         "./esm": {
             "import": "./dist/esm.js",
             "require": "./dist/esm.json"
+        },
+        "./oxlint-esm": {
+            "import": "./dist/oxlint-esm.js"
         },
         "./esm-vitest": {
             "import": "./dist/esm-vitest.js",
             "require": "./dist/esm-vitest.json"
         },
+        "./oxlint-esm-vitest": {
+            "import": "./dist/oxlint-esm-vitest.js"
+        },
         "./react": {
             "import": "./dist/react.js",
             "require": "./dist/react.json"
+        },
+        "./oxlint-react": {
+            "import": "./dist/oxlint-react.js"
         },
         "./react-vitest": {
             "import": "./dist/react-vitest.js",
             "require": "./dist/react-vitest.json"
         },
+        "./oxlint-react-vitest": {
+            "import": "./dist/oxlint-react-vitest.js"
+        },
         "./react-cypress": {
             "import": "./dist/react-cypress.js",
             "require": "./dist/react-cypress.json"
+        },
+        "./oxlint-react-cypress": {
+            "import": "./dist/oxlint-react-cypress.js"
         },
         "./esm-react": {
             "import": "./dist/esm-react.js",
             "require": "./dist/esm-react.json"
         },
+        "./oxlint-esm-react": {
+            "import": "./dist/oxlint-esm-react.js"
+        },
         "./esm-react-cypress": {
             "import": "./dist/esm-react-cypress.js",
             "require": "./dist/esm-react-cypress.json"
+        },
+        "./oxlint-esm-react-cypress": {
+            "import": "./dist/oxlint-esm-react-cypress.js"
         },
         "./esm-react-vitest": {
             "import": "./dist/esm-react-vitest.js",
             "require": "./dist/esm-react-vitest.json"
         },
+        "./oxlint-esm-react-vitest": {
+            "import": "./dist/oxlint-esm-react-vitest.js"
+        },
         "./esm-react-vitest-storybook": {
             "import": "./dist/esm-react-vitest-storybook.js",
             "require": "./dist/esm-react-vitest-storybook.json"
+        },
+        "./oxlint-esm-react-vitest-storybook": {
+            "import": "./dist/oxlint-esm-react-vitest-storybook.js"
         }
     },
     "scripts": {
@@ -86,6 +122,7 @@
     },
     "devDependencies": {
         "@eslint/js": "9.28.0",
+        "@gooddata/lint-config": "workspace:*",
         "@testing-library/dom": "10.4.1",
         "@types/node": "^22.13.0",
         "@typescript-eslint/eslint-plugin": "8.52.0",
@@ -123,7 +160,6 @@
         "eslint-plugin-import-x": "4.16.1",
         "eslint-plugin-jsdoc": "62.1.0",
         "eslint-plugin-no-barrel-files": "1.2.2",
-        "eslint-plugin-no-only-tests": "2.6.0 || 3.3.0",
         "eslint-plugin-sonarjs": "3.0.6"
     }
 }

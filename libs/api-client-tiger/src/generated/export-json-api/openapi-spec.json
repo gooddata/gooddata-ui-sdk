@@ -19,7 +19,10 @@
     "paths": {
         "/api/v1/actions/workspaces/{workspaceId}/export/visual": {
             "post": {
-                "tags": ["actions", "Visual export"],
+                "tags": [
+                    "actions",
+                    "Visual export"
+                ],
                 "summary": "Create visual - pdf export request",
                 "description": "An visual export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.",
                 "operationId": "createPdfExport",
@@ -65,14 +68,19 @@
                     }
                 },
                 "x-gdc-security-info": {
-                    "permissions": ["EXPORT_PDF"],
+                    "permissions": [
+                        "EXPORT_PDF"
+                    ],
                     "description": "Permissions required to execute pdf export."
                 }
             }
         },
         "/api/v1/actions/workspaces/{workspaceId}/export/tabular": {
             "post": {
-                "tags": ["Tabular export", "actions"],
+                "tags": [
+                    "Tabular export",
+                    "actions"
+                ],
                 "summary": "Create tabular export request",
                 "description": "An tabular export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.",
                 "operationId": "createTabularExport",
@@ -109,14 +117,19 @@
                     }
                 },
                 "x-gdc-security-info": {
-                    "permissions": ["EXPORT_TABULAR"],
+                    "permissions": [
+                        "EXPORT_TABULAR"
+                    ],
                     "description": "Permissions required to execute tabular export."
                 }
             }
         },
         "/api/v1/actions/workspaces/{workspaceId}/export/slides": {
             "post": {
-                "tags": ["Slides export", "actions"],
+                "tags": [
+                    "Slides export",
+                    "actions"
+                ],
                 "summary": "(EXPERIMENTAL) Create slides export request",
                 "description": "Note: This API is an experimental and is going to change. Please, use it accordingly. A slides export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.",
                 "operationId": "createSlidesExport",
@@ -162,14 +175,19 @@
                     }
                 },
                 "x-gdc-security-info": {
-                    "permissions": ["EXPORT_PDF"],
+                    "permissions": [
+                        "EXPORT_PDF"
+                    ],
                     "description": "Permissions required to execute slides export."
                 }
             }
         },
         "/api/v1/actions/workspaces/{workspaceId}/export/raw": {
             "post": {
-                "tags": ["Raw export", "actions"],
+                "tags": [
+                    "Raw export",
+                    "actions"
+                ],
                 "summary": "(EXPERIMENTAL) Create raw export request",
                 "description": "Note: This API is an experimental and is going to change. Please, use it accordingly.An raw export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.",
                 "operationId": "createRawExport",
@@ -206,14 +224,19 @@
                     }
                 },
                 "x-gdc-security-info": {
-                    "permissions": ["EXPORT_TABULAR"],
+                    "permissions": [
+                        "EXPORT_TABULAR"
+                    ],
                     "description": "Permissions required to execute raw export."
                 }
             }
         },
         "/api/v1/actions/workspaces/{workspaceId}/export/image": {
             "post": {
-                "tags": ["Image export", "actions"],
+                "tags": [
+                    "Image export",
+                    "actions"
+                ],
                 "summary": "(EXPERIMENTAL) Create image export request",
                 "description": "Note: This API is an experimental and is going to change. Please, use it accordingly. An image export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.",
                 "operationId": "createImageExport",
@@ -250,14 +273,19 @@
                     }
                 },
                 "x-gdc-security-info": {
-                    "permissions": ["EXPORT_PDF"],
+                    "permissions": [
+                        "EXPORT_PDF"
+                    ],
                     "description": "Permissions required to execute image export."
                 }
             }
         },
         "/api/v1/actions/workspaces/{workspaceId}/analyticalDashboards/{dashboardId}/export/tabular": {
             "post": {
-                "tags": ["Tabular export", "actions"],
+                "tags": [
+                    "Tabular export",
+                    "actions"
+                ],
                 "summary": "(EXPERIMENTAL) Create dashboard tabular export request",
                 "description": "Note: This API is an experimental and is going to change. Please, use it accordingly.An tabular export job will be created based on the export request and put to queue to be executed. The result of the operation will be an exportResult identifier that will be assembled by the client into a url that can be polled.",
                 "operationId": "createDashboardExportRequest",
@@ -302,14 +330,19 @@
                     }
                 },
                 "x-gdc-security-info": {
-                    "permissions": ["EXPORT_TABULAR"],
+                    "permissions": [
+                        "EXPORT_TABULAR"
+                    ],
                     "description": "Permissions required to execute tabular export."
                 }
             }
         },
         "/api/v1/actions/workspaces/{workspaceId}/export/visual/{exportId}/metadata": {
             "get": {
-                "tags": ["actions", "Visual export"],
+                "tags": [
+                    "actions",
+                    "Visual export"
+                ],
                 "summary": "Retrieve metadata context",
                 "description": "This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/visual endpoint. The metadata structure is not verified.",
                 "operationId": "getMetadata",
@@ -340,14 +373,19 @@
                     }
                 },
                 "x-gdc-security-info": {
-                    "permissions": ["EXPORT_PDF"],
+                    "permissions": [
+                        "EXPORT_PDF"
+                    ],
                     "description": "Minimal permission required to use this endpoint."
                 }
             }
         },
         "/api/v1/actions/workspaces/{workspaceId}/export/visual/{exportId}": {
             "get": {
-                "tags": ["actions", "Visual export"],
+                "tags": [
+                    "actions",
+                    "Visual export"
+                ],
                 "summary": "Retrieve exported files",
                 "description": "Returns 202 until original POST export request is not processed.Returns 200 with exported data once the export is done.",
                 "operationId": "getExportedFile",
@@ -416,14 +454,19 @@
                     }
                 },
                 "x-gdc-security-info": {
-                    "permissions": ["EXPORT_PDF"],
+                    "permissions": [
+                        "EXPORT_PDF"
+                    ],
                     "description": "Minimal permission required to use this endpoint."
                 }
             }
         },
         "/api/v1/actions/workspaces/{workspaceId}/export/tabular/{exportId}": {
             "get": {
-                "tags": ["Tabular export", "actions"],
+                "tags": [
+                    "Tabular export",
+                    "actions"
+                ],
                 "summary": "Retrieve exported files",
                 "description": "After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn't ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.",
                 "operationId": "getTabularExport",
@@ -528,14 +571,19 @@
                     }
                 },
                 "x-gdc-security-info": {
-                    "permissions": ["EXPORT_TABULAR"],
+                    "permissions": [
+                        "EXPORT_TABULAR"
+                    ],
                     "description": "Minimal permission required to use this endpoint."
                 }
             }
         },
         "/api/v1/actions/workspaces/{workspaceId}/export/slides/{exportId}/metadata": {
             "get": {
-                "tags": ["Slides export", "actions"],
+                "tags": [
+                    "Slides export",
+                    "actions"
+                ],
                 "summary": "(EXPERIMENTAL) Retrieve metadata context",
                 "description": "Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/slides endpoint. The metadata structure is not verified.",
                 "operationId": "getSlidesExportMetadata",
@@ -566,14 +614,19 @@
                     }
                 },
                 "x-gdc-security-info": {
-                    "permissions": ["EXPORT_PDF"],
+                    "permissions": [
+                        "EXPORT_PDF"
+                    ],
                     "description": "Minimal permission required to use this endpoint."
                 }
             }
         },
         "/api/v1/actions/workspaces/{workspaceId}/export/slides/{exportId}": {
             "get": {
-                "tags": ["Slides export", "actions"],
+                "tags": [
+                    "Slides export",
+                    "actions"
+                ],
                 "summary": "(EXPERIMENTAL) Retrieve exported files",
                 "description": "Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn't ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.",
                 "operationId": "getSlidesExport",
@@ -714,14 +767,19 @@
                     }
                 },
                 "x-gdc-security-info": {
-                    "permissions": ["EXPORT_PDF"],
+                    "permissions": [
+                        "EXPORT_PDF"
+                    ],
                     "description": "Minimal permission required to use this endpoint."
                 }
             }
         },
         "/api/v1/actions/workspaces/{workspaceId}/export/raw/{exportId}": {
             "get": {
-                "tags": ["Raw export", "actions"],
+                "tags": [
+                    "Raw export",
+                    "actions"
+                ],
                 "summary": "(EXPERIMENTAL) Retrieve exported files",
                 "description": "Note: This API is an experimental and is going to change. Please, use it accordingly.After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn't ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.",
                 "operationId": "getRawExport",
@@ -802,14 +860,19 @@
                     }
                 },
                 "x-gdc-security-info": {
-                    "permissions": ["EXPORT_TABULAR"],
+                    "permissions": [
+                        "EXPORT_TABULAR"
+                    ],
                     "description": "Minimal permission required to use this endpoint."
                 }
             }
         },
         "/api/v1/actions/workspaces/{workspaceId}/export/image/{exportId}/metadata": {
             "get": {
-                "tags": ["Image export", "actions"],
+                "tags": [
+                    "Image export",
+                    "actions"
+                ],
                 "summary": "(EXPERIMENTAL) Retrieve metadata context",
                 "description": "Note: This API is an experimental and is going to change. Please, use it accordingly. This endpoint serves as a cache for user-defined metadata of the export for the front end UI to retrieve it, if one was created using the POST ../export/image endpoint. The metadata structure is not verified.",
                 "operationId": "getImageExportMetadata",
@@ -840,14 +903,19 @@
                     }
                 },
                 "x-gdc-security-info": {
-                    "permissions": ["EXPORT_PDF"],
+                    "permissions": [
+                        "EXPORT_PDF"
+                    ],
                     "description": "Minimal permission required to use this endpoint."
                 }
             }
         },
         "/api/v1/actions/workspaces/{workspaceId}/export/image/{exportId}": {
             "get": {
-                "tags": ["Image export", "actions"],
+                "tags": [
+                    "Image export",
+                    "actions"
+                ],
                 "summary": "(EXPERIMENTAL) Retrieve exported files",
                 "description": "Note: This API is an experimental and is going to change. Please, use it accordingly. After clients creates a POST export request, the processing of it will start shortly asynchronously. To retrieve the result, client has to check periodically for the result on this endpoint. In case the result isn't ready yet, the service returns 202. If the result is ready, it returns 200 and octet stream of the result file with provided filename.",
                 "operationId": "getImageExport",
@@ -937,7 +1005,9 @@
                     }
                 },
                 "x-gdc-security-info": {
-                    "permissions": ["EXPORT_PDF"],
+                    "permissions": [
+                        "EXPORT_PDF"
+                    ],
                     "description": "Minimal permission required to use this endpoint."
                 }
             }
@@ -953,7 +1023,10 @@
                 "example": {}
             },
             "VisualExportRequest": {
-                "required": ["dashboardId", "fileName"],
+                "required": [
+                    "dashboardId",
+                    "fileName"
+                ],
                 "type": "object",
                 "properties": {
                     "fileName": {
@@ -975,7 +1048,9 @@
                 "description": "Export request object describing the export properties and metadata for dashboard PDF exports."
             },
             "ExportResponse": {
-                "required": ["exportResult"],
+                "required": [
+                    "exportResult"
+                ],
                 "type": "object",
                 "properties": {
                     "exportResult": {
@@ -984,7 +1059,9 @@
                 }
             },
             "CustomLabel": {
-                "required": ["title"],
+                "required": [
+                    "title"
+                ],
                 "type": "object",
                 "properties": {
                     "title": {
@@ -995,7 +1072,10 @@
                 "description": "Custom label object override."
             },
             "CustomMetric": {
-                "required": ["format", "title"],
+                "required": [
+                    "format",
+                    "title"
+                ],
                 "type": "object",
                 "properties": {
                     "title": {
@@ -1030,7 +1110,9 @@
                 "description": "Custom cell value overrides (IDs will be replaced with specified values)."
             },
             "PdfTableStyle": {
-                "required": ["selector"],
+                "required": [
+                    "selector"
+                ],
                 "type": "object",
                 "properties": {
                     "selector": {
@@ -1060,7 +1142,10 @@
                 "deprecated": true
             },
             "PdfTableStyleProperty": {
-                "required": ["key", "value"],
+                "required": [
+                    "key",
+                    "value"
+                ],
                 "type": "object",
                 "properties": {
                     "key": {
@@ -1135,18 +1220,25 @@
                         "type": "string",
                         "description": "Set page size. (PDF)",
                         "default": "A4",
-                        "enum": ["A3", "A4", "LETTER"]
+                        "enum": [
+                            "A3",
+                            "A4",
+                            "LETTER"
+                        ]
                     },
                     "pageOrientation": {
                         "type": "string",
                         "description": "Set page orientation. (PDF)",
                         "default": "PORTRAIT",
-                        "enum": ["PORTRAIT", "LANDSCAPE"]
+                        "enum": [
+                            "PORTRAIT",
+                            "LANDSCAPE"
+                        ]
                     },
                     "delimiter": {
                         "maxLength": 1,
                         "minLength": 1,
-                        "pattern": "^[^\r\n\"]$",
+                        "pattern": "^[^\\r\\n\"]$",
                         "type": "string",
                         "description": "Set column delimiter. (CSV)"
                     }
@@ -1154,14 +1246,22 @@
                 "description": "Additional settings."
             },
             "TabularExportRequest": {
-                "required": ["fileName", "format"],
+                "required": [
+                    "fileName",
+                    "format"
+                ],
                 "type": "object",
                 "properties": {
                     "format": {
                         "type": "string",
                         "description": "Expected file format.",
                         "example": "CSV",
-                        "enum": ["CSV", "XLSX", "HTML", "PDF"]
+                        "enum": [
+                            "CSV",
+                            "XLSX",
+                            "HTML",
+                            "PDF"
+                        ]
                     },
                     "executionResult": {
                         "type": "string",
@@ -1204,14 +1304,20 @@
                 "description": "Export request object describing the export properties and overrides for tabular exports."
             },
             "SlidesExportRequest": {
-                "required": ["fileName", "format"],
+                "required": [
+                    "fileName",
+                    "format"
+                ],
                 "type": "object",
                 "properties": {
                     "format": {
                         "type": "string",
                         "description": "Requested resulting file type.",
                         "example": "PDF",
-                        "enum": ["PDF", "PPTX"]
+                        "enum": [
+                            "PDF",
+                            "PPTX"
+                        ]
                     },
                     "fileName": {
                         "type": "string",
@@ -1258,7 +1364,11 @@
                 "description": "Export request object describing the export properties and metadata for slides exports."
             },
             "AFM": {
-                "required": ["attributes", "filters", "measures"],
+                "required": [
+                    "attributes",
+                    "filters",
+                    "measures"
+                ],
                 "type": "object",
                 "properties": {
                     "attributes": {
@@ -1293,11 +1403,17 @@
                 "description": "Top level executable entity. Combination of [A]ttributes, [F]ilters & [M]etrics."
             },
             "AbsoluteDateFilter": {
-                "required": ["absoluteDateFilter"],
+                "required": [
+                    "absoluteDateFilter"
+                ],
                 "type": "object",
                 "properties": {
                     "absoluteDateFilter": {
-                        "required": ["from", "to", "dataset"],
+                        "required": [
+                            "from",
+                            "to",
+                            "dataset"
+                        ],
                         "type": "object",
                         "properties": {
                             "from": {
@@ -1358,7 +1474,9 @@
                 ]
             },
             "AfmLocalIdentifier": {
-                "required": ["localIdentifier"],
+                "required": [
+                    "localIdentifier"
+                ],
                 "type": "object",
                 "properties": {
                     "localIdentifier": {
@@ -1369,11 +1487,16 @@
                 }
             },
             "AfmObjectIdentifier": {
-                "required": ["identifier"],
+                "required": [
+                    "identifier"
+                ],
                 "type": "object",
                 "properties": {
                     "identifier": {
-                        "required": ["type", "id"],
+                        "required": [
+                            "type",
+                            "id"
+                        ],
                         "type": "object",
                         "properties": {
                             "type": {
@@ -1403,11 +1526,16 @@
                 "description": "ObjectIdentifier with `identifier` wrapper. This serves to distinguish MD object identifiers in AFM request from local identifiers."
             },
             "AfmObjectIdentifierAttribute": {
-                "required": ["identifier"],
+                "required": [
+                    "identifier"
+                ],
                 "type": "object",
                 "properties": {
                     "identifier": {
-                        "required": ["id", "type"],
+                        "required": [
+                            "id",
+                            "type"
+                        ],
                         "type": "object",
                         "properties": {
                             "id": {
@@ -1417,7 +1545,9 @@
                             },
                             "type": {
                                 "type": "string",
-                                "enum": ["attribute"]
+                                "enum": [
+                                    "attribute"
+                                ]
                             }
                         }
                     }
@@ -1425,11 +1555,16 @@
                 "description": "Reference to the date attribute to use."
             },
             "AfmObjectIdentifierCore": {
-                "required": ["identifier"],
+                "required": [
+                    "identifier"
+                ],
                 "type": "object",
                 "properties": {
                     "identifier": {
-                        "required": ["id", "type"],
+                        "required": [
+                            "id",
+                            "type"
+                        ],
                         "type": "object",
                         "properties": {
                             "id": {
@@ -1439,7 +1574,12 @@
                             },
                             "type": {
                                 "type": "string",
-                                "enum": ["attribute", "label", "fact", "metric"]
+                                "enum": [
+                                    "attribute",
+                                    "label",
+                                    "fact",
+                                    "metric"
+                                ]
                             }
                         }
                     }
@@ -1447,11 +1587,16 @@
                 "description": "Reference to the metric, fact or attribute object to use for the metric."
             },
             "AfmObjectIdentifierDataset": {
-                "required": ["identifier"],
+                "required": [
+                    "identifier"
+                ],
                 "type": "object",
                 "properties": {
                     "identifier": {
-                        "required": ["id", "type"],
+                        "required": [
+                            "id",
+                            "type"
+                        ],
                         "type": "object",
                         "properties": {
                             "id": {
@@ -1461,7 +1606,9 @@
                             },
                             "type": {
                                 "type": "string",
-                                "enum": ["dataset"]
+                                "enum": [
+                                    "dataset"
+                                ]
                             }
                         }
                     }
@@ -1469,16 +1616,23 @@
                 "description": "Reference to the date dataset to which the filter should be applied."
             },
             "AfmObjectIdentifierLabel": {
-                "required": ["identifier"],
+                "required": [
+                    "identifier"
+                ],
                 "type": "object",
                 "properties": {
                     "identifier": {
-                        "required": ["type", "id"],
+                        "required": [
+                            "type",
+                            "id"
+                        ],
                         "type": "object",
                         "properties": {
                             "type": {
                                 "type": "string",
-                                "enum": ["label"]
+                                "enum": [
+                                    "label"
+                                ]
                             },
                             "id": {
                                 "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
@@ -1490,11 +1644,16 @@
                 }
             },
             "ArithmeticMeasureDefinition": {
-                "required": ["arithmeticMeasure"],
+                "required": [
+                    "arithmeticMeasure"
+                ],
                 "type": "object",
                 "properties": {
                     "arithmeticMeasure": {
-                        "required": ["measureIdentifiers", "operator"],
+                        "required": [
+                            "measureIdentifiers",
+                            "operator"
+                        ],
                         "type": "object",
                         "properties": {
                             "measureIdentifiers": {
@@ -1508,7 +1667,13 @@
                                 "type": "string",
                                 "description": "Arithmetic operator describing operation between metrics.",
                                 "example": "SUM",
-                                "enum": ["SUM", "DIFFERENCE", "MULTIPLICATION", "RATIO", "CHANGE"]
+                                "enum": [
+                                    "SUM",
+                                    "DIFFERENCE",
+                                    "MULTIPLICATION",
+                                    "RATIO",
+                                    "CHANGE"
+                                ]
                             }
                         }
                     }
@@ -1528,14 +1693,19 @@
                 ]
             },
             "AttributeFilterElements": {
-                "required": ["values"],
+                "required": [
+                    "values"
+                ],
                 "type": "object",
                 "properties": {
                     "values": {
                         "uniqueItems": true,
                         "type": "array",
                         "description": "Set of label values.",
-                        "example": ["value1", "value2"],
+                        "example": [
+                            "value1",
+                            "value2"
+                        ],
                         "items": {
                             "type": "string",
                             "nullable": true
@@ -1545,7 +1715,10 @@
                 "description": "Filter on specific set of label values."
             },
             "AttributeItem": {
-                "required": ["label", "localIdentifier"],
+                "required": [
+                    "label",
+                    "localIdentifier"
+                ],
                 "type": "object",
                 "properties": {
                     "localIdentifier": {
@@ -1565,7 +1738,9 @@
                 }
             },
             "BoundedFilter": {
-                "required": ["granularity"],
+                "required": [
+                    "granularity"
+                ],
                 "type": "object",
                 "properties": {
                     "granularity": {
@@ -1612,11 +1787,16 @@
                 "description": "Bounding filter for this relative date filter. This can be used to limit the range of the relative date filter to a specific date range."
             },
             "ComparisonCondition": {
-                "required": ["comparison"],
+                "required": [
+                    "comparison"
+                ],
                 "type": "object",
                 "properties": {
                     "comparison": {
-                        "required": ["operator", "value"],
+                        "required": [
+                            "operator",
+                            "value"
+                        ],
                         "type": "object",
                         "properties": {
                             "operator": {
@@ -1641,11 +1821,17 @@
                 "description": "Condition that compares the metric value to a given constant value using a comparison operator."
             },
             "ComparisonMeasureValueFilter": {
-                "required": ["comparisonMeasureValueFilter"],
+                "required": [
+                    "comparisonMeasureValueFilter"
+                ],
                 "type": "object",
                 "properties": {
                     "comparisonMeasureValueFilter": {
-                        "required": ["operator", "value", "measure"],
+                        "required": [
+                            "operator",
+                            "value",
+                            "measure"
+                        ],
                         "type": "object",
                         "properties": {
                             "dimensionality": {
@@ -1691,11 +1877,16 @@
                 "description": "Filter the result by comparing specified metric to given constant value, using given comparison operator."
             },
             "CompoundMeasureValueFilter": {
-                "required": ["compoundMeasureValueFilter"],
+                "required": [
+                    "compoundMeasureValueFilter"
+                ],
                 "type": "object",
                 "properties": {
                     "compoundMeasureValueFilter": {
-                        "required": ["conditions", "measure"],
+                        "required": [
+                            "conditions",
+                            "measure"
+                        ],
                         "type": "object",
                         "properties": {
                             "dimensionality": {
@@ -1809,11 +2000,15 @@
                 ]
             },
             "InlineFilterDefinition": {
-                "required": ["inline"],
+                "required": [
+                    "inline"
+                ],
                 "type": "object",
                 "properties": {
                     "inline": {
-                        "required": ["filter"],
+                        "required": [
+                            "filter"
+                        ],
                         "type": "object",
                         "properties": {
                             "filter": {
@@ -1832,11 +2027,15 @@
                 "description": "Filter in form of direct MAQL query."
             },
             "InlineMeasureDefinition": {
-                "required": ["inline"],
+                "required": [
+                    "inline"
+                ],
                 "type": "object",
                 "properties": {
                     "inline": {
-                        "required": ["maql"],
+                        "required": [
+                            "maql"
+                        ],
                         "type": "object",
                         "properties": {
                             "maql": {
@@ -1867,7 +2066,10 @@
                 ]
             },
             "MeasureItem": {
-                "required": ["definition", "localIdentifier"],
+                "required": [
+                    "definition",
+                    "localIdentifier"
+                ],
                 "type": "object",
                 "properties": {
                     "localIdentifier": {
@@ -1910,11 +2112,16 @@
                 ]
             },
             "NegativeAttributeFilter": {
-                "required": ["negativeAttributeFilter"],
+                "required": [
+                    "negativeAttributeFilter"
+                ],
                 "type": "object",
                 "properties": {
                     "negativeAttributeFilter": {
-                        "required": ["notIn", "label"],
+                        "required": [
+                            "notIn",
+                            "label"
+                        ],
                         "type": "object",
                         "properties": {
                             "notIn": {
@@ -1935,7 +2142,10 @@
                 "description": "Filter able to limit element values by label and related selected negated elements."
             },
             "PopDataset": {
-                "required": ["dataset", "periodsAgo"],
+                "required": [
+                    "dataset",
+                    "periodsAgo"
+                ],
                 "type": "object",
                 "properties": {
                     "dataset": {
@@ -1951,11 +2161,16 @@
                 "description": "Combination of the date data set to use and how many periods ago to calculate the previous period for."
             },
             "PopDatasetMeasureDefinition": {
-                "required": ["previousPeriodMeasure"],
+                "required": [
+                    "previousPeriodMeasure"
+                ],
                 "type": "object",
                 "properties": {
                     "previousPeriodMeasure": {
-                        "required": ["dateDatasets", "measureIdentifier"],
+                        "required": [
+                            "dateDatasets",
+                            "measureIdentifier"
+                        ],
                         "type": "object",
                         "properties": {
                             "measureIdentifier": {
@@ -1974,7 +2189,10 @@
                 "description": "Previous period type of metric."
             },
             "PopDate": {
-                "required": ["attribute", "periodsAgo"],
+                "required": [
+                    "attribute",
+                    "periodsAgo"
+                ],
                 "type": "object",
                 "properties": {
                     "attribute": {
@@ -1990,11 +2208,16 @@
                 "description": "Combination of the date attribute to use and how many periods ago to calculate the PoP for."
             },
             "PopDateMeasureDefinition": {
-                "required": ["overPeriodMeasure"],
+                "required": [
+                    "overPeriodMeasure"
+                ],
                 "type": "object",
                 "properties": {
                     "overPeriodMeasure": {
-                        "required": ["dateAttributes", "measureIdentifier"],
+                        "required": [
+                            "dateAttributes",
+                            "measureIdentifier"
+                        ],
                         "type": "object",
                         "properties": {
                             "measureIdentifier": {
@@ -2024,11 +2247,16 @@
                 ]
             },
             "PositiveAttributeFilter": {
-                "required": ["positiveAttributeFilter"],
+                "required": [
+                    "positiveAttributeFilter"
+                ],
                 "type": "object",
                 "properties": {
                     "positiveAttributeFilter": {
-                        "required": ["in", "label"],
+                        "required": [
+                            "in",
+                            "label"
+                        ],
                         "type": "object",
                         "properties": {
                             "in": {
@@ -2049,17 +2277,26 @@
                 "description": "Filter able to limit element values by label and related selected elements."
             },
             "RangeCondition": {
-                "required": ["range"],
+                "required": [
+                    "range"
+                ],
                 "type": "object",
                 "properties": {
                     "range": {
-                        "required": ["from", "operator", "to"],
+                        "required": [
+                            "from",
+                            "operator",
+                            "to"
+                        ],
                         "type": "object",
                         "properties": {
                             "operator": {
                                 "type": "string",
                                 "example": "BETWEEN",
-                                "enum": ["BETWEEN", "NOT_BETWEEN"]
+                                "enum": [
+                                    "BETWEEN",
+                                    "NOT_BETWEEN"
+                                ]
                             },
                             "from": {
                                 "type": "number",
@@ -2075,11 +2312,18 @@
                 "description": "Condition that checks if the metric value is within a given range."
             },
             "RangeMeasureValueFilter": {
-                "required": ["rangeMeasureValueFilter"],
+                "required": [
+                    "rangeMeasureValueFilter"
+                ],
                 "type": "object",
                 "properties": {
                     "rangeMeasureValueFilter": {
-                        "required": ["from", "operator", "to", "measure"],
+                        "required": [
+                            "from",
+                            "operator",
+                            "to",
+                            "measure"
+                        ],
                         "type": "object",
                         "properties": {
                             "dimensionality": {
@@ -2097,7 +2341,10 @@
                             "operator": {
                                 "type": "string",
                                 "example": "BETWEEN",
-                                "enum": ["BETWEEN", "NOT_BETWEEN"]
+                                "enum": [
+                                    "BETWEEN",
+                                    "NOT_BETWEEN"
+                                ]
                             },
                             "from": {
                                 "type": "number",
@@ -2122,11 +2369,17 @@
                 "description": "Filter the result by comparing specified metric to given range of values."
             },
             "RankingFilter": {
-                "required": ["rankingFilter"],
+                "required": [
+                    "rankingFilter"
+                ],
                 "type": "object",
                 "properties": {
                     "rankingFilter": {
-                        "required": ["measures", "operator", "value"],
+                        "required": [
+                            "measures",
+                            "operator",
+                            "value"
+                        ],
                         "type": "object",
                         "properties": {
                             "dimensionality": {
@@ -2146,7 +2399,10 @@
                             "operator": {
                                 "type": "string",
                                 "description": "The type of ranking to use, TOP or BOTTOM.",
-                                "enum": ["TOP", "BOTTOM"]
+                                "enum": [
+                                    "TOP",
+                                    "BOTTOM"
+                                ]
                             },
                             "value": {
                                 "type": "integer",
@@ -2166,7 +2422,9 @@
                 "description": "Filter the result on top/bottom N values according to given metric(s)."
             },
             "RawCustomLabel": {
-                "required": ["title"],
+                "required": [
+                    "title"
+                ],
                 "type": "object",
                 "properties": {
                     "title": {
@@ -2177,7 +2435,9 @@
                 "description": "Custom label object override."
             },
             "RawCustomMetric": {
-                "required": ["title"],
+                "required": [
+                    "title"
+                ],
                 "type": "object",
                 "properties": {
                     "title": {
@@ -2208,14 +2468,22 @@
                 "description": "Custom cell value overrides (IDs will be replaced with specified values)."
             },
             "RawExportRequest": {
-                "required": ["execution", "fileName", "format"],
+                "required": [
+                    "execution",
+                    "fileName",
+                    "format"
+                ],
                 "type": "object",
                 "properties": {
                     "format": {
                         "type": "string",
                         "description": "Requested resulting file type.",
                         "example": "CSV",
-                        "enum": ["ARROW_FILE", "ARROW_STREAM", "CSV"]
+                        "enum": [
+                            "ARROW_FILE",
+                            "ARROW_STREAM",
+                            "CSV"
+                        ]
                     },
                     "execution": {
                         "$ref": "#/components/schemas/AFM"
@@ -2234,7 +2502,7 @@
                     "delimiter": {
                         "maxLength": 1,
                         "minLength": 1,
-                        "pattern": "^[^\r\n\"]$",
+                        "pattern": "^[^\\r\\n\"]$",
                         "type": "string",
                         "description": "Set column delimiter. (CSV)"
                     }
@@ -2242,11 +2510,18 @@
                 "description": "Export request object describing the export properties and overrides for raw exports."
             },
             "RelativeDateFilter": {
-                "required": ["relativeDateFilter"],
+                "required": [
+                    "relativeDateFilter"
+                ],
                 "type": "object",
                 "properties": {
                     "relativeDateFilter": {
-                        "required": ["from", "granularity", "to", "dataset"],
+                        "required": [
+                            "from",
+                            "granularity",
+                            "to",
+                            "dataset"
+                        ],
                         "type": "object",
                         "properties": {
                             "granularity": {
@@ -2309,11 +2584,15 @@
                 "description": "A date filter specifying a time interval that is relative to the current date. For example, last week, next month, and so on. Field dataset is representing qualifier of date dimension. The 'from' and 'to' properties mark the boundaries of the interval. If 'from' is omitted, all values earlier than 'to' are included. If 'to' is omitted, all values later than 'from' are included. It is not allowed to omit both."
             },
             "SimpleMeasureDefinition": {
-                "required": ["measure"],
+                "required": [
+                    "measure"
+                ],
                 "type": "object",
                 "properties": {
                     "measure": {
-                        "required": ["item"],
+                        "required": [
+                            "item"
+                        ],
                         "type": "object",
                         "properties": {
                             "item": {
@@ -2353,14 +2632,21 @@
                 "description": "Metric defined by referencing a MAQL metric or an LDM fact object with aggregation."
             },
             "ImageExportRequest": {
-                "required": ["dashboardId", "fileName", "format", "widgetIds"],
+                "required": [
+                    "dashboardId",
+                    "fileName",
+                    "format",
+                    "widgetIds"
+                ],
                 "type": "object",
                 "properties": {
                     "format": {
                         "type": "string",
                         "description": "Requested resulting file type.",
                         "example": "PNG",
-                        "enum": ["PNG"]
+                        "enum": [
+                            "PNG"
+                        ]
                     },
                     "fileName": {
                         "type": "string",
@@ -2402,7 +2688,9 @@
                 ]
             },
             "AttributeElementsByRef": {
-                "required": ["uris"],
+                "required": [
+                    "uris"
+                ],
                 "type": "object",
                 "properties": {
                     "uris": {
@@ -2416,7 +2704,9 @@
                 }
             },
             "AttributeElementsByValue": {
-                "required": ["values"],
+                "required": [
+                    "values"
+                ],
                 "type": "object",
                 "properties": {
                     "values": {
@@ -2430,7 +2720,10 @@
                 }
             },
             "AttributeFilterByDate": {
-                "required": ["filterLocalIdentifier", "isCommonDate"],
+                "required": [
+                    "filterLocalIdentifier",
+                    "isCommonDate"
+                ],
                 "type": "object",
                 "properties": {
                     "filterLocalIdentifier": {
@@ -2442,7 +2735,10 @@
                 }
             },
             "AttributeFilterParent": {
-                "required": ["filterLocalIdentifier", "over"],
+                "required": [
+                    "filterLocalIdentifier",
+                    "over"
+                ],
                 "type": "object",
                 "properties": {
                     "filterLocalIdentifier": {
@@ -2454,11 +2750,17 @@
                 }
             },
             "DashboardAttributeFilter": {
-                "required": ["attributeFilter"],
+                "required": [
+                    "attributeFilter"
+                ],
                 "type": "object",
                 "properties": {
                     "attributeFilter": {
-                        "required": ["attributeElements", "displayForm", "negativeSelection"],
+                        "required": [
+                            "attributeElements",
+                            "displayForm",
+                            "negativeSelection"
+                        ],
                         "type": "object",
                         "properties": {
                             "displayForm": {
@@ -2493,7 +2795,10 @@
                             },
                             "selectionMode": {
                                 "type": "string",
-                                "enum": ["single", "multi"]
+                                "enum": [
+                                    "single",
+                                    "multi"
+                                ]
                             },
                             "localIdentifier": {
                                 "type": "string"
@@ -2503,16 +2808,24 @@
                 }
             },
             "DashboardDateFilter": {
-                "required": ["dateFilter"],
+                "required": [
+                    "dateFilter"
+                ],
                 "type": "object",
                 "properties": {
                     "dateFilter": {
-                        "required": ["granularity", "type"],
+                        "required": [
+                            "granularity",
+                            "type"
+                        ],
                         "type": "object",
                         "properties": {
                             "type": {
                                 "type": "string",
-                                "enum": ["relative", "absolute"]
+                                "enum": [
+                                    "relative",
+                                    "absolute"
+                                ]
                             },
                             "granularity": {
                                 "type": "string",
@@ -2605,13 +2918,20 @@
                         "type": "string",
                         "description": "Set page size. (PDF)",
                         "default": "A4",
-                        "enum": ["A3", "A4", "LETTER"]
+                        "enum": [
+                            "A3",
+                            "A4",
+                            "LETTER"
+                        ]
                     },
                     "pageOrientation": {
                         "type": "string",
                         "description": "Set page orientation. (PDF)",
                         "default": "PORTRAIT",
-                        "enum": ["PORTRAIT", "LANDSCAPE"]
+                        "enum": [
+                            "PORTRAIT",
+                            "LANDSCAPE"
+                        ]
                     }
                 },
                 "description": "Additional settings."
@@ -2628,14 +2948,20 @@
                 ]
             },
             "DashboardTabularExportRequest": {
-                "required": ["fileName", "format"],
+                "required": [
+                    "fileName",
+                    "format"
+                ],
                 "type": "object",
                 "properties": {
                     "format": {
                         "type": "string",
                         "description": "Requested tabular export type.",
                         "example": "XLSX",
-                        "enum": ["XLSX", "PDF"]
+                        "enum": [
+                            "XLSX",
+                            "PDF"
+                        ]
                     },
                     "fileName": {
                         "type": "string",
@@ -2675,7 +3001,9 @@
                 "description": "Export request object describing the export properties for dashboard tabular exports."
             },
             "DateValue": {
-                "required": ["value"],
+                "required": [
+                    "value"
+                ],
                 "type": "object",
                 "properties": {
                     "value": {
@@ -2687,7 +3015,10 @@
                 "type": "object",
                 "properties": {
                     "identifier": {
-                        "required": ["id", "type"],
+                        "required": [
+                            "id",
+                            "type"
+                        ],
                         "type": "object",
                         "properties": {
                             "id": {
@@ -2726,7 +3057,9 @@
                 }
             },
             "Over": {
-                "required": ["attributes"],
+                "required": [
+                    "attributes"
+                ],
                 "type": "object",
                 "properties": {
                     "attributes": {
@@ -2738,7 +3071,9 @@
                 }
             },
             "RelativeBoundedDateFilter": {
-                "required": ["granularity"],
+                "required": [
+                    "granularity"
+                ],
                 "type": "object",
                 "properties": {
                     "granularity": {

@@ -9,3 +9,6 @@ buildV8(commonConfigurations, v8Variants);
 
 // Build v9 flat config JS files
 buildV9(commonConfigurations, v9Variants);
+
+// Build v9 flat config JS files for OxLint partial migration
+buildV9(commonConfigurations, v9Variants, true);

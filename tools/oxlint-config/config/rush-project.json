@@ -1,0 +1,14 @@
+{
+    "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/rush-project.schema.json",
+    "incrementalBuildIgnoredGlobs": [],
+    "operationSettings": [
+        {
+            "operationName": "_phase:build",
+            "outputFolderNames": ["dist"]
+        },
+        {
+            "operationName": "_phase:validate",
+            "outputFolderNames": []
+        }
+    ]
+}

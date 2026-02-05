@@ -63,7 +63,11 @@
         "run-scenarios-local": "node ./scripts/run-scenarios-local.js",
         "start-scenarios": "cd scenarios && vite dev",
         "update-ref-workspace": "npm run delete-ref-workspace && npm run create-ref-workspace",
-        "validate": "npm run eslint && npm run dep-cruiser && npm run oxfmt-check"
+        "validate": "npm run lint && npm run dep-cruiser && npm run oxfmt-check",
+        "lint": "npm run oxlint && npm run eslint",
+        "lint-fix": "npm run oxlint-fix && npm run eslint-fix",
+        "oxlint": "oxlint .",
+        "oxlint-fix": "oxlint . --fix"
     },
     "devDependencies": {
         "@babel/core": "^7.23.5",
@@ -71,6 +75,7 @@
         "@gooddata/catalog-export": "workspace:*",
         "@gooddata/eslint-config": "workspace:*",
         "@gooddata/fixtures": "3.3.5",
+        "@gooddata/oxlint-config": "workspace:*",
         "@gooddata/sdk-backend-base": "workspace:*",
         "@gooddata/sdk-backend-spi": "workspace:*",
         "@gooddata/sdk-backend-tiger": "workspace:*",
@@ -122,6 +127,7 @@
         "node-xlsx": "0.24.0",
         "npm-run-all": "^4.1.5",
         "oxfmt": "0.27.0",
+        "oxlint": "^1.43.0",
         "pdf-parse": "^1.1.1",
         "raf": "^3.4.1",
         "react": "19.1.1",

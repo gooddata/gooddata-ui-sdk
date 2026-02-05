@@ -937,5 +937,21 @@
     "dialogs.export.pdf.pageOrientation.option.portrait": "Dikey Görünüm",
     "dialogs.export.pdf.pageOrientation.option.landscape": "Yatay Görünüm",
     "dialogs.export.submit": "Dışa aktar",
-    "gs.header.mainMenu.ariaLabel": "Ana menü"
+    "gs.header.mainMenu.ariaLabel": "Ana menü",
+    "gs.header.analyze": "Analiz et",
+    "gs.header.catalog": "Katalog",
+    "gs.header.community": "Topluluk",
+    "gs.header.data": "Veri",
+    "gs.header.documentation": "Dokümantasyon",
+    "gs.header.kpis.new": "Gösterge Tabloları",
+    "gs.header.metrics": "Metrikler",
+    "gs.header.slack": "Yığın",
+    "gs.header.submitTicket": "Destek Talebi Gönder",
+    "gs.header.university": "Üniversite",
+    "gs.header.visitSupportPortal": "Destek Portalını Ziyaret Edin",
+    "gs.header.dashboards": "Gösterge Tabloları",
+    "gs.header.kpis": "KPI'ler",
+    "gs.header.load": "Yükle",
+    "gs.header.manage": "Yönet",
+    "gs.header.reports": "Raporlar"
 }

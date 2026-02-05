@@ -2,17 +2,57 @@
 
 import type { IDualConfiguration, IPackage } from "../types.js";
 
-const typescriptEslintParser: IPackage = {
-    name: "@typescript-eslint/parser",
-    version: "8.52.0",
-};
-
 const typescriptEslintPlugin: IPackage = {
     name: "@typescript-eslint/eslint-plugin",
     version: "8.52.0",
 };
 
+const eslintConflicts = {
+    "constructor-super": "off",
+    "getter-return": "off",
+    "no-class-assign": "off",
+    "no-const-assign": "off",
+    "no-dupe-args": "off",
+    "no-dupe-class-members": "off",
+    "no-dupe-keys": "off",
+    "no-func-assign": "off",
+    "no-import-assign": "off",
+    "no-new-native-nonconstructor": "off",
+    "no-new-symbol": "off",
+    "no-obj-calls": "off",
+    "no-redeclare": "off",
+    "no-setter-return": "off",
+    "no-this-before-super": "off",
+    "no-undef": "off",
+    "no-unreachable": "off",
+    "no-unsafe-negation": "off",
+    "no-var": "error",
+    "no-with": "off",
+    "prefer-const": "error",
+    "prefer-rest-params": "error",
+    "prefer-spread": "error",
+    "no-array-constructor": "off",
+    "no-unused-expressions": "off",
+    "no-unused-vars": "off",
+};
+
 const commonRules = {
+    "@typescript-eslint/no-array-constructor": "error",
+    "@typescript-eslint/no-duplicate-enum-values": "error",
+    "@typescript-eslint/no-empty-object-type": "error",
+    "@typescript-eslint/no-extra-non-null-assertion": "error",
+    "@typescript-eslint/no-misused-new": "error",
+    "@typescript-eslint/no-namespace": "error",
+    "@typescript-eslint/no-non-null-asserted-optional-chain": "error",
+    "@typescript-eslint/no-require-imports": "error",
+    "@typescript-eslint/no-this-alias": "error",
+    "@typescript-eslint/no-unnecessary-type-constraint": "error",
+    "@typescript-eslint/no-unsafe-declaration-merging": "error",
+    "@typescript-eslint/no-unused-expressions": "error",
+    "@typescript-eslint/prefer-as-const": "error",
+    "@typescript-eslint/prefer-namespace-keyword": "error",
+    "@typescript-eslint/triple-slash-reference": "error",
+
     "@typescript-eslint/explicit-function-return-type": 0,
     "@typescript-eslint/no-use-before-define": 0,
     "@typescript-eslint/no-empty-function": 0,
@@ -101,90 +141,56 @@ const commonRules = {
     ],
 };
 
+const packages = [
+    {
+        name: "@typescript-eslint/parser",
+        version: "8.52.0",
+    },
+    typescriptEslintPlugin,
+];
+
+const commonOverride = {
+    files: ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts"],
+    rules: {
+        ...eslintConflicts,
+        ...commonRules,
+    },
+};
+
+const v9 = {
+    packages,
+    plugins: { "@typescript-eslint": typescriptEslintPlugin },
+    parser: "@typescript-eslint/parser",
+    languageOptions: {
+        sourceType: "module" as const,
+    },
+    overrides: [
+        {
+            ...commonOverride,
+            languageOptions: {
+                parserOptions: {
+                    projectService: true,
+                },
+            },
+        },
+    ],
+};
+
 export const typescript: IDualConfiguration<"@typescript-eslint" | "no-restricted-syntax", ""> = {
     v8: {
-        packages: [typescriptEslintParser, typescriptEslintPlugin],
+        packages,
         overrides: [
             {
+                ...commonOverride,
                 parser: "@typescript-eslint/parser",
-                files: ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts"],
-                extends: ["plugin:@typescript-eslint/recommended-type-checked"],
                 parserOptions: {
                     ecmaVersion: 2022,
                     sourceType: "module",
                     projectService: true,
                 },
-                rules: commonRules,
             },
         ],
     },
-    v9: {
-        packages: [typescriptEslintParser, typescriptEslintPlugin],
-        plugins: { "@typescript-eslint": typescriptEslintPlugin },
-        parser: "@typescript-eslint/parser",
-        languageOptions: {
-            sourceType: "module",
-        },
-        // Our additional rules in an override for TS files only
-        // (plugin already registered by the spread configs above)
-        overrides: [
-            {
-                files: ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts"],
-                languageOptions: {
-                    parserOptions: {
-                        projectService: true,
-                    },
-                },
-                rules: {
-                    "constructor-super": "off",
-                    "getter-return": "off",
-                    "no-class-assign": "off",
-                    "no-const-assign": "off",
-                    "no-dupe-args": "off",
-                    "no-dupe-class-members": "off",
-                    "no-dupe-keys": "off",
-                    "no-func-assign": "off",
-                    "no-import-assign": "off",
-                    "no-new-native-nonconstructor": "off",
-                    "no-new-symbol": "off",
-                    "no-obj-calls": "off",
-                    "no-redeclare": "off",
-                    "no-setter-return": "off",
-                    "no-this-before-super": "off",
-                    "no-undef": "off",
-                    "no-unreachable": "off",
-                    "no-unsafe-negation": "off",
-                    "no-var": "error",
-                    "no-with": "off",
-                    "prefer-const": "error",
-                    "prefer-rest-params": "error",
-                    "prefer-spread": "error",
-                    "@typescript-eslint/ban-ts-comment": "error",
-                    "no-array-constructor": "off",
-                    "@typescript-eslint/no-array-constructor": "error",
-                    "@typescript-eslint/no-duplicate-enum-values": "error",
-                    "@typescript-eslint/no-empty-object-type": "error",
-                    "@typescript-eslint/no-explicit-any": "error",
-                    "@typescript-eslint/no-extra-non-null-assertion": "error",
-                    "@typescript-eslint/no-misused-new": "error",
-                    "@typescript-eslint/no-namespace": "error",
-                    "@typescript-eslint/no-non-null-asserted-optional-chain": "error",
-                    "@typescript-eslint/no-require-imports": "error",
-                    "@typescript-eslint/no-this-alias": "error",
-                    "@typescript-eslint/no-unnecessary-type-constraint": "error",
-                    "@typescript-eslint/no-unsafe-declaration-merging": "error",
-                    "@typescript-eslint/no-unsafe-function-type": "error",
-                    "no-unused-expressions": "off",
-                    "@typescript-eslint/no-unused-expressions": "error",
-                    "no-unused-vars": "off",
-                    "@typescript-eslint/no-unused-vars": "error",
-                    "@typescript-eslint/no-wrapper-object-types": "error",
-                    "@typescript-eslint/prefer-as-const": "error",
-                    "@typescript-eslint/prefer-namespace-keyword": "error",
-                    "@typescript-eslint/triple-slash-reference": "error",
-                    ...commonRules,
-                },
-            },
-        ],
-    },
+    v9,
+    ox: v9,
 };

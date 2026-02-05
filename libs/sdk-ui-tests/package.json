@@ -52,11 +52,16 @@
         "stylelint-fix": "stylelint '**/*.scss' --fix",
         "test": "vitest watch",
         "test-once": "npm run story-generator && npm run scenario-extractor-local && vitest --run",
-        "validate": "npm run eslint && npm run dep-cruiser && npm run stylelint && npm run oxfmt-check"
+        "validate": "npm run lint && npm run dep-cruiser && npm run stylelint && npm run oxfmt-check",
+        "lint": "npm run oxlint && npm run eslint",
+        "lint-fix": "npm run oxlint-fix && npm run eslint-fix",
+        "oxlint": "oxlint .",
+        "oxlint-fix": "oxlint . --fix"
     },
     "devDependencies": {
         "@gooddata/eslint-config": "workspace:*",
         "@gooddata/mock-handling": "workspace:*",
+        "@gooddata/oxlint-config": "workspace:*",
         "@gooddata/reference-workspace": "workspace:*",
         "@gooddata/sdk-backend-base": "workspace:*",
         "@gooddata/sdk-backend-mockingbird": "workspace:*",
@@ -110,6 +115,7 @@
         "moment": "^2.29.4",
         "npm-run-all": "^4.1.5",
         "oxfmt": "0.27.0",
+        "oxlint": "^1.43.0",
         "react": "19.1.1",
         "react-dom": "19.1.1",
         "react-intl": "7.1.11",

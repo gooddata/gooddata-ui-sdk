@@ -8,7 +8,6 @@ import type { IConfigurationV8, IDualConfiguration, Rules } from "../../src/type
 interface IEslintConfigurationCommon {
     parser?: string;
     plugins?: string[];
-    extends?: string[];
     parserOptions?: Record<string, unknown>;
     rules?: Rules;
     settings?: Record<string, object>;
@@ -28,7 +27,6 @@ interface IEslintConfiguration extends IEslintConfigurationCommon {
 function createEmptyConfig(): IEslintConfiguration {
     return {
         plugins: [],
-        extends: [],
         rules: {},
         overrides: [],
         settings: {},
@@ -53,10 +51,6 @@ function applyConfiguration(
                 newConfiguration.plugins?.push(plugin);
             }
         }
-    }
-
-    if (configuration.extends) {
-        newConfiguration.extends = [...(newConfiguration.extends ?? []), ...configuration.extends];
     }
 
     if (configuration.parserOptions) {

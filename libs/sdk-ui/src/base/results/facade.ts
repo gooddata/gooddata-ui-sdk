@@ -258,9 +258,13 @@ export function emptyDataViewForResult(
     result: IExecutionResult,
     forecastConfig?: IForecastConfig,
     forecastResult?: IForecastResult,
+    // oxlint-disable-next-line oxc/only-used-in-recursion
     outliersConfig?: IOutliersConfig,
+    // oxlint-disable-next-line oxc/only-used-in-recursion
     outliersResult?: IOutliersResult,
+    // oxlint-disable-next-line oxc/only-used-in-recursion
     clusteringConfig?: IClusteringConfig,
+    // oxlint-disable-next-line oxc/only-used-in-recursion
     clusteringResult?: IClusteringResult,
 ): IDataView {
     const { definition } = result;

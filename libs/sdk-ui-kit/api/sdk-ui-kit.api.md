@@ -771,34 +771,34 @@ export function Header({ children, ...restProps }: IHeaderProps): JSX.Element;
 export const HEADER_CHAT_BUTTON_ID = "gd-header-chat-button";
 
 // @internal (undocumented)
-export const HEADER_ITEM_ID_ANALYZE = "gs.header.analyze";
+export const HEADER_ITEM_ID_ANALYZE: string;
 
 // @internal (undocumented)
-export const HEADER_ITEM_ID_CATALOG = "gs.header.catalog";
+export const HEADER_ITEM_ID_CATALOG: string;
 
 // @internal (undocumented)
-export const HEADER_ITEM_ID_DASHBOARDS = "gs.header.dashboards";
+export const HEADER_ITEM_ID_DASHBOARDS: string;
 
 // @internal (undocumented)
-export const HEADER_ITEM_ID_DATA = "gs.header.data";
+export const HEADER_ITEM_ID_DATA: string;
 
 // @internal (undocumented)
-export const HEADER_ITEM_ID_KPIS = "gs.header.kpis";
+export const HEADER_ITEM_ID_KPIS: string;
 
 // @internal (undocumented)
-export const HEADER_ITEM_ID_KPIS_NEW = "gs.header.kpis.new";
+export const HEADER_ITEM_ID_KPIS_NEW: string;
 
 // @internal (undocumented)
-export const HEADER_ITEM_ID_LOAD = "gs.header.load";
+export const HEADER_ITEM_ID_LOAD: string;
 
 // @internal (undocumented)
-export const HEADER_ITEM_ID_MANAGE = "gs.header.manage";
+export const HEADER_ITEM_ID_MANAGE: string;
 
 // @internal (undocumented)
-export const HEADER_ITEM_ID_METRICS = "gs.header.metrics";
+export const HEADER_ITEM_ID_METRICS: string;
 
 // @internal (undocumented)
-export const HEADER_ITEM_ID_REPORTS = "gs.header.reports";
+export const HEADER_ITEM_ID_REPORTS: string;
 
 // @internal (undocumented)
 export function HeaderBadge({ children, color, backgroundColor }: IHeaderBadgeProps): JSX.Element;
@@ -6814,6 +6814,9 @@ export type IUiTab<TTabProps extends Record<any, any> = EmptyObject, TTabActionP
     id: string;
     label: string;
     variant?: "default" | "placeholder";
+    tabId?: string;
+    panelId?: string;
+    autoSelectOnFocus?: boolean;
     actions?: Array<IUiTabAction<TTabProps, TTabActionProps> | typeof separatorStaticItem>;
 } & TTabProps;
 

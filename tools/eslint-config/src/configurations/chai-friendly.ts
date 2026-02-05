@@ -25,7 +25,10 @@ const commonConfiguration = {
     ],
 };
 
+const v9 = { ...commonConfiguration, plugins: { "chai-friendly": chaiFriendlyPlugin } };
+
 export const chaiFriendly: IDualConfiguration = {
     v8: { ...commonConfiguration, plugins: ["chai-friendly"] },
-    v9: { ...commonConfiguration, plugins: { "chai-friendly": chaiFriendlyPlugin } },
+    v9,
+    ox: v9,
 };

@@ -85,7 +85,7 @@ describe("Combo Configuration", () => {
             secondaryChartType: LINE,
         };
         const {
-            plotOptions: { series: series },
+            plotOptions: { series },
         } = getComboConfiguration(config);
         expect(series.states.inactive.opacity).toBe(1);
     });
@@ -96,7 +96,7 @@ describe("Combo Configuration", () => {
             secondaryChartType: COLUMN,
         };
         const {
-            plotOptions: { series: series },
+            plotOptions: { series },
         } = getComboConfiguration(config, getDefinition(BucketNames.MEASURES));
         expect(series.states.inactive.opacity).toBe(1);
     });
@@ -107,7 +107,7 @@ describe("Combo Configuration", () => {
             secondaryChartType: LINE,
         };
         const {
-            plotOptions: { series: series },
+            plotOptions: { series },
         } = getComboConfiguration(config, getDefinition(BucketNames.SECONDARY_MEASURES));
         expect(series.states.inactive.opacity).toBe(1);
     });
@@ -118,14 +118,14 @@ describe("Combo Configuration", () => {
             secondaryChartType: AREA,
         };
         const {
-            plotOptions: { series: series },
+            plotOptions: { series },
         } = getComboConfiguration(config, getDefinition(BucketNames.SECONDARY_MEASURES));
         expect(series?.states?.inactive?.opacity).not.toBe(1);
     });
 
     it("should not disable saturation other series for default combo", () => {
         const {
-            plotOptions: { series: series },
+            plotOptions: { series },
         } = getComboConfiguration({}, getDefinition(BucketNames.MEASURES));
         expect(series?.states?.inactive?.opacity).not.toBe(1);
     });

@@ -937,5 +937,21 @@
     "dialogs.export.pdf.pageOrientation.option.portrait": "纵向",
     "dialogs.export.pdf.pageOrientation.option.landscape": "横向",
     "dialogs.export.submit": "导出为",
-    "gs.header.mainMenu.ariaLabel": "主菜单"
+    "gs.header.mainMenu.ariaLabel": "主菜单",
+    "gs.header.analyze": "分析",
+    "gs.header.catalog": "目录",
+    "gs.header.community": "社区",
+    "gs.header.data": "数据",
+    "gs.header.documentation": "文档",
+    "gs.header.kpis.new": "控制面板",
+    "gs.header.metrics": "指标",
+    "gs.header.slack": "Slack",
+    "gs.header.submitTicket": "提交票证",
+    "gs.header.university": "大学",
+    "gs.header.visitSupportPortal": "访问支持门户",
+    "gs.header.dashboards": "控制面板",
+    "gs.header.kpis": "KPIs",
+    "gs.header.load": "加载",
+    "gs.header.manage": "管理",
+    "gs.header.reports": "报告"
 }

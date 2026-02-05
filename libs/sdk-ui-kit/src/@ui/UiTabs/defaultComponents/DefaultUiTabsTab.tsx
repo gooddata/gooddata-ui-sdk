@@ -28,12 +28,20 @@ export function DefaultUiTabsTab<
     const makeId = ScopedIdStore.useContextStoreOptional((ctx) => ctx.makeId);
 
     const isOverflowing = maxLabelLength !== undefined && tab.label.length > maxLabelLength;
+    const tabId = tab.tabId ?? makeId?.({ item: tab, specifier: "tab" });
+    const panelId = tab.panelId;
+    const autoSelectOnFocus = tab.autoSelectOnFocus ?? false;
 
     const [isActionsOpen, setIsActionsOpen] = useState(false);
     const handleToggleActionsOpen = useCallback(
         (desiredState?: boolean) => setIsActionsOpen((wasOpen) => desiredState ?? !wasOpen),
         [setIsActionsOpen],
     );
+    const handleFocus = () => {
+        if (autoSelectOnFocus && !isSelected) {
+            onSelect();
+        }
+    };
 
     // When this tab is focused, both tab button and actions are tabbable (tabIndex=0)
     // This allows natural Tab key navigation from tab button to actions button
@@ -43,11 +51,13 @@ export function DefaultUiTabsTab<
         <button
             className={UiTabsBem.e("item", { selected: isSelected })}
             onClick={onSelect}
+            onFocus={handleFocus}
             role={accessibilityConfig?.tabRole}
             aria-selected={isSelected}
+            aria-controls={panelId}
             aria-label={tab.label}
             tabIndex={tabIndex}
-            id={makeId?.({ item: tab, specifier: "tab" })}
+            id={tabId}
             data-testid={`s-tab-${simplifyText(tab.label)}`}
         >
             <TabValue tab={tab} isSelected={isSelected} location={"tabs"} />

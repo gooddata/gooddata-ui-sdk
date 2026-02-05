@@ -58,7 +58,7 @@ import { type CustomButtonBarComponent } from "../topBar/buttonBar/types.js";
 import { type CustomMenuButtonComponent, type IMenuButtonConfiguration } from "../topBar/menuButton/types.js";
 import { type CustomTitleComponent } from "../topBar/title/types.js";
 import { type CustomTopBarComponent } from "../topBar/topBar/types.js";
-import { type CustomDashboardLayoutComponent as CustomDashboardLayoutComponent } from "../widget/dashboardLayout/types.js";
+import { type CustomDashboardLayoutComponent } from "../widget/dashboardLayout/types.js";
 
 /**
  * These props allow you to specify custom components or custom component providers that the Dashboard

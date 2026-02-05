@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useIntl } from "react-intl";
 
@@ -9,13 +9,18 @@ import { type CalendarTabType } from "../utils/presetFilterUtils.js";
 interface ICalendarTypeTabsProps {
     selectedTab: CalendarTabType;
     onTabSelect: (tab: CalendarTabType) => void;
+    tabIds?: {
+        standard: string;
+        fiscal: string;
+    };
+    panelId?: string;
 }
 
 /**
  * Tabs component for switching between Standard and Fiscal calendar presets.
  * @internal
  */
-export function CalendarTypeTabs({ selectedTab, onTabSelect }: ICalendarTypeTabsProps) {
+export function CalendarTypeTabs({ selectedTab, onTabSelect, tabIds, panelId }: ICalendarTypeTabsProps) {
     const intl = useIntl();
 
     return (
@@ -26,10 +31,16 @@ export function CalendarTypeTabs({ selectedTab, onTabSelect }: ICalendarTypeTabs
                     {
                         id: "standard" as const,
                         label: intl.formatMessage({ id: "dateFilter.tab.standard" }),
+                        tabId: tabIds?.standard,
+                        panelId,
+                        autoSelectOnFocus: true,
                     },
                     {
                         id: "fiscal" as const,
                         label: intl.formatMessage({ id: "dateFilter.tab.fiscal" }),
+                        tabId: tabIds?.fiscal,
+                        panelId,
+                        autoSelectOnFocus: true,
                     },
                 ]}
                 selectedTabId={selectedTab}

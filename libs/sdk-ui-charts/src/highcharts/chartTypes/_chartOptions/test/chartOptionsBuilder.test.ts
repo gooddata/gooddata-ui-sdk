@@ -5,7 +5,7 @@ import { describe, expect, it } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
 import { type ScenarioRecording, dummyDataView } from "@gooddata/sdk-backend-mockingbird";
-import { type IColorPaletteItem, type IMeasureDescriptor, emptyDef, idRef } from "@gooddata/sdk-model";
+import { type IColorPaletteItem, emptyDef, idRef } from "@gooddata/sdk-model";
 import { DataViewFacade, DefaultColorPalette, HeaderPredicates, VisualizationTypes } from "@gooddata/sdk-ui";
 import {
     AttributeColorStrategy,
@@ -2696,7 +2696,6 @@ describe("chartOptionsBuilder", () => {
                                 name: "series",
                             },
                         };
-                        let measure: IMeasureDescriptor | undefined;
                         const tooltip = chartOptions.actions!.tooltip(
                             pointData,
                             DEFAULT_TOOLTIP_CONTENT_WIDTH,
@@ -2706,7 +2705,7 @@ describe("chartOptionsBuilder", () => {
                             "column",
                             {},
                             false,
-                            measure,
+                            undefined,
                             stackByAttribute,
                         )(pointData, DEFAULT_TOOLTIP_CONTENT_WIDTH);
                         expect(tooltip).toBe(expectedTooltip);

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type KeyboardEvent, type MutableRefObject } from "react";
 
@@ -53,14 +53,6 @@ const shouldHandleKeyboardNavigation = (
 ): boolean => ref.current?.contains(activeElement) === true && activeElement.role === role;
 
 /**
- * Checks if an element is a tab list item
- * @param element - The element to check
- * @returns boolean indicating if the element is a tab list item
- * @internal
- */
-const isTabListItem = (element: HTMLElement): boolean => element.getAttribute("role") === "tab";
-
-/**
  * Finds the next focusable element in the given direction
  * @param items - Array of focusable elements
  * @param currentIndex - Current element index
@@ -69,19 +61,15 @@ const isTabListItem = (element: HTMLElement): boolean => element.getAttribute("r
  * @internal
  */
 const findNextFocusableElement = (
-    items: Element[],
+    items: HTMLElement[],
     currentIndex: number,
     direction: number,
 ): HTMLElement | undefined => {
-    let nextIndex = currentIndex;
-    let nextElement: HTMLElement | undefined;
-
-    do {
-        nextIndex = (nextIndex + direction + items.length) % items.length;
-        nextElement = items[nextIndex] as HTMLElement;
-    } while (isTabListItem(nextElement));
-
-    return nextElement;
+    if (items.length === 0) {
+        return undefined;
+    }
+    const nextIndex = (currentIndex + direction + items.length) % items.length;
+    return items[nextIndex];
 };
 
 // Iterates through dropdown list, exclude period input, cancel and apply button.
@@ -104,7 +92,7 @@ const handleTabNavigation = (
 
     const focusableElements = Array.from(
         dateFilterContainerRef.current?.querySelectorAll<HTMLElement>(focusableElementsSelector) ?? [],
-    );
+    ).filter((element) => !element.closest("[hidden]"));
 
     const active = document.activeElement as HTMLElement;
     const currentIndex = focusableElements.indexOf(active);
@@ -132,7 +120,9 @@ export const createDateFilterKeyboardHandler =
             return;
         }
 
-        const items = Array.from(dateFilterBodyRef.current.querySelectorAll("[tabindex]"));
+        const items = Array.from(
+            dateFilterBodyRef.current.querySelectorAll<HTMLElement>("[role='option']"),
+        ).filter((element) => !element.closest("[hidden]"));
         const activeElement = document.activeElement as HTMLElement;
 
         const keyboardHandler = makeLinearKeyboardNavigation({
@@ -158,16 +148,14 @@ export const createDateFilterKeyboardHandler =
                 if (
                     shouldHandleKeyboardNavigation(dateFilterBodyRef, activeElement, ActiveElementRole.OPTION)
                 ) {
-                    const { firstElement } = getFocusableElements(dateFilterBodyRef.current);
-                    firstElement?.focus();
+                    items[0]?.focus();
                 }
             },
             onFocusLast: () => {
                 if (
                     shouldHandleKeyboardNavigation(dateFilterBodyRef, activeElement, ActiveElementRole.OPTION)
                 ) {
-                    const { lastElement } = getFocusableElements(dateFilterBodyRef.current);
-                    lastElement?.focus();
+                    items[items.length - 1]?.focus();
                 }
             },
             onClose: closeDropdown,

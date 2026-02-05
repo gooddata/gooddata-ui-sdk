@@ -373,21 +373,27 @@ export default config;
 export function buildV9(
     commonConfigurations: IDualConfiguration[],
     variants: Record<string, IDualConfiguration[]>,
+    oxLint: boolean = false,
 ): void {
+    const prefix = oxLint ? "oxlint-" : "";
+
     // Extract v9 configs from commonConfigurations
-    const commonV9Configs = commonConfigurations.map((dc) => dc.v9);
+    const commonV9Configs = commonConfigurations.map((dc) => (oxLint ? dc.ox : dc.v9));
 
     // Build base config
     const baseJs = generateJsFile(commonV9Configs);
-    writeFileSync("dist/base.js", baseJs);
-    writeFileSync("dist/base.d.ts", dtsContent);
+    writeFileSync(`dist/${prefix}base.js`, baseJs);
+    writeFileSync(`dist/${prefix}base.d.ts`, dtsContent);
 
     // Build variant configs
     for (const [variantName, variantConfigs] of Object.entries(variants)) {
-        const variantV9Configs = [...commonV9Configs, ...variantConfigs.map((dc) => dc.v9)];
+        const variantV9Configs = [
+            ...commonV9Configs,
+            ...variantConfigs.map((dc) => (oxLint ? dc.ox : dc.v9)),
+        ];
 
         const variantJs = generateJsFile(variantV9Configs);
-        writeFileSync(`dist/${variantName}.js`, variantJs);
-        writeFileSync(`dist/${variantName}.d.ts`, dtsContent);
+        writeFileSync(`dist/${prefix}${variantName}.js`, variantJs);
+        writeFileSync(`dist/${prefix}${variantName}.d.ts`, dtsContent);
     }
 }

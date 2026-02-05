@@ -800,20 +800,20 @@
         "crowdinContext": "Filter option for the next year"
     },
     "filters.thisFiscalMonth.title": {
-        "text": "This fiscal month",
-        "crowdinContext": "Filter option for the current fiscal month"
+        "text": "This period",
+        "crowdinContext": "Filter option for the current period"
     },
     "filters.thisFiscalMonthToDate.title": {
-        "text": "This fiscal month to date",
-        "crowdinContext": "Filter option for the current fiscal month to date"
+        "text": "This period to date",
+        "crowdinContext": "Filter option for the current period to date"
     },
     "filters.lastFiscalMonth.title": {
-        "text": "Last fiscal month",
-        "crowdinContext": "Filter option for the previous fiscal month"
+        "text": "Last period",
+        "crowdinContext": "Filter option for the previous period"
     },
     "filters.nextFiscalMonth.title": {
-        "text": "Next fiscal month",
-        "crowdinContext": "Filter option for the next fiscal month"
+        "text": "Next period",
+        "crowdinContext": "Filter option for the next period"
     },
     "filters.thisFiscalQuarter.title": {
         "text": "This fiscal quarter",
@@ -3850,5 +3850,69 @@
     "gs.header.mainMenu.ariaLabel": {
         "text": "Main menu",
         "crowdinContext": "Accessibility label for the main menu button in the header, used by screen readers"
+    },
+    "gs.header.analyze": {
+        "text": "Analyze",
+        "crowdinContext": "Navigation link to analytics section"
+    },
+    "gs.header.catalog": {
+        "text": "Catalog",
+        "crowdinContext": "Navigation link to catalog page"
+    },
+    "gs.header.community": {
+        "text": "Community",
+        "crowdinContext": "Link to community forum"
+    },
+    "gs.header.data": {
+        "text": "Data",
+        "crowdinContext": "Navigation link to data management section"
+    },
+    "gs.header.documentation": {
+        "text": "Documentation",
+        "crowdinContext": "Link to product documentation"
+    },
+    "gs.header.kpis.new": {
+        "text": "Dashboards",
+        "crowdinContext": "Navigation link to dashboards section"
+    },
+    "gs.header.metrics": {
+        "text": "Metrics",
+        "crowdinContext": "Navigation link to metrics section"
+    },
+    "gs.header.slack": {
+        "text": "Slack",
+        "crowdinContext": "Link to Slack community channel"
+    },
+    "gs.header.submitTicket": {
+        "text": "Submit Ticket",
+        "crowdinContext": "Link to submit support ticket"
+    },
+    "gs.header.university": {
+        "text": "University",
+        "crowdinContext": "Link to GoodData University training resources"
+    },
+    "gs.header.visitSupportPortal": {
+        "text": "Visit Support Portal",
+        "crowdinContext": "Link to customer support portal"
+    },
+    "gs.header.dashboards": {
+        "text": "Dashboards",
+        "crowdinContext": "Navigation link to dashboards section in global header"
+    },
+    "gs.header.kpis": {
+        "text": "KPIs",
+        "crowdinContext": "Navigation link to KPIs section in global header"
+    },
+    "gs.header.load": {
+        "text": "Load",
+        "crowdinContext": "Navigation link to data loading section in global header"
+    },
+    "gs.header.manage": {
+        "text": "Manage",
+        "crowdinContext": "Navigation link to management section in global header"
+    },
+    "gs.header.reports": {
+        "text": "Reports",
+        "crowdinContext": "Navigation link to reports section in global header"
     }
 }

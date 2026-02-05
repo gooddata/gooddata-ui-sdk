@@ -937,5 +937,21 @@
     "dialogs.export.pdf.pageOrientation.option.portrait": "Staand",
     "dialogs.export.pdf.pageOrientation.option.landscape": "Liggend",
     "dialogs.export.submit": "Exporteren",
-    "gs.header.mainMenu.ariaLabel": "Hoofdmenu"
+    "gs.header.mainMenu.ariaLabel": "Hoofdmenu",
+    "gs.header.analyze": "Analyseren",
+    "gs.header.catalog": "Catalogus",
+    "gs.header.community": "Community",
+    "gs.header.data": "Data",
+    "gs.header.documentation": "Documentatie",
+    "gs.header.kpis.new": "Dashboarden",
+    "gs.header.metrics": "Meetgegevens",
+    "gs.header.slack": "Slack",
+    "gs.header.submitTicket": "Ticket verzenden",
+    "gs.header.university": "Universiteit",
+    "gs.header.visitSupportPortal": "Bezoek ondersteuningsportaal",
+    "gs.header.dashboards": "Dashboarden",
+    "gs.header.kpis": "KPI's",
+    "gs.header.load": "Laden",
+    "gs.header.manage": "Beheren",
+    "gs.header.reports": "Rapporten"
 }

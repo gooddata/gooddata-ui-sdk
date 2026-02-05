@@ -1012,7 +1012,7 @@ export const selectEnableDrillToUrlByDefault: DashboardSelector<boolean> = creat
 export const selectEnableFiscalCalendars: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return state.settings?.enableFiscalCalendars ?? false;
+        return state.settings?.enableFiscalCalendars ?? true;
     },
 );
 

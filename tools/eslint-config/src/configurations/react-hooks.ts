@@ -7,21 +7,24 @@ const reactHooksPlugin: IPackage = {
     version: "5.2.0",
 };
 
-const rules = {
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "error",
+const commonConfiguration = {
+    packages: [reactHooksPlugin],
+    rules: {
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "error",
+    },
+};
+
+const v9 = {
+    ...commonConfiguration,
+    plugins: { "react-hooks": reactHooksPlugin },
 };
 
 export const reactHooks: IDualConfiguration<"react-hooks"> = {
     v8: {
-        packages: [reactHooksPlugin],
+        ...commonConfiguration,
         plugins: ["react-hooks"],
-        extends: ["plugin:react-hooks/recommended-legacy"],
-        rules,
     },
-    v9: {
-        packages: [reactHooksPlugin],
-        plugins: { "react-hooks": reactHooksPlugin },
-        rules,
-    },
+    v9,
+    ox: v9,
 };

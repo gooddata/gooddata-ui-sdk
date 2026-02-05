@@ -23,7 +23,10 @@
     "paths": {
         "/api/v1/auth/users/{userEmail}": {
             "get": {
-                "tags": ["User Authorization", "authentication"],
+                "tags": [
+                    "User Authorization",
+                    "authentication"
+                ],
                 "summary": "Get a user",
                 "description": "Get a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific",
                 "operationId": "getUser",
@@ -51,7 +54,10 @@
                 }
             },
             "put": {
-                "tags": ["User Authorization", "authentication"],
+                "tags": [
+                    "User Authorization",
+                    "authentication"
+                ],
                 "summary": "Update a user",
                 "description": "Update a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific",
                 "operationId": "updateUser",
@@ -89,7 +95,10 @@
                 }
             },
             "delete": {
-                "tags": ["User Authorization", "authentication"],
+                "tags": [
+                    "User Authorization",
+                    "authentication"
+                ],
                 "summary": "Delete a user",
                 "description": "Delete a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific",
                 "operationId": "deleteUser",
@@ -112,7 +121,10 @@
         },
         "/api/v1/auth/users": {
             "get": {
-                "tags": ["User Authorization", "authentication"],
+                "tags": [
+                    "User Authorization",
+                    "authentication"
+                ],
                 "summary": "Get all users",
                 "description": "Get all users - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific",
                 "operationId": "getUsers",
@@ -134,7 +146,10 @@
                 }
             },
             "post": {
-                "tags": ["User Authorization", "authentication"],
+                "tags": [
+                    "User Authorization",
+                    "authentication"
+                ],
                 "summary": "Create a user",
                 "description": "Create a user - dedicated endpoint for user management in the internal OIDC provider. GoodData.CN specific",
                 "operationId": "createUser",
@@ -164,7 +179,10 @@
         },
         "/api/v1/actions/invite": {
             "post": {
-                "tags": ["User Authorization", "actions"],
+                "tags": [
+                    "User Authorization",
+                    "actions"
+                ],
                 "summary": "Invite User",
                 "description": "Puts a new invitation requirement into the invitation generator queue. This is a GoodData Cloud specific endpoint.",
                 "operationId": "processInvitation",
@@ -184,14 +202,19 @@
                     }
                 },
                 "x-gdc-security-info": {
-                    "permissions": ["MANAGE"],
+                    "permissions": [
+                        "MANAGE"
+                    ],
                     "description": "Permissions required to add an invitation."
                 }
             }
         },
         "/api/v1/profile": {
             "get": {
-                "tags": ["User Authorization", "authentication"],
+                "tags": [
+                    "User Authorization",
+                    "authentication"
+                ],
                 "summary": "Get Profile",
                 "description": "Returns a Profile including Organization and Current User Information.",
                 "operationId": "getProfile",
@@ -213,7 +236,10 @@
     "components": {
         "schemas": {
             "AuthUser": {
-                "required": ["displayName", "email"],
+                "required": [
+                    "displayName",
+                    "email"
+                ],
                 "type": "object",
                 "properties": {
                     "email": {
@@ -238,7 +264,10 @@
                 "description": "Entity representing user in authentication system."
             },
             "Invitation": {
-                "required": ["email", "userId"],
+                "required": [
+                    "email",
+                    "userId"
+                ],
                 "type": "object",
                 "properties": {
                     "email": {
@@ -261,7 +290,11 @@
                 }
             },
             "AmplitudeService": {
-                "required": ["aiProjectApiKey", "endpoint", "gdCommonApiKey"],
+                "required": [
+                    "aiProjectApiKey",
+                    "endpoint",
+                    "gdCommonApiKey"
+                ],
                 "type": "object",
                 "properties": {
                     "aiProjectApiKey": {
@@ -284,7 +317,9 @@
                 "description": "Amplitude service."
             },
             "ApiEntitlement": {
-                "required": ["name"],
+                "required": [
+                    "name"
+                ],
                 "type": "object",
                 "properties": {
                     "name": {
@@ -301,7 +336,10 @@
                 "description": "Defines entitlements for given organization."
             },
             "FeatureFlagsContext": {
-                "required": ["earlyAccess", "earlyAccessValues"],
+                "required": [
+                    "earlyAccess",
+                    "earlyAccessValues"
+                ],
                 "type": "object",
                 "properties": {
                     "earlyAccessValues": {
@@ -317,7 +355,9 @@
                 }
             },
             "Features": {
-                "required": ["context"],
+                "required": [
+                    "context"
+                ],
                 "type": "object",
                 "properties": {
                     "context": {
@@ -327,7 +367,10 @@
                 "description": "Base Structure for feature flags"
             },
             "LiveFeatureFlagConfiguration": {
-                "required": ["host", "key"],
+                "required": [
+                    "host",
+                    "key"
+                ],
                 "type": "object",
                 "properties": {
                     "host": {
@@ -339,11 +382,16 @@
                 }
             },
             "LiveFeatures": {
-                "required": ["live"],
+                "required": [
+                    "live"
+                ],
                 "type": "object",
                 "properties": {
                     "live": {
-                        "required": ["configuration", "context"],
+                        "required": [
+                            "configuration",
+                            "context"
+                        ],
                         "type": "object",
                         "allOf": [
                             {
@@ -363,7 +411,10 @@
                 "description": "Structure for featureHub"
             },
             "MatomoService": {
-                "required": ["host", "siteId"],
+                "required": [
+                    "host",
+                    "siteId"
+                ],
                 "type": "object",
                 "properties": {
                     "host": {
@@ -383,7 +434,9 @@
                 "description": "Matomo service."
             },
             "OpenTelemetryService": {
-                "required": ["host"],
+                "required": [
+                    "host"
+                ],
                 "type": "object",
                 "properties": {
                     "host": {
@@ -422,7 +475,10 @@
                         "type": "array",
                         "items": {
                             "type": "string",
-                            "enum": ["MANAGE", "SELF_CREATE_TOKEN"]
+                            "enum": [
+                                "MANAGE",
+                                "SELF_CREATE_TOKEN"
+                            ]
                         }
                     },
                     "telemetryConfig": {
@@ -451,7 +507,11 @@
                 }
             },
             "ProfileLinks": {
-                "required": ["organization", "self", "user"],
+                "required": [
+                    "organization",
+                    "self",
+                    "user"
+                ],
                 "type": "object",
                 "properties": {
                     "self": {
@@ -466,11 +526,16 @@
                 }
             },
             "StaticFeatures": {
-                "required": ["static"],
+                "required": [
+                    "static"
+                ],
                 "type": "object",
                 "properties": {
                     "static": {
-                        "required": ["context", "items"],
+                        "required": [
+                            "context",
+                            "items"
+                        ],
                         "type": "object",
                         "allOf": [
                             {
@@ -493,7 +558,10 @@
                 "description": "Structure for offline feature flag"
             },
             "TelemetryConfig": {
-                "required": ["context", "services"],
+                "required": [
+                    "context",
+                    "services"
+                ],
                 "type": "object",
                 "properties": {
                     "context": {
@@ -506,7 +574,11 @@
                 "description": "Telemetry-related configuration."
             },
             "TelemetryContext": {
-                "required": ["deploymentId", "organizationHash", "userHash"],
+                "required": [
+                    "deploymentId",
+                    "organizationHash",
+                    "userHash"
+                ],
                 "type": "object",
                 "properties": {
                     "deploymentId": {

@@ -1,6 +1,13 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import type { IDualConfiguration } from "../types.js";
+
+const v9 = {
+    packages: [{ name: "globals", version: "17.2.0" }],
+    languageOptions: {
+        globalsPresets: ["node" as const, "es2022" as const],
+    },
+};
 
 export const env: IDualConfiguration = {
     v8: {
@@ -9,10 +16,6 @@ export const env: IDualConfiguration = {
             es2022: true,
         },
     },
-    v9: {
-        packages: [{ name: "globals", version: "17.2.0" }],
-        languageOptions: {
-            globalsPresets: ["node", "es2022"],
-        },
-    },
+    v9,
+    ox: v9,
 };

@@ -937,5 +937,21 @@
     "dialogs.export.pdf.pageOrientation.option.portrait": "세로형",
     "dialogs.export.pdf.pageOrientation.option.landscape": "가로형",
     "dialogs.export.submit": "내보내기",
-    "gs.header.mainMenu.ariaLabel": "메인 메뉴"
+    "gs.header.mainMenu.ariaLabel": "메인 메뉴",
+    "gs.header.analyze": "분석",
+    "gs.header.catalog": "카탈로그",
+    "gs.header.community": "커뮤니티",
+    "gs.header.data": "데이터",
+    "gs.header.documentation": "문서",
+    "gs.header.kpis.new": "대시보드",
+    "gs.header.metrics": "메트릭",
+    "gs.header.slack": "슬랙",
+    "gs.header.submitTicket": "티켓 제출",
+    "gs.header.university": "대학교",
+    "gs.header.visitSupportPortal": "지원 포털 방문",
+    "gs.header.dashboards": "대시보드",
+    "gs.header.kpis": "KPI",
+    "gs.header.load": "로드",
+    "gs.header.manage": "관리",
+    "gs.header.reports": "보고서"
 }

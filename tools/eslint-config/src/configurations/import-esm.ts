@@ -7,17 +7,22 @@ const importEsmPlugin: IPackage = {
     version: "1.2.1",
 };
 
+const rules = {
+    "import-esm/explicit-extension": "error",
+};
+
+const v9 = {
+    packages: [importEsmPlugin],
+    plugins: { "import-esm": importEsmPlugin },
+    rules,
+};
+
 export const importEsm: IDualConfiguration<"import-esm"> = {
     v8: {
         packages: [importEsmPlugin],
         plugins: ["import-esm"],
-        extends: ["plugin:import-esm/recommended"],
+        rules,
     },
-    v9: {
-        packages: [importEsmPlugin],
-        plugins: { "import-esm": importEsmPlugin },
-        rules: {
-            "import-esm/explicit-extension": "error",
-        },
-    },
+    v9,
+    ox: v9,
 };

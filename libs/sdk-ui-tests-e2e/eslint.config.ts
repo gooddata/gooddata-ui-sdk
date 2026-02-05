@@ -1,6 +1,6 @@
 // (C) 2020-2026 GoodData Corporation
 
-import config from "@gooddata/eslint-config/react-cypress";
+import config from "@gooddata/eslint-config/oxlint-react-cypress";
 
 export default [
     ...config,

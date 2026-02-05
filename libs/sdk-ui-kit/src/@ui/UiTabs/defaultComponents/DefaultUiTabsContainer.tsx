@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useCallback, useEffect } from "react";
 
@@ -60,10 +60,11 @@ export function DefaultUiTabsContainer<
     const scopedIdStoreValue = useScopedIdStoreValue<IUiTab<TTabProps, TTabActionProps> | undefined>(
         (item) => item?.id ?? "",
     );
+    const focusedTabId = focusedItem
+        ? (focusedItem.tabId ?? scopedIdStoreValue.makeId({ item: focusedItem, specifier: "tab" }))
+        : "";
 
-    const { containerRef: focusContainerRef } = useFocusWithinContainer(
-        scopedIdStoreValue.makeId({ item: focusedItem, specifier: "tab" }) ?? "",
-    );
+    const { containerRef: focusContainerRef } = useFocusWithinContainer(focusedTabId);
 
     const focusedItemContainerId = scopedIdStoreValue.makeId({
         item: focusedItem,

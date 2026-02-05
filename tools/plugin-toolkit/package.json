@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/plugin-toolkit",
-    "version": "11.19.0-alpha.9",
+    "version": "11.19.0-alpha.10",
     "description": "GoodData Set of Tools for working with Plugins",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData",
@@ -42,7 +42,11 @@
         "oxfmt-write": "oxfmt .",
         "test": "vitest watch",
         "test-once": "vitest run",
-        "validate": "npm run dep-cruiser && npm run eslint && npm run oxfmt-check"
+        "validate": "npm run dep-cruiser && npm run lint && npm run oxfmt-check",
+        "lint": "npm run oxlint && npm run eslint",
+        "lint-fix": "npm run oxlint-fix && npm run eslint-fix",
+        "oxlint": "oxlint .",
+        "oxlint-fix": "oxlint . --fix"
     },
     "dependencies": {
         "@babel/cli": "^7.23.4",
@@ -70,6 +74,7 @@
     },
     "devDependencies": {
         "@gooddata/eslint-config": "workspace:*",
+        "@gooddata/oxlint-config": "workspace:*",
         "@types/columnify": "^1.5.1",
         "@types/cross-spawn": "^6.0.2",
         "@types/fs-extra": "^9.0.13",
@@ -88,9 +93,9 @@
         "eslint-plugin-import-x": "4.16.1",
         "eslint-plugin-jsdoc": "62.1.0",
         "eslint-plugin-no-barrel-files": "1.2.2",
-        "eslint-plugin-no-only-tests": "3.3.0",
         "eslint-plugin-sonarjs": "3.0.6",
         "oxfmt": "0.27.0",
+        "oxlint": "^1.43.0",
         "typescript": "5.9.3",
         "vitest": "4.0.8"
     }
