@@ -16,7 +16,7 @@ import { HeadlineConfigurationPanel } from "../HeadlineConfigurationPanel.js";
 
 vi.mock("../../configurationControls/comparison/ComparisonSection.js", async (importOriginal) => {
     const actual =
-        // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+        // oxlint-disable-next-line @typescript-eslint/consistent-type-imports
         await importOriginal<typeof import("../../configurationControls/comparison/ComparisonSection.js")>();
     return {
         ...actual,

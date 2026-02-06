@@ -120,7 +120,7 @@ export class DataViewFacade {
      * @returns context metadata attached to the underlying execution
      * @public
      */
-    public context(): IExecutionContext | undefined {
+    public context(): IExecutionContext {
         return this.dataView.context;
     }
 

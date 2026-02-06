@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import path from "path";
 import { fileURLToPath } from "url";
@@ -66,7 +66,7 @@ export interface IStoryInfo {
     storyKind: string;
     storyName: string;
     scenarioName?: string;
-    // eslint-disable-next-line @typescript-eslint/no-empty-object-type
+    // oxlint-disable-next-line @typescript-eslint/no-empty-object-type
     scenarioConfig: INeobackstopScenarioConfig | {} | undefined;
 }
 

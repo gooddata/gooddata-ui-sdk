@@ -21,7 +21,7 @@ import { NumberFormatControl } from "../numberFormat/NumberFormatControl.js";
 import { ValueSubSection } from "../ValueSubSection.js";
 
 vi.mock("../ComparisonPositionControl.js", async (importOriginal) => {
-    // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+    // oxlint-disable-next-line @typescript-eslint/consistent-type-imports
     const actual = await importOriginal<typeof import("../ComparisonPositionControl.js")>();
     return {
         ...actual,
@@ -30,7 +30,7 @@ vi.mock("../ComparisonPositionControl.js", async (importOriginal) => {
 });
 
 vi.mock("../numberFormat/NumberFormatControl.js", async (importOriginal) => {
-    // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+    // oxlint-disable-next-line @typescript-eslint/consistent-type-imports
     const actual = await importOriginal<typeof import("../numberFormat/NumberFormatControl.js")>();
     return {
         ...actual,

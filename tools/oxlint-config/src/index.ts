@@ -13,6 +13,7 @@ import { noOnlyTests } from "./configurations/no-only-tests.js";
 import { oxc } from "./configurations/oxc.js";
 import { security } from "./configurations/security.js";
 import { sonarjs } from "./configurations/sonarjs.js";
+import { typescript } from "./configurations/typescript.js";
 import { type IConfiguration } from "./types.js";
 
 export const common: IConfiguration[] = [
@@ -20,6 +21,7 @@ export const common: IConfiguration[] = [
     oxc,
     eslint,
     headers,
+    typescript,
     noBarrelFiles,
     importX,
     sonarjs,

@@ -219,7 +219,7 @@ function* resetDashboardFromPersisted(ctx: DashboardContext) {
         const displayForms: ReturnType<typeof selectAllCatalogDisplayFormsMap> = yield select(
             selectAllCatalogDisplayFormsMap,
         );
-        const resolvedInsightsValues = Array(...resolvedInsights.resolved.values());
+        const resolvedInsightsValues = [...resolvedInsights.resolved.values()];
 
         const currentActiveTabId: ReturnType<typeof selectActiveTabLocalIdentifier> = yield select(
             selectActiveTabLocalIdentifier,

@@ -1,5 +1,6 @@
-// (C) 2020-2025 GoodData Corporation
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// (C) 2020-2026 GoodData Corporation
+
+// oxlint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 /**
  * A garbage file that creates fixtures to bypass typescript strict type checking

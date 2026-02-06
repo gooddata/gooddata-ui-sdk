@@ -1,6 +1,47 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 29 Jan 2026 08:15:37 GMT and should not be manually modified.
+This log was last generated on Fri, 06 Feb 2026 10:30:03 GMT and should not be manually modified.
+
+## 11.19.0
+
+Fri, 06 Feb 2026 10:30:03 GMT
+
+### Updates
+
+- sdk-ui-all: Calendar tabs accessibility.
+- sdk-ui-filters: Fix `DateFilter` state synchronization issue.
+- sdk-ui-filters: Ensure `DateFilter` button label updates when `Exclude current period` adjusts a named `relativePreset`.
+- Upgrage test fixtures to v3.3.5
+- sdk-ui-catalog: improved status handling for semantic quality check when model updates are in progress
+- sdk-ui-dashboard: disable date selector in KDA if there are no period available
+- sdk-ui-kit: accessibility improvements for combobox
+- sdk-ui-dashboard: option to allow override of automatic overly controller detection, disable this on dashboard
+- sdk-ui-kit: table menu can be also opened on top direction if there is no space below.
+- sdk-ui-kit: attribute popup can be setup by accesible config
+- sdk-ui-all: accesibility updates to kda flow from dashboard
+- sdk-ui-kit: added new icon "click"
+- sdk-ui-dashboard: update design of kda dialog
+- sdk-ui-dashboard: update the styling of the KDA floating bar
+- sdk-ui-kit: add new variable into theme
+- sdk-ui-kit: Allow setting fullWidthButton to UiDropdown
+- sdk-ui-all: Added support for dashboard summaries.
+- sdk-ui-dashboard: Feature flag enableFiscalCalendars set to true by default
+- @gooddata/sdk-ui-all: all dropdowns migrated to new virtualized list implementation. Paging changes for dropdowns.
+- add support for custom geo collection in AD
+- Add CrateDB data source type support
+- Respect null value in max zoom level for geo charts, null means unrestricted zoom level.
+- chore: Replace eslint-plugin-import with eslint-plugin-import-x
+- chore: Use project service in eslint
+- chore: Remove tsOverride from eslint-config
+- chore: Upgrade eslint-config to emit eslint v9 flat config
+- chore: Decouple eslint and prettier
+- chore: Move @gooddata/stylelint to this monorepo
+- Fix enabled save button in AD when nothing changed in Drill to URL interactions config
+- Show Drill to URL checkbox in table chart only
+- Fix duplicated same URL drills in dashboard view mode
+- sdk-ui-ext: sanitize dimensionality of metric value filter during drilling by migrating attributes identified by local id to obj ref when a linked attribute is removed from the insight buckets
+- sdk-ui-charts, sdk-ui-pivot: feature flag enableDrillMenuPositioningAtCursor has been removed
+- update fixture to 3.3.10
 
 ## 11.18.0
 

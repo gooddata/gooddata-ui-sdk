@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type DashboardDateFilterConfigMode } from "@gooddata/sdk-model";
 
@@ -32,9 +32,7 @@ export type RelativePreset =
     | "this-year";
 
 export class DateFilter {
-    constructor(private title = "Date range") {
-        this.title = title;
-    }
+    constructor(private title = "Date range") {}
 
     getDateFilterElement() {
         const testClass = getTestClassByTitle(this.title, "date-filter-button-");

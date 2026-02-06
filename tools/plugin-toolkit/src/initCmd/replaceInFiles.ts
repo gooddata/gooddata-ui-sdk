@@ -48,7 +48,7 @@ export type RegexReplacement = {
     apply?: boolean;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+// oxlint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface IFileReplacementSpec extends Record<string, RegexReplacement[] | IFileReplacementSpec> {}
 
 export async function replaceInFiles(

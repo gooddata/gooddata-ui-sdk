@@ -25,7 +25,7 @@ import {
 import { LabelSubSection } from "../LabelSubSection.js";
 
 vi.mock("../../../CheckboxControl.js", async (importOriginal) => {
-    // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+    // oxlint-disable-next-line @typescript-eslint/consistent-type-imports
     const actual = await importOriginal<typeof import("../../../CheckboxControl.js")>();
     return {
         ...actual,
@@ -34,7 +34,7 @@ vi.mock("../../../CheckboxControl.js", async (importOriginal) => {
 });
 
 vi.mock("../../../InputControl.js", async (importOriginal) => {
-    // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+    // oxlint-disable-next-line @typescript-eslint/consistent-type-imports
     const actual = await importOriginal<typeof import("../../../InputControl.js")>();
     return { ...actual, InputControl: vi.fn(actual.InputControl) };
 });

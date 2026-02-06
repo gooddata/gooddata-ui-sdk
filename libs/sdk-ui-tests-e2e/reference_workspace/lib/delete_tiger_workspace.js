@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import fs from "fs";
 
@@ -68,4 +68,4 @@ async function main() {
     }
 }
 
-main();
+void main();

@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { VisualizationTypes } from "@gooddata/sdk-ui";
 
@@ -27,7 +27,7 @@ export const autohideLabels = (Highcharts: any): void => {
         Highcharts.Chart.prototype,
         "hideOverlappingLabels",
         function (this: any, proceed: any, labels: any) {
-            // eslint-disable-next-line @typescript-eslint/no-this-alias
+            // oxlint-disable-next-line @typescript-eslint/no-this-alias
             const chart = this;
             const chartType = getChartType(this);
             const dataLabelsUserVisibility = getDataLabelsGdcVisible(this);

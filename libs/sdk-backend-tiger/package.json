@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-backend-tiger",
-    "version": "11.19.0-alpha.11",
+    "version": "11.19.0",
     "description": "GoodData Backend SPI implementation for GoodData Cloud and GoodData.CN",
     "license": "MIT",
     "author": "GoodData",
@@ -53,8 +53,8 @@
         "validate-esm": "node --input-type=module --eval 'import \"@gooddata/sdk-backend-tiger\"' ",
         "lint": "npm run oxlint && npm run eslint",
         "lint-fix": "npm run oxlint-fix && npm run eslint-fix",
-        "oxlint": "oxlint .",
-        "oxlint-fix": "oxlint . --fix"
+        "oxlint": "oxlint . --type-aware",
+        "oxlint-fix": "oxlint . --type-aware --fix"
     },
     "dependencies": {
         "@gooddata/api-client-tiger": "workspace:*",
@@ -100,6 +100,7 @@
         "npm-run-all": "^4.1.5",
         "oxfmt": "0.27.0",
         "oxlint": "^1.43.0",
+        "oxlint-tsgolint": "0.11.4",
         "typescript": "5.9.3",
         "vitest": "4.0.8"
     }

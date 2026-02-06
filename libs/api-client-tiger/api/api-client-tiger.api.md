@@ -2758,6 +2758,19 @@ export type AlertCondition = AnomalyDetectionWrapper | ComparisonWrapper | Range
 // @public
 export type AlertConditionOperand = LocalIdentifier | Value;
 
+// @public
+export interface AllowedRelationshipType {
+    'allowOrphans'?: boolean;
+    'sourceType': AllowedRelationshipTypeSourceTypeEnum;
+    'targetType': AllowedRelationshipTypeTargetTypeEnum;
+}
+
+// @public (undocumented)
+export type AllowedRelationshipTypeSourceTypeEnum = 'attribute' | 'metric' | 'fact' | 'label' | 'date' | 'dataset' | 'visualization' | 'dashboard';
+
+// @public (undocumented)
+export type AllowedRelationshipTypeTargetTypeEnum = 'attribute' | 'metric' | 'fact' | 'label' | 'date' | 'dataset' | 'visualization' | 'dashboard';
+
 declare namespace AnalyticalDashboardModelV1 {
     export {
         isAnalyticalDashboard,
@@ -5424,7 +5437,6 @@ export interface ChatHistoryResult {
 
 // @public (undocumented)
 export interface ChatRequest {
-    // Warning: (ae-forgotten-export) The symbol "AllowedRelationshipType" needs to be exported by the entry point index.d.ts
     'allowedRelationshipTypes'?: Array<AllowedRelationshipType>;
     'includeHidden'?: boolean;
     'limitCreate'?: number;

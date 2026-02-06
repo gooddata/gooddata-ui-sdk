@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { isEmpty, zip } from "lodash-es";
 
@@ -375,6 +375,7 @@ export function getStackItems(yAxis: Highcharts.Axis[]): IStackItem[] {
         const series = axis.series;
         return series.map((serie: Highcharts.Series) => {
             return {
+                // oxlint-disable-next-line @typescript-eslint/no-misused-spread
                 column: { ...serie.data },
             };
         });

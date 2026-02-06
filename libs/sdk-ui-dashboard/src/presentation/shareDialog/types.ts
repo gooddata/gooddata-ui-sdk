@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { type ComponentType } from "react";
 
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
@@ -14,7 +15,7 @@ import {
 /**
  * @alpha
  */
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+// oxlint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface ISharingApplyPayload extends ISharingDialogApplyPayload {}
 
 /**

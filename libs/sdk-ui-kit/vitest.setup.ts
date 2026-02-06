@@ -5,6 +5,8 @@ import { afterEach, expect, vi } from "vitest";
 import * as matchers from "vitest-dom/dist/matchers.js";
 import { type TestingLibraryMatchers } from "vitest-dom/dist/matchers.js";
 
+// oxlint-disable @typescript-eslint/no-empty-object-type
+
 /**
  * Exports of types and matchers of vitest-dom is currently broken we need export matchers from dist and define types manually
  */

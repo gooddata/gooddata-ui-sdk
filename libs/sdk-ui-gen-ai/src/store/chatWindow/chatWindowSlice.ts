@@ -1,9 +1,9 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type PayloadAction, type Reducer, createSlice } from "@reduxjs/toolkit";
 
 import { type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { type GenAIObjectType, type IColorPalette } from "@gooddata/sdk-model";
+import { type GenAIObjectType, type IAllowedRelationshipType, type IColorPalette } from "@gooddata/sdk-model";
 import type { IKdaDefinition } from "@gooddata/sdk-ui-dashboard";
 
 type ChatWindowSliceState = {
@@ -39,6 +39,10 @@ type ChatWindowSliceState = {
      * Objects with these tags will be excluded
      */
     excludeTags?: string[];
+    /**
+     * Allowed relationship types for semantic search (e.g. for view-only users).
+     */
+    allowedRelationshipTypes?: IAllowedRelationshipType[];
 };
 
 export const chatWindowSliceName = "chatWindow";
@@ -51,6 +55,7 @@ const initialState: ChatWindowSliceState = {
     objectTypes: undefined,
     includeTags: undefined,
     excludeTags: undefined,
+    allowedRelationshipTypes: undefined,
 };
 
 const chatWindowSlice = createSlice({
@@ -99,6 +104,14 @@ const chatWindowSlice = createSlice({
             state.includeTags = includeTags;
             state.excludeTags = excludeTags;
         },
+        setAllowedRelationshipTypesAction: (
+            state,
+            {
+                payload: { allowedRelationshipTypes },
+            }: PayloadAction<{ allowedRelationshipTypes?: IAllowedRelationshipType[] }>,
+        ) => {
+            state.allowedRelationshipTypes = allowedRelationshipTypes;
+        },
         copyToClipboardAction: (state, _action: PayloadAction<{ content: string }>) => state,
     },
 });
@@ -113,4 +126,5 @@ export const {
     setKeyDriverAnalysisAction,
     setObjectTypesAction,
     setTagsAction,
+    setAllowedRelationshipTypesAction,
 } = chatWindowSlice.actions;

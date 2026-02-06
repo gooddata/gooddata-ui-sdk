@@ -20,6 +20,7 @@ import { GenAIChatInteractionUserVisualisation } from '@gooddata/sdk-model';
 import { GenAIObjectType } from '@gooddata/sdk-model';
 import { IActiveCalendars } from '@gooddata/sdk-model';
 import { IAlertDefault } from '@gooddata/sdk-model';
+import { IAllowedRelationshipType } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAnalyticalBackendConfig } from '@gooddata/sdk-backend-spi';
 import { IAnomalyDetectionConfig } from '@gooddata/sdk-backend-spi';
@@ -805,6 +806,8 @@ export class DummySemanticSearchQueryBuilder implements ISemanticSearchQuery {
     }>;
     // (undocumented)
     question: string;
+    // (undocumented)
+    withAllowedRelationshipTypes(allowedRelationshipTypes: IAllowedRelationshipType[]): this;
     // (undocumented)
     withDeepSearch(): this;
     // (undocumented)

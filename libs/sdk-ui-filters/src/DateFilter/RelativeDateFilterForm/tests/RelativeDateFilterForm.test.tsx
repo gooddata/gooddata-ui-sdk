@@ -74,11 +74,11 @@ describe("RelativeDateFilterForm", () => {
         // vi.restoreAllMocks() doesn't work with vi.fn(impl) - it sets implementation to undefined
         // We need to manually restore the original implementations
         const originalRangePicker = await vi.importActual<
-            // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+            // oxlint-disable-next-line @typescript-eslint/consistent-type-imports
             typeof import("../../RelativeRangePicker/RelativeRangePicker.js")
         >("../../RelativeRangePicker/RelativeRangePicker.js");
         const originalTabs =
-            // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+            // oxlint-disable-next-line @typescript-eslint/consistent-type-imports
             await vi.importActual<typeof import("../GranularityTabs.js")>("../GranularityTabs.js");
 
         vi.mocked(mockRelativeRangePicker).mockImplementation(originalRangePicker.RelativeRangePicker);

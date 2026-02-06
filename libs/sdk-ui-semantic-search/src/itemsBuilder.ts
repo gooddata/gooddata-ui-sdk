@@ -1,8 +1,8 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import type { ISemanticSearchRelationship, ISemanticSearchResultItem } from "@gooddata/sdk-model";
 
-import { permissionsFilter, thresholdFilter } from "./filters/items.filters.js";
+import { thresholdFilter } from "./filters/items.filters.js";
 import { type SearchTreeViewItem } from "./internal/LeveledSearchTreeView.js";
 import { getItemRelationships } from "./utils/searchItem.js";
 
@@ -10,14 +10,12 @@ type BuildSemanticSearchItemsProps = {
     searchResults: ISemanticSearchResultItem[];
     relationships: ISemanticSearchRelationship[];
     threshold?: number;
-    canEdit?: boolean;
 };
 
 export function buildSemanticSearchItems({
     searchResults,
     relationships,
     threshold = 0.8,
-    canEdit = false,
 }: BuildSemanticSearchItemsProps): SearchTreeViewItem[] {
     return searchResults
         .filter(thresholdFilter(threshold))
@@ -50,6 +48,5 @@ export function buildSemanticSearchItems({
                     };
                 }),
             };
-        })
-        .filter(permissionsFilter(canEdit));
+        });
 }

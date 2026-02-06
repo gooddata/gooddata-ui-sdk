@@ -1,6 +1,6 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// oxlint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import cypressGrepPlugin from "@cypress/grep/src/plugin";
 import axios from "axios";

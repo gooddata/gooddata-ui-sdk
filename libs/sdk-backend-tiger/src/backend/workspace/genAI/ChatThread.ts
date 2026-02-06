@@ -27,6 +27,7 @@ import {
     type GenAIChatInteractionUserVisualisation,
     type GenAIFilter,
     type GenAIObjectType,
+    type IAllowedRelationshipType,
     type IAttribute,
     type IGenAIChangeAnalysisParams,
     type IGenAIChatInteraction,
@@ -160,6 +161,7 @@ export type ChatThreadQueryConfig = {
     limitCreate?: number;
     userContext?: IGenAIUserContext;
     objectTypes?: GenAIObjectType[];
+    allowedRelationshipTypes?: IAllowedRelationshipType[];
 };
 
 /**
@@ -201,6 +203,13 @@ export class ChatThreadQuery implements IChatThreadQuery {
         });
     }
 
+    withAllowedRelationshipTypes(allowedRelationshipTypes?: IAllowedRelationshipType[]): IChatThreadQuery {
+        return new ChatThreadQuery(this.authCall, this.dateNormalizer, {
+            ...this.config,
+            allowedRelationshipTypes,
+        });
+    }
+
     async query(options?: { signal?: AbortSignal }): Promise<IGenAIChatEvaluation> {
         const response = await this.authCall((client) =>
             GenAiApi_AiChat(
@@ -214,6 +223,7 @@ export class ChatThreadQuery implements IChatThreadQuery {
                         limitCreate: this.config.limitCreate,
                         userContext: this.config.userContext,
                         objectTypes: this.config.objectTypes,
+                        allowedRelationshipTypes: this.config.allowedRelationshipTypes,
                     },
                 },
                 options,
@@ -245,6 +255,7 @@ export class ChatThreadQuery implements IChatThreadQuery {
                                 limitCreate: config.limitCreate,
                                 userContext: config.userContext,
                                 objectTypes: config.objectTypes,
+                                allowedRelationshipTypes: config.allowedRelationshipTypes,
                             },
                         },
                         {

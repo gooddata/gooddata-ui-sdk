@@ -5,6 +5,7 @@
 ```ts
 
 import { GenAIObjectType } from '@gooddata/sdk-model';
+import { IAllowedRelationshipType } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { ISemanticSearchRelationship } from '@gooddata/sdk-model';
 import { ISemanticSearchResultItem } from '@gooddata/sdk-model';
@@ -31,6 +32,7 @@ export type SemanticSearchHookInput = {
     limit?: number;
     backend?: IAnalyticalBackend;
     workspace?: string;
+    allowedRelationshipTypes?: IAllowedRelationshipType[];
 };
 
 // @beta
@@ -64,6 +66,6 @@ export type SemanticSearchProps = {
 };
 
 // @beta
-export const useSemanticSearch: ({ searchTerm, objectTypes, deepSearch, limit, backend, workspace, }: SemanticSearchHookInput) => SemanticSearchInputResult;
+export const useSemanticSearch: ({ searchTerm, objectTypes, deepSearch, limit, backend, workspace, allowedRelationshipTypes, }: SemanticSearchHookInput) => SemanticSearchInputResult;
 
 ```

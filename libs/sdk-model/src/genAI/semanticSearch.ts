@@ -1,6 +1,28 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import { type GenAIObjectType } from "./common.js";
+
+/**
+ * Allowed relationship type combination for semantic search.
+ * Filters relationships and results to only include direct matches or objects reachable via allowed relationship types.
+ * @beta
+ */
+export interface IAllowedRelationshipType {
+    /**
+     * Source object type (e.g. 'dashboard', 'visualization', 'metric').
+     */
+    sourceType: GenAIObjectType;
+    /**
+     * Target object type (e.g. 'visualization', 'metric', 'attribute').
+     */
+    targetType: GenAIObjectType;
+    /**
+     * If true, allows target objects that are not part of any relationship (orphans) to be included in results.
+     * If false, orphan target objects will be excluded even if they directly match the search query.
+     * Default is true (orphans are allowed).
+     */
+    allowOrphans?: boolean;
+}
 
 /**
  * Semantic search result payload.

@@ -14,7 +14,7 @@ import { ComparisonSection } from "../ComparisonSection.js";
 import { COMPARISON_ENABLED_VALUE_PATH } from "../ComparisonValuePath.js";
 
 vi.mock("../../ConfigSection.js", async (importOriginal) => {
-    // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+    // oxlint-disable-next-line @typescript-eslint/consistent-type-imports
     const actual = await importOriginal<typeof import("../../ConfigSection.js")>();
     return {
         ...actual,
