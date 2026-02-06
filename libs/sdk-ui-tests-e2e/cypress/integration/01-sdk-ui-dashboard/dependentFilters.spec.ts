@@ -207,7 +207,7 @@ describe("Dependent filter", () => {
                 .isLoaded()
                 .hasSubtitle("California");
 
-            //eslint-disable-next-line cypress/no-unnecessary-waiting
+            //oxlint-disable-next-line cypress/no-unnecessary-waiting
             cy.wait(1000);
 
             cityFilter
@@ -266,7 +266,7 @@ describe("Dependent filter", () => {
                 .showAllElementValuesIsVisible(true);
 
             topBar.cancelEditMode().discardChanges().editButtonIsVisible(true);
-            //eslint-disable-next-line cypress/no-unnecessary-waiting
+            //oxlint-disable-next-line cypress/no-unnecessary-waiting
             cy.wait(2000);
 
             regionFilter.isLoaded().open().hasSubtitle("East Coast").hasFilterListSize(4);

@@ -2,7 +2,6 @@
 
 import { type ReactNode, createContext, useContext, useMemo } from "react";
 
-import { type IColorPalette } from "@gooddata/sdk-model";
 import { type DataViewFacade } from "@gooddata/sdk-ui";
 import { type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
@@ -103,11 +102,6 @@ export interface IGeoLayersContext {
      * Primary (first) layer data - used for legend/tooltips.
      */
     primaryLayer: IGeoLayerData | null;
-
-    /**
-     * Color palette used.
-     */
-    colorPalette: IColorPalette;
 }
 
 const GeoLayersContext = createContext<IGeoLayersContext | undefined>(undefined);
@@ -125,12 +119,10 @@ export function GeoLayersProvider({
     children,
     layerExecutions,
     layerOutputs,
-    colorPalette,
 }: {
     children: ReactNode;
     layerExecutions: ILayerExecutionRecord[];
     layerOutputs: Map<string, ILayerPreparedData>;
-    colorPalette: IColorPalette;
 }) {
     const layersData = useMemo(() => {
         const map = new Map<string, IGeoLayerData>();
@@ -162,9 +154,8 @@ export function GeoLayersProvider({
             layerExecutions,
             layers: layersData,
             primaryLayer,
-            colorPalette,
         }),
-        [layerExecutions, layersData, primaryLayer, colorPalette],
+        [layerExecutions, layersData, primaryLayer],
     );
 
     return <GeoLayersContext.Provider value={value}>{children}</GeoLayersContext.Provider>;

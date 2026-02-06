@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-/* eslint-disable no-barrel-files/no-barrel-files */
+/* oxlint-disable no-barrel-files/no-barrel-files */
 
 /**
  * This package provides foundational reusable code useful for building new or decorating existing Analytical Backend implementations.

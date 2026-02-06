@@ -4,6 +4,8 @@ import {
     type IAttribute,
     type IAttributeOrMeasure,
     type IBucket,
+    type IColorMappingItem,
+    type IColorPalette,
     type IInsightLayerDefinition,
     type ObjRef,
     attributeDisplayFormRef,
@@ -17,9 +19,16 @@ import {
     newAttribute,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
+import { type IColorMapping, getColorMappingPredicate } from "@gooddata/sdk-ui-vis-commons";
 
 import { isRecord } from "./guards.js";
-import { type IGeoLayer, type IGeoLayerArea, type IGeoLayerPushpin } from "../types/layers/index.js";
+import { registerHeaderPredicateKey } from "./predicateFingerprint.js";
+import {
+    type IGeoLayer,
+    type IGeoLayerArea,
+    type IGeoLayerConfig,
+    type IGeoLayerPushpin,
+} from "../types/layers/index.js";
 
 /**
  * Expected shape of geo layer controls in visualization properties.
@@ -29,6 +38,82 @@ import { type IGeoLayer, type IGeoLayerArea, type IGeoLayerPushpin } from "../ty
 interface IGeoLayerControls {
     latitude?: string;
     longitude?: string;
+}
+
+function isColorMappingItem(value: unknown): value is IColorMappingItem {
+    if (!isRecord(value)) {
+        return false;
+    }
+    const id = value["id"];
+    const color = value["color"];
+    if (typeof id !== "string") {
+        return false;
+    }
+    if (!isRecord(color)) {
+        return false;
+    }
+    return typeof color["type"] === "string";
+}
+
+/**
+ * `getColorMappingPredicate(id)` returns a new function instance on every call.
+ * That makes layer configs look "changed" even if mapping is semantically the same,
+ * which then cascades into unnecessary re-syncs (map flicker) on unrelated UI updates.
+ *
+ * Cache predicate instances per id to keep them referentially stable.
+ */
+const colorMappingPredicateCache = new Map<string, ReturnType<typeof getColorMappingPredicate>>();
+
+function getStableColorMappingPredicate(id: string): ReturnType<typeof getColorMappingPredicate> {
+    const cached = colorMappingPredicateCache.get(id);
+    if (cached) {
+        registerHeaderPredicateKey(cached, id);
+        return cached;
+    }
+    const created = getColorMappingPredicate(id);
+    registerHeaderPredicateKey(created, id);
+    colorMappingPredicateCache.set(id, created);
+    return created;
+}
+
+function getLayerColorMappingFromControls(controls: unknown): IColorMapping[] | undefined {
+    if (!isRecord(controls)) {
+        return undefined;
+    }
+    const raw = controls["colorMapping"];
+    if (!Array.isArray(raw)) {
+        return undefined;
+    }
+
+    const items = raw.filter(isColorMappingItem);
+    if (items.length === 0) {
+        return undefined;
+    }
+
+    return items.map((mapItem) => ({
+        predicate: getStableColorMappingPredicate(mapItem.id),
+        color: mapItem.color,
+    }));
+}
+
+function getLayerColorPaletteFromControls(controls: unknown): IColorPalette | undefined {
+    if (!isRecord(controls)) {
+        return undefined;
+    }
+    const raw = controls["colorPalette"];
+    if (!Array.isArray(raw)) {
+        return undefined;
+    }
+
+    // Minimal validation - accept only palette items with guid + fill.
+    const palette = raw.filter((item): item is IColorPalette[number] => {
+        if (!isRecord(item)) {
+            return false;
+        }
+        return typeof item["guid"] === "string" && isRecord(item["fill"]);
+    });
+
+    return palette.length > 0 ? palette : undefined;
 }
 
 /**
@@ -215,6 +300,15 @@ function convertToPushpinLayer(insightLayer: IInsightLayerDefinition): IGeoLayer
     const size = getAttributeOrMeasureFromBucket(buckets, BucketNames.SIZE);
     const color = getAttributeOrMeasureFromBucket(buckets, BucketNames.COLOR);
     const segmentBy = getAttributeFromBucket(buckets, BucketNames.SEGMENT);
+    const colorMapping = getLayerColorMappingFromControls(controls);
+    const colorPalette = getLayerColorPaletteFromControls(controls);
+    const layerConfig: IGeoLayerConfig | undefined = colorPalette || colorMapping ? {} : undefined;
+    if (layerConfig && colorPalette) {
+        layerConfig.colorPalette = colorPalette;
+    }
+    if (layerConfig && colorMapping) {
+        layerConfig.colorMapping = colorMapping;
+    }
 
     if (!latitude || !longitude) {
         return null;
@@ -238,6 +332,7 @@ function convertToPushpinLayer(insightLayer: IInsightLayerDefinition): IGeoLayer
         size,
         color,
         segmentBy,
+        ...(layerConfig ? { config: layerConfig } : {}),
         filters,
         sortBy: sorts,
     };
@@ -252,7 +347,7 @@ function convertToPushpinLayer(insightLayer: IInsightLayerDefinition): IGeoLayer
  * @internal
  */
 function convertToAreaLayer(insightLayer: IInsightLayerDefinition): IGeoLayerArea | null {
-    const { id, name, buckets, filters, sorts } = insightLayer;
+    const { id, name, buckets, filters, sorts, properties } = insightLayer;
 
     const area = getAttributeFromBucket(buckets, BucketNames.AREA);
 
@@ -260,8 +355,18 @@ function convertToAreaLayer(insightLayer: IInsightLayerDefinition): IGeoLayerAre
         return null;
     }
 
+    const controls = properties?.["controls"];
     const color = getAttributeOrMeasureFromBucket(buckets, BucketNames.COLOR);
     const segmentBy = getAttributeFromBucket(buckets, BucketNames.SEGMENT);
+    const colorMapping = getLayerColorMappingFromControls(controls);
+    const colorPalette = getLayerColorPaletteFromControls(controls);
+    const layerConfig: IGeoLayerConfig | undefined = colorPalette || colorMapping ? {} : undefined;
+    if (layerConfig && colorPalette) {
+        layerConfig.colorPalette = colorPalette;
+    }
+    if (layerConfig && colorMapping) {
+        layerConfig.colorMapping = colorMapping;
+    }
 
     return {
         id,
@@ -270,6 +375,7 @@ function convertToAreaLayer(insightLayer: IInsightLayerDefinition): IGeoLayerAre
         area,
         color,
         segmentBy,
+        ...(layerConfig ? { config: layerConfig } : {}),
         filters,
         sortBy: sorts,
     };

@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { invariant } from "ts-invariant";
 
@@ -152,7 +152,7 @@ class RecordedFilterElements implements IFilterElementsQuery {
         this.ref = filterObjRef(filter);
     }
 
-    // eslint-disable-next-line sonarjs/no-identical-functions
+    // oxlint-disable-next-line sonarjs/no-identical-functions
     public withLimit(limit: number): this {
         invariant(limit > 0, "Limit must be positive number");
         this.limit = limit;

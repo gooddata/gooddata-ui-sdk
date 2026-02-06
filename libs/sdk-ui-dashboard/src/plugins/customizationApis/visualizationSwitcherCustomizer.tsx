@@ -312,7 +312,7 @@ export class DefaultVisualizationSwitcherCustomizer implements IVisualizationSwi
         const decoratorProvider = providerFactory(rootSnapshot);
         // construct new root provider; this will be using user's provider with a fallback to root provider
         // in case user's code does not return anything
-        // eslint-disable-next-line sonarjs/no-identical-functions
+        // oxlint-disable-next-line sonarjs/no-identical-functions
         const newRootProvider: VisualizationSwitcherToolbarComponentProvider = (props) => {
             const Component = decoratorProvider(props);
 

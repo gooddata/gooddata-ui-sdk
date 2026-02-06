@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-/* eslint-disable no-barrel-files/no-barrel-files */
+/* oxlint-disable no-barrel-files/no-barrel-files */
 
 // Scan Model API - Export scan model ActionsApi functions with ScanModelApi_ prefix
 export {

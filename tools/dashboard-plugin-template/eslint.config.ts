@@ -5,11 +5,6 @@ import config from "@gooddata/eslint-config/oxlint-esm-react";
 export default [
     ...config,
     {
-        rules: {
-            "import-x/no-unassigned-import": "off",
-        },
-    },
-    {
         ignores: [
             "webpack.config.cjs",
             "scripts/refresh-md.js",

@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-/* eslint-disable no-barrel-files/no-barrel-files */
+/* oxlint-disable no-barrel-files/no-barrel-files */
 
 // Smart Functions API - Export ActionsApi functions with SmartFunctionsApi_ prefix
 export {

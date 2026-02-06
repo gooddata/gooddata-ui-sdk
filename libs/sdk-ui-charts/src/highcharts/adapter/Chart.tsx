@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-/* eslint-disable import-x/no-unassigned-import */
+/* oxlint-disable import/no-unassigned-import */
 
 import { Component } from "react";
 

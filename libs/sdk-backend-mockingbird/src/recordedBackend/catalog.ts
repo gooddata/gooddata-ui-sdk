@@ -258,7 +258,7 @@ class RecordedAvailableCatalogFactory implements IWorkspaceCatalogAvailableItems
         return this;
     };
 
-    // eslint-disable-next-line sonarjs/no-identical-functions
+    // oxlint-disable-next-line sonarjs/no-identical-functions
     public withGroups(loadGroups: boolean): IWorkspaceCatalogAvailableItemsFactory {
         return this.withOptions({
             loadGroups,

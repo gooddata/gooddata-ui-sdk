@@ -332,13 +332,14 @@ export interface IGeoLayerAdapter<
     ): Promise<TOutput | null>;
 
     /**
-     * Apply prepared output to the map.
+     * Initialize (or repair) the layer on the map.
      *
      * @remarks
-     * Called when map is ready and output is prepared.
-     * Should be idempotent - safe to call multiple times with same output.
-     * Implementation should handle MapLibre source/layer lifecycle
-     * (remove existing, add new).
+     * This method is allowed to (re)create MapLibre sources & layers and should be treated as the
+     * "remove+add" path. The core map lifecycle calls this when:
+     * - the map instance changes
+     * - layer order changes (z-order safety)
+     * - adapter-declared structural key changes ({@link getMapSyncKey})
      *
      * The output contains a complete GeoJSONSourceSpecification that can be
      * applied directly to the map without further transformation.
@@ -347,7 +348,33 @@ export interface IGeoLayerAdapter<
      * @param map - Map facade instance used to manipulate layers
      * @param output - Prepared layer output with complete source specification
      */
-    syncToMap(layer: TLayer, map: IMapFacade, output: TOutput, context: IGeoAdapterContext): void;
+    syncToMap(
+        layer: TLayer,
+        map: IMapFacade,
+        output: TOutput,
+        dataView: DataViewFacade,
+        context: IGeoAdapterContext,
+    ): void;
+
+    /**
+     * Update an already-initialized layer on the map (in-place).
+     *
+     * @remarks
+     * This method should avoid removing/re-adding MapLibre layers to prevent flicker.
+     * It is intended for "visual only" updates such as palette/mapping or paint properties.
+     *
+     * If the adapter cannot safely update in-place (e.g. map/style/source resources are missing),
+     * it should no-op. The init hook owns the remove+add lifecycle via {@link syncToMap}.
+     *
+     * @internal
+     */
+    updateOnMap?(
+        layer: TLayer,
+        map: IMapFacade,
+        output: TOutput,
+        dataView: DataViewFacade,
+        context: IGeoAdapterContext,
+    ): void;
 
     /**
      * Returns a stable key that identifies configuration changes requiring a full layer re-sync.
@@ -361,6 +388,20 @@ export interface IGeoLayerAdapter<
      * If not provided, layers are re-synced only when their prepared data changes.
      */
     getMapSyncKey?(layer: TLayer, context: IGeoAdapterContext): string;
+
+    /**
+     * Returns a stable key that identifies changes requiring an in-place update.
+     *
+     * @remarks
+     * This is the "update only" counterpart of {@link getMapSyncKey}. Use it for changes that should
+     * NOT trigger a re-init (remove + add), but still require applying updated output to the map.
+     *
+     * The key should be:
+     * - **Per-layer**: include `layer.id` if needed
+     * - **Stable**: derived from semantic values, not object identity
+     * - **Minimal**: include only what impacts in-place update
+     */
+    getMapUpdateKey?(layer: TLayer, context: IGeoAdapterContext): string;
 
     /**
      * Get tooltip configuration for unified tooltip handling.

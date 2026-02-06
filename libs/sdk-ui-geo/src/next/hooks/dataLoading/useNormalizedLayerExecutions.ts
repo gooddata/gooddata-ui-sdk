@@ -4,13 +4,37 @@ import { useMemo } from "react";
 
 import { type IPreparedExecution } from "@gooddata/sdk-backend-spi";
 import { type IDataVisualizationProps } from "@gooddata/sdk-ui";
+import { type IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 
 import { hasGeoLayerContext } from "../../layers/execution/layerContext.js";
 import { type GeoLayerType, type IGeoLayer } from "../../types/layers/index.js";
 import { type ILayerExecutionRecord } from "../../types/props/geoChart/internal.js";
 import { createExecutionBucketsFingerprint } from "../../utils/fingerprint.js";
+import { getHeaderPredicateFingerprint } from "../../utils/predicateFingerprint.js";
 
 type WithoutExecutions<T> = Omit<T, "execution" | "executions">;
+
+function stringify(value: unknown): string {
+    try {
+        return JSON.stringify(value);
+    } catch {
+        return "";
+    }
+}
+
+function colorMappingFingerprint(colorMapping: IColorMapping[] | undefined): string {
+    if (!colorMapping || colorMapping.length === 0) {
+        return "";
+    }
+
+    return colorMapping
+        .map((item) => {
+            const predicate = getHeaderPredicateFingerprint(item.predicate);
+            const color = stringify(item.color);
+            return `${predicate}:${color}`;
+        })
+        .join("|");
+}
 
 /**
  * Props that may include layer type information for fallback layer creation.
@@ -24,8 +48,12 @@ function executionContextFingerprint(execution: IPreparedExecution): string {
         return "";
     }
 
-    const { id, type, name } = execution.context;
-    return `${type}:${id}:${name ?? ""}`;
+    const { id, type, name, config } = execution.context;
+    return [
+        `${type}:${id}:${name ?? ""}`,
+        stringify(config?.colorPalette),
+        colorMappingFingerprint(config?.colorMapping),
+    ].join("|");
 }
 
 function executionNormalizationFingerprint(execution: IPreparedExecution, index: number): string {

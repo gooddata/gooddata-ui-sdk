@@ -1,4 +1,7 @@
 {
     "$schema": "./node_modules/oxlint/configuration_schema.json",
-    "extends": ["node_modules/@gooddata/oxlint-config/dist/base.json"]
+    "extends": ["node_modules/@gooddata/oxlint-config/dist/esm-react-vitest.json"],
+    "rules": {
+        "sonarjs/no-identical-functions": "warn"
+    }
 }

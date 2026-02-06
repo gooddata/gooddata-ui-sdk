@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import blessed from "blessed";
 
@@ -47,7 +47,7 @@ export class AppLog extends AppPanel implements IEventListener {
     }
 
     public onEvent = (event: DcEvent): void => {
-        // eslint-disable-next-line sonarjs/no-small-switch
+        // oxlint-disable-next-line sonarjs/no-small-switch
         switch (event.type) {
             case "somethingHappened": {
                 const tags = SeverityTags[event.body.severity];

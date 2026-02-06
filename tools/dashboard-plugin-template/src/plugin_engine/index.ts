@@ -1,5 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
-/* eslint-disable no-barrel-files/no-barrel-files */
+/* oxlint-disable no-barrel-files/no-barrel-files */
 
 export { newDashboardEngine } from "@gooddata/sdk-ui-dashboard";

@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/eslint-config",
-    "version": "11.19.0-alpha.10",
+    "version": "11.19.0-alpha.11",
     "license": "MIT",
     "author": "GoodData",
     "repository": {
@@ -158,8 +158,6 @@
         "eslint": "^8.57.1 || ^9.39.2",
         "eslint-import-resolver-typescript": "4.4.4",
         "eslint-plugin-import-x": "4.16.1",
-        "eslint-plugin-jsdoc": "62.1.0",
-        "eslint-plugin-no-barrel-files": "1.2.2",
-        "eslint-plugin-sonarjs": "3.0.6"
+        "eslint-plugin-jsdoc": "62.1.0"
     }
 }

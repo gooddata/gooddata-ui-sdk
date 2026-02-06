@@ -317,7 +317,7 @@ class TigerWorkspaceFilterElementsQuery implements IFilterElementsQuery {
         private readonly filter: IAttributeFilter | IRelativeDateFilter,
     ) {}
 
-    // eslint-disable-next-line sonarjs/no-identical-functions
+    // oxlint-disable-next-line sonarjs/no-identical-functions
     public withLimit(limit: number): IFilterElementsQuery {
         invariant(limit > 0, `limit must be a positive number, got: ${limit}`);
 

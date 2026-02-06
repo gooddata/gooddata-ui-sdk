@@ -1,19 +1,13 @@
 // (C) 2025-2026 GoodData Corporation
 
-import type { IDualConfiguration, IPackage } from "../types.js";
+import { chaiFriendlyPlugin, chaiFriendlyRules } from "@gooddata/lint-config";
 
-const chaiFriendlyPlugin: IPackage = {
-    name: "eslint-plugin-chai-friendly",
-    version: "1.1.0",
-};
+import type { IDualConfiguration } from "../types.js";
 
 // empty generic because we have built-in eslint and typescript-eslint rules here too
 const commonConfiguration = {
     packages: [chaiFriendlyPlugin],
-    rules: {
-        "no-unused-expressions": "off",
-        "chai-friendly/no-unused-expressions": "error",
-    },
+    rules: chaiFriendlyRules,
     overrides: [
         {
             parser: "@typescript-eslint/parser",

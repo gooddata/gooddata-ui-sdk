@@ -1,6 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
-/* eslint-disable no-barrel-files/no-barrel-files */
+/* oxlint-disable no-barrel-files/no-barrel-files */
 
 /**
  * This package provides React hooks and components for semantic search integration with GoodData apps,

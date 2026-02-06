@@ -13,7 +13,7 @@ import { type ISeparators, withIntl } from "@gooddata/sdk-ui";
 import { type IMeasureNumberFormatOwnProps, MeasureNumberFormat } from "../MeasureNumberFormat.js";
 import { type IFormatTemplate, type IToggleButtonProps } from "../typings.js";
 
-// eslint-disable-next-line import-x/no-unassigned-import
+// oxlint-disable-next-line import/no-unassigned-import
 import "vitest-dom/extend-expect";
 
 // CodeMirror window method requirements

@@ -1,6 +1,6 @@
 // (C) 2022-2026 GoodData Corporation
 
-/* eslint-disable no-barrel-files/no-barrel-files */
+/* oxlint-disable no-barrel-files/no-barrel-files */
 
 /**
  * This file is used to re-export internal parts of the package that are used in other GoodData applications.

@@ -1,3 +1,5 @@
+// (C) 2026 GoodData Corporation
+
 import fs from "fs";
 import packageData from "../package.json" assert { type: "json" };
 

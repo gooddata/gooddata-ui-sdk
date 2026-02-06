@@ -10,23 +10,23 @@ import * as VisualizationObjectModelV2 from "./VisualizationObjectModelV2.js";
 /**
  * @public
  */
-// eslint-disable-next-line no-barrel-files/no-barrel-files
+// oxlint-disable-next-line no-barrel-files/no-barrel-files
 export { AnalyticalDashboardModelV1 };
 
 /**
  * @public
  */
-// eslint-disable-next-line no-barrel-files/no-barrel-files
+// oxlint-disable-next-line no-barrel-files/no-barrel-files
 export { AnalyticalDashboardModelV2 };
 
 /**
  * @public
  */
-// eslint-disable-next-line no-barrel-files/no-barrel-files
+// oxlint-disable-next-line no-barrel-files/no-barrel-files
 export { VisualizationObjectModelV1 };
 
 /**
  * @public
  */
-// eslint-disable-next-line no-barrel-files/no-barrel-files
+// oxlint-disable-next-line no-barrel-files/no-barrel-files
 export { VisualizationObjectModelV2 };

@@ -426,8 +426,6 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
             return undefined;
         }
 
-        const configWithResolvedTooltip = fullConfig;
-
         // Set primary layer name to the insight title so legend/title logic is consistent for all layers.
         const title = insightTitle(insight);
         const primaryLayer = createPushpinLayer({
@@ -438,11 +436,22 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
             ...(size ? { size } : {}),
             ...(color ? { color } : {}),
             ...(segmentBy ? { segmentBy } : {}),
+            // Colors are ALWAYS per-layer.
+            // AD's "root" color config is just the primary (root insight) layer config.
+            ...(fullConfig.colorPalette || fullConfig.colorMapping
+                ? {
+                      config: {
+                          ...(fullConfig.colorPalette ? { colorPalette: fullConfig.colorPalette } : {}),
+                          ...(fullConfig.colorMapping ? { colorMapping: fullConfig.colorMapping } : {}),
+                      },
+                  }
+                : {}),
         });
 
         return {
             primaryLayer,
-            config: configWithResolvedTooltip,
+            // Prevent treating chart-level colors as global. They are stored on the primary layer above.
+            config: { ...fullConfig, colorPalette: undefined, colorMapping: undefined },
             filters,
         };
     }

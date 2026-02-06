@@ -4,11 +4,8 @@ import { setContext } from "../esm/index.js";
 import tigerFactory, { TigerTokenAuthProvider } from "../esm/tigerBackend.js";
 
 // Get environment variables (these are defined by Vite at build time)
-// eslint-disable-next-line no-undef
 const backendUrl = VITE_BACKEND_URL;
-// eslint-disable-next-line no-undef
 const authToken = VITE_AUTH_TOKEN;
-// eslint-disable-next-line no-undef
 const workspaceId = VITE_WORKSPACE;
 
 setContext({

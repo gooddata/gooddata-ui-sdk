@@ -400,6 +400,7 @@ export interface IGeoLayerArea extends IGeoLayerBase {
 // @public
 export interface IGeoLayerBase {
     color?: IAttributeOrMeasure;
+    config?: IGeoLayerConfig;
     filters?: INullableFilter[];
     id: string;
     name?: string;
@@ -407,6 +408,12 @@ export interface IGeoLayerBase {
     sortBy?: ISortItem[];
     tooltipText?: IAttribute;
     type: GeoLayerType;
+}
+
+// @public
+export interface IGeoLayerConfig {
+    colorMapping?: IColorMapping[];
+    colorPalette?: IColorPalette;
 }
 
 // @public

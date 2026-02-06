@@ -71,6 +71,13 @@ function attachLayerSpecificFilters(layer: IGeoLayer, routedByLayerId: Map<strin
 }
 
 function sanitizeLayerForEmbedding(layer: IGeoLayer): IGeoLayer {
+    const layerConfig =
+        layer.config?.colorPalette || layer.config?.colorMapping?.length
+            ? {
+                  ...(layer.config?.colorPalette ? { colorPalette: layer.config.colorPalette } : {}),
+                  ...(layer.config?.colorMapping?.length ? { colorMapping: layer.config.colorMapping } : {}),
+              }
+            : undefined;
     const base = {
         id: layer.id,
         type: layer.type,
@@ -78,6 +85,7 @@ function sanitizeLayerForEmbedding(layer: IGeoLayer): IGeoLayer {
         ...(layer.color ? { color: layer.color } : {}),
         ...(layer.segmentBy ? { segmentBy: layer.segmentBy } : {}),
         ...(layer.tooltipText ? { tooltipText: layer.tooltipText } : {}),
+        ...(layerConfig ? { config: layerConfig } : {}),
         ...(layer.filters?.some((f) => f !== null && f !== undefined) ? { filters: layer.filters } : {}),
         ...(layer.sortBy?.length ? { sortBy: layer.sortBy } : {}),
     };

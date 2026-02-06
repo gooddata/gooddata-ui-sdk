@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-/* eslint-disable no-barrel-files/no-barrel-files */
+/* oxlint-disable no-barrel-files/no-barrel-files */
 
 /**
  * Internal entrypoint for `@gooddata/sdk-ui-geo`.

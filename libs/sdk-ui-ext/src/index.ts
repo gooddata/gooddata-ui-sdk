@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-/* eslint-disable no-barrel-files/no-barrel-files */
+/* oxlint-disable no-barrel-files/no-barrel-files */
 
 /**
  * This package contains various extensions on top of the stable components included in GoodData.UI.

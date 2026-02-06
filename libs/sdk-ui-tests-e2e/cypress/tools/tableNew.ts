@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 // NOTE: Backward-compatible rewrite of the legacy Table test helper
 // to work with the new Pivot Table Next DOM (aria roles/indices and new classes).
@@ -277,7 +277,6 @@ export class TableNew {
     }
 
     isCellUnderlined(cellName: string, isUnderlined = true) {
-        // eslint-disable-next-line
         cy.get(`.s-header-cell-label.gd-pivot-table-header-label`)
             .contains(cellName)
             .trigger("mouseover")

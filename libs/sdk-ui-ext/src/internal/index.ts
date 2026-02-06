@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-/* eslint-disable no-barrel-files/no-barrel-files */
+/* oxlint-disable no-barrel-files/no-barrel-files */
 
 export { Axis } from "./constants/axis.js";
 export { DrillablePredicatesUtils } from "./utils/drillablePredicates.js";

@@ -36,7 +36,7 @@ export function GeoChartDataLoader({
     const backend = useBackendStrict(props.backend, "GeoDataLoadingGate");
     const workspace = useWorkspaceStrict(props.workspace, "GeoDataLoadingGate");
 
-    const { layerOutputs, status, error, colorPalette } = useGeoChartData({
+    const { layerOutputs, status, error } = useGeoChartData({
         layerExecutions,
         backend,
         workspace,
@@ -81,11 +81,7 @@ export function GeoChartDataLoader({
     }
 
     return (
-        <GeoChartProviders
-            layerExecutions={layerExecutions}
-            layerOutputs={layerOutputs}
-            colorPalette={colorPalette}
-        >
+        <GeoChartProviders layerExecutions={layerExecutions} layerOutputs={layerOutputs}>
             <RenderGeoChart />
         </GeoChartProviders>
     );

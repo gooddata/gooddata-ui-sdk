@@ -78,10 +78,6 @@ function applyConfiguration(
         newConfiguration.settings = { ...newConfiguration.settings, ...configuration.settings };
     }
 
-    if (configuration.env) {
-        newConfiguration.env = { ...newConfiguration.env, ...configuration.env };
-    }
-
     if (configuration.ignorePatterns) {
         newConfiguration.ignorePatterns = [
             ...(newConfiguration.ignorePatterns ?? []),

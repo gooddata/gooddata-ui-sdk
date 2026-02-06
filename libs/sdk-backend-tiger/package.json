@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-backend-tiger",
-    "version": "11.19.0-alpha.10",
+    "version": "11.19.0-alpha.11",
     "description": "GoodData Backend SPI implementation for GoodData Cloud and GoodData.CN",
     "license": "MIT",
     "author": "GoodData",
@@ -78,7 +78,7 @@
     "devDependencies": {
         "@gooddata/catalog-export": "workspace:*",
         "@gooddata/eslint-config": "workspace:*",
-        "@gooddata/fixtures": "3.3.5",
+        "@gooddata/fixtures": "3.3.10",
         "@gooddata/oxlint-config": "workspace:*",
         "@gooddata/reference-workspace": "workspace:*",
         "@microsoft/api-documenter": "^7.17.0",
@@ -91,7 +91,7 @@
         "dotenv": "16.0.3",
         "eslint": "^9.39.2",
         "eslint-import-resolver-typescript": "4.4.4",
-        "eslint-plugin-header": "3.1.1",
+        "eslint-plugin-headers": "1.3.3",
         "eslint-plugin-import-esm": "1.2.1",
         "eslint-plugin-import-x": "4.16.1",
         "eslint-plugin-jsdoc": "62.1.0",

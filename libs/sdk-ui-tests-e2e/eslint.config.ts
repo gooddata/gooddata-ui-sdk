@@ -17,9 +17,4 @@ export default [
             "@typescript-eslint/no-explicit-any": "warn",
         },
     },
-    {
-        rules: {
-            "import-x/no-unassigned-import": "warn",
-        },
-    },
 ];

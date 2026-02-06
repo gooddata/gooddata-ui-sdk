@@ -1,20 +1,13 @@
 // (C) 2025-2026 GoodData Corporation
 
-import type { IDualConfiguration, IPackage } from "../types.js";
+import { noOnlyTestsPlugin, noOnlyTestsRules } from "@gooddata/lint-config";
 
-const noOnlyTestsPluginV9: IPackage = {
-    name: "eslint-plugin-no-only-tests",
-    version: "3.3.0",
-};
-
-const rules = {
-    "no-only-tests/no-only-tests": ["error", { block: ["fixture"], focus: ["only"] }],
-};
+import type { IDualConfiguration } from "../types.js";
 
 const v9 = {
-    packages: [noOnlyTestsPluginV9],
-    plugins: { "no-only-tests": noOnlyTestsPluginV9 },
-    rules,
+    packages: [noOnlyTestsPlugin],
+    plugins: { "no-only-tests": noOnlyTestsPlugin },
+    rules: noOnlyTestsRules,
 };
 
 export const noOnlyTests: IDualConfiguration<"no-only-tests"> = {
@@ -26,8 +19,8 @@ export const noOnlyTests: IDualConfiguration<"no-only-tests"> = {
             },
         ],
         plugins: ["no-only-tests"],
-        rules,
+        rules: noOnlyTestsRules,
     },
     v9,
-    ox: v9,
+    ox: {},
 };

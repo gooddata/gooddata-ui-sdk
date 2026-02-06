@@ -340,11 +340,22 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
             ...(color ? { color } : {}),
             ...(segmentBy ? { segmentBy } : {}),
             sortBy,
+            // Colors are ALWAYS per-layer.
+            // AD's "root" color config is just the primary (root insight) layer config.
+            ...(fullConfig.colorPalette || fullConfig.colorMapping
+                ? {
+                      config: {
+                          ...(fullConfig.colorPalette ? { colorPalette: fullConfig.colorPalette } : {}),
+                          ...(fullConfig.colorMapping ? { colorMapping: fullConfig.colorMapping } : {}),
+                      },
+                  }
+                : {}),
         });
 
         return {
             primaryLayer,
-            config: fullConfig,
+            // Prevent treating chart-level colors as global. They are stored on the primary layer above.
+            config: { ...fullConfig, colorPalette: undefined, colorMapping: undefined },
             filters,
         };
     }
