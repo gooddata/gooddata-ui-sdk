@@ -1,7 +1,5 @@
 // (C) 2007-2026 GoodData Corporation
 
-/* oxlint-disable import/no-unassigned-import */
-
 import { Component } from "react";
 
 import { createCustomEqual } from "fast-equals";

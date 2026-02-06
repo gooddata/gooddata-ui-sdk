@@ -22,7 +22,7 @@ import { fetchMapStyle } from "../style/styleEndpoint.js";
 export interface IMapInitResult {
     map: MapLibreMap;
     tooltip: Popup;
-    // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+    // oxlint-disable-next-line @typescript-eslint/consistent-type-imports
     maplibregl: typeof import("maplibre-gl");
 }
 

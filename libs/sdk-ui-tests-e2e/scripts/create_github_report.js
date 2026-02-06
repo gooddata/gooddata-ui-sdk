@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import fs from "fs";
 import path from "path";
@@ -75,4 +75,4 @@ async function main() {
     await util.promisify(fs.writeFile)(GITHUB_MESSAGE_FILE, result).catch(handleError);
 }
 
-main();
+void main();

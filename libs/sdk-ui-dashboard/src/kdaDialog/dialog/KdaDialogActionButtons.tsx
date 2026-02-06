@@ -11,6 +11,7 @@ export type KdaDialogActionButtonsSize = "small" | "medium";
 
 export interface IKdaDialogActionButtonsProps {
     size: KdaDialogActionButtonsSize;
+    // oxlint-disable-next-line typescript-eslint/no-redundant-type-constituents
     status?: "done" | "error" | string;
     titleElementId?: string;
     onClose?: () => void;
@@ -57,6 +58,7 @@ export function KdaDialogActionButtons({
     );
 }
 
+// oxlint-disable-next-line typescript-eslint/no-redundant-type-constituents
 const buttonMessages: Record<"done" | "error" | string, MessageDescriptor> = defineMessages({
     done: { id: "kdaDialog.floatingStatus.done.opener" },
     error: { id: "kdaDialog.floatingStatus.error.opener" },

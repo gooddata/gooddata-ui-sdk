@@ -1,6 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { type FC, type MouseEvent, useCallback } from "react";
+import { type FC, type MouseEvent, useCallback, useEffect } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 import { connect } from "react-redux";
@@ -17,6 +17,8 @@ import { Input } from "./Input.js";
 import { Messages } from "./Messages.js";
 import { getAbsoluteSettingHref, getSettingHref } from "../utils.js";
 import { KeyDriverAnalysis } from "./KeyDriverAnalysis.js";
+import { ALLOWED_RELATIONSHIP_TYPES_FOR_VIEWER } from "../store/chatWindow/allowedRelationshipTypes.js";
+import { setAllowedRelationshipTypesAction } from "../store/chatWindow/chatWindowSlice.js";
 import { asyncProcessSelector } from "../store/messages/messagesSelectors.js";
 import { cancelAsyncAction, clearThreadAction, loadThreadAction } from "../store/messages/messagesSlice.js";
 import { type RootState } from "../store/types.js";
@@ -30,6 +32,7 @@ type GenAIChatWrapperProps = GenAIChatOwnProps & {
     loadThread: typeof loadThreadAction;
     cancelLoading: typeof cancelAsyncAction;
     clearThread: typeof clearThreadAction;
+    setAllowedRelationshipTypes: typeof setAllowedRelationshipTypesAction;
     autofocus?: boolean;
     initializing?: boolean;
     isClearing?: boolean;
@@ -47,6 +50,7 @@ function GenAIChatWrapperComponent({
     loadThread,
     clearThread,
     cancelLoading,
+    setAllowedRelationshipTypes,
     autofocus,
     initializing,
     isClearing,
@@ -56,6 +60,12 @@ function GenAIChatWrapperComponent({
     const { linkHandler, allowNativeLinks, catalogItems, canManage, canAnalyze, canFullControl } =
         useConfig();
     const { checking, evaluated, count, restart } = useEndpointCheck(canFullControl);
+
+    const canEdit = canFullControl || canManage || canAnalyze;
+    const allowedRelationshipTypes = canEdit ? undefined : ALLOWED_RELATIONSHIP_TYPES_FOR_VIEWER;
+    useEffect(() => {
+        setAllowedRelationshipTypes({ allowedRelationshipTypes });
+    }, [setAllowedRelationshipTypes, allowedRelationshipTypes]);
 
     useThreadLoading({
         initializing: initializing || checking,
@@ -157,6 +167,7 @@ const mapDispatchToProps = {
     loadThread: loadThreadAction,
     cancelLoading: cancelAsyncAction,
     clearThread: clearThreadAction,
+    setAllowedRelationshipTypes: setAllowedRelationshipTypesAction,
 };
 
 export const GenAIChatWrapper: FC<GenAIChatOwnProps> = connect(

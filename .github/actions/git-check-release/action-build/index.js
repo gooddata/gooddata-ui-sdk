@@ -243,7 +243,7 @@
              * @param name the name of the variable to set
              * @param val the value of the variable. Non-string values will be converted to a string via JSON.stringify
              */
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // oxlint-disable-next-line @typescript-eslint/no-explicit-any
             function exportVariable(name, val) {
                 const convertedVal = utils_1.toCommandValue(val);
                 process.env[name] = convertedVal;
@@ -345,7 +345,7 @@
              * @param     name     name of the output to set
              * @param     value    value to store. Non-string values will be converted to a string via JSON.stringify
              */
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // oxlint-disable-next-line @typescript-eslint/no-explicit-any
             function setOutput(name, value) {
                 const filePath = process.env["GITHUB_OUTPUT"] || "";
                 if (filePath) {
@@ -493,7 +493,7 @@
              * @param     name     name of the state to store
              * @param     value    value to store. Non-string values will be converted to a string via JSON.stringify
              */
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            // oxlint-disable-next-line @typescript-eslint/no-explicit-any
             function saveState(name, value) {
                 const filePath = process.env["GITHUB_STATE"] || "";
                 if (filePath) {
@@ -1459,8 +1459,10 @@
                 const httpDispatcher = getProxyAgentDispatcher(destinationUrl);
                 const proxyFetch = (url, opts) =>
                     __awaiter(this, void 0, void 0, function* () {
-                        return (0,
-                        undici_1.fetch)(url, Object.assign(Object.assign({}, opts), { dispatcher: httpDispatcher }));
+                        return (0, undici_1.fetch)(
+                            url,
+                            Object.assign(Object.assign({}, opts), { dispatcher: httpDispatcher }),
+                        );
                     });
                 return proxyFetch;
             }
@@ -2569,10 +2571,10 @@
                 const tokenType = isApp
                     ? "app"
                     : isInstallation
-                    ? "installation"
-                    : isUserToServer
-                    ? "user-to-server"
-                    : "oauth";
+                      ? "installation"
+                      : isUserToServer
+                        ? "user-to-server"
+                        : "oauth";
                 return {
                     type: "token",
                     token,
@@ -6183,15 +6185,16 @@
                 }
 
                 dump() {
-                    return this[LRU_LIST].map((hit) =>
-                        isStale(this, hit)
-                            ? false
-                            : {
-                                  k: hit.key,
-                                  v: hit.value,
-                                  e: hit.now + (hit.maxAge || 0),
-                              },
-                    )
+                    return this[LRU_LIST]
+                        .map((hit) =>
+                            isStale(this, hit)
+                                ? false
+                                : {
+                                      k: hit.key,
+                                      v: hit.value,
+                                      e: hit.now + (hit.maxAge || 0),
+                                  },
+                        )
                         .toArray()
                         .filter((h) => h);
                 }
@@ -34943,9 +34946,9 @@ ${pendingInterceptorsFormatter.format(pending)}
     var __webpack_exports__ = {};
     // This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
     (() => {
-        // (C) 2024 GoodData Corporation
+        // (C) 2024-2026 GoodData Corporation
 
-        const core = __nccwpck_require__(2186);
+const core = __nccwpck_require__(2186);
         const github = __nccwpck_require__(5438);
         const semver = __nccwpck_require__(1383);
 

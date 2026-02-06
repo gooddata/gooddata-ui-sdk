@@ -9,15 +9,4 @@ export default [
             "no-console": "warn",
         },
     },
-    {
-        files: ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts"],
-        rules: {
-            "@typescript-eslint/no-unsafe-member-access": "warn",
-            "@typescript-eslint/no-unsafe-assignment": "warn",
-            "@typescript-eslint/unbound-method": "warn",
-            "@typescript-eslint/no-unsafe-call": "warn",
-            "@typescript-eslint/no-unsafe-return": "warn",
-            "@typescript-eslint/no-explicit-any": "warn",
-        },
-    },
 ];

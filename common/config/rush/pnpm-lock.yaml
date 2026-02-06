@@ -138,7 +138,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       react:
         specifier: 19.1.1
         version: 19.1.1
@@ -283,7 +286,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       process:
         specifier: ^0.11.10
         version: 0.11.10
@@ -416,7 +422,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       process:
         specifier: ^0.11.10
         version: 0.11.10
@@ -549,7 +558,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       process:
         specifier: ^0.11.10
         version: 0.11.10
@@ -682,7 +694,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       process:
         specifier: ^0.11.10
         version: 0.11.10
@@ -815,7 +830,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       process:
         specifier: ^0.11.10
         version: 0.11.10
@@ -948,7 +966,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       process:
         specifier: ^0.11.10
         version: 0.11.10
@@ -1081,7 +1102,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       process:
         specifier: ^0.11.10
         version: 0.11.10
@@ -1214,7 +1238,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       process:
         specifier: ^0.11.10
         version: 0.11.10
@@ -1356,7 +1383,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       process:
         specifier: ^0.11.10
         version: 0.11.10
@@ -1489,7 +1519,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       process:
         specifier: ^0.11.10
         version: 0.11.10
@@ -1622,7 +1655,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       process:
         specifier: ^0.11.10
         version: 0.11.10
@@ -1755,7 +1791,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       process:
         specifier: ^0.11.10
         version: 0.11.10
@@ -1888,7 +1927,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       process:
         specifier: ^0.11.10
         version: 0.11.10
@@ -2021,7 +2063,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       process:
         specifier: ^0.11.10
         version: 0.11.10
@@ -2130,7 +2175,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       typescript:
         specifier: 5.9.3
         version: 5.9.3
@@ -2236,7 +2284,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       typescript:
         specifier: 5.9.3
         version: 5.9.3
@@ -2330,7 +2381,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       typescript:
         specifier: 5.9.3
         version: 5.9.3
@@ -2409,7 +2463,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       typescript:
         specifier: 5.9.3
         version: 5.9.3
@@ -2542,7 +2599,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       typescript:
         specifier: 5.9.3
         version: 5.9.3
@@ -2621,7 +2681,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       typescript:
         specifier: 5.9.3
         version: 5.9.3
@@ -2715,7 +2778,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       typescript:
         specifier: 5.9.3
         version: 5.9.3
@@ -2878,7 +2944,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       raf:
         specifier: ^3.4.1
         version: 3.4.1
@@ -2990,7 +3059,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       typescript:
         specifier: 5.9.3
         version: 5.9.3
@@ -3126,7 +3198,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       raf:
         specifier: ^3.4.1
         version: 3.4.1
@@ -3343,7 +3418,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       raf:
         specifier: ^3.4.1
         version: 3.4.1
@@ -3602,7 +3680,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       raf:
         specifier: ^3.4.1
         version: 3.4.1
@@ -3876,7 +3957,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       raf:
         specifier: ^3.4.1
         version: 3.4.1
@@ -4075,7 +4159,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       raf:
         specifier: ^3.4.1
         version: 3.4.1
@@ -4313,7 +4400,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       raf:
         specifier: ^3.4.1
         version: 3.4.1
@@ -4497,7 +4587,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       raf:
         specifier: ^3.4.1
         version: 3.4.1
@@ -4780,7 +4873,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       raf:
         specifier: ^3.4.1
         version: 3.4.1
@@ -4922,7 +5018,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       raf:
         specifier: ^3.4.1
         version: 3.4.1
@@ -5094,7 +5193,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       raf:
         specifier: ^3.4.1
         version: 3.4.1
@@ -5248,7 +5350,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       raf:
         specifier: ^3.4.1
         version: 3.4.1
@@ -5446,7 +5551,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       react:
         specifier: 19.1.1
         version: 19.1.1
@@ -5674,7 +5782,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       pdf-parse:
         specifier: ^1.1.1
         version: 1.1.1
@@ -5849,7 +5960,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       raf:
         specifier: ^3.4.1
         version: 3.4.1
@@ -6003,7 +6117,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       raf:
         specifier: ^3.4.1
         version: 3.4.1
@@ -6160,7 +6277,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       raf:
         specifier: ^3.4.1
         version: 3.4.1
@@ -6260,7 +6380,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       typescript:
         specifier: 5.9.3
         version: 5.9.3
@@ -6411,7 +6534,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       typescript:
         specifier: 5.9.3
         version: 5.9.3
@@ -6510,7 +6636,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       tslib:
         specifier: 2.8.1
         version: 2.8.1
@@ -6637,7 +6766,10 @@ importers:
         version: 4.1.5
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       typescript:
         specifier: 5.9.3
         version: 5.9.3
@@ -6797,7 +6929,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       raf:
         specifier: ^3.4.1
         version: 3.4.1
@@ -7029,7 +7164,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       typescript:
         specifier: 5.9.3
         version: 5.9.3
@@ -7147,7 +7285,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       typescript:
         specifier: 5.9.3
         version: 5.9.3
@@ -7219,7 +7360,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       typescript:
         specifier: 5.9.3
         version: 5.9.3
@@ -7364,7 +7508,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       typescript:
         specifier: 5.9.3
         version: 5.9.3
@@ -7503,7 +7650,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       process:
         specifier: ^0.11.10
         version: 0.11.10
@@ -7600,7 +7750,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       typescript:
         specifier: 5.9.3
         version: 5.9.3
@@ -7676,7 +7829,10 @@ importers:
         version: 0.27.0
       oxlint:
         specifier: ^1.43.0
-        version: 1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
       typescript:
         specifier: 5.9.3
         version: 5.9.3
@@ -10653,6 +10809,54 @@ packages:
     cpu: [x64]
     os: [win32]
     requiresBuild: true
+    optional: true
+
+  /@oxlint-tsgolint/darwin-arm64@0.11.4:
+    resolution: {integrity: sha512-IhdhiC183s5wdFDZSQC8PaFFq1QROiVT5ahz7ysgEKVnkNDjy82ieM7ZKiUfm2ncXNX2RcFGSSZrQO6plR+VAQ==}
+    cpu: [arm64]
+    os: [darwin]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@oxlint-tsgolint/darwin-x64@0.11.4:
+    resolution: {integrity: sha512-KJmBg10Z1uGpJqxDzETXOytYyeVrKUepo8rCXeVkRlZ2QzZqMElgalFN4BI3ccgIPkQpzzu4SVzWNFz7yiKavQ==}
+    cpu: [x64]
+    os: [darwin]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@oxlint-tsgolint/linux-arm64@0.11.4:
+    resolution: {integrity: sha512-P6I3dSSpoEnjFzTMlrbcBHNbErSxceZmcVUslBxrrIUH1NSVS1XfSz6S75vT2Gay7Jv6LI7zTTVAk4cSqkfe+w==}
+    cpu: [arm64]
+    os: [linux]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@oxlint-tsgolint/linux-x64@0.11.4:
+    resolution: {integrity: sha512-G0eAW3S7cp/vP7Kx6e7+Ze7WfNgSt1tc/rOexfLKnnIi+9BelyOa2wF9bWFPpxk3n3AdkBwKttU1/adDZlD87Q==}
+    cpu: [x64]
+    os: [linux]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@oxlint-tsgolint/win32-arm64@0.11.4:
+    resolution: {integrity: sha512-prgQEBiwp4TAxarh6dYbVOKw6riRJ6hB49vDD6DxQlOZQky7xHQ9qTec5/rf0JTUZ16YaJ9YfHycbJS3QVpTYw==}
+    cpu: [arm64]
+    os: [win32]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@oxlint-tsgolint/win32-x64@0.11.4:
+    resolution: {integrity: sha512-5xXTzZIT/1meWMmS60Q+FYWvWncc6iTfC8tyQt7GDfPUoqQvE5WVgHm1QjDSJvxTD+6AHphpCqdhXq/KtxagRw==}
+    cpu: [x64]
+    os: [win32]
+    requiresBuild: true
+    dev: true
     optional: true
 
   /@oxlint/darwin-arm64@1.43.0:
@@ -18818,7 +19022,19 @@ packages:
       '@oxfmt/win32-arm64': 0.27.0
       '@oxfmt/win32-x64': 0.27.0
 
-  /oxlint@1.43.0:
+  /oxlint-tsgolint@0.11.4:
+    resolution: {integrity: sha512-VyQc+69TxQwUdsEPiVFN7vNZdDVO/FHaEcHltnWs3O6rvwxv67uADlknQQO714sbRdEahOjgO5dFf+K9ili0gg==}
+    hasBin: true
+    optionalDependencies:
+      '@oxlint-tsgolint/darwin-arm64': 0.11.4
+      '@oxlint-tsgolint/darwin-x64': 0.11.4
+      '@oxlint-tsgolint/linux-arm64': 0.11.4
+      '@oxlint-tsgolint/linux-x64': 0.11.4
+      '@oxlint-tsgolint/win32-arm64': 0.11.4
+      '@oxlint-tsgolint/win32-x64': 0.11.4
+    dev: true
+
+  /oxlint@1.43.0(oxlint-tsgolint@0.11.4):
     resolution: {integrity: sha512-xiqTCsKZch+R61DPCjyqUVP2MhkQlRRYxLRBeBDi+dtQJ90MOgdcjIktvDCgXz0bgtx94EQzHEndsizZjMX2OA==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
@@ -18827,6 +19043,8 @@ packages:
     peerDependenciesMeta:
       oxlint-tsgolint:
         optional: true
+    dependencies:
+      oxlint-tsgolint: 0.11.4
     optionalDependencies:
       '@oxlint/darwin-arm64': 1.43.0
       '@oxlint/darwin-x64': 1.43.0

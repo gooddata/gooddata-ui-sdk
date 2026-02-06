@@ -132,6 +132,7 @@ function* notImplementedCommand(ctx: DashboardContext, cmd: IDashboardCommand): 
 }
 
 export const DefaultCommandHandlers: {
+    // oxlint-disable-next-line typescript-eslint/no-redundant-type-constituents
     [cmd in DashboardCommands["type"]]?: (...args: any[]) => SagaIterator<any> | any;
 } = {
     "GDC.DASH/CMD.INITIALIZE": initializeDashboardHandler,

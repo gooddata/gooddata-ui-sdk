@@ -1,9 +1,9 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
 
 import { type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { type GenAIObjectType, type IColorPalette } from "@gooddata/sdk-model";
+import { type GenAIObjectType, type IAllowedRelationshipType, type IColorPalette } from "@gooddata/sdk-model";
 import type { IKdaDefinition } from "@gooddata/sdk-ui-dashboard";
 
 import { chatWindowSliceName } from "./chatWindowSlice.js";
@@ -35,6 +35,9 @@ export const objectTypesSelector: (state: RootState) => GenAIObjectType[] | unde
     chatWindowSliceSelector,
     (state) => state.objectTypes,
 );
+
+export const allowedRelationshipTypesSelector: (state: RootState) => IAllowedRelationshipType[] | undefined =
+    createSelector(chatWindowSliceSelector, (state) => state.allowedRelationshipTypes);
 
 export const tagsSelector: (state: RootState) => {
     includeTags: string[] | undefined;

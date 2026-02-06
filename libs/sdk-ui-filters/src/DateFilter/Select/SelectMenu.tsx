@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type ReactElement } from "react";
 
@@ -21,7 +21,7 @@ export interface ISelectMenuProps<V> {
     optionClassName?: string;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+// oxlint-disable-next-line @typescript-eslint/no-empty-object-type
 export function SelectMenu<V extends {}>({
     items,
     selectedItem,

@@ -55,6 +55,7 @@ import { type DashboardContext, type PrivateDashboardContext } from "../types/co
 // https://github.com/microsoft/TypeScript/issues/52086#issuecomment-1385978414
 const createSagaMiddleware = defaultImport(defaultReduxSaga);
 
+// oxlint-disable-next-line typescript-eslint/no-redundant-type-constituents
 const nonSerializableEventsAndCommands: (DashboardEventType | DashboardCommandType | string)[] = [
     "GDC.DASH/EVT.COMMAND.STARTED",
     "GDC.DASH/EVT.COMMAND.FAILED",

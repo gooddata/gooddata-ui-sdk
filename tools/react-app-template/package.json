@@ -39,8 +39,8 @@
         "validate": "npm run dep-cruiser && npm run lint && npm run oxfmt-check",
         "lint": "npm run oxlint && npm run eslint",
         "lint-fix": "npm run oxlint-fix && npm run eslint-fix",
-        "oxlint": "oxlint .",
-        "oxlint-fix": "oxlint . --fix"
+        "oxlint": "oxlint . --type-aware",
+        "oxlint-fix": "oxlint . --type-aware --fix"
     },
     "dependencies": {
         "@codemirror/state": "~6.5.3",
@@ -88,6 +88,7 @@
         "html-webpack-plugin": "^5.3.1",
         "oxfmt": "0.27.0",
         "oxlint": "^1.43.0",
+        "oxlint-tsgolint": "0.11.4",
         "process": "^0.11.10",
         "source-map-loader": "^4.0.0",
         "style-loader": "^3.3.1",

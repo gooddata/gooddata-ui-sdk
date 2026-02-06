@@ -101,7 +101,7 @@ export type KdaPeriodType = "same_period_previous_year" | "previous_period";
  */
 export type DeepReadonly<T> = T extends (infer R)[]
     ? ReadonlyArray<DeepReadonly<R>>
-    : // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+    : // oxlint-disable-next-line @typescript-eslint/no-unsafe-function-type
       T extends Function
       ? T
       : T extends object

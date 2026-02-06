@@ -24,6 +24,7 @@ import { useElementWidth } from "./hooks/useElementWidth.js";
 import { useSearchIds } from "./hooks/useSearchIds.js";
 import { useSemanticSearch } from "./hooks/useSemanticSearch.js";
 import { useSearchKeyboard } from "./hooks/usSearchKeyboard.js";
+import { ALLOWED_RELATIONSHIP_TYPES_FOR_VIEWER } from "./internal/allowedRelationshipTypes.js";
 import { buildSemanticSearchItems } from "./itemsBuilder.js";
 import { IntlWrapper } from "./localization/IntlWrapper.js";
 import { PermissionsProvider } from "./permissions/PermissionsContext.js";
@@ -128,6 +129,9 @@ function SemanticSearchCore(props: Omit<SemanticSearchProps, "locale">) {
     const effectiveWorkspace = useWorkspaceStrict(workspace);
     const { loading, permissions } = usePermissions();
 
+    const canEdit = permissions.canManageProject ?? permissions.canCreateVisualization ?? false;
+    const allowedRelationshipTypes = !loading && !canEdit ? ALLOWED_RELATIONSHIP_TYPES_FOR_VIEWER : undefined;
+
     // Input value handling
     const inputRef = useRef<Input>(null);
     const [value, setValue, searchTerm, setImmediate] = useDebouncedState("", DEBOUNCE);
@@ -136,14 +140,19 @@ function SemanticSearchCore(props: Omit<SemanticSearchProps, "locale">) {
 
     const [activeNodeId, setActiveNodeId] = useState<string>();
 
+    // Wait for permissions before starting search so we pass the right allowedRelationshipTypes
+    // and avoid a second request when loading flips to false.
+    const searchTermForRequest = loading ? "" : searchTerm;
+
     // Search results
     const { searchStatus, searchResults, relationships, searchMessage, searchError } = useSemanticSearch({
         backend,
         workspace: effectiveWorkspace,
-        searchTerm,
+        searchTerm: searchTermForRequest,
         objectTypes,
         deepSearch,
         limit,
+        allowedRelationshipTypes,
     });
 
     const isLoading = searchStatus === "loading";
@@ -222,16 +231,10 @@ function SemanticSearchCore(props: Omit<SemanticSearchProps, "locale">) {
                             case "error":
                                 return null;
                             case "success": {
-                                const canEdit =
-                                    permissions.canManageProject ??
-                                    permissions.canCreateVisualization ??
-                                    false;
-
                                 const items = buildSemanticSearchItems({
                                     searchResults,
                                     relationships,
                                     threshold,
-                                    canEdit,
                                 });
 
                                 // API search message

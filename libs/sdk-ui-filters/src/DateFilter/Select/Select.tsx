@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type CSSProperties, type ComponentClass, type ReactElement } from "react";
 
@@ -27,7 +27,7 @@ export interface ISelectProps<V> {
 
 const DEFAULT_STYLES: CSSProperties = {};
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+// oxlint-disable-next-line @typescript-eslint/no-empty-object-type
 export function Select<V extends {}>({
     onChange = () => {},
     value,

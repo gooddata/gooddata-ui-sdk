@@ -345,7 +345,7 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
     // with new TS we got Property 'handlePushData' is used before its initialization.ts(2729)
     // it is not possible to call super.handlePushData() directly and get reference to this.handlePushData in constructor
     // tested in runtime and it works
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // oxlint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     private superHandlePushData = this.handlePushData;
 

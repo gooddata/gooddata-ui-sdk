@@ -1,4 +1,4 @@
 #!/usr/bin/env node
-// (C) 2021-2022 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
-import("./esm/index.js");
+void import("./esm/index.js");

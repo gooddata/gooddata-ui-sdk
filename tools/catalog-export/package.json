@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/catalog-export",
-    "version": "11.19.0-alpha.11",
+    "version": "11.20.0-alpha.0",
     "description": "GoodData SDK Catalog Export tooling",
     "license": "MIT",
     "author": "GoodData",
@@ -41,8 +41,8 @@
         "validate": "npm run dep-cruiser && npm run lint && npm run oxfmt-check",
         "lint": "npm run oxlint && npm run eslint",
         "lint-fix": "npm run oxlint-fix && npm run eslint-fix",
-        "oxlint": "oxlint .",
-        "oxlint-fix": "oxlint . --fix"
+        "oxlint": "oxlint . --type-aware",
+        "oxlint-fix": "oxlint . --type-aware --fix"
     },
     "dependencies": {
         "@babel/core": "^7.23.5",
@@ -84,6 +84,7 @@
         "happy-dom": "18.0.1",
         "npm-run-all": "^4.1.5",
         "oxlint": "^1.43.0",
+        "oxlint-tsgolint": "0.11.4",
         "typescript": "5.9.3",
         "vitest": "4.0.8"
     }

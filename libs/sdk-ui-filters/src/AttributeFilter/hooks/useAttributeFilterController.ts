@@ -1,5 +1,7 @@
 // (C) 2022-2026 GoodData Corporation
 
+// oxlint-disable @typescript-eslint/require-array-sort-compare
+
 import { type MutableRefObject, useCallback, useEffect, useRef, useState } from "react";
 
 import { debounce, difference, differenceBy, isEmpty, isEqual } from "lodash-es";

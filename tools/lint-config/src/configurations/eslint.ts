@@ -167,6 +167,7 @@ const eslintRulesCommon = {
 export const eslintRulesNativeSupported = {
     ...eslintRulesCommon,
     "no-duplicate-imports": "error",
+    "prefer-const": "off", // todo: maybe leave this here, both linters seem to turn it on by default and conflict
 };
 
 // todo: https://github.com/oxc-project/oxc/issues/479
@@ -197,6 +198,7 @@ export const eslintRulesNativeNotSupported = {
         },
     ],
     "no-negated-condition": "error",
+    "prefer-const": "off", // todo: maybe leave this here, both linters seem to turn it on by default and conflict
 };
 
 export const eslintRules = {

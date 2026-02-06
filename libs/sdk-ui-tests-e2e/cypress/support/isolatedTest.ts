@@ -1,7 +1,8 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { getBackendHost, getMockServer, getProjectId, getWorkingDir, isRecording } from "./constants";
 
-// eslint-disable-next-line @typescript-eslint/no-require-imports
+// oxlint-disable-next-line @typescript-eslint/no-require-imports
 const record = require("../../scripts/lib/recordings");
 
 const currentTestFileMappings = `${getWorkingDir()}/recordings/mappings/TIGER/mapping-${

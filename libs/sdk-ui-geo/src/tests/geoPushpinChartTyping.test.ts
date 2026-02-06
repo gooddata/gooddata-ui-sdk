@@ -52,5 +52,3 @@ describe("GeoPushpinChart typing", () => {
         expect(true).toBe(true);
     });
 });
-
-export {};

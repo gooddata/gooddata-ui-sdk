@@ -29,7 +29,7 @@ export interface ISelectMenuProps<V> extends IOptionGetterProps<V> {
 
 export const defaultVisibleItemsRange = 3;
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+// oxlint-disable-next-line @typescript-eslint/no-empty-object-type
 const optionGetter = <V extends {}>({
     items,
     selectedItem,

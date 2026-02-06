@@ -20,7 +20,7 @@ import { ColorResetButton } from "../ColorResetButton.js";
 import { ColorsControl } from "../ColorsControl.js";
 
 vi.mock("../ColorCheckbox.js", async (importOriginal) => {
-    // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+    // oxlint-disable-next-line @typescript-eslint/consistent-type-imports
     const actual = await importOriginal<typeof import("../ColorCheckbox.js")>();
     return {
         ...actual,
@@ -29,13 +29,13 @@ vi.mock("../ColorCheckbox.js", async (importOriginal) => {
 });
 
 vi.mock("../ColorItem.js", async (importOriginal) => {
-    // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+    // oxlint-disable-next-line @typescript-eslint/consistent-type-imports
     const actual = await importOriginal<typeof import("../ColorItem.js")>();
     return { ...actual, ColorItem: vi.fn(actual.ColorItem) };
 });
 
 vi.mock("../ColorResetButton.js", async (importOriginal) => {
-    // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+    // oxlint-disable-next-line @typescript-eslint/consistent-type-imports
     const actual = await importOriginal<typeof import("../ColorResetButton.js")>();
     return {
         ...actual,

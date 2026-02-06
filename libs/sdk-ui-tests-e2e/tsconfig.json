@@ -17,7 +17,7 @@
         "sourceMap": false,
         "types": ["cypress-real-events", "node", "@cypress/grep"],
         "paths": {
-            "gooddata/util": ["util/src"]
+            "gooddata/util": ["../util/src"]
         }
     },
     "compileOnSave": false,

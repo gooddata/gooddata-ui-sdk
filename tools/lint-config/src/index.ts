@@ -25,5 +25,12 @@ export {
 export { noOnlyTestsPlugin, noOnlyTestsRules } from "./configurations/no-only-tests.js";
 export { securityRules } from "./configurations/security.js";
 export { sonarjsOverrides, sonarjsPlugin, sonarjsRules } from "./configurations/sonarjs.js";
+export {
+    typescriptConflicts,
+    typescriptOverrideFiles,
+    typescriptRules,
+    typescriptRulesNativeNotSupported,
+    typescriptRulesNativeSupported,
+} from "./configurations/typescript.js";
 
 export { scopeRules } from "./utils/scopeRules.js";

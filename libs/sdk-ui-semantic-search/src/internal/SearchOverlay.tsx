@@ -32,6 +32,7 @@ import {
     useHeaderSearch,
 } from "@gooddata/sdk-ui-kit";
 
+import { ALLOWED_RELATIONSHIP_TYPES_FOR_VIEWER } from "./allowedRelationshipTypes.js";
 import { HistorySearchTreeView } from "./HistorySearchTreeView.js";
 import { buildSemanticSearchTreeViewItems } from "./itemsBuilder.js";
 import { LeveledSearchTreeView, type SearchTreeViewLevels } from "./LeveledSearchTreeView.js";
@@ -174,6 +175,7 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
     } = props;
 
     const canEdit = canFullControl || canManage || canAnalyze;
+    const allowedRelationshipTypes = canEdit ? undefined : ALLOWED_RELATIONSHIP_TYPES_FOR_VIEWER;
 
     const intl = useIntl();
     const { toggleOpen } = useHeaderSearch();
@@ -196,6 +198,7 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
         objectTypes,
         deepSearch,
         limit,
+        allowedRelationshipTypes,
     });
 
     // Search history

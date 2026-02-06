@@ -1015,6 +1015,10 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
+      "name": "oxlint-tsgolint",
+      "allowedCategories": [ "examples", "production", "tools" ]
+    },
+    {
       "name": "p-map",
       "allowedCategories": [ "tools" ]
     },

@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import blessed from "blessed";
 import { difference, isEmpty } from "lodash-es";
@@ -23,10 +23,10 @@ export class TerminalUi implements IEventListener {
     private readonly screen: blessed.Widgets.Screen;
     private readonly packageList: PackageList;
     private readonly log: AppLog;
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // oxlint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     private readonly buildOutput: BuildOutput;
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // oxlint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     private readonly menu: AppMenu;
 

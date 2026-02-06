@@ -20,6 +20,7 @@ import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
 import { IAccessGrantee } from '@gooddata/sdk-model';
 import { IActiveCalendars } from '@gooddata/sdk-model';
 import { IAlertDefault } from '@gooddata/sdk-model';
+import type { IAllowedRelationshipType } from '@gooddata/sdk-model';
 import { IAttribute } from '@gooddata/sdk-model';
 import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeElement } from '@gooddata/sdk-model';
@@ -559,6 +560,7 @@ export interface IChatThreadQuery {
         signal?: AbortSignal;
     }): Promise<IGenAIChatEvaluation>;
     stream(): ReadableStream<IGenAIChatEvaluation>;
+    withAllowedRelationshipTypes(relationshipTypes?: IAllowedRelationshipType[]): IChatThreadQuery;
     withCreateLimit(createLimit: number): IChatThreadQuery;
     withObjectTypes(objectTypes?: GenAIObjectType[]): IChatThreadQuery;
     withSearchLimit(searchLimit: number): IChatThreadQuery;
@@ -1711,6 +1713,7 @@ export interface ISemanticSearchQuery {
     query(options?: {
         signal?: AbortSignal;
     }): Promise<ISemanticSearchResult>;
+    withAllowedRelationshipTypes(types: IAllowedRelationshipType[]): ISemanticSearchQuery;
     withDeepSearch(deepSearch: boolean): ISemanticSearchQuery;
     withLimit(limit: number): ISemanticSearchQuery;
     withObjectTypes(types: GenAIObjectType[]): ISemanticSearchQuery;

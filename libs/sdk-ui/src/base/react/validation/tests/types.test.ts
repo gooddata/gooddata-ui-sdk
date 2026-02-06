@@ -1,5 +1,7 @@
-// (C) 2025 GoodData Corporation
-/* eslint-disable @typescript-eslint/no-empty-object-type */
+// (C) 2025-2026 GoodData Corporation
+
+/* oxlint-disable @typescript-eslint/no-empty-object-type */
+
 import { describe, expectTypeOf, it } from "vitest";
 
 import {

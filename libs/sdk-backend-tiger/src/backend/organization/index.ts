@@ -57,11 +57,11 @@ export class TigerOrganization implements IOrganization {
                 }),
             );
 
-            // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+            // oxlint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
             const organizationName = result.data.data.attributes?.name!;
-            // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+            // oxlint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
             const bootstrapUser = result.data.data?.relationships?.bootstrapUser?.data!;
-            // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+            // oxlint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
             const bootstrapUserGroup = result.data.data?.relationships?.bootstrapUserGroup?.data!;
 
             // Get the identity provider from included data using the relationship reference
@@ -120,11 +120,11 @@ export class TigerOrganization implements IOrganization {
         );
 
         const resultData = result.data.data;
-        // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+        // oxlint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
         const organizationName = resultData.attributes?.name!;
-        // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+        // oxlint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
         const bootstrapUser = resultData.relationships?.bootstrapUser?.data!;
-        // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+        // oxlint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
         const bootstrapUserGroup = resultData.relationships?.bootstrapUserGroup?.data!;
         const earlyAccess = resultData.attributes?.earlyAccess ?? undefined;
         const earlyAccessValues = resultData.attributes?.earlyAccessValues ?? undefined;

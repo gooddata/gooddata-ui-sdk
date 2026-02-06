@@ -1,10 +1,11 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { useEffect, useState } from "react";
 
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
     type GenAIObjectType,
+    type IAllowedRelationshipType,
     type ISemanticSearchRelationship,
     type ISemanticSearchResultItem,
 } from "@gooddata/sdk-model";
@@ -81,6 +82,12 @@ export type SemanticSearchHookInput = {
      * If omitted, will be retrieved from the context.
      */
     workspace?: string;
+    /**
+     * Filter relationships and results based on allowed relationship type combinations.
+     * When specified, only relationships matching the allowed types are returned.
+     * If omitted, all relationships and results are returned.
+     */
+    allowedRelationshipTypes?: IAllowedRelationshipType[];
 };
 
 const DEFAULT_OBJECT_TYPES: GenAIObjectType[] = [];
@@ -98,6 +105,7 @@ export const useSemanticSearch = ({
     limit,
     backend,
     workspace,
+    allowedRelationshipTypes,
 }: SemanticSearchHookInput): SemanticSearchInputResult => {
     const [state, setState] = useState<SemanticSearchInputResult>(DEFAULT_STATE);
     const effectiveBackend = useBackendStrict(backend);
@@ -127,6 +135,9 @@ export const useSemanticSearch = ({
         }
         if (limit) {
             qb = qb.withLimit(limit);
+        }
+        if (allowedRelationshipTypes?.length) {
+            qb = qb.withAllowedRelationshipTypes(allowedRelationshipTypes);
         }
 
         // Execute the query
@@ -164,7 +175,15 @@ export const useSemanticSearch = ({
         return () => {
             searchController.abort();
         };
-    }, [effectiveBackend, effectiveWorkspace, searchTerm, objectTypes, deepSearch, limit]);
+    }, [
+        effectiveBackend,
+        effectiveWorkspace,
+        searchTerm,
+        objectTypes,
+        deepSearch,
+        limit,
+        allowedRelationshipTypes,
+    ]);
 
     return state;
 };

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 /**
  * This file is supposed to run within the Cypress container.
@@ -101,4 +101,4 @@ async function main() {
     }
 }
 
-main();
+void main();

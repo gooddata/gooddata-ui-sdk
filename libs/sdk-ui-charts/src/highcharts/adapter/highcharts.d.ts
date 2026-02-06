@@ -2,7 +2,6 @@
 
 /* oxlint-disable no-barrel-files/no-barrel-files */
 
-// eslint-disable-next-line no-restricted-syntax
 export * from "highcharts";
 
 declare module "highcharts" {

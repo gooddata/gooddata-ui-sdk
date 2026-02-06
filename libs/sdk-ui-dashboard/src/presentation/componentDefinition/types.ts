@@ -55,7 +55,7 @@ export interface ICustomComponentBase<TMainProps, TProviderParams extends any[]>
 /**
  * @internal
  */
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+// oxlint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface IDraggingComponentProps {
     // TODO define when dragging will be implemented
 }
@@ -63,7 +63,7 @@ export interface IDraggingComponentProps {
 /**
  * @internal
  */
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+// oxlint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface IDropTargetComponentProps {
     // TODO define when dragging will be implemented
 }

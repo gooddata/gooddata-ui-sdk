@@ -65,6 +65,7 @@ describe("isOverlappingWidth", () => {
     it("should return true when point has datalabel width greater than shape width", () => {
         const visiblePointsWithShape = [
             {
+                // oxlint-disable-next-line @typescript-eslint/no-misused-spread
                 ...visiblePointsWithoutShape[0],
                 shapeArgs: {
                     width: 100,
@@ -77,6 +78,7 @@ describe("isOverlappingWidth", () => {
     it("should return false when point has datalabel width less than shape width", () => {
         const visiblePointsWithShape: Highcharts.Point[] = [
             {
+                // oxlint-disable-next-line @typescript-eslint/no-misused-spread
                 ...visiblePointsWithoutShape[0],
                 shapeArgs: {
                     width: 105,
@@ -119,12 +121,15 @@ describe("getLabelOrDataLabelForPoints", () => {
 
     it.each([
         [visiblePoints, [label, dataLabel]],
+        // oxlint-disable-next-line @typescript-eslint/no-misused-spread
         [[{ ...visiblePoints[0] }, { ...visiblePoints[1] }], [label]],
         [
             [
                 {
+                    // oxlint-disable-next-line @typescript-eslint/no-misused-spread
                     ...visiblePoints[0],
                 },
+                // oxlint-disable-next-line @typescript-eslint/no-misused-spread
                 { ...visiblePoints[2] },
             ],
             [dataLabel],
