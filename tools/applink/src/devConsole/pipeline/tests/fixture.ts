@@ -48,7 +48,7 @@ export class MockBuilder implements IEventListener {
     };
 
     public onEvent = (event: DcEvent): void => {
-        // eslint-disable-next-line sonarjs/no-small-switch
+        // oxlint-disable-next-line sonarjs/no-small-switch
         switch (event.type) {
             case "buildRequested": {
                 const { packageName } = event.body;

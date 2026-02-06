@@ -105,7 +105,7 @@ export interface ISemanticSearchQuery {
  * @beta
  * @deprecated Use `ISemanticSearchResult` from \@gooddata/sdk-model instead.
  */
-// eslint-disable-next-line no-barrel-files/no-barrel-files
+// oxlint-disable-next-line no-barrel-files/no-barrel-files
 export type { ISemanticSearchResult };
 
 /**

@@ -1,28 +1,21 @@
 // (C) 2025-2026 GoodData Corporation
 
-import type { IDualConfiguration, IPackage } from "../types.js";
+import { importEsmPlugin, importEsmRules } from "@gooddata/lint-config";
 
-const importEsmPlugin: IPackage = {
-    name: "eslint-plugin-import-esm",
-    version: "1.2.1",
-};
-
-const rules = {
-    "import-esm/explicit-extension": "error",
-};
+import type { IDualConfiguration } from "../types.js";
 
 const v9 = {
     packages: [importEsmPlugin],
     plugins: { "import-esm": importEsmPlugin },
-    rules,
+    rules: importEsmRules,
 };
 
 export const importEsm: IDualConfiguration<"import-esm"> = {
     v8: {
         packages: [importEsmPlugin],
         plugins: ["import-esm"],
-        rules,
+        rules: importEsmRules,
     },
     v9,
-    ox: v9,
+    ox: {},
 };

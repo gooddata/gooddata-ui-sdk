@@ -748,7 +748,7 @@
     },
     {
       "name": "eslint-plugin-headers",
-      "allowedCategories": [ "tools" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "eslint-plugin-import",

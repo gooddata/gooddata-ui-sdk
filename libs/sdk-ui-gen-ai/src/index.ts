@@ -1,6 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
-/* eslint-disable no-barrel-files/no-barrel-files */
+/* oxlint-disable no-barrel-files/no-barrel-files */
 
 /**
  * This package provides React components for GoodData's GenAI features.

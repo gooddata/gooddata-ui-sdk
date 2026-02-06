@@ -3,7 +3,7 @@
 import { messagingUtils } from "./messagingUtils.js";
 import { validators } from "./validators.js";
 
-/* eslint-disable no-barrel-files/no-barrel-files */
+/* oxlint-disable no-barrel-files/no-barrel-files */
 
 export { messagingUtils, validators };
 export {

@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/i18n-toolkit",
-    "version": "11.19.0-alpha.10",
+    "version": "11.19.0-alpha.11",
     "description": "Localization validator to validate localization complexity and intl and html format.",
     "license": "MIT",
     "author": "GoodData",
@@ -71,7 +71,7 @@
         "dotenv": "16.0.3",
         "eslint": "^9.39.2",
         "eslint-import-resolver-typescript": "4.4.4",
-        "eslint-plugin-header": "3.1.1",
+        "eslint-plugin-headers": "1.3.3",
         "eslint-plugin-import-esm": "1.2.1",
         "eslint-plugin-import-x": "4.16.1",
         "eslint-plugin-jsdoc": "62.1.0",

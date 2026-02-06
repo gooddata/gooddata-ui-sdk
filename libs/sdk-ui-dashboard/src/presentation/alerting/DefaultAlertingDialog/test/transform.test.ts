@@ -1171,6 +1171,7 @@ describe("alert transforms", () => {
                         ...baseRelative.alert?.condition,
                         operator: "INCREASES_BY",
                         measure: {
+                            // oxlint-disable-next-line no-unsafe-optional-chaining
                             ...(baseRelative.alert?.condition as IAutomationAlertRelativeCondition).measure,
                             left: {
                                 format: "#,##0.00",

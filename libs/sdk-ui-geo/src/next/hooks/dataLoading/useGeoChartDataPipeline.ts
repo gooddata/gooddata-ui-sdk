@@ -5,14 +5,12 @@ import { useMemo } from "react";
 import { type IntlShape } from "react-intl";
 
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { type IColorPalette, type IExecutionConfig } from "@gooddata/sdk-model";
+import { type IExecutionConfig } from "@gooddata/sdk-model";
 import {
     DataTooLargeToDisplaySdkError,
-    DefaultColorPalette,
     type GoodDataSdkError,
     type UseCancelablePromiseStatus,
 } from "@gooddata/sdk-ui";
-import { type IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 
 import { type IGeoChartConfig } from "../../types/config/unified.js";
 import { type ILayerExecutionRecord } from "../../types/props/geoChart/internal.js";
@@ -28,8 +26,6 @@ export interface IGeoChartDataResult {
     layerOutputs: Map<string, ILayerPreparedData>;
     status: UseCancelablePromiseStatus;
     error?: GoodDataSdkError;
-    colorPalette: IColorPalette;
-    colorMapping: IColorMapping[];
 }
 
 /**
@@ -61,13 +57,6 @@ export function useGeoChartData(params: {
 }): IGeoChartDataResult {
     const { layerExecutions, backend, workspace, config, execConfig, intl } = params;
 
-    const colorPalette = useMemo<IColorPalette>(
-        () => config?.colorPalette ?? DefaultColorPalette,
-        [config?.colorPalette],
-    );
-
-    const colorMapping = useMemo<IColorMapping[]>(() => config?.colorMapping ?? [], [config?.colorMapping]);
-
     const {
         layerDataViews,
         status: dataStatus,
@@ -79,8 +68,6 @@ export function useGeoChartData(params: {
         workspace,
         config,
         execConfig,
-        colorPalette,
-        colorMapping,
         intl,
     };
 
@@ -117,7 +104,5 @@ export function useGeoChartData(params: {
         layerOutputs,
         status,
         error,
-        colorPalette,
-        colorMapping,
     };
 }

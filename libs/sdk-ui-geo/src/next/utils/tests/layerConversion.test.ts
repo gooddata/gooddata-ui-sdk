@@ -4,6 +4,7 @@ import { describe, expect, it } from "vitest";
 
 import {
     type IInsightLayerDefinition,
+    type IRgbColor,
     attributeDisplayFormRef,
     attributeLocalId,
     idRef,
@@ -75,6 +76,30 @@ describe("layerConversion", () => {
         expect(attributeDisplayFormRef(result.longitude)).toEqual(
             idRef("customer_city.city_longitude", "displayForm"),
         );
+    });
+
+    it("should convert colorMapping items from layer controls", () => {
+        const latitudeAttr = createAttribute("latitude_attr");
+        const longitudeAttr = createAttribute("longitude_attr");
+        const mappedColor: IRgbColor = { type: "rgb", value: { r: 175, g: 13, b: 242 } };
+        const layerDef = createPushpinLayer(
+            [newBucket(BucketNames.LATITUDE, latitudeAttr), newBucket(BucketNames.LONGITUDE, longitudeAttr)],
+            {
+                controls: {
+                    colorMapping: [{ id: "Canada", color: mappedColor }],
+                },
+            },
+        );
+
+        const result = insightLayerToGeoLayer(layerDef);
+
+        if (result?.type !== "pushpin") {
+            throw new Error("Expected pushpin layer");
+        }
+
+        expect(result.config?.colorMapping).toHaveLength(1);
+        expect(result.config?.colorMapping?.[0]?.color).toEqual(mappedColor);
+        expect(result.config?.colorMapping?.[0]?.predicate).toEqual(expect.any(Function));
     });
 
     it("should keep LOCATION localId for latitude even if LATITUDE bucket exists", () => {

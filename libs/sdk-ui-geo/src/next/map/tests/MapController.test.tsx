@@ -79,7 +79,6 @@ const geoLayersContextMock: IGeoLayersContext = {
     layerExecutions: [],
     layers: new Map(),
     primaryLayer: null,
-    colorPalette: [],
 };
 
 const adapterContextMock: IGeoAdapterContext = {

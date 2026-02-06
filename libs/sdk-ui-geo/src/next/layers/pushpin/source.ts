@@ -1,8 +1,10 @@
 // (C) 2025-2026 GoodData Corporation
 
+import { type DataViewFacade } from "@gooddata/sdk-ui";
 import { type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
 import type { GeoJSONSourceSpecification } from "../common/mapFacade.js";
+import { getPushpinColorStrategy } from "./coloring/colorStrategy.js";
 import { getPushpinColors } from "./coloring/palette.js";
 import { DEFAULT_CLUSTER_MAX_ZOOM, DEFAULT_CLUSTER_RADIUS, PUSHPIN_SIZE_OPTIONS_MAP } from "./constants.js";
 import { getMinMax } from "./size/calculations.js";
@@ -10,6 +12,7 @@ import { type IGeoLngLat } from "../../types/common/coordinates.js";
 import { type IGeoChartPointsConfig } from "../../types/config/points.js";
 import { type IGeoPushpinChartConfig } from "../../types/config/pushpinChart.js";
 import { type IPushpinColor, type IPushpinGeoData } from "../../types/geoData/pushpin.js";
+import type { IGeoAdapterContext, IPushpinLayerOutput } from "../registry/adapterTypes.js";
 
 /**
  * Properties for creating a pushpin data source
@@ -250,4 +253,81 @@ export function createPushpinDataSource(
         };
     }
     return source;
+}
+
+/**
+ * Applies current palette/mapping colors to a pushpin GeoJSON source specification.
+ *
+ * @remarks
+ * Pushpin styling reads colors from flattened GeoJSON feature properties (`color_background`, `color_border`).
+ * To update colors in-place (via `setData`), we patch those properties according to `properties.locationIndex`.
+ *
+ * If the source data is not a FeatureCollection, the source is returned unchanged.
+ *
+ * @internal
+ */
+function recolorPushpinDataSource(
+    source: GeoJSONSourceSpecification,
+    pushpinColors: IPushpinColor[],
+): GeoJSONSourceSpecification {
+    const data = source.data;
+    if (!data || typeof data === "string" || data.type !== "FeatureCollection") {
+        return source;
+    }
+
+    const nextFeatures = data.features.map((feature) => {
+        const properties = feature.properties;
+        if (!properties) {
+            return feature;
+        }
+
+        const index: unknown = properties["locationIndex"];
+        if (typeof index !== "number") {
+            return feature;
+        }
+
+        const pushpinColor = pushpinColors[index] || pushpinColors[0];
+        if (!pushpinColor) {
+            return feature;
+        }
+
+        const nextProperties: GeoJSON.GeoJsonProperties = {
+            ...properties,
+            color_background: pushpinColor.background,
+            color_border: pushpinColor.border,
+        };
+
+        const previousColor: unknown = properties["color"];
+        if (previousColor && typeof previousColor === "object") {
+            nextProperties["color"] = { ...previousColor, ...pushpinColor };
+        }
+
+        return { ...feature, properties: nextProperties };
+    });
+
+    return { ...source, data: { ...data, features: nextFeatures } };
+}
+
+/**
+ * Applies current palette/mapping colors to a prepared pushpin output source.
+ *
+ * @remarks
+ * Matches area-layer pattern: compute current colors, then delegate patching to a concise
+ * `recolor...DataSource(...)` helper.
+ *
+ * @internal
+ */
+export function applyCurrentColorsToPushpinOutputSource(
+    output: IPushpinLayerOutput,
+    dataView: DataViewFacade,
+    context: IGeoAdapterContext,
+): GeoJSONSourceSpecification {
+    const { colorPalette = [], colorMapping = [] } = context;
+    const colorStrategy = getPushpinColorStrategy(colorPalette, colorMapping, output.geoData, dataView);
+
+    const colorData = output.geoData.color?.data ?? [];
+    const segmentData = output.geoData.segment?.data ?? [];
+    const pushpinColors = getPushpinColors(colorData, segmentData, colorStrategy);
+
+    return recolorPushpinDataSource(output.source, pushpinColors);
 }

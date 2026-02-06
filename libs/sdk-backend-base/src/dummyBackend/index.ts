@@ -770,7 +770,7 @@ class DummyWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCatalogAva
         });
     }
 
-    //eslint-disable-next-line sonarjs/no-identical-functions
+    // oxlint-disable-next-line sonarjs/no-identical-functions
     public forDataset(dataset: ObjRef): IWorkspaceCatalogAvailableItemsFactory {
         return this.withOptions({
             dataset,
@@ -789,7 +789,7 @@ class DummyWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCatalogAva
         });
     }
 
-    //eslint-disable-next-line sonarjs/no-identical-functions
+    // oxlint-disable-next-line sonarjs/no-identical-functions
     public forTypes(types: CatalogItemType[]): IWorkspaceCatalogAvailableItemsFactory {
         return this.withOptions({
             types,
@@ -806,7 +806,7 @@ class DummyWorkspaceCatalogAvailableItemsFactory implements IWorkspaceCatalogAva
         return Promise.resolve(new DummyWorkspaceCatalogWithAvailableItems(this.workspace));
     }
 
-    //eslint-disable-next-line sonarjs/no-identical-functions
+    // oxlint-disable-next-line sonarjs/no-identical-functions
     public withGroups(loadGroups: boolean): IWorkspaceCatalogAvailableItemsFactory {
         return this.withOptions({
             loadGroups,
@@ -894,7 +894,7 @@ class DummyOrganization implements IOrganization {
         });
     }
 
-    // eslint-disable-next-line sonarjs/no-identical-functions
+    // oxlint-disable-next-line sonarjs/no-identical-functions
     updateDescriptor(): Promise<IOrganizationDescriptor> {
         return Promise.resolve({
             id: this.organizationId,

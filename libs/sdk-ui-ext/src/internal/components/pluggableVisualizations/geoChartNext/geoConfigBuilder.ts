@@ -92,7 +92,6 @@ export function buildGeoVisualizationConfig({
 
 const supportedGeoConfigProperties = new Set<keyof IGeoChartConfig>([
     "center",
-    "colorMapping",
     "cooperativeGestures",
     "legend",
     "limit",

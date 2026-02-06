@@ -3,9 +3,11 @@
 import {
     type IAttribute,
     type IAttributeOrMeasure,
+    type IColorPalette,
     type INullableFilter,
     type ISortItem,
 } from "@gooddata/sdk-model";
+import { type IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 
 /**
  * Layer types supported by GeoChart.
@@ -18,6 +20,27 @@ import {
  * @public
  */
 export type GeoLayerType = "pushpin" | "area";
+
+/**
+ * Per-layer configuration for GeoChart layers.
+ *
+ * @remarks
+ * This config is intentionally limited to options that are meaningful on a per-layer basis.
+ * It is **not** the same as {@link IGeoChartConfig} (which contains global/map-level settings).
+ *
+ * @public
+ */
+export interface IGeoLayerConfig {
+    /**
+     * Optional color palette override for this layer.
+     */
+    colorPalette?: IColorPalette;
+
+    /**
+     * Optional custom color mappings override for this layer.
+     */
+    colorMapping?: IColorMapping[];
+}
 
 /**
  * Base interface for all geo layer configurations.
@@ -82,6 +105,16 @@ export interface IGeoLayerBase {
      * For area layers, different segments get different fill colors.
      */
     segmentBy?: IAttribute;
+
+    /**
+     * Optional per-layer configuration.
+     *
+     * @remarks
+     * This config is intentionally limited to layer-scoped options only.
+     *
+     * @public
+     */
+    config?: IGeoLayerConfig;
 
     /**
      * Filters specific to this layer.

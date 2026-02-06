@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 
-import type { IGeoLayerData } from "../../context/GeoLayersContext.js";
+import { type IGeoLayerData } from "../../context/GeoLayersContext.js";
 import { useGeoLegend } from "../../context/GeoLegendContext.js";
 import { type ILegendModel } from "../../types/legend/model.js";
 import type { ILayerExecutionRecord } from "../../types/props/geoChart/internal.js";

@@ -1,9 +1,14 @@
 // (C) 2025-2026 GoodData Corporation
 
+import { DefaultColorPalette } from "@gooddata/sdk-ui";
+
 import { computeAreaLegend } from "./computeAreaLegend.js";
 import { computePushpinLegend } from "./computePushpinLegend.js";
 import type { IGeoLayerData } from "../../context/GeoLayersContext.js";
 import type { EnabledItemsByLayer } from "../../context/GeoLegendContext.js";
+import { getAreaColorStrategy } from "../../layers/area/coloring/colorStrategy.js";
+import { computeLegend } from "../../layers/common/computeLegend.js";
+import { getPushpinColorStrategy } from "../../layers/pushpin/coloring/colorStrategy.js";
 import type { IAreaGeoData } from "../../types/geoData/area.js";
 import type { IPushpinGeoData } from "../../types/geoData/pushpin.js";
 import { type ILegendModel, type ILegendSection } from "../../types/legend/model.js";
@@ -99,8 +104,7 @@ export function aggregateLegend(
             continue;
         }
 
-        const { geoData, baseLegendItems, availableLegends } = layerData;
-        const colorScaleBaseColor = layerData.colorStrategy?.getColorByIndex(0);
+        const { geoData, dataView } = layerData;
 
         // Skip layers without geoData - no legend to display
         if (!geoData) {
@@ -109,9 +113,29 @@ export function aggregateLegend(
 
         const layerName = layer.name ?? layerId;
 
+        const effectivePalette = layer.config?.colorPalette ?? DefaultColorPalette;
+        const effectiveMapping = layer.config?.colorMapping ?? [];
+
+        const colorStrategy =
+            layer.type === "pushpin"
+                ? getPushpinColorStrategy(
+                      effectivePalette,
+                      effectiveMapping,
+                      geoData as IPushpinGeoData,
+                      dataView,
+                  )
+                : getAreaColorStrategy(effectivePalette, effectiveMapping, geoData as IAreaGeoData, dataView);
+
+        const legend = computeLegend(geoData, colorStrategy, {
+            layerType: layer.type,
+            hasSizeData: layer.type === "pushpin" ? Boolean((geoData as IPushpinGeoData).size) : false,
+        });
+
+        const colorScaleBaseColor = colorStrategy.getColorByIndex(0);
+
         // Apply visibility state to legend items using per-layer enabled items
         const enabledItemsForLayer = options?.enabledItemsByLayer?.get(layerId) ?? null;
-        const legendItems = applyVisibilityState(baseLegendItems, enabledItemsForLayer);
+        const legendItems = applyVisibilityState(legend.items, enabledItemsForLayer);
 
         const section =
             layer.type === "pushpin"
@@ -120,7 +144,7 @@ export function aggregateLegend(
                       layerName,
                       geoData: geoData as IPushpinGeoData,
                       legendItems,
-                      availableLegends,
+                      availableLegends: legend.available,
                       numericSymbols: options?.numericSymbols,
                       colorScaleBaseColor,
                   })
@@ -129,7 +153,7 @@ export function aggregateLegend(
                       layerName,
                       geoData: geoData as IAreaGeoData,
                       legendItems,
-                      availableLegends,
+                      availableLegends: legend.available,
                       numericSymbols: options?.numericSymbols,
                       colorScaleBaseColor,
                   });

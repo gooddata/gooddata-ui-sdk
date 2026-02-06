@@ -7,7 +7,7 @@ import { userEvent } from "@testing-library/user-event";
 import cx from "classnames";
 import { describe, expect, it, vi } from "vitest";
 
-// eslint-disable-next-line import-x/no-unassigned-import
+// oxlint-disable-next-line import/no-unassigned-import
 import "vitest-dom/extend-expect";
 
 import { type ISyntaxHighlightingInputProps, SyntaxHighlightingInput } from "../SyntaxHighlightingInput.js";

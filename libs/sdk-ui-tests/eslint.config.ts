@@ -23,11 +23,6 @@ export default [
         },
     },
     {
-        rules: {
-            "import-x/no-unassigned-import": "warn",
-        },
-    },
-    {
         ignores: ["**/*.generated.stories.tsx", "**/dist-storybook/**"],
     },
 ];

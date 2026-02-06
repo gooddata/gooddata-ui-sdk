@@ -43,13 +43,12 @@ const containerBaseId = "geo-chart-next";
  */
 export function RenderGeoChart(): ReactElement {
     const props = useGeoChartProps();
-    const { layers, layerExecutions, colorPalette, primaryLayer } = useGeoLayers();
+    const { layers, layerExecutions, primaryLayer } = useGeoLayers();
     const mapContainerRef = useRef<HTMLDivElement>(null);
     const containerId = useMemo(() => `${containerBaseId}-${v4()}`, []);
 
     const [chartContainerRect, setChartContainerRect] = useState<ContentRect | null>(null);
 
-    const colorStrategy = primaryLayer?.colorStrategy ?? null;
     const availableLegends = primaryLayer?.availableLegends;
 
     const dataViewport = useMemo(() => computeCombinedViewport(layers), [layers]);
@@ -111,12 +110,7 @@ export function RenderGeoChart(): ReactElement {
                         config={props.config}
                         backend={props.backend}
                     />
-                    <PushDataSync
-                        colorStrategy={colorStrategy}
-                        colorPalette={colorPalette}
-                        availableLegends={availableLegends}
-                        geoLayerType={props.type}
-                    />
+                    <PushDataSync availableLegends={availableLegends} geoLayerType={props.type} />
                 </div>
             )}
         </Measure>

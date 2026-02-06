@@ -1,6 +1,5 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { barrelFiles } from "./configurations/barrel-files.js";
 import { browserEnv } from "./configurations/browser-env.js";
 import { chaiFriendly } from "./configurations/chai-friendly.js";
 import { cypress } from "./configurations/cypress.js";
@@ -13,6 +12,7 @@ import { ignore } from "./configurations/ignore.js";
 import { importEsm } from "./configurations/import-esm.js";
 import { importX } from "./configurations/import-x.js";
 import { jsdoc } from "./configurations/jsdoc.js";
+import { noBarrelFiles } from "./configurations/no-barrel-files.js";
 import { noOnlyTests } from "./configurations/no-only-tests.js";
 import { reactHooks } from "./configurations/react-hooks.js";
 import { react } from "./configurations/react.js";
@@ -29,7 +29,7 @@ export const commonConfigurations: IDualConfiguration[] = [
     eslint,
     header,
     typescript,
-    barrelFiles,
+    noBarrelFiles,
     importX,
     jsdoc,
     regexp,

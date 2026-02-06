@@ -15,7 +15,7 @@ import { getPushpinColorStrategy } from "./coloring/colorStrategy.js";
 import { transformPushpinData } from "./data/transformation.js";
 import { UNCLUSTER_FILTER } from "./layers.js";
 import { getPushpinLayerIds, removePushpinLayer, syncPushpinLayerToMap } from "./operations.js";
-import { createPushpinDataSource } from "./source.js";
+import { applyCurrentColorsToPushpinOutputSource, createPushpinDataSource } from "./source.js";
 import { createPushpinTooltipConfig } from "./tooltip/tooltipManagement.js";
 import { calculateViewport } from "../../map/viewport/viewportCalculation.js";
 import type { IGeoLngLat } from "../../types/common/coordinates.js";
@@ -24,8 +24,10 @@ import type { IPushpinGeoData } from "../../types/geoData/pushpin.js";
 import type { IGeoLayerPushpin } from "../../types/layers/index.js";
 import type { IMapViewport } from "../../types/map/provider.js";
 import { getGeoHeaderStrings } from "../../utils/geoHeaders.js";
+import { getHeaderPredicateFingerprint } from "../../utils/predicateFingerprint.js";
 import { computeLegend } from "../common/computeLegend.js";
 import { getGeoChartDimensions } from "../common/dimensions.js";
+import { canSetGeoJsonSourceData, trySetGeoJsonSourceData } from "../common/layerOps.js";
 import { createLayerInsight, sanitizeGlobalFilters } from "../execution/layerInsightFactory.js";
 import { prepareExecutionWithTooltipText } from "../execution/prepareTooltipExecution.js";
 import type { IGeoAdapterContext, IGeoLayerAdapter, IPushpinLayerOutput } from "../registry/adapterTypes.js";
@@ -191,27 +193,58 @@ export const pushpinAdapter: IGeoLayerAdapter<IGeoLayerPushpin, IPushpinLayerOut
         return Promise.resolve({ source, legend, geoData, colorStrategy, initialViewport });
     },
 
-    syncToMap(layer, map, output, context): void {
+    syncToMap(layer, map, output, dataView, context): void {
         if (!output.geoData) {
             removePushpinLayer(map, layer.id);
             return;
         }
 
-        // Rebuild MapLibre source from current config so AD toggles are respected without re-execution.
-        const { config, source } = createPushpinSource(layer, output.geoData, output.colorStrategy, context);
+        // Init/repair path: remove+add semantics (can recreate layers & sources).
+        const { colorPalette = [], colorMapping = [] } = context;
+        const colorStrategy = getPushpinColorStrategy(colorPalette, colorMapping, output.geoData, dataView);
+        const { config, source } = createPushpinSource(layer, output.geoData, colorStrategy, context);
         syncPushpinLayerToMap(map, layer.id, source, output.geoData, config);
     },
 
-    getMapSyncKey(_layer, context): string {
+    updateOnMap(layer, map, output, dataView, context): void {
+        if (!output.geoData) {
+            removePushpinLayer(map, layer.id);
+            return;
+        }
+
+        // Update path: in-place GeoJSON data update (no remove+add = no flicker).
+        const ids = getPushpinLayerIds(layer.id);
+        if (!canSetGeoJsonSourceData(map, ids.sourceId)) {
+            return;
+        }
+
+        const nextSource = applyCurrentColorsToPushpinOutputSource(output, dataView, context);
+        trySetGeoJsonSourceData(map, ids.sourceId, nextSource.data);
+    },
+
+    getMapSyncKey(layer, context): string {
         // Only include settings configurable from AD that affect MapLibre source/feature props.
         const points = context.config?.points;
         return [
             "pushpin",
+            layer.id,
             "points",
             String(points?.groupNearbyPoints),
             String(points?.minSize),
             String(points?.maxSize),
         ].join(":");
+    },
+
+    getMapUpdateKey(layer, context): string {
+        const palette = context.colorPalette ?? [];
+        const mapping = context.colorMapping ?? [];
+        // Mapping predicates are not always derived from stable ids (can be user-provided functions),
+        // so include their fingerprint to ensure recoloring is triggered when predicate changes.
+        const paletteKey = palette.map((p) => `${p.guid}:${JSON.stringify(p.fill)}`).join("|");
+        const mappingKey = mapping
+            .map((m) => `${getHeaderPredicateFingerprint(m.predicate)}:${JSON.stringify(m.color)}`)
+            .join("|");
+        return ["pushpin", layer.id, "colors", paletteKey, mappingKey].join(":");
     },
 
     removeFromMap(layer, map): void {

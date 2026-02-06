@@ -7,7 +7,6 @@ export default [
     {
         rules: {
             "no-console": "warn",
-            "import-x/default": "warn",
         },
     },
     {

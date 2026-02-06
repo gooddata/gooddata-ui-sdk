@@ -1,6 +1,13 @@
 // (C) 2025-2026 GoodData Corporation
 
-import type { IDualConfiguration, IPackage } from "../types.js";
+import {
+    type IPackage,
+    importXRules,
+    importXRulesNativeNotSupported,
+    scopeRules,
+} from "@gooddata/lint-config";
+
+import type { IDualConfiguration } from "../types.js";
 
 const importXPlugin: IPackage = {
     name: "eslint-plugin-import-x",
@@ -18,42 +25,6 @@ const commonConfiguration = {
     settings: {
         "import-x/extensions": [".js", ".jsx", ".mjs", ".cjs"],
     },
-    rules: {
-        "import-x/no-unresolved": "error",
-        "import-x/named": "error",
-        "import-x/namespace": "error",
-        "import-x/default": "error",
-        "import-x/export": "error",
-        "import-x/no-named-as-default": "warn",
-        "import-x/no-named-as-default-member": "warn",
-        "import-x/no-duplicates": "warn",
-
-        "import-x/order": [
-            "error",
-            {
-                pathGroups: [
-                    {
-                        pattern: "react",
-                        group: "external",
-                        position: "before",
-                    },
-                    {
-                        pattern: "@gooddata/**",
-                        group: "external",
-                        position: "after",
-                    },
-                ],
-                groups: ["builtin", "external", "internal", ["parent", "sibling", "index"]],
-                pathGroupsExcludedImportTypes: ["react"],
-                alphabetize: {
-                    order: "asc",
-                    caseInsensitive: true,
-                },
-                "newlines-between": "always",
-            },
-        ],
-        "import-x/no-unassigned-import": "error",
-    },
     overrides: [
         {
             files: ["**/*.ts", "**/*.cts", "**/*.mts", "**/*.tsx"],
@@ -69,15 +40,11 @@ const commonConfiguration = {
                     },
                 },
             },
-            rules: {
-                // TypeScript compilation already ensures that named imports exist
-                "import-x/named": "off",
-            },
         },
     ],
 };
 
-const v9 = {
+const v9Common = {
     ...commonConfiguration,
     plugins: { "import-x": importXPlugin },
 };
@@ -85,8 +52,17 @@ const v9 = {
 export const importX: IDualConfiguration<"import-x"> = {
     v8: {
         ...commonConfiguration,
+        rules: scopeRules(importXRules, "import-x"),
         plugins: ["import-x"],
     },
-    v9,
-    ox: v9,
+    v9: {
+        ...v9Common,
+        rules: scopeRules(importXRules, "import-x"),
+        plugins: { "import-x": importXPlugin },
+    },
+    ox: {
+        ...v9Common,
+        rules: scopeRules(importXRulesNativeNotSupported, "import-x"),
+        plugins: { "import-x": importXPlugin },
+    },
 };

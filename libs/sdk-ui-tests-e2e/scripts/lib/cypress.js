@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
-/* eslint-disable sonarjs/cognitive-complexity */
+/* oxlint-disable sonarjs/cognitive-complexity */
 
 import { execSync, spawn } from "child_process";
 

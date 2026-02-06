@@ -2,8 +2,6 @@
 
 import { type ReactElement, type ReactNode, useMemo } from "react";
 
-import { type IColorPalette } from "@gooddata/sdk-model";
-
 import { GeoLayersProvider, useGeoLayers } from "../context/GeoLayersContext.js";
 import { GeoLegendProvider } from "../context/GeoLegendContext.js";
 import { InitialExecutionContextProvider } from "../context/InitialExecutionContext.js";
@@ -14,21 +12,15 @@ interface IGeoChartProvidersProps {
     children: ReactNode;
     layerExecutions: ILayerExecutionRecord[];
     layerOutputs: Map<string, ILayerPreparedData>;
-    colorPalette: IColorPalette;
 }
 
 export function GeoChartProviders({
     children,
     layerExecutions,
     layerOutputs,
-    colorPalette,
 }: IGeoChartProvidersProps): ReactElement {
     return (
-        <GeoLayersProvider
-            layerExecutions={layerExecutions}
-            layerOutputs={layerOutputs}
-            colorPalette={colorPalette}
-        >
+        <GeoLayersProvider layerExecutions={layerExecutions} layerOutputs={layerOutputs}>
             <GeoLegendProvider>
                 <InitialExecutionProvider>{children}</InitialExecutionProvider>
             </GeoLegendProvider>

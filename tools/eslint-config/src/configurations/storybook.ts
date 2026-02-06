@@ -1,6 +1,8 @@
 // (C) 2025-2026 GoodData Corporation
 
-import type { IDualConfiguration, IPackage } from "../types.js";
+import { type IPackage } from "@gooddata/lint-config";
+
+import type { IDualConfiguration } from "../types.js";
 
 const storybookPlugin: IPackage = {
     name: "eslint-plugin-storybook",

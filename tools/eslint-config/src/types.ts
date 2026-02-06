@@ -1,13 +1,10 @@
 // (C) 2025-2026 GoodData Corporation
 
+import type { GlobalValue, IPackage } from "@gooddata/lint-config";
+
 export type Rules<Prefix extends string = ""> = {
     [key in `${Prefix}${string}`]: string | number | object | object[];
 };
-
-export interface IPackage {
-    name: string;
-    version: string;
-}
 
 interface IConfigurationBase {
     /**
@@ -91,13 +88,6 @@ export type GlobalsPreset =
  * Source type for ECMAScript modules.
  */
 export type SourceType = "module" | "script" | "commonjs";
-
-/**
- * Global variable configuration value.
- * - "readonly" or false: variable is read-only
- * - "writable" or true: variable can be written to
- */
-export type GlobalValue = "readonly" | "writable" | false | true;
 
 interface ILanguageOptionsV9 {
     /**

@@ -15,15 +15,17 @@ import { deriveCollectionBoundingBox } from "./boundingBox.js";
 import { getAreaColorStrategy } from "./coloring/colorStrategy.js";
 import { transformAreaData } from "./data/transformation.js";
 import { getAreaLayerIds, removeAreaLayer, syncAreaLayerToMap } from "./operations.js";
-import { createAreaDataSource } from "./source.js";
+import { applyCurrentColorsToAreaOutputSource, createAreaDataSource } from "./source.js";
 import { createAreaTooltipConfig } from "./tooltip/tooltipManagement.js";
 import { bboxToViewport } from "../../map/viewport/viewportCalculation.js";
 import { type IGeoAreaChartConfig } from "../../types/config/areaChart.js";
 import { type IGeoLayerArea } from "../../types/layers/index.js";
 import { type IGeoCollectionMetadata, getLocationCollectionMetadata } from "../../utils/geoCollection.js";
 import { getGeoHeaderStrings } from "../../utils/geoHeaders.js";
+import { getHeaderPredicateFingerprint } from "../../utils/predicateFingerprint.js";
 import { computeLegend } from "../common/computeLegend.js";
 import { getGeoChartDimensions } from "../common/dimensions.js";
+import { canSetGeoJsonSourceData, trySetGeoJsonSourceData } from "../common/layerOps.js";
 import { createLayerInsight, sanitizeGlobalFilters } from "../execution/layerInsightFactory.js";
 import { prepareExecutionWithTooltipText } from "../execution/prepareTooltipExecution.js";
 import {
@@ -163,8 +165,6 @@ export const areaAdapter: IGeoLayerAdapter<IGeoLayerArea, IAreaLayerOutput> = {
             ...context.config,
         };
 
-        // Create complete source with all features and styling
-        // Boundaries are passed directly - no need to store in geoData
         const source = createAreaDataSource({
             geoData,
             colorStrategy,
@@ -187,15 +187,58 @@ export const areaAdapter: IGeoLayerAdapter<IGeoLayerArea, IAreaLayerOutput> = {
         return { source, legend, geoData, colorStrategy, initialViewport };
     },
 
-    syncToMap(layer, map, output, context): void {
+    syncToMap(layer, map, output, dataView, context): void {
         if (!output.geoData) {
             removeAreaLayer(map, layer.id);
             return;
         }
 
+        const sourceWithCurrentColors = applyCurrentColorsToAreaOutputSource(output, dataView, context);
         const config = context.config ?? {};
-        // Use pre-computed source from output - no transformation needed
-        syncAreaLayerToMap(map, layer.id, output.source, config);
+        syncAreaLayerToMap(map, layer.id, sourceWithCurrentColors, config);
+    },
+
+    updateOnMap(layer, map, output, dataView, context): void {
+        if (!output.geoData) {
+            removeAreaLayer(map, layer.id);
+            return;
+        }
+
+        const sourceWithCurrentColors = applyCurrentColorsToAreaOutputSource(output, dataView, context);
+
+        // Update path: in-place GeoJSON data update (no remove+add = no flicker).
+        const ids = getAreaLayerIds(layer.id);
+        if (!canSetGeoJsonSourceData(map, ids.sourceId)) {
+            return;
+        }
+
+        trySetGeoJsonSourceData(map, ids.sourceId, sourceWithCurrentColors.data);
+    },
+
+    getMapSyncKey(layer, context): string {
+        // Keep this strictly about MapLibre layer/source structure or paint properties.
+        // Segment filtering + visibility is handled outside (Effect 2/3 in useSyncLayersToMap).
+        const areas = context.config?.areas;
+        return [
+            "area",
+            layer.id,
+            "areas",
+            String(areas?.fillOpacity),
+            String(areas?.borderColor),
+            String(areas?.borderWidth),
+        ].join(":");
+    },
+
+    getMapUpdateKey(layer, context): string {
+        const palette = context.colorPalette ?? [];
+        const mapping = context.colorMapping ?? [];
+        // Mapping predicates are not always derived from stable ids (can be user-provided functions),
+        // so include their fingerprint to ensure recoloring is triggered when predicate changes.
+        const paletteKey = palette.map((p) => `${p.guid}:${JSON.stringify(p.fill)}`).join("|");
+        const mappingKey = mapping
+            .map((m) => `${getHeaderPredicateFingerprint(m.predicate)}:${JSON.stringify(m.color)}`)
+            .join("|");
+        return ["area", layer.id, "colors", paletteKey, mappingKey].join(":");
     },
 
     removeFromMap(layer, map): void {

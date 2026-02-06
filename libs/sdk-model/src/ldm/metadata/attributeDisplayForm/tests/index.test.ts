@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { idRef } from "../../../../objRef/factory.js";
@@ -8,6 +9,8 @@ import {
     attributeDisplayFormMetadataObjectRef,
     attributeDisplayFormMetadataObjectTitle,
 } from "../index.js";
+
+/* oxlint-disable no-undef */
 
 describe("attribute display form", () => {
     const _attributeDisplayFormTitle = "Account";

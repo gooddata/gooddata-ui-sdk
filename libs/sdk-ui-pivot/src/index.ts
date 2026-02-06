@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-/* eslint-disable no-barrel-files/no-barrel-files */
+/* oxlint-disable no-barrel-files/no-barrel-files */
 
 /**
  * This package provides the PivotTable component that you can use to visualize your data in a table-based manner.

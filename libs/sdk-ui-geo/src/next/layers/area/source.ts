@@ -1,12 +1,16 @@
 // (C) 2025-2026 GoodData Corporation
 
 import { type IGeoJsonFeature, geoFeatureId } from "@gooddata/sdk-model";
+import { type DataViewFacade } from "@gooddata/sdk-ui";
 import { type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
 import type { GeoJSONSourceSpecification } from "../common/mapFacade.js";
+import { getAreaColorStrategy } from "./coloring/colorStrategy.js";
 import { getAreaAreaColors } from "./coloring/palette.js";
+import { DEFAULT_AREA_FILL_COLOR } from "./constants.js";
 import { type IGeoAreaChartConfig } from "../../types/config/areaChart.js";
 import { type IAreaGeoData } from "../../types/geoData/area.js";
+import type { IAreaLayerOutput, IGeoAdapterContext } from "../registry/adapterTypes.js";
 
 /**
  * Properties for creating a area data source
@@ -226,6 +230,90 @@ function aggregateByUniqueArea(
     }
 
     return aggregated;
+}
+
+/**
+ * Updates area source feature fills according to the provided map.
+ *
+ * @remarks
+ * Used for synchronous recoloring (e.g. palette/mapping change) without re-running async preparation.
+ *
+ * @internal
+ */
+export function recolorAreaDataSource(
+    source: GeoJSONSourceSpecification,
+    fillByKey: Map<string, string>,
+): GeoJSONSourceSpecification {
+    const data = source.data;
+    if (!data || typeof data === "string" || data.type !== "FeatureCollection") {
+        return source;
+    }
+
+    const updatedFeatures = data.features.map((feature) => {
+        const props = feature.properties;
+        if (!props) {
+            return feature;
+        }
+
+        const areaUri = typeof props["areaUri"] === "string" ? props["areaUri"] : "";
+        const areaId = typeof props["areaId"] === "string" ? props["areaId"] : "";
+        const key = areaUri || areaId;
+        const fill = (key ? fillByKey.get(key) : undefined) ?? DEFAULT_AREA_FILL_COLOR;
+
+        const nextProps = { ...props, color_fill: fill };
+
+        return { ...feature, properties: nextProps };
+    });
+
+    return {
+        ...source,
+        data: {
+            ...data,
+            features: updatedFeatures,
+        },
+    };
+}
+
+/**
+ * Applies current palette/mapping colors to a prepared area output source.
+ *
+ * @remarks
+ * Area styling reads fill color from GeoJSON feature properties, so palette/mapping updates require
+ * producing a new GeoJSON payload and pushing it via `setData` (or by re-initializing the layer).
+ *
+ * This helper keeps the "apply current colors" logic colocated with other area source utilities
+ * (similar to pushpin's `applyCurrentColorsToPushpinOutputSource`).
+ *
+ * @internal
+ */
+export function applyCurrentColorsToAreaOutputSource(
+    output: IAreaLayerOutput,
+    dataView: DataViewFacade,
+    context: IGeoAdapterContext,
+): GeoJSONSourceSpecification {
+    const { colorPalette = [], colorMapping = [] } = context;
+    const colorStrategy = getAreaColorStrategy(colorPalette, colorMapping, output.geoData, dataView);
+
+    const areaIdentifiers = output.geoData.area?.data ?? [];
+    const areaUris = output.geoData.area?.uris ?? [];
+    const segmentData = output.geoData.segment?.data ?? [];
+    const colorData = output.geoData.color?.data ?? [];
+    const areaColors = getAreaAreaColors(colorData, segmentData, colorStrategy);
+
+    const fillByKey = new Map<string, string>();
+    for (let i = 0; i < areaIdentifiers.length; i++) {
+        const areaIdentifier = areaIdentifiers[i];
+        if (!areaIdentifier) {
+            continue;
+        }
+        const key = areaUris[i] || areaIdentifier;
+        if (fillByKey.has(key)) {
+            continue;
+        }
+        fillByKey.set(key, areaColors[i]?.fill);
+    }
+
+    return recolorAreaDataSource(output.source, fillByKey);
 }
 
 /**

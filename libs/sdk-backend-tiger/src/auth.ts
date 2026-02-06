@@ -275,7 +275,7 @@ export class ContextDeferredAuthProvider extends TigerAuthProviderBase {
         this.notAuthenticatedHandler?.(context, error);
     };
 
-    // eslint-disable-next-line sonarjs/no-identical-functions
+    // oxlint-disable-next-line sonarjs/no-identical-functions
     public async authenticate(context: IAuthenticationContext): Promise<IAuthenticatedPrincipal> {
         await this.obtainCurrentPrincipal(context);
 

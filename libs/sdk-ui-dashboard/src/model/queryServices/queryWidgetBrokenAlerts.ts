@@ -12,7 +12,7 @@ export const QueryWidgetBrokenAlertService = createQueryService(
     queryService,
 );
 
-// eslint-disable-next-line require-yield
+// oxlint-disable-next-line require-yield
 function* queryService(
     _ctx: DashboardContext,
     _query: IQueryWidgetBrokenAlerts,

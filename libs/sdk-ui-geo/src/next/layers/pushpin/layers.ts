@@ -64,7 +64,7 @@ const DEFAULT_CLUSTER_POINT_SIZES: ExpressionSpecification = [
  *
  * @internal
  */
-export const UNCLUSTER_FILTER: FilterSpecification = ["!", ["has", "point_count"]];
+export const UNCLUSTER_FILTER: ExpressionSpecification = ["!", ["has", "point_count"]];
 
 const UNCLUSTER_COLOR: ExpressionSpecification = ["get", "background", ["get", "color"]];
 

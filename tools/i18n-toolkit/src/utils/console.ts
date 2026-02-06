@@ -157,7 +157,6 @@ function table(data: string[][]) {
 }
 
 function realLength(str: string) {
-    // eslint-disable-next-line no-control-regex
     return ("" + str).replace(/\u001b\[\d+m/g, "").length;
 }
 

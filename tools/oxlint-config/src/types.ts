@@ -1,5 +1,7 @@
 // (C) 2025-2026 GoodData Corporation
 
+import type { GlobalValue, IPackage } from "@gooddata/lint-config";
+
 export type Rules<Prefix extends string = ""> = {
     [key in `${Prefix}${string}`]: string | number | object | object[];
 };
@@ -14,11 +16,6 @@ export type Category =
     | "suspicious";
 
 export type Level = "off" | "warn" | "error";
-
-export interface IPackage {
-    name: string;
-    version: string;
-}
 
 export interface IJsPlugin {
     name: string;
@@ -54,10 +51,6 @@ interface IConfigurationShared<RulePrefix extends string> {
      */
     settings?: Record<string, object>;
     /**
-     * Env values to be set when this configuration is active
-     */
-    env?: Record<string, boolean>;
-    /**
      * Ignore patterns to be added when this configuration is active
      */
     ignorePatterns?: string[];
@@ -66,6 +59,8 @@ interface IConfigurationShared<RulePrefix extends string> {
 interface IOverride<RulePrefix extends string> extends IConfigurationShared<RulePrefix> {
     files: string[];
     excludedFiles?: string[];
+    env?: Record<string, boolean>;
+    globals?: Record<string, GlobalValue>;
 }
 
 export interface IConfiguration<RulePrefix extends string = "">

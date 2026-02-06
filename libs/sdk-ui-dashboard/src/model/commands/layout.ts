@@ -127,7 +127,7 @@ export function addLayoutSection(
  *
  * @alpha
  */
-// eslint-disable-next-line sonarjs/no-identical-functions
+// oxlint-disable-next-line sonarjs/no-identical-functions
 export function addNestedLayoutSection(
     index: ILayoutSectionPath,
     initialHeader?: IDashboardLayoutSectionHeader,
@@ -229,7 +229,7 @@ export function moveLayoutSection(
  *
  * @alpha
  */
-// eslint-disable-next-line sonarjs/no-identical-functions
+// oxlint-disable-next-line sonarjs/no-identical-functions
 export function moveNestedLayoutSection(
     sectionIndex: ILayoutSectionPath,
     toIndex: ILayoutSectionPath,
@@ -334,7 +334,7 @@ export function removeLayoutSection(
  *
  * @alpha
  */
-// eslint-disable-next-line sonarjs/no-identical-functions
+// oxlint-disable-next-line sonarjs/no-identical-functions
 export function removeNestedLayoutSection(
     index: ILayoutSectionPath,
     stashIdentifier?: StashedDashboardItemsId,
@@ -440,7 +440,7 @@ export function changeLayoutSectionHeader(
  *
  * @alpha
  */
-// eslint-disable-next-line sonarjs/no-identical-functions
+// oxlint-disable-next-line sonarjs/no-identical-functions
 export function changeNestedLayoutSectionHeader(
     index: ILayoutSectionPath,
     header: IDashboardLayoutSectionHeader,
@@ -1757,7 +1757,7 @@ export function resizeHeight(
  *
  * @alpha
  */
-// eslint-disable-next-line sonarjs/no-identical-functions
+// oxlint-disable-next-line sonarjs/no-identical-functions
 export function resizeNestedLayoutItemsHeight(
     sectionIndex: ILayoutSectionPath,
     itemIndexes: number[],

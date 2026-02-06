@@ -6,7 +6,6 @@ export default [
     ...config,
     {
         rules: {
-            "import-x/default": "warn",
             "no-restricted-imports": [
                 "error",
                 {

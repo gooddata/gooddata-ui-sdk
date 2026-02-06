@@ -1,6 +1,6 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
-/* eslint-disable sonarjs/no-identical-functions */
+/* oxlint-disable sonarjs/no-identical-functions */
 
 import { action } from "storybook/actions";
 

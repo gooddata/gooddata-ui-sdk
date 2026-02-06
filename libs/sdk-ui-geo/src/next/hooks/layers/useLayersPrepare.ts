@@ -1,11 +1,11 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 
 import type { IntlShape } from "react-intl";
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import type { IColorPalette, IExecutionConfig } from "@gooddata/sdk-model";
+import type { IExecutionConfig } from "@gooddata/sdk-model";
 import {
     type DataViewFacade,
     DefaultColorPalette,
@@ -14,7 +14,6 @@ import {
     type UseCancelablePromiseStatus,
     useCancelablePromise,
 } from "@gooddata/sdk-ui";
-import type { IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 
 import { getLayerAdapter } from "../../layers/registry/adapterRegistry.js";
 import type { IGeoAdapterContext, IGeoLayerOutput } from "../../layers/registry/adapterTypes.js";
@@ -82,8 +81,6 @@ export interface ILayersPrepareContext {
     workspace: string;
     config?: IGeoChartConfig;
     execConfig?: IExecutionConfig;
-    colorPalette?: IColorPalette;
-    colorMapping?: IColorMapping[];
     intl: IntlShape;
 }
 
@@ -118,9 +115,11 @@ async function prepareSingleLayer(
 async function prepareAllLayers(
     layerExecutions: ILayerExecutionRecord[],
     layerDataViews: Map<string, DataViewFacade>,
-    adapterContext: IGeoAdapterContext,
+    createAdapterContext: (layerExecution: ILayerExecutionRecord) => IGeoAdapterContext,
 ): Promise<ILayerPreparedData[]> {
-    return Promise.all(layerExecutions.map((le) => prepareSingleLayer(le, layerDataViews, adapterContext)));
+    return Promise.all(
+        layerExecutions.map((le) => prepareSingleLayer(le, layerDataViews, createAdapterContext(le))),
+    );
 }
 
 /**
@@ -146,27 +145,10 @@ export function useLayersPrepare(
 ): ILayersPrepareResult {
     const { backend, workspace, config, execConfig, intl } = context;
 
-    const colorPalette = useMemo(
-        () => context.colorPalette ?? config?.colorPalette ?? DefaultColorPalette,
-        [context.colorPalette, config?.colorPalette],
-    );
-
-    const colorMapping = useMemo(
-        () => context.colorMapping ?? config?.colorMapping ?? [],
-        [context.colorMapping, config?.colorMapping],
-    );
-
     const dataViewsFingerprint = useMemo(
         () => createDataViewsFingerprint(layerDataViews, dataStatus === "success"),
         [dataStatus, layerDataViews],
     );
-
-    const configFingerprint = useMemo(() => {
-        return JSON.stringify({
-            colorPalette: colorPalette?.map((c) => c.guid),
-            colorMapping: colorMapping?.map((m) => m.color),
-        });
-    }, [colorPalette, colorMapping]);
 
     // Fingerprint that captures bucket structure (which items are in which buckets).
     // This detects when measures are moved between buckets (e.g., COLOR to SIZE)
@@ -176,24 +158,32 @@ export function useLayersPrepare(
         [layerExecutions],
     );
 
-    const adapterContext: IGeoAdapterContext = {
-        backend,
-        workspace,
-        config,
-        execConfig,
-        colorPalette,
-        colorMapping,
-        intl,
-    };
+    const createAdapterContext = useCallback(
+        (layerExecution: ILayerExecutionRecord): IGeoAdapterContext => {
+            const layer = layerExecution.layer;
+
+            return {
+                backend,
+                workspace,
+                config,
+                execConfig,
+                // Colors are ALWAYS per-layer (layer.config) with safe defaults.
+                colorPalette: layer.config?.colorPalette ?? DefaultColorPalette,
+                colorMapping: layer.config?.colorMapping ?? [],
+                intl,
+            };
+        },
+        [backend, workspace, config, execConfig, intl],
+    );
 
     const { result, status, error } = useCancelablePromise<ILayerPreparedData[], GoodDataSdkError>(
         {
             promise:
                 dataStatus === "success" && layerExecutions.length > 0
-                    ? () => prepareAllLayers(layerExecutions, layerDataViews, adapterContext)
+                    ? () => prepareAllLayers(layerExecutions, layerDataViews, createAdapterContext)
                     : undefined,
         },
-        [backend, workspace, dataViewsFingerprint, configFingerprint, layersStructureFingerprint, intl],
+        [backend, workspace, dataViewsFingerprint, layersStructureFingerprint, intl],
     );
 
     const layerOutputs = useMemo(() => {

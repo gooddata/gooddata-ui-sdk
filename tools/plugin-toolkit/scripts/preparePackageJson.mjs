@@ -6,7 +6,6 @@ import * as path from "path";
 import * as process from "process";
 
 import fse from "fs-extra";
-import { keys } from "lodash-es";
 
 export function readJsonSync(file) {
     return JSON.parse(fse.readFileSync(file, { encoding: "utf-8" }));
@@ -86,7 +85,7 @@ function removeGdStuff(packageJson) {
 
 function removeTs(packageJson) {
     const { devDependencies, dependencies } = packageJson;
-    const typings = keys(devDependencies).filter((dep) => dep.startsWith("@types"));
+    const typings = Object.keys(devDependencies).filter((dep) => dep.startsWith("@types"));
 
     [...ExplicitTypeScriptDependencies, ...typings].forEach((dep) => {
         delete devDependencies[dep];

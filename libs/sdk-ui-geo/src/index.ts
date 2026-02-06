@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-/* eslint-disable no-barrel-files/no-barrel-files */
+/* oxlint-disable no-barrel-files/no-barrel-files */
 
 /**
  * This package provides the components that you can use to visualize location-based data.
@@ -64,6 +64,7 @@ export {
     type GeoLayerType,
     type IGeoLayerBase,
     type IGeoLayer,
+    type IGeoLayerConfig,
     type IGeoLayerArea,
     type IGeoLayerPushpin,
 } from "./next/types/layers/index.js";

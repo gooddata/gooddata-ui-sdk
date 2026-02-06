@@ -2,14 +2,10 @@
 
 import { writeFileSync } from "fs";
 
+import type { GlobalValue, IPackage } from "@gooddata/lint-config";
+
 import { renderKey, renderValue } from "./renderPlugin.js";
-import type {
-    GlobalValue,
-    GlobalsPreset,
-    IConfigurationV9,
-    IDualConfiguration,
-    IPackage,
-} from "../../src/types.js";
+import type { GlobalsPreset, IConfigurationV9, IDualConfiguration } from "../../src/types.js";
 
 // Track imports needed for generated JS
 interface IImportInfo {

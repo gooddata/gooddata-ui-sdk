@@ -128,7 +128,7 @@ export const useInitializeDashboardStore = (
                 // this can lead to an error, but it should be safe to ignore it.
                 try {
                     dashboardStore.rootSagaTask.cancel();
-                    // eslint-disable-next-line no-empty
+                    // oxlint-disable-next-line no-empty
                 } catch {}
             }
 

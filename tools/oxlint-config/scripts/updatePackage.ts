@@ -27,9 +27,7 @@ const devDeps: Record<string, string> = {
     eslint: packageJson.devDependencies["eslint"],
     "eslint-import-resolver-typescript": packageJson.devDependencies["eslint-import-resolver-typescript"],
     "eslint-plugin-headers": packageJson.devDependencies["eslint-plugin-headers"],
-    "eslint-plugin-import-esm": packageJson.devDependencies["eslint-plugin-import-esm"],
     "eslint-plugin-import-x": packageJson.devDependencies["eslint-plugin-import-x"],
-    "eslint-plugin-no-barrel-files": packageJson.devDependencies["eslint-plugin-no-barrel-files"],
     "eslint-plugin-sonarjs": packageJson.devDependencies["eslint-plugin-sonarjs"],
     globals: packageJson.devDependencies["globals"],
 };
@@ -72,3 +70,96 @@ packageJson.exports = {
 };
 
 writeFileSync("./package.json", JSON.stringify(packageJson, null, 4));
+
+// Generate PACKAGES.md
+function generatePackagesMarkdown(): string {
+    // Collect all config names: base + variants
+    const configNames = ["base", ...Object.keys(variants).sort()];
+
+    // Collect packages for each config
+    const configPackages: Map<string, Map<string, string>> = new Map();
+
+    // Base config packages (common + oxlint peer)
+    const basePackages = new Map<string, string>();
+    basePackages.set("oxlint", peers.oxlint);
+    for (const config of common) {
+        for (const pkg of config.packages ?? []) {
+            basePackages.set(pkg.name, pkg.version);
+        }
+    }
+    configPackages.set("base", basePackages);
+
+    // Variant config packages (includes base + variant-specific)
+    for (const [variantName, variantConfigs] of Object.entries(variants)) {
+        const packages = new Map<string, string>();
+
+        // Add base packages
+        for (const [name, version] of basePackages) {
+            packages.set(name, version);
+        }
+
+        // Add variant-specific packages
+        for (const config of variantConfigs) {
+            for (const pkg of config.packages ?? []) {
+                packages.set(pkg.name, pkg.version);
+            }
+        }
+
+        configPackages.set(variantName, packages);
+    }
+
+    // Collect all unique package names across all configs
+    const allPackages = new Set<string>();
+    for (const packages of configPackages.values()) {
+        for (const name of packages.keys()) {
+            allPackages.add(name);
+        }
+    }
+
+    const sortedPackages = [...allPackages].sort();
+
+    // Build table data to calculate column widths
+    const headerRow = ["Package", ...configNames];
+    const dataRows: string[][] = sortedPackages.map((pkgName) => {
+        const cells = configNames.map((configName) => {
+            const packages = configPackages.get(configName);
+            if (packages?.has(pkgName)) {
+                return packages.get(pkgName)!;
+            }
+            return "";
+        });
+        return [pkgName, ...cells];
+    });
+
+    // Calculate max width for each column
+    const columnWidths: number[] = headerRow.map((header, colIndex) => {
+        const headerWidth = header.length;
+        const maxDataWidth = Math.max(...dataRows.map((row) => row[colIndex].length));
+        return Math.max(headerWidth, maxDataWidth);
+    });
+
+    // Helper to pad cell content
+    const padCell = (content: string, width: number): string => content.padEnd(width);
+
+    // Generate formatted markdown table
+    const formattedHeader = headerRow.map((cell, i) => padCell(cell, columnWidths[i])).join(" | ");
+    const separatorRow = columnWidths.map((width) => "-".repeat(width)).join(" | ");
+    const formattedDataRows = dataRows.map((row) =>
+        row.map((cell, i) => padCell(cell, columnWidths[i])).join(" | "),
+    );
+
+    const lines: string[] = [
+        "# OxLint Config Packages",
+        "",
+        "This table shows which packages are required for each configuration.",
+        "",
+        `| ${formattedHeader} |`,
+        `| ${separatorRow} |`,
+        ...formattedDataRows.map((row) => `| ${row} |`),
+        "",
+    ];
+
+    return lines.join("\n");
+}
+
+writeFileSync("./PACKAGES.md", generatePackagesMarkdown());

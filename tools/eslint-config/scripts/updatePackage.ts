@@ -2,8 +2,10 @@
 
 import { readFileSync, writeFileSync } from "fs";
 
+import { type IPackage } from "@gooddata/lint-config";
+
 import { commonConfigurations, v8Variants, v9Variants } from "../src/index.js";
-import type { IDualConfiguration, IPackage } from "../src/types.js";
+import type { IDualConfiguration } from "../src/types.js";
 
 type ExportValue = string | { import?: string; require?: string };
 
@@ -17,11 +19,12 @@ const packageJson = JSON.parse(readFileSync("./package.json").toString()) as {
 interface IPackageVersions {
     v8?: string;
     v9?: string;
+    ox?: string;
 }
 
 const packageVersions: Record<string, IPackageVersions> = {};
 
-function collectPackages(packages: IPackage[] | undefined, eslintVersion: "v8" | "v9") {
+function collectPackages(packages: IPackage[] | undefined, eslintVersion: "v8" | "v9" | "ox") {
     for (const pkg of packages ?? []) {
         if (!packageVersions[pkg.name]) {
             packageVersions[pkg.name] = {};
@@ -34,6 +37,7 @@ function collectPackages(packages: IPackage[] | undefined, eslintVersion: "v8" |
 for (const configuration of commonConfigurations) {
     collectPackages(configuration.v8.packages, "v8");
     collectPackages(configuration.v9.packages, "v9");
+    collectPackages(configuration.ox.packages, "ox");
 }
 
 // Collect packages from v9 variants only (these are added to devDependencies only)
@@ -53,18 +57,18 @@ const peers: Record<string, string> = {
 };
 
 for (const [name, versions] of Object.entries(packageVersions)) {
-    const { v8, v9 } = versions;
+    const { v8, v9, ox } = versions;
 
-    // Only add to peerDependencies if package appears in BOTH v8 and v9
-    if (v8 && v9) {
-        if (v8 === v9) {
+    // Only add to peerDependencies if package appears in v8, v9 AND ox
+    if (v8 && v9 && ox) {
+        if (v8 === v9 && v9 === ox) {
             peers[name] = v8;
         } else {
             // Different versions - use || syntax
-            peers[name] = `${v8} || ${v9}`;
+            peers[name] = `${v8} || ${v9} || ${ox}`;
         }
     }
-    // Packages only in v8 or only in v9 are NOT added to peerDependencies
+    // Packages only in v8 or only in v9 or only in ox are NOT added to peerDependencies
 }
 
 // Build devDependencies (v9 packages only to avoid conflicts)
