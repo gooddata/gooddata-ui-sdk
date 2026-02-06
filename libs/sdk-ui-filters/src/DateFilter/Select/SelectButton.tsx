@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type ReactElement } from "react";
 
@@ -7,7 +7,7 @@ import cx from "classnames";
 import { type ISelectItemOption } from "./types.js";
 import { itemToString } from "./utils.js";
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+// oxlint-disable-next-line @typescript-eslint/no-empty-object-type
 export function SelectButton<V extends {}>({
     selectedItem,
     isOpen,

@@ -2,6 +2,117 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.19.0",
+            "tag": "@gooddata/sdk-ui-all_v11.19.0",
+            "date": "Fri, 06 Feb 2026 10:30:03 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "sdk-ui-all: Calendar tabs accessibility."
+                    },
+                    {
+                        "comment": "sdk-ui-filters: Fix `DateFilter` state synchronization issue."
+                    },
+                    {
+                        "comment": "sdk-ui-filters: Ensure `DateFilter` button label updates when `Exclude current period` adjusts a named `relativePreset`."
+                    },
+                    {
+                        "comment": "Upgrage test fixtures to v3.3.5"
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: improved status handling for semantic quality check when model updates are in progress"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: disable date selector in KDA if there are no period available"
+                    },
+                    {
+                        "comment": "sdk-ui-kit: accessibility improvements for combobox"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: option to allow override of automatic overly controller detection, disable this on dashboard"
+                    },
+                    {
+                        "comment": "sdk-ui-kit: table menu can be also opened on top direction if there is no space below."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: attribute popup can be setup by accesible config"
+                    },
+                    {
+                        "comment": "sdk-ui-all: accesibility updates to kda flow from dashboard"
+                    },
+                    {
+                        "comment": "sdk-ui-kit: added new icon \"click\""
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: update design of kda dialog"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: update the styling of the KDA floating bar"
+                    },
+                    {
+                        "comment": "sdk-ui-kit: add new variable into theme"
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Allow setting fullWidthButton to UiDropdown"
+                    },
+                    {
+                        "comment": "sdk-ui-all: Added support for dashboard summaries."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Feature flag enableFiscalCalendars set to true by default"
+                    },
+                    {
+                        "comment": "@gooddata/sdk-ui-all: all dropdowns migrated to new virtualized list implementation. Paging changes for dropdowns."
+                    },
+                    {
+                        "comment": "add support for custom geo collection in AD"
+                    },
+                    {
+                        "comment": "Add CrateDB data source type support"
+                    },
+                    {
+                        "comment": "Respect null value in max zoom level for geo charts, null means unrestricted zoom level."
+                    },
+                    {
+                        "comment": "chore: Replace eslint-plugin-import with eslint-plugin-import-x"
+                    },
+                    {
+                        "comment": "chore: Use project service in eslint"
+                    },
+                    {
+                        "comment": "chore: Remove tsOverride from eslint-config"
+                    },
+                    {
+                        "comment": "chore: Upgrade eslint-config to emit eslint v9 flat config"
+                    },
+                    {
+                        "comment": "chore: Decouple eslint and prettier"
+                    },
+                    {
+                        "comment": "chore: Move @gooddata/stylelint to this monorepo"
+                    },
+                    {
+                        "comment": "Fix enabled save button in AD when nothing changed in Drill to URL interactions config"
+                    },
+                    {
+                        "comment": "Show Drill to URL checkbox in table chart only"
+                    },
+                    {
+                        "comment": "Fix duplicated same URL drills in dashboard view mode"
+                    },
+                    {
+                        "comment": "sdk-ui-ext: sanitize dimensionality of metric value filter during drilling by migrating attributes identified by local id to obj ref when a linked attribute is removed from the insight buckets"
+                    },
+                    {
+                        "comment": "sdk-ui-charts, sdk-ui-pivot: feature flag enableDrillMenuPositioningAtCursor has been removed"
+                    },
+                    {
+                        "comment": "update fixture to 3.3.10"
+                    }
+                ]
+            }
+        },
+        {
             "version": "11.18.0",
             "tag": "@gooddata/sdk-ui-all_v11.18.0",
             "date": "Thu, 29 Jan 2026 08:15:37 GMT",

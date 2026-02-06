@@ -75,7 +75,7 @@ class TigerWorkspaceQuery implements IWorkspacesQuery {
         private readonly dateFormatter: DateFormatter,
         private readonly dateStringifier: DateStringifier,
         private readonly dateNormalizer: DateNormalizer,
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // oxlint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         private readonly userId?: string,
     ) {}

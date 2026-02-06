@@ -9,7 +9,7 @@ import {
     type IGenAIChatEvaluation,
     type IUserWorkspaceSettings,
 } from "@gooddata/sdk-backend-spi";
-import { type GenAIObjectType } from "@gooddata/sdk-model";
+import { type GenAIObjectType, type IAllowedRelationshipType } from "@gooddata/sdk-model";
 
 import { processContents } from "./converters/interactionsToMessages.js";
 import { extractError } from "./utils.js";
@@ -20,7 +20,11 @@ import {
     isUserMessage,
     makeAssistantMessage,
 } from "../../model.js";
-import { objectTypesSelector, settingsSelector } from "../chatWindow/chatWindowSelectors.js";
+import {
+    allowedRelationshipTypesSelector,
+    objectTypesSelector,
+    settingsSelector,
+} from "../chatWindow/chatWindowSelectors.js";
 import { messagesSelector } from "../messages/messagesSelectors.js";
 import {
     evaluateMessageAction,
@@ -120,19 +124,25 @@ function* evaluateUserMessage(message: AssistantMessage, preparedChatThread: ICh
     let reader: ReadableStreamReader<IGenAIChatEvaluation> | undefined = undefined;
     const settings: IUserWorkspaceSettings | undefined = yield select(settingsSelector);
     const objectTypes: GenAIObjectType[] | undefined = yield select(objectTypesSelector);
+    const allowedRelationshipTypes: IAllowedRelationshipType[] | undefined = yield select(
+        allowedRelationshipTypesSelector,
+    );
     const showReasoning = Boolean(settings?.enableGenAIReasoningVisibility);
 
     // Track interaction ID to assistant message mapping
     let currentAssistantMessage = message;
     let currentInteractionId: string | undefined = undefined;
 
+    let queryBuilder = preparedChatThread
+        .withSearchLimit(Number(settings?.["aiChatSearchLimit"]) || 5)
+        .withObjectTypes(objectTypes);
+
+    if (allowedRelationshipTypes?.length) {
+        queryBuilder = queryBuilder.withAllowedRelationshipTypes(allowedRelationshipTypes);
+    }
+
     try {
-        const results: ReadableStream<IGenAIChatEvaluation> = yield call([
-            preparedChatThread
-                .withSearchLimit(Number(settings?.["aiChatSearchLimit"]) || 5)
-                .withObjectTypes(objectTypes),
-            preparedChatThread.stream,
-        ]);
+        const results: ReadableStream<IGenAIChatEvaluation> = yield call([queryBuilder, queryBuilder.stream]);
 
         reader = results.getReader();
         while (true) {

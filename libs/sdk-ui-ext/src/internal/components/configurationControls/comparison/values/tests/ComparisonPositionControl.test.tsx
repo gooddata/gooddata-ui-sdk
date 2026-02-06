@@ -13,7 +13,7 @@ import { DropdownControl } from "../../../DropdownControl.js";
 import { ComparisonPositionControl } from "../ComparisonPositionControl.js";
 
 vi.mock("../../../DropdownControl.js", async (importOriginal) => {
-    // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+    // oxlint-disable-next-line @typescript-eslint/consistent-type-imports
     const actual = await importOriginal<typeof import("../../../DropdownControl.js")>();
     return {
         ...actual,

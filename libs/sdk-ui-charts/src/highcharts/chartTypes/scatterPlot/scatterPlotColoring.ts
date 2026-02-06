@@ -30,6 +30,7 @@ export class ScatterPlotColorStrategy extends MeasureColorStrategy {
 
         let colorAssignment: IColorAssignment[];
         if (isClustering && isClusteringLoaded) {
+            // oxlint-disable-next-line @typescript-eslint/require-array-sort-compare
             const uniqueClusters = uniq(dv.dataView.clusteringResult.clusters).sort();
             colorAssignment = uniqueClusters.map(
                 (clusterIndex, currentColorPaletteIndex): IColorAssignment => {

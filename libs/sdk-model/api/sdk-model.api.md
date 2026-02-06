@@ -773,6 +773,13 @@ export type IAlertTriggerMode = "ALWAYS" | "ONCE";
 // @alpha (undocumented)
 export type IAlertTriggerState = "ACTIVE" | "PAUSED";
 
+// @beta
+export interface IAllowedRelationshipType {
+    allowOrphans?: boolean;
+    sourceType: GenAIObjectType;
+    targetType: GenAIObjectType;
+}
+
 // @alpha
 export interface IAllTimeDateFilterOption extends IDateFilterOption {
     type: DateFilterOptionAllTimeType;

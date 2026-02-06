@@ -42,6 +42,7 @@ export function getChartOrientationConfiguration(
         plotOptions: {
             waterfall: {
                 dataLabels: {
+                    // oxlint-disable-next-line @typescript-eslint/no-misused-spread
                     ...config.plotOptions?.waterfall?.dataLabels,
                     crop: false,
                     overflow: "allow",

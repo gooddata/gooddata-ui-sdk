@@ -1,5 +1,7 @@
 // (C) 2023-2026 GoodData Corporation
 
+// oxlint-disable @typescript-eslint/no-empty-object-type
+
 import { cleanup } from "@testing-library/react";
 import { afterEach, expect, vi } from "vitest";
 import * as matchers from "vitest-dom/dist/matchers.js";

@@ -1,11 +1,12 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import "./isolatedTest";
 import "./session";
 import "./commands";
 import "./recordings";
 import "cypress-real-events/support";
 import "./featureHub";
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// oxlint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import registerCypressGrep from "@cypress/grep/src/support";
 import installLogsCollector from "cypress-terminal-report/src/installLogsCollector";

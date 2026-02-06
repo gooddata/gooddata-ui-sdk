@@ -2,7 +2,7 @@
 
 import { GenAiApi_AiSearch } from "@gooddata/api-client-tiger/endpoints/genAI";
 import { type ISemanticSearchQuery, type ISemanticSearchResult } from "@gooddata/sdk-backend-spi";
-import { type GenAIObjectType } from "@gooddata/sdk-model";
+import { type GenAIObjectType, type IAllowedRelationshipType } from "@gooddata/sdk-model";
 
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 
@@ -11,6 +11,7 @@ type SemanticSearchQueryConfig = {
     limit: number;
     question: string;
     objectTypes: GenAIObjectType[];
+    allowedRelationshipTypes?: IAllowedRelationshipType[];
 };
 
 const defaultConfig: SemanticSearchQueryConfig = {
@@ -52,6 +53,13 @@ export class SemanticSearchQuery implements ISemanticSearchQuery {
         return new SemanticSearchQuery(this.authCall, this.workspaceId, {
             ...this.config,
             objectTypes,
+        });
+    }
+
+    withAllowedRelationshipTypes(allowedRelationshipTypes: IAllowedRelationshipType[]): ISemanticSearchQuery {
+        return new SemanticSearchQuery(this.authCall, this.workspaceId, {
+            ...this.config,
+            allowedRelationshipTypes,
         });
     }
 

@@ -1,11 +1,12 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
+// oxlint-disable @typescript-eslint/no-namespace
 
 export interface IOffset {
     x?: number;
     y?: number;
 }
 declare global {
-    // eslint-disable-next-line @typescript-eslint/no-namespace
     namespace Cypress {
         // eslint-disable-next-line @typescript-eslint/naming-convention
         interface Chainable<Subject> {

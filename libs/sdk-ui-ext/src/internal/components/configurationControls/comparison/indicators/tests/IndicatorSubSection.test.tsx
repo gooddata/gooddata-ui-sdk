@@ -13,13 +13,13 @@ import { ColorsControl } from "../colorsControl/ColorsControl.js";
 import { IndicatorSubSection } from "../IndicatorSubSection.js";
 
 vi.mock("../ArrowControl.js", async (importOriginal) => {
-    // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+    // oxlint-disable-next-line @typescript-eslint/consistent-type-imports
     const actual = await importOriginal<typeof import("../ArrowControl.js")>();
     return { ...actual, ArrowControl: vi.fn(actual.ArrowControl) };
 });
 
 vi.mock("../colorsControl/ColorsControl.js", async (importOriginal) => {
-    // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+    // oxlint-disable-next-line @typescript-eslint/consistent-type-imports
     const actual = await importOriginal<typeof import("../colorsControl/ColorsControl.js")>();
     return {
         ...actual,

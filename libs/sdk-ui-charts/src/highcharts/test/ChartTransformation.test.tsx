@@ -137,6 +137,7 @@ describe("ChartTransformation", () => {
             render(
                 createComponent({
                     renderer,
+                    // oxlint-disable-next-line @typescript-eslint/no-misused-spread
                     ...executionData,
                     config: {
                         ...config,
@@ -177,6 +178,7 @@ describe("ChartTransformation", () => {
         it("should be invoked if data series is over limit", () => {
             const onDataTooLarge = vi.fn();
             const props = {
+                // oxlint-disable-next-line @typescript-eslint/no-misused-spread
                 ...BarChartMultipleMeasures,
                 onDataTooLarge,
                 config: {
@@ -193,6 +195,7 @@ describe("ChartTransformation", () => {
         it("should be invoked if data categories is over limit", () => {
             const onDataTooLarge = vi.fn();
             const props = {
+                // oxlint-disable-next-line @typescript-eslint/no-misused-spread
                 ...BarChartMultipleMeasures,
                 onDataTooLarge,
                 config: {
@@ -209,6 +212,7 @@ describe("ChartTransformation", () => {
         it("should be invoked on component mount", () => {
             const onDataTooLarge = vi.fn();
             const props = {
+                // oxlint-disable-next-line @typescript-eslint/no-misused-spread
                 ...BarChartMultipleMeasures,
                 onDataTooLarge,
                 config: {
@@ -291,6 +295,7 @@ describe("ChartTransformation", () => {
     describe.each(AlignableCharts)("%s chart alignments", (type: string) => {
         function renderComponent(chartConfig: IChartConfig) {
             const props = {
+                // oxlint-disable-next-line @typescript-eslint/no-misused-spread
                 ...PieChartSingleMeasure,
                 config: {
                     type,

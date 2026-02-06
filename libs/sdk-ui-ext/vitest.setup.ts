@@ -1,5 +1,7 @@
 // (C) 2023-2026 GoodData Corporation
 
+// oxlint-disable @typescript-eslint/no-empty-object-type
+
 import { cleanup } from "@testing-library/react";
 import { afterEach, expect, vi } from "vitest";
 import * as matchers from "vitest-dom/dist/matchers.js";
@@ -9,9 +11,9 @@ import { type TestingLibraryMatchers } from "vitest-dom/dist/matchers.js";
  * Exports of types and matchers of vitest-dom is currently broken we need export matchers from dist and define types manually
  */
 declare module "vitest" {
-    // eslint-disable-next-line @typescript-eslint/no-empty-object-type,@typescript-eslint/naming-convention
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     interface Assertion<T = any> extends TestingLibraryMatchers<typeof expect.stringContaining, T> {}
-    // eslint-disable-next-line @typescript-eslint/no-empty-object-type,@typescript-eslint/naming-convention
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     interface AsymmetricMatchersContaining extends TestingLibraryMatchers<unknown, unknown> {}
 }
 
@@ -29,6 +31,7 @@ globalThis.Element.prototype.getBoundingClientRect = function () {
         const height = parseFloat(this.style.height);
         if (!isNaN(height) && height > 0) {
             return {
+                // oxlint-disable-next-line @typescript-eslint/no-misused-spread
                 ...original,
                 height,
                 width: original.width || 200, // Default width for dropdown lists
@@ -65,6 +68,7 @@ global.ResizeObserver = class ResizeObserver {
             [
                 {
                     target: element,
+                    // oxlint-disable-next-line @typescript-eslint/no-misused-spread
                     contentRect: { ...rect, width, height } as DOMRectReadOnly,
                     borderBoxSize: [{ inlineSize: width, blockSize: height }],
                     contentBoxSize: [{ inlineSize: width, blockSize: height }],

@@ -68,6 +68,10 @@ export class DummyGenAIChatQueryBuilder implements IChatThreadQuery {
         return this;
     }
 
+    withAllowedRelationshipTypes(): IChatThreadQuery {
+        return this;
+    }
+
     async query({ signal }: { signal?: AbortSignal }): Promise<IGenAIChatEvaluation> {
         await cancellableTimeout(100, signal);
         return Promise.resolve({

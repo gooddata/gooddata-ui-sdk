@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 /*
  * Starts Wiremock in Docker without recording
@@ -87,4 +87,4 @@ function runWiremockDocker(host, verbose, proxy) {
     });
 }
 
-main();
+void main();

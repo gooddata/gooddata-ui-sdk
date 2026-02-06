@@ -4,6 +4,7 @@ import type {
     GenAIChatInteractionUserFeedback,
     GenAIChatInteractionUserVisualisation,
     GenAIObjectType,
+    IAllowedRelationshipType,
     IGenAIChangeAnalysisParams,
     IGenAIChatInteraction,
     IGenAIChatReasoning,
@@ -95,6 +96,12 @@ export interface ISemanticSearchQuery {
     withDeepSearch(deepSearch: boolean): ISemanticSearchQuery;
 
     /**
+     * Filter relationships and results based on allowed relationship type combinations.
+     * When specified, only relationships matching the allowed types are returned.
+     */
+    withAllowedRelationshipTypes(types: IAllowedRelationshipType[]): ISemanticSearchQuery;
+
+    /**
      * Execute the search.
      */
     query(options?: { signal?: AbortSignal }): Promise<ISemanticSearchResult>;
@@ -181,6 +188,10 @@ export interface IChatThreadQuery {
      * Define the object types for the chat thread.
      */
     withObjectTypes(objectTypes?: GenAIObjectType[]): IChatThreadQuery;
+    /**
+     * Define allowed relationships for search queries in search
+     */
+    withAllowedRelationshipTypes(relationshipTypes?: IAllowedRelationshipType[]): IChatThreadQuery;
     /**
      * Execute the chat thread.
      */

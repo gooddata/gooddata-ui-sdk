@@ -76,7 +76,7 @@ const shouldIgnoreDateFilterLocalIdentifiers = (
 
 const removeDateFilterLocalIdentifier = (filter: FilterContextItem): FilterContextItem => {
     if (isDashboardDateFilter(filter)) {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        // oxlint-disable-next-line @typescript-eslint/no-unused-vars
         const { localIdentifier, ...rest } = filter.dateFilter;
         return {
             ...filter,

@@ -382,6 +382,7 @@ describe("BaseVisualization", () => {
         rerender(
             <BaseVisualization
                 {...defaultProps}
+                // oxlint-disable-next-line @typescript-eslint/no-misused-spread
                 {...visualizationCatalog}
                 totalsEditAllowed={totalsEditAllowed}
                 drillableItems={drillableItems}

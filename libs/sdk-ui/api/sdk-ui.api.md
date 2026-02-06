@@ -358,7 +358,7 @@ export class DataTooLargeToDisplaySdkError extends GoodDataSdkError {
 export class DataViewFacade {
     protected constructor(dataView: IDataView);
     // (undocumented)
-    context(): IExecutionContext | undefined;
+    context(): IExecutionContext;
     // (undocumented)
     data(config?: DataAccessConfig): IDataAccessMethods;
     // @alpha

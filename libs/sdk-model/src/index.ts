@@ -1127,6 +1127,7 @@ export {
 } from "./automations/index.js";
 
 export {
+    type IAllowedRelationshipType,
     type ISemanticSearchResult,
     type ISemanticSearchResultItem,
     type ISemanticSearchRelationship,

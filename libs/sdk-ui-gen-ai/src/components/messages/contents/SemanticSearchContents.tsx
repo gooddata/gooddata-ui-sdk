@@ -25,37 +25,44 @@ type Props = {
     useMarkdown?: boolean;
 };
 
+const hasSearchResults = (content: SemanticSearchContents): boolean => content.searchResults.length > 0;
+
 export function SemanticSearchContentsComponent({ content, useMarkdown }: Props) {
     const workspace = useWorkspaceStrict();
 
     // Keeping for backwards compatibility
     const text = replaceLinks(content.text, content.searchResults, workspace);
+    const showSearchUI = hasSearchResults(content);
 
     return (
         <div
             className={cx(
                 "gd-gen-ai-chat__messages__content",
-                "gd-gen-ai-chat__messages__content--semantic-search",
+                showSearchUI && "gd-gen-ai-chat__messages__content--semantic-search",
             )}
         >
             <MarkdownComponent allowMarkdown={useMarkdown}>{text}</MarkdownComponent>
-            <div className="gd-gen-ai-chat__messages__semantic-search-header">
-                <UiIcon
-                    type="search"
-                    size={14}
-                    color="complementary-6"
-                    backgroundSize={26}
-                    backgroundColor="complementary-2"
-                />
-                <FormattedMessage id="gd.gen-ai.semantic-search.title" />
-            </div>
-            <Suspense fallback={<SemanticSearchTreeViewFallback />}>
-                <SemanticSearchTreeView
-                    workspace={workspace}
-                    content={content}
-                    maxHeight={SEMANTIC_SEARCH_TREE_VIEW_HEIGHT}
-                />
-            </Suspense>
+            {showSearchUI ? (
+                <>
+                    <div className="gd-gen-ai-chat__messages__semantic-search-header">
+                        <UiIcon
+                            type="search"
+                            size={14}
+                            color="complementary-6"
+                            backgroundSize={26}
+                            backgroundColor="complementary-2"
+                        />
+                        <FormattedMessage id="gd.gen-ai.semantic-search.title" />
+                    </div>
+                    <Suspense fallback={<SemanticSearchTreeViewFallback />}>
+                        <SemanticSearchTreeView
+                            workspace={workspace}
+                            content={content}
+                            maxHeight={SEMANTIC_SEARCH_TREE_VIEW_HEIGHT}
+                        />
+                    </Suspense>
+                </>
+            ) : null}
         </div>
     );
 }

@@ -168,7 +168,7 @@ export function initAccessibleTooltipPluginOnce(Highcharts: any): void {
             }
             state.pendingPoint = nextPoint ?? null;
 
-            // eslint-disable-next-line @typescript-eslint/no-this-alias
+            // oxlint-disable-next-line @typescript-eslint/no-this-alias
             const tooltip = this;
             state.activationTimer = window.setTimeout(() => {
                 state.currentPoint = state.pendingPoint ?? null;
@@ -247,7 +247,7 @@ export function initAccessibleTooltipPluginOnce(Highcharts: any): void {
             if (state.hideTimer) {
                 return;
             }
-            // eslint-disable-next-line @typescript-eslint/no-this-alias
+            // oxlint-disable-next-line @typescript-eslint/no-this-alias
             const tooltip = this;
             state.hideTimer = window.setTimeout(() => {
                 state.hideTimer = null;

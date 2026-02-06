@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { spawn } from "child_process";
 
@@ -30,4 +30,4 @@ async function main() {
     process.stdout.write("Started Scenarios in Nginx\n");
 }
 
-main();
+void main();

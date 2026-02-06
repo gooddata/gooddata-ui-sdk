@@ -823,7 +823,7 @@ export class CorePivotTableAgImpl extends Component<ICorePivotTableProps, ICoreP
      *
      * @param callback - function to wrap with state guard
      */
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+    // oxlint-disable-next-line @typescript-eslint/no-unsafe-function-type
     private stateBoundCallback = <T extends Function>(callback: T): T => {
         return createStateBoundCallback(callback as any, this.internal, () => this.internal) as unknown as T;
     };

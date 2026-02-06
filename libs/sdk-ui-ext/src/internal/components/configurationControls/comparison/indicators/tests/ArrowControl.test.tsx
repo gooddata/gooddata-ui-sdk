@@ -12,7 +12,7 @@ import { COMPARISON_IS_ARROW_ENABLED_PATH } from "../../ComparisonValuePath.js";
 import { ArrowControl } from "../ArrowControl.js";
 
 vi.mock("../../../CheckboxControl.js", async (importOriginal) => {
-    // eslint-disable-next-line @typescript-eslint/consistent-type-imports
+    // oxlint-disable-next-line @typescript-eslint/consistent-type-imports
     const actual = await importOriginal<typeof import("../../../CheckboxControl.js")>();
     return {
         ...actual,
