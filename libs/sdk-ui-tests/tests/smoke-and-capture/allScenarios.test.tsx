@@ -251,7 +251,7 @@ async function scenarioStoreInsight(scenario: IScenario<any>, def: IInsightDefin
  */
 const PlugVisUnsupported: string[] = [];
 
-describe("all scenarios", () => {
+describe.skip("all scenarios", () => {
     const Scenarios: AllScenariosType[] = allScenarios.flatMap((s): AllScenariosType[] => {
         const testInputs: Array<IScenario<any>> = s.asScenarioList();
 

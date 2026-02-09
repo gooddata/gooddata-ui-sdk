@@ -29,7 +29,7 @@ vi.mock("@gooddata/sdk-ui-charts/internal-tests/CoreFunnelChart", async () => {
     };
 });
 
-describe("FunnelChart", () => {
+describe.skip("FunnelChart", () => {
     const Scenarios: Array<ScenarioAndDescription<IFunnelChartProps>> = funnelChartScenarios.flatMap(
         (group) => group.forTestTypes("api").asScenarioDescAndScenario(),
     );

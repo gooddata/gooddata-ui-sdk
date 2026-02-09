@@ -105,13 +105,13 @@ export function attributeAlias(attribute: IAttribute): string | undefined;
 export class AttributeBuilder {
     // @internal
     constructor(input: AttributeBuilderInput);
-    alias: (alias?: string) => this;
+    alias: (alias?: string | undefined) => this;
     build: () => IAttribute;
     defaultLocalId: () => this;
     displayForm: (ref: ObjRef) => this;
-    localId: (localId?: Identifier) => this;
+    localId: (localId?: string | undefined) => this;
     noAlias: () => this;
-    showAllValues: (showAllValues?: boolean) => this;
+    showAllValues: (showAllValues?: boolean | undefined) => this;
 }
 
 // @public
@@ -517,7 +517,7 @@ export function exportDefinitionTitle(exportDefinition: IExportDefinitionMetadat
 export function exportDefinitionUpdated(exportDefinition: IExportDefinitionMetadataObject): string | undefined;
 
 // @public
-export const factoryNotationFor: (data: any, additionalConversion?: (data: any) => string | undefined) => string;
+export const factoryNotationFor: (data: any, additionalConversion?: ((data: any) => string | undefined) | undefined) => string;
 
 // @public
 export function filterAttributeElements(filter: IPositiveAttributeFilter | INegativeAttributeFilter): IAttributeElements;
@@ -5099,7 +5099,7 @@ export function measureArithmeticOperator(measure: IMeasure): ArithmeticMeasureO
 export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
     // @internal
     constructor(measureOrRef: IMeasure<IMeasureDefinition> | ObjRef);
-    aggregation: (aggregation?: MeasureAggregation) => this;
+    aggregation: (aggregation?: MeasureAggregation | undefined) => this;
     // (undocumented)
     protected buildDefinition(): IMeasureDefinition;
     defaultAggregation: () => this;
@@ -5116,7 +5116,7 @@ export class MeasureBuilder extends MeasureBuilderBase<IMeasureDefinition> {
 export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
     // @internal
     protected constructor();
-    alias: (alias?: string) => this;
+    alias: (alias?: string | undefined) => this;
     // (undocumented)
     build: () => IMeasure<T>;
     protected abstract buildDefinition(): T;
@@ -5124,13 +5124,13 @@ export abstract class MeasureBuilderBase<T extends IMeasureDefinitionType> {
     protected customLocalId: boolean;
     defaultFormat: () => this;
     defaultLocalId: () => this;
-    format: (format?: string) => this;
+    format: (format?: string | undefined) => this;
     protected abstract generateLocalId(): string;
     protected initializeFromExisting(measure: MeasureEnvelope): void;
-    localId: (localId?: Identifier) => this;
+    localId: (localId?: string | undefined) => this;
     noAlias: () => this;
     noTitle: () => this;
-    title: (title?: string) => this;
+    title: (title?: string | undefined) => this;
 }
 
 // @public
@@ -5410,7 +5410,7 @@ export class PoPMeasureBuilder extends MeasureBuilderBase<IPoPMeasureDefinition>
     // (undocumented)
     protected generateLocalId(): string;
     masterMeasure: (measureOrLocalId: MeasureOrLocalId) => this;
-    popAttribute: (popAttrIdOrRef: ObjRef | Identifier) => this;
+    popAttribute: (popAttrIdOrRef: string | ObjRef) => this;
 }
 
 // @public

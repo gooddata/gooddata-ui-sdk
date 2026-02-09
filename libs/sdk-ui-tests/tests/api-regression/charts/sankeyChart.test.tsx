@@ -29,7 +29,7 @@ vi.mock("@gooddata/sdk-ui-charts/internal-tests/CoreSankeyChart", async () => {
     };
 });
 
-describe("SankeyChart", () => {
+describe.skip("SankeyChart", () => {
     const Scenarios: Array<ScenarioAndDescription<ISankeyChartProps>> = sankeyChartScenarios.flatMap(
         (group) => group.forTestTypes("api").asScenarioDescAndScenario(),
     );

@@ -2,6 +2,8 @@
 
 import { defineConfig } from "vitest/config";
 
+// Note: all unit tests which iterate on scenarios are skipped, as neoBackstop is now voting on pre-merge
+
 // eslint-disable-next-line no-restricted-exports
 export default defineConfig({
     test: {

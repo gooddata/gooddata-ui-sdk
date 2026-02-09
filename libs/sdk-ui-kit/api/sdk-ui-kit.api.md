@@ -61,7 +61,6 @@ import { JSX } from 'react/jsx-runtime';
 import { KeyboardEvent as KeyboardEvent_2 } from 'react';
 import { KeyboardEventHandler } from 'react';
 import { LocalIdRef } from '@gooddata/sdk-model';
-import { MemoExoticComponent } from 'react';
 import { MessageDescriptor } from 'react-intl';
 import type { MetricType } from '@gooddata/sdk-model';
 import { Middleware } from '@floating-ui/react';
@@ -106,10 +105,10 @@ export type ActionType = "LinkButton" | "Button" | "Switcher";
 export function activateHeaderMenuItems(items: IHeaderMenuItem[][], ids: Array<string>): IHeaderMenuItem[][];
 
 // @internal (undocumented)
-export function AddButton({ title, isDisabled, onClick, tooltip, tooltipAlignPoints, className, }: IAddButtonProps): JSX.Element;
+export function AddButton({ title, isDisabled, onClick, tooltip, tooltipAlignPoints, className }: IAddButtonProps): JSX.Element;
 
 // @internal (undocumented)
-export function AddGranteeBase({ appliedGrantees, addedGrantees, currentUser, isDirty, currentUserPermissions, sharedObject, previouslyFocusedRef, onCancel, onSubmit, onBackClick, onAddUserOrGroups, onDelete, onGranularGranteeChange, isGranteeShareLoading, }: IAddGranteeBaseProps): JSX.Element;
+export function AddGranteeBase({ appliedGrantees, addedGrantees, currentUser, isDirty, currentUserPermissions, sharedObject, previouslyFocusedRef, onCancel, onSubmit, onBackClick, onAddUserOrGroups, onDelete, onGranularGranteeChange, isGranteeShareLoading }: IAddGranteeBaseProps): JSX.Element;
 
 // @internal (undocumented)
 export type AddMessageType = (message: MessageDescriptor, options?: MessageParameters) => IMessage;
@@ -125,7 +124,7 @@ export type AlignConfig = {
 };
 
 // @internal (undocumented)
-export function alignConfigToAlignPoint({ triggerAlignPoint, overlayAlignPoint, offset, }: AlignConfig): IAlignPoint;
+export function alignConfigToAlignPoint({ triggerAlignPoint, overlayAlignPoint, offset }: AlignConfig): IAlignPoint;
 
 // @internal (undocumented)
 export type Alignment = {
@@ -232,7 +231,7 @@ export class BubbleTrigger<P extends IBubbleTriggerProps> extends PureComponent<
 export const Button: ForwardRefExoticComponent<IButtonProps & RefAttributes<HTMLElement>>;
 
 // @internal (undocumented)
-export const CatalogItemPicker: MemoExoticComponent<(<TAttributePayload = unknown, TMetricPayload = unknown>({ itemTypes, selectionMode, attributeItems, metricItems, groups, maxListHeight, isOpen, isLoading, onBack, onClose, onAdd, onSelect, variant, }: ICatalogItemPickerProps<TAttributePayload, TMetricPayload>) => JSX.Element)>;
+export const CatalogItemPicker: NamedExoticComponent<ICatalogItemPickerProps<unknown, unknown>>;
 
 // @internal
 export type CatalogItemPickerSelectionMode = "single" | "multiple";
@@ -276,13 +275,13 @@ export function ColorPickerPointer(): JSX.Element;
 export function ColorPreview(props: IColorPreviewProps): JSX.Element;
 
 // @internal (undocumented)
-export function CommunityEditionDialog({ headerText, infoText, copyrightText, links, onClose, closeButtonText, }: ICommunityEditionDialogProps): JSX.Element;
+export function CommunityEditionDialog({ headerText, infoText, copyrightText, links, onClose, closeButtonText }: ICommunityEditionDialogProps): JSX.Element;
 
 // @internal (undocumented)
 export function ComponentLabelsProvider({ children, labels }: IComponentLabelsProviderProps): JSX.Element;
 
 // @internal (undocumented)
-export function ComponentTable<TProps extends object>({ Component, columnsBy, rowsBy, baseProps, debug, codeSnippet, cellWidth, cellHeight, align, cellStyle, }: IComponentTableProps<TProps>): JSX.Element;
+export function ComponentTable<TProps extends object>({ Component, columnsBy, rowsBy, baseProps, debug, codeSnippet, cellWidth, cellHeight, align, cellStyle }: IComponentTableProps<TProps>): JSX.Element;
 
 // @internal (undocumented)
 export const ConfirmDialog: NamedExoticComponent<IConfirmDialogBaseProps>;
@@ -347,7 +346,7 @@ export type CurrentUserPermissions = {
 export function CustomizableCheckmark({ className, width, height }: ICustomizableCheckmarkProps): JSX.Element;
 
 // @internal (undocumented)
-export function DateDatasetsListItem({ id, title, isHeader, isSelected, isUnrelated, onClick, }: IDateDatasetsListItemProps): JSX.Element;
+export function DateDatasetsListItem({ id, title, isHeader, isSelected, isUnrelated, onClick }: IDateDatasetsListItemProps): JSX.Element;
 
 // @internal (undocumented)
 export class Datepicker extends PureComponent<IDatePickerOwnProps> {
@@ -377,36 +376,34 @@ export const defaultFocusCheckFn: (element: HTMLElement) => boolean;
 export const defaultThemeMetadataObject: IThemeDefinition;
 
 // @internal (undocumented)
-export function DefaultUiListboxInteractiveItemComponent<T>({ item, isFocused, isSelected, isCompact, onSelect, }: IUiListboxInteractiveItemProps<T>): ReactNode;
+export function DefaultUiListboxInteractiveItemComponent<T>({ item, isFocused, isSelected, isCompact, onSelect }: IUiListboxInteractiveItemProps<T>): ReactNode;
 
 // @internal
 export function DefaultUiListboxStaticItemComponent<T>({ item }: IUiListboxStaticItemProps<T>): ReactNode;
 
 // @internal
-export const DefaultUiMenuContent: MemoExoticComponent<(<T extends IUiMenuItemData = object>({ item, }: {
-item: IUiMenuContentItem<T>;
-}) => ReactElement)>;
+export const DefaultUiMenuContent: NamedExoticComponent<IUiMenuContentProps<object>>;
 
 // @internal (undocumented)
-export function DefaultUiMenuContentItem<T extends IUiMenuItemData = object>({ item, isFocused, }: IUiMenuContentItemProps<T>): ReactNode;
+export function DefaultUiMenuContentItem<T extends IUiMenuItemData = object>({ item, isFocused }: IUiMenuContentItemProps<T>): ReactNode;
 
 // @internal
-export const DefaultUiMenuContentItemWrapper: MemoExoticComponent<(<T extends IUiMenuItemData = object>({ item }: IUiMenuContentItemWrapperProps<T>) => ReactElement)>;
+export const DefaultUiMenuContentItemWrapper: NamedExoticComponent<IUiMenuContentItemWrapperProps<object>>;
 
 // @internal (undocumented)
-export function DefaultUiMenuGroupItem<T extends IUiMenuItemData = object>({ item, }: IUiMenuGroupItemProps<T>): ReactNode;
+export function DefaultUiMenuGroupItem<T extends IUiMenuItemData = object>({ item }: IUiMenuGroupItemProps<T>): ReactNode;
 
 // @internal
 export const DefaultUiMenuHeader: FC;
 
 // @internal (undocumented)
-export function DefaultUiMenuInteractiveItem<T extends IUiMenuItemData = object>({ item, isFocused, }: IUiMenuInteractiveItemProps<T>): ReactNode;
+export function DefaultUiMenuInteractiveItem<T extends IUiMenuItemData = object>({ item, isFocused }: IUiMenuInteractiveItemProps<T>): ReactNode;
 
 // @internal (undocumented)
-export function DefaultUiMenuInteractiveItemWrapper<T extends IUiMenuItemData = object>({ item, }: IUiMenuInteractiveItemWrapperProps<T>): ReactNode;
+export function DefaultUiMenuInteractiveItemWrapper<T extends IUiMenuItemData = object>({ item }: IUiMenuInteractiveItemWrapperProps<T>): ReactNode;
 
 // @internal
-export const DefaultUiMenuStaticItem: MemoExoticComponent<(<T extends IUiMenuItemData = object>({ item }: IUiMenuStaticItemProps<T>) => ReactElement)>;
+export const DefaultUiMenuStaticItem: NamedExoticComponent<IUiMenuStaticItemProps<object>>;
 
 // @internal (undocumented)
 export function DefaultUiTabsAllTabs<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>(_props: IUiTabComponentProps<"AllTabs", TTabProps, TTabActionProps>): JSX.Element | null;
@@ -415,8 +412,10 @@ export function DefaultUiTabsAllTabs<TTabProps extends Record<any, any> = EmptyO
 export const DefaultUiTabsAllTabsButton: <TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>(props: Omit<{
     isOpen: boolean;
     onClick: () => void;
-    ref?: RefObject<HTMLElement>;
-    ariaAttributes?: IDropdownButtonRenderProps["ariaAttributes"];
+    ref?: RefObject<HTMLElement> | undefined;
+    ariaAttributes?: ({
+        role: AriaRole;
+    } & Pick<AriaAttributes, "aria-controls" | "aria-expanded" | "aria-haspopup">) | undefined;
 }, "ref"> & RefAttributes<HTMLElement>) => ReactNode;
 
 // @internal (undocumented)
@@ -426,16 +425,16 @@ export function DefaultUiTabsContainer<TTabProps extends Record<any, any> = Empt
 export function DefaultUiTabsTab<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>({ tab, isSelected, onSelect, isFocused }: IUiTabComponentProps<"Tab", TTabProps, TTabActionProps>): JSX.Element;
 
 // @internal (undocumented)
-export function DefaultUiTabsTabActions<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>({ tab, location, id, tabIndex, isOpen, onToggleOpen, }: IUiTabComponentProps<"TabActions", TTabProps, TTabActionProps>): JSX.Element | null;
+export function DefaultUiTabsTabActions<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>({ tab, location, id, tabIndex, isOpen, onToggleOpen }: IUiTabComponentProps<"TabActions", TTabProps, TTabActionProps>): JSX.Element | null;
 
 // @internal (undocumented)
-export function DefaultUiTabsTabActionsButton<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>({ tab, onClick, ariaAttributes, tabIndex, id, }: IUiTabComponentProps<"TabActionsButton", TTabProps, TTabActionProps>): JSX.Element | null;
+export function DefaultUiTabsTabActionsButton<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>({ tab, onClick, ariaAttributes, tabIndex, id }: IUiTabComponentProps<"TabActionsButton", TTabProps, TTabActionProps>): JSX.Element | null;
 
 // @internal (undocumented)
 export function DefaultUiTabsTabValue<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>({ tab, isSelected }: IUiTabComponentProps<"TabValue", TTabProps, TTabActionProps>): JSX.Element;
 
 // @internal (undocumented)
-export function DefaultUiTreeViewItemComponent<Level>({ item, type, level, isExpanded, isFocused, isSelected, isCompact, onToggle, onSelect, ariaAttributes, }: IUiTreeviewItemProps<Level>): ReactNode;
+export function DefaultUiTreeViewItemComponent<Level>({ item, type, level, isExpanded, isFocused, isSelected, isCompact, onToggle, onSelect, ariaAttributes }: IUiTreeviewItemProps<Level>): ReactNode;
 
 // @internal (undocumented)
 export const DESCRIPTION_PANEL_ALIGN_POINTS: {
@@ -480,10 +479,10 @@ export const DialogBase: NamedExoticComponent<IDialogBaseProps>;
 export function DialogCloseButton(props: IDialogCloseButtonProps): JSX.Element;
 
 // @internal (undocumented)
-export function DialogList({ items, isLoading, className, emptyMessageElement, itemComponent, itemClassName, onItemClick, onItemDelete, }: IDialogListProps): JSX.Element;
+export function DialogList({ items, isLoading, className, emptyMessageElement, itemComponent, itemClassName, onItemClick, onItemDelete }: IDialogListProps): JSX.Element;
 
 // @internal (undocumented)
-export function DialogListHeader({ className, gdIconName, title, buttonTitle, buttonDisabled, buttonTooltipText, onButtonClick, }: IDialogListHeaderProps): JSX.Element;
+export function DialogListHeader({ className, gdIconName, title, buttonTitle, buttonDisabled, buttonTooltipText, onButtonClick }: IDialogListHeaderProps): JSX.Element;
 
 // @internal (undocumented)
 export function DialogListItemBasic({ item, className, onClick, onDelete }: IDialogListItemComponentProps): JSX.Element;
@@ -495,22 +494,22 @@ export type DialogListItemComponent<T extends IDialogListItem = IDialogListItem>
 export type DialogModeType = "ShareGrantee" | "AddGrantee";
 
 // @internal (undocumented)
-export function DocumentHeader({ pageTitle, brandTitle, appleTouchIconUrl, faviconUrl, }: IDocumentHeaderProps): null;
+export function DocumentHeader({ pageTitle, brandTitle, appleTouchIconUrl, faviconUrl }: IDocumentHeaderProps): null;
 
 // @internal (undocumented)
 export function DomainHomepageLink({ onClick }: IDomainHomepageLinkProps): JSX.Element;
 
 // @internal (undocumented)
-export function Dropdown({ isOpen: isOpenProp, onToggle, className, openOnInit, closeOnParentScroll, closeOnMouseDrag, closeOnOutsideClick, overlayPositionType, alignPoints, overlayZIndex, ignoreClicksOnByClass, renderBody, renderButton, onOpenStateChanged, fullscreenOnMobile, enableEventPropagation, closeOnEscape, autofocusOnOpen, initialFocus, returnFocusTo, accessibilityConfig, shouldTrapFocus, }: IDropdownProps): JSX.Element;
+export function Dropdown({ isOpen: isOpenProp, onToggle, className, openOnInit, closeOnParentScroll, closeOnMouseDrag, closeOnOutsideClick, overlayPositionType, alignPoints, overlayZIndex, ignoreClicksOnByClass, renderBody, renderButton, onOpenStateChanged, fullscreenOnMobile, enableEventPropagation, closeOnEscape, autofocusOnOpen, initialFocus, returnFocusTo, accessibilityConfig, shouldTrapFocus }: IDropdownProps): JSX.Element;
 
 // @internal (undocumented)
-export function DropdownButton({ id, className, accessibilityConfig, value, title, disabled, isOpen, isSmall, iconLeft, isFullWidth, onClick, children, dropdownId, buttonRef, }: IDropdownButtonProps): JSX.Element;
+export function DropdownButton({ id, className, accessibilityConfig, value, title, disabled, isOpen, isSmall, iconLeft, isFullWidth, onClick, children, dropdownId, buttonRef }: IDropdownButtonProps): JSX.Element;
 
 // @internal (undocumented)
 export function DropdownInvertableSelect<T>(props: IDropdownInvertableSelectProps<T>): JSX.Element;
 
 // @internal
-export function DropdownList<T>({ id, title, className, tabsClassName, width, height, maxHeight, onKeyDownSelect, onKeyDownConfirm, isMobile, isLoading, items, itemsCount, itemHeight, containerPadding, mobileItemHeight, showSearch, disableAutofocus, searchString, searchLabel, searchPlaceholder, searchFieldSize, onSearch, showTabs, tabs, selectedTabId, onTabSelect, renderNoData, footer, closeDropdown, accessibilityConfig, renderItem, itemHeightGetter, itemTitleGetter, loadNextPage, hasNextPage, skeletonItemsCount, shouldLoadNextPage, isNextPageLoading, SkeletonItem, onScroll, scrollToItem, scrollToItemKeyExtractor, }: IDropdownListProps<T>): ReactElement;
+export function DropdownList<T>({ id, title, className, tabsClassName, width, height, maxHeight, onKeyDownSelect, onKeyDownConfirm, isMobile, isLoading, items, itemsCount, itemHeight, containerPadding, mobileItemHeight, showSearch, disableAutofocus, searchString, searchLabel, searchPlaceholder, searchFieldSize, onSearch, showTabs, tabs, selectedTabId, onTabSelect, renderNoData, footer, closeDropdown, accessibilityConfig, renderItem, itemHeightGetter, itemTitleGetter, loadNextPage, hasNextPage, skeletonItemsCount, shouldLoadNextPage, isNextPageLoading, SkeletonItem, onScroll, scrollToItem, scrollToItemKeyExtractor }: IDropdownListProps<T>): ReactElement;
 
 // @internal (undocumented)
 export function DropdownTabs({ tabs, selectedTabId, onTabSelect, className }: IDropdownTagsProps): JSX.Element;
@@ -522,7 +521,7 @@ export const EditableLabel: ForwardRefExoticComponent<IEditableLabelProps & RefA
 export function EllipsisText({ text, maxLines }: IEllipsisTextProps): JSX.Element;
 
 // @internal (undocumented)
-export function EmbedInsightDialogBase({ code, propertiesLink, integrationDocLink, embedTab, embedTypeOptions, openSaveInsightDialog, onClose, onCopyCode, onOptionsChange, onTabChange, showWebComponentsTab, }: IEmbedInsightDialogBaseProps): JSX.Element;
+export function EmbedInsightDialogBase({ code, propertiesLink, integrationDocLink, embedTab, embedTypeOptions, openSaveInsightDialog, onClose, onCopyCode, onOptionsChange, onTabChange, showWebComponentsTab }: IEmbedInsightDialogBaseProps): JSX.Element;
 
 // @internal (undocumented)
 export type EmbedOptionsType = IReactOptions | IWebComponentsOptions;
@@ -551,7 +550,7 @@ export const ExportDialogBase: NamedExoticComponent<IExportDialogBaseProps>;
 export const ExportTabularPdfDialog: NamedExoticComponent<IExportTabularPdfDialogProps>;
 
 // @internal (undocumented)
-export function FilterGroupItem({ title, subtitle, selectedItemsCount, totalItemsCount, showSelectionCount, isOpen, isLoading, isLoaded, isError, icon, titleExtension, onClick, buttonRef, dropdownId, disabled, }: IFilterGroupItemProps): JSX.Element;
+export function FilterGroupItem({ title, subtitle, selectedItemsCount, totalItemsCount, showSelectionCount, isOpen, isLoading, isLoaded, isError, icon, titleExtension, onClick, buttonRef, dropdownId, disabled }: IFilterGroupItemProps): JSX.Element;
 
 // @internal (undocumented)
 export const FilterLabel: NamedExoticComponent<IFilterLabelProps>;
@@ -652,8 +651,8 @@ export function generateSupportUrl(projectId?: string, sessionId?: string, userE
 export const getClosestFocusableSibling: <T extends IUiMenuItemData = object>(args: {
     items: IUiMenuItem<T>[];
     isItemFocusable: (item: IUiMenuItem<T>) => boolean;
-    itemId?: string;
-    direction: "forward" | "backward";
+    itemId?: string | undefined;
+    direction: "backward" | "forward";
 }) => IUiMenuItem<T> | undefined;
 
 // @internal
@@ -669,14 +668,14 @@ export function getDateTimeConfig(date: string, options?: IDateTimeConfigOptions
 export const getDefaultEmbedTypeOptions: (embedType: EmbedType) => EmbedOptionsType;
 
 // @internal
-export const getFocusableElements: (element?: HTMLElement | null, includeHidden?: boolean) => {
+export const getFocusableElements: (element?: HTMLElement | null | undefined, includeHidden?: boolean) => {
     focusableElements: HTMLElement[];
     firstElement: HTMLElement;
     lastElement: HTMLElement;
 };
 
 // @internal (undocumented)
-export const getGranteeItemTestId: (grantee: GranteeItem, prefix?: "option") => string;
+export const getGranteeItemTestId: (grantee: GranteeItem, prefix?: "option" | undefined) => string;
 
 // @internal (undocumented)
 export const getHeightWithUnitsForEmbedCode: (codeOption: EmbedOptionsType) => string | number;
@@ -691,7 +690,7 @@ export const getItem: <T extends IUiMenuItemData = object>(items: IUiMenuItem<T>
 export const getItemInteractiveParent: <T extends IUiMenuItemData = object>(items: IUiMenuItem<T>[], itemId: string) => IUiMenuInteractiveItem<T> | undefined;
 
 // @internal
-export const getItemsByInteractiveParent: <T extends IUiMenuItemData = object>(items: IUiMenuItem<T>[], parentId?: string) => IUiMenuItem<T>[] | undefined;
+export const getItemsByInteractiveParent: <T extends IUiMenuItemData = object>(items: IUiMenuItem<T>[], parentId?: string | undefined) => IUiMenuItem<T>[] | undefined;
 
 // @internal (undocumented)
 export const getNextFocusableElement: (initialElement: HTMLElement | undefined, focusableElements: HTMLElement[], direction: NavigationDirection) => HTMLElement | undefined;
@@ -750,7 +749,7 @@ export const GOODSTRAP_SCROLLED_EVENT = "goodstrap.scrolled";
 export type GranteeItem = IGranteeUser | IGranteeInactiveOwner | IGranteeGroup | IGranteeGroupAll | IGranularGranteeUser | IGranularGranteeGroup | IGranteeRules;
 
 // @internal (undocumented)
-export function GranteeItemComponent({ grantee, mode, currentUserPermissions, isSharedObjectLocked, isGranteeShareLoading, onDelete, onChange, }: IGranteeItemProps): JSX.Element | null;
+export function GranteeItemComponent({ grantee, mode, currentUserPermissions, isSharedObjectLocked, isGranteeShareLoading, onDelete, onChange }: IGranteeItemProps): JSX.Element | null;
 
 // @internal (undocumented)
 export type GranteeStatus = "Inactive" | "Active";
@@ -1532,7 +1531,7 @@ export function IconBullet({ className, width, height, color, ariaHidden }: IIco
 export function IconBurgerMenu({ color, className, width, height }: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconChatBubble({ color, className, width, height, ariaHidden, }: IIconProps): JSX.Element;
+export function IconChatBubble({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
 
 // @internal (undocumented)
 export function IconClose({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
@@ -1743,7 +1742,7 @@ export function IconMetric({ color, className, width, height, ariaHidden }: IIco
 export function IconMinimize({ color, className, width, height }: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconNewVisualization({ color, className, width, height, ariaHidden, }: IIconProps): JSX.Element;
+export function IconNewVisualization({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
 
 // @internal (undocumented)
 export function IconOrigin({ color, className, width, height }: IIconProps): JSX.Element;
@@ -1764,7 +1763,7 @@ export function IconProgress({ color, className, width, height }: IIconProps): J
 export function IconPyramid({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconQuestionMark({ color, className, width, height, ariaHidden, }: IIconProps): JSX.Element;
+export function IconQuestionMark({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
 
 // @internal (undocumented)
 export function IconRefresh({ color, className, width, height }: IIconProps): JSX.Element;
@@ -1839,10 +1838,10 @@ export type IconType = "brain" | "brainDisabled" | "check" | "checkCircle" | "pl
 export function IconUndo({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconUser({ color, backgroundColor, className, width, height, }: IUserIconProps): JSX.Element;
+export function IconUser({ color, backgroundColor, className, width, height }: IUserIconProps): JSX.Element;
 
 // @internal (undocumented)
-export function IconUserGroup({ color, backgroundColor, className, width, height, }: IUserGroupIconProps): JSX.Element;
+export function IconUserGroup({ color, backgroundColor, className, width, height }: IUserGroupIconProps): JSX.Element;
 
 // @internal (undocumented)
 export function IconVisualizationSwitcher({ color, className, width, height }: IIconProps): JSX.Element;
@@ -4273,7 +4272,7 @@ export class Input extends PureComponent<IInputPureProps, IInputState> {
     // (undocumented)
     inputNodeRef: InputPure | null;
     // (undocumented)
-    onChange: (value: string | number, e?: ChangeEvent<HTMLInputElement>) => void;
+    onChange: (value: string | number, e?: ChangeEvent<HTMLInputElement> | undefined) => void;
     // (undocumented)
     render(): JSX.Element;
     // (undocumented)
@@ -4329,9 +4328,9 @@ export class InputPure extends PureComponent<IInputPureProps> implements IDomNat
     // (undocumented)
     onChange: (e: ChangeEvent<HTMLInputElement>) => void;
     // (undocumented)
-    onClear: (e?: ChangeEvent<HTMLInputElement>) => void;
+    onClear: (e?: ChangeEvent<HTMLInputElement> | undefined) => void;
     // (undocumented)
-    onKeyPress: (e: KeyboardEvent_2) => void;
+    onKeyPress: (e: KeyboardEvent_2<Element>) => void;
     // (undocumented)
     render(): JSX.Element;
     // (undocumented)
@@ -4357,10 +4356,10 @@ export const InputWithNumberFormat: NamedExoticComponent<IInputWithNumberFormatP
 export type InsightCodeType = "definition" | "reference";
 
 // @internal (undocumented)
-export function InsightIcon({ visualizationUrl, iconProps, }: IInsightIconProps): ReturnType<FC<IIconProps>> | null;
+export function InsightIcon({ visualizationUrl, iconProps }: IInsightIconProps): ReturnType<FC<IIconProps>> | null;
 
 // @internal (undocumented)
-export function InsightListItem({ title, description, updated, type, isSelected, isLoading, filters, separators, LoadingComponent, onClick, onDescriptionPanelOpen, showDescriptionPanel, useRichText, useReferences, richTextExecConfig, width, isLocked, onDelete, metadataTimeZone, }: IInsightListItemProps): JSX.Element;
+export function InsightListItem({ title, description, updated, type, isSelected, isLoading, filters, separators, LoadingComponent, onClick, onDescriptionPanelOpen, showDescriptionPanel, useRichText, useReferences, richTextExecConfig, width, isLocked, onDelete, metadataTimeZone }: IInsightListItemProps): JSX.Element;
 
 // @internal (undocumented)
 export function InsightListItemDate({ config }: IInsightListItemDateProps): JSX.Element;
@@ -4382,22 +4381,22 @@ export interface INumericInputProps {
 export function InvertableSelect<T>(props: IInvertableSelectProps<T>): JSX.Element;
 
 // @internal (undocumented)
-export function InvertableSelectAllCheckbox({ isVisible, checked, onToggle, onApplyButtonClick, isApplyDisabled, isFiltered, totalItemsCount, isPartialSelection, }: IInvertableSelectAllCheckboxProps): JSX.Element | null;
+export function InvertableSelectAllCheckbox({ isVisible, checked, onToggle, onApplyButtonClick, isApplyDisabled, isFiltered, totalItemsCount, isPartialSelection }: IInvertableSelectAllCheckboxProps): JSX.Element | null;
 
 // @internal (undocumented)
-export function InvertableSelectItem({ title, onClick, onMouseOver, onMouseOut, isSelected, onOnly, renderOnly, renderRight, icon, isDisabled, accessibilityConfig, }: IInvertableSelectItem): JSX.Element;
+export function InvertableSelectItem({ title, onClick, onMouseOver, onMouseOut, isSelected, onOnly, renderOnly, renderRight, icon, isDisabled, accessibilityConfig }: IInvertableSelectItem): JSX.Element;
 
 // @internal (undocumented)
-export function InvertableSelectLimitWarning({ limit, selectedItemsCount, }: IInvertableSelectLimitWarningProps): JSX.Element;
+export function InvertableSelectLimitWarning({ limit, selectedItemsCount }: IInvertableSelectLimitWarningProps): JSX.Element;
 
 // @internal (undocumented)
-export function InvertableSelectSearchBar({ className, isSmall, searchString, onSearch, onEscKeyPress, searchPlaceholder, }: IInvertableSelectSearchBarProps): JSX.Element;
+export function InvertableSelectSearchBar({ className, isSmall, searchString, onSearch, onEscKeyPress, searchPlaceholder }: IInvertableSelectSearchBarProps): JSX.Element;
 
 // @internal (undocumented)
-export function InvertableSelectStatus<T>({ selectedItems, getItemTitle, isInverted, }: IInvertableSelectStatusProps<T>): JSX.Element;
+export function InvertableSelectStatus<T>({ selectedItems, getItemTitle, isInverted }: IInvertableSelectStatusProps<T>): JSX.Element;
 
 // @internal (undocumented)
-export function InvertableSelectStatusBar<T>({ className, selectedItems, getItemTitle, isInverted, selectedItemsLimit, showSelectionStatus, }: IInvertableSelectStatusBarProps<T>): JSX.Element;
+export function InvertableSelectStatusBar<T>({ className, selectedItems, getItemTitle, isInverted, selectedItemsLimit, showSelectionStatus }: IInvertableSelectStatusBarProps<T>): JSX.Element;
 
 // @internal (undocumented)
 export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualisedProps<T>): JSX.Element;
@@ -4767,10 +4766,10 @@ export interface IRowsIconProps extends IIconProps {
 }
 
 // @internal
-export const isActionKey: (event: KeyboardEvent_2) => boolean;
+export const isActionKey: (event: KeyboardEvent_2<Element>) => boolean;
 
 // @internal
-export const isArrowKey: (event: KeyboardEvent_2) => boolean;
+export const isArrowKey: (event: KeyboardEvent_2<Element>) => boolean;
 
 // @internal (undocumented)
 export interface IScopedIdStoreValue {
@@ -4784,7 +4783,7 @@ export interface IScopedIdStoreValue {
 }
 
 // @internal
-export const isCopyKey: (event: KeyboardEvent_2) => boolean;
+export const isCopyKey: (event: KeyboardEvent_2<Element>) => boolean;
 
 // @internal (undocumented)
 export interface IScrollableItemProps {
@@ -4842,13 +4841,13 @@ export interface ISearchResultsAnnouncementProps {
 }
 
 // @internal (undocumented)
-export const isElementFocusable: (element?: HTMLElement | null, includeHidden?: boolean) => boolean | undefined;
+export const isElementFocusable: (element?: HTMLElement | null | undefined, includeHidden?: boolean) => boolean | undefined;
 
 // @internal (undocumented)
 export type isElementInvisibleType = (element: HTMLElement, container: HTMLElement) => boolean;
 
 // @internal
-export const isEnterKey: (event: KeyboardEvent_2) => boolean;
+export const isEnterKey: (event: KeyboardEvent_2<Element>) => boolean;
 
 // @internal (undocumented)
 export interface ISeparatorLineProps {
@@ -4866,7 +4865,7 @@ export interface ISeparatorLineProps {
 }
 
 // @internal
-export const isEscapeKey: (event: KeyboardEvent_2) => boolean;
+export const isEscapeKey: (event: KeyboardEvent_2<Element>) => boolean;
 
 // @internal (undocumented)
 export interface ISettingItem {
@@ -5244,10 +5243,10 @@ export interface ISpinnerProps {
 export function isSeparator(item: unknown): item is typeof separatorStaticItem;
 
 // @internal
-export const isSpaceKey: (event: KeyboardEvent_2) => boolean;
+export const isSpaceKey: (event: KeyboardEvent_2<Element>) => boolean;
 
 // @internal
-export const isTabKey: (event: KeyboardEvent_2) => boolean;
+export const isTabKey: (event: KeyboardEvent_2<Element>) => boolean;
 
 // @internal
 export interface IStandardPresetDefinition {
@@ -5358,7 +5357,7 @@ export interface IStylingSettingWidgetProps<T extends StylingPickerItemContent> 
 }
 
 // @internal
-export const isTypingKey: (event: KeyboardEvent_2) => boolean;
+export const isTypingKey: (event: KeyboardEvent_2<Element>) => boolean;
 
 // @internal (undocumented)
 export interface ISubMenuProps extends IMenuStateConfig, Partial<IMenuPositionConfig> {
@@ -5439,7 +5438,7 @@ export interface ITabsState {
 }
 
 // @internal (undocumented)
-export function Item({ checked, subMenu, disabled, className, children, style, onClick, }: IItemProps): JSX.Element;
+export function Item({ checked, subMenu, disabled, className, children, style, onClick }: IItemProps): JSX.Element;
 
 // @internal
 export interface ITemplateDefinition {
@@ -5452,7 +5451,7 @@ export interface ITemplateDefinition {
 }
 
 // @internal (undocumented)
-export function ItemsWrapper({ smallItemsSpacing, className, children, style, wrapperRef, }: IItemsWrapperProps): JSX.Element;
+export function ItemsWrapper({ smallItemsSpacing, className, children, style, wrapperRef }: IItemsWrapperProps): JSX.Element;
 
 // @internal (undocumented)
 export interface ITextAreaWithSubmitProps {
@@ -7272,10 +7271,10 @@ export interface IZoomContextState {
 export type LabelSize = "small" | "normal";
 
 // @internal @deprecated (undocumented)
-export function LegacyInvertableList<T>({ className, filteredItemsCount, getItemKey, height, isInverted, isLoading, isLoadingClass: IsLoadingClass, isMobile, itemHeight, items, itemsCount, limitHitWarningClass: LimitHitWarningClass, listItemClass, maxSelectionSize, noItemsFound, noItemsFoundClass: NoItemsFoundClass, onRangeChange, onSearch, onSelect, searchPlaceholder, searchString, selection, showSearchField, smallSearch, tagName, width, actionsAsCheckboxes, selectAllCheckbox, rowItem, isSearchFieldAutoFocused, }: ILegacyInvertableListProps<T>): JSX.Element;
+export function LegacyInvertableList<T>({ className, filteredItemsCount, getItemKey, height, isInverted, isLoading, isLoadingClass: IsLoadingClass, isMobile, itemHeight, items, itemsCount, limitHitWarningClass: LimitHitWarningClass, listItemClass, maxSelectionSize, noItemsFound, noItemsFoundClass: NoItemsFoundClass, onRangeChange, onSearch, onSelect, searchPlaceholder, searchString, selection, showSearchField, smallSearch, tagName, width, actionsAsCheckboxes, selectAllCheckbox, rowItem, isSearchFieldAutoFocused }: ILegacyInvertableListProps<T>): JSX.Element;
 
 // @internal @deprecated (undocumented)
-export function LegacyList({ className, onScroll, onScrollStart, onSelect, width, height, itemHeight, itemHeightGetter, compensateBorder, scrollToSelected, dataSource, rowItem, }: ILegacyListProps): JSX.Element;
+export function LegacyList({ className, onScroll, onScrollStart, onSelect, width, height, itemHeight, itemHeightGetter, compensateBorder, scrollToSelected, dataSource, rowItem }: ILegacyListProps): JSX.Element;
 
 // @internal @deprecated (undocumented)
 export function LegacyListItem<T>({ item, listItemClass }: ILegacyListItemProps<T>): ReactElement;
@@ -7290,13 +7289,13 @@ export const LegacyMultiSelectListItem: NamedExoticComponent<ILegacyMultiSelectL
 export function LegacySingleSelectList<T>(props: ILegacySingleSelectListProps<T>): ReactElement;
 
 // @internal @deprecated (undocumented)
-export function LegacySingleSelectListItem({ source, selected, onSelect, onMouseOver, onMouseOut, }: ILegacySingleSelectListItemProps): ReactElement;
+export function LegacySingleSelectListItem({ source, selected, onSelect, onMouseOver, onMouseOut }: ILegacySingleSelectListItemProps): ReactElement;
 
 // @internal (undocumented)
 export type LevelTypesUnion<Levels extends unknown[]> = Levels[number];
 
 // @internal (undocumented)
-export function List<T>({ id, className, compensateBorder, width, height, maxHeight, items, itemsCount, itemHeight, itemHeightGetter, maxVisibleItemsCount, renderItem, onScrollStart, onScrollEnd, scrollToItem, scrollDirection, accessibilityConfig, }: IListProps<T>): ReactElement;
+export function List<T>({ id, className, compensateBorder, width, height, maxHeight, items, itemsCount, itemHeight, itemHeightGetter, maxVisibleItemsCount, renderItem, onScrollStart, onScrollEnd, scrollToItem, scrollDirection, accessibilityConfig }: IListProps<T>): ReactElement;
 
 // @internal (undocumented)
 export const LOADING_HEIGHT = 100;
@@ -7311,57 +7310,57 @@ export function LoadingMask({ className, height, width, size }: ILoadingMaskProp
 export function LoadingSpinner({ className, color }: ILoadingSpinner): JSX.Element;
 
 // @internal (undocumented)
-export function LocaleSetting({ isChecked, selectedLocal, onChecked, onLocaleSelected, }: ILocaleSettingProps): JSX.Element;
+export function LocaleSetting({ isChecked, selectedLocal, onChecked, onLocaleSelected }: ILocaleSettingProps): JSX.Element;
 
 // @internal (undocumented)
-export const makeHorizontalKeyboardNavigation: <T extends KeyboardEvent_2 = KeyboardEvent_2<Element>>(handlers: {
-    onUnhandledKeyDown?: ((event: T) => void) | undefined;
-    onFocusPrevious?: ((event: T) => void) | undefined;
-    onFocusNext?: ((event: T) => void) | undefined;
+export const makeHorizontalKeyboardNavigation: <T extends KeyboardEvent_2<Element> = KeyboardEvent_2<Element>>(handlers: {
     onFocusFirst?: ((event: T) => void) | undefined;
     onFocusLast?: ((event: T) => void) | undefined;
+    onFocusNext?: ((event: T) => void) | undefined;
+    onFocusPrevious?: ((event: T) => void) | undefined;
+    onUnhandledKeyDown?: ((event: T) => void) | undefined;
 }, options?: IHandleActionOptions) => (event: T) => void;
 
 // @internal (undocumented)
 export const makeKeyboardNavigation: <ActionKeysMap extends {
-    [action: string]: Array<{
+    [action: string]: {
         code: string | string[];
-        modifiers?: IModifier[];
-    }>;
-}>(actionKeysMap: ActionKeysMap) => <T extends KeyboardEvent_2 = KeyboardEvent_2>(handlers: { [action in keyof ActionKeysMap | "onUnhandledKeyDown"]?: (event: T) => void; }, options?: IHandleActionOptions) => (event: T) => void;
+        modifiers?: IModifier[] | undefined;
+    }[];
+}>(actionKeysMap: ActionKeysMap) => <T extends KeyboardEvent_2<Element> = KeyboardEvent_2<Element>>(handlers: { [action in "onUnhandledKeyDown" | keyof ActionKeysMap]?: ((event: T) => void) | undefined; }, options?: IHandleActionOptions) => (event: T) => void;
 
 // @internal (undocumented)
-export const makeLinearKeyboardNavigation: <T extends KeyboardEvent_2 = KeyboardEvent_2<Element>>(handlers: {
+export const makeLinearKeyboardNavigation: <T extends KeyboardEvent_2<Element> = KeyboardEvent_2<Element>>(handlers: {
     onClose?: ((event: T) => void) | undefined;
-    onSelect?: ((event: T) => void) | undefined;
-    onUnhandledKeyDown?: ((event: T) => void) | undefined;
-    onFocusPrevious?: ((event: T) => void) | undefined;
-    onFocusNext?: ((event: T) => void) | undefined;
     onFocusFirst?: ((event: T) => void) | undefined;
     onFocusLast?: ((event: T) => void) | undefined;
+    onFocusNext?: ((event: T) => void) | undefined;
+    onFocusPrevious?: ((event: T) => void) | undefined;
+    onSelect?: ((event: T) => void) | undefined;
+    onUnhandledKeyDown?: ((event: T) => void) | undefined;
 }, options?: IHandleActionOptions) => (event: T) => void;
 
 // @internal (undocumented)
-export const makeMenuKeyboardNavigation: <T extends KeyboardEvent_2 = KeyboardEvent_2<Element>>(handlers: {
+export const makeMenuKeyboardNavigation: <T extends KeyboardEvent_2<Element> = KeyboardEvent_2<Element>>(handlers: {
     onClose?: ((event: T) => void) | undefined;
-    onSelect?: ((event: T) => void) | undefined;
-    onUnhandledKeyDown?: ((event: T) => void) | undefined;
-    onFocusPrevious?: ((event: T) => void) | undefined;
-    onFocusNext?: ((event: T) => void) | undefined;
-    onFocusFirst?: ((event: T) => void) | undefined;
-    onFocusLast?: ((event: T) => void) | undefined;
     onEnterLevel?: ((event: T) => void) | undefined;
+    onFocusFirst?: ((event: T) => void) | undefined;
+    onFocusLast?: ((event: T) => void) | undefined;
+    onFocusNext?: ((event: T) => void) | undefined;
+    onFocusPrevious?: ((event: T) => void) | undefined;
     onLeaveLevel?: ((event: T) => void) | undefined;
+    onSelect?: ((event: T) => void) | undefined;
+    onUnhandledKeyDown?: ((event: T) => void) | undefined;
 }, options?: IHandleActionOptions) => (event: T) => void;
 
 // @internal (undocumented)
-export const makeTabsKeyboardNavigation: <T extends KeyboardEvent_2 = KeyboardEvent_2<Element>>(handlers: {
-    onSelect?: ((event: T) => void) | undefined;
-    onUnhandledKeyDown?: ((event: T) => void) | undefined;
-    onFocusPrevious?: ((event: T) => void) | undefined;
-    onFocusNext?: ((event: T) => void) | undefined;
+export const makeTabsKeyboardNavigation: <T extends KeyboardEvent_2<Element> = KeyboardEvent_2<Element>>(handlers: {
     onFocusFirst?: ((event: T) => void) | undefined;
     onFocusLast?: ((event: T) => void) | undefined;
+    onFocusNext?: ((event: T) => void) | undefined;
+    onFocusPrevious?: ((event: T) => void) | undefined;
+    onSelect?: ((event: T) => void) | undefined;
+    onUnhandledKeyDown?: ((event: T) => void) | undefined;
 }, options?: IHandleActionOptions) => (event: T) => void;
 
 // @internal (undocumented)
@@ -7373,13 +7372,13 @@ export type MeasureSortSuggestion = {
 } & IMeasureSortTarget;
 
 // @internal (undocumented)
-export function Menu({ alignment, children, closeOnScroll, defaultOpened, offset, onOpenedChange, openAction, opened, portalTarget, spacing, toggler, togglerWrapperClassName, }: IMenuProps): JSX.Element;
+export function Menu({ alignment, children, closeOnScroll, defaultOpened, offset, onOpenedChange, openAction, opened, portalTarget, spacing, toggler, togglerWrapperClassName }: IMenuProps): JSX.Element;
 
 // @internal (undocumented)
 export type MenuAlignment = ["bottom", "right"] | ["bottom", "left"] | ["top", "right"] | ["top", "left"] | ["right", "top"] | ["right", "bottom"] | ["left", "top"] | ["left", "bottom"];
 
 // @internal (undocumented)
-export function Message({ onClose, type, children, className, contrast, intensive, dataTestId, }: IMessageProps): JSX.Element;
+export function Message({ onClose, type, children, className, contrast, intensive, dataTestId }: IMessageProps): JSX.Element;
 
 // @internal (undocumented)
 export type MessageParameters = Pick<IMessageDefinition, "duration" | "intensive" | "values" | "showMore" | "showLess" | "errorDetail" | "id">;
@@ -7397,7 +7396,7 @@ export function MetadataList({ title, list }: IMetadataListProps): JSX.Element;
 export const modifierNegator: "!";
 
 // @internal (undocumented)
-export function MultiSelectList<T>({ isMobile, width, height, items, itemHeight, itemsCount, onScrollEnd, renderItem, selectedItems, listClassNames, onSelectAll, onSelectNone, isInverted, isSearching, isSelected, filteredItemsCount, selectAllCheckbox, tagName, }: IMultiSelectListProps<T>): JSX.Element;
+export function MultiSelectList<T>({ isMobile, width, height, items, itemHeight, itemsCount, onScrollEnd, renderItem, selectedItems, listClassNames, onSelectAll, onSelectNone, isInverted, isSearching, isSelected, filteredItemsCount, selectAllCheckbox, tagName }: IMultiSelectListProps<T>): JSX.Element;
 
 // @internal (undocumented)
 export const MultiSelectListItem: NamedExoticComponent<IMultiSelectListItemProps>;
@@ -7516,13 +7515,13 @@ export enum PresetType {
 export const programaticFocusManagement: (element: HTMLElement) => void;
 
 // @internal (undocumented)
-export function propCombinationsFor<TProps extends object>(baseProps: TProps): <TProp extends keyof TProps>(prop: TProp, values: TProps[TProp][], additionalProps?: Partial<TProps>) => IPropCombination<TProps, TProp>;
+export function propCombinationsFor<TProps extends object>(baseProps: TProps): <TProp extends keyof TProps>(prop: TProp, values: TProps[TProp][], additionalProps?: Partial<TProps> | undefined) => IPropCombination<TProps, TProp>;
 
 // @internal (undocumented)
 export const recommendedHeader: IDateDatasetHeader;
 
 // @internal
-export function Recurrence({ label, recurrenceType, inheritRecurrenceType, startDate, cronValue, cronPlaceholder, cronDescription, timezone, onRepeatTypeChange, onCronValueChange, allowHourlyRecurrence, showTimezoneInOccurrence, showRepeatTypeDescription, showInheritValue, isWhiteLabeled, weekStart, onRecurrenceDropdownOpen, closeOnParentScroll, }: IRecurrenceProps): JSX.Element;
+export function Recurrence({ label, recurrenceType, inheritRecurrenceType, startDate, cronValue, cronPlaceholder, cronDescription, timezone, onRepeatTypeChange, onCronValueChange, allowHourlyRecurrence, showTimezoneInOccurrence, showRepeatTypeDescription, showInheritValue, isWhiteLabeled, weekStart, onRecurrenceDropdownOpen, closeOnParentScroll }: IRecurrenceProps): JSX.Element;
 
 // @internal
 export const RECURRENCE_TYPES: {
@@ -7550,7 +7549,7 @@ export const relatedHeader: IDateDatasetHeader;
 export function resolveAnchor(anchor: IFloatingAnchor): HTMLElement | VirtualElement | null;
 
 // @internal (undocumented)
-export const resolveRef: (ref: string | RefObject<HTMLElement | null> | (() => HTMLElement | null) | undefined | null) => HTMLElement | null;
+export const resolveRef: (ref: string | RefObject<HTMLElement | null> | (() => HTMLElement | null) | null | undefined) => HTMLElement | null;
 
 // @internal (undocumented)
 export const ResponsiveContextProvider: Provider<IResponsiveConfig>;
@@ -7559,7 +7558,7 @@ export const ResponsiveContextProvider: Provider<IResponsiveConfig>;
 export type ResponsiveScreenType = "xxl" | "xl" | "lg" | "md" | "sm" | "xs";
 
 // @internal (undocumented)
-export function ResponsiveText({ tagName: Tag, tagClassName, title, children, windowResizeRefreshDelay, window: windowInstance, minFontSize, includeHeightCheck, }: IResponsiveTextProps): JSX.Element;
+export function ResponsiveText({ tagName: Tag, tagClassName, title, children, windowResizeRefreshDelay, window: windowInstance, minFontSize, includeHeightCheck }: IResponsiveTextProps): JSX.Element;
 
 // @internal (undocumented)
 export function RichText(props: IRichTextProps): JSX.Element;
@@ -7577,7 +7576,7 @@ export const ScopedIdStore: IContextStore<IScopedIdStoreValue>;
 export function ScreenReaderToast(): JSX.Element;
 
 // @internal (undocumented)
-export function ScrollableItem({ scrollIntoView, bottomMargin, isElementInvisibleCheck, className, children, onItemScrolled, tagName: TagName, }: IScrollableItemProps): JSX.Element;
+export function ScrollableItem({ scrollIntoView, bottomMargin, isElementInvisibleCheck, className, children, onItemScrolled, tagName: TagName }: IScrollableItemProps): JSX.Element;
 
 // @internal (undocumented)
 export const ScrollablePanel: ForwardRefExoticComponent<IScrollablePanelProps & RefAttributes<HTMLDivElement | undefined>>;
@@ -7587,11 +7586,11 @@ export type ScrollCallback = (visibleRowsStartIndex: number, visibleRowsEndIndex
 
 // @internal (undocumented)
 export const scrollContextDefault: {
-    scrollIntoView: (_element: HTMLElement, _bottomMargin?: number, _isElementInvisibleCheck?: isElementInvisibleType) => void;
+    scrollIntoView: (_element: HTMLElement, _bottomMargin?: number | undefined, _isElementInvisibleCheck?: isElementInvisibleType | undefined) => void;
 };
 
 // @internal (undocumented)
-export function ScrollGradient({ backgroundColor, size, className, contentClassName, onScroll, children, }: IScrollGradientProps): JSX.Element;
+export function ScrollGradient({ backgroundColor, size, className, contentClassName, onScroll, children }: IScrollGradientProps): JSX.Element;
 
 // @internal (undocumented)
 export const SELECT_ITEM_ACTION = "selectItem";
@@ -7606,7 +7605,7 @@ export type SelectedTime = {
 export function Separator(props: HTMLAttributes<HTMLDivElement>): JSX.Element;
 
 // @internal (undocumented)
-export function SeparatorLine({ mT: marginTop, mR: marginRight, mB: marginBottom, mL: marginLeft, pT: paddingTop, pR: paddingRight, pB: paddingBottom, pL: paddingLeft, m, p, height, }: ISeparatorLineProps): JSX.Element;
+export function SeparatorLine({ mT: marginTop, mR: marginRight, mB: marginBottom, mL: marginLeft, pT: paddingTop, pR: paddingRight, pB: paddingBottom, pL: paddingLeft, m, p, height }: ISeparatorLineProps): JSX.Element;
 
 // @internal (undocumented)
 export type Separators = {
@@ -7621,10 +7620,10 @@ export const separatorStaticItem: {
 };
 
 // @internal (undocumented)
-export function SettingItem({ className, title, titleTooltipText, alignPointTitleTooltip, value, actionType, actionValue, hasDivider, isLoading, isDisableAction, actionTooltipText, alignPointActionTooltip, onAction, renderSubtitle, titleTooltipHideDelay, }: ISettingItem): JSX.Element;
+export function SettingItem({ className, title, titleTooltipText, alignPointTitleTooltip, value, actionType, actionValue, hasDivider, isLoading, isDisableAction, actionTooltipText, alignPointActionTooltip, onAction, renderSubtitle, titleTooltipHideDelay }: ISettingItem): JSX.Element;
 
 // @internal (undocumented)
-export function ShareDialog({ backend, workspace, locale, sharedObject, currentUser, onApply, onCancel, onError, onInteraction, isLockingSupported, isCurrentUserWorkspaceManager, isGranteeShareLoading, labels, currentUserPermissions, dashboardFilters, isShareGrantHidden, applyShareGrantOnSelect, showDashboardShareLink, onShareLinkCopy, }: IShareDialogProps): JSX.Element;
+export function ShareDialog({ backend, workspace, locale, sharedObject, currentUser, onApply, onCancel, onError, onInteraction, isLockingSupported, isCurrentUserWorkspaceManager, isGranteeShareLoading, labels, currentUserPermissions, dashboardFilters, isShareGrantHidden, applyShareGrantOnSelect, showDashboardShareLink, onShareLinkCopy }: IShareDialogProps): JSX.Element;
 
 // @internal (undocumented)
 export function ShareDialogBase(props: IShareDialogBaseProps): JSX.Element;
@@ -7643,7 +7642,7 @@ export type ShareDialogInteractionGranteeData = {
 export type ShareDialogInteractionType = "SHARE_DIALOG_OPENED" | "SHARE_DIALOG_CLOSED" | "SHARE_DIALOG_SAVED" | "SHARE_DIALOG_PERMISSIONS_DROPDOWN_OPENED" | "SHARE_DIALOG_PERMISSIONS_CHANGED" | "SHARE_DIALOG_GRANTEE_REMOVED" | "SHARE_DIALOG_GRANTEE_ADDED" | "SHARE_DIALOG_AVAILABLE_GRANTEE_LIST_OPENED";
 
 // @internal (undocumented)
-export function ShareGranteeBase({ isLoading, isLockedNow, isUnderLenientControlNow, grantees, sharedObject, isDirty, currentUserPermissions, dashboardFilters, isShareGrantHidden, applyShareGrantOnSelect, showDashboardShareLink, isGranteeShareLoading, onCancel, onSubmit, onGranteeDelete, onGranularGranteeChange, onAddGranteeButtonClick, onLockChange, onUnderLenientControlChange, isCurrentUserWorkspaceManager, onShareLinkCopy, }: IShareGranteeBaseProps): JSX.Element;
+export function ShareGranteeBase({ isLoading, isLockedNow, isUnderLenientControlNow, grantees, sharedObject, isDirty, currentUserPermissions, dashboardFilters, isShareGrantHidden, applyShareGrantOnSelect, showDashboardShareLink, isGranteeShareLoading, onCancel, onSubmit, onGranteeDelete, onGranularGranteeChange, onAddGranteeButtonClick, onLockChange, onUnderLenientControlChange, isCurrentUserWorkspaceManager, onShareLinkCopy }: IShareGranteeBaseProps): JSX.Element;
 
 // @internal (undocumented)
 export class ShortenedText extends PureComponent<IShortenedTextProps, IShortenedTextState> {
@@ -7677,10 +7676,10 @@ export function shortenNumber(value: number | null | undefined, separators?: ISe
 export function shouldHidePPExperience(_featureFlags: ISettings): boolean;
 
 // @internal
-export const simpleRecurrenceTypeMappingFn: (_date?: Date | null, cronExpression?: string, allowHourlyRecurrence?: boolean, _showInheritValue?: boolean, weekStart?: WeekStart) => RecurrenceType;
+export const simpleRecurrenceTypeMappingFn: (_date?: Date | null | undefined, cronExpression?: string | undefined, allowHourlyRecurrence?: boolean | undefined, _showInheritValue?: boolean | undefined, weekStart?: WeekStart | undefined) => string;
 
 // @internal
-export function SimpleSettingWidget({ title, currentSettingStatus, titleTooltip, helpLinkText, helpLinkUrl, actionButtonText, isLoading, onSubmit, onHelpLinkClick, }: ISimpleSettingWidgetProps): JSX.Element;
+export function SimpleSettingWidget({ title, currentSettingStatus, titleTooltip, helpLinkText, helpLinkUrl, actionButtonText, isLoading, onSubmit, onHelpLinkClick }: ISimpleSettingWidgetProps): JSX.Element;
 
 // @internal (undocumented)
 export const SingleSelectListItem: ForwardRefExoticComponent<ISingleSelectListItemProps & RefAttributes<HTMLButtonElement | HTMLDivElement>>;
@@ -7768,7 +7767,7 @@ export type StyleProps = Record<string, string | boolean>;
 export function StylingEditorDialog<T extends StylingPickerItemContent>(props: IStylingEditorDialogProps<T>): JSX.Element;
 
 // @internal (undocumented)
-export function StylingEditorDialogFooter({ link, disableSubmit, showProgressIndicator, errorMessage, onSubmit, onCancel, onHelpClick, }: TStylingEditorDialogFooterProps): JSX.Element;
+export function StylingEditorDialogFooter({ link, disableSubmit, showProgressIndicator, errorMessage, onSubmit, onCancel, onHelpClick }: TStylingEditorDialogFooterProps): JSX.Element;
 
 // @internal (undocumented)
 export function StylingExample({ name, colors, onClick }: IStylingExampleProps): JSX.Element;
@@ -7783,13 +7782,13 @@ export function StylingSettingWidget<T extends StylingPickerItemContent>(props: 
 export function SubMenu(props: ISubMenuProps): JSX.Element;
 
 // @internal (undocumented)
-export function SyntaxHighlightingInput({ value, label, placeholder, autocompletion, onApi, onChange, onCursor, onKeyDown, onCompletion, onFocus, onBlur, className, beforeExtensions, extensions, disabled, }: ISyntaxHighlightingInputProps): JSX.Element;
+export function SyntaxHighlightingInput({ value, label, placeholder, autocompletion, onApi, onChange, onCursor, onKeyDown, onCompletion, onFocus, onBlur, className, beforeExtensions, extensions, disabled }: ISyntaxHighlightingInputProps): JSX.Element;
 
 // @internal (undocumented)
-export function Tabs({ className, onTabSelect, selectedTabId: propSelectedTabId, tabs, }: ITabsProps): ReactElement;
+export function Tabs({ className, onTabSelect, selectedTabId: propSelectedTabId, tabs }: ITabsProps): ReactElement;
 
 // @internal (undocumented)
-export function TextAreaWithSubmit({ className, maxLength, rows, onCancel, onEditingStart, onChange, placeholder, scrollToEndOnEditingStart, autofocus, disabled, defaultValue, onSubmit: onSubmitProp, }: ITextAreaWithSubmitProps): JSX.Element;
+export function TextAreaWithSubmit({ className, maxLength, rows, onCancel, onEditingStart, onChange, placeholder, scrollToEndOnEditingStart, autofocus, disabled, defaultValue, onSubmit: onSubmitProp }: ITextAreaWithSubmitProps): JSX.Element;
 
 // @internal (undocumented)
 export type ThemeColor = "primary" | "success" | "warning" | "error" | "complementary-0" | "complementary-1" | "complementary-2" | "complementary-3" | "complementary-4" | "complementary-5" | "complementary-6" | "complementary-7" | "complementary-8" | "complementary-9";
@@ -7798,7 +7797,7 @@ export type ThemeColor = "primary" | "success" | "warning" | "error" | "compleme
 export const Timepicker: NamedExoticComponent<ITimepickerOwnProps>;
 
 // @internal (undocumented)
-export function ToastMessageList({ messages, onRemoveMessage, }: {
+export function ToastMessageList({ messages, onRemoveMessage }: {
     messages: IMessage[];
     onRemoveMessage?: (id: string) => void;
 }): JSX.Element;
@@ -7810,7 +7809,7 @@ export function ToastsCenter(): JSX.Element | null;
 export const ToastsCenterContext: IContextStore<IToastsCenterContext>;
 
 // @internal
-export function ToastsCenterContextProvider({ skipAutomaticMessageRendering, children, }: {
+export function ToastsCenterContextProvider({ skipAutomaticMessageRendering, children }: {
     skipAutomaticMessageRendering?: boolean;
     children: ReactNode;
 }): JSX.Element;
@@ -7822,7 +7821,7 @@ export type TooltipArrowPlacement = "top" | "top-start" | "top-end" | "bottom" |
 export function transform2Dropdown<T extends IDateDataset>(dateDatasets: T[]): Array<T | IDateDatasetHeader>;
 
 // @internal
-export const transformCronExpressionToRecurrenceType: (date: Date | null, cronExpression: string | undefined, allowHourlyRecurrence: boolean, allowInheritValue: boolean, weekStart: WeekStart) => RecurrenceType;
+export const transformCronExpressionToRecurrenceType: (date: Date | null, cronExpression: string | undefined, allowHourlyRecurrence: boolean, allowInheritValue: boolean, weekStart: WeekStart) => string;
 
 // @internal (undocumented)
 export type TStylingEditorDialogFooterProps = {
@@ -7857,7 +7856,7 @@ export function UiAsyncTable<T extends {
 export const UiAsyncTableCheckboxColumnWidth = 34;
 
 // @internal (undocumented)
-export function UiAsyncTableEmptyState({ title, description, icon, }: IUiAsyncTableEmptyStateProps): JSX.Element;
+export function UiAsyncTableEmptyState({ title, description, icon }: IUiAsyncTableEmptyStateProps): JSX.Element;
 
 // @internal (undocumented)
 export const UiAsyncTableMenuColumnWidth = 55;
@@ -7907,10 +7906,10 @@ export type UiButtonSegmentedControlProps = Omit<ComponentPropsWithRef<"div">, "
 export const UiCard: ForwardRefExoticComponent<IUiCardProps & RefAttributes<HTMLDivElement>>;
 
 // @internal (undocumented)
-export function UiCheckbox({ checked, onChange, preventDefault, indeterminate, disabled, accessibilityConfig, tabIndex, label, }: IUiCheckboxProps): JSX.Element;
+export function UiCheckbox({ checked, onChange, preventDefault, indeterminate, disabled, accessibilityConfig, tabIndex, label }: IUiCheckboxProps): JSX.Element;
 
 // @internal (undocumented)
-export function UiChip({ label, tag, isDeletable, isActive, isLocked, isExpandable, isDisabled, maxWidth, iconBefore, onClick, onDelete, onKeyDown, onDeleteKeyDown, accessibilityConfig, dataTestId, buttonRef, renderChipContent, renderDeleteButton, }: IUiChipProps): JSX.Element;
+export function UiChip({ label, tag, isDeletable, isActive, isLocked, isExpandable, isDisabled, maxWidth, iconBefore, onClick, onDelete, onKeyDown, onDeleteKeyDown, accessibilityConfig, dataTestId, buttonRef, renderChipContent, renderDeleteButton }: IUiChipProps): JSX.Element;
 
 // @internal
 export function UiCombobox({ children, ...props }: IUiComboboxProps): JSX.Element;
@@ -7946,13 +7945,13 @@ export function UiComboboxPopup({ style, className, children, ...htmlProps }: Ui
 export type UiComboboxPopupProps = HTMLAttributes<HTMLDivElement>;
 
 // @internal (undocumented)
-export function UiCopyButton({ label, clipboardContent, successMessage, successMessageOptions, errorMessage, errorMessageOptions, }: IUiCopyButtonProps): JSX.Element;
+export function UiCopyButton({ label, clipboardContent, successMessage, successMessageOptions, errorMessage, errorMessageOptions }: IUiCopyButtonProps): JSX.Element;
 
 // @internal (undocumented)
-export function UiDate({ date, locale, relativeThresholdMs, absoluteOptions, allowRelative, }: IUiDateProps): JSX.Element;
+export function UiDate({ date, locale, relativeThresholdMs, absoluteOptions, allowRelative }: IUiDateProps): JSX.Element;
 
 // @internal (undocumented)
-export function UiDrawer({ open, zIndex, node, mode, dataTestId, children, anchor, transition, onEscapeKey, onClickOutside, closeLabel, showCloseButton, onClickClose, refocusKey, initialFocus, returnFocusTo, accessibilityConfig, }: IUiDrawerProps): JSX.Element | null;
+export function UiDrawer({ open, zIndex, node, mode, dataTestId, children, anchor, transition, onEscapeKey, onClickOutside, closeLabel, showCloseButton, onClickClose, refocusKey, initialFocus, returnFocusTo, accessibilityConfig }: IUiDrawerProps): JSX.Element | null;
 
 // @internal (undocumented)
 export type UiDrawerTransitionProps = {
@@ -7962,26 +7961,26 @@ export type UiDrawerTransitionProps = {
 };
 
 // @internal
-export function UiDropdown({ renderButton, renderBody, isOpen: isOpenProp, onOpenChange, openOnInit, placement, offset, alignPoints, closeOnOutsideClick, closeOnEscape, closeOnParentScroll, closeOnMouseDrag, ignoreClicksOnByClass, zIndex, width, fullWidthButton, enableFocusTrap, autofocusOnOpen, initialFocus, returnFocusTo, onOpen, onClose, accessibilityConfig, }: IUiDropdownProps): JSX.Element;
+export function UiDropdown({ renderButton, renderBody, isOpen: isOpenProp, onOpenChange, openOnInit, placement, offset, alignPoints, closeOnOutsideClick, closeOnEscape, closeOnParentScroll, closeOnMouseDrag, ignoreClicksOnByClass, zIndex, width, fullWidthButton, enableFocusTrap, autofocusOnOpen, initialFocus, returnFocusTo, onOpen, onClose, accessibilityConfig }: IUiDropdownProps): JSX.Element;
 
 // @internal (undocumented)
 export const UiDropdownIconButton: ForwardRefExoticComponent<IUiDropdownIconButtonProps & RefAttributes<HTMLButtonElement>>;
 
 // @internal
-export function UiFloatingElement({ children, anchor, isOpen, onClose, placement, alignPoints, strategy, offset, autoFlip, closeOnOutsideClick, closeOnEscape, closeOnParentScroll, closeOnMouseDrag, ignoreClicksOn, shouldCloseOnClick, zIndex: zIndexProp, className, contentClassName, style, width, maxWidth, maxHeight, accessibilityConfig, onPlacementChange, }: IUiFloatingElementProps): JSX.Element | null;
+export function UiFloatingElement({ children, anchor, isOpen, onClose, placement, alignPoints, strategy, offset, autoFlip, closeOnOutsideClick, closeOnEscape, closeOnParentScroll, closeOnMouseDrag, ignoreClicksOn, shouldCloseOnClick, zIndex: zIndexProp, className, contentClassName, style, width, maxWidth, maxHeight, accessibilityConfig, onPlacementChange }: IUiFloatingElementProps): JSX.Element | null;
 
 // @internal (undocumented)
 export function UiFocusManager({ children, ...args }: IUiFocusManagerProps): JSX.Element;
 
 // @internal (undocumented)
-export function UiFocusTrap({ root, children, focusCheckFn, }: {
+export function UiFocusTrap({ root, children, focusCheckFn }: {
     root?: ReactElement;
     children: ReactNode;
     focusCheckFn?: (element: HTMLElement) => boolean;
 }): FunctionComponentElement<any>;
 
 // @internal (undocumented)
-export function UiIcon({ type, color, layout, disableAnimation, accessibilityConfig, size, backgroundSize, backgroundColor, backgroundType, backgroundShape, }: IUiIconProps): JSX.Element;
+export function UiIcon({ type, color, layout, disableAnimation, accessibilityConfig, size, backgroundSize, backgroundColor, backgroundType, backgroundShape }: IUiIconProps): JSX.Element;
 
 // @internal (undocumented)
 export const UiIconButton: ForwardRefExoticComponent<IUiIconButtonPublicProps & RefAttributes<HTMLButtonElement>>;
@@ -7999,7 +7998,7 @@ export function UiLeveledTreeview<Levels extends unknown[]>(props: IUiLeveledTre
 export function UiLink({ variant, flipUnderline, fullWidth, dataTestId, ...anchorProps }: IUiLinkProps): JSX.Element;
 
 // @internal
-export function UiListbox<InteractiveItemData, StaticItemData>({ items, dataTestId, itemDataTestId, width, maxWidth, maxHeight, onSelect, onClose, onUnhandledKeyDown, selectedItemId, InteractiveItemComponent, StaticItemComponent, shouldKeyboardActionPreventDefault, shouldKeyboardActionStopPropagation, shouldCloseOnSelect, isDisabledFocusable, isCompact, reference, ariaAttributes, }: IUiListboxProps<InteractiveItemData, StaticItemData>): ReactNode;
+export function UiListbox<InteractiveItemData, StaticItemData>({ items, dataTestId, itemDataTestId, width, maxWidth, maxHeight, onSelect, onClose, onUnhandledKeyDown, selectedItemId, InteractiveItemComponent, StaticItemComponent, shouldKeyboardActionPreventDefault, shouldKeyboardActionStopPropagation, shouldCloseOnSelect, isDisabledFocusable, isCompact, reference, ariaAttributes }: IUiListboxProps<InteractiveItemData, StaticItemData>): ReactNode;
 
 // @internal (undocumented)
 export type UiListboxAriaAttributes = Omit<IDropdownBodyRenderProps["ariaAttributes"], "role"> & {
@@ -8025,7 +8024,7 @@ export type UiPaginationButtonDirection = "previous" | "next";
 export type UiPaginationButtonSize = "small" | "large";
 
 // @internal (undocumented)
-export function UiPopover({ id, accessibilityConfig, anchor, width, title, tabIndex, disabled, content, footer, closeText, closeVisible, initialFocus, returnFocusTo, triggerBy, returnFocusAfterClose, focusCheckFn, enableFocusTrap, onOpen, onClose, }: IUiPopoverProps): JSX.Element;
+export function UiPopover({ id, accessibilityConfig, anchor, width, title, tabIndex, disabled, content, footer, closeText, closeVisible, initialFocus, returnFocusTo, triggerBy, returnFocusAfterClose, focusCheckFn, enableFocusTrap, onOpen, onClose }: IUiPopoverProps): JSX.Element;
 
 // @internal (undocumented)
 export type UiRefsTree = Record<string, HTMLDivElement | null>;
@@ -8036,10 +8035,10 @@ export function UiReturnFocusOnUnmount({ children, ...options }: IUiReturnFocusO
 }): JSX.Element;
 
 // @internal
-export function UiSearchResultsAnnouncement({ totalResults, resultValues, announcementDelay, }: ISearchResultsAnnouncementProps): JSX.Element;
+export function UiSearchResultsAnnouncement({ totalResults, resultValues, announcementDelay }: ISearchResultsAnnouncementProps): JSX.Element;
 
 // @internal (undocumented)
-export function UiSkeleton({ itemsCount, itemHeight, itemPadding, itemWidth, itemsGap, direction, itemBorderRadius, }: IUiSkeletonProps): JSX.Element;
+export function UiSkeleton({ itemsCount, itemHeight, itemPadding, itemWidth, itemsGap, direction, itemBorderRadius }: IUiSkeletonProps): JSX.Element;
 
 // @internal (undocumented)
 export type UiStateTreeItem = {
@@ -8053,7 +8052,7 @@ export type UiStaticTreeView<Level> = UiTreeViewTree<Level>;
 export function UiStaticTreeview<Level>(props: IUiStaticTreeViewProps<Level>): JSX.Element;
 
 // @internal
-export function UiSubmenuHeader({ title, onBack, onClose, backAriaLabel, closeAriaLabel, useShortenedTitle, textColor, backgroundColor, height, titleId, }: IUiSubmenuHeaderProps): JSX.Element;
+export function UiSubmenuHeader({ title, onBack, onClose, backAriaLabel, closeAriaLabel, useShortenedTitle, textColor, backgroundColor, height, titleId }: IUiSubmenuHeaderProps): JSX.Element;
 
 // @internal (undocumented)
 export function UiTabOutHandler({ onTabOut, children }: {
@@ -8086,10 +8085,10 @@ export type UiTagProps = {
 };
 
 // @internal (undocumented)
-export function UiTags({ tags, tagOptions, addLabel, nameLabel, cancelLabel, closeLabel, saveLabel, noTagsLabel, moreLabel, removeLabel, creatableLabel, mode, canDeleteTags, canCreateTag, readOnly, onTagClick, onTagAdd, onTagRemove, accessibilityConfig, }: IUiTagsProps): JSX.Element;
+export function UiTags({ tags, tagOptions, addLabel, nameLabel, cancelLabel, closeLabel, saveLabel, noTagsLabel, moreLabel, removeLabel, creatableLabel, mode, canDeleteTags, canCreateTag, readOnly, onTagClick, onTagAdd, onTagRemove, accessibilityConfig }: IUiTagsProps): JSX.Element;
 
 // @internal (undocumented)
-export function UiTooltip({ id, anchor, content, behaviour, arrowPlacement, triggerBy, hoverOpenDelay, hoverCloseDelay, showArrow, width, offset: offsetProp, optimalPlacement, accessibilityConfig, variant, disabled, isOpen: isOpenProp, onOpen, onClose, anchorWrapperStyles, }: IUiTooltipProps): JSX.Element;
+export function UiTooltip({ id, anchor, content, behaviour, arrowPlacement, triggerBy, hoverOpenDelay, hoverCloseDelay, showArrow, width, offset: offsetProp, optimalPlacement, accessibilityConfig, variant, disabled, isOpen: isOpenProp, onOpen, onClose, anchorWrapperStyles }: IUiTooltipProps): JSX.Element;
 
 // @internal (undocumented)
 export type UiTreeViewAddLevel<N extends number> = [...Array<N>, unknown]["length"];
@@ -8163,7 +8162,7 @@ export function useCloseOnParentScroll(isOpen: boolean, onClose: () => void, anc
 export function useComboboxState(): IUiComboboxState;
 
 // @internal
-export function useCurrencyFormatDefaults({ metricType, currencyFormatOverride, onFormatChange, shouldBootstrap, fallbackFormat, }: UseCurrencyFormatDefaultsConfig): void;
+export function useCurrencyFormatDefaults({ metricType, currencyFormatOverride, onFormatChange, shouldBootstrap, fallbackFormat }: UseCurrencyFormatDefaultsConfig): void;
 
 // @internal (undocumented)
 export type UseCurrencyFormatDefaultsConfig = {
@@ -8182,7 +8181,7 @@ export function useElementSize<T extends HTMLElement>(): {
 };
 
 // @internal
-export function useFloatingPosition({ isOpen, onOpenChange, placement: placementProp, alignPoints, strategy, offset: offsetProp, autoFlip, fallbackPlacements: fallbackPlacementsProp, arrowRef, customMiddleware, maxWidth, maxHeight, zIndex: zIndexProp, shiftPadding, }: IUseFloatingPositionOptions): IUseFloatingPositionResult;
+export function useFloatingPosition({ isOpen, onOpenChange, placement: placementProp, alignPoints, strategy, offset: offsetProp, autoFlip, fallbackPlacements: fallbackPlacementsProp, arrowRef, customMiddleware, maxWidth, maxHeight, zIndex: zIndexProp, shiftPadding }: IUseFloatingPositionOptions): IUseFloatingPositionResult;
 
 // @internal (undocumented)
 export function useFocusWithinContainer(idToFocus?: string | null): {
@@ -8201,7 +8200,7 @@ export const useHeaderSearch: () => HeaderSearchContext;
 export const useId: () => string;
 
 // @internal
-export const useIdPrefixed: (prefix?: string) => string;
+export const useIdPrefixed: (prefix?: string | undefined) => string;
 
 // @internal (undocumented)
 export function useInvertableSelectionStatusText<T>(selectedItems: T[], isInverted: boolean, getItemTitle: (item: T) => string): {
@@ -8219,7 +8218,7 @@ export const useKeyboardNavigationTarget: ({ navigationId, label, tabIndex, onFo
 };
 
 // @internal (undocumented)
-export function useListWithActionsKeyboardNavigation<Item, Action extends string>({ items, actionHandlers, getItemAdditionalActions, isNestedList, isSimple, isWrapping, focusedIndex: focusedIndexProp, }: {
+export function useListWithActionsKeyboardNavigation<Item, Action extends string>({ items, actionHandlers, getItemAdditionalActions, isNestedList, isSimple, isWrapping, focusedIndex: focusedIndexProp }: {
     items: Item[];
     actionHandlers: {
         [key in Action | typeof SELECT_ITEM_ACTION]: (item: Item, e?: KeyboardEvent_2) => (() => void) | undefined;
@@ -8232,9 +8231,9 @@ export function useListWithActionsKeyboardNavigation<Item, Action extends string
 }): {
     onKeyboardNavigation: (event: KeyboardEvent_2<Element>) => void;
     onBlur: FocusEventHandler;
-    focusedAction: Action | "selectItem";
+    focusedAction: "selectItem" | Action;
     focusedItem: Item | undefined;
-    setFocusedAction: Dispatch<SetStateAction<Action | "selectItem">>;
+    setFocusedAction: Dispatch<SetStateAction<"selectItem" | Action>>;
     setFocusedIndex: Dispatch<SetStateAction<number | undefined>>;
 };
 
@@ -8242,7 +8241,7 @@ export function useListWithActionsKeyboardNavigation<Item, Action extends string
 export const useMediaQuery: (mediaQueryName: keyof IMediaQueries) => boolean;
 
 // @internal
-export function useMetricTypePresets({ metricType, currencyFormatOverride, formatMessage, }: UseMetricTypePresetsConfig): UseMetricTypePresetsResult;
+export function useMetricTypePresets({ metricType, currencyFormatOverride, formatMessage }: UseMetricTypePresetsConfig): UseMetricTypePresetsResult;
 
 // @internal
 export type UseMetricTypePresetsConfig = {
@@ -8282,14 +8281,14 @@ export function useScopedIdOptional<T>(item?: T, specifier?: string): string | u
 export const useScopedIdStoreValue: <T>(getIdFromItem: (item: T) => string) => {
     makeId: ({ item, specifier }: {
         item: T;
-        specifier?: string;
+        specifier?: string | undefined;
     }) => string;
     containerId: string;
 };
 
 // @internal (undocumented)
 export const useScrollContext: () => {
-    scrollIntoView: (_element: HTMLElement, _bottomMargin?: number, _isElementInvisibleCheck?: isElementInvisibleType) => void;
+    scrollIntoView: (_element: HTMLElement, _bottomMargin?: number | undefined, _isElementInvisibleCheck?: isElementInvisibleType | undefined) => void;
 };
 
 // @internal
@@ -8301,7 +8300,7 @@ export function useStandardPresets(formatMessage: (descriptor: {
 export const useToastMessage: () => IUseToastMessageType;
 
 // @internal (undocumented)
-export const useToastsCenterValue: (onDismissMessage?: (id: IMessage["id"]) => void) => IToastsCenterContext;
+export const useToastsCenterValue: (onDismissMessage?: ((id: string) => void) | undefined) => IToastsCenterContext;
 
 // @internal
 export const useUiAutofocusConnectors: <T extends HTMLElement = HTMLElement>({ active, refocusKey, initialFocus, }?: IUiAutofocusOptions) => IUiFocusHelperConnectors<T>;
@@ -8316,10 +8315,10 @@ export const useUiFocusTrapConnectors: <T extends HTMLElement = HTMLElement>(foc
 export const useUiReturnFocusOnUnmountConnectors: <T extends HTMLElement = HTMLElement>({ returnFocusTo, }?: IUiReturnFocusOnUnmountOptions) => IUiFocusHelperConnectors<T>;
 
 // @internal (undocumented)
-export const useUiTabOutHandlerConnectors: <T extends HTMLElement = HTMLElement>(handler?: (event: KeyboardEvent_2) => void) => IUiFocusHelperConnectors<T>;
+export const useUiTabOutHandlerConnectors: <T extends HTMLElement = HTMLElement>(handler?: ((event: KeyboardEvent_2<Element>) => void) | undefined) => IUiFocusHelperConnectors<T>;
 
 // @internal (undocumented)
-export function useUiTabsContextStoreValue<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>({ tabs, selectedTabId, onTabSelect, size, maxLabelLength, accessibilityConfig: accessibilityConfigProp, disableBottomBorder, Container, Tab, TabValue, TabActions, TabActionsButton, AllTabs, AllTabsButton, }: IUiTabsProps<TTabProps, TTabActionProps>): IUiTabContext<TTabProps, TTabActionProps>;
+export function useUiTabsContextStoreValue<TTabProps extends Record<any, any> = EmptyObject, TTabActionProps extends Record<any, any> = EmptyObject>({ tabs, selectedTabId, onTabSelect, size, maxLabelLength, accessibilityConfig: accessibilityConfigProp, disableBottomBorder, Container, Tab, TabValue, TabActions, TabActionsButton, AllTabs, AllTabsButton }: IUiTabsProps<TTabProps, TTabActionProps>): IUiTabContext<TTabProps, TTabActionProps>;
 
 // @internal (undocumented)
 export function useUiTreeViewEventPublisher<T extends UiTreeViewEventType>(eventType: T): (event: UiTreeViewEvents[T]) => void;

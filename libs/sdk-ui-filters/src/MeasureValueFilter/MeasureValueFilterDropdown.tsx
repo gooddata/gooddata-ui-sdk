@@ -76,6 +76,7 @@ export const MeasureValueFilterDropdown = memo(function MeasureValueFilterDropdo
     insightDimensionality,
     isDimensionalityEnabled,
     catalogDimensionality,
+    loadCatalogDimensionality,
     onDimensionalityChange,
     isLoadingCatalogDimensionality,
     enableMultipleConditions = false,
@@ -197,6 +198,7 @@ export const MeasureValueFilterDropdown = memo(function MeasureValueFilterDropdo
             insightDimensionality={insightDimensionality}
             isDimensionalityEnabled={isDimensionalityEnabled}
             catalogDimensionality={catalogDimensionality}
+            loadCatalogDimensionality={loadCatalogDimensionality}
             onDimensionalityChange={onDimensionalityChange}
             isLoadingCatalogDimensionality={isLoadingCatalogDimensionality}
             enableMultipleConditions={enableMultipleConditions}

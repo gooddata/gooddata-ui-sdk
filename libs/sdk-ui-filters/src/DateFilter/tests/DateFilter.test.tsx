@@ -42,7 +42,7 @@ import {
     openAbsoluteFormFilter,
     openRelativeFormFilter,
     setRelativeFormInputs,
-} from "./extendedDateFilters_helpers.js";
+} from "./extendedDateFilters.test.helpers.js";
 import { DEFAULT_DATE_FORMAT } from "../constants/Platform.js";
 import { verifyDateFormat } from "../DateFilterCore.js";
 import type { IDateFilterOptionsByType } from "../interfaces/index.js";

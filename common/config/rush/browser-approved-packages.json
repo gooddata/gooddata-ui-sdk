@@ -544,7 +544,7 @@
     },
     {
       "name": "@typescript/native-preview",
-      "allowedCategories": [ "examples", "tools" ]
+      "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
       "name": "@vitejs/plugin-react",

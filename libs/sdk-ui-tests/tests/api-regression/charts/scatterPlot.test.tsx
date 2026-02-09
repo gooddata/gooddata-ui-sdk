@@ -29,7 +29,7 @@ vi.mock("@gooddata/sdk-ui-charts/internal-tests/CoreScatterPlot", async () => {
     };
 });
 
-describe("ScatterPlot", () => {
+describe.skip("ScatterPlot", () => {
     const Scenarios: Array<ScenarioAndDescription<IScatterPlotProps>> = scatterPlotScenarios.flatMap(
         (group) => group.forTestTypes("api").asScenarioDescAndScenario(),
     );

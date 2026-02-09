@@ -95,13 +95,13 @@ export const ARITHMETIC_OPERATORS: {
 };
 
 // @internal (undocumented)
-export function AttributeHierarchyDetailBubble({ children, className, }: IAttributeHierarchyDetailBubbleProps): JSX.Element;
+export function AttributeHierarchyDetailBubble({ children, className }: IAttributeHierarchyDetailBubbleProps): JSX.Element;
 
 // @internal (undocumented)
-export function AttributeHierarchyDetailPanel({ title, description, attributes, onEdit, }: IAttributeHierarchyDetailPanelProps): JSX.Element;
+export function AttributeHierarchyDetailPanel({ title, description, attributes, onEdit }: IAttributeHierarchyDetailPanelProps): JSX.Element;
 
 // @internal (undocumented)
-export function AttributeHierarchyDialog({ initialAttributeRef, editingAttributeHierarchy, onClose, onSaveOrUpdateSuccess, onDeleteSuccess, onAddAttributeClicked, onCreateHierarchyClicked, }: IAttributeHierarchyDialogProps): JSX.Element;
+export function AttributeHierarchyDialog({ initialAttributeRef, editingAttributeHierarchy, onClose, onSaveOrUpdateSuccess, onDeleteSuccess, onAddAttributeClicked, onCreateHierarchyClicked }: IAttributeHierarchyDialogProps): JSX.Element;
 
 // @internal
 export type AutomationColumnDefinition = {
@@ -114,7 +114,7 @@ export type AutomationColumnDefinition = {
 export type AutomationColumnDefinitions = Array<AutomationColumnDefinition>;
 
 // @internal
-export function Automations({ backend, scope, workspace, organization, locale, timezone, selectedColumnDefinitions, preselectedFilters, availableFilters, maxHeight, pageSize, type, tableVariant, isMobileView, enableBulkActions, externalInvalidationId, renderToolbarCustomElement, dashboardUrlBuilder, widgetUrlBuilder, editAutomation, onLoad, }: IAutomationsProps): JSX.Element;
+export function Automations({ backend, scope, workspace, organization, locale, timezone, selectedColumnDefinitions, preselectedFilters, availableFilters, maxHeight, pageSize, type, tableVariant, isMobileView, enableBulkActions, externalInvalidationId, renderToolbarCustomElement, dashboardUrlBuilder, widgetUrlBuilder, editAutomation, onLoad }: IAutomationsProps): JSX.Element;
 
 // @internal
 export type AutomationsAvailableFilters = Array<AutomationsFilterName>;
@@ -181,28 +181,28 @@ export type DataSourcePermission = "USE" | "MANAGE";
 export type DataSourcePermissionSubject = "user" | "userGroup";
 
 // @public
-export function DefaultNotification({ notification, markNotificationAsRead, onNotificationClick, closeNotificationsPanel, }: INotificationComponentProps): JSX.Element;
+export function DefaultNotification({ notification, markNotificationAsRead, onNotificationClick, closeNotificationsPanel }: INotificationComponentProps): JSX.Element;
 
 // @public
 export const DefaultNotificationSkeletonItem: typeof UiSkeleton;
 
 // @public
-export function DefaultNotificationsList({ Notification, NotificationsListEmptyState, NotificationsListErrorState, NotificationSkeletonItem, activeView, status, error, activeNotifications, markNotificationAsRead, onNotificationClick, hasNextPage, loadNextPage, itemHeight, itemsGap, itemPadding, skeletonItemsCount, maxListHeight, closeNotificationsPanel, }: INotificationsListComponentProps): JSX.Element;
+export function DefaultNotificationsList({ Notification, NotificationsListEmptyState, NotificationsListErrorState, NotificationSkeletonItem, activeView, status, error, activeNotifications, markNotificationAsRead, onNotificationClick, hasNextPage, loadNextPage, itemHeight, itemsGap, itemPadding, skeletonItemsCount, maxListHeight, closeNotificationsPanel }: INotificationsListComponentProps): JSX.Element;
 
 // @public
-export function DefaultNotificationsListEmptyState({ activeView, }: INotificationsListEmptyStateComponentProps): JSX.Element;
+export function DefaultNotificationsListEmptyState({ activeView }: INotificationsListEmptyStateComponentProps): JSX.Element;
 
 // @public
 export function DefaultNotificationsListErrorState({ error }: INotificationsListErrorStateComponentProps): JSX.Element;
 
 // @public
-export function DefaultNotificationsPanel({ NotificationsPanelHeader, NotificationsList, NotificationsListEmptyState, NotificationsListErrorState, Notification, NotificationSkeletonItem, activeView, changeActiveView, markNotificationAsRead, markAllNotificationsAsRead, unreadNotificationsCount, hasUnreadNotifications, activeNotifications, onNotificationClick, closeNotificationsPanel, status, error, loadNextPage, hasNextPage, itemHeight, itemsGap, itemPadding, skeletonItemsCount, maxListHeight, }: INotificationsPanelComponentProps): JSX.Element;
+export function DefaultNotificationsPanel({ NotificationsPanelHeader, NotificationsList, NotificationsListEmptyState, NotificationsListErrorState, Notification, NotificationSkeletonItem, activeView, changeActiveView, markNotificationAsRead, markAllNotificationsAsRead, unreadNotificationsCount, hasUnreadNotifications, activeNotifications, onNotificationClick, closeNotificationsPanel, status, error, loadNextPage, hasNextPage, itemHeight, itemsGap, itemPadding, skeletonItemsCount, maxListHeight }: INotificationsPanelComponentProps): JSX.Element;
 
 // @internal (undocumented)
-export function DefaultNotificationsPanelButton({ buttonRef, isNotificationPanelOpen, toggleNotificationPanel, hasUnreadNotifications, }: INotificationsPanelButtonComponentProps): JSX.Element;
+export function DefaultNotificationsPanelButton({ buttonRef, isNotificationPanelOpen, toggleNotificationPanel, hasUnreadNotifications }: INotificationsPanelButtonComponentProps): JSX.Element;
 
 // @public
-export function DefaultNotificationsPanelHeader({ activeView, changeActiveView, markAllNotificationsAsRead, hasUnreadNotifications, unreadNotificationsCount, }: INotificationsPanelHeaderComponentProps): JSX.Element;
+export function DefaultNotificationsPanelHeader({ activeView, changeActiveView, markAllNotificationsAsRead, hasUnreadNotifications, unreadNotificationsCount }: INotificationsPanelHeaderComponentProps): JSX.Element;
 
 // @internal (undocumented)
 export const DeleteUserDialog: {
@@ -743,7 +743,7 @@ export const INSIGHT_WIDGET_SIZE_INFO_DEFAULT: IVisualizationDefaultSizeInfo;
 export const INSIGHT_WIDGET_SIZE_INFO_NEW_DEFAULT: IVisualizationDefaultSizeInfo;
 
 // @internal (undocumented)
-export function InsightError({ error, ErrorComponent, height, clientHeight, }: IInsightErrorProps): JSX.Element;
+export function InsightError({ error, ErrorComponent, height, clientHeight }: IInsightErrorProps): JSX.Element;
 
 // @internal
 export function InsightRenderer(props: IInsightRendererProps): JSX.Element | null;
@@ -758,19 +758,19 @@ export function isDrillDownDefinition(obj: unknown): obj is IDrillDownDefinition
 export function isEmptyAfm(obj: unknown): obj is EmptyAfmSdkError;
 
 // @internal (undocumented)
-export const isInsightAlertingConfigurationEnabled: (insight: IInsight | IInsightDefinition | undefined) => boolean;
+export const isInsightAlertingConfigurationEnabled: (insight: IInsightDefinition | IInsight | undefined) => boolean;
 
 // @internal (undocumented)
-export const isInsightKeyDriverAnalysisEnabled: (insight: IInsight | IInsightDefinition | undefined) => boolean;
+export const isInsightKeyDriverAnalysisEnabled: (insight: IInsightDefinition | IInsight | undefined) => boolean;
 
 // @internal (undocumented)
-export const isInsightScheduledExportsConfigurationEnabled: (insight: IInsight | IInsightDefinition | undefined) => boolean;
+export const isInsightScheduledExportsConfigurationEnabled: (insight: IInsightDefinition | IInsight | undefined) => boolean;
 
 // @internal (undocumented)
-export const isInsightSupportedForAlerts: (insight: IInsight | IInsightDefinition | null | undefined) => boolean;
+export const isInsightSupportedForAlerts: (insight: IInsightDefinition | IInsight | null | undefined) => boolean;
 
 // @internal (undocumented)
-export const isInsightSupportedForScheduledExports: (insight: IInsight | IInsightDefinition | null | undefined) => boolean;
+export const isInsightSupportedForScheduledExports: (insight: IInsightDefinition | IInsight | null | undefined) => boolean;
 
 // @alpha
 export interface ISizeInfo {
@@ -982,7 +982,7 @@ export type TelemetryEvent = "multiple-users-deleted" | "multiple-groups-deleted
 export type TrackEventCallback = (event: TelemetryEvent) => void;
 
 // @internal
-export function useInsightPagedList({ backend, workspaceId, author, tabsIds, }: IUsePagedDropdownConfig): IUsePagedDropdownResult;
+export function useInsightPagedList({ backend, workspaceId, author, tabsIds }: IUsePagedDropdownConfig): IUsePagedDropdownResult;
 
 // @internal (undocumented)
 export const UserEditDialog: {

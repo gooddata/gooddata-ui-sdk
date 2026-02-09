@@ -91,6 +91,7 @@ function getLayerColorMappingFromControls(controls: unknown): IColorMapping[] | 
     }
 
     return items.map((mapItem) => ({
+        id: mapItem.id,
         predicate: getStableColorMappingPredicate(mapItem.id),
         color: mapItem.color,
     }));

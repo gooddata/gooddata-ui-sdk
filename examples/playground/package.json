@@ -21,16 +21,12 @@
         "_phase:validate": "npm run validate",
         "build": "echo Build of playground is skipped by default. See the alternative 'build_' script.",
         "dev": "vite",
-        "eslint": "eslint .",
-        "eslint-fix": "eslint . --fix",
-        "oxfmt-check": "oxfmt --check .",
-        "oxfmt-write": "oxfmt .",
+        "format-check": "oxfmt --check .",
+        "format-write": "oxfmt .",
         "refresh-md": "./scripts/refresh-md.sh && npm run build",
-        "validate": "npm run lint && npm run oxfmt-check",
-        "lint": "npm run oxlint && npm run eslint",
-        "lint-fix": "npm run oxlint-fix && npm run eslint-fix",
-        "oxlint": "oxlint . --type-aware",
-        "oxlint-fix": "oxlint . --type-aware --fix"
+        "validate": "npm run lint && npm run format-check",
+        "lint": "oxlint . --type-aware && eslint .",
+        "lint-fix": "oxlint . --type-aware --fix && eslint . --fix"
     },
     "devDependencies": {
         "@codemirror/state": "~6.5.3",

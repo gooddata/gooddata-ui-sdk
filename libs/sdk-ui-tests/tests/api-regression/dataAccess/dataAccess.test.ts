@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
@@ -8,7 +8,7 @@ import { type IDataView } from "@gooddata/sdk-backend-spi";
 import { isAttributeDescriptor, isTotal } from "@gooddata/sdk-model";
 import { DataViewFacade, type IDataSeriesCollection, type IDataSliceCollection } from "@gooddata/sdk-ui";
 
-describe("DataAccess", () => {
+describe.skip("DataAccess", () => {
     const Scenarios: Array<[string, IDataView]> = recordedDataViews(ReferenceRecordings.Recordings).map(
         (dv) => [dv.name, dv.dataView],
     );

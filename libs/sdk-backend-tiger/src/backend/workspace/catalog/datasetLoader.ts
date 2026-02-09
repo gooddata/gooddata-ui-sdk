@@ -156,7 +156,9 @@ export async function loadAttributesAndDateDatasetsAndHierarchies(
     signal?: AbortSignal,
 ): Promise<CatalogItem[]> {
     const includeObjects: EntitiesApiGetAllEntitiesAttributesRequest["include"] = ["labels", "defaultView"];
-    if (loadDateDatasets) {
+    // Include dataset relationship when loading attributes as well, so attribute catalog items
+    // carry dataset info (used e.g. for dataset grouping in catalog pickers).
+    if (loadAttributes || loadDateDatasets) {
         includeObjects.push("dataset");
     }
     if (loadAttributeHierarchies) {

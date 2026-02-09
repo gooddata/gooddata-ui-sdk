@@ -70,6 +70,7 @@ import { IDataView } from '@gooddata/sdk-backend-spi';
 import { IDateFilter } from '@gooddata/sdk-model';
 import { IDimension } from '@gooddata/sdk-model';
 import { IDimensionDescriptor } from '@gooddata/sdk-model';
+import { IDrillToLegacyDashboard } from '@gooddata/sdk-model';
 import { IExecutionConfig } from '@gooddata/sdk-model';
 import { IExecutionContext } from '@gooddata/sdk-backend-spi';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
@@ -640,10 +641,10 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
     // (undocumented)
     getDashboardWithReferences(ref: ObjRef, filterContextRef?: ObjRef, options?: IGetDashboardOptions, types?: SupportedDashboardReferenceTypes[]): Promise<IDashboardWithReferences>;
     // (undocumented)
-    getFilterContextByExportId: (exportId: string, type: "visual" | "slides" | undefined, tabId?: string) => Promise<{
-        filterContext?: IFilterContext;
-        title?: string;
-        hideWidgetTitles?: boolean;
+    getFilterContextByExportId: (exportId: string, type: "slides" | "visual" | undefined, tabId?: string | undefined) => Promise<{
+        filterContext?: IFilterContext | undefined;
+        title?: string | undefined;
+        hideWidgetTitles?: boolean | undefined;
     } | null>;
     // (undocumented)
     getFilterViewsForCurrentUser(dashboardRef: ObjRef): Promise<IDashboardFilterView[]>;
@@ -853,7 +854,7 @@ export class FactMetadataObjectBuilder<T extends IFactMetadataObject = IFactMeta
 }
 
 // @internal
-export const generateDateFilterLocalIdentifier: (index: number, dateDatasetRef?: ObjRef) => string;
+export const generateDateFilterLocalIdentifier: (index: number, dateDatasetRef?: ObjRef | undefined) => string;
 
 // @alpha (undocumented)
 export type GeoDecoratorFactory = (geo: IGeoService) => IGeoService;
@@ -1022,7 +1023,7 @@ export class KpiWidgetBuilder extends WidgetBaseBuilder<IKpiWidget> implements I
     // (undocumented)
     comparisonType: (valueOrUpdateCallback: ValueOrUpdateCallback<IKpiComparisonTypeComparison>) => this;
     // (undocumented)
-    drills: (valueOrUpdateCallback: ValueOrUpdateCallback<KpiDrillDefinition[]>) => this;
+    drills: (valueOrUpdateCallback: ValueOrUpdateCallback<IDrillToLegacyDashboard[]>) => this;
     // (undocumented)
     static for(kpiWidget: IKpiWidgetDefinition): KpiWidgetBuilder;
     // (undocumented)
@@ -1032,7 +1033,7 @@ export class KpiWidgetBuilder extends WidgetBaseBuilder<IKpiWidget> implements I
     // (undocumented)
     measure: (valueOrUpdateCallback: ValueOrUpdateCallback<ObjRef>) => this;
     // (undocumented)
-    protected setKpiWidgetProp: <K extends keyof IKpi>(prop: K, valueOrUpdateCallback: ValueOrUpdateCallback<IKpiWidget["kpi"][K]>) => this;
+    protected setKpiWidgetProp: <K extends "comparisonDirection" | "comparisonType" | "metric">(prop: K, valueOrUpdateCallback: ValueOrUpdateCallback<IKpi[K]>) => this;
     // (undocumented)
     protected validator?: ((item: Partial<IKpiWidget>) => void) | undefined;
 }
@@ -1089,37 +1090,37 @@ export class MetadataObjectBuilder<T extends IMetadataObject = IMetadataObject> 
 }
 
 // @beta
-export const newAttributeDisplayFormMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<AttributeDisplayFormMetadataObjectBuilder>) => IAttributeDisplayFormMetadataObject;
+export const newAttributeDisplayFormMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<AttributeDisplayFormMetadataObjectBuilder<IAttributeDisplayFormMetadataObject>>) => IAttributeDisplayFormMetadataObject;
 
 // @beta
-export const newAttributeMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<AttributeMetadataObjectBuilder>) => IAttributeMetadataObject;
+export const newAttributeMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<AttributeMetadataObjectBuilder<IAttributeMetadataObject>>) => IAttributeMetadataObject;
 
 // @beta
-export const newCatalogAttribute: (modifications?: BuilderModifications<CatalogAttributeBuilder>) => ICatalogAttribute;
+export const newCatalogAttribute: (modifications?: BuilderModifications<CatalogAttributeBuilder<ICatalogAttribute>>) => ICatalogAttribute;
 
 // @beta
-export const newCatalogDateAttribute: (modifications?: BuilderModifications<CatalogDateAttributeBuilder>) => ICatalogDateAttribute;
+export const newCatalogDateAttribute: (modifications?: BuilderModifications<CatalogDateAttributeBuilder<ICatalogDateAttribute>>) => ICatalogDateAttribute;
 
 // @beta
-export const newCatalogDateDataset: (modifications?: BuilderModifications<CatalogDateDatasetBuilder>) => ICatalogDateDataset;
+export const newCatalogDateDataset: (modifications?: BuilderModifications<CatalogDateDatasetBuilder<ICatalogDateDataset>>) => ICatalogDateDataset;
 
 // @beta
-export const newCatalogFact: (modifications?: BuilderModifications<CatalogFactBuilder>) => ICatalogFact;
+export const newCatalogFact: (modifications?: BuilderModifications<CatalogFactBuilder<ICatalogFact>>) => ICatalogFact;
 
 // @beta
-export const newCatalogGroup: (modifications?: BuilderModifications<CatalogGroupBuilder>) => ICatalogGroup;
+export const newCatalogGroup: (modifications?: BuilderModifications<CatalogGroupBuilder<ICatalogGroup>>) => ICatalogGroup;
 
 // @beta
-export const newCatalogMeasure: (modifications?: BuilderModifications<CatalogMeasureBuilder>) => ICatalogMeasure;
+export const newCatalogMeasure: (modifications?: BuilderModifications<CatalogMeasureBuilder<ICatalogMeasure>>) => ICatalogMeasure;
 
 // @beta
-export const newDashboardMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<DashboardMetadataObjectBuilder>) => IDashboardMetadataObject;
+export const newDashboardMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<DashboardMetadataObjectBuilder<IDashboardMetadataObject>>) => IDashboardMetadataObject;
 
 // @beta
-export const newDataSetMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<DataSetMetadataObjectBuilder>) => IDataSetMetadataObject;
+export const newDataSetMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<DataSetMetadataObjectBuilder<IDataSetMetadataObject>>) => IDataSetMetadataObject;
 
 // @beta
-export const newFactMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<FactMetadataObjectBuilder>) => IFactMetadataObject;
+export const newFactMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<FactMetadataObjectBuilder<IFactMetadataObject>>) => IFactMetadataObject;
 
 // @alpha (undocumented)
 export const newInsightWidget: (insight: ObjRef, modifications: (builder: InsightWidgetBuilder) => InsightWidgetBuilder) => IInsightWidget;
@@ -1128,10 +1129,10 @@ export const newInsightWidget: (insight: ObjRef, modifications: (builder: Insigh
 export const newKpiWidget: (measure: ObjRef, modifications: (builder: KpiWidgetBuilder) => KpiWidgetBuilder) => IKpiWidget;
 
 // @beta
-export const newMeasureMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<MeasureMetadataObjectBuilder>) => IMeasureMetadataObject;
+export const newMeasureMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<MeasureMetadataObjectBuilder<IMeasureMetadataObject>>) => IMeasureMetadataObject;
 
 // @beta
-export const newVariableMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<VariableMetadataObjectBuilder>) => IVariableMetadataObject;
+export const newVariableMetadataObject: (ref: ObjRef, modifications?: BuilderModifications<VariableMetadataObjectBuilder<IVariableMetadataObject>>) => IVariableMetadataObject;
 
 // @internal
 export class NoopAuthProvider implements IAuthProviderCallGuard {

@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type FC, type ReactElement, memo, useCallback } from "react";
 
@@ -8,19 +8,15 @@ import { UiSubmenuHeader } from "../../../UiSubmenuHeader/UiSubmenuHeader.js";
 import { typedUiMenuContextStore } from "../../context.js";
 import { getItemInteractiveParent } from "../../itemUtils.js";
 import { e } from "../../menuBem.js";
-import { type IUiMenuItemData } from "../../types.js";
-
 /**
  * Renders the submenu header when in a submenu.
  * If not in a submenu, returns null.
  * @internal
  */
-export const DefaultUiMenuHeader: FC = memo(function DefaultUiMenuHeader<
-    T extends IUiMenuItemData = object,
->(): ReactElement | null {
+export const DefaultUiMenuHeader: FC = memo(function DefaultUiMenuHeader(): ReactElement | null {
     const { formatMessage } = useIntl();
 
-    const { useContextStore, createSelector } = typedUiMenuContextStore<T>();
+    const { useContextStore, createSelector } = typedUiMenuContextStore();
     const selector = createSelector((ctx) => ({
         setFocusedId: ctx.setFocusedId,
         onClose: ctx.onClose,

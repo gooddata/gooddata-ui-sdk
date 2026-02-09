@@ -29,7 +29,7 @@ vi.mock("@gooddata/sdk-ui-charts/internal-tests/CoreComboChart", async () => {
     };
 });
 
-describe("ComboChart", () => {
+describe.skip("ComboChart", () => {
     const Scenarios: Array<ScenarioAndDescription<IComboChartProps>> = comboChartScenarios.flatMap((group) =>
         group.forTestTypes("api").asScenarioDescAndScenario(),
     );

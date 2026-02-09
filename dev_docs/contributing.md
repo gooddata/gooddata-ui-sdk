@@ -112,8 +112,8 @@ On top of Rush built-in commands, we have added our own custom commands (see [co
 | `rush validate`     | Validates code in all projects.                                                         |
 | `rush test-once`    | Tests code in all projects.                                                             |
 | `rush dep-cruiser`  | Runs dependency-cruiser in all projects.                                                |
-| `rush oxfmt-check`  | Verifies code formatting in all projects.                                               |
-| `rush oxfmt-write`  | Formats code in all projects.                                                           |
+| `rush format-check` | Verifies code formatting in all projects.                                               |
+| `rush format-write` | Formats code in all projects.                                                           |
 | `rush populate-ref` | Makes projects populate reference workspace with recording definitions.                 |
 
 ## How do I...?

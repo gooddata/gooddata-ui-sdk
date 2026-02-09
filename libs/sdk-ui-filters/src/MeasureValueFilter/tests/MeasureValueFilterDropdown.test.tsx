@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 
 import {
@@ -40,6 +40,32 @@ const renderComponent = (props?: Partial<IMeasureValueFilterDropdownProps>) => {
 const component = new MVFDropdownFragment();
 
 describe("Measure value filter dropdown", () => {
+    it("should load catalog dimensionality only after dimensionality picker is opened", async () => {
+        const loadCatalogDimensionality = vi.fn(
+            (_dimensionality: any) =>
+                // keep pending to assert loading UI
+                new Promise<any>(() => {
+                    /* pending */
+                }),
+        );
+
+        renderComponent({
+            isDimensionalityEnabled: true,
+            dimensionality: [{ identifier: localIdRef("product"), title: "Product", type: "attribute" }],
+            loadCatalogDimensionality,
+        });
+
+        expect(loadCatalogDimensionality).not.toHaveBeenCalled();
+
+        fireEvent.click(screen.getByTestId("mvf-dimensionality-plus"));
+
+        await waitFor(() => expect(loadCatalogDimensionality).toHaveBeenCalledTimes(1));
+        expect(loadCatalogDimensionality.mock.calls[0]?.[0]).toMatchObject([{ localIdentifier: "product" }]);
+
+        // CatalogItemPicker renders a dedicated loading container when isLoading=true
+        expect(document.querySelector(".gd-ui-kit-catalog-item-picker__loading")).toBeInTheDocument();
+    });
+
     it("should render single value input when comparison type operator is selected", () => {
         renderComponent();
 

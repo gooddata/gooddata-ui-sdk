@@ -29,7 +29,7 @@ vi.mock("@gooddata/sdk-ui-charts/internal-tests/CoreRepeater", async () => {
     };
 });
 
-describe("Repeater", () => {
+describe.skip("Repeater", () => {
     const Scenarios: Array<ScenarioAndDescription<IRepeaterProps>> = RepeaterScenarios.flatMap((group) =>
         group.forTestTypes("api").asScenarioDescAndScenario(),
     );

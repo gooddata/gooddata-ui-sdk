@@ -137,13 +137,13 @@ export const clearThreadAction: ActionCreatorWithoutPayload<"messages/clearThrea
 export type Contents = TextContents | RoutingContents | ReasoningContents | SearchContents | SemanticSearchContents | VisualizationContents | ChangeAnalysisContents | ErrorContents;
 
 // @beta (undocumented)
-export function DefaultLandingContainer({ children, isBigScreen, isSmallScreen, isFullscreen, }: ILandingContentProps): JSX.Element;
+export function DefaultLandingContainer({ children, isBigScreen, isSmallScreen, isFullscreen }: ILandingContentProps): JSX.Element;
 
 // @beta (undocumented)
 export const DefaultLandingQuestion: FC<ILandingQuestionProps>;
 
 // @beta (undocumented)
-export function DefaultLandingQuestions({ children, isFullscreen, isBigScreen, isSmallScreen, }: ILandingContentProps): JSX.Element;
+export function DefaultLandingQuestions({ children, isFullscreen, isBigScreen, isSmallScreen }: ILandingContentProps): JSX.Element;
 
 // @beta (undocumented)
 export const DefaultLandingScreen: FC<LandingScreenProps>;

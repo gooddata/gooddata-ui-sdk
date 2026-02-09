@@ -178,7 +178,7 @@ module.exports = {
 
 - **Peer Dependencies**: Only packages from the `common` configuration are listed in `peerDependencies`. Variant-specific packages (e.g., `eslint-plugin-react` for the `react` variant) are **not** included as peer dependencies since they're not required by all consumers.
 
-- **Verify Dependencies**: After adopting a configuration, run `npm run eslint` (or your lint command) to ensure all necessary dependencies are present in your project. If you get plugin errors, install the missing packages.
+- **Verify Dependencies**: After adopting a configuration, run `npm run lint` (or your lint command) to ensure all necessary dependencies are present in your project. If you get plugin errors, install the missing packages.
 
 ## Development Guide
 
@@ -291,7 +291,7 @@ rules: {
 
 - **`npm run validate`** - Type-checks TypeScript files
 
-- **`npm run eslint`** - Lints the configuration source code
+- **`npm run lint`** - Lints the configuration source code
 
 ## Configuration Structure
 

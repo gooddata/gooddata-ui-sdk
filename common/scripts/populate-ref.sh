@@ -5,4 +5,4 @@ cd libs/sdk-ui-tests
 rushx populate-ref
 
 cd ../../tools/reference-workspace
-rushx oxfmt-write
+rushx format-write

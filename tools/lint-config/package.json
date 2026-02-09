@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/lint-config",
-    "version": "11.20.0-alpha.0",
+    "version": "11.20.0-alpha.1",
     "description": "Linter-agnostic shared rules for @gooddata/eslint-config and @gooddata/oxlint-config",
     "license": "MIT",
     "author": "GoodData",
@@ -29,9 +29,9 @@
         "build-check": "tsgo",
         "build-ts": "tsgo -p tsconfig.build.json",
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo tsconfig.check.tsbuildinfo",
-        "oxfmt-check": "oxfmt --check .",
-        "oxfmt-write": "oxfmt .",
-        "validate": "npm run oxfmt-check"
+        "format-check": "oxfmt --check .",
+        "format-write": "oxfmt .",
+        "validate": "npm run format-check"
     },
     "devDependencies": {
         "@typescript/native-preview": "7.0.0-dev.20260202.1",

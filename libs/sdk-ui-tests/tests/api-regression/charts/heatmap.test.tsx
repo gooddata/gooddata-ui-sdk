@@ -29,7 +29,7 @@ vi.mock("@gooddata/sdk-ui-charts/internal-tests/CoreHeatmap", async () => {
     };
 });
 
-describe("Heatmap", () => {
+describe.skip("Heatmap", () => {
     const Scenarios: Array<ScenarioAndDescription<IHeatmapProps>> = heatmapScenarios.flatMap((group) =>
         group.forTestTypes("api").asScenarioDescAndScenario(),
     );

@@ -2128,6 +2128,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       commander:
         specifier: ^8.1.0
         version: 8.3.0
@@ -2249,6 +2252,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       dependency-cruiser:
         specifier: ^14.1.2
         version: 14.1.2
@@ -2346,6 +2352,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       dependency-cruiser:
         specifier: ^14.1.2
         version: 14.1.2
@@ -2428,6 +2437,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       dependency-cruiser:
         specifier: ^14.1.2
         version: 14.1.2
@@ -2561,6 +2573,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       dependency-cruiser:
         specifier: ^14.1.2
         version: 14.1.2
@@ -2646,6 +2661,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       dependency-cruiser:
         specifier: ^14.1.2
         version: 14.1.2
@@ -2743,6 +2761,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       dependency-cruiser:
         specifier: ^14.1.2
         version: 14.1.2
@@ -2891,6 +2912,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       '@vitest/eslint-plugin':
         specifier: 1.6.6
         version: 1.6.6(eslint@9.39.2)(typescript@5.9.3)(vitest@4.0.8)
@@ -3024,6 +3048,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       dependency-cruiser:
         specifier: ^14.1.2
         version: 14.1.2
@@ -3148,6 +3175,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       '@vitest/eslint-plugin':
         specifier: 1.6.6
         version: 1.6.6(eslint@9.39.2)(typescript@5.9.3)(vitest@4.0.8)
@@ -3365,6 +3395,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       '@vitest/eslint-plugin':
         specifier: 1.6.6
         version: 1.6.6(eslint@9.39.2)(typescript@5.9.3)(vitest@4.0.8)
@@ -3630,6 +3663,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       '@vitest/eslint-plugin':
         specifier: 1.6.6
         version: 1.6.6(eslint@9.39.2)(typescript@5.9.3)(vitest@4.0.8)
@@ -3904,6 +3940,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       '@vitest/eslint-plugin':
         specifier: 1.6.6
         version: 1.6.6(eslint@9.39.2)(typescript@5.9.3)(vitest@4.0.8)
@@ -4106,6 +4145,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       '@vitest/eslint-plugin':
         specifier: 1.6.6
         version: 1.6.6(eslint@9.39.2)(typescript@5.9.3)(vitest@4.0.8)
@@ -4350,6 +4392,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       '@vitest/eslint-plugin':
         specifier: 1.6.6
         version: 1.6.6(eslint@9.39.2)(typescript@5.9.3)(vitest@4.0.8)
@@ -4540,6 +4585,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       '@vitest/eslint-plugin':
         specifier: 1.6.6
         version: 1.6.6(eslint@9.39.2)(typescript@5.9.3)(vitest@4.0.8)
@@ -4820,6 +4868,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       '@vitest/eslint-plugin':
         specifier: 1.6.6
         version: 1.6.6(eslint@9.39.2)(typescript@5.9.3)(vitest@4.0.8)
@@ -4974,6 +5025,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       dependency-cruiser:
         specifier: ^14.1.2
         version: 14.1.2
@@ -5140,6 +5194,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       '@vitest/eslint-plugin':
         specifier: 1.6.6
         version: 1.6.6(eslint@9.39.2)(typescript@5.9.3)(vitest@4.0.8)
@@ -5300,6 +5357,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       '@vitest/eslint-plugin':
         specifier: 1.6.6
         version: 1.6.6(eslint@9.39.2)(typescript@5.9.3)(vitest@4.0.8)
@@ -5483,6 +5543,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       '@vitest/eslint-plugin':
         specifier: 1.6.6
         version: 1.6.6(eslint@9.39.2)(typescript@5.9.3)(vitest@4.0.8)
@@ -5910,6 +5973,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       '@vitest/eslint-plugin':
         specifier: 1.6.6
         version: 1.6.6(eslint@9.39.2)(typescript@5.9.3)(vitest@4.0.8)
@@ -6067,6 +6133,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       '@vitest/eslint-plugin':
         specifier: 1.6.6
         version: 1.6.6(eslint@9.39.2)(typescript@5.9.3)(vitest@4.0.8)
@@ -6345,6 +6414,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: 8.52.0
         version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
       dependency-cruiser:
         specifier: ^14.1.2
         version: 14.1.2

@@ -29,7 +29,7 @@ vi.mock("@gooddata/sdk-ui-charts/internal-tests/CoreAreaChart", async () => {
     };
 });
 
-describe("AreaChart", () => {
+describe.skip("AreaChart", () => {
     const Scenarios: Array<ScenarioAndDescription<IAreaChartProps>> = areaScenarios.flatMap((group) =>
         group.forTestTypes("api").asScenarioDescAndScenario(),
     );

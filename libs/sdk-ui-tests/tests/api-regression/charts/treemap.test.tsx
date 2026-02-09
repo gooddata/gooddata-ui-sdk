@@ -29,7 +29,7 @@ vi.mock("@gooddata/sdk-ui-charts/internal-tests/CoreTreemap", async () => {
     };
 });
 
-describe("Treemap", () => {
+describe.skip("Treemap", () => {
     const Scenarios: Array<ScenarioAndDescription<ITreemapProps>> = treemapScenarios.flatMap((group) =>
         group.forTestTypes("api").asScenarioDescAndScenario(),
     );

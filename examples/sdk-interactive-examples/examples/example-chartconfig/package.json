@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-interactive-example-chartconfig",
-    "version": "11.20.0-alpha.0",
+    "version": "11.20.0-alpha.1",
     "private": false,
     "description": "This interactive example demonstrates how to manipulate the chart config.",
     "license": "LicenseRef-LICENSE",
@@ -14,19 +14,15 @@
         "build-ts": "tsgo -p tsconfig.build.json",
         "build-example": "vite build",
         "clean": "rm -rf esm dist *.log",
-        "eslint": "eslint src",
-        "eslint-fix": "eslint src --fix",
-        "oxfmt-check": "oxfmt --check .",
-        "oxfmt-write": "oxfmt .",
+        "format-check": "oxfmt --check .",
+        "format-write": "oxfmt .",
         "preview": "vite preview",
-        "refresh-md": "gdc-catalog-export && npm run oxfmt-write",
+        "refresh-md": "gdc-catalog-export && npm run format-write",
         "start": "vite serve",
         "update-version": "node ./scripts/updateWorkspaceVersion.mjs",
-        "validate": "npm run lint && npm run oxfmt-check",
-        "lint": "npm run oxlint && npm run eslint",
-        "lint-fix": "npm run oxlint-fix && npm run eslint-fix",
-        "oxlint": "oxlint . --type-aware",
-        "oxlint-fix": "oxlint . --type-aware --fix"
+        "validate": "npm run lint && npm run format-check",
+        "lint": "oxlint . --type-aware && eslint src",
+        "lint-fix": "oxlint . --type-aware --fix && eslint src --fix"
     },
     "dependencies": {
         "@gooddata/sdk-backend-base": "workspace:*",

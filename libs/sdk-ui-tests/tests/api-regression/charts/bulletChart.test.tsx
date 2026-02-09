@@ -29,7 +29,7 @@ vi.mock("@gooddata/sdk-ui-charts/internal-tests/CoreBulletChart", async () => {
     };
 });
 
-describe("BulletChart", () => {
+describe.skip("BulletChart", () => {
     const Scenarios: Array<ScenarioAndDescription<IBulletChartProps>> = bulletChartScenarios.flatMap(
         (group) => group.forTestTypes("api").asScenarioDescAndScenario(),
     );

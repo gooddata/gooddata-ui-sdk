@@ -106,6 +106,15 @@ export interface IMeasureValueFilterCommonProps {
      */
     catalogDimensionality?: IDimensionalityItem[];
     /**
+     * Callback for loading catalog dimensionality items lazily.
+     *
+     * When provided, the dimensionality picker can call this on demand (e.g. when opened)
+     * to load compatible attributes/dates for the current dimensionality.
+     *
+     * @beta
+     */
+    loadCatalogDimensionality?: (dimensionality: ObjRefInScope[]) => Promise<IDimensionalityItem[]>;
+    /**
      * Callback triggered when dimensionality changes.
      * Used to revalidate catalog items after selection changes.
      */

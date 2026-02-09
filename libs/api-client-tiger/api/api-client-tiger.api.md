@@ -24173,7 +24173,7 @@ export class OrganizationUtilities {
     // Warning: (ae-forgotten-export) The symbol "OrganizationGetEntitiesFnNew" needs to be exported by the entry point index.d.ts
     //
     // (undocumented)
-    static getAllPagesOf: <T extends OrganizationGetEntitiesResult, P extends OrganizationGetEntitiesParams>(client: ITigerClientBase, entitiesGet: OrganizationGetEntitiesFnNew<T, P>, params: P, options?: AxiosRequestConfig) => Promise<T[]>;
+    static getAllPagesOf: <T extends OrganizationGetEntitiesResult, P extends OrganizationGetEntitiesParams>(client: ITigerClientBase, entitiesGet: OrganizationGetEntitiesFnNew<T, P>, params: P, options?: AxiosRequestConfig<any>) => Promise<T[]>;
     static mergeEntitiesResults<T extends OrganizationGetEntitiesResult>(pages: T[]): T;
 }
 
@@ -25671,16 +25671,16 @@ export const tigerClientBaseFactory: (axios: AxiosInstance, basePath?: string) =
 export const tigerClientFactory: (axios: AxiosInstance) => ITigerClient;
 
 // @public
-export const tigerExecutionClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "computeReport" | "changeAnalysis">;
+export const tigerExecutionClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "changeAnalysis" | "computeReport">;
 
 // @public
-export const tigerExecutionResultClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "retrieveResult" | "changeAnalysisResult">;
+export const tigerExecutionResultClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "changeAnalysisResult" | "retrieveResult">;
 
 // @public (undocumented)
 export const tigerExportClientFactory: (axios: AxiosInstance) => ActionsExportInterface;
 
 // @public
-export const tigerGenAIClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "aiSearch" | "aiChat" | "aiChatStream" | "aiChatHistory" | "validateLLMEndpoint" | "validateLLMEndpointById" | "getQualityIssues" | "getQualityIssuesCalculationStatus" | "triggerQualityIssuesCalculation" | "tags" | "createdBy" | "memoryCreatedByUsers">;
+export const tigerGenAIClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "aiChat" | "aiChatHistory" | "aiChatStream" | "aiSearch" | "createdBy" | "getQualityIssues" | "getQualityIssuesCalculationStatus" | "memoryCreatedByUsers" | "tags" | "triggerQualityIssuesCalculation" | "validateLLMEndpoint" | "validateLLMEndpointById">;
 
 // @public (undocumented)
 export const tigerLabelElementsClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "computeLabelElementsPost">;
@@ -25701,7 +25701,7 @@ export const tigerResultClientFactory: (axios: AxiosInstance) => ResultActionsAp
 export const tigerScanModelClientFactory: (axios: AxiosInstance) => ScanModelActionsApiInterface;
 
 // @beta
-export const tigerSmartFunctionsClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "forecast" | "forecastResult" | "keyDriverAnalysis" | "keyDriverAnalysisResult" | "anomalyDetection" | "anomalyDetectionResult" | "clustering" | "clusteringResult">;
+export const tigerSmartFunctionsClientFactory: (axios: AxiosInstance) => Pick<AfmActionsApiInterface, "anomalyDetection" | "anomalyDetectionResult" | "clustering" | "clusteringResult" | "forecast" | "forecastResult" | "keyDriverAnalysis" | "keyDriverAnalysisResult">;
 
 // @public (undocumented)
 export const tigerUserManagementClientFactory: (axios: AxiosInstance) => UserManagementApiInterface;

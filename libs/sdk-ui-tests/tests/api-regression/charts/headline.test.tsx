@@ -29,7 +29,7 @@ vi.mock("@gooddata/sdk-ui-charts/internal-tests/CoreHeadline", async () => {
     };
 });
 
-describe("Headline", () => {
+describe.skip("Headline", () => {
     const Scenarios: Array<ScenarioAndDescription<IHeadlineProps>> = headlineScenarios.flatMap((group) =>
         group.forTestTypes("api").asScenarioDescAndScenario(),
     );

@@ -28,7 +28,7 @@ vi.mock("@gooddata/sdk-ui-charts/internal-tests/CoreXirr", async () => {
         CoreXirr: wrap(Original.CoreXirr),
     };
 });
-describe("XIRR", () => {
+describe.skip("XIRR", () => {
     const Scenarios: Array<ScenarioAndDescription<IXirrProps>> = xirrScenarios.flatMap((group) =>
         group.forTestTypes("api").asScenarioDescAndScenario(),
     );
