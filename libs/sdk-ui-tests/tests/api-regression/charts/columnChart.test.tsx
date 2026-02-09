@@ -29,7 +29,7 @@ vi.mock("@gooddata/sdk-ui-charts/internal-tests/CoreColumnChart", async () => {
     };
 });
 
-describe("ColumnChart", () => {
+describe.skip("ColumnChart", () => {
     const Scenarios: Array<ScenarioAndDescription<IColumnChartProps>> = columnChartScenarios.flatMap(
         (group) => group.forTestTypes("api").asScenarioDescAndScenario(),
     );

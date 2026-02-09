@@ -13,11 +13,12 @@ import {
 
 import { useIntl } from "react-intl";
 
-import { areObjRefsEqual, objRefToString } from "@gooddata/sdk-model";
+import { type ObjRefInScope, areObjRefsEqual, objRefToString } from "@gooddata/sdk-model";
 import { Bubble, BubbleHoverTrigger, UiButton, UiIconButton, UiTag } from "@gooddata/sdk-ui-kit";
 
 import { AttributePicker } from "./AttributePicker.js";
 import type { IDimensionalityItem } from "./typings.js";
+import { useLazyCatalogDimensionality } from "./useLazyCatalogDimensionality.js";
 
 interface IWithAddButtonProps {
     children: ReactNode;
@@ -110,6 +111,10 @@ interface IDimensionalitySectionProps {
      */
     catalogDimensionality?: IDimensionalityItem[];
     /**
+     * Optional callback to load catalog dimensionality items lazily (e.g. on picker open).
+     */
+    loadCatalogDimensionality?: (dimensionality: ObjRefInScope[]) => Promise<IDimensionalityItem[]>;
+    /**
      * Whether catalog dimensionality is currently being loaded.
      */
     isLoadingCatalogDimensionality?: boolean;
@@ -133,6 +138,7 @@ export const DimensionalitySection = memo(function DimensionalitySection({
     dimensionality,
     insightDimensionality,
     catalogDimensionality,
+    loadCatalogDimensionality,
     isLoadingCatalogDimensionality,
     onDimensionalityChange,
     isMigratedFilter,
@@ -148,6 +154,12 @@ export const DimensionalitySection = memo(function DimensionalitySection({
 
     // Store standalone button anchor separately since it's not a ref
     const [standaloneAnchor, setStandaloneAnchor] = useState<HTMLElement | null>(null);
+
+    const { lazyCatalogDimensionality, isLoadingLazyCatalogDimensionality } = useLazyCatalogDimensionality({
+        isOpen: isAttributePickerOpen,
+        dimensionality,
+        loadCatalogDimensionality,
+    });
 
     /**
      * Check if the current dimensionality differs from the insight defaults (order-insensitive).
@@ -171,7 +183,11 @@ export const DimensionalitySection = memo(function DimensionalitySection({
     }, [insightDimensionality, dimensionality]);
 
     const availableCatalogItems = useMemo(() => {
-        const selectedFilteredOut = (catalogDimensionality ?? []).filter(
+        const effectiveCatalog = loadCatalogDimensionality
+            ? (lazyCatalogDimensionality ?? [])
+            : (catalogDimensionality ?? []);
+
+        const selectedFilteredOut = effectiveCatalog.filter(
             (availableItem) =>
                 !dimensionality.some((filterItem) =>
                     areDimensionalityItemsDeepEqual(availableItem, filterItem),
@@ -198,7 +214,13 @@ export const DimensionalitySection = memo(function DimensionalitySection({
             // Fallback for environments where insight items do not provide refs.
             return !insightTitlesWithoutRef.has(item.title);
         });
-    }, [catalogDimensionality, dimensionality, availableInsightItems]);
+    }, [
+        catalogDimensionality,
+        dimensionality,
+        availableInsightItems,
+        lazyCatalogDimensionality,
+        loadCatalogDimensionality,
+    ]);
 
     const handleRemoveDimensionality = useCallback(
         (index: number) => {
@@ -349,7 +371,11 @@ export const DimensionalitySection = memo(function DimensionalitySection({
                     onCancel={handleCloseAttributePicker}
                     availableInsightItems={availableInsightItems}
                     availableCatalogItems={availableCatalogItems}
-                    isLoadingCatalogDimensionality={isLoadingCatalogDimensionality}
+                    isLoadingCatalogDimensionality={
+                        loadCatalogDimensionality
+                            ? isLoadingLazyCatalogDimensionality
+                            : isLoadingCatalogDimensionality
+                    }
                 />
             ) : null}
         </div>

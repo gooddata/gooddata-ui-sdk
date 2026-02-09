@@ -55,6 +55,7 @@ interface IDropdownBodyProps {
     insightDimensionality?: IDimensionalityItem[];
     isDimensionalityEnabled?: boolean;
     catalogDimensionality?: IDimensionalityItem[];
+    loadCatalogDimensionality?: (dimensionality: ObjRefInScope[]) => Promise<IDimensionalityItem[]>;
     onDimensionalityChange?: (dimensionality: ObjRefInScope[]) => void;
     isLoadingCatalogDimensionality?: boolean;
 }
@@ -145,6 +146,7 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
         insightDimensionality,
         separators,
         catalogDimensionality,
+        loadCatalogDimensionality,
         onDimensionalityChange,
         isLoadingCatalogDimensionality,
     } = props;
@@ -815,6 +817,7 @@ export const DropdownBodyWithIntl = memo(function DropdownBodyWithIntl(props: ID
                             dimensionality={dimensionality}
                             insightDimensionality={insightDimensionality}
                             catalogDimensionality={catalogDimensionality}
+                            loadCatalogDimensionality={loadCatalogDimensionality}
                             isLoadingCatalogDimensionality={isLoadingCatalogDimensionality}
                             onDimensionalityChange={handleDimensionalityChange}
                             isMigratedFilter={isMigratedFilter}

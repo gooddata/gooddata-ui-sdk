@@ -217,7 +217,7 @@ export type ActionFailedErrorReason = "USER_ERROR" | "INTERNAL_ERROR";
 export function addAttributeFilter(displayForm: ObjRef, index: number, correlationId?: string, selectionMode?: DashboardAttributeFilterSelectionMode, mode?: DashboardAttributeFilterConfigMode, initialSelection?: IAttributeElements, initialIsNegativeSelection?: boolean, localIdentifier?: string, primaryDisplayForm?: ObjRef, title?: string): IAddAttributeFilter;
 
 // @internal (undocumented)
-export function AddAttributeFilterButton({ id, className, isOpen, title, buttonRef, onClick, }: IAddAttributeFilterButtonProps): JSX.Element;
+export function AddAttributeFilterButton({ id, className, isOpen, title, buttonRef, onClick }: IAddAttributeFilterButtonProps): JSX.Element;
 
 // @beta
 export type AddAttributeFilterPayload = {
@@ -334,7 +334,7 @@ export type AttributeHierarchiesInteractionType = "attributeHierarchyDrillDownSe
 export function attributeHierarchyModified(correlationId?: string): IAttributeHierarchyModified;
 
 // @internal (undocumented)
-export function AttributesDropdown({ id, className, bodyClassName, onClose, onOpen, onSelect, attributes, dateDatasets, openOnInit, DropdownButtonComponent, DropdownTitleComponent, renderNoData, overlayPositionType, getCustomItemTitle, accessibilityConfig, returnFocusTo, }: IDashboardAttributeFilterPlaceholderProps): JSX.Element;
+export function AttributesDropdown({ id, className, bodyClassName, onClose, onOpen, onSelect, attributes, dateDatasets, openOnInit, DropdownButtonComponent, DropdownTitleComponent, renderNoData, overlayPositionType, getCustomItemTitle, accessibilityConfig, returnFocusTo }: IDashboardAttributeFilterPlaceholderProps): JSX.Element;
 
 // @alpha (undocumented)
 export type AutomationInteractionData = {
@@ -467,7 +467,7 @@ export type ChangeFilterContextSelection = IDashboardCommand & {
 export function changeFilterContextSelection(filters: (IDashboardFilter | FilterContextItem)[], resetOthers?: boolean, correlationId?: string): ChangeFilterContextSelection;
 
 // @internal
-export function changeFilterContextSelectionByParams({ filters, attributeFilterConfigs, resetOthers, correlationId, tabLocalIdentifier, }: ChangeFilterContextSelectionParams): ChangeFilterContextSelection;
+export function changeFilterContextSelectionByParams({ filters, attributeFilterConfigs, resetOthers, correlationId, tabLocalIdentifier }: ChangeFilterContextSelectionParams): ChangeFilterContextSelection;
 
 // @public
 export type ChangeFilterContextSelectionParams = {
@@ -608,7 +608,7 @@ export type ConfigurableWidget<TWidget> = {
 export function convertDashboardTabFromDefault(title?: string, correlationId?: string): IConvertDashboardTabFromDefault;
 
 // @internal (undocumented)
-export function CreatableAttributeFilter({ WrapCreatePanelItemWithDragComponent, }: ICreatePanelItemComponentProps): JSX.Element;
+export function CreatableAttributeFilter({ WrapCreatePanelItemWithDragComponent }: ICreatePanelItemComponentProps): JSX.Element;
 
 // @internal
 export type CreatableByDragComponent = DraggableComponent & {
@@ -1311,8 +1311,7 @@ export function DashboardWidget(props: IDashboardWidgetProps): ReactElement;
 export type DateFilterComponentProvider = (filter: IDashboardDateFilter) => CustomDashboardDateFilterComponent;
 
 // @internal
-export type DateFilterComponentSet = ICustomComponentBase<IDashboardDateFilterProps, Parameters<DateFilterComponentProvider>> & DraggableComponent & CreatablePlaceholderComponent<IDashboardAttributeFilterPlaceholderProps> & // placeholder is shared with AF
-CreatableByDragComponent;
+export type DateFilterComponentSet = ICustomComponentBase<IDashboardDateFilterProps, Parameters<DateFilterComponentProvider>> & DraggableComponent & CreatablePlaceholderComponent<IDashboardAttributeFilterPlaceholderProps> & CreatableByDragComponent;
 
 // @public
 export type DateFilterConfigValidationResult = "Valid" | "NoVisibleOptions" | "ConflictingIdentifiers" | "SelectedOptionInvalid";
@@ -1384,16 +1383,16 @@ export const DEFAULT_TAB_ID = "defaultTabId";
 export function DefaultAlertingDialogNew(props: IAlertingDialogProps): JSX.Element;
 
 // @alpha (undocumented)
-export function DefaultAlertingDialogOld({ editAlert, editWidget, anchorEl, onCancel, onUpdate, }: IAlertingDialogOldProps): JSX.Element | null;
+export function DefaultAlertingDialogOld({ editAlert, editWidget, anchorEl, onCancel, onUpdate }: IAlertingDialogOldProps): JSX.Element | null;
 
 // @alpha (undocumented)
-export function DefaultAlertingManagementDialogNew({ onPauseSuccess, onPauseError, onEdit, onAdd, onDeleteSuccess, onDeleteError, onClose, isLoadingAlertingData, automations, }: IAlertingManagementDialogProps): JSX.Element;
+export function DefaultAlertingManagementDialogNew({ onPauseSuccess, onPauseError, onEdit, onAdd, onDeleteSuccess, onDeleteError, onClose, isLoadingAlertingData, automations }: IAlertingManagementDialogProps): JSX.Element;
 
 // @alpha (undocumented)
-export function DefaultAlertingManagementDialogOld({ onPauseSuccess, onPauseError, onEdit, onDeleteSuccess, onDeleteError, onClose, isLoadingAlertingData, automations, }: IAlertingManagementDialogOldProps): JSX.Element;
+export function DefaultAlertingManagementDialogOld({ onPauseSuccess, onPauseError, onEdit, onDeleteSuccess, onDeleteError, onClose, isLoadingAlertingData, automations }: IAlertingManagementDialogOldProps): JSX.Element;
 
 // @alpha (undocumented)
-export function DefaultButtonBar({ children, cancelButtonProps, saveButtonProps, settingButtonProps, editButtonProps, saveAsNewButtonProps, shareButtonProps, childContentPosition, }: IButtonBarProps): ReactElement;
+export function DefaultButtonBar({ children, cancelButtonProps, saveButtonProps, settingButtonProps, editButtonProps, saveAsNewButtonProps, shareButtonProps, childContentPosition }: IButtonBarProps): ReactElement;
 
 // @internal (undocumented)
 export function DefaultCancelButton({ isVisible, onCancelClick }: ICancelButtonProps): JSX.Element | null;
@@ -1408,7 +1407,7 @@ export function DefaultDashboardAttributeFilter(props: IDashboardAttributeFilter
 export function DefaultDashboardAttributeFilterComponentSetFactory(attributeFilterProvider: AttributeFilterComponentProvider): AttributeFilterComponentSet;
 
 // @alpha
-export function DefaultDashboardDateFilter({ filter, workingFilter, onFilterChanged, config, readonly, autoOpen, ButtonComponent, overlayPositionType, tabId, }: IDashboardDateFilterProps): ReactElement;
+export function DefaultDashboardDateFilter({ filter, workingFilter, onFilterChanged, config, readonly, autoOpen, ButtonComponent, overlayPositionType, tabId }: IDashboardDateFilterProps): ReactElement;
 
 // @internal (undocumented)
 export function DefaultDashboardDateFilterComponentSetFactory(dateFilterProvider: DateFilterComponentProvider): DateFilterComponentSet;
@@ -1459,7 +1458,7 @@ export function DefaultDashboardRichTextMenu(props: IDashboardRichTextMenuProps)
 export function DefaultDashboardRichTextMenuTitle(_props: IDashboardRichTextMenuTitleProps): JSX.Element;
 
 // @alpha (undocumented)
-export function DefaultDashboardSettingsDialog({ isVisible, onApply, onCancel, }: IDashboardSettingsDialogProps): ReactElement | null;
+export function DefaultDashboardSettingsDialog({ isVisible, onApply, onCancel }: IDashboardSettingsDialogProps): ReactElement | null;
 
 // @beta
 export const defaultDashboardThemeModifier: (theme: ITheme) => ITheme;
@@ -1468,7 +1467,7 @@ export const defaultDashboardThemeModifier: (theme: ITheme) => ITheme;
 export function DefaultDashboardToolbar({ children }: IToolbarProps): JSX.Element;
 
 // @internal (undocumented)
-export function DefaultDashboardToolbarButton({ tooltip, disabled, icon, onClick, isActive, }: IDefaultDashboardToolbarButtonProps): JSX.Element;
+export function DefaultDashboardToolbarButton({ tooltip, disabled, icon, onClick, isActive }: IDefaultDashboardToolbarButtonProps): JSX.Element;
 
 // @internal (undocumented)
 export function DefaultDashboardToolbarGroup({ children, title }: IDefaultDashboardToolbarGroupProps): JSX.Element;
@@ -1489,7 +1488,7 @@ export function DefaultEditButton({ isVisible, isEnabled, onEditClick, tooltipTe
 export function DefaultFilterBar(props: IFilterBarProps): ReactElement;
 
 // @alpha (undocumented)
-export function DefaultFlexibleDashboardLayout({ layout: providedLayout, onFiltersChange, onDrill, onError, dashboardItemClasses, }: IDashboardLayoutProps): ReactElement;
+export function DefaultFlexibleDashboardLayout({ layout: providedLayout, onFiltersChange, onDrill, onError, dashboardItemClasses }: IDashboardLayoutProps): ReactElement;
 
 // @alpha
 export function DefaultInsightBody(props: IInsightBodyProps): JSX.Element;
@@ -1501,28 +1500,28 @@ export function DefaultLockedStatus(props: ILockedStatusProps): ReactElement | n
 export function DefaultMenuButton({ menuItems }: IMenuButtonProps): ReactElement | null;
 
 // @alpha (undocumented)
-export function DefaultSaveAsDialog({ onSubmit, onCancel, onError, isVisible, onSuccess, }: ISaveAsDialogProps): ReactElement | null;
+export function DefaultSaveAsDialog({ onSubmit, onCancel, onError, isVisible, onSuccess }: ISaveAsDialogProps): ReactElement | null;
 
 // @internal (undocumented)
 export function DefaultSaveAsNewButton({ isVisible, onSaveAsNewClick }: ISaveAsNewButtonProps): JSX.Element | null;
 
 // @internal (undocumented)
-export function DefaultSaveButton({ isVisible, isEnabled, isSaving, buttonTitle, onSaveClick, }: ISaveButtonProps): JSX.Element | null;
+export function DefaultSaveButton({ isVisible, isEnabled, isSaving, buttonTitle, onSaveClick }: ISaveButtonProps): JSX.Element | null;
 
 // @alpha (undocumented)
 export function DefaultScheduledEmailDialog(props: IScheduledEmailDialogProps): JSX.Element;
 
 // @alpha (undocumented)
-export function DefaultScheduledEmailManagementDialog({ onAdd, onEdit, onDeleteSuccess: onDelete, onClose, onDeleteError, isLoadingScheduleData, automations, notificationChannels, }: IScheduledEmailManagementDialogProps): JSX.Element;
+export function DefaultScheduledEmailManagementDialog({ onAdd, onEdit, onDeleteSuccess: onDelete, onClose, onDeleteError, isLoadingScheduleData, automations, notificationChannels }: IScheduledEmailManagementDialogProps): JSX.Element;
 
 // @internal (undocumented)
-export function DefaultSettingButton({ isVisible, isEnabled, isSaving, buttonTitle, onSettingClick, }: ISettingButtonProps): JSX.Element | null;
+export function DefaultSettingButton({ isVisible, isEnabled, isSaving, buttonTitle, onSettingClick }: ISettingButtonProps): JSX.Element | null;
 
 // @alpha (undocumented)
-export function DefaultShareButton({ isVisible, onShareButtonClick, }: IShareButtonProps): ReactElement | null;
+export function DefaultShareButton({ isVisible, onShareButtonClick }: IShareButtonProps): ReactElement | null;
 
 // @alpha (undocumented)
-export function DefaultShareDialog({ workspace, backend, isVisible, sharedObject, currentUser, isLockingSupported, isCurrentUserWorkspaceManager, currentUserPermissions, dashboardFilters, isShareGrantHidden, applyShareGrantOnSelect, showDashboardShareLink, isGranteeShareLoading, onApply, onCancel, onError, onInteraction, onShareLinkCopy, }: IShareDialogProps): ReactElement | null;
+export function DefaultShareDialog({ workspace, backend, isVisible, sharedObject, currentUser, isLockingSupported, isCurrentUserWorkspaceManager, currentUserPermissions, dashboardFilters, isShareGrantHidden, applyShareGrantOnSelect, showDashboardShareLink, isGranteeShareLoading, onApply, onCancel, onError, onInteraction, onShareLinkCopy }: IShareDialogProps): ReactElement | null;
 
 // @alpha (undocumented)
 export function DefaultShareStatus(props: IShareStatusProps): ReactElement | null;
@@ -1898,7 +1897,7 @@ export function formatKeyDriverAnalysisDateRange(range: DeepReadonly<[IKdaDataPo
 export function getAuthor(capabilities: IBackendCapabilities, user: IUser): string | undefined;
 
 // @internal (undocumented)
-export function getDefaultInsightEditMenuItems(widget: IInsightWidget, { intl, dispatch, eventDispatch, includeInteractions, includeConfigurations, useWidgetDeleteDialog, }: InsightMenuItemDependencies): IInsightMenuItem[];
+export function getDefaultInsightEditMenuItems(widget: IInsightWidget, { intl, dispatch, eventDispatch, includeInteractions, includeConfigurations, useWidgetDeleteDialog }: InsightMenuItemDependencies): IInsightMenuItem[];
 
 // @internal (undocumented)
 export function getDefaultInsightMenuItems(intl: IntlShape, config: IUseInsightMenuConfig, execution?: IExecutionResultEnvelope): IInsightMenuItem[];
@@ -6338,7 +6337,7 @@ export type InsightDraggableListItem = BaseDraggableLayoutItem & {
 export type InsightDraggingComponent = ComponentType<IInsightDraggingComponentProps>;
 
 // @internal (undocumented)
-export function InsightList({ height, width, searchAutofocus, renderItem, selectedRef, onSelect, }: IInsightListProps): JSX.Element;
+export function InsightList({ height, width, searchAutofocus, renderItem, selectedRef, onSelect }: IInsightListProps): JSX.Element;
 
 // @alpha (undocumented)
 export type InsightMenuButtonComponentProvider = (insight: IInsight | undefined, widget: IInsightWidget) => CustomDashboardInsightMenuButtonComponent;
@@ -6368,7 +6367,7 @@ export type InsightPlaceholderDraggableItem = BaseDraggableLayoutItem & {
 };
 
 // @alpha
-export function insightSelectDateDataset({ mostImportantFromInsight, dateDatasetsOrdered, }: IInsightDateDatasets): ICatalogDateDataset | undefined;
+export function insightSelectDateDataset({ mostImportantFromInsight, dateDatasetsOrdered }: IInsightDateDatasets): ICatalogDateDataset | undefined;
 
 // @internal
 export class InsightWidgetBuilder {
@@ -8801,8 +8800,8 @@ export function MenuButton(props: IMenuButtonProps): ReactElement;
 // @internal (undocumented)
 export const metaActions: {
     setMeta: ActionCreatorWithPayload<    {
-    dashboard?: IDashboard;
-    initialContent?: boolean;
+    dashboard?: IDashboard<IDashboardWidget> | undefined;
+    initialContent?: boolean | undefined;
     }, "meta/setMeta">;
     setDashboardTitle: ActionCreatorWithPayload<string, "meta/setDashboardTitle">;
     setDisableCrossFiltering: ActionCreatorWithPayload<boolean, "meta/setDisableCrossFiltering">;
@@ -8964,7 +8963,7 @@ export class ObjRefMap<T> {
     // (undocumented)
     entries(): IterableIterator<[ObjRef, T]>;
     // (undocumented)
-    fromItems: (items: ReadonlyArray<T>) => ObjRefMap<T>;
+    fromItems: (items: readonly T[]) => ObjRefMap<T>;
     // (undocumented)
     get(key: ObjRef): T | undefined;
     // (undocumented)
@@ -10342,32 +10341,32 @@ export const selectFiltersByTab: ((state: DashboardState) => Record<string, Filt
                 dependencyRecomputations: () => number;
                 resetDependencyRecomputations: () => void;
             } & {
-                argsMemoize: weakMapMemoize;
                 memoize: weakMapMemoize;
+                argsMemoize: weakMapMemoize;
             }];
             recomputations: () => number;
             resetRecomputations: () => void;
             dependencyRecomputations: () => number;
             resetDependencyRecomputations: () => void;
         } & {
-            argsMemoize: weakMapMemoize;
             memoize: weakMapMemoize;
+            argsMemoize: weakMapMemoize;
         }];
         recomputations: () => number;
         resetRecomputations: () => void;
         dependencyRecomputations: () => number;
         resetDependencyRecomputations: () => void;
     } & {
-        argsMemoize: weakMapMemoize;
         memoize: weakMapMemoize;
+        argsMemoize: weakMapMemoize;
     }];
     recomputations: () => number;
     resetRecomputations: () => void;
     dependencyRecomputations: () => number;
     resetDependencyRecomputations: () => void;
 } & {
-    argsMemoize: weakMapMemoize;
     memoize: weakMapMemoize;
+    argsMemoize: weakMapMemoize;
 };
 
 // @internal
@@ -10602,10 +10601,10 @@ export const selectIsInViewMode: DashboardSelector<boolean>;
 export const selectIsKDDependentFiltersEnabled: DashboardSelector<boolean>;
 
 // @alpha (undocumented)
-export const selectIsKpiAlertHighlightedByWidgetRef: (ref: ObjRef | undefined) => ((state: DashboardState) => boolean);
+export const selectIsKpiAlertHighlightedByWidgetRef: (ref: ObjRef | undefined) => (state: DashboardState) => boolean;
 
 // @alpha (undocumented)
-export const selectIsKpiAlertOpenedByWidgetRef: (ref: ObjRef | undefined) => ((state: DashboardState) => boolean);
+export const selectIsKpiAlertOpenedByWidgetRef: (ref: ObjRef | undefined) => (state: DashboardState) => boolean;
 
 // @internal
 export const selectIsKPIDashboardDependentFiltersEnabled: DashboardSelector<boolean>;
@@ -10794,32 +10793,32 @@ export const selectOriginalFilterContextFiltersByTab: ((state: DashboardState) =
                 dependencyRecomputations: () => number;
                 resetDependencyRecomputations: () => void;
             } & {
-                argsMemoize: weakMapMemoize;
                 memoize: weakMapMemoize;
+                argsMemoize: weakMapMemoize;
             }];
             recomputations: () => number;
             resetRecomputations: () => void;
             dependencyRecomputations: () => number;
             resetDependencyRecomputations: () => void;
         } & {
-            argsMemoize: weakMapMemoize;
             memoize: weakMapMemoize;
+            argsMemoize: weakMapMemoize;
         }];
         recomputations: () => number;
         resetRecomputations: () => void;
         dependencyRecomputations: () => number;
         resetDependencyRecomputations: () => void;
     } & {
-        argsMemoize: weakMapMemoize;
         memoize: weakMapMemoize;
+        argsMemoize: weakMapMemoize;
     }];
     recomputations: () => number;
     resetRecomputations: () => void;
     dependencyRecomputations: () => number;
     resetDependencyRecomputations: () => void;
 } & {
-    argsMemoize: weakMapMemoize;
     memoize: weakMapMemoize;
+    argsMemoize: weakMapMemoize;
 };
 
 // @internal
@@ -11137,7 +11136,7 @@ export type ShareDialogInteractionPayload = IUserInteractionPayloadWithDataBase<
 export type ShareDialogInteractionType = "SHARE_DIALOG_OPENED" | "SHARE_DIALOG_CLOSED" | "SHARE_DIALOG_SAVED" | "SHARE_DIALOG_PERMISSIONS_DROPDOWN_OPENED" | "SHARE_DIALOG_PERMISSIONS_CHANGED" | "SHARE_DIALOG_GRANTEE_REMOVED" | "SHARE_DIALOG_GRANTEE_ADDED" | "SHARE_DIALOG_AVAILABLE_GRANTEE_LIST_OPENED";
 
 // @alpha (undocumented)
-export function ShareStatusIndicator({ shareStatus, isUnderStrictControl, }: IShareStatusProps): ReactElement | null;
+export function ShareStatusIndicator({ shareStatus, isUnderStrictControl }: IShareStatusProps): ReactElement | null;
 
 // @internal (undocumented)
 export function ShowAsTableButton(props: IShowAsTableButtonProps): ReactElement;
@@ -11177,329 +11176,122 @@ export function switchToEditRenderMode(correlationId?: string): IChangeRenderMod
 
 // @internal (undocumented)
 export const tabsActions: CaseReducerActions<    {
-readonly setLayout: (state: WritableDraft<ITabsState>, action: {
-payload: IDashboardLayout<ExtendedDashboardWidget>;
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly setScreen: (state: WritableDraft<ITabsState>, action: {
+readonly setTabs: TabsReducer<    {
 payload: {
-screen: ScreenSize;
+tabs?: ITabState[] | undefined;
+activeTabLocalIdentifier?: string | undefined;
 };
 type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly updateWidgetIdentities: (state: WritableDraft<ITabsState>, action: {
-payload: ObjRefMap<IdentityMapping>;
+}>;
+readonly setActiveTabLocalIdentifier: TabsReducer<    {
+payload: string | undefined;
 type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly updateWidgetIdentitiesForTab: (state: WritableDraft<ITabsState>, action: {
+}>;
+readonly updateTab: TabsReducer<    {
+payload: ITabState;
+type: string;
+}>;
+readonly removeTabById: TabsReducer<    {
+payload: string;
+type: string;
+}>;
+readonly clearTabs: TabsReducer<    {
+payload: void;
+type: string;
+}>;
+readonly setTabIsRenaming: TabsReducer<    {
 payload: {
 tabId: string;
-mapping: ObjRefMap<IdentityMapping>;
+isRenaming: boolean;
 };
 type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly removeIgnoredAttributeFilter: (state: WritableDraft<ITabsState>, action: {
+}>;
+readonly renameTab: TabsReducer<    {
 payload: {
-displayFormRefs: ObjRef[];
+tabId: string;
+title: string;
 };
 type: string;
+}>;
+readonly changeAttributeFilterConfigMode: (state: WritableDraft<ITabsState>, action: {
+payload: ISetDashboardAttributeFilterConfigModePayload;
+type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
-readonly removeIgnoredDateFilter: (state: WritableDraft<ITabsState>, action: {
+readonly setAttributeFilterConfigs: (state: WritableDraft<ITabsState>, action: {
+payload: any;
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly removeAttributeFilterConfig: TabsReducer<    {
+payload: string;
+type: string;
+}>;
+readonly changeDisplayAsLabel: (state: WritableDraft<ITabsState>, action: {
+payload: ISetDashboardAttributeFilterConfigDisplayAsLabelPayload;
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly setDateFilterConfig: (state: WritableDraft<ITabsState>, action: {
 payload: {
-dateDataSets: ObjRef[];
+dateFilterConfig?: IDashboardDateFilterConfig_2 | undefined;
+effectiveDateFilterConfig: IDateFilterConfig;
+isUsingDashboardOverrides: boolean;
 };
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
-readonly addSection: (state: WritableDraft<ITabsState>, action: {
-payload: IUndoPayload<IDashboardCommand> & {
-section: ExtendedDashboardLayoutSection;
-index: ILayoutSectionPath;
-usedStashes: StashedDashboardItemsId[];
-};
+readonly setDateFilterConfigMode: (state: WritableDraft<ITabsState>, action: {
+payload: DashboardDateFilterConfigMode;
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
-readonly removeSection: (state: WritableDraft<ITabsState>, action: {
-payload: IUndoPayload<IDashboardCommand> & {
-index: ILayoutSectionPath;
-stashIdentifier?: StashedDashboardItemsId;
-};
+readonly setDateFilterConfigTitle: (state: WritableDraft<ITabsState>, action: {
+payload: string | undefined;
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
-readonly moveSection: (state: WritableDraft<ITabsState>, action: {
-payload: IUndoPayload<IDashboardCommand> & {
-sectionIndex: ILayoutSectionPath;
-toIndex: ILayoutSectionPath;
-};
+readonly updateDateFilterConfig: (state: WritableDraft<ITabsState>, action: {
+payload: IDashboardDateFilterConfig_2;
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
-readonly changeSectionHeader: (state: WritableDraft<ITabsState>, action: {
-payload: IUndoPayload<IDashboardCommand> & {
-index: ILayoutSectionPath;
-header: IDashboardLayoutSectionHeader;
-};
+readonly addDateFilterConfigValidationWarning: (state: WritableDraft<ITabsState>, action: {
+payload: DateFilterValidationResult;
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
-readonly addSectionItems: (state: WritableDraft<ITabsState>, action: {
-payload: IUndoPayload<IDashboardCommand> & {
-layoutPath: ILayoutItemPath;
-items: ExtendedDashboardItem[];
-usedStashes: StashedDashboardItemsId[];
-};
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly moveSectionItem: (state: WritableDraft<ITabsState>, action: {
-payload: IUndoPayload<IDashboardCommand> & {
-itemIndex: ILayoutItemPath;
-toItemIndex: ILayoutItemPath;
-};
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly removeSectionItem: (state: WritableDraft<ITabsState>, action: {
-payload: IUndoPayload<IDashboardCommand> & {
-itemIndex: ILayoutItemPath;
-stashIdentifier?: StashedDashboardItemsId;
-};
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly replaceSectionItem: (state: WritableDraft<ITabsState>, action: {
-payload: IUndoPayload<IDashboardCommand> & {
-layoutPath: ILayoutItemPath;
-newItems: ExtendedDashboardItem[];
-stashIdentifier?: StashedDashboardItemsId;
-usedStashes: StashedDashboardItemsId[];
-};
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly replaceWidgetHeader: (state: WritableDraft<ITabsState>, action: {
-payload: IUndoPayload<IDashboardCommand> & {
-ref: ObjRef;
-header: IWidgetHeader;
-};
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly replaceWidgetDescription: (state: WritableDraft<ITabsState>, action: {
-payload: IUndoPayload<IDashboardCommand> & {
-ref: ObjRef;
-description: IWidgetDescription;
-};
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly replaceWidgetDrillWithoutUndo: (state: WritableDraft<ITabsState>, action: {
-payload: {
-ref: ObjRef;
-drillDefinitions: InsightDrillDefinition[];
-};
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly replaceWidgetDrills: (state: WritableDraft<ITabsState>, action: {
-payload: IUndoPayload<IDashboardCommand> & {
-ref: ObjRef;
-drillDefinitions: InsightDrillDefinition[];
-};
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly replaceWidgetBlacklistHierarchies: (state: WritableDraft<ITabsState>, action: {
-payload: IUndoPayload<IDashboardCommand> & {
-ref: ObjRef;
-blacklistHierarchies: IDrillDownReference[];
-};
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly replaceWidgetBlacklistAttributes: (state: WritableDraft<ITabsState>, action: {
-payload: IUndoPayload<IDashboardCommand> & {
-ref: ObjRef;
-blacklistAttributes: ObjRef[];
-};
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly replaceWidgetDrillDownIntersectionIgnoredAttributes: (state: WritableDraft<ITabsState>, action: {
-payload: IUndoPayload<IDashboardCommand> & {
-ref: ObjRef;
-ignoredDrillDownIntersectionIgnoredAttributes: IDrillDownIntersectionIgnoredAttributes[];
-};
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly replaceInsightWidgetVisProperties: (state: WritableDraft<ITabsState>, action: {
-payload: IUndoPayload<IDashboardCommand> & {
-ref: ObjRef;
-properties: VisualizationProperties | undefined;
-};
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly replaceInsightWidgetVisConfiguration: (state: WritableDraft<ITabsState>, action: {
-payload: IUndoPayload<IDashboardCommand> & {
-ref: ObjRef;
-config: IInsightWidgetConfiguration | undefined;
-};
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly replaceInsightWidgetInsight: (state: WritableDraft<ITabsState>, action: {
-payload: IUndoPayload<IDashboardCommand> & {
-ref: ObjRef;
-insightRef: ObjRef;
-properties: VisualizationProperties | undefined;
-header: IWidgetHeader | undefined;
-newSize?: IVisualizationSizeInfo;
-};
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly replaceWidgetFilterSettings: (state: WritableDraft<ITabsState>, action: {
-payload: IUndoPayload<IDashboardCommand> & {
-ref: ObjRef;
-ignoreDashboardFilters?: IDashboardFilterReference[];
-dateDataSet?: ObjRef;
-};
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly replaceWidgetDateDataset: (state: WritableDraft<ITabsState>, action: {
-payload: IUndoPayload<IDashboardCommand> & {
-ref: ObjRef;
-dateDataSet?: ObjRef;
-};
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly replaceKpiWidgetMeasure: (state: WritableDraft<ITabsState>, action: {
-payload: IUndoPayload<IDashboardCommand> & {
-ref: ObjRef;
-measureRef: ObjRef;
-};
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly replaceKpiWidgetComparison: (state: WritableDraft<ITabsState>, action: {
-payload: IUndoPayload<IDashboardCommand> & {
-ref: ObjRef;
-comparisonType: IKpiComparisonTypeComparison;
-comparisonDirection?: IKpiComparisonDirection;
-};
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly replaceKpiWidgetDrillWithoutUndo: (state: WritableDraft<ITabsState>, action: {
-payload: {
-ref: ObjRef;
-drillDefinitions: InsightDrillDefinition[];
-};
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly replaceKpiWidgetDrill: (state: WritableDraft<ITabsState>, action: {
-payload: IUndoPayload<IDashboardCommand> & {
-ref: ObjRef;
-drill: IDrillToLegacyDashboard_2 | undefined;
-};
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly replaceKpiWidgetConfiguration: (state: WritableDraft<ITabsState>, action: {
-payload: IUndoPayload<IDashboardCommand> & {
-ref: ObjRef;
-config: IKpiWidgetConfiguration | undefined;
-};
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly replaceRichTextWidgetContent: (state: WritableDraft<ITabsState>, action: {
-payload: IUndoPayload<IDashboardCommand> & {
-ref: ObjRef;
-content: string;
-};
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly addVisualizationSwitcherWidgetVisualization: (state: WritableDraft<ITabsState>, action: {
-payload: IUndoPayload<IDashboardCommand> & {
-ref: ObjRef;
-visualization: IInsightWidget;
-newSize?: IVisualizationSizeInfo;
-};
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly updateVisualizationSwitcherWidgetVisualizations: (state: WritableDraft<ITabsState>, action: {
-payload: IUndoPayload<IDashboardCommand> & {
-ref: ObjRef;
-visualizations: IInsightWidget[];
-};
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly undoLayout: <TState extends IUndoEnhancedState>(state: WritableDraft<ITabsState>, action: {
-payload: {
-undoDownTo: number;
-};
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly clearLayoutHistory: (state: WritableDraft<ITabsState>, action: {
+readonly clearDateFilterConfigValidationWarning: (state: WritableDraft<ITabsState>, action: {
 payload: void;
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
-readonly changeItemsHeight: (state: WritableDraft<ITabsState>, action: {
-payload: {
-sectionIndex: ILayoutSectionPath;
-itemIndexes: number[];
-height: number;
-};
+readonly changeDateFilterConfigsMode: (state: WritableDraft<ITabsState>, action: {
+payload: ISetDashboardDateFilterWithDimensionConfigModePayload;
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
-readonly changeItemWidth: (state: WritableDraft<ITabsState>, action: {
-payload: {
-layoutPath: ILayoutItemPath;
-width: number;
-};
+readonly setDateFilterConfigs: (state: WritableDraft<ITabsState>, action: {
+payload: any;
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
-readonly changeWidgetIgnoreCrossFiltering: (state: WritableDraft<ITabsState>, action: {
-payload: IUndoPayload<IDashboardCommand> & {
-ref: ObjRef;
-ignoreCrossFiltering?: boolean;
-};
+readonly removeDateFilterConfigs: (state: WritableDraft<ITabsState>, action: {
+payload: ObjRef;
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
-readonly resizeVisualizationSwitcherOnInsightChanged: (state: WritableDraft<ITabsState>, action: {
-payload: IUndoPayload<IDashboardCommand> & {
-ref: ObjRef;
-newSize?: IVisualizationSizeInfo;
-};
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly toggleLayoutSectionHeaders: (state: WritableDraft<ITabsState>, action: {
-payload: IUndoPayload<IDashboardCommand> & {
-layoutPath: ILayoutItemPath | undefined;
-enableSectionHeaders: boolean;
-};
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly toggleLayoutDirection: (state: WritableDraft<ITabsState>, action: {
-payload: IUndoPayload<IDashboardCommand> & {
-layoutPath: ILayoutItemPath | undefined;
-direction: IDashboardLayoutContainerDirection;
-};
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly updateHeightOfMultipleItems: (state: WritableDraft<ITabsState>, action: {
-payload: {
-itemsWithSizes: IItemWithHeight[];
-};
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly updateWidthOfMultipleItems: (state: WritableDraft<ITabsState>, action: {
-payload: {
-itemsWithSizes: IItemWithWidth[];
-};
+readonly changeDateFilterConfigsTitle: (state: WritableDraft<ITabsState>, action: {
+payload: ISetDateFilterConfigTitlePayload;
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
 readonly setFilterContext: (state: WritableDraft<ITabsState>, action: {
 payload: {
 filterContextDefinition: IFilterContextDefinition;
-originalFilterContextDefinition?: IFilterContextDefinition;
+originalFilterContextDefinition?: IFilterContextDefinition | undefined;
 attributeFilterDisplayForms: IAttributeDisplayFormMetadataObject[];
-filterContextIdentity?: IDashboardObjectIdentity;
+filterContextIdentity?: IDashboardObjectIdentity | undefined;
 };
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
 readonly updateFilterContextIdentity: (state: WritableDraft<ITabsState>, action: {
 payload: {
-filterContextIdentity?: IDashboardObjectIdentity;
+filterContextIdentity?: IDashboardObjectIdentity | undefined;
 };
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
 readonly updateFilterContextIdentityForTab: (state: WritableDraft<ITabsState>, action: {
 payload: {
 tabId: string;
-filterContextIdentity?: IDashboardObjectIdentity;
+filterContextIdentity?: IDashboardObjectIdentity | undefined;
 };
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
@@ -11508,7 +11300,7 @@ payload: ObjRef;
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
 readonly addAttributeFilterDisplayForm: (state: WritableDraft<ITabsState>, action: {
-payload: IAttributeDisplayFormMetadataObject | IAddAttributeFilterDisplayFormPayload;
+payload: IAddAttributeFilterDisplayFormPayload | IAttributeDisplayFormMetadataObject;
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
 readonly addAttributeFilter: (state: WritableDraft<ITabsState>, action: {
@@ -11587,103 +11379,310 @@ readonly setDefaultFilterOverrides: (state: WritableDraft<ITabsState>, action: {
 payload: FilterContextItem[];
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
-readonly setDateFilterConfig: (state: WritableDraft<ITabsState>, action: {
+readonly setLayout: (state: WritableDraft<ITabsState>, action: {
+payload: IDashboardLayout<ExtendedDashboardWidget>;
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly setScreen: (state: WritableDraft<ITabsState>, action: {
 payload: {
-dateFilterConfig?: IDashboardDateFilterConfig_2;
-effectiveDateFilterConfig: IDateFilterConfig;
-isUsingDashboardOverrides: boolean;
+screen: ScreenSize;
 };
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
-readonly setDateFilterConfigMode: (state: WritableDraft<ITabsState>, action: {
-payload: DashboardDateFilterConfigMode;
+readonly updateWidgetIdentities: (state: WritableDraft<ITabsState>, action: {
+payload: ObjRefMap<IdentityMapping>;
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
-readonly setDateFilterConfigTitle: (state: WritableDraft<ITabsState>, action: {
-payload: string | undefined;
+readonly updateWidgetIdentitiesForTab: (state: WritableDraft<ITabsState>, action: {
+payload: {
+tabId: string;
+mapping: ObjRefMap<IdentityMapping>;
+};
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
-readonly updateDateFilterConfig: (state: WritableDraft<ITabsState>, action: {
-payload: IDashboardDateFilterConfig_2;
+readonly removeIgnoredAttributeFilter: (state: WritableDraft<ITabsState>, action: {
+payload: {
+displayFormRefs: ObjRef[];
+};
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
-readonly addDateFilterConfigValidationWarning: (state: WritableDraft<ITabsState>, action: {
-payload: DateFilterValidationResult;
+readonly removeIgnoredDateFilter: (state: WritableDraft<ITabsState>, action: {
+payload: {
+dateDataSets: ObjRef[];
+};
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
-readonly clearDateFilterConfigValidationWarning: (state: WritableDraft<ITabsState>, action: {
+readonly addSection: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
+section: ExtendedDashboardLayoutSection;
+index: ILayoutSectionPath;
+usedStashes: string[];
+};
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly removeSection: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
+index: ILayoutSectionPath;
+stashIdentifier?: string | undefined;
+};
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly moveSection: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
+sectionIndex: ILayoutSectionPath;
+toIndex: ILayoutSectionPath;
+};
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly changeSectionHeader: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
+index: ILayoutSectionPath;
+header: IDashboardLayoutSectionHeader;
+};
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly addSectionItems: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
+layoutPath: ILayoutItemPath;
+items: ExtendedDashboardItem[];
+usedStashes: string[];
+};
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly moveSectionItem: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
+itemIndex: ILayoutItemPath;
+toItemIndex: ILayoutItemPath;
+};
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly removeSectionItem: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
+itemIndex: ILayoutItemPath;
+stashIdentifier?: string | undefined;
+};
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly replaceSectionItem: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
+layoutPath: ILayoutItemPath;
+newItems: ExtendedDashboardItem[];
+stashIdentifier?: string | undefined;
+usedStashes: string[];
+};
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly replaceWidgetHeader: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
+ref: ObjRef;
+header: IWidgetHeader;
+};
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly replaceWidgetDescription: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
+ref: ObjRef;
+description: IWidgetDescription;
+};
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly replaceWidgetDrillWithoutUndo: (state: WritableDraft<ITabsState>, action: {
+payload: {
+ref: ObjRef;
+drillDefinitions: InsightDrillDefinition[];
+};
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly replaceWidgetDrills: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
+ref: ObjRef;
+drillDefinitions: InsightDrillDefinition[];
+};
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly replaceWidgetBlacklistHierarchies: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
+ref: ObjRef;
+blacklistHierarchies: IDrillDownReference[];
+};
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly replaceWidgetBlacklistAttributes: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
+ref: ObjRef;
+blacklistAttributes: ObjRef[];
+};
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly replaceWidgetDrillDownIntersectionIgnoredAttributes: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
+ref: ObjRef;
+ignoredDrillDownIntersectionIgnoredAttributes: IDrillDownIntersectionIgnoredAttributes[];
+};
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly replaceInsightWidgetVisProperties: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
+ref: ObjRef;
+properties: VisualizationProperties | undefined;
+};
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly replaceInsightWidgetVisConfiguration: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
+ref: ObjRef;
+config: IInsightWidgetConfiguration | undefined;
+};
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly replaceInsightWidgetInsight: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
+ref: ObjRef;
+insightRef: ObjRef;
+properties: VisualizationProperties | undefined;
+header: IWidgetHeader | undefined;
+newSize?: IVisualizationSizeInfo | undefined;
+};
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly replaceWidgetFilterSettings: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
+ref: ObjRef;
+ignoreDashboardFilters?: IDashboardFilterReference[] | undefined;
+dateDataSet?: ObjRef | undefined;
+};
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly replaceWidgetDateDataset: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
+ref: ObjRef;
+dateDataSet?: ObjRef | undefined;
+};
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly replaceKpiWidgetMeasure: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
+ref: ObjRef;
+measureRef: ObjRef;
+};
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly replaceKpiWidgetComparison: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
+ref: ObjRef;
+comparisonType: IKpiComparisonTypeComparison;
+comparisonDirection?: IKpiComparisonDirection | undefined;
+};
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly replaceKpiWidgetDrillWithoutUndo: (state: WritableDraft<ITabsState>, action: {
+payload: {
+ref: ObjRef;
+drillDefinitions: InsightDrillDefinition[];
+};
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly replaceKpiWidgetDrill: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
+ref: ObjRef;
+drill: IDrillToLegacyDashboard_2 | undefined;
+};
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly replaceKpiWidgetConfiguration: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
+ref: ObjRef;
+config: IKpiWidgetConfiguration | undefined;
+};
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly replaceRichTextWidgetContent: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
+ref: ObjRef;
+content: string;
+};
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly addVisualizationSwitcherWidgetVisualization: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
+ref: ObjRef;
+visualization: IInsightWidget;
+newSize?: IVisualizationSizeInfo | undefined;
+};
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly updateVisualizationSwitcherWidgetVisualizations: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
+ref: ObjRef;
+visualizations: IInsightWidget[];
+};
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly undoLayout: <TState extends IUndoEnhancedState<IDashboardCommand>>(state: WritableDraft<ITabsState>, action: {
+payload: {
+undoDownTo: number;
+};
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly clearLayoutHistory: (state: WritableDraft<ITabsState>, action: {
 payload: void;
 type: string;
 }) => void | ITabsState | WritableDraft<ITabsState>;
-readonly changeDateFilterConfigsMode: (state: WritableDraft<ITabsState>, action: {
-payload: ISetDashboardDateFilterWithDimensionConfigModePayload;
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly setDateFilterConfigs: (state: WritableDraft<ITabsState>, action: {
-payload: any;
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly removeDateFilterConfigs: (state: WritableDraft<ITabsState>, action: {
-payload: ObjRef;
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly changeDateFilterConfigsTitle: (state: WritableDraft<ITabsState>, action: {
-payload: ISetDateFilterConfigTitlePayload;
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly changeAttributeFilterConfigMode: (state: WritableDraft<ITabsState>, action: {
-payload: ISetDashboardAttributeFilterConfigModePayload;
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly setAttributeFilterConfigs: (state: WritableDraft<ITabsState>, action: {
-payload: any;
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly removeAttributeFilterConfig: TabsReducer<    {
-payload: string;
-type: string;
-}>;
-readonly changeDisplayAsLabel: (state: WritableDraft<ITabsState>, action: {
-payload: ISetDashboardAttributeFilterConfigDisplayAsLabelPayload;
-type: string;
-}) => void | ITabsState | WritableDraft<ITabsState>;
-readonly setTabs: TabsReducer<    {
+readonly changeItemsHeight: (state: WritableDraft<ITabsState>, action: {
 payload: {
-tabs?: ITabState[];
-activeTabLocalIdentifier?: string;
+sectionIndex: ILayoutSectionPath;
+itemIndexes: number[];
+height: number;
 };
 type: string;
-}>;
-readonly setActiveTabLocalIdentifier: TabsReducer<    {
-payload: string | undefined;
-type: string;
-}>;
-readonly updateTab: TabsReducer<    {
-payload: ITabState;
-type: string;
-}>;
-readonly removeTabById: TabsReducer<    {
-payload: string;
-type: string;
-}>;
-readonly clearTabs: TabsReducer<    {
-payload: void;
-type: string;
-}>;
-readonly setTabIsRenaming: TabsReducer<    {
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly changeItemWidth: (state: WritableDraft<ITabsState>, action: {
 payload: {
-tabId: string;
-isRenaming: boolean;
+layoutPath: ILayoutItemPath;
+width: number;
 };
 type: string;
-}>;
-readonly renameTab: TabsReducer<    {
-payload: {
-tabId: string;
-title: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly changeWidgetIgnoreCrossFiltering: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
+ref: ObjRef;
+ignoreCrossFiltering?: boolean | undefined;
 };
 type: string;
-}>;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly resizeVisualizationSwitcherOnInsightChanged: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
+ref: ObjRef;
+newSize?: IVisualizationSizeInfo | undefined;
+};
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly toggleLayoutSectionHeaders: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
+layoutPath: ILayoutItemPath | undefined;
+enableSectionHeaders: boolean;
+};
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly toggleLayoutDirection: (state: WritableDraft<ITabsState>, action: {
+payload: IUndoPayload<IDashboardCommand> & {
+layoutPath: ILayoutItemPath | undefined;
+direction: IDashboardLayoutContainerDirection;
+};
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly updateHeightOfMultipleItems: (state: WritableDraft<ITabsState>, action: {
+payload: {
+itemsWithSizes: IItemWithHeight[];
+};
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
+readonly updateWidthOfMultipleItems: (state: WritableDraft<ITabsState>, action: {
+payload: {
+itemsWithSizes: IItemWithWidth[];
+};
+type: string;
+}) => void | ITabsState | WritableDraft<ITabsState>;
 }, "tabs">;
 
 // @alpha (undocumented)
@@ -11718,17 +11717,17 @@ export const uiActions: {
     openSettingsDialog: ActionCreatorWithoutPayload<"uiSlice/openSettingsDialog">;
     closeSettingsDialog: ActionCreatorWithoutPayload<"uiSlice/closeSettingsDialog">;
     openScheduleEmailDialog: ActionCreatorWithPayload<IScheduleEmailContext & {
-    openedFrom?: string;
+    openedFrom?: string | undefined;
     }, "uiSlice/openScheduleEmailDialog">;
     closeScheduleEmailDialog: ActionCreatorWithoutPayload<"uiSlice/closeScheduleEmailDialog">;
     setScheduleEmailDialogDefaultAttachment: ActionCreatorWithPayload<ObjRef, "uiSlice/setScheduleEmailDialogDefaultAttachment">;
     resetScheduleEmailDialogDefaultAttachment: ActionCreatorWithoutPayload<"uiSlice/resetScheduleEmailDialogDefaultAttachment">;
     openScheduleEmailManagementDialog: ActionCreatorWithPayload<IScheduleEmailContext & {
-    openedFrom?: string;
+    openedFrom?: string | undefined;
     }, "uiSlice/openScheduleEmailManagementDialog">;
     closeScheduleEmailManagementDialog: ActionCreatorWithoutPayload<"uiSlice/closeScheduleEmailManagementDialog">;
     openAlertingManagementDialog: ActionCreatorWithPayload<IAlertDialogContext & {
-    openedFrom?: string;
+    openedFrom?: string | undefined;
     }, "uiSlice/openAlertingManagementDialog">;
     closeAlertingManagementDialog: ActionCreatorWithoutPayload<"uiSlice/closeAlertingManagementDialog">;
     openAlertingDialog: ActionCreatorWithPayload<IAlertDialogContext, "uiSlice/openAlertingDialog">;
@@ -11784,8 +11783,8 @@ export const uiActions: {
     setWidgetsOverlay: ActionCreatorWithPayload<Record<string, IDashboardWidgetOverlay>, "uiSlice/setWidgetsOverlay">;
     hideAllWidgetsOverlay: ActionCreatorWithoutPayload<"uiSlice/hideAllWidgetsOverlay">;
     toggleFilterViewsDialog: ActionCreatorWithOptionalPayload<    {
-    open?: boolean;
-    mode?: FilterViewDialogMode;
+    open?: boolean | undefined;
+    mode?: FilterViewDialogMode | undefined;
     } | undefined, "uiSlice/toggleFilterViewsDialog">;
     openWidgetDeleteDialog: ActionCreatorWithPayload<ObjRef, "uiSlice/openWidgetDeleteDialog">;
     closeWidgetDeleteDialog: ActionCreatorWithoutPayload<"uiSlice/closeWidgetDeleteDialog">;
@@ -11835,13 +11834,13 @@ export const useCancelEditDialog: () => {
 };
 
 // @public
-export function useCustomWidgetExecutionDataView({ enableExecutionCancelling, widget, execution, onCancel, onError, onLoading, onPending, onSuccess, }: IUseCustomWidgetExecutionDataViewConfig & UseCustomWidgetExecutionDataViewCallbacks): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
+export function useCustomWidgetExecutionDataView({ enableExecutionCancelling, widget, execution, onCancel, onError, onLoading, onPending, onSuccess }: IUseCustomWidgetExecutionDataViewConfig & UseCustomWidgetExecutionDataViewCallbacks): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
 
 // @public
 export type UseCustomWidgetExecutionDataViewCallbacks = UseCancelablePromiseCallbacks<DataViewFacade, GoodDataSdkError>;
 
 // @public
-export function useCustomWidgetInsightDataView({ widget, insight, enableExecutionCancelling, onCancel, onError, onLoading, onPending, onSuccess, }: IUseCustomWidgetInsightDataViewConfig & UseCustomWidgetInsightDataViewCallbacks): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
+export function useCustomWidgetInsightDataView({ widget, insight, enableExecutionCancelling, onCancel, onError, onLoading, onPending, onSuccess }: IUseCustomWidgetInsightDataViewConfig & UseCustomWidgetInsightDataViewCallbacks): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
 
 // @public
 export type UseCustomWidgetInsightDataViewCallbacks = UseCancelablePromiseCallbacks<DataViewFacade, GoodDataSdkError>;
@@ -11860,8 +11859,8 @@ export const useDashboardAlerts: () => {
     automationsError: GoodDataSdkError | undefined;
     isAlertingVisible: boolean;
     isAlertDialogOpen: boolean;
-    defaultOnAlerting: (widget?: IWidget) => void;
-    onAlertingOpen: (widget?: IWidget, alert?: IAutomationMetadataObject) => void;
+    defaultOnAlerting: (widget?: IWidget | undefined) => void;
+    onAlertingOpen: (widget?: IWidget | undefined, alert?: IAutomationMetadataObject | undefined) => void;
     onAlertingCancel: () => void;
     onAlertingCreateError: () => void;
     onAlertingCreateSuccess: (alert: IAutomationMetadataObject) => void;
@@ -11869,13 +11868,13 @@ export const useDashboardAlerts: () => {
     onAlertingSaveSuccess: () => void;
     isAlertManagementVisible: boolean;
     isAlertManagementDialogOpen: boolean;
-    defaultOnAlertingManagement: (widget?: IWidget) => void;
-    onAlertingManagementOpen: (widget?: IWidget) => void;
+    defaultOnAlertingManagement: (widget?: IWidget | undefined) => void;
+    onAlertingManagementOpen: (widget?: IWidget | undefined) => void;
     onAlertingManagementClose: () => void;
-    onAlertingManagementAdd: (targetWidget?: IWidget) => void;
+    onAlertingManagementAdd: (targetWidget?: IWidget | undefined) => void;
     onAlertingManagementDeleteError: () => void;
     onAlertingManagementDeleteSuccess: () => void;
-    onAlertingManagementEdit: (alert: IAutomationMetadataObject, widget?: IWidget) => void;
+    onAlertingManagementEdit: (alert: IAutomationMetadataObject, widget?: IWidget | undefined) => void;
     onAlertingManagementLoadingError: () => void;
     onAlertingManagementPauseSuccess: (_alert: IAutomationMetadataObject, pause: boolean) => void;
     onAlertingManagementPauseError: (_error: GoodDataSdkError, pause: boolean) => void;
@@ -11929,37 +11928,481 @@ export const useDashboardCommandProcessing: <TCommand extends DashboardCommands,
     commandCreator: (...args: TCommandCreatorArgs) => TCommand;
     successEvent: TSuccessEventType;
     errorEvent: TErrorEventType;
-    onSuccess?: (event: Extract<DashboardEvents, {
+    onSuccess?: ((event: Extract<ICreateAttributeHierarchyRequested, {
         type: TSuccessEventType;
-    }>) => void;
-    onError?: (event: Extract<DashboardEvents, {
+    }> | Extract<ICreateInsightRequested, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardAlertCreated, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardAlertSaved, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardAttributeFilterAdded, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardAttributeFilterMoved, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardAttributeFilterParentChanged, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardAttributeFilterRemoved, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardAttributeSelectionModeChanged, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardAttributeTitleChanged, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardAutomationsRefreshed, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardCommandFailed<any>, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardCommandRejected, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardCommandStarted<any>, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardDrillDownRequested, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardDrillDownResolved, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardDrillRequested, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardDrillResolved, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardDrillToAttributeUrlRequested, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardDrillToAttributeUrlResolved, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardDrillToCustomUrlRequested, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardDrillToCustomUrlResolved, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardDrillToDashboardRequested, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardDrillToDashboardResolved, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardDrillToInsightRequested, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardDrillToInsightResolved, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardDrillToLegacyDashboardRequested, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardDrillToLegacyDashboardResolved, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardDrillableItemsChanged, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardExportToExcelRequested, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardExportToExcelResolved, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardExportToImageRequested, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardExportToImageResolved, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardExportToPdfPresentationRequested, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardExportToPdfPresentationResolved, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardExportToPdfRequested, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardExportToPdfResolved, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardExportToPptPresentationRequested, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardExportToPptPresentationResolved, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardIgnoreExecutionTimestampChanged, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardInsightWidgetChanged, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardInsightWidgetDescriptionChanged, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardInsightWidgetDrillsModified, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardInsightWidgetDrillsRemoved, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardInsightWidgetExportRequested, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardInsightWidgetExportResolved, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardInsightWidgetFilterSettingsChanged, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardInsightWidgetHeaderChanged, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardInsightWidgetInsightSwitched, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardInsightWidgetRefreshed, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardInsightWidgetVisConfigurationChanged, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardInsightWidgetVisPropertiesChanged, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardKeyDriverAnalysisRequested, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardKeyDriverAnalysisResolved, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardKpiWidgetChanged, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardKpiWidgetComparisonChanged, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardKpiWidgetConfigurationChanged, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardKpiWidgetDescriptionChanged, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardKpiWidgetDrillRemoved, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardKpiWidgetDrillSet, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardKpiWidgetFilterSettingsChanged, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardKpiWidgetHeaderChanged, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardKpiWidgetMeasureChanged, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardLayoutChanged, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardLayoutSectionAdded, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardLayoutSectionHeaderChanged, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardLayoutSectionItemMoved, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardLayoutSectionItemMovedToNewSection, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardLayoutSectionItemRemoved, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardLayoutSectionItemReplaced, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardLayoutSectionItemsAdded, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardLayoutSectionMoved, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardLayoutSectionRemoved, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardQueryCompleted<any, any>, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardQueryFailed, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardQueryRejected, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardQueryStarted, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardRenamed, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardRenderModeChanged, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardRichTextWidgetContentChanged, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardRichTextWidgetFilterSettingsChanged, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardScheduledEmailCreated, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardScheduledEmailSaved, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardTabConvertedFromDefault, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardTabCreated, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardTabDeleted, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardTabRenamed, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardTabRenamingCanceled, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardTabRenamingStarted, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardTabSwitched, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardUserInteractionTriggered, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardVisualizationSwitcherWidgetVisualizationAdded, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardVisualizationSwitcherWidgetVisualizationsUpdated, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardWasReset, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardWidgetExecutionFailed, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardWidgetExecutionStarted, {
+        type: TSuccessEventType;
+    }> | Extract<IDashboardWidgetExecutionSucceeded, {
+        type: TSuccessEventType;
+    }> | Extract<IDeleteAttributeHierarchyRequested, {
+        type: TSuccessEventType;
+    }> | Extract<IShowWidgetAsTableSet, {
+        type: TSuccessEventType;
+    }> | Extract<DashboardAsyncRenderRequested, {
+        type: TSuccessEventType;
+    }> | Extract<DashboardAsyncRenderResolved, {
+        type: TSuccessEventType;
+    }> | Extract<DashboardAttributeFilterSelectionChanged, {
+        type: TSuccessEventType;
+    }> | Extract<DashboardCopySaved, {
+        type: TSuccessEventType;
+    }> | Extract<DashboardDateFilterSelectionChanged, {
+        type: TSuccessEventType;
+    }> | Extract<DashboardDeinitialized, {
+        type: TSuccessEventType;
+    }> | Extract<DashboardFilterContextChanged, {
+        type: TSuccessEventType;
+    }> | Extract<DashboardInitialized, {
+        type: TSuccessEventType;
+    }> | Extract<DashboardRenderRequested, {
+        type: TSuccessEventType;
+    }> | Extract<DashboardRenderResolved, {
+        type: TSuccessEventType;
+    }> | Extract<DashboardSaved, {
+        type: TSuccessEventType;
+    }> | Extract<DashboardSharingChanged, {
+        type: TSuccessEventType;
+    }> | Extract<DateFilterValidationFailed, {
+        type: TSuccessEventType;
+    }>) => void) | undefined;
+    onError?: ((event: Extract<ICreateAttributeHierarchyRequested, {
         type: TErrorEventType;
-    }>) => void;
-    onBeforeRun?: (command: TCommand) => void;
+    }> | Extract<ICreateInsightRequested, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardAlertCreated, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardAlertSaved, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardAttributeFilterAdded, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardAttributeFilterMoved, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardAttributeFilterParentChanged, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardAttributeFilterRemoved, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardAttributeSelectionModeChanged, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardAttributeTitleChanged, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardAutomationsRefreshed, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardCommandFailed<any>, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardCommandRejected, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardCommandStarted<any>, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardDrillDownRequested, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardDrillDownResolved, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardDrillRequested, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardDrillResolved, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardDrillToAttributeUrlRequested, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardDrillToAttributeUrlResolved, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardDrillToCustomUrlRequested, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardDrillToCustomUrlResolved, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardDrillToDashboardRequested, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardDrillToDashboardResolved, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardDrillToInsightRequested, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardDrillToInsightResolved, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardDrillToLegacyDashboardRequested, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardDrillToLegacyDashboardResolved, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardDrillableItemsChanged, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardExportToExcelRequested, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardExportToExcelResolved, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardExportToImageRequested, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardExportToImageResolved, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardExportToPdfPresentationRequested, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardExportToPdfPresentationResolved, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardExportToPdfRequested, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardExportToPdfResolved, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardExportToPptPresentationRequested, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardExportToPptPresentationResolved, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardIgnoreExecutionTimestampChanged, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardInsightWidgetChanged, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardInsightWidgetDescriptionChanged, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardInsightWidgetDrillsModified, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardInsightWidgetDrillsRemoved, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardInsightWidgetExportRequested, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardInsightWidgetExportResolved, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardInsightWidgetFilterSettingsChanged, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardInsightWidgetHeaderChanged, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardInsightWidgetInsightSwitched, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardInsightWidgetRefreshed, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardInsightWidgetVisConfigurationChanged, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardInsightWidgetVisPropertiesChanged, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardKeyDriverAnalysisRequested, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardKeyDriverAnalysisResolved, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardKpiWidgetChanged, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardKpiWidgetComparisonChanged, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardKpiWidgetConfigurationChanged, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardKpiWidgetDescriptionChanged, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardKpiWidgetDrillRemoved, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardKpiWidgetDrillSet, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardKpiWidgetFilterSettingsChanged, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardKpiWidgetHeaderChanged, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardKpiWidgetMeasureChanged, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardLayoutChanged, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardLayoutSectionAdded, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardLayoutSectionHeaderChanged, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardLayoutSectionItemMoved, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardLayoutSectionItemMovedToNewSection, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardLayoutSectionItemRemoved, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardLayoutSectionItemReplaced, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardLayoutSectionItemsAdded, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardLayoutSectionMoved, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardLayoutSectionRemoved, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardQueryCompleted<any, any>, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardQueryFailed, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardQueryRejected, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardQueryStarted, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardRenamed, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardRenderModeChanged, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardRichTextWidgetContentChanged, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardRichTextWidgetFilterSettingsChanged, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardScheduledEmailCreated, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardScheduledEmailSaved, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardTabConvertedFromDefault, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardTabCreated, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardTabDeleted, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardTabRenamed, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardTabRenamingCanceled, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardTabRenamingStarted, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardTabSwitched, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardUserInteractionTriggered, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardVisualizationSwitcherWidgetVisualizationAdded, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardVisualizationSwitcherWidgetVisualizationsUpdated, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardWasReset, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardWidgetExecutionFailed, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardWidgetExecutionStarted, {
+        type: TErrorEventType;
+    }> | Extract<IDashboardWidgetExecutionSucceeded, {
+        type: TErrorEventType;
+    }> | Extract<IDeleteAttributeHierarchyRequested, {
+        type: TErrorEventType;
+    }> | Extract<IShowWidgetAsTableSet, {
+        type: TErrorEventType;
+    }> | Extract<DashboardAsyncRenderRequested, {
+        type: TErrorEventType;
+    }> | Extract<DashboardAsyncRenderResolved, {
+        type: TErrorEventType;
+    }> | Extract<DashboardAttributeFilterSelectionChanged, {
+        type: TErrorEventType;
+    }> | Extract<DashboardCopySaved, {
+        type: TErrorEventType;
+    }> | Extract<DashboardDateFilterSelectionChanged, {
+        type: TErrorEventType;
+    }> | Extract<DashboardDeinitialized, {
+        type: TErrorEventType;
+    }> | Extract<DashboardFilterContextChanged, {
+        type: TErrorEventType;
+    }> | Extract<DashboardInitialized, {
+        type: TErrorEventType;
+    }> | Extract<DashboardRenderRequested, {
+        type: TErrorEventType;
+    }> | Extract<DashboardRenderResolved, {
+        type: TErrorEventType;
+    }> | Extract<DashboardSaved, {
+        type: TErrorEventType;
+    }> | Extract<DashboardSharingChanged, {
+        type: TErrorEventType;
+    }> | Extract<DateFilterValidationFailed, {
+        type: TErrorEventType;
+    }>) => void) | undefined;
+    onBeforeRun?: ((command: TCommand) => void) | undefined;
 }) => {
     run: (...args: TCommandCreatorArgs) => void;
-    status?: CommandProcessingStatus;
+    status?: CommandProcessingStatus | undefined;
 };
 
 // @alpha (undocumented)
 export const useDashboardDispatch: () => Dispatch<Action>;
 
 // @alpha
-export const useDashboardEventDispatch: () => ((eventBody: DashboardEventBody<DashboardEvents | ICustomDashboardEvent>) => void);
+export const useDashboardEventDispatch: () => (eventBody: DashboardEventBody<ICustomDashboardEvent<any> | DashboardEvents>) => void;
 
 // @alpha (undocumented)
 export const useDashboardEventsContext: () => IDashboardEventsContext;
 
 // @alpha (undocumented)
-export const useDashboardExportData: (renderMode: RenderMode | undefined, status: "loaded" | "empty", type: "nested" | "root") => CommonExportDataAttributes | undefined;
+export const useDashboardExportData: (renderMode: RenderMode | undefined, status: "empty" | "loaded", type: "nested" | "root") => CommonExportDataAttributes | undefined;
 
 // @internal (undocumented)
 export const useDashboardQueryProcessing: <TQuery extends DashboardQueries, TQueryResult, TQueryCreatorArgs extends any[]>({ queryCreator, onSuccess, onError, onRejected, onBeforeRun, }: {
     queryCreator: (...args: TQueryCreatorArgs) => TQuery;
-    onSuccess?: (result: TQueryResult) => void;
-    onError?: (event: IDashboardQueryFailed) => void;
-    onRejected?: (event: IDashboardQueryRejected) => void;
-    onBeforeRun?: (query: TQuery) => void;
+    onSuccess?: ((result: TQueryResult) => void) | undefined;
+    onError?: ((event: IDashboardQueryFailed) => void) | undefined;
+    onRejected?: ((event: IDashboardQueryRejected) => void) | undefined;
+    onBeforeRun?: ((query: TQuery) => void) | undefined;
 }) => UseDashboardQueryProcessingResult<TQueryCreatorArgs, TQueryResult>;
 
 // @internal (undocumented)
@@ -11981,20 +12424,20 @@ export const useDashboardScheduledEmails: () => {
     automationsError: GoodDataSdkError | undefined;
     isScheduledEmailingVisible: boolean;
     isScheduleEmailingDialogOpen: boolean;
-    defaultOnScheduleEmailing: (widget?: IWidget) => void;
-    onScheduleEmailingOpen: (widget?: IWidget) => void;
-    onScheduleEmailingCancel: (widget?: IWidget) => void;
-    onScheduleEmailingBack: (widget?: IWidget) => void;
+    defaultOnScheduleEmailing: (widget?: IWidget | undefined) => void;
+    onScheduleEmailingOpen: (widget?: IWidget | undefined) => void;
+    onScheduleEmailingCancel: (widget?: IWidget | undefined) => void;
+    onScheduleEmailingBack: (widget?: IWidget | undefined) => void;
     onScheduleEmailingCreateError: () => void;
     onScheduleEmailingCreateSuccess: (scheduledEmail: IAutomationMetadataObject) => void;
     onScheduleEmailingSaveError: () => void;
-    onScheduleEmailingSaveSuccess: (widget?: IWidget) => void;
+    onScheduleEmailingSaveSuccess: (widget?: IWidget | undefined) => void;
     isScheduledManagementEmailingVisible: boolean;
     isScheduleEmailingManagementDialogOpen: boolean;
-    defaultOnScheduleEmailingManagement: (widget?: IWidget) => void;
-    onScheduleEmailingManagementOpen: (widget?: IWidget) => void;
-    onScheduleEmailingManagementEdit: (schedule: IAutomationMetadataObject, widget?: IWidget) => void;
-    onScheduleEmailingManagementAdd: (targetWidget?: IWidget) => void;
+    defaultOnScheduleEmailingManagement: (widget?: IWidget | undefined) => void;
+    onScheduleEmailingManagementOpen: (widget?: IWidget | undefined) => void;
+    onScheduleEmailingManagementEdit: (schedule: IAutomationMetadataObject, widget?: IWidget | undefined) => void;
+    onScheduleEmailingManagementAdd: (targetWidget?: IWidget | undefined) => void;
     onScheduleEmailingManagementClose: () => void;
     onScheduleEmailingManagementLoadingError: () => void;
     onScheduleEmailingManagementDeleteSuccess: () => void;
@@ -12027,48 +12470,48 @@ export const useDashboardUserInteraction: () => {
 export function useDefaultMenuItems(): IMenuButtonItem[];
 
 // @public
-export const useDispatchDashboardCommand: <TCommand extends DashboardCommands, TArgs extends any[]>(commandCreator: (...args: TArgs) => TCommand) => ((...args: TArgs) => void);
+export const useDispatchDashboardCommand: <TCommand extends DashboardCommands, TArgs extends any[]>(commandCreator: (...args: TArgs) => TCommand) => (...args: TArgs) => void;
 
 // @internal (undocumented)
 export const useDrill: ({ onSuccess, onError, onBeforeRun }?: IUseDrillProps) => {
     run: (drillEvent: IDashboardDrillEvent, drillContext: IDashboardDrillContext, correlationId?: string | undefined) => void;
-    status?: CommandProcessingStatus;
+    status?: CommandProcessingStatus | undefined;
 };
 
 // @internal (undocumented)
 export const useDrillDown: ({ onSuccess, onError, onBeforeRun }?: IUseDrillDownProps) => {
     run: (insight: IInsight, drillDefinition: IDrillDownDefinition, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
-    status?: CommandProcessingStatus;
+    status?: CommandProcessingStatus | undefined;
 };
 
 // @internal (undocumented)
 export const useDrillToAttributeUrl: ({ onSuccess, onError, onBeforeRun, }?: IUseDrillToAttributeUrlProps) => {
     run: (drillDefinition: IDrillToAttributeUrl_2, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
-    status?: CommandProcessingStatus;
+    status?: CommandProcessingStatus | undefined;
 };
 
 // @internal (undocumented)
 export const useDrillToCustomUrl: ({ onSuccess, onError, onBeforeRun }?: IUseDrillToCustomUrlProps) => {
     run: (drillDefinition: IDrillToCustomUrl_2, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
-    status?: CommandProcessingStatus;
+    status?: CommandProcessingStatus | undefined;
 };
 
 // @internal (undocumented)
 export const useDrillToDashboard: ({ onSuccess, onError, onBeforeRun }?: IUseDrillToDashboardProps) => {
     run: (drillDefinition: IDrillToDashboard_2, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
-    status?: CommandProcessingStatus;
+    status?: CommandProcessingStatus | undefined;
 };
 
 // @internal (undocumented)
 export const useDrillToInsight: ({ onSuccess, onError, onBeforeRun }?: IUseDrillToInsightProps) => {
     run: (drillDefinition: IDrillToInsight_2, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
-    status?: CommandProcessingStatus;
+    status?: CommandProcessingStatus | undefined;
 };
 
 // @internal (undocumented)
 export const useDrillToLegacyDashboard: ({ onSuccess, onError, onBeforeRun, }?: IUseDrillToLegacyDashboardProps) => {
     run: (drillDefinition: IDrillToLegacyDashboard_2, drillEvent: IDashboardDrillEvent, correlationId?: string | undefined) => void;
-    status?: CommandProcessingStatus;
+    status?: CommandProcessingStatus | undefined;
 };
 
 // @internal (undocumented)
@@ -12081,7 +12524,7 @@ export const useEnableAlertingAutomationFilterContext: () => boolean;
 export const useFilterBarProps: () => IFilterBarProps;
 
 // @public
-export function useInsightWidgetDataView({ insightWidget, onCancel, onError, onLoading, onPending, onSuccess, }: IUseInsightWidgetDataView & UseInsightWidgetInsightDataViewCallbacks): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
+export function useInsightWidgetDataView({ insightWidget, onCancel, onError, onLoading, onPending, onSuccess }: IUseInsightWidgetDataView & UseInsightWidgetInsightDataViewCallbacks): UseCancelablePromiseState<DataViewFacade, GoodDataSdkError>;
 
 // @public
 export type UseInsightWidgetInsightDataViewCallbacks = UseCancelablePromiseCallbacks<DataViewFacade, GoodDataSdkError>;
@@ -12090,7 +12533,7 @@ export type UseInsightWidgetInsightDataViewCallbacks = UseCancelablePromiseCallb
 export const useMetaExportData: () => MetaExportData | undefined;
 
 // @alpha (undocumented)
-export const useMetaExportImageData: (type: MetaExportDataAttributes["data-export-meta-type"], loading: boolean, error: boolean) => MetaExportDataAttributes | undefined;
+export const useMetaExportImageData: (type: ExportMetaType | undefined, loading: boolean, error: boolean) => MetaExportDataAttributes | undefined;
 
 // @alpha (undocumented)
 export const useMetaPaletteData: () => {
@@ -12106,7 +12549,7 @@ export function useMinimalSizeValidation(minimalWidth?: number, minimalHeight?: 
 };
 
 // @public
-export const useParentFilters: (filter: IDashboardAttributeFilter, tabId?: string) => UseParentFiltersResult;
+export const useParentFilters: (filter: IDashboardAttributeFilter, tabId?: string | undefined) => UseParentFiltersResult;
 
 // @public
 export type UseParentFiltersResult = Pick<IAttributeFilterBaseProps, "parentFilters" | "parentFilterOverAttribute">;
@@ -12167,7 +12610,7 @@ export const useTopBarProps: () => ITopBarProps;
 export const useVisualizationExportData: (widget: WidgetExportDataAttributes | undefined, loading: boolean, error: boolean) => Partial<WidgetExportDataAttributes> | undefined;
 
 // @alpha @deprecated
-export function useWidgetAlertFilters({ alertToEdit, widget, insight, }: IUseWidgetAlertFiltersProps): QueryProcessingState<IFilter[]>;
+export function useWidgetAlertFilters({ alertToEdit, widget, insight }: IUseWidgetAlertFiltersProps): QueryProcessingState<IFilter[]>;
 
 // @internal (undocumented)
 export function useWidgetDragEndHandler(): () => void;
@@ -12187,7 +12630,7 @@ export const useWidgetExportData: (widget: ExtendedDashboardWidget) => WidgetExp
 export function useWidgetFilters(widget: FilterableDashboardWidget | undefined | null, insight?: IInsightDefinition): QueryProcessingState<IFilter[]>;
 
 // @alpha @deprecated
-export function useWidgetScheduledExportFilters({ scheduledExportToEdit, widget, insight, }: IUseWidgetScheduledExportFiltersProps): QueryProcessingState<IFilter[]>;
+export function useWidgetScheduledExportFilters({ scheduledExportToEdit, widget, insight }: IUseWidgetScheduledExportFiltersProps): QueryProcessingState<IFilter[]>;
 
 // @internal (undocumented)
 export function useWidgetSelection(widgetRef?: ObjRef): IUseWidgetSelectionResult;
@@ -12264,7 +12707,7 @@ export type WidgetExportDimensionsAttributes = {
 export type WidgetsOverlayFn = (dashboard: IDashboard<ExtendedDashboardWidget>) => Record<string, IDashboardWidgetOverlay>;
 
 // @internal (undocumented)
-export function WithDrillSelect({ widgetRef, children, insight, returnFocusToInsight, onDrillStart, onDrillDownSuccess, onDrillToInsightSuccess, onDrillToDashboardSuccess, onDrillToAttributeUrlSuccess, onDrillToCustomUrlSuccess, onKeyDriverAnalysisSuccess, onError, }: IWithDrillSelectProps): ReactElement;
+export function WithDrillSelect({ widgetRef, children, insight, returnFocusToInsight, onDrillStart, onDrillDownSuccess, onDrillToInsightSuccess, onDrillToDashboardSuccess, onDrillToAttributeUrlSuccess, onDrillToCustomUrlSuccess, onKeyDriverAnalysisSuccess, onError }: IWithDrillSelectProps): ReactElement;
 
 // @alpha
 export type WorkingDashboardAttributeFilter = {

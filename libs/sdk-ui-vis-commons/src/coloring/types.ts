@@ -1,4 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import { type SVGAttributes } from "react";
 
 import { type IColor } from "@gooddata/sdk-model";
@@ -8,6 +9,16 @@ import { type IHeaderPredicate } from "@gooddata/sdk-ui";
  * @public
  */
 export interface IColorMapping {
+    /**
+     * Optional stable identifier of the mapped item.
+     *
+     * @remarks
+     * Consumers may use this to build stable fingerprints without depending on predicate function identity.
+     *
+     * @public
+     */
+    id?: string;
+
     /**
      * Predicate function which will be called for each entity that will be charted.
      *

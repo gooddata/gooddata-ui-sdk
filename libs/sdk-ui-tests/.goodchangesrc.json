@@ -1,0 +1,5 @@
+{
+    "type": "virtual-target",
+    "targetName": "neobackstop",
+    "changeDirs": ["src", "scenarios", "stories", "neobackstop"]
+}

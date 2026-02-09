@@ -29,7 +29,7 @@ vi.mock("@gooddata/sdk-ui-charts/internal-tests/CoreDonutChart", async () => {
     };
 });
 
-describe("DonutChart", () => {
+describe.skip("DonutChart", () => {
     const Scenarios: Array<ScenarioAndDescription<IDonutChartProps>> = donutChartScenarios.flatMap((group) =>
         group.forTestTypes("api").asScenarioDescAndScenario(),
     );

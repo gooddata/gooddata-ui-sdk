@@ -111,7 +111,7 @@ export function getColorPaletteFromColors(colors: string[]): IColorPalette;
 export function getContrastRatio(colorA: string, colorB: string): number;
 
 // @internal
-export const getHeadlineResponsiveClassName: (width: number | undefined, isShortened?: boolean) => string;
+export const getHeadlineResponsiveClassName: (width: number | undefined, isShortened?: boolean | undefined) => string;
 
 // @internal (undocumented)
 export function getLegendDetails(legendPosition: PositionType, responsive: boolean | "autoPositionWithPopup", options: ILegendDetailOptions, respectLegendPosition?: boolean): ILegendDetails | null;
@@ -144,7 +144,7 @@ export function getRgbStringFromRGB(color: IRgbColorValue): string;
 export function getValidColorPalette(colors?: string[], colorPalette?: IColorPalette): IColorPalette;
 
 // @internal (undocumented)
-export function HeadlinePagination({ renderSecondaryItem, renderTertiaryItem, accessibilityConfig, }: IHeadlinePaginationProps): JSX.Element;
+export function HeadlinePagination({ renderSecondaryItem, renderTertiaryItem, accessibilityConfig }: IHeadlinePaginationProps): JSX.Element;
 
 // @internal (undocumented)
 export const HeatmapLegend: NamedExoticComponent<IHeatmapLegendProps>;
@@ -187,6 +187,7 @@ export type IColorLegendSize = "large" | "medium" | "small";
 // @public (undocumented)
 export interface IColorMapping {
     color: IColor;
+    id?: string;
     predicate: IHeaderPredicate;
 }
 
@@ -571,7 +572,7 @@ export const LegendPosition: {
 export function normalizeColorToRGB(color: string): string;
 
 // @internal (undocumented)
-export function Paging({ page, pagesCount, buttonsOrientation, showNextPage, showPrevPage, }: IPagingProps): ReactElement;
+export function Paging({ page, pagesCount, buttonsOrientation, showNextPage, showPrevPage }: IPagingProps): ReactElement;
 
 // @internal (undocumented)
 export function parseRGBColorCode(color: string): {
@@ -596,7 +597,7 @@ export function PatternFill({ patternFill }: IPatternFillProps): JSX.Element;
 export type PatternFillName = (typeof PATTERN_FILLS)[number]["name"];
 
 // @internal (undocumented)
-export function PopUpLegend({ name, maxRows, enableBorderRadius, series, onLegendItemClick, containerId, customComponent, customComponentName, chartFill, }: IPopUpLegendProps): JSX.Element;
+export function PopUpLegend({ name, maxRows, enableBorderRadius, series, onLegendItemClick, containerId, customComponent, customComponentName, chartFill }: IPopUpLegendProps): JSX.Element;
 
 // @internal
 export type PositionType = "left" | "right" | "top" | "bottom" | "auto";

@@ -44,6 +44,7 @@ export const MeasureValueFilter = memo(function MeasureValueFilter({
     insightDimensionality,
     isDimensionalityEnabled,
     catalogDimensionality,
+    loadCatalogDimensionality,
     onDimensionalityChange,
     isLoadingCatalogDimensionality,
     enableMultipleConditions = false,
@@ -98,6 +99,7 @@ export const MeasureValueFilter = memo(function MeasureValueFilter({
                     insightDimensionality={insightDimensionality}
                     isDimensionalityEnabled={isDimensionalityEnabled}
                     catalogDimensionality={catalogDimensionality}
+                    loadCatalogDimensionality={loadCatalogDimensionality}
                     onDimensionalityChange={onDimensionalityChange}
                     isLoadingCatalogDimensionality={isLoadingCatalogDimensionality}
                     enableMultipleConditions={enableMultipleConditions}

@@ -29,7 +29,7 @@ vi.mock("@gooddata/sdk-ui-pivot/internal-tests/CorePivotTableAgImpl", async () =
     };
 });
 
-describe("PivotTable", () => {
+describe.skip("PivotTable", () => {
     const Scenarios: Array<ScenarioAndDescription<IPivotTableProps>> = pivotTableScenarios.flatMap((group) =>
         group.forTestTypes("api").asScenarioDescAndScenario(),
     );

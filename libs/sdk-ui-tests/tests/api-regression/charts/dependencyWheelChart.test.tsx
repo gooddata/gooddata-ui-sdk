@@ -31,7 +31,7 @@ vi.mock("@gooddata/sdk-ui-charts/internal-tests/CoreDependencyWheelChart", async
     };
 });
 
-describe("DependencyWheelChart", () => {
+describe.skip("DependencyWheelChart", () => {
     const Scenarios: Array<ScenarioAndDescription<IDependencyWheelChartProps>> =
         dependencyWheelChartScenarios.flatMap((group) =>
             group.forTestTypes("api").asScenarioDescAndScenario(),

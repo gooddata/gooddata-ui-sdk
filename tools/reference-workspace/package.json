@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/reference-workspace",
-    "version": "11.20.0-alpha.0",
+    "version": "11.20.0-alpha.1",
     "description": "GoodData SDK - Reference Workspace for tests",
     "license": "MIT",
     "author": "GoodData",
@@ -26,19 +26,15 @@
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
         "clear-recordings": "rm -r src/recordings/uiTestScenarios",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
-        "eslint": "eslint src",
-        "eslint-fix": "eslint src --fix",
         "export-ref-workspace": "cd ../reference-workspace-mgmt && npm run export-ref-workspace",
         "import-ref-workspace": "cd ../reference-workspace-mgmt && npm run import-ref-workspace",
-        "oxfmt-check": "oxfmt --check .",
-        "oxfmt-write": "oxfmt .",
+        "format-check": "oxfmt --check .",
+        "format-write": "oxfmt .",
         "refresh-md": "../reference-workspace-mgmt/bin/refresh-md.sh && npm run build",
-        "refresh-recordings": "../reference-workspace-mgmt/bin/refresh-recordings.sh && npm run oxfmt-write && npm run build",
-        "validate": "npm run dep-cruiser && npm run lint && npm run oxfmt-check",
-        "lint": "npm run oxlint && npm run eslint",
-        "lint-fix": "npm run oxlint-fix && npm run eslint-fix",
-        "oxlint": "oxlint . --type-aware",
-        "oxlint-fix": "oxlint . --type-aware --fix"
+        "refresh-recordings": "../reference-workspace-mgmt/bin/refresh-recordings.sh && npm run format-write && npm run build",
+        "validate": "npm run dep-cruiser && npm run lint && npm run format-check",
+        "lint": "oxlint . --type-aware && eslint src",
+        "lint-fix": "oxlint . --type-aware --fix && eslint src --fix"
     },
     "dependencies": {
         "@gooddata/sdk-backend-spi": "workspace:*",

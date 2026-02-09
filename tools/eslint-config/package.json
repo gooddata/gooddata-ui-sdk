@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/eslint-config",
-    "version": "11.20.0-alpha.0",
+    "version": "11.20.0-alpha.1",
     "license": "MIT",
     "author": "GoodData",
     "repository": {
@@ -113,12 +113,12 @@
         "_phase:validate": "npm run validate",
         "build": "rm -rf dist && mkdir dist && vite-node scripts/build.ts && tsgo",
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
-        "eslint": "eslint .",
-        "eslint-fix": "eslint . --fix",
-        "oxfmt-check": "oxfmt --check .",
-        "oxfmt-write": "oxfmt .",
+        "lint": "eslint .",
+        "lint-fix": "eslint . --fix",
+        "format-check": "oxfmt --check .",
+        "format-write": "oxfmt .",
         "update-package": "vite-node scripts/updatePackage.ts",
-        "validate": "npm run eslint && npm run oxfmt-check"
+        "validate": "npm run lint && npm run format-check"
     },
     "devDependencies": {
         "@eslint/js": "9.28.0",

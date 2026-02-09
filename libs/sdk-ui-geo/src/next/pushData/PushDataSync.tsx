@@ -2,6 +2,7 @@
 
 import { type ReactElement, useMemo } from "react";
 
+import { type IColorPalette } from "@gooddata/sdk-model";
 import { DefaultColorPalette } from "@gooddata/sdk-ui";
 import { type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
@@ -20,11 +21,50 @@ type PushDataSyncProps = {
 
 const EMPTY_COLOR_MAPPING: [] = [];
 
+function stringify(value: unknown): string {
+    try {
+        return JSON.stringify(value);
+    } catch {
+        return "";
+    }
+}
+
+function colorPaletteKey(palette: IColorPalette): string {
+    return palette.map((p) => `${p.guid}:${stringify(p.fill)}`).join("|");
+}
+
+function colorMappingKey(colorMapping: readonly { id?: string; color: unknown }[]): string {
+    return colorMapping.map((m, index) => `${m.id ?? index}:${stringify(m.color)}`).join("|");
+}
+
 export function PushDataSync({ availableLegends, geoLayerType }: PushDataSyncProps): ReactElement | null {
     const { primaryLayer, layerExecutions } = useGeoLayers();
     const primaryLayerDefinition = layerExecutions[0]?.layer;
     const colorPalette = primaryLayerDefinition?.config?.colorPalette ?? DefaultColorPalette;
     const colorMapping = primaryLayerDefinition?.config?.colorMapping ?? EMPTY_COLOR_MAPPING;
+
+    const paletteKey = useMemo(() => colorPaletteKey(colorPalette), [colorPalette]);
+    const mappingKey = useMemo(() => colorMappingKey(colorMapping), [colorMapping]);
+
+    const paletteCache = useMemo(() => new Map<string, IColorPalette>(), []);
+    const stableColorPalette = useMemo(() => {
+        const cached = paletteCache.get(paletteKey);
+        if (cached) {
+            return cached;
+        }
+        paletteCache.set(paletteKey, colorPalette);
+        return colorPalette;
+    }, [paletteCache, paletteKey, colorPalette]);
+
+    const mappingCache = useMemo(() => new Map<string, typeof colorMapping>(), []);
+    const stableColorMapping = useMemo(() => {
+        const cached = mappingCache.get(mappingKey);
+        if (cached) {
+            return cached;
+        }
+        mappingCache.set(mappingKey, colorMapping);
+        return colorMapping;
+    }, [mappingCache, mappingKey, colorMapping]);
 
     const colorStrategy: IColorStrategy | null = useMemo(() => {
         if (!primaryLayer?.geoData || !primaryLayer.dataView) {
@@ -32,11 +72,27 @@ export function PushDataSync({ availableLegends, geoLayerType }: PushDataSyncPro
         }
 
         return primaryLayer.layerType === "pushpin"
-            ? getPushpinColorStrategy(colorPalette, colorMapping, primaryLayer.geoData, primaryLayer.dataView)
-            : getAreaColorStrategy(colorPalette, colorMapping, primaryLayer.geoData, primaryLayer.dataView);
-    }, [primaryLayer?.geoData, primaryLayer?.dataView, primaryLayer?.layerType, colorPalette, colorMapping]);
+            ? getPushpinColorStrategy(
+                  stableColorPalette,
+                  stableColorMapping,
+                  primaryLayer.geoData,
+                  primaryLayer.dataView,
+              )
+            : getAreaColorStrategy(
+                  stableColorPalette,
+                  stableColorMapping,
+                  primaryLayer.geoData,
+                  primaryLayer.dataView,
+              );
+    }, [
+        primaryLayer?.geoData,
+        primaryLayer?.dataView,
+        primaryLayer?.layerType,
+        stableColorPalette,
+        stableColorMapping,
+    ]);
 
-    useGeoPushData(colorStrategy, colorPalette, {
+    useGeoPushData(colorStrategy, stableColorPalette, {
         useProps: useGeoChartProps,
         useLegendContext: () => ({
             availableLegends: availableLegends ?? {

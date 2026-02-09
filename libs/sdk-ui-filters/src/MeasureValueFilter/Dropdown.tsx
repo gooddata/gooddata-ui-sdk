@@ -45,6 +45,7 @@ interface IDropdownProps {
     insightDimensionality?: IDimensionalityItem[];
     isDimensionalityEnabled?: boolean;
     catalogDimensionality?: IDimensionalityItem[];
+    loadCatalogDimensionality?: (dimensionality: ObjRefInScope[]) => Promise<IDimensionalityItem[]>;
     onDimensionalityChange?: (dimensionality: ObjRefInScope[]) => void;
     isLoadingCatalogDimensionality?: boolean;
 }
@@ -69,6 +70,7 @@ const DropdownWithIntl = memo(function DropdownWithIntl(props: IDropdownProps) {
         insightDimensionality,
         isDimensionalityEnabled,
         catalogDimensionality,
+        loadCatalogDimensionality,
         onDimensionalityChange,
         isLoadingCatalogDimensionality,
         conditions = [],
@@ -119,6 +121,7 @@ const DropdownWithIntl = memo(function DropdownWithIntl(props: IDropdownProps) {
                 insightDimensionality={insightDimensionality}
                 isDimensionalityEnabled={isDimensionalityEnabled}
                 catalogDimensionality={catalogDimensionality}
+                loadCatalogDimensionality={loadCatalogDimensionality}
                 onDimensionalityChange={onDimensionalityChange}
                 isLoadingCatalogDimensionality={isLoadingCatalogDimensionality}
                 enableRankingWithMvf={enableRankingWithMvf}

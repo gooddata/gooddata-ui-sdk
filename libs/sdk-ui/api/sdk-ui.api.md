@@ -132,7 +132,7 @@ export type AttributesOrPlaceholders = ValuesOrPlaceholders<IAttribute>;
 export function BackendProvider({ children, backend }: IBackendProviderProps): JSX.Element;
 
 // @public
-export function BackendProviderWithCorrelation({ backend: externalBackend, correlationData, children, }: IBackendProviderWithCorrelationProps): JSX.Element;
+export function BackendProviderWithCorrelation({ backend: externalBackend, correlationData, children }: IBackendProviderWithCorrelationProps): JSX.Element;
 
 // @public
 export class BadRequestSdkError extends GoodDataSdkError {
@@ -257,9 +257,9 @@ export function createIntlMock(customMessages?: {}, locale?: string): IntlShape;
 
 // @internal (undocumented)
 export const createInvalidDatapoint: (input?: Partial<IInvalidDatapoint>) => {
-    id: string;
-    severity: IValidationSeverity;
     message: string;
+    severity: IValidationSeverity;
+    id: string;
 };
 
 // @internal (undocumented)
@@ -470,7 +470,7 @@ export const ErrorCodes: {
 };
 
 // @public
-export function ErrorComponent({ icon, className, width, height, style, message, description, clientHeight, }: IErrorProps): JSX.Element;
+export function ErrorComponent({ icon, className, width, height, style, message, description, clientHeight }: IErrorProps): JSX.Element;
 
 // @public
 export function Execute(props: IExecuteProps): JSX.Element;
@@ -578,11 +578,11 @@ export function getMultiLayerDrillTargets(layerDataViews: Array<DataViewFacade |
 
 // @internal
 export function getObjectDiff(prevObj: Record<string, any> | null, currObj: Record<string, any>, equalityFn?: (A: any, B: any) => boolean): {
-    hasChanged: boolean;
-    DEEP_CHANGES?: Record<string, any> | undefined;
-    CHANGED?: string[] | undefined;
-    REMOVED?: string[] | undefined;
     NEW?: string[] | undefined;
+    REMOVED?: string[] | undefined;
+    CHANGED?: string[] | undefined;
+    DEEP_CHANGES?: Record<string, any> | undefined;
+    hasChanged: boolean;
 };
 
 // @internal (undocumented)
@@ -602,9 +602,9 @@ export function getVisualizationType(type: ChartType): ChartType;
 
 // @public
 export abstract class GoodDataSdkError extends Error {
-    protected constructor(seType: SdkErrorType, message?: string, cause?: any | undefined);
+    protected constructor(seType: SdkErrorType, message?: string, cause?: any);
     // (undocumented)
-    readonly cause?: any | undefined;
+    readonly cause?: any;
     getCause(): any;
     getErrorCode(): string;
     getMessage(): string;
@@ -1322,7 +1322,7 @@ export interface IMeasureTitleProps {
 }
 
 // @internal (undocumented)
-function Intl_2({ children, customLocale, customMessages, forTest, }: {
+function Intl_2({ children, customLocale, customMessages, forTest }: {
     children: ReactNode;
     customLocale?: ILocale;
     customMessages?: ITranslations;
@@ -2147,7 +2147,7 @@ export interface IWorkspaceProviderProps {
 export const Kpi: ComponentType<IKpiProps>;
 
 // @public
-export function LoadingComponent({ className, color, speed, inline, height, width, imageHeight, imageWidth, }: ILoadingProps): JSX.Element;
+export function LoadingComponent({ className, color, speed, inline, height, width, imageHeight, imageWidth }: ILoadingProps): JSX.Element;
 
 // @internal
 export const LOCALES: string[];
@@ -2171,7 +2171,7 @@ export type MeasuresOrPlaceholders = ValuesOrPlaceholders<AnyMeasure>;
 export const messages: Record<string, MessageDescriptor>;
 
 // @internal (undocumented)
-export const navigate: (url?: string) => void;
+export const navigate: (url?: string | undefined) => void;
 
 // @public
 export class NegativeValuesSdkError extends GoodDataSdkError {
@@ -2346,13 +2346,13 @@ export function uriMatch(uri: string): IHeaderPredicate;
 export const useAutoupdateRef: <T>(value: T) => RefObject<T>;
 
 // @public
-export const useBackend: (backend?: IAnalyticalBackend) => IAnalyticalBackend | undefined;
+export const useBackend: (backend?: IAnalyticalBackend | undefined) => IAnalyticalBackend | undefined;
 
 // @public
-export const useBackendStrict: (backend?: IAnalyticalBackend, context?: string) => IAnalyticalBackend;
+export const useBackendStrict: (backend?: IAnalyticalBackend | undefined, context?: string) => IAnalyticalBackend;
 
 // @public
-export const useBackendWithCorrelation: (backend?: IAnalyticalBackend, correlationMetadata?: IRequestCorrelationMetadata) => IAnalyticalBackend | undefined;
+export const useBackendWithCorrelation: (backend?: IAnalyticalBackend | undefined, correlationMetadata?: IRequestCorrelationMetadata | undefined) => IAnalyticalBackend | undefined;
 
 // @public
 export function useCancelablePromise<TResult, TError = any>(options: UseCancelablePromiseOptions<TResult, TError>, deps?: DependencyList): UseCancelablePromiseState<TResult, TError>;
@@ -2419,7 +2419,7 @@ export const useClientWorkspaceInitialized: () => boolean;
 export const useClientWorkspaceStatus: () => UseCancelablePromiseStatus;
 
 // @internal (undocumented)
-export const useCombineRefs: <T>(...refs: Array<MutableRefObject<T> | ((instance: T) => void) | undefined | null | false>) => (instance: T) => void;
+export const useCombineRefs: <T>(...refs: (false | MutableRefObject<T> | ((instance: T) => void) | null | undefined)[]) => (instance: T) => void;
 
 // @public
 export function useComposedPlaceholder<TContext, TPlaceholder extends IComposedPlaceholder<any, any, TContext>>(placeholder: TPlaceholder, resolutionContext?: TContext): PlaceholderResolvedValue<TPlaceholder>;
@@ -2428,7 +2428,7 @@ export function useComposedPlaceholder<TContext, TPlaceholder extends IComposedP
 export const useCorrelationData: () => Record<string, string>;
 
 // @public
-export function useDataExport({ execution, exportConfig, onCancel, onError, onLoading, onPending, onSuccess, }: {
+export function useDataExport({ execution, exportConfig, onCancel, onError, onLoading, onPending, onSuccess }: {
     execution: IPreparedExecution | undefined | null;
     exportConfig?: IExportConfig;
 } & UseDataExportCallbacks, deps?: DependencyList): UseDataExportState;
@@ -2473,11 +2473,11 @@ export const useLocalStorage: <T>(key: string, initialValue: T) => [T, (value: T
 
 // @internal
 export function useObjectDiff(obj: Record<string, any>, equalityFn?: (A: any, B: any) => boolean): {
-    hasChanged: boolean;
-    DEEP_CHANGES?: Record<string, any> | undefined;
-    CHANGED?: string[] | undefined;
-    REMOVED?: string[] | undefined;
     NEW?: string[] | undefined;
+    REMOVED?: string[] | undefined;
+    CHANGED?: string[] | undefined;
+    DEEP_CHANGES?: Record<string, any> | undefined;
+    hasChanged: boolean;
 };
 
 // @public
@@ -2514,10 +2514,10 @@ export function useResolveValueWithPlaceholders<T, C>(value: T, resolutionContex
 export const useValidationContextValue: <T extends IInvalidNode>(initialValue: T) => IValidationContextValue<T>;
 
 // @public
-export const useWorkspace: (workspace?: string) => string | undefined;
+export const useWorkspace: (workspace?: string | undefined) => string | undefined;
 
 // @public
-export const useWorkspaceStrict: (workspace?: string, context?: string) => string;
+export const useWorkspaceStrict: (workspace?: string | undefined, context?: string) => string;
 
 // @internal (undocumented)
 export const ValidationContextStore: IContextStore<IValidationContextValue<any>>;
@@ -2596,10 +2596,10 @@ export function withContexts<T extends {
 export function withEntireDataView<T extends IDataVisualizationProps>(InnerComponent: ComponentType<T & ILoadingInjectedProps>): ComponentType<T>;
 
 // @internal
-export function withExecution<T>({ execution, events, loadOnMount, shouldRefetch, window, exportTitle, enableExecutionCancelling, }: IWithExecution<T>): (WrappedComponent: ComponentType<T & WithLoadingResult>) => ComponentType<T>;
+export function withExecution<T>({ execution, events, loadOnMount, shouldRefetch, window, exportTitle, enableExecutionCancelling }: IWithExecution<T>): (WrappedComponent: ComponentType<T & WithLoadingResult>) => ComponentType<T>;
 
 // @internal
-export function withExecutionLoading<TProps>({ promiseFactory, loadOnMount, events, shouldRefetch, window, exportTitle, enableExecutionCancelling, }: IWithExecutionLoading<TProps>): (WrappedComponent: ComponentType<TProps & WithLoadingResult>) => ComponentType<TProps>;
+export function withExecutionLoading<TProps>({ promiseFactory, loadOnMount, events, shouldRefetch, window, exportTitle, enableExecutionCancelling }: IWithExecutionLoading<TProps>): (WrappedComponent: ComponentType<TProps & WithLoadingResult>) => ComponentType<TProps>;
 
 // @internal (undocumented)
 export function withIntl<P>(WrappedComponent: FC<P> | ComponentClass<P>, customLocale?: ILocale, customMessages?: ITranslations): ComponentType<P>;
@@ -2624,7 +2624,7 @@ export function withWorkspace<T extends {
 export function WorkspaceProvider({ children, workspace }: IWorkspaceProviderProps): JSX.Element;
 
 // @internal
-export const wrapDisplayName: (hocName: string, BaseComponent?: ComponentType<any>) => (<T>(Component: ComponentType<T>) => ComponentType<T>);
+export const wrapDisplayName: (hocName: string, BaseComponent?: ComponentType<any> | undefined) => <T>(Component: ComponentType<T>) => ComponentType<T>;
 
 // @public (undocumented)
 export type XirrType = "xirr";

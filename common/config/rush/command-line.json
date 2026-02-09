@@ -55,8 +55,8 @@
         },
         {
             "commandKind": "bulk",
-            "name": "eslint-fix",
-            "summary": "Triggers eslint auto fix in all projects.",
+            "name": "lint",
+            "summary": "Run lint across all apps",
             "safeForSimultaneousRushProcesses": true,
             "enableParallelism": true,
             "ignoreDependencyOrder": true,
@@ -64,7 +64,16 @@
         },
         {
             "commandKind": "bulk",
-            "name": "oxfmt-check",
+            "name": "lint-fix",
+            "summary": "Run lint-fix across all apps",
+            "safeForSimultaneousRushProcesses": true,
+            "enableParallelism": true,
+            "ignoreDependencyOrder": true,
+            "ignoreMissingScript": true
+        },
+        {
+            "commandKind": "bulk",
+            "name": "format-check",
             "summary": "Run oxfmt-check across all apps",
             "enableParallelism": true,
             "ignoreDependencyOrder": true,
@@ -73,7 +82,7 @@
         },
         {
             "commandKind": "bulk",
-            "name": "oxfmt-write",
+            "name": "format-write",
             "summary": "Run oxfmt-write across all apps",
             "enableParallelism": true,
             "ignoreDependencyOrder": true,

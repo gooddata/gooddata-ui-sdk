@@ -1,22 +1,22 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ReactElement, memo, useCallback } from "react";
 
 import { DefaultUiMenuHeader } from "./DefaultUiMenuHeader.js";
 import { typedUiMenuContextStore } from "../../context.js";
 import { e } from "../../menuBem.js";
-import { type IUiMenuContentItem, type IUiMenuItemData } from "../../types.js";
+import { type IUiMenuContentItem, type IUiMenuContentProps } from "../../types.js";
 
 /**
  * Container for rendering custom content in menu.
  * @internal
  */
-export const DefaultUiMenuContent = memo(function DefaultUiMenuContent<T extends IUiMenuItemData = object>({
+export const DefaultUiMenuContent = memo<IUiMenuContentProps>(function DefaultUiMenuContent({
     item,
 }: {
-    item: IUiMenuContentItem<T>;
+    item: IUiMenuContentItem;
 }): ReactElement {
-    const { useContextStore, createSelector } = typedUiMenuContextStore<T>();
+    const { useContextStore, createSelector } = typedUiMenuContextStore();
     const selector = createSelector((ctx) => ({
         onClose: ctx.onClose,
         setShownCustomContentItemId: ctx.setShownCustomContentItemId,

@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/catalog-export",
-    "version": "11.20.0-alpha.0",
+    "version": "11.20.0-alpha.1",
     "description": "GoodData SDK Catalog Export tooling",
     "license": "MIT",
     "author": "GoodData",
@@ -32,17 +32,13 @@
         "build-dynamic-files": "bash scripts/build.sh --genFilesOnly",
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
-        "eslint": "eslint src",
-        "eslint-fix": "eslint src --fix",
-        "oxfmt-check": "oxfmt --check .",
-        "oxfmt-write": "oxfmt .",
+        "format-check": "oxfmt --check .",
+        "format-write": "oxfmt .",
         "test": "vitest watch",
         "test-once": "vitest run",
-        "validate": "npm run dep-cruiser && npm run lint && npm run oxfmt-check",
-        "lint": "npm run oxlint && npm run eslint",
-        "lint-fix": "npm run oxlint-fix && npm run eslint-fix",
-        "oxlint": "oxlint . --type-aware",
-        "oxlint-fix": "oxlint . --type-aware --fix"
+        "validate": "npm run dep-cruiser && npm run lint && npm run format-check",
+        "lint": "oxlint . --type-aware && eslint src",
+        "lint-fix": "oxlint . --type-aware --fix && eslint src --fix"
     },
     "dependencies": {
         "@babel/core": "^7.23.5",

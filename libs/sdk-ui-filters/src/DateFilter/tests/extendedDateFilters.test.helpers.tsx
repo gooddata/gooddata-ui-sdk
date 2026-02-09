@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { fireEvent, render, screen } from "@testing-library/react";
+import { type RenderResult, fireEvent, render, screen } from "@testing-library/react";
 import { add, formatDate } from "date-fns";
 import moment from "moment";
 
@@ -211,7 +211,7 @@ const relativeFormGranularityTab = (intlGranularity: string) => `.gd-tab.s-granu
 
 const defaultDateFormat: string = "MM/dd/yyyy";
 
-export const createDateFilter = (customProps: Partial<IDateFilterProps> = {}): ReturnType<typeof render> => {
+export const createDateFilter = (customProps: Partial<IDateFilterProps> = {}): RenderResult => {
     const props: IDateFilterProps = { ...defaultProps, ...customProps };
 
     return render(<DateFilter {...props} />);
@@ -220,9 +220,7 @@ export const createDateFilter = (customProps: Partial<IDateFilterProps> = {}): R
 /**
  * Use this component renderer if you need to check some state changes regarding apply handler
  */
-export const createDateFilterWithState = (
-    customProps: Partial<IDateFilterProps> = {},
-): ReturnType<typeof render> => {
+export const createDateFilterWithState = (customProps: Partial<IDateFilterProps> = {}): RenderResult => {
     const props: IDateFilterProps = { ...defaultProps, ...customProps };
 
     return render(<DateFilterWithState {...props} />);

@@ -2294,7 +2294,7 @@ export class UnexpectedResponseError extends AnalyticalBackendError {
 export type ValidationContext = "CORS" | "UI_EVENT" | "DRILL_TO_URI";
 
 // @alpha
-export function walkLayout<TWidget extends IDashboardWidget>(layout: IDashboardLayout<TWidget>, { sectionCallback, itemCallback, widgetCallback, }: {
+export function walkLayout<TWidget extends IDashboardWidget>(layout: IDashboardLayout<TWidget>, { sectionCallback, itemCallback, widgetCallback }: {
     sectionCallback?: (section: IDashboardLayoutSection<TWidget>, sectionPath: LayoutPath) => void;
     itemCallback?: (item: IDashboardLayoutItem<TWidget>, widgetPath: LayoutPath) => void;
     widgetCallback?: (widget: TWidget, widgetPath: LayoutPath) => void;

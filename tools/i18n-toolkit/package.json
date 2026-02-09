@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/i18n-toolkit",
-    "version": "11.20.0-alpha.0",
+    "version": "11.20.0-alpha.1",
     "description": "Localization validator to validate localization complexity and intl and html format.",
     "license": "MIT",
     "author": "GoodData",
@@ -32,19 +32,15 @@
         "build-ts": "tsgo -p tsconfig.build.json",
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci esm coverage *.log tsconfig.tsbuildinfo",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
-        "eslint": "eslint src",
-        "eslint-fix": "eslint src --fix",
-        "oxfmt-check": "oxfmt --check .",
-        "oxfmt-write": "oxfmt .",
+        "format-check": "oxfmt --check .",
+        "format-write": "oxfmt .",
         "run": "node ./esm/index.js",
         "test": "vitest watch",
         "test-once": "vitest run",
-        "validate": "npm run dep-cruiser && npm run lint && npm run oxfmt-check",
+        "validate": "npm run dep-cruiser && npm run lint && npm run format-check",
         "validate-esm": "node validate-esm.cjs",
-        "lint": "npm run oxlint && npm run eslint",
-        "lint-fix": "npm run oxlint-fix && npm run eslint-fix",
-        "oxlint": "oxlint . --type-aware",
-        "oxlint-fix": "oxlint . --type-aware --fix"
+        "lint": "oxlint . --type-aware && eslint src",
+        "lint-fix": "oxlint . --type-aware --fix && eslint src --fix"
     },
     "dependencies": {
         "@formatjs/cli-lib": "^6.1.1",

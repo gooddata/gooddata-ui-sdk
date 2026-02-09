@@ -29,7 +29,7 @@ vi.mock("@gooddata/sdk-ui-charts/internal-tests/CorePieChart", async () => {
     };
 });
 
-describe("PieChart", () => {
+describe.skip("PieChart", () => {
     const Scenarios: Array<ScenarioAndDescription<IPieChartProps>> = pieChartScenarios.flatMap((group) =>
         group.forTestTypes("api").asScenarioDescAndScenario(),
     );

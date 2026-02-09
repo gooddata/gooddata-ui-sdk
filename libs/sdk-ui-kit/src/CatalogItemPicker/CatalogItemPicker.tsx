@@ -27,10 +27,7 @@ const { b, e } = bem("gd-ui-kit-catalog-item-picker");
 /**
  * @internal
  */
-export const CatalogItemPicker = memo(function CatalogItemPickerInner<
-    TAttributePayload = unknown,
-    TMetricPayload = unknown,
->({
+export const CatalogItemPicker = memo<ICatalogItemPickerProps>(function CatalogItemPickerInner({
     itemTypes,
     selectionMode,
     attributeItems,
@@ -44,7 +41,7 @@ export const CatalogItemPicker = memo(function CatalogItemPickerInner<
     onAdd,
     onSelect,
     variant = "addFilter",
-}: ICatalogItemPickerProps<TAttributePayload, TMetricPayload>) {
+}: ICatalogItemPickerProps) {
     const listboxId = useId();
 
     // Compute available items
@@ -161,10 +158,7 @@ export const CatalogItemPicker = memo(function CatalogItemPickerInner<
     });
 
     // Event handlers
-    const { handleListboxSelect, handleAdd, handleTabChange } = useCatalogItemPickerHandlers<
-        TAttributePayload,
-        TMetricPayload
-    >({
+    const { handleListboxSelect, handleAdd, handleTabChange } = useCatalogItemPickerHandlers({
         selectionMode,
         selectedIds,
         setSelectedIds,

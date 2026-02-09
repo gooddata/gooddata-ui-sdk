@@ -51,16 +51,16 @@ export interface IThemeProviderProps {
 }
 
 // @internal
-export function ScopedThemeProvider({ children, theme: themeParam, backend: backendParam, workspace: workspaceParam, modifier, enableComplementaryPalette, removeGlobalStylesOnUnmout, }: IScopedThemeProviderProps): JSX.Element;
+export function ScopedThemeProvider({ children, theme: themeParam, backend: backendParam, workspace: workspaceParam, modifier, enableComplementaryPalette, removeGlobalStylesOnUnmout }: IScopedThemeProviderProps): JSX.Element;
 
 // @public
-export function ThemeContextProvider({ children, theme, themeIsLoading, themeStatus, isScopeThemed, }: IThemeContextProviderProps): JSX.Element;
+export function ThemeContextProvider({ children, theme, themeIsLoading, themeStatus, isScopeThemed }: IThemeContextProviderProps): JSX.Element;
 
 // @public (undocumented)
 export type ThemeModifier = (theme: ITheme) => ITheme;
 
 // @public
-export function ThemeProvider({ children, theme: themeParam, backend: backendParam, workspace: workspaceParam, modifier, enableComplementaryPalette, removeGlobalStylesOnUnmout, }: IThemeProviderProps): JSX.Element;
+export function ThemeProvider({ children, theme: themeParam, backend: backendParam, workspace: workspaceParam, modifier, enableComplementaryPalette, removeGlobalStylesOnUnmout }: IThemeProviderProps): JSX.Element;
 
 // @public (undocumented)
 export type ThemeStatus = "pending" | "loading" | "success";
@@ -72,7 +72,7 @@ export const useIsDarkTheme: () => boolean;
 export const useIsScopeThemed: () => boolean | undefined;
 
 // @public
-export const useTheme: (theme?: ITheme) => ITheme | undefined;
+export const useTheme: (theme?: ITheme | undefined) => ITheme | undefined;
 
 // @public
 export const useThemeIsLoading: () => boolean | undefined;

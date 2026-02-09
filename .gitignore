@@ -1,6 +1,5 @@
 .DS_Store
 .idea
-.vscode
 # Logs
 *.log
 npm-debug.log*
