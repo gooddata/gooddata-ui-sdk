@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/i18n-toolkit",
-    "version": "11.20.0-alpha.1",
+    "version": "11.20.0-alpha.2",
     "description": "Localization validator to validate localization complexity and intl and html format.",
     "license": "MIT",
     "author": "GoodData",
@@ -39,8 +39,8 @@
         "test-once": "vitest run",
         "validate": "npm run dep-cruiser && npm run lint && npm run format-check",
         "validate-esm": "node validate-esm.cjs",
-        "lint": "oxlint . --type-aware && eslint src",
-        "lint-fix": "oxlint . --type-aware --fix && eslint src --fix"
+        "lint": "oxlint . --type-aware --quiet && eslint src",
+        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint src --fix"
     },
     "dependencies": {
         "@formatjs/cli-lib": "^6.1.1",

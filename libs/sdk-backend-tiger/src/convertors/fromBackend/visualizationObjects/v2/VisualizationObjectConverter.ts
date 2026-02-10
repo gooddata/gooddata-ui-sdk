@@ -1,41 +1,71 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
-import { type VisualizationObjectModelV2 } from "@gooddata/api-client-tiger";
-import { type IInsightDefinition } from "@gooddata/sdk-model";
+import {
+    type ITigerAttributeFilterConfigs,
+    type ITigerBucket,
+    type ITigerFilter,
+    type ITigerInsightLayerDefinition,
+    type ITigerSortItem,
+    type ITigerVisualizationProperties,
+    type VisualizationObjectModelV2,
+} from "@gooddata/api-client-tiger";
+import {
+    type IAttributeFilterConfigs,
+    type IBucket,
+    type IFilter,
+    type IInsightDefinition,
+    type IInsightLayerDefinition,
+    type ISortItem,
+    type VisualizationProperties,
+} from "@gooddata/sdk-model";
 
 import { fixInsightLegacyElementUris } from "../../fixLegacyElementUris.js";
-import { cloneWithSanitizedIds } from "../../IdSanitization.js";
+import { cloneWithSanitizedIdsTyped } from "../../IdSanitization.js";
 
+/**
+ * Converts Tiger-specific visualization object to platform-agnostic insight definition.
+ *
+ * @param visualizationObject - Tiger visualization object (uses ITigerBucket[], ITigerFilter[], etc.)
+ * @param title - Insight title
+ * @param description - Insight description
+ * @param tags - Optional insight tags
+ * @returns Platform-agnostic insight definition (uses IBucket[], IFilter[], etc.)
+ */
 export function convertVisualizationObject(
     visualizationObject: VisualizationObjectModelV2.IVisualizationObject,
     title: string,
     description: string,
     tags?: string[],
 ): IInsightDefinition {
-    const { version: _, ...data } = visualizationObject;
-
     const layersProp =
         visualizationObject.layers && visualizationObject.layers.length > 0
             ? {
-                  layers: cloneWithSanitizedIds(visualizationObject.layers),
+                  layers: cloneWithSanitizedIdsTyped<
+                      ITigerInsightLayerDefinition[],
+                      IInsightLayerDefinition[]
+                  >(visualizationObject.layers),
               }
             : {};
 
     const convertedInsight: IInsightDefinition = {
         insight: {
-            ...data,
+            visualizationUrl: visualizationObject.visualizationUrl,
             title,
             summary: description,
-            buckets: cloneWithSanitizedIds(visualizationObject.buckets) ?? [],
-            filters: cloneWithSanitizedIds(visualizationObject.filters) ?? [],
+            buckets: cloneWithSanitizedIdsTyped<ITigerBucket[], IBucket[]>(visualizationObject.buckets) ?? [],
+            filters: cloneWithSanitizedIdsTyped<ITigerFilter[], IFilter[]>(visualizationObject.filters) ?? [],
             ...(visualizationObject.attributeFilterConfigs
                 ? {
-                      attributeFilterConfigs: cloneWithSanitizedIds(
-                          visualizationObject.attributeFilterConfigs,
-                      ),
+                      attributeFilterConfigs: cloneWithSanitizedIdsTyped<
+                          ITigerAttributeFilterConfigs,
+                          IAttributeFilterConfigs
+                      >(visualizationObject.attributeFilterConfigs),
                   }
                 : {}),
-            sorts: cloneWithSanitizedIds(visualizationObject.sorts) ?? [],
+            sorts: cloneWithSanitizedIdsTyped<ITigerSortItem[], ISortItem[]>(visualizationObject.sorts) ?? [],
+            properties: cloneWithSanitizedIdsTyped<ITigerVisualizationProperties, VisualizationProperties>(
+                visualizationObject.properties,
+            ),
             tags,
             ...layersProp,
         },

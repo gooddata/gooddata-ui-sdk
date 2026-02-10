@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-model",
-    "version": "11.20.0-alpha.1",
+    "version": "11.20.0-alpha.2",
     "description": "GoodData Model definitions used by UI components and Backend SPI",
     "license": "MIT",
     "author": "GoodData",
@@ -40,8 +40,8 @@
         "test-once": "vitest run",
         "validate": "npm run lint && npm run dep-cruiser && npm run format-check",
         "validate-esm": "node --input-type=module --eval 'import \"@gooddata/sdk-model\"' ",
-        "lint": "oxlint . --type-aware && eslint .",
-        "lint-fix": "oxlint . --type-aware --fix && eslint . --fix"
+        "lint": "oxlint . --type-aware --quiet && eslint .",
+        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint . --fix"
     },
     "dependencies": {
         "@types/geojson": "^7946.0.16",

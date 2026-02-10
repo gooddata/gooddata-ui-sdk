@@ -35,8 +35,8 @@
         "refresh-md": "gdc-catalog-export",
         "start": "webpack-cli serve",
         "validate": "npm run dep-cruiser && npm run lint && npm run format-check",
-        "lint": "oxlint . --type-aware && eslint src",
-        "lint-fix": "oxlint . --type-aware --fix && eslint src --fix"
+        "lint": "oxlint . --type-aware --quiet && eslint src",
+        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint src --fix"
     },
     "dependencies": {
         "@codemirror/state": "~6.5.3",

@@ -3,6 +3,6 @@
     "extends": ["node_modules/@gooddata/oxlint-config/dist/esm-react.json"],
     "ignorePatterns": ["typings.d.ts"],
     "rules": {
-        "import/no-unassigned-import": "off"
+        "import/no-unassigned-import": "warn"
     }
 }

@@ -5,6 +5,10 @@ import { v4 as uuidv4 } from "uuid";
 
 import {
     type AnalyticalDashboardModelV2,
+    type ITigerDashboardAttributeFilterConfig,
+    type ITigerDashboardDateFilterConfig,
+    type ITigerDashboardLayout,
+    type ITigerFilterContextItem,
     type JsonApiAnalyticalDashboardOutDocument,
     type JsonApiAnalyticalDashboardOutIncludes,
     type JsonApiDashboardPluginOutDocument,
@@ -18,6 +22,7 @@ import {
     type IDashboard,
     type IDashboardAttributeFilterConfig,
     type IDashboardDateFilterConfig,
+    type IDashboardDateFilterConfigItem,
     type IDashboardLayout,
     type IDashboardLayoutWidget,
     type IDashboardPlugin,
@@ -40,7 +45,7 @@ import { convertFilterContextFilters } from "./FilterContextFiltersConverter.js"
 import { convertLayout } from "../../../shared/layoutConverter.js";
 import { convertDataSetItem } from "../../DataSetConverter.js";
 import { fixWidgetLegacyElementUris } from "../../fixLegacyElementUris.js";
-import { cloneWithSanitizedIds } from "../../IdSanitization.js";
+import { cloneWithSanitizedIds, cloneWithSanitizedIdsTyped } from "../../IdSanitization.js";
 import { isInheritedObject } from "../../ObjectInheritance.js";
 import { convertUserIdentifier } from "../../UsersConverter.js";
 import { getShareStatus, stripQueryParams } from "../../utils.js";
@@ -108,10 +113,6 @@ function setWidgetRefsInLayout(layout: IDashboardLayout<IDashboardWidget> | unde
     }, layout);
 }
 
-interface IDashboardDateFilterConfigItem {
-    dateDataSet: IdentifierRef;
-    config: IDashboardDateFilterConfig;
-}
 interface IAnalyticalDashboardContent {
     layout?: IDashboardLayout;
     dateFilterConfig?: IDashboardDateFilterConfig;
@@ -154,7 +155,11 @@ function convertDashboardTabContent(
         title: tab.title,
         layout: convertLayout(
             true,
-            prepareDrillLocalIdentifierIfMissing(setWidgetRefsInLayout(cloneWithSanitizedIds(tab.layout))),
+            prepareDrillLocalIdentifierIfMissing(
+                setWidgetRefsInLayout(
+                    cloneWithSanitizedIdsTyped<ITigerDashboardLayout, IDashboardLayout>(tab.layout),
+                ),
+            ),
         ),
         filterContext: filterContext || {
             ref: cloneWithSanitizedIds(tab.filterContextRef)!,
@@ -164,9 +169,15 @@ function convertDashboardTabContent(
             description: "",
             filters: [],
         },
-        dateFilterConfig: cloneWithSanitizedIds(tab.dateFilterConfig),
+        dateFilterConfig: cloneWithSanitizedIdsTyped<
+            ITigerDashboardDateFilterConfig | undefined,
+            IDashboardDateFilterConfig | undefined
+        >(tab.dateFilterConfig),
         dateFilterConfigs: cloneWithSanitizedIds(tab.dateFilterConfigs),
-        attributeFilterConfigs: cloneWithSanitizedIds(tab.attributeFilterConfigs),
+        attributeFilterConfigs: cloneWithSanitizedIdsTyped<
+            ITigerDashboardAttributeFilterConfig[] | undefined,
+            IDashboardAttributeFilterConfig[] | undefined
+        >(tab.attributeFilterConfigs),
         filterGroupsConfig: cloneWithSanitizedIds(tab.filterGroupsConfig),
     };
 }
@@ -197,19 +208,28 @@ function getConvertedAnalyticalDashboardContent(
     const layout = convertLayout(
         true,
         prepareDrillLocalIdentifierIfMissing(
-            setWidgetRefsInLayout(cloneWithSanitizedIds(analyticalDashboard.layout)),
+            setWidgetRefsInLayout(
+                cloneWithSanitizedIdsTyped<ITigerDashboardLayout | undefined, IDashboardLayout | undefined>(
+                    analyticalDashboard.layout,
+                ),
+            ),
         ),
     );
 
     return {
         dateFilterConfig: analyticalDashboard.dateFilterConfig
-            ? cloneWithSanitizedIds(analyticalDashboard.dateFilterConfig)
+            ? cloneWithSanitizedIdsTyped<ITigerDashboardDateFilterConfig, IDashboardDateFilterConfig>(
+                  analyticalDashboard.dateFilterConfig,
+              )
             : defaultTab?.dateFilterConfig,
         dateFilterConfigs: analyticalDashboard.dateFilterConfigs
             ? cloneWithSanitizedIds(analyticalDashboard.dateFilterConfigs)
             : defaultTab?.dateFilterConfigs,
         attributeFilterConfigs: analyticalDashboard.attributeFilterConfigs
-            ? cloneWithSanitizedIds(analyticalDashboard.attributeFilterConfigs)
+            ? cloneWithSanitizedIdsTyped<
+                  ITigerDashboardAttributeFilterConfig[],
+                  IDashboardAttributeFilterConfig[]
+              >(analyticalDashboard.attributeFilterConfigs)
             : defaultTab?.attributeFilterConfigs,
         layout: layout ?? defaultTab?.layout,
         plugins: analyticalDashboard.plugins?.map(convertDashboardPluginLink),
@@ -232,6 +252,13 @@ function getDashboardRootFilterContext(
     return filterContextsList.find((fc) => areObjRefsEqual(fc.ref, sanitizedFilterRef));
 }
 
+/**
+ * Converts Tiger-specific analytical dashboard to platform-agnostic dashboard.
+ *
+ * @param analyticalDashboard - JSON API document containing Tiger dashboard (uses ITigerDashboardLayout, ITigerDashboardTab, etc.)
+ * @param filterContext - Optional external filter context override
+ * @returns Platform-agnostic dashboard (uses IDashboardLayout, IDashboardTab, etc.)
+ */
 export function convertDashboard(
     analyticalDashboard: JsonApiAnalyticalDashboardOutDocument,
     filterContext?: IFilterContext, // external override
@@ -306,6 +333,12 @@ export function convertDashboard(
     };
 }
 
+/**
+ * Converts Tiger-specific filter context to platform-agnostic filter context.
+ *
+ * @param filterContext - JSON API document containing Tiger filter context (uses ITigerFilterContextItem[])
+ * @returns Platform-agnostic filter context (uses FilterContextItem[])
+ */
 export function convertFilterContextFromBackend(
     filterContext: JsonApiFilterContextOutDocument,
 ): IFilterContext {
@@ -325,7 +358,9 @@ export function convertFilterContextFromBackend(
 export function convertFilterViewContextFilters(
     content: AnalyticalDashboardModelV2.IFilterContextWithTab,
 ): FilterContextItem[] {
-    return sanitizeSelectionMode(cloneWithSanitizedIds(content.filters));
+    return sanitizeSelectionMode(
+        cloneWithSanitizedIdsTyped<ITigerFilterContextItem[], FilterContextItem[]>(content.filters),
+    );
 }
 
 export function convertDashboardPlugin({

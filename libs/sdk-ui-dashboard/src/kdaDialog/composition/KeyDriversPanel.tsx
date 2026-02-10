@@ -1,13 +1,13 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { useCallback, useEffect, useId } from "react";
+import { useId, useRef } from "react";
 
 import cx from "classnames";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage, defineMessages, useIntl } from "react-intl";
 
 import {
     UiButton,
-    UiButtonSegmentedControl,
+    UiDropdown,
     UiIcon,
     UiIconButton,
     UiListbox,
@@ -16,7 +16,7 @@ import {
 } from "@gooddata/sdk-ui-kit";
 
 import { KeyDriverItem } from "../components/items/KeyDriverItem.js";
-import { SummaryItem } from "../components/items/SummaryItem.js";
+import { TrendItem } from "../components/items/TrendItem.js";
 import { useSignificantDrives } from "../hooks/useDriversList.js";
 import { type IKdaState } from "../internalTypes.js";
 import { useKdaState } from "../providers/KdaState.js";
@@ -26,66 +26,35 @@ export interface IKeyDriversPanelProps {
     loading?: boolean;
 }
 
+const trendMessages = defineMessages({
+    up: { id: "kdaDialog.dialog.keyDrives.button.trendUp" },
+    down: { id: "kdaDialog.dialog.keyDrives.button.trendDown" },
+    all: { id: "kdaDialog.dialog.keyDrives.button.trendAll" },
+});
+
 export function KeyDriversPanel({ loading, detailsId }: IKeyDriversPanelProps) {
     const intl = useIntl();
     const listTitleId = useId();
     const listId = useId();
+    const trendOpener = useRef<HTMLButtonElement>(null);
 
     const label = intl.formatMessage({ id: "kdaDialog.dialog.keyDrives.title" });
     const tooltip = intl.formatMessage({ id: "kdaDialog.dialog.keyDrives.tooltip" });
 
     const { state, setState } = useKdaState();
 
-    const { maximum, list, trendUp, trendDown } = useSignificantDrives();
+    const { maximum, list, trends, trendUp, trendDown } = useSignificantDrives();
 
-    // When there are no items for selected trend, switch to the other trend
-    useEffect(() => {
-        if (state.itemsStatus !== "success") {
-            return;
-        }
-        if (trendUp.length === 0 && trendDown.length > 0 && state.selectedTrend.includes("up")) {
-            setState({ selectedTrend: ["down"] });
-        }
-        // eslint-disable-next-line
-    }, [state.itemsStatus]);
-
-    const upSelected = state.selectedTrend.includes("up");
-    const downSelected = state.selectedTrend.includes("down");
-
-    const onSelectCallback = useCallback(
-        (trend: "up" | "down") => {
-            const selected = state.selectedTrend.includes(trend);
-            if (selected) {
-                const selectedTrend = state.selectedTrend.filter((t) => trend !== t);
-                if (selectedTrend.length === 0) {
-                    selectedTrend.push(trend === "up" ? "down" : "up");
-                }
-                setState({
-                    selectedTrend,
-                });
-            } else {
-                const selectedTrend = [...state.selectedTrend, trend];
-                setState({ selectedTrend });
-            }
-        },
-        [setState, state.selectedTrend],
-    );
+    const upSelected = state.selectedTrend === "up";
+    const allSelected = state.selectedTrend === "all";
+    const countSelected = allSelected
+        ? trendUp.length + trendDown.length
+        : upSelected
+          ? trendUp.length
+          : trendDown.length;
 
     return (
         <div className={cx("gd-kda-key-drivers-panel")}>
-            <div className={cx("gd-kda-key-drivers-panel-summary")}>
-                {loading ? (
-                    <UiSkeleton itemHeight={40} />
-                ) : (
-                    <SummaryItem
-                        detailsId={detailsId}
-                        isSelected={state.selectedItem === "summary"}
-                        onSelect={() => {
-                            setState({ selectedItem: "summary" });
-                        }}
-                    />
-                )}
-            </div>
             <div className={cx("gd-kda-key-drivers-panel-title")} id={listTitleId}>
                 {loading ? (
                     <UiSkeleton itemHeight={21} itemWidth={70} />
@@ -115,39 +84,63 @@ export function KeyDriversPanel({ loading, detailsId }: IKeyDriversPanelProps) {
                 {loading ? (
                     <UiSkeleton itemHeight={27} />
                 ) : (
-                    <UiButtonSegmentedControl>
-                        <UiButton
-                            label={intl.formatMessage(
-                                { id: "kdaDialog.dialog.keyDrives.button.trendUp" },
-                                { count: trendUp.length },
-                            )}
-                            size="small"
-                            isSelected={upSelected}
-                            onClick={() => {
-                                onSelectCallback("up");
-                            }}
-                            accessibilityConfig={{
-                                ariaControls: listId,
-                            }}
-                        />
-                        <UiButton
-                            label={intl.formatMessage(
-                                { id: "kdaDialog.dialog.keyDrives.button.trendDown" },
-                                { count: trendDown.length },
-                            )}
-                            size="small"
-                            isSelected={downSelected}
-                            onClick={() => {
-                                onSelectCallback("down");
-                            }}
-                            accessibilityConfig={{
-                                ariaControls: listId,
-                            }}
-                        />
-                    </UiButtonSegmentedControl>
+                    <UiDropdown
+                        closeOnEscape
+                        autofocusOnOpen
+                        closeOnOutsideClick
+                        onOpen={() => {
+                            setState({
+                                trendDropdownOpen: true,
+                            });
+                        }}
+                        onClose={() => {
+                            setTimeout(() => {
+                                setState({
+                                    trendDropdownOpen: false,
+                                });
+                            }, 10);
+                        }}
+                        renderButton={(props) => (
+                            <UiButton
+                                ref={trendOpener}
+                                size="medium"
+                                label={intl.formatMessage(trendMessages[state.selectedTrend || "all"])}
+                                iconAfter={props.isOpen ? "chevronUp" : "chevronDown"}
+                                badgeAfter={intl.formatMessage(
+                                    { id: "kdaDialog.dialog.keyDrives.drivers" },
+                                    { count: countSelected },
+                                )}
+                                iconAfterSize={11}
+                                onClick={props.toggleDropdown}
+                            />
+                        )}
+                        renderBody={(props) => (
+                            <UiListbox
+                                width={trendOpener.current?.offsetWidth ?? 200}
+                                items={trends}
+                                ariaAttributes={{
+                                    id: props.ariaAttributes.id,
+                                    "aria-controls": detailsId,
+                                    "aria-labelledby": listTitleId,
+                                }}
+                                InteractiveItemComponent={(props) => {
+                                    return <TrendItem {...props} />;
+                                }}
+                                selectedItemId={getSelectedTrend(state)}
+                                onSelect={(item) => {
+                                    setState({ selectedTrend: item.data.trend });
+                                    props.closeDropdown();
+                                }}
+                            />
+                        )}
+                    />
                 )}
             </div>
-            <div className={cx("gd-kda-key-drivers-panel-list")}>
+            <div
+                className={cx("gd-kda-key-drivers-panel-list", {
+                    empty: list.length === 0,
+                })}
+            >
                 {loading ? (
                     <div className={cx("gd-kda-key-drivers-panel-list-loading")}>
                         <UiSkeleton itemHeight={40} />
@@ -178,17 +171,7 @@ export function KeyDriversPanel({ loading, detailsId }: IKeyDriversPanelProps) {
                         ) : (
                             <div className={cx("gd-kda-key-drivers-panel-list-empty")}>
                                 <UiIcon type="drawerEmpty" size={26} color="currentColor" />
-                                {upSelected && downSelected ? (
-                                    <FormattedMessage id="kdaDialog.dialog.keyDrives.empty" />
-                                ) : (
-                                    <>
-                                        {upSelected ? (
-                                            <FormattedMessage id="kdaDialog.dialog.keyDrives.empty_up" />
-                                        ) : (
-                                            <FormattedMessage id="kdaDialog.dialog.keyDrives.empty_down" />
-                                        )}
-                                    </>
-                                )}
+                                <FormattedMessage id="kdaDialog.dialog.keyDrives.empty" />
                             </div>
                         )}
                     </>
@@ -200,4 +183,8 @@ export function KeyDriversPanel({ loading, detailsId }: IKeyDriversPanelProps) {
 
 function getSelectedItem(state: IKdaState) {
     return typeof state.selectedItem === "string" ? undefined : state.selectedItem.id;
+}
+
+function getSelectedTrend(state: IKdaState) {
+    return state.selectedTrend;
 }

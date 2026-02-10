@@ -991,8 +991,9 @@ export const selectExportResultPollingTimeout: DashboardSelector<number | undefi
 );
 
 /**
- * Selects whether drill to URL is enabled by default and therefore insight setting is ignored.
+ * Selects whether drill to URL is enabled by default.
  * Works with ENABLE_DRILL_TO_URL_BY_DEFAULT setting type.
+ * Can be overridden by insight config.
  *
  * @alpha
  */

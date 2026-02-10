@@ -51,8 +51,8 @@
         "test": "vitest watch",
         "test-once": "npm run story-generator && npm run scenario-extractor-local && vitest --run",
         "validate": "npm run lint && npm run dep-cruiser && npm run stylelint && npm run format-check",
-        "lint": "oxlint . --type-aware && eslint .",
-        "lint-fix": "oxlint . --type-aware --fix && eslint . --fix"
+        "lint": "oxlint . --type-aware --quiet && eslint .",
+        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint . --fix"
     },
     "devDependencies": {
         "@gooddata/eslint-config": "workspace:*",

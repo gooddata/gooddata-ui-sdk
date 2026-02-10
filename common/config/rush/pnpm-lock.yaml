@@ -2547,8 +2547,8 @@ importers:
         specifier: workspace:*
         version: link:../../tools/eslint-config
       '@gooddata/fixtures':
-        specifier: 3.3.10
-        version: 3.3.10
+        specifier: 3.3.11
+        version: 3.3.11
       '@gooddata/oxlint-config':
         specifier: workspace:*
         version: link:../../tools/oxlint-config
@@ -5685,8 +5685,8 @@ importers:
         specifier: workspace:*
         version: link:../../tools/eslint-config
       '@gooddata/fixtures':
-        specifier: 3.3.10
-        version: 3.3.10
+        specifier: 3.3.11
+        version: 3.3.11
       '@gooddata/oxlint-config':
         specifier: workspace:*
         version: link:../../tools/oxlint-config
@@ -7849,8 +7849,8 @@ importers:
         specifier: workspace:*
         version: link:../eslint-config
       '@gooddata/fixtures':
-        specifier: 3.3.10
-        version: 3.3.10
+        specifier: 3.3.11
+        version: 3.3.11
       '@gooddata/oxlint-config':
         specifier: workspace:*
         version: link:../oxlint-config
@@ -10234,8 +10234,8 @@ packages:
       text-encoding: 0.7.0
     dev: false
 
-  /@gooddata/fixtures@3.3.10:
-    resolution: {integrity: sha512-aD5OnBbnIVSb7ZsPzEAXzPDXtsX78Uu1r8hv2kI9gHN0sJqKFLe0sLWHmLn2GqNq0qKA5QGkSCYsZZ+UOnGjYA==}
+  /@gooddata/fixtures@3.3.11:
+    resolution: {integrity: sha512-9tiTwcpH6pvQayZb2pPZ9jnAr2HmsjT3bLoCZHIREizUAKUnvQ+jAW8oNcTKxZSO6G+Uo5PYnuS+baS8c4rTWg==}
     dependencies:
       '@gooddata/api-client-bear': 8.12.3
       '@gooddata/api-client-tiger': 10.43.0

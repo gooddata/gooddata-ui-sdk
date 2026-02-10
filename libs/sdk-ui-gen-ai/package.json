@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-gen-ai",
-    "version": "11.20.0-alpha.1",
+    "version": "11.20.0-alpha.2",
     "description": "GoodData GenAI SDK",
     "license": "MIT",
     "author": "GoodData Corporation",
@@ -58,8 +58,8 @@
         "validate-esm": "node --input-type=module --eval 'import \"@gooddata/sdk-ui-gen-ai\"'",
         "validate-locales": "i18n-toolkit",
         "validate-theming": "npm run scss && node scripts/validateCss.js",
-        "lint": "oxlint . --type-aware && eslint .",
-        "lint-fix": "oxlint . --type-aware --fix && eslint . --fix"
+        "lint": "oxlint . --type-aware --quiet && eslint .",
+        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint . --fix"
     },
     "dependencies": {
         "@codemirror/autocomplete": "^6.20.0",

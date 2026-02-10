@@ -2,9 +2,18 @@
 
 import { cloneDeep, omit, update } from "lodash-es";
 
-import { type AnalyticalDashboardModelV2 } from "@gooddata/api-client-tiger";
+import {
+    type AnalyticalDashboardModelV2,
+    type ITigerDashboardAttributeFilterConfig,
+    type ITigerDashboardDateFilterConfig,
+    type ITigerDashboardLayout,
+    type ITigerFilterContextItem,
+} from "@gooddata/api-client-tiger";
 import { type LayoutPath, walkLayout } from "@gooddata/sdk-backend-spi";
 import {
+    type FilterContextItem,
+    type IDashboardAttributeFilterConfig,
+    type IDashboardDateFilterConfig,
     type IDashboardDefinition,
     type IDashboardLayout,
     type IDashboardPluginDefinition,
@@ -22,7 +31,7 @@ import {
     isVisualizationSwitcherWidgetDefinition,
 } from "@gooddata/sdk-model";
 
-import { cloneWithSanitizedIds } from "./IdSanitization.js";
+import { cloneWithSanitizedIds, cloneWithSanitizedIdsTyped } from "./IdSanitization.js";
 import { addFilterLocalIdentifier } from "../../utils/filterLocalidentifier.js";
 import { generateWidgetLocalIdentifier } from "../../utils/widgetLocalIdentifier.js";
 import { convertLayout } from "../shared/layoutConverter.js";
@@ -97,15 +106,30 @@ function convertDashboardTabToBackend(
     return {
         localIdentifier: tab.localIdentifier,
         title: tab.title,
-        layout: cloneWithSanitizedIds(layout),
+        layout: cloneWithSanitizedIdsTyped<IDashboardLayout | undefined, ITigerDashboardLayout>(layout),
         filterContextRef: cloneWithSanitizedIds(filterContextRef)!,
-        dateFilterConfig: cloneWithSanitizedIds(tab.dateFilterConfig),
+        dateFilterConfig: cloneWithSanitizedIdsTyped<
+            IDashboardDateFilterConfig | undefined,
+            ITigerDashboardDateFilterConfig | undefined
+        >(tab.dateFilterConfig),
         dateFilterConfigs: cloneWithSanitizedIds(tab.dateFilterConfigs),
-        attributeFilterConfigs: cloneWithSanitizedIds(tab.attributeFilterConfigs),
+        attributeFilterConfigs: cloneWithSanitizedIdsTyped<
+            IDashboardAttributeFilterConfig[] | undefined,
+            ITigerDashboardAttributeFilterConfig[] | undefined
+        >(tab.attributeFilterConfigs),
         filterGroupsConfig: cloneWithSanitizedIds(tab.filterGroupsConfig),
     };
 }
 
+/**
+ * Converts platform-agnostic dashboard definition to Tiger-specific analytical dashboard.
+ *
+ * @param dashboard - Platform-agnostic dashboard definition (uses IDashboardLayout, IDashboardTab, etc.)
+ * @param filterContextRef - Optional filter context reference
+ * @param useWidgetLocalIdentifiers - Whether to preserve widget local identifiers
+ * @param enableDashboardSectionHeadersDateDataSet - Whether to include section headers date data set
+ * @returns Tiger analytical dashboard (uses ITigerDashboardLayout, ITigerDashboardTab, etc.)
+ */
 export function convertAnalyticalDashboard(
     dashboard: IDashboardDefinition,
     filterContextRef?: ObjRef,
@@ -135,11 +159,19 @@ export function convertAnalyticalDashboard(
     );
 
     const result: AnalyticalDashboardModelV2.IAnalyticalDashboard = {
-        dateFilterConfig: cloneWithSanitizedIds(effectiveDateFilterConfig),
+        dateFilterConfig: cloneWithSanitizedIdsTyped<
+            IDashboardDateFilterConfig | undefined,
+            ITigerDashboardDateFilterConfig | undefined
+        >(effectiveDateFilterConfig),
         dateFilterConfigs: cloneWithSanitizedIds(effectiveDateFilterConfigs),
-        attributeFilterConfigs: cloneWithSanitizedIds(effectiveAttributeFilterConfigs),
+        attributeFilterConfigs: cloneWithSanitizedIdsTyped<
+            IDashboardAttributeFilterConfig[] | undefined,
+            ITigerDashboardAttributeFilterConfig[] | undefined
+        >(effectiveAttributeFilterConfigs),
         filterContextRef: cloneWithSanitizedIds(filterContextRef),
-        layout: cloneWithSanitizedIds(layout),
+        layout: cloneWithSanitizedIdsTyped<IDashboardLayout | undefined, ITigerDashboardLayout | undefined>(
+            layout,
+        ),
         plugins: dashboard.plugins?.map(convertDashboardPluginLinkToBackend),
         disableCrossFiltering: dashboard.disableCrossFiltering,
         disableUserFilterReset: dashboard.disableUserFilterReset,
@@ -159,6 +191,13 @@ export function convertAnalyticalDashboard(
     return result;
 }
 
+/**
+ * Converts platform-agnostic filter context to Tiger-specific filter context.
+ *
+ * @param filterContext - Platform-agnostic filter context definition (uses FilterContextItem[])
+ * @param useDateFilterLocalIdentifiers - Whether to add local identifiers to date filters
+ * @returns Tiger filter context (uses ITigerFilterContextItem[])
+ */
 export function convertFilterContextToBackend(
     filterContext: IFilterContextDefinition,
     useDateFilterLocalIdentifiers?: boolean,
@@ -168,7 +207,7 @@ export function convertFilterContextToBackend(
         : filterContext.filters;
 
     return {
-        filters: cloneWithSanitizedIds(updatedFilters),
+        filters: cloneWithSanitizedIdsTyped<FilterContextItem[], ITigerFilterContextItem[]>(updatedFilters),
         version: "2",
     };
 }

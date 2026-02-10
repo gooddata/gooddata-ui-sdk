@@ -8,19 +8,8 @@ import { AxiosInstance } from 'axios';
 import { AxiosPromise } from 'axios';
 import { AxiosRequestConfig } from 'axios';
 import { GenericAbortSignal } from 'axios';
-import { IAttributeFilterConfigs } from '@gooddata/sdk-model';
-import { IBucket } from '@gooddata/sdk-model';
-import { IDashboardAttributeFilterConfig } from '@gooddata/sdk-model';
-import { IDashboardDateFilterConfig } from '@gooddata/sdk-model';
-import { IDashboardFilterGroupsConfig } from '@gooddata/sdk-model';
-import { IDashboardLayout } from '@gooddata/sdk-model';
-import { IFilter } from '@gooddata/sdk-model';
-import { IFilterContext as IFilterContext_2 } from '@gooddata/sdk-model';
-import { IInsightLayerDefinition } from '@gooddata/sdk-model';
-import { ISortItem } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 import type { RawAxiosRequestConfig } from 'axios';
-import { VisualizationProperties } from '@gooddata/sdk-model';
 
 // @public
 export interface AacAnalyticsModel {
@@ -2792,7 +2781,7 @@ declare namespace AnalyticalDashboardModelV2 {
         IDashboardDateFilterConfigItem,
         IDashboardTab,
         IAnalyticalDashboard_2 as IAnalyticalDashboard,
-        IFilterContext_3 as IFilterContext,
+        IFilterContext_2 as IFilterContext,
         IFilterContextWithTab,
         IDashboardPlugin,
         IDashboardPluginLink
@@ -14243,18 +14232,18 @@ export interface IAacLogicalModel {
 interface IAnalyticalDashboard {
     // (undocumented)
     analyticalDashboard: {
-        layout?: IDashboardLayout;
+        layout?: ITigerDashboardLayout;
         filterContextRef?: ObjRef;
-        dateFilterConfig?: IDashboardDateFilterConfig;
+        dateFilterConfig?: ITigerDashboardDateFilterConfig;
     };
 }
 
 // @public (undocumented)
 interface IAnalyticalDashboard_2 {
     // (undocumented)
-    attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
+    attributeFilterConfigs?: ITigerDashboardAttributeFilterConfig[];
     // (undocumented)
-    dateFilterConfig?: IDashboardDateFilterConfig;
+    dateFilterConfig?: ITigerDashboardDateFilterConfig;
     // (undocumented)
     dateFilterConfigs?: IDashboardDateFilterConfigItem[];
     // (undocumented)
@@ -14270,13 +14259,13 @@ interface IAnalyticalDashboard_2 {
     // (undocumented)
     filterContextRef?: ObjRef;
     // (undocumented)
-    layout?: IDashboardLayout;
+    layout?: ITigerDashboardLayout;
     // (undocumented)
     plugins?: IDashboardPluginLink[];
     // (undocumented)
     sectionHeadersDateDataSet?: ObjRef;
     // @alpha
-    tabs?: IDashboardTab[];
+    tabs?: ITigerDashboardTab[];
     // (undocumented)
     version: "2";
 }
@@ -14294,7 +14283,7 @@ interface IAttribute {
 // @public (undocumented)
 interface IDashboardDateFilterConfigItem {
     // (undocumented)
-    config: IDashboardDateFilterConfig;
+    config: ITigerDashboardDateFilterConfig;
     // (undocumented)
     dateDataSet: ObjRef;
 }
@@ -14317,17 +14306,8 @@ interface IDashboardPluginLink {
     version: "2";
 }
 
-// @alpha
-interface IDashboardTab {
-    attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
-    dateFilterConfig?: IDashboardDateFilterConfig;
-    dateFilterConfigs?: IDashboardDateFilterConfigItem[];
-    filterContextRef: ObjRef;
-    filterGroupsConfig?: IDashboardFilterGroupsConfig;
-    layout: IDashboardLayout;
-    localIdentifier: string;
-    title: string;
-}
+// @public
+type IDashboardTab = ITigerDashboardTab;
 
 // @public (undocumented)
 type Identifier = string;
@@ -14495,20 +14475,20 @@ interface IDimension {
 interface IFilterContext {
     // (undocumented)
     filterContext: {
-        filters: IFilterContext_2["filters"];
+        filters: ITigerFilterContextItem[];
     };
 }
 
 // @public (undocumented)
-interface IFilterContext_3 {
+interface IFilterContext_2 {
     // (undocumented)
-    filters: IFilterContext_2["filters"];
+    filters: ITigerFilterContextItem[];
     // (undocumented)
     version: "2";
 }
 
 // @alpha (undocumented)
-interface IFilterContextWithTab extends IFilterContext_3 {
+interface IFilterContextWithTab extends IFilterContext_2 {
     // (undocumented)
     tabLocalIdentifier?: string;
 }
@@ -14746,7 +14726,7 @@ function isDashboardPluginLink(pluginLink: unknown): pluginLink is IDashboardPlu
 export function isDashboardPluginsItem(dashboardPlugin: unknown): dashboardPlugin is JsonApiDashboardPluginOutWithLinks;
 
 // @alpha (undocumented)
-function isDashboardTab(tab: unknown): tab is IDashboardTab;
+function isDashboardTab(tab: unknown): tab is ITigerDashboardTab;
 
 // @public (undocumented)
 export function isDataSetItem(dataSet: unknown): dataSet is JsonApiDatasetOutWithLinks;
@@ -14758,7 +14738,7 @@ export function isFactItem(fact: unknown): fact is JsonApiFactOutWithLinks;
 function isFilterContext(filterContext: unknown): filterContext is IFilterContext;
 
 // @public (undocumented)
-function isFilterContext_2(filterContext: unknown): filterContext is IFilterContext_3;
+function isFilterContext_2(filterContext: unknown): filterContext is IFilterContext_2;
 
 // @public (undocumented)
 export function isFilterContextData(filterContext: unknown): filterContext is JsonApiFilterContextIn;
@@ -14804,6 +14784,73 @@ function isVisualizationObject_2(visualizationObject: unknown): visualizationObj
 
 // @public (undocumented)
 export function isVisualizationObjectsItem(visualizationObject: unknown): visualizationObject is JsonApiVisualizationObjectOutWithLinks;
+
+// @public
+export interface ITigerAttribute {
+    // (undocumented)
+    attribute: {
+        localIdentifier: string;
+        displayForm: ObjRef;
+        alias?: string;
+        showAllValues?: boolean;
+    };
+}
+
+// @public
+export interface ITigerAttributeFilterConfig {
+    // (undocumented)
+    displayAsLabel?: ObjRef;
+    // (undocumented)
+    filterElementsBy?: Array<{
+        filterLocalIdentifier: string;
+        over: {
+            attributes: ObjRef[];
+        };
+    }>;
+    // (undocumented)
+    localIdentifier?: string;
+    // (undocumented)
+    mode?: "active" | "readonly" | "hidden";
+}
+
+// @public
+export type ITigerAttributeFilterConfigs = {
+    [filterLocalIdentifier: string]: ITigerAttributeFilterConfig;
+};
+
+// @public
+export interface ITigerAttributeLocatorItem {
+    // (undocumented)
+    attributeLocatorItem: {
+        attributeIdentifier: string;
+        element: string | null;
+    };
+}
+
+// @public
+export type ITigerAttributeOrMeasure = ITigerMeasure | ITigerAttribute;
+
+// @public
+export interface ITigerAttributeSortItem {
+    // (undocumented)
+    attributeSortItem: {
+        attributeIdentifier: string;
+        direction: "asc" | "desc";
+        aggregation?: "sum";
+    };
+}
+
+// @public
+export interface ITigerBucket {
+    // (undocumented)
+    items: ITigerAttributeOrMeasure[];
+    // (undocumented)
+    localIdentifier?: string;
+    // Warning: (ae-forgotten-export) The symbol "ITigerTotal" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    totals?: ITigerTotal[];
+}
 
 // @public @deprecated
 export interface ITigerClient extends ITigerClientBase {
@@ -14863,6 +14910,152 @@ export interface ITigerClientBase {
     setApiToken: (token: string | undefined) => void;
 }
 
+// @public
+export interface ITigerDashboardAttributeFilterConfig {
+    // (undocumented)
+    displayAsLabel?: ObjRef;
+    // (undocumented)
+    filterElementsBy?: Array<{
+        filterLocalIdentifier: string;
+        over: {
+            attributes: ObjRef[];
+        };
+    }>;
+    // (undocumented)
+    localIdentifier: string;
+    // (undocumented)
+    mode?: "active" | "readonly" | "hidden";
+    // (undocumented)
+    selectionMode?: "single" | "multi";
+    // (undocumented)
+    title?: string;
+}
+
+// @public
+export interface ITigerDashboardDateFilterConfig {
+    // (undocumented)
+    addPresets?: {
+        absolutePresets?: Array<{
+            from: string;
+            to: string;
+            name: string;
+            localIdentifier?: string;
+        }>;
+        relativePresets?: Array<{
+            from: number;
+            to: number;
+            granularity: string;
+            name: string;
+            localIdentifier?: string;
+        }>;
+    };
+    // (undocumented)
+    filterName: string;
+    // (undocumented)
+    hideGranularities?: string[];
+    // (undocumented)
+    hideOptions?: string[];
+    // (undocumented)
+    mode?: "readonly" | "hidden" | "active";
+}
+
+// @public
+export interface ITigerDashboardFilterGroupsConfig {
+    // Warning: (ae-forgotten-export) The symbol "ITigerDashboardFilterGroup" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    groups: ITigerDashboardFilterGroup[];
+}
+
+// Warning: (ae-forgotten-export) The symbol "ITigerWidget" needs to be exported by the entry point index.d.ts
+//
+// @public
+export interface ITigerDashboardLayout<TWidget = ITigerWidget> {
+    // Warning: (ae-forgotten-export) The symbol "ITigerDashboardLayoutSection" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    sections?: Array<ITigerDashboardLayoutSection<TWidget>>;
+    // (undocumented)
+    type: "IDashboardLayout";
+}
+
+// @public
+export interface ITigerDashboardTab {
+    // (undocumented)
+    attributeFilterConfigs?: ITigerDashboardAttributeFilterConfig[];
+    // (undocumented)
+    dateFilterConfig?: ITigerDashboardDateFilterConfig;
+    // (undocumented)
+    dateFilterConfigs?: Array<{
+        dateDataSet: ObjRef;
+        config: ITigerDashboardDateFilterConfig;
+    }>;
+    // (undocumented)
+    filterContextRef: ObjRef;
+    // (undocumented)
+    filterGroupsConfig?: ITigerDashboardFilterGroupsConfig;
+    // (undocumented)
+    layout: ITigerDashboardLayout;
+    // (undocumented)
+    localIdentifier: string;
+    // (undocumented)
+    title: string;
+}
+
+// Warning: (ae-forgotten-export) The symbol "ITigerAbsoluteDateFilter" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "ITigerRelativeDateFilter" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "ITigerPositiveAttributeFilter" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "ITigerNegativeAttributeFilter" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "ITigerMeasureValueFilter" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "ITigerRankingFilter" needs to be exported by the entry point index.d.ts
+//
+// @public
+export type ITigerFilter = ITigerAbsoluteDateFilter | ITigerRelativeDateFilter | ITigerPositiveAttributeFilter | ITigerNegativeAttributeFilter | ITigerMeasureValueFilter | ITigerRankingFilter;
+
+// Warning: (ae-forgotten-export) The symbol "ITigerDashboardAttributeFilter" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "ITigerDashboardDateFilter" needs to be exported by the entry point index.d.ts
+//
+// @public
+export type ITigerFilterContextItem = ITigerDashboardAttributeFilter | ITigerDashboardDateFilter;
+
+// @public
+export interface ITigerInsightLayerDefinition {
+    // (undocumented)
+    attributeFilterConfigs?: ITigerAttributeFilterConfigs;
+    // (undocumented)
+    buckets: ITigerBucket[];
+    // (undocumented)
+    filters?: ITigerFilter[];
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    name?: string;
+    // (undocumented)
+    properties?: ITigerVisualizationProperties;
+    // (undocumented)
+    sorts?: ITigerSortItem[];
+    // (undocumented)
+    type: string;
+}
+
+// Warning: (ae-forgotten-export) The symbol "ITigerSimpleMeasure" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "ITigerArithmeticMeasure" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "ITigerPopMeasure" needs to be exported by the entry point index.d.ts
+// Warning: (ae-forgotten-export) The symbol "ITigerPreviousPeriodMeasure" needs to be exported by the entry point index.d.ts
+//
+// @public
+export type ITigerMeasure = ITigerSimpleMeasure | ITigerArithmeticMeasure | ITigerPopMeasure | ITigerPreviousPeriodMeasure;
+
+// Warning: (ae-forgotten-export) The symbol "ITigerMeasureSortItem" needs to be exported by the entry point index.d.ts
+//
+// @public
+export type ITigerSortItem = ITigerAttributeSortItem | ITigerMeasureSortItem;
+
+// @public
+export type ITigerVisualizationProperties = {
+    [key: string]: any;
+};
+
 // @public @deprecated
 interface ITotalItem {
     // (undocumented)
@@ -14910,27 +15103,27 @@ interface IVisualizationObject {
     visualizationObject: {
         title: string;
         visualizationUrl: string;
-        buckets: IBucket[];
-        filters: IFilter[];
-        sorts: ISortItem[];
-        properties: VisualizationProperties;
+        buckets: ITigerBucket[];
+        filters: ITigerFilter[];
+        sorts: ITigerSortItem[];
+        properties: ITigerVisualizationProperties;
     };
 }
 
 // @public
 interface IVisualizationObject_2 {
     // (undocumented)
-    attributeFilterConfigs?: IAttributeFilterConfigs;
+    attributeFilterConfigs?: ITigerAttributeFilterConfigs;
     // (undocumented)
-    buckets: IBucket[];
+    buckets: ITigerBucket[];
     // (undocumented)
-    filters: IFilter[];
+    filters: ITigerFilter[];
     // (undocumented)
-    layers?: IInsightLayerDefinition[];
+    layers?: ITigerInsightLayerDefinition[];
     // (undocumented)
-    properties: VisualizationProperties;
+    properties: ITigerVisualizationProperties;
     // (undocumented)
-    sorts: ISortItem[];
+    sorts: ITigerSortItem[];
     // (undocumented)
     version: "2";
     // (undocumented)

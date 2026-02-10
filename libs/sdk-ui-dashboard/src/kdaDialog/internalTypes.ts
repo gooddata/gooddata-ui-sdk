@@ -16,6 +16,8 @@ export interface IKdaDateOptions {
     range?: DeepReadonly<[IKdaDataPoint, IKdaDataPoint]>;
 }
 
+export type IKdaTrend = "up" | "down" | "all";
+
 export interface IKdaItem {
     id: string;
     title: string;
@@ -56,10 +58,11 @@ export interface IKdaState {
     //states
     attributesDropdownOpen: boolean;
     addFilterDropdownOpen: boolean;
+    trendDropdownOpen: boolean;
     //settings
     separators?: ISeparators;
     //rest
-    selectedTrend: ("up" | "down")[];
+    selectedTrend: IKdaTrend;
     selectedItem: IUiListboxInteractiveItem<IKdaItem> | "summary";
     selectedStatus: KdaAsyncStatus;
     selectedError: Error | undefined;

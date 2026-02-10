@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/reference-workspace",
-    "version": "11.20.0-alpha.1",
+    "version": "11.20.0-alpha.2",
     "description": "GoodData SDK - Reference Workspace for tests",
     "license": "MIT",
     "author": "GoodData",
@@ -33,8 +33,8 @@
         "refresh-md": "../reference-workspace-mgmt/bin/refresh-md.sh && npm run build",
         "refresh-recordings": "../reference-workspace-mgmt/bin/refresh-recordings.sh && npm run format-write && npm run build",
         "validate": "npm run dep-cruiser && npm run lint && npm run format-check",
-        "lint": "oxlint . --type-aware && eslint src",
-        "lint-fix": "oxlint . --type-aware --fix && eslint src --fix"
+        "lint": "oxlint . --type-aware --quiet && eslint src",
+        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint src --fix"
     },
     "dependencies": {
         "@gooddata/sdk-backend-spi": "workspace:*",

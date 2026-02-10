@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-kit",
-    "version": "11.20.0-alpha.1",
+    "version": "11.20.0-alpha.2",
     "description": "GoodData SDK - UI Building Components",
     "license": "MIT",
     "author": "GoodData Corporation",
@@ -58,8 +58,8 @@
         "validate-locales": "cd ../sdk-ui && npm run validate-locales",
         "validate-theming": "npm run scss && node scripts/validateCss.js",
         "validate-ui-components": "node scripts/validateUiComponents.js",
-        "lint": "oxlint . --type-aware && eslint .",
-        "lint-fix": "oxlint . --type-aware --fix && eslint . --fix"
+        "lint": "oxlint . --type-aware --quiet && eslint .",
+        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint . --fix"
     },
     "dependencies": {
         "@aaronhayes/react-use-hubspot-form": "^2.1.2",

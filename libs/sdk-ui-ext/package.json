@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-ext",
-    "version": "11.20.0-alpha.1",
+    "version": "11.20.0-alpha.2",
     "description": "GoodData.UI SDK - Extensions",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData Corporation",
@@ -59,8 +59,8 @@
         "validate-esm": "node --input-type=module --eval 'import \"@gooddata/sdk-ui-ext\"'",
         "validate-locales": "i18n-toolkit",
         "validate-theming": "npm run scss && node scripts/validateCss.js",
-        "lint": "oxlint . --type-aware && eslint .",
-        "lint-fix": "oxlint . --type-aware --fix && eslint . --fix"
+        "lint": "oxlint . --type-aware --quiet && eslint .",
+        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint . --fix"
     },
     "dependencies": {
         "@codemirror/commands": "~6.10.1",

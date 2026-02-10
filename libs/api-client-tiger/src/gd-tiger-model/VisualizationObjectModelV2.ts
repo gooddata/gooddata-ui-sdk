@@ -1,15 +1,15 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
 
 import {
-    type IAttributeFilterConfigs,
-    type IBucket,
-    type IFilter,
-    type IInsightLayerDefinition,
-    type ISortItem,
-    type VisualizationProperties,
-} from "@gooddata/sdk-model";
+    type ITigerAttributeFilterConfigs,
+    type ITigerBucket,
+    type ITigerFilter,
+    type ITigerInsightLayerDefinition,
+    type ITigerSortItem,
+    type ITigerVisualizationProperties,
+} from "./TigerTypes.js";
 
 /**
  * Visualization object used to store its data as a metadata object
@@ -18,12 +18,12 @@ import {
 export interface IVisualizationObject {
     version: "2";
     visualizationUrl: string;
-    buckets: IBucket[];
-    filters: IFilter[];
-    attributeFilterConfigs?: IAttributeFilterConfigs;
-    sorts: ISortItem[];
-    properties: VisualizationProperties;
-    layers?: IInsightLayerDefinition[];
+    buckets: ITigerBucket[];
+    filters: ITigerFilter[];
+    attributeFilterConfigs?: ITigerAttributeFilterConfigs;
+    sorts: ITigerSortItem[];
+    properties: ITigerVisualizationProperties;
+    layers?: ITigerInsightLayerDefinition[];
 }
 
 /**

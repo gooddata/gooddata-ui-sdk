@@ -32,8 +32,8 @@
         "test": "vitest watch --passWithNoTests",
         "test-once": "vitest run --passWithNoTests",
         "validate": "npm run dep-cruiser && npm run lint && npm run format-check",
-        "lint": "oxlint . --type-aware && eslint src",
-        "lint-fix": "oxlint . --type-aware --fix && eslint src --fix"
+        "lint": "oxlint . --type-aware --quiet && eslint src",
+        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint src --fix"
     },
     "dependencies": {
         "@gooddata/catalog-export": "workspace:*",
@@ -43,7 +43,7 @@
     },
     "devDependencies": {
         "@gooddata/eslint-config": "workspace:*",
-        "@gooddata/fixtures": "3.3.10",
+        "@gooddata/fixtures": "3.3.11",
         "@gooddata/oxlint-config": "workspace:*",
         "@types/lodash-es": "^4.17.12",
         "@types/node": "^22.13.0",

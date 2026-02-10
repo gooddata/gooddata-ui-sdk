@@ -25,8 +25,8 @@
         "format-write": "oxfmt .",
         "refresh-md": "./scripts/refresh-md.sh && npm run build",
         "validate": "npm run lint && npm run format-check",
-        "lint": "oxlint . --type-aware && eslint .",
-        "lint-fix": "oxlint . --type-aware --fix && eslint . --fix"
+        "lint": "oxlint . --type-aware --quiet && eslint .",
+        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint . --fix"
     },
     "devDependencies": {
         "@codemirror/state": "~6.5.3",

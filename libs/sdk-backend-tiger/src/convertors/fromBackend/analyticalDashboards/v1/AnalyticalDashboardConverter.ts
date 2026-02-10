@@ -5,6 +5,9 @@ import { v4 as uuidv4 } from "uuid";
 
 import {
     type AnalyticalDashboardModelV1,
+    type ITigerDashboardDateFilterConfig,
+    type ITigerDashboardLayout,
+    type ITigerFilterContextItem,
     type JsonApiAnalyticalDashboardOutDocument,
     type JsonApiFilterContextOutDocument,
     isDataSetItem,
@@ -25,7 +28,7 @@ import {
 import { convertLayout } from "../../../shared/layoutConverter.js";
 import { convertDataSetItem } from "../../DataSetConverter.js";
 import { fixWidgetLegacyElementUris } from "../../fixLegacyElementUris.js";
-import { cloneWithSanitizedIds } from "../../IdSanitization.js";
+import { cloneWithSanitizedIdsTyped } from "../../IdSanitization.js";
 import { isInheritedObject } from "../../ObjectInheritance.js";
 import { convertUserIdentifier } from "../../UsersConverter.js";
 import { getShareStatus, stripQueryParams } from "../../utils.js";
@@ -66,10 +69,17 @@ function getConvertedAnalyticalDashboardContent(
     analyticalDashboard: AnalyticalDashboardModelV1.IAnalyticalDashboard,
 ): IAnalyticalDashboardContent {
     return {
-        dateFilterConfig: cloneWithSanitizedIds(analyticalDashboard.analyticalDashboard.dateFilterConfig),
+        dateFilterConfig: cloneWithSanitizedIdsTyped<
+            ITigerDashboardDateFilterConfig | undefined,
+            IDashboardDateFilterConfig | undefined
+        >(analyticalDashboard.analyticalDashboard.dateFilterConfig),
         layout: convertLayout(
             true,
-            setWidgetRefsInLayout(cloneWithSanitizedIds(analyticalDashboard.analyticalDashboard.layout)),
+            setWidgetRefsInLayout(
+                cloneWithSanitizedIdsTyped<ITigerDashboardLayout | undefined, IDashboardLayout | undefined>(
+                    analyticalDashboard.analyticalDashboard.layout,
+                ),
+            ),
         ),
     };
 }
@@ -130,5 +140,9 @@ export function convertFilterContextFromBackend(
 export function convertFilterContextFilters(
     content: AnalyticalDashboardModelV1.IFilterContext,
 ): FilterContextItem[] {
-    return sanitizeSelectionMode(cloneWithSanitizedIds(content.filterContext.filters));
+    return sanitizeSelectionMode(
+        cloneWithSanitizedIdsTyped<ITigerFilterContextItem[], FilterContextItem[]>(
+            content.filterContext.filters,
+        ),
+    );
 }

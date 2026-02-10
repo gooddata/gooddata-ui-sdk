@@ -3008,12 +3008,32 @@
         "crowdinContext": "Key drivers tooltip in key driver analysis dialog"
     },
     "kdaDialog.dialog.keyDrives.button.trendUp": {
-        "text": "Increasing ({count})",
+        "text": "Increase",
         "crowdinContext": "Key drivers button trend up in key driver analysis dialog"
     },
     "kdaDialog.dialog.keyDrives.button.trendDown": {
-        "text": "Decreasing ({count})",
+        "text": "Decrease",
         "crowdinContext": "Key drivers button trend down in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.keyDrives.button.trendAll": {
+        "text": "All",
+        "crowdinContext": "Key drivers button trend down in key driver analysis dialog"
+    },
+    "kdaDialog.dialog.keyDrives.drivers": {
+        "text": "{count} driver{count, plural, other {s}}",
+        "crowdinContext": "Used to show the number of key drivers in the dialog. Example: '2 drivers'."
+    },
+    "kdaDialog.dialog.keyDrives.overview.summary.home": {
+        "text": "Summary",
+        "crowdinContext": "Home button in the Key Driver Analysis dialog overview section"
+    },
+    "kdaDialog.dialog.keyDrives.overview.summary.home.tooltip": {
+        "text": "Go to Analysis summary",
+        "crowdinContext": "Tooltip for the home button in the Key Driver Analysis dialog overview section"
+    },
+    "kdaDialog.dialog.keyDrives.overview.summary.breadcrumb.label": {
+        "text": "Key driver analysis navigation",
+        "crowdinContext": "Breadcrumb label in the Key Driver Analysis dialog overview section"
     },
     "kdaDialog.dialog.keyDrives.overview.summary.title": {
         "text": "Analysis summary",
@@ -3070,14 +3090,6 @@
     "kdaDialog.dialog.bars.date.period.previousPeriod": {
         "text": "Previous period",
         "crowdinContext": "Key drivers dialog date previous period in key driver analysis dialog"
-    },
-    "kdaDialog.dialog.keyDrives.empty_up": {
-        "text": "No increasing drivers",
-        "crowdinContext": "Key drivers dialog empty up in key driver analysis dialog"
-    },
-    "kdaDialog.dialog.keyDrives.empty_down": {
-        "text": "No decreasing drivers",
-        "crowdinContext": "Key drivers dialog empty down in key driver analysis dialog"
     },
     "kdaDialog.dialog.keyDrives.empty": {
         "text": "No key drivers",
