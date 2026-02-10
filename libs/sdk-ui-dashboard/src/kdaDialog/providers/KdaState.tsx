@@ -17,8 +17,9 @@ const defaultState: IKdaState = {
     //states
     attributesDropdownOpen: false,
     addFilterDropdownOpen: false,
+    trendDropdownOpen: false,
     //selected
-    selectedTrend: ["up", "down"],
+    selectedTrend: "all",
     selectedItem: "summary",
     selectedStatus: "pending",
     selectedError: undefined,

@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/oxlint-config",
-    "version": "11.20.0-alpha.1",
+    "version": "11.20.0-alpha.2",
     "license": "MIT",
     "author": "GoodData",
     "repository": {
@@ -38,8 +38,8 @@
         "_phase:validate": "npm run validate",
         "build": "rm -rf dist && mkdir dist && vite-node scripts/build.ts && tsgo",
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci dist esm coverage *.log tsconfig.tsbuildinfo",
-        "lint": "oxlint . --type-aware && eslint .",
-        "lint-fix": "oxlint . --type-aware --fix && eslint . --fix",
+        "lint": "oxlint . --type-aware --quiet && eslint .",
+        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint . --fix",
         "format-check": "oxfmt --check .",
         "format-write": "oxfmt .",
         "update-package": "vite-node scripts/updatePackage.ts",

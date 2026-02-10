@@ -43,7 +43,7 @@ export interface IUiButtonProps {
     disableIconAnimation?: boolean;
     iconBefore?: IconType;
     iconBeforeSize?: number;
-    badgeAfter?: number;
+    badgeAfter?: number | string;
     iconAfter?: IconType;
     iconAfterSize?: number;
     label: string;
@@ -140,7 +140,12 @@ export const UiButton = forwardRef<HTMLButtonElement, IUiButtonProps>(
                 <span className={e("text")} style={{ maxWidth }}>
                     {label}
                 </span>
-                {badgeAfter === undefined ? null : <span className={e("badge")}>({badgeAfter})</span>}
+                {badgeAfter !== undefined && typeof badgeAfter === "number" ? (
+                    <span className={e("badge")}>({badgeAfter})</span>
+                ) : null}
+                {badgeAfter !== undefined && typeof badgeAfter === "string" ? (
+                    <span className={e("badge")}>{badgeAfter}</span>
+                ) : null}
                 {iconAfter ? (
                     <UiIcon
                         type={iconAfter}

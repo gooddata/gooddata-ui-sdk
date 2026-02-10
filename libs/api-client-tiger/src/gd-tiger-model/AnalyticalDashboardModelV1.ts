@@ -1,12 +1,14 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 
+import { type ObjRef } from "@gooddata/sdk-model";
+
 import {
-    type IDashboardDateFilterConfig,
-    type IDashboardLayout,
-    type IFilterContext as IFilterContextModel,
-    type ObjRef,
-} from "@gooddata/sdk-model";
+    type ITigerDashboardDateFilterConfig,
+    type ITigerDashboardLayout,
+    type ITigerFilterContextItem,
+} from "./TigerTypes.js";
 
 /**
  * @deprecated use {@link AnalyticalDashboardModelV2.IAnalyticalDashboard} instead
@@ -14,9 +16,9 @@ import {
  */
 export interface IAnalyticalDashboard {
     analyticalDashboard: {
-        layout?: IDashboardLayout;
+        layout?: ITigerDashboardLayout;
         filterContextRef?: ObjRef;
-        dateFilterConfig?: IDashboardDateFilterConfig;
+        dateFilterConfig?: ITigerDashboardDateFilterConfig;
     };
 }
 
@@ -26,7 +28,7 @@ export interface IAnalyticalDashboard {
  */
 export interface IFilterContext {
     filterContext: {
-        filters: IFilterContextModel["filters"];
+        filters: ITigerFilterContextItem[];
     };
 }
 

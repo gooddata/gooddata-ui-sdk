@@ -1,13 +1,13 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 
 import {
-    type IBucket,
-    type IFilter,
-    type ISortItem,
-    type VisualizationProperties,
-} from "@gooddata/sdk-model";
-
+    type ITigerBucket,
+    type ITigerFilter,
+    type ITigerSortItem,
+    type ITigerVisualizationProperties,
+} from "./TigerTypes.js";
 import {
     type AfmLocalIdentifier,
     type AfmObjectIdentifier,
@@ -26,10 +26,10 @@ export interface IVisualizationObject {
     visualizationObject: {
         title: string;
         visualizationUrl: string;
-        buckets: IBucket[];
-        filters: IFilter[];
-        sorts: ISortItem[];
-        properties: VisualizationProperties;
+        buckets: ITigerBucket[];
+        filters: ITigerFilter[];
+        sorts: ITigerSortItem[];
+        properties: ITigerVisualizationProperties;
     };
 }
 

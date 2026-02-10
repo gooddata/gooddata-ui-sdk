@@ -43,6 +43,11 @@ export interface IUiSkeletonProps {
     direction?: "row" | "column";
 
     /**
+     * Whether to render the skeleton inline.
+     */
+    inline?: boolean;
+
+    /**
      * Border radius of the item.
      */
     itemBorderRadius?: number;
@@ -56,6 +61,7 @@ export function UiSkeleton({
     itemHeight = 24,
     itemPadding = 0,
     itemWidth,
+    inline = false,
     itemsGap = 10,
     direction = "column",
     itemBorderRadius,
@@ -86,7 +92,7 @@ export function UiSkeleton({
     const style = useMemo(() => ({ gap: itemsGap }), [itemsGap]);
 
     return (
-        <div className={b({ direction })} style={style}>
+        <div className={b({ direction, inline })} style={style}>
             {items}
         </div>
     );

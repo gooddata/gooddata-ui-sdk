@@ -5,6 +5,7 @@ import { invariant } from "ts-invariant";
 import {
     AnalyticalDashboardModelV1,
     AnalyticalDashboardModelV2,
+    type ITigerDashboardTab,
     type JsonApiAnalyticalDashboardOut,
     type JsonApiAnalyticalDashboardOutDocument,
     type JsonApiAnalyticalDashboardOutIncludes,
@@ -17,11 +18,13 @@ import {
 import {
     type IDashboard,
     type IDashboardPlugin,
+    type IDashboardTab,
     type IFilterContext,
     type IListedDashboard,
     idRef,
 } from "@gooddata/sdk-model";
 
+import { cloneWithSanitizedIdsTyped } from "../IdSanitization.js";
 import { isInheritedObject } from "../ObjectInheritance.js";
 import { convertUserIdentifier } from "../UsersConverter.js";
 import { getShareStatus } from "../utils.js";
@@ -48,7 +51,9 @@ export const convertAnalyticalDashboard = (
 
     // Use type guard for safer access to dashboard content
     const content = attributes?.content;
-    const tabs = AnalyticalDashboardModelV2.isAnalyticalDashboard(content) ? (content.tabs ?? []) : [];
+    const tabs = AnalyticalDashboardModelV2.isAnalyticalDashboard(content)
+        ? cloneWithSanitizedIdsTyped<ITigerDashboardTab[], IDashboardTab[]>(content.tabs ?? [])
+        : [];
     // NOTE: `summary` is present on the backend response, but may not be reflected in older generated API typings.
     const summary = (attributes as unknown as { summary?: unknown } | undefined)?.summary;
     const normalizedSummary = typeof summary === "string" ? summary : undefined;

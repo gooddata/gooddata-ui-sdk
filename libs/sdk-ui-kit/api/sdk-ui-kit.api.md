@@ -5766,6 +5766,40 @@ export interface IUiBadgeProps {
 }
 
 // @internal (undocumented)
+export interface IUiBreadcrumbItem {
+    // (undocumented)
+    accessibilityConfig?: IAccessibilityConfigBase;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    label: string;
+    // (undocumented)
+    tooltip?: string | ReactNode;
+}
+
+// @internal (undocumented)
+export interface IUiBreadcrumbProps {
+    // (undocumented)
+    accessibilityConfig?: IAccessibilityConfigBase;
+    // (undocumented)
+    dataId?: string;
+    // (undocumented)
+    dataTestId?: string;
+    // (undocumented)
+    id?: string;
+    // (undocumented)
+    items: IUiBreadcrumbItem[];
+    // (undocumented)
+    label: string;
+    // (undocumented)
+    maxWidth?: number;
+    // (undocumented)
+    onSelect?: (item: IUiBreadcrumbItem) => void;
+    // (undocumented)
+    tabIndex?: number;
+}
+
+// @internal (undocumented)
 export interface IUiButtonAccessibilityConfig extends IAccessibilityConfigBase {
     // (undocumented)
     iconAriaHidden?: boolean;
@@ -5776,7 +5810,7 @@ export interface IUiButtonProps {
     // (undocumented)
     accessibilityConfig?: IUiButtonAccessibilityConfig;
     // (undocumented)
-    badgeAfter?: number;
+    badgeAfter?: number | string;
     // (undocumented)
     dataId?: string;
     // (undocumented)
@@ -6766,6 +6800,7 @@ export interface IUiSettings {
 // @internal (undocumented)
 export interface IUiSkeletonProps {
     direction?: "row" | "column";
+    inline?: boolean;
     itemBorderRadius?: number;
     itemHeight?: (number | string) | (number | string)[];
     itemPadding?: number | number[];
@@ -7892,6 +7927,9 @@ export function UiAutofocus({ root, children, ...options }: {
 export function UiBadge({ label }: IUiBadgeProps): JSX.Element;
 
 // @internal (undocumented)
+export const UiBreadcrumb: ForwardRefExoticComponent<IUiBreadcrumbProps & RefAttributes<HTMLDivElement>>;
+
+// @internal (undocumented)
 export const UiButton: ForwardRefExoticComponent<IUiButtonProps & RefAttributes<HTMLButtonElement>>;
 
 // @internal
@@ -8038,7 +8076,7 @@ export function UiReturnFocusOnUnmount({ children, ...options }: IUiReturnFocusO
 export function UiSearchResultsAnnouncement({ totalResults, resultValues, announcementDelay }: ISearchResultsAnnouncementProps): JSX.Element;
 
 // @internal (undocumented)
-export function UiSkeleton({ itemsCount, itemHeight, itemPadding, itemWidth, itemsGap, direction, itemBorderRadius }: IUiSkeletonProps): JSX.Element;
+export function UiSkeleton({ itemsCount, itemHeight, itemPadding, itemWidth, inline, itemsGap, direction, itemBorderRadius }: IUiSkeletonProps): JSX.Element;
 
 // @internal (undocumented)
 export type UiStateTreeItem = {

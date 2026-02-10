@@ -98,7 +98,11 @@ export function KdaDialog({
             ) : (
                 <Dialog
                     className={cx(dialogBaseClassName, "gd-kda-dialog--expanded")}
-                    closeOnEscape={!state.attributesDropdownOpen && !state.addFilterDropdownOpen}
+                    closeOnEscape={
+                        !state.attributesDropdownOpen &&
+                        !state.addFilterDropdownOpen &&
+                        !state.trendDropdownOpen
+                    }
                     isModal
                     accessibilityConfig={{
                         ...accessibilityConfig,

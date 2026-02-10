@@ -26,6 +26,7 @@ export interface IInteractionsSectionProps {
     supportsScheduledExportsConfiguration?: boolean;
     supportsKeyDriveAnalysis?: boolean;
     showImplicitDrillToUrl?: boolean;
+    enableDrillToUrlByDefault?: boolean;
 }
 
 const TOOLTIP_ALIGN_POINTS = [{ align: "cr cl", offset: { x: 5, y: 0 } }];
@@ -52,9 +53,11 @@ export const InteractionsSection = memo(function InteractionsSection({
     supportsScheduledExportsConfiguration,
     supportsKeyDriveAnalysis,
     showImplicitDrillToUrl,
+    enableDrillToUrlByDefault,
 }: IInteractionsSectionProps) {
     const isDrillDownDisabled = properties?.controls?.["disableDrillDown"] ?? false;
-    const isDrillIntoURLDisabled = properties?.controls?.["disableDrillIntoURL"] ?? true;
+    const isDrillIntoURLDisabled =
+        properties?.controls?.["disableDrillIntoURL"] ?? !enableDrillToUrlByDefault;
     const isAlertsDisabled = properties?.controls?.["disableAlerts"] ?? false;
     const isScheduledExportsDisabled = properties?.controls?.["disableScheduledExports"] ?? false;
     const isKdaDisabled = properties?.controls?.["disableKeyDriveAnalysis"] ?? false;
@@ -164,7 +167,7 @@ export const InteractionsSection = memo(function InteractionsSection({
                     checked={!isDrillIntoURLDisabled}
                     pushData={pushData}
                     isValueInverted
-                    defaultValue
+                    defaultValue={!enableDrillToUrlByDefault}
                 />
             ) : null}
         </ConfigSection>

@@ -184,6 +184,9 @@ export abstract class ConfigurationPanelContent<
                 InteractionsDetailRenderer={configurationPanelRenderers?.InteractionsDetailRenderer}
                 showImplicitDrillToUrl={showImplicitDrillToUrl}
                 supportsKeyDriveAnalysis={supportsKeyDriveAnalysis}
+                // enableDrillToUrlByDefault is actually not a feature flag, but setting
+                // for some reason the property is called featureFlags, but contains both feature flags and settings
+                enableDrillToUrlByDefault={featureFlags?.enableDrillToUrlByDefault}
             />
         ) : null;
     }

@@ -6,6 +6,11 @@
     width: 100%;
     display: flex;
 
+    &--inline {
+        display: inline-flex;
+        width: auto;
+    }
+
     &--direction {
         &-column {
             flex-direction: column;

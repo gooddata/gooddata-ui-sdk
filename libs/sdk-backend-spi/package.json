@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-backend-spi",
-    "version": "11.20.0-alpha.1",
+    "version": "11.20.0-alpha.2",
     "description": "GoodData Backend SPI abstraction interfaces",
     "license": "MIT",
     "author": "GoodData",
@@ -36,8 +36,8 @@
         "test-once": "vitest run",
         "validate": "npm run lint && npm run dep-cruiser && npm run format-check",
         "validate-esm": "node --input-type=module --eval 'import \"@gooddata/sdk-backend-spi\"' ",
-        "lint": "oxlint . --type-aware && eslint .",
-        "lint-fix": "oxlint . --type-aware --fix && eslint . --fix"
+        "lint": "oxlint . --type-aware --quiet && eslint .",
+        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint . --fix"
     },
     "dependencies": {
         "@gooddata/sdk-model": "workspace:*",

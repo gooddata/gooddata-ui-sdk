@@ -114,6 +114,27 @@ export {
     AnalyticalDashboardModelV2,
 } from "./gd-tiger-model/index.js";
 
+export type {
+    ITigerAttribute,
+    ITigerAttributeFilterConfig,
+    ITigerAttributeFilterConfigs,
+    ITigerAttributeLocatorItem,
+    ITigerAttributeOrMeasure,
+    ITigerAttributeSortItem,
+    ITigerBucket,
+    ITigerDashboardAttributeFilterConfig,
+    ITigerDashboardDateFilterConfig,
+    ITigerDashboardFilterGroupsConfig,
+    ITigerDashboardLayout,
+    ITigerDashboardTab,
+    ITigerFilter,
+    ITigerFilterContextItem,
+    ITigerInsightLayerDefinition,
+    ITigerMeasure,
+    ITigerSortItem,
+    ITigerVisualizationProperties,
+} from "./gd-tiger-model/TigerTypes.js";
+
 export {
     isAttributeHeader,
     isAfmObjectIdentifier,
@@ -589,7 +610,7 @@ export type {
     BaseAPI as AutomationBaseAPI,
     RequestArgs as AutomationRequestArgs,
 } from "./generated/automation-json-api/base.js";
-// eslint-disable-next-line no-restricted-syntax
+
 export * from "./generated/metadata-json-api/api.js";
 
 export type {
@@ -675,7 +696,6 @@ export type {
     GdStorageFileTypeEnum,
 } from "./generated/result-json-api/api.js";
 
-// eslint-disable-next-line no-restricted-syntax
 export * from "./generated/export-json-api/index.js";
 export type {
     Configuration as ExportConfiguration,

@@ -684,8 +684,9 @@ export const selectDrillsToUrlAttributeByWidgetRef: (
                 return [];
             }
             const disableDrillIntoURL =
-                widgetInsight?.insight?.properties?.["controls"]?.disableDrillIntoURL ?? true;
-            if (!enableDrillToUrlByDefault && disableDrillIntoURL) {
+                widgetInsight?.insight?.properties?.["controls"]?.disableDrillIntoURL ??
+                !enableDrillToUrlByDefault;
+            if (disableDrillIntoURL) {
                 return [];
             }
 
@@ -923,10 +924,9 @@ export const selectConfiguredAndImplicitDrillsByWidgetRef: (
             enableDrillToUrlByDefault,
             enableImplicitDrillToUrl,
         ) => {
-            const disableDrillIntoURL = insight?.insight.properties["controls"]?.disableDrillIntoURL ?? true;
-            const isDrillToUrlDisabled = enableImplicitDrillToUrl
-                ? !enableDrillToUrlByDefault && disableDrillIntoURL
-                : true;
+            const disableDrillIntoURL =
+                insight?.insight.properties["controls"]?.disableDrillIntoURL ?? !enableDrillToUrlByDefault;
+            const isDrillToUrlDisabled = !enableImplicitDrillToUrl || disableDrillIntoURL;
 
             // disable drilling until all necessary items are loaded (catalog, dash list, ...)
             const drillActive = catalogIsLoaded && accessibleDashboardsLoaded;
@@ -1018,7 +1018,7 @@ export const selectImplicitDrillsByAvailableDrillTargets: (
                 enableDrillToUrlByDefault,
                 enableImplicitDrillToUrl,
             ) => {
-                const isDrillToUrlDisabled = !enableDrillToUrlByDefault && disableDrillIntoURL;
+                const isDrillToUrlDisabled = disableDrillIntoURL ?? !enableDrillToUrlByDefault;
                 const availableDrillAttributes = availableDrillTargets?.attributes ?? [];
                 const drillDownDrills = isDrillDownEnabled
                     ? getDrillDownDefinitionsWithPredicates(

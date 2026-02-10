@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-interactive-example-execute",
-    "version": "11.20.0-alpha.1",
+    "version": "11.20.0-alpha.2",
     "private": false,
     "description": "This example demonstrates using Execute component and build custom visualization.",
     "license": "LicenseRef-LICENSE",
@@ -21,8 +21,8 @@
         "start": "vite serve",
         "update-version": "node ./scripts/updateWorkspaceVersion.mjs",
         "validate": "npm run lint && npm run format-check",
-        "lint": "oxlint . --type-aware && eslint src",
-        "lint-fix": "oxlint . --type-aware --fix && eslint src --fix"
+        "lint": "oxlint . --type-aware --quiet && eslint src",
+        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint src --fix"
     },
     "dependencies": {
         "@gooddata/sdk-backend-base": "workspace:*",

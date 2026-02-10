@@ -2,84 +2,44 @@
 
 import { isEmpty } from "lodash-es";
 
+import { type ObjRef } from "@gooddata/sdk-model";
+
 import {
-    type IDashboardAttributeFilterConfig,
-    type IDashboardDateFilterConfig,
-    type IDashboardFilterGroupsConfig,
-    type IDashboardLayout,
-    type IFilterContext as IFilterContextModel,
-    type ObjRef,
-} from "@gooddata/sdk-model";
+    type ITigerDashboardAttributeFilterConfig,
+    type ITigerDashboardDateFilterConfig,
+    type ITigerDashboardLayout,
+    type ITigerDashboardTab,
+    type ITigerFilterContextItem,
+} from "./TigerTypes.js";
 
 /**
  * @public
  */
 export interface IDashboardDateFilterConfigItem {
     dateDataSet: ObjRef;
-    config: IDashboardDateFilterConfig;
+    config: ITigerDashboardDateFilterConfig;
 }
 
 /**
  * Dashboard tab definition.
  *
  * @remarks
- * Each tab can have its own layout and its own filter context. Tabs are optional and
- * dashboards without tabs continue to work using the root layout and filter context.
+ * This is an alias for ITigerDashboardTab for backward compatibility.
  *
- * @alpha
+ * @public
  */
-export interface IDashboardTab {
-    /**
-     * Unique identifier of the tab (stable within dashboard).
-     */
-    localIdentifier: string;
-
-    /**
-     * Display title of the tab.
-     */
-    title: string;
-
-    /**
-     * Complete layout definition for this tab.
-     */
-    layout: IDashboardLayout;
-
-    /**
-     * Tab-specific filter context.
-     */
-    filterContextRef: ObjRef;
-
-    /**
-     * Dashboard tab common date filter config
-     */
-    dateFilterConfig?: IDashboardDateFilterConfig;
-
-    /**
-     * Dashboard tab date filters with date data set/dimension configs
-     */
-    dateFilterConfigs?: IDashboardDateFilterConfigItem[];
-
-    /**
-     * Dashboard extended attribute filter configs
-     */
-    attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
-
-    /**
-     * Dashboard filter groups config.
-     */
-    filterGroupsConfig?: IDashboardFilterGroupsConfig;
-}
+export type IDashboardTab = ITigerDashboardTab;
 
 /**
  * @public
  */
 export interface IAnalyticalDashboard {
     version: "2";
-    layout?: IDashboardLayout;
+    layout?: ITigerDashboardLayout;
     filterContextRef?: ObjRef;
-    dateFilterConfig?: IDashboardDateFilterConfig;
+    dateFilterConfig?: ITigerDashboardDateFilterConfig;
     dateFilterConfigs?: IDashboardDateFilterConfigItem[];
-    attributeFilterConfigs?: IDashboardAttributeFilterConfig[];
+    attributeFilterConfigs?: ITigerDashboardAttributeFilterConfig[];
     plugins?: IDashboardPluginLink[];
     disableCrossFiltering?: boolean;
     disableUserFilterReset?: boolean;
@@ -94,7 +54,7 @@ export interface IAnalyticalDashboard {
      *
      * @alpha
      */
-    tabs?: IDashboardTab[];
+    tabs?: ITigerDashboardTab[];
 }
 
 /**
@@ -102,7 +62,7 @@ export interface IAnalyticalDashboard {
  */
 export interface IFilterContext {
     version: "2";
-    filters: IFilterContextModel["filters"];
+    filters: ITigerFilterContextItem[];
 }
 
 /**
@@ -172,12 +132,12 @@ export function isDashboardPluginLink(pluginLink: unknown): pluginLink is IDashb
 /**
  * @alpha
  */
-export function isDashboardTab(tab: unknown): tab is IDashboardTab {
+export function isDashboardTab(tab: unknown): tab is ITigerDashboardTab {
     return (
         !isEmpty(tab) &&
-        typeof (tab as IDashboardTab).localIdentifier === "string" &&
-        typeof (tab as IDashboardTab).title === "string" &&
-        typeof (tab as IDashboardTab).layout === "object" &&
-        typeof (tab as IDashboardTab).filterContextRef === "object"
+        typeof (tab as ITigerDashboardTab).localIdentifier === "string" &&
+        typeof (tab as ITigerDashboardTab).title === "string" &&
+        typeof (tab as ITigerDashboardTab).layout === "object" &&
+        typeof (tab as ITigerDashboardTab).filterContextRef === "object"
     );
 }

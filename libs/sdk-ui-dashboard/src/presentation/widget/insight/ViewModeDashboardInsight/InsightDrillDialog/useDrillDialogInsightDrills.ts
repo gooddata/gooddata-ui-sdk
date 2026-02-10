@@ -14,6 +14,7 @@ import {
 } from "@gooddata/sdk-ui";
 
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
+import { selectEnableDrillToUrlByDefault } from "../../../../../model/store/config/configSelectors.js";
 import {
     selectDrillableItemsByAvailableDrillTargets,
     selectImplicitDrillsByAvailableDrillTargets,
@@ -56,7 +57,9 @@ export const useDrillDialogInsightDrills = ({
         [disableDrillDownOnInsight, drillTargets],
     );
 
-    const disableDrillIntoURL = insight.insight.properties["controls"]?.disableDrillIntoURL ?? true;
+    const enableDrillToUrlByDefault = useDashboardSelector(selectEnableDrillToUrlByDefault);
+    const disableDrillIntoURL =
+        insight.insight.properties["controls"]?.disableDrillIntoURL ?? !enableDrillToUrlByDefault;
 
     const implicitDrillDefinitions = useDashboardSelector(
         selectImplicitDrillsByAvailableDrillTargets(

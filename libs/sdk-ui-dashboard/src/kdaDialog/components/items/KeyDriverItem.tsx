@@ -4,7 +4,7 @@ import { type CSSProperties, type ReactNode } from "react";
 
 import cx from "classnames";
 
-import { type IUiListboxInteractiveItemProps, UiIcon } from "@gooddata/sdk-ui-kit";
+import { type IUiListboxInteractiveItemProps } from "@gooddata/sdk-ui-kit";
 
 import { type IKdaItem } from "../../internalTypes.js";
 
@@ -27,13 +27,13 @@ export function KeyDriverItem({
             onClick={onSelect}
         >
             <div className={cx("gd-kda-item-text")}>
-                {item.data.title}: <strong>{item.data.category}</strong>
+                <div className="gd-kda-item-text-title">{item.data.title}</div>
+                <div className="gd-kda-item-text-category">{item.data.category}</div>
             </div>
             <div className={cx("gd-kda-item-value")}>
+                {trend === "up" ? "+" : ""}
                 {item.data.formatValue(item.data.to.value - item.data.from.value)}
             </div>
-            {trend === "up" ? <UiIcon type="trendUp" size={16} color="complementary-5" /> : null}
-            {trend === "down" ? <UiIcon type="trendDown" size={16} color="complementary-5" /> : null}
             <div
                 className={cx("gd-kda-item-progress")}
                 style={{ "--kda-item-width": width } as CSSProperties}

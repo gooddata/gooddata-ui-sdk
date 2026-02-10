@@ -2,7 +2,7 @@
     "$schema": "./node_modules/oxlint/configuration_schema.json",
     "extends": ["node_modules/@gooddata/oxlint-config/dist/esm.json"],
     "rules": {
-        "no-control-regex": "off"
+        "no-control-regex": "warn"
     },
     "overrides": [
         {

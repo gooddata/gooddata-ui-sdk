@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-all",
-    "version": "11.20.0-alpha.1",
+    "version": "11.20.0-alpha.2",
     "description": "GoodData SDK - All-In-One",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData",
@@ -35,8 +35,8 @@
         "format-check": "oxfmt --check .",
         "format-write": "oxfmt .",
         "validate": "npm run lint && npm run dep-cruiser && npm run format-check",
-        "lint": "oxlint . --type-aware && eslint .",
-        "lint-fix": "oxlint . --type-aware --fix && eslint . --fix"
+        "lint": "oxlint . --type-aware --quiet && eslint .",
+        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint . --fix"
     },
     "dependencies": {
         "@gooddata/sdk-backend-spi": "workspace:*",

@@ -1080,6 +1080,12 @@ export { UiDate, type IUiDateProps } from "./@ui/UiDate/UiDate.js";
 export { UiDrawer } from "./@ui/UiDrawer/UiDrawer.js";
 export type { IUiDrawerProps, UiDrawerTransitionProps } from "./@ui/UiDrawer/types.js";
 
+export {
+    UiBreadcrumb,
+    type IUiBreadcrumbProps,
+    type IUiBreadcrumbItem,
+} from "./@ui/UiBreadcrumb/UiBreadcrumb.js";
+
 export { UiCard, type IUiCardProps } from "./@ui/UiCard/UiCard.js";
 
 export { UiSubmenuHeader, type IUiSubmenuHeaderProps } from "./@ui/UiSubmenuHeader/UiSubmenuHeader.js";

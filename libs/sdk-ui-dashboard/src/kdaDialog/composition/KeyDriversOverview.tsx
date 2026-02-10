@@ -1,9 +1,17 @@
 // (C) 2025-2026 GoodData Corporation
 
+import { useMemo } from "react";
+
 import cx from "classnames";
 import { type IntlShape, useIntl } from "react-intl";
 
-import { type IUiListboxInteractiveItem, UiIcon, UiSkeleton } from "@gooddata/sdk-ui-kit";
+import {
+    type IUiBreadcrumbItem,
+    type IUiListboxInteractiveItem,
+    UiBreadcrumb,
+    UiIcon,
+    UiSkeleton,
+} from "@gooddata/sdk-ui-kit";
 
 import { KdaKeyDriverChart } from "../components/KdaKeyDriverChart.js";
 import { KdaSummaryDrivers } from "../components/KdaSummaryDrivers.js";
@@ -63,7 +71,7 @@ interface IKeyDriversDetailsProps {
 
 function KeyDriversDetail({ detailsId }: IKeyDriversDetailsProps) {
     const intl = useIntl();
-    const { state } = useKdaState();
+    const { state, setState } = useKdaState();
 
     const metric = state.definition?.metric;
     const title = metric?.measure.title ?? metric?.measure.alias ?? "";
@@ -72,10 +80,40 @@ function KeyDriversDetail({ detailsId }: IKeyDriversDetailsProps) {
 
     const { group, item } = useGroupAndItem();
     const { config, dataView, displayForm } = useDataViewWithConfig(group, item);
+    const breadcrumbs = useMemo(
+        () =>
+            [
+                {
+                    id: "summary",
+                    label: intl.formatMessage({ id: "kdaDialog.dialog.keyDrives.overview.summary.home" }),
+                    tooltip: intl.formatMessage({
+                        id: "kdaDialog.dialog.keyDrives.overview.summary.home.tooltip",
+                    }),
+                },
+                {
+                    id: category,
+                    label: `${getAttribute(state.selectedItem)}: ${category}`,
+                },
+            ] as IUiBreadcrumbItem[],
+        [category, intl, state.selectedItem],
+    );
 
     return (
         <div className={cx("gd-kda-key-drivers-detail")} id={detailsId}>
             <div>
+                <div className={cx("gd-kda-key-drivers-detail-breadcrumb")}>
+                    <UiBreadcrumb
+                        label={intl.formatMessage({
+                            id: "kdaDialog.dialog.keyDrives.overview.summary.breadcrumb.label",
+                        })}
+                        items={breadcrumbs}
+                        onSelect={(item) => {
+                            if (item.id === "summary") {
+                                setState({ selectedItem: "summary" });
+                            }
+                        }}
+                    />
+                </div>
                 <div className={cx("gd-kda-key-drivers-detail-title")}>
                     {getTitle(intl, title, state.selectedItem)}
                 </div>
@@ -107,6 +145,13 @@ function getTitle(intl: IntlShape, metric: string, item: IUiListboxInteractiveIt
             category: item.data.title,
         },
     );
+}
+
+function getAttribute(item: IUiListboxInteractiveItem<IKdaItem> | string) {
+    if (typeof item === "string") {
+        return "";
+    }
+    return item.data.title;
 }
 
 function getCategory(item: IUiListboxInteractiveItem<IKdaItem> | string) {
