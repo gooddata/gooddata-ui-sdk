@@ -68,8 +68,8 @@ export const visualizationObjectsItemToInsight = (
         // TODO: TIGER-HACK: inherited objects must be locked; they are read-only for all
         isInheritedObject(visualizationObject),
         isHidden,
-        createdAt,
-        modifiedAt,
+        createdAt ?? undefined,
+        modifiedAt ?? undefined,
         convertUserIdentifier(createdBy, included),
         convertUserIdentifier(modifiedBy, included),
     );

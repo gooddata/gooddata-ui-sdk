@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import {
     type DashboardFiltersApplyMode,
@@ -214,12 +214,14 @@ export interface IOrganizationSettingsService {
     setMaxZoomLevel(level: number | null): Promise<void>;
 
     /**
-     * Get all current organization settings.
+     * Returns effective organization settings with all defaults resolved.
      *
      * @remarks
+     * The returned settings include system defaults, not just those directly set
+     * at the organization level. User-specific overrides are excluded.
      * User has to have an organization level permission to access them.
      *
-     * @returns promise
+     * @returns promise of resolved settings
      */
     getSettings(): Promise<ISettings>;
 }

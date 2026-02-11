@@ -9,9 +9,27 @@
     align-self: stretch;
     font-family: var(--gd-font-family);
 
-    &:focus,
-    &:focus-within {
-        outline: none;
+    // reset styles
+    ol {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        li {
+            display: inline-flex;
+
+            button {
+                border: none;
+                background: none;
+            }
+        }
+        li:last-of-type #{$root}__item {
+            cursor: default;
+
+            &:hover {
+                background: none;
+            }
+        }
     }
 
     &__item {
@@ -34,19 +52,6 @@
 
         &:hover {
             background: var(--gd-palette-complementary-2);
-        }
-
-        &:last-of-type {
-            cursor: default;
-
-            &:hover {
-                background: none;
-            }
-        }
-
-        #{$root}:focus-visible &--focused {
-            background: var(--gd-palette-complementary-2);
-            @include mixins.focus-ring;
         }
     }
 

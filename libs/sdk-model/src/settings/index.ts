@@ -699,6 +699,11 @@ export interface ISettings {
     enableAnomalyDetectionVisualization?: boolean;
 
     /**
+     * Enable alert once per interval
+     */
+    enableAlertOncePerInterval?: boolean;
+
+    /**
      * Enable fiscal calendars configuration.
      */
     enableFiscalCalendars?: boolean;

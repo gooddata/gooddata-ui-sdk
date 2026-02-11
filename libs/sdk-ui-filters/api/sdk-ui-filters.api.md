@@ -235,8 +235,8 @@ export class DateFilter extends PureComponent<IDateFilterProps, IDateFilterState
 // @beta (undocumented)
 export const DateFilterHelpers: {
     validateFilterOption: (filterOption: DateFilterOption) => IExtendedDateFilterErrors;
-    getDateFilterTitleUsingTranslator: (filter: DateFilterOption, translator: IDateAndMessageTranslator, dateFormat?: string, labelMode?: DateFilterLabelMode) => string;
-    getDateFilterRepresentation: (filter: DateFilterOption, locale: ILocale, messages: ITranslations, dateFormat?: string, labelMode?: DateFilterLabelMode) => string;
+    getDateFilterTitleUsingTranslator: (filter: DateFilterOption, translator: IDateAndMessageTranslator, labelMode: DateFilterLabelMode, dateFormat?: string) => string;
+    getDateFilterRepresentation: (filter: DateFilterOption, locale: ILocale, messages: ITranslations, labelMode: DateFilterLabelMode, dateFormat?: string) => string;
     granularityIntlCodes: {
         "GDC.time.date": GranularityIntlKey;
         "GDC.time.fiscal_month": GranularityIntlKey;
@@ -254,7 +254,7 @@ export const DateFilterHelpers: {
     canExcludeCurrentPeriod: (dateFilterOption: DateFilterOption) => boolean;
     mapOptionToAfm: (value: DateFilterOption, dateDataSet: ObjRef, excludeCurrentPeriod: boolean) => IDateFilter | null;
     formatAbsoluteDateRange: (from: string | Date, to: string | Date, dateFormat: string, splitter?: string) => string;
-    formatRelativeDateRange: (from: number, to: number, granularity: DateFilterGranularity, translator: IDateAndMessageTranslator, boundedFilter?: ILowerBoundedFilter | IUpperBoundedFilter | undefined, labelMode?: DateFilterLabelMode) => string;
+    formatRelativeDateRange: (from: number, to: number, granularity: DateFilterGranularity, translator: IDateAndMessageTranslator, labelMode: DateFilterLabelMode, boundedFilter?: ILowerBoundedFilter | IUpperBoundedFilter | undefined) => string;
     filterVisibleDateFilterOptions: typeof filterVisibleDateFilterOptions;
 };
 

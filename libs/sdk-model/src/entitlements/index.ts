@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 /**
  * Entitlement name
@@ -32,7 +32,8 @@ export type IEntitlementsName =
     | "FederatedIdentityManagement"
     | "AuditLogging"
     | "ControlledFeatureRollout"
-    | "ManagedIdpUserCount";
+    | "ManagedIdpUserCount"
+    | "AiLake";
 /**
  * Entitlement descriptor
  *

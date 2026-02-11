@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import {
     type DashboardFiltersApplyMode,
@@ -12,7 +12,7 @@ import {
 import { type IUserWorkspaceSettings, type IWorkspaceSettings } from "../../common/settings.js";
 
 /**
- * This query service provides access to feature flags that are in effect for particular workspace.
+ * This service provides access to settings for a particular workspace.
  *
  * @public
  */
@@ -27,9 +27,13 @@ export interface IWorkspaceSettingsService {
     setAlertDefault(value: IAlertDefault): Promise<void>;
 
     /**
-     * Asynchronously queries actual feature flags.
+     * Returns effective workspace settings with all inherited values resolved.
      *
-     * @returns promise of workspace settings
+     * @remarks
+     * The returned settings include values inherited from organization and system defaults,
+     * not just those directly set at the workspace level. User-specific overrides are excluded.
+     *
+     * @returns promise of resolved workspace settings
      */
     getSettings(): Promise<IWorkspaceSettings>;
 

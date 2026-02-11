@@ -31,6 +31,24 @@ const specs = [
         path: "/api/v1/schemas/metadata",
         name: "metadata-json-api",
         // modelNamePrefix: "Md", // we should consider prefixing in next major, due to lot of name clashes
+        // Remove Aac* schemas and endpoints that cause openapi-generator 7.15.0 NPE due to 'not: { required: [...] }' pattern
+        // Remove once openapi-generator handles this pattern or backend fixes the schema
+        schemaOverrides: (schema) => {
+            const schemasToRemove = Object.keys(schema.components.schemas).filter((name) =>
+                name.startsWith("Aac"),
+            );
+            schemasToRemove.forEach((name) => {
+                delete schema.components.schemas[name];
+            });
+            // Also remove the /api/v1/aac/ endpoints and any endpoints ending with Aac that reference these schemas
+            const pathsToRemove = Object.keys(schema.paths).filter(
+                (path) => path.startsWith("/api/v1/aac/") || path.endsWith("Aac"),
+            );
+            pathsToRemove.forEach((path) => {
+                delete schema.paths[path];
+            });
+            return schema;
+        },
         // Remove when openapi-generator correctly generates null values in arrays
         apiOverrides: (api) => {
             // Replace AttributeFilterElements and DependsOn values;
@@ -126,7 +144,7 @@ const generate = async (specMeta, outputDir, outputFile) => {
         command += ` --api-name-suffix=${specMeta.apiNameSuffix}`;
     }
 
-    await execPromise(command);
+    await execPromise(command, { maxBuffer: 2 * 1024 * 1024 }); // 2MB buffer (default 1MB is slightly insufficient)
 
     if (specMeta.apiOverrides) {
         const apiPath = `${outputPath}/api.ts`;

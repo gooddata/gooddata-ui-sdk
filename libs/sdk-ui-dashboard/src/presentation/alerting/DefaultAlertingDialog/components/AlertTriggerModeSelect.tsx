@@ -29,6 +29,10 @@ const options: {
         title: messages.alertTriggerModeOnce.id,
         id: "ONCE",
     },
+    {
+        title: messages.alertTriggerModeOncePerInterval.id,
+        id: "ONCE_PER_INTERVAL",
+    },
 ];
 
 export interface IAlertTriggerModeSelectProps {
@@ -37,6 +41,7 @@ export interface IAlertTriggerModeSelectProps {
     onTriggerModeChange: (triggerMode: IAlertTriggerMode) => void;
     overlayPositionType?: OverlayPositionType;
     closeOnParentScroll?: boolean;
+    enableAlertOncePerInterval?: boolean;
 }
 
 export function AlertTriggerModeSelect({
@@ -45,6 +50,7 @@ export function AlertTriggerModeSelect({
     onTriggerModeChange,
     overlayPositionType,
     closeOnParentScroll,
+    enableAlertOncePerInterval,
 }: IAlertTriggerModeSelectProps) {
     const selectedOption = options.find((o) => o.id === selectedTriggerMode);
     const intl = useIntl();
@@ -75,8 +81,9 @@ export function AlertTriggerModeSelect({
                     );
                 }}
                 renderBody={({ closeDropdown, ariaAttributes }) => {
-                    const listboxItems: IUiListboxItem<{ title: string; id: IAlertTriggerMode }>[] =
-                        options.map((option) => ({
+                    const listboxItems: IUiListboxItem<{ title: string; id: IAlertTriggerMode }>[] = options
+                        .filter((item) => item.id !== "ONCE_PER_INTERVAL" || enableAlertOncePerInterval)
+                        .map((option) => ({
                             type: "interactive",
                             id: option.id,
                             stringTitle: intl.formatMessage({ id: option.title }),

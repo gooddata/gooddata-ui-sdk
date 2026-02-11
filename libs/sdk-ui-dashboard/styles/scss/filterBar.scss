@@ -12,15 +12,15 @@ $attribute-filter-drag-handle-left: 10px;
     position: relative;
 
     .show-all {
-        display: none;
-    }
-
-    .show-all:last-child {
         position: absolute;
         bottom: -25px;
         left: 50%;
         display: block;
         transform: translateX(-50%);
+
+        @media #{kit-variables.$xsmall-only}, #{kit-variables.$small-only} {
+            display: none;
+        }
     }
 
     .gd-filter-button-custom-icon-wrapper {

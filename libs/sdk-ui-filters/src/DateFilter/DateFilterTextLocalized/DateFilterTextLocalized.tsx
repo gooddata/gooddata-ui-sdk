@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { useIntl } from "react-intl";
 
@@ -36,5 +36,5 @@ export const useDateFilterText = ({
     labelMode?: DateFilterLabelMode;
 }) => {
     const intl = useIntl();
-    return filter ? getDateFilterTitleUsingTranslator(filter, intl, dateFormat, labelMode) : "";
+    return filter ? getDateFilterTitleUsingTranslator(filter, intl, labelMode, dateFormat) : "";
 };

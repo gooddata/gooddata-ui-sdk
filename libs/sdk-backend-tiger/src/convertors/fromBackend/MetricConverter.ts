@@ -38,9 +38,9 @@ export function convertMetricFromBackend(
             .expression(attributes.content.maql)
             .format(attributes.content.format ?? "")
             .metricType(attributes.content.metricType)
-            .created(createdAt)
+            .created(createdAt ?? undefined)
             .createdBy(convertUserIdentifier(createdBy, included))
-            .updated(modifiedAt)
+            .updated(modifiedAt ?? undefined)
             .updatedBy(convertUserIdentifier(modifiedBy, included)),
     );
 }

@@ -848,7 +848,13 @@ describe("PluggableHeadline", () => {
         const emptyPropertiesMeta = {};
 
         it("should correctly set default comparison configuration", () => {
-            const headline = createComponent();
+            const pushData = vi.fn();
+            const headline = createComponent({
+                callbacks: {
+                    ...defaultProps.callbacks,
+                    pushData,
+                },
+            });
 
             const options: IVisProps = getTestOptions({
                 lastSavedVisClassUrl: "local:columns",
@@ -860,6 +866,11 @@ describe("PluggableHeadline", () => {
                 emptyPropertiesMeta,
                 executionFactory,
             );
+
+            // Default comparison properties are injected automatically; this must not create an undo step in AD
+            // when switching to Headline visualization.
+            expect(pushData).toHaveBeenCalled();
+            expect(pushData.mock.calls.some(([data]) => data?.ignoreUndoRedo === true)).toBe(true);
 
             const renderEl = getLastRenderEl<ICoreChartProps>(mockRenderFun, mockElement);
             expect(renderEl!.type).toBe(CoreHeadline);

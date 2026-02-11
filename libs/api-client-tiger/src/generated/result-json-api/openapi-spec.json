@@ -22,10 +22,6 @@
         {
             "name": "OGC API Features",
             "description": "OGC API Features implementation for GeoCollections collections"
-        },
-        {
-            "name": "actions",
-            "description": "Action API endpoints"
         }
     ],
     "paths": {

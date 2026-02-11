@@ -1106,6 +1106,7 @@ export {
     type IAutomationAlertExecutionDefinition,
     type IAlertComparisonOperator,
     type IAlertTriggerMode,
+    type IAlertTriggerInterval,
     type IAlertTriggerState,
     type IAutomationAlertTrigger,
     type IAutomationAlertComparisonCondition,

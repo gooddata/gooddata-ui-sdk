@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { defineMessages } from "react-intl";
 
@@ -98,6 +98,24 @@ export const messages = defineMessages({
     },
     alertTriggerModeOnce: {
         id: "insightAlert.config.triggerMode.once",
+    },
+    alertTriggerModeOncePerInterval: {
+        id: "insightAlert.config.triggerMode.oncePerInterval",
+    },
+    alertTriggerIntervalDay: {
+        id: "insightAlert.config.interval.day",
+    },
+    alertTriggerIntervalWeek: {
+        id: "insightAlert.config.interval.week",
+    },
+    alertTriggerIntervalMonth: {
+        id: "insightAlert.config.interval.month",
+    },
+    alertTriggerIntervalQuarter: {
+        id: "insightAlert.config.interval.quarter",
+    },
+    alertTriggerIntervalYear: {
+        id: "insightAlert.config.interval.year",
     },
     alertDeleteSuccess: {
         id: "insightAlert.config.delete.success",

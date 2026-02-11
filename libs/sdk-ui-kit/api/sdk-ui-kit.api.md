@@ -5768,7 +5768,7 @@ export interface IUiBadgeProps {
 // @internal (undocumented)
 export interface IUiBreadcrumbItem {
     // (undocumented)
-    accessibilityConfig?: IAccessibilityConfigBase;
+    accessibilityConfig?: Omit<IAccessibilityConfigBase, "role">;
     // (undocumented)
     id: string;
     // (undocumented)
@@ -5780,7 +5780,7 @@ export interface IUiBreadcrumbItem {
 // @internal (undocumented)
 export interface IUiBreadcrumbProps {
     // (undocumented)
-    accessibilityConfig?: IAccessibilityConfigBase;
+    accessibilityConfig?: Omit<IAccessibilityConfigBase, "role">;
     // (undocumented)
     dataId?: string;
     // (undocumented)

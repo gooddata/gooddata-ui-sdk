@@ -1,13 +1,13 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { Fragment, type ReactNode, forwardRef, useRef, useState } from "react";
+import { type ReactNode, forwardRef, useRef } from "react";
 
 import { simplifyText } from "@gooddata/util";
 
 import { type IAccessibilityConfigBase } from "../../typings/accessibility.js";
 import { bem } from "../@utils/bem.js";
-import { makeTabsKeyboardNavigation } from "../@utils/keyboardNavigation.js";
-import { UiIconButton } from "../UiIconButton/UiIconButton.js";
+import { makeKeyboardNavigation } from "../@utils/keyboardNavigation.js";
+import { UiIcon } from "../UiIcon/UiIcon.js";
 import { UiTooltip } from "../UiTooltip/UiTooltip.js";
 
 /**
@@ -17,7 +17,7 @@ export interface IUiBreadcrumbItem {
     id: string;
     label: string;
     tooltip?: string | ReactNode;
-    accessibilityConfig?: IAccessibilityConfigBase;
+    accessibilityConfig?: Omit<IAccessibilityConfigBase, "role">;
 }
 
 /**
@@ -30,7 +30,7 @@ export interface IUiBreadcrumbProps {
     onSelect?: (item: IUiBreadcrumbItem) => void;
     dataId?: string;
     dataTestId?: string;
-    accessibilityConfig?: IAccessibilityConfigBase;
+    accessibilityConfig?: Omit<IAccessibilityConfigBase, "role">;
     maxWidth?: number;
     tabIndex?: number;
 }
@@ -49,32 +49,19 @@ export const UiBreadcrumb = forwardRef<HTMLDivElement, IUiBreadcrumbProps>(
         { id, label, tabIndex = 0, dataId, dataTestId, accessibilityConfig, maxWidth, items, onSelect },
         ref,
     ) => {
-        const [focused, setFocused] = useState(0);
-        const refs = useRef<(HTMLDivElement | null)[]>([]);
+        const refs = useRef<(HTMLButtonElement | null)[]>([]);
         const testId = dataTestId || getGeneratedTestId(label, accessibilityConfig?.ariaLabel ?? "");
 
-        const onKeyDown = makeTabsKeyboardNavigation({
-            onFocusFirst: () => {
-                setFocused(0);
-            },
-            onFocusLast: () => {
-                setFocused(refs.current.length - 1);
-            },
-            onFocusNext: () => {
-                const index = Math.min(focused + 1, refs.current.length - 1);
-                setFocused(index);
-            },
-            onFocusPrevious: () => {
-                const index = Math.max(focused - 1, 0);
-                setFocused(index);
-            },
-            onSelect: () => {
-                onSelect?.(items[focused]);
+        const onKeyDown = makeKeyboardNavigation({
+            onSelect: [{ code: ["Enter", "Space"] }],
+        })({
+            onSelect: (e) => {
+                (e.target as HTMLButtonElement).click();
             },
         });
 
         return (
-            <div
+            <nav
                 id={id}
                 ref={ref}
                 className={b()}
@@ -89,55 +76,48 @@ export const UiBreadcrumb = forwardRef<HTMLDivElement, IUiBreadcrumbProps>(
                 aria-description={accessibilityConfig?.ariaDescription}
                 aria-controls={accessibilityConfig?.ariaControls}
                 aria-haspopup={accessibilityConfig?.ariaHaspopup}
-                role={accessibilityConfig?.role ?? "listbox"}
+                aria-current="true"
                 style={{ maxWidth }}
             >
-                {items.map((item, index) => (
-                    <Fragment key={item.id}>
-                        <div
-                            ref={(item) => {
-                                refs.current[index] = item;
-                            }}
-                            className={e("item", {
-                                focused: index === focused,
-                            })}
-                            aria-label={item.accessibilityConfig?.ariaLabel ?? item.label}
-                            aria-labelledby={item.accessibilityConfig?.ariaLabelledBy}
-                            aria-describedby={item.accessibilityConfig?.ariaDescribedBy}
-                            aria-expanded={item.accessibilityConfig?.ariaExpanded}
-                            aria-description={item.accessibilityConfig?.ariaDescription}
-                            aria-controls={item.accessibilityConfig?.ariaControls}
-                            aria-haspopup={item.accessibilityConfig?.ariaHaspopup}
-                            role={item.accessibilityConfig?.role ?? "listitem"}
-                            onClick={() => {
-                                onSelect?.(item);
-                            }}
-                        >
-                            {item.tooltip ? (
-                                <UiTooltip
-                                    anchor={item.label}
-                                    content={item.tooltip}
-                                    triggerBy={["hover", "focus"]}
-                                />
-                            ) : (
-                                item.label
-                            )}
-                        </div>
-                        {index < items.length - 1 ? (
-                            <div className={e("separator")}>
-                                <UiIconButton
-                                    tabIndex={-1}
-                                    isDisabled
-                                    variant="bare"
-                                    size="small"
-                                    isDesctructive={false}
-                                    icon="navigateRight"
-                                />
-                            </div>
-                        ) : null}
-                    </Fragment>
-                ))}
-            </div>
+                <ol>
+                    {items.map((item, index) => (
+                        <li key={item.id}>
+                            <button
+                                ref={(item) => {
+                                    refs.current[index] = item;
+                                }}
+                                className={e("item")}
+                                aria-label={item.accessibilityConfig?.ariaLabel ?? item.label}
+                                aria-labelledby={item.accessibilityConfig?.ariaLabelledBy}
+                                aria-describedby={item.accessibilityConfig?.ariaDescribedBy}
+                                aria-expanded={item.accessibilityConfig?.ariaExpanded}
+                                aria-description={item.accessibilityConfig?.ariaDescription}
+                                aria-controls={item.accessibilityConfig?.ariaControls}
+                                aria-haspopup={item.accessibilityConfig?.ariaHaspopup}
+                                aria-current={index === items.length - 1}
+                                onClick={() => {
+                                    onSelect?.(item);
+                                }}
+                            >
+                                {item.tooltip ? (
+                                    <UiTooltip
+                                        anchor={item.label}
+                                        content={item.tooltip}
+                                        triggerBy={["hover", "focus"]}
+                                    />
+                                ) : (
+                                    item.label
+                                )}
+                            </button>
+                            {index < items.length - 1 ? (
+                                <div className={e("separator")}>
+                                    <UiIcon type="navigateRight" size={16} color="complementary-5" />
+                                </div>
+                            ) : null}
+                        </li>
+                    ))}
+                </ol>
+            </nav>
         );
     },
 );

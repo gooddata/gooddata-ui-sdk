@@ -886,6 +886,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableAlertOncePerInterval,
+            "enableAlertOncePerInterval",
+            "BOOLEAN",
+            FeatureFlagsValues.enableAlertOncePerInterval,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableFiscalCalendars,
             "enableFiscalCalendars",
             "BOOLEAN",

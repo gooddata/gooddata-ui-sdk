@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { format } from "date-fns";
 import { capitalize } from "lodash-es";
@@ -197,8 +197,8 @@ export const formatRelativeDateRange = (
     to: number,
     granularity: DateFilterGranularity,
     translator: IDateAndMessageTranslator,
+    labelMode: DateFilterLabelMode,
     boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter,
-    labelMode: DateFilterLabelMode = "short",
 ): string => {
     const intlCodes = labelMode === "full" ? granularityIntlCodesFull : granularityIntlCodes;
     const intlGranularity = intlCodes[granularity];
@@ -226,7 +226,7 @@ const getAbsolutePresetFilterRepresentation = (
 const getRelativeFormFilterRepresentation = (
     filter: IUiRelativeDateFilterForm,
     translator: IDateAndMessageTranslator,
-    labelMode: DateFilterLabelMode = "short",
+    labelMode: DateFilterLabelMode,
 ): string =>
     typeof filter.from === "number" && typeof filter.to === "number" && filter.granularity
         ? formatRelativeDateRange(
@@ -234,30 +234,30 @@ const getRelativeFormFilterRepresentation = (
               filter.to,
               filter.granularity,
               translator,
-              filter.boundedFilter,
               labelMode,
+              filter.boundedFilter,
           )
         : "";
 
 const getRelativePresetFilterRepresentation = (
     filter: IRelativeDateFilterPreset,
     translator: IDateAndMessageTranslator,
-    labelMode: DateFilterLabelMode = "short",
+    labelMode: DateFilterLabelMode,
 ): string =>
     formatRelativeDateRange(
         filter.from,
         filter.to,
         filter.granularity,
         translator,
-        filter.boundedFilter,
         labelMode,
+        filter.boundedFilter,
     );
 
 export const getDateFilterRepresentationByFilterType = (
     filter: DateFilterOption,
     translator: IDateAndMessageTranslator,
     dateFormat: string,
-    labelMode: DateFilterLabelMode = "short",
+    labelMode: DateFilterLabelMode,
 ) => {
     if (isAbsoluteDateFilterForm(filter) || isRelativeDateFilterForm(filter)) {
         return getDateFilterRepresentationUsingTranslator(filter, translator, dateFormat, labelMode);
@@ -290,8 +290,8 @@ export const getDateFilterRepresentationByFilterType = (
 export const getDateFilterTitleUsingTranslator = (
     filter: DateFilterOption,
     translator: IDateAndMessageTranslator,
+    labelMode: DateFilterLabelMode,
     dateFormat: string = DEFAULT_DATE_FORMAT,
-    labelMode: DateFilterLabelMode = "short",
 ): string => getDateFilterRepresentationByFilterType(filter, translator, dateFormat, labelMode);
 
 /**
@@ -302,7 +302,7 @@ const getDateFilterRepresentationUsingTranslator = (
     filter: DateFilterOption,
     translator: IDateAndMessageTranslator,
     dateFormat: string,
-    labelMode: DateFilterLabelMode = "short",
+    labelMode: DateFilterLabelMode,
 ): string => {
     if (isAbsoluteDateFilterForm(filter)) {
         return getAbsoluteFormFilterRepresentation(filter, dateFormat);
@@ -323,8 +323,8 @@ export const getDateFilterRepresentation = (
     filter: DateFilterOption,
     locale: ILocale,
     messages: ITranslations,
+    labelMode: DateFilterLabelMode,
     dateFormat: string = DEFAULT_DATE_FORMAT,
-    labelMode: DateFilterLabelMode = "short",
 ): string => {
     const translator = getIntl(locale, messages);
 

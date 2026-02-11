@@ -1,12 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import {
-    type FeatureContext,
-    type JsonApiDatasetOutMetaOriginOriginTypeEnum,
-    type JsonApiWorkspaceSettingOutWithLinks,
-    isLiveFeatures,
-    isStaticFeatures,
-} from "@gooddata/api-client-tiger";
+import { type FeatureContext, isLiveFeatures, isStaticFeatures } from "@gooddata/api-client-tiger";
 import { ActionsApi_WorkspaceResolveAllSettings } from "@gooddata/api-client-tiger/endpoints/actions";
 import {
     EntitiesApi_CreateEntityWorkspaceSettings,
@@ -44,7 +38,7 @@ import {
 } from "../../features/index.js";
 import { mapTypeToKey } from "../../settings/mapping.js";
 import { TigerSettingsService } from "../../settings/settings.js";
-import { DefaultUiSettings, DefaultUserSettings } from "../../uiSettings.js";
+import { DefaultUserSettings } from "../../uiSettings.js";
 import { GET_OPTIMIZED_WORKSPACE_PARAMS } from "../constants.js";
 
 export class TigerWorkspaceSettings
@@ -58,64 +52,13 @@ export class TigerWorkspaceSettings
         super();
     }
 
-    public override getSettings(): Promise<IWorkspaceSettings> {
-        return this.authCall(async (client) => {
-            const { data } = await this.authCall(async (client) =>
-                EntitiesApi_GetAllEntitiesWorkspaceSettings(client.axios, client.basePath, {
-                    workspaceId: this.workspace,
-                }),
-            );
-            const settings = this.mapSettingsToKeys(data.data);
-
-            const {
-                data: { meta: config },
-            } = (
-                await EntitiesApi_GetEntityWorkspaces(client.axios, client.basePath, {
-                    id: this.workspace,
-                    ...GET_OPTIMIZED_WORKSPACE_PARAMS,
-                })
-            ).data;
-
-            return {
-                workspace: this.workspace,
-                ...DefaultUiSettings,
-                ...config?.config,
-                ...settings,
-            };
-        });
+    public override async getSettings(): Promise<IWorkspaceSettings> {
+        const resolvedSettings = await resolveSettings(this.authCall, this.workspace, true);
+        return {
+            workspace: this.workspace,
+            ...resolvedSettings,
+        };
     }
-
-    private mapSettingsToKeys = (data: JsonApiWorkspaceSettingOutWithLinks[]): ISettings => {
-        const nativeSettings = this.mapSettingsToKeysByOrigin(data, "NATIVE");
-        const parentSettings = this.mapSettingsToKeysByOrigin(data, "PARENT");
-        return Object.keys(parentSettings).reduce((result: ISettings, key) => {
-            if (result[key] === undefined) {
-                return {
-                    ...result,
-                    [key]: parentSettings[key],
-                };
-            }
-            return result;
-        }, nativeSettings);
-    };
-
-    private mapSettingsToKeysByOrigin = (
-        data: JsonApiWorkspaceSettingOutWithLinks[],
-        origin: JsonApiDatasetOutMetaOriginOriginTypeEnum,
-    ): ISettings => {
-        return data.reduce((result: ISettings, setting) => {
-            const isValueApplicable = setting.meta?.origin?.originType === origin;
-            if (!isValueApplicable) {
-                return result;
-            }
-            const key = mapTypeToKey(setting.attributes?.type, setting.id);
-            const value = unwrapSettingContent(setting.attributes?.content);
-            return {
-                ...result,
-                [key]: value,
-            };
-        }, {});
-    };
 
     public override async setAlertDefault(value: IAlertDefault): Promise<void> {
         return this.setSetting("ALERT", value);
@@ -276,10 +219,15 @@ function resolveCurrencyFormatOverride(
 /**
  * @internal
  */
-async function resolveSettings(authCall: TigerAuthenticatedCallGuard, workspace: string): Promise<ISettings> {
+async function resolveSettings(
+    authCall: TigerAuthenticatedCallGuard,
+    workspace: string,
+    excludeUserSettings = false,
+): Promise<ISettings> {
     const { data } = await authCall(async (client) =>
         ActionsApi_WorkspaceResolveAllSettings(client.axios, client.basePath, {
             workspaceId: workspace,
+            excludeUserSettings: excludeUserSettings || undefined,
         }),
     );
 

@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { isEmpty, omit, omitBy } from "lodash-es";
 import { v4 as uuidv4 } from "uuid";
@@ -8,7 +8,7 @@ import {
     type ComparisonOperatorEnum,
     type JsonApiAutomationIn,
     type JsonApiAutomationOutAttributes,
-    type JsonApiAutomationOutAttributesAlert,
+    type JsonApiWorkspaceAutomationOutAttributesAlert,
     type RelativeOperatorEnum,
 } from "@gooddata/api-client-tiger";
 import { type IRawExportCustomOverrides } from "@gooddata/sdk-backend-spi";
@@ -283,7 +283,7 @@ export function convertAutomation(
 const convertAlert = (
     alert: IAutomationAlert,
     enableAutomationFilterContext: boolean,
-): JsonApiAutomationOutAttributesAlert => {
+): JsonApiWorkspaceAutomationOutAttributesAlert => {
     const { condition, execution } = alert;
 
     const { filters: convertedFilters } = convertAfmFilters(
@@ -305,6 +305,7 @@ const convertAlert = (
             }),
         },
         trigger: alert.trigger.mode,
+        interval: alert.trigger.interval,
     };
 
     //comparison

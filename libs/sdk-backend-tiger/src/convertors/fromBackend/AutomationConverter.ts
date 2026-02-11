@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { compact } from "lodash-es";
 
@@ -324,8 +324,8 @@ export function convertAutomation(
         createdBy: convertUserIdentifier(createdBy, included as IIncludedWithUserIdentifier[]),
         updatedBy: convertUserIdentifier(modifiedBy, included as IIncludedWithUserIdentifier[]),
         lastRun: automationResult,
-        created: createdAt,
-        updated: modifiedAt,
+        created: createdAt ?? undefined,
+        updated: modifiedAt ?? undefined,
         state: state as IAutomationState,
         dashboard,
         workspace,
@@ -380,6 +380,7 @@ const convertAlert = (
         trigger: {
             state: state ?? "ACTIVE",
             mode: alert.trigger,
+            interval: alert.interval,
         },
     };
 

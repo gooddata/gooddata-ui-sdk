@@ -1114,7 +1114,8 @@
                             "STARROCKS",
                             "ATHENA",
                             "MONGODB",
-                            "CRATEDB"
+                            "CRATEDB",
+                            "AILAKEHOUSE"
                         ]
                     },
                     "url": {

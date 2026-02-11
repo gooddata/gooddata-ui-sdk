@@ -1,3 +1,5 @@
+// (C) 2024-2026 GoodData Corporation
+
 /* eslint-disable */
 /**
  * OpenAPI definition
@@ -57,10 +59,6 @@ export interface AutomationAbsoluteDateFilterAbsoluteDateFilter {
     'to': string;
     'localIdentifier'?: string;
     'applyOnResult'?: boolean;
-    /**
-     * If true, rows with undefined (NULL) date values will be included in the result. The filter becomes: (date_condition) OR (date IS NULL). If false or not set, standard behavior applies (NULLs excluded by the date condition).
-     */
-    'includeEmptyValues'?: boolean;
     'dataset': AutomationAfmObjectIdentifierDataset;
 }
 
@@ -344,12 +342,17 @@ export interface AutomationAutomationAlert {
     'execution': AutomationAlertAfm;
     'condition': AutomationAutomationAlertCondition;
     /**
-     * Trigger behavior for the alert. ALWAYS - alert is triggered every time the condition is met. ONCE - alert is triggered only once when the condition is met. 
+     * Trigger behavior for the alert. ALWAYS - alert is triggered every time the condition is met. ONCE - alert is triggered only once when the condition is met. ONCE_PER_INTERVAL - alert is triggered when the condition is met, then suppressed for the interval. If no interval is specified, it behaves as ALWAYS. 
      */
     'trigger'?: AutomationAutomationAlertTriggerEnum;
+    /**
+     * Date granularity for the interval of ONCE_PER_INTERVAL trigger. Supported granularities: DAY, WEEK, MONTH, QUARTER, YEAR.
+     */
+    'interval'?: AutomationAutomationAlertIntervalEnum;
 }
 
-export type AutomationAutomationAlertTriggerEnum = 'ALWAYS' | 'ONCE';
+export type AutomationAutomationAlertTriggerEnum = 'ALWAYS' | 'ONCE' | 'ONCE_PER_INTERVAL';
+export type AutomationAutomationAlertIntervalEnum = 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR';
 
 /**
  * @type AutomationAutomationAlertCondition
@@ -565,7 +568,6 @@ export interface AutomationDashboardDateFilterDateFilter {
     'dataSet'?: AutomationIdentifierRef;
     'attribute'?: AutomationIdentifierRef;
     'boundedFilter'?: AutomationRelativeBoundedDateFilter;
-    'includeEmptyValues'?: boolean;
     'localIdentifier'?: string;
 }
 
@@ -1239,10 +1241,6 @@ export interface AutomationRelativeDateFilterRelativeDateFilter {
     'localIdentifier'?: string;
     'applyOnResult'?: boolean;
     'boundedFilter'?: AutomationBoundedFilter;
-    /**
-     * If true, rows with undefined (NULL) date values will be included in the result. The filter becomes: (date_condition) OR (date IS NULL). If false or not set, standard behavior applies (NULLs excluded by the date condition).
-     */
-    'includeEmptyValues'?: boolean;
     'dataset': AutomationAfmObjectIdentifierDataset;
 }
 
