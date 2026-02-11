@@ -54,6 +54,7 @@ import { isMobileView } from "./utils/responsive.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { useEnableAlertingAutomationFilterContext } from "../../../model/react/useDashboardAlerting/useEnableAutomationFilterContext.js";
 import {
+    selectEnableAlertOncePerInterval,
     selectEnableAnomalyDetectionAlert,
     selectEnableAutomationManagement,
     selectExternalRecipient,
@@ -75,6 +76,7 @@ import { RecipientsSelect } from "../../scheduledEmail/DefaultScheduledEmailDial
 import { DEFAULT_MAX_RECIPIENTS } from "../../scheduledEmail/DefaultScheduledEmailDialog/constants.js";
 import { DeleteAlertConfirmDialog } from "../DefaultAlertingManagementDialog/components/DeleteAlertConfirmDialog.js";
 import { type IAlertingDialogProps } from "../types.js";
+import { AlertTriggerIntervalSelect } from "./components/AlertTriggerIntervalSelect.js";
 
 const OVERLAY_POSITION_TYPE = "sameAsTarget";
 const CLOSE_ON_PARENT_SCROLL = true;
@@ -106,6 +108,7 @@ export function AlertingDialogRenderer({
     const enableAutomationManagement = useDashboardSelector(selectEnableAutomationManagement);
     const enableAnomalyDetectionAlert = useDashboardSelector(selectEnableAnomalyDetectionAlert);
     const enableAiAssistant = useDashboardSelector(selectCanUseAiAssistant);
+    const enableAlertOncePerInterval = useDashboardSelector(selectEnableAlertOncePerInterval);
 
     const [alertToDelete, setAlertToDelete] = useState<IAutomationMetadataObject | null>(null);
 
@@ -144,6 +147,7 @@ export function AlertingDialogRenderer({
         onComparisonTypeChange,
         onDestinationChange,
         onTriggerModeChange,
+        onTriggerIntervalChange,
         selectedMeasure,
         supportedMeasures,
         canManageAttributes,
@@ -565,8 +569,51 @@ export function AlertingDialogRenderer({
                                             onTriggerModeChange={onTriggerModeChange}
                                             overlayPositionType={OVERLAY_POSITION_TYPE}
                                             closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
+                                            enableAlertOncePerInterval={enableAlertOncePerInterval}
                                         />
                                     </FormField>
+                                    {editedAutomation?.alert?.trigger.mode === "ONCE_PER_INTERVAL" ? (
+                                        <FormField
+                                            label={
+                                                <div className="gd-dashboard-alerting-dialog-form-field__content-container-tooltip">
+                                                    <FormattedMessage id="insightAlert.config.interval" />
+                                                    <UiTooltip
+                                                        anchor={
+                                                            <UiIconButton
+                                                                icon="question"
+                                                                variant="tertiary"
+                                                                size="xsmall"
+                                                                accessibilityConfig={{
+                                                                    ariaLabel: intl.formatMessage({
+                                                                        id: "insightAlert.config.interval",
+                                                                    }),
+                                                                }}
+                                                            />
+                                                        }
+                                                        content={
+                                                            <FormattedMessage id="insightAlert.config.interval.tooltip" />
+                                                        }
+                                                        arrowPlacement="left"
+                                                        optimalPlacement
+                                                        offset={10}
+                                                        width={280}
+                                                        triggerBy={["hover", "click"]}
+                                                    />
+                                                </div>
+                                            }
+                                            htmlFor="alert.interval"
+                                        >
+                                            <AlertTriggerIntervalSelect
+                                                id="alert.interval"
+                                                selectedTriggerInterval={
+                                                    editedAutomation?.alert?.trigger.interval ?? "DAY"
+                                                }
+                                                onTriggerIntervalChange={onTriggerIntervalChange}
+                                                overlayPositionType={OVERLAY_POSITION_TYPE}
+                                                closeOnParentScroll={CLOSE_ON_PARENT_SCROLL}
+                                            />
+                                        </FormField>
+                                    ) : null}
                                     <FormField
                                         label={<FormattedMessage id="insightAlert.config.recipients" />}
                                         htmlFor="alert.recipients"

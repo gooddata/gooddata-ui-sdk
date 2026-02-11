@@ -12,6 +12,7 @@ import {
     type IAlertComparisonOperator,
     type IAlertRelativeArithmeticOperator,
     type IAlertRelativeOperator,
+    type IAlertTriggerInterval,
     type IAlertTriggerMode,
     type IAutomationMetadataObject,
     type IAutomationMetadataObjectDefinition,
@@ -42,6 +43,7 @@ import {
 } from "../../../../model/store/catalog/catalogSelectors.js";
 import {
     selectEnableAlertAttributes,
+    selectEnableAlertOncePerInterval,
     selectEnableComparisonInAlerting,
     selectEnableExternalRecipients,
     selectLocale,
@@ -138,6 +140,7 @@ export function useEditAlert({
     const dashboardId = useDashboardSelector(selectDashboardId);
     const separators = useDashboardSelector(selectSeparators);
     const dashboardHiddenFilters = useDashboardSelector(selectDashboardHiddenFilters);
+    const enableAlertOncePerInterval = useDashboardSelector(selectEnableAlertOncePerInterval);
     const commonDateFilterId = useDashboardSelector(selectAutomationCommonDateFilterId);
     const weekStart = useDashboardSelector(selectWeekStart);
     const timezone = useDashboardSelector(selectTimezone);
@@ -193,6 +196,7 @@ export function useEditAlert({
     // Local state
     const [warningMessage, setWarningMessage] = useState<string | undefined>(undefined);
     const [isTitleValid, setIsTitleValid] = useState(true);
+    const [triggerIntervalDirty, setTriggerIntervalDirty] = useState(false);
 
     const [editedAutomation, setEditedAutomation] = useState<IAutomationMetadataObjectDefinition | undefined>(
         alertToEdit ??
@@ -352,6 +356,7 @@ export function useEditAlert({
 
     const onAnomalyDetectionChange = useCallback(
         (measure: AlertMetric) => {
+            setTriggerIntervalDirty(false);
             setEditedAutomation((alert) =>
                 transformAlertByAnomalyDetection(
                     supportedMeasures,
@@ -359,10 +364,11 @@ export function useEditAlert({
                     measure,
                     weekStart,
                     timezone,
+                    enableAlertOncePerInterval,
                 ),
             );
         },
-        [supportedMeasures, weekStart, timezone],
+        [supportedMeasures, weekStart, timezone, enableAlertOncePerInterval],
     );
 
     const onComparisonTypeChange = useCallback(
@@ -398,6 +404,18 @@ export function useEditAlert({
         );
     }, []);
 
+    const onTriggerIntervalChange = useCallback((triggerInterval: IAlertTriggerInterval, dirty = true) => {
+        setTriggerIntervalDirty(dirty);
+        setEditedAutomation((s): IAutomationMetadataObjectDefinition | undefined =>
+            s
+                ? {
+                      ...s,
+                      alert: { ...s.alert!, trigger: { ...s.alert!.trigger, interval: triggerInterval } },
+                  }
+                : undefined,
+        );
+    }, []);
+
     const onGranularityChange = useCallback(
         (measure: AlertMetric | undefined, granularity: IAlertAnomalyDetectionGranularity) => {
             if (!measure) {
@@ -412,8 +430,11 @@ export function useEditAlert({
                     weekStart,
                 ),
             );
+            if (!triggerIntervalDirty) {
+                onTriggerIntervalChange(granularity === "HOUR" ? "DAY" : granularity, false);
+            }
         },
-        [supportedMeasures, weekStart],
+        [onTriggerIntervalChange, supportedMeasures, triggerIntervalDirty, weekStart],
     );
 
     const onDestinationChange = useCallback(
@@ -639,6 +660,7 @@ export function useEditAlert({
         onComparisonTypeChange,
         onDestinationChange,
         onTriggerModeChange,
+        onTriggerIntervalChange,
         selectedMeasure,
         supportedMeasures,
         canManageAttributes,

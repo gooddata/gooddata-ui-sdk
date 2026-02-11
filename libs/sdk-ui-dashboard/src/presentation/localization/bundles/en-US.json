@@ -2583,21 +2583,41 @@
         "text": "Days",
         "crowdinContext": "Granularity for anomaly detection in alert configuration."
     },
+    "insightAlert.config.interval.day": {
+        "text": "Day",
+        "crowdinContext": "Interval for anomaly detection in alert configuration."
+    },
     "insightAlert.config.granularity.week": {
         "text": "Weeks",
         "crowdinContext": "Granularity for anomaly detection in alert configuration."
+    },
+    "insightAlert.config.interval.week": {
+        "text": "Week",
+        "crowdinContext": "Interval for anomaly detection in alert configuration."
     },
     "insightAlert.config.granularity.month": {
         "text": "Months",
         "crowdinContext": "Granularity for anomaly detection in alert configuration."
     },
+    "insightAlert.config.interval.month": {
+        "text": "Month",
+        "crowdinContext": "Interval for anomaly detection in alert configuration."
+    },
     "insightAlert.config.granularity.quarter": {
         "text": "Quarters",
         "crowdinContext": "Granularity for anomaly detection in alert configuration."
     },
+    "insightAlert.config.interval.quarter": {
+        "text": "Quarter",
+        "crowdinContext": "Interval for anomaly detection in alert configuration."
+    },
     "insightAlert.config.granularity.year": {
         "text": "Years",
         "crowdinContext": "Granularity for anomaly detection in alert configuration."
+    },
+    "insightAlert.config.interval.year": {
+        "text": "Year",
+        "crowdinContext": "Interval for anomaly detection in alert configuration."
     },
     "insightAlert.config.changeOperator.increasesBy": {
         "text": "Increases by",
@@ -2657,6 +2677,14 @@
     },
     "insightAlert.config.trigger": {
         "text": "Trigger",
+        "crowdinContext": "Title of the section in insight configuration"
+    },
+    "insightAlert.config.interval": {
+        "text": "Trigger interval",
+        "crowdinContext": "Title of the section in insight configuration"
+    },
+    "insightAlert.config.interval.tooltip": {
+        "text": "Trigger at most once per chosen interval (e.g. once per day or week)",
         "crowdinContext": "Title of the section in insight configuration"
     },
     "insightAlert.config.metric": {
@@ -2754,6 +2782,10 @@
     "insightAlert.config.triggerMode.once": {
         "text": "Once, then pause",
         "crowdinContext": "Alert trigger option to send notification only once when condition is met, then automatically pause"
+    },
+    "insightAlert.config.triggerMode.oncePerInterval": {
+        "text": "Once per interval",
+        "crowdinContext": "Alert trigger option to send notification only once per interval when condition is met"
     },
     "insightAlert.config.delete.success": {
         "text": "Success. The alert has been deleted.",

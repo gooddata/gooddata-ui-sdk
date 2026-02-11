@@ -928,6 +928,18 @@ export const selectEnableAutomationManagement: DashboardSelector<boolean> = crea
 );
 
 /**
+ * Selector for the alert once per interval feature flag
+ *
+ * @internal
+ */
+export const selectEnableAlertOncePerInterval: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return Boolean(state.settings?.enableAlertOncePerInterval);
+    },
+);
+
+/**
  * Selector for the automation evaluation mode feature flag
  *
  * @internal

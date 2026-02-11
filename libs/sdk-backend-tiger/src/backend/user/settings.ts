@@ -36,6 +36,7 @@ export class TigerUserSettingsService
             const { data } = await ActionsApi_ResolveAllSettingsWithoutWorkspace(
                 client.axios,
                 client.basePath,
+                {},
             );
             const resolvedSettings = data.reduce(
                 (result: ISettings, setting) => ({

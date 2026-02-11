@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { type DateFilterGranularity } from "@gooddata/sdk-model";
@@ -30,6 +31,7 @@ describe("getDateFilterTitleUsingTranslator", () => {
         const actual = getDateFilterTitleUsingTranslator(
             allTimeFilter,
             serializingTranslator,
+            "short",
             DEFAULT_DATE_FORMAT,
         );
         expect(actual).toEqual(expected);
@@ -40,6 +42,7 @@ describe("getDateFilterTitleUsingTranslator", () => {
             const actual = getDateFilterTitleUsingTranslator(
                 absoluteFormFilter,
                 serializingTranslator,
+                "short",
                 DEFAULT_DATE_FORMAT,
             );
             expect(actual).toEqual("01/01/2019 – 02/01/2019");
@@ -49,6 +52,7 @@ describe("getDateFilterTitleUsingTranslator", () => {
             const actual = getDateFilterTitleUsingTranslator(
                 absoluteFormFilterOneDay,
                 serializingTranslator,
+                "short",
                 DEFAULT_DATE_FORMAT,
             );
             expect(actual).toEqual("01/01/2019");
@@ -60,6 +64,7 @@ describe("getDateFilterTitleUsingTranslator", () => {
             const actual = getDateFilterTitleUsingTranslator(
                 absoluteFormFilterWithTime,
                 serializingTranslator,
+                "short",
                 DEFAULT_DATE_FORMAT_WITH_TIME,
             );
             expect(actual).toEqual("01/01/2019, 01:00 – 02/01/2019, 16:55");
@@ -69,6 +74,7 @@ describe("getDateFilterTitleUsingTranslator", () => {
             const actual = getDateFilterTitleUsingTranslator(
                 absoluteFormFilterWithTimeInOneDay,
                 serializingTranslator,
+                "short",
                 DEFAULT_DATE_FORMAT_WITH_TIME,
             );
             expect(actual).toEqual("01/01/2019");
@@ -78,6 +84,7 @@ describe("getDateFilterTitleUsingTranslator", () => {
             const actual = getDateFilterTitleUsingTranslator(
                 absoluteFormFilterWithTimeWithinMoreDays,
                 serializingTranslator,
+                "short",
                 DEFAULT_DATE_FORMAT_WITH_TIME,
             );
             expect(actual).toEqual("01/01/2019 – 01/04/2019");
@@ -87,6 +94,7 @@ describe("getDateFilterTitleUsingTranslator", () => {
             const actual = getDateFilterTitleUsingTranslator(
                 absoluteFormFilter,
                 serializingTranslator,
+                "short",
                 DEFAULT_DATE_FORMAT_WITH_TIME,
             );
             expect(actual).toEqual("01/01/2019 – 02/01/2019");
@@ -98,6 +106,7 @@ describe("getDateFilterTitleUsingTranslator", () => {
         const actual = getDateFilterTitleUsingTranslator(
             absolutePresetFilter,
             serializingTranslator,
+            "short",
             DEFAULT_DATE_FORMAT,
         );
         expect(actual).toEqual(expected);
@@ -181,6 +190,7 @@ describe("getDateFilterTitleUsingTranslator", () => {
             const actual = getDateFilterTitleUsingTranslator(
                 filter,
                 serializingTranslator,
+                "short",
                 DEFAULT_DATE_FORMAT,
             );
             expect(actual).toEqual(expected);
@@ -192,6 +202,7 @@ describe("getDateFilterTitleUsingTranslator", () => {
         const actual = getDateFilterTitleUsingTranslator(
             relativePresetFilter,
             serializingTranslator,
+            "short",
             DEFAULT_DATE_FORMAT,
         );
         expect(actual).toEqual(expected);
@@ -202,7 +213,12 @@ describe("getDateFilterTitleUsingTranslator", () => {
         const expectedId = "filters.interval.days.mixed";
         const expectedValues = { from: 5, to: 5 };
         const expected = `${expectedId}__${JSON.stringify(expectedValues)}`;
-        const actual = getDateFilterTitleUsingTranslator(filter, serializingTranslator, DEFAULT_DATE_FORMAT);
+        const actual = getDateFilterTitleUsingTranslator(
+            filter,
+            serializingTranslator,
+            "short",
+            DEFAULT_DATE_FORMAT,
+        );
         expect(actual).toEqual(expected);
     });
 });
@@ -216,6 +232,7 @@ describe("getDateFilterRepresentation", () => {
                 filter,
                 "en-US",
                 DEFAULT_MESSAGES[DEFAULT_LANGUAGE],
+                "short",
                 DEFAULT_DATE_FORMAT,
             );
             expect(actual).toEqual(expected);
@@ -230,6 +247,7 @@ describe("getDateFilterRepresentation", () => {
                 filter,
                 "en-US",
                 DEFAULT_MESSAGES[DEFAULT_LANGUAGE],
+                "short",
                 DEFAULT_DATE_FORMAT_WITH_TIME,
             );
             expect(actual).toEqual(expected);

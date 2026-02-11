@@ -134,6 +134,7 @@ export enum TigerFeaturesNames {
     EnableDashboardSectionHeadersDateDataSet = "enableDashboardSectionHeadersDateDataSet",
     EnableAnomalyDetectionAlert = "enableAnomalyDetectionAlert",
     EnableAnomalyDetectionVisualization = "enableAnomalyDetectionVisualization",
+    EnableAlertOncePerInterval = "enableAlertOncePerInterval",
     EnableFiscalCalendars = "enableFiscalCalendars",
     EnablePivotTablePagination = "enablePivotTablePagination",
     EnableImplicitDrillToUrl = "enableImplicitDrillToUrl",
@@ -265,6 +266,7 @@ export type ITigerFeatureFlags = {
     enableDashboardSectionHeadersDateDataSet: (typeof FeatureFlagsValues)["enableDashboardSectionHeadersDateDataSet"][number];
     enableAnomalyDetectionAlert: (typeof FeatureFlagsValues)["enableAnomalyDetectionAlert"][number];
     enableAnomalyDetectionVisualization: (typeof FeatureFlagsValues)["enableAnomalyDetectionVisualization"][number];
+    enableAlertOncePerInterval: (typeof FeatureFlagsValues)["enableAlertOncePerInterval"][number];
     enableFiscalCalendars: (typeof FeatureFlagsValues)["enableFiscalCalendars"][number];
     enablePivotTablePagination: (typeof FeatureFlagsValues)["enablePivotTablePagination"][number];
     enableImplicitDrillToUrl: (typeof FeatureFlagsValues)["enableImplicitDrillToUrl"][number];
@@ -396,6 +398,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableDashboardSectionHeadersDateDataSet: false,
     enableAnomalyDetectionAlert: false,
     enableAnomalyDetectionVisualization: false,
+    enableAlertOncePerInterval: false,
     enableFiscalCalendars: true,
     enablePivotTablePagination: true,
     enableImplicitDrillToUrl: false,
@@ -528,6 +531,7 @@ export const FeatureFlagsValues = {
     enableDashboardSectionHeadersDateDataSet: [true, false] as const,
     enableAnomalyDetectionAlert: [true, false] as const,
     enableAnomalyDetectionVisualization: [true, false] as const,
+    enableAlertOncePerInterval: [true, false] as const,
     enableFiscalCalendars: [true, false] as const,
     enablePivotTablePagination: [true, false] as const,
     enableImplicitDrillToUrl: [true, false] as const,

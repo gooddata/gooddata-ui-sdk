@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-ext",
-    "version": "11.20.0-alpha.2",
+    "version": "11.20.0-alpha.3",
     "description": "GoodData.UI SDK - Extensions",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData Corporation",

@@ -1,5 +1,6 @@
 // (C) 2022-2026 GoodData Corporation
 
+import { ActionsApi_ResolveAllSettingsWithoutWorkspace } from "@gooddata/api-client-tiger/endpoints/actions";
 import {
     EntitiesApi_CreateEntityOrganizationSettings,
     EntitiesApi_DeleteEntityOrganizationSettings,
@@ -117,15 +118,15 @@ export class OrganizationSettingsService
 
     public override async getSettings(): Promise<ISettings> {
         const { data } = await this.authCall(async (client) =>
-            EntitiesApi_GetAllEntitiesOrganizationSettings(client.axios, client.basePath, {}),
+            ActionsApi_ResolveAllSettingsWithoutWorkspace(client.axios, client.basePath, {
+                excludeUserSettings: true,
+            }),
         );
 
-        return data.data.reduce((result: ISettings, setting) => {
+        return data.reduce((result: ISettings, setting) => {
             return {
                 ...result,
-                [mapTypeToKey(setting.attributes?.type, setting.id)]: unwrapSettingContent(
-                    setting.attributes?.content,
-                ),
+                [mapTypeToKey(setting.type, setting.id)]: unwrapSettingContent(setting.content),
             };
         }, {});
     }

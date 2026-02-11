@@ -152,6 +152,7 @@ function transformFiltersToNamings(
             const subtitle = DateFilterHelpers.getDateFilterTitleUsingTranslator(
                 dateFilterOption!,
                 intl,
+                "full",
                 dateFormat,
             );
 

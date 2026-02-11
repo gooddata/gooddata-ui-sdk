@@ -1,3 +1,5 @@
+// (C) 2024-2026 GoodData Corporation
+
 /* eslint-disable */
 /**
  * OpenAPI definition
@@ -52,10 +54,6 @@ export interface ExportAbsoluteDateFilterAbsoluteDateFilter {
     'to': string;
     'localIdentifier'?: string;
     'applyOnResult'?: boolean;
-    /**
-     * If true, rows with undefined (NULL) date values will be included in the result. The filter becomes: (date_condition) OR (date IS NULL). If false or not set, standard behavior applies (NULLs excluded by the date condition).
-     */
-    'includeEmptyValues'?: boolean;
     'dataset': ExportAfmObjectIdentifierDataset;
 }
 
@@ -370,7 +368,6 @@ export interface ExportDashboardDateFilterDateFilter {
     'dataSet'?: ExportIdentifierRef;
     'attribute'?: ExportIdentifierRef;
     'boundedFilter'?: ExportRelativeBoundedDateFilter;
-    'includeEmptyValues'?: boolean;
     'localIdentifier'?: string;
 }
 
@@ -866,10 +863,6 @@ export interface ExportRelativeDateFilterRelativeDateFilter {
     'localIdentifier'?: string;
     'applyOnResult'?: boolean;
     'boundedFilter'?: ExportBoundedFilter;
-    /**
-     * If true, rows with undefined (NULL) date values will be included in the result. The filter becomes: (date_condition) OR (date IS NULL). If false or not set, standard behavior applies (NULLs excluded by the date condition).
-     */
-    'includeEmptyValues'?: boolean;
     'dataset': ExportAfmObjectIdentifierDataset;
 }
 

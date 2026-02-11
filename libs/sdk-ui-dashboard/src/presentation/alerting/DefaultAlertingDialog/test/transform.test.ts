@@ -1203,6 +1203,40 @@ describe("alert transforms", () => {
             });
         });
 
+        it("transformAlertByAnomalyDetection, anomaly detection value, change trigger type", () => {
+            const res = transformAlertByAnomalyDetection(
+                allMetrics,
+                baseAnomalyDetection,
+                previousPeriodMetric,
+                undefined,
+                undefined,
+                true,
+            );
+            expect(res).toEqual({
+                ...baseAnomalyDetection,
+                alert: {
+                    ...baseAnomalyDetection.alert,
+                    execution: {
+                        ...baseAnomalyDetection.alert?.execution,
+                        measures: [previousPeriodMetric.measure],
+                    },
+                    trigger: {
+                        interval: "WEEK",
+                        mode: "ONCE_PER_INTERVAL",
+                        state: "ACTIVE",
+                    },
+                },
+                metadata: {
+                    filters: undefined,
+                    originalSchedule: undefined,
+                },
+                schedule: {
+                    cron: "0 0 0 * * 1",
+                    timezone: undefined,
+                },
+            });
+        });
+
         it("transformAlertByAnomalyDetection, comparison value, different granularity", () => {
             const res = transformAlertByAnomalyDetection(allMetrics, baseComparison, previousPeriodMetric3);
             const cond = baseAnomalyDetection.alert?.condition as IAutomationAnomalyDetectionCondition;

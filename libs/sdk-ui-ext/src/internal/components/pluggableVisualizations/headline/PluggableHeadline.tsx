@@ -333,6 +333,7 @@ export class PluggableHeadline extends AbstractPluggableVisualization {
             this.visualizationProperties = newProperties;
             this.pushData({
                 properties: newProperties,
+                ignoreUndoRedo: true,
             });
         }
     }

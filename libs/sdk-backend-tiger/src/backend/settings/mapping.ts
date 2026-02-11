@@ -20,7 +20,9 @@ type UnmappedTypes =
     | "DATA_LOCALE"
     | "LDM_DEFAULT_LOCALE"
     | "EXPORT_RESULT_POLLING_TIMEOUT_SECONDS"
-    | "SORT_CASE_SENSITIVE";
+    | "SORT_CASE_SENSITIVE"
+    | "EXPORT_CSV_CUSTOM_DELIMITER"
+    | "ENABLE_QUERY_TAGS";
 
 // Only mandatory types
 type MandatoryTypes = Exclude<AllSettingsType, UnmappedTypes>;

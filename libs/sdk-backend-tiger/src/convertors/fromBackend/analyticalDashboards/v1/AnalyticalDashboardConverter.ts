@@ -105,9 +105,9 @@ export function convertDashboard(
         uri: stripQueryParams(links!.self),
         title,
         description,
-        created: createdAt,
+        created: createdAt ?? "",
         createdBy: convertUserIdentifier(createdBy, included),
-        updated: modifiedAt,
+        updated: modifiedAt ?? "",
         updatedBy: convertUserIdentifier(modifiedBy, included),
         // TODO: TIGER-HACK: inherited objects must be locked; they are read-only for all
         isLocked: isInheritedObject(data),

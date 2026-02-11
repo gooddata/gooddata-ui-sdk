@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
 
@@ -610,14 +610,25 @@ export interface IAutomationAlertTrigger {
      * State of the trigger.
      */
     state: IAlertTriggerState;
+
+    /**
+     * Interval of the trigger.
+     * Only used when mode is set to ONCE_PER_INTERVAL.
+     */
+    interval?: IAlertTriggerInterval;
 }
 
 /**
  * @alpha
  */
-export type IAlertTriggerMode = "ALWAYS" | "ONCE";
+export type IAlertTriggerMode = "ALWAYS" | "ONCE" | "ONCE_PER_INTERVAL";
 
 /**
  * @alpha
  */
 export type IAlertTriggerState = "ACTIVE" | "PAUSED";
+
+/**
+ * @alpha
+ */
+export type IAlertTriggerInterval = "DAY" | "WEEK" | "MONTH" | "QUARTER" | "YEAR";

@@ -1,0 +1,9 @@
+// (C) 2024-2026 GoodData Corporation
+
+/* eslint-disable */
+{{>licenseInfo}}
+
+
+export * from "./api{{importFileExtension}}";
+export * from "./configuration{{importFileExtension}}";
+{{#withSeparateModelsAndApi}}export * from "./{{tsModelPackage}}{{#importFileExtension}}/index{{importFileExtension}}{{/importFileExtension}}";{{/withSeparateModelsAndApi}}

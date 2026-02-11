@@ -839,6 +839,91 @@
                 }
             }
         },
+        "/api/v1/actions/workspaces/{workspaceId}/ai/workflow/{runId}/cancel": {
+            "post": {
+                "tags": [
+                    "actions"
+                ],
+                "operationId": "cancelWorkflow",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "runId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/ai/workflow/dashboardSummary": {
+            "post": {
+                "tags": [
+                    "actions"
+                ],
+                "operationId": "generateDashboardSummary",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/WorkflowDashboardSummaryRequestDto"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/WorkflowDashboardSummaryResponseDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/actions/workspaces/{workspaceId}/ai/search": {
             "post": {
                 "tags": [
@@ -1804,6 +1889,46 @@
                 }
             }
         },
+        "/api/v1/actions/workspaces/{workspaceId}/ai/workflow/{runId}/status": {
+            "get": {
+                "tags": [
+                    "actions"
+                ],
+                "operationId": "getWorkflowStatus",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "runId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/WorkflowStatusResponseDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/actions/workspaces/{workspaceId}/ai/resolveLlmEndpoints": {
             "get": {
                 "tags": [
@@ -2202,10 +2327,6 @@
                             },
                             "applyOnResult": {
                                 "type": "boolean"
-                            },
-                            "includeEmptyValues": {
-                                "type": "boolean",
-                                "description": "If true, rows with undefined (NULL) date values will be included in the result. The filter becomes: (date_condition) OR (date IS NULL). If false or not set, standard behavior applies (NULLs excluded by the date condition)."
                             },
                             "dataset": {
                                 "$ref": "#/components/schemas/AfmObjectIdentifierDataset"
@@ -3304,10 +3425,6 @@
                             },
                             "boundedFilter": {
                                 "$ref": "#/components/schemas/BoundedFilter"
-                            },
-                            "includeEmptyValues": {
-                                "type": "boolean",
-                                "description": "If true, rows with undefined (NULL) date values will be included in the result. The filter becomes: (date_condition) OR (date IS NULL). If false or not set, standard behavior applies (NULLs excluded by the date condition)."
                             },
                             "dataset": {
                                 "$ref": "#/components/schemas/AfmObjectIdentifierDataset"
@@ -4566,6 +4683,48 @@
                     }
                 },
                 "description": "Any information related to cancellation."
+            },
+            "WorkflowDashboardSummaryRequestDto": {
+                "required": [
+                    "dashboardId"
+                ],
+                "type": "object",
+                "properties": {
+                    "dashboardId": {
+                        "type": "string"
+                    },
+                    "keyMetricIds": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "referenceQuarter": {
+                        "type": "string"
+                    },
+                    "customUserPrompt": {
+                        "type": "string"
+                    }
+                }
+            },
+            "WorkflowDashboardSummaryResponseDto": {
+                "required": [
+                    "message",
+                    "runId",
+                    "status"
+                ],
+                "type": "object",
+                "properties": {
+                    "runId": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
             },
             "AllowedRelationshipType": {
                 "required": [
@@ -6487,6 +6646,37 @@
                     }
                 },
                 "description": "Header containing the information related to a subtotal."
+            },
+            "WorkflowStatusResponseDto": {
+                "required": [
+                    "message",
+                    "runId",
+                    "status"
+                ],
+                "type": "object",
+                "properties": {
+                    "runId": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "result": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "object"
+                        }
+                    },
+                    "error": {
+                        "type": "string"
+                    },
+                    "currentPhase": {
+                        "type": "string"
+                    }
+                }
             },
             "ResolvedLlmEndpoint": {
                 "required": [

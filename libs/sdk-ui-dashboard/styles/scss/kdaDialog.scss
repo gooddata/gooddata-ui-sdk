@@ -655,6 +655,10 @@
         align-self: stretch;
         height: 100%;
 
+        &-head {
+            width: 100%;
+        }
+
         &-title {
             color: var(--gd-palette-complementary-8);
             text-align: left;
@@ -667,6 +671,7 @@
 
         &-breadcrumb {
             margin-bottom: 8px;
+            width: 100%;
         }
 
         &-visualisation {

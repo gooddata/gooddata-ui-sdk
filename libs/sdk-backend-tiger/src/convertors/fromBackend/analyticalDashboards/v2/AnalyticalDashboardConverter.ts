@@ -307,9 +307,9 @@ export function convertDashboard(
         uri: stripQueryParams(links!.self),
         title,
         description,
-        created: createdAt,
+        created: createdAt ?? "",
         createdBy: convertUserIdentifier(createdBy, included),
-        updated: modifiedAt,
+        updated: modifiedAt ?? "",
         updatedBy: convertUserIdentifier(modifiedBy, included),
         // TODO: TIGER-HACK: inherited objects must be locked; they are read-only for all
         isLocked: isInheritedObject(data),
@@ -382,9 +382,9 @@ export function convertDashboardPlugin({
         tags: tags ?? [],
         type: "IDashboardPlugin",
         url,
-        created: createdAt,
+        created: createdAt ?? undefined,
         createdBy: convertUserIdentifier(createdBy, included),
-        updated: modifiedAt,
+        updated: modifiedAt ?? undefined,
         updatedBy: convertUserIdentifier(modifiedBy, included),
     };
 }
@@ -407,9 +407,9 @@ export function convertDashboardPluginWithLinks(
         tags: tags ?? [],
         type: "IDashboardPlugin",
         url,
-        created: createdAt,
+        created: createdAt ?? undefined,
         createdBy: convertUserIdentifier(createdBy, included),
-        updated: modifiedAt,
+        updated: modifiedAt ?? undefined,
         updatedBy: convertUserIdentifier(modifiedBy, included),
     };
 }

@@ -113,9 +113,9 @@ export const convertMeasure = (
                     .isHiddenFromKda(measure.attributes?.isHiddenFromKda)
                     .tags(measure.attributes?.tags ?? [])
                     .metricType(metricType as MetricType | undefined)
-                    .created(measure.attributes?.createdAt)
+                    .created(measure.attributes?.createdAt ?? undefined)
                     .createdBy(convertUserIdentifier(measure.relationships?.createdBy, included))
-                    .updated(measure.attributes?.modifiedAt)
+                    .updated(measure.attributes?.modifiedAt ?? undefined)
                     .updatedBy(convertUserIdentifier(measure.relationships?.modifiedBy, included)),
             )
             .modify(commonGroupableCatalogItemModifications(measure)),

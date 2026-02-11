@@ -275,8 +275,8 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
             insightData.data.attributes?.tags,
             isInheritedObject(insightData.data),
             insightData.data.attributes?.isHidden,
-            insightData.data.attributes?.createdAt,
-            insightData.data.attributes?.modifiedAt,
+            insightData.data.attributes?.createdAt ?? undefined,
+            insightData.data.attributes?.modifiedAt ?? undefined,
             convertUserIdentifier(insightData.data.relationships?.createdBy, insightData.included),
             convertUserIdentifier(insightData.data.relationships?.modifiedBy, insightData.included),
         );
@@ -407,8 +407,8 @@ function createInsightFromBackend(data: JsonApiVisualizationObjectOutDocument, r
         visualizationObject.attributes.tags,
         isInheritedObject(visualizationObject),
         visualizationObject.attributes?.isHidden,
-        visualizationObject.attributes?.createdAt,
-        visualizationObject.attributes?.modifiedAt,
+        visualizationObject.attributes?.createdAt ?? undefined,
+        visualizationObject.attributes?.modifiedAt ?? undefined,
         convertUserIdentifier(createdBy, included),
         convertUserIdentifier(modifiedBy, included),
     );

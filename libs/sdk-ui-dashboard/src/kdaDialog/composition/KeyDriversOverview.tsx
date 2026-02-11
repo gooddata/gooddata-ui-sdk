@@ -100,7 +100,7 @@ function KeyDriversDetail({ detailsId }: IKeyDriversDetailsProps) {
 
     return (
         <div className={cx("gd-kda-key-drivers-detail")} id={detailsId}>
-            <div>
+            <div className={cx("gd-kda-key-drivers-detail-head")}>
                 <div className={cx("gd-kda-key-drivers-detail-breadcrumb")}>
                     <UiBreadcrumb
                         label={intl.formatMessage({

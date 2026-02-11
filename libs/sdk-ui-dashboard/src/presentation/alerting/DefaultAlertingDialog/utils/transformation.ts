@@ -360,6 +360,7 @@ export function transformAlertByAnomalyDetection(
     measure: AlertMetric,
     weekStart?: WeekStart,
     timezone?: string,
+    enableAlertOncePerInterval?: boolean,
 ): IAutomationMetadataObject {
     const periodMeasure = measure.comparators;
     const first = periodMeasure[0];
@@ -383,6 +384,16 @@ export function transformAlertByAnomalyDetection(
             ...alert.alert!,
             condition,
             execution,
+            ...(enableAlertOncePerInterval
+                ? {
+                      trigger: {
+                          state: "ACTIVE",
+                          ...alert.alert?.trigger,
+                          mode: "ONCE_PER_INTERVAL",
+                          interval: cond.granularity === "HOUR" ? "DAY" : cond.granularity,
+                      },
+                  }
+                : {}),
         },
         schedule: {
             cron: createCronFromGranularity(cond.granularity, weekStart),

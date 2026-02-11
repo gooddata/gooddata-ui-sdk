@@ -9,10 +9,10 @@ import {
     type AutomationAutomationTabularExport,
     type AutomationAutomationVisualExport,
     type AutomationDashboardExportSettings,
-    type JsonApiAutomationOutAttributesDashboardTabularExportsInner,
-    type JsonApiAutomationOutAttributesRawExportsInner,
     type JsonApiExportDefinitionOutIncludes,
     type JsonApiExportDefinitionOutWithLinks,
+    type JsonApiWorkspaceAutomationOutAttributesDashboardTabularExportsInner,
+    type JsonApiWorkspaceAutomationOutAttributesRawExportsInner,
     type TabularExportRequest,
     type VisualExportRequest,
 } from "@gooddata/api-client-tiger";
@@ -93,7 +93,7 @@ export const wrapExportDefinition = (
 };
 
 export const convertDashboardTabularExportRequest = (
-    exportRequest: JsonApiAutomationOutAttributesDashboardTabularExportsInner,
+    exportRequest: JsonApiWorkspaceAutomationOutAttributesDashboardTabularExportsInner,
 ): IExportDefinitionDashboardRequestPayload | IExportDefinitionVisualizationObjectRequestPayload => {
     const {
         requestPayload: {
@@ -128,13 +128,12 @@ export const convertDashboardTabularExportRequest = (
 
     // Convert dashboardTabsFiltersOverrides to filtersByTab
     const filtersByTab = dashboardTabsFiltersOverrides
-        ? Object.entries(dashboardTabsFiltersOverrides).reduce<Record<string, FilterContextItem[]>>(
-              (acc, [tabId, tabFilters]) => {
-                  acc[tabId] = tabFilters.map(cloneWithSanitizedIds);
-                  return acc;
-              },
-              {},
-          )
+        ? Object.entries(dashboardTabsFiltersOverrides as Record<string, FilterContextItem[]>).reduce<
+              Record<string, FilterContextItem[]>
+          >((acc, [tabId, tabFilters]) => {
+              acc[tabId] = tabFilters.map(cloneWithSanitizedIds);
+              return acc;
+          }, {})
         : undefined;
 
     return {
@@ -190,7 +189,7 @@ export const convertVisualExportRequest = (
 };
 
 export const convertToRawExportRequest = (
-    exportRequest: JsonApiAutomationOutAttributesRawExportsInner,
+    exportRequest: JsonApiWorkspaceAutomationOutAttributesRawExportsInner,
 ): IExportDefinitionVisualizationObjectRequestPayload => {
     const {
         requestPayload: { fileName, execution, metadata },
@@ -341,8 +340,8 @@ export const convertExportDefinitionMdObject = (
         description,
         tags,
         requestPayload: request,
-        created: createdAt,
-        updated: modifiedAt,
+        created: createdAt ?? undefined,
+        updated: modifiedAt ?? undefined,
         createdBy: convertUserIdentifier(createdBy, included as IIncludedWithUserIdentifier[]),
         updatedBy: convertUserIdentifier(modifiedBy, included as IIncludedWithUserIdentifier[]),
         production: true,
