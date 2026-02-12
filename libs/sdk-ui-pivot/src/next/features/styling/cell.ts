@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type CellClassParams, type CellStyle, type ICellRendererParams } from "ag-grid-enterprise";
 import cx from "classnames";
@@ -509,7 +509,7 @@ const isNullValue = (colData: ITableDataValue) => {
  * @returns Object containing color and backgroundColor CSS values
  */
 function extractColorsFromCellData(cellData: ITableDataValue): { color?: string; backgroundColor?: string } {
-    if (!("value" in cellData) || cellData.value == null || !cellData.columnDefinition) {
+    if (!("value" in cellData) || !cellData.columnDefinition) {
         return {};
     }
 

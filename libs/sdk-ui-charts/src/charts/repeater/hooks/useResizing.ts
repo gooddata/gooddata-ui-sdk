@@ -1,6 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { type MutableRefObject, useCallback, useEffect, useMemo, useRef } from "react";
+import { type RefObject, useCallback, useEffect, useMemo, useRef } from "react";
 
 import {
     type ColDef,
@@ -12,6 +12,7 @@ import {
 
 import { type IAttributeOrMeasure } from "@gooddata/sdk-model";
 
+import { cancelScheduledAnimationFrame } from "../../_base/animationFrameScheduler.js";
 import { type RepeaterColumnLocator, UIClick } from "../columnWidths.js";
 import {
     getColumnWidths,
@@ -41,6 +42,8 @@ export function useResizing(columnDefs: ColDef[], items: IAttributeOrMeasure[], 
         isMetaOrCtrlKeyPressed: false,
         clicks: 0,
         columnApi: null,
+        containerElement: null,
+        growToFitFrame: { frameId: null },
         manuallyResizedColumns: [],
     });
 
@@ -70,15 +73,11 @@ export function useResizing(columnDefs: ColDef[], items: IAttributeOrMeasure[], 
             isAltKeyPressed: resizingState.current.isAltKeyPressed,
             isMetaOrCtrlKeyPressed: resizingState.current.isMetaOrCtrlKeyPressed,
 
-            // use clientWidth of the viewport container to accommodate for vertical scrollbars if needed
-            clientWidth:
-                containerRef.current?.getElementsByClassName("ag-body-viewport")[0]?.clientWidth ?? 0,
-            containerRef: containerRef.current,
             separators: props?.config?.separators,
 
             onColumnResized: props.onColumnResized,
         };
-    }, [props.config, props.onColumnResized, resizingState]);
+    }, [props.config, props.onColumnResized]);
 
     const onColumnResized = useCallback(
         (columnEvent: ColumnResizedEvent) => {
@@ -96,25 +95,39 @@ export function useResizing(columnDefs: ColDef[], items: IAttributeOrMeasure[], 
     const onGridReady = useCallback(
         (readyEvent: GridReadyEvent) => {
             resizingState.current.columnApi = readyEvent.api;
+            resizingState.current.containerElement = containerRef.current;
             applyColumnSizes(columnDefs, resizingState, resizeSettings);
             growToFit(resizingState, resizeSettings);
         },
         [columnDefs, resizeSettings],
     );
 
+    const onGridSizeChanged = useCallback(() => {
+        growToFit(resizingState, resizeSettings);
+    }, [resizeSettings]);
+
     useEffect(() => {
         applyColumnSizes(columnDefs, resizingState, resizeSettings);
-    }, [columnDefs, resizingState, resizeSettings]);
+    }, [columnDefs, resizeSettings]);
+
+    // Cancel pending frames on cleanup
+    useEffect(() => {
+        const { growToFitFrame } = resizingState.current;
+        return () => {
+            cancelScheduledAnimationFrame(growToFitFrame);
+        };
+    }, []);
 
     return {
         containerRef,
         onColumnResized,
         onGridReady,
+        onGridSizeChanged,
     };
 }
 
 async function onManualColumnResize(
-    resizingState: MutableRefObject<ResizingState>,
+    resizingState: RefObject<ResizingState>,
     resizingConfig: ColumnResizingConfig,
     columns: Column[],
 ) {
@@ -131,7 +144,7 @@ async function onManualColumnResize(
 }
 
 function onColumnsManualReset(
-    resizingState: MutableRefObject<ResizingState>,
+    resizingState: RefObject<ResizingState>,
     resizingConfig: ColumnResizingConfig,
     columns: Column[],
 ) {
@@ -160,7 +173,7 @@ function onColumnsManualReset(
 }
 
 function onColumnsManualResized(
-    resizingState: MutableRefObject<ResizingState>,
+    resizingState: RefObject<ResizingState>,
     resizingConfig: ColumnResizingConfig,
     columns: Column[],
 ) {
@@ -175,7 +188,7 @@ function onColumnsManualResized(
 
 function applyColumnSizes(
     columnDefs: ColDef[],
-    resizingState: MutableRefObject<ResizingState>,
+    resizingState: RefObject<ResizingState>,
     resizeSettings: ColumnResizingConfig,
 ) {
     const columnWidthItems: Array<{ key: string; newWidth: number }> = [];
@@ -245,7 +258,7 @@ function applyColumnSizes(
 
 function applyMeasureColumnSize(
     columnDefs: ColDef[],
-    resizingState: MutableRefObject<ResizingState>,
+    resizingState: RefObject<ResizingState>,
     locator: RepeaterColumnLocator,
     width: number | "auto",
 ): { key: string; newWidth: number } | undefined {
@@ -278,10 +291,7 @@ function applyMeasureColumnSize(
     return undefined;
 }
 
-function afterOnResizeColumns(
-    resizingState: MutableRefObject<ResizingState>,
-    resizingConfig: ColumnResizingConfig,
-) {
+function afterOnResizeColumns(resizingState: RefObject<ResizingState>, resizingConfig: ColumnResizingConfig) {
     growToFit(resizingState, resizingConfig);
 
     const columnWidths = getColumnWidths(resizingState.current);

@@ -424,6 +424,7 @@ export const PIVOT_TABLE_NEXT_SUPPORTED_PROPERTIES = [
     "columnWidths",
     "measureGroupDimension",
     "columnHeadersPosition",
+    "grandTotalsPosition",
     "disableDrillDown",
     "disableDrillIntoURL",
     "disableAlerts",

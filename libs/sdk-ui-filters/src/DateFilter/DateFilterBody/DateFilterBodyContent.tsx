@@ -85,6 +85,11 @@ export function DateFilterBodyContent({
     const panelId = `${tabsIdBase}-panel`;
     const activeTabId = selectedTab === "fiscal" ? tabIds.fiscal : tabIds.standard;
 
+    // When the selected option is not visible (e.g. preset from the other tab),
+    // the first listbox item (AllTime) needs tabIndex={0} so the list is keyboard-reachable.
+    // Note: relies on AllTime being the first rendered item in the listbox.
+    const selectedId = selectedFilterOption.localIdentifier;
+
     const filteredRelativePreset = getFilteredPresets(
         filterOptions.relativePreset,
         fiscalTabsConfig,
@@ -95,6 +100,14 @@ export function DateFilterBodyContent({
         fiscalTabsConfig,
         selectedTab,
     );
+    const isSelectedInVisibleList =
+        selectedId === filterOptions.allTime?.localIdentifier ||
+        selectedId === filterOptions.absoluteForm?.localIdentifier ||
+        selectedId === filterOptions.relativeForm?.localIdentifier ||
+        filterOptions.absolutePreset?.some((p) => p.localIdentifier === selectedId) ||
+        Object.values(filteredRelativePreset ?? {}).some((items) =>
+            items?.some((p) => p.localIdentifier === selectedId),
+        );
 
     const listContent = (
         <>
@@ -103,6 +116,7 @@ export function DateFilterBodyContent({
                 selectedFilterOption={selectedFilterOption}
                 onSelectedFilterOptionChange={onSelectedFilterOptionChange}
                 isMobile={isMobile}
+                isFocusFallback={!isSelectedInVisibleList}
             />
             <AbsoluteDateFilterFormSection
                 filterOptions={filterOptions}
@@ -165,7 +179,7 @@ export function DateFilterBodyContent({
                 />
             ) : null}
             {fiscalTabsConfig.showTabs ? (
-                <div role="tabpanel" id={panelId} aria-labelledby={activeTabId} tabIndex={0}>
+                <div role="tabpanel" id={panelId} aria-labelledby={activeTabId}>
                     <div role="listbox" aria-label={listboxLabel}>
                         {listContent}
                     </div>

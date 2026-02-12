@@ -1685,6 +1685,9 @@
                     },
                     {
                         "$ref": "#/components/schemas/PositiveAttributeFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/MatchAttributeFilter"
                     }
                 ]
             },
@@ -1980,6 +1983,9 @@
                     },
                     {
                         "$ref": "#/components/schemas/PositiveAttributeFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/MatchAttributeFilter"
                     }
                 ]
             },
@@ -2042,6 +2048,58 @@
                     }
                 },
                 "description": "Metric defined by the raw MAQL query."
+            },
+            "MatchAttributeFilter": {
+                "required": [
+                    "matchAttributeFilter"
+                ],
+                "type": "object",
+                "properties": {
+                    "matchAttributeFilter": {
+                        "required": [
+                            "literal",
+                            "matchType",
+                            "label"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "literal": {
+                                "type": "string",
+                                "description": "Literal used to limit label values.",
+                                "example": "value"
+                            },
+                            "matchType": {
+                                "type": "string",
+                                "description": "Requested match type.",
+                                "enum": [
+                                    "STARTS_WITH",
+                                    "ENDS_WITH",
+                                    "CONTAINS"
+                                ]
+                            },
+                            "negate": {
+                                "type": "boolean",
+                                "description": "Indicates whether the filter should negate the match.",
+                                "default": false
+                            },
+                            "caseSensitive": {
+                                "type": "boolean",
+                                "description": "Indicates whether the filter match is evaluated in case-sensitive mode or not.",
+                                "default": false
+                            },
+                            "localIdentifier": {
+                                "type": "string"
+                            },
+                            "applyOnResult": {
+                                "type": "boolean"
+                            },
+                            "label": {
+                                "$ref": "#/components/schemas/AfmIdentifier"
+                            }
+                        }
+                    }
+                },
+                "description": "Filter via label with given match type and literal value."
             },
             "MeasureDefinition": {
                 "type": "object",

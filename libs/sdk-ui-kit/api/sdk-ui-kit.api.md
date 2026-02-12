@@ -6853,6 +6853,7 @@ export type IUiTab<TTabProps extends Record<any, any> = EmptyObject, TTabActionP
     tabId?: string;
     panelId?: string;
     autoSelectOnFocus?: boolean;
+    ariaLabel?: string;
     actions?: Array<IUiTabAction<TTabProps, TTabActionProps> | typeof separatorStaticItem>;
 } & TTabProps;
 

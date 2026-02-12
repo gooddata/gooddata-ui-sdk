@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-pivot",
-    "version": "11.21.0-alpha.0",
+    "version": "11.22.0-alpha.0",
     "description": "GoodData.UI SDK - Pivot Table",
     "license": "MIT",
     "author": "GoodData Corporation",

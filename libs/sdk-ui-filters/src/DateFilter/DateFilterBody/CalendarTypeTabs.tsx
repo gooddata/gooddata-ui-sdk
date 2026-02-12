@@ -4,6 +4,7 @@ import { useIntl } from "react-intl";
 
 import { UiTabs } from "@gooddata/sdk-ui-kit";
 
+import { DATE_FILTER_ACTIVE_CALENDAR_TAB_ID } from "../accessibility/elementId.js";
 import { type CalendarTabType } from "../utils/presetFilterUtils.js";
 
 interface ICalendarTypeTabsProps {
@@ -24,13 +25,14 @@ export function CalendarTypeTabs({ selectedTab, onTabSelect, tabIds, panelId }: 
     const intl = useIntl();
 
     return (
-        <div className="gd-date-preset-tabs s-date-preset-tabs">
+        <div className="gd-date-preset-tabs s-date-preset-tabs" id={DATE_FILTER_ACTIVE_CALENDAR_TAB_ID}>
             <UiTabs
                 size="small"
                 tabs={[
                     {
                         id: "standard" as const,
                         label: intl.formatMessage({ id: "dateFilter.tab.standard" }),
+                        ariaLabel: intl.formatMessage({ id: "dateFilter.tab.standard.ariaLabel" }),
                         tabId: tabIds?.standard,
                         panelId,
                         autoSelectOnFocus: true,
@@ -38,6 +40,7 @@ export function CalendarTypeTabs({ selectedTab, onTabSelect, tabIds, panelId }: 
                     {
                         id: "fiscal" as const,
                         label: intl.formatMessage({ id: "dateFilter.tab.fiscal" }),
+                        ariaLabel: intl.formatMessage({ id: "dateFilter.tab.fiscal.ariaLabel" }),
                         tabId: tabIds?.fiscal,
                         panelId,
                         autoSelectOnFocus: true,
