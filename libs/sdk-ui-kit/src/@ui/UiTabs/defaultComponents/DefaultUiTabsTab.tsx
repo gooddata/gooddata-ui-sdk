@@ -55,7 +55,7 @@ export function DefaultUiTabsTab<
             role={accessibilityConfig?.tabRole}
             aria-selected={isSelected}
             aria-controls={panelId}
-            aria-label={tab.label}
+            aria-label={tab.ariaLabel ?? tab.label}
             tabIndex={tabIndex}
             id={tabId}
             data-testid={`s-tab-${simplifyText(tab.label)}`}

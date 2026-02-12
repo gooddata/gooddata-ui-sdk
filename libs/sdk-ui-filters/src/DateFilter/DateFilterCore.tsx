@@ -24,6 +24,7 @@ import {
 import { Dropdown, type OverlayPositionType } from "@gooddata/sdk-ui-kit";
 
 import {
+    DATE_FILTER_ACTIVE_CALENDAR_TAB_ID,
     DATE_FILTER_CUSTOM_RELATIVE_ID,
     DATE_FILTER_CUSTOM_STATIC_ID,
     DATE_FILTER_SELECTED_LIST_ITEM_ID,
@@ -42,6 +43,7 @@ import {
 } from "./interfaces/index.js";
 import { filterVisibleDateFilterOptions, sanitizePresetIntervals } from "./utils/OptionUtils.js";
 import { applyExcludeCurrentPeriod } from "./utils/PeriodExclusion.js";
+import { getFiscalTabsConfig } from "./utils/presetFilterUtils.js";
 import { MediaQueries } from "../constants/MediaQueries.js";
 import { type IFilterButtonCustomIcon } from "../shared/interfaces/index.js";
 
@@ -128,14 +130,24 @@ const getInitialFocus = (
     selectedFilterOption: DateFilterOption,
     filterOptions: IDateFilterOptionsByType,
     improveAccessibility: boolean,
+    activeCalendars?: IActiveCalendars,
 ) => {
-    return improveAccessibility
-        ? selectedFilterOption.localIdentifier === filterOptions.relativeForm?.localIdentifier
-            ? DATE_FILTER_CUSTOM_RELATIVE_ID
-            : selectedFilterOption.localIdentifier === filterOptions.absoluteForm?.localIdentifier
-              ? DATE_FILTER_CUSTOM_STATIC_ID
-              : DATE_FILTER_SELECTED_LIST_ITEM_ID
-        : DATE_FILTER_SELECTED_LIST_ITEM_ID;
+    if (!improveAccessibility) {
+        return DATE_FILTER_SELECTED_LIST_ITEM_ID;
+    }
+
+    const { showTabs } = getFiscalTabsConfig(filterOptions.relativePreset, activeCalendars);
+    if (showTabs) {
+        return DATE_FILTER_ACTIVE_CALENDAR_TAB_ID;
+    }
+
+    if (selectedFilterOption.localIdentifier === filterOptions.relativeForm?.localIdentifier) {
+        return DATE_FILTER_CUSTOM_RELATIVE_ID;
+    }
+    if (selectedFilterOption.localIdentifier === filterOptions.absoluteForm?.localIdentifier) {
+        return DATE_FILTER_CUSTOM_STATIC_ID;
+    }
+    return DATE_FILTER_SELECTED_LIST_ITEM_ID;
 };
 
 export function DateFilterCore({
@@ -161,6 +173,7 @@ export function DateFilterCore({
     ButtonComponent,
     overlayPositionType,
     improveAccessibility = false,
+    activeCalendars,
     ...dropdownBodyProps
 }: IDateFilterCoreProps) {
     const [isConfigurationOpen, setIsConfigurationOpen] = useState(false);
@@ -219,7 +232,12 @@ export function DateFilterCore({
     );
 
     const DateFilterBodyComponent = improveAccessibility ? DateFilterBodyRedesigned : DateFilterBody;
-    const initialFocus = getInitialFocus(selectedFilterOption, filterOptions, improveAccessibility);
+    const initialFocus = getInitialFocus(
+        selectedFilterOption,
+        filterOptions,
+        improveAccessibility,
+        activeCalendars,
+    );
 
     return (
         <IntlWrapper locale={locale || "en-US"}>
@@ -304,6 +322,7 @@ export function DateFilterCore({
                                         >
                                             <DateFilterBodyComponent
                                                 {...dropdownBodyProps}
+                                                activeCalendars={activeCalendars}
                                                 {...(improveAccessibility && { id: ariaAttributes.id })}
                                                 {...(improveAccessibility && {
                                                     "aria-label": customFilterName,

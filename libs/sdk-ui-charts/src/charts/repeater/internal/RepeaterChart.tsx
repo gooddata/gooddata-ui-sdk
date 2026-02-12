@@ -165,6 +165,7 @@ export function RepeaterChart(props: IRepeaterChartProps) {
     const {
         onColumnResized,
         onGridReady: onResizingGridReady,
+        onGridSizeChanged,
         containerRef,
     } = useResizing(columnDefs, items, props);
     const {
@@ -224,6 +225,7 @@ export function RepeaterChart(props: IRepeaterChartProps) {
                     onDrillingGridReady(e);
                 }}
                 onColumnResized={onColumnResized}
+                onGridSizeChanged={onGridSizeChanged}
                 onFirstDataRendered={onFirstDataRendered}
                 suppressContextMenu
             />

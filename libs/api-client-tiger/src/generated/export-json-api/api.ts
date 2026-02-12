@@ -182,7 +182,7 @@ export interface ExportAttributeElementsByValue {
  * @type ExportAttributeFilter
  * Abstract filter definition type attributes
  */
-export type ExportAttributeFilter = ExportNegativeAttributeFilter | ExportPositiveAttributeFilter;
+export type ExportAttributeFilter = ExportMatchAttributeFilter | ExportNegativeAttributeFilter | ExportPositiveAttributeFilter;
 
 export interface ExportAttributeFilterByDate {
     'filterLocalIdentifier': string;
@@ -470,7 +470,7 @@ export interface ExportExportResponse {
  * @type ExportFilterDefinition
  * Abstract filter definition type
  */
-export type ExportFilterDefinition = ExportAbsoluteDateFilter | ExportComparisonMeasureValueFilter | ExportCompoundMeasureValueFilter | ExportInlineFilterDefinition | ExportNegativeAttributeFilter | ExportPositiveAttributeFilter | ExportRangeMeasureValueFilter | ExportRankingFilter | ExportRelativeDateFilter;
+export type ExportFilterDefinition = ExportAbsoluteDateFilter | ExportComparisonMeasureValueFilter | ExportCompoundMeasureValueFilter | ExportInlineFilterDefinition | ExportMatchAttributeFilter | ExportNegativeAttributeFilter | ExportPositiveAttributeFilter | ExportRangeMeasureValueFilter | ExportRankingFilter | ExportRelativeDateFilter;
 
 /**
  * @type ExportFilterDefinitionForSimpleMeasure
@@ -557,6 +557,37 @@ export interface ExportInlineMeasureDefinitionInline {
      */
     'maql': string;
 }
+
+/**
+ * Filter via label with given match type and literal value.
+ */
+export interface ExportMatchAttributeFilter {
+    'matchAttributeFilter': ExportMatchAttributeFilterMatchAttributeFilter;
+}
+
+export interface ExportMatchAttributeFilterMatchAttributeFilter {
+    /**
+     * Literal used to limit label values.
+     */
+    'literal': string;
+    /**
+     * Requested match type.
+     */
+    'matchType': ExportMatchAttributeFilterMatchAttributeFilterMatchTypeEnum;
+    /**
+     * Indicates whether the filter should negate the match.
+     */
+    'negate'?: boolean;
+    /**
+     * Indicates whether the filter match is evaluated in case-sensitive mode or not.
+     */
+    'caseSensitive'?: boolean;
+    'localIdentifier'?: string;
+    'applyOnResult'?: boolean;
+    'label': ExportAfmIdentifier;
+}
+
+export type ExportMatchAttributeFilterMatchAttributeFilterMatchTypeEnum = 'STARTS_WITH' | 'ENDS_WITH' | 'CONTAINS';
 
 /**
  * @type ExportMeasureDefinition

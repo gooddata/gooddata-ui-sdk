@@ -54,6 +54,17 @@ export function DateFilterBodyContentFiltered({
     const panelId = `${tabsIdBase}-panel`;
     const activeTabId = selectedTab === "fiscal" ? tabIds.fiscal : tabIds.standard;
 
+    // When the selected option is not visible (e.g. custom form or preset from the other tab),
+    // the first listbox item (AllTime) needs tabIndex={0} so the list is keyboard-reachable.
+    // Note: relies on AllTime being the first rendered item in the listbox.
+    const selectedId = selectedFilterOption.localIdentifier;
+    const isSelectedInVisibleList =
+        selectedId === filterOptions.allTime?.localIdentifier ||
+        filterOptions.absolutePreset?.some((p) => p.localIdentifier === selectedId) ||
+        Object.values(filteredRelativePreset ?? {}).some((items) =>
+            items?.some((p) => p.localIdentifier === selectedId),
+        );
+
     const listContent = (
         <>
             <AllTimeFilterSection
@@ -61,10 +72,7 @@ export function DateFilterBodyContentFiltered({
                 selectedFilterOption={selectedFilterOption}
                 onSelectedFilterOptionChange={onSelectedFilterOptionChange}
                 isMobile={isMobile}
-                isFocusFallback={
-                    selectedFilterOption.localIdentifier === filterOptions.absoluteForm?.localIdentifier ||
-                    selectedFilterOption.localIdentifier === filterOptions.relativeForm?.localIdentifier
-                }
+                isFocusFallback={!isSelectedInVisibleList}
             />
             {filterOptions.absolutePreset && filterOptions.absolutePreset.length > 0 ? (
                 <AbsolutePresetFilterItems
@@ -98,7 +106,7 @@ export function DateFilterBodyContentFiltered({
                 />
             ) : null}
             {showTabs ? (
-                <div role="tabpanel" id={panelId} aria-labelledby={activeTabId} tabIndex={0}>
+                <div role="tabpanel" id={panelId} aria-labelledby={activeTabId}>
                     <div role="listbox" aria-label={listboxLabel}>
                         {listContent}
                     </div>
