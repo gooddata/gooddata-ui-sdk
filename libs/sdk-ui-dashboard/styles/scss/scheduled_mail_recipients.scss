@@ -88,6 +88,7 @@ $input-height: 28px;
     // custom className from react-select rendered
     .gd-recipients__value-container {
         overflow-y: auto;
+        overscroll-behavior: contain;
         padding: 0;
         min-height: $input-height;
         max-height: 100px;

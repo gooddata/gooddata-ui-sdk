@@ -218,6 +218,7 @@ $gd-message-padding-vertical: 4px;
             &.on {
                 visibility: visible;
                 overflow: auto;
+                overscroll-behavior: contain;
                 height: 100%;
                 max-height: 100px;
             }

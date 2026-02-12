@@ -512,6 +512,7 @@ $subtotal-odd-background-color: var(
         .ag-floating-bottom {
             // stylelint-disable-next-line declaration-no-important
             overflow: auto !important;
+            overscroll-behavior: contain;
             border-top: none;
         }
 

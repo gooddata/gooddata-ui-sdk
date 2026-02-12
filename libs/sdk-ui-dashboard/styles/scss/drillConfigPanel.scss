@@ -60,6 +60,7 @@
     .gd-drill-item-selector-body {
         max-height: $items-visible-count * $item-height;
         overflow-y: auto;
+        overscroll-behavior: contain;
     }
 
     .gd-drill-origin-selector-separator,
@@ -508,6 +509,7 @@ $gd-gd-drill-to-url-body-width: 230px;
         max-height: 200px;
         overflow-y: auto;
         overflow-x: hidden;
+        overscroll-behavior: contain;
     }
 
     .gd-list-item {
@@ -529,6 +531,7 @@ $gd-gd-drill-to-url-body-width: 230px;
             justify-content: flex-start;
             flex-wrap: nowrap;
             overflow: auto;
+            overscroll-behavior: contain;
             padding: 4px 10px;
             white-space: nowrap;
 
@@ -650,6 +653,7 @@ $gd-gd-drill-to-url-body-width: 230px;
 
     .gd-drill-to-url-parameters {
         overflow: auto;
+        overscroll-behavior: contain;
         width: 200px;
         height: 270px;
         border: 1px solid var(--gd-palette-complementary-3-from-theme, variables.$dialog-border);

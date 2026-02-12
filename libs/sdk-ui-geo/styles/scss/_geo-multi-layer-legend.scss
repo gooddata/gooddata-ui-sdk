@@ -94,6 +94,7 @@ $legend-toggle-active-bg: var(--gd-palette-primary-base, #14b2e2);
         &--flexible {
             flex: 1 0 0;
             overflow-y: auto;
+            overscroll-behavior: contain;
         }
 
         // Border between sections (not on first)
@@ -199,6 +200,7 @@ $legend-toggle-active-bg: var(--gd-palette-primary-base, #14b2e2);
         .gd-geo-multi-layer-legend__section--scroll-enabled & {
             overflow-y: auto;
             opacity: 1;
+            overscroll-behavior: contain;
         }
 
         // Hidden layer: dimmed and desaturated content.

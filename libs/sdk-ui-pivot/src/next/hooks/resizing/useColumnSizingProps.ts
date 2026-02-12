@@ -1,10 +1,8 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useCallback } from "react";
 
-import { debounce } from "lodash-es";
-
-import { UnexpectedSdkError } from "@gooddata/sdk-ui";
+import { UnexpectedSdkError, useDebounce } from "@gooddata/sdk-ui";
 
 import { useColumnSizingDefault } from "./useColumnSizingDefault.js";
 import { useColumnSizingForAutoResize } from "./useColumnSizingForAutoResize.js";
@@ -46,8 +44,7 @@ export function useColumnSizingProps(): (agGridReactProps: AgGridProps) => AgGri
         [initColumnWidths, initSyncColumnWidths, handleManualResize],
     );
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const debouncedOnColumnResized = useCallback(debounce(onColumnResized, 250), [onColumnResized]);
+    const debouncedOnColumnResized = useDebounce(onColumnResized, 250);
 
     return useCallback(
         (agGridReactProps: AgGridProps): AgGridProps => {

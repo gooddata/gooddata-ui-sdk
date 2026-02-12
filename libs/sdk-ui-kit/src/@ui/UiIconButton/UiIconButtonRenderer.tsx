@@ -34,7 +34,7 @@ import { UiIcon } from "../UiIcon/UiIcon.js";
  */
 export interface IUiIconButtonPublicProps {
     icon: IconType;
-    iconColor?: ThemeColor;
+    iconColor?: ThemeColor | "currentColor";
     label?: string;
     size?: SizeXSmall | SizeSmall | SizeMedium | SizeLarge | SizeXLarge | SizeXXLarge;
 

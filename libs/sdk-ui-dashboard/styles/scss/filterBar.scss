@@ -116,6 +116,7 @@ $attribute-filter-drag-handle-left: 10px;
 
     &.scrollable {
         overflow-y: auto;
+        overscroll-behavior: contain;
     }
 
     .dash-filters-rows {
@@ -639,6 +640,7 @@ $attribute-filter-drag-handle-left: 10px;
         .configuration-panel__filter-view__list .configuration-category {
             margin: 10px 0 0;
             overflow: auto;
+            overscroll-behavior: contain;
         }
 
         .gd-filter-view__list {

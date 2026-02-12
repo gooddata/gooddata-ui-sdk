@@ -31,6 +31,7 @@
         min-width: 0;
 
         overflow-x: auto;
+        overscroll-behavior: contain;
         overflow-y: hidden;
         // Hide scrollbar for Firefox
         scrollbar-width: none;
@@ -224,6 +225,7 @@
         max-height: 400px;
         overflow-y: auto;
         overflow-x: hidden;
+        overscroll-behavior: contain;
         padding: 6px 0;
 
         &--mobile {

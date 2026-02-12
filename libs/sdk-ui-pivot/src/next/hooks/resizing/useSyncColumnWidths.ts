@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useCallback, useEffect, useRef } from "react";
 
@@ -33,11 +33,13 @@ export function useSyncColumnWidths() {
     const prevColumnWidths = usePrevious(columnWidths);
 
     const initialWidthByColId = useRef<Record<string, number>>({});
+    const initialFlexByColId = useRef<Record<string, number | undefined>>({});
 
     const { agGridApi } = useAgGridApi();
 
     // Ag-grid autoSizeStrategy is triggered only on initial render and cannot be triggered again,
-    // so store initial set column widths, as we want to set them back later, if they are no longer coming from the props.
+    // so store initial set column widths and flex, as we want to set them back later,
+    // if they are no longer coming from the props.
     // (e.g. undo in AD to initial state to insight without stored columnWidths)
     const initSyncColumnWidths = useCallback<AgGridOnColumnResized>(
         (params) => {
@@ -48,8 +50,9 @@ export function useSyncColumnWidths() {
             const allColumns = getAgGridColumns(params.api);
             allColumns?.forEach((column) => {
                 const colDef = column.getColDef();
-                const initialWidth = column.getActualWidth();
-                initialWidthByColId.current[colDef.colId!] = initialWidth;
+                const colId = colDef.colId!;
+                initialWidthByColId.current[colId] = column.getActualWidth();
+                initialFlexByColId.current[colId] = colDef.flex ?? undefined;
             });
         },
         [getAgGridColumns],
@@ -60,7 +63,9 @@ export function useSyncColumnWidths() {
             const allColumns = getAgGridColumns(agGridApi);
             const updatedColDefs = allColumns?.map((column) => {
                 const colDef = column.getColDef();
-                const initialWidth = initialWidthByColId.current[colDef.colId!];
+                const colId = colDef.colId!;
+                const initialWidth = initialWidthByColId.current[colId];
+                const initialFlex = initialFlexByColId.current[colId];
                 const widthItem = createColumnWidthItemForColumnDefinition(
                     colDef.context.columnDefinition,
                     initialWidth,
@@ -72,20 +77,31 @@ export function useSyncColumnWidths() {
                     ? getColumnWidthItemValue(existingWidthItem)
                     : undefined;
 
-                // If no columnWidths are provided, use the initial width.
-                if (!existingWidthItem) {
+                // Column has a persisted explicit width — apply it and clear flex.
+                if (existingWidthItem && currentColumnWidth !== undefined) {
                     return {
                         ...colDef,
                         flex: undefined,
+                        width: currentColumnWidth,
+                    };
+                }
+
+                // No persisted width (or persisted "auto") — restore to initial state.
+                // Preserve the flex layout from the growToFit strategy if it was present initially,
+                // so that non-resized columns keep their proportional sizing.
+                if (initialFlex !== undefined) {
+                    return {
+                        ...colDef,
+                        flex: initialFlex,
                         width: initialWidth,
                     };
                 }
 
-                // If columnWidths are provided, use the provided width.
+                // No flex was present initially — restore the initial fixed width.
                 return {
                     ...colDef,
                     flex: undefined,
-                    width: currentColumnWidth,
+                    width: initialWidth,
                 };
             });
 

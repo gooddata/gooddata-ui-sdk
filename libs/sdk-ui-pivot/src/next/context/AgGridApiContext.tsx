@@ -1,16 +1,13 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-import { type ReactNode, createContext, useContext, useState } from "react";
+import { type ReactNode, createContext, useContext, useMemo, useState } from "react";
 
 import { type AgGridApi } from "../types/agGrid.js";
 
+// NOTE: Keep this context **AG Grid API-only**.
 type IAgGridApiContext = {
     agGridApi: AgGridApi | null;
     setAgGridApi: (api: AgGridApi | null) => void;
-    containerWidth: number;
-    setContainerWidth: (width: number) => void;
-    autoSizeInitialized: boolean;
-    setAutoSizeInitialized: (value: boolean) => void;
 };
 
 const AgGridApiContext = createContext<IAgGridApiContext | undefined>(undefined);
@@ -20,23 +17,16 @@ const AgGridApiContext = createContext<IAgGridApiContext | undefined>(undefined)
  */
 export function AgGridApiProvider({ children }: { children: ReactNode }) {
     const [agGridApi, setAgGridApi] = useState<AgGridApi | null>(null);
-    const [containerWidth, setContainerWidth] = useState(0);
-    const [autoSizeInitialized, setAutoSizeInitialized] = useState(false);
 
-    return (
-        <AgGridApiContext.Provider
-            value={{
-                agGridApi,
-                setAgGridApi,
-                containerWidth,
-                setContainerWidth,
-                autoSizeInitialized,
-                setAutoSizeInitialized,
-            }}
-        >
-            {children}
-        </AgGridApiContext.Provider>
+    const value = useMemo<IAgGridApiContext>(
+        () => ({
+            agGridApi,
+            setAgGridApi,
+        }),
+        [agGridApi],
     );
+
+    return <AgGridApiContext.Provider value={value}>{children}</AgGridApiContext.Provider>;
 }
 
 /**

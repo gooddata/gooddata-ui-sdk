@@ -16,6 +16,7 @@
 .gd-alerts-list__items {
     padding: 10px 0 10px 0;
     overflow-y: auto;
+    overscroll-behavior: contain;
     max-height: 365px;
 
     .skeleton-flex {
@@ -197,6 +198,7 @@
 .gd-edit-alert__form {
     padding: 10px 10px 0 10px;
     overflow: auto;
+    overscroll-behavior: contain;
     flex: 1 1 auto;
     min-height: 0;
 
@@ -384,6 +386,7 @@
 .gd-alert-attribute-select__menu-item__values {
     max-height: 375px;
     overflow-y: auto;
+    overscroll-behavior: contain;
 }
 
 .gd-alert-attribute-select__submenu {

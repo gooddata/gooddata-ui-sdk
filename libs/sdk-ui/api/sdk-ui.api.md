@@ -9,6 +9,7 @@ import { AuthenticationFlow } from '@gooddata/sdk-backend-spi';
 import { ComponentClass } from 'react';
 import { ComponentType } from 'react';
 import { DataValue } from '@gooddata/sdk-model';
+import { DebouncedFunc } from 'lodash-es';
 import { DependencyList } from 'react';
 import { Dispatch } from 'react';
 import { FC } from 'react';
@@ -2438,6 +2439,9 @@ export type UseDataExportCallbacks = UseCancelablePromiseCallbacks<string, GoodD
 
 // @public
 export type UseDataExportState = UseCancelablePromiseState<string, GoodDataSdkError>;
+
+// @internal
+export function useDebounce<T extends (...args: Parameters<T>) => void>(callback: T, delay: number): DebouncedFunc<(...args: Parameters<T>) => void>;
 
 // @internal
 export const useDebouncedState: <T>(initialValue: T, delay: number) => UseDebouncedStateOutput<T>;

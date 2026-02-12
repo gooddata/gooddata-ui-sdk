@@ -9,6 +9,7 @@
     max-height: 300px;
     overflow-y: auto;
     overflow-x: hidden;
+    overscroll-behavior: contain;
     width: 100%;
     min-width: 200px;
     padding: 6px 0;

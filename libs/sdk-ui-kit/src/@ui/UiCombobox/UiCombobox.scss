@@ -81,6 +81,7 @@
         max-height: 280px;
         overflow-y: auto;
         overflow-x: hidden;
+        overscroll-behavior: contain;
     }
 
     &__item {

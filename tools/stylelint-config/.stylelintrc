@@ -2,11 +2,16 @@
     "extends": "stylelint-config-standard",
     "plugins": [
         "stylelint-order",
-        "stylelint-scss"
+        "stylelint-scss",
+        "stylelint-plugin-defensive-css"
     ],
     "customSyntax": "postcss-scss",
     "rules": {
         "declaration-block-no-duplicate-properties": null,
+        "defensive-css/require-overscroll-behavior": [true, {
+            "x": [true, { "severity": "error" }],
+            "y": [true, { "severity": "error" }]
+        }],
         "declaration-no-important": true,
         "function-url-quotes": "always",
         "max-nesting-depth": 3,

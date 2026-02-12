@@ -411,6 +411,8 @@ export class PluggablePivotTableNext extends AbstractPluggableVisualization {
             measureGroupDimension,
             columnHeadersPosition,
             columnSizing: {
+                // Use effective insight properties from the current render payload.
+                // In dashboards, widget-level properties are already merged into `insight`.
                 columnWidths: getColumnWidthsFromProperties(insightProperties(insight)),
                 defaultWidth: "autoresizeAll",
                 growToFit,

@@ -144,6 +144,7 @@ $gd-dashboards-navigation-item-selectedBackgroundColor: var(
 .grouped-navigation-list {
     flex: 1 1 auto;
     overflow: auto;
+    overscroll-behavior: contain;
     margin: 0;
     padding: 8px 0;
     list-style-type: none;
@@ -321,6 +322,7 @@ $dashboard-group-height: 45px;
     display: flex;
     flex-direction: column;
     overflow: auto;
+    overscroll-behavior: contain;
     height: 100%;
 
     &.grouped-mobile-navigation-dropdown--has-subgroups {

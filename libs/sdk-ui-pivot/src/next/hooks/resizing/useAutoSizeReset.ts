@@ -1,10 +1,10 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useEffect, useRef } from "react";
 
-import { useAgGridApi } from "../../context/AgGridApiContext.js";
 import { useColumnDefs } from "../../context/ColumnDefsContext.js";
 import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
+import { usePivotTableSizing } from "../../context/PivotTableSizingContext.js";
 
 const CONTAINER_WIDTH_CHANGE_THRESHOLD_PX = 50;
 const RESIZE_TOLERANCE_PX = 10;
@@ -34,11 +34,12 @@ export interface IAutoSizeResetResult {
  */
 export function useAutoSizeReset(): IAutoSizeResetResult {
     const { config } = usePivotTableProps();
-    const { containerWidth, autoSizeInitialized, setAutoSizeInitialized } = useAgGridApi();
+    const { containerWidth, autoSizeInitialized, setAutoSizeInitialized } = usePivotTableSizing();
     const { columnDefsFlat } = useColumnDefs();
 
     const enablePivotTableAutoSizeReset = config.enablePivotTableAutoSizeReset ?? true;
     const prevContainerWidthRef = useRef(containerWidth);
+    const prevColumnDefsFlatRef = useRef(columnDefsFlat);
 
     // Always reset when column structure changes (original behavior)
     // Skip if new behavior is enabled (it will be handled by columnDefsFlat dependency in the second effect)
@@ -63,8 +64,13 @@ export function useAutoSizeReset(): IAutoSizeResetResult {
             prevContainerWidthRef.current = containerWidth;
         }
 
+        const columnDefsChanged = prevColumnDefsFlatRef.current !== columnDefsFlat;
+        if (columnDefsChanged) {
+            prevColumnDefsFlatRef.current = columnDefsFlat;
+        }
+
         // Reset on either container width change or column structure change
-        if (containerWidthChanged || columnDefsFlat) {
+        if (containerWidthChanged || columnDefsChanged) {
             setAutoSizeInitialized(false);
         }
     }, [containerWidth, columnDefsFlat, setAutoSizeInitialized, enablePivotTableAutoSizeReset]);

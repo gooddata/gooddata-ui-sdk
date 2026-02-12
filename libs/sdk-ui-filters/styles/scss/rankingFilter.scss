@@ -111,6 +111,7 @@ $measure_dropdown_width: $ranking_filter_dropdown_width - 20px;
     width: $attribute_dropdown_width;
     max-height: $dropdown_max_height;
     overflow-x: auto;
+    overscroll-behavior: contain;
 
     .gd-button-link {
         width: 100%;
@@ -150,6 +151,7 @@ $measure_dropdown_width: $ranking_filter_dropdown_width - 20px;
     width: $measure_dropdown_width;
     max-height: $dropdown_max_height;
     overflow-x: auto;
+    overscroll-behavior: contain;
 
     .gd-button-link {
         display: flex;

@@ -74,6 +74,26 @@
         }
     }
 
+    &__type-icon-wrapper {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        &--type {
+            &-date {
+                color: variables.$gd-color-object-type-date;
+            }
+
+            &-attribute {
+                color: variables.$gd-color-object-type-attribute;
+            }
+
+            &-metric {
+                color: variables.$gd-color-object-type-metric;
+            }
+        }
+    }
+
     &__list {
         display: flex;
         flex-direction: column;

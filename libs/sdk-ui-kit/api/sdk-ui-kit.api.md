@@ -6222,7 +6222,7 @@ export interface IUiIconButtonPublicProps {
     // (undocumented)
     icon: IconType;
     // (undocumented)
-    iconColor?: ThemeColor;
+    iconColor?: ThemeColor | "currentColor";
     // (undocumented)
     id?: string;
     // (undocumented)

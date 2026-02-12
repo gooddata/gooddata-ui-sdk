@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     type CSSProperties,
@@ -21,13 +21,14 @@ import { AvoidResizeFlickering } from "./components/AvoidResizeFlickering.js";
 import { ErrorComponent } from "./components/ErrorComponent.js";
 import { LoadingComponent } from "./components/LoadingComponent.js";
 import { OVERLAY_CONTROLLER_Z_INDEX } from "./constants/internal.js";
-import { AgGridApiProvider, useAgGridApi } from "./context/AgGridApiContext.js";
+import { AgGridApiProvider } from "./context/AgGridApiContext.js";
 import { ColumnDefsProvider } from "./context/ColumnDefsContext.js";
 import { CurrentDataViewProvider } from "./context/CurrentDataViewContext.js";
 import { DrillableItemsRefProvider } from "./context/DrillableItemsRefContext.js";
 import { HeaderMenuProvider } from "./context/HeaderMenuContext.js";
 import { InitialExecutionContextProvider } from "./context/InitialExecutionContext.js";
 import { PivotTablePropsProvider, usePivotTableProps } from "./context/PivotTablePropsContext.js";
+import { PivotTableSizingProvider, usePivotTableSizing } from "./context/PivotTableSizingContext.js";
 import { RuntimeErrorProvider, useRuntimeError } from "./context/RuntimeErrorContext.js";
 import { TableReadyProvider } from "./context/TableReadyContext.js";
 import { b } from "./features/styling/bem.js";
@@ -76,19 +77,21 @@ export function PivotTableNext(props: IPivotTableNextProps) {
 export function PivotTableNextImplementation(props: ICorePivotTableNextProps) {
     return (
         <AgGridApiProvider>
-            <PivotTablePropsProvider {...props}>
-                <RuntimeErrorProvider>
-                    <CurrentDataViewProvider>
-                        <IntlWrapper locale={props.locale}>
-                            <ThemeContextProvider theme={props.theme || {}} themeIsLoading={false}>
-                                <OverlayControllerProvider overlayController={pivotOverlayController}>
-                                    <PivotTableNextWithInitialization />
-                                </OverlayControllerProvider>
-                            </ThemeContextProvider>
-                        </IntlWrapper>
-                    </CurrentDataViewProvider>
-                </RuntimeErrorProvider>
-            </PivotTablePropsProvider>
+            <PivotTableSizingProvider>
+                <PivotTablePropsProvider {...props}>
+                    <RuntimeErrorProvider>
+                        <CurrentDataViewProvider>
+                            <IntlWrapper locale={props.locale}>
+                                <ThemeContextProvider theme={props.theme || {}} themeIsLoading={false}>
+                                    <OverlayControllerProvider overlayController={pivotOverlayController}>
+                                        <PivotTableNextWithInitialization />
+                                    </OverlayControllerProvider>
+                                </ThemeContextProvider>
+                            </IntlWrapper>
+                        </CurrentDataViewProvider>
+                    </RuntimeErrorProvider>
+                </PivotTablePropsProvider>
+            </PivotTableSizingProvider>
         </AgGridApiProvider>
     );
 }
@@ -138,7 +141,7 @@ function PivotTableNextWithInitialization() {
 function RenderPivotTableNextAgGrid() {
     const agGridReactProps = useAgGridReactProps();
     const { config } = usePivotTableProps();
-    const { setContainerWidth } = useAgGridApi();
+    const { setContainerWidth } = usePivotTableSizing();
     const clearCellSelection = useClearCellSelection();
 
     useMemo(() => {

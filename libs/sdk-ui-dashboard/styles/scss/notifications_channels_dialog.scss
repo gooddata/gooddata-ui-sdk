@@ -24,6 +24,7 @@ $min-content-height: 110px;
     .gd-notifications-channels-dialog-overlay {
         overflow-y: auto;
         overflow-x: hidden;
+        overscroll-behavior: contain;
         max-height: 99vh;
     }
 }
@@ -77,6 +78,7 @@ $min-content-height: 110px;
 .gd-notifications-channels-dialog-overlay.truncated {
     overflow-y: auto;
     overflow-x: hidden;
+    overscroll-behavior: contain;
 }
 
 .gd-dialog:not(.gd-dropdown).gd-notifications-channels-dialog {
@@ -332,6 +334,7 @@ $min-content-height: 110px;
             margin-left: 6px;
             max-height: 180px;
             overflow-y: auto;
+            overscroll-behavior: contain;
             margin-right: -10px;
         }
 
@@ -434,6 +437,7 @@ $min-content-height: 110px;
         min-height: 143px;
         max-height: 475px;
         overflow-y: auto;
+        overscroll-behavior: contain;
 
         @media #{kit-variables.$small-only} {
             max-height: none;
@@ -764,6 +768,7 @@ $min-content-height: 110px;
     width: 100%;
     overflow-y: auto;
     overflow-x: hidden;
+    overscroll-behavior: contain;
 
     @media #{kit-variables.$small-only} {
         height: inherit;
@@ -865,6 +870,7 @@ $min-content-height: 110px;
 .gd-notifications-channels-dialog-error {
     max-height: 70px;
     overflow: auto;
+    overscroll-behavior: contain;
     margin-bottom: $vertical-space;
 }
 

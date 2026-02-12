@@ -39,6 +39,7 @@
     .gd-drill-modal-picker-body {
         max-height: 160px;
         overflow-y: auto;
+        overscroll-behavior: contain;
         padding: 0 0 10px 0;
     }
 

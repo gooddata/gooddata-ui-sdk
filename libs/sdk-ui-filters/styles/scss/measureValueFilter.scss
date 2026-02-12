@@ -149,6 +149,7 @@ $mvf-condition-action-gap: 10px;
 .gd-mvf-conditions-scroll-container {
     max-height: 322px;
     overflow-y: auto;
+    overscroll-behavior: contain;
 }
 
 .gd-mvf-conditions-joiner {
@@ -230,6 +231,7 @@ $mvf-condition-action-gap: 10px;
     gap: 5px;
     max-height: 350px;
     overflow-y: auto;
+    overscroll-behavior: contain;
 }
 
 .gd-mvf-dimensionality-reset-button {

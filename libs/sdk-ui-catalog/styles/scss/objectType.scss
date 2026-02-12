@@ -1,5 +1,7 @@
 // (C) 2024-2025 GoodData Corporation
 
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
 .gd-analytics-catalog__object-type {
     &[data-object-type="analyticalDashboard"] {
         --catalog-object-type-icon-color: var(--gd-palette-complementary-6);
@@ -10,15 +12,15 @@
     }
 
     &[data-object-type="dataSet"] {
-        --catalog-object-type-icon-color: #14b2e2;
+        --catalog-object-type-icon-color: kit-variables.$gd-color-object-type-date;
     }
 
     &[data-object-type="measure"],
     &[data-object-type="fact"] {
-        --catalog-object-type-icon-color: #00c18d;
+        --catalog-object-type-icon-color: kit-variables.$gd-color-object-type-metric;
     }
 
     &[data-object-type="attribute"] {
-        --catalog-object-type-icon-color: #f18600;
+        --catalog-object-type-icon-color: kit-variables.$gd-color-object-type-attribute;
     }
 }

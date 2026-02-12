@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/stylelint-config",
-    "version": "11.20.0-alpha.3",
+    "version": "11.20.0-alpha.4",
     "description": "GoodData CSS Style Guide",
     "keywords": [
         "config",
@@ -24,6 +24,7 @@
         "stylelint": "^16.26.1",
         "stylelint-config-standard": "^38.0.0",
         "stylelint-order": "^6.0.4",
+        "stylelint-plugin-defensive-css": "^2.4.2",
         "stylelint-scss": "^6.12.0"
     },
     "engines": {

@@ -29,6 +29,7 @@
     .gd-infinite-list {
         max-height: 350px;
         overflow: auto;
+        overscroll-behavior: contain;
         margin: 6px 0 10px;
     }
 

@@ -1,5 +1,7 @@
 // (C) 2025 GoodData Corporation
 
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
 @keyframes gd-kda-dialog-enter-minimized {
     0% {
         opacity: 0;
@@ -285,7 +287,7 @@
             max-width: 300px;
 
             svg.gd-ui-kit-icon {
-                fill: #00c18d;
+                fill: kit-variables.$gd-color-object-type-metric;
             }
         }
 
@@ -859,6 +861,7 @@
                 font-weight: 400;
                 line-height: 18px;
                 overflow: auto;
+                overscroll-behavior: contain;
                 white-space: normal;
                 word-break: break-word;
             }
