@@ -11,6 +11,7 @@
 .configuration-scrollable-panel {
     width: 100%;
     overflow: auto;
+    overscroll-behavior: contain;
 }
 
 .configuration-panel {
@@ -40,6 +41,7 @@
     .gd-rich-text-insight-description {
         height: 85px;
         overflow: auto;
+        overscroll-behavior: contain;
 
         textarea {
             font-weight: 400;
@@ -106,6 +108,7 @@
             max-height: variables.$gd-configuration-bubble-height;
             overflow-x: hidden;
             overflow-y: auto;
+            overscroll-behavior: contain;
             padding: 0;
         }
 

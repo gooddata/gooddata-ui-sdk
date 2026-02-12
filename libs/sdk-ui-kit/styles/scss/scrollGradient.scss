@@ -28,6 +28,7 @@
         flex: 1 1 auto;
         overflow-y: auto;
         overflow-x: hidden;
+        overscroll-behavior: contain;
         flex-direction: column;
 
         &::before {

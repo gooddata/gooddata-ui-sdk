@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     type IInsightDefinition,
@@ -99,8 +99,13 @@ const widthItemLocatorsHaveProperLength = (
     const locatorsAreEmpty = hasNotMeasureLocators && widthItemLocatorsHasLengthAsColumnAttributesLength;
 
     const locatorsHavePropertLength = hasWidthItemLocators && (locatorsMatchesLength || locatorsAreEmpty);
+    // For transposed pivot tables (measures in rows), child value columns can legitimately
+    // produce measureColumnWidthItem without explicit measure locators. In that case the width
+    // should apply to all measures for the given column-attribute path.
     const transposedLocatorsHavePropertLength =
-        hasWidthItemLocators && widthItemLocatorsLength === measuresCount + columnAttributesCount;
+        hasWidthItemLocators &&
+        (widthItemLocatorsLength === measuresCount + columnAttributesCount ||
+            widthItemLocatorsLength === columnAttributesCount);
 
     return measureGroupDimension === "rows" ? transposedLocatorsHavePropertLength : locatorsHavePropertLength;
 };

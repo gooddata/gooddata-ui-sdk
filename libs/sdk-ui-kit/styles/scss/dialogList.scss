@@ -72,6 +72,7 @@
     padding-right: 20px;
     min-height: 40px;
     overflow: auto;
+    overscroll-behavior: contain;
 }
 
 .gd-dialog-list-item-basic {

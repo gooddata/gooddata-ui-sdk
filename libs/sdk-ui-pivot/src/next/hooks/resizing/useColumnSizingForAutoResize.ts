@@ -1,10 +1,10 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useCallback, useEffect } from "react";
 
-import { useAgGridApi } from "../../context/AgGridApiContext.js";
 import { useColumnDefs } from "../../context/ColumnDefsContext.js";
 import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
+import { usePivotTableSizing } from "../../context/PivotTableSizingContext.js";
 import { type AgGridColumnDef, type AgGridOnColumnResized, type AgGridProps } from "../../types/agGrid.js";
 import { useGetAgGridColumns } from "../columns/useGetAgGridColumns.js";
 import { useUpdateAgGridColumnDefs } from "../columns/useUpdateAgGridColumnDefs.js";
@@ -27,7 +27,7 @@ export function useColumnSizingForAutoResize() {
     const shouldFillFullHorizontalSpace = growToFit ?? false;
     const isColumnSizingForAutoResize = shouldAdaptSizeToCellContent && !shouldFillFullHorizontalSpace;
 
-    const { autoSizeInitialized, setAutoSizeInitialized } = useAgGridApi();
+    const { autoSizeInitialized, setAutoSizeInitialized } = usePivotTableSizing();
     const { columnDefsFlat } = useColumnDefs();
     const getAgGridColumns = useGetAgGridColumns();
     const updateAgGridColumnDefs = useUpdateAgGridColumnDefs();

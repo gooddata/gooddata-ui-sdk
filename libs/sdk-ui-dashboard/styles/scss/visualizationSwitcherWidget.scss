@@ -7,6 +7,7 @@
     height: 100%;
     overflow-x: hidden;
     overflow-y: auto;
+    overscroll-behavior: contain;
     display: flex;
     flex: 1 1 auto;
     flex-direction: column;

@@ -20,6 +20,7 @@ $description-width-mobile: 320px;
     flex-direction: column;
     overflow-x: hidden;
     overflow-y: auto;
+    overscroll-behavior: contain;
     max-width: 100vw;
     // "(1vw + 1vh - 1vmin)" is substitute for vmax that is unsupported by MSIE11
     width: calc(100vw - 10 * (1vw + 1vh - 1vmin));
@@ -269,6 +270,7 @@ $description-width-mobile: 320px;
     flex-shrink: 0;
     overflow: hidden;
     overflow-y: auto;
+    overscroll-behavior: contain;
     transition: width 0.3s ease-in-out;
     position: relative;
 

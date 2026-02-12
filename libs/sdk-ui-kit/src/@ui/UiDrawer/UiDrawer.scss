@@ -93,6 +93,7 @@
         #{$root}__scrollable {
             padding: 10px 15px;
             overflow: auto;
+            overscroll-behavior: contain;
             height: calc(100% - 20px);
         }
     }

@@ -37,6 +37,7 @@
     .gd-flex-item-stretch#{$type} {
         flex: 1 1 auto;
         overflow-y: auto;
+        overscroll-behavior: contain;
     }
 }
 

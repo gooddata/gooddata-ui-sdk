@@ -71,6 +71,7 @@
         flex-direction: column;
         gap: 15px;
         overflow: auto;
+        overscroll-behavior: contain;
         padding: 0 15px;
     }
 }

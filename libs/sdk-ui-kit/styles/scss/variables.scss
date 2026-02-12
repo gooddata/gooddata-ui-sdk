@@ -13,6 +13,12 @@ $gd-color-negative: #e54d42;
 $gd-color-warning: #f18600;
 $gd-color-warning-text: #f18600; //FIXME: Remove once nowhere used
 
+// fixed object-type/icon colors (do not theme)
+// keep in sync with catalog object type icon colors
+$gd-color-object-type-date: $gd-color-highlight;
+$gd-color-object-type-attribute: $gd-color-warning;
+$gd-color-object-type-metric: $gd-color-positive;
+
 // gray colors
 $default-gd-color-white: #fff;
 $gd-color-white: var(--gd-palette-complementary-0, $default-gd-color-white);

@@ -11,6 +11,7 @@
 
     flex: 1;
     overflow-y: auto;
+    overscroll-behavior: contain;
     display: flex;
     justify-content: center;
 
@@ -333,7 +334,7 @@
         align-items: baseline;
         flex-direction: row;
         gap: 5px;
-        color: #00c18d;
+        color: kit-variables.$gd-color-object-type-metric;
 
         svg {
             position: relative;
@@ -361,6 +362,7 @@
         border-radius: 8px;
         overflow-x: hidden;
         overflow-y: auto;
+        overscroll-behavior: contain;
         margin: 0;
     }
 }

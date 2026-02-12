@@ -54,6 +54,7 @@
     max-height: 375px;
     overflow-y: auto;
     overflow-x: hidden;
+    overscroll-behavior: contain;
 
     &:focus-visible {
         @include mixins.focus-ring;

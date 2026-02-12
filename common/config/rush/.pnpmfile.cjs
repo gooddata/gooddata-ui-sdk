@@ -66,5 +66,11 @@ function readPackage(packageJson, context) {
         packageJson.devDependencies["baseline-browser-mapping"] = baselineBrowserMappingVersion;
     }
 
+    // remove after eslint-plugin-sonarjs is updated to > 3.0.7
+    if (packageJson.dependencies && packageJson.dependencies["minimatch"]) {
+        context.log("Fixed up dependencies for minimatch");
+        packageJson.dependencies["minimatch"] = "10.1.2";
+    }
+
     return packageJson;
 }

@@ -437,6 +437,7 @@ $dialog-background: kit-variables.$is-focused-background;
 
     .filter-section-content {
         overflow: auto;
+        overscroll-behavior: contain;
         max-height: 117px;
         margin: 5px 0;
         font-size: 14px;

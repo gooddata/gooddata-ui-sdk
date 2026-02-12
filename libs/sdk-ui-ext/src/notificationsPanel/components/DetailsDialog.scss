@@ -41,6 +41,7 @@
         padding: 10px;
         max-height: 350px;
         overflow: auto;
+        overscroll-behavior: contain;
     }
 
     &__footer {

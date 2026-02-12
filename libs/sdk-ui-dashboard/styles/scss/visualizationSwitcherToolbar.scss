@@ -124,6 +124,7 @@
     .visualizations-list {
         max-height: 253px;
         overflow-y: auto;
+        overscroll-behavior: contain;
     }
 
     .horizontal-divider {

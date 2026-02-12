@@ -129,6 +129,7 @@ $menu-item-icon-width: 30px;
         position: relative;
         width: 100%;
         overflow-y: auto;
+        overscroll-behavior: contain;
         -webkit-overflow-scrolling: touch;
     }
 }

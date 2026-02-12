@@ -8,7 +8,6 @@ import { type CatalogItemListboxItem, type ICatalogItemPickerListItemData } from
 import { testIds } from "./messages.js";
 import { type CatalogItemPickerType } from "./types.js";
 import type { IconType } from "../@ui/@types/icon.js";
-import { type ThemeColor } from "../@ui/@types/themeColors.js";
 import { bem } from "../@ui/@utils/bem.js";
 import { UiButton } from "../@ui/UiButton/UiButton.js";
 import { UiButtonSegmentedControl } from "../@ui/UiButtonSegmentedControl/UiButtonSegmentedControl.js";
@@ -27,16 +26,16 @@ import { Input } from "../Form/Input.js";
 const { e } = bem("gd-ui-kit-catalog-item-picker");
 
 /**
- * Returns icon type and color for a catalog item type.
+ * Returns icon type for a catalog item type.
  */
-export function getTypeIcon(type: CatalogItemPickerType): { icon: IconType; color: ThemeColor } {
+export function getTypeIcon(type: CatalogItemPickerType): { icon: IconType } {
     switch (type) {
         case "metric":
-            return { icon: "metric", color: "success" };
+            return { icon: "metric" };
         case "date":
-            return { icon: "date", color: "primary" };
+            return { icon: "date" };
         default:
-            return { icon: "ldmAttribute", color: "warning" };
+            return { icon: "ldmAttribute" };
     }
 }
 
@@ -135,21 +134,22 @@ export function CatalogItemPickerTabs({
         <div className={e("type-filter", { variant })} data-testid={testIds.typeFilter}>
             <UiButtonSegmentedControl layout="fill">
                 {itemTypes.map((type, index) => {
-                    const { icon, color } = getTypeIcon(type);
+                    const { icon } = getTypeIcon(type);
                     return (
-                        <UiIconButton
-                            key={type}
-                            icon={icon}
-                            iconColor={color}
-                            size="small"
-                            variant="secondary"
-                            isActive={effectiveType === type}
-                            onClick={() => onChange(type)}
-                            accessibilityConfig={{
-                                ariaLabel: getAriaLabel(type),
-                            }}
-                            dataTestId={`${testIds.tab}-${index}`}
-                        />
+                        <span key={type} className={e("type-icon-wrapper", { type })}>
+                            <UiIconButton
+                                icon={icon}
+                                iconColor="currentColor"
+                                size="small"
+                                variant="secondary"
+                                isActive={effectiveType === type}
+                                onClick={() => onChange(type)}
+                                accessibilityConfig={{
+                                    ariaLabel: getAriaLabel(type),
+                                }}
+                                dataTestId={`${testIds.tab}-${index}`}
+                            />
+                        </span>
                     );
                 })}
             </UiButtonSegmentedControl>
@@ -171,7 +171,7 @@ function CatalogItemPickerItemComponent<TPayload>({
     variant: "mvf" | "addFilter";
 }): ReactNode {
     const { item: pickerItem, isSelected } = item.data;
-    const { icon, color } = getTypeIcon(pickerItem.type);
+    const { icon } = getTypeIcon(pickerItem.type);
 
     return (
         <div
@@ -196,7 +196,9 @@ function CatalogItemPickerItemComponent<TPayload>({
                     }}
                 />
             </span>
-            <UiIcon type={icon} size={16} color={color} />
+            <span className={e("type-icon-wrapper", { type: pickerItem.type })}>
+                <UiIcon type={icon} size={16} color="currentColor" />
+            </span>
             <span className={e("item-title")}>{pickerItem.title}</span>
             {pickerItem.sequenceNumber ? (
                 <span className={e("item-sequence")}>{pickerItem.sequenceNumber}</span>
@@ -214,7 +216,7 @@ function CatalogItemPickerSingleSelectItem({
 }: IUiListboxInteractiveItemProps<ICatalogItemPickerListItemData> & {
     variant: "mvf" | "addFilter";
 }): ReactNode {
-    const { icon, color } = getTypeIcon(item.data.item.type);
+    const { icon } = getTypeIcon(item.data.item.type);
     return (
         <div
             className={cx("gd-ui-kit-listbox__item", e("item", { isSelected: false, variant }), {
@@ -223,7 +225,9 @@ function CatalogItemPickerSingleSelectItem({
             })}
             onClick={onSelect}
         >
-            <UiIcon type={icon} size={16} color={color} />
+            <span className={e("type-icon-wrapper", { type: item.data.item.type })}>
+                <UiIcon type={icon} size={16} color="currentColor" />
+            </span>
             <span className={e("item-title")}>{item.data.item.title}</span>
             {item.data.item.sequenceNumber ? (
                 <span className={e("item-sequence")}>{item.data.item.sequenceNumber}</span>

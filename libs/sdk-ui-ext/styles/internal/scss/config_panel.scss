@@ -64,6 +64,7 @@ $color-picker-spacing: 5px;
     display: flex;
     flex-wrap: wrap;
     overflow: scroll;
+    overscroll-behavior: contain;
     width: 160px;
     height: 138px;
 }
@@ -187,7 +188,7 @@ $color-picker-spacing: 5px;
         gap: 5px;
 
         svg path {
-            fill: #00c18d;
+            fill: kit-variables.$gd-color-object-type-metric;
         }
     }
 }
@@ -326,6 +327,7 @@ $color-picker-spacing: 5px;
         width: 200px;
         max-height: 320px;
         overflow: auto;
+        overscroll-behavior: contain;
         border-left: 1px solid kit-variables.$gd-border-color;
         color: kit-variables.$gd-color-text;
         padding: 0 5px;

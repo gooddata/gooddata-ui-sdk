@@ -91,7 +91,7 @@ export {
     useBackendWithCorrelation,
     BackendProviderWithCorrelation,
 } from "./base/react/CorrelationContext.js";
-export { useDebouncedState, type UseDebouncedStateOutput } from "./base/react/debounce.js";
+export { useDebouncedState, useDebounce, type UseDebouncedStateOutput } from "./base/react/debounce.js";
 export {
     type IWorkspaceProviderProps,
     WorkspaceProvider,
