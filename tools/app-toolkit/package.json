@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/app-toolkit",
-    "version": "11.20.0-alpha.4",
+    "version": "11.21.0-alpha.0",
     "description": "CLI with useful tools for creating and maintaining GoodData web applications.",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData",

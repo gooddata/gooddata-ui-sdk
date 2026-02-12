@@ -2,6 +2,63 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.20.0",
+            "tag": "@gooddata/sdk-ui-all_v11.20.0",
+            "date": "Thu, 12 Feb 2026 08:00:41 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "Remove the last-child dependency so the show-all button is placed consistently and hidden only on small screens."
+                    },
+                    {
+                        "comment": "sdk-ui-all: brace-expansion vulnerability fix"
+                    },
+                    {
+                        "comment": "sdk-ui: Add a React hook `useDebounce` that returns a stable debounced callback function."
+                    },
+                    {
+                        "comment": "sdk-ui-pivot: Fix Pivot Table column width not persisting correctly."
+                    },
+                    {
+                        "comment": "Upgrade @gooddata/fixtures@3.3.11"
+                    },
+                    {
+                        "comment": "sdk-ui-kit: added component for breadcrumb"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: redesign of KDA dialog"
+                    },
+                    {
+                        "comment": "sdk-ui-kit: breadcrumb component redesign"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: new alert trigger mode and interval duration selector in alerts"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: autocomplete in chatbot is clipped in additional description"
+                    },
+                    {
+                        "comment": "sdk-ui-all: prevent parent scroll when child scrollable area reaches end"
+                    },
+                    {
+                        "comment": "sdk-backend-all: Change getSettings to resolved API"
+                    },
+                    {
+                        "comment": "feat(sdk-backend-tiger): Decouple sdk-model and tiger types."
+                    },
+                    {
+                        "comment": "Fix implicit drill to url default setting logic and AD save button enabling logic"
+                    },
+                    {
+                        "comment": "sdk-ui-filters: Defer MVF dimensionality catalog loading until picker opens and optimize catalog item picker data loading to not fail on too large requests"
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Introduce SCSS variables with hardcoded colors for catalog item types icons and use them instead of hardcoded colors everywhere in the code across our libs and apps."
+                    }
+                ]
+            }
+        },
+        {
             "version": "11.19.0",
             "tag": "@gooddata/sdk-ui-all_v11.19.0",
             "date": "Fri, 06 Feb 2026 10:30:03 GMT",
