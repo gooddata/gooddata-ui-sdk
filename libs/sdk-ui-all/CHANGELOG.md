@@ -1,6 +1,19 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 12 Feb 2026 08:00:41 GMT and should not be manually modified.
+This log was last generated on Thu, 12 Feb 2026 18:33:21 GMT and should not be manually modified.
+
+## 11.21.0
+
+Thu, 12 Feb 2026 18:33:21 GMT
+
+### Updates
+
+- sdk-ui-filters: Accessible date filter with calendar tabs.
+- sdk-ui-charts: Fix `Repeater` `growToFit` sizing.
+- sdk-ui-gen-ai: accessibility repair on visualization menu
+- api-client-tiger: Introduce new type of attribute filter.
+- sdk-ui-pivot: Fix conditional formatting for null values.
+- sdk-ui-ext: Persist grand total position.
 
 ## 11.20.0
 

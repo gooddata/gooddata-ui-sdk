@@ -2,6 +2,33 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.21.0",
+            "tag": "@gooddata/sdk-ui-all_v11.21.0",
+            "date": "Thu, 12 Feb 2026 18:33:21 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "sdk-ui-filters: Accessible date filter with calendar tabs."
+                    },
+                    {
+                        "comment": "sdk-ui-charts: Fix `Repeater` `growToFit` sizing."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: accessibility repair on visualization menu"
+                    },
+                    {
+                        "comment": "api-client-tiger: Introduce new type of attribute filter."
+                    },
+                    {
+                        "comment": "sdk-ui-pivot: Fix conditional formatting for null values."
+                    },
+                    {
+                        "comment": "sdk-ui-ext: Persist grand total position."
+                    }
+                ]
+            }
+        },
+        {
             "version": "11.20.0",
             "tag": "@gooddata/sdk-ui-all_v11.20.0",
             "date": "Thu, 12 Feb 2026 08:00:41 GMT",

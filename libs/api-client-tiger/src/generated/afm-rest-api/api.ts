@@ -312,7 +312,7 @@ export interface AttributeExecutionResultHeader {
  * @type AttributeFilter
  * Abstract filter definition type attributes
  */
-export type AttributeFilter = NegativeAttributeFilter | PositiveAttributeFilter;
+export type AttributeFilter = MatchAttributeFilter | NegativeAttributeFilter | PositiveAttributeFilter;
 
 /**
  * Filter on specific set of label values.
@@ -1214,7 +1214,7 @@ export type FilterByLabelTypeEnum = 'PRIMARY' | 'REQUESTED';
  * @type FilterDefinition
  * Abstract filter definition type
  */
-export type FilterDefinition = AbsoluteDateFilter | ComparisonMeasureValueFilter | CompoundMeasureValueFilter | InlineFilterDefinition | NegativeAttributeFilter | PositiveAttributeFilter | RangeMeasureValueFilter | RankingFilter | RelativeDateFilter;
+export type FilterDefinition = AbsoluteDateFilter | ComparisonMeasureValueFilter | CompoundMeasureValueFilter | InlineFilterDefinition | MatchAttributeFilter | NegativeAttributeFilter | PositiveAttributeFilter | RangeMeasureValueFilter | RankingFilter | RelativeDateFilter;
 
 /**
  * @type FilterDefinitionForSimpleMeasure
@@ -1376,6 +1376,37 @@ export interface KeyDriversResponse {
 export interface KeyDriversResult {
     'data': object;
 }
+
+/**
+ * Filter via label with given match type and literal value.
+ */
+export interface MatchAttributeFilter {
+    'matchAttributeFilter': MatchAttributeFilterMatchAttributeFilter;
+}
+
+export interface MatchAttributeFilterMatchAttributeFilter {
+    /**
+     * Literal used to limit label values.
+     */
+    'literal': string;
+    /**
+     * Requested match type.
+     */
+    'matchType': MatchAttributeFilterMatchAttributeFilterMatchTypeEnum;
+    /**
+     * Indicates whether the filter should negate the match.
+     */
+    'negate'?: boolean;
+    /**
+     * Indicates whether the filter match is evaluated in case-sensitive mode or not.
+     */
+    'caseSensitive'?: boolean;
+    'localIdentifier'?: string;
+    'applyOnResult'?: boolean;
+    'label': AfmIdentifier;
+}
+
+export type MatchAttributeFilterMatchAttributeFilterMatchTypeEnum = 'STARTS_WITH' | 'ENDS_WITH' | 'CONTAINS';
 
 /**
  * @type MeasureDefinition

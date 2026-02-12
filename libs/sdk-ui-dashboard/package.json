@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-dashboard",
-    "version": "11.21.0-alpha.0",
+    "version": "11.21.0",
     "description": "GoodData SDK - Dashboard Component",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData Corporation",

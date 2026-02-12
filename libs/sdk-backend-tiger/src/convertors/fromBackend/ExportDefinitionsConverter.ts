@@ -9,10 +9,10 @@ import {
     type AutomationAutomationTabularExport,
     type AutomationAutomationVisualExport,
     type AutomationDashboardExportSettings,
+    type JsonApiAutomationOutAttributesDashboardTabularExportsInner,
+    type JsonApiAutomationOutAttributesRawExportsInner,
     type JsonApiExportDefinitionOutIncludes,
     type JsonApiExportDefinitionOutWithLinks,
-    type JsonApiWorkspaceAutomationOutAttributesDashboardTabularExportsInner,
-    type JsonApiWorkspaceAutomationOutAttributesRawExportsInner,
     type TabularExportRequest,
     type VisualExportRequest,
 } from "@gooddata/api-client-tiger";
@@ -93,7 +93,7 @@ export const wrapExportDefinition = (
 };
 
 export const convertDashboardTabularExportRequest = (
-    exportRequest: JsonApiWorkspaceAutomationOutAttributesDashboardTabularExportsInner,
+    exportRequest: JsonApiAutomationOutAttributesDashboardTabularExportsInner,
 ): IExportDefinitionDashboardRequestPayload | IExportDefinitionVisualizationObjectRequestPayload => {
     const {
         requestPayload: {
@@ -189,7 +189,7 @@ export const convertVisualExportRequest = (
 };
 
 export const convertToRawExportRequest = (
-    exportRequest: JsonApiWorkspaceAutomationOutAttributesRawExportsInner,
+    exportRequest: JsonApiAutomationOutAttributesRawExportsInner,
 ): IExportDefinitionVisualizationObjectRequestPayload => {
     const {
         requestPayload: { fileName, execution, metadata },

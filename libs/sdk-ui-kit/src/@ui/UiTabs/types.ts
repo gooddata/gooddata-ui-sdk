@@ -69,6 +69,11 @@ export type IUiTab<
      * When true, focusing the tab will select it.
      */
     autoSelectOnFocus?: boolean;
+    /**
+     * Optional aria-label override for the tab button.
+     * When provided, used instead of `label` for the `aria-label` attribute.
+     */
+    ariaLabel?: string;
     actions?: Array<IUiTabAction<TTabProps, TTabActionProps> | typeof separatorStaticItem>;
 } & TTabProps;
 

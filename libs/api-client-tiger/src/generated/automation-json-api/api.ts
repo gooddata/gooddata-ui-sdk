@@ -304,7 +304,7 @@ export interface AutomationAttributeElementsByValue {
  * @type AutomationAttributeFilter
  * Abstract filter definition type attributes
  */
-export type AutomationAttributeFilter = AutomationNegativeAttributeFilter | AutomationPositiveAttributeFilter;
+export type AutomationAttributeFilter = AutomationMatchAttributeFilter | AutomationNegativeAttributeFilter | AutomationPositiveAttributeFilter;
 
 export interface AutomationAttributeFilterByDate {
     'filterLocalIdentifier': string;
@@ -752,7 +752,7 @@ export type AutomationExportResultStatusEnum = 'SUCCESS' | 'ERROR' | 'INTERNAL_E
  * @type AutomationFilterDefinition
  * Abstract filter definition type
  */
-export type AutomationFilterDefinition = AutomationAbsoluteDateFilter | AutomationComparisonMeasureValueFilter | AutomationCompoundMeasureValueFilter | AutomationInlineFilterDefinition | AutomationNegativeAttributeFilter | AutomationPositiveAttributeFilter | AutomationRangeMeasureValueFilter | AutomationRankingFilter | AutomationRelativeDateFilter;
+export type AutomationFilterDefinition = AutomationAbsoluteDateFilter | AutomationComparisonMeasureValueFilter | AutomationCompoundMeasureValueFilter | AutomationInlineFilterDefinition | AutomationMatchAttributeFilter | AutomationNegativeAttributeFilter | AutomationPositiveAttributeFilter | AutomationRangeMeasureValueFilter | AutomationRankingFilter | AutomationRelativeDateFilter;
 
 /**
  * @type AutomationFilterDefinitionForSimpleMeasure
@@ -855,6 +855,37 @@ export interface AutomationLocalIdentifier {
      */
     'title'?: string | null;
 }
+
+/**
+ * Filter via label with given match type and literal value.
+ */
+export interface AutomationMatchAttributeFilter {
+    'matchAttributeFilter': AutomationMatchAttributeFilterMatchAttributeFilter;
+}
+
+export interface AutomationMatchAttributeFilterMatchAttributeFilter {
+    /**
+     * Literal used to limit label values.
+     */
+    'literal': string;
+    /**
+     * Requested match type.
+     */
+    'matchType': AutomationMatchAttributeFilterMatchAttributeFilterMatchTypeEnum;
+    /**
+     * Indicates whether the filter should negate the match.
+     */
+    'negate'?: boolean;
+    /**
+     * Indicates whether the filter match is evaluated in case-sensitive mode or not.
+     */
+    'caseSensitive'?: boolean;
+    'localIdentifier'?: string;
+    'applyOnResult'?: boolean;
+    'label': AutomationAfmIdentifier;
+}
+
+export type AutomationMatchAttributeFilterMatchAttributeFilterMatchTypeEnum = 'STARTS_WITH' | 'ENDS_WITH' | 'CONTAINS';
 
 /**
  * @type AutomationMeasureDefinition

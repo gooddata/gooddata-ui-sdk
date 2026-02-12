@@ -1,19 +1,17 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
-import { type MutableRefObject } from "react";
+import { type RefObject } from "react";
 
 import { getManualResizedColumn } from "./columnSizing.js";
 import { type ColumnResizingConfig, type ResizingState } from "./privateTypes.js";
+import { scheduleAnimationFrame } from "../../_base/animationFrameScheduler.js";
 
-export function growToFit(
-    resizingState: MutableRefObject<ResizingState>,
-    resizingConfig: ColumnResizingConfig,
-) {
+export function growToFit(resizingState: RefObject<ResizingState>, resizingConfig: ColumnResizingConfig) {
     if (!resizingConfig.growToFit) {
         return;
     }
 
-    const { columnApi } = resizingState.current;
+    const { columnApi, containerElement, growToFitFrame } = resizingState.current;
 
     if (!columnApi) {
         return;
@@ -34,10 +32,8 @@ export function growToFit(
     const manualWidths = manualSizedColumns.map((column) => column.getActualWidth());
     const sumOfManualWidths = manualWidths.reduce((a, b) => a + b, 0);
 
-    // Consider scrollbar width = 15
-    const clientWidth = resizingConfig.clientWidth - 15;
-
-    if (sumOfManualWidths >= clientWidth) {
+    const clientWidth = getColsViewportClientWidth(containerElement);
+    if (clientWidth <= 0 || sumOfManualWidths >= clientWidth) {
         return;
     }
 
@@ -49,8 +45,17 @@ export function growToFit(
         columnWidthItems.push({ key: columnWidthItem.getColId(), newWidth: width });
     });
 
-    setTimeout(() => {
-        columnApi.setColumnWidths(columnWidthItems);
-        columnApi.refreshCells();
-    }, 0);
+    scheduleAnimationFrame(growToFitFrame, () => {
+        const { columnApi } = resizingState.current;
+        columnApi?.setColumnWidths(columnWidthItems);
+        columnApi?.refreshCells();
+    });
+}
+
+/**
+ * Returns the available width in the AG Grid body viewport.
+ * Uses clientWidth, which excludes the vertical scrollbar when present (CSSOM).
+ */
+function getColsViewportClientWidth(container: HTMLDivElement | null): number {
+    return container?.getElementsByClassName("ag-center-cols-viewport")[0]?.clientWidth ?? 0;
 }

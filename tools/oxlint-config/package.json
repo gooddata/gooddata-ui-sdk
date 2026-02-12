@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/oxlint-config",
-    "version": "11.21.0-alpha.0",
+    "version": "11.21.0",
     "license": "MIT",
     "author": "GoodData",
     "repository": {

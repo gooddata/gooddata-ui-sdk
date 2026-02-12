@@ -683,6 +683,14 @@
         "text": "Fiscal",
         "crowdinContext": "Tab label for fiscal calendar date presets in the date filter dropdown."
     },
+    "dateFilter.tab.standard.ariaLabel": {
+        "text": "Standard calendar",
+        "crowdinContext": "Accessible label for the standard calendar tab in the date filter dropdown, announced by screen readers."
+    },
+    "dateFilter.tab.fiscal.ariaLabel": {
+        "text": "Fiscal calendar",
+        "crowdinContext": "Accessible label for the fiscal calendar tab in the date filter dropdown, announced by screen readers."
+    },
     "filters.thisMinute.title": {
         "text": "This minute",
         "crowdinContext": "Filter option to select the current minute in time-based filtering controls."
