@@ -500,7 +500,7 @@ export function DocumentHeader({ pageTitle, brandTitle, appleTouchIconUrl, favic
 export function DomainHomepageLink({ onClick }: IDomainHomepageLinkProps): JSX.Element;
 
 // @internal (undocumented)
-export function Dropdown({ isOpen: isOpenProp, onToggle, className, openOnInit, closeOnParentScroll, closeOnMouseDrag, closeOnOutsideClick, overlayPositionType, alignPoints, overlayZIndex, ignoreClicksOnByClass, renderBody, renderButton, onOpenStateChanged, fullscreenOnMobile, enableEventPropagation, closeOnEscape, autofocusOnOpen, initialFocus, returnFocusTo, accessibilityConfig, shouldTrapFocus }: IDropdownProps): JSX.Element;
+export function Dropdown({ isOpen: isOpenProp, onToggle, className, openOnInit, closeOnParentScroll, closeOnMouseDrag, closeOnOutsideClick, overlayPositionType, alignPoints, overlayZIndex, ignoreClicksOnByClass, renderBody, renderButton, onOpenStateChanged, fullscreenOnMobile, enableEventPropagation, enableAutoToggle, closeOnEscape, autofocusOnOpen, initialFocus, returnFocusTo, accessibilityConfig, shouldTrapFocus }: IDropdownProps): JSX.Element;
 
 // @internal (undocumented)
 export function DropdownButton({ id, className, accessibilityConfig, value, title, disabled, isOpen, isSmall, iconLeft, isFullWidth, onClick, children, dropdownId, buttonRef }: IDropdownButtonProps): JSX.Element;
@@ -2454,6 +2454,8 @@ export interface IDropdownProps {
     closeOnOutsideClick?: boolean;
     // (undocumented)
     closeOnParentScroll?: boolean;
+    // (undocumented)
+    enableAutoToggle?: boolean;
     // (undocumented)
     enableEventPropagation?: boolean;
     fullscreenOnMobile?: boolean;

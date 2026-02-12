@@ -416,6 +416,7 @@ function VisualizationContentsComponentCore({
             <MarkdownComponent allowMarkdown={useMarkdown}>{content.text}</MarkdownComponent>
             {visualization ? (
                 <Dropdown
+                    enableAutoToggle={false}
                     isOpen={Boolean(drillState)}
                     onToggle={(state) => {
                         if (!state) {

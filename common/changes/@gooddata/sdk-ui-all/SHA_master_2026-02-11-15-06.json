@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "sdk-ui-pivot: Fix Pivot Table column width not persisting correctly.",
+            "comment": "sdk-ui-gen-ai: accessibility repair on visualization menu",
             "type": "none"
         }
     ],

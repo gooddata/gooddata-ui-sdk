@@ -5,6 +5,7 @@ import { type HTMLProps, type KeyboardEventHandler, type RefObject, forwardRef, 
 import { isElementTextInput } from "../utils/domUtilities.js";
 
 type IDropdownButtonKeyboardWrapperProps = {
+    enabled?: boolean;
     onToggle: (desiredState?: unknown) => void;
     closeOnEscape?: boolean;
     isOpen: boolean;
@@ -12,12 +13,16 @@ type IDropdownButtonKeyboardWrapperProps = {
 
 export const DropdownButtonKeyboardWrapper = forwardRef<HTMLElement, IDropdownButtonKeyboardWrapperProps>(
     function DropdownButtonKeyboardWrapper(
-        { onToggle, isOpen, closeOnEscape = true, children, ...divProps },
+        { onToggle, isOpen, closeOnEscape = true, children, enabled = true, ...divProps },
         ref,
     ) {
         const handleKeyDown = useCallback<KeyboardEventHandler<HTMLDivElement>>(
             (event) => {
                 const isInputFocused = isElementTextInput(document.activeElement);
+
+                if (!enabled) {
+                    return;
+                }
 
                 if (event.code === "Enter" || (event.code === "Space" && !isInputFocused)) {
                     onToggle();
@@ -40,7 +45,7 @@ export const DropdownButtonKeyboardWrapper = forwardRef<HTMLElement, IDropdownBu
                     event.stopPropagation();
                 }
             },
-            [isOpen, onToggle, closeOnEscape],
+            [isOpen, onToggle, closeOnEscape, enabled],
         );
 
         return (

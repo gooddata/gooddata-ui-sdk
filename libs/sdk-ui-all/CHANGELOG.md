@@ -1,6 +1,29 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Fri, 06 Feb 2026 10:30:03 GMT and should not be manually modified.
+This log was last generated on Thu, 12 Feb 2026 08:00:41 GMT and should not be manually modified.
+
+## 11.20.0
+
+Thu, 12 Feb 2026 08:00:41 GMT
+
+### Updates
+
+- Remove the last-child dependency so the show-all button is placed consistently and hidden only on small screens.
+- sdk-ui-all: brace-expansion vulnerability fix
+- sdk-ui: Add a React hook `useDebounce` that returns a stable debounced callback function.
+- sdk-ui-pivot: Fix Pivot Table column width not persisting correctly.
+- Upgrade @gooddata/fixtures@3.3.11
+- sdk-ui-kit: added component for breadcrumb
+- sdk-ui-dashboard: redesign of KDA dialog
+- sdk-ui-kit: breadcrumb component redesign
+- sdk-ui-dashboard: new alert trigger mode and interval duration selector in alerts
+- sdk-ui-gen-ai: autocomplete in chatbot is clipped in additional description
+- sdk-ui-all: prevent parent scroll when child scrollable area reaches end
+- sdk-backend-all: Change getSettings to resolved API
+- feat(sdk-backend-tiger): Decouple sdk-model and tiger types.
+- Fix implicit drill to url default setting logic and AD save button enabling logic
+- sdk-ui-filters: Defer MVF dimensionality catalog loading until picker opens and optimize catalog item picker data loading to not fail on too large requests
+- sdk-ui-kit: Introduce SCSS variables with hardcoded colors for catalog item types icons and use them instead of hardcoded colors everywhere in the code across our libs and apps.
 
 ## 11.19.0
 

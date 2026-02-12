@@ -145,6 +145,7 @@ export interface IDropdownProps {
     fullscreenOnMobile?: boolean;
 
     enableEventPropagation?: boolean;
+    enableAutoToggle?: boolean;
 
     closeOnEscape?: boolean;
 
@@ -191,6 +192,7 @@ export function Dropdown({
 
     fullscreenOnMobile = true,
     enableEventPropagation = false,
+    enableAutoToggle = true,
     closeOnEscape = false,
     autofocusOnOpen = false,
     initialFocus,
@@ -209,6 +211,7 @@ export function Dropdown({
     const buttonWrapperRef = useRef<HTMLElement>(null);
     const _renderButton = (renderProps: IDropdownButtonRenderProps) => (
         <DropdownButtonKeyboardWrapper
+            enabled={enableAutoToggle}
             onToggle={renderProps.toggleDropdown}
             closeOnEscape={closeOnEscape}
             isOpen={renderProps.isOpen}
