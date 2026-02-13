@@ -75,12 +75,7 @@ describe.skip("Dashboard", { tags: ["pre-merge_isolated_bear"] }, () => {
                 .dateFilterExist()
                 .dateFilterHasTitle("Date range")
                 .clickDateFilter()
-                .dateFilterHasElements([
-                    ".s-all-time",
-                    ".s-exclude-current-perod-disabled",
-                    ".s-date-filter-cancel",
-                    ".s-date-filter-apply",
-                ]);
+                .dateFilterHasElements([".s-all-time", ".s-date-filter-cancel", ".s-date-filter-apply"]);
         });
 
         it("should change the filter", () => {

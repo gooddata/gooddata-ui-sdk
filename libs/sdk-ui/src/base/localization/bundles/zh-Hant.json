@@ -977,5 +977,11 @@
     "gs.header.kpis": "關鍵績效指標",
     "gs.header.load": "載入",
     "gs.header.manage": "管理",
-    "gs.header.reports": "報告"
+    "gs.header.reports": "報告",
+    "gs.date.date-dataset.recommended": "受到推崇的",
+    "gs.date.date-dataset.other": "其他",
+    "gs.date.date-dataset.related": "有關的",
+    "gs.date.date-dataset.unrelated": "無關",
+    "gs.date.today": "今天",
+    "gs.date.yesterday": "昨天"
 }

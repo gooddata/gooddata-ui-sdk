@@ -284,7 +284,7 @@ const getLocalIdentifierFromItem = (item: string) => {
     return item.toUpperCase().replace(/-/g, "_");
 };
 
-export const getPresetByItem = (item: string, relativePreset: any[]) => {
+export const getPresetByItem = (item: string, relativePreset: DateFilterOption[]) => {
     const localIdentifier = getLocalIdentifierFromItem(item);
     return relativePreset.find((x) => {
         return x.localIdentifier === localIdentifier.toUpperCase();
@@ -400,8 +400,10 @@ export const isRelativeFormSelectMenuVisible = () => !!document.querySelector(re
 
 // exclude
 
-export const getExcludeCurrentPeriodCheckbox = (): HTMLInputElement =>
-    document.querySelector(excludeCurrentPeriodCheckbox)!;
+export const queryExcludeCurrentPeriodCheckbox = (): HTMLInputElement | null =>
+    document.querySelector(excludeCurrentPeriodCheckbox);
+
+export const getExcludeCurrentPeriodCheckbox = (): HTMLInputElement => queryExcludeCurrentPeriodCheckbox()!;
 
 export const clickExcludeCurrentPeriodCheckBox = () => {
     fireEvent.click(getExcludeCurrentPeriodCheckbox());

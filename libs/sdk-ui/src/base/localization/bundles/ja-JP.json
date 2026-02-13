@@ -977,5 +977,11 @@
     "gs.header.kpis": "KPIs",
     "gs.header.load": "ロード",
     "gs.header.manage": "管理",
-    "gs.header.reports": "レポート"
+    "gs.header.reports": "レポート",
+    "gs.date.date-dataset.recommended": "お勧め",
+    "gs.date.date-dataset.other": "その他",
+    "gs.date.date-dataset.related": "関係する",
+    "gs.date.date-dataset.unrelated": "関係しない",
+    "gs.date.today": "今日",
+    "gs.date.yesterday": "昨日"
 }

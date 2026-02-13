@@ -98,12 +98,7 @@ describe("Dashboard", () => {
                 .dateFilterExist()
                 .dateFilterHasTitle("Date range")
                 .clickDateFilter()
-                .dateFilterHasElements([
-                    ".s-all-time",
-                    ".s-exclude-current-perod-disabled",
-                    ".s-date-filter-cancel",
-                    ".s-date-filter-apply",
-                ]);
+                .dateFilterHasElements([".s-all-time", ".s-date-filter-cancel", ".s-date-filter-apply"]);
         });
 
         it.skip("should change the filter", () => {

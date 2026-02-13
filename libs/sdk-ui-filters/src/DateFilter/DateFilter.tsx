@@ -114,6 +114,18 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     improveAccessibility?: boolean;
 
     /**
+     * When true, the "Exclude current period" toggle is hidden when it is disabled
+     * for the currently selected option.
+     *
+     * @remarks
+     * By default (false), the toggle remains visible and is rendered disabled when not applicable.
+     *
+     * @defaultValue false
+     * @alpha
+     */
+    hideDisabledExclude?: boolean;
+
+    /**
      * Active calendars configuration from workspace settings.
      * Controls which calendar types (standard/fiscal) are available in the filter.
      *
@@ -179,6 +191,7 @@ export class DateFilter extends PureComponent<IDateFilterProps, IDateFilterState
         onClose: () => {},
         weekStart: "Sunday" as const,
         withoutApply: false,
+        hideDisabledExclude: false,
     };
 
     public static getDerivedStateFromProps(
@@ -315,6 +328,7 @@ export class DateFilter extends PureComponent<IDateFilterProps, IDateFilterState
                 excludeCurrentPeriod={excludeCurrentPeriod}
                 originalExcludeCurrentPeriod={originalExcludeCurrentPeriod}
                 isExcludeCurrentPeriodEnabled={isExcludeCurrentPeriodEnabled}
+                hideDisabledExclude={this.props.hideDisabledExclude}
                 isTimeForAbsoluteRangeEnabled={isTimeForAbsoluteRangeEnabled ?? false}
                 isEditMode={isEditMode ?? false}
                 filterOptions={filterOptions}

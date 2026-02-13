@@ -857,6 +857,8 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     // (undocumented)
     filterOptions: IDateFilterOptionsByType;
     // @alpha
+    hideDisabledExclude?: boolean;
+    // @alpha
     improveAccessibility?: boolean;
     // (undocumented)
     isEditMode?: boolean;
@@ -1479,6 +1481,9 @@ export const useAttributeFilterSearch: (props: IUseAttributeFilterSearchProps) =
 
 // @internal
 export const useAutoOpenAttributeFilterDropdownButton: (props: IAttributeFilterDropdownButtonProps, isAutoOpen: boolean) => void;
+
+// @public (undocumented)
+export function useDeepEqualRefStablizer<T>(unstableState: T): T;
 
 // @internal
 export const useOnCloseAttributeFilterDropdownButton: (props: IAttributeFilterDropdownButtonProps, onClose: () => void) => void;

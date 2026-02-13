@@ -63,6 +63,7 @@ export interface IDateFilterCoreProps {
     excludeCurrentPeriod: boolean;
     originalExcludeCurrentPeriod: boolean;
     isExcludeCurrentPeriodEnabled: boolean;
+    hideDisabledExclude?: boolean;
     onExcludeCurrentPeriodChange: (isExcluded: boolean) => void;
     isTimeForAbsoluteRangeEnabled: boolean;
 
@@ -174,6 +175,7 @@ export function DateFilterCore({
     overlayPositionType,
     improveAccessibility = false,
     activeCalendars,
+    hideDisabledExclude,
     ...dropdownBodyProps
 }: IDateFilterCoreProps) {
     const [isConfigurationOpen, setIsConfigurationOpen] = useState(false);
@@ -329,6 +331,7 @@ export function DateFilterCore({
                                                 })}
                                                 selectedFilterOption={selectedFilterOption}
                                                 excludeCurrentPeriod={excludeCurrentPeriod}
+                                                hideDisabledExclude={hideDisabledExclude}
                                                 showHeaderMessage={showDropDownHeaderMessage}
                                                 onApplyClick={onApplyClick}
                                                 onCancelClick={onCancelClick}

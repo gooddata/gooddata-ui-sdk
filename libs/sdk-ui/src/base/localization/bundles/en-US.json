@@ -3922,5 +3922,29 @@
     "gs.header.reports": {
         "text": "Reports",
         "crowdinContext": "Navigation link to reports section in global header"
+    },
+    "gs.date.date-dataset.recommended": {
+        "text": "Recommended",
+        "crowdinContext": "Label for recommended date datasets section"
+    },
+    "gs.date.date-dataset.other": {
+        "text": "Other",
+        "crowdinContext": "Label for section containing additional date datasets"
+    },
+    "gs.date.date-dataset.related": {
+        "text": "Related",
+        "crowdinContext": "Label for section containing related date datasets"
+    },
+    "gs.date.date-dataset.unrelated": {
+        "text": "Unrelated",
+        "crowdinContext": "Label for section containing unrelated date datasets"
+    },
+    "gs.date.today": {
+        "text": "Today",
+        "crowdinContext": "Label for the current day in date filters and selectors"
+    },
+    "gs.date.yesterday": {
+        "text": "Yesterday",
+        "crowdinContext": "Label for the day before today in date filters and selectors"
     }
 }

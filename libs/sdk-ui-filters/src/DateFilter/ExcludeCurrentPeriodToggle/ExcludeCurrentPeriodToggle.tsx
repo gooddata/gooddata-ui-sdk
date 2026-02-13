@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type KeyboardEvent } from "react";
 
@@ -41,8 +41,7 @@ export function ExcludeCurrentPeriodToggle({
             <BubbleHoverTrigger>
                 <label
                     className={cx("s-exclude-current-period", "input-checkbox-label", {
-                        "s-exclude-current-perod-enabled": !disabled,
-                        "s-exclude-current-perod-disabled": disabled,
+                        "is-disabled": disabled,
                     })}
                 >
                     <input

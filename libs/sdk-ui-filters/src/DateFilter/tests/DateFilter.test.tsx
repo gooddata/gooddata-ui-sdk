@@ -41,11 +41,12 @@ import {
     isRelativeFormVisible,
     openAbsoluteFormFilter,
     openRelativeFormFilter,
+    queryExcludeCurrentPeriodCheckbox,
     setRelativeFormInputs,
 } from "./extendedDateFilters.test.helpers.js";
 import { DEFAULT_DATE_FORMAT } from "../constants/Platform.js";
 import { verifyDateFormat } from "../DateFilterCore.js";
-import type { IDateFilterOptionsByType } from "../interfaces/index.js";
+import type { DateFilterOption, IDateFilterOptionsByType } from "../interfaces/index.js";
 
 describe("DateFilter", () => {
     it("should render without crash", () => {
@@ -234,6 +235,12 @@ describe("DateFilter", () => {
             expect(getExcludeCurrentPeriodCheckbox()).not.toBeDisabled();
         });
 
+        it("should not render when hideDisabledExclude=true and 'All time' selected", () => {
+            createDateFilter({ hideDisabledExclude: true });
+            clickDateFilterButton();
+            expect(queryExcludeCurrentPeriodCheckbox()).toBeNull();
+        });
+
         it("should be disabled when last month", () => {
             createDateFilter();
             clickDateFilterButton();
@@ -270,13 +277,14 @@ describe("DateFilter", () => {
             expect(isExcludeCurrentPeriodChecked()).toBe(true);
         });
 
-        it("should be unchecked when switching to option where it is no longer valid", () => {
+        it("should be disabled when switching to option where it is no longer valid", () => {
             createDateFilter();
             clickDateFilterButton();
             clickStaticFilter("last-12-months");
             clickExcludeCurrentPeriodCheckBox();
             expect(isExcludeCurrentPeriodChecked()).toBe(true);
             clickStaticFilter("last-month");
+            expect(getExcludeCurrentPeriodCheckbox()).toBeDisabled();
             expect(isExcludeCurrentPeriodChecked()).toBe(false);
         });
 
@@ -333,7 +341,7 @@ describe("DateFilter", () => {
     });
 
     describe("relative presets", () => {
-        it.each<[string, any[]]>([
+        it.each<[string, DateFilterOption[]]>([
             ["last-7-days", defaultDateFilterOptions.relativePreset!["GDC.time.date"]!],
             ["last-30-days", defaultDateFilterOptions.relativePreset!["GDC.time.date"]!],
             ["last-90-days", defaultDateFilterOptions.relativePreset!["GDC.time.date"]!],
@@ -359,7 +367,7 @@ describe("DateFilter", () => {
             expect(onApply).toBeCalledWith(expectedSelectedItem, false);
         });
 
-        it.each<[string, string, any[]]>([
+        it.each<[string, string, DateFilterOption[]]>([
             ["last-7-days", "Last 7 days", defaultDateFilterOptions.relativePreset!["GDC.time.date"]!],
             ["last-30-days", "Last 30 days", defaultDateFilterOptions.relativePreset!["GDC.time.date"]!],
             ["last-90-days", "Last 90 days", defaultDateFilterOptions.relativePreset!["GDC.time.date"]!],

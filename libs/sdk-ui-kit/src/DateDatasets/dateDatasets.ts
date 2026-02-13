@@ -1,6 +1,7 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { groupBy, takeWhile } from "lodash-es";
+import { defineMessage } from "react-intl";
 
 import { type IDateDataset, type IDateDatasetHeader } from "./typings.js";
 
@@ -41,7 +42,7 @@ const MAX_RECOMMENDED_ITEMS = 3;
  * @internal
  */
 export const recommendedHeader: IDateDatasetHeader = {
-    title: "gs.date.date-dataset.recommended",
+    title: defineMessage({ id: "gs.date.date-dataset.recommended" }).id,
     type: "header",
 };
 
@@ -49,7 +50,7 @@ export const recommendedHeader: IDateDatasetHeader = {
  * @internal
  */
 export const otherHeader: IDateDatasetHeader = {
-    title: "gs.date.date-dataset.other",
+    title: defineMessage({ id: "gs.date.date-dataset.other" }).id,
     type: "header",
 };
 
@@ -57,7 +58,7 @@ export const otherHeader: IDateDatasetHeader = {
  * @internal
  */
 export const relatedHeader: IDateDatasetHeader = {
-    title: "gs.date.date-dataset.related",
+    title: defineMessage({ id: "gs.date.date-dataset.related" }).id,
     type: "header",
 };
 
@@ -65,7 +66,7 @@ export const relatedHeader: IDateDatasetHeader = {
  * @internal
  */
 export const unrelatedHeader: IDateDatasetHeader = {
-    title: "gs.date.date-dataset.unrelated",
+    title: defineMessage({ id: "gs.date.date-dataset.unrelated" }).id,
     type: "header",
 };
 
