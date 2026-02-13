@@ -977,5 +977,11 @@
     "gs.header.kpis": "KPIs",
     "gs.header.load": "Загрузить",
     "gs.header.manage": "Управление",
-    "gs.header.reports": "Отчеты"
+    "gs.header.reports": "Отчеты",
+    "gs.date.date-dataset.recommended": "Рекомендуемые",
+    "gs.date.date-dataset.other": "Прочие",
+    "gs.date.date-dataset.related": "Связанные",
+    "gs.date.date-dataset.unrelated": "Несвязанные",
+    "gs.date.today": "Сегодня",
+    "gs.date.yesterday": "Вчера"
 }

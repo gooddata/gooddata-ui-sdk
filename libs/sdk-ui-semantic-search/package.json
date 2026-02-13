@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-semantic-search",
-    "version": "11.22.0-alpha.1",
+    "version": "11.22.0-alpha.2",
     "description": "GoodData SDK TypeScript & React skeleton",
     "license": "MIT",
     "author": "GoodData Corporation",

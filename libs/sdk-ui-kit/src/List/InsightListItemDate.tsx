@@ -1,6 +1,6 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
-import { FormattedDate, FormattedMessage, FormattedTime } from "react-intl";
+import { FormattedDate, FormattedMessage, FormattedTime, defineMessage } from "react-intl";
 
 import { type IDateConfig } from "../utils/dateTimeConfig.js";
 
@@ -22,7 +22,9 @@ export interface IInsightListItemDateProps {
  * @internal
  */
 export function InsightListItemDate({ config }: IInsightListItemDateProps) {
-    const relativeDate = config.isToday ? "gs.date.today" : "gs.date.yesterday";
+    const relativeDate = config.isToday
+        ? defineMessage({ id: "gs.date.today" }).id
+        : defineMessage({ id: "gs.date.yesterday" }).id;
 
     if (config.isToday || config.isYesterday) {
         return (

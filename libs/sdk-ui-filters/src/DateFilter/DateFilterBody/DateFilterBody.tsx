@@ -41,6 +41,7 @@ export interface IDateFilterBodyProps {
     onSelectedFilterOptionChange: (option: DateFilterOption) => void;
 
     excludeCurrentPeriod: boolean;
+    hideDisabledExclude?: boolean;
     isExcludeCurrentPeriodEnabled: boolean;
     onExcludeCurrentPeriodChange: (isExcluded: boolean) => void;
     isTimeForAbsoluteRangeEnabled: boolean;
@@ -109,6 +110,7 @@ export const DateFilterBody = forwardRef<HTMLDivElement, IDateFilterBodyProps>((
     };
 
     const {
+        hideDisabledExclude,
         isExcludeCurrentPeriodEnabled,
         isMobile,
         dateFilterButton,
@@ -133,7 +135,11 @@ export const DateFilterBody = forwardRef<HTMLDivElement, IDateFilterBodyProps>((
         activeCalendars,
     } = props;
 
-    const showExcludeCurrent: boolean = !isMobile || isExcludeCurrentPeriodEnabled;
+    // Backwards compatible behavior:
+    // - on mobile, hide the exclude toggle when it is disabled (old behavior)
+    // - on desktop, show it disabled by default, unless caller explicitly opts into hiding via `hideDisabledExclude`
+    const hideWhenDisabled = !!hideDisabledExclude || isMobile;
+    const showExcludeCurrent = !(hideWhenDisabled && !isExcludeCurrentPeriodEnabled);
     const bodyHeight = calculateHeight(showExcludeCurrent);
     const visibleScrollbarClassName = getVisibleScrollbarClassName();
     let wrapperStyle: CSSProperties = {};

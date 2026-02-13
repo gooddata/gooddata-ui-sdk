@@ -977,5 +977,11 @@
     "gs.header.kpis": "KPIs",
     "gs.header.load": "加载",
     "gs.header.manage": "管理",
-    "gs.header.reports": "报告"
+    "gs.header.reports": "报告",
+    "gs.date.date-dataset.recommended": "已推荐",
+    "gs.date.date-dataset.other": "其他",
+    "gs.date.date-dataset.related": "相关",
+    "gs.date.date-dataset.unrelated": "无关",
+    "gs.date.today": "今天",
+    "gs.date.yesterday": "昨天"
 }

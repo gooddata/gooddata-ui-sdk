@@ -977,5 +977,11 @@
     "gs.header.kpis": "KPI'ler",
     "gs.header.load": "Yükle",
     "gs.header.manage": "Yönet",
-    "gs.header.reports": "Raporlar"
+    "gs.header.reports": "Raporlar",
+    "gs.date.date-dataset.recommended": "Önerilen",
+    "gs.date.date-dataset.other": "Diğer",
+    "gs.date.date-dataset.related": "İlgili",
+    "gs.date.date-dataset.unrelated": "İlgisiz",
+    "gs.date.today": "Bugün",
+    "gs.date.yesterday": "Dün"
 }

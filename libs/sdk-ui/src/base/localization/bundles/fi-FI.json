@@ -977,5 +977,11 @@
     "gs.header.kpis": "KPI: t",
     "gs.header.load": "Lataa",
     "gs.header.manage": "Hallinnoi",
-    "gs.header.reports": "Raportit"
+    "gs.header.reports": "Raportit",
+    "gs.date.date-dataset.recommended": "Suositeltu",
+    "gs.date.date-dataset.other": "Muut",
+    "gs.date.date-dataset.related": "Liittyvä",
+    "gs.date.date-dataset.unrelated": "Liittymätön",
+    "gs.date.today": "Tänään",
+    "gs.date.yesterday": "Eilen"
 }

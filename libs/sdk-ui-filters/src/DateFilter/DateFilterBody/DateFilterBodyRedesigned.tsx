@@ -163,6 +163,7 @@ export const DateFilterBodyRedesigned = forwardRef<HTMLDivElement, IDateFilterBo
         selectedFilterOption,
         isEditMode,
         excludeCurrentPeriod,
+        hideDisabledExclude,
         filterOptions,
         showHeaderMessage = true,
         dateFormat,
@@ -178,9 +179,13 @@ export const DateFilterBodyRedesigned = forwardRef<HTMLDivElement, IDateFilterBo
         ariaLabel,
         id,
     } = props;
+    // Keep the same behavior as `DateFilterBody`:
+    // - hide disabled exclude toggle on mobile by default
+    // - allow callers to hide it on desktop via `hideDisabledExclude`
+    const hideWhenDisabled = !!hideDisabledExclude || isMobile;
+    const shouldRenderExcludeCurrent = !(hideWhenDisabled && !isExcludeCurrentPeriodEnabled);
 
-    const showExcludeCurrent: boolean = !isMobile || isExcludeCurrentPeriodEnabled;
-    const bodyHeight = calculateHeight(showExcludeCurrent);
+    const bodyHeight = calculateHeight(shouldRenderExcludeCurrent);
     const visibleScrollbarClassName = getVisibleScrollbarClassName();
     let wrapperStyle: CSSProperties = {};
     let scrollerStyle: CSSProperties = {};
@@ -316,28 +321,33 @@ export const DateFilterBodyRedesigned = forwardRef<HTMLDivElement, IDateFilterBo
                 </div>
             )}
 
-            {showExcludeCurrent && !route ? (
-                <ExcludeCurrentPeriodToggle
-                    value={excludeCurrentPeriod}
-                    onChange={onExcludeCurrentPeriodChange}
-                    disabled={!isExcludeCurrentPeriodEnabled}
-                    granularity={getDateFilterOptionGranularity(selectedFilterOption)}
-                />
+            {hasFormOptions && !route ? (
+                <>
+                    <div className="gd-date-filter-menu-divider" />
+                    <DateFilterCustomPeriodButtons
+                        filterOptions={filterOptions}
+                        selectedFilterOption={selectedFilterOption}
+                        availableGranularities={availableGranularities}
+                        onStaticButtonClick={handleStaticButtonClick}
+                        onRelativeButtonClick={handleRelativeButtonClick}
+                        absoluteButtonRef={absoluteButtonRef}
+                        relativeButtonRef={relativeButtonRef}
+                        absoluteFormId={absoluteFormId}
+                        relativeFormId={relativeFormId}
+                    />
+                </>
             ) : null}
 
-            {/* New section for form buttons */}
-            {hasFormOptions && !route ? (
-                <DateFilterCustomPeriodButtons
-                    filterOptions={filterOptions}
-                    selectedFilterOption={selectedFilterOption}
-                    availableGranularities={availableGranularities}
-                    onStaticButtonClick={handleStaticButtonClick}
-                    onRelativeButtonClick={handleRelativeButtonClick}
-                    absoluteButtonRef={absoluteButtonRef}
-                    relativeButtonRef={relativeButtonRef}
-                    absoluteFormId={absoluteFormId}
-                    relativeFormId={relativeFormId}
-                />
+            {shouldRenderExcludeCurrent && !route ? (
+                <>
+                    <div className="gd-date-filter-menu-divider" />
+                    <ExcludeCurrentPeriodToggle
+                        value={excludeCurrentPeriod}
+                        onChange={onExcludeCurrentPeriodChange}
+                        disabled={!isExcludeCurrentPeriodEnabled}
+                        granularity={getDateFilterOptionGranularity(selectedFilterOption)}
+                    />
+                </>
             ) : null}
 
             <div role="group" className={cx("gd-extended-date-filter-actions")}>

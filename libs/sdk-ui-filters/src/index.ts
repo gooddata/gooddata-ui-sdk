@@ -325,7 +325,7 @@ export {
     AttributeFilterDependencyTooltip,
 } from "./AttributeFilter/Components/Addons/AttributeFilterDependencyTooltip.js";
 
-export { FilterGroup, type IFilterGroupProps } from "./FilterGroup/FilterGroup.js";
+export { FilterGroup, type IFilterGroupProps, useDeepEqualRefStablizer } from "./FilterGroup/FilterGroup.js";
 
 export type { IFilterButtonCustomIcon, VisibilityMode } from "./shared/interfaces/index.js";
 

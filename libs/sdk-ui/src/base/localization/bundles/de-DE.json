@@ -977,5 +977,11 @@
     "gs.header.kpis": "Leistungskennzahlen",
     "gs.header.load": "Laden",
     "gs.header.manage": "Verwalten",
-    "gs.header.reports": "Berichte"
+    "gs.header.reports": "Berichte",
+    "gs.date.date-dataset.recommended": "Empfohlen",
+    "gs.date.date-dataset.other": "Andere",
+    "gs.date.date-dataset.related": "Zugehörig",
+    "gs.date.date-dataset.unrelated": "Nicht zugehörig",
+    "gs.date.today": "Heute",
+    "gs.date.yesterday": "Gestern"
 }

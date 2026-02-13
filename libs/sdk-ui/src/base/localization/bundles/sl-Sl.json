@@ -977,5 +977,11 @@
     "gs.header.kpis": "KPIs",
     "gs.header.load": "Nalaganje",
     "gs.header.manage": "Upravljanje",
-    "gs.header.reports": "Poročila"
+    "gs.header.reports": "Poročila",
+    "gs.date.date-dataset.recommended": "Priporočeno",
+    "gs.date.date-dataset.other": "Drugo",
+    "gs.date.date-dataset.related": "Povezano",
+    "gs.date.date-dataset.unrelated": "Nepovezano",
+    "gs.date.today": "Danes",
+    "gs.date.yesterday": "Včeraj"
 }

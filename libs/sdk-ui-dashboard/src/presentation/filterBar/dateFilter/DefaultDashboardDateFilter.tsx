@@ -200,6 +200,7 @@ export function DefaultDashboardDateFilter({
             overlayPositionType={overlayPositionType}
             improveAccessibility={enableFilterAccessibility}
             activeCalendars={activeCalendars}
+            hideDisabledExclude
         />
     );
 }

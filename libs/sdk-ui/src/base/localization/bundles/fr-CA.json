@@ -977,5 +977,11 @@
     "gs.header.kpis": "Les KPIs",
     "gs.header.load": "Charger",
     "gs.header.manage": "Gérer",
-    "gs.header.reports": "Rapports"
+    "gs.header.reports": "Rapports",
+    "gs.date.date-dataset.recommended": "Recommandé",
+    "gs.date.date-dataset.other": "Autre",
+    "gs.date.date-dataset.related": "Associé",
+    "gs.date.date-dataset.unrelated": "Non associé",
+    "gs.date.today": "Aujourd’hui",
+    "gs.date.yesterday": "Hier"
 }

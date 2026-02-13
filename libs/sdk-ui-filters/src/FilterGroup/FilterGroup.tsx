@@ -7,6 +7,7 @@ import {
     type ReactElement,
     type ReactNode,
     useCallback,
+    useEffect,
     useMemo,
     useRef,
     useState,
@@ -190,6 +191,12 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
                     },
                     [],
                 );
+                useEffect(
+                    () => () =>
+                        // stop loading on unmount
+                        setFilterStatus(filterIdentifier, { loading: false }),
+                    [],
+                );
                 return (
                     <AttributeFilterButton
                         {...attributeFilterProps}
@@ -226,7 +233,13 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
         });
 
         return result;
-    }, [availableFilterIdentifiers, getTitleExtension, errorHandler, initLoadingChangedHandler]);
+    }, [
+        availableFilterIdentifiers,
+        getTitleExtension,
+        errorHandler,
+        initLoadingChangedHandler,
+        setFilterStatus,
+    ]);
 
     const renderItem = useCallback(
         ({ item }: { item: P }) => {
@@ -313,7 +326,10 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
     );
 }
 
-function useDeepEqualRefStablizer<T>(unstableState: T): T {
+/**
+ * @public
+ */
+export function useDeepEqualRefStablizer<T>(unstableState: T): T {
     const stableRef = useRef<T>(unstableState);
     // Compare and update the ref synchronously to keep the reference stable
     const prevState = stableRef.current;

@@ -2,7 +2,7 @@
 // Date Filter Form Buttons styling
 
 .gd-date-filter-form-buttons {
-    padding-top: 10px;
+    padding-top: 5px;
     padding-bottom: 10px;
 
     .gd-date-filter-form-buttons-container {
@@ -23,6 +23,9 @@
 // Mobile specific adjustments
 @media screen and (max-width: 768px) {
     .gd-date-filter-form-buttons {
+        padding-top: 10px;
+        padding-bottom: 10px;
+
         .gd-date-filter-form-buttons-container {
             .gd-date-filter-form-button {
                 min-height: 44px; // Larger touch targets on mobile

@@ -977,5 +977,11 @@
     "gs.header.kpis": "KPI",
     "gs.header.load": "로드",
     "gs.header.manage": "관리",
-    "gs.header.reports": "보고서"
+    "gs.header.reports": "보고서",
+    "gs.date.date-dataset.recommended": "추천됨",
+    "gs.date.date-dataset.other": "기타",
+    "gs.date.date-dataset.related": "관련됨",
+    "gs.date.date-dataset.unrelated": "무관함",
+    "gs.date.today": "오늘",
+    "gs.date.yesterday": "어제"
 }

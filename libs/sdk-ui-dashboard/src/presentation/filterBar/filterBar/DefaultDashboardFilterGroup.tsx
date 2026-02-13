@@ -14,6 +14,7 @@ import {
     AttributeFilterDependencyTooltip,
     FilterGroup,
     type IAttributeFilterProps,
+    useDeepEqualRefStablizer,
 } from "@gooddata/sdk-ui-filters";
 
 import {
@@ -117,7 +118,7 @@ export function DefaultDashboardFilterGroup(props: IDashboardFilterGroupProps): 
             );
     }, [groupItem.filters, supportElementUris, attributeFiltersModeMap]);
 
-    const filterDependenciesByLocalId = useMemo(() => {
+    const filterDependenciesByLocalIdUnstable = useMemo(() => {
         return new Map<string, boolean>(
             itemFilters.map((filter) => {
                 const { localIdentifier, filterElementsBy, filterElementsByDate } =
@@ -127,6 +128,8 @@ export function DefaultDashboardFilterGroup(props: IDashboardFilterGroupProps): 
             }),
         );
     }, [itemFilters]);
+
+    const filterDependenciesByLocalId = useDeepEqualRefStablizer(filterDependenciesByLocalIdUnstable);
 
     const getTitleExtension = useCallback(
         (filterIdentifier: string, filterTitle?: string) => {

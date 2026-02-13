@@ -30,6 +30,16 @@ describe("ExtendedDateFilterBody", () => {
         return <DateFilterButtonLocalized {...defaultProps} {...props} />;
     };
 
+    const last7Days = {
+        from: -6,
+        to: 0,
+        granularity: "GDC.time.date",
+        localIdentifier: "LAST_7_DAYS",
+        type: "relativePreset",
+        visible: true,
+        name: "",
+    } satisfies IDateFilterBodyProps["selectedFilterOption"];
+
     const renderDateFilterBody = (props?: Partial<IDateFilterBodyProps>) => {
         const mockProps: IDateFilterBodyProps = {
             filterOptions: {},
@@ -39,6 +49,7 @@ describe("ExtendedDateFilterBody", () => {
             onSelectedFilterOptionChange: vi.fn(),
 
             excludeCurrentPeriod: false,
+            hideDisabledExclude: false,
             isExcludeCurrentPeriodEnabled: false,
             onExcludeCurrentPeriodChange: vi.fn(),
 
@@ -55,14 +66,32 @@ describe("ExtendedDateFilterBody", () => {
         return render(<Wrapped {...mockProps} {...props} />);
     };
 
-    it("should pass the isExcludeCurrentPeriodEnabled=true to Exclude button", () => {
-        renderDateFilterBody({ isExcludeCurrentPeriodEnabled: true });
-        expect(screen.getByRole("checkbox", { name: "Exclude open period" })).not.toBeDisabled();
+    it("should render the Exclude checkbox when enabled", () => {
+        renderDateFilterBody({ selectedFilterOption: last7Days, isExcludeCurrentPeriodEnabled: true });
+        expect(screen.getByRole("checkbox", { name: /Exclude/ })).not.toBeDisabled();
     });
 
-    it("should pass the isExcludeCurrentPeriodEnabled=false to Exclude button", () => {
-        renderDateFilterBody({ isExcludeCurrentPeriodEnabled: false });
-        expect(screen.getByRole("checkbox", { name: "Exclude open period" })).toBeDisabled();
+    it("should render the Exclude checkbox as disabled when isExcludeCurrentPeriodEnabled=false", () => {
+        renderDateFilterBody({ selectedFilterOption: last7Days, isExcludeCurrentPeriodEnabled: false });
+        expect(screen.getByRole("checkbox", { name: /Exclude/ })).toBeDisabled();
+    });
+
+    it("should not render the Exclude checkbox when hideDisabledExclude=true and isExcludeCurrentPeriodEnabled=false", () => {
+        renderDateFilterBody({
+            selectedFilterOption: last7Days,
+            hideDisabledExclude: true,
+            isExcludeCurrentPeriodEnabled: false,
+        });
+        expect(screen.queryByRole("checkbox", { name: /Exclude/ })).toBeNull();
+    });
+
+    it("should not render the Exclude checkbox on mobile when it is disabled (backwards compatible)", () => {
+        renderDateFilterBody({
+            selectedFilterOption: last7Days,
+            isMobile: true,
+            isExcludeCurrentPeriodEnabled: false,
+        });
+        expect(screen.queryByRole("checkbox", { name: /Exclude/ })).toBeNull();
     });
 
     it("should display edit mode message in edit mode", () => {
@@ -104,6 +133,13 @@ describe("ExtendedDateFilterBody", () => {
             renderDateFilterBody({ isEditMode: false });
             expect(getBodyWrapper()).toHaveStyle("display: block; height: 323px");
             expect(getBodyScroller()).toHaveStyle("min-height: 323px");
+        });
+
+        it("should resize body wrapper and scroller in horizontal mobile layout when exclude is hidden", () => {
+            resizeWindow(896, 414);
+            renderDateFilterBody({ isEditMode: false, hideDisabledExclude: true });
+            expect(getBodyWrapper()).toHaveStyle("display: block; height: 353px");
+            expect(getBodyScroller()).toHaveStyle("min-height: 353px");
         });
     });
 });

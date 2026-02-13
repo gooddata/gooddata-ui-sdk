@@ -132,6 +132,11 @@
 
         .input-checkbox-label {
             margin-left: -3px;
+            color: variables.$gd-color-text;
+
+            &.is-disabled {
+                color: variables.$gd-color-disabled;
+            }
         }
 
         .input-label-text {
@@ -142,6 +147,13 @@
     &-body-mobile &-exclude-current {
         margin-top: 0;
         padding: 10px 10px 0;
+        border-top: 0; // mobile should not show the "menu divider" line here
+    }
+
+    // `gd-date-filter-menu-divider` is a desktop-only visual separator in redesigned body.
+    // Ensure it never shows on the mobile date filter layout (even though redesigned class is not present on mobile).
+    &-body-mobile .gd-date-filter-menu-divider {
+        display: none;
     }
 
     &-edit-mode-message {
@@ -206,10 +218,16 @@
         background-color: transparent;
     }
 
+    .gd-date-filter-menu-divider {
+        margin: 5px 10px;
+        border-top: 1px solid variables.$gd-border-color;
+    }
+
     .gd-extended-date-filter-exclude-current {
         margin: 0 10px 0 10px;
         border-top: 0;
-        border-bottom: 1px solid variables.$gd-border-color;
+        border-bottom: 0;
+        padding: 10px 0;
     }
 
     .header {
