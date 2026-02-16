@@ -401,7 +401,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAlertOncePerInterval: false,
     enableFiscalCalendars: true,
     enablePivotTablePagination: true,
-    enableImplicitDrillToUrl: false,
+    enableImplicitDrillToUrl: true,
     enableDashboardFilterGroups: false,
 };
 

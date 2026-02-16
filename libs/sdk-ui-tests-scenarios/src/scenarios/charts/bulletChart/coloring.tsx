@@ -1,0 +1,50 @@
+// (C) 2007-2026 GoodData Corporation
+
+import { ReferenceMd } from "@gooddata/reference-workspace";
+import { HeaderPredicates } from "@gooddata/sdk-ui";
+import { BulletChart, type IBulletChartProps } from "@gooddata/sdk-ui-charts";
+
+import { BulletChartWithAllMeasuresAndViewBy } from "./base.js";
+import { scenariosFor } from "../../../scenarioGroup.js";
+import { BlackColor, CustomColorPalette, RedColor } from "../../_infra/colors.js";
+import { coloringCustomizer } from "../_infra/coloringVariants.js";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
+import { replaceMappingPredicates } from "../_infra/insightConverters.js";
+
+const colorsAndPalette = scenariosFor<IBulletChartProps>("BulletChart", BulletChart)
+    .withGroupNames(...ScenarioGroupNames.Coloring)
+    .withVisualTestConfig({
+        groupUnder: "coloring",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
+    .addScenarios("coloring", BulletChartWithAllMeasuresAndViewBy, coloringCustomizer);
+
+const colorAssignment = scenariosFor<IBulletChartProps>("BulletChart", BulletChart)
+    .withGroupNames(...ScenarioGroupNames.Coloring)
+    .withVisualTestConfig({
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
+    .addScenario(
+        "assign color to attribute bubbles",
+        {
+            ...BulletChartWithAllMeasuresAndViewBy,
+            config: {
+                colorPalette: CustomColorPalette,
+                colorMapping: [
+                    {
+                        predicate: HeaderPredicates.localIdentifierMatch(ReferenceMd.Won),
+                        color: BlackColor,
+                    },
+                    {
+                        predicate: HeaderPredicates.localIdentifierMatch(ReferenceMd.Amount),
+                        color: RedColor,
+                    },
+                ],
+            },
+        },
+        (m) => m.withInsightConverter(replaceMappingPredicates(ReferenceMd.Won, ReferenceMd.Amount)),
+    );
+
+export const coloring = [colorsAndPalette, colorAssignment];

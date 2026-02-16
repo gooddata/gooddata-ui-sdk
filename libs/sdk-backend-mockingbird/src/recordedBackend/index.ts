@@ -293,6 +293,15 @@ function recordedWorkspace(
                 async setEnableAiOnData(): Promise<void> {
                     return Promise.resolve();
                 },
+                async getEnableDrillToUrlByDefault(): Promise<boolean | undefined> {
+                    return Promise.resolve(undefined);
+                },
+                async setEnableDrillToUrlByDefault(): Promise<void> {
+                    return Promise.resolve();
+                },
+                async deleteEnableDrillToUrlByDefault(): Promise<void> {
+                    return Promise.resolve();
+                },
                 async setColorPalette(): Promise<void> {
                     return Promise.resolve();
                 },
@@ -519,6 +528,7 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 setColorPalette: () => Promise.resolve(),
                 setOpenAiConfig: () => Promise.resolve(),
                 setDashboardFiltersApplyMode: () => Promise.resolve(),
+                setEnableDrillToUrlByDefault: () => Promise.resolve(),
                 setAlertDefault: () => Promise.resolve(),
                 deleteTheme: () => Promise.resolve(),
                 deleteColorPalette: () => Promise.resolve(),

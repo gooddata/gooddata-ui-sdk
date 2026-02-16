@@ -686,9 +686,13 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
     // (undocumented)
     deleteDashboardFiltersApplyMode(): Promise<void>;
     // (undocumented)
+    deleteEnableDrillToUrlByDefault(): Promise<void>;
+    // (undocumented)
     deleteMetricFormatOverride(): Promise<void>;
     // (undocumented)
     deleteTheme(): Promise<void>;
+    // (undocumented)
+    getEnableDrillToUrlByDefault(): Promise<boolean | undefined>;
     // (undocumented)
     getSettings(): Promise<IWorkspaceSettings>;
     // (undocumented)
@@ -707,6 +711,8 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
     setDateFormat(dateFormat: string): Promise<void>;
     // (undocumented)
     setEnableAiOnData(enabled: boolean): Promise<void>;
+    // (undocumented)
+    setEnableDrillToUrlByDefault(enabled: boolean): Promise<void>;
     // (undocumented)
     setFiscalCalendar(fiscalYear: IFiscalYear): Promise<void>;
     // (undocumented)

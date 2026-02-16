@@ -1,4 +1,6 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
+import { type KeyboardEvent } from "react";
 
 import { InvertableSelectSearchBar } from "@gooddata/sdk-ui-kit";
 
@@ -28,6 +30,13 @@ export interface IAttributeFilterElementsSearchBarProps {
      * @beta
      */
     isSmall?: boolean;
+
+    /**
+     * Callback for key down event
+     *
+     * @beta
+     */
+    onKeyDown?: (e: KeyboardEvent) => void;
 }
 
 /**

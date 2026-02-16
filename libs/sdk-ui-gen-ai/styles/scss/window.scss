@@ -37,6 +37,11 @@
     //stylelint-disable-next-line declaration-no-important
     border-radius: 3px !important;
 
+    .gd-gen-ai-chat {
+        // We need to subtract the height of the header
+        height: calc(100% - 45px);
+    }
+
     &--fullscreen {
         margin: 0;
         height: calc(100vh - 60px);

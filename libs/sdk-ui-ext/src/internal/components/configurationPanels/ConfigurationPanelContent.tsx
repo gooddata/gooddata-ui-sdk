@@ -35,6 +35,7 @@ import {
     isInsightSupportedForAlerts,
     isInsightSupportedForScheduledExports,
 } from "../pluggableVisualizations/alerts.js";
+import { isInsightSupportedForImplicitDrillToUrl } from "../pluggableVisualizations/drillDownUtil.js";
 
 export interface IConfigurationPanelContentProps<PanelConfig = any> {
     properties?: IVisualizationProperties;
@@ -76,13 +77,6 @@ export abstract class ConfigurationPanelContent<
     };
 
     protected supportedPropertiesList: string[] | undefined;
-
-    /**
-     * Whether the visualization supports implicit drill to URL.
-     * Override in subclasses to enable this feature for specific visualization types.
-     * Currently only pivot tables support this feature.
-     */
-    protected supportsImplicitDrillToUrl: boolean = false;
 
     constructor(props: T) {
         super(props);
@@ -162,7 +156,7 @@ export abstract class ConfigurationPanelContent<
         const isAlertingEnabled = featureFlags?.enableAlerting;
         const isScheduledExportsEnabled = featureFlags?.enableScheduling;
         const showImplicitDrillToUrl =
-            this.supportsImplicitDrillToUrl && featureFlags?.enableImplicitDrillToUrl;
+            featureFlags?.enableImplicitDrillToUrl && isInsightSupportedForImplicitDrillToUrl(insight);
         const supportsKeyDriveAnalysis = featureFlags?.enableChangeAnalysis;
         const insightSupportsScheduledExports = isInsightSupportedForScheduledExports(insight);
         const insightSupportsAlerts = isInsightSupportedForAlerts(insight);
@@ -171,7 +165,9 @@ export abstract class ConfigurationPanelContent<
             insightSupportsScheduledExports && isScheduledExportsEnabled;
         const metrics = insight ? insightMeasures(insight) : [];
 
-        return supportsAlertsConfiguration || panelConfig?.supportsAttributeHierarchies ? (
+        return supportsAlertsConfiguration ||
+            panelConfig?.supportsAttributeHierarchies ||
+            showImplicitDrillToUrl ? (
             <InteractionsSection
                 metrics={metrics}
                 areControlsDisabledGetter={this.isControlDisabled}

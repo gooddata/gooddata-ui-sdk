@@ -1,0 +1,17 @@
+// (C) 2007-2026 GoodData Corporation
+
+import { AreaChart, type IAreaChartProps } from "@gooddata/sdk-ui-charts";
+
+import { AreaChartWithTwoMeasuresAndViewBy } from "./base.js";
+import { scenariosFor } from "../../../scenarioGroup.js";
+import { coloringCustomizer } from "../_infra/coloringVariants.js";
+import { ScenarioGroupNames } from "../_infra/groupNames.js";
+
+export const coloring = scenariosFor<IAreaChartProps>("AreaChart", AreaChart)
+    .withGroupNames(...ScenarioGroupNames.Coloring)
+    .withVisualTestConfig({
+        groupUnder: "coloring",
+        viewports: [{ label: "desktop", width: 1464, height: 768 }],
+    })
+    .withDefaultTags("vis-config-only", "mock-no-scenario-meta")
+    .addScenarios("coloring", AreaChartWithTwoMeasuresAndViewBy, coloringCustomizer);

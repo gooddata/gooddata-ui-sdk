@@ -84,6 +84,18 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
         return this.decorated.setEnableAiOnData(enabled);
     }
 
+    async getEnableDrillToUrlByDefault(): Promise<boolean | undefined> {
+        return this.decorated.getEnableDrillToUrlByDefault();
+    }
+
+    async setEnableDrillToUrlByDefault(enabled: boolean): Promise<void> {
+        return this.decorated.setEnableDrillToUrlByDefault(enabled);
+    }
+
+    async deleteEnableDrillToUrlByDefault(): Promise<void> {
+        return this.decorated.deleteEnableDrillToUrlByDefault();
+    }
+
     async setTheme(themeId: string): Promise<void> {
         return this.decorated.setTheme(themeId);
     }

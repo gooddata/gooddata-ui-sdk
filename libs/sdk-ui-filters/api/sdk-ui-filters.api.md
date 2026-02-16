@@ -42,6 +42,7 @@ import { ISeparators } from '@gooddata/sdk-ui';
 import { ITranslations } from '@gooddata/sdk-ui';
 import { IUpperBoundedFilter } from '@gooddata/sdk-model';
 import { JSX } from 'react/jsx-runtime';
+import { KeyboardEvent as KeyboardEvent_2 } from 'react';
 import { MutableRefObject } from 'react';
 import { NamedExoticComponent } from 'react';
 import { ObjRef } from '@gooddata/sdk-model';
@@ -595,6 +596,7 @@ export interface IAttributeFilterElementsActionsProps {
 // @beta
 export interface IAttributeFilterElementsSearchBarProps {
     isSmall?: boolean;
+    onKeyDown?: (e: KeyboardEvent_2) => void;
     onSearch: (text: string) => void;
     searchString: string;
 }

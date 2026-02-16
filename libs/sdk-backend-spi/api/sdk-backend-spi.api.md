@@ -1491,6 +1491,8 @@ export interface IOrganizationSettingsService {
     // @alpha
     setDashboardFiltersApplyMode(dashboardFiltersApplyMode: DashboardFiltersApplyMode): Promise<void>;
     setDateFormat(dateFormat: string): Promise<void>;
+    // @alpha
+    setEnableDrillToUrlByDefault(enabled: boolean): Promise<void>;
     setFiscalCalendar(fiscalYear: IFiscalYear): Promise<void>;
     setFormatLocale(locale: string): Promise<void>;
     setLocale(locale: string): Promise<void>;
@@ -2100,8 +2102,12 @@ export interface IWorkspaceSettingsService {
     deleteColorPalette(): Promise<void>;
     // @alpha
     deleteDashboardFiltersApplyMode(): Promise<void>;
+    // @alpha
+    deleteEnableDrillToUrlByDefault(): Promise<void>;
     deleteMetricFormatOverride(): Promise<void>;
     deleteTheme(): Promise<void>;
+    // @alpha
+    getEnableDrillToUrlByDefault(): Promise<boolean | undefined>;
     getSettings(): Promise<IWorkspaceSettings>;
     getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings>;
     setActiveCalendars(calendars: IActiveCalendars): Promise<void>;
@@ -2113,6 +2119,8 @@ export interface IWorkspaceSettingsService {
     setDateFormat(dateFormat: string): Promise<void>;
     // @alpha
     setEnableAiOnData(enabled: boolean): Promise<void>;
+    // @alpha
+    setEnableDrillToUrlByDefault(enabled: boolean): Promise<void>;
     setFiscalCalendar(fiscalYear: IFiscalYear): Promise<void>;
     setFormatLocale(locale: string): Promise<void>;
     setLocale(locale: string): Promise<void>;

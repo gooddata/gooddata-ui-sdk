@@ -27,8 +27,6 @@ import { MetricsPositionControl } from "../configurationControls/MetricsPosition
 import { PagingSection } from "../configurationControls/PagingSection.js";
 
 export class PivotTableConfigurationPanel extends ConfigurationPanelContent {
-    protected override supportsImplicitDrillToUrl = true;
-
     protected override isControlDisabled(sectionName?: SectionName): boolean {
         const enableImplicitDrillToUrl = this.props.featureFlags?.enableImplicitDrillToUrl;
         if (

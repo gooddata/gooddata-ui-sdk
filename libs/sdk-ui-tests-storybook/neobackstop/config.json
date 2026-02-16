@@ -1,0 +1,69 @@
+{
+    "id": "storybook",
+    "browsers": {
+        "chromium": {
+            "name": "chromium",
+            "args": [
+                "--disable-infobars",
+                "--disable-background-networking",
+                "--disable-background-timer-throttling",
+                "--disable-backgrounding-occluded-windows",
+                "--disable-breakpad",
+                "--disable-client-side-phishing-detection",
+                "--disable-default-apps",
+                "--disable-dev-shm-usage",
+                "--disable-extensions",
+                "--disable-features=site-per-process",
+                "--disable-hang-monitor",
+                "--disable-ipc-flooding-protection",
+                "--disable-popup-blocking",
+                "--disable-prompt-on-repost",
+                "--disable-renderer-backgrounding",
+                "--disable-sync",
+                "--disable-translate",
+                "--metrics-recording-only",
+                "--no-first-run",
+                "--safebrowsing-disable-auto-update",
+                "--enable-automation",
+                "--disable-component-update",
+                "--disable-web-resource",
+                "--mute-audio",
+                "--no-sandbox",
+                "--disable-software-rasterizer",
+                "--disable-gpu",
+                "--disable-setuid-sandbox",
+                "--force-device-scale-factor=1"
+            ]
+        },
+        "firefox": {
+            "name": "firefox",
+            "args": [
+                "--disable-dev-shm-usage",
+                "--disable-extensions",
+                "--enable-automation",
+                "--mute-audio",
+                "--no-sandbox",
+                "--disable-gpu"
+            ]
+        }
+    },
+    "defaultBrowsers": ["chromium"],
+    "viewports": [
+        {
+            "label": "desktop",
+            "width": 1024,
+            "height": 768
+        }
+    ],
+    "bitmapsReferencePath": "../output/reference",
+    "bitmapsTestPath": "../output/test",
+    "htmlReport": {
+        "path": "../output/html-report",
+        "showSuccessfulTests": false
+    },
+    "ciReportPath": "../output/ci-report",
+    "asyncCaptureLimit": 20,
+    "asyncCompareLimit": 18,
+    "requireSameDimensions": false,
+    "retryCount": 2
+}

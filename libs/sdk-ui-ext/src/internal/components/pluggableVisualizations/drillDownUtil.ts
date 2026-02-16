@@ -5,6 +5,7 @@ import {
     type IAttributeOrMeasure,
     type IFilter,
     type IInsight,
+    type IInsightDefinition,
     type ObjRefInScope,
     type VisualizationProperties,
     areObjRefsEqual,
@@ -22,6 +23,7 @@ import {
     insightSetProperties,
     insightSetSorts,
     insightSorts,
+    insightVisualizationType,
     isAttribute,
     isIdentifierRef,
     isLocalIdRef,
@@ -33,6 +35,7 @@ import {
 } from "@gooddata/sdk-model";
 import {
     type IDrillEventIntersectionElement,
+    type VisType,
     getIntersectionPartAfter,
     isDrillIntersectionAttributeItem,
 } from "@gooddata/sdk-ui";
@@ -305,3 +308,38 @@ function removeRankingFiltersForRemovedAttributes(insight: IInsight): IInsight {
         }),
     );
 }
+
+/**
+ * Whether the visualization supports implicit drill to URL.
+ * (usually those that does not support attribute bucket items).
+ * @internal
+ */
+export const isInsightSupportedForImplicitDrillToUrl = (
+    insight: IInsight | IInsightDefinition | null | undefined,
+): boolean => {
+    const type = insight ? (insightVisualizationType(insight) as VisType) : null;
+    switch (type) {
+        case "table":
+        case "repeater":
+        case "column":
+        case "bar":
+        case "line":
+        case "area":
+        case "combo2":
+        case "scatter":
+        case "bubble":
+        case "pie":
+        case "donut":
+        case "treemap":
+        case "pyramid":
+        case "funnel":
+        case "heatmap":
+        case "bullet":
+        case "waterfall":
+        case "dependencywheel":
+        case "sankey":
+            return true;
+        default:
+            return false;
+    }
+};

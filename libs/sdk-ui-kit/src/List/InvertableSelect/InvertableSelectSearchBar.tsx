@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type KeyboardEvent } from "react";
 
@@ -17,6 +17,7 @@ export interface IInvertableSelectSearchBarProps {
     searchPlaceholder?: string;
     onSearch: (searchString: string) => void;
     onEscKeyPress?: (e: KeyboardEvent) => void;
+    onKeyDown?: (e: KeyboardEvent) => void;
 }
 
 /**
@@ -29,6 +30,7 @@ export function InvertableSelectSearchBar({
     onSearch,
     onEscKeyPress,
     searchPlaceholder,
+    onKeyDown,
 }: IInvertableSelectSearchBarProps) {
     const intl = useIntl();
 
@@ -38,6 +40,7 @@ export function InvertableSelectSearchBar({
             value={searchString}
             onChange={onSearch as any}
             onEscKeyPress={onEscKeyPress}
+            onKeyDown={onKeyDown}
             placeholder={searchPlaceholder ?? intl.formatMessage({ id: "gs.list.search.placeholder" })}
             autofocus
             clearOnEsc

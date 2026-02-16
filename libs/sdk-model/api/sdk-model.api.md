@@ -5401,6 +5401,7 @@ export type OrganizationPermissionAssignment = (typeof OrganizationPermissionAss
 export const OrganizationPermissionAssignmentValue: {
     readonly MANAGE: "MANAGE";
     readonly SELF_CREATE_TOKEN: "SELF_CREATE_TOKEN";
+    readonly BASE_UI_ACCESS: "BASE_UI_ACCESS";
 };
 
 // @public

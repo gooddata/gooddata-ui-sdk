@@ -518,8 +518,15 @@
             "shouldPublish": false
         },
         {
-            "packageName": "@gooddata/sdk-ui-tests",
-            "projectFolder": "libs/sdk-ui-tests",
+            "packageName": "@gooddata/sdk-ui-tests-scenarios",
+            "projectFolder": "libs/sdk-ui-tests-scenarios",
+            "reviewCategory": "production",
+            // "versionPolicyName": "sdk", // until we publish this, we cannot specify the policy, it overrides the shouldPublish
+            "shouldPublish": false // skipping publishing for now, the package is not ready for publication ye
+        },
+        {
+            "packageName": "@gooddata/sdk-ui-tests-storybook",
+            "projectFolder": "libs/sdk-ui-tests-storybook",
             "reviewCategory": "production",
             // "versionPolicyName": "sdk", // until we publish this, we cannot specify the policy, it overrides the shouldPublish
             "shouldPublish": false // skipping publishing for now, the package is not ready for publication ye
