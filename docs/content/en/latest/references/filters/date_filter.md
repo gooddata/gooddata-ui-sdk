@@ -154,52 +154,58 @@ The relative period defines which granularities (e.g., days, weeks, months) are 
 
 ```json
 {
-    "config": {
-        "absoluteForm": {
+  "data": {
+    "attributes": {
+      "content": {
+        "config": {
+          "absoluteForm": {
             "localIdentifier": "absoluteForm",
             "name": "",
             "visible": true
-        },
-        "allTime": {
+          },
+          "allTime": {
             "localIdentifier": "allTime",
             "name": "All time",
             "visible": true
-        },
-        "relativeForm": {
+          },
+          "relativeForm": {
             "granularities": [
-                "GDC.time.week_us",
-                "GDC.time.month",
-                "GDC.time.year",
-                "GDC.time.quarter",
-                "GDC.time.date",
-                "GDC.time.hour",
-                "GDC.time.minute"
+              "GDC.time.week_us",
+              "GDC.time.month",
+              "GDC.time.year",
+              "GDC.time.quarter",
+              "GDC.time.date",
+              "GDC.time.hour",
+              "GDC.time.minute"
             ],
             "localIdentifier": "relativeForm",
             "name": "",
             "visible": true
-        },
-        "relativePresets": [
+          },
+          "relativePresets": [
             {
-                "from": -6,
-                "to": 0,
-                "granularity": "GDC.time.date",
-                "localIdentifier": "relative_last_7_days",
-                "name": "Last 7 days",
-                "visible": true
+              "from": -6,
+              "to": 0,
+              "granularity": "GDC.time.date",
+              "localIdentifier": "relative_last_7_days",
+              "name": "Last 7 days",
+              "visible": true
             },
             {
-                "from": -29,
-                "to": 0,
-                "granularity": "GDC.time.date",
-                "localIdentifier": "relative_last_30_days",
-                "name": "Last 30 days",
-                "visible": true
+              "from": -29,
+              "to": 0,
+              "granularity": "GDC.time.date",
+              "localIdentifier": "relative_last_30_days",
+              "name": "Last 30 days",
+              "visible": true
             }
             // Add more presets as needed
-        ],
-        "selectedOption": "relative_this_month"
+          ],
+          "selectedOption": "relative_this_month"
+        }
+      }
     }
+  }
 }
 ```
 
