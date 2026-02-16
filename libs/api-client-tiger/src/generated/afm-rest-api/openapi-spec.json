@@ -4906,6 +4906,11 @@
                         "items": {
                             "$ref": "#/components/schemas/AllowedRelationshipType"
                         }
+                    },
+                    "enableHybridSearch": {
+                        "type": "boolean",
+                        "description": "If true, enables hybrid search combining vector similarity and keyword matching. This can improve search results by considering both semantic similarity and exact keyword matches.",
+                        "default": false
                     }
                 }
             },

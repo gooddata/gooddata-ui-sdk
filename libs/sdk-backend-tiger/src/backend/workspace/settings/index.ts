@@ -118,6 +118,23 @@ export class TigerWorkspaceSettings
         return this.setSetting("ENABLE_AI_ON_DATA", { value: enabled });
     }
 
+    public async getEnableDrillToUrlByDefault(): Promise<boolean | undefined> {
+        const settings = await this.getSettingByType("ENABLE_DRILL_TO_URL_BY_DEFAULT");
+        if (settings.data.data.length === 0) {
+            return undefined;
+        }
+        const content = settings.data.data[0].attributes?.content;
+        return unwrapSettingContent(content) as boolean | undefined;
+    }
+
+    public async setEnableDrillToUrlByDefault(enabled: boolean): Promise<void> {
+        return this.setSetting("ENABLE_DRILL_TO_URL_BY_DEFAULT", { value: enabled });
+    }
+
+    public async deleteEnableDrillToUrlByDefault(): Promise<void> {
+        return this.deleteSettingByType("ENABLE_DRILL_TO_URL_BY_DEFAULT");
+    }
+
     public override async setTheme(activeThemeId: string): Promise<void> {
         return this.setSetting("ACTIVE_THEME", { id: activeThemeId, type: "theme" });
     }

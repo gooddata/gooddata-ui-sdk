@@ -247,7 +247,7 @@ importers:
         version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: ^5.1.2
-        version: 5.1.3(vite@8.0.0-beta.10)
+        version: 5.1.3(vite@8.0.0-beta.13)
       eslint:
         specifier: ^9.39.2
         version: 9.39.2(jiti@2.6.1)
@@ -294,17 +294,17 @@ importers:
         specifier: ^0.11.10
         version: 0.11.10
       rolldown:
-        specifier: 1.0.0-rc.1
-        version: 1.0.0-rc.1
+        specifier: 1.0.0-rc.3
+        version: 1.0.0-rc.3
       typescript:
         specifier: 5.9.3
         version: 5.9.3
       vite:
-        specifier: 8.0.0-beta.10
-        version: 8.0.0-beta.10(@types/node@22.18.5)
+        specifier: 8.0.0-beta.13
+        version: 8.0.0-beta.13(@types/node@22.18.5)
       vite-plugin-html:
         specifier: ~3.2.0
-        version: 3.2.2(vite@8.0.0-beta.10)
+        version: 3.2.2(vite@8.0.0-beta.13)
 
   ../../examples/sdk-interactive-examples/examples/example-attributefilter:
     dependencies:
@@ -383,7 +383,7 @@ importers:
         version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: ^5.1.2
-        version: 5.1.3(vite@8.0.0-beta.10)
+        version: 5.1.3(vite@8.0.0-beta.13)
       eslint:
         specifier: ^9.39.2
         version: 9.39.2(jiti@2.6.1)
@@ -430,17 +430,17 @@ importers:
         specifier: ^0.11.10
         version: 0.11.10
       rolldown:
-        specifier: 1.0.0-rc.1
-        version: 1.0.0-rc.1
+        specifier: 1.0.0-rc.3
+        version: 1.0.0-rc.3
       typescript:
         specifier: 5.9.3
         version: 5.9.3
       vite:
-        specifier: 8.0.0-beta.10
-        version: 8.0.0-beta.10(@types/node@22.18.5)
+        specifier: 8.0.0-beta.13
+        version: 8.0.0-beta.13(@types/node@22.18.5)
       vite-plugin-html:
         specifier: ~3.2.0
-        version: 3.2.2(vite@8.0.0-beta.10)
+        version: 3.2.2(vite@8.0.0-beta.13)
 
   ../../examples/sdk-interactive-examples/examples/example-chartconfig:
     dependencies:
@@ -519,7 +519,7 @@ importers:
         version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: ^5.1.2
-        version: 5.1.3(vite@8.0.0-beta.10)
+        version: 5.1.3(vite@8.0.0-beta.13)
       eslint:
         specifier: ^9.39.2
         version: 9.39.2(jiti@2.6.1)
@@ -566,17 +566,17 @@ importers:
         specifier: ^0.11.10
         version: 0.11.10
       rolldown:
-        specifier: 1.0.0-rc.1
-        version: 1.0.0-rc.1
+        specifier: 1.0.0-rc.3
+        version: 1.0.0-rc.3
       typescript:
         specifier: 5.9.3
         version: 5.9.3
       vite:
-        specifier: 8.0.0-beta.10
-        version: 8.0.0-beta.10(@types/node@22.18.5)
+        specifier: 8.0.0-beta.13
+        version: 8.0.0-beta.13(@types/node@22.18.5)
       vite-plugin-html:
         specifier: ~3.2.0
-        version: 3.2.2(vite@8.0.0-beta.10)
+        version: 3.2.2(vite@8.0.0-beta.13)
 
   ../../examples/sdk-interactive-examples/examples/example-columnchart:
     dependencies:
@@ -655,7 +655,7 @@ importers:
         version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: ^5.1.2
-        version: 5.1.3(vite@8.0.0-beta.10)
+        version: 5.1.3(vite@8.0.0-beta.13)
       eslint:
         specifier: ^9.39.2
         version: 9.39.2(jiti@2.6.1)
@@ -702,17 +702,17 @@ importers:
         specifier: ^0.11.10
         version: 0.11.10
       rolldown:
-        specifier: 1.0.0-rc.1
-        version: 1.0.0-rc.1
+        specifier: 1.0.0-rc.3
+        version: 1.0.0-rc.3
       typescript:
         specifier: 5.9.3
         version: 5.9.3
       vite:
-        specifier: 8.0.0-beta.10
-        version: 8.0.0-beta.10(@types/node@22.18.5)
+        specifier: 8.0.0-beta.13
+        version: 8.0.0-beta.13(@types/node@22.18.5)
       vite-plugin-html:
         specifier: ~3.2.0
-        version: 3.2.2(vite@8.0.0-beta.10)
+        version: 3.2.2(vite@8.0.0-beta.13)
 
   ../../examples/sdk-interactive-examples/examples/example-combochart:
     dependencies:
@@ -791,7 +791,7 @@ importers:
         version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: ^5.1.2
-        version: 5.1.3(vite@8.0.0-beta.10)
+        version: 5.1.3(vite@8.0.0-beta.13)
       eslint:
         specifier: ^9.39.2
         version: 9.39.2(jiti@2.6.1)
@@ -838,17 +838,17 @@ importers:
         specifier: ^0.11.10
         version: 0.11.10
       rolldown:
-        specifier: 1.0.0-rc.1
-        version: 1.0.0-rc.1
+        specifier: 1.0.0-rc.3
+        version: 1.0.0-rc.3
       typescript:
         specifier: 5.9.3
         version: 5.9.3
       vite:
-        specifier: 8.0.0-beta.10
-        version: 8.0.0-beta.10(@types/node@22.18.5)
+        specifier: 8.0.0-beta.13
+        version: 8.0.0-beta.13(@types/node@22.18.5)
       vite-plugin-html:
         specifier: ~3.2.0
-        version: 3.2.2(vite@8.0.0-beta.10)
+        version: 3.2.2(vite@8.0.0-beta.13)
 
   ../../examples/sdk-interactive-examples/examples/example-dashboard:
     dependencies:
@@ -927,7 +927,7 @@ importers:
         version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: ^5.1.2
-        version: 5.1.3(vite@8.0.0-beta.10)
+        version: 5.1.3(vite@8.0.0-beta.13)
       eslint:
         specifier: ^9.39.2
         version: 9.39.2(jiti@2.6.1)
@@ -974,17 +974,17 @@ importers:
         specifier: ^0.11.10
         version: 0.11.10
       rolldown:
-        specifier: 1.0.0-rc.1
-        version: 1.0.0-rc.1
+        specifier: 1.0.0-rc.3
+        version: 1.0.0-rc.3
       typescript:
         specifier: 5.9.3
         version: 5.9.3
       vite:
-        specifier: 8.0.0-beta.10
-        version: 8.0.0-beta.10(@types/node@22.18.5)
+        specifier: 8.0.0-beta.13
+        version: 8.0.0-beta.13(@types/node@22.18.5)
       vite-plugin-html:
         specifier: ~3.2.0
-        version: 3.2.2(vite@8.0.0-beta.10)
+        version: 3.2.2(vite@8.0.0-beta.13)
 
   ../../examples/sdk-interactive-examples/examples/example-datefilter:
     dependencies:
@@ -1063,7 +1063,7 @@ importers:
         version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: ^5.1.2
-        version: 5.1.3(vite@8.0.0-beta.10)
+        version: 5.1.3(vite@8.0.0-beta.13)
       eslint:
         specifier: ^9.39.2
         version: 9.39.2(jiti@2.6.1)
@@ -1110,17 +1110,17 @@ importers:
         specifier: ^0.11.10
         version: 0.11.10
       rolldown:
-        specifier: 1.0.0-rc.1
-        version: 1.0.0-rc.1
+        specifier: 1.0.0-rc.3
+        version: 1.0.0-rc.3
       typescript:
         specifier: 5.9.3
         version: 5.9.3
       vite:
-        specifier: 8.0.0-beta.10
-        version: 8.0.0-beta.10(@types/node@22.18.5)
+        specifier: 8.0.0-beta.13
+        version: 8.0.0-beta.13(@types/node@22.18.5)
       vite-plugin-html:
         specifier: ~3.2.0
-        version: 3.2.2(vite@8.0.0-beta.10)
+        version: 3.2.2(vite@8.0.0-beta.13)
 
   ../../examples/sdk-interactive-examples/examples/example-dependentfilters:
     dependencies:
@@ -1199,7 +1199,7 @@ importers:
         version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: ^5.1.2
-        version: 5.1.3(vite@8.0.0-beta.10)
+        version: 5.1.3(vite@8.0.0-beta.13)
       eslint:
         specifier: ^9.39.2
         version: 9.39.2(jiti@2.6.1)
@@ -1246,17 +1246,17 @@ importers:
         specifier: ^0.11.10
         version: 0.11.10
       rolldown:
-        specifier: 1.0.0-rc.1
-        version: 1.0.0-rc.1
+        specifier: 1.0.0-rc.3
+        version: 1.0.0-rc.3
       typescript:
         specifier: 5.9.3
         version: 5.9.3
       vite:
-        specifier: 8.0.0-beta.10
-        version: 8.0.0-beta.10(@types/node@22.18.5)
+        specifier: 8.0.0-beta.13
+        version: 8.0.0-beta.13(@types/node@22.18.5)
       vite-plugin-html:
         specifier: ~3.2.0
-        version: 3.2.2(vite@8.0.0-beta.10)
+        version: 3.2.2(vite@8.0.0-beta.13)
 
   ../../examples/sdk-interactive-examples/examples/example-execute:
     dependencies:
@@ -1344,7 +1344,7 @@ importers:
         version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: ^5.1.2
-        version: 5.1.3(vite@8.0.0-beta.10)
+        version: 5.1.3(vite@8.0.0-beta.13)
       eslint:
         specifier: ^9.39.2
         version: 9.39.2(jiti@2.6.1)
@@ -1391,17 +1391,17 @@ importers:
         specifier: ^0.11.10
         version: 0.11.10
       rolldown:
-        specifier: 1.0.0-rc.1
-        version: 1.0.0-rc.1
+        specifier: 1.0.0-rc.3
+        version: 1.0.0-rc.3
       typescript:
         specifier: 5.9.3
         version: 5.9.3
       vite:
-        specifier: 8.0.0-beta.10
-        version: 8.0.0-beta.10(@types/node@22.18.5)
+        specifier: 8.0.0-beta.13
+        version: 8.0.0-beta.13(@types/node@22.18.5)
       vite-plugin-html:
         specifier: ~3.2.0
-        version: 3.2.2(vite@8.0.0-beta.10)
+        version: 3.2.2(vite@8.0.0-beta.13)
 
   ../../examples/sdk-interactive-examples/examples/example-granularity:
     dependencies:
@@ -1480,7 +1480,7 @@ importers:
         version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: ^5.1.2
-        version: 5.1.3(vite@8.0.0-beta.10)
+        version: 5.1.3(vite@8.0.0-beta.13)
       eslint:
         specifier: ^9.39.2
         version: 9.39.2(jiti@2.6.1)
@@ -1527,17 +1527,17 @@ importers:
         specifier: ^0.11.10
         version: 0.11.10
       rolldown:
-        specifier: 1.0.0-rc.1
-        version: 1.0.0-rc.1
+        specifier: 1.0.0-rc.3
+        version: 1.0.0-rc.3
       typescript:
         specifier: 5.9.3
         version: 5.9.3
       vite:
-        specifier: 8.0.0-beta.10
-        version: 8.0.0-beta.10(@types/node@22.18.5)
+        specifier: 8.0.0-beta.13
+        version: 8.0.0-beta.13(@types/node@22.18.5)
       vite-plugin-html:
         specifier: ~3.2.0
-        version: 3.2.2(vite@8.0.0-beta.10)
+        version: 3.2.2(vite@8.0.0-beta.13)
 
   ../../examples/sdk-interactive-examples/examples/example-headline:
     dependencies:
@@ -1616,7 +1616,7 @@ importers:
         version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: ^5.1.2
-        version: 5.1.3(vite@8.0.0-beta.10)
+        version: 5.1.3(vite@8.0.0-beta.13)
       eslint:
         specifier: ^9.39.2
         version: 9.39.2(jiti@2.6.1)
@@ -1663,17 +1663,17 @@ importers:
         specifier: ^0.11.10
         version: 0.11.10
       rolldown:
-        specifier: 1.0.0-rc.1
-        version: 1.0.0-rc.1
+        specifier: 1.0.0-rc.3
+        version: 1.0.0-rc.3
       typescript:
         specifier: 5.9.3
         version: 5.9.3
       vite:
-        specifier: 8.0.0-beta.10
-        version: 8.0.0-beta.10(@types/node@22.18.5)
+        specifier: 8.0.0-beta.13
+        version: 8.0.0-beta.13(@types/node@22.18.5)
       vite-plugin-html:
         specifier: ~3.2.0
-        version: 3.2.2(vite@8.0.0-beta.10)
+        version: 3.2.2(vite@8.0.0-beta.13)
 
   ../../examples/sdk-interactive-examples/examples/example-pivottable:
     dependencies:
@@ -1752,7 +1752,7 @@ importers:
         version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: ^5.1.2
-        version: 5.1.3(vite@8.0.0-beta.10)
+        version: 5.1.3(vite@8.0.0-beta.13)
       eslint:
         specifier: ^9.39.2
         version: 9.39.2(jiti@2.6.1)
@@ -1799,17 +1799,17 @@ importers:
         specifier: ^0.11.10
         version: 0.11.10
       rolldown:
-        specifier: 1.0.0-rc.1
-        version: 1.0.0-rc.1
+        specifier: 1.0.0-rc.3
+        version: 1.0.0-rc.3
       typescript:
         specifier: 5.9.3
         version: 5.9.3
       vite:
-        specifier: 8.0.0-beta.10
-        version: 8.0.0-beta.10(@types/node@22.18.5)
+        specifier: 8.0.0-beta.13
+        version: 8.0.0-beta.13(@types/node@22.18.5)
       vite-plugin-html:
         specifier: ~3.2.0
-        version: 3.2.2(vite@8.0.0-beta.10)
+        version: 3.2.2(vite@8.0.0-beta.13)
 
   ../../examples/sdk-interactive-examples/examples/example-relativedatefilter:
     dependencies:
@@ -1888,7 +1888,7 @@ importers:
         version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: ^5.1.2
-        version: 5.1.3(vite@8.0.0-beta.10)
+        version: 5.1.3(vite@8.0.0-beta.13)
       eslint:
         specifier: ^9.39.2
         version: 9.39.2(jiti@2.6.1)
@@ -1935,17 +1935,17 @@ importers:
         specifier: ^0.11.10
         version: 0.11.10
       rolldown:
-        specifier: 1.0.0-rc.1
-        version: 1.0.0-rc.1
+        specifier: 1.0.0-rc.3
+        version: 1.0.0-rc.3
       typescript:
         specifier: 5.9.3
         version: 5.9.3
       vite:
-        specifier: 8.0.0-beta.10
-        version: 8.0.0-beta.10(@types/node@22.18.5)
+        specifier: 8.0.0-beta.13
+        version: 8.0.0-beta.13(@types/node@22.18.5)
       vite-plugin-html:
         specifier: ~3.2.0
-        version: 3.2.2(vite@8.0.0-beta.10)
+        version: 3.2.2(vite@8.0.0-beta.13)
 
   ../../examples/sdk-interactive-examples/examples/example-repeater:
     dependencies:
@@ -2024,7 +2024,7 @@ importers:
         version: 7.0.0-dev.20260202.1
       '@vitejs/plugin-react':
         specifier: ^5.1.2
-        version: 5.1.3(vite@8.0.0-beta.10)
+        version: 5.1.3(vite@8.0.0-beta.13)
       eslint:
         specifier: ^9.39.2
         version: 9.39.2(jiti@2.6.1)
@@ -2071,17 +2071,17 @@ importers:
         specifier: ^0.11.10
         version: 0.11.10
       rolldown:
-        specifier: 1.0.0-rc.1
-        version: 1.0.0-rc.1
+        specifier: 1.0.0-rc.3
+        version: 1.0.0-rc.3
       typescript:
         specifier: 5.9.3
         version: 5.9.3
       vite:
-        specifier: 8.0.0-beta.10
-        version: 8.0.0-beta.10(@types/node@22.18.5)
+        specifier: 8.0.0-beta.13
+        version: 8.0.0-beta.13(@types/node@22.18.5)
       vite-plugin-html:
         specifier: ~3.2.0
-        version: 3.2.2(vite@8.0.0-beta.10)
+        version: 3.2.2(vite@8.0.0-beta.13)
 
   ../../libs/api-client-tiger:
     dependencies:
@@ -5439,237 +5439,6 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@4.0.8)
 
-  ../../libs/sdk-ui-tests:
-    devDependencies:
-      '@gooddata/eslint-config':
-        specifier: workspace:*
-        version: link:../../tools/eslint-config
-      '@gooddata/mock-handling':
-        specifier: workspace:*
-        version: link:../../tools/mock-handling
-      '@gooddata/oxlint-config':
-        specifier: workspace:*
-        version: link:../../tools/oxlint-config
-      '@gooddata/reference-workspace':
-        specifier: workspace:*
-        version: link:../../tools/reference-workspace
-      '@gooddata/sdk-backend-base':
-        specifier: workspace:*
-        version: link:../sdk-backend-base
-      '@gooddata/sdk-backend-mockingbird':
-        specifier: workspace:*
-        version: link:../sdk-backend-mockingbird
-      '@gooddata/sdk-backend-spi':
-        specifier: workspace:*
-        version: link:../sdk-backend-spi
-      '@gooddata/sdk-model':
-        specifier: workspace:*
-        version: link:../sdk-model
-      '@gooddata/sdk-ui':
-        specifier: workspace:*
-        version: link:../sdk-ui
-      '@gooddata/sdk-ui-charts':
-        specifier: workspace:*
-        version: link:../sdk-ui-charts
-      '@gooddata/sdk-ui-dashboard':
-        specifier: workspace:*
-        version: link:../sdk-ui-dashboard
-      '@gooddata/sdk-ui-ext':
-        specifier: workspace:*
-        version: link:../sdk-ui-ext
-      '@gooddata/sdk-ui-filters':
-        specifier: workspace:*
-        version: link:../sdk-ui-filters
-      '@gooddata/sdk-ui-gen-ai':
-        specifier: workspace:*
-        version: link:../sdk-ui-gen-ai
-      '@gooddata/sdk-ui-geo':
-        specifier: workspace:*
-        version: link:../sdk-ui-geo
-      '@gooddata/sdk-ui-kit':
-        specifier: workspace:*
-        version: link:../sdk-ui-kit
-      '@gooddata/sdk-ui-pivot':
-        specifier: workspace:*
-        version: link:../sdk-ui-pivot
-      '@gooddata/sdk-ui-semantic-search':
-        specifier: workspace:*
-        version: link:../sdk-ui-semantic-search
-      '@gooddata/sdk-ui-theme-provider':
-        specifier: workspace:*
-        version: link:../sdk-ui-theme-provider
-      '@gooddata/sdk-ui-web-components':
-        specifier: workspace:*
-        version: link:../sdk-ui-web-components
-      '@gooddata/stylelint-config':
-        specifier: workspace:*
-        version: link:../../tools/stylelint-config
-      '@storybook/addon-a11y':
-        specifier: ^10.1.11
-        version: 10.1.11(storybook@10.1.11)
-      '@storybook/builder-vite':
-        specifier: ^10.1.11
-        version: 10.1.11(storybook@10.1.11)(vite@8.0.0-beta.10)
-      '@storybook/cli':
-        specifier: ^10.1.11
-        version: 10.1.11(@testing-library/dom@10.4.1)(react-dom@19.1.1)(react@19.1.1)
-      '@storybook/react-vite':
-        specifier: ^10.1.11
-        version: 10.1.11(react-dom@19.1.1)(react@19.1.1)(storybook@10.1.11)(typescript@5.9.3)(vite@8.0.0-beta.10)
-      '@testing-library/dom':
-        specifier: 10.4.1
-        version: 10.4.1
-      '@testing-library/react':
-        specifier: 16.3.0
-        version: 16.3.0(@testing-library/dom@10.4.1)(@types/react-dom@19.1.7)(@types/react@19.1.11)(react-dom@19.1.1)(react@19.1.1)
-      '@types/lodash-es':
-        specifier: ^4.17.12
-        version: 4.17.12
-      '@types/node':
-        specifier: ^22.13.0
-        version: 22.18.5
-      '@types/react':
-        specifier: 19.1.11
-        version: 19.1.11
-      '@types/react-dom':
-        specifier: 19.1.7
-        version: 19.1.7(@types/react@19.1.11)
-      '@types/spark-md5':
-        specifier: ^3.0.1
-        version: 3.0.5
-      '@typescript-eslint/eslint-plugin':
-        specifier: 8.52.0
-        version: 8.52.0(@typescript-eslint/parser@8.52.0)(eslint@9.39.2)(typescript@5.9.3)
-      '@typescript-eslint/parser':
-        specifier: 8.52.0
-        version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
-      '@typescript/native-preview':
-        specifier: 7.0.0-dev.20260202.1
-        version: 7.0.0-dev.20260202.1
-      '@vitest/eslint-plugin':
-        specifier: 1.6.6
-        version: 1.6.6(eslint@9.39.2)(typescript@5.9.3)(vitest@4.0.8)
-      dependency-cruiser:
-        specifier: ^14.1.2
-        version: 14.1.2
-      eslint:
-        specifier: ^9.39.2
-        version: 9.39.2(jiti@2.6.1)
-      eslint-import-resolver-typescript:
-        specifier: 4.4.4
-        version: 4.4.4(eslint-plugin-import-x@4.16.1)(eslint@9.39.2)
-      eslint-plugin-headers:
-        specifier: 1.3.3
-        version: 1.3.3(eslint@9.39.2)
-      eslint-plugin-import-esm:
-        specifier: 1.2.1
-        version: 1.2.1(eslint@9.39.2)
-      eslint-plugin-import-x:
-        specifier: 4.16.1
-        version: 4.16.1(eslint@9.39.2)
-      eslint-plugin-jsdoc:
-        specifier: 62.1.0
-        version: 62.1.0(eslint@9.39.2)
-      eslint-plugin-no-barrel-files:
-        specifier: 1.2.2
-        version: 1.2.2(eslint@9.39.2)(typescript@5.9.3)
-      eslint-plugin-no-only-tests:
-        specifier: 3.3.0
-        version: 3.3.0
-      eslint-plugin-react:
-        specifier: 7.37.5
-        version: 7.37.5(eslint@9.39.2)
-      eslint-plugin-react-hooks:
-        specifier: 5.2.0
-        version: 5.2.0(eslint@9.39.2)
-      eslint-plugin-sonarjs:
-        specifier: 3.0.6
-        version: 3.0.6(eslint@9.39.2)
-      eslint-plugin-storybook:
-        specifier: 10.1.11
-        version: 10.1.11(eslint@9.39.2)(storybook@10.1.11)(typescript@5.9.3)
-      fast-glob:
-        specifier: 3.3.3
-        version: 3.3.3
-      happy-dom:
-        specifier: 18.0.1
-        version: 18.0.1
-      json-stable-stringify:
-        specifier: 1.3.0
-        version: 1.3.0
-      lodash-es:
-        specifier: ^4.17.23
-        version: 4.17.23
-      mapbox-gl:
-        specifier: ^2.6.1
-        version: 2.15.0
-      moment:
-        specifier: ^2.29.4
-        version: 2.30.1
-      npm-run-all:
-        specifier: ^4.1.5
-        version: 4.1.5
-      oxfmt:
-        specifier: 0.27.0
-        version: 0.27.0
-      oxlint:
-        specifier: ^1.43.0
-        version: 1.43.0(oxlint-tsgolint@0.11.4)
-      oxlint-tsgolint:
-        specifier: 0.11.4
-        version: 0.11.4
-      react:
-        specifier: 19.1.1
-        version: 19.1.1
-      react-dom:
-        specifier: 19.1.1
-        version: 19.1.1(react@19.1.1)
-      react-intl:
-        specifier: 7.1.11
-        version: 7.1.11(react@19.1.1)(typescript@5.9.3)
-      react-responsive:
-        specifier: ^10.0.1
-        version: 10.0.1(react@19.1.1)
-      require-from-string:
-        specifier: ^2.0.2
-        version: 2.0.2
-      rolldown:
-        specifier: 1.0.0-rc.1
-        version: 1.0.0-rc.1
-      spark-md5:
-        specifier: ^3.0.0
-        version: 3.0.2
-      storybook:
-        specifier: ^10.1.11
-        version: 10.1.11(@testing-library/dom@10.4.1)(prettier@3.6.2)(react-dom@19.1.1)(react@19.1.1)
-      stylelint:
-        specifier: ^16.26.1
-        version: 16.26.1(typescript@5.9.3)
-      ts-invariant:
-        specifier: ^0.7.5
-        version: 0.7.5
-      tslib:
-        specifier: 2.8.1
-        version: 2.8.1
-      typescript:
-        specifier: 5.9.3
-        version: 5.9.3
-      uuid:
-        specifier: ^11.1.0
-        version: 11.1.0
-      vite:
-        specifier: 8.0.0-beta.10
-        version: 8.0.0-beta.10(@types/node@22.18.5)
-      vite-node:
-        specifier: ^5.2.0
-        version: 5.2.0(@types/node@22.18.5)(jiti@2.6.1)
-      vite-plugin-static-copy:
-        specifier: ^3.1.1
-        version: 3.1.2(vite@8.0.0-beta.10)
-      vitest:
-        specifier: 4.0.8
-        version: 4.0.8(@types/node@22.18.5)(happy-dom@18.0.1)
-
   ../../libs/sdk-ui-tests-e2e:
     devDependencies:
       '@babel/core':
@@ -5888,6 +5657,396 @@ importers:
       xml2js:
         specifier: ^0.5.0
         version: 0.5.0
+
+  ../../libs/sdk-ui-tests-scenarios:
+    devDependencies:
+      '@gooddata/eslint-config':
+        specifier: workspace:*
+        version: link:../../tools/eslint-config
+      '@gooddata/mock-handling':
+        specifier: workspace:*
+        version: link:../../tools/mock-handling
+      '@gooddata/oxlint-config':
+        specifier: workspace:*
+        version: link:../../tools/oxlint-config
+      '@gooddata/reference-workspace':
+        specifier: workspace:*
+        version: link:../../tools/reference-workspace
+      '@gooddata/sdk-backend-base':
+        specifier: workspace:*
+        version: link:../sdk-backend-base
+      '@gooddata/sdk-backend-mockingbird':
+        specifier: workspace:*
+        version: link:../sdk-backend-mockingbird
+      '@gooddata/sdk-backend-spi':
+        specifier: workspace:*
+        version: link:../sdk-backend-spi
+      '@gooddata/sdk-model':
+        specifier: workspace:*
+        version: link:../sdk-model
+      '@gooddata/sdk-ui':
+        specifier: workspace:*
+        version: link:../sdk-ui
+      '@gooddata/sdk-ui-charts':
+        specifier: workspace:*
+        version: link:../sdk-ui-charts
+      '@gooddata/sdk-ui-ext':
+        specifier: workspace:*
+        version: link:../sdk-ui-ext
+      '@gooddata/sdk-ui-geo':
+        specifier: workspace:*
+        version: link:../sdk-ui-geo
+      '@gooddata/sdk-ui-pivot':
+        specifier: workspace:*
+        version: link:../sdk-ui-pivot
+      '@testing-library/dom':
+        specifier: 10.4.1
+        version: 10.4.1
+      '@testing-library/react':
+        specifier: 16.3.0
+        version: 16.3.0(@testing-library/dom@10.4.1)(@types/react-dom@19.1.7)(@types/react@19.1.11)(react-dom@19.1.1)(react@19.1.1)
+      '@types/lodash-es':
+        specifier: ^4.17.12
+        version: 4.17.12
+      '@types/node':
+        specifier: ^22.13.0
+        version: 22.18.5
+      '@types/react':
+        specifier: 19.1.11
+        version: 19.1.11
+      '@types/react-dom':
+        specifier: 19.1.7
+        version: 19.1.7(@types/react@19.1.11)
+      '@types/spark-md5':
+        specifier: ^3.0.1
+        version: 3.0.5
+      '@typescript-eslint/eslint-plugin':
+        specifier: 8.52.0
+        version: 8.52.0(@typescript-eslint/parser@8.52.0)(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript-eslint/parser':
+        specifier: 8.52.0
+        version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
+      '@vitest/eslint-plugin':
+        specifier: 1.6.6
+        version: 1.6.6(eslint@9.39.2)(typescript@5.9.3)(vitest@4.0.8)
+      dependency-cruiser:
+        specifier: ^14.1.2
+        version: 14.1.2
+      eslint:
+        specifier: ^9.39.2
+        version: 9.39.2(jiti@2.6.1)
+      eslint-import-resolver-typescript:
+        specifier: 4.4.4
+        version: 4.4.4(eslint-plugin-import-x@4.16.1)(eslint@9.39.2)
+      eslint-plugin-headers:
+        specifier: 1.3.3
+        version: 1.3.3(eslint@9.39.2)
+      eslint-plugin-import-esm:
+        specifier: 1.2.1
+        version: 1.2.1(eslint@9.39.2)
+      eslint-plugin-import-x:
+        specifier: 4.16.1
+        version: 4.16.1(eslint@9.39.2)
+      eslint-plugin-jsdoc:
+        specifier: 62.1.0
+        version: 62.1.0(eslint@9.39.2)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@9.39.2)(typescript@5.9.3)
+      eslint-plugin-no-only-tests:
+        specifier: 3.3.0
+        version: 3.3.0
+      eslint-plugin-react:
+        specifier: 7.37.5
+        version: 7.37.5(eslint@9.39.2)
+      eslint-plugin-react-hooks:
+        specifier: 5.2.0
+        version: 5.2.0(eslint@9.39.2)
+      eslint-plugin-sonarjs:
+        specifier: 3.0.6
+        version: 3.0.6(eslint@9.39.2)
+      fast-glob:
+        specifier: 3.3.3
+        version: 3.3.3
+      happy-dom:
+        specifier: 18.0.1
+        version: 18.0.1
+      json-stable-stringify:
+        specifier: 1.3.0
+        version: 1.3.0
+      lodash-es:
+        specifier: ^4.17.23
+        version: 4.17.23
+      mapbox-gl:
+        specifier: ^2.6.1
+        version: 2.15.0
+      moment:
+        specifier: ^2.29.4
+        version: 2.30.1
+      npm-run-all:
+        specifier: ^4.1.5
+        version: 4.1.5
+      oxfmt:
+        specifier: 0.27.0
+        version: 0.27.0
+      oxlint:
+        specifier: ^1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
+      react:
+        specifier: 19.1.1
+        version: 19.1.1
+      react-dom:
+        specifier: 19.1.1
+        version: 19.1.1(react@19.1.1)
+      spark-md5:
+        specifier: ^3.0.0
+        version: 3.0.2
+      storybook:
+        specifier: ^10.1.11
+        version: 10.1.11(@testing-library/dom@10.4.1)(prettier@3.6.2)(react-dom@19.1.1)(react@19.1.1)
+      ts-invariant:
+        specifier: ^0.7.5
+        version: 0.7.5
+      typescript:
+        specifier: 5.9.3
+        version: 5.9.3
+      vitest:
+        specifier: 4.0.8
+        version: 4.0.8(@types/node@22.18.5)(happy-dom@18.0.1)
+
+  ../../libs/sdk-ui-tests-storybook:
+    devDependencies:
+      '@gooddata/eslint-config':
+        specifier: workspace:*
+        version: link:../../tools/eslint-config
+      '@gooddata/mock-handling':
+        specifier: workspace:*
+        version: link:../../tools/mock-handling
+      '@gooddata/oxlint-config':
+        specifier: workspace:*
+        version: link:../../tools/oxlint-config
+      '@gooddata/reference-workspace':
+        specifier: workspace:*
+        version: link:../../tools/reference-workspace
+      '@gooddata/sdk-backend-base':
+        specifier: workspace:*
+        version: link:../sdk-backend-base
+      '@gooddata/sdk-backend-mockingbird':
+        specifier: workspace:*
+        version: link:../sdk-backend-mockingbird
+      '@gooddata/sdk-backend-spi':
+        specifier: workspace:*
+        version: link:../sdk-backend-spi
+      '@gooddata/sdk-model':
+        specifier: workspace:*
+        version: link:../sdk-model
+      '@gooddata/sdk-ui':
+        specifier: workspace:*
+        version: link:../sdk-ui
+      '@gooddata/sdk-ui-charts':
+        specifier: workspace:*
+        version: link:../sdk-ui-charts
+      '@gooddata/sdk-ui-dashboard':
+        specifier: workspace:*
+        version: link:../sdk-ui-dashboard
+      '@gooddata/sdk-ui-ext':
+        specifier: workspace:*
+        version: link:../sdk-ui-ext
+      '@gooddata/sdk-ui-filters':
+        specifier: workspace:*
+        version: link:../sdk-ui-filters
+      '@gooddata/sdk-ui-gen-ai':
+        specifier: workspace:*
+        version: link:../sdk-ui-gen-ai
+      '@gooddata/sdk-ui-geo':
+        specifier: workspace:*
+        version: link:../sdk-ui-geo
+      '@gooddata/sdk-ui-kit':
+        specifier: workspace:*
+        version: link:../sdk-ui-kit
+      '@gooddata/sdk-ui-pivot':
+        specifier: workspace:*
+        version: link:../sdk-ui-pivot
+      '@gooddata/sdk-ui-semantic-search':
+        specifier: workspace:*
+        version: link:../sdk-ui-semantic-search
+      '@gooddata/sdk-ui-tests-scenarios':
+        specifier: workspace:*
+        version: link:../sdk-ui-tests-scenarios
+      '@gooddata/sdk-ui-theme-provider':
+        specifier: workspace:*
+        version: link:../sdk-ui-theme-provider
+      '@gooddata/sdk-ui-web-components':
+        specifier: workspace:*
+        version: link:../sdk-ui-web-components
+      '@gooddata/stylelint-config':
+        specifier: workspace:*
+        version: link:../../tools/stylelint-config
+      '@storybook/addon-a11y':
+        specifier: ^10.1.11
+        version: 10.1.11(storybook@10.1.11)
+      '@storybook/builder-vite':
+        specifier: ^10.1.11
+        version: 10.1.11(storybook@10.1.11)(vite@8.0.0-beta.13)
+      '@storybook/cli':
+        specifier: ^10.1.11
+        version: 10.1.11(@testing-library/dom@10.4.1)(react-dom@19.1.1)(react@19.1.1)
+      '@storybook/react-vite':
+        specifier: ^10.1.11
+        version: 10.1.11(react-dom@19.1.1)(react@19.1.1)(storybook@10.1.11)(typescript@5.9.3)(vite@8.0.0-beta.13)
+      '@testing-library/dom':
+        specifier: 10.4.1
+        version: 10.4.1
+      '@testing-library/react':
+        specifier: 16.3.0
+        version: 16.3.0(@testing-library/dom@10.4.1)(@types/react-dom@19.1.7)(@types/react@19.1.11)(react-dom@19.1.1)(react@19.1.1)
+      '@types/lodash-es':
+        specifier: ^4.17.12
+        version: 4.17.12
+      '@types/node':
+        specifier: ^22.13.0
+        version: 22.18.5
+      '@types/react':
+        specifier: 19.1.11
+        version: 19.1.11
+      '@types/react-dom':
+        specifier: 19.1.7
+        version: 19.1.7(@types/react@19.1.11)
+      '@types/spark-md5':
+        specifier: ^3.0.1
+        version: 3.0.5
+      '@typescript-eslint/eslint-plugin':
+        specifier: 8.52.0
+        version: 8.52.0(@typescript-eslint/parser@8.52.0)(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript-eslint/parser':
+        specifier: 8.52.0
+        version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
+      '@vitest/eslint-plugin':
+        specifier: 1.6.6
+        version: 1.6.6(eslint@9.39.2)(typescript@5.9.3)(vitest@4.0.8)
+      eslint:
+        specifier: ^9.39.2
+        version: 9.39.2(jiti@2.6.1)
+      eslint-import-resolver-typescript:
+        specifier: 4.4.4
+        version: 4.4.4(eslint-plugin-import-x@4.16.1)(eslint@9.39.2)
+      eslint-plugin-headers:
+        specifier: 1.3.3
+        version: 1.3.3(eslint@9.39.2)
+      eslint-plugin-import-esm:
+        specifier: 1.2.1
+        version: 1.2.1(eslint@9.39.2)
+      eslint-plugin-import-x:
+        specifier: 4.16.1
+        version: 4.16.1(eslint@9.39.2)
+      eslint-plugin-jsdoc:
+        specifier: 62.1.0
+        version: 62.1.0(eslint@9.39.2)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@9.39.2)(typescript@5.9.3)
+      eslint-plugin-no-only-tests:
+        specifier: 3.3.0
+        version: 3.3.0
+      eslint-plugin-react:
+        specifier: 7.37.5
+        version: 7.37.5(eslint@9.39.2)
+      eslint-plugin-react-hooks:
+        specifier: 5.2.0
+        version: 5.2.0(eslint@9.39.2)
+      eslint-plugin-sonarjs:
+        specifier: 3.0.6
+        version: 3.0.6(eslint@9.39.2)
+      eslint-plugin-storybook:
+        specifier: 10.1.11
+        version: 10.1.11(eslint@9.39.2)(storybook@10.1.11)(typescript@5.9.3)
+      fast-glob:
+        specifier: 3.3.3
+        version: 3.3.3
+      happy-dom:
+        specifier: 18.0.1
+        version: 18.0.1
+      json-stable-stringify:
+        specifier: 1.3.0
+        version: 1.3.0
+      lodash-es:
+        specifier: ^4.17.23
+        version: 4.17.23
+      mapbox-gl:
+        specifier: ^2.6.1
+        version: 2.15.0
+      moment:
+        specifier: ^2.29.4
+        version: 2.30.1
+      npm-run-all:
+        specifier: ^4.1.5
+        version: 4.1.5
+      oxfmt:
+        specifier: 0.27.0
+        version: 0.27.0
+      oxlint:
+        specifier: ^1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
+      react:
+        specifier: 19.1.1
+        version: 19.1.1
+      react-dom:
+        specifier: 19.1.1
+        version: 19.1.1(react@19.1.1)
+      react-intl:
+        specifier: 7.1.11
+        version: 7.1.11(react@19.1.1)(typescript@5.9.3)
+      react-responsive:
+        specifier: ^10.0.1
+        version: 10.0.1(react@19.1.1)
+      require-from-string:
+        specifier: ^2.0.2
+        version: 2.0.2
+      rolldown:
+        specifier: 1.0.0-rc.3
+        version: 1.0.0-rc.3
+      spark-md5:
+        specifier: ^3.0.0
+        version: 3.0.2
+      storybook:
+        specifier: ^10.1.11
+        version: 10.1.11(@testing-library/dom@10.4.1)(prettier@3.6.2)(react-dom@19.1.1)(react@19.1.1)
+      stylelint:
+        specifier: ^16.26.1
+        version: 16.26.1(typescript@5.9.3)
+      ts-invariant:
+        specifier: ^0.7.5
+        version: 0.7.5
+      tslib:
+        specifier: 2.8.1
+        version: 2.8.1
+      typescript:
+        specifier: 5.9.3
+        version: 5.9.3
+      uuid:
+        specifier: ^11.1.0
+        version: 11.1.0
+      vite:
+        specifier: 8.0.0-beta.13
+        version: 8.0.0-beta.13(@types/node@22.18.5)
+      vite-node:
+        specifier: ^5.2.0
+        version: 5.2.0(@types/node@22.18.5)(jiti@2.6.1)
+      vite-plugin-static-copy:
+        specifier: ^3.1.1
+        version: 3.1.2(vite@8.0.0-beta.13)
 
   ../../libs/sdk-ui-theme-provider:
     dependencies:
@@ -10376,11 +10535,11 @@ packages:
       '@sinclair/typebox': 0.27.8
     dev: true
 
-  /@joshwooding/vite-plugin-react-docgen-typescript@0.6.3(typescript@5.9.3)(vite@8.0.0-beta.10):
+  /@joshwooding/vite-plugin-react-docgen-typescript@0.6.3(typescript@5.9.3)(vite@8.0.0-beta.13):
     resolution: {integrity: sha512-9TGZuAX+liGkNKkwuo3FYJu7gHWT0vkBcf7GkOe7s7fmC19XwH/4u5u7sDIFrMooe558ORcmuBvBz7Ur5PlbHw==}
     peerDependencies:
       typescript: '>= 4.3.x'
-      vite: ^7.3.1 || 8.0.0-beta.10
+      vite: ^7.3.1 || 8.0.0-beta.13
     peerDependenciesMeta:
       typescript:
         optional: true
@@ -10388,7 +10547,7 @@ packages:
       glob: 11.1.0
       react-docgen-typescript: 2.4.0(typescript@5.9.3)
       typescript: 5.9.3
-      vite: 8.0.0-beta.10(@types/node@22.18.5)
+      vite: 8.0.0-beta.13(@types/node@22.18.5)
     dev: true
 
   /@jridgewell/gen-mapping@0.3.13:
@@ -10821,13 +10980,13 @@ packages:
       - supports-color
     dev: true
 
-  /@oxc-project/runtime@0.110.0:
-    resolution: {integrity: sha512-4t5lYmPneAGKGN7zDhK2iQrn+Ax3DXLCNqVr3z6K2VqemKWfQTlLyzjgjilxZmwFAKe65qI4WG7Bsj05UgUHaA==}
+  /@oxc-project/runtime@0.112.0:
+    resolution: {integrity: sha512-4vYtWXMnXM6EaweCxbJ6bISAhkNHeN33SihvuX3wrpqaSJA4ZEoW35i9mSvE74+GDf1yTeVE+aEHA+WBpjDk/g==}
     engines: {node: ^20.19.0 || >=22.12.0}
     dev: true
 
-  /@oxc-project/types@0.110.0:
-    resolution: {integrity: sha512-6Ct21OIlrEnFEJk5LT4e63pk3btsI6/TusD/GStLi7wYlGJNOl1GI9qvXAnRAxQU9zqA2Oz+UwhfTOU2rPZVow==}
+  /@oxc-project/types@0.112.0:
+    resolution: {integrity: sha512-m6RebKHIRsax2iCwVpYW2ErQwa4ywHJrE4sCK3/8JK8ZZAWOKXaRJFl/uP51gaVyyXlaS4+chU1nSCdzYf6QqQ==}
     dev: true
 
   /@oxfmt/darwin-arm64@0.27.0:
@@ -11150,8 +11309,8 @@ packages:
       reselect: 5.1.1
     dev: false
 
-  /@rolldown/binding-android-arm64@1.0.0-rc.1:
-    resolution: {integrity: sha512-He6ZoCfv5D7dlRbrhNBkuMVIHd0GDnjJwbICE1OWpG7G3S2gmJ+eXkcNLJjzjNDpeI2aRy56ou39AJM9AD8YFA==}
+  /@rolldown/binding-android-arm64@1.0.0-rc.3:
+    resolution: {integrity: sha512-0T1k9FinuBZ/t7rZ8jN6OpUKPnUjNdYHoj/cESWrQ3ZraAJ4OMm6z7QjSfCxqj8mOp9kTKc1zHK3kGz5vMu+nQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm64]
     os: [android]
@@ -11159,8 +11318,8 @@ packages:
     dev: true
     optional: true
 
-  /@rolldown/binding-darwin-arm64@1.0.0-rc.1:
-    resolution: {integrity: sha512-YzJdn08kSOXnj85ghHauH2iHpOJ6eSmstdRTLyaziDcUxe9SyQJgGyx/5jDIhDvtOcNvMm2Ju7m19+S/Rm1jFg==}
+  /@rolldown/binding-darwin-arm64@1.0.0-rc.3:
+    resolution: {integrity: sha512-JWWLzvcmc/3pe7qdJqPpuPk91SoE/N+f3PcWx/6ZwuyDVyungAEJPvKm/eEldiDdwTmaEzWfIR+HORxYWrCi1A==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm64]
     os: [darwin]
@@ -11168,8 +11327,8 @@ packages:
     dev: true
     optional: true
 
-  /@rolldown/binding-darwin-x64@1.0.0-rc.1:
-    resolution: {integrity: sha512-cIvAbqM+ZVV6lBSKSBtlNqH5iCiW933t1q8j0H66B3sjbe8AxIRetVqfGgcHcJtMzBIkIALlL9fcDrElWLJQcQ==}
+  /@rolldown/binding-darwin-x64@1.0.0-rc.3:
+    resolution: {integrity: sha512-MTakBxfx3tde5WSmbHxuqlDsIW0EzQym+PJYGF4P6lG2NmKzi128OGynoFUqoD5ryCySEY85dug4v+LWGBElIw==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [x64]
     os: [darwin]
@@ -11177,8 +11336,8 @@ packages:
     dev: true
     optional: true
 
-  /@rolldown/binding-freebsd-x64@1.0.0-rc.1:
-    resolution: {integrity: sha512-rVt+B1B/qmKwCl1XD02wKfgh3vQPXRXdB/TicV2w6g7RVAM1+cZcpigwhLarqiVCxDObFZ7UgXCxPC7tpDoRog==}
+  /@rolldown/binding-freebsd-x64@1.0.0-rc.3:
+    resolution: {integrity: sha512-jje3oopyOLs7IwfvXoS6Lxnmie5JJO7vW29fdGFu5YGY1EDbVDhD+P9vDihqS5X6fFiqL3ZQZCMBg6jyHkSVww==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [x64]
     os: [freebsd]
@@ -11186,8 +11345,8 @@ packages:
     dev: true
     optional: true
 
-  /@rolldown/binding-linux-arm-gnueabihf@1.0.0-rc.1:
-    resolution: {integrity: sha512-69YKwJJBOFprQa1GktPgbuBOfnn+EGxu8sBJ1TjPER+zhSpYeaU4N07uqmyBiksOLGXsMegymuecLobfz03h8Q==}
+  /@rolldown/binding-linux-arm-gnueabihf@1.0.0-rc.3:
+    resolution: {integrity: sha512-A0n8P3hdLAaqzSFrQoA42p23ZKBYQOw+8EH5r15Sa9X1kD9/JXe0YT2gph2QTWvdr0CVK2BOXiK6ENfy6DXOag==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm]
     os: [linux]
@@ -11195,8 +11354,8 @@ packages:
     dev: true
     optional: true
 
-  /@rolldown/binding-linux-arm64-gnu@1.0.0-rc.1:
-    resolution: {integrity: sha512-9JDhHUf3WcLfnViFWm+TyorqUtnSAHaCzlSNmMOq824prVuuzDOK91K0Hl8DUcEb9M5x2O+d2/jmBMsetRIn3g==}
+  /@rolldown/binding-linux-arm64-gnu@1.0.0-rc.3:
+    resolution: {integrity: sha512-kWXkoxxarYISBJ4bLNf5vFkEbb4JvccOwxWDxuK9yee8lg5XA7OpvlTptfRuwEvYcOZf+7VS69Uenpmpyo5Bjw==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm64]
     os: [linux]
@@ -11204,8 +11363,8 @@ packages:
     dev: true
     optional: true
 
-  /@rolldown/binding-linux-arm64-musl@1.0.0-rc.1:
-    resolution: {integrity: sha512-UvApLEGholmxw/HIwmUnLq3CwdydbhaHHllvWiCTNbyGom7wTwOtz5OAQbAKZYyiEOeIXZNPkM7nA4Dtng7CLw==}
+  /@rolldown/binding-linux-arm64-musl@1.0.0-rc.3:
+    resolution: {integrity: sha512-Z03/wrqau9Bicfgb3Dbs6SYTHliELk2PM2LpG2nFd+cGupTMF5kanLEcj2vuuJLLhptNyS61rtk7SOZ+lPsTUA==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm64]
     os: [linux]
@@ -11213,8 +11372,8 @@ packages:
     dev: true
     optional: true
 
-  /@rolldown/binding-linux-x64-gnu@1.0.0-rc.1:
-    resolution: {integrity: sha512-uVctNgZHiGnJx5Fij7wHLhgw4uyZBVi6mykeWKOqE7bVy9Hcxn0fM/IuqdMwk6hXlaf9fFShDTFz2+YejP+x0A==}
+  /@rolldown/binding-linux-x64-gnu@1.0.0-rc.3:
+    resolution: {integrity: sha512-iSXXZsQp08CSilff/DCTFZHSVEpEwdicV3W8idHyrByrcsRDVh9sGC3sev6d8BygSGj3vt8GvUKBPCoyMA4tgQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [x64]
     os: [linux]
@@ -11222,8 +11381,8 @@ packages:
     dev: true
     optional: true
 
-  /@rolldown/binding-linux-x64-musl@1.0.0-rc.1:
-    resolution: {integrity: sha512-T6Eg0xWwcxd/MzBcuv4Z37YVbUbJxy5cMNnbIt/Yr99wFwli30O4BPlY8hKeGyn6lWNtU0QioBS46lVzDN38bg==}
+  /@rolldown/binding-linux-x64-musl@1.0.0-rc.3:
+    resolution: {integrity: sha512-qaj+MFudtdCv9xZo9znFvkgoajLdc+vwf0Kz5N44g+LU5XMe+IsACgn3UG7uTRlCCvhMAGXm1XlpEA5bZBrOcw==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [x64]
     os: [linux]
@@ -11231,8 +11390,8 @@ packages:
     dev: true
     optional: true
 
-  /@rolldown/binding-openharmony-arm64@1.0.0-rc.1:
-    resolution: {integrity: sha512-PuGZVS2xNJyLADeh2F04b+Cz4NwvpglbtWACgrDOa5YDTEHKwmiTDjoD5eZ9/ptXtcpeFrMqD2H4Zn33KAh1Eg==}
+  /@rolldown/binding-openharmony-arm64@1.0.0-rc.3:
+    resolution: {integrity: sha512-U662UnMETyjT65gFmG9ma+XziENrs7BBnENi/27swZPYagubfHRirXHG2oMl+pEax2WvO7Kb9gHZmMakpYqBHQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm64]
     os: [openharmony]
@@ -11240,8 +11399,8 @@ packages:
     dev: true
     optional: true
 
-  /@rolldown/binding-wasm32-wasi@1.0.0-rc.1:
-    resolution: {integrity: sha512-2mOxY562ihHlz9lEXuaGEIDCZ1vI+zyFdtsoa3M62xsEunDXQE+DVPO4S4x5MPK9tKulG/aFcA/IH5eVN257Cw==}
+  /@rolldown/binding-wasm32-wasi@1.0.0-rc.3:
+    resolution: {integrity: sha512-gekrQ3Q2HiC1T5njGyuUJoGpK/l6B/TNXKed3fZXNf9YRTJn3L5MOZsFBn4bN2+UX+8+7hgdlTcEsexX988G4g==}
     engines: {node: '>=14.0.0'}
     cpu: [wasm32]
     requiresBuild: true
@@ -11250,8 +11409,8 @@ packages:
     dev: true
     optional: true
 
-  /@rolldown/binding-win32-arm64-msvc@1.0.0-rc.1:
-    resolution: {integrity: sha512-oQVOP5cfAWZwRD0Q3nGn/cA9FW3KhMMuQ0NIndALAe6obqjLhqYVYDiGGRGrxvnjJsVbpLwR14gIUYnpIcHR1g==}
+  /@rolldown/binding-win32-arm64-msvc@1.0.0-rc.3:
+    resolution: {integrity: sha512-85y5JifyMgs8m5K2XzR/VDsapKbiFiohl7s5lEj7nmNGO0pkTXE7q6TQScei96BNAsoK7JC3pA7ukA8WRHVJpg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm64]
     os: [win32]
@@ -11259,8 +11418,8 @@ packages:
     dev: true
     optional: true
 
-  /@rolldown/binding-win32-x64-msvc@1.0.0-rc.1:
-    resolution: {integrity: sha512-Ydsxxx++FNOuov3wCBPaYjZrEvKOOGq3k+BF4BPridhg2pENfitSRD2TEuQ8i33bp5VptuNdC9IzxRKU031z5A==}
+  /@rolldown/binding-win32-x64-msvc@1.0.0-rc.3:
+    resolution: {integrity: sha512-a4VUQZH7LxGbUJ3qJ/TzQG8HxdHvf+jOnqf7B7oFx1TEBm+j2KNL2zr5SQ7wHkNAcaPevF6gf9tQnVBnC4mD+A==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [x64]
     os: [win32]
@@ -11268,12 +11427,12 @@ packages:
     dev: true
     optional: true
 
-  /@rolldown/pluginutils@1.0.0-rc.1:
-    resolution: {integrity: sha512-UTBjtTxVOhodhzFVp/ayITaTETRHPUPYZPXQe0WU0wOgxghMojXxYjOiPOauKIYNWJAWS2fd7gJgGQK8GU8vDA==}
-    dev: true
-
   /@rolldown/pluginutils@1.0.0-rc.2:
     resolution: {integrity: sha512-izyXV/v+cHiRfozX62W9htOAvwMo4/bXKDrQ+vom1L1qRuexPock/7VZDAhnpHCLNejd3NJ6hiab+tO0D44Rgw==}
+    dev: true
+
+  /@rolldown/pluginutils@1.0.0-rc.3:
+    resolution: {integrity: sha512-eybk3TjzzzV97Dlj5c+XrBFW57eTNhzod66y9HrBlzJ6NsCrWCp/2kaPS3K9wJmurBC0Tdw4yPjXKZqlznim3Q==}
     dev: true
 
   /@rollup/pluginutils@4.2.1:
@@ -11602,17 +11761,17 @@ packages:
       storybook: 10.1.11(@testing-library/dom@10.4.1)(prettier@3.6.2)(react-dom@19.1.1)(react@19.1.1)
     dev: true
 
-  /@storybook/builder-vite@10.1.11(storybook@10.1.11)(vite@8.0.0-beta.10):
+  /@storybook/builder-vite@10.1.11(storybook@10.1.11)(vite@8.0.0-beta.13):
     resolution: {integrity: sha512-MMD09Ap7FyzDfWG961pkIMv/w684XXe1bBEi+wCEpHxvrgAd3j3A9w/Rqp9Am2uRDPCEdi1QgSzS3SGW3aGThQ==}
     peerDependencies:
       storybook: ^10.1.11
-      vite: ^7.3.1 || 8.0.0-beta.10
+      vite: ^7.3.1 || 8.0.0-beta.13
     dependencies:
-      '@storybook/csf-plugin': 10.1.11(storybook@10.1.11)(vite@8.0.0-beta.10)
-      '@vitest/mocker': 3.2.4(vite@8.0.0-beta.10)
+      '@storybook/csf-plugin': 10.1.11(storybook@10.1.11)(vite@8.0.0-beta.13)
+      '@vitest/mocker': 3.2.4(vite@8.0.0-beta.13)
       storybook: 10.1.11(@testing-library/dom@10.4.1)(prettier@3.6.2)(react-dom@19.1.1)(react@19.1.1)
       ts-dedent: 2.2.0
-      vite: 8.0.0-beta.10(@types/node@22.18.5)
+      vite: 8.0.0-beta.13(@types/node@22.18.5)
     transitivePeerDependencies:
       - esbuild
       - msw
@@ -11663,7 +11822,7 @@ packages:
       - utf-8-validate
     dev: true
 
-  /@storybook/csf-plugin@10.1.11(storybook@10.1.11)(vite@8.0.0-beta.10):
+  /@storybook/csf-plugin@10.1.11(storybook@10.1.11)(vite@8.0.0-beta.13):
     resolution: {integrity: sha512-Ant0NhgqHKzQsseeVTSetZCuDHHs0W2HRkHt51Kg/sUl0T/sDtfVA+fWZT8nGzGZqYSFkxqYPWjauPmIhPtaRw==}
     peerDependencies:
       esbuild: '*'
@@ -11683,7 +11842,7 @@ packages:
     dependencies:
       storybook: 10.1.11(@testing-library/dom@10.4.1)(prettier@3.6.2)(react-dom@19.1.1)(react@19.1.1)
       unplugin: 2.3.10
-      vite: 8.0.0-beta.10(@types/node@22.18.5)
+      vite: 8.0.0-beta.13(@types/node@22.18.5)
     dev: true
 
   /@storybook/global@5.0.0:
@@ -11712,17 +11871,17 @@ packages:
       storybook: 10.1.11(@testing-library/dom@10.4.1)(prettier@3.6.2)(react-dom@19.1.1)(react@19.1.1)
     dev: true
 
-  /@storybook/react-vite@10.1.11(react-dom@19.1.1)(react@19.1.1)(storybook@10.1.11)(typescript@5.9.3)(vite@8.0.0-beta.10):
+  /@storybook/react-vite@10.1.11(react-dom@19.1.1)(react@19.1.1)(storybook@10.1.11)(typescript@5.9.3)(vite@8.0.0-beta.13):
     resolution: {integrity: sha512-qh1BCD25nIoiDfqwha+qBkl7pcG4WuzM+c8tsE63YEm8AFIbNKg5K8lVUoclF+4CpFz7IwBpWe61YUTDfp+91w==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
       storybook: ^10.1.11
-      vite: ^7.3.1 || 8.0.0-beta.10
+      vite: ^7.3.1 || 8.0.0-beta.13
     dependencies:
-      '@joshwooding/vite-plugin-react-docgen-typescript': 0.6.3(typescript@5.9.3)(vite@8.0.0-beta.10)
+      '@joshwooding/vite-plugin-react-docgen-typescript': 0.6.3(typescript@5.9.3)(vite@8.0.0-beta.13)
       '@rollup/pluginutils': 5.3.0
-      '@storybook/builder-vite': 10.1.11(storybook@10.1.11)(vite@8.0.0-beta.10)
+      '@storybook/builder-vite': 10.1.11(storybook@10.1.11)(vite@8.0.0-beta.13)
       '@storybook/react': 10.1.11(react-dom@19.1.1)(react@19.1.1)(storybook@10.1.11)(typescript@5.9.3)
       empathic: 2.0.0
       magic-string: 0.30.21
@@ -11732,7 +11891,7 @@ packages:
       resolve: 1.22.10
       storybook: 10.1.11(@testing-library/dom@10.4.1)(prettier@3.6.2)(react-dom@19.1.1)(react@19.1.1)
       tsconfig-paths: 4.2.0
-      vite: 8.0.0-beta.10(@types/node@22.18.5)
+      vite: 8.0.0-beta.13(@types/node@22.18.5)
     transitivePeerDependencies:
       - esbuild
       - msw
@@ -12748,7 +12907,7 @@ packages:
     resolution: {integrity: sha512-NVUnA6gQCl8jfoYqKqQU5Clv0aPw14KkZYCsX6T9Lfu9slI0LOU10OTwFHS/WmptsMMpshNd/1tuWsHQ2Uk+cg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
-      vite: ^7.3.1 || 8.0.0-beta.10
+      vite: ^7.3.1 || 8.0.0-beta.13
     dependencies:
       '@babel/core': 7.29.0
       '@babel/plugin-transform-react-jsx-self': 7.27.1(@babel/core@7.29.0)
@@ -12761,11 +12920,11 @@ packages:
       - supports-color
     dev: true
 
-  /@vitejs/plugin-react@5.1.3(vite@8.0.0-beta.10):
+  /@vitejs/plugin-react@5.1.3(vite@8.0.0-beta.13):
     resolution: {integrity: sha512-NVUnA6gQCl8jfoYqKqQU5Clv0aPw14KkZYCsX6T9Lfu9slI0LOU10OTwFHS/WmptsMMpshNd/1tuWsHQ2Uk+cg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
-      vite: ^7.3.1 || 8.0.0-beta.10
+      vite: ^7.3.1 || 8.0.0-beta.13
     dependencies:
       '@babel/core': 7.29.0
       '@babel/plugin-transform-react-jsx-self': 7.27.1(@babel/core@7.29.0)
@@ -12773,7 +12932,7 @@ packages:
       '@rolldown/pluginutils': 1.0.0-rc.2
       '@types/babel__core': 7.20.5
       react-refresh: 0.18.0
-      vite: 8.0.0-beta.10(@types/node@22.18.5)
+      vite: 8.0.0-beta.13(@types/node@22.18.5)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -12820,11 +12979,11 @@ packages:
       chai: 6.2.2
       tinyrainbow: 3.0.3
 
-  /@vitest/mocker@3.2.4(vite@8.0.0-beta.10):
+  /@vitest/mocker@3.2.4(vite@8.0.0-beta.13):
     resolution: {integrity: sha512-46ryTE9RZO/rfDd7pEqFl7etuyzekzEhUbTW3BvmeO/BcCMEgq59BKhek3dXDWgAj4oMK6OZi+vRr1wPW6qjEQ==}
     peerDependencies:
       msw: ^2.4.9
-      vite: ^7.3.1 || 8.0.0-beta.10
+      vite: ^7.3.1 || 8.0.0-beta.13
     peerDependenciesMeta:
       msw:
         optional: true
@@ -12834,14 +12993,14 @@ packages:
       '@vitest/spy': 3.2.4
       estree-walker: 3.0.3
       magic-string: 0.30.21
-      vite: 8.0.0-beta.10(@types/node@22.18.5)
+      vite: 8.0.0-beta.13(@types/node@22.18.5)
     dev: true
 
   /@vitest/mocker@4.0.8(vite@7.3.1):
     resolution: {integrity: sha512-9FRM3MZCedXH3+pIh+ME5Up2NBBHDq0wqwhOKkN4VnvCiKbVxddqH9mSGPZeawjd12pCOGnl+lo/ZGHt0/dQSg==}
     peerDependencies:
       msw: ^2.4.9
-      vite: ^7.3.1 || 8.0.0-beta.10
+      vite: ^7.3.1 || 8.0.0-beta.13
     peerDependenciesMeta:
       msw:
         optional: true
@@ -20385,27 +20544,27 @@ packages:
       glob: 7.2.3
     dev: true
 
-  /rolldown@1.0.0-rc.1:
-    resolution: {integrity: sha512-M3AeZjYE6UclblEf531Hch0WfVC/NOL43Cc+WdF3J50kk5/fvouHhDumSGTh0oRjbZ8C4faaVr5r6Nx1xMqDGg==}
+  /rolldown@1.0.0-rc.3:
+    resolution: {integrity: sha512-Po/YZECDOqVXjIXrtC5h++a5NLvKAQNrd9ggrIG3sbDfGO5BqTUsrI6l8zdniKRp3r5Tp/2JTrXqx4GIguFCMw==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     dependencies:
-      '@oxc-project/types': 0.110.0
-      '@rolldown/pluginutils': 1.0.0-rc.1
+      '@oxc-project/types': 0.112.0
+      '@rolldown/pluginutils': 1.0.0-rc.3
     optionalDependencies:
-      '@rolldown/binding-android-arm64': 1.0.0-rc.1
-      '@rolldown/binding-darwin-arm64': 1.0.0-rc.1
-      '@rolldown/binding-darwin-x64': 1.0.0-rc.1
-      '@rolldown/binding-freebsd-x64': 1.0.0-rc.1
-      '@rolldown/binding-linux-arm-gnueabihf': 1.0.0-rc.1
-      '@rolldown/binding-linux-arm64-gnu': 1.0.0-rc.1
-      '@rolldown/binding-linux-arm64-musl': 1.0.0-rc.1
-      '@rolldown/binding-linux-x64-gnu': 1.0.0-rc.1
-      '@rolldown/binding-linux-x64-musl': 1.0.0-rc.1
-      '@rolldown/binding-openharmony-arm64': 1.0.0-rc.1
-      '@rolldown/binding-wasm32-wasi': 1.0.0-rc.1
-      '@rolldown/binding-win32-arm64-msvc': 1.0.0-rc.1
-      '@rolldown/binding-win32-x64-msvc': 1.0.0-rc.1
+      '@rolldown/binding-android-arm64': 1.0.0-rc.3
+      '@rolldown/binding-darwin-arm64': 1.0.0-rc.3
+      '@rolldown/binding-darwin-x64': 1.0.0-rc.3
+      '@rolldown/binding-freebsd-x64': 1.0.0-rc.3
+      '@rolldown/binding-linux-arm-gnueabihf': 1.0.0-rc.3
+      '@rolldown/binding-linux-arm64-gnu': 1.0.0-rc.3
+      '@rolldown/binding-linux-arm64-musl': 1.0.0-rc.3
+      '@rolldown/binding-linux-x64-gnu': 1.0.0-rc.3
+      '@rolldown/binding-linux-x64-musl': 1.0.0-rc.3
+      '@rolldown/binding-openharmony-arm64': 1.0.0-rc.3
+      '@rolldown/binding-wasm32-wasi': 1.0.0-rc.3
+      '@rolldown/binding-win32-arm64-msvc': 1.0.0-rc.3
+      '@rolldown/binding-win32-x64-msvc': 1.0.0-rc.3
     dev: true
 
   /rollup@4.54.0:
@@ -22196,7 +22355,7 @@ packages:
       vite: 7.3.1(@types/node@22.18.5)(jiti@2.6.1)
     dev: true
 
-  /vite-plugin-html@3.2.2(vite@8.0.0-beta.10):
+  /vite-plugin-html@3.2.2(vite@8.0.0-beta.13):
     resolution: {integrity: sha512-vb9C9kcdzcIo/Oc3CLZVS03dL5pDlOFuhGlZYDCJ840BhWl/0nGeZWf3Qy7NlOayscY4Cm/QRgULCQkEZige5Q==}
     peerDependencies:
       vite: '>=2.0.0'
@@ -22213,14 +22372,14 @@ packages:
       html-minifier-terser: 6.1.0
       node-html-parser: 5.4.2
       pathe: 0.2.0
-      vite: 8.0.0-beta.10(@types/node@22.18.5)
+      vite: 8.0.0-beta.13(@types/node@22.18.5)
     dev: true
 
   /vite-plugin-static-copy@3.1.2(vite@7.3.1):
     resolution: {integrity: sha512-aVmYOzptLVOI2b1jL+cmkF7O6uhRv1u5fvOkQgbohWZp2CbR22kn9ZqkCUIt9umKF7UhdbsEpshn1rf4720QFg==}
     engines: {node: ^18.0.0 || >=20.0.0}
     peerDependencies:
-      vite: ^7.3.1 || 8.0.0-beta.10
+      vite: ^7.3.1 || 8.0.0-beta.13
     dependencies:
       chokidar: 3.6.0
       fs-extra: 11.3.2
@@ -22230,18 +22389,18 @@ packages:
       vite: 7.3.1(@types/node@22.18.5)(jiti@2.6.1)
     dev: true
 
-  /vite-plugin-static-copy@3.1.2(vite@8.0.0-beta.10):
+  /vite-plugin-static-copy@3.1.2(vite@8.0.0-beta.13):
     resolution: {integrity: sha512-aVmYOzptLVOI2b1jL+cmkF7O6uhRv1u5fvOkQgbohWZp2CbR22kn9ZqkCUIt9umKF7UhdbsEpshn1rf4720QFg==}
     engines: {node: ^18.0.0 || >=20.0.0}
     peerDependencies:
-      vite: ^7.3.1 || 8.0.0-beta.10
+      vite: ^7.3.1 || 8.0.0-beta.13
     dependencies:
       chokidar: 3.6.0
       fs-extra: 11.3.2
       p-map: 7.0.3
       picocolors: 1.1.1
       tinyglobby: 0.2.15
-      vite: 8.0.0-beta.10(@types/node@22.18.5)
+      vite: 8.0.0-beta.13(@types/node@22.18.5)
     dev: true
 
   /vite@7.3.1(@types/node@22.18.5)(jiti@2.6.1):
@@ -22347,12 +22506,13 @@ packages:
       fsevents: 2.3.3
     dev: true
 
-  /vite@8.0.0-beta.10(@types/node@22.18.5):
-    resolution: {integrity: sha512-YXbwlvG+57+LRRJBJYCHki0Z1LWRkPEy3khQ0ZphzW5aJaz17fFBCeefOtHC5VgRuLbG155+lq98I+BjeizQ5Q==}
+  /vite@8.0.0-beta.13(@types/node@22.18.5):
+    resolution: {integrity: sha512-7s/rfpYOAo7WUHh9irzaGjhhKb12hGv0BpDegAMV5A391wdyvM45WtX6VMV7hvEtZF2j/QtpDpR6ldXI3GgARQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
       '@types/node': ^20.19.0 || >=22.12.0
+      '@vitejs/devtools': ^0.0.0-alpha.24
       esbuild: ^0.27.0
       jiti: '>=1.21.0'
       less: ^4.0.0
@@ -22365,6 +22525,8 @@ packages:
       yaml: ^2.4.2
     peerDependenciesMeta:
       '@types/node':
+        optional: true
+      '@vitejs/devtools':
         optional: true
       esbuild:
         optional: true
@@ -22387,13 +22549,13 @@ packages:
       yaml:
         optional: true
     dependencies:
-      '@oxc-project/runtime': 0.110.0
+      '@oxc-project/runtime': 0.112.0
       '@types/node': 22.18.5
       fdir: 6.5.0(picomatch@4.0.3)
       lightningcss: 1.31.1
       picomatch: 4.0.3
       postcss: 8.5.6
-      rolldown: 1.0.0-rc.1
+      rolldown: 1.0.0-rc.3
       tinyglobby: 0.2.15
     optionalDependencies:
       fsevents: 2.3.3

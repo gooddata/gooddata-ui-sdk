@@ -2145,6 +2145,10 @@ export interface SearchRequest {
      * Filter relationships and results based on allowed relationship type combinations. When specified, only relationships matching the allowed types are returned, and results are filtered to include only direct matches or objects reachable via allowed relationships. When null or omitted, all relationships and results are returned (default behavior). Note: This filtering happens after the initial search, so the number of returned results may be lower than the requested limit if some results are filtered out.
      */
     'allowedRelationshipTypes'?: Array<AllowedRelationshipType>;
+    /**
+     * If true, enables hybrid search combining vector similarity and keyword matching. This can improve search results by considering both semantic similarity and exact keyword matches.
+     */
+    'enableHybridSearch'?: boolean;
 }
 
 export type SearchRequestObjectTypesEnum = 'attribute' | 'metric' | 'fact' | 'label' | 'date' | 'dataset' | 'visualization' | 'dashboard';

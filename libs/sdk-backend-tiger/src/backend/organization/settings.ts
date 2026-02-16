@@ -112,6 +112,10 @@ export class OrganizationSettingsService
         return this.setSetting("DASHBOARD_FILTERS_APPLY_MODE", dashboardFiltersApplyMode);
     }
 
+    public async setEnableDrillToUrlByDefault(enabled: boolean): Promise<void> {
+        return this.setSetting("ENABLE_DRILL_TO_URL_BY_DEFAULT", { value: enabled });
+    }
+
     public async deleteColorPalette() {
         return this.deleteSettingByType("ACTIVE_COLOR_PALETTE");
     }

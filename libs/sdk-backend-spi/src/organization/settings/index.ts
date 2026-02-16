@@ -182,6 +182,16 @@ export interface IOrganizationSettingsService {
     setDashboardFiltersApplyMode(dashboardFiltersApplyMode: DashboardFiltersApplyMode): Promise<void>;
 
     /**
+     * Sets enable drill to URL by default configuration for organization.
+     *
+     * @param enabled - whether to enable drill to URL by default for dashboard widgets.
+     *
+     * @returns promise
+     * @alpha
+     */
+    setEnableDrillToUrlByDefault(enabled: boolean): Promise<void>;
+
+    /**
      * Deletes theme from organization settings returning workspace styling to default.
      *
      * @returns promise

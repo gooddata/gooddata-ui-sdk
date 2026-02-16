@@ -477,7 +477,8 @@
                             "type": "string",
                             "enum": [
                                 "MANAGE",
-                                "SELF_CREATE_TOKEN"
+                                "SELF_CREATE_TOKEN",
+                                "BASE_UI_ACCESS"
                             ]
                         }
                     },

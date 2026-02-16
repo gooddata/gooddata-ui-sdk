@@ -156,7 +156,7 @@ export interface Profile {
     'entitlements': Array<ApiEntitlement>;
 }
 
-export type ProfilePermissionsEnum = 'MANAGE' | 'SELF_CREATE_TOKEN';
+export type ProfilePermissionsEnum = 'MANAGE' | 'SELF_CREATE_TOKEN' | 'BASE_UI_ACCESS';
 
 /**
  * @type ProfileFeatures

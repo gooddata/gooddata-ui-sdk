@@ -239,6 +239,10 @@
       "allowedCategories": [ "examples", "production" ]
     },
     {
+      "name": "@gooddata/sdk-ui-tests-scenarios",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@gooddata/sdk-ui-theme-provider",
       "allowedCategories": [ "examples", "production" ]
     },

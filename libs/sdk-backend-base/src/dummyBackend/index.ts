@@ -981,6 +981,7 @@ class DummyOrganization implements IOrganization {
             setColorPalette: () => Promise.resolve(),
             setOpenAiConfig: () => Promise.resolve(),
             setDashboardFiltersApplyMode: () => Promise.resolve(),
+            setEnableDrillToUrlByDefault: () => Promise.resolve(),
             deleteTheme: () => Promise.resolve(),
             deleteColorPalette: () => Promise.resolve(),
             getSettings: () => Promise.resolve({}),
@@ -1189,6 +1190,18 @@ class DummyWorkspaceSettingsService implements IWorkspaceSettingsService {
     }
 
     setEnableAiOnData(_enabled: boolean): Promise<void> {
+        return Promise.resolve();
+    }
+
+    getEnableDrillToUrlByDefault(): Promise<boolean | undefined> {
+        return Promise.resolve(undefined);
+    }
+
+    setEnableDrillToUrlByDefault(_enabled: boolean): Promise<void> {
+        return Promise.resolve();
+    }
+
+    deleteEnableDrillToUrlByDefault(): Promise<void> {
         return Promise.resolve();
     }
 

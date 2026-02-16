@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type ObjRef } from "../objRef/index.js";
 
@@ -148,6 +148,7 @@ export interface IDataSourcePermissionAssignment {
 export const OrganizationPermissionAssignmentValue = {
     MANAGE: "MANAGE",
     SELF_CREATE_TOKEN: "SELF_CREATE_TOKEN",
+    BASE_UI_ACCESS: "BASE_UI_ACCESS",
 } as const;
 
 /**

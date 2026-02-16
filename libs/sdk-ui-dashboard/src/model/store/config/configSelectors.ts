@@ -983,7 +983,7 @@ export const selectEnableAccessibilityMode: DashboardSelector<boolean> = createS
 export const selectEnableImplicitDrillToUrl: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return state.settings?.enableImplicitDrillToUrl ?? false;
+        return state.settings?.enableImplicitDrillToUrl ?? true;
     },
 );
 

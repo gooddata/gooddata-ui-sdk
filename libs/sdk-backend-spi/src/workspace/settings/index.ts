@@ -165,6 +165,37 @@ export interface IWorkspaceSettingsService {
     setEnableAiOnData(enabled: boolean): Promise<void>;
 
     /**
+     * Gets enable drill to URL by default setting value for workspace.
+     *
+     * @remarks
+     * Returns the workspace-owned value only, not the resolved/inherited value.
+     * Returns `undefined` if no workspace override exists (inherits from organization).
+     *
+     * @returns promise of workspace-owned setting value, or undefined if not set
+     * @alpha
+     */
+    getEnableDrillToUrlByDefault(): Promise<boolean | undefined>;
+
+    /**
+     * Sets enable drill to URL by default setting for workspace. Default is taken from organization setting.
+     *
+     * @param enabled - whether to enable drill to URL by default for dashboard widgets.
+     *
+     * @returns promise
+     * @alpha
+     */
+    setEnableDrillToUrlByDefault(enabled: boolean): Promise<void>;
+
+    /**
+     * Clears enable drill to URL by default configuration for workspace
+     * so default value from organization is used.
+     *
+     * @returns promise
+     * @alpha
+     */
+    deleteEnableDrillToUrlByDefault(): Promise<void>;
+
+    /**
      * Sets color palette for current workspace.
      *
      * @param colorPaletteId - ID of the color palette to apply to charts in workspace.

@@ -869,6 +869,20 @@ class WithWorkspaceSettingsCaching extends DecoratedWorkspaceSettingsService {
         this.invalidateCache();
     }
 
+    public override async getEnableDrillToUrlByDefault(): Promise<boolean | undefined> {
+        return super.getEnableDrillToUrlByDefault();
+    }
+
+    public override async setEnableDrillToUrlByDefault(enabled: boolean): Promise<void> {
+        await super.setEnableDrillToUrlByDefault(enabled);
+        this.invalidateCache();
+    }
+
+    public override async deleteEnableDrillToUrlByDefault(): Promise<void> {
+        await super.deleteEnableDrillToUrlByDefault();
+        this.invalidateCache();
+    }
+
     public override async setMetricFormatOverride(override: IMetricFormatOverrideSetting): Promise<void> {
         await super.setMetricFormatOverride(override);
         this.invalidateCache();

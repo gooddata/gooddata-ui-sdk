@@ -193,5 +193,19 @@ describe("BaseChartConfigurationPanel", () => {
 
             expect(screen.queryByText("Interactions")).toBeInTheDocument();
         });
+
+        it("should render implicit drill to URL controls when enabled by feature flag", async () => {
+            createComponent({
+                ...defaultProps,
+                insight: insightWithSingleAttribute,
+                featureFlags: {
+                    enableImplicitDrillToUrl: true,
+                },
+            });
+
+            expect(screen.queryByText("Interactions")).toBeInTheDocument();
+            await userEvent.click(screen.getByText("Interactions"));
+            expect(screen.getByLabelText(/drill into url/i)).toBeInTheDocument();
+        });
     });
 });

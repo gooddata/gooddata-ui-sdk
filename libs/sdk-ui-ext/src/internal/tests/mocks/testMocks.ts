@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import {
     type IInsight,
     type IInsightDefinition,
@@ -574,7 +575,7 @@ export const insightWithSingleMeasureAndStack: IInsightDefinition = {
 
 export const insightWithSingleAttribute: IInsightDefinition = {
     insight: {
-        visualizationUrl: "column",
+        visualizationUrl: "local:column",
         buckets: [
             {
                 localIdentifier: BucketNames.VIEW,

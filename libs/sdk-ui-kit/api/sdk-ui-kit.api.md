@@ -3482,6 +3482,8 @@ export interface IInvertableSelectSearchBarProps {
     // (undocumented)
     onEscKeyPress?: (e: KeyboardEvent_2) => void;
     // (undocumented)
+    onKeyDown?: (e: KeyboardEvent_2) => void;
+    // (undocumented)
     onSearch: (searchString: string) => void;
     // (undocumented)
     searchPlaceholder?: string;
@@ -4392,7 +4394,7 @@ export function InvertableSelectItem({ title, onClick, onMouseOver, onMouseOut, 
 export function InvertableSelectLimitWarning({ limit, selectedItemsCount }: IInvertableSelectLimitWarningProps): JSX.Element;
 
 // @internal (undocumented)
-export function InvertableSelectSearchBar({ className, isSmall, searchString, onSearch, onEscKeyPress, searchPlaceholder }: IInvertableSelectSearchBarProps): JSX.Element;
+export function InvertableSelectSearchBar({ className, isSmall, searchString, onSearch, onEscKeyPress, searchPlaceholder, onKeyDown }: IInvertableSelectSearchBarProps): JSX.Element;
 
 // @internal (undocumented)
 export function InvertableSelectStatus<T>({ selectedItems, getItemTitle, isInverted }: IInvertableSelectStatusProps<T>): JSX.Element;

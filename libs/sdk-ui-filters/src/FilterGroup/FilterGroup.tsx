@@ -28,6 +28,7 @@ import {
     type IDropdownButtonRenderProps,
     UiIcon,
     isArrowKey,
+    isSpaceKey,
     useMediaQuery,
 } from "@gooddata/sdk-ui-kit";
 
@@ -35,6 +36,7 @@ import { useFilterGroupStatus } from "./useFilterGroupStatus.js";
 import type { IAttributeFilterProps } from "../AttributeFilter/AttributeFilter.js";
 import { AttributeFilterButton } from "../AttributeFilter/AttributeFilterButton.js";
 import { AttributeFilterDropdownButton } from "../AttributeFilter/Components/DropdownButton/AttributeFilterDropdownButton.js";
+import { AttributeFilterElementsSearchBar } from "../AttributeFilter/Components/ElementsSelect/AttributeFilterElementsSearchBar.js";
 import {
     ATTRIBUTE_DISPLAY_FORM_DROPDOWN_BODY_CLASS,
     ATTRIBUTE_FILTER_DROPDOWN_BODY_CLASS,
@@ -225,6 +227,18 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
                         }}
                         LoadingComponent={() => <FilterGroupItem isLoading />}
                         ErrorComponent={() => <FilterGroupItem isError />}
+                        ElementsSearchBarComponent={(props) => (
+                            <AttributeFilterElementsSearchBar
+                                {...props}
+                                onKeyDown={(e) => {
+                                    // allow space key to be handled by filter search bar
+                                    // and not stolen by filter group dropdown keyboard navigation
+                                    if (isSpaceKey(e)) {
+                                        e.stopPropagation();
+                                    }
+                                }}
+                            />
+                        )}
                     />
                 );
             }
