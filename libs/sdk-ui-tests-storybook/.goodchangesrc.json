@@ -1,5 +1,30 @@
 {
-    "type": "virtual-target",
-    "targetName": "neobackstop",
-    "changeDirs": ["stories", "neobackstop"]
+    "targets": [
+        {
+            "type": "virtual-target",
+            "targetName": "neobackstop",
+            "changeDirs": [
+                {
+                    "glob": "*"
+                },
+                {
+                    "glob": ".storybook/*"
+                },
+                {
+                    "glob": "stories/*.conf"
+                },
+                {
+                    "glob": "scripts/*"
+                },
+                {
+                    "glob": "neobackstop/**/*"
+                },
+                {
+                    "glob": "stories/**/*",
+                    "type": "fine-grained"
+                }
+            ]
+        }
+    ],
+    "ignores": ["README.md", "LICENSE", "eslint.config.ts", ".oxlintrc.json", ".gitignore", ".stylelintrc"]
 }

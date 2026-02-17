@@ -16,12 +16,13 @@ const fs = require("fs");
 const path = require("path");
 
 const currentDir = __dirname;
+const neoBackstopDir = path.join(currentDir, "../neobackstop");
 const references = "reference";
 
 // eslint-disable-next-line no-console
-console.log(`Cleaning artifacts from ${currentDir}/output`);
+console.log(`Cleaning artifacts from ${neoBackstopDir}/output`);
 
-const outputPath = path.join(currentDir, "output");
+const outputPath = path.join(neoBackstopDir, "output");
 const htmlReportPath = path.join(outputPath, "html-report");
 const outputConfig = path.join(htmlReportPath, "config.js");
 
