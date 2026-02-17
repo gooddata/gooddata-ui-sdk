@@ -1,5 +1,9 @@
 {
-    "type": "target",
+    "targets": [
+        {
+            "type": "target"
+        }
+    ],
     "ignores": [
         "README.md",
         ".oxlintrc.json",
