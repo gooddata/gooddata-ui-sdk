@@ -59,8 +59,14 @@ export interface AutomationAbsoluteDateFilterAbsoluteDateFilter {
     'to': string;
     'localIdentifier'?: string;
     'applyOnResult'?: boolean;
+    /**
+     * Specifies how rows with empty (null/missing) date values should be handled. INCLUDE includes empty dates in addition to the date range restriction, EXCLUDE removes rows with empty dates (default), ONLY keeps only rows with empty dates.
+     */
+    'emptyValueHandling'?: AutomationAbsoluteDateFilterAbsoluteDateFilterEmptyValueHandlingEnum;
     'dataset': AutomationAfmObjectIdentifierDataset;
 }
+
+export type AutomationAbsoluteDateFilterAbsoluteDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
 
 /**
  * @type AutomationAbstractMeasureValueFilter
@@ -229,6 +235,30 @@ export interface AutomationAlertEvaluationRow {
     'computedMetric'?: AutomationMetricRecord;
     'labelValue'?: string;
 }
+
+/**
+ * An all-time date filter that does not restrict by date range. Controls how rows with empty (null/missing) date values are handled.
+ */
+export interface AutomationAllTimeDateFilter {
+    'allTimeDateFilter': AutomationAllTimeDateFilterAllTimeDateFilter;
+}
+
+export interface AutomationAllTimeDateFilterAllTimeDateFilter {
+    /**
+     * Specifies how rows with empty (null/missing) date values should be handled. INCLUDE means no filtering effect (default), EXCLUDE removes rows with null dates, ONLY keeps only rows with null dates.
+     */
+    'emptyValueHandling'?: AutomationAllTimeDateFilterAllTimeDateFilterEmptyValueHandlingEnum;
+    /**
+     * Date granularity used to resolve the date attribute label for null value checks. Defaults to DAY if not specified.
+     */
+    'granularity'?: AutomationAllTimeDateFilterAllTimeDateFilterGranularityEnum;
+    'localIdentifier'?: string;
+    'applyOnResult'?: boolean;
+    'dataset': AutomationAfmObjectIdentifierDataset;
+}
+
+export type AutomationAllTimeDateFilterAllTimeDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
+export type AutomationAllTimeDateFilterAllTimeDateFilterGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
 
 export interface AutomationAnomalyDetection {
     'measure': AutomationLocalIdentifier;
@@ -646,7 +676,7 @@ export type AutomationDashboardTabularExportRequestV2FormatEnum = 'XLSX' | 'PDF'
  * @type AutomationDateFilter
  * Abstract filter definition type for dates.
  */
-export type AutomationDateFilter = AutomationAbsoluteDateFilter | AutomationRelativeDateFilter;
+export type AutomationDateFilter = AutomationAbsoluteDateFilter | AutomationAllTimeDateFilter | AutomationRelativeDateFilter;
 
 export interface AutomationDateValue {
     'value': string;
@@ -752,7 +782,7 @@ export type AutomationExportResultStatusEnum = 'SUCCESS' | 'ERROR' | 'INTERNAL_E
  * @type AutomationFilterDefinition
  * Abstract filter definition type
  */
-export type AutomationFilterDefinition = AutomationAbsoluteDateFilter | AutomationComparisonMeasureValueFilter | AutomationCompoundMeasureValueFilter | AutomationInlineFilterDefinition | AutomationMatchAttributeFilter | AutomationNegativeAttributeFilter | AutomationPositiveAttributeFilter | AutomationRangeMeasureValueFilter | AutomationRankingFilter | AutomationRelativeDateFilter;
+export type AutomationFilterDefinition = AutomationAbsoluteDateFilter | AutomationAllTimeDateFilter | AutomationComparisonMeasureValueFilter | AutomationCompoundMeasureValueFilter | AutomationInlineFilterDefinition | AutomationMatchAttributeFilter | AutomationNegativeAttributeFilter | AutomationPositiveAttributeFilter | AutomationRangeMeasureValueFilter | AutomationRankingFilter | AutomationRelativeDateFilter;
 
 /**
  * @type AutomationFilterDefinitionForSimpleMeasure
@@ -1272,10 +1302,15 @@ export interface AutomationRelativeDateFilterRelativeDateFilter {
     'localIdentifier'?: string;
     'applyOnResult'?: boolean;
     'boundedFilter'?: AutomationBoundedFilter;
+    /**
+     * Specifies how rows with empty (null/missing) date values should be handled. INCLUDE includes empty dates in addition to the date range restriction, EXCLUDE removes rows with empty dates (default), ONLY keeps only rows with empty dates.
+     */
+    'emptyValueHandling'?: AutomationRelativeDateFilterRelativeDateFilterEmptyValueHandlingEnum;
     'dataset': AutomationAfmObjectIdentifierDataset;
 }
 
 export type AutomationRelativeDateFilterRelativeDateFilterGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
+export type AutomationRelativeDateFilterRelativeDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
 
 export interface AutomationRelativeWrapper {
     'relative': AutomationRelative;

@@ -86,6 +86,32 @@ exports[`tiger filter converter from model to AFM > convert filter > should retu
 }
 `;
 
+exports[`tiger filter converter from model to AFM > convert filter > should return compound measure value filter with localIdentifier 1`] = `
+{
+  "compoundMeasureValueFilter": {
+    "conditions": [
+      {
+        "comparison": {
+          "operator": "GREATER_THAN",
+          "value": 10,
+        },
+      },
+      {
+        "range": {
+          "from": 5,
+          "operator": "BETWEEN",
+          "to": 20,
+        },
+      },
+    ],
+    "localIdentifier": "compoundFilterLocalId",
+    "measure": {
+      "localIdentifier": "m_e519fa2a_86c3_4e32_8313_0c03062348j3",
+    },
+  },
+}
+`;
+
 exports[`tiger filter converter from model to AFM > convert filter > should return measure value filter with dimensionality using local id refs 1`] = `
 {
   "comparisonMeasureValueFilter": {
@@ -346,14 +372,14 @@ exports[`tiger filter converter from model to AFM > convert filter > should retu
 }
 `;
 
-exports[`tiger filter converter from model to AFM > convert measure value filter > should convert specified using id of metric 1`] = `
+exports[`tiger filter converter from model to AFM > convert measure value filter > should convert specified using id of fact 1`] = `
 {
   "comparisonMeasureValueFilter": {
     "localIdentifier": undefined,
     "measure": {
       "identifier": {
-        "id": "measureId",
-        "type": "metric",
+        "id": "factId",
+        "type": "fact",
       },
     },
     "operator": "GREATER_THAN",
@@ -363,14 +389,14 @@ exports[`tiger filter converter from model to AFM > convert measure value filter
 }
 `;
 
-exports[`tiger filter converter from model to AFM > convert measure value filter > should convert specified using id of metric 2`] = `
+exports[`tiger filter converter from model to AFM > convert measure value filter > should convert specified using id of metric 1`] = `
 {
   "comparisonMeasureValueFilter": {
     "localIdentifier": undefined,
     "measure": {
       "identifier": {
-        "id": "factId",
-        "type": "fact",
+        "id": "measureId",
+        "type": "metric",
       },
     },
     "operator": "GREATER_THAN",
@@ -427,6 +453,8 @@ exports[`tiger filter converter from model to AFM > convert relative date filter
 }
 `;
 
+exports[`tiger filter converter from model to AFM > convert relative date filter > should return AFM relative date filter with missing 'from' parameter 1`] = `null`;
+
 exports[`tiger filter converter from model to AFM > convert relative date filter > should return AFM relative date filter with missing 'to' parameter 1`] = `
 {
   "relativeDateFilter": {
@@ -443,8 +471,6 @@ exports[`tiger filter converter from model to AFM > convert relative date filter
   },
 }
 `;
-
-exports[`tiger filter converter from model to AFM > convert relative date filter > should return AFM relative date filter with mission 'from' parameter 1`] = `null`;
 
 exports[`tiger filter converter from model to AFM > convert relative date filter > should return AFM relative date filter with month granularity 1`] = `
 {

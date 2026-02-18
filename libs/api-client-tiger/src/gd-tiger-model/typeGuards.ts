@@ -1,5 +1,15 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
+import {
+    type ITigerAbsoluteDateFilter,
+    type ITigerFilter,
+    type ITigerFilterContextItem,
+    type ITigerMeasureValueFilter,
+    type ITigerNegativeAttributeFilter,
+    type ITigerPositiveAttributeFilter,
+    type ITigerRankingFilter,
+    type ITigerRelativeDateFilter,
+} from "./TigerTypes.js";
 import {
     type AfmLocalIdentifier,
     type AfmObjectIdentifier,
@@ -11,6 +21,8 @@ import {
     type TotalExecutionResultHeader,
 } from "../generated/afm-rest-api/index.js";
 import {
+    type DashboardAttributeFilter,
+    type DashboardDateFilter,
     type JsonApiAttributeOutWithLinks,
     type JsonApiDashboardPluginOutWithLinks,
     type JsonApiDatasetOutWithLinks,
@@ -126,4 +138,97 @@ export function isFactItem(fact: unknown): fact is JsonApiFactOutWithLinks {
  */
 export function isMetricItem(metric: unknown): metric is JsonApiMetricOutWithLinks {
     return (metric as JsonApiMetricOutWithLinks).type === "metric";
+}
+
+/**
+ * @public
+ */
+export function isTigerFilterContextItem(obj: unknown): obj is ITigerFilterContextItem {
+    if (!obj || typeof obj !== "object") {
+        return false;
+    }
+
+    if ("attributeFilter" in obj) {
+        return isDashboardAttributeFilter(obj);
+    }
+
+    if ("dateFilter" in obj) {
+        return isDashboardDateFilter(obj);
+    }
+
+    return false;
+}
+
+/**
+ * @public
+ */
+export function isTigerFilterContextItems(filters: unknown[]): filters is ITigerFilterContextItem[] {
+    return filters.every(isTigerFilterContextItem);
+}
+
+/**
+ * @public
+ */
+export function isTigerFilter(obj: unknown): obj is ITigerFilter {
+    return (
+        isTigerDateFilter(obj) ||
+        isTigerAttributeFilter(obj) ||
+        isTigerMeasureValueFilter(obj) ||
+        isTigerRankingFilter(obj)
+    );
+}
+
+/**
+ * @public
+ */
+export function isTigerFilters(filters: unknown[]): filters is ITigerFilter[] {
+    return filters.every(isTigerFilter);
+}
+
+function isTigerAttributeFilter(
+    obj: unknown,
+): obj is ITigerPositiveAttributeFilter | ITigerNegativeAttributeFilter {
+    return isTigerPositiveAttributeFilter(obj) || isTigerNegativeAttributeFilter(obj);
+}
+
+function isTigerDateFilter(obj: unknown): obj is ITigerAbsoluteDateFilter | ITigerRelativeDateFilter {
+    return isTigerAbsoluteDateFilter(obj) || isTigerRelativeDateFilter(obj);
+}
+
+function isTigerPositiveAttributeFilter(obj: unknown): obj is ITigerPositiveAttributeFilter {
+    return !!obj && typeof obj === "object" && "positiveAttributeFilter" in obj;
+}
+
+function isTigerNegativeAttributeFilter(obj: unknown): obj is ITigerNegativeAttributeFilter {
+    return !!obj && typeof obj === "object" && "negativeAttributeFilter" in obj;
+}
+
+function isTigerAbsoluteDateFilter(obj: unknown): obj is ITigerAbsoluteDateFilter {
+    return !!obj && typeof obj === "object" && "absoluteDateFilter" in obj;
+}
+
+function isTigerRelativeDateFilter(obj: unknown): obj is ITigerRelativeDateFilter {
+    return !!obj && typeof obj === "object" && "relativeDateFilter" in obj;
+}
+
+function isTigerMeasureValueFilter(obj: unknown): obj is ITigerMeasureValueFilter {
+    return !!obj && typeof obj === "object" && "measureValueFilter" in obj;
+}
+
+function isTigerRankingFilter(obj: unknown): obj is ITigerRankingFilter {
+    return !!obj && typeof obj === "object" && "rankingFilter" in obj;
+}
+
+function isDashboardAttributeFilter(obj: unknown): obj is DashboardAttributeFilter {
+    return isAfmObjectIdentifier((obj as DashboardAttributeFilter).attributeFilter?.displayForm);
+}
+
+function isDashboardDateFilter(obj: unknown): obj is DashboardDateFilter {
+    const dateFilter = (obj as DashboardDateFilter).dateFilter;
+    return (
+        !!dateFilter &&
+        (isAfmObjectIdentifier(dateFilter.dataSet) ||
+            isAfmObjectIdentifier(dateFilter.attribute) ||
+            dateFilter.boundedFilter !== undefined)
+    );
 }

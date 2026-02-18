@@ -1,0 +1,15 @@
+{
+    "targets": [
+        {
+            "type": "virtual-target",
+            "targetName": "@gooddata/api-client-tiger-unit-tests",
+            "changeDirs": [
+                {
+                    "glob": "**/*",
+                    "type": "fine-grained",
+                    "filter": "**/*.test.ts*"
+                }
+            ]
+        }
+    ]
+}

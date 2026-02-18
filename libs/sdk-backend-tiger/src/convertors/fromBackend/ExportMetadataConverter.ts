@@ -1,7 +1,9 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
-import { cloneWithSanitizedIds } from "./IdSanitization.js";
+import { isFilterContextItem } from "@gooddata/sdk-model";
+
 import { type FiltersByTab, type IExportMetadata } from "../../types/index.js";
+import { convertTigerToSdkFilters } from "../shared/storedFilterConverter.js";
 
 export const convertExportMetadata = (
     exportMetadata: any,
@@ -12,7 +14,7 @@ export const convertExportMetadata = (
         ...(exportMetadata?.filters
             ? {
                   filters: enableAutomationFilterContext
-                      ? exportMetadata.filters.map(cloneWithSanitizedIds)
+                      ? convertTigerToSdkFilters(exportMetadata.filters)
                       : exportMetadata.filters,
               }
             : {}),
@@ -20,7 +22,10 @@ export const convertExportMetadata = (
         ...(exportMetadata?.filtersByTab && enableAutomationFilterContext
             ? {
                   filtersByTab: Object.keys(exportMetadata?.filtersByTab).reduce((acc, tabId) => {
-                      acc[tabId] = exportMetadata?.filtersByTab[tabId].map(cloneWithSanitizedIds);
+                      acc[tabId] =
+                          convertTigerToSdkFilters(exportMetadata?.filtersByTab[tabId])?.filter(
+                              isFilterContextItem,
+                          ) ?? [];
                       return acc;
                   }, {} as FiltersByTab),
               }

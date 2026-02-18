@@ -54,8 +54,14 @@ export interface ExportAbsoluteDateFilterAbsoluteDateFilter {
     'to': string;
     'localIdentifier'?: string;
     'applyOnResult'?: boolean;
+    /**
+     * Specifies how rows with empty (null/missing) date values should be handled. INCLUDE includes empty dates in addition to the date range restriction, EXCLUDE removes rows with empty dates (default), ONLY keeps only rows with empty dates.
+     */
+    'emptyValueHandling'?: ExportAbsoluteDateFilterAbsoluteDateFilterEmptyValueHandlingEnum;
     'dataset': ExportAfmObjectIdentifierDataset;
 }
+
+export type ExportAbsoluteDateFilterAbsoluteDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
 
 /**
  * @type ExportAbstractMeasureValueFilter
@@ -138,6 +144,30 @@ export interface ExportAfmObjectIdentifierLabelIdentifier {
 }
 
 export type ExportAfmObjectIdentifierLabelIdentifierTypeEnum = 'label';
+
+/**
+ * An all-time date filter that does not restrict by date range. Controls how rows with empty (null/missing) date values are handled.
+ */
+export interface ExportAllTimeDateFilter {
+    'allTimeDateFilter': ExportAllTimeDateFilterAllTimeDateFilter;
+}
+
+export interface ExportAllTimeDateFilterAllTimeDateFilter {
+    /**
+     * Specifies how rows with empty (null/missing) date values should be handled. INCLUDE means no filtering effect (default), EXCLUDE removes rows with null dates, ONLY keeps only rows with null dates.
+     */
+    'emptyValueHandling'?: ExportAllTimeDateFilterAllTimeDateFilterEmptyValueHandlingEnum;
+    /**
+     * Date granularity used to resolve the date attribute label for null value checks. Defaults to DAY if not specified.
+     */
+    'granularity'?: ExportAllTimeDateFilterAllTimeDateFilterGranularityEnum;
+    'localIdentifier'?: string;
+    'applyOnResult'?: boolean;
+    'dataset': ExportAfmObjectIdentifierDataset;
+}
+
+export type ExportAllTimeDateFilterAllTimeDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
+export type ExportAllTimeDateFilterAllTimeDateFilterGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
 
 /**
  * Metric representing arithmetics between other metrics.
@@ -442,7 +472,7 @@ export type ExportDashboardTabularExportRequestFormatEnum = 'XLSX' | 'PDF';
  * @type ExportDateFilter
  * Abstract filter definition type for dates.
  */
-export type ExportDateFilter = ExportAbsoluteDateFilter | ExportRelativeDateFilter;
+export type ExportDateFilter = ExportAbsoluteDateFilter | ExportAllTimeDateFilter | ExportRelativeDateFilter;
 
 export interface ExportDateValue {
     'value': string;
@@ -470,7 +500,7 @@ export interface ExportExportResponse {
  * @type ExportFilterDefinition
  * Abstract filter definition type
  */
-export type ExportFilterDefinition = ExportAbsoluteDateFilter | ExportComparisonMeasureValueFilter | ExportCompoundMeasureValueFilter | ExportInlineFilterDefinition | ExportMatchAttributeFilter | ExportNegativeAttributeFilter | ExportPositiveAttributeFilter | ExportRangeMeasureValueFilter | ExportRankingFilter | ExportRelativeDateFilter;
+export type ExportFilterDefinition = ExportAbsoluteDateFilter | ExportAllTimeDateFilter | ExportComparisonMeasureValueFilter | ExportCompoundMeasureValueFilter | ExportInlineFilterDefinition | ExportMatchAttributeFilter | ExportNegativeAttributeFilter | ExportPositiveAttributeFilter | ExportRangeMeasureValueFilter | ExportRankingFilter | ExportRelativeDateFilter;
 
 /**
  * @type ExportFilterDefinitionForSimpleMeasure
@@ -894,10 +924,15 @@ export interface ExportRelativeDateFilterRelativeDateFilter {
     'localIdentifier'?: string;
     'applyOnResult'?: boolean;
     'boundedFilter'?: ExportBoundedFilter;
+    /**
+     * Specifies how rows with empty (null/missing) date values should be handled. INCLUDE includes empty dates in addition to the date range restriction, EXCLUDE removes rows with empty dates (default), ONLY keeps only rows with empty dates.
+     */
+    'emptyValueHandling'?: ExportRelativeDateFilterRelativeDateFilterEmptyValueHandlingEnum;
     'dataset': ExportAfmObjectIdentifierDataset;
 }
 
 export type ExportRelativeDateFilterRelativeDateFilterGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
+export type ExportRelativeDateFilterRelativeDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
 
 /**
  * Additional settings.

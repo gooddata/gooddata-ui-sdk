@@ -5,7 +5,6 @@ import { omit } from "lodash-es";
 import {
     type ITigerAttributeFilterConfigs,
     type ITigerBucket,
-    type ITigerFilter,
     type ITigerInsightLayerDefinition,
     type ITigerSortItem,
     type ITigerVisualizationProperties,
@@ -14,7 +13,6 @@ import {
 import {
     type IAttributeFilterConfigs,
     type IBucket,
-    type IFilter,
     type IInsight,
     type IInsightDefinition,
     type IInsightLayerDefinition,
@@ -24,6 +22,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { cloneWithSanitizedIdsTyped } from "./IdSanitization.js";
+import { convertSdkFiltersToTiger } from "../shared/storedFilterConverter.js";
 
 function removeIdentifiers(insight: IInsight): IInsightDefinition {
     const insightData = omit(insight.insight, ["ref", "uri", "identifier"]);
@@ -61,16 +60,25 @@ export const convertInsight = (
     const layersProp =
         layers && layers.length > 0
             ? {
-                  layers: cloneWithSanitizedIdsTyped<
-                      IInsightLayerDefinition[],
-                      ITigerInsightLayerDefinition[]
-                  >(layers),
+                  layers: layers.map((layer) => {
+                      const tigerLayer = cloneWithSanitizedIdsTyped<
+                          IInsightLayerDefinition,
+                          ITigerInsightLayerDefinition
+                      >(layer);
+
+                      const convertedFilters = convertSdkFiltersToTiger(layer.filters);
+
+                      return {
+                          ...tigerLayer,
+                          ...(convertedFilters ? { filters: convertedFilters } : {}),
+                      };
+                  }),
               }
             : {};
 
     return {
         buckets: cloneWithSanitizedIdsTyped<IBucket[], ITigerBucket[]>(sanitizedInsight.insight.buckets),
-        filters: cloneWithSanitizedIdsTyped<IFilter[], ITigerFilter[]>(sanitizedInsight.insight.filters),
+        filters: convertSdkFiltersToTiger(sanitizedInsight.insight.filters),
         ...(sanitizedInsight.insight.attributeFilterConfigs
             ? {
                   attributeFilterConfigs: cloneWithSanitizedIdsTyped<

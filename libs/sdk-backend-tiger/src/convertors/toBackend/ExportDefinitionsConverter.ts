@@ -4,14 +4,15 @@ import { isEmpty, omitBy } from "lodash-es";
 
 import {
     type AutomationRawExportAutomationRequest,
-    type DashboardFilter,
     type DashboardTabularExportRequestV2,
+    type ITigerFilterContextItem,
     type ImageExportRequest,
     type JsonApiExportDefinitionInDocument,
     type JsonApiExportDefinitionPostOptionalIdDocument,
     type SlidesExportRequest,
     type TabularExportRequest,
     type VisualExportRequest,
+    isTigerFilterContextItem,
 } from "@gooddata/api-client-tiger";
 import { type IRawExportCustomOverrides, UnexpectedError } from "@gooddata/sdk-backend-spi";
 import {
@@ -27,7 +28,7 @@ import {
 import { convertAfmFilters } from "./afm/AfmFiltersConverter.js";
 import { convertAttribute } from "./afm/AttributeConverter.js";
 import { convertMeasure } from "./afm/MeasureConverter.js";
-import { cloneWithSanitizedIds } from "./IdSanitization.js";
+import { convertSdkFiltersToTiger } from "../shared/storedFilterConverter.js";
 
 export const convertExportDefinitionMdObjectDefinition = (
     exportDefinition: IExportDefinitionMetadataObjectDefinition,
@@ -106,7 +107,7 @@ export const convertToRawExportRequest = (
             widget: exportRequest.content.widget,
             visualizationObject: exportRequest.content.visualizationObject,
             dashboard: exportRequest.content.dashboard,
-            filters: contentFilters?.map(cloneWithSanitizedIds),
+            filters: convertSdkFiltersToTiger(contentFilters),
         },
         (value) => value === undefined || (Array.isArray(value) && value.length === 0),
     );
@@ -142,7 +143,7 @@ export const convertToImageExportRequest = (
                       metadata: {
                           ...(filters
                               ? {
-                                    filters: filters.map(cloneWithSanitizedIds),
+                                    filters: convertSdkFiltersToTiger(filters),
                                 }
                               : {}),
                           ...(title ? { title } : {}),
@@ -178,7 +179,7 @@ export const convertToSlidesExportRequest = (
         // Convert filtersByTab to API format
         const filtersByTabObj = filtersByTab
             ? Object.entries(filtersByTab).reduce<Record<string, unknown[]>>((acc, [tabId, tabFilters]) => {
-                  acc[tabId] = tabFilters.map(cloneWithSanitizedIds);
+                  acc[tabId] = convertSdkFiltersToTiger(tabFilters) ?? [];
                   return acc;
               }, {})
             : undefined;
@@ -190,7 +191,7 @@ export const convertToSlidesExportRequest = (
                       metadata: {
                           ...(filters
                               ? {
-                                    filters: filters.map(cloneWithSanitizedIds),
+                                    filters: convertSdkFiltersToTiger(filters),
                                 }
                               : {}),
                           ...(filtersByTabObj ? { filtersByTab: filtersByTabObj } : {}),
@@ -221,7 +222,7 @@ export const convertToSlidesExportRequest = (
         widgetIds: [widget],
         metadata: {
             widget,
-            ...(filters ? { filters: filters.map(cloneWithSanitizedIds) } : {}),
+            ...(filters ? { filters: convertSdkFiltersToTiger(filters) } : {}),
             ...(title ? { title } : {}),
         },
     };
@@ -236,7 +237,7 @@ export const convertToVisualExportRequest = (
     // Convert filtersByTab to API format
     const filtersByTabObj = filtersByTab
         ? Object.entries(filtersByTab).reduce<Record<string, unknown[]>>((acc, [tabId, tabFilters]) => {
-              acc[tabId] = tabFilters.map(cloneWithSanitizedIds);
+              acc[tabId] = convertSdkFiltersToTiger(tabFilters) ?? [];
               return acc;
           }, {})
         : undefined;
@@ -248,7 +249,7 @@ export const convertToVisualExportRequest = (
                   metadata: {
                       ...(filters
                           ? {
-                                filters: filters.map(cloneWithSanitizedIds),
+                                filters: convertSdkFiltersToTiger(filters),
                             }
                           : {}),
                       ...(filtersByTabObj ? { filtersByTab: filtersByTabObj } : {}),
@@ -278,9 +279,9 @@ export const convertToDashboardTabularExportRequest = (
 
         // Convert filtersByTab to API format (dashboardTabsFiltersOverrides)
         const dashboardTabsFiltersOverrides = filtersByTab
-            ? Object.entries(filtersByTab).reduce<Record<string, DashboardFilter[]>>(
+            ? Object.entries(filtersByTab).reduce<Record<string, ITigerFilterContextItem[]>>(
                   (acc, [tabId, tabFilters]) => {
-                      acc[tabId] = tabFilters.map(cloneWithSanitizedIds) as DashboardFilter[];
+                      acc[tabId] = convertSdkFiltersToTiger(tabFilters);
                       return acc;
                   },
                   {},
@@ -296,7 +297,7 @@ export const convertToDashboardTabularExportRequest = (
                 ...(orientation ? { pdfPageSize: orientation } : {}),
                 ...(exportInfo ? { exportInfo } : {}),
             },
-            dashboardFiltersOverride: filters?.map(cloneWithSanitizedIds),
+            dashboardFiltersOverride: filters ? convertSdkFiltersToTiger(filters) : undefined,
             dashboardTabsFiltersOverrides,
         };
     }
@@ -314,7 +315,7 @@ export const convertToTabularExportRequest = (
         const { visualizationObject, filters, widget, dashboard } = exportRequest.content;
         const { mergeHeaders, orientation, exportInfo } = exportRequest.settings ?? {};
         const filtersObj = filters
-            ? { visualizationObjectCustomFilters: filters.map(cloneWithSanitizedIds) }
+            ? { visualizationObjectCustomFilters: convertSdkFiltersToTiger(filters) }
             : {};
 
         return {
@@ -373,7 +374,7 @@ export const convertVisualizationToDashboardTabularExportRequest = (
         format: exportRequest.format === "PDF_TABULAR" ? "PDF" : "XLSX",
         dashboardId: dashboard,
         widgetIds: [widget],
-        dashboardFiltersOverride: filters?.map(cloneWithSanitizedIds),
+        dashboardFiltersOverride: convertSdkFiltersToTiger(filters)?.filter(isTigerFilterContextItem),
         settings,
     };
 };
@@ -389,7 +390,7 @@ export const convertExportDefinitionRequestPayload = (
         // Convert filtersByTab to API format
         const filtersByTabObj = filtersByTab
             ? Object.entries(filtersByTab).reduce<Record<string, unknown[]>>((acc, [tabId, tabFilters]) => {
-                  acc[tabId] = tabFilters.map(cloneWithSanitizedIds);
+                  acc[tabId] = convertSdkFiltersToTiger(tabFilters) ?? [];
                   return acc;
               }, {})
             : undefined;
@@ -402,7 +403,7 @@ export const convertExportDefinitionRequestPayload = (
                           ...(filters
                               ? {
                                     filters: enableAutomationFilterContext
-                                        ? filters.map(cloneWithSanitizedIds)
+                                        ? convertSdkFiltersToTiger(filters)
                                         : filters,
                                 }
                               : {}),
@@ -422,9 +423,7 @@ export const convertExportDefinitionRequestPayload = (
 
     const { mergeHeaders, orientation } = exportRequest.settings ?? {};
     const { visualizationObject, filters, widget, dashboard } = exportRequest.content;
-    const filtersObj = filters
-        ? { visualizationObjectCustomFilters: filters.map(cloneWithSanitizedIds) }
-        : {};
+    const filtersObj = filters ? { visualizationObjectCustomFilters: convertSdkFiltersToTiger(filters) } : {};
 
     return {
         fileName: exportRequest.fileName,

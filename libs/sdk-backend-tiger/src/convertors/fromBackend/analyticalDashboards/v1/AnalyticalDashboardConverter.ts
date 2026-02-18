@@ -7,7 +7,6 @@ import {
     type AnalyticalDashboardModelV1,
     type ITigerDashboardDateFilterConfig,
     type ITigerDashboardLayout,
-    type ITigerFilterContextItem,
     type JsonApiAnalyticalDashboardOutDocument,
     type JsonApiFilterContextOutDocument,
     isDataSetItem,
@@ -26,6 +25,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { convertLayout } from "../../../shared/layoutConverter.js";
+import { convertTigerToSdkFilters } from "../../../shared/storedFilterConverter.js";
 import { convertDataSetItem } from "../../DataSetConverter.js";
 import { fixWidgetLegacyElementUris } from "../../fixLegacyElementUris.js";
 import { cloneWithSanitizedIdsTyped } from "../../IdSanitization.js";
@@ -140,9 +140,5 @@ export function convertFilterContextFromBackend(
 export function convertFilterContextFilters(
     content: AnalyticalDashboardModelV1.IFilterContext,
 ): FilterContextItem[] {
-    return sanitizeSelectionMode(
-        cloneWithSanitizedIdsTyped<ITigerFilterContextItem[], FilterContextItem[]>(
-            content.filterContext.filters,
-        ),
-    );
+    return sanitizeSelectionMode(convertTigerToSdkFilters(content.filterContext.filters) ?? []);
 }

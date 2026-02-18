@@ -2,12 +2,12 @@
 
 import {
     type ITigerBucket,
-    type ITigerFilter,
     type ITigerSortItem,
     type VisualizationObjectModelV1,
 } from "@gooddata/api-client-tiger";
-import { type IBucket, type IFilter, type IInsightDefinition, type ISortItem } from "@gooddata/sdk-model";
+import { type IBucket, type IInsightDefinition, type ISortItem } from "@gooddata/sdk-model";
 
+import { convertTigerToSdkFilters } from "../../../shared/storedFilterConverter.js";
 import { fixInsightLegacyElementUris } from "../../fixLegacyElementUris.js";
 import { cloneWithSanitizedIdsTyped } from "../../IdSanitization.js";
 
@@ -28,10 +28,7 @@ export function convertVisualizationObject(
                 cloneWithSanitizedIdsTyped<ITigerBucket[], IBucket[]>(
                     visualizationObject.visualizationObject.buckets,
                 ) ?? [],
-            filters:
-                cloneWithSanitizedIdsTyped<ITigerFilter[], IFilter[]>(
-                    visualizationObject.visualizationObject.filters,
-                ) ?? [],
+            filters: convertTigerToSdkFilters(visualizationObject.visualizationObject.filters) ?? [],
             sorts:
                 cloneWithSanitizedIdsTyped<ITigerSortItem[], ISortItem[]>(
                     visualizationObject.visualizationObject.sorts,

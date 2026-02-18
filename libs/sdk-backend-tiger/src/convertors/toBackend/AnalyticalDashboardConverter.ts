@@ -7,11 +7,9 @@ import {
     type ITigerDashboardAttributeFilterConfig,
     type ITigerDashboardDateFilterConfig,
     type ITigerDashboardLayout,
-    type ITigerFilterContextItem,
 } from "@gooddata/api-client-tiger";
 import { type LayoutPath, walkLayout } from "@gooddata/sdk-backend-spi";
 import {
-    type FilterContextItem,
     type IDashboardAttributeFilterConfig,
     type IDashboardDateFilterConfig,
     type IDashboardDefinition,
@@ -35,6 +33,7 @@ import { cloneWithSanitizedIds, cloneWithSanitizedIdsTyped } from "./IdSanitizat
 import { addFilterLocalIdentifier } from "../../utils/filterLocalidentifier.js";
 import { generateWidgetLocalIdentifier } from "../../utils/widgetLocalIdentifier.js";
 import { convertLayout } from "../shared/layoutConverter.js";
+import { convertSdkFiltersToTiger } from "../shared/storedFilterConverter.js";
 
 function removeIdentifiers(widget: IDashboardWidget, useWidgetLocalIdentifiers?: boolean): IDashboardWidget {
     /**
@@ -207,7 +206,7 @@ export function convertFilterContextToBackend(
         : filterContext.filters;
 
     return {
-        filters: cloneWithSanitizedIdsTyped<FilterContextItem[], ITigerFilterContextItem[]>(updatedFilters),
+        filters: convertSdkFiltersToTiger(updatedFilters) ?? [],
         version: "2",
     };
 }

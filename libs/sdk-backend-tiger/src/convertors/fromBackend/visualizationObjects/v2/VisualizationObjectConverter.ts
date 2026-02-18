@@ -3,7 +3,6 @@
 import {
     type ITigerAttributeFilterConfigs,
     type ITigerBucket,
-    type ITigerFilter,
     type ITigerInsightLayerDefinition,
     type ITigerSortItem,
     type ITigerVisualizationProperties,
@@ -12,13 +11,13 @@ import {
 import {
     type IAttributeFilterConfigs,
     type IBucket,
-    type IFilter,
     type IInsightDefinition,
     type IInsightLayerDefinition,
     type ISortItem,
     type VisualizationProperties,
 } from "@gooddata/sdk-model";
 
+import { convertTigerToSdkFilters } from "../../../shared/storedFilterConverter.js";
 import { fixInsightLegacyElementUris } from "../../fixLegacyElementUris.js";
 import { cloneWithSanitizedIdsTyped } from "../../IdSanitization.js";
 
@@ -40,10 +39,19 @@ export function convertVisualizationObject(
     const layersProp =
         visualizationObject.layers && visualizationObject.layers.length > 0
             ? {
-                  layers: cloneWithSanitizedIdsTyped<
-                      ITigerInsightLayerDefinition[],
-                      IInsightLayerDefinition[]
-                  >(visualizationObject.layers),
+                  layers: visualizationObject.layers.map((layer) => {
+                      const convertedLayer = cloneWithSanitizedIdsTyped<
+                          ITigerInsightLayerDefinition,
+                          IInsightLayerDefinition
+                      >(layer);
+
+                      const layerFilters = convertTigerToSdkFilters(layer.filters);
+
+                      return {
+                          ...convertedLayer,
+                          ...(layerFilters ? { filters: layerFilters } : {}),
+                      };
+                  }),
               }
             : {};
 
@@ -53,7 +61,7 @@ export function convertVisualizationObject(
             title,
             summary: description,
             buckets: cloneWithSanitizedIdsTyped<ITigerBucket[], IBucket[]>(visualizationObject.buckets) ?? [],
-            filters: cloneWithSanitizedIdsTyped<ITigerFilter[], IFilter[]>(visualizationObject.filters) ?? [],
+            filters: convertTigerToSdkFilters(visualizationObject.filters) ?? [],
             ...(visualizationObject.attributeFilterConfigs
                 ? {
                       attributeFilterConfigs: cloneWithSanitizedIdsTyped<

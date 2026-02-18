@@ -54,8 +54,14 @@ export interface AbsoluteDateFilterAbsoluteDateFilter {
     'to': string;
     'localIdentifier'?: string;
     'applyOnResult'?: boolean;
+    /**
+     * Specifies how rows with empty (null/missing) date values should be handled. INCLUDE includes empty dates in addition to the date range restriction, EXCLUDE removes rows with empty dates (default), ONLY keeps only rows with empty dates.
+     */
+    'emptyValueHandling'?: AbsoluteDateFilterAbsoluteDateFilterEmptyValueHandlingEnum;
     'dataset': AfmObjectIdentifierDataset;
 }
+
+export type AbsoluteDateFilterAbsoluteDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
 
 /**
  * @type AbstractMeasureValueFilter
@@ -216,6 +222,30 @@ export type AfmValidObjectsQueryTypesEnum = 'facts' | 'attributes' | 'measures';
 export interface AfmValidObjectsResponse {
     'items': Array<RestApiIdentifier>;
 }
+
+/**
+ * An all-time date filter that does not restrict by date range. Controls how rows with empty (null/missing) date values are handled.
+ */
+export interface AllTimeDateFilter {
+    'allTimeDateFilter': AllTimeDateFilterAllTimeDateFilter;
+}
+
+export interface AllTimeDateFilterAllTimeDateFilter {
+    /**
+     * Specifies how rows with empty (null/missing) date values should be handled. INCLUDE means no filtering effect (default), EXCLUDE removes rows with null dates, ONLY keeps only rows with null dates.
+     */
+    'emptyValueHandling'?: AllTimeDateFilterAllTimeDateFilterEmptyValueHandlingEnum;
+    /**
+     * Date granularity used to resolve the date attribute label for null value checks. Defaults to DAY if not specified.
+     */
+    'granularity'?: AllTimeDateFilterAllTimeDateFilterGranularityEnum;
+    'localIdentifier'?: string;
+    'applyOnResult'?: boolean;
+    'dataset': AfmObjectIdentifierDataset;
+}
+
+export type AllTimeDateFilterAllTimeDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
+export type AllTimeDateFilterAllTimeDateFilterGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
 
 /**
  * Allowed relationship type combination.
@@ -891,7 +921,7 @@ export interface DateAbsoluteFilter {
  * @type DateFilter
  * Abstract filter definition type for dates.
  */
-export type DateFilter = AbsoluteDateFilter | RelativeDateFilter;
+export type DateFilter = AbsoluteDateFilter | AllTimeDateFilter | RelativeDateFilter;
 
 export interface DateRelativeFilter {
     'using': string;
@@ -1214,7 +1244,7 @@ export type FilterByLabelTypeEnum = 'PRIMARY' | 'REQUESTED';
  * @type FilterDefinition
  * Abstract filter definition type
  */
-export type FilterDefinition = AbsoluteDateFilter | ComparisonMeasureValueFilter | CompoundMeasureValueFilter | InlineFilterDefinition | MatchAttributeFilter | NegativeAttributeFilter | PositiveAttributeFilter | RangeMeasureValueFilter | RankingFilter | RelativeDateFilter;
+export type FilterDefinition = AbsoluteDateFilter | AllTimeDateFilter | ComparisonMeasureValueFilter | CompoundMeasureValueFilter | InlineFilterDefinition | MatchAttributeFilter | NegativeAttributeFilter | PositiveAttributeFilter | RangeMeasureValueFilter | RankingFilter | RelativeDateFilter;
 
 /**
  * @type FilterDefinitionForSimpleMeasure
@@ -1976,10 +2006,15 @@ export interface RelativeDateFilterRelativeDateFilter {
     'localIdentifier'?: string;
     'applyOnResult'?: boolean;
     'boundedFilter'?: BoundedFilter;
+    /**
+     * Specifies how rows with empty (null/missing) date values should be handled. INCLUDE includes empty dates in addition to the date range restriction, EXCLUDE removes rows with empty dates (default), ONLY keeps only rows with empty dates.
+     */
+    'emptyValueHandling'?: RelativeDateFilterRelativeDateFilterEmptyValueHandlingEnum;
     'dataset': AfmObjectIdentifierDataset;
 }
 
 export type RelativeDateFilterRelativeDateFilterGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
+export type RelativeDateFilterRelativeDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
 
 export interface ResolvedLlmEndpoint {
     /**

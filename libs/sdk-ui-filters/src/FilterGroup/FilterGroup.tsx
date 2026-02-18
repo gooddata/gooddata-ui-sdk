@@ -7,7 +7,6 @@ import {
     type ReactElement,
     type ReactNode,
     useCallback,
-    useEffect,
     useMemo,
     useRef,
     useState,
@@ -17,7 +16,6 @@ import cx from "classnames";
 import { isEqual } from "lodash-es";
 import { useIntl } from "react-intl";
 
-import { type IAttributeMetadataObject } from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 import {
     Dropdown,
@@ -101,13 +99,9 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
     // which will cause unexpected closing of dropdown content
     const availableFilterIdentifiers = useDeepEqualRefStablizer(filtersIdentifiersUnstable);
 
-    const { isAnyFilterLoading, isAnyFilterError, getFilterStatus, setFilterStatus } =
-        useFilterGroupStatus(availableFilterIdentifiers);
+    const { isAnyFilterError, setFilterError } = useFilterGroupStatus(availableFilterIdentifiers);
 
     const subtitle = useMemo(() => {
-        if (isAnyFilterLoading) {
-            return intl.formatMessage({ id: "loading" });
-        }
         if (isAnyFilterError) {
             return intl.formatMessage({ id: "gs.list.notAvailableAbbreviation" });
         }
@@ -116,30 +110,14 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
         if (activeFiltersCount === 0) {
             return intl.formatMessage({ id: "gs.list.allAndCount" }, { count: filters.length });
         } else {
-            const listOfTitles = activeFilters
-                .map((filter) => getFilterStatus(getFilterIdentifier(filter))?.attribute?.title)
-                .filter((title) => !!title)
-                .join(", ");
-            return `${listOfTitles} (${activeFiltersCount}/${availableFilterIdentifiers.length})`;
+            return `(${activeFiltersCount}/${availableFilterIdentifiers.length})`;
         }
-    }, [
-        filters,
-        isAnyFilterError,
-        isAnyFilterLoading,
-        getFilterStatus,
-        hasSelectedElements,
-        intl,
-        availableFilterIdentifiers,
-        getFilterIdentifier,
-    ]);
+    }, [filters, isAnyFilterError, hasSelectedElements, intl, availableFilterIdentifiers]);
 
     const { selectedItemsCount, totalItemsCount } = useMemo((): {
         selectedItemsCount?: number;
         totalItemsCount?: number;
     } => {
-        if (isAnyFilterLoading) {
-            return {};
-        }
         if (isAnyFilterError) {
             return {};
         }
@@ -150,24 +128,20 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
         } else {
             return { selectedItemsCount: activeFiltersCount, totalItemsCount: filters.length };
         }
-    }, [filters, isAnyFilterError, isAnyFilterLoading, hasSelectedElements]);
+    }, [filters, isAnyFilterError, hasSelectedElements]);
 
     const errorHandler = useCallback(
         (filterIdentifier: string) => (error: GoodDataSdkError) => {
-            setFilterStatus(filterIdentifier, { error });
+            setFilterError(filterIdentifier, error);
         },
-        [setFilterStatus],
+        [setFilterError],
     );
 
     const initLoadingChangedHandler = useCallback(
-        (filterIdentifier: string) => (loading: boolean, attribute?: IAttributeMetadataObject) => {
-            setFilterStatus(filterIdentifier, {
-                loading,
-                error: loading ? null : undefined,
-                attribute,
-            });
+        (filterIdentifier: string) => (loading: boolean) => {
+            setFilterError(filterIdentifier, loading ? null : undefined);
         },
-        [setFilterStatus],
+        [setFilterError],
     );
 
     /**
@@ -187,18 +161,9 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
                     (error: GoodDataSdkError) => errorHandler(filterIdentifier)(error),
                     [],
                 );
-                const onInitLoadingChanged = useCallback(
-                    (loading: boolean, attribute?: IAttributeMetadataObject) => {
-                        initLoadingChangedHandler(filterIdentifier)(loading, attribute);
-                    },
-                    [],
-                );
-                useEffect(
-                    () => () =>
-                        // stop loading on unmount
-                        setFilterStatus(filterIdentifier, { loading: false }),
-                    [],
-                );
+                const onInitLoadingChanged = useCallback((loading: boolean) => {
+                    initLoadingChangedHandler(filterIdentifier)(loading);
+                }, []);
                 return (
                     <AttributeFilterButton
                         {...attributeFilterProps}
@@ -247,13 +212,7 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
         });
 
         return result;
-    }, [
-        availableFilterIdentifiers,
-        getTitleExtension,
-        errorHandler,
-        initLoadingChangedHandler,
-        setFilterStatus,
-    ]);
+    }, [availableFilterIdentifiers, getTitleExtension, errorHandler, initLoadingChangedHandler]);
 
     const renderItem = useCallback(
         ({ item }: { item: P }) => {
@@ -295,7 +254,7 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
                 <AttributeFilterDropdownButton
                     title={title}
                     subtitle={subtitle}
-                    isLoaded={!isAnyFilterLoading && !isAnyFilterError}
+                    isLoaded={!isAnyFilterError}
                     isOpen={isOpen}
                     selectedItemsCount={selectedItemsCount}
                     totalItemsCount={totalItemsCount}
@@ -305,19 +264,10 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
                     buttonRef={buttonRef}
                     onClick={toggleDropdown}
                     isError={isAnyFilterError}
-                    isLoading={isAnyFilterLoading}
                 />
             </div>
         ),
-        [
-            title,
-            subtitle,
-            isAnyFilterLoading,
-            isAnyFilterError,
-            selectedItemsCount,
-            totalItemsCount,
-            isMobile,
-        ],
+        [title, subtitle, isAnyFilterError, selectedItemsCount, totalItemsCount, isMobile],
     );
 
     return (

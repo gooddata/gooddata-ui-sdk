@@ -8,7 +8,6 @@ import {
     type ITigerDashboardAttributeFilterConfig,
     type ITigerDashboardDateFilterConfig,
     type ITigerDashboardLayout,
-    type ITigerFilterContextItem,
     type JsonApiAnalyticalDashboardOutDocument,
     type JsonApiAnalyticalDashboardOutIncludes,
     type JsonApiDashboardPluginOutDocument,
@@ -43,6 +42,7 @@ import {
 
 import { convertFilterContextFilters } from "./FilterContextFiltersConverter.js";
 import { convertLayout } from "../../../shared/layoutConverter.js";
+import { convertTigerToSdkFilters } from "../../../shared/storedFilterConverter.js";
 import { convertDataSetItem } from "../../DataSetConverter.js";
 import { fixWidgetLegacyElementUris } from "../../fixLegacyElementUris.js";
 import { cloneWithSanitizedIds, cloneWithSanitizedIdsTyped } from "../../IdSanitization.js";
@@ -358,9 +358,7 @@ export function convertFilterContextFromBackend(
 export function convertFilterViewContextFilters(
     content: AnalyticalDashboardModelV2.IFilterContextWithTab,
 ): FilterContextItem[] {
-    return sanitizeSelectionMode(
-        cloneWithSanitizedIdsTyped<ITigerFilterContextItem[], FilterContextItem[]>(content.filters),
-    );
+    return sanitizeSelectionMode(convertTigerToSdkFilters(content.filters) ?? []);
 }
 
 export function convertDashboardPlugin({
