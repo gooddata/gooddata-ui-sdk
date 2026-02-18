@@ -3854,6 +3854,8 @@ export interface ISettings {
     enableAmplitudeTracker?: boolean;
     enableAnomalyDetectionAlert?: boolean;
     enableAnomalyDetectionVisualization?: boolean;
+    enableArbitraryFilterAD?: boolean;
+    enableArbitraryFilterKD?: boolean;
     // (undocumented)
     enableAthenaDataSource?: boolean;
     enableAutomationEvaluationMode?: boolean;
@@ -3914,6 +3916,8 @@ export interface ISettings {
     enableLineChartTrendThreshold?: boolean;
     // (undocumented)
     enableMariaDbDataSource?: boolean;
+    enableMatchFilterAD?: boolean;
+    enableMatchFilterKD?: boolean;
     enableMetricFormatOverrides?: boolean;
     // (undocumented)
     enableMongoDbDataSource?: boolean;

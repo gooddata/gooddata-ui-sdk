@@ -721,6 +721,26 @@ export interface ISettings {
      */
     enableDashboardFilterGroups?: boolean;
 
+    /**
+     * Enable match filter in Analytical Designer.
+     */
+    enableMatchFilterAD?: boolean;
+
+    /**
+     * Enable arbitrary filter in Analytical Designer.
+     */
+    enableArbitraryFilterAD?: boolean;
+
+    /**
+     * Enable match filter in Dashboard app.
+     */
+    enableMatchFilterKD?: boolean;
+
+    /**
+     * Enable arbitrary filter in Dashboard app.
+     */
+    enableArbitraryFilterKD?: boolean;
+
     [key: string]: number | boolean | string | object | undefined | null;
 }
 

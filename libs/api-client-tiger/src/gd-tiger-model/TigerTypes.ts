@@ -28,7 +28,9 @@
  * @public
  */
 
-import { type ObjRef } from "@gooddata/sdk-model";
+import { type DateFilterGranularity, type ObjRef } from "@gooddata/sdk-model";
+
+import { type DashboardFilter } from "../generated/metadata-json-api/index.js";
 
 //
 // =====================================================================================================================
@@ -276,6 +278,23 @@ export interface ITigerComparisonCondition {
 }
 
 /**
+ * Tiger-specific comparison condition in the compound condition
+ * @public
+ */
+export interface ITigerComparisonConditionInCompound {
+    comparison: {
+        operator:
+            | "GREATER_THAN"
+            | "GREATER_THAN_OR_EQUAL_TO"
+            | "LESS_THAN"
+            | "LESS_THAN_OR_EQUAL_TO"
+            | "EQUAL_TO"
+            | "NOT_EQUAL_TO";
+        value: number;
+    };
+}
+
+/**
  * Tiger-specific range condition
  * @public
  */
@@ -289,9 +308,35 @@ export interface ITigerRangeCondition {
 }
 
 /**
+ * Tiger-specific range condition in the compound condition
  * @public
  */
-export type ITigerMeasureValueFilterCondition = ITigerComparisonCondition | ITigerRangeCondition;
+export interface ITigerRangeConditionInCompound {
+    range: {
+        operator: "BETWEEN" | "NOT_BETWEEN";
+        from: number;
+        to: number;
+    };
+}
+
+/**
+ * Tiger-specific compound condition
+ * @public
+ */
+export interface ITigerCompoundCondition {
+    compound: {
+        conditions: Array<ITigerComparisonConditionInCompound | ITigerRangeConditionInCompound>;
+        treatNullValuesAs?: number;
+    };
+}
+
+/**
+ * @public
+ */
+export type ITigerMeasureValueFilterCondition =
+    | ITigerComparisonCondition
+    | ITigerRangeCondition
+    | ITigerCompoundCondition;
 
 /**
  * Tiger-specific measure value filter
@@ -718,7 +763,7 @@ export interface ITigerDashboardAttributeFilter {
 export interface ITigerDashboardDateFilter {
     dateFilter: {
         type: "relative" | "absolute";
-        granularity: string;
+        granularity: DateFilterGranularity;
         from?: string | number;
         to?: string | number;
         dataSet?: ObjRef;
@@ -731,7 +776,7 @@ export interface ITigerDashboardDateFilter {
  * Tiger-specific filter context item
  * @public
  */
-export type ITigerFilterContextItem = ITigerDashboardAttributeFilter | ITigerDashboardDateFilter;
+export type ITigerFilterContextItem = DashboardFilter;
 
 //
 // =====================================================================================================================

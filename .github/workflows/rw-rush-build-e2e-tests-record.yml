@@ -78,7 +78,7 @@ jobs:
           node common/scripts/install-run-rush.js build --to @gooddata/sdk-ui-tests-e2e
       - name: Run e2e tests
         run: |
-          export TEST_BACKEND=https://staging-automation.dev-latest.stg11.panther.intgdc.com
+          export TEST_BACKEND=https://staging-automation.staging-ui.stg11.panther.intgdc.com
           export EXECUTOR_NUMBER=$GH_RUN_ID
           if [ -n "$USER_FILTER" ]; then
             export FILTER=$USER_FILTER

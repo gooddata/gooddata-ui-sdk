@@ -2306,9 +2306,9 @@
                 "properties": {
                     "absoluteDateFilter": {
                         "required": [
+                            "dataset",
                             "from",
-                            "to",
-                            "dataset"
+                            "to"
                         ],
                         "type": "object",
                         "properties": {
@@ -2327,6 +2327,16 @@
                             },
                             "applyOnResult": {
                                 "type": "boolean"
+                            },
+                            "emptyValueHandling": {
+                                "type": "string",
+                                "description": "Specifies how rows with empty (null/missing) date values should be handled. INCLUDE includes empty dates in addition to the date range restriction, EXCLUDE removes rows with empty dates (default), ONLY keeps only rows with empty dates.",
+                                "default": "EXCLUDE",
+                                "enum": [
+                                    "INCLUDE",
+                                    "EXCLUDE",
+                                    "ONLY"
+                                ]
                             },
                             "dataset": {
                                 "$ref": "#/components/schemas/AfmObjectIdentifierDataset"
@@ -2535,6 +2545,69 @@
                     }
                 }
             },
+            "AllTimeDateFilter": {
+                "required": [
+                    "allTimeDateFilter"
+                ],
+                "type": "object",
+                "properties": {
+                    "allTimeDateFilter": {
+                        "required": [
+                            "dataset"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "emptyValueHandling": {
+                                "type": "string",
+                                "description": "Specifies how rows with empty (null/missing) date values should be handled. INCLUDE means no filtering effect (default), EXCLUDE removes rows with null dates, ONLY keeps only rows with null dates.",
+                                "default": "INCLUDE",
+                                "enum": [
+                                    "INCLUDE",
+                                    "EXCLUDE",
+                                    "ONLY"
+                                ]
+                            },
+                            "granularity": {
+                                "type": "string",
+                                "description": "Date granularity used to resolve the date attribute label for null value checks. Defaults to DAY if not specified.",
+                                "example": "DAY",
+                                "default": "DAY",
+                                "enum": [
+                                    "MINUTE",
+                                    "HOUR",
+                                    "DAY",
+                                    "WEEK",
+                                    "MONTH",
+                                    "QUARTER",
+                                    "YEAR",
+                                    "MINUTE_OF_HOUR",
+                                    "HOUR_OF_DAY",
+                                    "DAY_OF_WEEK",
+                                    "DAY_OF_MONTH",
+                                    "DAY_OF_QUARTER",
+                                    "DAY_OF_YEAR",
+                                    "WEEK_OF_YEAR",
+                                    "MONTH_OF_YEAR",
+                                    "QUARTER_OF_YEAR",
+                                    "FISCAL_MONTH",
+                                    "FISCAL_QUARTER",
+                                    "FISCAL_YEAR"
+                                ]
+                            },
+                            "localIdentifier": {
+                                "type": "string"
+                            },
+                            "applyOnResult": {
+                                "type": "boolean"
+                            },
+                            "dataset": {
+                                "$ref": "#/components/schemas/AfmObjectIdentifierDataset"
+                            }
+                        }
+                    }
+                },
+                "description": "An all-time date filter that does not restrict by date range. Controls how rows with empty (null/missing) date values are handled."
+            },
             "ArithmeticMeasureDefinition": {
                 "required": [
                     "arithmeticMeasure"
@@ -2723,9 +2796,9 @@
                 "properties": {
                     "comparisonMeasureValueFilter": {
                         "required": [
+                            "measure",
                             "operator",
-                            "value",
-                            "measure"
+                            "value"
                         ],
                         "type": "object",
                         "properties": {
@@ -2826,6 +2899,9 @@
                     },
                     {
                         "$ref": "#/components/schemas/RelativeDateFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/AllTimeDateFilter"
                     }
                 ]
             },
@@ -2853,6 +2929,9 @@
                     },
                     {
                         "$ref": "#/components/schemas/RelativeDateFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/AllTimeDateFilter"
                     },
                     {
                         "$ref": "#/components/schemas/NegativeAttributeFilter"
@@ -2933,9 +3012,9 @@
                 "properties": {
                     "matchAttributeFilter": {
                         "required": [
+                            "label",
                             "literal",
-                            "matchType",
-                            "label"
+                            "matchType"
                         ],
                         "type": "object",
                         "properties": {
@@ -3049,8 +3128,8 @@
                 "properties": {
                     "negativeAttributeFilter": {
                         "required": [
-                            "notIn",
-                            "label"
+                            "label",
+                            "notIn"
                         ],
                         "type": "object",
                         "properties": {
@@ -3321,9 +3400,9 @@
                     "rangeMeasureValueFilter": {
                         "required": [
                             "from",
+                            "measure",
                             "operator",
-                            "to",
-                            "measure"
+                            "to"
                         ],
                         "type": "object",
                         "properties": {
@@ -3430,10 +3509,10 @@
                 "properties": {
                     "relativeDateFilter": {
                         "required": [
+                            "dataset",
                             "from",
                             "granularity",
-                            "to",
-                            "dataset"
+                            "to"
                         ],
                         "type": "object",
                         "properties": {
@@ -3483,6 +3562,16 @@
                             },
                             "boundedFilter": {
                                 "$ref": "#/components/schemas/BoundedFilter"
+                            },
+                            "emptyValueHandling": {
+                                "type": "string",
+                                "description": "Specifies how rows with empty (null/missing) date values should be handled. INCLUDE includes empty dates in addition to the date range restriction, EXCLUDE removes rows with empty dates (default), ONLY keeps only rows with empty dates.",
+                                "default": "EXCLUDE",
+                                "enum": [
+                                    "INCLUDE",
+                                    "EXCLUDE",
+                                    "ONLY"
+                                ]
                             },
                             "dataset": {
                                 "$ref": "#/components/schemas/AfmObjectIdentifierDataset"

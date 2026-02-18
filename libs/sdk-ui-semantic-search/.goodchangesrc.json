@@ -1,0 +1,15 @@
+{
+    "targets": [
+        {
+            "type": "virtual-target",
+            "targetName": "@gooddata/sdk-ui-semantic-search-unit-tests",
+            "changeDirs": [
+                {
+                    "glob": "**/*",
+                    "type": "fine-grained",
+                    "filter": "**/*.test.ts*"
+                }
+            ]
+        }
+    ]
+}

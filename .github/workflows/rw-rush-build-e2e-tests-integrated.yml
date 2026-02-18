@@ -78,7 +78,7 @@ jobs:
           node common/scripts/install-run-rush.js build --to @gooddata/sdk-ui-tests-e2e
       - name: Run e2e tests
         run: |
-          export TEST_BACKEND=https://staging-automation.dev-latest.stg11.panther.intgdc.com
+          export TEST_BACKEND=https://staging-automation.staging-ui.stg11.panther.intgdc.com
           export TIGER_DATASOURCES_NAME=pg_staging-goodsales
           export EXECUTOR_NUMBER=$GH_RUN_ID
           export CYPRESS_TEST_TAGS=post-merge_integrated_tiger

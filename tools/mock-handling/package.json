@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/mock-handling",
-    "version": "11.22.0-alpha.4",
+    "version": "11.22.0-alpha.5",
     "description": "GoodData SDK Mock data capture and management tool",
     "license": "MIT",
     "author": "GoodData",

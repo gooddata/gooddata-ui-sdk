@@ -139,6 +139,10 @@ export enum TigerFeaturesNames {
     EnablePivotTablePagination = "enablePivotTablePagination",
     EnableImplicitDrillToUrl = "enableImplicitDrillToUrl",
     EnableDashboardFilterGroups = "enableDashboardFilterGroups",
+    EnableMatchFilterAD = "enableMatchFilterAD",
+    EnableArbitraryFilterAD = "enableArbitraryFilterAD",
+    EnableMatchFilterKD = "enableMatchFilterKD",
+    EnableArbitraryFilterKD = "enableArbitraryFilterKD",
 }
 
 export type ITigerFeatureFlags = {
@@ -271,6 +275,10 @@ export type ITigerFeatureFlags = {
     enablePivotTablePagination: (typeof FeatureFlagsValues)["enablePivotTablePagination"][number];
     enableImplicitDrillToUrl: (typeof FeatureFlagsValues)["enableImplicitDrillToUrl"][number];
     enableDashboardFilterGroups: (typeof FeatureFlagsValues)["enableDashboardFilterGroups"][number];
+    enableMatchFilterAD: (typeof FeatureFlagsValues)["enableMatchFilterAD"][number];
+    enableArbitraryFilterAD: (typeof FeatureFlagsValues)["enableArbitraryFilterAD"][number];
+    enableMatchFilterKD: (typeof FeatureFlagsValues)["enableMatchFilterKD"][number];
+    enableArbitraryFilterKD: (typeof FeatureFlagsValues)["enableArbitraryFilterKD"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -403,6 +411,10 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enablePivotTablePagination: true,
     enableImplicitDrillToUrl: true,
     enableDashboardFilterGroups: false,
+    enableMatchFilterAD: false,
+    enableArbitraryFilterAD: false,
+    enableMatchFilterKD: false,
+    enableArbitraryFilterKD: false,
 };
 
 export const FeatureFlagsValues = {
@@ -536,4 +548,8 @@ export const FeatureFlagsValues = {
     enablePivotTablePagination: [true, false] as const,
     enableImplicitDrillToUrl: [true, false] as const,
     enableDashboardFilterGroups: [true, false] as const,
+    enableMatchFilterAD: [true, false] as const,
+    enableArbitraryFilterAD: [true, false] as const,
+    enableMatchFilterKD: [true, false] as const,
+    enableArbitraryFilterKD: [true, false] as const,
 };

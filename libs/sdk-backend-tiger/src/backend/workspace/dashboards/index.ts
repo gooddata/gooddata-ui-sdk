@@ -361,11 +361,16 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     };
 
     public createDashboard = async (dashboard: IDashboardDefinition): Promise<IDashboard> => {
-        // Process root-level filter context for backward compatibility
-        const filterContext = await this.processFilterContextForCreation(dashboard.filterContext);
-
-        // Process filter contexts for each tab if tabs are present
+        // Process filter contexts for each tab first
         const dashboardWithTabFilterContexts = await this.processDashboardTabsFilterContexts(dashboard);
+
+        // For the root-level filter context (backward compatibility):
+        // If tabs exist and the first tab has a filter context, reuse it to avoid creating a duplicate.
+        // Otherwise, create/use the root filter context definition.
+        const rootFilterContextFromTabs = dashboardWithTabFilterContexts.tabs?.[0]?.filterContext;
+        const filterContext =
+            rootFilterContextFromTabs ??
+            (await this.processFilterContextForCreation(dashboard.filterContext));
 
         const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);
         const isWidgetIdentifiersEnabled = userSettings.enableWidgetIdentifiersRollout ?? true;

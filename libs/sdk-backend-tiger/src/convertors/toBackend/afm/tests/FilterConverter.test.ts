@@ -5,6 +5,7 @@ import { describe, expect, it } from "vitest";
 import { ReferenceMd } from "@gooddata/reference-workspace";
 import {
     DateGranularity,
+    type IFilter,
     type IMeasureValueFilter,
     idRef,
     localIdRef,
@@ -19,7 +20,11 @@ import {
 } from "@gooddata/sdk-model";
 
 import { absoluteFilter, relativeFilter } from "./InvalidInputs.fixture.js";
-import { convertFilter, newFilterWithApplyOnResult } from "../FilterConverter.js";
+import {
+    type IFilterWithApplyOnResult,
+    convertFilter,
+    newFilterWithApplyOnResult,
+} from "../FilterConverter.js";
 
 describe("tiger filter converter from model to AFM", () => {
     describe("convert measure value filter", () => {
@@ -29,7 +34,7 @@ describe("tiger filter converter from model to AFM", () => {
                 newMeasureValueFilter(idRef("measureId", "measure"), "GREATER_THAN", 10),
             ],
             [
-                "specified using id of metric",
+                "specified using id of fact",
                 newMeasureValueFilter(idRef("factId", "fact"), "GREATER_THAN", 10),
             ],
             [
@@ -59,7 +64,7 @@ describe("tiger filter converter from model to AFM", () => {
         });
     });
     describe("convert absolute date filter", () => {
-        const Scenarios: Array<[string, any]> = [
+        const Scenarios: Array<[string, unknown]> = [
             ["absolute date filter without 'to' attribute", absoluteFilter.withoutTo],
             ["absolute date filter without 'from' attribute", absoluteFilter.withoutFrom],
             [
@@ -69,11 +74,11 @@ describe("tiger filter converter from model to AFM", () => {
         ];
 
         it.each(Scenarios)("should convert %s", (_desc, input) => {
-            expect(convertFilter(input)).toMatchSnapshot();
+            expect(convertFilter(input as IFilter | IFilterWithApplyOnResult)).toMatchSnapshot();
         });
     });
     describe("convert relative date filter", () => {
-        const Scenarios: Array<[string, any]> = [
+        const Scenarios: Array<[string, unknown]> = [
             [
                 "year granularity",
                 newRelativeDateFilter(ReferenceMd.DateDatasets.Closed.ref, DateGranularity["year"], 2, 7),
@@ -100,10 +105,10 @@ describe("tiger filter converter from model to AFM", () => {
                 newRelativeDateFilter(ReferenceMd.DateDatasets.Closed.ref, DateGranularity["week"], 50, 100),
             ],
             ["missing 'to' parameter", relativeFilter.withoutTo],
-            ["mission 'from' parameter", relativeFilter.withoutFrom],
+            ["missing 'from' parameter", relativeFilter.withoutFrom],
         ];
         it.each(Scenarios)("should return AFM relative date filter with %s", (_desc, input) => {
-            expect(convertFilter(input)).toMatchSnapshot();
+            expect(convertFilter(input as IFilter | IFilterWithApplyOnResult)).toMatchSnapshot();
         });
     });
     describe("convert filter", () => {
@@ -116,7 +121,7 @@ describe("tiger filter converter from model to AFM", () => {
             uris: ["value"],
         });
 
-        const Scenarios: Array<[string, any]> = [
+        const Scenarios: Array<[string, unknown]> = [
             ["positive attribute filter", positiveAttributeFilter],
             ["positive attribute filter with uri attribute elements", positiveAttributeFilterWithUris],
             [
@@ -177,6 +182,19 @@ describe("tiger filter converter from model to AFM", () => {
                 }),
             ],
             [
+                "compound measure value filter with localIdentifier",
+                {
+                    measureValueFilter: {
+                        measure: localIdRef("m_e519fa2a_86c3_4e32_8313_0c03062348j3"),
+                        localIdentifier: "compoundFilterLocalId",
+                        conditions: [
+                            { comparison: { operator: "GREATER_THAN", value: 10 } },
+                            { range: { operator: "BETWEEN", from: 5, to: 20 } },
+                        ],
+                    },
+                } satisfies IMeasureValueFilter,
+            ],
+            [
                 "measure value filter with dimensionality using local id refs",
                 newMeasureValueFilterWithOptions(ReferenceMd.Won, {
                     operator: "LESS_THAN",
@@ -186,7 +204,7 @@ describe("tiger filter converter from model to AFM", () => {
             ],
         ];
         it.each(Scenarios)("should return %s", (_desc, input) => {
-            expect(convertFilter(input)).toMatchSnapshot();
+            expect(convertFilter(input as IFilter | IFilterWithApplyOnResult)).toMatchSnapshot();
         });
 
         it("should filter out empty negative attribute filters and not cause RAIL-2083", () => {
