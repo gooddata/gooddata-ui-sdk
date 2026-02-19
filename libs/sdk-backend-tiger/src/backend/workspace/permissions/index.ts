@@ -1,5 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
+import { type JsonApiWorkspaceOutMetaPermissionsEnum } from "@gooddata/api-client-tiger";
 import { EntitiesApi_GetEntityWorkspaces } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import { type IWorkspacePermissionsService } from "@gooddata/sdk-backend-spi";
 import { type IWorkspacePermissions } from "@gooddata/sdk-model";
@@ -7,17 +8,7 @@ import { type IWorkspacePermissions } from "@gooddata/sdk-model";
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { GET_OPTIMIZED_WORKSPACE_PARAMS } from "../constants.js";
 
-// TODO:
-type TigerPermissionType =
-    | "MANAGE"
-    | "VIEW"
-    | "ANALYZE"
-    | "EXPORT"
-    | "EXPORT_TABULAR"
-    | "EXPORT_PDF"
-    | "USE_AI_ASSISTANT"
-    | "CREATE_FILTER_VIEW"
-    | "CREATE_AUTOMATION";
+type TigerPermissionType = JsonApiWorkspaceOutMetaPermissionsEnum;
 
 export class TigerWorkspacePermissionsFactory implements IWorkspacePermissionsService {
     constructor(

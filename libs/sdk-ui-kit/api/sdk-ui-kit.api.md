@@ -6212,6 +6212,48 @@ export type IUiFocusManagerProps = {
 };
 
 // @internal (undocumented)
+export interface IUiGenerateTextDialogProps {
+    // (undocumented)
+    acceptLabel: string;
+    // (undocumented)
+    buttonDataTestId?: string;
+    // (undocumented)
+    buttonIcon?: IconType;
+    // (undocumented)
+    buttonLabel: string;
+    // (undocumented)
+    buttonSize?: UiIconButtonProps["size"];
+    // (undocumented)
+    buttonVariant?: UiIconButtonProps["variant"];
+    // (undocumented)
+    declineLabel: string;
+    // (undocumented)
+    dialogDisclaimer: string;
+    // (undocumented)
+    dialogTitle: string;
+    // (undocumented)
+    initialText: string;
+    // (undocumented)
+    noteLabel: string;
+    // (undocumented)
+    onAccept: (text: string) => void;
+    // (undocumented)
+    onGenerate: () => Promise<IUiGenerateTextDialogResult>;
+    // (undocumented)
+    textAreaAriaLabel: string;
+    // (undocumented)
+    textAreaRows?: number;
+}
+
+// @internal (undocumented)
+export interface IUiGenerateTextDialogResult {
+    // (undocumented)
+    note?: string;
+    // (undocumented)
+    text?: string;
+}
+
+// @internal (undocumented)
 export interface IUiIconButtonPublicProps {
     // (undocumented)
     accessibilityConfig?: IDropdownButtonRenderProps["accessibilityConfig"];
@@ -8021,6 +8063,9 @@ export function UiFocusTrap({ root, children, focusCheckFn }: {
     children: ReactNode;
     focusCheckFn?: (element: HTMLElement) => boolean;
 }): FunctionComponentElement<any>;
+
+// @internal
+export function UiGenerateTextDialog({ buttonLabel, buttonDataTestId, buttonIcon, buttonSize, buttonVariant, dialogTitle, dialogDisclaimer, acceptLabel, declineLabel, noteLabel, textAreaAriaLabel, initialText, textAreaRows, onGenerate, onAccept }: IUiGenerateTextDialogProps): JSX.Element;
 
 // @internal (undocumented)
 export function UiIcon({ type, color, layout, disableAnimation, accessibilityConfig, size, backgroundSize, backgroundColor, backgroundType, backgroundShape }: IUiIconProps): JSX.Element;

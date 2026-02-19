@@ -17,7 +17,7 @@ import { canEditCatalogItem } from "../catalogItem/permission.js";
 import { type ICatalogItem, type ICatalogItemRef } from "../catalogItem/types.js";
 import { type ObjectType } from "../objectType/types.js";
 import { usePermissionsState } from "../permission/PermissionsContext.js";
-import { useIsCatalogQualityEnabled } from "../quality/gate.js";
+import { useIsCatalogDescriptionGenerationEnabled, useIsCatalogQualityEnabled } from "../quality/gate.js";
 import { useQualityIssuesById, useQualityReportState } from "../quality/QualityContext.js";
 
 const Tabs = {
@@ -134,6 +134,7 @@ export function CatalogDetailContent({
     const isQualityEnabled = useIsCatalogQualityEnabled();
     const isQualityVisible = isQualityEnabled && qualityStatus !== "error";
     const isQualityLoading = qualityStatus === "loading" || qualityStatus === "pending";
+    const isDescriptionGenerationEnabled = useIsCatalogDescriptionGenerationEnabled();
 
     const issues = useQualityIssuesById(item?.identifier ?? "") ?? [];
     const issueCount = issues.length > 0 ? `(${issues.length})` : "";
@@ -181,6 +182,7 @@ export function CatalogDetailContent({
                             canEdit={canEdit}
                             updateItemTitle={updateItemTitle}
                             updateItemDescription={updateItemDescription}
+                            isDescriptionGenerationEnabled={isDescriptionGenerationEnabled}
                             headerRef={headerRef}
                             actions={
                                 <UiButton

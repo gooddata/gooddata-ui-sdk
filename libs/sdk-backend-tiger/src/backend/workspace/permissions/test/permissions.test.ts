@@ -2,21 +2,13 @@
 
 import { describe, expect, it, vi } from "vitest";
 
+import type { JsonApiWorkspaceOutMetaPermissionsEnum } from "@gooddata/api-client-tiger";
 import { EntitiesApi_GetEntityWorkspaces } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import type { IWorkspacePermissions } from "@gooddata/sdk-model";
 
 import { GET_OPTIMIZED_WORKSPACE_PARAMS } from "../../constants.js";
 
-type TigerPermissionType =
-    | "MANAGE"
-    | "VIEW"
-    | "ANALYZE"
-    | "EXPORT"
-    | "EXPORT_TABULAR"
-    | "EXPORT_PDF"
-    | "USE_AI_ASSISTANT"
-    | "CREATE_FILTER_VIEW"
-    | "CREATE_AUTOMATION";
+type TigerPermissionType = JsonApiWorkspaceOutMetaPermissionsEnum;
 
 function hasPermission(permissions: Array<TigerPermissionType>, need: TigerPermissionType): boolean {
     return permissions.indexOf(need) >= 0;

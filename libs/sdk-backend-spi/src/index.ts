@@ -109,6 +109,9 @@ export type { IExportConfig, IExportResult, IExportPdfConfig } from "./workspace
 export type {
     IGenAIService,
     IAnalyticsCatalogService,
+    AnalyticsCatalogGenerateDescriptionObjectType,
+    IAnalyticsCatalogGenerateDescriptionRequest,
+    IAnalyticsCatalogGenerateDescriptionResponse,
     IAnalyticsCatalogTags,
     IAnalyticsCatalogCreatedBy,
     ISemanticSearchQuery,

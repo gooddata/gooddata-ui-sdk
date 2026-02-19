@@ -2,6 +2,45 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.22.0",
+            "tag": "@gooddata/sdk-ui-all_v11.22.0",
+            "date": "Thu, 19 Feb 2026 10:02:57 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "sdk-ui-dashboard: Fix drill modal width override by increasing drill dialog selector specificity."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: Add forecasting support to AI assistant."
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: Transform compound filters for Tiger"
+                    },
+                    {
+                        "comment": "sdk-ui-filters: Move date filter exclude checkbox at the end of the form and hide if not applicable."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Introduce empty values date filter configuration."
+                    },
+                    {
+                        "comment": "fix unexpected closing of filter group and fix stuck filter group in loading state"
+                    },
+                    {
+                        "comment": "fix filter group loading UI"
+                    },
+                    {
+                        "comment": "bugfix, space key is not propagated to attribute filter search within filter group"
+                    },
+                    {
+                        "comment": "sdk-ui-ext: Implicit URL drill can be configured for every vis type in AD, associated feature flag has been enabled by default"
+                    },
+                    {
+                        "comment": "\"gen-ai: Add AI-generated catalog description flow and Tiger support updates\""
+                    }
+                ]
+            }
+        },
+        {
             "version": "11.21.0",
             "tag": "@gooddata/sdk-ui-all_v11.21.0",
             "date": "Thu, 12 Feb 2026 18:33:21 GMT",

@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/util",
-    "version": "11.22.0-alpha.6",
+    "version": "11.22.0",
     "description": "GoodData Utility Functions",
     "license": "MIT",
     "author": "GoodData",

@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/reference-workspace",
-    "version": "11.22.0-alpha.6",
+    "version": "11.22.0",
     "description": "GoodData SDK - Reference Workspace for tests",
     "license": "MIT",
     "author": "GoodData",

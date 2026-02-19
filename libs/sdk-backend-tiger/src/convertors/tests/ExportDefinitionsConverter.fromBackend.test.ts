@@ -4,7 +4,7 @@ import { describe, expect, it } from "vitest";
 
 import {
     type AutomationAutomationTabularExport,
-    type JsonApiAutomationPatchAttributesDashboardTabularExportsInner,
+    type JsonApiAutomationOutAttributesDashboardTabularExportsInner,
 } from "@gooddata/api-client-tiger";
 import {
     type IDashboardAttributeFilter,
@@ -82,7 +82,7 @@ describe("ExportDefinitionsConverter fromBackend", () => {
                 ],
                 settings: {},
             },
-        } as unknown as JsonApiAutomationPatchAttributesDashboardTabularExportsInner;
+        } as unknown as JsonApiAutomationOutAttributesDashboardTabularExportsInner;
 
         const result = convertDashboardTabularExportRequest(exportRequest);
         expect(result.type).toBe("visualizationObject");
@@ -111,7 +111,7 @@ describe("ExportDefinitionsConverter fromBackend", () => {
                 },
                 settings: {},
             },
-        } as unknown as JsonApiAutomationPatchAttributesDashboardTabularExportsInner;
+        } as unknown as JsonApiAutomationOutAttributesDashboardTabularExportsInner;
 
         const result = convertDashboardTabularExportRequest(
             exportRequest,

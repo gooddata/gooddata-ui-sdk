@@ -6,6 +6,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { EditableLabel, UiCard, UiCopyButton } from "@gooddata/sdk-ui-kit";
 
+import { CatalogDetailGenerateDescription } from "./CatalogDetailGenerateDescription.js";
 import { CatalogItemLockMemo } from "../catalogItem/CatalogItemLock.js";
 import { type ICatalogItem } from "../catalogItem/types.js";
 import { ObjectTypeIconMemo } from "../objectType/ObjectTypeIcon.js";
@@ -22,6 +23,7 @@ interface IProps {
     actions: ReactNode;
     updateItemTitle: (title: string) => void;
     updateItemDescription: (description: string) => void;
+    isDescriptionGenerationEnabled: boolean;
     headerRef: RefObject<ICatalogDetailHeaderRef | null>;
 }
 
@@ -31,12 +33,14 @@ export function CatalogDetailHeader({
     actions,
     updateItemTitle,
     updateItemDescription,
+    isDescriptionGenerationEnabled,
     headerRef,
 }: IProps) {
     const intl = useIntl();
 
     const type = item.type ?? "analyticalDashboard";
     const visualizationType = item.visualizationType;
+    const canGenerateDescription = canEdit && item.type !== "dataSet" && isDescriptionGenerationEnabled;
 
     const titleRef = useRef<HTMLDivElement>(null);
     const descriptionRef = useRef<HTMLDivElement>(null);
@@ -101,8 +105,16 @@ export function CatalogDetailHeader({
                     </div>
                     {canEdit ? (
                         <div className="gd-analytics-catalog-detail__card__header__row">
-                            <div className="gd-analytics-catalog-detail__card__header__row__subtitle">
-                                <FormattedMessage id="analyticsCatalog.catalogItem.description" />
+                            <div className="gd-analytics-catalog-detail__card__header__row__subtitle gd-analytics-catalog-detail__card__header__row__subtitle--with-action">
+                                <span className="gd-analytics-catalog-detail__card__header__row__subtitle-label">
+                                    <FormattedMessage id="analyticsCatalog.catalogItem.description" />
+                                </span>
+                                {canGenerateDescription ? (
+                                    <CatalogDetailGenerateDescription
+                                        item={item}
+                                        onApplyDescription={updateItemDescription}
+                                    />
+                                ) : null}
                             </div>
                             <div className="gd-analytics-catalog-detail__card__header__row__content">
                                 <EditableLabel

@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-loaders",
-    "version": "11.22.0-alpha.6",
+    "version": "11.22.0",
     "description": "GoodData SDK Runtime Component Loaders",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData Corporation",
