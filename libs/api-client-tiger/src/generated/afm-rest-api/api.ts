@@ -40,6 +40,10 @@ export interface AFM {
      * Metrics to be referenced from other AFM objects (e.g. filters) but not included in the result.
      */
     'auxMeasures'?: Array<MeasureItem>;
+    /**
+     * (EXPERIMENTAL) Override definitions of catalog metrics for this request. Allows substituting a catalog metric\'s MAQL definition without modifying the stored definition.
+     */
+    'measureDefinitionOverrides'?: Array<MetricDefinitionOverride>;
 }
 
 /**
@@ -1599,6 +1603,14 @@ export interface Metric {
 
 export type MetricTypeEnum = 'metric' | 'fact' | 'attribute';
 export type MetricAggFunctionEnum = 'COUNT' | 'SUM' | 'MIN' | 'MAX' | 'AVG' | 'MEDIAN';
+
+/**
+ * (EXPERIMENTAL) Override for a catalog metric definition.
+ */
+export interface MetricDefinitionOverride {
+    'item': AfmObjectIdentifierCore;
+    'definition': InlineMeasureDefinition;
+}
 
 /**
  * Individual change analysis data item

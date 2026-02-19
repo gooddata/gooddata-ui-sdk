@@ -1,12 +1,14 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import {
     type AFM,
     type AfmExecution,
     type AttributeItem,
     type MeasureItem,
+    type MetricDefinitionOverride,
     type ResultSpec,
 } from "@gooddata/api-client-tiger";
-import { type IExecutionDefinition } from "@gooddata/sdk-model";
+import { type IExecutionDefinition, type IMeasureDefinitionOverride } from "@gooddata/sdk-model";
 
 import { convertAfmFilters } from "./AfmFiltersConverter.js";
 import { convertAttribute } from "./AttributeConverter.js";
@@ -49,13 +51,34 @@ function convertResultSpec(def: IExecutionDefinition): ResultSpec {
  * @public
  */
 export function toAfmExecution(def: IExecutionDefinition): AfmExecution {
+    const { measureDefinitionOverrides, ...settings } = def.executionConfig ?? {};
+
     return {
         resultSpec: convertResultSpec(def),
         execution: {
             ...convertAFM(def),
+            ...(measureDefinitionOverrides?.length && {
+                measureDefinitionOverrides: convertMeasureDefinitionOverrides(measureDefinitionOverrides),
+            }),
         },
-        settings: {
-            ...def.executionConfig,
-        },
+        settings,
     };
+}
+
+function convertMeasureDefinitionOverrides(
+    overrides: IMeasureDefinitionOverride[],
+): MetricDefinitionOverride[] {
+    return overrides.map((override) => ({
+        item: {
+            identifier: {
+                id: override.item.identifier.id,
+                type: override.item.identifier.type,
+            },
+        },
+        definition: {
+            inline: {
+                maql: override.definition.inline.maql,
+            },
+        },
+    }));
 }

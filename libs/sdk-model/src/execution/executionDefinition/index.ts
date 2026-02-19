@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 import SparkMD5 from "spark-md5";
 import { invariant } from "ts-invariant";
@@ -30,6 +31,36 @@ export interface IPostProcessing {
 }
 
 /**
+ * (EXPERIMENTAL) Override for a catalog metric definition.
+ *
+ * @remarks
+ * Allows substituting a catalog metric's MAQL definition for a single execution request
+ * without modifying the stored definition.
+ *
+ * @alpha
+ */
+export interface IMeasureDefinitionOverride {
+    /**
+     * Reference to the metric object to override.
+     */
+    item: {
+        identifier: {
+            id: string;
+            type: "metric";
+        };
+    };
+
+    /**
+     * Inline MAQL definition to use instead of the stored metric definition.
+     */
+    definition: {
+        inline: {
+            maql: string;
+        };
+    };
+}
+
+/**
  * Contains any configuration that should be part of execution
  *
  * @public
@@ -46,6 +77,17 @@ export interface IExecutionConfig {
      * @remarks This may alter the data for computation when using date filters (e.g. last year)
      */
     timestamp?: string;
+
+    /**
+     * (EXPERIMENTAL) Override definitions of catalog metrics for this execution request.
+     *
+     * @remarks
+     * Allows substituting a catalog metric's MAQL definition without modifying the stored definition.
+     * This is useful for ad-hoc metric customization at execution time.
+     *
+     * @alpha
+     */
+    measureDefinitionOverrides?: IMeasureDefinitionOverride[];
 }
 
 /**
@@ -308,6 +350,9 @@ export function defFingerprint(def: IExecutionDefinition): string {
     }
     if (def.executionConfig?.timestamp) {
         hashFun(def.executionConfig.timestamp);
+    }
+    if (def.executionConfig?.measureDefinitionOverrides?.length) {
+        hashFun(JSON.stringify(def.executionConfig.measureDefinitionOverrides));
     }
 
     return hasher.end();

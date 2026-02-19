@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import {
     type JsonApiUserGroupOutDocument,
@@ -13,6 +13,7 @@ import {
     type WorkspaceUser,
 } from "@gooddata/api-client-tiger";
 import {
+    type AssignedWorkspacePermission,
     type IDataSourcePermissionAssignment,
     type IOrganizationUser,
     type IOrganizationUserGroup,
@@ -21,6 +22,7 @@ import {
     type IWorkspacePermissionAssignment,
     type IWorkspaceUser,
     idRef,
+    isAssignedWorkspacePermission,
 } from "@gooddata/sdk-model";
 
 const constructFullName = (firstName?: string, lastName?: string) =>
@@ -138,6 +140,13 @@ export function convertWorkspacePermissionsAssignment(
     subjectType: "user" | "userGroup",
     assignment: UserManagementWorkspacePermissionAssignment,
 ): IWorkspacePermissionAssignment {
+    const permissions = (assignment.permissions ?? []).filter(
+        isAssignedWorkspacePermission,
+    ) as AssignedWorkspacePermission[];
+    const hierarchyPermissions = (assignment.hierarchyPermissions ?? []).filter(
+        isAssignedWorkspacePermission,
+    ) as AssignedWorkspacePermission[];
+
     return {
         assigneeIdentifier: {
             id,
@@ -147,7 +156,8 @@ export function convertWorkspacePermissionsAssignment(
             id: assignment.id,
             name: assignment.name,
         },
-        ...assignment,
+        permissions,
+        hierarchyPermissions,
     };
 }
 

@@ -11,8 +11,8 @@ import {
     type AutomationDashboardExportSettings,
     type ITigerFilter,
     type ITigerFilterContextItem,
-    type JsonApiAutomationPatchAttributesDashboardTabularExportsInner,
-    type JsonApiAutomationPatchAttributesRawExportsInner,
+    type JsonApiAutomationOutAttributesDashboardTabularExportsInner,
+    type JsonApiAutomationOutAttributesRawExportsInner,
     type JsonApiExportDefinitionOutIncludes,
     type JsonApiExportDefinitionOutWithLinks,
     type TabularExportRequest,
@@ -74,6 +74,10 @@ type MetadataObjectDefinition<T extends ITigerFilter | ITigerFilterContextItem =
     filtersByTab?: Record<string, ITigerFilterContextItem[]>;
 };
 
+const convertTigerToDashboardFilters = (
+    filters: ITigerFilterContextItem[] | undefined,
+): FilterContextItem[] | undefined => convertTigerToSdkFilters(filters);
+
 export const wrapExportDefinition = (
     requestPayload: IExportDefinitionRequestPayload,
     metadata?: MetadataObjectDefinition,
@@ -95,7 +99,7 @@ export const wrapExportDefinition = (
 };
 
 export const convertDashboardTabularExportRequest = (
-    exportRequest: JsonApiAutomationPatchAttributesDashboardTabularExportsInner,
+    exportRequest: JsonApiAutomationOutAttributesDashboardTabularExportsInner,
 ): IExportDefinitionDashboardRequestPayload | IExportDefinitionVisualizationObjectRequestPayload => {
     const {
         requestPayload: {
@@ -123,7 +127,7 @@ export const convertDashboardTabularExportRequest = (
                 dashboard: dashboardId,
                 visualizationObject: widgetId ?? "",
                 widget: widgetId,
-                filters: convertTigerToSdkFilters(dashboardFiltersOverride),
+                filters: convertTigerToDashboardFilters(dashboardFiltersOverride),
             },
         };
     }
@@ -132,7 +136,7 @@ export const convertDashboardTabularExportRequest = (
     const filtersByTab = dashboardTabsFiltersOverrides
         ? Object.entries(dashboardTabsFiltersOverrides).reduce<Record<string, FilterContextItem[]>>(
               (acc, [tabId, tabFilters]) => {
-                  acc[tabId] = convertTigerToSdkFilters(tabFilters) ?? [];
+                  acc[tabId] = convertTigerToDashboardFilters(tabFilters) ?? [];
                   return acc;
               },
               {},
@@ -146,7 +150,7 @@ export const convertDashboardTabularExportRequest = (
         settings: normalizedSettings,
         content: {
             dashboard: dashboardId,
-            filters: convertTigerToSdkFilters(dashboardFiltersOverride),
+            filters: convertTigerToDashboardFilters(dashboardFiltersOverride),
             filtersByTab,
         },
     };
@@ -190,7 +194,7 @@ export const convertVisualExportRequest = (
 };
 
 export const convertToRawExportRequest = (
-    exportRequest: JsonApiAutomationPatchAttributesRawExportsInner,
+    exportRequest: JsonApiAutomationOutAttributesRawExportsInner,
 ): IExportDefinitionVisualizationObjectRequestPayload => {
     const {
         requestPayload: { fileName, execution, metadata },

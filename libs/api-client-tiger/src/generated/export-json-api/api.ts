@@ -40,6 +40,10 @@ export interface ExportAFM {
      * Metrics to be referenced from other AFM objects (e.g. filters) but not included in the result.
      */
     'auxMeasures'?: Array<ExportMeasureItem>;
+    /**
+     * (EXPERIMENTAL) Override definitions of catalog metrics for this request. Allows substituting a catalog metric\'s MAQL definition without modifying the stored definition.
+     */
+    'measureDefinitionOverrides'?: Array<ExportMetricDefinitionOverride>;
 }
 
 /**
@@ -398,11 +402,13 @@ export interface ExportDashboardDateFilterDateFilter {
     'dataSet'?: ExportIdentifierRef;
     'attribute'?: ExportIdentifierRef;
     'boundedFilter'?: ExportRelativeBoundedDateFilter;
+    'emptyValueHandling'?: ExportDashboardDateFilterDateFilterEmptyValueHandlingEnum;
     'localIdentifier'?: string;
 }
 
 export type ExportDashboardDateFilterDateFilterTypeEnum = 'relative' | 'absolute';
 export type ExportDashboardDateFilterDateFilterGranularityEnum = 'ALL_TIME_GRANULARITY' | 'GDC.time.year' | 'GDC.time.week_us' | 'GDC.time.week_in_year' | 'GDC.time.week_in_quarter' | 'GDC.time.week' | 'GDC.time.euweek_in_year' | 'GDC.time.euweek_in_quarter' | 'GDC.time.quarter' | 'GDC.time.quarter_in_year' | 'GDC.time.month' | 'GDC.time.month_in_quarter' | 'GDC.time.month_in_year' | 'GDC.time.day_in_year' | 'GDC.time.day_in_quarter' | 'GDC.time.day_in_month' | 'GDC.time.day_in_week' | 'GDC.time.day_in_euweek' | 'GDC.time.date' | 'GDC.time.hour' | 'GDC.time.hour_in_day' | 'GDC.time.minute' | 'GDC.time.minute_in_hour' | 'GDC.time.fiscal_month' | 'GDC.time.fiscal_quarter' | 'GDC.time.fiscal_year';
+export type ExportDashboardDateFilterDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
 
 /**
  * @type ExportDashboardDateFilterDateFilterFrom
@@ -647,6 +653,14 @@ export type ExportMeasureValueCondition = ExportComparisonCondition | ExportRang
  * Abstract filter definition type filtering by the value of the metric.
  */
 export type ExportMeasureValueFilter = ExportComparisonMeasureValueFilter | ExportCompoundMeasureValueFilter | ExportRangeMeasureValueFilter;
+
+/**
+ * (EXPERIMENTAL) Override for a catalog metric definition.
+ */
+export interface ExportMetricDefinitionOverride {
+    'item': ExportAfmObjectIdentifierCore;
+    'definition': ExportInlineMeasureDefinition;
+}
 
 /**
  * Filter able to limit element values by label and related selected negated elements.

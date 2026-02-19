@@ -327,6 +327,34 @@
         "text": "Add description…",
         "crowdinContext": "Catalog item description placeholder."
     },
+    "analyticsCatalog.catalogItem.description.generate": {
+        "text": "Generate description",
+        "crowdinContext": "Label for the icon-only button in catalog item detail header that generates an AI description."
+    },
+    "analyticsCatalog.catalogItem.description.generate.dialog.title": {
+        "text": "Generate description",
+        "crowdinContext": "Title of the dialog used to generate and edit an AI-generated catalog item description."
+    },
+    "analyticsCatalog.catalogItem.description.generate.dialog.content": {
+        "text": "This description is AI-generated. Use the generated text as a starting point and review it before applying.",
+        "crowdinContext": "Disclaimer in the generate description dialog indicating the text was created by AI and must be reviewed by the user."
+    },
+    "analyticsCatalog.catalogItem.description.generate.dialog.accept": {
+        "text": "Accept",
+        "crowdinContext": "Primary action in the generate description dialog that applies the generated description."
+    },
+    "analyticsCatalog.catalogItem.description.generate.dialog.decline": {
+        "text": "Decline",
+        "crowdinContext": "Secondary action in the generate description dialog that closes the dialog without applying generated description."
+    },
+    "analyticsCatalog.catalogItem.description.generate.dialog.note": {
+        "text": "Note",
+        "crowdinContext": "Label shown before backend-provided note in the generate description dialog."
+    },
+    "analyticsCatalog.catalogItem.description.generate.failed": {
+        "text": "Failed to generate description. Try again later.",
+        "crowdinContext": "Toast message shown when generating a catalog item description fails."
+    },
     "analyticsCatalog.catalogItem.update.failed": {
         "text": "Failed to update catalog item. Try again later.",
         "crowdinContext": "Catalog item update failed message."

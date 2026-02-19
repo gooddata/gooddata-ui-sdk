@@ -21,6 +21,7 @@ import type {
     IUser,
     MemoryItemStrategy,
     ObjectOrigin,
+    ObjectType,
 } from "@gooddata/sdk-model";
 
 import type { IFilterBaseOptions } from "../../common/filtering.js";
@@ -262,6 +263,13 @@ export interface IGenAIChatEvaluation {
  */
 export interface IAnalyticsCatalogService {
     /**
+     * Generates AI description for an Analytics Catalog object.
+     */
+    generateDescription(
+        request: IAnalyticsCatalogGenerateDescriptionRequest,
+    ): Promise<IAnalyticsCatalogGenerateDescriptionResponse>;
+
+    /**
      * Returns list of available tags in the workspace Analytics Catalog.
      */
     getTags(): Promise<IAnalyticsCatalogTags>;
@@ -270,6 +278,33 @@ export interface IAnalyticsCatalogService {
      * Returns information about users who created objects in the workspace Analytics Catalog.
      */
     getCreatedBy(): Promise<IAnalyticsCatalogCreatedBy>;
+}
+
+/**
+ * Supported object types for AI-generated Analytics Catalog description.
+ * @internal
+ */
+export type AnalyticsCatalogGenerateDescriptionObjectType = Extract<
+    ObjectType,
+    "insight" | "analyticalDashboard" | "measure" | "fact" | "attribute"
+>;
+
+/**
+ * Request payload for AI-generated Analytics Catalog description.
+ * @internal
+ */
+export interface IAnalyticsCatalogGenerateDescriptionRequest {
+    objectType: AnalyticsCatalogGenerateDescriptionObjectType;
+    objectId: string;
+}
+
+/**
+ * Response payload for AI-generated Analytics Catalog description.
+ * @internal
+ */
+export interface IAnalyticsCatalogGenerateDescriptionResponse {
+    description?: string;
+    note?: string;
 }
 
 /**

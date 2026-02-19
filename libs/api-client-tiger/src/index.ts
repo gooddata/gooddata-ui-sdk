@@ -233,6 +233,7 @@ export type {
     MeasureItem as AfmMeasureItem,
     MeasureResultHeader,
     MeasureValueFilter,
+    MetricDefinitionOverride as AfmMetricDefinitionOverride,
     NegativeAttributeFilter as AfmNegativeAttributeFilter,
     NegativeAttributeFilterNegativeAttributeFilter as AfmNegativeAttributeFilterNegativeAttributeFilter,
     Paging,

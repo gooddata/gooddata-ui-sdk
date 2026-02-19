@@ -1,6 +1,23 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 12 Feb 2026 18:33:21 GMT and should not be manually modified.
+This log was last generated on Thu, 19 Feb 2026 10:02:57 GMT and should not be manually modified.
+
+## 11.22.0
+
+Thu, 19 Feb 2026 10:02:57 GMT
+
+### Updates
+
+- sdk-ui-dashboard: Fix drill modal width override by increasing drill dialog selector specificity.
+- sdk-ui-gen-ai: Add forecasting support to AI assistant.
+- sdk-backend-tiger: Transform compound filters for Tiger
+- sdk-ui-filters: Move date filter exclude checkbox at the end of the form and hide if not applicable.
+- sdk-ui-dashboard: Introduce empty values date filter configuration.
+- fix unexpected closing of filter group and fix stuck filter group in loading state
+- fix filter group loading UI
+- bugfix, space key is not propagated to attribute filter search within filter group
+- sdk-ui-ext: Implicit URL drill can be configured for every vis type in AD, associated feature flag has been enabled by default
+- "gen-ai: Add AI-generated catalog description flow and Tiger support updates"
 
 ## 11.21.0
 

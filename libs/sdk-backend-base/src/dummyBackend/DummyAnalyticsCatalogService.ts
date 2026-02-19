@@ -2,6 +2,8 @@
 
 import type {
     IAnalyticsCatalogCreatedBy,
+    IAnalyticsCatalogGenerateDescriptionRequest,
+    IAnalyticsCatalogGenerateDescriptionResponse,
     IAnalyticsCatalogService,
     IAnalyticsCatalogTags,
 } from "@gooddata/sdk-backend-spi";
@@ -11,6 +13,15 @@ import type {
  * @internal
  */
 export class DummyAnalyticsCatalogService implements IAnalyticsCatalogService {
+    async generateDescription(
+        _request: IAnalyticsCatalogGenerateDescriptionRequest,
+    ): Promise<IAnalyticsCatalogGenerateDescriptionResponse> {
+        return Promise.resolve({
+            description: "",
+            note: "",
+        });
+    }
+
     async getTags(): Promise<IAnalyticsCatalogTags> {
         return Promise.resolve({ tags: ["Test"] });
     }

@@ -13,3 +13,12 @@ export function useIsCatalogQualityEnabled(): boolean {
 
     return isEnabledByFeatureFlag && canUseAiAssistant;
 }
+
+/**
+ * Catalog AI Description Generation feature gate.
+ *
+ * Enabled only when catalog quality checker is enabled and the current user has AI Assistant permission.
+ */
+export function useIsCatalogDescriptionGenerationEnabled(): boolean {
+    return useIsCatalogQualityEnabled();
+}

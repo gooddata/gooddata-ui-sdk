@@ -106,6 +106,18 @@ $content-font-size: 14px;
                     text-transform: uppercase;
                 }
 
+                &__subtitle--with-action {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                }
+
+                &__subtitle--with-action .gd-ui-kit-button,
+                &__subtitle--with-action .gd-ui-kit-icon-button {
+                    text-transform: none;
+                    flex-shrink: 0;
+                }
+
                 &__content {
                     color: kit-variables.$gd-color-text;
                     font-size: $content-font-size;
