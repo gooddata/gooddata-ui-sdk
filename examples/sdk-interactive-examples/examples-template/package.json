@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-interactive-examples-template",
-    "version": "11.22.0-alpha.6",
+    "version": "11.23.0-alpha.0",
     "private": false,
     "description": "GoodData interactive example template",
     "license": "LicenseRef-LICENSE",

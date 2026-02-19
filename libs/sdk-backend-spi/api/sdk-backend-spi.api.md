@@ -183,6 +183,9 @@ export const AnalyticalBackendErrorTypes: {
 // @public
 export type AnalyticalBackendFactory = (config?: IAnalyticalBackendConfig, implConfig?: any) => IAnalyticalBackend;
 
+// @internal
+export type AnalyticsCatalogGenerateDescriptionObjectType = Extract<ObjectType, "insight" | "analyticalDashboard" | "measure" | "fact" | "attribute">;
+
 // @public
 export type AuthenticationFlow = {
     loginUrl: string;
@@ -322,7 +325,24 @@ export interface IAnalyticsCatalogCreatedBy {
 }
 
 // @internal
+export interface IAnalyticsCatalogGenerateDescriptionRequest {
+    // (undocumented)
+    objectId: string;
+    // (undocumented)
+    objectType: AnalyticsCatalogGenerateDescriptionObjectType;
+}
+
+// @internal
+export interface IAnalyticsCatalogGenerateDescriptionResponse {
+    // (undocumented)
+    description?: string;
+    // (undocumented)
+    note?: string;
+}
+
+// @internal
 export interface IAnalyticsCatalogService {
+    generateDescription(request: IAnalyticsCatalogGenerateDescriptionRequest): Promise<IAnalyticsCatalogGenerateDescriptionResponse>;
     getCreatedBy(): Promise<IAnalyticsCatalogCreatedBy>;
     getTags(): Promise<IAnalyticsCatalogTags>;
 }

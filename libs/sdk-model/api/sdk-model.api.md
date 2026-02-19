@@ -2049,6 +2049,8 @@ export type IEntitlementsName = "CacheStrategy" | "Contract" | "CustomTheming" |
 // @public
 export interface IExecutionConfig {
     dataSamplingPercentage?: number;
+    // @alpha
+    measureDefinitionOverrides?: IMeasureDefinitionOverride[];
     timestamp?: string;
 }
 
@@ -2664,6 +2666,21 @@ export interface IMeasureDefinitionBody {
     computeRatio?: boolean;
     filters?: IMeasureFilter[];
     item: ObjRef;
+}
+
+// @alpha
+export interface IMeasureDefinitionOverride {
+    definition: {
+        inline: {
+            maql: string;
+        };
+    };
+    item: {
+        identifier: {
+            id: string;
+            type: "metric";
+        };
+    };
 }
 
 // @public

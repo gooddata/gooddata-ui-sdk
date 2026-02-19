@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/lint-config",
-    "version": "11.22.0-alpha.6",
+    "version": "11.23.0-alpha.0",
     "description": "Linter-agnostic shared rules for @gooddata/eslint-config and @gooddata/oxlint-config",
     "license": "MIT",
     "author": "GoodData",

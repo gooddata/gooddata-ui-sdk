@@ -1106,6 +1106,11 @@ export { useComboboxState } from "./@ui/UiCombobox/UiComboboxContext.js";
 export type { IUiComboboxOption, IUiComboboxParams, IUiComboboxState } from "./@ui/UiCombobox/types.js";
 
 export { UiCopyButton, type IUiCopyButtonProps } from "./@ui/UiCopyButton/UiCopyButton.js";
+export {
+    UiGenerateTextDialog,
+    type IUiGenerateTextDialogProps,
+    type IUiGenerateTextDialogResult,
+} from "./@ui/UiGenerateTextDialog/UiGenerateTextDialog.js";
 
 export { DomainHomepageLink, type IDomainHomepageLinkProps } from "./Header/HomepageLink.js";
 

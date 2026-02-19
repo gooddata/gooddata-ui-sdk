@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-backend-base",
-    "version": "11.22.0-alpha.6",
+    "version": "11.23.0-alpha.0",
     "description": "GoodData.UI SDK - Base for backend implementations",
     "license": "MIT",
     "author": "GoodData",

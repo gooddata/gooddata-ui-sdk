@@ -1398,6 +1398,13 @@
                         "items": {
                             "$ref": "#/components/schemas/MeasureItem"
                         }
+                    },
+                    "measureDefinitionOverrides": {
+                        "type": "array",
+                        "description": "(EXPERIMENTAL) Override definitions of catalog metrics for this request. Allows substituting a catalog metric's MAQL definition without modifying the stored definition.",
+                        "items": {
+                            "$ref": "#/components/schemas/MetricDefinitionOverride"
+                        }
                     }
                 },
                 "description": "Top level executable entity. Combination of [A]ttributes, [F]ilters & [M]etrics."
@@ -2244,6 +2251,22 @@
                     }
                 ]
             },
+            "MetricDefinitionOverride": {
+                "required": [
+                    "definition",
+                    "item"
+                ],
+                "type": "object",
+                "properties": {
+                    "item": {
+                        "$ref": "#/components/schemas/AfmObjectIdentifierCore"
+                    },
+                    "definition": {
+                        "$ref": "#/components/schemas/InlineMeasureDefinition"
+                    }
+                },
+                "description": "(EXPERIMENTAL) Override for a catalog metric definition."
+            },
             "NegativeAttributeFilter": {
                 "required": [
                     "negativeAttributeFilter"
@@ -3027,6 +3050,14 @@
                             },
                             "boundedFilter": {
                                 "$ref": "#/components/schemas/RelativeBoundedDateFilter"
+                            },
+                            "emptyValueHandling": {
+                                "type": "string",
+                                "enum": [
+                                    "INCLUDE",
+                                    "EXCLUDE",
+                                    "ONLY"
+                                ]
                             },
                             "localIdentifier": {
                                 "type": "string"

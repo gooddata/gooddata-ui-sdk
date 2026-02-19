@@ -411,6 +411,7 @@ export { bucketItemLocalId } from "./execution/buckets/bucketItem.js";
 export {
     type IExecutionDefinition,
     type IExecutionConfig,
+    type IMeasureDefinitionOverride,
     type DimensionGenerator,
     type IPostProcessing,
     defWithFilters,
