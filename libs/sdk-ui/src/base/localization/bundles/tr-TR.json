@@ -170,6 +170,8 @@
     "dateFilterDropdown.relativeForm.label": "Granülerlik",
     "dateFilter.tab.standard": "Standart",
     "dateFilter.tab.fiscal": "Mali",
+    "dateFilter.tab.standard.ariaLabel": "Standart takvim",
+    "dateFilter.tab.fiscal.ariaLabel": "Mali takvim",
     "filters.thisMinute.title": "Bu dakika",
     "filters.lastMinute.title": "Son dakika",
     "filters.nextMinute.title": "Sonraki dakika",

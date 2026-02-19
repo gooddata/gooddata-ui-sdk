@@ -2,6 +2,9 @@
 
 import {
     type AbsoluteDateFilter,
+    type AbsoluteDateFilterAbsoluteDateFilterEmptyValueHandlingEnum,
+    type AllTimeDateFilter,
+    type AllTimeDateFilterAllTimeDateFilterEmptyValueHandlingEnum,
     type AttributeFilter,
     type FilterDefinition,
     type MeasureValueFilter,
@@ -9,9 +12,11 @@ import {
     type PositiveAttributeFilter,
     type RankingFilter,
     type RelativeDateFilter,
+    type RelativeDateFilterRelativeDateFilterEmptyValueHandlingEnum,
     type MeasureValueCondition as TigerMeasureValueCondition,
 } from "@gooddata/api-client-tiger";
 import {
+    type EmptyValues,
     type IAbsoluteDateFilter,
     type IAttributeElements,
     type IAttributeFilter,
@@ -23,6 +28,7 @@ import {
     type IRelativeDateFilter,
     filterIsEmpty,
     isAbsoluteDateFilter,
+    isAllTimeDateFilter,
     isAttributeElementsByValue,
     isAttributeFilter,
     isComparisonCondition,
@@ -46,6 +52,25 @@ import {
     toLabelQualifier,
     toLocalIdentifier,
 } from "../ObjRefConverter.js";
+
+function toTigerEmptyValueHandling(
+    emptyValues: EmptyValues | undefined,
+):
+    | AllTimeDateFilterAllTimeDateFilterEmptyValueHandlingEnum
+    | AbsoluteDateFilterAbsoluteDateFilterEmptyValueHandlingEnum
+    | RelativeDateFilterRelativeDateFilterEmptyValueHandlingEnum
+    | undefined {
+    if (emptyValues === "include") {
+        return "INCLUDE" as const;
+    }
+    if (emptyValues === "exclude") {
+        return "EXCLUDE" as const;
+    }
+    if (emptyValues === "only") {
+        return "ONLY" as const;
+    }
+    return undefined;
+}
 
 /**
  * Tiger specific wrapper for IFilter, adding 'applyOnResult' property influencing the place of filter application.
@@ -154,6 +179,7 @@ function convertAbsoluteDateFilter(
 
     const datasetRef = absoluteDateFilter.dataSet;
     const localIdentifier = absoluteDateFilter.localIdentifier;
+    const emptyValueHandling = toTigerEmptyValueHandling(absoluteDateFilter.emptyValueHandling);
 
     return {
         absoluteDateFilter: {
@@ -161,16 +187,48 @@ function convertAbsoluteDateFilter(
             from: String(absoluteDateFilter.from),
             to: String(absoluteDateFilter.to),
             localIdentifier,
+            ...(emptyValueHandling === undefined ? {} : { emptyValueHandling }),
             ...applyOnResultProp,
         },
     };
 }
 
+function convertAllTimeDateFilter(
+    filter: IRelativeDateFilter,
+    applyOnResultProp: ApplyOnResultProp,
+): AllTimeDateFilter | null {
+    const { relativeDateFilter } = filter;
+
+    const datasetRef = relativeDateFilter.dataSet;
+    const localIdentifier = relativeDateFilter.localIdentifier;
+    const emptyValueHandling = toTigerEmptyValueHandling(relativeDateFilter.emptyValueHandling);
+
+    // Noop all-time filters have no execution effect; send only meaningful variants.
+    if (emptyValueHandling === "EXCLUDE" || emptyValueHandling === "ONLY") {
+        return {
+            allTimeDateFilter: {
+                dataset: toDateDataSetQualifier(datasetRef),
+                localIdentifier,
+                emptyValueHandling,
+                ...applyOnResultProp,
+            },
+        };
+    }
+
+    return null;
+}
+
 function convertRelativeDateFilter(
     filter: IRelativeDateFilter,
     applyOnResultProp: ApplyOnResultProp,
-): RelativeDateFilter | null {
+): RelativeDateFilter | AllTimeDateFilter | null {
     const { relativeDateFilter } = filter;
+
+    if (isAllTimeDateFilter(filter)) {
+        // All time date filters map to a dedicated AFM filter type.
+        // The backend defaults the granularity used for null-date checks (DAY) if not specified.
+        return convertAllTimeDateFilter(filter, applyOnResultProp);
+    }
 
     if (relativeDateFilter.from === undefined) {
         return null;
@@ -178,6 +236,7 @@ function convertRelativeDateFilter(
 
     const datasetRef = relativeDateFilter.dataSet;
     const localIdentifier = relativeDateFilter.localIdentifier;
+    const emptyValueHandling = toTigerEmptyValueHandling(relativeDateFilter.emptyValueHandling);
 
     const boundedFilter = isRelativeBoundedDateFilterBody(relativeDateFilter)
         ? {
@@ -200,6 +259,7 @@ function convertRelativeDateFilter(
             from: Number(relativeDateFilter.from),
             to: Number(relativeDateFilter.to),
             localIdentifier,
+            ...(emptyValueHandling === undefined ? {} : { emptyValueHandling }),
             ...boundedFilter,
             ...applyOnResultProp,
         },

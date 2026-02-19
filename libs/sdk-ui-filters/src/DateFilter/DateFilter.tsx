@@ -9,6 +9,8 @@ import {
     type IActiveCalendars,
     type WeekStart,
     isAbsoluteDateFilterForm,
+    isAllTimeDateFilterOption,
+    isEmptyValuesDateFilterOption,
 } from "@gooddata/sdk-model";
 import { type OverlayPositionType } from "@gooddata/sdk-ui-kit";
 
@@ -112,6 +114,17 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
      * @alpha
      */
     improveAccessibility?: boolean;
+
+    /**
+     * Enables empty date values UI (e.g. “Other → Empty values” preset, empty-values handling controls).
+     *
+     * @remarks
+     * Defaults to `false` to keep backward compatibility. Dashboard apps should control this
+     * via a feature flag and explicitly opt-in.
+     *
+     * @alpha
+     */
+    enableEmptyDateValues?: boolean;
 
     /**
      * When true, the "Exclude current period" toggle is hidden when it is disabled
@@ -315,6 +328,7 @@ export class DateFilter extends PureComponent<IDateFilterProps, IDateFilterState
             overlayPositionType,
             improveAccessibility,
             activeCalendars,
+            enableEmptyDateValues,
         } = this.props;
         const { excludeCurrentPeriod, selectedFilterOption, isExcludeCurrentPeriodEnabled } = this.state;
         return dateFilterMode === "hidden" ? null : (
@@ -349,12 +363,15 @@ export class DateFilter extends PureComponent<IDateFilterProps, IDateFilterState
                 overlayPositionType={overlayPositionType}
                 improveAccessibility={improveAccessibility}
                 activeCalendars={activeCalendars}
+                enableEmptyDateValues={enableEmptyDateValues}
             />
         );
     }
 
     private handleApplyClick = () => {
-        const normalizedSelectedFilterOption = normalizeSelectedFilterOption(this.state.selectedFilterOption);
+        const normalizedSelectedFilterOption = this.normalizeEmptyValueHandling(
+            normalizeSelectedFilterOption(this.state.selectedFilterOption),
+        );
         this.props.onApply(normalizedSelectedFilterOption, this.state.excludeCurrentPeriod);
     };
 
@@ -388,10 +405,19 @@ export class DateFilter extends PureComponent<IDateFilterProps, IDateFilterState
     };
 
     private handleSelectedFilterOptionChange = (selectedFilterOption: DateFilterOption) => {
+        let nextSelectedFilterOption: DateFilterOption;
         this.setState(
-            (state) =>
-                DateFilter.getStateFromSelectedOption(selectedFilterOption, state.excludeCurrentPeriod),
-            () => this.fireOnSelect(selectedFilterOption),
+            (state) => {
+                nextSelectedFilterOption = this.normalizeEmptyValueHandling(
+                    this.mergeEmptyValueHandling(selectedFilterOption, state.selectedFilterOption),
+                );
+
+                return DateFilter.getStateFromSelectedOption(
+                    nextSelectedFilterOption,
+                    state.excludeCurrentPeriod,
+                );
+            },
+            () => this.fireOnSelect(nextSelectedFilterOption),
         );
     };
 
@@ -403,9 +429,87 @@ export class DateFilter extends PureComponent<IDateFilterProps, IDateFilterState
         selectedFilterOption: DateFilterOption = this.state.selectedFilterOption,
         excludeCurrentPeriod: boolean = this.state.excludeCurrentPeriod,
     ) {
-        const normalizedSelectedFilterOption = normalizeSelectedFilterOption(selectedFilterOption);
+        const normalizedSelectedFilterOption = this.normalizeEmptyValueHandling(
+            normalizeSelectedFilterOption(selectedFilterOption),
+        );
         if (isEmpty(validateFilterOption(normalizedSelectedFilterOption))) {
             this.props.onSelect?.(normalizedSelectedFilterOption, excludeCurrentPeriod);
         }
     }
+
+    private normalizeEmptyValueHandling = (selectedFilterOption: DateFilterOption): DateFilterOption => {
+        if (!this.props.enableEmptyDateValues) {
+            return selectedFilterOption;
+        }
+
+        if (isEmptyValuesDateFilterOption(selectedFilterOption)) {
+            return {
+                ...selectedFilterOption,
+                emptyValueHandling: "only",
+            };
+        }
+
+        if (selectedFilterOption.emptyValueHandling === "only") {
+            return {
+                ...selectedFilterOption,
+                emptyValueHandling: "exclude",
+            };
+        }
+
+        return selectedFilterOption;
+    };
+
+    private mergeEmptyValueHandling = (
+        nextSelectedFilterOption: DateFilterOption,
+        currentSelectedFilterOption: DateFilterOption,
+    ): DateFilterOption => {
+        if (!this.props.enableEmptyDateValues) {
+            return nextSelectedFilterOption;
+        }
+
+        if (isEmptyValuesDateFilterOption(nextSelectedFilterOption)) {
+            return nextSelectedFilterOption;
+        }
+
+        // Keep the "All time exclude empty values" checkbox state separate from the
+        // "Include empty values" checkbox used for non-all-time options.
+        // Also, never carry state to/from the dedicated "Empty values" preset.
+        const isCurrentAllTime = isAllTimeDateFilterOption(currentSelectedFilterOption);
+        const isNextAllTime = isAllTimeDateFilterOption(nextSelectedFilterOption);
+        if (isCurrentAllTime !== isNextAllTime) {
+            return nextSelectedFilterOption;
+        }
+
+        const currentHandling = currentSelectedFilterOption.emptyValueHandling;
+        if (
+            nextSelectedFilterOption.emptyValueHandling === undefined &&
+            currentHandling !== undefined &&
+            currentHandling !== "only"
+        ) {
+            // If the only difference is `emptyValueHandling` (e.g. user unchecks the checkbox),
+            // do not carry the previous value back in.
+            if (
+                this.isSameOptionExceptEmptyValueHandling(
+                    nextSelectedFilterOption,
+                    currentSelectedFilterOption,
+                )
+            ) {
+                return nextSelectedFilterOption;
+            }
+
+            return {
+                ...nextSelectedFilterOption,
+                emptyValueHandling: currentHandling,
+            };
+        }
+
+        return nextSelectedFilterOption;
+    };
+
+    private isSameOptionExceptEmptyValueHandling = (a: DateFilterOption, b: DateFilterOption): boolean => {
+        const { emptyValueHandling: _aEmptyValueHandling, ...aWithoutEmptyValueHandling } = a;
+        const { emptyValueHandling: _bEmptyValueHandling, ...bWithoutEmptyValueHandling } = b;
+
+        return isEqual(aWithoutEmptyValueHandling, bWithoutEmptyValueHandling);
+    };
 }

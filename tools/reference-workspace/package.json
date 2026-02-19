@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/reference-workspace",
-    "version": "11.22.0-alpha.5",
+    "version": "11.22.0-alpha.6",
     "description": "GoodData SDK - Reference Workspace for tests",
     "license": "MIT",
     "author": "GoodData",
@@ -46,7 +46,7 @@
         "@gooddata/eslint-config": "workspace:*",
         "@gooddata/oxlint-config": "workspace:*",
         "@types/lodash-es": "^4.17.12",
-        "@types/node": "^22.13.0",
+        "@types/node": "22.13.0",
         "@typescript-eslint/eslint-plugin": "8.52.0",
         "@typescript-eslint/parser": "8.52.0",
         "@typescript/native-preview": "7.0.0-dev.20260202.1",

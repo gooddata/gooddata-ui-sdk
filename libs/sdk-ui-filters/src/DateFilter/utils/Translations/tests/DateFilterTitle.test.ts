@@ -37,6 +37,17 @@ describe("getDateFilterTitleUsingTranslator", () => {
         expect(actual).toEqual(expected);
     });
 
+    it("should return the correct translation for allTime filter with excluded empty values", () => {
+        const expected = "filters.allTime.exceptEmptyValues.title__undefined";
+        const actual = getDateFilterTitleUsingTranslator(
+            { ...allTimeFilter, emptyValueHandling: "exclude" },
+            serializingTranslator,
+            "short",
+            DEFAULT_DATE_FORMAT,
+        );
+        expect(actual).toEqual(expected);
+    });
+
     describe("with disabled time", () => {
         it("should return the correct translation for absolute form filter", () => {
             const actual = getDateFilterTitleUsingTranslator(
@@ -201,6 +212,17 @@ describe("getDateFilterTitleUsingTranslator", () => {
         const expected = "foo";
         const actual = getDateFilterTitleUsingTranslator(
             relativePresetFilter,
+            serializingTranslator,
+            "short",
+            DEFAULT_DATE_FORMAT,
+        );
+        expect(actual).toEqual(expected);
+    });
+
+    it("should return the correct translation for relative preset filter with included empty values", () => {
+        const expected = `filters.emptyValues.label__${JSON.stringify({ title: "foo" })}`;
+        const actual = getDateFilterTitleUsingTranslator(
+            { ...relativePresetFilter, emptyValueHandling: "include" },
             serializingTranslator,
             "short",
             DEFAULT_DATE_FORMAT,

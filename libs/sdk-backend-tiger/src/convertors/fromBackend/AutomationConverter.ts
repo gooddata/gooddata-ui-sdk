@@ -35,7 +35,6 @@ import {
     type IAutomationState,
     type IExportDefinitionMetadataObject,
     type IFilter,
-    type IRelativeDateFilter,
     filterAttributeElements,
     filterLocalIdentifier,
     filterObjRef,
@@ -505,12 +504,16 @@ function convertExecutionFilterToFilterContextItem(filter: IFilter): FilterConte
             filter.absoluteDateFilter.to,
             filter.absoluteDateFilter.dataSet,
             filter.absoluteDateFilter.localIdentifier,
+            filter.absoluteDateFilter.emptyValueHandling,
         );
     }
 
     if (isAllTimeDateFilter(filter)) {
-        const relativeFilter = (filter as IRelativeDateFilter).relativeDateFilter;
-        return newAllTimeDashboardDateFilter(relativeFilter?.dataSet, relativeFilter?.localIdentifier);
+        return newAllTimeDashboardDateFilter(
+            filter.relativeDateFilter.dataSet,
+            filter.relativeDateFilter.localIdentifier,
+            filter.relativeDateFilter.emptyValueHandling,
+        );
     }
 
     if (isRelativeDateFilter(filter)) {
@@ -521,6 +524,7 @@ function convertExecutionFilterToFilterContextItem(filter: IFilter): FilterConte
             filter.relativeDateFilter.dataSet,
             filter.relativeDateFilter.localIdentifier,
             isRelativeBoundedDateFilter(filter) ? filter.relativeDateFilter.boundedFilter : undefined,
+            filter.relativeDateFilter.emptyValueHandling,
         );
     }
 

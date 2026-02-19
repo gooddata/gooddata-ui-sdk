@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-all",
-    "version": "11.22.0-alpha.5",
+    "version": "11.22.0-alpha.6",
     "description": "GoodData SDK - All-In-One",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData",
@@ -54,7 +54,7 @@
         "@gooddata/oxlint-config": "workspace:*",
         "@microsoft/api-documenter": "^7.17.0",
         "@microsoft/api-extractor": "^7.55.2",
-        "@types/node": "^22.13.0",
+        "@types/node": "22.13.0",
         "@typescript-eslint/eslint-plugin": "8.52.0",
         "@typescript-eslint/parser": "8.52.0",
         "@typescript/native-preview": "7.0.0-dev.20260202.1",

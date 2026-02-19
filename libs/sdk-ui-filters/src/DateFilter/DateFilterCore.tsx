@@ -108,6 +108,17 @@ export interface IDateFilterCoreProps {
      * @alpha
      */
     activeCalendars?: IActiveCalendars;
+
+    /**
+     * Enables empty date values UI (e.g. “Other → Empty values” preset, empty-values handling controls).
+     *
+     * @remarks
+     * Defaults to `false` to keep backward compatibility. Dashboard apps should control this
+     * via a feature flag and explicitly opt-in.
+     *
+     * @alpha
+     */
+    enableEmptyDateValues?: boolean;
 }
 
 export const verifyDateFormat = (dateFormat: string): string => {

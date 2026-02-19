@@ -12,9 +12,9 @@ import {
     dashboardFilterReferenceObjRef,
     filterLocalIdentifier,
     filterObjRef,
-    isAllTimeDateFilter,
     isAttributeFilter,
     isDateFilter,
+    isNoopAllTimeDateFilter,
 } from "@gooddata/sdk-model";
 
 type NormalizeIds = (refs: ObjRef[]) => string[];
@@ -129,7 +129,7 @@ function getRelevantDateFiltersForWidget(
     dateDataSet: IWidget["dateDataSet"],
     normalizeIds: NormalizeIds,
 ): IDateFilter[] {
-    if (!dateDataSet || !filters.length || filters.every(isAllTimeDateFilter)) {
+    if (!dateDataSet || !filters.length || filters.every(isNoopAllTimeDateFilter)) {
         return [];
     }
 
@@ -143,7 +143,7 @@ function getRelevantDateFiltersForWidget(
         .map(([filter]) => filter!);
 
     const candidate = withRelevantDimension.at(-1);
-    return !candidate || isAllTimeDateFilter(candidate) ? [] : [candidate];
+    return !candidate || isNoopAllTimeDateFilter(candidate) ? [] : [candidate];
 }
 
 function getRelevantDateFiltersWithDimensionForWidget(
@@ -173,7 +173,7 @@ function getRelevantDateFiltersWithDimensionForWidget(
     return zip(filters, filterIds)
         .filter(([, id]) => !ignoredIds.includes(id!))
         .map(([filter]) => filter!)
-        .filter((f) => !isAllTimeDateFilter(f));
+        .filter((f) => !isNoopAllTimeDateFilter(f));
 }
 
 function getRelevantAttributeFiltersForWidget(

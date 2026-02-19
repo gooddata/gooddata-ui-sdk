@@ -2,6 +2,7 @@
 
 import {
     type AbsoluteDateFilter,
+    type AllTimeDateFilter,
     type BoundedFilter,
     type ComparisonMeasureValueFilter,
     type CompoundMeasureValueFilter,
@@ -18,6 +19,7 @@ import {
 import { NotSupported } from "@gooddata/sdk-backend-spi";
 import {
     type ComparisonConditionOperator,
+    type EmptyValues,
     type IFilter,
     type ILowerBoundedFilter,
     type IUpperBoundedFilter,
@@ -39,6 +41,10 @@ const isNegativeAttributeFilter = (filter: unknown): filter is NegativeAttribute
 
 const isAbsoluteDateFilter = (filter: unknown): filter is AbsoluteDateFilter => {
     return (filter as AbsoluteDateFilter).absoluteDateFilter !== undefined;
+};
+
+const isAllTimeDateFilter = (filter: unknown): filter is AllTimeDateFilter => {
+    return (filter as AllTimeDateFilter).allTimeDateFilter !== undefined;
 };
 
 const isRelativeDateFilter = (filter: unknown): filter is RelativeDateFilter => {
@@ -68,6 +74,19 @@ const isCompoundMeasureValueFilter = (filter: unknown): filter is CompoundMeasur
 const isRankingFilter = (filter: unknown): filter is RankingFilter => {
     return (filter as RankingFilter).rankingFilter !== undefined;
 };
+
+function toSdkEmptyValues(emptyValueHandling: unknown): EmptyValues | undefined {
+    if (emptyValueHandling === "INCLUDE") {
+        return "include";
+    }
+    if (emptyValueHandling === "EXCLUDE") {
+        return "exclude";
+    }
+    if (emptyValueHandling === "ONLY") {
+        return "only";
+    }
+    return undefined;
+}
 
 function convertTigerDimensionalityToSdk(dimensionality: unknown[] | undefined): ObjRefInScope[] | undefined {
     const converted = dimensionality
@@ -159,16 +178,31 @@ export const convertFilter = (filter: FilterDefinition): IFilter => {
             },
         };
     } else if (isAbsoluteDateFilter(filter)) {
+        const emptyValueHandling = toSdkEmptyValues(filter.absoluteDateFilter.emptyValueHandling);
         return {
             absoluteDateFilter: {
                 dataSet: toObjRef(filter.absoluteDateFilter.dataset),
                 localIdentifier: filter.absoluteDateFilter.localIdentifier,
                 from: filter.absoluteDateFilter.from,
                 to: filter.absoluteDateFilter.to,
+                ...(emptyValueHandling === undefined ? {} : { emptyValueHandling }),
+            },
+        };
+    } else if (isAllTimeDateFilter(filter)) {
+        const emptyValueHandling = toSdkEmptyValues(filter.allTimeDateFilter.emptyValueHandling);
+        return {
+            relativeDateFilter: {
+                dataSet: toObjRef(filter.allTimeDateFilter.dataset),
+                localIdentifier: filter.allTimeDateFilter.localIdentifier,
+                granularity: "ALL_TIME_GRANULARITY",
+                from: 0,
+                to: 0,
+                ...(emptyValueHandling === undefined ? {} : { emptyValueHandling }),
             },
         };
     } else if (isRelativeDateFilter(filter)) {
         const { from, to } = filter.relativeDateFilter;
+        const emptyValueHandling = toSdkEmptyValues(filter.relativeDateFilter.emptyValueHandling);
 
         let boundedFilter: ILowerBoundedFilter | IUpperBoundedFilter | undefined;
         if (isRelativeBoundedDateFilter(filter)) {
@@ -197,6 +231,7 @@ export const convertFilter = (filter: FilterDefinition): IFilter => {
                 to,
                 granularity: toSdkGranularity(filter.relativeDateFilter.granularity),
                 ...(boundedFilter ? { boundedFilter } : {}),
+                ...(emptyValueHandling === undefined ? {} : { emptyValueHandling }),
             },
         };
     } else if (isCompoundMeasureValueFilter(filter)) {

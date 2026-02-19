@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-pivot",
-    "version": "11.22.0-alpha.5",
+    "version": "11.22.0-alpha.6",
     "description": "GoodData.UI SDK - Pivot Table",
     "license": "MIT",
     "author": "GoodData Corporation",
@@ -66,13 +66,13 @@
         "ag-grid-community": "34.2.0",
         "ag-grid-enterprise": "34.2.0",
         "ag-grid-react": "34.2.0",
-        "classnames": "^2.3.1",
-        "fixed-data-table-2": "^2.0.22",
+        "classnames": "2.5.1",
+        "fixed-data-table-2": "2.0.22",
         "lodash-es": "^4.17.23",
         "react-intl": "7.1.11",
-        "ts-invariant": "^0.7.5",
+        "ts-invariant": "0.10.3",
         "tslib": "2.8.1",
-        "uuid": "^11.1.0"
+        "uuid": "11.1.0"
     },
     "devDependencies": {
         "@gooddata/eslint-config": "workspace:*",
@@ -86,7 +86,7 @@
         "@testing-library/dom": "10.4.1",
         "@testing-library/react": "16.3.0",
         "@types/lodash-es": "^4.17.12",
-        "@types/node": "^22.13.0",
+        "@types/node": "22.13.0",
         "@types/raf": "^3.4.0",
         "@types/react": "19.1.11",
         "@types/react-dom": "19.1.7",
@@ -112,7 +112,7 @@
         "oxfmt": "0.27.0",
         "oxlint": "^1.43.0",
         "oxlint-tsgolint": "0.11.4",
-        "raf": "^3.4.1",
+        "raf": "3.4.1",
         "react": "19.1.1",
         "react-dom": "19.1.1",
         "sass": "1.70.0",

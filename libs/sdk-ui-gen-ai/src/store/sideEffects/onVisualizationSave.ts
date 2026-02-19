@@ -16,6 +16,7 @@ import {
 import { BucketNames } from "@gooddata/sdk-ui";
 
 import { prepareExecution } from "../../components/messages/contents/useExecution.js";
+import { mapVisualizationForecastToChartConfig } from "../../forecast/forecastMapping.js";
 import { type Message, isVisualizationContents } from "../../model.js";
 import { getHeadlineComparison } from "../../utils.js";
 import { messagesSelector } from "../messages/messagesSelectors.js";
@@ -174,7 +175,7 @@ const buildPieChart = (
     };
 };
 
-const buildLineChart = (
+export const buildLineChart = (
     visualizationContent: IGenAIVisualization,
     visualizationTitle: string,
 ): IInsightDefinition => {
@@ -193,6 +194,8 @@ const buildLineChart = (
         newBucket(BucketNames.SEGMENT, segmentBy);
     }
 
+    const forecast = mapVisualizationForecastToChartConfig(visualizationContent);
+
     return {
         insight: {
             title: visualizationTitle,
@@ -204,6 +207,7 @@ const buildLineChart = (
                 legend: {
                     responsive: "autoPositionWithPopup",
                 },
+                ...(forecast ? { controls: { forecast } } : {}),
             },
         },
     };

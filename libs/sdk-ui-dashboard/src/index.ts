@@ -1255,6 +1255,7 @@ export {
     selectEnableAutomationFilterContext,
     selectEnableAlertsEvaluationFrequencySetup,
     selectEnableDateFilterIdentifiers,
+    selectEnableKDEmptyDateValuesFilter,
     selectEnableSnapshotExportAccessibility,
     selectEnableExportToDocumentStorage,
     selectExternalRecipient,

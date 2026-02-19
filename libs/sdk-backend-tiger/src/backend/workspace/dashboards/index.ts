@@ -97,10 +97,10 @@ import {
     type ObjRef,
     areObjRefsEqual,
     idRef,
-    isAllTimeDashboardDateFilter,
     isFilterContext,
     isFilterContextDefinition,
     isInsightWidget,
+    isNoopAllTimeDashboardDateFilter,
     isTempFilterContext,
     objRefToString,
 } from "@gooddata/sdk-model";
@@ -587,14 +587,14 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     ): Promise<IExportResult> => {
         const dashboardId = objRefToIdentifier(dashboardRef, this.authCall);
 
-        // skip all time date filter from stored filters, when missing, it's correctly
-        // restored to All time during the load later
-        const withoutAllTime = (filters || []).filter((f) => !isAllTimeDashboardDateFilter(f));
+        // skip noop all time date filter from stored filters; if missing, it's correctly
+        // restored to All time during the load later. Keep all time filters that carry extra config.
+        const withoutAllTime = (filters || []).filter((f) => !isNoopAllTimeDashboardDateFilter(f));
 
         const withoutAllTimePerTab = Object.entries(filtersByTab || {}).reduce((acc, [tabId, filters]) => {
             return {
                 ...acc,
-                [tabId]: filters.filter((f) => !isAllTimeDashboardDateFilter(f)),
+                [tabId]: filters.filter((f) => !isNoopAllTimeDashboardDateFilter(f)),
             };
         }, {});
 
@@ -643,14 +643,14 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
     ): Promise<IExportResult> => {
         const dashboardId = objRefToIdentifier(dashboardRef, this.authCall);
 
-        // skip all time date filter from stored filters, when missing, it's correctly
-        // restored to All time during the load later
-        const withoutAllTime = (filters || []).filter((f) => !isAllTimeDashboardDateFilter(f));
+        // skip noop all time date filter from stored filters; if missing, it's correctly
+        // restored to All time during the load later. Keep all time filters that carry extra config.
+        const withoutAllTime = (filters || []).filter((f) => !isNoopAllTimeDashboardDateFilter(f));
 
         const withoutAllTimePerTab = Object.entries(filtersByTab || {}).reduce((acc, [tabId, filters]) => {
             return {
                 ...acc,
-                [tabId]: filters.filter((f) => !isAllTimeDashboardDateFilter(f)),
+                [tabId]: filters.filter((f) => !isNoopAllTimeDashboardDateFilter(f)),
             };
         }, {});
 
@@ -894,15 +894,15 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         return this.authCall(async (client) => {
             const dashboardId = objRefToIdentifier(dashboardRef, this.authCall);
 
-            // skip all time date filter from stored filters, when missing, it's correctly
-            // restored to All time during the load later
-            const withoutAllTime = (filters || []).filter((f) => !isAllTimeDashboardDateFilter(f));
+            // skip noop all time date filter from stored filters; if missing, it's correctly
+            // restored to All time during the load later. Keep all time filters that carry extra config.
+            const withoutAllTime = (filters || []).filter((f) => !isNoopAllTimeDashboardDateFilter(f));
 
             const withoutAllTimePerTab = Object.entries(filtersByTab || {}).reduce(
                 (acc, [tabId, filters]) => {
                     return {
                         ...acc,
-                        [tabId]: filters.filter((f) => !isAllTimeDashboardDateFilter(f)),
+                        [tabId]: filters.filter((f) => !isNoopAllTimeDashboardDateFilter(f)),
                     };
                 },
                 {},

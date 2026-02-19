@@ -8,7 +8,7 @@ import {
     type IAutomationMetadataObject,
     type IAutomationMetadataObjectDefinition,
     type IFilter,
-    isAllTimeDateFilter,
+    isNoopAllTimeDateFilter,
 } from "@gooddata/sdk-model";
 
 import { useCreateAlert } from "./useCreateAlert.js";
@@ -148,5 +148,5 @@ function sanitizeAutomation(
 }
 
 function removeAllTimeDateFiltersFromAlertFilters(filters: IFilter[]) {
-    return filters.filter((filter) => !isAllTimeDateFilter(filter));
+    return filters.filter((filter) => !isNoopAllTimeDateFilter(filter));
 }

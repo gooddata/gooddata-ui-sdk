@@ -10,10 +10,10 @@ import {
     type IDashboardAttributeFilter,
     type IDashboardDateFilter,
     dashboardFilterLocalIdentifier,
-    isAllTimeDashboardDateFilter,
     isDashboardAttributeFilter,
     isDashboardCommonDateFilter,
     isDashboardDateFilter,
+    isNoopAllTimeDashboardDateFilter,
     newAllTimeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 
@@ -50,13 +50,42 @@ import {
 } from "../../../../model/store/tabs/filterContext/filterContextSelectors.js";
 import { selectActiveTabLocalIdentifier } from "../../../../model/store/tabs/tabsSelectors.js";
 
+const isNoopAllTimeCommonDateFilter = (filter: FilterContextItem): boolean => {
+    return isDashboardCommonDateFilter(filter) && isNoopAllTimeDashboardDateFilter(filter);
+};
+
+const normalizeDateFilterForComparison = (filter: IDashboardDateFilter): IDashboardDateFilter => {
+    /**
+     * Filter objects can be created in different shapes:
+     * - `{ dataSet: undefined }` (explicit undefined)
+     * - no `dataSet` key at all (omitted)
+     *
+     * They are semantically the same for common date filters, but deep equality would treat them as different.
+     * Normalize by stripping `undefined` keys from the `dateFilter` object.
+     */
+    const { dataSet, from, to, ...rest } = filter.dateFilter;
+
+    return {
+        ...filter,
+        dateFilter: {
+            ...rest,
+            ...(dataSet === undefined ? {} : { dataSet }),
+            ...(from === undefined ? {} : { from }),
+            ...(to === undefined ? {} : { to }),
+        } as IDashboardDateFilter["dateFilter"],
+    };
+};
+
+const normalizeFilterForComparison = (filter: FilterContextItem): FilterContextItem => {
+    return isDashboardDateFilter(filter) ? normalizeDateFilterForComparison(filter) : filter;
+};
+
 const normalizeFiltersForComparison = (filters: FilterContextItem[]): FilterContextItem[] => {
+    const normalized = filters.map(normalizeFilterForComparison);
+
     // Remove any "all time" common date filters to normalize the comparison
-    return filters.filter((filter) => {
-        if (isDashboardCommonDateFilter(filter)) {
-            return !isDashboardDateFilter(filter) || !isAllTimeDashboardDateFilter(filter);
-        }
-        return true;
+    return normalized.filter((filter) => {
+        return !isNoopAllTimeCommonDateFilter(filter);
     });
 };
 

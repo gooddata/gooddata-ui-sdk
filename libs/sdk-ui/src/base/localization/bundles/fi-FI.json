@@ -170,6 +170,8 @@
     "dateFilterDropdown.relativeForm.label": "Rakeisuus",
     "dateFilter.tab.standard": "Standardi",
     "dateFilter.tab.fiscal": "Tilikausi",
+    "dateFilter.tab.standard.ariaLabel": "Vakiokalenteri",
+    "dateFilter.tab.fiscal.ariaLabel": "Tilikausikalenteri",
     "filters.thisMinute.title": "Tällä minuutilla",
     "filters.lastMinute.title": "Viime minuutti",
     "filters.nextMinute.title": "Seuraava minuutti",

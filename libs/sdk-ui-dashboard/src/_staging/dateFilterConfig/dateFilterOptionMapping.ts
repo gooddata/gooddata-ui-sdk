@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { compact } from "lodash-es";
 
@@ -38,6 +38,14 @@ interface IDateFilterOptionInfo {
 
 const isAllTimeDateFilter = (dateFilter: IDashboardDateFilter | undefined) =>
     dateFilter && isAllTimeDashboardDateFilter(dateFilter);
+
+function applyEmptyValueHandling(
+    dateFilterOption: DateFilterOption,
+    dateFilter: IDashboardDateFilter | undefined,
+): DateFilterOption {
+    const emptyValueHandling = dateFilter?.dateFilter.emptyValueHandling;
+    return emptyValueHandling ? { ...dateFilterOption, emptyValueHandling } : dateFilterOption;
+}
 
 /**
  * Tries to match a preset or a form with the provided value. Prioritizes the provided option if possible.
@@ -88,15 +96,39 @@ export function matchDateFilterToDateFilterOption(
     const isAllTime = isAllTimeDateFilter(dateFilter);
 
     if (!dateFilter || isAllTime) {
+        const emptyValueHandling = dateFilter?.dateFilter.emptyValueHandling;
+
+        if (emptyValueHandling === "only") {
+            const { emptyValues: emptyValuesOption } = availableOptions;
+            if (isDateFilterOptionVisible(emptyValuesOption)) {
+                return {
+                    dateFilterOption: { ...emptyValuesOption!, emptyValueHandling: "only" },
+                    excludeCurrentPeriod: false,
+                };
+            }
+        }
+
         const { allTime } = availableOptions;
-        return allTime
-            ? { dateFilterOption: allTime, excludeCurrentPeriod: false }
-            : createVirtualPresetForStoredFilter(undefined);
+        if (allTime) {
+            return {
+                dateFilterOption: applyEmptyValueHandling(allTime, dateFilter),
+                excludeCurrentPeriod: false,
+            };
+        }
+
+        const virtual = createVirtualPresetForStoredFilter(undefined);
+        return {
+            ...virtual,
+            dateFilterOption: applyEmptyValueHandling(virtual.dateFilterOption, dateFilter),
+        };
     }
     // try matching the filter as is
     const matchingFilter = findDateFilterOptionByValue(dateFilter, availableOptions);
     if (matchingFilter) {
-        return { dateFilterOption: matchingFilter, excludeCurrentPeriod: false };
+        return {
+            dateFilterOption: applyEmptyValueHandling(matchingFilter, dateFilter),
+            excludeCurrentPeriod: false,
+        };
     }
     // try matching the filter with excludeCurrentPeriod === true, but only for relativeFormPresets
     if (dateFilter.dateFilter.type === "relative" && dateFilter.dateFilter.to?.toString() === "-1") {
@@ -113,7 +145,10 @@ export function matchDateFilterToDateFilterOption(
             "relativePreset",
         );
         if (matchingFilter) {
-            return { dateFilterOption: matchingFilter, excludeCurrentPeriod: true };
+            return {
+                dateFilterOption: applyEmptyValueHandling(matchingFilter, dateFilter),
+                excludeCurrentPeriod: true,
+            };
         }
     }
     // the stored filter must be a form with custom values
@@ -123,7 +158,8 @@ export function matchDateFilterToDateFilterOption(
 
     // we cannot use the form because it is disabled or otherwise incompatible
     // -> we must create a virtual hidden preset
-    return createVirtualPresetForStoredFilter(dateFilter);
+    const virtual = createVirtualPresetForStoredFilter(dateFilter);
+    return { ...virtual, dateFilterOption: applyEmptyValueHandling(virtual.dateFilterOption, dateFilter) };
 }
 
 /**
@@ -145,6 +181,7 @@ export function flattenDateFilterOptions(dateFilterOptions: IDateFilterOptionsBy
     // the first visible filter is selected for new dashboards if none is specified in config
     return compact([
         dateFilterOptions.allTime,
+        dateFilterOptions.emptyValues,
         ...(dateFilterOptions.absolutePreset || []),
         ...relativePresets,
         dateFilterOptions.absoluteForm,
@@ -176,6 +213,9 @@ function reconstructFormForStoredFilter(
             from: dateFilter.dateFilter.from!.toString(),
             to: dateFilter.dateFilter.to!.toString(),
             type: "absoluteForm",
+            ...(dateFilter.dateFilter.emptyValueHandling
+                ? { emptyValueHandling: dateFilter.dateFilter.emptyValueHandling }
+                : {}),
         };
         return { dateFilterOption, excludeCurrentPeriod: false };
     } else {
@@ -185,6 +225,9 @@ function reconstructFormForStoredFilter(
             to: Number.parseInt(dateFilter.dateFilter.to!.toString(), 10),
             granularity: dateFilter.dateFilter.granularity,
             type: "relativeForm",
+            ...(dateFilter.dateFilter.emptyValueHandling
+                ? { emptyValueHandling: dateFilter.dateFilter.emptyValueHandling }
+                : {}),
         };
         return { dateFilterOption, excludeCurrentPeriod: false };
     }
@@ -290,6 +333,9 @@ function createVirtualPresetForStoredFilter(
             from: from!.toString(),
             to: to!.toString(),
             type: "absolutePreset",
+            ...(dateFilter.dateFilter.emptyValueHandling
+                ? { emptyValueHandling: dateFilter.dateFilter.emptyValueHandling }
+                : {}),
         };
         return { dateFilterOption, excludeCurrentPeriod: false };
     } else {
@@ -301,6 +347,9 @@ function createVirtualPresetForStoredFilter(
             type: "relativePreset",
             ...(dateFilter.dateFilter.boundedFilter
                 ? { boundedFilter: dateFilter.dateFilter.boundedFilter }
+                : {}),
+            ...(dateFilter.dateFilter.emptyValueHandling
+                ? { emptyValueHandling: dateFilter.dateFilter.emptyValueHandling }
                 : {}),
         };
         return { dateFilterOption, excludeCurrentPeriod: false };

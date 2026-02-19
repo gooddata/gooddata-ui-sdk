@@ -230,6 +230,16 @@
         padding: 10px 0;
     }
 
+    .gd-date-filter-checkbox-section {
+        .input-checkbox-label {
+            display: block;
+        }
+
+        .gd-date-filter-checkbox-section-item + .gd-date-filter-checkbox-section-item {
+            margin-top: 5px;
+        }
+    }
+
     .header {
         display: flex;
         align-items: center;
@@ -244,5 +254,12 @@
         font-size: 11px;
         font-weight: bold;
         text-transform: uppercase;
+    }
+}
+
+.gd-date-filter-form-content {
+    .gd-date-filter-empty-values-handling-toggle {
+        padding-top: 10px;
+        font-size: 12px;
     }
 }

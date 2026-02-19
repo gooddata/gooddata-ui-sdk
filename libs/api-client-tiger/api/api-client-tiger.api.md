@@ -1222,6 +1222,9 @@ export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApi
     //
     // (undocumented)
     generateDashboardSummary(requestParameters: ActionsApiGenerateDashboardSummaryRequest, options?: AxiosRequestConfig): AxiosPromise<WorkflowDashboardSummaryResponseDto>;
+    // Warning: (ae-forgotten-export) The symbol "ActionsApiGenerateDescriptionRequest" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "GenerateDescriptionResponse" needs to be exported by the entry point index.d.ts
+    generateDescription(requestParameters: ActionsApiGenerateDescriptionRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateDescriptionResponse>;
     getQualityIssues(requestParameters: AfmActionsApiGetQualityIssuesRequest, options?: AxiosRequestConfig): AxiosPromise<AfmGetQualityIssuesResponse>;
     getQualityIssuesCalculationStatus(requestParameters: AfmActionsApiGetQualityIssuesCalculationStatusRequest, options?: AxiosRequestConfig): AxiosPromise<AfmQualityIssuesCalculationStatusResponse>;
     // Warning: (ae-forgotten-export) The symbol "ActionsApiGetWorkflowStatusRequest" needs to be exported by the entry point index.d.ts
@@ -1288,6 +1291,7 @@ export interface AfmActionsApiInterface {
     forecastResult(requestParameters: ActionsApiForecastResultRequest, options?: AxiosRequestConfig): AxiosPromise<ForecastResult>;
     // (undocumented)
     generateDashboardSummary(requestParameters: ActionsApiGenerateDashboardSummaryRequest, options?: AxiosRequestConfig): AxiosPromise<WorkflowDashboardSummaryResponseDto>;
+    generateDescription(requestParameters: ActionsApiGenerateDescriptionRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateDescriptionResponse>;
     getQualityIssues(requestParameters: AfmActionsApiGetQualityIssuesRequest, options?: AxiosRequestConfig): AxiosPromise<AfmGetQualityIssuesResponse>;
     getQualityIssuesCalculationStatus(requestParameters: AfmActionsApiGetQualityIssuesCalculationStatusRequest, options?: AxiosRequestConfig): AxiosPromise<AfmQualityIssuesCalculationStatusResponse>;
     // (undocumented)
@@ -5321,6 +5325,8 @@ export interface CoverSlideTemplate {
 
 // @public
 export interface CreatedVisualization {
+    // (undocumented)
+    'config'?: VisualizationConfig;
     'dimensionality': Array<DimAttribute>;
     'filters': Array<CreatedVisualizationFiltersInner>;
     'id': string;
@@ -26925,6 +26931,14 @@ export interface VisualExportRequest {
     'dashboardId': string;
     'fileName': string;
     'metadata'?: object;
+}
+
+// @public
+export interface VisualizationConfig {
+    // Warning: (ae-forgotten-export) The symbol "ForecastConfig" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    'forecast'?: ForecastConfig;
 }
 
 // @public

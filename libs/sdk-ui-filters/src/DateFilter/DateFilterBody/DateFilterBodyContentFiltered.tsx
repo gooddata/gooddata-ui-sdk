@@ -13,6 +13,7 @@ import {
     type DateFilterRelativeOptionGroup,
     type IDateFilterOptionsByType,
 } from "../interfaces/index.js";
+import { OtherPresetsSection } from "../Other/OtherPresetsSection.js";
 import { type CalendarTabType } from "../utils/presetFilterUtils.js";
 
 const ITEM_CLASS_MOBILE = "gd-date-filter-item-mobile";
@@ -27,6 +28,12 @@ interface IDateFilterBodyContentFilteredProps {
     selectedTab: CalendarTabType;
     onTabSelect: (tab: CalendarTabType) => void;
     filteredRelativePreset: DateFilterRelativeOptionGroup | undefined;
+    /**
+     * Enables empty date values UI (e.g. “Other → Empty values” preset, empty-values handling controls).
+     *
+     * @alpha
+     */
+    enableEmptyDateValues?: boolean;
 }
 
 /**
@@ -43,6 +50,7 @@ export function DateFilterBodyContentFiltered({
     selectedTab,
     onTabSelect,
     filteredRelativePreset,
+    enableEmptyDateValues,
 }: IDateFilterBodyContentFilteredProps) {
     const intl = useIntl();
     const listboxLabel = intl.formatMessage({ id: "dateFilterDropdown.label" });
@@ -60,6 +68,7 @@ export function DateFilterBodyContentFiltered({
     const selectedId = selectedFilterOption.localIdentifier;
     const isSelectedInVisibleList =
         selectedId === filterOptions.allTime?.localIdentifier ||
+        selectedId === filterOptions.emptyValues?.localIdentifier ||
         filterOptions.absolutePreset?.some((p) => p.localIdentifier === selectedId) ||
         Object.values(filteredRelativePreset ?? {}).some((items) =>
             items?.some((p) => p.localIdentifier === selectedId),
@@ -92,6 +101,13 @@ export function DateFilterBodyContentFiltered({
                     className={isMobile ? ITEM_CLASS_MOBILE : undefined}
                 />
             ) : null}
+            <OtherPresetsSection
+                filterOptions={filterOptions}
+                selectedFilterOption={selectedFilterOption}
+                onSelectedFilterOptionChange={onSelectedFilterOptionChange}
+                isMobile={isMobile}
+                enableEmptyDateValues={enableEmptyDateValues ?? false}
+            />
         </>
     );
 

@@ -2126,5 +2126,17 @@
     "automations.accessibility.gridLabel.schedules": {
         "text": "List of scheduled exports",
         "crowdinContext": "Accessibility label for the scheduled exports table grid, describing the content to screen readers"
+    },
+    "filters.allTime.exceptEmptyValues.title": {
+        "text": "All time except empty values",
+        "crowdinContext": "Notifications filters detail: Title for 'All time' date filter when empty (missing) date values are excluded."
+    },
+    "filters.emptyValues.label": {
+        "text": "{title}, empty values",
+        "crowdinContext": "Notifications filters detail: Date range label template when empty (missing) date values are included. {title} is the base range label."
+    },
+    "filters.emptyValues.title": {
+        "text": "Empty values",
+        "crowdinContext": "Notifications filters detail: Label for a date filter that matches only records with empty (missing) date values."
     }
 }

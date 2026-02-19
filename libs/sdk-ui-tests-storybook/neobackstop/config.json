@@ -62,7 +62,7 @@
         "showSuccessfulTests": false
     },
     "ciReportPath": "../output/ci-report",
-    "asyncCaptureLimit": 20,
+    "asyncCaptureLimit": 18,
     "asyncCompareLimit": 18,
     "requireSameDimensions": false,
     "retryCount": 2

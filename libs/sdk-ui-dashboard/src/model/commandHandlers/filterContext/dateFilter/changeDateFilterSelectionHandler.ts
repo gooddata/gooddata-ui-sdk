@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { toNumber } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
@@ -61,6 +61,9 @@ export function* changeDateFilterSelectionHandler(
                       dataSet: cmd.payload.dataSet,
                       isWorkingSelectionChange,
                       ...localIdentifierObj,
+                      ...(cmd.payload.emptyValueHandling
+                          ? { emptyValueHandling: cmd.payload.emptyValueHandling }
+                          : {}),
                   }
                 : {
                       type: cmd.payload.type,
@@ -71,6 +74,9 @@ export function* changeDateFilterSelectionHandler(
                       isWorkingSelectionChange,
                       ...localIdentifierObj,
                       ...(cmd.payload.boundedFilter ? { boundedFilter: cmd.payload.boundedFilter } : {}),
+                      ...(cmd.payload.emptyValueHandling
+                          ? { emptyValueHandling: cmd.payload.emptyValueHandling }
+                          : {}),
                   },
         ),
     );
@@ -100,6 +106,7 @@ function dateFilterSelectionToDateFilter(dateFilterSelection: DateFilterSelectio
             dateFilterSelection.to.toString(),
             undefined,
             dateFilterSelection.localIdentifier,
+            dateFilterSelection.emptyValueHandling,
         );
     } else if (
         dateFilterSelection.type === "relative" &&
@@ -107,7 +114,11 @@ function dateFilterSelectionToDateFilter(dateFilterSelection: DateFilterSelectio
         dateFilterSelection.from === undefined &&
         dateFilterSelection.to === undefined
     ) {
-        return newAllTimeDashboardDateFilter(undefined, dateFilterSelection.localIdentifier);
+        return newAllTimeDashboardDateFilter(
+            undefined,
+            dateFilterSelection.localIdentifier,
+            dateFilterSelection.emptyValueHandling,
+        );
     } else {
         return newRelativeDashboardDateFilter(
             dateFilterSelection.granularity,
@@ -116,6 +127,7 @@ function dateFilterSelectionToDateFilter(dateFilterSelection: DateFilterSelectio
             undefined,
             dateFilterSelection.localIdentifier,
             dateFilterSelection.boundedFilter,
+            dateFilterSelection.emptyValueHandling,
         );
     }
 }

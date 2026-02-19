@@ -25,6 +25,7 @@ import { selectBackendCapabilities } from "../../../model/store/backendCapabilit
 import { selectCatalogDateDatasets } from "../../../model/store/catalog/catalogSelectors.js";
 import {
     selectActiveCalendars,
+    selectEnableKDEmptyDateValuesFilter,
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
     selectLocale,
     selectSettings,
@@ -60,6 +61,7 @@ export function DefaultDashboardDateFilter({
     const weekStart = useDashboardSelector(selectWeekStart);
     const isApplyAllAtOnceEnabledAndSet = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
     const activeCalendars = useDashboardSelector(selectActiveCalendars);
+    const enableEmptyDateValues = useDashboardSelector(selectEnableKDEmptyDateValuesFilter);
 
     const enableFilterAccessibility = settings?.enableFilterAccessibility;
 
@@ -80,24 +82,30 @@ export function DefaultDashboardDateFilter({
         tabId,
     );
     const [lastSelectedOptionId, setLastSelectedOptionId] = useState("");
+
+    const dateFilterOptions = useMemo(() => {
+        if (enableEmptyDateValues) {
+            return config.dateFilterOptions;
+        }
+
+        const { emptyValues: _emptyValues, ...rest } = config.dateFilterOptions;
+        return rest;
+    }, [config.dateFilterOptions, enableEmptyDateValues]);
+
     const { dateFilterOption, excludeCurrentPeriod } = useMemo(
         () =>
-            matchDateFilterToDateFilterOptionWithPreference(
-                filter,
-                config.dateFilterOptions,
-                lastSelectedOptionId,
-            ),
-        [filter, config.dateFilterOptions, lastSelectedOptionId],
+            matchDateFilterToDateFilterOptionWithPreference(filter, dateFilterOptions, lastSelectedOptionId),
+        [filter, dateFilterOptions, lastSelectedOptionId],
     );
     const { dateFilterOption: workingFilterOption, excludeCurrentPeriod: workingExcludeCurrentPeriod } =
         useMemo(
             () =>
                 matchDateFilterToDateFilterOptionWithPreference(
                     workingFilter,
-                    config.dateFilterOptions,
+                    dateFilterOptions,
                     lastSelectedOptionId,
                 ),
-            [workingFilter, config.dateFilterOptions, lastSelectedOptionId],
+            [workingFilter, dateFilterOptions, lastSelectedOptionId],
         );
     const onApply = useCallback<NonNullable<IDateFilterProps["onApply"]>>(
         (option, exclude) => {
@@ -181,7 +189,7 @@ export function DefaultDashboardDateFilter({
                     ? DashboardDateFilterConfigModeValues.READONLY
                     : DashboardDateFilterConfigModeValues.ACTIVE
             }
-            filterOptions={config.dateFilterOptions}
+            filterOptions={dateFilterOptions}
             availableGranularities={config.availableGranularities}
             customFilterName={title}
             onApply={onApply}
@@ -200,6 +208,7 @@ export function DefaultDashboardDateFilter({
             overlayPositionType={overlayPositionType}
             improveAccessibility={enableFilterAccessibility}
             activeCalendars={activeCalendars}
+            enableEmptyDateValues={enableEmptyDateValues}
             hideDisabledExclude
         />
     );

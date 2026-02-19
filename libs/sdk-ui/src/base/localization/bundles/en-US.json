@@ -1391,9 +1391,33 @@
         "text": "All time",
         "crowdinContext": "Filter option indicating no time-based filtering should be applied, including all available historical data in the results."
     },
+    "filters.allTime.exceptEmptyValues.title": {
+        "text": "All time except empty values",
+        "crowdinContext": "All time date filter label when empty (missing) date values are excluded."
+    },
     "filters.allTime.excludeCurrentPeriod": {
         "text": "Exclude open period",
         "crowdinContext": "Option to exclude incomplete or in-progress time periods from the 'All time' filter, such as the current day, week, or month that hasn't fully elapsed."
+    },
+    "filters.emptyValues.label": {
+        "text": "{title}, empty values",
+        "crowdinContext": "Date filter label template when empty values are included. {title} is the base date filter label."
+    },
+    "filters.other.heading": {
+        "text": "Other",
+        "crowdinContext": "Heading label for the 'Other' section in the date filter preset list."
+    },
+    "filters.emptyValues.title": {
+        "text": "Empty values",
+        "crowdinContext": "Date filter preset label for filtering records with empty (missing) date values."
+    },
+    "filters.emptyValuesHandling.exclude": {
+        "text": "Exclude empty values",
+        "crowdinContext": "Checkbox label for excluding records with empty (missing) date values from date filter results."
+    },
+    "filters.emptyValuesHandling.include": {
+        "text": "Include empty values",
+        "crowdinContext": "Checkbox label for including records with empty (missing) date values together with the selected date range."
     },
     "filters.minute.title": {
         "text": "MINUTE",

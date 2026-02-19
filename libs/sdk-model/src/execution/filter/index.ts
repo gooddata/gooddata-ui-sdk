@@ -7,6 +7,18 @@ import { type AllTimeGranularity, type DateAttributeGranularity } from "../../ba
 import { type Identifier, type ObjRef, type ObjRefInScope, isObjRef } from "../../objRef/index.js";
 
 /**
+ * Determines how date filters should treat empty values.
+ *
+ * @remarks
+ * - `"include"`: include empty values together with selected date range
+ * - `"exclude"`: exclude empty values from results
+ * - `"only"`: only empty values
+ *
+ * @public
+ */
+export type EmptyValues = "include" | "exclude" | "only";
+
+/**
  * Attribute elements specified by their URI.
  *
  * @remarks
@@ -148,6 +160,11 @@ export interface IAbsoluteDateFilterBody extends IIdentifiableFilter {
      * End date (including): this is in format 'YYYY-MM-DD'
      */
     to: string;
+
+    /**
+     * How to treat empty date values.
+     */
+    emptyValueHandling?: EmptyValues;
 }
 
 /**
@@ -210,6 +227,11 @@ export interface IRelativeDateFilterBody extends IIdentifiableFilter {
     granularity: DateAttributeGranularity;
     from: number;
     to: number;
+
+    /**
+     * How to treat empty date values.
+     */
+    emptyValueHandling?: EmptyValues;
 }
 
 /**
@@ -222,6 +244,11 @@ export interface IRelativeDateFilterAllTimeBody extends IIdentifiableFilter {
     granularity: AllTimeGranularity;
     from: 0;
     to: 0;
+
+    /**
+     * How to treat empty date values.
+     */
+    emptyValueHandling?: EmptyValues;
 }
 
 /**
@@ -548,6 +575,62 @@ export function isAllTimeDateFilter(
         !isEmpty(obj) &&
         (obj as IRelativeDateFilter).relativeDateFilter?.granularity === "ALL_TIME_GRANULARITY"
     );
+}
+
+/**
+ * Type guard checking whether the provided object is an all time date filter with `emptyValueHandling` defined.
+ *
+ * @remarks
+ * This is useful to distinguish between:
+ * - a noop "all time" filter (no additional configuration), and
+ * - an "all time" filter that carries extra configuration (e.g. empty date values handling).
+ *
+ * @public
+ */
+export function isAllTimeDateFilterWithEmptyValueHandling(obj: unknown): obj is IRelativeDateFilter & {
+    relativeDateFilter: IRelativeDateFilterAllTimeBody & { emptyValueHandling: EmptyValues };
+} {
+    return (
+        isAllTimeDateFilter(obj) &&
+        (obj as IRelativeDateFilter).relativeDateFilter.emptyValueHandling !== undefined
+    );
+}
+
+/**
+ * Type guard checking whether the provided object is a noop "all time" date filter.
+ *
+ * @remarks
+ * This is useful to distinguish between:
+ * - a noop "all time" filter (no additional configuration), and
+ * - an "all time" filter that carries extra configuration (e.g. empty date values handling).
+ *
+ * @public
+ */
+export function isNoopAllTimeDateFilter(obj: unknown): boolean {
+    return isAllTimeDateFilter(obj) && !isAllTimeDateFilterWithEmptyValueHandling(obj);
+}
+
+/**
+ * Type guard checking whether the provided object is a date filter with `emptyValueHandling` defined.
+ *
+ * @public
+ */
+export function isDateFilterWithEmptyValueHandling(obj: unknown): obj is
+    | (IAbsoluteDateFilter & {
+          absoluteDateFilter: IAbsoluteDateFilterBody & { emptyValueHandling: EmptyValues };
+      })
+    | (IRelativeDateFilter & {
+          relativeDateFilter: (IRelativeDateFilterBody | IRelativeDateFilterAllTimeBody) & {
+              emptyValueHandling: EmptyValues;
+          };
+      }) {
+    if (isAbsoluteDateFilter(obj)) {
+        return obj.absoluteDateFilter.emptyValueHandling !== undefined;
+    }
+    if (isRelativeDateFilter(obj)) {
+        return obj.relativeDateFilter.emptyValueHandling !== undefined;
+    }
+    return false;
 }
 
 /**
@@ -885,6 +968,7 @@ export interface IAbsoluteDateFilterValues {
     from: string;
     to: string;
     dataSet?: ObjRef;
+    emptyValueHandling?: EmptyValues;
 }
 
 /**
@@ -900,11 +984,13 @@ export function absoluteDateFilterValues(
     includeDataSet = false,
 ): IAbsoluteDateFilterValues {
     invariant(filter, "filter must be specified");
+    const emptyValueHandling = filter.absoluteDateFilter.emptyValueHandling;
 
     return {
         from: filter.absoluteDateFilter.from,
         to: filter.absoluteDateFilter.to,
         ...(includeDataSet ? { dataSet: filter.absoluteDateFilter.dataSet } : {}),
+        ...(emptyValueHandling === undefined ? {} : { emptyValueHandling }),
     };
 }
 
@@ -919,6 +1005,7 @@ export interface IRelativeDateFilterValues {
     granularity: string;
     dataSet?: ObjRef;
     boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter;
+    emptyValueHandling?: EmptyValues;
 }
 
 /**
@@ -937,6 +1024,7 @@ export function relativeDateFilterValues(
     const boundedFilter = isRelativeBoundedDateFilter(filter)
         ? filter.relativeDateFilter.boundedFilter
         : undefined;
+    const emptyValueHandling = filter.relativeDateFilter.emptyValueHandling;
 
     return {
         from: filter.relativeDateFilter.from,
@@ -944,6 +1032,7 @@ export function relativeDateFilterValues(
         granularity: filter.relativeDateFilter.granularity,
         ...(boundedFilter ? { boundedFilter } : {}),
         ...(includeDataSet ? { dataSet: filter.relativeDateFilter.dataSet } : {}),
+        ...(emptyValueHandling === undefined ? {} : { emptyValueHandling }),
     };
 }
 

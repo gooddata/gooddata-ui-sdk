@@ -1066,3 +1066,15 @@ export const selectEnableDashboardFilterGroups: DashboardSelector<boolean> = cre
         return state.settings?.enableDashboardFilterGroups ?? false;
     },
 );
+
+/**
+ * Selector for enabling empty date values configuration in KPI Dashboards date filter.
+ *
+ * @alpha
+ */
+export const selectEnableKDEmptyDateValuesFilter: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableKDEmptyDateValuesFilter ?? false;
+    },
+);

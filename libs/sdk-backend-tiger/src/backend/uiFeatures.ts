@@ -129,6 +129,7 @@ export enum TigerFeaturesNames {
     EnableGenAIReasoningVisibility = "enableGenAIReasoningVisibility",
     AIChatSearchLimit = "aiChatSearchLimit",
     EnableEmptyDateValuesFilter = "enableEmptyDateValuesFilter",
+    EnableKDEmptyDateValuesFilter = "enableKDEmptyDateValuesFilter",
     EnablePivotTableAutoSizeReset = "enablePivotTableAutoSizeReset",
     EnableRichTextWidgetFilterConfiguration = "enableRichTextWidgetFilterConfiguration",
     EnableDashboardSectionHeadersDateDataSet = "enableDashboardSectionHeadersDateDataSet",
@@ -265,6 +266,7 @@ export type ITigerFeatureFlags = {
     enableGenAIReasoningVisibility: (typeof FeatureFlagsValues)["enableGenAIReasoningVisibility"][number];
     aiChatSearchLimit: (typeof FeatureFlagsValues)["aiChatSearchLimit"][number];
     enableEmptyDateValuesFilter: (typeof FeatureFlagsValues)["enableEmptyDateValuesFilter"][number];
+    enableKDEmptyDateValuesFilter: (typeof FeatureFlagsValues)["enableKDEmptyDateValuesFilter"][number];
     enablePivotTableAutoSizeReset: (typeof FeatureFlagsValues)["enablePivotTableAutoSizeReset"][number];
     enableRichTextWidgetFilterConfiguration: (typeof FeatureFlagsValues)["enableRichTextWidgetFilterConfiguration"][number];
     enableDashboardSectionHeadersDateDataSet: (typeof FeatureFlagsValues)["enableDashboardSectionHeadersDateDataSet"][number];
@@ -401,6 +403,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableGenAIReasoningVisibility: false,
     aiChatSearchLimit: undefined,
     enableEmptyDateValuesFilter: true,
+    enableKDEmptyDateValuesFilter: false,
     enablePivotTableAutoSizeReset: true,
     enableRichTextWidgetFilterConfiguration: false,
     enableDashboardSectionHeadersDateDataSet: false,
@@ -538,6 +541,7 @@ export const FeatureFlagsValues = {
     enableGenAIReasoningVisibility: [false, true] as const,
     aiChatSearchLimit: [undefined, {} as number] as const,
     enableEmptyDateValuesFilter: [true, false] as const,
+    enableKDEmptyDateValuesFilter: [true, false] as const,
     enablePivotTableAutoSizeReset: [true, false] as const,
     enableRichTextWidgetFilterConfiguration: [true, false] as const,
     enableDashboardSectionHeadersDateDataSet: [true, false] as const,

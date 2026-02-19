@@ -21,7 +21,6 @@ import {
     filterObjRef,
     getAttributeElementsItems,
     isAbsoluteDateFilter,
-    isAllTimeDashboardDateFilter,
     isAllTimeDateFilter,
     isAttributeFilter,
     isDashboardAttributeFilter,
@@ -29,6 +28,7 @@ import {
     isDashboardDateFilter,
     isDateFilter,
     isInsightWidget,
+    isNoopAllTimeDashboardDateFilter,
     isPositiveAttributeFilter,
     isRelativeDateFilter,
     mergeFilters,
@@ -158,7 +158,9 @@ export const getVisibleFiltersByFilters = (
         if (targetFilter && isDashboardDateFilter(selectedFilter)) {
             return {
                 ...targetFilter,
-                isAllTimeDateFilter: isAllTimeDashboardDateFilter(selectedFilter),
+                // NOTE: despite the name, this flag is used to mark *noop* "All time" filters (implicit default)
+                // that are intentionally not stored in automation execution filters.
+                isAllTimeDateFilter: isNoopAllTimeDashboardDateFilter(selectedFilter),
             };
         }
 
@@ -227,10 +229,10 @@ export const getAppliedWidgetFilters = (
         ? mergeFilters(insight?.insight?.filters ?? [], selectedExecutionFilters, commonDateFilterId)
         : selectedExecutionFilters;
 
-    // Strip all-time date filters - we don't want to save them, they have no effect on execution.
+    // Strip noop "all time" date filters - we don't want to save them, they have no effect on execution.
     return filtersToUse.filter((f) => {
         if (isDateFilter(f)) {
-            return !isAllTimeDateFilterFixed(f);
+            return !isNoopAllTimeDateFilterFixed(f);
         }
 
         return true;
@@ -252,10 +254,10 @@ export const getAppliedDashboardFilters = (
     // but we need them to construct proper execution filters, so merge them.
     const selectedFiltersWithHiddenFilters = [...selectedAutomationFilters, ...dashboardHiddenFilters];
 
-    // And finally, strip all-time date filters - we don't want to save them, they have no effect on execution.
+    // And finally, strip noop "all time" date filters - we don't want to save them, they have no effect on execution.
     return selectedFiltersWithHiddenFilters.filter((f) => {
         if (isDashboardDateFilter(f)) {
-            return !isAllTimeDashboardDateFilter(f);
+            return !isNoopAllTimeDashboardDateFilter(f);
         }
 
         return true;
@@ -324,6 +326,41 @@ export function isAllTimeDateFilterFixed(f: IFilter): boolean {
         return (
             (f.absoluteDateFilter.from === null || f.absoluteDateFilter.from === undefined) &&
             (f.absoluteDateFilter.to === null || f.absoluteDateFilter.to === undefined)
+        );
+    }
+
+    return false;
+}
+
+/**
+ * Similar to {@link isAllTimeDateFilterFixed}, but only matches *noop* all-time filters.
+ *
+ * @remarks
+ * Noop all-time filters are implicit defaults and have no effect on execution. All-time filters with `emptyValueHandling`
+ * are considered meaningful (they carry extra configuration) and should not be treated as no-op.
+ */
+export function isNoopAllTimeDateFilterFixed(f: IFilter): boolean {
+    // Standard check for noop all-time date filter.
+    if (isAllTimeDateFilter(f)) {
+        return f.relativeDateFilter.emptyValueHandling === undefined;
+    }
+
+    // Analytical Designer may store "all-time" as a relative date filter without from/to.
+    // Treat it as no-op only when it does NOT carry extra configuration (e.g. emptyValueHandling).
+    if (isRelativeDateFilter(f)) {
+        return (
+            (f.relativeDateFilter.from === null || f.relativeDateFilter.from === undefined) &&
+            (f.relativeDateFilter.to === null || f.relativeDateFilter.to === undefined) &&
+            f.relativeDateFilter.emptyValueHandling === undefined
+        );
+    }
+
+    // Not expected, but keep the symmetric safety behavior for absolute filters.
+    if (isAbsoluteDateFilter(f)) {
+        return (
+            (f.absoluteDateFilter.from === null || f.absoluteDateFilter.from === undefined) &&
+            (f.absoluteDateFilter.to === null || f.absoluteDateFilter.to === undefined) &&
+            f.absoluteDateFilter.emptyValueHandling === undefined
         );
     }
 

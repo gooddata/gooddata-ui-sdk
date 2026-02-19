@@ -170,6 +170,8 @@
     "dateFilterDropdown.relativeForm.label": "Uitsplitsing",
     "dateFilter.tab.standard": "Standaard",
     "dateFilter.tab.fiscal": "Boekjaar",
+    "dateFilter.tab.standard.ariaLabel": "Standaardkalender",
+    "dateFilter.tab.fiscal.ariaLabel": "Fiscale kalender",
     "filters.thisMinute.title": "Deze minuut",
     "filters.lastMinute.title": "Afgelopen minuut",
     "filters.nextMinute.title": "Volgende minuut",

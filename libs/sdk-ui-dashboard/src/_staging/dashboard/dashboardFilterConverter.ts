@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import {
     type DashboardAttributeFilterSelectionMode,
@@ -13,6 +13,7 @@ import {
     filterAttributeElements,
     filterObjRef,
     idRef,
+    isEmptyValuesDateFilterOption,
     isNegativeAttributeFilter,
     isRelativeDateFilter,
     newNegativeAttributeFilter,
@@ -87,6 +88,9 @@ export function dateFilterOptionToDashboardDateFilter(
     dataSet?: ObjRef,
     localIdentifier?: string,
 ): IDashboardDateFilter | undefined {
+    const emptyValueHandling = isEmptyValuesDateFilterOption(dateFilterOption)
+        ? "only"
+        : dateFilterOption.emptyValueHandling;
     const tempDateDatasetId = dataSet ?? idRef("TEMP");
     const afmFilter = DateFilterHelpers.mapOptionToAfm(
         dateFilterOption,
@@ -102,6 +106,7 @@ export function dateFilterOptionToDashboardDateFilter(
                 granularity: "GDC.time.date",
                 dataSet,
                 localIdentifier,
+                ...(emptyValueHandling ? { emptyValueHandling } : {}),
             },
         };
     }
@@ -117,6 +122,7 @@ export function dateFilterOptionToDashboardDateFilter(
                 dataSet,
                 localIdentifier,
                 boundedFilter,
+                ...(emptyValueHandling ? { emptyValueHandling } : {}),
             },
         };
     } else {
@@ -129,6 +135,7 @@ export function dateFilterOptionToDashboardDateFilter(
                 to,
                 dataSet,
                 localIdentifier,
+                ...(emptyValueHandling ? { emptyValueHandling } : {}),
             },
         };
     }

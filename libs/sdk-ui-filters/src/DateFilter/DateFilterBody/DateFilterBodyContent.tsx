@@ -21,6 +21,7 @@ import {
     type IUiAbsoluteDateFilterForm,
     type IUiRelativeDateFilterForm,
 } from "../interfaces/index.js";
+import { OtherPresetsSection } from "../Other/OtherPresetsSection.js";
 import { RelativeDateFilterFormSection } from "../RelativeDateFilterForm/RelativeDateFilterFormSection.js";
 import {
     type CalendarTabType,
@@ -51,6 +52,13 @@ interface IDateFilterBodyContentProps {
      * Active calendars configuration from workspace settings.
      */
     activeCalendars?: IActiveCalendars;
+
+    /**
+     * Enables empty date values UI (e.g. “Other → Empty values” preset, empty-values handling controls).
+     *
+     * @alpha
+     */
+    enableEmptyDateValues?: boolean;
 }
 
 export function DateFilterBodyContent({
@@ -69,6 +77,7 @@ export function DateFilterBodyContent({
     onApplyClick,
     onSelectedFilterOptionChange,
     activeCalendars,
+    enableEmptyDateValues,
 }: IDateFilterBodyContentProps) {
     const intl = useIntl();
     const listboxLabel = intl.formatMessage({ id: "dateFilterDropdown.label" });
@@ -102,6 +111,7 @@ export function DateFilterBodyContent({
     );
     const isSelectedInVisibleList =
         selectedId === filterOptions.allTime?.localIdentifier ||
+        selectedId === filterOptions.emptyValues?.localIdentifier ||
         selectedId === filterOptions.absoluteForm?.localIdentifier ||
         selectedId === filterOptions.relativeForm?.localIdentifier ||
         filterOptions.absolutePreset?.some((p) => p.localIdentifier === selectedId) ||
@@ -165,6 +175,13 @@ export function DateFilterBodyContent({
                     className={isMobile ? ITEM_CLASS_MOBILE : undefined}
                 />
             ) : null}
+            <OtherPresetsSection
+                filterOptions={filterOptions}
+                selectedFilterOption={selectedFilterOption}
+                onSelectedFilterOptionChange={onSelectedFilterOptionChange}
+                isMobile={isMobile}
+                enableEmptyDateValues={enableEmptyDateValues ?? false}
+            />
         </>
     );
 

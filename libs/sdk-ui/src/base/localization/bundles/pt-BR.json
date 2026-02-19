@@ -170,6 +170,8 @@
     "dateFilterDropdown.relativeForm.label": "Granularidade",
     "dateFilter.tab.standard": "Padrão",
     "dateFilter.tab.fiscal": "Fiscal",
+    "dateFilter.tab.standard.ariaLabel": "Calendário padrão",
+    "dateFilter.tab.fiscal.ariaLabel": "Calendário fiscal",
     "filters.thisMinute.title": "Este minuto",
     "filters.lastMinute.title": "Último minuto",
     "filters.nextMinute.title": "Próximo minuto",

@@ -6,6 +6,7 @@ import {
     type DateFilterGranularity,
     type DateFilterType,
     type DateString,
+    type EmptyValues,
     type FilterContextItem,
     type IAttributeElements,
     type IAttributeFilter,
@@ -105,6 +106,13 @@ export type DateFilterSelection = {
      * @alpha
      */
     readonly boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter;
+
+    /**
+     * How to treat undefined (empty) date values.
+     *
+     * @alpha
+     */
+    readonly emptyValueHandling?: EmptyValues;
 };
 
 /**
@@ -154,6 +162,7 @@ export function changeDateFilterSelection(
     isWorkingSelectionChange?: boolean,
     localIdentifier?: string,
     boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter,
+    emptyValueHandling?: EmptyValues,
 ): ChangeDateFilterSelection {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.CHANGE_SELECTION",
@@ -168,6 +177,7 @@ export function changeDateFilterSelection(
             isWorkingSelectionChange,
             localIdentifier,
             boundedFilter,
+            emptyValueHandling,
         },
     };
 }
@@ -192,7 +202,26 @@ export function changeDateFilterSelection(
 export function applyDateFilter(filter: IDateFilter, correlationId?: string): ChangeDateFilterSelection {
     if (isAllTimeDateFilter(filter)) {
         const values = relativeDateFilterValues(filter, true);
-        return clearDateFilterSelection(correlationId, values.dataSet);
+        const emptyValueHandling = filter.relativeDateFilter.emptyValueHandling;
+        if (emptyValueHandling === undefined) {
+            return clearDateFilterSelection(correlationId, values.dataSet);
+        }
+
+        // All time with explicit empty values handling needs to be persisted on the dashboard,
+        // so it must not be converted to a "clear date filter" command.
+        return changeDateFilterSelection(
+            "relative",
+            "GDC.time.date",
+            undefined,
+            undefined,
+            undefined,
+            correlationId,
+            values.dataSet,
+            undefined,
+            filter.relativeDateFilter.localIdentifier,
+            undefined,
+            emptyValueHandling,
+        );
     }
 
     if (isRelativeDateFilter(filter)) {
@@ -200,6 +229,7 @@ export function applyDateFilter(filter: IDateFilter, correlationId?: string): Ch
         const boundedFilter = isRelativeBoundedDateFilter(filter)
             ? filter.relativeDateFilter.boundedFilter
             : undefined;
+        const emptyValueHandling = filter.relativeDateFilter.emptyValueHandling;
         return changeDateFilterSelection(
             "relative",
             values.granularity as DateFilterGranularity,
@@ -211,9 +241,11 @@ export function applyDateFilter(filter: IDateFilter, correlationId?: string): Ch
             undefined,
             filter.relativeDateFilter.localIdentifier,
             boundedFilter,
+            emptyValueHandling,
         );
     } else {
         const values = absoluteDateFilterValues(filter, true);
+        const emptyValueHandling = filter.absoluteDateFilter.emptyValueHandling;
         return changeDateFilterSelection(
             "absolute",
             "GDC.time.date",
@@ -224,6 +256,8 @@ export function applyDateFilter(filter: IDateFilter, correlationId?: string): Ch
             values.dataSet,
             undefined,
             filter.absoluteDateFilter.localIdentifier,
+            undefined,
+            emptyValueHandling,
         );
     }
 }
@@ -244,6 +278,7 @@ export function clearDateFilterSelection(
     dataSet?: ObjRef,
     isWorkingSelectionChange?: boolean,
     localIdentifier?: string,
+    emptyValueHandling?: EmptyValues,
 ): ChangeDateFilterSelection {
     return {
         type: "GDC.DASH/CMD.FILTER_CONTEXT.DATE_FILTER.CHANGE_SELECTION",
@@ -254,6 +289,7 @@ export function clearDateFilterSelection(
             granularity: "GDC.time.date",
             isWorkingSelectionChange,
             localIdentifier,
+            emptyValueHandling,
         },
     };
 }

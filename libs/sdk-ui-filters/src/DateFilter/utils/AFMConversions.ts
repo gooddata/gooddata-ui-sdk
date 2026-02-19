@@ -1,10 +1,12 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import {
     type IAbsoluteDateFilter,
     type IDateFilter,
     type IRelativeDateFilter,
     type ObjRef,
     isAllTimeDateFilterOption,
+    isEmptyValuesDateFilterOption,
 } from "@gooddata/sdk-model";
 
 import { applyExcludeCurrentPeriod } from "./PeriodExclusion.js";
@@ -51,7 +53,7 @@ export const mapOptionToAfm = (
 ): IDateFilter | null => {
     const excludeApplied = applyExcludeCurrentPeriod(value, excludeCurrentPeriod);
 
-    if (isAllTimeDateFilterOption(excludeApplied)) {
+    if (isAllTimeDateFilterOption(excludeApplied) || isEmptyValuesDateFilterOption(excludeApplied)) {
         return null;
     }
 

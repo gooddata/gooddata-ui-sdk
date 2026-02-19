@@ -9,6 +9,8 @@ import {
     type DateFilterGranularity,
     type WeekStart,
     isAbsoluteDateFilterForm,
+    isAllTimeDateFilterOption,
+    isEmptyValuesDateFilterOption,
     isRelativeDateFilterForm,
 } from "@gooddata/sdk-model";
 import { useId } from "@gooddata/sdk-ui-kit";
@@ -21,6 +23,7 @@ import {
     submitRelativeDateFilterForm,
 } from "../accessibility/keyboardNavigation.js";
 import { DateFilterFormWrapper } from "../DateFilterFormWrapper/DateFilterFormWrapper.js";
+import { EmptyValuesHandlingToggle } from "../EmptyValuesHandlingToggle/EmptyValuesHandlingToggle.js";
 import {
     type DateFilterOption,
     type IDateFilterOptionsByType,
@@ -42,6 +45,7 @@ export interface IDateFilterFormContentProps {
 
     isMobile: boolean;
     withoutApply?: boolean;
+    enableEmptyDateValues?: boolean;
 
     activeForm: DateFilterRoute;
     onBackNavigation: () => void;
@@ -67,6 +71,7 @@ export function DateFilterFormContent({
     availableGranularities,
     isMobile,
     withoutApply,
+    enableEmptyDateValues,
     activeForm,
     onBackNavigation,
     onClose,
@@ -91,6 +96,14 @@ export function DateFilterFormContent({
     const relativeDateFilterRef = useRef<HTMLDivElement>(null);
     const tabGranularityRef = useRef<HTMLDivElement>(null);
     const relativeDateFilterId = useId();
+
+    const shouldRenderEmptyValuesHandling =
+        !!enableEmptyDateValues &&
+        !isAllTimeDateFilterOption(selectedFilterOption) &&
+        !isEmptyValuesDateFilterOption(selectedFilterOption) &&
+        selectedFilterOption.emptyValueHandling !== "only";
+    const effectiveEmptyValueHandling = selectedFilterOption.emptyValueHandling ?? "exclude";
+    const emptyValueHandlingToggleChecked = effectiveEmptyValueHandling === "include";
 
     const handleRelativeDateFilterKeydown = useCallback(
         (event: KeyboardEvent, closeDropdown: () => void) => {
@@ -128,6 +141,20 @@ export function DateFilterFormContent({
                             submitForm={submitForm}
                             withoutApply={withoutApply}
                         />
+                        {shouldRenderEmptyValuesHandling ? (
+                            <EmptyValuesHandlingToggle
+                                mode="include"
+                                className="gd-date-filter-empty-values-handling-toggle"
+                                checked={emptyValueHandlingToggleChecked}
+                                onChange={(checked: boolean) => {
+                                    const emptyValueHandling = checked ? "include" : undefined;
+                                    onSelectedFilterOptionChange({
+                                        ...absoluteSelectedFilterOption!,
+                                        emptyValueHandling,
+                                    });
+                                }}
+                            />
+                        ) : null}
                     </DateFilterFormWrapper>
                 </DateFilterFormNavigationWrapper>
             ) : null}
@@ -167,6 +194,20 @@ export function DateFilterFormContent({
                                     )
                                 }
                             />
+                            {shouldRenderEmptyValuesHandling ? (
+                                <EmptyValuesHandlingToggle
+                                    mode="include"
+                                    className="gd-date-filter-empty-values-handling-toggle"
+                                    checked={emptyValueHandlingToggleChecked}
+                                    onChange={(checked: boolean) => {
+                                        const emptyValueHandling = checked ? "include" : undefined;
+                                        onSelectedFilterOptionChange({
+                                            ...relativeSelectedFilterOption!,
+                                            emptyValueHandling,
+                                        });
+                                    }}
+                                />
+                            ) : null}
                         </DateFilterFormWrapper>
                     </div>
                 </DateFilterFormNavigationWrapper>

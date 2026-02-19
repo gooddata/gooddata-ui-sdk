@@ -16,6 +16,57 @@ exports[`tiger filter converter from model to AFM > convert absolute date filter
 }
 `;
 
+exports[`tiger filter converter from model to AFM > convert absolute date filter > should convert absolute date filter with empty values handling (exclude) 1`] = `
+{
+  "absoluteDateFilter": {
+    "dataset": {
+      "identifier": {
+        "id": "dt_closedate_timestamp",
+        "type": "dataset",
+      },
+    },
+    "emptyValueHandling": "EXCLUDE",
+    "from": "2019-08-06",
+    "localIdentifier": undefined,
+    "to": "2019-08-12",
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM > convert absolute date filter > should convert absolute date filter with empty values handling (include) 1`] = `
+{
+  "absoluteDateFilter": {
+    "dataset": {
+      "identifier": {
+        "id": "dt_closedate_timestamp",
+        "type": "dataset",
+      },
+    },
+    "emptyValueHandling": "INCLUDE",
+    "from": "2019-08-06",
+    "localIdentifier": undefined,
+    "to": "2019-08-12",
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM > convert absolute date filter > should convert absolute date filter with empty values handling (only) 1`] = `
+{
+  "absoluteDateFilter": {
+    "dataset": {
+      "identifier": {
+        "id": "dt_closedate_timestamp",
+        "type": "dataset",
+      },
+    },
+    "emptyValueHandling": "ONLY",
+    "from": "2019-08-06",
+    "localIdentifier": undefined,
+    "to": "2019-08-12",
+  },
+}
+`;
+
 exports[`tiger filter converter from model to AFM > convert absolute date filter > should convert absolute date filter without 'from' attribute 1`] = `null`;
 
 exports[`tiger filter converter from model to AFM > convert absolute date filter > should convert absolute date filter without 'to' attribute 1`] = `null`;
@@ -436,6 +487,25 @@ exports[`tiger filter converter from model to AFM > convert measure value filter
 
 exports[`tiger filter converter from model to AFM > convert measure value filter > should throw exception if filter has idRef without type 1`] = `[Error: Incomplete object specification in {"identifier":"ambiguous"}. You must provide both id and type of object you want to reference.]`;
 
+exports[`tiger filter converter from model to AFM > convert relative date filter > should return AFM relative date filter with all time date filter (default handling) 1`] = `null`;
+
+exports[`tiger filter converter from model to AFM > convert relative date filter > should return AFM relative date filter with all time date filter with empty values handling (exclude) 1`] = `
+{
+  "allTimeDateFilter": {
+    "dataset": {
+      "identifier": {
+        "id": "dt_closedate_timestamp",
+        "type": "dataset",
+      },
+    },
+    "emptyValueHandling": "EXCLUDE",
+    "localIdentifier": undefined,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM > convert relative date filter > should return AFM relative date filter with all time date filter with empty values handling (include) 1`] = `null`;
+
 exports[`tiger filter converter from model to AFM > convert relative date filter > should return AFM relative date filter with date granularity 1`] = `
 {
   "relativeDateFilter": {
@@ -502,6 +572,24 @@ exports[`tiger filter converter from model to AFM > convert relative date filter
     "granularity": "QUARTER",
     "localIdentifier": undefined,
     "to": -2,
+  },
+}
+`;
+
+exports[`tiger filter converter from model to AFM > convert relative date filter > should return AFM relative date filter with relative date filter with empty values handling (include) 1`] = `
+{
+  "relativeDateFilter": {
+    "dataset": {
+      "identifier": {
+        "id": "dt_closedate_timestamp",
+        "type": "dataset",
+      },
+    },
+    "emptyValueHandling": "INCLUDE",
+    "from": -11,
+    "granularity": "DAY",
+    "localIdentifier": undefined,
+    "to": 0,
   },
 }
 `;

@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { compact, groupBy } from "lodash-es";
 import { invariant } from "ts-invariant";
 
@@ -11,10 +12,10 @@ import {
     type IRankingFilter,
     filterLocalIdentifier,
     filterObjRef,
-    isAllTimeDateFilter,
     isAttributeFilter,
     isDateFilter,
     isMeasureValueFilter,
+    isNoopAllTimeDateFilter,
     isRankingFilter,
 } from "./index.js";
 import { objRefToString } from "../../objRef/index.js";
@@ -91,7 +92,7 @@ export function mergeFilters(
     }
 
     if (!originalFilters.length) {
-        return filtersToMerge.filter((f) => !isAllTimeDateFilter(f));
+        return filtersToMerge.filter((f) => !isNoopAllTimeDateFilter(f));
     }
 
     const original = separateFiltersByType(originalFilters);
@@ -137,12 +138,12 @@ function mergeDateFilters(
         // Handle case, when there are 2 date filters with the same date dataset,
         // and when one of them is common date filter.
         // In this case, we want to use both filters.
-        if (!lastFilterIsCommon && commonDateFilter && !isAllTimeDateFilter(commonDateFilter)) {
+        if (!lastFilterIsCommon && commonDateFilter && !isNoopAllTimeDateFilter(commonDateFilter)) {
             mergedFilters.push(commonDateFilter);
         }
 
         // if the last filter is all time, clear filters for this dimension, otherwise use the last filter
-        if (!isAllTimeDateFilter(lastFilterForDimension)) {
+        if (!isNoopAllTimeDateFilter(lastFilterForDimension)) {
             mergedFilters.push(lastFilterForDimension);
         }
     });

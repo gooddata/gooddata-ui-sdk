@@ -15,6 +15,39 @@ exports[`filterConverters tests > filterContextToFiltersForDataSet > should hand
 ]
 `;
 
+exports[`filterConverters tests > filterContextToFiltersForDataSet > should handle filterContext with all time date filter 1`] = `
+[
+  {
+    "relativeDateFilter": {
+      "dataSet": {
+        "identifier": "dt_activity_timestamp",
+        "type": "dataSet",
+      },
+      "from": 0,
+      "granularity": "ALL_TIME_GRANULARITY",
+      "to": 0,
+    },
+  },
+]
+`;
+
+exports[`filterConverters tests > filterContextToFiltersForDataSet > should handle filterContext with all time date filter with empty values handling 1`] = `
+[
+  {
+    "relativeDateFilter": {
+      "dataSet": {
+        "identifier": "dt_activity_timestamp",
+        "type": "dataSet",
+      },
+      "emptyValueHandling": "exclude",
+      "from": 0,
+      "granularity": "ALL_TIME_GRANULARITY",
+      "to": 0,
+    },
+  },
+]
+`;
+
 exports[`filterConverters tests > filterContextToFiltersForDataSet > should handle filterContext with positive attribute filter with values 1`] = `
 [
   {
@@ -62,6 +95,39 @@ exports[`filterConverters tests > filterContextToFiltersForWidget > should handl
       },
       "from": "2020-01-01",
       "to": "2021-01-01",
+    },
+  },
+]
+`;
+
+exports[`filterConverters tests > filterContextToFiltersForWidget > should handle filterContext with all time date filter 1`] = `
+[
+  {
+    "relativeDateFilter": {
+      "dataSet": {
+        "identifier": "dt_activity_timestamp",
+        "type": "dataSet",
+      },
+      "from": 0,
+      "granularity": "ALL_TIME_GRANULARITY",
+      "to": 0,
+    },
+  },
+]
+`;
+
+exports[`filterConverters tests > filterContextToFiltersForWidget > should handle filterContext with all time date filter with empty values handling 1`] = `
+[
+  {
+    "relativeDateFilter": {
+      "dataSet": {
+        "identifier": "dt_activity_timestamp",
+        "type": "dataSet",
+      },
+      "emptyValueHandling": "exclude",
+      "from": 0,
+      "granularity": "ALL_TIME_GRANULARITY",
+      "to": 0,
     },
   },
 ]

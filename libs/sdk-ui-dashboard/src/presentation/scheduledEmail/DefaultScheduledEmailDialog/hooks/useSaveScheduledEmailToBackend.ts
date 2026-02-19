@@ -10,10 +10,10 @@ import {
     type IAutomationMetadataObjectDefinition,
     type IExportDefinitionMetadataObject,
     type IExportDefinitionMetadataObjectDefinition,
-    isAllTimeDashboardDateFilter,
-    isAllTimeDateFilter,
     isExportDefinitionDashboardRequestPayload,
     isExportDefinitionVisualizationObjectRequestPayload,
+    isNoopAllTimeDashboardDateFilter,
+    isNoopAllTimeDateFilter,
 } from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
@@ -163,8 +163,8 @@ function removeAllTimeDateFiltersFromExportDefinitions<
             const format = exportDefinition.requestPayload.format;
             const isTabularFormat = format === "XLSX" || format === "CSV";
             const appliedFilters = isTabularFormat
-                ? filters?.filter((f) => !isAllTimeDateFilter(f))
-                : filters?.filter((f) => !isAllTimeDashboardDateFilter(f));
+                ? filters?.filter((f) => !isNoopAllTimeDateFilter(f))
+                : filters?.filter((f) => !isNoopAllTimeDashboardDateFilter(f));
             return {
                 ...exportDefinition,
                 requestPayload: {
@@ -183,7 +183,7 @@ function removeAllTimeDateFiltersFromExportDefinitions<
                     content: {
                         ...exportDefinition.requestPayload.content,
                         filters: exportDefinition.requestPayload.content.filters?.filter(
-                            (f) => !isAllTimeDashboardDateFilter(f),
+                            (f) => !isNoopAllTimeDashboardDateFilter(f),
                         ),
                     },
                 },

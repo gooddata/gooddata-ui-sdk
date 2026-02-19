@@ -16,6 +16,8 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     fiscalmonth: { id: "filters.granularity.periods" },
     period: { id: "filters.granularity.periods" },
     allTimeExcluded: { id: "filters.allTime.excludeCurrentPeriod" },
+    emptyValuesHandlingExclude: { id: "filters.emptyValuesHandling.exclude" },
+    emptyValuesHandlingInclude: { id: "filters.emptyValuesHandling.include" },
     minuteExcluded: { id: "filters.minute.excludeCurrentPeriod" },
     hourExcluded: { id: "filters.hour.excludeCurrentPeriod" },
     dayExcluded: { id: "filters.day.excludeCurrentPeriod" },

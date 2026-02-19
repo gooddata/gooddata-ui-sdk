@@ -102,7 +102,6 @@ export type WorkspacePermission =
      * Whether the current user has permissions to use AI Assistant.
      */
     | "canUseAiAssistant";
-
 /**
  * Dictionary of workspace permissions
  *

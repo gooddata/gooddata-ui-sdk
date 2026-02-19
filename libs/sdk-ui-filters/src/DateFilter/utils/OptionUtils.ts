@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 
 import {
@@ -57,11 +58,13 @@ function removeEmptyKeysFromDateFilterOptions({
     absoluteForm,
     absolutePreset,
     allTime,
+    emptyValues,
     relativeForm,
     relativePreset,
 }: IDateFilterOptionsByType): IDateFilterOptionsByType {
     return {
         ...(allTime && { allTime }),
+        ...(emptyValues && { emptyValues }),
         ...(absoluteForm && { absoluteForm }),
         ...(!isEmpty(absolutePreset) && { absolutePreset }),
         ...(relativeForm && { relativeForm }),
@@ -80,6 +83,8 @@ export function filterVisibleDateFilterOptions(
 ): IDateFilterOptionsByType {
     const allTime = pickDateFilterOptionIfVisible(dateFilterOptions.allTime);
 
+    const emptyValues = pickDateFilterOptionIfVisible(dateFilterOptions.emptyValues);
+
     const absoluteForm = pickDateFilterOptionIfVisible(dateFilterOptions.absoluteForm);
 
     const relativeForm = pickDateFilterOptionIfVisible(dateFilterOptions.relativeForm);
@@ -91,6 +96,7 @@ export function filterVisibleDateFilterOptions(
 
     return removeEmptyKeysFromDateFilterOptions({
         allTime,
+        emptyValues,
         absoluteForm,
         absolutePreset,
         relativeForm,

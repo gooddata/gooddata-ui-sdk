@@ -72,6 +72,13 @@ export interface IDateFilterBodyProps {
      * @alpha
      */
     activeCalendars?: IActiveCalendars;
+
+    /**
+     * Enables empty date values UI (e.g. “Other → Empty values” preset, empty-values handling controls).
+     *
+     * @alpha
+     */
+    enableEmptyDateValues?: boolean;
 }
 
 export const DateFilterBody = forwardRef<HTMLDivElement, IDateFilterBodyProps>((props, ref) => {
@@ -140,6 +147,7 @@ export const DateFilterBody = forwardRef<HTMLDivElement, IDateFilterBodyProps>((
     // - on desktop, show it disabled by default, unless caller explicitly opts into hiding via `hideDisabledExclude`
     const hideWhenDisabled = !!hideDisabledExclude || isMobile;
     const showExcludeCurrent = !(hideWhenDisabled && !isExcludeCurrentPeriodEnabled);
+
     const bodyHeight = calculateHeight(showExcludeCurrent);
     const visibleScrollbarClassName = getVisibleScrollbarClassName();
     let wrapperStyle: CSSProperties = {};

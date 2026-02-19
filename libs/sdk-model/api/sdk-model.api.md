@@ -389,13 +389,16 @@ export type DateFilterOptionAbsolutePresetType = "absolutePreset";
 export type DateFilterOptionAllTimeType = "allTime";
 
 // @alpha
+export type DateFilterOptionEmptyValuesType = "emptyValues";
+
+// @alpha
 export type DateFilterOptionRelativeFormType = "relativeForm";
 
 // @alpha
 export type DateFilterOptionRelativePresetType = "relativePreset";
 
 // @alpha
-export type DateFilterOptionType = DateFilterOptionAllTimeType | DateFilterOptionAbsoluteFormType | DateFilterOptionRelativeFormType | DateFilterOptionAbsolutePresetType | DateFilterOptionRelativePresetType;
+export type DateFilterOptionType = DateFilterOptionAllTimeType | DateFilterOptionAbsoluteFormType | DateFilterOptionRelativeFormType | DateFilterOptionAbsolutePresetType | DateFilterOptionRelativePresetType | DateFilterOptionEmptyValuesType;
 
 // @beta
 export type DateFilterRelativeType = "relative";
@@ -506,6 +509,9 @@ export type EarlyAccessFeatureStatus = "EXPERIMENTAL" | "BETA";
 
 // @public
 export function emptyDef(workspace: string): IExecutionDefinition;
+
+// @public
+export type EmptyValues = "include" | "exclude" | "only";
 
 // @alpha
 export function exportDefinitionCreated(exportDefinition: IExportDefinitionMetadataObject): string | undefined;
@@ -658,17 +664,20 @@ export interface IAbsoluteDateFilter {
 // @public
 export interface IAbsoluteDateFilterBody extends IIdentifiableFilter {
     dataSet: ObjRef;
+    emptyValueHandling?: EmptyValues;
     from: string;
     to: string;
 }
 
 // @alpha
 export interface IAbsoluteDateFilterForm extends IDateFilterOption {
+    emptyValueHandling?: EmptyValues;
     type: DateFilterOptionAbsoluteFormType;
 }
 
 // @alpha
 export interface IAbsoluteDateFilterPreset extends IDateFilterOption {
+    emptyValueHandling?: EmptyValues;
     from: DateString;
     to: DateString;
     type: DateFilterOptionAbsolutePresetType;
@@ -678,6 +687,8 @@ export interface IAbsoluteDateFilterPreset extends IDateFilterOption {
 export interface IAbsoluteDateFilterValues {
     // (undocumented)
     dataSet?: ObjRef;
+    // (undocumented)
+    emptyValueHandling?: EmptyValues;
     // (undocumented)
     from: string;
     // (undocumented)
@@ -785,6 +796,7 @@ export interface IAllowedRelationshipType {
 
 // @alpha
 export interface IAllTimeDateFilterOption extends IDateFilterOption {
+    emptyValueHandling?: EmptyValues;
     type: DateFilterOptionAllTimeType;
 }
 
@@ -1473,6 +1485,7 @@ export interface IDashboardDateFilter {
         attribute?: ObjRef;
         localIdentifier?: string;
         boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter;
+        emptyValueHandling?: EmptyValues;
     };
 }
 
@@ -1821,6 +1834,7 @@ export interface IDateFilterConfig {
     absoluteForm?: IAbsoluteDateFilterForm;
     absolutePresets?: IAbsoluteDateFilterPreset[];
     allTime?: IAllTimeDateFilterOption;
+    emptyValues?: IEmptyValuesDateFilterOption;
     ref: ObjRef;
     relativeForm?: IRelativeDateFilterForm;
     relativePresets?: IRelativeDateFilterPreset[];
@@ -2014,6 +2028,12 @@ export interface IEarlyAccessFeatureConfig {
 export interface IEarlyAccessFeaturesConfig {
     // (undocumented)
     features: IEarlyAccessFeatureConfig[];
+}
+
+// @alpha
+export interface IEmptyValuesDateFilterOption extends IDateFilterOption {
+    emptyValueHandling?: EmptyValues;
+    type: DateFilterOptionEmptyValuesType;
 }
 
 // @public
@@ -2262,6 +2282,13 @@ export interface IGenAICreatedVisualizations {
 }
 
 // @internal
+export interface IGenAIForecastConfig {
+    confidenceLevel: number;
+    forecastPeriod: number;
+    seasonal: boolean;
+}
+
+// @internal
 export interface IGenAIFoundObjects {
     objects: ISemanticSearchResultItem[];
     reasoning: string;
@@ -2280,6 +2307,7 @@ export interface IGenAIUserContext {
 
 // @internal
 export interface IGenAIVisualization {
+    config?: IGenAIVisualizationConfig;
     dimensionality: IGenAIVisualizationDimension[];
     filters?: GenAIFilter[];
     id: string;
@@ -2290,6 +2318,11 @@ export interface IGenAIVisualization {
     suggestions?: IGenAISuggestion[];
     title: string;
     visualizationType: GenAIVisualizationType;
+}
+
+// @internal
+export interface IGenAIVisualizationConfig {
+    forecast?: IGenAIForecastConfig;
 }
 
 // @internal
@@ -3328,6 +3361,7 @@ export type IRelativeDateFilter = {
 export interface IRelativeDateFilterAllTimeBody extends IIdentifiableFilter {
     // (undocumented)
     dataSet: ObjRef;
+    emptyValueHandling?: EmptyValues;
     // (undocumented)
     from: 0;
     // (undocumented)
@@ -3340,6 +3374,7 @@ export interface IRelativeDateFilterAllTimeBody extends IIdentifiableFilter {
 export interface IRelativeDateFilterBody extends IIdentifiableFilter {
     // (undocumented)
     dataSet: ObjRef;
+    emptyValueHandling?: EmptyValues;
     // (undocumented)
     from: number;
     // (undocumented)
@@ -3351,12 +3386,14 @@ export interface IRelativeDateFilterBody extends IIdentifiableFilter {
 // @alpha
 export interface IRelativeDateFilterForm extends IDateFilterOption {
     availableGranularities: DateFilterGranularity[];
+    emptyValueHandling?: EmptyValues;
     type: DateFilterOptionRelativeFormType;
 }
 
 // @alpha
 export interface IRelativeDateFilterPreset extends IDateFilterOption {
     boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter;
+    emptyValueHandling?: EmptyValues;
     from: RelativeDateFilterGranularityOffset;
     granularity: DateFilterGranularity;
     to: RelativeDateFilterGranularityOffset;
@@ -3374,6 +3411,8 @@ export interface IRelativeDateFilterValues {
     boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter;
     // (undocumented)
     dataSet?: ObjRef;
+    // (undocumented)
+    emptyValueHandling?: EmptyValues;
     // (undocumented)
     from: number;
     // (undocumented)
@@ -3488,6 +3527,13 @@ export function isAlertNotification(notification: unknown): notification is IAle
 // @alpha
 export function isAllTimeDashboardDateFilter(obj: unknown): boolean;
 
+// @alpha
+export function isAllTimeDashboardDateFilterWithEmptyValueHandling(obj: unknown): obj is IDashboardDateFilter & {
+    dateFilter: {
+        emptyValueHandling: EmptyValues;
+    };
+};
+
 // @public
 export function isAllTimeDateFilter(obj: unknown): obj is IRelativeDateFilter & {
     relativeDateFilter: {
@@ -3497,6 +3543,13 @@ export function isAllTimeDateFilter(obj: unknown): obj is IRelativeDateFilter & 
 
 // @alpha
 export const isAllTimeDateFilterOption: (obj: unknown) => obj is IAllTimeDateFilterOption;
+
+// @public
+export function isAllTimeDateFilterWithEmptyValueHandling(obj: unknown): obj is IRelativeDateFilter & {
+    relativeDateFilter: IRelativeDateFilterAllTimeBody & {
+        emptyValueHandling: EmptyValues;
+    };
+};
 
 // @alpha
 export function isAllValuesDashboardAttributeFilter(obj: unknown): boolean;
@@ -3713,6 +3766,17 @@ export function isDateFilter(obj: unknown): obj is IDateFilter;
 // @alpha
 export const isDateFilterGranularity: (obj: unknown) => obj is DateFilterGranularity;
 
+// @public
+export function isDateFilterWithEmptyValueHandling(obj: unknown): obj is (IAbsoluteDateFilter & {
+    absoluteDateFilter: IAbsoluteDateFilterBody & {
+        emptyValueHandling: EmptyValues;
+    };
+}) | (IRelativeDateFilter & {
+    relativeDateFilter: (IRelativeDateFilterBody | IRelativeDateFilterAllTimeBody) & {
+        emptyValueHandling: EmptyValues;
+    };
+});
+
 // @alpha
 export function isDateHierarchyReference(obj: unknown): obj is IDateHierarchyReference;
 
@@ -3815,6 +3879,9 @@ export interface ISemanticSearchResultItem {
     workspaceId: string;
 }
 
+// @alpha
+export const isEmptyValuesDateFilterOption: (obj: unknown) => obj is IEmptyValuesDateFilterOption;
+
 // @public
 export interface ISeparators {
     decimal: string;
@@ -3910,6 +3977,7 @@ export interface ISettings {
     enableInPlatformNotifications?: boolean;
     enableKDAttributeFilterDatesValidation?: boolean;
     enableKDCrossFiltering?: boolean;
+    enableKDEmptyDateValuesFilter?: boolean;
     enableKDRespectLegendPosition?: boolean;
     enableKDRichText?: boolean;
     enableKDVisualizationSwitcher?: boolean;
@@ -3989,6 +4057,7 @@ export interface ISettings {
     productionFeatures?: IProductionFeaturesConfig;
     registeredPluggableApplications?: string;
     responsiveUiDateFormat?: string;
+    restrictBaseUi?: boolean;
     showHiddenCatalogItems?: boolean;
     timezone?: string;
     weekStart?: WeekStart;
@@ -4154,6 +4223,12 @@ export function isNegativeAttributeFilter(obj: unknown): obj is INegativeAttribu
 
 // @alpha
 export function isNegativeDashboardAttributeFilter(filter: IDashboardAttributeFilter): boolean;
+
+// @alpha
+export function isNoopAllTimeDashboardDateFilter(obj: unknown): boolean;
+
+// @public
+export function isNoopAllTimeDateFilter(obj: unknown): boolean;
 
 // @public
 export function isNotification(notification: unknown): notification is INotification;
@@ -5267,16 +5342,16 @@ export function modifyPreviousPeriodMeasure(measure: IMeasure<IPreviousPeriodMea
 export function modifySimpleMeasure(measure: IMeasure<IMeasureDefinition>, modifications?: MeasureModifications<MeasureBuilder>): IMeasure<IMeasureDefinition>;
 
 // @alpha
-export function newAbsoluteDashboardDateFilter(from: DateString, to: DateString, dataSet?: ObjRef, localIdentifier?: string): IDashboardDateFilter;
+export function newAbsoluteDashboardDateFilter(from: DateString, to: DateString, dataSet?: ObjRef, localIdentifier?: string, emptyValueHandling?: EmptyValues): IDashboardDateFilter;
 
 // @public
-export function newAbsoluteDateFilter(dateDataSet: ObjRef | Identifier, from: string, to: string, localIdentifier?: string): IAbsoluteDateFilter;
+export function newAbsoluteDateFilter(dateDataSet: ObjRef | Identifier, from: string, to: string, localIdentifier?: string, emptyValueHandling?: EmptyValues): IAbsoluteDateFilter;
 
 // @alpha
-export function newAllTimeDashboardDateFilter(dataSet?: ObjRef, localIdentifier?: string): IDashboardDateFilter;
+export function newAllTimeDashboardDateFilter(dataSet?: ObjRef, localIdentifier?: string, emptyValueHandling?: EmptyValues): IDashboardDateFilter;
 
 // @public
-export function newAllTimeFilter(dateDataSet: ObjRef | Identifier, localIdentifier?: string): IRelativeDateFilter;
+export function newAllTimeFilter(dateDataSet: ObjRef | Identifier, localIdentifier?: string, emptyValueHandling?: EmptyValues): IRelativeDateFilter;
 
 // @public
 export function newArithmeticMeasure(measuresOrIds: ReadonlyArray<MeasureOrLocalId>, operator: ArithmeticMeasureOperator, modifications?: MeasureModifications<ArithmeticMeasureBuilder>): IMeasure<IArithmeticMeasureDefinition>;
@@ -5354,10 +5429,10 @@ export function newRankingFilter(measureOrRef: IMeasure | ObjRefInScope | string
 export function newRankingFilter(measureOrRef: IMeasure | ObjRefInScope | string, operator: RankingFilterOperator, value: number): IRankingFilter;
 
 // @alpha
-export function newRelativeDashboardDateFilter(granularity: DateFilterGranularity, from: number, to: number, dataSet?: ObjRef, localIdentifier?: string, boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter): IDashboardDateFilter;
+export function newRelativeDashboardDateFilter(granularity: DateFilterGranularity, from: number, to: number, dataSet?: ObjRef, localIdentifier?: string, boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter, emptyValueHandling?: EmptyValues): IDashboardDateFilter;
 
 // @public
-export function newRelativeDateFilter(dateDataSet: ObjRef | Identifier, granularity: DateAttributeGranularity, from: number, to: number, localIdentifier?: string, boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter): IRelativeDateFilter;
+export function newRelativeDateFilter(dateDataSet: ObjRef | Identifier, granularity: DateAttributeGranularity, from: number, to: number, localIdentifier?: string, boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter, emptyValueHandling?: EmptyValues): IRelativeDateFilter;
 
 // @public
 export function newTotal(type: TotalType, measureOrId: IMeasure | Identifier, attributeOrId: IAttribute | Identifier, alias?: string): ITotal;

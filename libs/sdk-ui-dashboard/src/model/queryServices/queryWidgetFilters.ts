@@ -23,13 +23,13 @@ import {
     filterObjRef,
     idRef,
     insightFilters,
-    isAllTimeDateFilter,
     isAttributeFilter,
     isDashboardAttributeFilterReference,
     isDashboardDateFilterReference,
     isDateFilter,
     isInsightWidget,
     isMeasureValueFilter,
+    isNoopAllTimeDateFilter,
     isRankingFilter,
     newAllTimeFilter,
     objRefToString,
@@ -267,7 +267,7 @@ function resolveDateFilters(
             if (supportsMultipleDateFilters) {
                 return true;
             } else {
-                return !isAllTimeDateFilter(item);
+                return !isNoopAllTimeDateFilter(item);
             }
         });
 }

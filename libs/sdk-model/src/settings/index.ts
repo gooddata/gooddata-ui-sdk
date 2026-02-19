@@ -740,6 +740,15 @@ export interface ISettings {
      * Enable arbitrary filter in Dashboard app.
      */
     enableArbitraryFilterKD?: boolean;
+    /**
+     * Restrict access to Base UI applications.
+     */
+    restrictBaseUi?: boolean;
+
+    /**
+     * Enables "Empty date values" configuration in KPI Dashboards date filter.
+     */
+    enableKDEmptyDateValuesFilter?: boolean;
 
     [key: string]: number | boolean | string | object | undefined | null;
 }

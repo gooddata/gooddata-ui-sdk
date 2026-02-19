@@ -846,6 +846,7 @@ export interface CreatedVisualization {
      * Saved visualization ID.
      */
     'savedVisualizationId'?: string;
+    'config'?: VisualizationConfig;
 }
 
 export type CreatedVisualizationVisualizationTypeEnum = 'TABLE' | 'HEADLINE' | 'BAR' | 'LINE' | 'PIE' | 'COLUMN';
@@ -1252,6 +1253,24 @@ export type FilterDefinition = AbsoluteDateFilter | AllTimeDateFilter | Comparis
  */
 export type FilterDefinitionForSimpleMeasure = AttributeFilter | DateFilter;
 
+/**
+ * Forecast configuration.
+ */
+export interface ForecastConfig {
+    /**
+     * Number of future periods that should be forecasted
+     */
+    'forecastPeriod': number;
+    /**
+     * Confidence interval boundary value.
+     */
+    'confidenceLevel': number;
+    /**
+     * Whether the input data is seasonal
+     */
+    'seasonal': boolean;
+}
+
 export interface ForecastRequest {
     /**
      * Number of future periods that should be forecasted
@@ -1287,6 +1306,30 @@ export interface FoundObjects {
      * DEPRECATED: Use top-level reasoning.steps instead. Reasoning from LLM. Description of how and why the answer was generated.
      */
     'reasoning': string;
+}
+
+export interface GenerateDescriptionRequest {
+    /**
+     * Type of the object to describe. One of: visualization, dashboard, metric, fact, attribute
+     */
+    'objectType': GenerateDescriptionRequestObjectTypeEnum;
+    /**
+     * Identifier of the object to describe
+     */
+    'objectId': string;
+}
+
+export type GenerateDescriptionRequestObjectTypeEnum = 'Visualization' | 'Dashboard' | 'Metric' | 'Fact' | 'Attribute';
+
+export interface GenerateDescriptionResponse {
+    /**
+     * Generated description of the requested object
+     */
+    'description'?: string;
+    /**
+     * Additional note with details in case generation was not performed
+     */
+    'note'?: string;
 }
 
 /**
@@ -2517,6 +2560,13 @@ export interface ValidateLLMEndpointResponse {
      * Additional message about the LLM endpoint validation
      */
     'message': string;
+}
+
+/**
+ * Visualization config for smart-function rendering.
+ */
+export interface VisualizationConfig {
+    'forecast'?: ForecastConfig;
 }
 
 export interface WorkflowDashboardSummaryRequestDto {
@@ -4378,6 +4428,68 @@ export async function ActionsApiAxiosParamCreator_GenerateDashboardSummary(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
+ * Generates a description for the specified analytics object. Returns description and a note with details if generation was not performed.
+ * @summary Generate Description for Analytics Object
+ * @param {string} workspaceId Workspace identifier
+ * @param {GenerateDescriptionRequest} generateDescriptionRequest 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_GenerateDescription(
+    workspaceId: string, generateDescriptionRequest: GenerateDescriptionRequest, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('generateDescription', 'workspaceId', workspaceId)
+    // verify required parameter 'generateDescriptionRequest' is not null or undefined
+    assertParamExists('generateDescription', 'generateDescriptionRequest', generateDescriptionRequest)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/analyticsCatalog/generateDescription`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof generateDescriptionRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(generateDescriptionRequest !== undefined ? generateDescriptionRequest : {})
+        : generateDescriptionRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
  * Returns metadata quality issues detected by the platform linter.
  * @summary Get Quality Issues
  * @param {string} workspaceId Workspace identifier
@@ -5759,6 +5871,32 @@ export async function ActionsApi_GenerateDashboardSummary(
 
 // ActionsApi Api FP
 /**
+ * Generates a description for the specified analytics object. Returns description and a note with details if generation was not performed.
+ * @summary Generate Description for Analytics Object
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiGenerateDescriptionRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_GenerateDescription(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiGenerateDescriptionRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<GenerateDescriptionResponse> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_GenerateDescription(
+        requestParameters.workspaceId, requestParameters.generateDescriptionRequest, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
  * Returns metadata quality issues detected by the platform linter.
  * @summary Get Quality Issues
  * @param {AxiosInstance} axios Axios instance.
@@ -6369,6 +6507,16 @@ export interface ActionsApiInterface {
      * @memberof ActionsApiInterface
      */
     generateDashboardSummary(requestParameters: ActionsApiGenerateDashboardSummaryRequest, options?: AxiosRequestConfig): AxiosPromise<WorkflowDashboardSummaryResponseDto>;
+
+    /**
+     * Generates a description for the specified analytics object. Returns description and a note with details if generation was not performed.
+     * @summary Generate Description for Analytics Object
+     * @param {ActionsApiGenerateDescriptionRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    generateDescription(requestParameters: ActionsApiGenerateDescriptionRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateDescriptionResponse>;
 
     /**
      * Returns metadata quality issues detected by the platform linter.
@@ -7096,6 +7244,27 @@ export interface ActionsApiGenerateDashboardSummaryRequest {
 }
 
 /**
+ * Request parameters for generateDescription operation in ActionsApi.
+ * @export
+ * @interface ActionsApiGenerateDescriptionRequest
+ */
+export interface ActionsApiGenerateDescriptionRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiGenerateDescription
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {GenerateDescriptionRequest}
+     * @memberof ActionsApiGenerateDescription
+     */
+    readonly generateDescriptionRequest: GenerateDescriptionRequest
+}
+
+/**
  * Request parameters for getQualityIssues operation in ActionsApi.
  * @export
  * @interface ActionsApiGetQualityIssuesRequest
@@ -7705,6 +7874,18 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      */
     public generateDashboardSummary(requestParameters: ActionsApiGenerateDashboardSummaryRequest, options?: AxiosRequestConfig) {
         return ActionsApi_GenerateDashboardSummary(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Generates a description for the specified analytics object. Returns description and a note with details if generation was not performed.
+     * @summary Generate Description for Analytics Object
+     * @param {ActionsApiGenerateDescriptionRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public generateDescription(requestParameters: ActionsApiGenerateDescriptionRequest, options?: AxiosRequestConfig) {
+        return ActionsApi_GenerateDescription(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -10597,6 +10778,68 @@ export async function SmartFunctionsApiAxiosParamCreator_ForecastResult(
 
 // SmartFunctionsApi FP - SmartFunctionsApiAxiosParamCreator
 /**
+ * Generates a description for the specified analytics object. Returns description and a note with details if generation was not performed.
+ * @summary Generate Description for Analytics Object
+ * @param {string} workspaceId Workspace identifier
+ * @param {GenerateDescriptionRequest} generateDescriptionRequest 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApiAxiosParamCreator_GenerateDescription(
+    workspaceId: string, generateDescriptionRequest: GenerateDescriptionRequest, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('generateDescription', 'workspaceId', workspaceId)
+    // verify required parameter 'generateDescriptionRequest' is not null or undefined
+    assertParamExists('generateDescription', 'generateDescriptionRequest', generateDescriptionRequest)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/analyticsCatalog/generateDescription`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof generateDescriptionRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(generateDescriptionRequest !== undefined ? generateDescriptionRequest : {})
+        : generateDescriptionRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// SmartFunctionsApi FP - SmartFunctionsApiAxiosParamCreator
+/**
  * Returns metadata quality issues detected by the platform linter.
  * @summary Get Quality Issues
  * @param {string} workspaceId Workspace identifier
@@ -11302,6 +11545,32 @@ export async function SmartFunctionsApi_ForecastResult(
 
 // SmartFunctionsApi Api FP
 /**
+ * Generates a description for the specified analytics object. Returns description and a note with details if generation was not performed.
+ * @summary Generate Description for Analytics Object
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {SmartFunctionsApiGenerateDescriptionRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApi_GenerateDescription(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: SmartFunctionsApiGenerateDescriptionRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<GenerateDescriptionResponse> {
+    const localVarAxiosArgs = await SmartFunctionsApiAxiosParamCreator_GenerateDescription(
+        requestParameters.workspaceId, requestParameters.generateDescriptionRequest, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// SmartFunctionsApi Api FP
+/**
  * Returns metadata quality issues detected by the platform linter.
  * @summary Get Quality Issues
  * @param {AxiosInstance} axios Axios instance.
@@ -11633,6 +11902,16 @@ export interface SmartFunctionsApiInterface {
      * @memberof SmartFunctionsApiInterface
      */
     forecastResult(requestParameters: SmartFunctionsApiForecastResultRequest, options?: AxiosRequestConfig): AxiosPromise<ForecastResult>;
+
+    /**
+     * Generates a description for the specified analytics object. Returns description and a note with details if generation was not performed.
+     * @summary Generate Description for Analytics Object
+     * @param {SmartFunctionsApiGenerateDescriptionRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApiInterface
+     */
+    generateDescription(requestParameters: SmartFunctionsApiGenerateDescriptionRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateDescriptionResponse>;
 
     /**
      * Returns metadata quality issues detected by the platform linter.
@@ -12039,6 +12318,27 @@ export interface SmartFunctionsApiForecastResultRequest {
 }
 
 /**
+ * Request parameters for generateDescription operation in SmartFunctionsApi.
+ * @export
+ * @interface SmartFunctionsApiGenerateDescriptionRequest
+ */
+export interface SmartFunctionsApiGenerateDescriptionRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof SmartFunctionsApiGenerateDescription
+     */
+    readonly workspaceId: string
+
+    /**
+     * 
+     * @type {GenerateDescriptionRequest}
+     * @memberof SmartFunctionsApiGenerateDescription
+     */
+    readonly generateDescriptionRequest: GenerateDescriptionRequest
+}
+
+/**
  * Request parameters for getQualityIssues operation in SmartFunctionsApi.
  * @export
  * @interface SmartFunctionsApiGetQualityIssuesRequest
@@ -12313,6 +12613,18 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
      */
     public forecastResult(requestParameters: SmartFunctionsApiForecastResultRequest, options?: AxiosRequestConfig) {
         return SmartFunctionsApi_ForecastResult(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Generates a description for the specified analytics object. Returns description and a note with details if generation was not performed.
+     * @summary Generate Description for Analytics Object
+     * @param {SmartFunctionsApiGenerateDescriptionRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApi
+     */
+    public generateDescription(requestParameters: SmartFunctionsApiGenerateDescriptionRequest, options?: AxiosRequestConfig) {
+        return SmartFunctionsApi_GenerateDescription(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**

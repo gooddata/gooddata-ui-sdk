@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import {
     type FilterContextItem,
@@ -12,8 +12,10 @@ import {
     type ITempFilterContext,
     type IWidgetDefinition,
     type ObjRef,
+    isAllTimeDashboardDateFilter,
     isDashboardAttributeFilter,
     newAbsoluteDateFilter,
+    newAllTimeFilter,
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
     newRelativeDateFilter,
@@ -93,6 +95,17 @@ export function dashboardDateFilterToDateFilterByWidget(
     filter: IDashboardDateFilter,
     widget?: Partial<IFilterableWidget>,
 ): IDateFilter {
+    if (isAllTimeDashboardDateFilter(filter)) {
+        const dataSet = widget
+            ? filter.dateFilter.dataSet || widget.dateDataSet!
+            : filter.dateFilter.dataSet!;
+        return newAllTimeFilter(
+            dataSet,
+            filter.dateFilter.localIdentifier,
+            filter.dateFilter.emptyValueHandling,
+        );
+    }
+
     if (filter.dateFilter.type === "relative") {
         return newRelativeDateFilter(
             widget ? filter.dateFilter.dataSet || widget.dateDataSet! : filter.dateFilter.dataSet!,
@@ -101,6 +114,7 @@ export function dashboardDateFilterToDateFilterByWidget(
             numberOrStringToNumber(filter.dateFilter.to!),
             filter.dateFilter.localIdentifier,
             filter.dateFilter.boundedFilter,
+            filter.dateFilter.emptyValueHandling,
         );
     } else {
         return newAbsoluteDateFilter(
@@ -108,6 +122,7 @@ export function dashboardDateFilterToDateFilterByWidget(
             filter.dateFilter.from!.toString(),
             filter.dateFilter.to!.toString(),
             filter.dateFilter.localIdentifier,
+            filter.dateFilter.emptyValueHandling,
         );
     }
 }
@@ -123,6 +138,14 @@ export function dashboardDateFilterToDateFilterByDateDataSet(
     filter: IDashboardDateFilter,
     dateDataSet: ObjRef,
 ): IDateFilter {
+    if (isAllTimeDashboardDateFilter(filter)) {
+        return newAllTimeFilter(
+            dateDataSet,
+            filter.dateFilter.localIdentifier,
+            filter.dateFilter.emptyValueHandling,
+        );
+    }
+
     if (filter.dateFilter.type === "relative") {
         return newRelativeDateFilter(
             dateDataSet,
@@ -131,6 +154,7 @@ export function dashboardDateFilterToDateFilterByDateDataSet(
             numberOrStringToNumber(filter.dateFilter.to!),
             filter.dateFilter.localIdentifier,
             filter.dateFilter.boundedFilter,
+            filter.dateFilter.emptyValueHandling,
         );
     } else {
         return newAbsoluteDateFilter(
@@ -138,6 +162,7 @@ export function dashboardDateFilterToDateFilterByDateDataSet(
             filter.dateFilter.from!.toString(),
             filter.dateFilter.to!.toString(),
             filter.dateFilter.localIdentifier,
+            filter.dateFilter.emptyValueHandling,
         );
     }
 }

@@ -1,4 +1,6 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
+import { type EmptyValues } from "@gooddata/sdk-model";
 
 import { platformDateFormat, platformDateTimeFormat } from "../constants/Platform.js";
 import { type IDateRange } from "../DateRangePicker/types.js";
@@ -12,6 +14,7 @@ export const dateRangeToDateFilterValue = (
     range: IDateRange,
     localIdentifier: string,
     isTimeForAbsoluteRangeEnabled: boolean,
+    emptyValueHandling?: EmptyValues,
 ): IUiAbsoluteDateFilterForm => {
     const parsingFormat = isTimeForAbsoluteRangeEnabled ? platformDateTimeFormat : platformDateFormat;
 
@@ -22,6 +25,7 @@ export const dateRangeToDateFilterValue = (
         type: "absoluteForm",
         name: "",
         visible: true,
+        ...(emptyValueHandling ? { emptyValueHandling } : {}),
     };
 };
 

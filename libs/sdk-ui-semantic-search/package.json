@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-semantic-search",
-    "version": "11.22.0-alpha.5",
+    "version": "11.22.0-alpha.6",
     "description": "GoodData SDK TypeScript & React skeleton",
     "license": "MIT",
     "author": "GoodData Corporation",
@@ -63,7 +63,7 @@
         "@gooddata/sdk-ui-kit": "workspace:*",
         "@gooddata/sdk-ui-theme-provider": "workspace:*",
         "@gooddata/util": "workspace:*",
-        "classnames": "^2.3.1",
+        "classnames": "2.5.1",
         "lodash-es": "^4.17.23",
         "react-intl": "7.1.11",
         "tslib": "2.8.1"
@@ -103,7 +103,7 @@
         "oxfmt": "0.27.0",
         "oxlint": "^1.43.0",
         "oxlint-tsgolint": "0.11.4",
-        "raf": "^3.4.1",
+        "raf": "3.4.1",
         "react": "19.1.1",
         "react-dom": "19.1.1",
         "sass": "1.70.0",

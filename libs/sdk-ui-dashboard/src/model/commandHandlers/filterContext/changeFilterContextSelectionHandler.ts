@@ -387,11 +387,15 @@ function* getDateFilterUpdateActions(
         const localIdentifierObj = dateFilter.dateFilter.localIdentifier
             ? { localIdentifier: dateFilter.dateFilter.localIdentifier }
             : {};
+        const emptyValueHandlingObj = dateFilter.dateFilter.emptyValueHandling
+            ? { emptyValueHandling: dateFilter.dateFilter.emptyValueHandling }
+            : {};
         const upsertPayload: IUpsertDateFilterPayload = isAllTimeDashboardDateFilter(dateFilter)
             ? {
                   type: "allTime",
                   dataSet: dateFilter.dateFilter.dataSet,
                   ...localIdentifierObj,
+                  ...emptyValueHandlingObj,
                   tabLocalIdentifier,
               }
             : {
@@ -404,6 +408,7 @@ function* getDateFilterUpdateActions(
                   ...(dateFilter.dateFilter.boundedFilter
                       ? { boundedFilter: dateFilter.dateFilter.boundedFilter }
                       : {}),
+                  ...emptyValueHandlingObj,
                   tabLocalIdentifier,
               };
 
@@ -434,12 +439,16 @@ function* getDateFiltersUpdateActions(
             const localIdentifierObj = dateFilter.dateFilter.localIdentifier
                 ? { localIdentifier: dateFilter.dateFilter.localIdentifier }
                 : {};
+            const emptyValueHandlingObj = dateFilter.dateFilter.emptyValueHandling
+                ? { emptyValueHandling: dateFilter.dateFilter.emptyValueHandling }
+                : {};
             handledDataSets.add(serializeObjRef(dashboardFilter.dateFilter.dataSet!));
             const upsertPayload: IUpsertDateFilterPayload = isAllTimeDashboardDateFilter(dateFilter)
                 ? {
                       type: "allTime",
                       dataSet: dateFilter.dateFilter.dataSet,
                       ...localIdentifierObj,
+                      ...emptyValueHandlingObj,
                       tabLocalIdentifier,
                   }
                 : {
@@ -452,6 +461,7 @@ function* getDateFiltersUpdateActions(
                       ...(dateFilter.dateFilter.boundedFilter
                           ? { boundedFilter: dateFilter.dateFilter.boundedFilter }
                           : {}),
+                      ...emptyValueHandlingObj,
                       tabLocalIdentifier,
                   };
 

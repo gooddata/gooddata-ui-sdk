@@ -3,6 +3,7 @@ import {
     type IAbsoluteDateFilterForm,
     type IAbsoluteDateFilterPreset,
     type IAllTimeDateFilterOption,
+    type IEmptyValuesDateFilterOption,
     type IRelativeDateFilterForm,
     type IRelativeDateFilterPreset,
 } from "@gooddata/sdk-model";
@@ -65,5 +66,11 @@ export const relativeForm: IRelativeDateFilterForm = {
     availableGranularities: ["GDC.time.year", "GDC.time.month"],
     localIdentifier: "RELATIVE_FORM",
     name: "",
+    visible: true,
+};
+
+export const emptyValues: IEmptyValuesDateFilterOption = {
+    type: "emptyValues",
+    localIdentifier: "EMPTY_VALUES",
     visible: true,
 };
