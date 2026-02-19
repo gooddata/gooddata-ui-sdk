@@ -47,6 +47,13 @@ interface IDateFilterBodyMobileContentProps {
      * Active calendars configuration from workspace settings.
      */
     activeCalendars?: IActiveCalendars;
+
+    /**
+     * Enables empty date values UI (e.g. “Other → Empty values” preset, empty-values handling controls).
+     *
+     * @alpha
+     */
+    enableEmptyDateValues?: boolean;
 }
 
 export function DateFilterBodyMobileContent({
@@ -66,6 +73,7 @@ export function DateFilterBodyMobileContent({
     onSelectedFilterOptionChange,
     isRedesigned = false,
     activeCalendars,
+    enableEmptyDateValues,
 }: IDateFilterBodyMobileContentProps) {
     const intl = useIntl();
 
@@ -137,6 +145,7 @@ export function DateFilterBodyMobileContent({
                 selectedTab={selectedTab}
                 onTabSelect={setSelectedTab}
                 filteredRelativePreset={filteredRelativePreset}
+                enableEmptyDateValues={enableEmptyDateValues}
             />
         );
     }
@@ -156,6 +165,7 @@ export function DateFilterBodyMobileContent({
             weekStart={weekStart}
             availableGranularities={availableGranularities}
             activeCalendars={activeCalendars}
+            enableEmptyDateValues={enableEmptyDateValues}
         />
     );
 }

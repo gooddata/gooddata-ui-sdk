@@ -209,6 +209,24 @@ const conditionallyHandleFiscalFilters = (
     };
 };
 
+const conditionallyHandleEmptyValues = (
+    config: IDateFilterConfig,
+    enableEmptyDateValuesFilter: boolean,
+): IDateFilterConfig => {
+    if (!enableEmptyDateValuesFilter) {
+        return config;
+    }
+
+    if (config.emptyValues || !defaultDateFilterConfig.emptyValues) {
+        return config;
+    }
+
+    return {
+        ...config,
+        emptyValues: defaultDateFilterConfig.emptyValues,
+    };
+};
+
 /**
  * Given the date filter config loaded from backend and the settings, this function will perform validation
  * of the config and if needed also cleanup of invalid/disabled presets.
@@ -222,6 +240,10 @@ export function getValidDateFilterConfig(
 
     validConfig = conditionallyStripToDateFilters(validConfig, settings.enableToDateFilters ?? true);
     validConfig = conditionallyHandleFiscalFilters(validConfig, settings.enableFiscalCalendars ?? true);
+    validConfig = conditionallyHandleEmptyValues(
+        validConfig,
+        settings.enableKDEmptyDateValuesFilter ?? false,
+    );
 
     return [validConfig, configValidation];
 }

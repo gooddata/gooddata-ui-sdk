@@ -1,12 +1,15 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 
 import {
     type DateFilterGranularity,
     type DateString,
+    type EmptyValues,
     type IAbsoluteDateFilterForm,
     type IAbsoluteDateFilterPreset,
     type IAllTimeDateFilterOption,
+    type IEmptyValuesDateFilterOption,
     type ILowerBoundedFilter,
     type IRelativeDateFilterForm,
     type IRelativeDateFilterPreset,
@@ -32,6 +35,10 @@ export interface IUiAbsoluteDateFilterForm extends IAbsoluteDateFilterForm {
      * Selected global absolute date filter end date
      */
     to?: DateString;
+    /**
+     * Optional configuration for how this option should treat empty date values.
+     */
+    emptyValueHandling?: EmptyValues;
 }
 
 /**
@@ -63,6 +70,10 @@ export interface IUiRelativeDateFilterForm extends Omit<IRelativeDateFilterForm,
      * Additional bound for the relative date filter
      */
     boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter;
+    /**
+     * Optional configuration for how this option should treat empty date values.
+     */
+    emptyValueHandling?: EmptyValues;
 }
 
 /**
@@ -102,7 +113,11 @@ export const isRelativeDateFilterWithBoundOption = (obj: unknown): obj is Relati
  * Represents any option in the date filter dropdown
  * @public
  */
-export type DateFilterOption = IAllTimeDateFilterOption | AbsoluteDateFilterOption | RelativeDateFilterOption;
+export type DateFilterOption =
+    | IAllTimeDateFilterOption
+    | IEmptyValuesDateFilterOption
+    | AbsoluteDateFilterOption
+    | RelativeDateFilterOption;
 
 /**
  * @internal
@@ -126,6 +141,10 @@ export interface IDateFilterOptionsByType {
      * Global all time date filter options
      */
     allTime?: IAllTimeDateFilterOption;
+    /**
+     * Preset for filtering only empty date values (records with no date)
+     */
+    emptyValues?: IEmptyValuesDateFilterOption;
     /**
      * Global absolute date filter options
      */

@@ -1,7 +1,12 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { InvariantError } from "ts-invariant";
 
-import { type IDashboardDateFilter, isAllTimeDateFilterOption } from "@gooddata/sdk-model";
+import {
+    type IDashboardDateFilter,
+    isAllTimeDateFilterOption,
+    isEmptyValuesDateFilterOption,
+} from "@gooddata/sdk-model";
 import {
     type DateFilterOption,
     isAbsoluteDateFilterOption,
@@ -9,7 +14,7 @@ import {
 } from "@gooddata/sdk-ui-filters";
 
 export function convertOptionToDateFilter(option: DateFilterOption): IDashboardDateFilter | undefined {
-    if (isAllTimeDateFilterOption(option)) {
+    if (isAllTimeDateFilterOption(option) || isEmptyValuesDateFilterOption(option)) {
         return;
     }
 

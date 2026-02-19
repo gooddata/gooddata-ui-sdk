@@ -1142,6 +1142,51 @@
                 }
             }
         },
+        "/api/v1/actions/workspaces/{workspaceId}/ai/analyticsCatalog/generateDescription": {
+            "post": {
+                "tags": [
+                    "Smart Functions",
+                    "actions"
+                ],
+                "summary": "Generate Description for Analytics Object",
+                "description": "Generates a description for the specified analytics object. Returns description and a note with details if generation was not performed.",
+                "operationId": "generateDescription",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/GenerateDescriptionRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GenerateDescriptionResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/actions/ai/llmEndpoint/{llmEndpointId}/test": {
             "post": {
                 "tags": [
@@ -5644,6 +5689,9 @@
                     "savedVisualizationId": {
                         "type": "string",
                         "description": "Saved visualization ID."
+                    },
+                    "config": {
+                        "$ref": "#/components/schemas/VisualizationConfig"
                     }
                 },
                 "description": "List of created visualization objects"
@@ -5789,6 +5837,31 @@
             "Filter": {
                 "type": "object",
                 "description": "List of filters to be applied to the new visualization"
+            },
+            "ForecastConfig": {
+                "required": [
+                    "confidenceLevel",
+                    "forecastPeriod",
+                    "seasonal"
+                ],
+                "type": "object",
+                "properties": {
+                    "forecastPeriod": {
+                        "type": "integer",
+                        "description": "Number of future periods that should be forecasted",
+                        "format": "int32"
+                    },
+                    "confidenceLevel": {
+                        "type": "number",
+                        "description": "Confidence interval boundary value.",
+                        "format": "float"
+                    },
+                    "seasonal": {
+                        "type": "boolean",
+                        "description": "Whether the input data is seasonal"
+                    }
+                },
+                "description": "Forecast configuration."
             },
             "FoundObjects": {
                 "required": [
@@ -5953,6 +6026,15 @@
                 },
                 "description": "Detailed thoughts/messages within this step."
             },
+            "VisualizationConfig": {
+                "type": "object",
+                "properties": {
+                    "forecast": {
+                        "$ref": "#/components/schemas/ForecastConfig"
+                    }
+                },
+                "description": "Visualization config for smart-function rendering."
+            },
             "ChatResult": {
                 "type": "object",
                 "properties": {
@@ -5989,6 +6071,43 @@
                     },
                     "reasoning": {
                         "$ref": "#/components/schemas/Reasoning"
+                    }
+                }
+            },
+            "GenerateDescriptionRequest": {
+                "required": [
+                    "objectId",
+                    "objectType"
+                ],
+                "type": "object",
+                "properties": {
+                    "objectType": {
+                        "type": "string",
+                        "description": "Type of the object to describe. One of: visualization, dashboard, metric, fact, attribute",
+                        "enum": [
+                            "Visualization",
+                            "Dashboard",
+                            "Metric",
+                            "Fact",
+                            "Attribute"
+                        ]
+                    },
+                    "objectId": {
+                        "type": "string",
+                        "description": "Identifier of the object to describe"
+                    }
+                }
+            },
+            "GenerateDescriptionResponse": {
+                "type": "object",
+                "properties": {
+                    "description": {
+                        "type": "string",
+                        "description": "Generated description of the requested object"
+                    },
+                    "note": {
+                        "type": "string",
+                        "description": "Additional note with details in case generation was not performed"
                     }
                 }
             },

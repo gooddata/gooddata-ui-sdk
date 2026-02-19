@@ -9,6 +9,7 @@ import {
     type DateFilterGranularity,
     type DateFilterType,
     type DateString,
+    type EmptyValues,
     type FilterContextItem,
     type IAttributeDisplayFormMetadataObject,
     type IAttributeElements,
@@ -224,6 +225,7 @@ export interface IUpsertDateFilterAllTimePayload {
     readonly dataSet?: ObjRef;
     readonly isWorkingSelectionChange?: boolean;
     readonly localIdentifier?: string;
+    readonly emptyValueHandling?: EmptyValues;
     /**
      * Optional tab local identifier to target a specific tab.
      * If not provided, the active tab will be used.
@@ -243,6 +245,7 @@ export interface IUpsertDateFilterNonAllTimePayload {
     readonly isWorkingSelectionChange?: boolean;
     readonly localIdentifier?: string;
     readonly boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter;
+    readonly emptyValueHandling?: EmptyValues;
     /**
      * Optional tab local identifier to target a specific tab.
      * If not provided, the active tab will be used.
@@ -291,11 +294,16 @@ const upsertDateFilter: FilterContextReducer<PayloadAction<IUpsertDateFilterPayl
                 filterContextDefinition.filters[existingFilterIndex] = newAllTimeDashboardDateFilter(
                     dateFilter.dateFilter.dataSet,
                     dateFilter.dateFilter.localIdentifier,
+                    action.payload.emptyValueHandling,
                 );
             }
         } else {
             filterContextDefinition.filters.unshift(
-                newAllTimeDashboardDateFilter(action.payload.dataSet, action.payload.localIdentifier),
+                newAllTimeDashboardDateFilter(
+                    action.payload.dataSet,
+                    action.payload.localIdentifier,
+                    action.payload.emptyValueHandling,
+                ),
             );
         }
     } else if (action.payload.type === "allTime") {
@@ -307,15 +315,35 @@ const upsertDateFilter: FilterContextReducer<PayloadAction<IUpsertDateFilterPayl
                     filterContextDefinition.filters[existingFilterIndex] = newAllTimeDashboardDateFilter(
                         dateFilter.dateFilter.dataSet,
                         dateFilter.dateFilter.localIdentifier,
+                        action.payload.emptyValueHandling,
                     );
                 }
             } else {
-                //if allTime common DF remove the date filter altogether
-                filterContextDefinition.filters.splice(existingFilterIndex, 1);
+                if (action.payload.emptyValueHandling) {
+                    // Preserve all-time common DF when it carries additional config (e.g. emptyValueHandling).
+                    filterContextDefinition.filters[existingFilterIndex] = newAllTimeDashboardDateFilter(
+                        undefined,
+                        action.payload.localIdentifier,
+                        action.payload.emptyValueHandling,
+                    );
+                } else {
+                    // if allTime common DF remove the date filter altogether
+                    filterContextDefinition.filters.splice(existingFilterIndex, 1);
+                }
             }
+        } else if (!dateDataSet && action.payload.emptyValueHandling) {
+            // No common date filter existed (all time was represented by absence); create it to preserve extra config.
+            filterContextDefinition.filters.unshift(
+                newAllTimeDashboardDateFilter(
+                    undefined,
+                    action.payload.localIdentifier,
+                    action.payload.emptyValueHandling,
+                ),
+            );
         }
     } else if (existingFilterIndex >= 0) {
-        const { type, granularity, from, to, localIdentifier, boundedFilter } = action.payload;
+        const { type, granularity, from, to, localIdentifier, boundedFilter, emptyValueHandling } =
+            action.payload;
         const dateFilter = filterContextDefinition.filters[existingFilterIndex];
 
         if (isDashboardDateFilter(dateFilter)) {
@@ -333,9 +361,16 @@ const upsertDateFilter: FilterContextReducer<PayloadAction<IUpsertDateFilterPayl
             } else {
                 delete dateFilter.dateFilter.boundedFilter;
             }
+
+            if (emptyValueHandling) {
+                dateFilter.dateFilter.emptyValueHandling = emptyValueHandling;
+            } else {
+                delete dateFilter.dateFilter.emptyValueHandling;
+            }
         }
     } else {
-        const { type, granularity, from, to, dataSet, localIdentifier, boundedFilter } = action.payload;
+        const { type, granularity, from, to, dataSet, localIdentifier, boundedFilter, emptyValueHandling } =
+            action.payload;
         filterContextDefinition.filters.unshift({
             dateFilter: {
                 granularity,
@@ -345,6 +380,7 @@ const upsertDateFilter: FilterContextReducer<PayloadAction<IUpsertDateFilterPayl
                 ...(dataSet ? { dataSet } : {}),
                 ...(localIdentifier ? { localIdentifier } : {}),
                 ...(boundedFilter ? { boundedFilter } : {}),
+                ...(emptyValueHandling ? { emptyValueHandling } : {}),
             },
         });
     }

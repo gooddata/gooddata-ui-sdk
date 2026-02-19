@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-backend-mockingbird",
-    "version": "11.22.0-alpha.5",
+    "version": "11.22.0-alpha.6",
     "description": "Mock GoodData Backend SPI implementation",
     "license": "MIT",
     "author": "GoodData",
@@ -45,9 +45,9 @@
         "@gooddata/sdk-model": "workspace:*",
         "@gooddata/util": "workspace:*",
         "lodash-es": "^4.17.23",
-        "ts-invariant": "^0.7.5",
+        "ts-invariant": "0.10.3",
         "tslib": "2.8.1",
-        "uuid": "^11.1.0"
+        "uuid": "11.1.0"
     },
     "devDependencies": {
         "@gooddata/eslint-config": "workspace:*",

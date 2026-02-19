@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import type { GenAIObjectType } from "./common.js";
 import type { ISemanticSearchResult, ISemanticSearchResultItem } from "./semanticSearch.js";
@@ -167,6 +167,10 @@ export interface IGenAIVisualization {
      */
     filters?: GenAIFilter[];
     /**
+     * Visualization-level configuration.
+     */
+    config?: IGenAIVisualizationConfig;
+    /**
      * Suggestions for the visualization.
      */
     suggestions?: IGenAISuggestion[];
@@ -182,6 +186,36 @@ export interface IGenAIVisualization {
      * A flag indicating if visualization status waiting for report
      */
     statusReportPending?: boolean;
+}
+
+/**
+ * Visualization configuration for GenAI-created visualization.
+ * @internal
+ */
+export interface IGenAIVisualizationConfig {
+    /**
+     * Forecast configuration.
+     */
+    forecast?: IGenAIForecastConfig;
+}
+
+/**
+ * Forecast configuration for GenAI-created visualization.
+ * @internal
+ */
+export interface IGenAIForecastConfig {
+    /**
+     * Number of future periods that should be forecasted.
+     */
+    forecastPeriod: number;
+    /**
+     * Confidence interval boundary value.
+     */
+    confidenceLevel: number;
+    /**
+     * Whether the input data is seasonal.
+     */
+    seasonal: boolean;
 }
 
 /**

@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { NotSupported } from "@gooddata/sdk-backend-spi";
 import {
     type DateFilterGranularity,
@@ -161,11 +162,13 @@ export function dashboardFilterToFilterContextItem(
             filter.absoluteDateFilter.to,
             keepDatasets ? filter.absoluteDateFilter.dataSet : undefined,
             filter.absoluteDateFilter.localIdentifier,
+            filter.absoluteDateFilter.emptyValueHandling,
         );
     } else if (isAllTimeDateFilter(filter)) {
         return newAllTimeDashboardDateFilter(
             keepDatasets ? filter.relativeDateFilter.dataSet : undefined,
             filter.relativeDateFilter.localIdentifier,
+            filter.relativeDateFilter.emptyValueHandling,
         );
     } else if (isRelativeDateFilter(filter)) {
         return newRelativeDashboardDateFilter(
@@ -175,6 +178,7 @@ export function dashboardFilterToFilterContextItem(
             keepDatasets ? filter.relativeDateFilter.dataSet : undefined,
             filter.relativeDateFilter.localIdentifier,
             isRelativeBoundedDateFilter(filter) ? filter.relativeDateFilter.boundedFilter : undefined,
+            filter.relativeDateFilter.emptyValueHandling,
         );
     }
 

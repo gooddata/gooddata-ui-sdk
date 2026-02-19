@@ -12,7 +12,7 @@ import {
 
 import { sanitizeDateFilterOption } from "./sanitization.js";
 
-type NonArrayFilterOptionKey = "absoluteForm" | "relativeForm" | "allTime";
+type NonArrayFilterOptionKey = "absoluteForm" | "relativeForm" | "allTime" | "emptyValues";
 
 type DashboardConfigMerger = (
     dashboardConfig: IDashboardDateFilterConfig,
@@ -77,6 +77,8 @@ const hideNonArrayOptionType =
     };
 
 const hideAllTime = hideNonArrayOptionType("allTime");
+
+const hideEmptyValues = hideNonArrayOptionType("emptyValues");
 
 const hideAbsoluteForm = hideNonArrayOptionType("absoluteForm");
 
@@ -171,6 +173,7 @@ export function mergeDateFilterConfigs(
     return [
         addPresets(dashboardOverrides),
         hideAllTime(dashboardOverrides),
+        hideEmptyValues(dashboardOverrides),
         hideAbsoluteForm(dashboardOverrides),
         hideRelativeForm(dashboardOverrides),
         hideRelativeFormGranularities(dashboardOverrides),

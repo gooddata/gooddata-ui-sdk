@@ -1,8 +1,12 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
 
-import { type ILowerBoundedFilter, type IUpperBoundedFilter } from "../execution/filter/index.js";
+import {
+    type EmptyValues,
+    type ILowerBoundedFilter,
+    type IUpperBoundedFilter,
+} from "../execution/filter/index.js";
 import { type Identifier, type ObjRef } from "../objRef/index.js";
 
 /**
@@ -42,6 +46,12 @@ export type DateFilterOptionAbsolutePresetType = "absolutePreset";
 export type DateFilterOptionRelativePresetType = "relativePreset";
 
 /**
+ * Type that identifies the empty date values date filter option
+ * @alpha
+ */
+export type DateFilterOptionEmptyValuesType = "emptyValues";
+
+/**
  * Type that identifies the date filter option
  * @alpha
  */
@@ -50,7 +60,8 @@ export type DateFilterOptionType =
     | DateFilterOptionAbsoluteFormType
     | DateFilterOptionRelativeFormType
     | DateFilterOptionAbsolutePresetType
-    | DateFilterOptionRelativePresetType;
+    | DateFilterOptionRelativePresetType
+    | DateFilterOptionEmptyValuesType;
 
 /**
  * Relative granularity offset
@@ -135,6 +146,10 @@ export interface IAbsoluteDateFilterPreset extends IDateFilterOption {
      * Absolute date filter end date
      */
     to: DateString;
+    /**
+     * Optional configuration for how this preset should treat empty date values.
+     */
+    emptyValueHandling?: EmptyValues;
 }
 
 /**
@@ -162,6 +177,10 @@ export interface IRelativeDateFilterPreset extends IDateFilterOption {
      * Additional bound for the relative date filter
      */
     boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter;
+    /**
+     * Optional configuration for how this preset should treat empty date values.
+     */
+    emptyValueHandling?: EmptyValues;
 }
 
 /**
@@ -186,6 +205,10 @@ export interface IAbsoluteDateFilterForm extends IDateFilterOption {
      * Type to identify the global absolute date filter
      */
     type: DateFilterOptionAbsoluteFormType;
+    /**
+     * Optional configuration for how this option should treat empty date values.
+     */
+    emptyValueHandling?: EmptyValues;
 }
 
 /**
@@ -201,6 +224,10 @@ export interface IRelativeDateFilterForm extends IDateFilterOption {
      * Available granularities for the global relative date filter
      */
     availableGranularities: DateFilterGranularity[];
+    /**
+     * Optional configuration for how this option should treat empty date values.
+     */
+    emptyValueHandling?: EmptyValues;
 }
 
 /**
@@ -212,6 +239,10 @@ export interface IAllTimeDateFilterOption extends IDateFilterOption {
      * Type to identify the global all time date filter
      */
     type: DateFilterOptionAllTimeType;
+    /**
+     * Optional configuration for how this option should treat empty date values.
+     */
+    emptyValueHandling?: EmptyValues;
 }
 
 /**
@@ -220,6 +251,28 @@ export interface IAllTimeDateFilterOption extends IDateFilterOption {
  */
 export const isAllTimeDateFilterOption = (obj: unknown): obj is IAllTimeDateFilterOption =>
     !isEmpty(obj) && (obj as IAllTimeDateFilterOption).type === "allTime";
+
+/**
+ * Preset option for empty date values (records with no date)
+ * @alpha
+ */
+export interface IEmptyValuesDateFilterOption extends IDateFilterOption {
+    /**
+     * Type to identify the empty values date filter option
+     */
+    type: DateFilterOptionEmptyValuesType;
+    /**
+     * Optional configuration for how this option should treat empty date values.
+     */
+    emptyValueHandling?: EmptyValues;
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IEmptyValuesDateFilterOption}.
+ * @alpha
+ */
+export const isEmptyValuesDateFilterOption = (obj: unknown): obj is IEmptyValuesDateFilterOption =>
+    !isEmpty(obj) && (obj as IEmptyValuesDateFilterOption).type === "emptyValues";
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IAbsoluteDateFilterForm}.
@@ -267,6 +320,10 @@ export interface IDateFilterConfig {
      * Options to customize displaying of the global all time date filter
      */
     allTime?: IAllTimeDateFilterOption;
+    /**
+     * Options to customize displaying of the empty values date filter preset
+     */
+    emptyValues?: IEmptyValuesDateFilterOption;
     /**
      * Options to customize displaying of the global absolute date filter
      */

@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { Account, Activity, Won } from "../../../../__mocks__/model.js";
@@ -6,6 +7,7 @@ import { InvalidInputTestCases } from "../../../../__mocks__/typeGuards.js";
 import { DateGranularity } from "../../../base/dateGranularities.js";
 import {
     newAbsoluteDateFilter,
+    newAllTimeFilter,
     newMeasureValueFilter,
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
@@ -14,10 +16,13 @@ import {
 } from "../factory.js";
 import {
     isAbsoluteDateFilter,
+    isAllTimeDateFilter,
+    isAllTimeDateFilterWithEmptyValueHandling,
     isAttributeElementsByRef,
     isAttributeElementsByValue,
     isComparisonCondition,
     isComparisonConditionOperator,
+    isDateFilterWithEmptyValueHandling,
     isFilter,
     isMeasureValueFilter,
     isNegativeAttributeFilter,
@@ -108,6 +113,87 @@ describe("filter type guards", () => {
 
         it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
             expect(isAbsoluteDateFilter(input)).toBe(expectedResult);
+        });
+    });
+
+    describe("isAllTimeDateFilter", () => {
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [true, "all time date filter", newAllTimeFilter("dd1")],
+            [false, "relative date filter", newRelativeDateFilter("dd1", DateGranularity["month"], 0, -1)],
+            [false, "absolute date filter", newAbsoluteDateFilter("dd1", "01/01/2019", "10/10/2019")],
+        ];
+
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(isAllTimeDateFilter(input)).toBe(expectedResult);
+        });
+    });
+
+    describe("isAllTimeDateFilterWithEmptyValueHandling", () => {
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [false, "all time date filter without emptyValueHandling", newAllTimeFilter("dd1")],
+            [
+                true,
+                "all time date filter with emptyValueHandling",
+                newAllTimeFilter("dd1", undefined, "exclude"),
+            ],
+            [
+                false,
+                "relative date filter with emptyValueHandling",
+                newRelativeDateFilter(
+                    "dd1",
+                    DateGranularity["month"],
+                    0,
+                    -1,
+                    undefined,
+                    undefined,
+                    "exclude",
+                ),
+            ],
+        ];
+
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(isAllTimeDateFilterWithEmptyValueHandling(input)).toBe(expectedResult);
+        });
+    });
+
+    describe("isDateFilterWithEmptyValueHandling", () => {
+        const Scenarios: Array<[boolean, string, any]> = [
+            ...InvalidInputTestCases,
+            [false, "all time date filter without emptyValueHandling", newAllTimeFilter("dd1")],
+            [
+                true,
+                "all time date filter with emptyValueHandling",
+                newAllTimeFilter("dd1", undefined, "include"),
+            ],
+            [
+                true,
+                "relative date filter with emptyValueHandling",
+                newRelativeDateFilter(
+                    "dd1",
+                    DateGranularity["month"],
+                    0,
+                    -1,
+                    undefined,
+                    undefined,
+                    "exclude",
+                ),
+            ],
+            [
+                true,
+                "absolute date filter with emptyValueHandling",
+                newAbsoluteDateFilter("dd1", "01/01/2019", "10/10/2019", undefined, "exclude"),
+            ],
+            [
+                false,
+                "relative date filter without emptyValueHandling",
+                newRelativeDateFilter("dd1", DateGranularity["month"], 0, -1),
+            ],
+        ];
+
+        it.each(Scenarios)("should return %s when input is %s", (expectedResult, _desc, input) => {
+            expect(isDateFilterWithEmptyValueHandling(input)).toBe(expectedResult);
         });
     });
 

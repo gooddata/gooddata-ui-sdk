@@ -3,7 +3,15 @@ import { describe, expect, it } from "vitest";
 
 import { type IDashboardDateFilterConfig, type IDateFilterConfig, idRef } from "@gooddata/sdk-model";
 
-import { absoluteForm, allTime, lastMonth, lastYear, relativeForm, year2019 } from "./fixtures.js";
+import {
+    absoluteForm,
+    allTime,
+    emptyValues,
+    lastMonth,
+    lastYear,
+    relativeForm,
+    year2019,
+} from "./fixtures.js";
 import { mergeDateFilterConfigs } from "../merge.js";
 
 describe("mergeProjectConfigWithDashboardConfig", () => {
@@ -45,6 +53,7 @@ describe("mergeProjectConfigWithDashboardConfig", () => {
         const projectConfig: IDateFilterConfig = {
             ref: idRef("shouldProperlyHideOptions"),
             allTime,
+            emptyValues,
             absoluteForm,
             absolutePresets: [year2019],
             relativeForm,
@@ -53,7 +62,12 @@ describe("mergeProjectConfigWithDashboardConfig", () => {
         };
 
         const dashboardConfig: IDashboardDateFilterConfig = {
-            hideOptions: [allTime.localIdentifier, absoluteForm.localIdentifier, year2019.localIdentifier],
+            hideOptions: [
+                allTime.localIdentifier,
+                emptyValues.localIdentifier,
+                absoluteForm.localIdentifier,
+                year2019.localIdentifier,
+            ],
             mode: "active",
             filterName: "",
         };
@@ -62,6 +76,10 @@ describe("mergeProjectConfigWithDashboardConfig", () => {
             ref: idRef("shouldProperlyHideOptions"),
             allTime: {
                 ...allTime,
+                visible: false,
+            },
+            emptyValues: {
+                ...emptyValues,
                 visible: false,
             },
             absoluteForm: {

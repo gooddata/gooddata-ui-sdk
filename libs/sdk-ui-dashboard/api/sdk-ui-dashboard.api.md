@@ -29,6 +29,7 @@ import { DateString } from '@gooddata/sdk-model';
 import { Dispatch } from '@reduxjs/toolkit';
 import { Dispatch as Dispatch_2 } from 'react';
 import { DrillDefinition } from '@gooddata/sdk-model';
+import { EmptyValues } from '@gooddata/sdk-model';
 import { EntityId } from '@reduxjs/toolkit';
 import { EntityState } from '@reduxjs/toolkit';
 import { ExplicitDrill } from '@gooddata/sdk-ui';
@@ -452,7 +453,7 @@ export type ChangeDateFilterSelection = IDashboardCommand & {
 };
 
 // @public
-export function changeDateFilterSelection(type: DateFilterType, granularity: DateFilterGranularity, from?: DateString | number, to?: DateString | number, dateFilterOptionLocalId?: string, correlationId?: string, dataSet?: ObjRef, isWorkingSelectionChange?: boolean, localIdentifier?: string, boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter): ChangeDateFilterSelection;
+export function changeDateFilterSelection(type: DateFilterType, granularity: DateFilterGranularity, from?: DateString | number, to?: DateString | number, dateFilterOptionLocalId?: string, correlationId?: string, dataSet?: ObjRef, isWorkingSelectionChange?: boolean, localIdentifier?: string, boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter, emptyValueHandling?: EmptyValues): ChangeDateFilterSelection;
 
 // @alpha
 export function changeDrillableItems(drillableItems: ExplicitDrill[], correlationId?: string): IChangeDrillableItems;
@@ -569,7 +570,7 @@ export function changeSharing(newSharingProperties: ISharingApplyPayload_2, corr
 export function changeWorkingAttributeFilterSelection(filterLocalId: string, elements: IAttributeElements, selectionType: AttributeFilterSelectionType, correlationId?: string, isSelectionInvalid?: boolean): ChangeAttributeFilterSelection;
 
 // @public
-export function clearDateFilterSelection(correlationId?: string, dataSet?: ObjRef, isWorkingSelectionChange?: boolean, localIdentifier?: string): ChangeDateFilterSelection;
+export function clearDateFilterSelection(correlationId?: string, dataSet?: ObjRef, isWorkingSelectionChange?: boolean, localIdentifier?: string, emptyValueHandling?: EmptyValues): ChangeDateFilterSelection;
 
 // @alpha
 export function commandFailedEventHandler<TCommand extends IDashboardCommand>(type: TCommand["type"], handler: DashboardEventHandler<IDashboardCommandFailed<TCommand>>["handler"]): DashboardEventHandler<IDashboardCommandFailed<TCommand>>;
@@ -1346,6 +1347,7 @@ export type DateFilterSelection = {
     readonly isWorkingSelectionChange?: boolean;
     readonly localIdentifier?: string;
     readonly boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter;
+    readonly emptyValueHandling?: EmptyValues;
 };
 
 // @public
@@ -8308,6 +8310,8 @@ export interface IUpsertDateFilterAllTimePayload {
     // (undocumented)
     readonly dataSet?: ObjRef;
     // (undocumented)
+    readonly emptyValueHandling?: EmptyValues;
+    // (undocumented)
     readonly isWorkingSelectionChange?: boolean;
     // (undocumented)
     readonly localIdentifier?: string;
@@ -8322,6 +8326,8 @@ export interface IUpsertDateFilterNonAllTimePayload {
     readonly boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter;
     // (undocumented)
     readonly dataSet?: ObjRef;
+    // (undocumented)
+    readonly emptyValueHandling?: EmptyValues;
     // (undocumented)
     readonly from?: DateString | number;
     // (undocumented)
@@ -10150,6 +10156,9 @@ export const selectEnableKDCrossFiltering: DashboardSelector<boolean>;
 
 // @internal
 export const selectEnableKDDependentFilters: DashboardSelector<boolean>;
+
+// @alpha
+export const selectEnableKDEmptyDateValuesFilter: DashboardSelector<boolean>;
 
 // @internal
 export const selectEnableKDRichText: DashboardSelector<boolean>;

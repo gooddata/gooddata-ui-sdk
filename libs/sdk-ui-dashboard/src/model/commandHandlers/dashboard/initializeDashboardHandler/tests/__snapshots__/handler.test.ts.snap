@@ -59,6 +59,12 @@ exports[`initialize dashboard handler > for any dashboard > should resolve confi
       "type": "allTime",
       "visible": true,
     },
+    "emptyValues": {
+      "localIdentifier": "EMPTY_VALUES",
+      "name": "",
+      "type": "emptyValues",
+      "visible": true,
+    },
     "ref": {
       "identifier": "defaultDateFilterProjectConfig",
     },

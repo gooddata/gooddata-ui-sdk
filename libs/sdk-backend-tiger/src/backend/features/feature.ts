@@ -851,6 +851,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableKDEmptyDateValuesFilter,
+            "enableKDEmptyDateValuesFilter",
+            "BOOLEAN",
+            FeatureFlagsValues.enableKDEmptyDateValuesFilter,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnablePivotTableAutoSizeReset,
             "enablePivotTableAutoSizeReset",
             "BOOLEAN",

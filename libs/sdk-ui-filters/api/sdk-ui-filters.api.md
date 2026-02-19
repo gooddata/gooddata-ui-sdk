@@ -11,6 +11,7 @@ import { DashboardAttributeFilterSelectionMode } from '@gooddata/sdk-model';
 import { DateFilterGranularity } from '@gooddata/sdk-model';
 import { DateString } from '@gooddata/sdk-model';
 import { ElementsQueryOptionsElementsSpecification } from '@gooddata/sdk-backend-spi';
+import { EmptyValues } from '@gooddata/sdk-model';
 import { GoodDataSdkError } from '@gooddata/sdk-ui';
 import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
 import { IAbsoluteDateFilterForm } from '@gooddata/sdk-model';
@@ -27,6 +28,7 @@ import { IDashboardDateFilter } from '@gooddata/sdk-model';
 import { IDataSetMetadataObject } from '@gooddata/sdk-model';
 import { IDateFilter } from '@gooddata/sdk-model';
 import { IElementsQueryAttributeFilter } from '@gooddata/sdk-backend-spi';
+import { IEmptyValuesDateFilterOption } from '@gooddata/sdk-model';
 import { ILocale } from '@gooddata/sdk-ui';
 import { ILowerBoundedFilter } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
@@ -263,7 +265,7 @@ export const DateFilterHelpers: {
 export type DateFilterLabelMode = "short" | "full";
 
 // @public
-export type DateFilterOption = IAllTimeDateFilterOption | AbsoluteDateFilterOption | RelativeDateFilterOption;
+export type DateFilterOption = IAllTimeDateFilterOption | IEmptyValuesDateFilterOption | AbsoluteDateFilterOption | RelativeDateFilterOption;
 
 // @public
 export type DateFilterRelativeOptionGroup = {
@@ -834,6 +836,7 @@ export interface IDateFilterOptionsByType {
     absoluteForm?: IUiAbsoluteDateFilterForm;
     absolutePreset?: IAbsoluteDateFilterPreset[];
     allTime?: IAllTimeDateFilterOption;
+    emptyValues?: IEmptyValuesDateFilterOption;
     relativeForm?: IUiRelativeDateFilterForm;
     relativePreset?: DateFilterRelativeOptionGroup;
 }
@@ -854,6 +857,8 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     dateFilterMode: VisibilityMode;
     // (undocumented)
     dateFormat?: string;
+    // @alpha
+    enableEmptyDateValues?: boolean;
     // @alpha
     FilterConfigurationComponent?: ComponentType<IFilterConfigurationProps>;
     // (undocumented)
@@ -1245,6 +1250,7 @@ export function isWarningMessage(obj: unknown): obj is IWarningMessage;
 
 // @public
 export interface IUiAbsoluteDateFilterForm extends IAbsoluteDateFilterForm {
+    emptyValueHandling?: EmptyValues;
     from?: DateString;
     to?: DateString;
 }
@@ -1252,6 +1258,7 @@ export interface IUiAbsoluteDateFilterForm extends IAbsoluteDateFilterForm {
 // @public
 export interface IUiRelativeDateFilterForm extends Omit<IRelativeDateFilterForm, "availableGranularities"> {
     boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter;
+    emptyValueHandling?: EmptyValues;
     from?: RelativeDateFilterGranularityOffset;
     granularity?: DateFilterGranularity;
     to?: RelativeDateFilterGranularityOffset;

@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
@@ -10,6 +10,7 @@ import {
     idRef,
     localIdRef,
     newAbsoluteDateFilter,
+    newAllTimeFilter,
     newMeasureValueFilter,
     newMeasureValueFilterWithOptions,
     newNegativeAttributeFilter,
@@ -71,6 +72,45 @@ describe("tiger filter converter from model to AFM", () => {
                 "absolute date filter from model to AFM with all attributes",
                 newAbsoluteDateFilter(ReferenceMd.DateDatasets.Closed.ref, "2019-08-06", "2019-08-12"),
             ],
+            [
+                "absolute date filter with empty values handling (include)",
+                {
+                    absoluteDateFilter: {
+                        ...newAbsoluteDateFilter(
+                            ReferenceMd.DateDatasets.Closed.ref,
+                            "2019-08-06",
+                            "2019-08-12",
+                        ).absoluteDateFilter,
+                        emptyValueHandling: "include",
+                    },
+                },
+            ],
+            [
+                "absolute date filter with empty values handling (exclude)",
+                {
+                    absoluteDateFilter: {
+                        ...newAbsoluteDateFilter(
+                            ReferenceMd.DateDatasets.Closed.ref,
+                            "2019-08-06",
+                            "2019-08-12",
+                        ).absoluteDateFilter,
+                        emptyValueHandling: "exclude",
+                    },
+                },
+            ],
+            [
+                "absolute date filter with empty values handling (only)",
+                {
+                    absoluteDateFilter: {
+                        ...newAbsoluteDateFilter(
+                            ReferenceMd.DateDatasets.Closed.ref,
+                            "2019-08-06",
+                            "2019-08-12",
+                        ).absoluteDateFilter,
+                        emptyValueHandling: "only",
+                    },
+                },
+            ],
         ];
 
         it.each(Scenarios)("should convert %s", (_desc, input) => {
@@ -104,11 +144,60 @@ describe("tiger filter converter from model to AFM", () => {
                 "week granularity",
                 newRelativeDateFilter(ReferenceMd.DateDatasets.Closed.ref, DateGranularity["week"], 50, 100),
             ],
+            [
+                "relative date filter with empty values handling (include)",
+                {
+                    relativeDateFilter: {
+                        ...newRelativeDateFilter(
+                            ReferenceMd.DateDatasets.Closed.ref,
+                            DateGranularity["date"],
+                            -11,
+                            0,
+                        ).relativeDateFilter,
+                        emptyValueHandling: "include",
+                    },
+                },
+            ],
+            [
+                "all time date filter (default handling)",
+                newAllTimeFilter(ReferenceMd.DateDatasets.Closed.ref),
+            ],
+            [
+                "all time date filter with empty values handling (include)",
+                newAllTimeFilter(ReferenceMd.DateDatasets.Closed.ref, undefined, "include"),
+            ],
+            [
+                "all time date filter with empty values handling (exclude)",
+                newAllTimeFilter(ReferenceMd.DateDatasets.Closed.ref, undefined, "exclude"),
+            ],
             ["missing 'to' parameter", relativeFilter.withoutTo],
             ["missing 'from' parameter", relativeFilter.withoutFrom],
         ];
         it.each(Scenarios)("should return AFM relative date filter with %s", (_desc, input) => {
             expect(convertFilter(input as IFilter | IFilterWithApplyOnResult)).toMatchSnapshot();
+        });
+
+        it("should convert all time date filter with empty values handling (only)", () => {
+            const result = convertFilter(
+                newAllTimeFilter(ReferenceMd.DateDatasets.Closed.ref, undefined, "only"),
+            );
+
+            expect(result).toMatchObject({
+                allTimeDateFilter: {
+                    emptyValueHandling: "ONLY",
+                },
+            });
+        });
+
+        it("should not convert all time date filter with unsupported empty values handling", () => {
+            const unsupportedFilter = newAllTimeFilter(
+                ReferenceMd.DateDatasets.Closed.ref,
+            ) as IFilterWithApplyOnResult["filter"] & {
+                relativeDateFilter: { emptyValueHandling?: string };
+            };
+            unsupportedFilter.relativeDateFilter.emptyValueHandling = "unsupported";
+
+            expect(convertFilter(unsupportedFilter)).toBeNull();
         });
     });
     describe("convert filter", () => {

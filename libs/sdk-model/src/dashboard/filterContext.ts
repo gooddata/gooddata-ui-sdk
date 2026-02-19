@@ -1,10 +1,11 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
 
 import { type IDashboardObjectIdentity } from "./common.js";
 import { type DateFilterGranularity, type DateString } from "../dateFilterConfig/index.js";
 import {
+    type EmptyValues,
     type IAttributeElements,
     type ILowerBoundedFilter,
     type IUpperBoundedFilter,
@@ -211,6 +212,13 @@ export interface IDashboardDateFilter {
          * @alpha
          */
         boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter;
+
+        /**
+         * How to treat empty date values.
+         *
+         * @alpha
+         */
+        emptyValueHandling?: EmptyValues;
     };
 }
 
@@ -285,6 +293,7 @@ export function newRelativeDashboardDateFilter(
     dataSet?: ObjRef,
     localIdentifier?: string,
     boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter,
+    emptyValueHandling?: EmptyValues,
 ): IDashboardDateFilter {
     return {
         dateFilter: {
@@ -295,6 +304,7 @@ export function newRelativeDashboardDateFilter(
             dataSet,
             ...(boundedFilter ? { boundedFilter } : {}),
             ...(localIdentifier ? { localIdentifier } : {}),
+            ...(emptyValueHandling ? { emptyValueHandling } : {}),
         },
     };
 }
@@ -311,6 +321,7 @@ export function newAbsoluteDashboardDateFilter(
     to: DateString,
     dataSet?: ObjRef,
     localIdentifier?: string,
+    emptyValueHandling?: EmptyValues,
 ): IDashboardDateFilter {
     return {
         dateFilter: {
@@ -320,6 +331,7 @@ export function newAbsoluteDashboardDateFilter(
             to,
             dataSet,
             ...(localIdentifier ? { localIdentifier } : {}),
+            ...(emptyValueHandling ? { emptyValueHandling } : {}),
         },
     };
 }
@@ -332,6 +344,7 @@ export function newAbsoluteDashboardDateFilter(
 export function newAllTimeDashboardDateFilter(
     dataSet?: ObjRef,
     localIdentifier?: string,
+    emptyValueHandling?: EmptyValues,
 ): IDashboardDateFilter {
     return {
         dateFilter: {
@@ -339,6 +352,7 @@ export function newAllTimeDashboardDateFilter(
             granularity: "GDC.time.date",
             dataSet,
             ...(localIdentifier ? { localIdentifier } : {}),
+            ...(emptyValueHandling ? { emptyValueHandling } : {}),
         },
     };
 }
@@ -353,6 +367,40 @@ export function isAllTimeDashboardDateFilter(obj: unknown): boolean {
         (obj.dateFilter.from === null || obj.dateFilter.from === undefined) &&
         (obj.dateFilter.to === null || obj.dateFilter.to === undefined)
     );
+}
+
+/**
+ * Type-guard testing whether the provided object is an All time dashboard date filter
+ * with `emptyValueHandling` explicitly defined.
+ *
+ * @remarks
+ * This is useful to distinguish between:
+ * - a "noop" All time filter (implicit default, no additional config), and
+ * - an All time filter that carries extra configuration (e.g. empty date values handling).
+ *
+ * @alpha
+ */
+export function isAllTimeDashboardDateFilterWithEmptyValueHandling(
+    obj: unknown,
+): obj is IDashboardDateFilter & { dateFilter: { emptyValueHandling: EmptyValues } } {
+    return (
+        isAllTimeDashboardDateFilter(obj) &&
+        (obj as IDashboardDateFilter).dateFilter.emptyValueHandling !== undefined
+    );
+}
+
+/**
+ * Type-guard testing whether the provided object is a noop "All time" dashboard date filter.
+ *
+ * @remarks
+ * This is useful to distinguish between:
+ * - a noop "All time" filter (implicit default, no additional config), and
+ * - an "All time" filter that carries extra configuration (e.g. empty date values handling).
+ *
+ * @alpha
+ */
+export function isNoopAllTimeDashboardDateFilter(obj: unknown): boolean {
+    return isAllTimeDashboardDateFilter(obj) && !isAllTimeDashboardDateFilterWithEmptyValueHandling(obj);
 }
 
 /**

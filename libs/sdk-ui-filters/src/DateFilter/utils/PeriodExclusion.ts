@@ -4,6 +4,7 @@ import {
     isAbsoluteDateFilterForm,
     isAbsoluteDateFilterPreset,
     isAllTimeDateFilterOption,
+    isEmptyValuesDateFilterOption,
     isRelativeDateFilterForm,
     isRelativeDateFilterPreset,
 } from "@gooddata/sdk-model";
@@ -23,6 +24,7 @@ export const applyExcludeCurrentPeriod = (
 
     if (
         isAllTimeDateFilterOption(dateFilterOption) ||
+        isEmptyValuesDateFilterOption(dateFilterOption) ||
         isAbsoluteDateFilterForm(dateFilterOption) ||
         isAbsoluteDateFilterPreset(dateFilterOption) ||
         isRelativeDateFilterForm(dateFilterOption)

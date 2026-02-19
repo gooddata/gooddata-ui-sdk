@@ -1,20 +1,20 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type DayPickerProps } from "react-day-picker";
 
-import { type IAbsoluteDateFilterForm, type WeekStart } from "@gooddata/sdk-model";
+import { type WeekStart } from "@gooddata/sdk-model";
 
 import { dateFilterValueToDateRange, dateRangeToDateFilterValue } from "./conversions.js";
 import { DateRangePicker } from "../DateRangePicker/DateRangePicker.js";
 import { type IDateRange } from "../DateRangePicker/types.js";
-import { type DateFilterOption } from "../interfaces/index.js";
+import { type DateFilterOption, type IUiAbsoluteDateFilterForm } from "../interfaces/index.js";
 
 /**
  * @internal
  */
 export interface IAbsoluteDateFilterFormProps {
     dateFormat: string;
-    selectedFilterOption: IAbsoluteDateFilterForm;
+    selectedFilterOption: IUiAbsoluteDateFilterForm;
     isMobile: boolean;
     onSelectedFilterOptionChange: (option: DateFilterOption) => void;
     isTimeEnabled: boolean;
@@ -45,7 +45,12 @@ export function AbsoluteDateFilterForm({
 }: IAbsoluteDateFilterFormProps) {
     const handleRangeChange = (range: IDateRange): void => {
         onSelectedFilterOptionChange(
-            dateRangeToDateFilterValue(range, selectedFilterOption.localIdentifier, isTimeEnabled),
+            dateRangeToDateFilterValue(
+                range,
+                selectedFilterOption.localIdentifier,
+                isTimeEnabled,
+                selectedFilterOption.emptyValueHandling,
+            ),
         );
     };
 

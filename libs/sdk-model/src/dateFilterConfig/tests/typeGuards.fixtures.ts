@@ -1,8 +1,10 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import {
     type IAbsoluteDateFilterForm,
     type IAbsoluteDateFilterPreset,
     type IAllTimeDateFilterOption,
+    type IEmptyValuesDateFilterOption,
     type IRelativeDateFilterForm,
     type IRelativeDateFilterPreset,
 } from "../index.js";
@@ -46,4 +48,11 @@ export const relativeDateFilterPreset: IRelativeDateFilterPreset = {
     from: -12,
     to: -1,
     granularity: "GDC.time.year",
+};
+
+export const emptyValuesDateFilterOption: IEmptyValuesDateFilterOption = {
+    localIdentifier: "emptyValuesDateFilterOption",
+    name: "emptyValuesDateFilterOption",
+    type: "emptyValues",
+    visible: true,
 };

@@ -508,12 +508,27 @@ function convertCreatedVisualizations(
     };
 }
 
-function convertCreatedVisualization(data: CreatedVisualization): IGenAIVisualization {
+export function convertCreatedVisualization(data: CreatedVisualization): IGenAIVisualization {
     return {
-        ...data,
-        filters: data.filters.map((f) => {
-            return f as GenAIFilter;
-        }),
+        id: data.id,
+        title: data.title,
+        visualizationType: data.visualizationType,
+        metrics: data.metrics,
+        dimensionality: data.dimensionality,
+        filters: data.filters as GenAIFilter[],
+        suggestions: data.suggestions,
+        savedVisualizationId: data.savedVisualizationId,
+        ...(data.config?.forecast
+            ? {
+                  config: {
+                      forecast: {
+                          forecastPeriod: data.config.forecast.forecastPeriod,
+                          confidenceLevel: data.config.forecast.confidenceLevel,
+                          seasonal: data.config.forecast.seasonal,
+                      },
+                  },
+              }
+            : {}),
     };
 }
 

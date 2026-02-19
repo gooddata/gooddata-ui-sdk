@@ -41,9 +41,9 @@ import type { ExtendedDashboardWidget } from "../../../model/types/layoutTypes.j
 import { type IDashboardFilter } from "../../../types.js";
 import {
     areFiltersEqual,
-    isAllTimeDateFilterFixed,
     isFilterIgnoredByWidget,
     isFilterMatch,
+    isNoopAllTimeDateFilterFixed,
 } from "../utils.js";
 
 function sanitizeCommonDateFilter(filter: IDashboardFilter, commonDateFilterId?: string): IDashboardFilter {
@@ -433,8 +433,8 @@ function validateHiddenFilters(
     );
 
     for (const hiddenFilter of hiddenFiltersAsIFilter) {
-        // All-time date filters should not be saved in automation filters, so we can skip them
-        if (isAllTimeDateFilterFixed(hiddenFilter)) {
+        // Noop "all time" date filters should not be saved in automation filters, so we can skip them
+        if (isNoopAllTimeDateFilterFixed(hiddenFilter)) {
             continue;
         }
 
@@ -482,8 +482,8 @@ function validateLockedFilters(
     );
 
     for (const lockedFilter of lockedFilterAsIFilter) {
-        // All-time date filters are not saved in automation filters, so we can skip them
-        if (isAllTimeDateFilterFixed(lockedFilter)) {
+        // Noop "all time" date filters are not saved in automation filters, so we can skip them
+        if (isNoopAllTimeDateFilterFixed(lockedFilter)) {
             continue;
         }
 

@@ -170,6 +170,8 @@
     "dateFilterDropdown.relativeForm.label": "粒徑",
     "dateFilter.tab.standard": "標準",
     "dateFilter.tab.fiscal": "會計",
+    "dateFilter.tab.standard.ariaLabel": "標準行事曆",
+    "dateFilter.tab.fiscal.ariaLabel": "會計行事曆",
     "filters.thisMinute.title": "這一刻",
     "filters.lastMinute.title": "最後一分鐘",
     "filters.nextMinute.title": "下一分鐘",

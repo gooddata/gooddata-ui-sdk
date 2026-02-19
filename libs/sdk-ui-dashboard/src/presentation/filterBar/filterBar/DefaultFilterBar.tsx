@@ -176,11 +176,20 @@ export const useFilterBarProps = (): IFilterBarProps => {
                         filter?.dateFilter.dataSet,
                         isWorkingSelectionChange && isApplyAllAtOnceEnabledAndSet,
                         localIdentifier,
+                        filter?.dateFilter.emptyValueHandling,
                     ),
                 );
             } else {
-                const { type, granularity, from, to, dataSet, localIdentifier, boundedFilter } =
-                    filter.dateFilter;
+                const {
+                    type,
+                    granularity,
+                    from,
+                    to,
+                    dataSet,
+                    localIdentifier,
+                    boundedFilter,
+                    emptyValueHandling,
+                } = filter.dateFilter;
                 const filterIndex = filters
                     .filter(isDashboardDateFilter)
                     .findIndex((filter) => areObjRefsEqual(filter.dateFilter.dataSet, dataSet));
@@ -200,6 +209,7 @@ export const useFilterBarProps = (): IFilterBarProps => {
                         isWorkingSelectionChange && isApplyAllAtOnceEnabledAndSet,
                         localIdentifier ?? newLocalIdentifier,
                         boundedFilter,
+                        emptyValueHandling,
                     ),
                 );
             }

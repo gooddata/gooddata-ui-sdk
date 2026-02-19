@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { endOfDay, format, startOfDay, subMonths } from "date-fns";
 import { groupBy, isEmpty, max, min } from "lodash-es";
@@ -8,6 +8,7 @@ import {
     type IAbsoluteDateFilterPreset,
     type IAllTimeDateFilterOption,
     type IDateFilterConfig,
+    type IEmptyValuesDateFilterOption,
     type IRelativeDateFilterForm,
     type IRelativeDateFilterPreset,
 } from "@gooddata/sdk-model";
@@ -33,6 +34,7 @@ export function convertDateFilterConfigToDateFilterOptions(
     config: IDateFilterConfig,
 ): IDateFilterOptionsByType {
     const allTime = convertAllTime(config.allTime);
+    const emptyValues = convertEmptyValues(config.emptyValues);
     const absoluteForm = convertAbsoluteForm(config.absoluteForm);
     const relativeForm = convertRelativeForm(config.relativeForm);
     const absolutePreset = convertAbsolutePresets(config.absolutePresets);
@@ -40,6 +42,7 @@ export function convertDateFilterConfigToDateFilterOptions(
 
     return removeEmptyKeysFromDateFilterOptions({
         allTime,
+        emptyValues,
         absoluteForm,
         absolutePreset,
         relativeForm,
@@ -52,6 +55,17 @@ function convertAllTime(filter: IAllTimeDateFilterOption | undefined): IAllTimeD
         filter && {
             ...filter,
             type: "allTime",
+        }
+    );
+}
+
+function convertEmptyValues(
+    filter: IEmptyValuesDateFilterOption | undefined,
+): IEmptyValuesDateFilterOption | undefined {
+    return (
+        filter && {
+            ...filter,
+            type: "emptyValues",
         }
     );
 }
@@ -120,11 +134,13 @@ function removeEmptyKeysFromDateFilterOptions({
     absoluteForm,
     absolutePreset,
     allTime,
+    emptyValues,
     relativeForm,
     relativePreset,
 }: IDateFilterOptionsByType): IDateFilterOptionsByType {
     return {
         ...(allTime && { allTime }),
+        ...(emptyValues && { emptyValues }),
         ...(absoluteForm && { absoluteForm }),
         ...(!isEmpty(absolutePreset) && { absolutePreset }),
         ...(relativeForm && { relativeForm }),

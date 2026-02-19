@@ -170,6 +170,8 @@
     "dateFilterDropdown.relativeForm.label": "細分性",
     "dateFilter.tab.standard": "標準",
     "dateFilter.tab.fiscal": "会計",
+    "dateFilter.tab.standard.ariaLabel": "標準カレンダー",
+    "dateFilter.tab.fiscal.ariaLabel": "会計カレンダー",
     "filters.thisMinute.title": "現時点",
     "filters.lastMinute.title": "一分前",
     "filters.nextMinute.title": "一分後",

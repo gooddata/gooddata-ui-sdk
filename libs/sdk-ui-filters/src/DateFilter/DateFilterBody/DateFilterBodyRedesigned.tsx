@@ -6,7 +6,12 @@ import cx from "classnames";
 import { isEmpty } from "lodash-es";
 import { useIntl } from "react-intl";
 
-import { isAbsoluteDateFilterForm, isRelativeDateFilterForm } from "@gooddata/sdk-model";
+import {
+    isAbsoluteDateFilterForm,
+    isAllTimeDateFilterOption,
+    isEmptyValuesDateFilterOption,
+    isRelativeDateFilterForm,
+} from "@gooddata/sdk-model";
 import { useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 import { type IDateFilterBodyProps } from "./DateFilterBody.js";
@@ -18,7 +23,7 @@ import { DateFilterCustomPeriodButtons } from "./DateFilterCustomPeriodButtons.j
 import { DateFilterFormContent } from "./DateFilterFormContent.js";
 import { EditModeMessage } from "./EditModeMessage.js";
 import { type DateFilterRoute } from "./types.js";
-import { ExcludeCurrentPeriodToggle } from "../ExcludeCurrentPeriodToggle/ExcludeCurrentPeriodToggle.js";
+import { CheckboxSection } from "../CheckboxSection/CheckboxSection.js";
 import { type IUiRelativeDateFilterForm } from "../interfaces/index.js";
 import { getDateFilterOptionGranularity } from "../utils/OptionUtils.js";
 import {
@@ -137,11 +142,15 @@ export const DateFilterBodyRedesigned = forwardRef<HTMLDivElement, IDateFilterBo
         }
     }, [props.isMobile, props.selectedFilterOption]);
 
-    const calculateHeight = (showExcludeCurrent: boolean): number | undefined => {
+    const calculateHeight = (
+        showExcludeCurrent: boolean,
+        showEmptyValuesHandling: boolean,
+    ): number | undefined => {
         // Mobile in Horizontal Layout
         if (window.innerHeight <= MOBILE_WIDTH) {
-            const excludeOpenPeriodHeight = showExcludeCurrent ? EXCLUDE_OPEN_PERIOD_HEIGHT : 0;
-            return window.innerHeight - excludeOpenPeriodHeight - ACTIONS_BUTTONS_HEIGHT - MARGIN_BOTTOM;
+            const checkboxCount = (showExcludeCurrent ? 1 : 0) + (showEmptyValuesHandling ? 1 : 0);
+            const checkboxHeight = checkboxCount * EXCLUDE_OPEN_PERIOD_HEIGHT;
+            return window.innerHeight - checkboxHeight - ACTIONS_BUTTONS_HEIGHT - MARGIN_BOTTOM;
         }
         return undefined;
     };
@@ -185,7 +194,22 @@ export const DateFilterBodyRedesigned = forwardRef<HTMLDivElement, IDateFilterBo
     const hideWhenDisabled = !!hideDisabledExclude || isMobile;
     const shouldRenderExcludeCurrent = !(hideWhenDisabled && !isExcludeCurrentPeriodEnabled);
 
-    const bodyHeight = calculateHeight(shouldRenderExcludeCurrent);
+    const shouldRenderEmptyValuesHandling =
+        !!props.enableEmptyDateValues &&
+        !isEmptyValuesDateFilterOption(selectedFilterOption) &&
+        selectedFilterOption.emptyValueHandling !== "only";
+    const isAllTimeSelected = isAllTimeDateFilterOption(selectedFilterOption);
+    const effectiveEmptyValueHandling =
+        selectedFilterOption.emptyValueHandling ?? (isAllTimeSelected ? "include" : "exclude");
+    const emptyValuesToggleMode = isAllTimeSelected ? ("exclude" as const) : ("include" as const);
+    const emptyValuesToggleChecked = isAllTimeSelected
+        ? effectiveEmptyValueHandling !== "include"
+        : effectiveEmptyValueHandling === "include";
+
+    const bodyHeight = calculateHeight(
+        shouldRenderExcludeCurrent,
+        shouldRenderEmptyValuesHandling && route === null,
+    );
     const visibleScrollbarClassName = getVisibleScrollbarClassName();
     let wrapperStyle: CSSProperties = {};
     let scrollerStyle: CSSProperties = {};
@@ -259,6 +283,7 @@ export const DateFilterBodyRedesigned = forwardRef<HTMLDivElement, IDateFilterBo
                         availableGranularities={filteredAvailableGranularities}
                         isMobile={isMobile}
                         withoutApply={withoutApply}
+                        enableEmptyDateValues={props.enableEmptyDateValues}
                         activeForm={route}
                         onBackNavigation={handleBackNavigation}
                         onClose={closeDropdown}
@@ -302,6 +327,7 @@ export const DateFilterBodyRedesigned = forwardRef<HTMLDivElement, IDateFilterBo
                             withoutApply={withoutApply}
                             isRedesigned
                             activeCalendars={props.activeCalendars}
+                            enableEmptyDateValues={props.enableEmptyDateValues}
                         />
                     ) : (
                         <VisibleScrollbar className={visibleScrollbarClassName} style={scrollerStyle}>
@@ -315,6 +341,7 @@ export const DateFilterBodyRedesigned = forwardRef<HTMLDivElement, IDateFilterBo
                                 selectedTab={selectedTab}
                                 onTabSelect={setSelectedTab}
                                 filteredRelativePreset={filteredRelativePreset}
+                                enableEmptyDateValues={props.enableEmptyDateValues}
                             />
                         </VisibleScrollbar>
                     )}
@@ -338,17 +365,42 @@ export const DateFilterBodyRedesigned = forwardRef<HTMLDivElement, IDateFilterBo
                 </>
             ) : null}
 
-            {shouldRenderExcludeCurrent && !route ? (
-                <>
-                    <div className="gd-date-filter-menu-divider" />
-                    <ExcludeCurrentPeriodToggle
-                        value={excludeCurrentPeriod}
-                        onChange={onExcludeCurrentPeriodChange}
-                        disabled={!isExcludeCurrentPeriodEnabled}
-                        granularity={getDateFilterOptionGranularity(selectedFilterOption)}
-                    />
-                </>
-            ) : null}
+            <CheckboxSection
+                visible={!route}
+                showDivider
+                emptyValuesHandling={
+                    shouldRenderEmptyValuesHandling
+                        ? {
+                              mode: emptyValuesToggleMode,
+                              checked: emptyValuesToggleChecked,
+                              onChange: (checked) => {
+                                  const emptyValueHandling = isAllTimeSelected
+                                      ? checked
+                                          ? "exclude"
+                                          : undefined
+                                      : checked
+                                        ? "include"
+                                        : undefined;
+                                  onSelectedFilterOptionChange({
+                                      ...selectedFilterOption,
+                                      emptyValueHandling,
+                                  });
+                              },
+                              testId: "date-filter-empty-values-handling-checkbox",
+                          }
+                        : undefined
+                }
+                excludeCurrentPeriod={
+                    shouldRenderExcludeCurrent
+                        ? {
+                              value: excludeCurrentPeriod,
+                              onChange: onExcludeCurrentPeriodChange,
+                              disabled: !isExcludeCurrentPeriodEnabled,
+                              granularity: getDateFilterOptionGranularity(selectedFilterOption),
+                          }
+                        : undefined
+                }
+            />
 
             <div role="group" className={cx("gd-extended-date-filter-actions")}>
                 <div className="gd-extended-date-filter-actions-left-content">

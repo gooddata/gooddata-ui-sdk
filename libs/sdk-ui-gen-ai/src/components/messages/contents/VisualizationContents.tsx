@@ -64,25 +64,29 @@ import { PivotTable } from "@gooddata/sdk-ui-pivot";
 import { PivotTableNext, useAgGridToken } from "@gooddata/sdk-ui-pivot/next";
 import { ScopedThemeProvider, useTheme } from "@gooddata/sdk-ui-theme-provider";
 
+import { DrillSelectDropdownMenu } from "./drill/DrillSelectDropdownMenu.js";
 import { MarkdownComponent } from "./Markdown.js";
 import { useExecution } from "./useExecution.js";
 import { VisualizationErrorBoundary } from "./VisualizationErrorBoundary.js";
 import { VisualizationSaveDialog } from "./VisualizationSaveDialog.js";
+import {
+    mapVisualizationForecastToBackendConfig,
+    mapVisualizationForecastToChartConfig,
+} from "../../../forecast/forecastMapping.js";
 import { type VisualizationContents, makeTextContents, makeUserMessage } from "../../../model.js";
 import { colorPaletteSelector, settingsSelector } from "../../../store/chatWindow/chatWindowSelectors.js";
 import {
     copyToClipboardAction,
     setKeyDriverAnalysisAction,
 } from "../../../store/chatWindow/chatWindowSlice.js";
-import { getAbsoluteVisualizationHref, getHeadlineComparison, getVisualizationHref } from "../../../utils.js";
-import { useConfig } from "../../ConfigContext.js";
-import { DrillSelectDropdownMenu } from "./drill/DrillSelectDropdownMenu.js";
 import {
     newMessageAction,
     saveVisualisationRenderStatusAction,
     visualizationErrorAction,
 } from "../../../store/messages/messagesSlice.js";
 import { type RootState } from "../../../store/types.js";
+import { getAbsoluteVisualizationHref, getHeadlineComparison, getVisualizationHref } from "../../../utils.js";
+import { useConfig } from "../../ConfigContext.js";
 import { createKdaDefinitionFromDrill, getDashboardAttributeFilter } from "../../hooks/useKdaDefinition.js";
 import { convertIntersectionToAttributeFilters, mergeFilters } from "../../utils/intersectionUtils.js";
 
@@ -631,6 +635,7 @@ function VisualizationContentsComponentCore({
                                                 case "LINE":
                                                     return renderLineChart(
                                                         intl.locale,
+                                                        visualization,
                                                         metrics,
                                                         dimensions,
                                                         filters,
@@ -846,6 +851,7 @@ const renderColumnChart = (
 
 const renderLineChart = (
     locale: string,
+    visualization: IGenAIVisualization,
     metrics: IMeasure[],
     dimensions: IAttribute[],
     filters: IFilter[],
@@ -860,28 +866,35 @@ const renderLineChart = (
         enableAccessibleChartTooltip?: boolean;
         enableChangeAnalysis?: boolean;
     },
-) => (
-    <LineChart
-        locale={locale}
-        height={VIS_HEIGHT}
-        measures={metrics}
-        trendBy={dimensions[0]}
-        segmentBy={metrics.length <= 1 ? dimensions[1] : undefined}
-        filters={filters}
-        sortBy={sortBy}
-        config={{
-            ...visualizationTooltipOptions,
-            ...legendTooltipOptions,
-            colorPalette,
-            enableAccessibleTooltip: props.enableAccessibleChartTooltip,
-        }}
-        drillableItems={props.drillableItems}
-        onDrill={onDrill}
-        onError={onError}
-        onLoadingChanged={onLoadingChanged}
-        onExportReady={onSuccess}
-    />
-);
+) => {
+    const forecast = mapVisualizationForecastToChartConfig(visualization);
+    const forecastConfig = mapVisualizationForecastToBackendConfig(visualization);
+
+    return (
+        <LineChart
+            locale={locale}
+            height={VIS_HEIGHT}
+            measures={metrics}
+            trendBy={dimensions[0]}
+            segmentBy={metrics.length <= 1 ? dimensions[1] : undefined}
+            filters={filters}
+            sortBy={sortBy}
+            config={{
+                ...visualizationTooltipOptions,
+                ...legendTooltipOptions,
+                colorPalette,
+                enableAccessibleTooltip: props.enableAccessibleChartTooltip,
+                ...(forecastConfig && forecast ? { forecast } : {}),
+            }}
+            forecastConfig={forecastConfig}
+            drillableItems={props.drillableItems}
+            onDrill={onDrill}
+            onError={onError}
+            onLoadingChanged={onLoadingChanged}
+            onExportReady={onSuccess}
+        />
+    );
+};
 
 const renderPieChart = (
     locale: string,

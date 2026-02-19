@@ -315,6 +315,7 @@ export type {
     RouteResult,
     RouteResultUseCaseEnum,
     CreatedVisualization,
+    VisualizationConfig,
     Metric,
     DimAttribute,
     DimAttributeTypeEnum,
@@ -707,7 +708,7 @@ export type {
     GdStorageFileTypeEnum,
 } from "./generated/result-json-api/api.js";
 
-export * from "./generated/export-json-api/index.js";
+export type * from "./generated/export-json-api/index.js";
 export type {
     Configuration as ExportConfiguration,
     ConfigurationParameters as ExportConfigurationParameters,

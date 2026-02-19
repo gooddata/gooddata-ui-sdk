@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { partition } from "lodash-es";
 
@@ -80,6 +80,7 @@ export function applyFilterContext(
                     from: workingFilter.dateFilter.from,
                     to: workingFilter.dateFilter.to,
                     boundedFilter: workingFilter.dateFilter.boundedFilter,
+                    emptyValueHandling: workingFilter.dateFilter.emptyValueHandling,
                 },
             };
 

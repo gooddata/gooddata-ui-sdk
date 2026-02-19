@@ -1,4 +1,5 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import {
@@ -82,5 +83,22 @@ describe("mergeFilters", () => {
         const actual = mergeFilters(insightFilters, addedFilters);
 
         expect(actual).toEqual([]);
+    });
+
+    it("should keep all time date filter if it has empty values handling configured", () => {
+        const insightFilters = [newAbsoluteDateFilter("foo", "2020-01-01", "2020-12-31")];
+        const allTimeWithEmptyValueHandling: IFilter = newAllTimeFilter("foo", undefined, "exclude");
+
+        const actual = mergeFilters(insightFilters, [allTimeWithEmptyValueHandling]);
+
+        expect(actual).toEqual([allTimeWithEmptyValueHandling]);
+    });
+
+    it("should keep all time date filter with empty values handling when original filters are empty", () => {
+        const allTimeWithEmptyValueHandling: IFilter = newAllTimeFilter("foo", undefined, "exclude");
+
+        const actual = mergeFilters([], [allTimeWithEmptyValueHandling]);
+
+        expect(actual).toEqual([allTimeWithEmptyValueHandling]);
     });
 });

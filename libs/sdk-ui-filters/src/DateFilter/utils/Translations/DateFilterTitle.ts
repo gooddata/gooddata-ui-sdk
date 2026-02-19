@@ -13,6 +13,7 @@ import {
     isAbsoluteDateFilterForm,
     isAbsoluteDateFilterPreset,
     isAllTimeDateFilterOption,
+    isEmptyValuesDateFilterOption,
     isRelativeDateFilterForm,
     isRelativeDateFilterPreset,
     isUpperBound,
@@ -215,6 +216,9 @@ export const formatRelativeDateRange = (
 const getAllTimeFilterRepresentation = (translator: IMessageTranslator): string =>
     translator.formatMessage({ id: "filters.allTime.title" });
 
+const getEmptyValuesFilterRepresentation = (translator: IMessageTranslator): string =>
+    translator.formatMessage({ id: "filters.emptyValues.title" });
+
 const getAbsoluteFormFilterRepresentation = (filter: IUiAbsoluteDateFilterForm, dateFormat: string): string =>
     filter.from && filter.to ? formatAbsoluteDateRange(filter.from, filter.to, dateFormat) : "";
 
@@ -253,7 +257,7 @@ const getRelativePresetFilterRepresentation = (
         filter.boundedFilter,
     );
 
-export const getDateFilterRepresentationByFilterType = (
+const getDateFilterRepresentationByFilterType = (
     filter: DateFilterOption,
     translator: IDateAndMessageTranslator,
     dateFormat: string,
@@ -261,6 +265,8 @@ export const getDateFilterRepresentationByFilterType = (
 ) => {
     if (isAbsoluteDateFilterForm(filter) || isRelativeDateFilterForm(filter)) {
         return getDateFilterRepresentationUsingTranslator(filter, translator, dateFormat, labelMode);
+    } else if (isEmptyValuesDateFilterOption(filter)) {
+        return filter.name || getEmptyValuesFilterRepresentation(translator);
     } else if (
         isAllTimeDateFilterOption(filter) ||
         isAbsoluteDateFilterPreset(filter) ||
@@ -285,6 +291,18 @@ export const getDateFilterRepresentationByFilterType = (
 // ...
 /**
  * Gets the filter title using provided intl object.
+ *
+ * @remarks
+ * In addition to the base date filter representation, this function also decorates the title based on
+ * empty values handling:
+ *
+ * - For "All time" with excluded empty values (`emptyValueHandling === "exclude"`), returns
+ *   `"All time except empty values"`.
+ * - For any other option with included empty values (`emptyValueHandling === "include"`), appends
+ *   `", empty value"` to the base representation.
+ *
+ * The dedicated "Empty values" preset is represented by its own title and is not further decorated.
+ *
  * @returns Representation of the filter (e.g. "My preset", "From 2 weeks ago to 1 week ahead")
  */
 export const getDateFilterTitleUsingTranslator = (
@@ -292,7 +310,19 @@ export const getDateFilterTitleUsingTranslator = (
     translator: IDateAndMessageTranslator,
     labelMode: DateFilterLabelMode,
     dateFormat: string = DEFAULT_DATE_FORMAT,
-): string => getDateFilterRepresentationByFilterType(filter, translator, dateFormat, labelMode);
+): string => {
+    if (isAllTimeDateFilterOption(filter) && filter.emptyValueHandling === "exclude") {
+        return translator.formatMessage({ id: "filters.allTime.exceptEmptyValues.title" });
+    }
+
+    const baseTitle = getDateFilterRepresentationByFilterType(filter, translator, dateFormat, labelMode);
+
+    if (!isEmptyValuesDateFilterOption(filter) && filter.emptyValueHandling === "include") {
+        return translator.formatMessage({ id: "filters.emptyValues.label" }, { title: baseTitle });
+    }
+
+    return baseTitle;
+};
 
 /**
  * Gets the filter representation regardless of custom name.
@@ -310,6 +340,8 @@ const getDateFilterRepresentationUsingTranslator = (
         return getAbsolutePresetFilterRepresentation(filter, dateFormat);
     } else if (isAllTimeDateFilterOption(filter)) {
         return getAllTimeFilterRepresentation(translator);
+    } else if (isEmptyValuesDateFilterOption(filter)) {
+        return getEmptyValuesFilterRepresentation(translator);
     } else if (isRelativeDateFilterForm(filter)) {
         return getRelativeFormFilterRepresentation(filter, translator, labelMode);
     } else if (isRelativeDateFilterPreset(filter)) {

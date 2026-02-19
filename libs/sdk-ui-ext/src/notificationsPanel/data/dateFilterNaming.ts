@@ -26,16 +26,39 @@ type DateFilterMeta = IRelativeDateFilterMeta | IAbsoluteDateFilterMeta;
 export function translateDateFilter(intl: IntlShape, filter: IDateFilter, dateFormat: string): string {
     const metadata = filterMetadata(filter);
 
-    return metadata.type === "absolute"
-        ? DateFilterHelpers.formatAbsoluteDateRange(metadata.from, metadata.to, dateFormat)
-        : DateFilterHelpers.formatRelativeDateRange(
-              metadata.from,
-              metadata.to,
-              metadata.granularity as DateFilterGranularity,
-              intl,
-              "full",
-              metadata.boundedFilter,
-          );
+    // Keep consistent with `getDateFilterTitleUsingTranslator` in sdk-ui-filters:
+    // - Special case for "All time" with excluded empty values.
+    // - For included empty values, decorate the base representation.
+    // - For "only" empty values, use the dedicated title.
+    if (
+        metadata.type === "relative" &&
+        metadata.granularity === "ALL_TIME_GRANULARITY" &&
+        metadata.emptyValueHandling === "exclude"
+    ) {
+        return intl.formatMessage({ id: "filters.allTime.exceptEmptyValues.title" });
+    }
+
+    if (metadata.emptyValueHandling === "only") {
+        return intl.formatMessage({ id: "filters.emptyValues.title" });
+    }
+
+    const base =
+        metadata.type === "absolute"
+            ? DateFilterHelpers.formatAbsoluteDateRange(metadata.from, metadata.to, dateFormat)
+            : DateFilterHelpers.formatRelativeDateRange(
+                  metadata.from,
+                  metadata.to,
+                  metadata.granularity as DateFilterGranularity,
+                  intl,
+                  "full",
+                  metadata.boundedFilter,
+              );
+
+    if (metadata.emptyValueHandling === "include") {
+        return intl.formatMessage({ id: "filters.emptyValues.label" }, { title: base });
+    }
+
+    return base;
 }
 
 function filterMetadata(filter: IDateFilter): DateFilterMeta {

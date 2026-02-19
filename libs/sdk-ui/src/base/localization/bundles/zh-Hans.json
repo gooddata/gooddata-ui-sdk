@@ -170,6 +170,8 @@
     "dateFilterDropdown.relativeForm.label": "精细度",
     "dateFilter.tab.standard": "标准",
     "dateFilter.tab.fiscal": "财务",
+    "dateFilter.tab.standard.ariaLabel": "标准日历",
+    "dateFilter.tab.fiscal.ariaLabel": "会计日历",
     "filters.thisMinute.title": "这一分钟",
     "filters.lastMinute.title": "上一分钟",
     "filters.nextMinute.title": "下一分钟",

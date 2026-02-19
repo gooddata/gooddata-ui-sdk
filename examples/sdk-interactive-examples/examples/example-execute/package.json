@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-interactive-example-execute",
-    "version": "11.22.0-alpha.5",
+    "version": "11.22.0-alpha.6",
     "private": false,
     "description": "This example demonstrates using Execute component and build custom visualization.",
     "license": "LicenseRef-LICENSE",
@@ -48,7 +48,7 @@
         "@gooddata/catalog-export": "workspace:*",
         "@gooddata/eslint-config": "workspace:*",
         "@gooddata/oxlint-config": "workspace:*",
-        "@types/node": "^22.13.0",
+        "@types/node": "22.13.0",
         "@types/react": "19.1.11",
         "@types/react-dom": "19.1.7",
         "@typescript-eslint/eslint-plugin": "8.52.0",

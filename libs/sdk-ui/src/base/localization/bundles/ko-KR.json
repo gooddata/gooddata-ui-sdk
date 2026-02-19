@@ -170,6 +170,8 @@
     "dateFilterDropdown.relativeForm.label": "세분성",
     "dateFilter.tab.standard": "표준",
     "dateFilter.tab.fiscal": "회계",
+    "dateFilter.tab.standard.ariaLabel": "표준 캘린더",
+    "dateFilter.tab.fiscal.ariaLabel": "회계 캘린더",
     "filters.thisMinute.title": "이 순간",
     "filters.lastMinute.title": "마지막 순간",
     "filters.nextMinute.title": "다음 분",

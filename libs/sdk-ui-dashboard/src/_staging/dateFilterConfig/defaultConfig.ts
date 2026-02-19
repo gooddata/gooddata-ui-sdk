@@ -22,6 +22,12 @@ export const defaultDateFilterConfig: IDateFilterConfig = {
         name: "",
         visible: true,
     },
+    emptyValues: {
+        localIdentifier: "EMPTY_VALUES",
+        type: "emptyValues",
+        name: "",
+        visible: true,
+    },
     absoluteForm: {
         localIdentifier: "ABSOLUTE_FORM",
         type: "absoluteForm",

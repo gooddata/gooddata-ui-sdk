@@ -1,4 +1,5 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { ReferenceMd } from "@gooddata/reference-workspace";
@@ -78,6 +79,29 @@ describe("filterConverters tests", () => {
                 ]),
             ],
             [
+                "filterContext with all time date filter",
+                getFilterContext([
+                    {
+                        dateFilter: {
+                            granularity: "GDC.time.date",
+                            type: "relative",
+                        },
+                    },
+                ]),
+            ],
+            [
+                "filterContext with all time date filter with empty values handling",
+                getFilterContext([
+                    {
+                        dateFilter: {
+                            granularity: "GDC.time.date",
+                            type: "relative",
+                            emptyValueHandling: "exclude",
+                        },
+                    },
+                ]),
+            ],
+            [
                 "filterContext with absolute date filter",
                 getFilterContext([
                     {
@@ -121,6 +145,29 @@ describe("filterConverters tests", () => {
                             type: "relative",
                             from: -4,
                             to: -3,
+                        },
+                    },
+                ]),
+            ],
+            [
+                "filterContext with all time date filter",
+                getFilterContext([
+                    {
+                        dateFilter: {
+                            granularity: "GDC.time.date",
+                            type: "relative",
+                        },
+                    },
+                ]),
+            ],
+            [
+                "filterContext with all time date filter with empty values handling",
+                getFilterContext([
+                    {
+                        dateFilter: {
+                            granularity: "GDC.time.date",
+                            type: "relative",
+                            emptyValueHandling: "exclude",
                         },
                     },
                 ]),

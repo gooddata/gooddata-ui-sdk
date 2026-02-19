@@ -5,6 +5,7 @@ import { invariant } from "ts-invariant";
 
 import {
     type ComparisonConditionOperator,
+    type EmptyValues,
     type IAbsoluteDateFilter,
     type IAttributeElements,
     type ILowerBoundedFilter,
@@ -136,6 +137,7 @@ export function newAbsoluteDateFilter(
     from: string,
     to: string,
     localIdentifier?: string,
+    emptyValueHandling?: EmptyValues,
 ): IAbsoluteDateFilter {
     const dataSet = isObjRef(dateDataSet) ? dateDataSet : idRef(dateDataSet);
     return {
@@ -144,6 +146,7 @@ export function newAbsoluteDateFilter(
             from,
             to,
             ...(localIdentifier ? { localIdentifier } : {}),
+            ...(emptyValueHandling ? { emptyValueHandling } : {}),
         },
     };
 }
@@ -168,6 +171,7 @@ export function newRelativeDateFilter(
     to: number,
     localIdentifier?: string,
     boundedFilter?: IUpperBoundedFilter | ILowerBoundedFilter,
+    emptyValueHandling?: EmptyValues,
 ): IRelativeDateFilter {
     const dataSet = isObjRef(dateDataSet) ? dateDataSet : idRef(dateDataSet);
     return {
@@ -178,6 +182,7 @@ export function newRelativeDateFilter(
             to,
             ...(boundedFilter ? { boundedFilter } : {}),
             ...(localIdentifier ? { localIdentifier } : {}),
+            ...(emptyValueHandling ? { emptyValueHandling } : {}),
         },
     };
 }
@@ -191,6 +196,7 @@ export function newRelativeDateFilter(
 export function newAllTimeFilter(
     dateDataSet: ObjRef | Identifier,
     localIdentifier?: string,
+    emptyValueHandling?: EmptyValues,
 ): IRelativeDateFilter {
     const dataSet = isObjRef(dateDataSet) ? dateDataSet : idRef(dateDataSet);
     return {
@@ -200,6 +206,7 @@ export function newAllTimeFilter(
             from: 0,
             to: 0,
             ...(localIdentifier ? { localIdentifier } : {}),
+            ...(emptyValueHandling ? { emptyValueHandling } : {}),
         },
     };
 }

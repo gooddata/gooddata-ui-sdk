@@ -4,8 +4,8 @@ import {
     type IFilter,
     filterIsEmpty,
     filterLocalIdentifier,
-    isAllTimeDateFilter,
     isAttributeFilter,
+    isNoopAllTimeDateFilter,
 } from "@gooddata/sdk-model";
 
 import { type ICrossFilteringItem } from "../../store/drill/types.js";
@@ -53,5 +53,5 @@ function removeEmptyAttributeFilters(filters: IFilter[]): IFilter[] {
  * @returns
  */
 function removeAllTimeDateFilters(filters: IFilter[]): IFilter[] {
-    return filters.filter((f) => !isAllTimeDateFilter(f));
+    return filters.filter((f) => !isNoopAllTimeDateFilter(f));
 }
