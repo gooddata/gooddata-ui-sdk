@@ -19,7 +19,10 @@ import {
     isDataSetItem,
     isVisualizationObjectsItem,
 } from "@gooddata/api-client-tiger";
-import { ActionsApi_GetDependentEntitiesGraph } from "@gooddata/api-client-tiger/endpoints/actions";
+import {
+    ActionsApi_GetDependentEntitiesGraph,
+    ActionsApi_SetCertification,
+} from "@gooddata/api-client-tiger/endpoints/actions";
 import {
     DashboardsApi_CreateEntityAnalyticalDashboards,
     DashboardsApi_DeleteEntityAnalyticalDashboards,
@@ -92,6 +95,7 @@ import {
     type IFilterContext,
     type IFilterContextDefinition,
     type IListedDashboard,
+    type IObjectCertificationWrite,
     type ITempFilterContext,
     type IWidget,
     type ObjRef,
@@ -566,6 +570,23 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
          */
         const { id, type } = result.data.data;
         return this.getDashboard(idRef(id, type));
+    };
+
+    public setCertification = async (
+        ref: ObjRef,
+        certification?: IObjectCertificationWrite,
+    ): Promise<void> => {
+        await this.authCall((client) =>
+            ActionsApi_SetCertification(client.axios, client.basePath, {
+                workspaceId: this.workspace,
+                setCertificationRequest: {
+                    type: "analyticalDashboard",
+                    id: objRefToIdentifier(ref, this.authCall),
+                    status: certification?.status ?? null,
+                    message: certification?.message ?? null,
+                },
+            }),
+        );
     };
 
     public deleteDashboard = async (ref: ObjRef): Promise<void> => {

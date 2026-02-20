@@ -37,6 +37,7 @@ import {
     type IOutliersResult,
     type IOutliersView,
     type IPreparedExecution,
+    type IReferencesService,
     type IUserService,
     type IWorkspaceAccessControlService,
     type IWorkspaceAttributesService,
@@ -300,6 +301,10 @@ function recordedWorkspace(
         },
 
         genAI(): IGenAIService {
+            throw new NotSupported("not supported");
+        },
+
+        references(): IReferencesService {
             throw new NotSupported("not supported");
         },
     };

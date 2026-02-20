@@ -445,6 +445,20 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableCatalogLineage,
+            "enableCatalogLineage",
+            "BOOLEAN",
+            FeatureFlagsValues.enableCatalogLineage,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableCertification,
+            "enableCertification",
+            "BOOLEAN",
+            FeatureFlagsValues.enableCertification,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableAIDataSetting,
             "enableAIDataSetting",
             "BOOLEAN",

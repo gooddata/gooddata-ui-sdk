@@ -10,7 +10,7 @@ import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 import { useCatalogItemLoad } from "./useCatalogItemLoad.js";
 import { getDisplayName } from "../../catalogItem/converter.js";
-import { updateCatalogItem } from "../../catalogItem/query.js";
+import { updateCatalogItem, updateCatalogItemCertification } from "../../catalogItem/query.js";
 import type { ICatalogItem, ICatalogItemRef } from "../../catalogItem/types.js";
 import { useMounted } from "../../hooks/useMounted.js";
 import { type ObjectType } from "../../objectType/types.js";
@@ -257,6 +257,54 @@ export function useCatalogItemUpdate({
         },
         [mounted, backend, currentUser, item, onError, onUpdate, persistMeasureChanges, status, workspace],
     );
+    const persistCertificationChanges = useCallback(
+        (_changes: Partial<ICatalogItem> & ICatalogItemRef, newItem: ICatalogItem) => {
+            return updateCatalogItemCertification(backend, workspace, {
+                type: newItem.type,
+                identifier: newItem.identifier,
+                certification: newItem.certification,
+            });
+        },
+        [backend, workspace],
+    );
+    const updateItemCertification = useCallback(
+        (certification: ICatalogItem["certification"]) => {
+            updateItem(
+                backend,
+                workspace,
+                currentUser,
+                item,
+                status !== "success",
+                () => ({
+                    certification,
+                }),
+                (newItem, changes) => {
+                    setItem(newItem);
+                    onUpdate?.(newItem, changes);
+                },
+                (err) => {
+                    if (!mounted.current || !item) {
+                        return;
+                    }
+                    setItem(item);
+                    onError?.(err);
+                    onUpdate?.(item, item);
+                },
+                persistCertificationChanges,
+            );
+        },
+        [
+            mounted,
+            backend,
+            currentUser,
+            item,
+            onError,
+            onUpdate,
+            persistCertificationChanges,
+            status,
+            workspace,
+        ],
+    );
 
     return {
         item,
@@ -269,6 +317,7 @@ export function useCatalogItemUpdate({
         updateItemIsHiddenFromKda,
         updateItemMetricType,
         updateItemFormat,
+        updateItemCertification,
     };
 }
 

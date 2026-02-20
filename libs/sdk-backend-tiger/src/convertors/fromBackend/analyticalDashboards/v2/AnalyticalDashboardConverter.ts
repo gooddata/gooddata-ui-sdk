@@ -43,6 +43,7 @@ import {
 import { convertFilterContextFilters } from "./FilterContextFiltersConverter.js";
 import { convertLayout } from "../../../shared/layoutConverter.js";
 import { convertTigerToSdkFilters } from "../../../shared/storedFilterConverter.js";
+import { convertCertificationFromBackend } from "../../CertificationConverter.js";
 import { convertDataSetItem } from "../../DataSetConverter.js";
 import { fixWidgetLegacyElementUris } from "../../fixLegacyElementUris.js";
 import { cloneWithSanitizedIds, cloneWithSanitizedIdsTyped } from "../../IdSanitization.js";
@@ -297,6 +298,7 @@ export function convertDashboard(
         filterContextsList,
         filterContext,
     );
+    const certification = convertCertificationFromBackend(attributes);
 
     const filterContextOfDefaultTab = tabs?.[0]?.filterContext;
 
@@ -329,6 +331,7 @@ export function convertDashboard(
         evaluationFrequency,
         sectionHeadersDateDataSet,
         tabs,
+        ...(certification ? { certification } : {}),
         dataSets: included?.filter(isDataSetItem).map((dataSet) => convertDataSetItem(dataSet)) ?? [],
     };
 }

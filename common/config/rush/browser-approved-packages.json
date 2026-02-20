@@ -263,6 +263,14 @@
       "allowedCategories": [ "production", "tools" ]
     },
     {
+      "name": "@joint/core",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@joint/layout-directed-graph",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@lezer/highlight",
       "allowedCategories": [ "production" ]
     },

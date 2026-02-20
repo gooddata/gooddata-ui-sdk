@@ -44,6 +44,7 @@ import {
     type IFilterContextDefinition,
     type IInsight,
     type IListedDashboard,
+    type IObjectCertificationWrite,
     type IScheduledMail,
     type IScheduledMailDefinition,
     type IWidget,
@@ -327,6 +328,10 @@ export class RecordedDashboards implements IWorkspaceDashboardsService {
     };
 
     updateDashboardMeta(_: IDashboardObjectIdentity & Partial<IDashboardBase>): Promise<IDashboard> {
+        throw new NotSupported("recorded backend does not support this call");
+    }
+
+    setCertification(_ref: ObjRef, _certification?: IObjectCertificationWrite): Promise<void> {
         throw new NotSupported("recorded backend does not support this call");
     }
 

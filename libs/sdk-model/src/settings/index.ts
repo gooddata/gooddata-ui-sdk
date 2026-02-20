@@ -363,6 +363,11 @@ export interface ISettings {
     enableGenAICatalogQualityChecker?: boolean;
 
     /**
+     * Enable certification indicators in Analytics Catalog.
+     */
+    enableCertification?: boolean;
+
+    /**
      * Allow sending aggregated data to LLM.
      */
     enableAiOnData?: boolean;

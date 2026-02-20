@@ -1,6 +1,6 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
-import { type IAuditable } from "../../../base/metadata.js";
+import { type IAuditable, type IObjectCertification } from "../../../base/metadata.js";
 import { type IMetadataObject, type IMetadataObjectDefinition, isMetadataObject } from "../types.js";
 
 /**
@@ -49,7 +49,15 @@ export interface IMeasureMetadataObjectBase {
  *
  * @public
  */
-export type IMeasureMetadataObject = IMetadataObject & IMeasureMetadataObjectBase & IAuditable;
+export type IMeasureMetadataObject = IMetadataObject &
+    IMeasureMetadataObjectBase &
+    IAuditable & {
+        /**
+         * Certification metadata.
+         * @internal
+         */
+        certification?: IObjectCertification;
+    };
 
 /**
  * Measure metadata object definition

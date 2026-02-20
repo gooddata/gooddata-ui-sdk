@@ -2,6 +2,7 @@
 
 import { type MouseEvent, useCallback, useMemo, useRef } from "react";
 
+import cx from "classnames";
 import { useIntl } from "react-intl";
 
 import { type SemanticQualityIssueAttributeName } from "@gooddata/sdk-model";
@@ -10,11 +11,15 @@ import { type IUiTab, UiButton, UiSkeleton, UiTabs } from "@gooddata/sdk-ui-kit"
 
 import { CatalogDetailHeader, type ICatalogDetailHeaderRef } from "./CatalogDetailHeader.js";
 import { CatalogDetailStatus } from "./CatalogDetailStatus.js";
+import { CatalogDetailTabCertification } from "./CatalogDetailTabCertification.js";
+import { CatalogDetailTabLineage } from "./CatalogDetailTabLineage.js";
 import { CatalogDetailTabMetadata } from "./CatalogDetailTabMetadata.js";
 import { CatalogDetailTabQuality } from "./CatalogDetailTabQuality.js";
 import { useCatalogItemUpdate } from "./hooks/useCatalogItemUpdate.js";
 import { canEditCatalogItem } from "../catalogItem/permission.js";
 import { type ICatalogItem, type ICatalogItemRef } from "../catalogItem/types.js";
+import { useIsCertificationAllowed } from "../certification/gate.js";
+import { useIsLineageEnabled } from "../lineage/gate.js";
 import { type ObjectType } from "../objectType/types.js";
 import { usePermissionsState } from "../permission/PermissionsContext.js";
 import { useIsCatalogDescriptionGenerationEnabled, useIsCatalogQualityEnabled } from "../quality/gate.js";
@@ -23,6 +28,8 @@ import { useQualityIssuesById, useQualityReportState } from "../quality/QualityC
 const Tabs = {
     METADATA: "metadata",
     QUALITY: "issues",
+    CERTIFICATION: "certification",
+    LINEAGE: "lineage",
 } as const;
 
 /**
@@ -114,6 +121,7 @@ export function CatalogDetailContent({
         updateItemIsHiddenFromKda,
         updateItemMetricType,
         updateItemFormat,
+        updateItemCertification,
     } = useCatalogItemUpdate({
         currentUser,
         objectId,
@@ -127,6 +135,7 @@ export function CatalogDetailContent({
     const separators = settings?.separators;
     const enableMetricFormatOverrides = Boolean(settings?.["enableMetricFormatOverrides"]);
     const currencyFormatOverride = settings?.currencyFormatOverride ?? null;
+    const isDescriptionGenerationEnabled = useIsCatalogDescriptionGenerationEnabled();
 
     // Quality
     const { status: qualityStatus } = useQualityReportState();
@@ -134,10 +143,15 @@ export function CatalogDetailContent({
     const isQualityEnabled = useIsCatalogQualityEnabled();
     const isQualityVisible = isQualityEnabled && qualityStatus !== "error";
     const isQualityLoading = qualityStatus === "loading" || qualityStatus === "pending";
-    const isDescriptionGenerationEnabled = useIsCatalogDescriptionGenerationEnabled();
 
     const issues = useQualityIssuesById(item?.identifier ?? "") ?? [];
     const issueCount = issues.length > 0 ? `(${issues.length})` : "";
+
+    // Certification
+    const isCertificationVisible = useIsCertificationAllowed(item?.type);
+
+    // Lineage
+    const isLineageVisible = useIsLineageEnabled();
 
     const headerRef = useRef<ICatalogDetailHeaderRef>(null);
 
@@ -167,8 +181,20 @@ export function CatalogDetailContent({
                 ),
             });
         }
+        if (isCertificationVisible) {
+            tabs.push({
+                id: Tabs.CERTIFICATION,
+                label: intl.formatMessage({ id: "analyticsCatalog.catalogItem.tab.certification" }),
+            });
+        }
+        if (isLineageVisible) {
+            tabs.push({
+                id: Tabs.LINEAGE,
+                label: intl.formatMessage({ id: "analyticsCatalog.catalogItem.tab.lineage" }),
+            });
+        }
         return tabs;
-    }, [intl, isQualityVisible, issueCount]);
+    }, [intl, isCertificationVisible, isQualityVisible, isLineageVisible, issueCount]);
 
     const [selectedTabId, setSelectedTabId] = useSelectedTabId(tabs);
 
@@ -176,7 +202,11 @@ export function CatalogDetailContent({
         <div className="gd-analytics-catalog-detail">
             <CatalogDetailStatus status={status} error={error}>
                 {item ? (
-                    <div className="gd-analytics-catalog-detail__content">
+                    <div
+                        className={cx("gd-analytics-catalog-detail__content", {
+                            lineage: selectedTabId === Tabs.LINEAGE,
+                        })}
+                    >
                         <CatalogDetailHeader
                             item={item}
                             canEdit={canEdit}
@@ -239,6 +269,15 @@ export function CatalogDetailContent({
                                 enableMetricFormatOverrides={enableMetricFormatOverrides}
                             />
                         )}
+                        {selectedTabId === Tabs.CERTIFICATION && isCertificationVisible ? (
+                            <CatalogDetailTabCertification
+                                item={item}
+                                canEdit={canEdit}
+                                onCertificationChange={(certification) => {
+                                    updateItemCertification(certification);
+                                }}
+                            />
+                        ) : null}
                         {selectedTabId === Tabs.QUALITY &&
                             (isQualityLoading ? (
                                 <UiSkeleton itemsCount={2} itemHeight={65} itemsGap={10} />
@@ -251,6 +290,7 @@ export function CatalogDetailContent({
                                     onCatalogItemNavigation={onCatalogItemNavigation}
                                 />
                             ))}
+                        {selectedTabId === Tabs.LINEAGE && <CatalogDetailTabLineage item={item} />}
                     </div>
                 ) : null}
             </CatalogDetailStatus>

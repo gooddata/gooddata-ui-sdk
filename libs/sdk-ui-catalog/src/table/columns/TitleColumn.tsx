@@ -9,6 +9,7 @@ import { type IUiAsyncTableColumn } from "@gooddata/sdk-ui-kit";
 import { CatalogItemLockMemo } from "../../catalogItem/CatalogItemLock.js";
 import { CatalogItemVisibilityIconMemo } from "../../catalogItem/CatalogItemVisibilityIcon.js";
 import { type ICatalogItem } from "../../catalogItem/types.js";
+import { CertificationIconMemo } from "../../certification/CertificationIcon.js";
 import { ObjectTypeIconMemo } from "../../objectType/ObjectTypeIcon.js";
 import { ObjectTypeTooltip } from "../../objectType/ObjectTypeTooltip.js";
 import { QualityIconMemo } from "../../quality/QualityIcon.js";
@@ -37,6 +38,11 @@ export const titleColumn: (intl: IntlShape, width: number) => IUiAsyncTableColum
         renderSuffixIcon: (item) => {
             return (
                 <>
+                    <CertificationIconMemo
+                        className="gd-analytics-catalog__table__column-icon"
+                        intl={intl}
+                        certification={item.certification}
+                    />
                     <QualityIconMemo
                         className="gd-analytics-catalog__table__column-icon"
                         intl={intl}

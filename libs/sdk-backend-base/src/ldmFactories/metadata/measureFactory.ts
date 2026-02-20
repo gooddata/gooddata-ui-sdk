@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type IMeasureMetadataObject, type IUser, type MetricType, type ObjRef } from "@gooddata/sdk-model";
 
@@ -14,6 +14,11 @@ import { type BuilderModifications, builderFactory } from "../builder.js";
 export class MeasureMetadataObjectBuilder<
     T extends IMeasureMetadataObject = IMeasureMetadataObject,
 > extends MetadataObjectBuilder<T> {
+    public certification(certification?: IMeasureMetadataObject["certification"]): this {
+        this.item.certification = certification;
+        return this;
+    }
+
     public expression(maql: string): this {
         this.item.expression = maql;
         return this;

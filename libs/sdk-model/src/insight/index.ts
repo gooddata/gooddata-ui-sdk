@@ -1,9 +1,9 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { intersection, isEmpty, uniqBy } from "lodash-es";
 import { invariant } from "ts-invariant";
 
-import { type IAuditable } from "../base/metadata.js";
+import { type IAuditable, type IObjectCertification } from "../base/metadata.js";
 import { type IColor } from "../colors/index.js";
 import {
     type AttributePredicate,
@@ -79,6 +79,12 @@ export type IInsight = IInsightDefinition & {
          * Whether the insight is hidden
          */
         isHidden?: boolean;
+
+        /**
+         * Certification metadata.
+         * @internal
+         */
+        certification?: IObjectCertification;
     };
 };
 

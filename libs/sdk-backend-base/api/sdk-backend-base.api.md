@@ -108,6 +108,7 @@ import { IMetadataObject } from '@gooddata/sdk-model';
 import { IMetricFormatOverrideSetting } from '@gooddata/sdk-model';
 import { InsightDrillDefinition } from '@gooddata/sdk-model';
 import { INullableFilter } from '@gooddata/sdk-model';
+import { IObjectCertificationWrite } from '@gooddata/sdk-model';
 import { IOutliersConfig } from '@gooddata/sdk-backend-spi';
 import { IOutliersResult } from '@gooddata/sdk-backend-spi';
 import { IPagedResource } from '@gooddata/sdk-backend-spi';
@@ -661,6 +662,8 @@ export abstract class DecoratedWorkspaceDashboardsService implements IWorkspaceD
     // (undocumented)
     getWidgetReferencedObjects(widget: IWidget, types?: SupportedWidgetReferenceTypes[]): Promise<IWidgetReferences>;
     // (undocumented)
+    setCertification(ref: ObjRef, certification?: IObjectCertificationWrite): Promise<void>;
+    // (undocumented)
     setFilterViewAsDefault(ref: ObjRef, isDefault: boolean): Promise<void>;
     // (undocumented)
     updateDashboard(dashboard: IDashboard, updatedDashboard: IDashboardDefinition): Promise<IDashboard>;
@@ -1051,6 +1054,8 @@ export type LocalIdMap = {
 
 // @beta
 export class MeasureMetadataObjectBuilder<T extends IMeasureMetadataObject = IMeasureMetadataObject> extends MetadataObjectBuilder<T> {
+    // (undocumented)
+    certification(certification?: IMeasureMetadataObject["certification"]): this;
     // (undocumented)
     created(createdAt?: string): this;
     // (undocumented)

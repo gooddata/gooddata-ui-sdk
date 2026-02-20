@@ -12,15 +12,15 @@
     }
 
     &[data-object-type="dataSet"] {
-        --catalog-object-type-icon-color: kit-variables.$gd-color-object-type-date;
+        --catalog-object-type-icon-color: #{kit-variables.$gd-color-object-type-date};
     }
 
     &[data-object-type="measure"],
     &[data-object-type="fact"] {
-        --catalog-object-type-icon-color: kit-variables.$gd-color-object-type-metric;
+        --catalog-object-type-icon-color: #{kit-variables.$gd-color-object-type-metric};
     }
 
     &[data-object-type="attribute"] {
-        --catalog-object-type-icon-color: kit-variables.$gd-color-object-type-attribute;
+        --catalog-object-type-icon-color: #{kit-variables.$gd-color-object-type-attribute};
     }
 }

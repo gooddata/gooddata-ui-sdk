@@ -15,7 +15,10 @@ import {
     isLabelItem,
     isMetricItem,
 } from "@gooddata/api-client-tiger";
-import { ActionsApi_GetDependentEntitiesGraphFromEntryPoints } from "@gooddata/api-client-tiger/endpoints/actions";
+import {
+    ActionsApi_GetDependentEntitiesGraphFromEntryPoints,
+    ActionsApi_SetCertification,
+} from "@gooddata/api-client-tiger/endpoints/actions";
 import {
     EntitiesApi_CreateEntityVisualizationObjects,
     EntitiesApi_DeleteEntityVisualizationObjects,
@@ -46,6 +49,7 @@ import {
     type IInsightDefinition,
     type IMetadataObjectBase,
     type IMetadataObjectIdentity,
+    type IObjectCertificationWrite,
     type IVisualizationClass,
     type ObjRef,
     insightFilters,
@@ -65,6 +69,7 @@ import {
     convertFact,
     convertMeasure,
 } from "../../../convertors/fromBackend/CatalogConverter.js";
+import { convertCertificationFromBackend } from "../../../convertors/fromBackend/CertificationConverter.js";
 import { convertGraphEntityNodeToAnalyticalDashboard } from "../../../convertors/fromBackend/GraphConverter.js";
 import {
     convertVisualizationObjectsToInsights,
@@ -279,6 +284,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
             insightData.data.attributes?.modifiedAt ?? undefined,
             convertUserIdentifier(insightData.data.relationships?.createdBy, insightData.included),
             convertUserIdentifier(insightData.data.relationships?.modifiedBy, insightData.included),
+            convertCertificationFromBackend(insightData.data.attributes),
         );
     };
 
@@ -331,6 +337,23 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
 
         const { insight } = createInsightFromBackend(response.data, insightMeta.ref);
         return insight;
+    };
+
+    public setCertification = async (
+        ref: ObjRef,
+        certification?: IObjectCertificationWrite,
+    ): Promise<void> => {
+        await this.authCall((client) =>
+            ActionsApi_SetCertification(client.axios, client.basePath, {
+                workspaceId: this.workspace,
+                setCertificationRequest: {
+                    type: "visualizationObject",
+                    id: objRefToIdentifier(ref, this.authCall),
+                    status: certification?.status ?? null,
+                    message: certification?.message ?? null,
+                },
+            }),
+        );
     };
 
     public deleteInsight = async (ref: ObjRef): Promise<void> => {
@@ -411,6 +434,7 @@ function createInsightFromBackend(data: JsonApiVisualizationObjectOutDocument, r
         visualizationObject.attributes?.modifiedAt ?? undefined,
         convertUserIdentifier(createdBy, included),
         convertUserIdentifier(modifiedBy, included),
+        convertCertificationFromBackend(visualizationObject.attributes),
     );
 
     if (!insight) {

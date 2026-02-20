@@ -26,6 +26,7 @@ import {
 
 import { convertLayout } from "../../../shared/layoutConverter.js";
 import { convertTigerToSdkFilters } from "../../../shared/storedFilterConverter.js";
+import { convertCertificationFromBackend } from "../../CertificationConverter.js";
 import { convertDataSetItem } from "../../DataSetConverter.js";
 import { fixWidgetLegacyElementUris } from "../../fixLegacyElementUris.js";
 import { cloneWithSanitizedIdsTyped } from "../../IdSanitization.js";
@@ -97,6 +98,7 @@ export function convertDashboard(
     const { dateFilterConfig, layout } = getConvertedAnalyticalDashboardContent(
         content as AnalyticalDashboardModelV1.IAnalyticalDashboard,
     );
+    const certification = convertCertificationFromBackend(attributes);
 
     return {
         type: "IDashboard",
@@ -117,6 +119,7 @@ export function convertDashboard(
         filterContext,
         dateFilterConfig,
         layout,
+        ...(certification ? { certification } : {}),
         dataSets: included?.filter(isDataSetItem).map((dataSet) => convertDataSetItem(dataSet)) ?? [],
     };
 }

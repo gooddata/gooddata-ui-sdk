@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import {
     type IMeasureExpressionToken,
@@ -12,6 +12,7 @@ import {
     type IMeasure,
     type IMeasureMetadataObject,
     type IMeasureMetadataObjectDefinition,
+    type IObjectCertificationWrite,
     type ObjRef,
 } from "@gooddata/sdk-model";
 
@@ -40,6 +41,10 @@ export class RecordedMeasures implements IWorkspaceMeasuresService {
     }
 
     updateMeasureMeta(_: IMeasureMetadataObject): Promise<IMeasureMetadataObject> {
+        throw new NotSupported("not supported");
+    }
+
+    setCertification(_ref: ObjRef, _certification?: IObjectCertificationWrite): Promise<void> {
         throw new NotSupported("not supported");
     }
 

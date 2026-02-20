@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import type {
     CatalogItem,
@@ -11,6 +11,7 @@ import type {
     IMetadataObject,
     IMetadataObjectBase,
     IMetadataObjectIdentity,
+    IObjectCertificationWrite,
     IVisualizationClass,
     ObjRef,
     ObjectOrigin,
@@ -114,6 +115,14 @@ export interface IWorkspaceInsightsService {
      * @returns promise of updated measure
      */
     updateInsightMeta(insight: Partial<IMetadataObjectBase> & IMetadataObjectIdentity): Promise<IInsight>;
+
+    /**
+     * Sets insight certification metadata.
+     *
+     * @param ref - insight reference
+     * @param certification - certification state; undefined clears certification
+     */
+    setCertification(ref: ObjRef, certification?: IObjectCertificationWrite): Promise<void>;
 
     /**
      * Delete insight with the given reference

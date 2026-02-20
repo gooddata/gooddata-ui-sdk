@@ -305,6 +305,9 @@ export const catalogItemMetadataObject: (catalogItem: CatalogItem) => MetadataOb
 // @public
 export type CatalogItemType = "attribute" | "measure" | "fact" | "dateDataset" | "attributeHierarchy";
 
+// @internal
+export type CertificationStatus = "CERTIFIED";
+
 // @public
 export function colorPaletteItemToRgb(item: IColorPaletteItem): string;
 
@@ -1468,6 +1471,8 @@ export interface IDashboardAttributeFilterReference {
 
 // @alpha
 export interface IDashboardBase {
+    // @internal
+    readonly certification?: IObjectCertification;
     readonly description: string;
     readonly tags?: string[];
     readonly title: string;
@@ -2425,6 +2430,7 @@ export type IInsight = IInsightDefinition & {
         ref: ObjRef;
         isLocked?: boolean;
         isHidden?: boolean;
+        certification?: IObjectCertification;
     };
 };
 
@@ -2570,6 +2576,8 @@ export interface IKpiWithPreviousPeriodComparison extends IKpiBase {
 // @alpha
 export interface IListedDashboard extends Readonly<Required<IAuditableDates>>, Readonly<IAuditableUsers>, IAccessControlAware {
     readonly availability: ListedDashboardAvailability;
+    // @internal
+    readonly certification?: IObjectCertification;
     readonly description: string;
     readonly identifier: string;
     readonly ref: ObjRef;
@@ -2732,7 +2740,9 @@ export interface IMeasureLocatorItemBody {
 }
 
 // @public
-export type IMeasureMetadataObject = IMetadataObject & IMeasureMetadataObjectBase & IAuditable;
+export type IMeasureMetadataObject = IMetadataObject & IMeasureMetadataObjectBase & IAuditable & {
+    certification?: IObjectCertification;
+};
 
 // @public (undocumented)
 export interface IMeasureMetadataObjectBase {
@@ -3129,6 +3139,16 @@ export type InsightWidgetDescriptionSourceType = "widget" | "insight";
 
 // @public
 export type INullableFilter = IFilter | undefined | null;
+
+// @internal
+export interface IObjectCertification {
+    certifiedAt?: string;
+    message?: string;
+    status: CertificationStatus;
+}
+
+// @internal
+export type IObjectCertificationWrite = Pick<IObjectCertification, "status" | "message">;
 
 // @alpha
 export interface IOpenAiConfig {
@@ -3945,6 +3965,7 @@ export interface ISettings {
     enableAutomationEvaluationMode?: boolean;
     enableAutomationFilterContext?: boolean;
     enableAutomationManagement?: boolean;
+    enableCertification?: boolean;
     enableChangeAnalysis?: boolean;
     enableComparisonInAlerting?: boolean;
     enableCompositeGrain?: boolean;

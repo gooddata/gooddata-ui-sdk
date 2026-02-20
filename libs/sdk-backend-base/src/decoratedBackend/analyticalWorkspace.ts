@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import {
     type IAnalyticalWorkspace,
@@ -7,6 +7,7 @@ import {
     type IDateFilterConfigsQuery,
     type IExecutionFactory,
     type IGenAIService,
+    type IReferencesService,
     type IWorkspaceAccessControlService,
     type IWorkspaceAttributesService,
     type IWorkspaceAutomationService,
@@ -175,5 +176,9 @@ export class AnalyticalWorkspaceDecorator implements IAnalyticalWorkspace {
 
     public genAI(): IGenAIService {
         return this.decorated.genAI();
+    }
+
+    public references(): IReferencesService {
+        return this.decorated.references();
     }
 }

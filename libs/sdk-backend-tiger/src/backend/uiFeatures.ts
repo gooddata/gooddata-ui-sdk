@@ -72,6 +72,8 @@ export enum TigerFeaturesNames {
     EnableGenAIChat = "enableGenAIChat",
     EnableGenAIChatRollout = "enableGenAIChatRollout",
     EnableGenAICatalogQualityChecker = "enableGenAICatalogQualityChecker",
+    EnableCatalogLineage = "enableCatalogLineage",
+    EnableCertification = "enableCertification",
     EnableAIDataSetting = "enableAIDataSetting",
     EnableDashboardFilterViews = "enableDashboardFilterViews",
     EnableCustomizedDashboardsWithoutPluginOverlay = "enableCustomizedDashboardsWithoutPluginOverlay",
@@ -206,6 +208,8 @@ export type ITigerFeatureFlags = {
     enableGenAIChat: (typeof FeatureFlagsValues)["enableGenAIChat"][number];
     enableGenAIChatRollout: (typeof FeatureFlagsValues)["enableGenAIChatRollout"][number];
     enableGenAICatalogQualityChecker: (typeof FeatureFlagsValues)["enableGenAICatalogQualityChecker"][number];
+    enableCatalogLineage: (typeof FeatureFlagsValues)["enableCatalogLineage"][number];
+    enableCertification: (typeof FeatureFlagsValues)["enableCertification"][number];
     enableAIDataSetting: (typeof FeatureFlagsValues)["enableAIDataSetting"][number];
     enableAlertingRollout: (typeof FeatureFlagsValues)["enableAlertingRollout"][number];
     enableDashboardFilterViews: (typeof FeatureFlagsValues)["enableDashboardFilterViews"][number];
@@ -343,6 +347,8 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableGenAIChat: false,
     enableGenAIChatRollout: false,
     enableGenAICatalogQualityChecker: false,
+    enableCatalogLineage: false,
+    enableCertification: false,
     enableAIDataSetting: false,
     enableAlertingRollout: false,
     enableDashboardFilterViews: true,
@@ -480,6 +486,8 @@ export const FeatureFlagsValues = {
     enableGenAIChat: [true, false] as const,
     enableGenAIChatRollout: [true, false] as const,
     enableGenAICatalogQualityChecker: [false, true] as const,
+    enableCatalogLineage: [false, true] as const,
+    enableCertification: [true, false] as const,
     enableAIDataSetting: [true, false] as const,
     enableAlertingRollout: [true, false] as const,
     enableDashboardFilterViews: [true, false] as const,

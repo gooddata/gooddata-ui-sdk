@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-vis-commons",
-    "version": "11.23.0-alpha.0",
+    "version": "11.23.0-alpha.1",
     "description": "GoodData.UI SDK - common functionality for different types of visualizations",
     "license": "MIT",
     "author": "GoodData Corporation",

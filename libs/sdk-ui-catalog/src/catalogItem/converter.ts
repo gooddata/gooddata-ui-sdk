@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import {
     type IAttributeMetadataObject,
@@ -60,6 +60,7 @@ export function convertDashboardToCatalogItem(dashboard: IDashboard | IListedDas
         type: "analyticalDashboard",
         title: dashboard.title,
         description: dashboard.description,
+        certification: dashboard.certification,
         tags: dashboard.tags ?? [],
         createdBy: getDisplayName(dashboard.createdBy),
         createdAt: dashboard.created ? parseBackendDate(dashboard.created) : null,
@@ -77,6 +78,7 @@ export function convertInsightToCatalogItem({ insight }: IInsight): ICatalogItem
         type: "insight",
         title: insight.title,
         description: insight.summary ?? "",
+        certification: insight.certification,
         tags: insight.tags ?? [],
         visualizationType: insight.visualizationUrl.replace("local:", "") as VisualizationType,
         createdBy: getDisplayName(insight.createdBy),
@@ -98,6 +100,7 @@ export function convertMeasureToCatalogItem(measure: IMeasureMetadataObject): IC
         type: "measure",
         title: measure.title,
         description: measure.description,
+        certification: measure.certification,
         tags: measure.tags ?? [],
         createdBy: getDisplayName(measure.createdBy),
         createdAt: measure.created ? parseBackendDate(measure.created) : null,

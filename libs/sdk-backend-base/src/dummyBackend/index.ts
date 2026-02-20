@@ -89,6 +89,8 @@ import {
     type IPreparedExecution,
     type IPreparedExecutionOptions,
     type IRawExportCustomOverrides,
+    type IReferencesResult,
+    type IReferencesService,
     type ISecuritySettingsService,
     type ISemanticSearchQuery,
     type IUserService,
@@ -186,6 +188,7 @@ import {
     type IMetadataObjectIdentity,
     type IMetricFormatOverrideSetting,
     type INotificationChannelMetadataObject,
+    type IObjectCertificationWrite,
     type IOrganizationDescriptor,
     type IRelativeDateFilter,
     type IScheduledMail,
@@ -505,6 +508,16 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
                 },
                 getSemanticQuality() {
                     return new DummySemanticQualityService();
+                },
+            };
+        },
+        references(): IReferencesService {
+            return {
+                getReferences(): Promise<IReferencesResult> {
+                    return Promise.resolve({
+                        nodes: [],
+                        edges: [],
+                    });
                 },
             };
         },
@@ -1454,6 +1467,10 @@ class DummyWorkspaceMeasuresService implements IWorkspaceMeasuresService {
         return Promise.resolve({ ...measure });
     }
 
+    setCertification(_ref: ObjRef, _certification?: IObjectCertificationWrite): Promise<void> {
+        throw new NotSupported("not supported");
+    }
+
     getMeasuresQuery(): IMeasuresQuery {
         return new DummyMeasuresQuery();
     }
@@ -2066,6 +2083,10 @@ class DummyWorkspaceDashboardsService implements IWorkspaceDashboardsService {
         throw new NotSupported("not supported");
     }
 
+    setCertification(_ref: ObjRef, _certification?: IObjectCertificationWrite): Promise<void> {
+        throw new NotSupported("not supported");
+    }
+
     deleteDashboard(_ref: ObjRef): Promise<void> {
         throw new NotSupported("not supported");
     }
@@ -2265,6 +2286,10 @@ class DummyWorkspaceInsightsService implements IWorkspaceInsightsService {
     }
 
     updateInsightMeta(): Promise<IInsight> {
+        throw new NotSupported("not supported");
+    }
+
+    setCertification(_ref: ObjRef, _certification?: IObjectCertificationWrite): Promise<void> {
         throw new NotSupported("not supported");
     }
 

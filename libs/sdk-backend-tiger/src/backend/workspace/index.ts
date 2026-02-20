@@ -12,6 +12,7 @@ import {
     type IDateFilterConfigsQuery,
     type IExecutionFactory,
     type IGenAIService,
+    type IReferencesService,
     type IWorkspaceAccessControlService,
     type IWorkspaceAttributesService,
     type IWorkspaceAutomationService,
@@ -53,6 +54,7 @@ import { TigerWorkspaceKeyDriverAnalysis } from "./keyDriverAnalysis/index.js";
 import { TigerWorkspaceLogicalModelService } from "./ldm/index.js";
 import { TigerWorkspaceMeasures } from "./measures/index.js";
 import { TigerWorkspacePermissionsFactory } from "./permissions/index.js";
+import { TigerReferencesService } from "./references/index.js";
 import { TigerWorkspaceSettings } from "./settings/index.js";
 import { TigerWorkspaceStyling } from "./styling/index.js";
 import { TigerWorkspaceUsersQuery } from "./users/index.js";
@@ -213,5 +215,9 @@ export class TigerWorkspace implements IAnalyticalWorkspace {
 
     public genAI(): IGenAIService {
         return new GenAIService(this.authCall, this.workspace, this.dateNormalizer);
+    }
+
+    public references(): IReferencesService {
+        return new TigerReferencesService(this.authCall, this.workspace);
     }
 }

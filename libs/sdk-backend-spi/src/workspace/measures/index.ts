@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import type {
     IInsight,
@@ -8,6 +8,7 @@ import type {
     IMetadataObject,
     IMetadataObjectBase,
     IMetadataObjectIdentity,
+    IObjectCertificationWrite,
     ObjRef,
     ObjectOrigin,
 } from "@gooddata/sdk-model";
@@ -113,6 +114,14 @@ export interface IWorkspaceMeasuresService {
     updateMeasureMeta(
         measure: Partial<IMetadataObjectBase> & IMetadataObjectIdentity,
     ): Promise<IMeasureMetadataObject>;
+
+    /**
+     * Sets measure certification metadata.
+     *
+     * @param ref - measure reference
+     * @param certification - certification state; undefined clears certification
+     */
+    setCertification(ref: ObjRef, certification?: IObjectCertificationWrite): Promise<void>;
 
     /**
      * Delete measure with the given reference

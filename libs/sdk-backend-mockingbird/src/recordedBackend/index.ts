@@ -30,6 +30,7 @@ import {
     type IOrganizationStylingService,
     type IOrganizationUserService,
     type IOrganizations,
+    type IReferencesService,
     type ISecuritySettingsService,
     type IUserService,
     type IUserSettingsService,
@@ -411,6 +412,16 @@ function recordedWorkspace(
                 },
                 getSemanticQuality() {
                     throw new NotSupported("not supported");
+                },
+            };
+        },
+        references(): IReferencesService {
+            return {
+                getReferences() {
+                    return Promise.resolve({
+                        nodes: [],
+                        edges: [],
+                    });
                 },
             };
         },
