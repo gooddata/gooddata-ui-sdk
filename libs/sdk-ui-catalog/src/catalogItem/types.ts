@@ -1,7 +1,13 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import type { IDataSetMetadataObject, IdentifierRef, MetricType, ObjectOrigin } from "@gooddata/sdk-model";
+import type {
+    IDataSetMetadataObject,
+    IObjectCertification,
+    IdentifierRef,
+    MetricType,
+    ObjectOrigin,
+} from "@gooddata/sdk-model";
 
 import type { ObjectType } from "../objectType/types.js";
 
@@ -47,6 +53,7 @@ export type VisualizationType =
 export interface ICatalogItem extends ICatalogItemRef {
     title: string;
     description: string;
+    certification?: IObjectCertification;
     tags: string[];
     createdBy: string;
     updatedBy: string;

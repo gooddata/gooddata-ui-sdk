@@ -4,6 +4,7 @@ import type {
     AnalyticsCatalogGenerateDescriptionObjectType,
     IAnalyticalBackend,
 } from "@gooddata/sdk-backend-spi";
+import { idRef } from "@gooddata/sdk-model";
 
 import type { ICatalogItem, ICatalogItemQueryOptions, ICatalogItemRef } from "./types.js";
 import type { ObjectType } from "../objectType/types.js";
@@ -323,6 +324,25 @@ function updateDataSetCatalogItem(
             description: item.description,
             tags: item.tags,
         });
+}
+
+export function updateCatalogItemCertification(
+    backend: IAnalyticalBackend,
+    workspace: string,
+    item: Pick<ICatalogItem, "type" | "identifier" | "certification">,
+) {
+    const ref = idRef(item.identifier, item.type);
+
+    switch (item.type) {
+        case "analyticalDashboard":
+            return backend.workspace(workspace).dashboards().setCertification(ref, item.certification);
+        case "insight":
+            return backend.workspace(workspace).insights().setCertification(ref, item.certification);
+        case "measure":
+            return backend.workspace(workspace).measures().setCertification(ref, item.certification);
+        default:
+            throw new Error("Unsupported catalog item type for certification update.");
+    }
 }
 
 function buildIdentity(item: ICatalogItemRef) {

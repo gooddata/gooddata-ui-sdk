@@ -8,6 +8,7 @@ export type IconType =
     | "brainDisabled"
     | "check"
     | "checkCircle"
+    | "certification"
     | "plus"
     | "plusCircle"
     | "sync"

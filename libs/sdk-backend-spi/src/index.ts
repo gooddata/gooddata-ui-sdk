@@ -128,6 +128,12 @@ export type {
     IMemoryItemsQueryResult,
 } from "./workspace/genAI/index.js";
 
+export type {
+    IReferencesResult,
+    IReferencesOption,
+    IReferencesService,
+} from "./workspace/references/index.js";
+
 export type { IWorkspaceStylingService } from "./workspace/styling/index.js";
 export {
     type AuthenticationFlow,

@@ -24,6 +24,7 @@ import {
     idRef,
 } from "@gooddata/sdk-model";
 
+import { convertCertificationFromBackend } from "../CertificationConverter.js";
 import { cloneWithSanitizedIdsTyped } from "../IdSanitization.js";
 import { isInheritedObject } from "../ObjectInheritance.js";
 import { convertUserIdentifier } from "../UsersConverter.js";
@@ -57,6 +58,7 @@ export const convertAnalyticalDashboard = (
     // NOTE: `summary` is present on the backend response, but may not be reflected in older generated API typings.
     const summary = (attributes as unknown as { summary?: unknown } | undefined)?.summary;
     const normalizedSummary = typeof summary === "string" ? summary : undefined;
+    const certification = convertCertificationFromBackend(attributes);
 
     return {
         ref: idRef(id, "analyticalDashboard"),
@@ -75,6 +77,7 @@ export const convertAnalyticalDashboard = (
         sharePermissions: meta?.permissions,
         isUnderStrictControl: true,
         availability: "full",
+        ...(certification ? { certification } : {}),
         ...(tabs.length > 0 ? { tabs } : {}),
     };
 };

@@ -105,6 +105,7 @@ import { INotificationChannelMetadataObject } from '@gooddata/sdk-model';
 import { INotificationChannelMetadataObjectDefinition } from '@gooddata/sdk-model';
 import { INotificationChannelTestResponse } from '@gooddata/sdk-model';
 import { INullableFilter } from '@gooddata/sdk-model';
+import type { IObjectCertificationWrite } from '@gooddata/sdk-model';
 import { IOpenAiConfig } from '@gooddata/sdk-model';
 import { IOrganizationAssignee } from '@gooddata/sdk-model';
 import { IOrganizationDescriptor } from '@gooddata/sdk-model';
@@ -307,6 +308,7 @@ export interface IAnalyticalWorkspace {
     logicalModel(): IWorkspaceLogicalModelService;
     measures(): IWorkspaceMeasuresService;
     permissions(): IWorkspacePermissionsService;
+    references(): IReferencesService;
     settings(): IWorkspaceSettingsService;
     styling(): IWorkspaceStylingService;
     updateDescriptor(descriptor: IWorkspaceDescriptorUpdate): Promise<IWorkspaceDescriptor>;
@@ -1689,6 +1691,32 @@ export interface IRawExportCustomOverrides {
     measures?: Record<string, IRawExportCustomOverride>;
 }
 
+// @alpha (undocumented)
+export interface IReferencesOption {
+    // (undocumented)
+    direction: "up" | "down";
+}
+
+// @alpha (undocumented)
+export interface IReferencesResult {
+    // (undocumented)
+    edges: {
+        from: ObjRef;
+        to: ObjRef;
+    }[];
+    // (undocumented)
+    nodes: (ObjRef & {
+        title: string;
+        isRoot?: boolean;
+    })[];
+}
+
+// @alpha (undocumented)
+export interface IReferencesService {
+    // (undocumented)
+    getReferences(root: ObjRef, opts?: IReferencesOption): Promise<IReferencesResult>;
+}
+
 // @public
 export interface IRequestCorrelationMetadata {
     readonly [key: string]: string;
@@ -1981,6 +2009,7 @@ export interface IWorkspaceDashboardsService {
     getScheduledMailsForDashboard(ref: ObjRef, options?: IGetScheduledMailOptions): Promise<IScheduledMail[]>;
     getWidgetAlertsCountForWidgets(refs: ObjRef[]): Promise<IWidgetAlertCount[]>;
     getWidgetReferencedObjects(widget: IWidget, types?: SupportedWidgetReferenceTypes[]): Promise<IWidgetReferences>;
+    setCertification(ref: ObjRef, certification?: IObjectCertificationWrite): Promise<void>;
     setFilterViewAsDefault(ref: ObjRef, isDefault: boolean): Promise<void>;
     startDashboardSummaryWorkflow?(dashboardId: string): Promise<IDashboardSummaryWorkflowStartResult>;
     updateDashboard(dashboard: IDashboard, updatedDashboard: IDashboardDefinition): Promise<IDashboard>;
@@ -2074,6 +2103,7 @@ export interface IWorkspaceInsightsService {
     }>;
     getVisualizationClass(ref: ObjRef): Promise<IVisualizationClass>;
     getVisualizationClasses(options?: IGetVisualizationClassesOptions): Promise<IVisualizationClass[]>;
+    setCertification(ref: ObjRef, certification?: IObjectCertificationWrite): Promise<void>;
     updateInsight(insight: IInsight): Promise<IInsight>;
     updateInsightMeta(insight: Partial<IMetadataObjectBase> & IMetadataObjectIdentity): Promise<IInsight>;
 }
@@ -2101,6 +2131,7 @@ export interface IWorkspaceMeasuresService {
     getMeasureExpressionTokens(ref: ObjRef): Promise<IMeasureExpressionToken[]>;
     getMeasureReferencingObjects(measureRef: ObjRef): Promise<IMeasureReferencing>;
     getMeasuresQuery(): IMeasuresQuery;
+    setCertification(ref: ObjRef, certification?: IObjectCertificationWrite): Promise<void>;
     updateMeasure(measure: IMeasureMetadataObject): Promise<IMeasureMetadataObject>;
     updateMeasureMeta(measure: Partial<IMetadataObjectBase> & IMetadataObjectIdentity): Promise<IMeasureMetadataObject>;
 }

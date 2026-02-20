@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import {
     type IAnalyticalWorkspace,
@@ -7,6 +7,7 @@ import {
     type IDateFilterConfigsQuery,
     type IExecutionFactory,
     type IGenAIService,
+    type IReferencesService,
     type IWorkspaceAccessControlService,
     type IWorkspaceAttributesService,
     type IWorkspaceAutomationService,
@@ -149,5 +150,9 @@ export class CustomWorkspace implements IAnalyticalWorkspace {
 
     public genAI(): IGenAIService {
         throw new NotSupported("genAI is not supported");
+    }
+
+    public references(): IReferencesService {
+        throw new NotSupported("references are not supported");
     }
 }

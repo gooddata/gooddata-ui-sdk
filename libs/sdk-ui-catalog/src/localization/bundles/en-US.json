@@ -247,6 +247,30 @@
         "text": "Hidden from Smart Search and AI Assistant results for all users.",
         "crowdinContext": "Tooltip content displayed on the hidden icon that appears only when the catalog item's visibility is set to hidden (in table view)."
     },
+    "analyticsCatalog.certification.tooltip.title": {
+        "text": "Certified",
+        "crowdinContext": "Title shown in the certification tooltip for catalog items marked as certified."
+    },
+    "analyticsCatalog.certification.field.status": {
+        "text": "Status",
+        "crowdinContext": "Label for the certification status dropdown in the catalog item certification tab."
+    },
+    "analyticsCatalog.certification.field.status.certified": {
+        "text": "Certified",
+        "crowdinContext": "Option in the certification status dropdown for marking the catalog item as certified."
+    },
+    "analyticsCatalog.certification.field.status.notCertified": {
+        "text": "Not certified",
+        "crowdinContext": "Option in the certification status dropdown for marking the catalog item as not certified."
+    },
+    "analyticsCatalog.certification.field.message": {
+        "text": "Message",
+        "crowdinContext": "Label for the editable certification message field in catalog item certification tab."
+    },
+    "analyticsCatalog.certification.field.message.placeholder": {
+        "text": "Add certification message",
+        "crowdinContext": "Placeholder for the certification message editor when no message is set."
+    },
     "analyticsCatalog.column.isHidden.field.tooltip": {
         "text": "Include in Smart Search and AI Assistant results for all users.",
         "crowdinContext": "Tooltip content for the field indicating whether the object is hidden in AI results."
@@ -371,8 +395,16 @@
         "text": "Details",
         "crowdinContext": "Catalog item tab label."
     },
+    "analyticsCatalog.catalogItem.tab.certification": {
+        "text": "Certification",
+        "crowdinContext": "Catalog item tab label for certification metadata and controls."
+    },
     "analyticsCatalog.catalogItem.tab.quality": {
         "text": "Validations {count}",
+        "crowdinContext": "Catalog item tab label."
+    },
+    "analyticsCatalog.catalogItem.tab.lineage": {
+        "text": "Lineage",
         "crowdinContext": "Catalog item tab label."
     },
     "analyticsCatalog.catalogItem.tab.quality.empty": {
@@ -526,6 +558,14 @@
     "analyticsCatalog.quality.severity.suggestion": {
         "text": "{count, plural, one {suggestion} other {suggestions}}",
         "crowdinContext": "Semantic quality score card: Accessibility label for the suggestion severity icon. The number is displayed next to the icon; this label provides only the severity word. Example output: if count is 1, output is 'suggestion'; if count is 3, output is 'suggestions'."
+    },
+    "analyticsCatalog.lineage.direction.up": {
+        "text": "Upstream",
+        "crowdinContext": "Label for the top lineage direction."
+    },
+    "analyticsCatalog.lineage.direction.down": {
+        "text": "Downstream",
+        "crowdinContext": "Label for the bottom lineage direction."
     },
     "metricComponent.metricType.label": {
         "text": "Metric type",

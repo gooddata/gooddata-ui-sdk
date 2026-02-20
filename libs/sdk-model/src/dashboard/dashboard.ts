@@ -9,7 +9,12 @@ import {
     type ITempFilterContext,
 } from "./filterContext.js";
 import { type IDashboardLayout, type IDashboardWidget } from "./layout.js";
-import { type IAuditable, type IAuditableDates, type IAuditableUsers } from "../base/metadata.js";
+import {
+    type IAuditable,
+    type IAuditableDates,
+    type IAuditableUsers,
+    type IObjectCertification,
+} from "../base/metadata.js";
 import {
     type DateFilterGranularity,
     type IAbsoluteDateFilterPreset,
@@ -253,6 +258,12 @@ export interface IDashboardBase {
      * Since 8.6.0
      */
     readonly tags?: string[];
+
+    /**
+     * Certification metadata.
+     * @internal
+     */
+    readonly certification?: IObjectCertification;
 }
 
 /**
@@ -607,6 +618,12 @@ export interface IListedDashboard
      * Dashboard description
      */
     readonly description: string;
+
+    /**
+     * Certification metadata.
+     * @internal
+     */
+    readonly certification?: IObjectCertification;
 
     /**
      * AI-generated summary of the dashboard content.

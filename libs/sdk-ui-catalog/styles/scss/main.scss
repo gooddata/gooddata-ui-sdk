@@ -294,4 +294,33 @@ $content-font-size: 14px;
             }
         }
     }
+
+    &__certification-tooltip {
+        background: var(--gd-palette-complementary-0);
+        border: 1px solid var(--gd-palette-complementary-3);
+        border-radius: 3px;
+        box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.1);
+        padding: 15px;
+        display: grid;
+        gap: 10px;
+
+        &__header {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        &__title {
+            font-size: 14px;
+            line-height: 23px;
+            font-weight: 400;
+            color: var(--gd-palette-complementary-8);
+        }
+
+        &__message {
+            font-size: 14px;
+            line-height: 18px;
+            color: var(--gd-palette-complementary-7);
+        }
+    }
 }

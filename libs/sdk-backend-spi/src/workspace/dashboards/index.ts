@@ -22,6 +22,7 @@ import type {
     IFilterContextDefinition,
     IInsight,
     IListedDashboard,
+    IObjectCertificationWrite,
     IScheduledMail,
     IScheduledMailDefinition,
     IWidget,
@@ -530,6 +531,14 @@ export interface IWorkspaceDashboardsService {
     updateDashboardMeta(
         updatedDashboard: IDashboardObjectIdentity & Partial<IDashboardBase>,
     ): Promise<IDashboard>;
+
+    /**
+     * Sets dashboard certification metadata.
+     *
+     * @param ref - dashboard reference
+     * @param certification - certification state; undefined clears certification
+     */
+    setCertification(ref: ObjRef, certification?: IObjectCertificationWrite): Promise<void>;
 
     /**
      * Delete dashboard

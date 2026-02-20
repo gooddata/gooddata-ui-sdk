@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import {
     type JsonApiMetricOutDocument,
@@ -8,6 +8,7 @@ import {
 import { newMeasureMetadataObject } from "@gooddata/sdk-backend-base";
 import { type IMeasureMetadataObject, idRef } from "@gooddata/sdk-model";
 
+import { convertCertificationFromBackend } from "./CertificationConverter.js";
 import { isInheritedObject } from "./ObjectInheritance.js";
 import { convertUserIdentifier } from "./UsersConverter.js";
 
@@ -41,7 +42,8 @@ export function convertMetricFromBackend(
             .created(createdAt ?? undefined)
             .createdBy(convertUserIdentifier(createdBy, included))
             .updated(modifiedAt ?? undefined)
-            .updatedBy(convertUserIdentifier(modifiedBy, included)),
+            .updatedBy(convertUserIdentifier(modifiedBy, included))
+            .certification(convertCertificationFromBackend(attributes)),
     );
 }
 

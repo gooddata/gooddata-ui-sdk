@@ -10,6 +10,7 @@ import {
     type KeyDriversDimension,
     MetadataUtilities,
 } from "@gooddata/api-client-tiger";
+import { ActionsApi_SetCertification } from "@gooddata/api-client-tiger/endpoints/actions";
 import {
     EntitiesApi_CreateEntityMetrics,
     EntitiesApi_DeleteEntityMetrics,
@@ -37,6 +38,7 @@ import {
     type IMeasureMetadataObjectDefinition,
     type IMetadataObjectBase,
     type IMetadataObjectIdentity,
+    type IObjectCertificationWrite,
     type ObjRef,
     type ObjectType,
     idRef,
@@ -254,6 +256,20 @@ export class TigerWorkspaceMeasures implements IWorkspaceMeasuresService {
         });
 
         return convertMetricFromBackend(result.data, result.data.included);
+    }
+
+    async setCertification(ref: ObjRef, certification?: IObjectCertificationWrite): Promise<void> {
+        await this.authCall((client) =>
+            ActionsApi_SetCertification(client.axios, client.basePath, {
+                workspaceId: this.workspace,
+                setCertificationRequest: {
+                    type: "metric",
+                    id: objRefToIdentifier(ref, this.authCall),
+                    status: certification?.status ?? null,
+                    message: certification?.message ?? null,
+                },
+            }),
+        );
     }
 
     async deleteMeasure(measureRef: ObjRef): Promise<void> {

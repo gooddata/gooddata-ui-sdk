@@ -1,5 +1,42 @@
-// (C) 2021 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { type IUser } from "../user/index.js";
+
+/**
+ * Certification status.
+ *
+ * @internal
+ */
+export type CertificationStatus = "CERTIFIED";
+
+/**
+ * Object certification data.
+ *
+ * @internal
+ */
+export interface IObjectCertification {
+    /**
+     * Certification status.
+     */
+    status: CertificationStatus;
+
+    /**
+     * Optional certification message.
+     */
+    message?: string;
+
+    /**
+     * Optional certification timestamp in backend format.
+     */
+    certifiedAt?: string;
+}
+
+/**
+ * Write-safe object certification payload.
+ *
+ * @internal
+ */
+export type IObjectCertificationWrite = Pick<IObjectCertification, "status" | "message">;
 
 /**
  * Object that can provide information about the users that created or modified it and when those actions occurred.

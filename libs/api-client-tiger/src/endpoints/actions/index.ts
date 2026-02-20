@@ -47,6 +47,8 @@ export {
     type ActionsApiGenerateLogicalModelRequest,
     ActionsApi_CheckEntityOverrides,
     type ActionsApiCheckEntityOverridesRequest,
+    ActionsApi_SetCertification,
+    type ActionsApiSetCertificationRequest,
     ActionsApi_DashboardPermissions,
     type ActionsApiDashboardPermissionsRequest,
     ActionsApi_ManageDashboardPermissions,

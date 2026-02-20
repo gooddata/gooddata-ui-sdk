@@ -18,7 +18,14 @@ export {
     type AllTimeGranularity,
     DateGranularity,
 } from "./base/dateGranularities.js";
-export type { IAuditable, IAuditableDates, IAuditableUsers } from "./base/metadata.js";
+export {
+    type IAuditable,
+    type IAuditableDates,
+    type IAuditableUsers,
+    type CertificationStatus,
+    type IObjectCertification,
+    type IObjectCertificationWrite,
+} from "./base/metadata.js";
 export type { ComparatorDirection, IComparator } from "./base/comparators.js";
 export { assertNever } from "./base/typeUtils.js";
 

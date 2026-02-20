@@ -11,6 +11,7 @@ import {
 } from "@gooddata/api-client-tiger";
 import { type IInsight, type IInsightDefinition, type IUser, idRef } from "@gooddata/sdk-model";
 
+import { convertCertificationFromBackend } from "./CertificationConverter.js";
 import { isInheritedObject } from "./ObjectInheritance.js";
 import { convertUserIdentifier } from "./UsersConverter.js";
 import { convertVisualizationObject } from "./visualizationObjects/VisualizationObjectConverter.js";
@@ -26,6 +27,7 @@ export const insightFromInsightDefinition = (
     updated: string | undefined,
     createdBy: IUser | undefined,
     updatedBy: IUser | undefined,
+    certification?: IInsight["insight"]["certification"],
 ): IInsight => {
     return {
         insight: {
@@ -40,6 +42,7 @@ export const insightFromInsightDefinition = (
             createdBy,
             updated,
             updatedBy,
+            ...(certification ? { certification } : {}),
         },
     };
 };
@@ -72,6 +75,7 @@ export const visualizationObjectsItemToInsight = (
         modifiedAt ?? undefined,
         convertUserIdentifier(createdBy, included),
         convertUserIdentifier(modifiedBy, included),
+        convertCertificationFromBackend(attributes),
     );
 };
 

@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type IWorkspaceAccessControlService } from "./accessControl/index.js";
 import { type IAttributeHierarchiesService } from "./attributeHierarchies/index.js";
@@ -23,6 +23,7 @@ import { type IWorkspaceUserGroupsQuery } from "./userGroups/index.js";
 import { type IWorkspaceUsersQuery } from "./users/index.js";
 import { type IPagedResource } from "../common/paging.js";
 import { type IWorkspaceKeyDriverAnalysisService } from "./keyDriverAnalysis/index.js";
+import { type IReferencesService } from "./references/index.js";
 
 /**
  * Represents an analytical workspace hosted on a backend.
@@ -175,6 +176,11 @@ export interface IAnalyticalWorkspace {
      * @beta
      */
     genAI(): IGenAIService;
+
+    /**
+     * Returns service that can be used to access references.
+     */
+    references(): IReferencesService;
 }
 
 /**

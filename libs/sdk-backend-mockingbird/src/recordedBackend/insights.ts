@@ -24,6 +24,7 @@ import {
     type IInsightDefinition,
     type IMetadataObjectBase,
     type IMetadataObjectIdentity,
+    type IObjectCertificationWrite,
     type IVisualizationClass,
     type ObjRef,
     idRef,
@@ -130,6 +131,10 @@ export class RecordedInsights implements IWorkspaceInsightsService {
     }
 
     public updateInsightMeta(_: Partial<IMetadataObjectBase> & IMetadataObjectIdentity): Promise<IInsight> {
+        throw new NotSupported("not supported");
+    }
+
+    public setCertification(_ref: ObjRef, _certification?: IObjectCertificationWrite): Promise<void> {
         throw new NotSupported("not supported");
     }
 
