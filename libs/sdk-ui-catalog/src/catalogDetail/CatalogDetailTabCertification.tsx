@@ -4,7 +4,7 @@ import { type RefObject } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { Dropdown, DropdownButton, EditableLabel, UiListbox } from "@gooddata/sdk-ui-kit";
+import { Dropdown, DropdownButton, EditableLabel, UiDate, UiListbox } from "@gooddata/sdk-ui-kit";
 
 import { CatalogDetailContentRow } from "./CatalogDetailContentRow.js";
 import { type ICatalogItem } from "../catalogItem/types.js";
@@ -109,39 +109,59 @@ export function CatalogDetailTabCertification({ item, canEdit, onCertificationCh
                 }
             />
             {isCertified ? (
-                <CatalogDetailContentRow
-                    title={<FormattedMessage id="analyticsCatalog.certification.field.message" />}
-                    content={
-                        <div className="gd-analytics-catalog-detail__tab-certification__message">
-                            {canEdit ? (
-                                <EditableLabel
-                                    ariaLabel={intl.formatMessage({
-                                        id: "analyticsCatalog.certification.field.message",
-                                    })}
-                                    placeholder={intl.formatMessage({
-                                        id: "analyticsCatalog.certification.field.message.placeholder",
-                                    })}
-                                    isEditableLabelWidthBasedOnText
-                                    onSubmit={handleMessageSubmit}
-                                    value={message}
-                                >
-                                    {message ||
-                                        intl.formatMessage({
+                <>
+                    <CatalogDetailContentRow
+                        title={<FormattedMessage id="analyticsCatalog.certification.field.message" />}
+                        content={
+                            <div className="gd-analytics-catalog-detail__tab-certification__message">
+                                {canEdit ? (
+                                    <EditableLabel
+                                        ariaLabel={intl.formatMessage({
+                                            id: "analyticsCatalog.certification.field.message",
+                                        })}
+                                        placeholder={intl.formatMessage({
                                             id: "analyticsCatalog.certification.field.message.placeholder",
                                         })}
-                                    <i className="gd-icon-pencil" />
-                                </EditableLabel>
-                            ) : (
-                                <>
-                                    {message ||
-                                        intl.formatMessage({
-                                            id: "analyticsCatalog.certification.field.message.placeholder",
-                                        })}
-                                </>
-                            )}
-                        </div>
-                    }
-                />
+                                        isEditableLabelWidthBasedOnText
+                                        onSubmit={handleMessageSubmit}
+                                        value={message}
+                                    >
+                                        {message ||
+                                            intl.formatMessage({
+                                                id: "analyticsCatalog.certification.field.message.placeholder",
+                                            })}
+                                        <i className="gd-icon-pencil" />
+                                    </EditableLabel>
+                                ) : (
+                                    <>
+                                        {message ||
+                                            intl.formatMessage({
+                                                id: "analyticsCatalog.certification.field.message.placeholder",
+                                            })}
+                                    </>
+                                )}
+                            </div>
+                        }
+                    />
+                    {item.certification?.certifiedBy ? (
+                        <CatalogDetailContentRow
+                            title={<FormattedMessage id="analyticsCatalog.certification.field.certifiedBy" />}
+                            content={item.certification.certifiedBy}
+                        />
+                    ) : null}
+                    {item.certification?.certifiedAt ? (
+                        <CatalogDetailContentRow
+                            title={<FormattedMessage id="analyticsCatalog.certification.field.certifiedAt" />}
+                            content={
+                                <UiDate
+                                    date={item.certification?.certifiedAt}
+                                    allowRelative={false}
+                                    locale={intl.locale}
+                                />
+                            }
+                        />
+                    ) : null}
+                </>
             ) : null}
         </dl>
     );

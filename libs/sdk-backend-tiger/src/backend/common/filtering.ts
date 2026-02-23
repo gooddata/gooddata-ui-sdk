@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import type { IFilterBaseOptions } from "@gooddata/sdk-backend-spi";
 
@@ -22,6 +22,7 @@ export function buildFilterQuery(filter: IFilterBaseOptions) {
         buildListClause("tags", "in", filter.tags),
         buildListClause("tags", "out", filter.excludeTags),
         buildIsHiddenClause(filter.isHidden),
+        buildCertificationClause(filter.certification),
     ]);
 }
 
@@ -96,6 +97,19 @@ function buildIsHiddenClause(isHidden?: boolean): string | undefined {
     if (isHidden === false) {
         // Parentheses ensure the search filter is evaluated as a single condition.
         return "(isHidden==false,isHidden=isnull=true)";
+    }
+    return undefined;
+}
+
+/**
+ * Builds the certification clause.
+ */
+function buildCertificationClause(certification?: boolean): string | undefined {
+    if (certification === true) {
+        return "certification==CERTIFIED";
+    }
+    if (certification === false) {
+        return "certification=isnull=true";
     }
     return undefined;
 }

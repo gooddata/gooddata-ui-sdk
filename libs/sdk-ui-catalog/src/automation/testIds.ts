@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 /*
  * NOTE: Testing IDs should be considered as immutable to prevent breaking changes in E2E tests.
@@ -10,6 +10,7 @@ export const filter = `${catalog}-filter`;
 export const filterCreatedBy = `${filter}/created-by`;
 export const filterOrigin = `${filter}/origin`;
 export const filterVisibility = `${filter}/visibility`;
+export const filterCertification = `${filter}/certification`;
 export const filterQuality = `${filter}/quality`;
 export const filterTags = `${filter}/tags`;
 export const filterReset = `${filter}/reset`;

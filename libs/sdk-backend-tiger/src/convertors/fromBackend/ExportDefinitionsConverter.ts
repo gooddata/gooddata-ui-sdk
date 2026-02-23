@@ -11,8 +11,8 @@ import {
     type AutomationDashboardExportSettings,
     type ITigerFilter,
     type ITigerFilterContextItem,
-    type JsonApiAutomationOutAttributesDashboardTabularExportsInner,
-    type JsonApiAutomationOutAttributesRawExportsInner,
+    type JsonApiAutomationPatchAttributesDashboardTabularExportsInner,
+    type JsonApiAutomationPatchAttributesRawExportsInner,
     type JsonApiExportDefinitionOutIncludes,
     type JsonApiExportDefinitionOutWithLinks,
     type TabularExportRequest,
@@ -99,7 +99,7 @@ export const wrapExportDefinition = (
 };
 
 export const convertDashboardTabularExportRequest = (
-    exportRequest: JsonApiAutomationOutAttributesDashboardTabularExportsInner,
+    exportRequest: JsonApiAutomationPatchAttributesDashboardTabularExportsInner,
 ): IExportDefinitionDashboardRequestPayload | IExportDefinitionVisualizationObjectRequestPayload => {
     const {
         requestPayload: {
@@ -194,7 +194,7 @@ export const convertVisualExportRequest = (
 };
 
 export const convertToRawExportRequest = (
-    exportRequest: JsonApiAutomationOutAttributesRawExportsInner,
+    exportRequest: JsonApiAutomationPatchAttributesRawExportsInner,
 ): IExportDefinitionVisualizationObjectRequestPayload => {
     const {
         requestPayload: { fileName, execution, metadata },

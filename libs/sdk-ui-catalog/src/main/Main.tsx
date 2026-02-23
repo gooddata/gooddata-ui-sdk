@@ -12,6 +12,7 @@ import { CatalogDetail } from "../catalogDetail/CatalogDetail.js";
 import type { OpenHandlerEvent } from "../catalogDetail/CatalogDetailContent.js";
 import { CatalogItemFeed } from "../catalogItem/CatalogItemFeed.js";
 import { type ICatalogItemRef } from "../catalogItem/types.js";
+import { FilterCertificationMemo } from "../filter/FilterCertification.js";
 import { useFilterActions } from "../filter/FilterContext.js";
 import { FilterCreatedByMemo } from "../filter/FilterCreatedBy.js";
 import { FilterGroupLayout } from "../filter/FilterGroupLayout.js";
@@ -73,6 +74,7 @@ export function Main({
                     </FilterOriginGuard>
                     {isQualityEnabled ? <FilterQualityMemo /> : null}
                     <FilterVisibilityMemo />
+                    <FilterCertificationMemo />
                     <FilterResetButtonMemo />
                 </FilterGroupLayout>
             </div>

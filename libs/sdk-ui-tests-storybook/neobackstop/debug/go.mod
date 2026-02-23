@@ -3,7 +3,7 @@ module debug
 go 1.26.0
 
 require (
-	github.com/gooddata/gooddata-neobackstop v0.21.1
+	github.com/gooddata/gooddata-neobackstop v0.21.2
 	github.com/playwright-community/playwright-go v0.5200.1
 )
 

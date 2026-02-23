@@ -39,6 +39,7 @@ export function getDashboardsQuery({
     tags,
     excludeTags,
     isHidden,
+    certification,
     pageSize = PAGE_SIZE,
 }: ICatalogItemQueryOptions) {
     return backend
@@ -47,11 +48,21 @@ export function getDashboardsQuery({
         .getDashboardsQuery()
         .withPage(0)
         .withSize(pageSize)
-        .withInclude(["createdBy", "modifiedBy"])
+        .withInclude(["createdBy", "modifiedBy", "certifiedBy"])
         .withMetaInclude(["permissions"])
         .withSorting(["title,asc"])
         .withOrigin(origin)
-        .withFilter({ search, id, excludeId, tags, excludeTags, createdBy, excludeCreatedBy, isHidden })
+        .withFilter({
+            search,
+            id,
+            excludeId,
+            tags,
+            excludeTags,
+            createdBy,
+            excludeCreatedBy,
+            isHidden,
+            certification,
+        })
         .withMethod("POST");
 }
 
@@ -67,6 +78,7 @@ export function getInsightsQuery({
     tags,
     excludeTags,
     isHidden,
+    certification,
     pageSize = PAGE_SIZE,
 }: ICatalogItemQueryOptions) {
     return backend
@@ -75,10 +87,20 @@ export function getInsightsQuery({
         .getInsightsQuery()
         .withPage(0)
         .withSize(pageSize)
-        .withInclude(["createdBy", "modifiedBy"])
+        .withInclude(["createdBy", "modifiedBy", "certifiedBy"])
         .withSorting(["title,asc"])
         .withOrigin(origin)
-        .withFilter({ search, id, excludeId, tags, excludeTags, createdBy, excludeCreatedBy, isHidden })
+        .withFilter({
+            search,
+            id,
+            excludeId,
+            tags,
+            excludeTags,
+            createdBy,
+            excludeCreatedBy,
+            isHidden,
+            certification,
+        })
         .withMethod("POST");
 }
 
@@ -94,6 +116,7 @@ export function getMetricsQuery({
     tags,
     excludeTags,
     isHidden,
+    certification,
     pageSize = PAGE_SIZE,
 }: ICatalogItemQueryOptions) {
     return backend
@@ -102,10 +125,20 @@ export function getMetricsQuery({
         .getMeasuresQuery()
         .withPage(0)
         .withSize(pageSize)
-        .withInclude(["createdBy", "modifiedBy"])
+        .withInclude(["createdBy", "modifiedBy", "certifiedBy"])
         .withSorting(["title,asc"])
         .withOrigin(origin)
-        .withFilter({ search, id, excludeId, tags, excludeTags, createdBy, excludeCreatedBy, isHidden })
+        .withFilter({
+            search,
+            id,
+            excludeId,
+            tags,
+            excludeTags,
+            createdBy,
+            excludeCreatedBy,
+            isHidden,
+            certification,
+        })
         .withMethod("POST");
 }
 
@@ -169,7 +202,14 @@ export function getFactsQuery({
             .withInclude(["dataset"])
             .withSorting(["title,asc"])
             .withOrigin(origin)
-            .withFilter({ search, id, excludeId, tags, excludeTags, isHidden })
+            .withFilter({
+                search,
+                id,
+                excludeId,
+                tags,
+                excludeTags,
+                isHidden,
+            })
             .withMethod("POST")
     );
 }
@@ -197,7 +237,15 @@ export function getDateDatasetsQuery({
             .withSorting(["title,asc"])
             .withOrigin(origin)
             // NOTE: Date datasets do not currently support createdBy filtering.
-            .withFilter({ dataSetType: "DATE", search, id, excludeId, tags, excludeTags, isHidden })
+            .withFilter({
+                dataSetType: "DATE",
+                search,
+                id,
+                excludeId,
+                tags,
+                excludeTags,
+                isHidden,
+            })
             .withMethod("POST")
     );
 }

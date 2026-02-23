@@ -276,7 +276,17 @@ export function useCatalogItemUpdate({
                 item,
                 status !== "success",
                 () => ({
-                    certification,
+                    certification: certification
+                        ? {
+                              ...certification,
+                              ...(certification.status === "CERTIFIED"
+                                  ? {
+                                        certifiedAt: new Date(),
+                                        certifiedBy: getDisplayName(currentUser),
+                                    }
+                                  : {}),
+                          }
+                        : undefined,
                 }),
                 (newItem, changes) => {
                     setItem(newItem);

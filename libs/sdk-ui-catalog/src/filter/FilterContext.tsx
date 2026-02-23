@@ -27,6 +27,7 @@ interface IFilterStateBase {
     tags: IFilterParams<string[]>;
     qualityCodes: IFilterParams<SemanticQualityIssueCode[]>;
     isHidden: boolean | undefined;
+    certification: boolean | undefined;
 }
 
 interface IFilterState extends IFilterStateBase {
@@ -42,6 +43,7 @@ interface IFilterActions {
     setTags: (params: IFilterParams<string[]>) => void;
     setQualityCodes: (params: IFilterParams<SemanticQualityIssueCode[]>) => void;
     setIsHidden: (isHidden: boolean | undefined) => void;
+    setCertification: (certification: boolean | undefined) => void;
     // Actions
     reset: () => void;
     toggleTag: (tag: string) => void;
@@ -54,6 +56,7 @@ type FilterReducerAction =
     | { type: "setTags"; payload: IFilterParams<string[]> }
     | { type: "setQualityCodes"; payload: IFilterParams<SemanticQualityIssueCode[]> }
     | { type: "setIsHidden"; payload: boolean | undefined }
+    | { type: "setCertification"; payload: boolean | undefined }
     | { type: "reset" }
     | { type: "toggleTag"; payload: string };
 
@@ -64,6 +67,7 @@ const initialState: IFilterStateBase = {
     tags: { values: [], isInverted: true },
     qualityCodes: { values: [], isInverted: true },
     isHidden: undefined,
+    certification: undefined,
 };
 
 const initialFullState: IFilterState = {
@@ -80,6 +84,7 @@ const initialActions: IFilterActions = {
     setTags: () => {},
     setQualityCodes: () => {},
     setIsHidden: () => {},
+    setCertification: () => {},
     // Actions
     reset: () => {},
     toggleTag: () => {},
@@ -108,6 +113,8 @@ export function FilterProvider({ children }: PropsWithChildren) {
             setTags: (params) => dispatch({ type: "setTags", payload: params }),
             setQualityCodes: (params) => dispatch({ type: "setQualityCodes", payload: params }),
             setIsHidden: (hidden) => dispatch({ type: "setIsHidden", payload: hidden }),
+            setCertification: (certification) =>
+                dispatch({ type: "setCertification", payload: certification }),
             reset: () => dispatch({ type: "reset" }),
             toggleTag: (tag) => dispatch({ type: "toggleTag", payload: tag }),
         }),
@@ -147,6 +154,10 @@ function filterReducer(state: IFilterStateBase, action: FilterReducerAction): IF
         case "setIsHidden": {
             if (isEqual(state.isHidden, action.payload)) return state;
             return { ...state, isHidden: action.payload };
+        }
+        case "setCertification": {
+            if (isEqual(state.certification, action.payload)) return state;
+            return { ...state, certification: action.payload };
         }
         // Actions
         case "reset": {

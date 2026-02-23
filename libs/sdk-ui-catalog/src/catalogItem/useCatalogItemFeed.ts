@@ -33,7 +33,7 @@ export function useCatalogItemFeed({ backend, workspace, id, pageSize }: ICatalo
     const state = useFeedState();
     const cache = useFeedCache();
     const { searchTerm: search } = useFullTextSearchState();
-    const { types, origin, createdBy, tags, isHidden } = useFilterState();
+    const { types, origin, createdBy, tags, isHidden, certification } = useFilterState();
     const qualityIds = useQualityFilter();
     const { status, totalCount, totalCounts, error, items, setItems } = state;
 
@@ -61,9 +61,22 @@ export function useCatalogItemFeed({ backend, workspace, id, pageSize }: ICatalo
             tags: tags.isInverted ? undefined : tags.values,
             excludeTags: tags.isInverted ? tags.values : undefined,
             isHidden,
+            certification,
             pageSize,
         };
-    }, [backend, workspace, search, origin, id, createdBy, pageSize, tags, qualityIds, isHidden]);
+    }, [
+        backend,
+        workspace,
+        search,
+        origin,
+        id,
+        createdBy,
+        pageSize,
+        tags,
+        qualityIds,
+        isHidden,
+        certification,
+    ]);
     const endpoints = useEndpoints(types, queryOptions);
 
     // reset
@@ -152,7 +165,11 @@ function useEndpoints(types: ObjectType[], queryOptions: ICatalogItemQueryOption
         if (types.includes(ObjectTypes.METRIC) || types.length === 0) {
             promises.push({ query: () => getMetricsQuery(queryOptions).query(), type: ObjectTypes.METRIC });
         }
-        if (!queryOptions.createdBy?.length && !queryOptions.excludeCreatedBy?.length) {
+        if (
+            !queryOptions.createdBy?.length &&
+            !queryOptions.excludeCreatedBy?.length &&
+            !queryOptions.certification
+        ) {
             if (types.includes(ObjectTypes.ATTRIBUTE) || types.length === 0) {
                 promises.push({
                     query: () => getAttributesQuery(queryOptions).query(),

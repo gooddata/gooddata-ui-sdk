@@ -1,11 +1,12 @@
 // (C) 2026 GoodData Corporation
 
-import { type IObjectCertification } from "@gooddata/sdk-model";
+import { type IObjectCertification, type IUser } from "@gooddata/sdk-model";
 
 type CertificationAttributes = {
     certification?: unknown;
     certificationMessage?: unknown;
     certifiedAt?: unknown;
+    certifiedBy?: IUser;
 };
 
 /**
@@ -13,6 +14,7 @@ type CertificationAttributes = {
  */
 export function convertCertificationFromBackend(
     attributes: CertificationAttributes = {},
+    certifiedBy?: IUser,
 ): IObjectCertification | undefined {
     const { certification, certificationMessage, certifiedAt } = attributes;
 
@@ -24,5 +26,6 @@ export function convertCertificationFromBackend(
         status: "CERTIFIED",
         ...(typeof certificationMessage === "string" ? { message: certificationMessage } : {}),
         ...(typeof certifiedAt === "string" ? { certifiedAt } : {}),
+        certifiedBy,
     };
 }

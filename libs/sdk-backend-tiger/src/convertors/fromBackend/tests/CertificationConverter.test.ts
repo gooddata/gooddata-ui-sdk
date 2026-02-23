@@ -13,15 +13,19 @@ describe("convertCertificationFromBackend", () => {
 
     it("should enrich certification string with sibling metadata fields", () => {
         expect(
-            convertCertificationFromBackend({
-                certification: "CERTIFIED",
-                certificationMessage: "Trusted object",
-                certifiedAt: "2026-02-19T10:00:00.000Z",
-            }),
+            convertCertificationFromBackend(
+                {
+                    certification: "CERTIFIED",
+                    certificationMessage: "Trusted object",
+                    certifiedAt: "2026-02-19T10:00:00.000Z",
+                },
+                { fullName: "John Doe", login: "john.doe@gooddata.com", ref: { uri: "/users/1" } },
+            ),
         ).toEqual({
             status: "CERTIFIED",
             message: "Trusted object",
             certifiedAt: "2026-02-19T10:00:00.000Z",
+            certifiedBy: { fullName: "John Doe", login: "john.doe@gooddata.com", ref: { uri: "/users/1" } },
         });
     });
 

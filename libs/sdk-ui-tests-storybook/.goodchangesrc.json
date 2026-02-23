@@ -21,7 +21,8 @@
                 },
                 {
                     "glob": "stories/**/*",
-                    "type": "fine-grained"
+                    "type": "fine-grained",
+                    "filter": "stories/**/*.stories.ts*"
                 }
             ]
         }

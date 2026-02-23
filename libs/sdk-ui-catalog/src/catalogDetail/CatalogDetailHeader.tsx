@@ -9,6 +9,7 @@ import { EditableLabel, UiCard, UiCopyButton } from "@gooddata/sdk-ui-kit";
 import { CatalogDetailGenerateDescription } from "./CatalogDetailGenerateDescription.js";
 import { CatalogItemLockMemo } from "../catalogItem/CatalogItemLock.js";
 import { type ICatalogItem } from "../catalogItem/types.js";
+import { CertificationIconMemo } from "../certification/CertificationIcon.js";
 import { ObjectTypeIconMemo } from "../objectType/ObjectTypeIcon.js";
 import { ObjectTypeTooltip } from "../objectType/ObjectTypeTooltip.js";
 
@@ -102,6 +103,11 @@ export function CatalogDetailHeader({
                                 <>{item.title}</>
                             )}
                         </div>
+                        <CertificationIconMemo
+                            className="gd-analytics-catalog-detail__card__header__title__certified"
+                            intl={intl}
+                            certification={item.certification}
+                        />
                     </div>
                     {canEdit ? (
                         <div className="gd-analytics-catalog-detail__card__header__row">

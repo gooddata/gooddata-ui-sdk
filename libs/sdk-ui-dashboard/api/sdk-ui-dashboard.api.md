@@ -9422,7 +9422,7 @@ export type ResolvedEntitlements = IEntitlementDescriptor[];
 export function resolveFilterValues(filters: ResolvableFilter[], backend?: IAnalyticalBackend, workspace?: string): Promise<IResolvedFilterValues>;
 
 // @internal
-export const resolveMessages: (locale: string) => Promise<any>;
+export const resolveMessages: (locale: string) => Promise<ITranslations>;
 
 // @alpha
 export function revertLastLayoutChange(correlationId?: string): IUndoLayoutChanges;

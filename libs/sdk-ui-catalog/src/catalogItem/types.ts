@@ -2,8 +2,8 @@
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import type {
+    CertificationStatus,
     IDataSetMetadataObject,
-    IObjectCertification,
     IdentifierRef,
     MetricType,
     ObjectOrigin,
@@ -53,7 +53,12 @@ export type VisualizationType =
 export interface ICatalogItem extends ICatalogItemRef {
     title: string;
     description: string;
-    certification?: IObjectCertification;
+    certification?: {
+        status: CertificationStatus;
+        message?: string;
+        certifiedAt?: Date | null;
+        certifiedBy?: string;
+    };
     tags: string[];
     createdBy: string;
     updatedBy: string;
@@ -83,5 +88,6 @@ export interface ICatalogItemQueryOptions {
     tags?: string[];
     excludeTags?: string[];
     isHidden?: boolean;
+    certification?: boolean;
     pageSize?: number;
 }

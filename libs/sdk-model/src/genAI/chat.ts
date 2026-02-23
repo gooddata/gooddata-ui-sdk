@@ -197,6 +197,44 @@ export interface IGenAIVisualizationConfig {
      * Forecast configuration.
      */
     forecast?: IGenAIForecastConfig;
+    /**
+     * Anomaly detection configuration.
+     */
+    anomalyDetection?: IGenAIAnomalyDetectionConfig;
+    /**
+     * Clustering configuration.
+     */
+    clustering?: IGenAIClusteringConfig;
+    /**
+     * What-if scenario configuration.
+     */
+    whatIf?: IGenAIWhatIfConfig;
+}
+
+/**
+ * Clustering configuration for GenAI-created visualization.
+ * @internal
+ */
+export interface IGenAIClusteringConfig {
+    /**
+     * Number of clusters.
+     */
+    numberOfClusters: number;
+    /**
+     * Clustering algorithm threshold.
+     */
+    threshold?: number;
+}
+
+/**
+ * Anomaly detection configuration for GenAI-created visualization.
+ * @internal
+ */
+export interface IGenAIAnomalyDetectionConfig {
+    /**
+     * Anomaly detection sensitivity level.
+     */
+    sensitivity: "LOW" | "MEDIUM" | "HIGH";
 }
 
 /**
@@ -216,6 +254,55 @@ export interface IGenAIForecastConfig {
      * Whether the input data is seasonal.
      */
     seasonal: boolean;
+}
+
+/**
+ * What-if scenario configuration for GenAI-created visualization.
+ * @internal
+ */
+export interface IGenAIWhatIfConfig {
+    /**
+     * List of what-if scenarios.
+     */
+    scenarios: IGenAIWhatIfScenario[];
+    /**
+     * Whether to include the baseline (unmodified) visualization.
+     */
+    includeBaseline?: boolean;
+}
+
+/**
+ * A single what-if scenario.
+ * @internal
+ */
+export interface IGenAIWhatIfScenario {
+    /**
+     * Display label for the scenario.
+     */
+    label: string;
+    /**
+     * Metric adjustments for this scenario.
+     */
+    adjustments: IGenAIWhatIfAdjustment[];
+}
+
+/**
+ * A metric adjustment within a what-if scenario.
+ * @internal
+ */
+export interface IGenAIWhatIfAdjustment {
+    /**
+     * ID of the metric to override.
+     */
+    metricId: string;
+    /**
+     * Type of the metric object.
+     */
+    metricType: GenAIMetricType;
+    /**
+     * MAQL expression to use as the scenario override.
+     */
+    scenarioMaql: string;
 }
 
 /**
@@ -319,7 +406,7 @@ export type IGenAISuggestion = {
  * Type of the visualization.
  * @internal
  */
-export type GenAIVisualizationType = "TABLE" | "HEADLINE" | "BAR" | "LINE" | "PIE" | "COLUMN";
+export type GenAIVisualizationType = "TABLE" | "HEADLINE" | "BAR" | "LINE" | "PIE" | "COLUMN" | "SCATTER";
 
 /**
  * Metric definition for the visualization.

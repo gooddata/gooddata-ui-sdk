@@ -1054,6 +1054,7 @@ export type IFactsQueryResult = IPagedResource<IFactMetadataObject>;
 
 // @beta (undocumented)
 export interface IFilterBaseOptions {
+    certification?: boolean;
     createdBy?: string[];
     excludeCreatedBy?: string[];
     excludeId?: string[];

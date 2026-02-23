@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { memoize, merge } from "lodash-es";
+import { memoize } from "lodash-es";
 
 import type { ITranslations } from "@gooddata/sdk-ui";
 import {
@@ -9,10 +9,16 @@ import {
 } from "@gooddata/sdk-ui-ext/internal";
 import { removeMetadata } from "@gooddata/util";
 
+/**
+ * @internal
+ */
+export const DEFAULT_LANGUAGE = "en-US";
+
 import { en_US } from "./bundles/en-US.localization-bundle.js";
 
 const asyncSdkUiDashboardTranslations: { [locale: string]: () => Promise<Record<string, string>> } = {
     "en-US": () => Promise.resolve(removeMetadata(en_US)),
+    "en-US-x-24h": () => Promise.resolve(removeMetadata(en_US)),
     "de-DE": () => import("./bundles/de-DE.localization-bundle.js").then((module) => module.de_DE),
     "es-ES": () => import("./bundles/es-ES.localization-bundle.js").then((module) => module.es_ES),
     "fr-FR": () => import("./bundles/fr-FR.localization-bundle.js").then((module) => module.fr_FR),
@@ -43,16 +49,12 @@ const asyncSdkUiDashboardTranslations: { [locale: string]: () => Promise<Record<
  * @returns Promise resolving to translations object
  * @internal
  */
-const resolveMessagesInternal = async (locale: string): Promise<any> => {
-    if (asyncSdkUiDashboardTranslations[locale]) {
-        const [ui, dash] = await Promise.all([
-            resolveMessagesSdkUiExt(locale),
-            asyncSdkUiDashboardTranslations[locale](),
-        ]);
-        return merge({}, ui, dash);
-    }
+const resolveMessagesInternal = async (locale: string): Promise<ITranslations> => {
+    const dashboardLoader =
+        asyncSdkUiDashboardTranslations[locale] || asyncSdkUiDashboardTranslations[DEFAULT_LANGUAGE];
 
-    return await resolveMessagesSdkUiExt("en-US");
+    const [ui, dash] = await Promise.all([resolveMessagesSdkUiExt(locale), dashboardLoader()]);
+    return { ...ui, ...dash };
 };
 
 /**
@@ -61,12 +63,8 @@ const resolveMessagesInternal = async (locale: string): Promise<any> => {
  *
  * @internal
  */
-export const resolveMessages: (locale: string) => Promise<any> = memoize(resolveMessagesInternal);
+export const resolveMessages: (locale: string) => Promise<ITranslations> = memoize(resolveMessagesInternal);
 
-/**
- * @internal
- */
-export const DEFAULT_LANGUAGE = "en-US";
 /**
  * @internal
  */

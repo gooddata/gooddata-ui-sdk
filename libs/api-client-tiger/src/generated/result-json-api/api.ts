@@ -701,7 +701,7 @@ export async function ActionsApiAxiosParamCreator_CollectCacheUsage(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
- * Converts a geo file from the staging area to GeoParquet format. Supported source formats: GeoJSON (.geojson, .json). If the source file is already in GeoParquet format, the same location is returned without conversion.
+ * Converts a geo file from the staging area to GeoParquet format. Supported source formats: GeoJSON (.geojson, .json), ESRI Shapefile (.zip). If the source file is already in GeoParquet format, the same location is returned without conversion.
  * @summary Convert a geo file to GeoParquet format
  * @param {ConvertGeoFileRequest} convertGeoFileRequest 
  * @param {*} [options] Override http request option.
@@ -759,9 +759,9 @@ export async function ActionsApiAxiosParamCreator_ConvertGeoFile(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
- * Provides a location for uploading staging files for custom geo collections. Supported file types: GeoParquet (.parquet), GeoJSON (.geojson, .json).
+ * Provides a location for uploading staging files for custom geo collections. Supported file types: GeoParquet (.parquet), GeoJSON (.geojson, .json), ESRI Shapefile (.zip). Maximum file size: 100 MB.
  * @summary Upload a geo collection file to the staging area
- * @param {File} file The geo collection file to upload. Supported formats: GeoParquet (.parquet), GeoJSON (.geojson, .json).
+ * @param {File} file The geo collection file to upload. Supported formats: GeoParquet (.parquet), GeoJSON (.geojson, .json), ESRI Shapefile (.zip).
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
@@ -935,7 +935,7 @@ export async function ActionsApiAxiosParamCreator_ImportCsv(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
- * Import a geo collection file from the staging area to be available for use.
+ * Import a geo collection file from the staging area to be available for use. The file must be in GeoParquet format (use the convert endpoint first for other formats). Validates file size (max 100 MB), organization storage quota (max 1 GB total), and GeoParquet schema (requires id, geometry, and bbox columns).
  * @summary Import custom geo collection
  * @param {string} collectionId 
  * @param {ImportGeoCollectionRequest} importGeoCollectionRequest 
@@ -1208,7 +1208,7 @@ export async function ActionsApi_CollectCacheUsage(
 
 // ActionsApi Api FP
 /**
- * Converts a geo file from the staging area to GeoParquet format. Supported source formats: GeoJSON (.geojson, .json). If the source file is already in GeoParquet format, the same location is returned without conversion.
+ * Converts a geo file from the staging area to GeoParquet format. Supported source formats: GeoJSON (.geojson, .json), ESRI Shapefile (.zip). If the source file is already in GeoParquet format, the same location is returned without conversion.
  * @summary Convert a geo file to GeoParquet format
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -1234,7 +1234,7 @@ export async function ActionsApi_ConvertGeoFile(
 
 // ActionsApi Api FP
 /**
- * Provides a location for uploading staging files for custom geo collections. Supported file types: GeoParquet (.parquet), GeoJSON (.geojson, .json).
+ * Provides a location for uploading staging files for custom geo collections. Supported file types: GeoParquet (.parquet), GeoJSON (.geojson, .json), ESRI Shapefile (.zip). Maximum file size: 100 MB.
  * @summary Upload a geo collection file to the staging area
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -1312,7 +1312,7 @@ export async function ActionsApi_ImportCsv(
 
 // ActionsApi Api FP
 /**
- * Import a geo collection file from the staging area to be available for use.
+ * Import a geo collection file from the staging area to be available for use. The file must be in GeoParquet format (use the convert endpoint first for other formats). Validates file size (max 100 MB), organization storage quota (max 1 GB total), and GeoParquet schema (requires id, geometry, and bbox columns).
  * @summary Import custom geo collection
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -1440,7 +1440,7 @@ export interface ActionsApiInterface {
     collectCacheUsage(options?: AxiosRequestConfig): AxiosPromise<CacheUsageData>;
 
     /**
-     * Converts a geo file from the staging area to GeoParquet format. Supported source formats: GeoJSON (.geojson, .json). If the source file is already in GeoParquet format, the same location is returned without conversion.
+     * Converts a geo file from the staging area to GeoParquet format. Supported source formats: GeoJSON (.geojson, .json), ESRI Shapefile (.zip). If the source file is already in GeoParquet format, the same location is returned without conversion.
      * @summary Convert a geo file to GeoParquet format
      * @param {ActionsApiConvertGeoFileRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1450,7 +1450,7 @@ export interface ActionsApiInterface {
     convertGeoFile(requestParameters: ActionsApiConvertGeoFileRequest, options?: AxiosRequestConfig): AxiosPromise<ConvertGeoFileResponse>;
 
     /**
-     * Provides a location for uploading staging files for custom geo collections. Supported file types: GeoParquet (.parquet), GeoJSON (.geojson, .json).
+     * Provides a location for uploading staging files for custom geo collections. Supported file types: GeoParquet (.parquet), GeoJSON (.geojson, .json), ESRI Shapefile (.zip). Maximum file size: 100 MB.
      * @summary Upload a geo collection file to the staging area
      * @param {ActionsApiCustomGeoCollectionStagingUploadRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1480,7 +1480,7 @@ export interface ActionsApiInterface {
     importCsv(requestParameters: ActionsApiImportCsvRequest, options?: AxiosRequestConfig): AxiosPromise<Array<ImportCsvResponse>>;
 
     /**
-     * Import a geo collection file from the staging area to be available for use.
+     * Import a geo collection file from the staging area to be available for use. The file must be in GeoParquet format (use the convert endpoint first for other formats). Validates file size (max 100 MB), organization storage quota (max 1 GB total), and GeoParquet schema (requires id, geometry, and bbox columns).
      * @summary Import custom geo collection
      * @param {ActionsApiImportCustomGeoCollectionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1556,7 +1556,7 @@ export interface ActionsApiConvertGeoFileRequest {
  */
 export interface ActionsApiCustomGeoCollectionStagingUploadRequest {
     /**
-     * The geo collection file to upload. Supported formats: GeoParquet (.parquet), GeoJSON (.geojson, .json).
+     * The geo collection file to upload. Supported formats: GeoParquet (.parquet), GeoJSON (.geojson, .json), ESRI Shapefile (.zip).
      * @type {File}
      * @memberof ActionsApiCustomGeoCollectionStagingUpload
      */
@@ -1706,7 +1706,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
-     * Converts a geo file from the staging area to GeoParquet format. Supported source formats: GeoJSON (.geojson, .json). If the source file is already in GeoParquet format, the same location is returned without conversion.
+     * Converts a geo file from the staging area to GeoParquet format. Supported source formats: GeoJSON (.geojson, .json), ESRI Shapefile (.zip). If the source file is already in GeoParquet format, the same location is returned without conversion.
      * @summary Convert a geo file to GeoParquet format
      * @param {ActionsApiConvertGeoFileRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1718,7 +1718,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
-     * Provides a location for uploading staging files for custom geo collections. Supported file types: GeoParquet (.parquet), GeoJSON (.geojson, .json).
+     * Provides a location for uploading staging files for custom geo collections. Supported file types: GeoParquet (.parquet), GeoJSON (.geojson, .json), ESRI Shapefile (.zip). Maximum file size: 100 MB.
      * @summary Upload a geo collection file to the staging area
      * @param {ActionsApiCustomGeoCollectionStagingUploadRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1754,7 +1754,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
-     * Import a geo collection file from the staging area to be available for use.
+     * Import a geo collection file from the staging area to be available for use. The file must be in GeoParquet format (use the convert endpoint first for other formats). Validates file size (max 100 MB), organization storage quota (max 1 GB total), and GeoParquet schema (requires id, geometry, and bbox columns).
      * @summary Import custom geo collection
      * @param {ActionsApiImportCustomGeoCollectionRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

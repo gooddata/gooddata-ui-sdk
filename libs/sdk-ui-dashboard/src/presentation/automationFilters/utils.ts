@@ -14,12 +14,15 @@ import {
     type IFilter,
     type IInsight,
     type ObjRef,
+    type ObjRefInScope,
     absoluteDateFilterValues,
     areObjRefsEqual,
+    attributeLocalId,
     filterAttributeElements,
     filterLocalIdentifier,
     filterObjRef,
     getAttributeElementsItems,
+    insightAttributes,
     isAbsoluteDateFilter,
     isAllTimeDateFilter,
     isAttributeFilter,
@@ -28,6 +31,8 @@ import {
     isDashboardDateFilter,
     isDateFilter,
     isInsightWidget,
+    isLocalIdRef,
+    isMeasureValueFilter,
     isNoopAllTimeDashboardDateFilter,
     isPositiveAttributeFilter,
     isRelativeDateFilter,
@@ -200,6 +205,63 @@ export const getVisibleFiltersByFiltersByTab = (
 };
 
 /**
+ * Resolve MVF dimensionality localIdRefs to stable identifierRefs using the insight's attributes.
+ *
+ * Measure value filters may reference attributes in their dimensionality via localIdRef,
+ * which is only meaningful within the insight's own execution context. When these filters
+ * are used in an alert execution (which may not include the original attributes), the
+ * localIdRefs become dangling. This function resolves them to display form identifierRefs.
+ */
+export function resolveMvfDimensionalityLocalRefs(
+    filters: IFilter[],
+    insight: IInsight | undefined,
+): IFilter[] {
+    if (!insight) {
+        return filters;
+    }
+
+    const attributeLocalIdToDisplayForm = new Map<string, ObjRefInScope>();
+    insightAttributes(insight).forEach((attribute) => {
+        attributeLocalIdToDisplayForm.set(attributeLocalId(attribute), attribute.attribute.displayForm);
+    });
+
+    if (attributeLocalIdToDisplayForm.size === 0) {
+        return filters;
+    }
+
+    return filters.map((filter) => {
+        if (!isMeasureValueFilter(filter)) {
+            return filter;
+        }
+
+        const dimensionality = filter.measureValueFilter.dimensionality;
+        if (!dimensionality?.length) {
+            return filter;
+        }
+
+        const resolvedDimensionality = dimensionality.map((item) => {
+            if (!isLocalIdRef(item)) {
+                return item;
+            }
+            return attributeLocalIdToDisplayForm.get(item.localIdentifier) ?? item;
+        });
+
+        const changed = dimensionality.some((item, i) => item !== resolvedDimensionality[i]);
+        if (!changed) {
+            return filter;
+        }
+
+        return {
+            ...filter,
+            measureValueFilter: {
+                ...filter.measureValueFilter,
+                dimensionality: resolvedDimensionality,
+            },
+        };
+    });
+}
+
+/**
  * Get final execution filters for the widget alert or scheduled export.
  */
 export const getAppliedWidgetFilters = (
@@ -229,8 +291,12 @@ export const getAppliedWidgetFilters = (
         ? mergeFilters(insight?.insight?.filters ?? [], selectedExecutionFilters, commonDateFilterId)
         : selectedExecutionFilters;
 
+    // Resolve MVF dimensionality localIdRefs to stable identifierRefs so that
+    // alert executions (which have empty attributes) don't contain dangling refs.
+    const resolvedFilters = resolveMvfDimensionalityLocalRefs(filtersToUse, insight);
+
     // Strip noop "all time" date filters - we don't want to save them, they have no effect on execution.
-    return filtersToUse.filter((f) => {
+    return resolvedFilters.filter((f) => {
         if (isDateFilter(f)) {
             return !isNoopAllTimeDateFilterFixed(f);
         }

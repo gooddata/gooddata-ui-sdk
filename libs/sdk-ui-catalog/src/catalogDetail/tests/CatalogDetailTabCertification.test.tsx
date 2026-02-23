@@ -85,4 +85,25 @@ describe("CatalogDetailTabCertification", () => {
 
         expect(onCertificationChange).toHaveBeenCalledWith({ status: "CERTIFIED" });
     });
+
+    it("shows certified by field for certified objects", () => {
+        render(
+            <CatalogDetailTabCertification
+                item={{
+                    ...baseItem,
+                    certification: {
+                        status: "CERTIFIED",
+                        message: "Trusted metric",
+                        certifiedBy: "John Doe",
+                    },
+                }}
+                canEdit
+                onCertificationChange={vi.fn()}
+            />,
+            { wrapper },
+        );
+
+        expect(screen.getByText("Certified by")).toBeInTheDocument();
+        expect(screen.getByText("John Doe")).toBeInTheDocument();
+    });
 });

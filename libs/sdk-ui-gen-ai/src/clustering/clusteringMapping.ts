@@ -1,0 +1,41 @@
+// (C) 2026 GoodData Corporation
+
+import type { IClusteringConfig } from "@gooddata/sdk-backend-spi";
+import type { IGenAIVisualization } from "@gooddata/sdk-model";
+import type { IChartClusteringConfig } from "@gooddata/sdk-ui-charts";
+
+/**
+ * @internal
+ */
+export function mapVisualizationClusteringToChartConfig(
+    visualization?: IGenAIVisualization,
+): IChartClusteringConfig | undefined {
+    const clustering = visualization?.config?.clustering;
+
+    if (!clustering) {
+        return undefined;
+    }
+
+    return {
+        enabled: true,
+        numberOfClusters: clustering.numberOfClusters,
+    };
+}
+
+/**
+ * @internal
+ */
+export function mapVisualizationClusteringToBackendConfig(
+    visualization?: IGenAIVisualization,
+): IClusteringConfig | undefined {
+    const clustering = visualization?.config?.clustering;
+
+    if (!clustering) {
+        return undefined;
+    }
+
+    return {
+        numberOfClusters: clustering.numberOfClusters,
+        threshold: clustering.threshold,
+    };
+}

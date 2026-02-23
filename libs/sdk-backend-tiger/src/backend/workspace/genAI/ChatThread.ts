@@ -26,7 +26,9 @@ import {
     type GenAIChatInteractionUserFeedback,
     type GenAIChatInteractionUserVisualisation,
     type GenAIFilter,
+    type GenAIMetricType,
     type GenAIObjectType,
+    type GenAIVisualizationType,
     type IAllowedRelationshipType,
     type IAttribute,
     type IGenAIChangeAnalysisParams,
@@ -509,26 +511,49 @@ function convertCreatedVisualizations(
 }
 
 export function convertCreatedVisualization(data: CreatedVisualization): IGenAIVisualization {
+    const config: IGenAIVisualization["config"] = {};
+    if (data.config?.forecast) {
+        config.forecast = {
+            forecastPeriod: data.config.forecast.forecastPeriod,
+            confidenceLevel: data.config.forecast.confidenceLevel,
+            seasonal: data.config.forecast.seasonal,
+        };
+    }
+    if (data.config?.anomalyDetection) {
+        config.anomalyDetection = {
+            sensitivity: data.config.anomalyDetection.sensitivity,
+        };
+    }
+    if (data.config?.clustering) {
+        config.clustering = {
+            numberOfClusters: data.config.clustering.numberOfClusters,
+            threshold: data.config.clustering.threshold,
+        };
+    }
+    if (data.config?.whatIf) {
+        config.whatIf = {
+            scenarios: data.config.whatIf.scenarios.map((scenario) => ({
+                label: scenario.label,
+                adjustments: scenario.adjustments.map((adj) => ({
+                    metricId: adj.metricId,
+                    metricType: adj.metricType as GenAIMetricType,
+                    scenarioMaql: adj.scenarioMaql,
+                })),
+            })),
+            includeBaseline: data.config.whatIf.includeBaseline,
+        };
+    }
+
     return {
         id: data.id,
         title: data.title,
-        visualizationType: data.visualizationType,
+        visualizationType: data.visualizationType as GenAIVisualizationType,
         metrics: data.metrics,
         dimensionality: data.dimensionality,
         filters: data.filters as GenAIFilter[],
         suggestions: data.suggestions,
         savedVisualizationId: data.savedVisualizationId,
-        ...(data.config?.forecast
-            ? {
-                  config: {
-                      forecast: {
-                          forecastPeriod: data.config.forecast.forecastPeriod,
-                          confidenceLevel: data.config.forecast.confidenceLevel,
-                          seasonal: data.config.forecast.seasonal,
-                      },
-                  },
-              }
-            : {}),
+        ...(Object.keys(config).length > 0 ? { config } : {}),
     };
 }
 

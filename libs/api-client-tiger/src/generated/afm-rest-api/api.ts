@@ -305,6 +305,18 @@ export interface AnalyticsCatalogUser {
     'lastname': string;
 }
 
+/**
+ * Anomaly detection configuration.
+ */
+export interface AnomalyDetectionConfig {
+    /**
+     * Outlier sensitivity level.
+     */
+    'sensitivity': AnomalyDetectionConfigSensitivityEnum;
+}
+
+export type AnomalyDetectionConfigSensitivityEnum = 'LOW' | 'MEDIUM' | 'HIGH';
+
 export interface AnomalyDetectionRequest {
     /**
      * Anomaly detection sensitivity.
@@ -730,6 +742,20 @@ export interface ChatUsageResponse {
     'timeWindowHours': number;
 }
 
+/**
+ * Clustering configuration.
+ */
+export interface ClusteringConfig {
+    /**
+     * Number of clusters to create
+     */
+    'numberOfClusters': number;
+    /**
+     * Clustering algorithm threshold
+     */
+    'threshold': number;
+}
+
 export interface ClusteringRequest {
     /**
      * Number of clusters to create
@@ -853,7 +879,7 @@ export interface CreatedVisualization {
     'config'?: VisualizationConfig;
 }
 
-export type CreatedVisualizationVisualizationTypeEnum = 'TABLE' | 'HEADLINE' | 'BAR' | 'LINE' | 'PIE' | 'COLUMN';
+export type CreatedVisualizationVisualizationTypeEnum = 'TABLE' | 'HEADLINE' | 'BAR' | 'LINE' | 'PIE' | 'COLUMN' | 'SCATTER';
 
 /**
  * @type CreatedVisualizationFiltersInner
@@ -2309,6 +2335,20 @@ export interface SearchResultObject {
 }
 
 /**
+ * Non-sensitive metadata for an AI Lake pipeline
+ */
+export interface ServiceInfo {
+    /**
+     * Internal identifier for the service configuration (UUID)
+     */
+    'serviceId': string;
+    /**
+     * Human-readable name of the service
+     */
+    'name': string;
+}
+
+/**
  * Metric defined by referencing a MAQL metric or an LDM fact object with aggregation.
  */
 export interface SimpleMeasureDefinition {
@@ -2579,6 +2619,9 @@ export interface ValidateLLMEndpointResponse {
  */
 export interface VisualizationConfig {
     'forecast'?: ForecastConfig;
+    'anomalyDetection'?: AnomalyDetectionConfig;
+    'clustering'?: ClusteringConfig;
+    'whatIf'?: WhatIfScenarioConfig;
 }
 
 export interface WorkflowDashboardSummaryRequestDto {
@@ -2601,6 +2644,52 @@ export interface WorkflowStatusResponseDto {
     'result'?: { [key: string]: object; };
     'error'?: string;
     'currentPhase'?: string;
+}
+
+/**
+ * Measure adjustments for this scenario
+ */
+export interface WhatIfMeasureAdjustmentConfig {
+    /**
+     * ID of the metric or fact to adjust
+     */
+    'metricId': string;
+    /**
+     * Type: metric or fact
+     */
+    'metricType': string;
+    /**
+     * Alternative MAQL expression for this scenario
+     */
+    'scenarioMaql': string;
+}
+
+/**
+ * What-if scenario configuration.
+ */
+export interface WhatIfScenarioConfig {
+    /**
+     * Scenarios with alternative measure calculations
+     */
+    'scenarios': Array<WhatIfScenarioItem>;
+    /**
+     * Whether baseline (unmodified) values are included
+     */
+    'includeBaseline': boolean;
+}
+
+/**
+ * Scenarios with alternative measure calculations
+ */
+export interface WhatIfScenarioItem {
+    /**
+     * Human-readable scenario label
+     */
+    'label': string;
+    /**
+     * Measure adjustments for this scenario
+     */
+    'adjustments': Array<WhatIfMeasureAdjustmentConfig>;
 }
 
 
@@ -2718,6 +2807,47 @@ export async function AILakeApiAxiosParamCreator_GetAiLakeOperation(
     assertParamExists('getAiLakeOperation', 'operationId', operationId)
     const localVarPath = `/api/v1/ailake/operation/{operationId}`
         .replace(`{${"operationId"}}`, encodeURIComponent(String(operationId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// AILakeApi FP - AILakeApiAxiosParamCreator
+/**
+ * (BETA) Lists services configured for the organization\'s AI Lake. Returns only non-sensitive fields (id, name).
+ * @summary (BETA) List AI Lake services
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeApiAxiosParamCreator_ListAiLakeServices(
+    
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    const localVarPath = `/api/v1/ailake/services`;
     // use dummy base URL string because the URL constructor only accepts absolute URLs.
     const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
     let baseOptions;
@@ -2889,6 +3019,31 @@ export async function AILakeApi_GetAiLakeOperation(
 
 // AILakeApi Api FP
 /**
+ * (BETA) Lists services configured for the organization\'s AI Lake. Returns only non-sensitive fields (id, name).
+ * @summary (BETA) List AI Lake services
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeApi_ListAiLakeServices(
+    axios: AxiosInstance, basePath: string,
+    
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<Array<ServiceInfo>> {
+    const localVarAxiosArgs = await AILakeApiAxiosParamCreator_ListAiLakeServices(
+        
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// AILakeApi Api FP
+/**
  * (BETA) Creates a new database in the organization\'s AI Lake. Returns an operation-id in the operation-id header the client can use to poll for the progress.
  * @summary (BETA) Create a new AILake Database instance
  * @param {AxiosInstance} axios Axios instance.
@@ -2948,6 +3103,15 @@ export interface AILakeApiInterface {
      * @memberof AILakeApiInterface
      */
     getAiLakeOperation(requestParameters: AILakeApiGetAiLakeOperationRequest, options?: AxiosRequestConfig): AxiosPromise<GetAiLakeOperation200Response>;
+
+    /**
+     * (BETA) Lists services configured for the organization\'s AI Lake. Returns only non-sensitive fields (id, name).
+     * @summary (BETA) List AI Lake services
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeApiInterface
+     */
+    listAiLakeServices(options?: AxiosRequestConfig): AxiosPromise<Array<ServiceInfo>>;
 
     /**
      * (BETA) Creates a new database in the organization\'s AI Lake. Returns an operation-id in the operation-id header the client can use to poll for the progress.
@@ -3072,6 +3236,17 @@ export class AILakeApi extends BaseAPI implements AILakeApiInterface {
      */
     public getAiLakeOperation(requestParameters: AILakeApiGetAiLakeOperationRequest, options?: AxiosRequestConfig) {
         return AILakeApi_GetAiLakeOperation(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * (BETA) Lists services configured for the organization\'s AI Lake. Returns only non-sensitive fields (id, name).
+     * @summary (BETA) List AI Lake services
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeApi
+     */
+    public listAiLakeServices(options?: AxiosRequestConfig) {
+        return AILakeApi_ListAiLakeServices(this.axios, this.basePath, options, this.configuration);
     }
 
     /**

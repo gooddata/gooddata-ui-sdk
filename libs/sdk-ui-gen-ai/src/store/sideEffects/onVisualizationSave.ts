@@ -15,6 +15,8 @@ import {
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 
+import { mapVisualizationAnomalyDetectionToChartConfig } from "../../anomalyDetection/anomalyDetectionMapping.js";
+import { mapVisualizationClusteringToChartConfig } from "../../clustering/clusteringMapping.js";
 import { prepareExecution } from "../../components/messages/contents/useExecution.js";
 import { mapVisualizationForecastToChartConfig } from "../../forecast/forecastMapping.js";
 import { type Message, isVisualizationContents } from "../../model.js";
@@ -92,6 +94,8 @@ const buildInsightDefinition = (
             return buildPieChart(visualizationContent, visualizationTitle);
         case "LINE":
             return buildLineChart(visualizationContent, visualizationTitle);
+        case "SCATTER":
+            return buildScatterPlot(visualizationContent, visualizationTitle);
         case "TABLE":
             return buildTableChart(visualizationContent, visualizationTitle);
         case "HEADLINE":
@@ -195,6 +199,12 @@ export const buildLineChart = (
     }
 
     const forecast = mapVisualizationForecastToChartConfig(visualizationContent);
+    const anomalies = mapVisualizationAnomalyDetectionToChartConfig(visualizationContent);
+
+    const controls = {
+        ...(forecast ? { forecast } : {}),
+        ...(anomalies ? { anomalies } : {}),
+    };
 
     return {
         insight: {
@@ -207,7 +217,45 @@ export const buildLineChart = (
                 legend: {
                     responsive: "autoPositionWithPopup",
                 },
-                ...(forecast ? { controls: { forecast } } : {}),
+                ...(Object.keys(controls).length > 0 ? { controls } : {}),
+            },
+        },
+    };
+};
+
+export const buildScatterPlot = (
+    visualizationContent: IGenAIVisualization,
+    visualizationTitle: string,
+): IInsightDefinition => {
+    const exec = prepareExecution(visualizationContent);
+
+    const metrics = applyRatioRule(exec.metrics as IAttributeOrMeasure[]);
+    const xAxisMeasure = metrics[0];
+    const yAxisMeasure = metrics[1];
+    const attribute = exec.dimensions[0];
+    const segmentBy = exec.dimensions[1];
+
+    const buckets: IBucket[] = [
+        newBucket(BucketNames.MEASURES, xAxisMeasure),
+        newBucket(BucketNames.SECONDARY_MEASURES, yAxisMeasure),
+        newBucket(BucketNames.ATTRIBUTE, attribute),
+    ];
+
+    if (segmentBy) {
+        buckets.push(newBucket(BucketNames.SEGMENT, segmentBy));
+    }
+
+    const clustering = mapVisualizationClusteringToChartConfig(visualizationContent);
+
+    return {
+        insight: {
+            title: visualizationTitle,
+            visualizationUrl: "local:scatter",
+            buckets: buckets,
+            filters: exec.filters,
+            sorts: [],
+            properties: {
+                ...(clustering ? { controls: { clustering } } : {}),
             },
         },
     };
