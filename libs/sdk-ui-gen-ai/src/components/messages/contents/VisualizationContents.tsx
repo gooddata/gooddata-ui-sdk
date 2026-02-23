@@ -21,12 +21,14 @@ import {
     type IColorPalette,
     type IDashboardAttributeFilter,
     type IDrillOrigin,
+    type IExecutionConfig,
     type IFilter,
     type IGenAIVisualization,
     type IKeyDriveAnalysis,
     type IMeasure,
     type ISortItem,
     type ITheme,
+    assertNever,
     isMeasureDescriptor,
 } from "@gooddata/sdk-model";
 import {
@@ -41,7 +43,7 @@ import {
     isNoDataSdkError,
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
-import { BarChart, ColumnChart, Headline, LineChart, PieChart } from "@gooddata/sdk-ui-charts";
+import { BarChart, ColumnChart, Headline, LineChart, PieChart, ScatterPlot } from "@gooddata/sdk-ui-charts";
 import {
     type IDashboardKeyDriverCombinationItem,
     getKdaKeyDriverCombinations,
@@ -70,6 +72,14 @@ import { useExecution } from "./useExecution.js";
 import { VisualizationErrorBoundary } from "./VisualizationErrorBoundary.js";
 import { VisualizationSaveDialog } from "./VisualizationSaveDialog.js";
 import {
+    mapVisualizationAnomalyDetectionToBackendConfig,
+    mapVisualizationAnomalyDetectionToChartConfig,
+} from "../../../anomalyDetection/anomalyDetectionMapping.js";
+import {
+    mapVisualizationClusteringToBackendConfig,
+    mapVisualizationClusteringToChartConfig,
+} from "../../../clustering/clusteringMapping.js";
+import {
     mapVisualizationForecastToBackendConfig,
     mapVisualizationForecastToChartConfig,
 } from "../../../forecast/forecastMapping.js";
@@ -86,6 +96,7 @@ import {
 } from "../../../store/messages/messagesSlice.js";
 import { type RootState } from "../../../store/types.js";
 import { getAbsoluteVisualizationHref, getHeadlineComparison, getVisualizationHref } from "../../../utils.js";
+import { mapVisualizationWhatIfToScenarios } from "../../../whatIf/whatIfMapping.js";
 import { useConfig } from "../../ConfigContext.js";
 import { createKdaDefinitionFromDrill, getDashboardAttributeFilter } from "../../hooks/useKdaDefinition.js";
 import { convertIntersectionToAttributeFilters, mergeFilters } from "../../utils/intersectionUtils.js";
@@ -415,10 +426,203 @@ function VisualizationContentsComponentCore({
         return undefined;
     }, [dimensions, enableChangeAnalysis, metrics, visualization]);
 
+    const whatIfScenarios = useMemo(() => mapVisualizationWhatIfToScenarios(visualization), [visualization]);
+
+    const renderCurrentChart = (execConfig?: IExecutionConfig) => {
+        if (!visualization) {
+            return null;
+        }
+
+        if (isTable) {
+            return renderTable(
+                intl.locale,
+                metrics,
+                dimensions,
+                filters,
+                sorts,
+                handleSdkError,
+                handleLoadingChanged,
+                handleSuccess,
+                handlerDrill,
+                {
+                    drillableItems,
+                    enableChangeAnalysis,
+                    enableNewPivotTable,
+                    enableAccessibleChartTooltip,
+                    agGridToken: resolvedAgGridToken,
+                    execConfig,
+                },
+            );
+        }
+
+        switch (visualization.visualizationType) {
+            case "BAR":
+                return renderBarChart(
+                    intl.locale,
+                    metrics,
+                    dimensions,
+                    filters,
+                    sorts,
+                    colorPalette,
+                    handleSdkError,
+                    handleLoadingChanged,
+                    handleSuccess,
+                    handlerDrill,
+                    {
+                        enableChangeAnalysis,
+                        enableAccessibleChartTooltip,
+                        execConfig,
+                    },
+                );
+            case "COLUMN":
+                return renderColumnChart(
+                    intl.locale,
+                    metrics,
+                    dimensions,
+                    filters,
+                    sorts,
+                    colorPalette,
+                    handleSdkError,
+                    handleLoadingChanged,
+                    handleSuccess,
+                    handlerDrill,
+                    {
+                        drillableItems,
+                        enableChangeAnalysis,
+                        enableAccessibleChartTooltip,
+                        execConfig,
+                    },
+                );
+            case "LINE":
+                return renderLineChart(
+                    intl.locale,
+                    visualization,
+                    metrics,
+                    dimensions,
+                    filters,
+                    sorts,
+                    colorPalette,
+                    handleSdkError,
+                    handleLoadingChanged,
+                    handleSuccess,
+                    handlerDrill,
+                    {
+                        drillableItems,
+                        enableChangeAnalysis,
+                        enableAccessibleChartTooltip,
+                        execConfig,
+                    },
+                );
+            case "PIE":
+                return renderPieChart(
+                    intl.locale,
+                    metrics,
+                    dimensions,
+                    filters,
+                    sorts,
+                    colorPalette,
+                    handleSdkError,
+                    handleLoadingChanged,
+                    handleSuccess,
+                    handlerDrill,
+                    {
+                        drillableItems,
+                        enableChangeAnalysis,
+                        enableAccessibleChartTooltip,
+                        execConfig,
+                    },
+                );
+            case "SCATTER":
+                return renderScatterPlot(
+                    intl.locale,
+                    visualization,
+                    metrics,
+                    dimensions,
+                    filters,
+                    sorts,
+                    colorPalette,
+                    handleSdkError,
+                    handleLoadingChanged,
+                    handleSuccess,
+                    handlerDrill,
+                    {
+                        drillableItems,
+                        enableAccessibleChartTooltip,
+                        execConfig,
+                    },
+                );
+            case "TABLE":
+                return renderTable(
+                    intl.locale,
+                    metrics,
+                    dimensions,
+                    filters,
+                    sorts,
+                    handleSdkError,
+                    handleLoadingChanged,
+                    handleSuccess,
+                    handlerDrill,
+                    {
+                        drillableItems,
+                        enableChangeAnalysis,
+                        enableNewPivotTable,
+                        enableAccessibleChartTooltip,
+                        agGridToken: resolvedAgGridToken,
+                        execConfig,
+                    },
+                );
+            case "HEADLINE":
+                return renderHeadline(
+                    intl.locale,
+                    kpiTheme,
+                    metrics,
+                    dimensions,
+                    filters,
+                    colorPalette,
+                    handleSdkError,
+                    handleLoadingChanged,
+                    handleSuccess,
+                    handlerDrill,
+                    {
+                        drillableItems,
+                        enableChangeAnalysis,
+                        execConfig,
+                    },
+                );
+            default:
+                assertNever(visualization.visualizationType);
+                return null;
+        }
+    };
+
     return (
         <div className={className}>
             <MarkdownComponent allowMarkdown={useMarkdown}>{content.text}</MarkdownComponent>
-            {visualization ? (
+            {visualization && whatIfScenarios ? (
+                <div className="gd-gen-ai-chat__visualization__what-if-group">
+                    {whatIfScenarios.map((scenario, index) => (
+                        <div
+                            key={index}
+                            className={cx(
+                                "gd-gen-ai-chat__visualization",
+                                `gd-gen-ai-chat__visualization--${visualization.visualizationType.toLowerCase()}`,
+                            )}
+                        >
+                            <div className="gd-gen-ai-chat__visualization__title">{scenario.label}</div>
+                            <div
+                                className={cx(
+                                    "gd-gen-ai-chat__visualization__wrapper",
+                                    `gd-gen-ai-chat__visualization__wrapper--${visualization.visualizationType.toLowerCase()}`,
+                                )}
+                            >
+                                <VisualizationErrorBoundary>
+                                    {renderCurrentChart(scenario.execConfig)}
+                                </VisualizationErrorBoundary>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            ) : visualization ? (
                 <Dropdown
                     enableAutoToggle={false}
                     isOpen={Boolean(drillState)}
@@ -574,141 +778,7 @@ function VisualizationContentsComponentCore({
                                     )}
                                 >
                                     <VisualizationErrorBoundary>
-                                        {(() => {
-                                            if (isTable) {
-                                                return renderTable(
-                                                    intl.locale,
-                                                    metrics,
-                                                    dimensions,
-                                                    filters,
-                                                    sorts,
-                                                    handleSdkError,
-                                                    handleLoadingChanged,
-                                                    handleSuccess,
-                                                    handlerDrill,
-                                                    {
-                                                        drillableItems,
-                                                        enableChangeAnalysis,
-                                                        enableNewPivotTable,
-                                                        enableAccessibleChartTooltip,
-                                                        agGridToken: resolvedAgGridToken,
-                                                    },
-                                                );
-                                            }
-
-                                            switch (visualization.visualizationType) {
-                                                case "BAR":
-                                                    return renderBarChart(
-                                                        intl.locale,
-                                                        metrics,
-                                                        dimensions,
-                                                        filters,
-                                                        sorts,
-                                                        colorPalette,
-                                                        handleSdkError,
-                                                        handleLoadingChanged,
-                                                        handleSuccess,
-                                                        handlerDrill,
-                                                        {
-                                                            enableChangeAnalysis,
-                                                            enableAccessibleChartTooltip,
-                                                        },
-                                                    );
-                                                case "COLUMN":
-                                                    return renderColumnChart(
-                                                        intl.locale,
-                                                        metrics,
-                                                        dimensions,
-                                                        filters,
-                                                        sorts,
-                                                        colorPalette,
-                                                        handleSdkError,
-                                                        handleLoadingChanged,
-                                                        handleSuccess,
-                                                        handlerDrill,
-                                                        {
-                                                            drillableItems,
-                                                            enableChangeAnalysis,
-                                                            enableAccessibleChartTooltip,
-                                                        },
-                                                    );
-                                                case "LINE":
-                                                    return renderLineChart(
-                                                        intl.locale,
-                                                        visualization,
-                                                        metrics,
-                                                        dimensions,
-                                                        filters,
-                                                        sorts,
-                                                        colorPalette,
-                                                        handleSdkError,
-                                                        handleLoadingChanged,
-                                                        handleSuccess,
-                                                        handlerDrill,
-                                                        {
-                                                            drillableItems,
-                                                            enableChangeAnalysis,
-                                                            enableAccessibleChartTooltip,
-                                                        },
-                                                    );
-                                                case "PIE":
-                                                    return renderPieChart(
-                                                        intl.locale,
-                                                        metrics,
-                                                        dimensions,
-                                                        filters,
-                                                        sorts,
-                                                        colorPalette,
-                                                        handleSdkError,
-                                                        handleLoadingChanged,
-                                                        handleSuccess,
-                                                        handlerDrill,
-                                                        {
-                                                            drillableItems,
-                                                            enableChangeAnalysis,
-                                                            enableAccessibleChartTooltip,
-                                                        },
-                                                    );
-                                                case "TABLE":
-                                                    return renderTable(
-                                                        intl.locale,
-                                                        metrics,
-                                                        dimensions,
-                                                        filters,
-                                                        sorts,
-                                                        handleSdkError,
-                                                        handleLoadingChanged,
-                                                        handleSuccess,
-                                                        handlerDrill,
-                                                        {
-                                                            drillableItems,
-                                                            enableChangeAnalysis,
-                                                            enableNewPivotTable,
-                                                            enableAccessibleChartTooltip,
-                                                            agGridToken: resolvedAgGridToken,
-                                                        },
-                                                    );
-                                                case "HEADLINE":
-                                                    return renderHeadline(
-                                                        intl.locale,
-                                                        kpiTheme,
-                                                        metrics,
-                                                        dimensions,
-                                                        filters,
-                                                        colorPalette,
-                                                        handleSdkError,
-                                                        handleLoadingChanged,
-                                                        handleSuccess,
-                                                        handlerDrill,
-                                                        {
-                                                            drillableItems,
-                                                            enableChangeAnalysis,
-                                                        },
-                                                    );
-                                                default:
-                                                    return assertNever(visualization.visualizationType);
-                                            }
-                                        })()}
+                                        {renderCurrentChart()}
                                     </VisualizationErrorBoundary>
                                 </div>
                                 {saveDialogOpen ? (
@@ -727,7 +797,7 @@ function VisualizationContentsComponentCore({
                     }}
                 />
             ) : null}
-            {showSuggestions && visualization?.suggestions?.length ? (
+            {showSuggestions && !whatIfScenarios && visualization?.suggestions?.length ? (
                 <div className="gd-gen-ai-chat__visualization__suggestions">
                     {visualization.suggestions.map((suggestion) => (
                         <UiButton
@@ -750,10 +820,6 @@ function VisualizationContentsComponentCore({
         </div>
     );
 }
-
-const assertNever = (value: never): never => {
-    throw new Error("Unknown visualization type:", value);
-};
 
 const visualizationTooltipOptions = {
     tooltip: {
@@ -782,6 +848,7 @@ const renderBarChart = (
         drillableItems?: ExplicitDrill[];
         enableAccessibleChartTooltip?: boolean;
         enableChangeAnalysis?: boolean;
+        execConfig?: IExecutionConfig;
     },
 ) => (
     <BarChart
@@ -805,6 +872,7 @@ const renderBarChart = (
         onError={onError}
         onLoadingChanged={onLoadingChanged}
         onExportReady={onSuccess}
+        execConfig={props.execConfig}
     />
 );
 
@@ -823,6 +891,7 @@ const renderColumnChart = (
         drillableItems?: ExplicitDrill[];
         enableAccessibleChartTooltip?: boolean;
         enableChangeAnalysis?: boolean;
+        execConfig?: IExecutionConfig;
     },
 ) => (
     <ColumnChart
@@ -846,6 +915,7 @@ const renderColumnChart = (
         onError={onError}
         onLoadingChanged={onLoadingChanged}
         onExportReady={onSuccess}
+        execConfig={props.execConfig}
     />
 );
 
@@ -865,10 +935,14 @@ const renderLineChart = (
         drillableItems?: ExplicitDrill[];
         enableAccessibleChartTooltip?: boolean;
         enableChangeAnalysis?: boolean;
+        execConfig?: IExecutionConfig;
     },
 ) => {
     const forecast = mapVisualizationForecastToChartConfig(visualization);
     const forecastConfig = mapVisualizationForecastToBackendConfig(visualization);
+
+    const anomalies = mapVisualizationAnomalyDetectionToChartConfig(visualization);
+    const outliersConfig = mapVisualizationAnomalyDetectionToBackendConfig(visualization);
 
     return (
         <LineChart
@@ -885,13 +959,16 @@ const renderLineChart = (
                 colorPalette,
                 enableAccessibleTooltip: props.enableAccessibleChartTooltip,
                 ...(forecastConfig && forecast ? { forecast } : {}),
+                ...(outliersConfig && anomalies ? { anomalies } : {}),
             }}
             forecastConfig={forecastConfig}
+            outliersConfig={outliersConfig}
             drillableItems={props.drillableItems}
             onDrill={onDrill}
             onError={onError}
             onLoadingChanged={onLoadingChanged}
             onExportReady={onSuccess}
+            execConfig={props.execConfig}
         />
     );
 };
@@ -911,6 +988,7 @@ const renderPieChart = (
         drillableItems?: ExplicitDrill[];
         enableAccessibleChartTooltip?: boolean;
         enableChangeAnalysis?: boolean;
+        execConfig?: IExecutionConfig;
     },
 ) => (
     <PieChart
@@ -930,8 +1008,57 @@ const renderPieChart = (
         onError={onError}
         onLoadingChanged={onLoadingChanged}
         onExportReady={onSuccess}
+        execConfig={props.execConfig}
     />
 );
+
+const renderScatterPlot = (
+    locale: string,
+    visualization: IGenAIVisualization,
+    metrics: IMeasure[],
+    dimensions: IAttribute[],
+    filters: IFilter[],
+    sortBy: ISortItem[],
+    colorPalette: IColorPalette | undefined,
+    onError: OnError,
+    onLoadingChanged: OnLoadingChanged,
+    onSuccess: OnExportReady,
+    onDrill: OnFiredDrillEvent,
+    props: {
+        drillableItems?: ExplicitDrill[];
+        enableAccessibleChartTooltip?: boolean;
+        execConfig?: IExecutionConfig;
+    },
+) => {
+    const clustering = mapVisualizationClusteringToChartConfig(visualization);
+    const clusteringConfig = mapVisualizationClusteringToBackendConfig(visualization);
+
+    return (
+        <ScatterPlot
+            locale={locale}
+            height={VIS_HEIGHT}
+            xAxisMeasure={metrics[0]}
+            yAxisMeasure={metrics[1]}
+            attribute={dimensions[0]}
+            segmentBy={dimensions[1]}
+            filters={filters}
+            sortBy={sortBy}
+            config={{
+                ...visualizationTooltipOptions,
+                ...legendTooltipOptions,
+                colorPalette,
+                enableAccessibleTooltip: props.enableAccessibleChartTooltip,
+                ...(clusteringConfig && clustering ? { clustering } : {}),
+            }}
+            drillableItems={props.drillableItems}
+            onDrill={onDrill}
+            onError={onError}
+            onLoadingChanged={onLoadingChanged}
+            onExportReady={onSuccess}
+            execConfig={props.execConfig}
+        />
+    );
+};
 
 const renderTable = (
     locale: string,
@@ -949,6 +1076,7 @@ const renderTable = (
         enableNewPivotTable?: boolean;
         enableChangeAnalysis?: boolean;
         agGridToken?: string;
+        execConfig?: IExecutionConfig;
     },
 ) => {
     const TableComponent = props.enableNewPivotTable ? PivotTableNext : PivotTable;
@@ -965,6 +1093,7 @@ const renderTable = (
             onError={onError}
             onLoadingChanged={onLoadingChanged}
             onExportReady={onSuccess}
+            execConfig={props.execConfig}
         />
     );
 };
@@ -983,6 +1112,7 @@ const renderHeadline = (
     props: {
         drillableItems?: ExplicitDrill[];
         enableChangeAnalysis?: boolean;
+        execConfig?: IExecutionConfig;
     },
 ) => {
     return (
@@ -1002,6 +1132,7 @@ const renderHeadline = (
                 onError={onError}
                 onLoadingChanged={onLoadingChanged}
                 onExportReady={onSuccess}
+                execConfig={props.execConfig}
             />
         </ScopedThemeProvider>
     );

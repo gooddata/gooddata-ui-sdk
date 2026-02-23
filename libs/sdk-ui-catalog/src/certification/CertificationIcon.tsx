@@ -4,7 +4,7 @@ import { type ComponentProps, memo } from "react";
 
 import type { IntlShape } from "react-intl";
 
-import { UiIcon, UiTooltip } from "@gooddata/sdk-ui-kit";
+import { UiDate, UiIcon, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import { useIsCatalogCertificationEnabled } from "./gate.js";
 import { type ICatalogItem } from "../catalogItem/types.js";
@@ -55,6 +55,34 @@ export const CertificationIconMemo = memo(function CertificationIcon(props: Cert
                             <div className="gd-analytics-catalog__certification-tooltip__message">
                                 {certification.message}
                             </div>
+                        ) : null}
+                        {certification.certifiedBy ? (
+                            <>
+                                <div className="gd-analytics-catalog__certification-tooltip__date">
+                                    {intl.formatMessage({
+                                        id: "analyticsCatalog.certification.tooltip.certifiedBy",
+                                    })}
+                                </div>
+                                <div className="gd-analytics-catalog__certification-tooltip__date_value">
+                                    {certification.certifiedBy}
+                                </div>
+                            </>
+                        ) : null}
+                        {certification.certifiedAt ? (
+                            <>
+                                <div className="gd-analytics-catalog__certification-tooltip__date">
+                                    {intl.formatMessage({
+                                        id: "analyticsCatalog.certification.tooltip.certifiedAt",
+                                    })}
+                                </div>
+                                <div className="gd-analytics-catalog__certification-tooltip__date_value">
+                                    <UiDate
+                                        date={certification.certifiedAt}
+                                        locale={intl.locale}
+                                        allowRelative={false}
+                                    />
+                                </div>
+                            </>
                         ) : null}
                     </div>
                 }

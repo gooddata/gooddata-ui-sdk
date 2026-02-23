@@ -8,6 +8,7 @@ import {
     type IInsight,
     type IListedDashboard,
     type IMeasureMetadataObject,
+    type IObjectCertification,
     type IUser,
     isAttributeMetadataObject,
     isDashboard,
@@ -60,7 +61,7 @@ export function convertDashboardToCatalogItem(dashboard: IDashboard | IListedDas
         type: "analyticalDashboard",
         title: dashboard.title,
         description: dashboard.description,
-        certification: dashboard.certification,
+        certification: convertCertification(dashboard.certification),
         tags: dashboard.tags ?? [],
         createdBy: getDisplayName(dashboard.createdBy),
         createdAt: dashboard.created ? parseBackendDate(dashboard.created) : null,
@@ -78,7 +79,7 @@ export function convertInsightToCatalogItem({ insight }: IInsight): ICatalogItem
         type: "insight",
         title: insight.title,
         description: insight.summary ?? "",
-        certification: insight.certification,
+        certification: convertCertification(insight.certification),
         tags: insight.tags ?? [],
         visualizationType: insight.visualizationUrl.replace("local:", "") as VisualizationType,
         createdBy: getDisplayName(insight.createdBy),
@@ -100,7 +101,7 @@ export function convertMeasureToCatalogItem(measure: IMeasureMetadataObject): IC
         type: "measure",
         title: measure.title,
         description: measure.description,
-        certification: measure.certification,
+        certification: convertCertification(measure.certification),
         tags: measure.tags ?? [],
         createdBy: getDisplayName(measure.createdBy),
         createdAt: measure.created ? parseBackendDate(measure.created) : null,
@@ -169,7 +170,7 @@ export function convertDataSetToCatalogItem(dataSet: IDataSetMetadataObject): IC
     };
 }
 
-export function getDisplayName(user?: IUser): string {
+export function getDisplayName(user?: IUser | null): string {
     if (user?.fullName) {
         return user.fullName;
     }
@@ -180,4 +181,16 @@ export function getDisplayName(user?: IUser): string {
         return user.login;
     }
     return "";
+}
+
+function convertCertification(certification: IObjectCertification | undefined) {
+    if (certification) {
+        return {
+            certifiedAt: certification.certifiedAt ? parseBackendDate(certification.certifiedAt) : null,
+            certifiedBy: getDisplayName(certification.certifiedBy),
+            message: certification.message,
+            status: certification.status,
+        };
+    }
+    return undefined;
 }

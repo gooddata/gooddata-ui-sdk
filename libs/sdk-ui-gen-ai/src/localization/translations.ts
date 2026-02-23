@@ -9,6 +9,7 @@ import { en_US } from "./bundles/en-US.localization-bundle.js";
 
 const asyncGenAiTranslations: { [locale: string]: () => Promise<ITranslations> } = {
     "en-US": () => Promise.resolve(removeMetadata(en_US)),
+    "en-US-x-24h": () => Promise.resolve(removeMetadata(en_US)),
     "de-DE": () => import("./bundles/de-DE.localization-bundle.js").then((module) => module.de_DE),
     "en-AU": () => import("./bundles/en-AU.localization-bundle.js").then((module) => module.en_AU),
     "en-GB": () => import("./bundles/en-GB.localization-bundle.js").then((module) => module.en_GB),

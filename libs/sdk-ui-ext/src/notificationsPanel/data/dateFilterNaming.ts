@@ -54,6 +54,14 @@ export function translateDateFilter(intl: IntlShape, filter: IDateFilter, dateFo
                   metadata.boundedFilter,
               );
 
+    if (
+        metadata.type === "relative" &&
+        metadata.granularity === "ALL_TIME_GRANULARITY" &&
+        metadata.emptyValueHandling === "include"
+    ) {
+        return base;
+    }
+
     if (metadata.emptyValueHandling === "include") {
         return intl.formatMessage({ id: "filters.emptyValues.label" }, { title: base });
     }

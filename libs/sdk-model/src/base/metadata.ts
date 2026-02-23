@@ -29,6 +29,12 @@ export interface IObjectCertification {
      * Optional certification timestamp in backend format.
      */
     certifiedAt?: string;
+
+    /**
+     * User who certified the object.
+     * @internal
+     */
+    certifiedBy?: IUser;
 }
 
 /**

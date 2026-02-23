@@ -48,6 +48,17 @@ describe("getDateFilterTitleUsingTranslator", () => {
         expect(actual).toEqual(expected);
     });
 
+    it("should return the base allTime translation for allTime filter with included empty values", () => {
+        const expected = "filters.allTime.title__undefined";
+        const actual = getDateFilterTitleUsingTranslator(
+            { ...allTimeFilter, emptyValueHandling: "include" },
+            serializingTranslator,
+            "short",
+            DEFAULT_DATE_FORMAT,
+        );
+        expect(actual).toEqual(expected);
+    });
+
     describe("with disabled time", () => {
         it("should return the correct translation for absolute form filter", () => {
             const actual = getDateFilterTitleUsingTranslator(

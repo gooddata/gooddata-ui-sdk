@@ -9,6 +9,10 @@ import { storiesToScenarios } from "./scenarios.config.js";
 
 import "./mockWindow.js";
 
+// Parse optional --filter arg (comma-delimited story file paths from goodchanges detections)
+const filterArg = process.argv.find((arg) => arg.startsWith("--filter="));
+const filterFiles = filterArg ? filterArg.replace("--filter=", "").split(",").filter(Boolean) : undefined;
+
 // Create vite server in middleware mode for SSR
 const server = await createServer({
     server: { middlewareMode: true },
@@ -21,7 +25,7 @@ try {
     const toBackstop = await server.ssrLoadModule(modulePath);
 
     // Call the function exactly as before
-    const stories = await toBackstop["toBackstopJson"]();
+    const stories = await toBackstop["toBackstopJson"](filterFiles);
 
     const scenarios = storiesToScenarios(stories);
 

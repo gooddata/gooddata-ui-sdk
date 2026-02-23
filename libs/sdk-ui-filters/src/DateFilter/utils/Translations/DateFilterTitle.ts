@@ -298,7 +298,7 @@ const getDateFilterRepresentationByFilterType = (
  *
  * - For "All time" with excluded empty values (`emptyValueHandling === "exclude"`), returns
  *   `"All time except empty values"`.
- * - For any other option with included empty values (`emptyValueHandling === "include"`), appends
+ * - For any non-"All time" option with included empty values (`emptyValueHandling === "include"`), appends
  *   `", empty value"` to the base representation.
  *
  * The dedicated "Empty values" preset is represented by its own title and is not further decorated.
@@ -316,6 +316,11 @@ export const getDateFilterTitleUsingTranslator = (
     }
 
     const baseTitle = getDateFilterRepresentationByFilterType(filter, translator, dateFormat, labelMode);
+
+    // Special case for that can potentially be persisted but is equal to regular "All time"
+    if (isAllTimeDateFilterOption(filter) && filter.emptyValueHandling === "include") {
+        return baseTitle;
+    }
 
     if (!isEmptyValuesDateFilterOption(filter) && filter.emptyValueHandling === "include") {
         return translator.formatMessage({ id: "filters.emptyValues.label" }, { title: baseTitle });

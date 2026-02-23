@@ -486,6 +486,12 @@
         background: kit-variables.$gd-color-white;
         border-radius: 3px;
     }
+
+    &__what-if-group {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
 }
 
 .gd-gen-ai-chat__messages__empty {

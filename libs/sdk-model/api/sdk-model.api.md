@@ -626,7 +626,7 @@ export type GenAIRelativeDateFilter = {
 };
 
 // @internal
-export type GenAIVisualizationType = "TABLE" | "HEADLINE" | "BAR" | "LINE" | "PIE" | "COLUMN";
+export type GenAIVisualizationType = "TABLE" | "HEADLINE" | "BAR" | "LINE" | "PIE" | "COLUMN" | "SCATTER";
 
 // @alpha
 export type GeoCollectionKind = "STATIC" | "CUSTOM";
@@ -2229,6 +2229,11 @@ export interface IGenAIActiveObject {
 }
 
 // @internal
+export interface IGenAIAnomalyDetectionConfig {
+    sensitivity: "LOW" | "MEDIUM" | "HIGH";
+}
+
+// @internal
 export interface IGenAIChangeAnalysisParams {
     analyzedPeriod: string;
     attributes: IAttribute[];
@@ -2282,6 +2287,12 @@ export interface IGenAIChatRouting {
 }
 
 // @internal
+export interface IGenAIClusteringConfig {
+    numberOfClusters: number;
+    threshold?: number;
+}
+
+// @internal
 export interface IGenAICreatedVisualizations {
     objects?: IGenAIVisualization[];
     reasoning: string;
@@ -2329,7 +2340,10 @@ export interface IGenAIVisualization {
 
 // @internal
 export interface IGenAIVisualizationConfig {
+    anomalyDetection?: IGenAIAnomalyDetectionConfig;
+    clustering?: IGenAIClusteringConfig;
     forecast?: IGenAIForecastConfig;
+    whatIf?: IGenAIWhatIfConfig;
 }
 
 // @internal
@@ -2344,6 +2358,25 @@ export interface IGenAIVisualizationMetric {
     id: string;
     title?: string;
     type: GenAIMetricType;
+}
+
+// @internal
+export interface IGenAIWhatIfAdjustment {
+    metricId: string;
+    metricType: GenAIMetricType;
+    scenarioMaql: string;
+}
+
+// @internal
+export interface IGenAIWhatIfConfig {
+    includeBaseline?: boolean;
+    scenarios: IGenAIWhatIfScenario[];
+}
+
+// @internal
+export interface IGenAIWhatIfScenario {
+    adjustments: IGenAIWhatIfAdjustment[];
+    label: string;
 }
 
 // @alpha
@@ -3143,6 +3176,7 @@ export type INullableFilter = IFilter | undefined | null;
 // @internal
 export interface IObjectCertification {
     certifiedAt?: string;
+    certifiedBy?: IUser;
     message?: string;
     status: CertificationStatus;
 }

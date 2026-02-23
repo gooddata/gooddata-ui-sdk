@@ -63,7 +63,11 @@ import { selectWidgetLocalIdToTabIdMap } from "../../../../model/store/tabs/layo
 import { selectCurrentUser } from "../../../../model/store/user/userSelectors.js";
 import { selectUsers } from "../../../../model/store/users/usersSelectors.js";
 import type { ExtendedDashboardWidget } from "../../../../model/types/layoutTypes.js";
-import { getAppliedWidgetFilters, getVisibleFiltersByFilters } from "../../../automationFilters/utils.js";
+import {
+    getAppliedWidgetFilters,
+    getVisibleFiltersByFilters,
+    resolveMvfDimensionalityLocalRefs,
+} from "../../../automationFilters/utils.js";
 import { isEmail } from "../../../scheduledEmail/utils/validate.js";
 import { type AlertAttribute, type AlertMetric, type AlertMetricComparatorType } from "../../types.js";
 import { createDefaultAlert } from "../utils/convertors.js";
@@ -198,8 +202,32 @@ export function useEditAlert({
     const [isTitleValid, setIsTitleValid] = useState(true);
     const [triggerIntervalDirty, setTriggerIntervalDirty] = useState(false);
 
+    const resolvedAlertToEdit = (() => {
+        if (!alertToEdit) {
+            return undefined;
+        }
+        const filters = alertToEdit.alert?.execution?.filters;
+        if (!alertToEdit.alert || !filters?.length || !insight) {
+            return alertToEdit;
+        }
+        const resolvedFilters = resolveMvfDimensionalityLocalRefs(filters, insight);
+        if (resolvedFilters === filters) {
+            return alertToEdit;
+        }
+        return {
+            ...alertToEdit,
+            alert: {
+                ...alertToEdit.alert,
+                execution: {
+                    ...alertToEdit.alert.execution,
+                    filters: resolvedFilters,
+                },
+            },
+        };
+    })();
+
     const [editedAutomation, setEditedAutomation] = useState<IAutomationMetadataObjectDefinition | undefined>(
-        alertToEdit ??
+        resolvedAlertToEdit ??
             createDefaultAlert(
                 getAppliedWidgetFilters(
                     editedAutomationFilters ?? [],

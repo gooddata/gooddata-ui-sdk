@@ -52,7 +52,7 @@ export const visualizationObjectsItemToInsight = (
     included: (JsonApiAnalyticalDashboardOutIncludes | JsonApiMetricOutIncludes)[] = [],
 ): IInsight => {
     const { id, attributes, relationships = {} } = visualizationObject;
-    const { createdBy, modifiedBy } = relationships;
+    const { createdBy, modifiedBy, certifiedBy } = relationships;
     const { content, title, description, tags, isHidden, createdAt, modifiedAt } = attributes;
     const links = "links" in visualizationObject ? visualizationObject.links : undefined;
 
@@ -75,7 +75,7 @@ export const visualizationObjectsItemToInsight = (
         modifiedAt ?? undefined,
         convertUserIdentifier(createdBy, included),
         convertUserIdentifier(modifiedBy, included),
-        convertCertificationFromBackend(attributes),
+        convertCertificationFromBackend(attributes, convertUserIdentifier(certifiedBy, included)),
     );
 };
 

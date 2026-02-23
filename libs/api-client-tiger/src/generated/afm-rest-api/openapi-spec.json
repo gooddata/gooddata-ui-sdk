@@ -1262,6 +1262,37 @@
                 }
             }
         },
+        "/api/v1/ailake/services": {
+            "get": {
+                "tags": [
+                    "AI Lake"
+                ],
+                "summary": "(BETA) List AI Lake services",
+                "description": "(BETA) Lists services configured for the organization's AI Lake. Returns only non-sensitive fields (id, name).",
+                "operationId": "listAiLakeServices",
+                "responses": {
+                    "200": {
+                        "description": "AI Lake services successfully retrieved",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ServiceInfo"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Permissions required to list AI Lake services."
+                }
+            }
+        },
         "/api/v1/ailake/operation/{operationId}": {
             "get": {
                 "tags": [
@@ -5432,6 +5463,24 @@
                 },
                 "description": "Created and saved visualization IDs."
             },
+            "AnomalyDetectionConfig": {
+                "required": [
+                    "sensitivity"
+                ],
+                "type": "object",
+                "properties": {
+                    "sensitivity": {
+                        "type": "string",
+                        "description": "Outlier sensitivity level.",
+                        "enum": [
+                            "LOW",
+                            "MEDIUM",
+                            "HIGH"
+                        ]
+                    }
+                },
+                "description": "Anomaly detection configuration."
+            },
             "AttributeNegativeFilter": {
                 "required": [
                     "exclude",
@@ -5630,6 +5679,26 @@
                     }
                 }
             },
+            "ClusteringConfig": {
+                "required": [
+                    "numberOfClusters",
+                    "threshold"
+                ],
+                "type": "object",
+                "properties": {
+                    "numberOfClusters": {
+                        "type": "integer",
+                        "description": "Number of clusters to create",
+                        "format": "int32"
+                    },
+                    "threshold": {
+                        "type": "number",
+                        "description": "Clustering algorithm threshold",
+                        "format": "float"
+                    }
+                },
+                "description": "Clustering configuration."
+            },
             "CreatedVisualization": {
                 "required": [
                     "dimensionality",
@@ -5662,7 +5731,8 @@
                             "BAR",
                             "LINE",
                             "PIE",
-                            "COLUMN"
+                            "COLUMN",
+                            "SCATTER"
                         ]
                     },
                     "metrics": {
@@ -6054,9 +6124,83 @@
                 "properties": {
                     "forecast": {
                         "$ref": "#/components/schemas/ForecastConfig"
+                    },
+                    "anomalyDetection": {
+                        "$ref": "#/components/schemas/AnomalyDetectionConfig"
+                    },
+                    "clustering": {
+                        "$ref": "#/components/schemas/ClusteringConfig"
+                    },
+                    "whatIf": {
+                        "$ref": "#/components/schemas/WhatIfScenarioConfig"
                     }
                 },
                 "description": "Visualization config for smart-function rendering."
+            },
+            "WhatIfMeasureAdjustmentConfig": {
+                "required": [
+                    "metricId",
+                    "metricType",
+                    "scenarioMaql"
+                ],
+                "type": "object",
+                "properties": {
+                    "metricId": {
+                        "type": "string",
+                        "description": "ID of the metric or fact to adjust"
+                    },
+                    "metricType": {
+                        "type": "string",
+                        "description": "Type: metric or fact"
+                    },
+                    "scenarioMaql": {
+                        "type": "string",
+                        "description": "Alternative MAQL expression for this scenario"
+                    }
+                },
+                "description": "Measure adjustments for this scenario"
+            },
+            "WhatIfScenarioConfig": {
+                "required": [
+                    "includeBaseline",
+                    "scenarios"
+                ],
+                "type": "object",
+                "properties": {
+                    "scenarios": {
+                        "type": "array",
+                        "description": "Scenarios with alternative measure calculations",
+                        "items": {
+                            "$ref": "#/components/schemas/WhatIfScenarioItem"
+                        }
+                    },
+                    "includeBaseline": {
+                        "type": "boolean",
+                        "description": "Whether baseline (unmodified) values are included"
+                    }
+                },
+                "description": "What-if scenario configuration."
+            },
+            "WhatIfScenarioItem": {
+                "required": [
+                    "adjustments",
+                    "label"
+                ],
+                "type": "object",
+                "properties": {
+                    "label": {
+                        "type": "string",
+                        "description": "Human-readable scenario label"
+                    },
+                    "adjustments": {
+                        "type": "array",
+                        "description": "Measure adjustments for this scenario",
+                        "items": {
+                            "$ref": "#/components/schemas/WhatIfMeasureAdjustmentConfig"
+                        }
+                    }
+                },
+                "description": "Scenarios with alternative measure calculations"
             },
             "ChatResult": {
                 "type": "object",
@@ -6204,6 +6348,24 @@
                         "description": "LLM model for the LLM endpoint validation"
                     }
                 }
+            },
+            "ServiceInfo": {
+                "required": [
+                    "name",
+                    "serviceId"
+                ],
+                "type": "object",
+                "properties": {
+                    "serviceId": {
+                        "type": "string",
+                        "description": "Internal identifier for the service configuration (UUID)"
+                    },
+                    "name": {
+                        "type": "string",
+                        "description": "Human-readable name of the service"
+                    }
+                },
+                "description": "Non-sensitive metadata for an AI Lake pipeline"
             },
             "FailedOperation": {
                 "required": [

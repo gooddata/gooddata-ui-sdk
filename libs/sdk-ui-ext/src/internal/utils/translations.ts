@@ -1,6 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
-import { memoize, merge } from "lodash-es";
+import { memoize } from "lodash-es";
 import type { IntlShape } from "react-intl";
 
 import {
@@ -34,8 +34,14 @@ export function getTranslatedDropdownItems(dropdownItems: IDropdownItem[], intl:
 
 import { en_US } from "../translations/en-US.localization-bundle.js";
 
+/**
+ * @internal
+ */
+export const DEFAULT_LANGUAGE = "en-US";
+
 const asyncSdkUiExtTranslations: { [locale: string]: () => Promise<ITranslations> } = {
     "en-US": () => Promise.resolve(removeMetadata(en_US)),
+    "en-US-x-24h": () => Promise.resolve(removeMetadata(en_US)),
     "de-DE": () => import("../translations/de-DE.localization-bundle.js").then((module) => module.de_DE),
     "es-ES": () => import("../translations/es-ES.localization-bundle.js").then((module) => module.es_ES),
     "fr-FR": () => import("../translations/fr-FR.localization-bundle.js").then((module) => module.fr_FR),
@@ -70,12 +76,12 @@ const asyncSdkUiExtTranslations: { [locale: string]: () => Promise<ITranslations
  * @internal
  */
 const resolveMessagesInternal = async (locale: string): Promise<ITranslations> => {
-    const sdkUiExtLoader = asyncSdkUiExtTranslations[locale] || asyncSdkUiExtTranslations["en-US"];
+    const sdkUiExtLoader = asyncSdkUiExtTranslations[locale] || asyncSdkUiExtTranslations[DEFAULT_LANGUAGE];
     const [sdkUiExtTranslations, sdkUiTranslations] = await Promise.all([
         sdkUiExtLoader(),
         sdkUiresolveMessages(locale),
     ]);
-    return merge({}, sdkUiTranslations, sdkUiExtTranslations);
+    return { ...sdkUiTranslations, ...sdkUiExtTranslations };
 };
 
 /**
@@ -86,7 +92,6 @@ const resolveMessagesInternal = async (locale: string): Promise<ITranslations> =
  */
 export const resolveMessages: (locale: string) => Promise<ITranslations> = memoize(resolveMessagesInternal);
 
-export const DEFAULT_LANGUAGE = "en-US";
 export const DEFAULT_MESSAGES = {
     [DEFAULT_LANGUAGE]: {
         ...removeMetadata(en_US),

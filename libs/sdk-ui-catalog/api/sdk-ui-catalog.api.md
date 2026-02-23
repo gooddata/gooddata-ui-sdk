@@ -4,10 +4,10 @@
 
 ```ts
 
+import type { CertificationStatus } from '@gooddata/sdk-model';
 import type { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import type { IDataSetMetadataObject } from '@gooddata/sdk-model';
 import type { IdentifierRef } from '@gooddata/sdk-model';
-import type { IObjectCertification } from '@gooddata/sdk-model';
 import { JSX } from 'react/jsx-runtime';
 import type { MetricType } from '@gooddata/sdk-model';
 import { MouseEvent as MouseEvent_2 } from 'react';
@@ -96,7 +96,12 @@ export interface ICatalogDetailProps extends ICatalogDetailContentProps {
 // @internal
 export interface ICatalogItem extends ICatalogItemRef {
     // (undocumented)
-    certification?: IObjectCertification;
+    certification?: {
+        status: CertificationStatus;
+        message?: string;
+        certifiedAt?: Date | null;
+        certifiedBy?: string;
+    };
     // (undocumented)
     createdAt: Date | null;
     // (undocumented)

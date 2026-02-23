@@ -309,7 +309,7 @@
                     "actions"
                 ],
                 "summary": "Import custom geo collection",
-                "description": "Import a geo collection file from the staging area to be available for use.",
+                "description": "Import a geo collection file from the staging area to be available for use. The file must be in GeoParquet format (use the convert endpoint first for other formats). Validates file size (max 100 MB), organization storage quota (max 1 GB total), and GeoParquet schema (requires id, geometry, and bbox columns).",
                 "operationId": "importCustomGeoCollection",
                 "parameters": [
                     {
@@ -357,7 +357,7 @@
                     "actions"
                 ],
                 "summary": "Upload a geo collection file to the staging area",
-                "description": "Provides a location for uploading staging files for custom geo collections. Supported file types: GeoParquet (.parquet), GeoJSON (.geojson, .json).",
+                "description": "Provides a location for uploading staging files for custom geo collections. Supported file types: GeoParquet (.parquet), GeoJSON (.geojson, .json), ESRI Shapefile (.zip). Maximum file size: 100 MB.",
                 "operationId": "customGeoCollectionStagingUpload",
                 "requestBody": {
                     "content": {
@@ -370,7 +370,7 @@
                                 "properties": {
                                     "file": {
                                         "type": "string",
-                                        "description": "The geo collection file to upload. Supported formats: GeoParquet (.parquet), GeoJSON (.geojson, .json).",
+                                        "description": "The geo collection file to upload. Supported formats: GeoParquet (.parquet), GeoJSON (.geojson, .json), ESRI Shapefile (.zip).",
                                         "format": "binary"
                                     }
                                 }
@@ -404,7 +404,7 @@
                     "actions"
                 ],
                 "summary": "Convert a geo file to GeoParquet format",
-                "description": "Converts a geo file from the staging area to GeoParquet format. Supported source formats: GeoJSON (.geojson, .json). If the source file is already in GeoParquet format, the same location is returned without conversion.",
+                "description": "Converts a geo file from the staging area to GeoParquet format. Supported source formats: GeoJSON (.geojson, .json), ESRI Shapefile (.zip). If the source file is already in GeoParquet format, the same location is returned without conversion.",
                 "operationId": "convertGeoFile",
                 "requestBody": {
                     "content": {

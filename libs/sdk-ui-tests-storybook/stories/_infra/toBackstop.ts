@@ -127,7 +127,7 @@ async function processStoryFile(file: string): Promise<IStoryInfo[]> {
     }
 }
 
-export async function toBackstopJson(): Promise<IStoryInfo[]> {
+export async function toBackstopJson(filterFiles?: string[]): Promise<IStoryInfo[]> {
     const storybookMain = (
         (await import("../../.storybook/main.js" as any)) as { default: { stories: string[] } }
     ).default;
@@ -136,9 +136,21 @@ export async function toBackstopJson(): Promise<IStoryInfo[]> {
     // because we are in stories/_infra, instead of .storybook
     storiesGlob[0] = path.join("../", storiesGlob[0]);
 
-    const files = await fg(storiesGlob, { cwd: path.resolve(path.join(__dirname)) });
+    let files = await fg(storiesGlob, { cwd: path.resolve(path.join(__dirname)) });
     // eslint-disable-next-line no-console
     console.log(`Found ${files.length} story files...`);
+
+    if (filterFiles && filterFiles.length > 0) {
+        // Filter paths are relative to package root (e.g. "stories/visual-regression/kit/Foo.stories.tsx").
+        // Glob results are relative to stories/_infra (e.g. "../visual-regression/kit/Foo.stories.tsx").
+        // Normalize both to package-root-relative for comparison.
+        const normalizedFilter = new Set(filterFiles.map((f) => path.normalize(f)));
+        files = files.filter((file) =>
+            normalizedFilter.has(path.normalize(path.join("stories/_infra", file))),
+        );
+        // eslint-disable-next-line no-console
+        console.log(`Filtered to ${files.length} story files from goodchanges detections`);
+    }
 
     // Process files in parallel with controlled concurrency to avoid overwhelming the system
     const concurrency = 10; // Process 10 files at a time

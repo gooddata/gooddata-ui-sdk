@@ -195,6 +195,18 @@
         "text": "Hidden from AI results",
         "crowdinContext": "Label for the hidden option in the AI visibility filter."
     },
+    "analyticsCatalog.filter.certification.title": {
+        "text": "Certification",
+        "crowdinContext": "Title of the header section containing the certification filter."
+    },
+    "analyticsCatalog.filter.certification.certified": {
+        "text": "Certified",
+        "crowdinContext": "Label for the certified option in the certification filter."
+    },
+    "analyticsCatalog.filter.certification.notCertified": {
+        "text": "Not certified",
+        "crowdinContext": "Label for the not certified option in the certification filter."
+    },
     "analyticsCatalog.filter.qualityCodes.title": {
         "text": "Validations",
         "crowdinContext": "Title of the header section containing the quality codes filter."
@@ -251,6 +263,14 @@
         "text": "Certified",
         "crowdinContext": "Title shown in the certification tooltip for catalog items marked as certified."
     },
+    "analyticsCatalog.certification.tooltip.certifiedAt": {
+        "text": "Certified at",
+        "crowdinContext": "Certification date shown in the certification tooltip for catalog items marked as certified."
+    },
+    "analyticsCatalog.certification.tooltip.certifiedBy": {
+        "text": "Certified by",
+        "crowdinContext": "Certification user shown in the certification tooltip for catalog items marked as certified."
+    },
     "analyticsCatalog.certification.field.status": {
         "text": "Status",
         "crowdinContext": "Label for the certification status dropdown in the catalog item certification tab."
@@ -266,6 +286,14 @@
     "analyticsCatalog.certification.field.message": {
         "text": "Message",
         "crowdinContext": "Label for the editable certification message field in catalog item certification tab."
+    },
+    "analyticsCatalog.certification.field.certifiedAt": {
+        "text": "Certified at",
+        "crowdinContext": "Label for the certification certifiedAt field in catalog item certification tab."
+    },
+    "analyticsCatalog.certification.field.certifiedBy": {
+        "text": "Certified by",
+        "crowdinContext": "Label for the certification certifiedBy field in catalog item certification tab."
     },
     "analyticsCatalog.certification.field.message.placeholder": {
         "text": "Add certification message",

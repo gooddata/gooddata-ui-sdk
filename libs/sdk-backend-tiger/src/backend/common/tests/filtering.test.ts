@@ -1,9 +1,10 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
 import {
     buildContainsIcClause,
+    buildFilterQuery,
     buildIsClause,
     buildIsNullClause,
     buildListClause,
@@ -130,6 +131,22 @@ describe("formatValue", () => {
 
     it("should escape backslashes", () => {
         expect(formatValue("a\\b")).toBe('"a\\\\b"');
+    });
+});
+
+describe("buildFilterQuery", () => {
+    it("should build a query with certification=true", () => {
+        expect(buildFilterQuery({ certification: true })).toBe("certification==CERTIFIED");
+    });
+
+    it("should build a query with certification=false", () => {
+        expect(buildFilterQuery({ certification: false })).toBe("certification=isnull=true");
+    });
+
+    it("should build a query with multiple filters including certification", () => {
+        expect(buildFilterQuery({ search: "foo", certification: true })).toBe(
+            '(id=="foo",title=containsic="foo",description=containsic="foo",tags=containsic="foo");certification==CERTIFIED',
+        );
     });
 });
 

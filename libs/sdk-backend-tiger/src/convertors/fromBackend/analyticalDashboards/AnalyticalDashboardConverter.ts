@@ -45,7 +45,7 @@ export const convertAnalyticalDashboard = (
     included?: JsonApiAnalyticalDashboardOutIncludes[],
 ): IListedDashboard => {
     const { id, attributes, meta, relationships = {} } = analyticalDashboard;
-    const { createdBy, modifiedBy } = relationships;
+    const { createdBy, modifiedBy, certifiedBy } = relationships;
     const { createdAt, modifiedAt } = attributes;
     const links = "links" in analyticalDashboard ? analyticalDashboard.links : undefined;
     const isPrivate = meta?.accessInfo?.private ?? false;
@@ -58,7 +58,10 @@ export const convertAnalyticalDashboard = (
     // NOTE: `summary` is present on the backend response, but may not be reflected in older generated API typings.
     const summary = (attributes as unknown as { summary?: unknown } | undefined)?.summary;
     const normalizedSummary = typeof summary === "string" ? summary : undefined;
-    const certification = convertCertificationFromBackend(attributes);
+    const certification = convertCertificationFromBackend(
+        attributes,
+        convertUserIdentifier(certifiedBy, included),
+    );
 
     return {
         ref: idRef(id, "analyticalDashboard"),
