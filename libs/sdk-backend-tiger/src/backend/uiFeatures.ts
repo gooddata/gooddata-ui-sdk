@@ -44,6 +44,7 @@ export enum TigerFeaturesNames {
     EnableOracleDataSource = "enableOracleDataSource",
     EnableAnalyticalCatalog = "enableAnalyticalCatalog",
     EnableAlerting = "enableAlerting",
+    EnableLlmEndpointReplacement = "enableLlmEndpointReplacement",
     EnableAlertingAttributes = "enableAlertAttributes",
     EnableComparisonInAlerting = "enableComparisonInAlerting",
     EnableSmtp = "enableSmtp",
@@ -72,6 +73,7 @@ export enum TigerFeaturesNames {
     EnableGenAIChat = "enableGenAIChat",
     EnableGenAIChatRollout = "enableGenAIChatRollout",
     EnableGenAICatalogQualityChecker = "enableGenAICatalogQualityChecker",
+    EnableCatalogTrendingObjects = "enableCatalogTrendingObjects",
     EnableCatalogLineage = "enableCatalogLineage",
     EnableCertification = "enableCertification",
     EnableAIDataSetting = "enableAIDataSetting",
@@ -89,6 +91,7 @@ export enum TigerFeaturesNames {
     EnableInPlatformNotifications = "enableInPlatformNotifications",
     EnableExternalRecipients = "enableExternalRecipients",
     EnableDrilledTooltip = "enableDrilledTooltip",
+    EnableVisualizationFilteringByTags = "enableVisualizationFilteringByTags",
     EnableVisualizationFineTuning = "enableVisualizationFineTuning",
     EnableImprovedAdFilters = "enableImprovedAdFilters",
     EnableDashboardDescriptionDynamicHeight = "enableDashboardDescriptionDynamicHeight",
@@ -123,16 +126,17 @@ export enum TigerFeaturesNames {
     EnableNewPivotTable = "enableNewPivotTable",
     EnableNewGeoPushpin = "enableNewGeoPushpin",
     EnableGeoArea = "enableGeoArea",
+    EnableGeoChartA11yImprovements = "enableGeoChartA11yImprovements",
     EnableGeoBasemapConfig = "enableGeoBasemapConfig",
     EnableAutomationManagement = "enableAutomationManagement",
     EnableNewPdfTabularExport = "enableNewPdfTabularExport",
     EnableFilterAccessibility = "enableFilterAccessibility",
     EnableGenAIMemory = "enableGenAIMemory",
+    EnableAIKnowledge = "enableAIKnowledge",
     EnableGenAIReasoningVisibility = "enableGenAIReasoningVisibility",
     AIChatSearchLimit = "aiChatSearchLimit",
     EnableEmptyDateValuesFilter = "enableEmptyDateValuesFilter",
     EnableKDEmptyDateValuesFilter = "enableKDEmptyDateValuesFilter",
-    EnablePivotTableAutoSizeReset = "enablePivotTableAutoSizeReset",
     EnableRichTextWidgetFilterConfiguration = "enableRichTextWidgetFilterConfiguration",
     EnableDashboardSectionHeadersDateDataSet = "enableDashboardSectionHeadersDateDataSet",
     EnableAnomalyDetectionAlert = "enableAnomalyDetectionAlert",
@@ -180,6 +184,7 @@ export type ITigerFeatureFlags = {
     enableOracleDataSource: (typeof FeatureFlagsValues)["enableOracleDataSource"][number];
     enableAnalyticalCatalog: (typeof FeatureFlagsValues)["enableAnalyticalCatalog"][number];
     enableAlerting: (typeof FeatureFlagsValues)["enableAlerting"][number];
+    enableLlmEndpointReplacement: (typeof FeatureFlagsValues)["enableLlmEndpointReplacement"][number];
     enableAlertAttributes: (typeof FeatureFlagsValues)["enableAlertAttributes"][number];
     enableComparisonInAlerting: (typeof FeatureFlagsValues)["enableComparisonInAlerting"][number];
     enableSmtp: (typeof FeatureFlagsValues)["enableSmtp"][number];
@@ -208,6 +213,7 @@ export type ITigerFeatureFlags = {
     enableGenAIChat: (typeof FeatureFlagsValues)["enableGenAIChat"][number];
     enableGenAIChatRollout: (typeof FeatureFlagsValues)["enableGenAIChatRollout"][number];
     enableGenAICatalogQualityChecker: (typeof FeatureFlagsValues)["enableGenAICatalogQualityChecker"][number];
+    enableCatalogTrendingObjects: (typeof FeatureFlagsValues)["enableCatalogTrendingObjects"][number];
     enableCatalogLineage: (typeof FeatureFlagsValues)["enableCatalogLineage"][number];
     enableCertification: (typeof FeatureFlagsValues)["enableCertification"][number];
     enableAIDataSetting: (typeof FeatureFlagsValues)["enableAIDataSetting"][number];
@@ -224,6 +230,7 @@ export type ITigerFeatureFlags = {
     enableNumberSeparators: (typeof FeatureFlagsValues)["enableNumberSeparators"][number];
     enableDestinationTesting: (typeof FeatureFlagsValues)["enableDestinationTesting"][number];
     enableInPlatformNotifications: (typeof FeatureFlagsValues)["enableInPlatformNotifications"][number];
+    enableVisualizationFilteringByTags: (typeof FeatureFlagsValues)["enableVisualizationFilteringByTags"][number];
     enableVisualizationFineTuning: (typeof FeatureFlagsValues)["enableVisualizationFineTuning"][number];
     enableImprovedAdFilters: (typeof FeatureFlagsValues)["enableImprovedAdFilters"][number];
     enableExternalRecipients: (typeof FeatureFlagsValues)["enableExternalRecipients"][number];
@@ -262,16 +269,17 @@ export type ITigerFeatureFlags = {
     enableNewPivotTable: (typeof FeatureFlagsValues)["enableNewPivotTable"][number];
     enableNewGeoPushpin: (typeof FeatureFlagsValues)["enableNewGeoPushpin"][number];
     enableGeoArea: (typeof FeatureFlagsValues)["enableGeoArea"][number];
+    enableGeoChartA11yImprovements: (typeof FeatureFlagsValues)["enableGeoChartA11yImprovements"][number];
     enableGeoBasemapConfig: (typeof FeatureFlagsValues)["enableGeoBasemapConfig"][number];
     enableAutomationManagement: (typeof FeatureFlagsValues)["enableAutomationManagement"][number];
     enableNewPdfTabularExport: (typeof FeatureFlagsValues)["enableNewPdfTabularExport"][number];
     enableFilterAccessibility: (typeof FeatureFlagsValues)["enableFilterAccessibility"][number];
     enableGenAIMemory: (typeof FeatureFlagsValues)["enableGenAIMemory"][number];
+    enableAIKnowledge: (typeof FeatureFlagsValues)["enableAIKnowledge"][number];
     enableGenAIReasoningVisibility: (typeof FeatureFlagsValues)["enableGenAIReasoningVisibility"][number];
     aiChatSearchLimit: (typeof FeatureFlagsValues)["aiChatSearchLimit"][number];
     enableEmptyDateValuesFilter: (typeof FeatureFlagsValues)["enableEmptyDateValuesFilter"][number];
     enableKDEmptyDateValuesFilter: (typeof FeatureFlagsValues)["enableKDEmptyDateValuesFilter"][number];
-    enablePivotTableAutoSizeReset: (typeof FeatureFlagsValues)["enablePivotTableAutoSizeReset"][number];
     enableRichTextWidgetFilterConfiguration: (typeof FeatureFlagsValues)["enableRichTextWidgetFilterConfiguration"][number];
     enableDashboardSectionHeadersDateDataSet: (typeof FeatureFlagsValues)["enableDashboardSectionHeadersDateDataSet"][number];
     enableAnomalyDetectionAlert: (typeof FeatureFlagsValues)["enableAnomalyDetectionAlert"][number];
@@ -322,6 +330,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableOracleDataSource: false,
     enableAnalyticalCatalog: false,
     enableAlerting: true,
+    enableLlmEndpointReplacement: false,
     enableAlertAttributes: true,
     enableComparisonInAlerting: true,
     enableSmtp: true,
@@ -347,6 +356,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableGenAIChat: false,
     enableGenAIChatRollout: false,
     enableGenAICatalogQualityChecker: false,
+    enableCatalogTrendingObjects: true,
     enableCatalogLineage: false,
     enableCertification: false,
     enableAIDataSetting: false,
@@ -363,6 +373,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableNumberSeparators: true,
     enableDestinationTesting: true,
     enableInPlatformNotifications: true,
+    enableVisualizationFilteringByTags: false,
     enableVisualizationFineTuning: false,
     enableImprovedAdFilters: true,
     enableExternalRecipients: true,
@@ -401,16 +412,17 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableNewPivotTable: true,
     enableNewGeoPushpin: true,
     enableGeoArea: true,
+    enableGeoChartA11yImprovements: false,
     enableGeoBasemapConfig: false,
     enableAutomationManagement: true,
     enableNewPdfTabularExport: true,
     enableFilterAccessibility: true,
     enableGenAIMemory: false,
+    enableAIKnowledge: false,
     enableGenAIReasoningVisibility: false,
     aiChatSearchLimit: undefined,
     enableEmptyDateValuesFilter: true,
     enableKDEmptyDateValuesFilter: false,
-    enablePivotTableAutoSizeReset: true,
     enableRichTextWidgetFilterConfiguration: false,
     enableDashboardSectionHeadersDateDataSet: false,
     enableAnomalyDetectionAlert: false,
@@ -461,6 +473,7 @@ export const FeatureFlagsValues = {
     enableOracleDataSource: [true, false] as const,
     enableAnalyticalCatalog: [true, false] as const,
     enableAlerting: [true, false] as const,
+    enableLlmEndpointReplacement: [true, false] as const,
     enableAlertAttributes: [true, false] as const,
     enableComparisonInAlerting: [true, false] as const,
     enableSmtp: [true, false] as const,
@@ -486,6 +499,7 @@ export const FeatureFlagsValues = {
     enableGenAIChat: [true, false] as const,
     enableGenAIChatRollout: [true, false] as const,
     enableGenAICatalogQualityChecker: [false, true] as const,
+    enableCatalogTrendingObjects: [true, false] as const,
     enableCatalogLineage: [false, true] as const,
     enableCertification: [true, false] as const,
     enableAIDataSetting: [true, false] as const,
@@ -503,6 +517,7 @@ export const FeatureFlagsValues = {
     enableNewUserCreationFlow: [true, false] as const,
     enableDestinationTesting: [true, false] as const,
     enableInPlatformNotifications: [true, false] as const,
+    enableVisualizationFilteringByTags: [true, false] as const,
     enableVisualizationFineTuning: [true, false] as const,
     enableImprovedAdFilters: [true, false] as const,
     enableExternalRecipients: [true, false] as const,
@@ -541,16 +556,17 @@ export const FeatureFlagsValues = {
     enableNewPivotTable: [true, false] as const,
     enableNewGeoPushpin: [true, false] as const,
     enableGeoArea: [true, false] as const,
+    enableGeoChartA11yImprovements: [true, false] as const,
     enableGeoBasemapConfig: [true, false] as const,
     enableAutomationManagement: [true, false] as const,
     enableNewPdfTabularExport: [true, false] as const,
     enableFilterAccessibility: [false, true] as const,
     enableGenAIMemory: [false, true] as const,
+    enableAIKnowledge: [false, true] as const,
     enableGenAIReasoningVisibility: [false, true] as const,
     aiChatSearchLimit: [undefined, {} as number] as const,
     enableEmptyDateValuesFilter: [true, false] as const,
     enableKDEmptyDateValuesFilter: [true, false] as const,
-    enablePivotTableAutoSizeReset: [true, false] as const,
     enableRichTextWidgetFilterConfiguration: [true, false] as const,
     enableDashboardSectionHeadersDateDataSet: [true, false] as const,
     enableAnomalyDetectionAlert: [true, false] as const,

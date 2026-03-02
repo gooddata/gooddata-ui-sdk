@@ -1229,6 +1229,16 @@ export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApi
     computeValidObjects(requestParameters: ActionsApiComputeValidObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmValidObjectsResponse>;
     // Warning: (ae-forgotten-export) The symbol "ActionsApiCreatedByRequest" needs to be exported by the entry point index.d.ts
     createdBy(requestParameters: ActionsApiCreatedByRequest, options?: AxiosRequestConfig): AxiosPromise<AfmAnalyticsCatalogCreatedBy>;
+    // Warning: (ae-forgotten-export) The symbol "ActionsApiCreateDocumentRequest" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "CreateKnowledgeDocumentResponseDto" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    createDocument(requestParameters: ActionsApiCreateDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<CreateKnowledgeDocumentResponseDto>;
+    // Warning: (ae-forgotten-export) The symbol "ActionsApiDeleteDocumentRequest" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "DeleteKnowledgeDocumentResponseDto" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    deleteDocument(requestParameters: ActionsApiDeleteDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<DeleteKnowledgeDocumentResponseDto>;
     explainAFM(requestParameters: ActionsApiExplainAFMRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
     forecast(requestParameters: ActionsApiForecastRequest, options?: AxiosRequestConfig): AxiosPromise<SmartFunctionResponse>;
     forecastResult(requestParameters: ActionsApiForecastResultRequest, options?: AxiosRequestConfig): AxiosPromise<ForecastResult>;
@@ -1240,6 +1250,14 @@ export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApi
     // Warning: (ae-forgotten-export) The symbol "ActionsApiGenerateDescriptionRequest" needs to be exported by the entry point index.d.ts
     // Warning: (ae-forgotten-export) The symbol "GenerateDescriptionResponse" needs to be exported by the entry point index.d.ts
     generateDescription(requestParameters: ActionsApiGenerateDescriptionRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateDescriptionResponse>;
+    // Warning: (ae-forgotten-export) The symbol "ActionsApiGenerateTitleRequest" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "GenerateTitleResponse" needs to be exported by the entry point index.d.ts
+    generateTitle(requestParameters: ActionsApiGenerateTitleRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateTitleResponse>;
+    // Warning: (ae-forgotten-export) The symbol "ActionsApiGetDocumentRequest" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "KnowledgeDocumentMetadataDto" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    getDocument(requestParameters: ActionsApiGetDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<KnowledgeDocumentMetadataDto>;
     getQualityIssues(requestParameters: AfmActionsApiGetQualityIssuesRequest, options?: AxiosRequestConfig): AxiosPromise<AfmGetQualityIssuesResponse>;
     getQualityIssuesCalculationStatus(requestParameters: AfmActionsApiGetQualityIssuesCalculationStatusRequest, options?: AxiosRequestConfig): AxiosPromise<AfmQualityIssuesCalculationStatusResponse>;
     // Warning: (ae-forgotten-export) The symbol "ActionsApiGetWorkflowStatusRequest" needs to be exported by the entry point index.d.ts
@@ -1249,6 +1267,11 @@ export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApi
     getWorkflowStatus(requestParameters: ActionsApiGetWorkflowStatusRequest, options?: AxiosRequestConfig): AxiosPromise<WorkflowStatusResponseDto>;
     keyDriverAnalysis(requestParameters: ActionsApiKeyDriverAnalysisRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResponse>;
     keyDriverAnalysisResult(requestParameters: ActionsApiKeyDriverAnalysisResultRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResult>;
+    // Warning: (ae-forgotten-export) The symbol "ActionsApiListDocumentsRequest" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "ListKnowledgeDocumentsResponseDto" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    listDocuments(requestParameters: ActionsApiListDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<ListKnowledgeDocumentsResponseDto>;
     // Warning: (ae-forgotten-export) The symbol "ActionsApiMemoryCreatedByUsersRequest" needs to be exported by the entry point index.d.ts
     memoryCreatedByUsers(requestParameters: ActionsApiMemoryCreatedByUsersRequest, options?: AxiosRequestConfig): AxiosPromise<AfmMemoryItemCreatedByUsers>;
     // Warning: (ae-forgotten-export) The symbol "ActionsApiOutlierDetectionRequest" needs to be exported by the entry point index.d.ts
@@ -1257,12 +1280,31 @@ export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApi
     // Warning: (ae-forgotten-export) The symbol "ActionsApiOutlierDetectionResultRequest" needs to be exported by the entry point index.d.ts
     // Warning: (ae-forgotten-export) The symbol "OutlierDetectionResult" needs to be exported by the entry point index.d.ts
     outlierDetectionResult(requestParameters: ActionsApiOutlierDetectionResultRequest, options?: AxiosRequestConfig): AxiosPromise<OutlierDetectionResult>;
+    // Warning: (ae-forgotten-export) The symbol "ActionsApiPatchDocumentRequest" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    patchDocument(requestParameters: ActionsApiPatchDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<KnowledgeDocumentMetadataDto>;
     resolveLlmEndpoints(requestParameters: ActionsApiResolveLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<ResolvedLlmEndpoints>;
     retrieveExecutionMetadata(requestParameters: ActionsApiRetrieveExecutionMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<ResultCacheMetadata>;
     retrieveResult(requestParameters: ActionsApiRetrieveResultRequest, options?: AxiosRequestConfig): AxiosPromise<ExecutionResult>;
+    // Warning: (ae-forgotten-export) The symbol "ActionsApiSearchKnowledgeRequest" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "SearchKnowledgeResponseDto" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    searchKnowledge(requestParameters: ActionsApiSearchKnowledgeRequest, options?: AxiosRequestConfig): AxiosPromise<SearchKnowledgeResponseDto>;
     // Warning: (ae-forgotten-export) The symbol "ActionsApiTagsRequest" needs to be exported by the entry point index.d.ts
     tags(requestParameters: ActionsApiTagsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmAnalyticsCatalogTags>;
+    // Warning: (ae-forgotten-export) The symbol "ActionsApiTestLlmProviderRequest" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "TestLlmProviderResponse" needs to be exported by the entry point index.d.ts
+    testLlmProvider(requestParameters: ActionsApiTestLlmProviderRequest, options?: AxiosRequestConfig): AxiosPromise<TestLlmProviderResponse>;
+    // Warning: (ae-forgotten-export) The symbol "ActionsApiTestLlmProviderByIdRequest" needs to be exported by the entry point index.d.ts
+    testLlmProviderById(requestParameters: ActionsApiTestLlmProviderByIdRequest, options?: AxiosRequestConfig): AxiosPromise<TestLlmProviderResponse>;
     triggerQualityIssuesCalculation(requestParameters: AfmActionsApiTriggerQualityIssuesCalculationRequest, options?: AxiosRequestConfig): AxiosPromise<AfmTriggerQualityIssuesCalculationResponse>;
+    // Warning: (ae-forgotten-export) The symbol "ActionsApiUpsertDocumentRequest" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "UpsertKnowledgeDocumentResponseDto" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    upsertDocument(requestParameters: ActionsApiUpsertDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<UpsertKnowledgeDocumentResponseDto>;
     validateLLMEndpoint(requestParameters: ActionsApiValidateLLMEndpointRequest, options?: AxiosRequestConfig): AxiosPromise<ValidateLLMEndpointResponse>;
     validateLLMEndpointById(requestParameters: ActionsApiValidateLLMEndpointByIdRequest, options?: AxiosRequestConfig): AxiosPromise<ValidateLLMEndpointResponse>;
 }
@@ -1301,26 +1343,43 @@ export interface AfmActionsApiInterface {
     computeValidDescendants(requestParameters: ActionsApiComputeValidDescendantsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmValidDescendantsResponse>;
     computeValidObjects(requestParameters: ActionsApiComputeValidObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmValidObjectsResponse>;
     createdBy(requestParameters: ActionsApiCreatedByRequest, options?: AxiosRequestConfig): AxiosPromise<AfmAnalyticsCatalogCreatedBy>;
+    // (undocumented)
+    createDocument(requestParameters: ActionsApiCreateDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<CreateKnowledgeDocumentResponseDto>;
+    // (undocumented)
+    deleteDocument(requestParameters: ActionsApiDeleteDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<DeleteKnowledgeDocumentResponseDto>;
     explainAFM(requestParameters: ActionsApiExplainAFMRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
     forecast(requestParameters: ActionsApiForecastRequest, options?: AxiosRequestConfig): AxiosPromise<SmartFunctionResponse>;
     forecastResult(requestParameters: ActionsApiForecastResultRequest, options?: AxiosRequestConfig): AxiosPromise<ForecastResult>;
     // (undocumented)
     generateDashboardSummary(requestParameters: ActionsApiGenerateDashboardSummaryRequest, options?: AxiosRequestConfig): AxiosPromise<WorkflowDashboardSummaryResponseDto>;
     generateDescription(requestParameters: ActionsApiGenerateDescriptionRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateDescriptionResponse>;
+    generateTitle(requestParameters: ActionsApiGenerateTitleRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateTitleResponse>;
+    // (undocumented)
+    getDocument(requestParameters: ActionsApiGetDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<KnowledgeDocumentMetadataDto>;
     getQualityIssues(requestParameters: AfmActionsApiGetQualityIssuesRequest, options?: AxiosRequestConfig): AxiosPromise<AfmGetQualityIssuesResponse>;
     getQualityIssuesCalculationStatus(requestParameters: AfmActionsApiGetQualityIssuesCalculationStatusRequest, options?: AxiosRequestConfig): AxiosPromise<AfmQualityIssuesCalculationStatusResponse>;
     // (undocumented)
     getWorkflowStatus(requestParameters: ActionsApiGetWorkflowStatusRequest, options?: AxiosRequestConfig): AxiosPromise<WorkflowStatusResponseDto>;
     keyDriverAnalysis(requestParameters: ActionsApiKeyDriverAnalysisRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResponse>;
     keyDriverAnalysisResult(requestParameters: ActionsApiKeyDriverAnalysisResultRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResult>;
+    // (undocumented)
+    listDocuments(requestParameters: ActionsApiListDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<ListKnowledgeDocumentsResponseDto>;
     memoryCreatedByUsers(requestParameters: ActionsApiMemoryCreatedByUsersRequest, options?: AxiosRequestConfig): AxiosPromise<AfmMemoryItemCreatedByUsers>;
     outlierDetection(requestParameters: ActionsApiOutlierDetectionRequest, options?: AxiosRequestConfig): AxiosPromise<OutlierDetectionResponse>;
     outlierDetectionResult(requestParameters: ActionsApiOutlierDetectionResultRequest, options?: AxiosRequestConfig): AxiosPromise<OutlierDetectionResult>;
+    // (undocumented)
+    patchDocument(requestParameters: ActionsApiPatchDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<KnowledgeDocumentMetadataDto>;
     resolveLlmEndpoints(requestParameters: ActionsApiResolveLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<ResolvedLlmEndpoints>;
     retrieveExecutionMetadata(requestParameters: ActionsApiRetrieveExecutionMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<ResultCacheMetadata>;
     retrieveResult(requestParameters: ActionsApiRetrieveResultRequest, options?: AxiosRequestConfig): AxiosPromise<ExecutionResult>;
+    // (undocumented)
+    searchKnowledge(requestParameters: ActionsApiSearchKnowledgeRequest, options?: AxiosRequestConfig): AxiosPromise<SearchKnowledgeResponseDto>;
     tags(requestParameters: ActionsApiTagsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmAnalyticsCatalogTags>;
+    testLlmProvider(requestParameters: ActionsApiTestLlmProviderRequest, options?: AxiosRequestConfig): AxiosPromise<TestLlmProviderResponse>;
+    testLlmProviderById(requestParameters: ActionsApiTestLlmProviderByIdRequest, options?: AxiosRequestConfig): AxiosPromise<TestLlmProviderResponse>;
     triggerQualityIssuesCalculation(requestParameters: AfmActionsApiTriggerQualityIssuesCalculationRequest, options?: AxiosRequestConfig): AxiosPromise<AfmTriggerQualityIssuesCalculationResponse>;
+    // (undocumented)
+    upsertDocument(requestParameters: ActionsApiUpsertDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<UpsertKnowledgeDocumentResponseDto>;
     validateLLMEndpoint(requestParameters: ActionsApiValidateLLMEndpointRequest, options?: AxiosRequestConfig): AxiosPromise<ValidateLLMEndpointResponse>;
     validateLLMEndpointById(requestParameters: ActionsApiValidateLLMEndpointByIdRequest, options?: AxiosRequestConfig): AxiosPromise<ValidateLLMEndpointResponse>;
 }
@@ -1858,7 +1917,7 @@ export interface AfmQualityIssuesCalculationStatusResponse {
 }
 
 // @public (undocumented)
-export type AfmQualityIssuesCalculationStatusResponseStatusEnum = 'RUNNING' | 'SYNCING' | 'COMPLETED' | 'FAILED' | 'NOT_FOUND' | 'DISABLED';
+export type AfmQualityIssuesCalculationStatusResponseStatusEnum = 'RUNNING' | 'SYNCING' | 'COMPLETED' | 'FAILED' | 'CANCELLED' | 'NOT_FOUND' | 'DISABLED';
 
 // @public
 export interface AfmRangeMeasureValueFilter {
@@ -7383,7 +7442,7 @@ export interface DeclarativeSetting {
 }
 
 // @public (undocumented)
-export type DeclarativeSettingTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_ENDPOINT' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS';
+export type DeclarativeSettingTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_ENDPOINT' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS';
 
 // @public (undocumented)
 export interface DeclarativeSingleWorkspacePermission {
@@ -15154,7 +15213,7 @@ export interface JsonApiAggregatedFactOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiApiTokenOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -15194,23 +15253,9 @@ export type JsonApiAggregatedFactOutWithLinksTypeEnum = 'aggregatedFact';
 // @public
 export interface JsonApiAnalyticalDashboardIn {
     // (undocumented)
-    'attributes': JsonApiAnalyticalDashboardInAttributes;
+    'attributes': JsonApiAnalyticalDashboardPostOptionalIdAttributes;
     'id': string;
     'type': JsonApiAnalyticalDashboardInTypeEnum;
-}
-
-// @public (undocumented)
-export interface JsonApiAnalyticalDashboardInAttributes {
-    // (undocumented)
-    'areRelationsValid'?: boolean;
-    'content': object;
-    // (undocumented)
-    'description'?: string;
-    'summary'?: string;
-    // (undocumented)
-    'tags'?: Array<string>;
-    // (undocumented)
-    'title'?: string;
 }
 
 // @public (undocumented)
@@ -15287,7 +15332,7 @@ export interface JsonApiAnalyticalDashboardOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiApiTokenOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -15405,9 +15450,23 @@ export type JsonApiAnalyticalDashboardPatchTypeEnum = 'analyticalDashboard';
 // @public
 export interface JsonApiAnalyticalDashboardPostOptionalId {
     // (undocumented)
-    'attributes': JsonApiAnalyticalDashboardInAttributes;
+    'attributes': JsonApiAnalyticalDashboardPostOptionalIdAttributes;
     'id'?: string;
     'type': JsonApiAnalyticalDashboardPostOptionalIdTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiAnalyticalDashboardPostOptionalIdAttributes {
+    // (undocumented)
+    'areRelationsValid'?: boolean;
+    'content': object;
+    // (undocumented)
+    'description'?: string;
+    'summary'?: string;
+    // (undocumented)
+    'tags'?: Array<string>;
+    // (undocumented)
+    'title'?: string;
 }
 
 // @public (undocumented)
@@ -15462,13 +15521,7 @@ export interface JsonApiApiTokenOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiApiTokenOutListMeta;
-}
-
-// @public (undocumented)
-export interface JsonApiApiTokenOutListMeta {
-    // (undocumented)
-    'page'?: PageMetadata;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -15562,7 +15615,7 @@ export interface JsonApiAttributeHierarchyOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiApiTokenOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -15707,7 +15760,7 @@ export interface JsonApiAttributeOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiApiTokenOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -15898,7 +15951,7 @@ export interface JsonApiAutomationOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiApiTokenOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -16154,7 +16207,7 @@ export interface JsonApiAutomationResultOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiApiTokenOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -16228,7 +16281,13 @@ export interface JsonApiColorPaletteOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiApiTokenOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
+}
+
+// @public (undocumented)
+export interface JsonApiColorPaletteOutListMeta {
+    // (undocumented)
+    'page'?: PageMetadata;
 }
 
 // @public (undocumented)
@@ -16377,7 +16436,7 @@ export interface JsonApiCspDirectiveOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiApiTokenOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -16468,7 +16527,7 @@ export interface JsonApiCustomApplicationSettingOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiApiTokenOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -16578,7 +16637,7 @@ export interface JsonApiCustomGeoCollectionOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiApiTokenOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -16686,7 +16745,7 @@ export interface JsonApiDashboardPluginOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiApiTokenOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -16899,7 +16958,7 @@ export interface JsonApiDatasetOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiApiTokenOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -17001,7 +17060,7 @@ export interface JsonApiDataSourceIdentifierOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiApiTokenOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -17128,7 +17187,7 @@ export interface JsonApiDataSourceOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiApiTokenOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -17221,7 +17280,7 @@ export interface JsonApiEntitlementOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiApiTokenOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -17321,7 +17380,7 @@ export interface JsonApiExportDefinitionOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiApiTokenOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -17505,7 +17564,7 @@ export interface JsonApiExportTemplateOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiApiTokenOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -17632,7 +17691,7 @@ export interface JsonApiFactOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiApiTokenOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -17751,7 +17810,7 @@ export interface JsonApiFilterContextOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiApiTokenOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -17894,7 +17953,7 @@ export interface JsonApiFilterViewOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiApiTokenOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -18061,7 +18120,7 @@ export interface JsonApiIdentityProviderOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiApiTokenOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -18143,7 +18202,7 @@ export interface JsonApiJwkOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiApiTokenOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -18182,54 +18241,17 @@ export type JsonApiJwkPatchTypeEnum = 'jwk';
 // @public
 export interface JsonApiKnowledgeRecommendationIn {
     // (undocumented)
-    'attributes': JsonApiKnowledgeRecommendationInAttributes;
+    'attributes': JsonApiKnowledgeRecommendationPostOptionalIdAttributes;
     'id': string;
     // (undocumented)
-    'relationships': JsonApiKnowledgeRecommendationInRelationships;
+    'relationships': JsonApiKnowledgeRecommendationPostOptionalIdRelationships;
     'type': JsonApiKnowledgeRecommendationInTypeEnum;
 }
-
-// @public (undocumented)
-export interface JsonApiKnowledgeRecommendationInAttributes {
-    'analyticalDashboardTitle'?: string;
-    'analyzedPeriod'?: string;
-    'analyzedValue'?: any;
-    // (undocumented)
-    'areRelationsValid'?: boolean;
-    'comparisonType': JsonApiKnowledgeRecommendationInAttributesComparisonTypeEnum;
-    'confidence'?: any;
-    'description'?: string;
-    'direction': JsonApiKnowledgeRecommendationInAttributesDirectionEnum;
-    'metricTitle'?: string;
-    'recommendations'?: object;
-    'referencePeriod'?: string;
-    'referenceValue'?: any;
-    'sourceCount'?: number;
-    // (undocumented)
-    'tags'?: Array<string>;
-    'title': string;
-    'widgetId'?: string;
-    'widgetName'?: string;
-}
-
-// @public (undocumented)
-export type JsonApiKnowledgeRecommendationInAttributesComparisonTypeEnum = 'MONTH' | 'QUARTER' | 'YEAR';
-
-// @public (undocumented)
-export type JsonApiKnowledgeRecommendationInAttributesDirectionEnum = 'INCREASED' | 'DECREASED';
 
 // @public (undocumented)
 export interface JsonApiKnowledgeRecommendationInDocument {
     // (undocumented)
     'data': JsonApiKnowledgeRecommendationIn;
-}
-
-// @public (undocumented)
-export interface JsonApiKnowledgeRecommendationInRelationships {
-    // (undocumented)
-    'analyticalDashboard'?: JsonApiAutomationPatchRelationshipsAnalyticalDashboard;
-    // (undocumented)
-    'metric': JsonApiKnowledgeRecommendationPatchRelationshipsMetric;
 }
 
 // @public (undocumented)
@@ -18298,7 +18320,7 @@ export interface JsonApiKnowledgeRecommendationOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiApiTokenOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -18386,17 +18408,54 @@ export type JsonApiKnowledgeRecommendationPatchTypeEnum = 'knowledgeRecommendati
 // @public
 export interface JsonApiKnowledgeRecommendationPostOptionalId {
     // (undocumented)
-    'attributes': JsonApiKnowledgeRecommendationInAttributes;
+    'attributes': JsonApiKnowledgeRecommendationPostOptionalIdAttributes;
     'id'?: string;
     // (undocumented)
-    'relationships': JsonApiKnowledgeRecommendationInRelationships;
+    'relationships': JsonApiKnowledgeRecommendationPostOptionalIdRelationships;
     'type': JsonApiKnowledgeRecommendationPostOptionalIdTypeEnum;
 }
+
+// @public (undocumented)
+export interface JsonApiKnowledgeRecommendationPostOptionalIdAttributes {
+    'analyticalDashboardTitle'?: string;
+    'analyzedPeriod'?: string;
+    'analyzedValue'?: any;
+    // (undocumented)
+    'areRelationsValid'?: boolean;
+    'comparisonType': JsonApiKnowledgeRecommendationPostOptionalIdAttributesComparisonTypeEnum;
+    'confidence'?: any;
+    'description'?: string;
+    'direction': JsonApiKnowledgeRecommendationPostOptionalIdAttributesDirectionEnum;
+    'metricTitle'?: string;
+    'recommendations'?: object;
+    'referencePeriod'?: string;
+    'referenceValue'?: any;
+    'sourceCount'?: number;
+    // (undocumented)
+    'tags'?: Array<string>;
+    'title': string;
+    'widgetId'?: string;
+    'widgetName'?: string;
+}
+
+// @public (undocumented)
+export type JsonApiKnowledgeRecommendationPostOptionalIdAttributesComparisonTypeEnum = 'MONTH' | 'QUARTER' | 'YEAR';
+
+// @public (undocumented)
+export type JsonApiKnowledgeRecommendationPostOptionalIdAttributesDirectionEnum = 'INCREASED' | 'DECREASED';
 
 // @public (undocumented)
 export interface JsonApiKnowledgeRecommendationPostOptionalIdDocument {
     // (undocumented)
     'data': JsonApiKnowledgeRecommendationPostOptionalId;
+}
+
+// @public (undocumented)
+export interface JsonApiKnowledgeRecommendationPostOptionalIdRelationships {
+    // (undocumented)
+    'analyticalDashboard'?: JsonApiAutomationPatchRelationshipsAnalyticalDashboard;
+    // (undocumented)
+    'metric': JsonApiKnowledgeRecommendationPatchRelationshipsMetric;
 }
 
 // @public (undocumented)
@@ -18494,7 +18553,7 @@ export interface JsonApiLabelOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiApiTokenOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -18611,7 +18670,7 @@ export interface JsonApiLlmEndpointOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiApiTokenOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -18687,6 +18746,7 @@ export interface JsonApiLlmProviderOut {
 
 // @public (undocumented)
 export interface JsonApiLlmProviderOutAttributes {
+    'defaultModelId'?: string | null;
     'description'?: string | null;
     'models': Array<JsonApiLlmProviderOutAttributesModelsInner> | null;
     // (undocumented)
@@ -18722,7 +18782,7 @@ export interface JsonApiLlmProviderOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiApiTokenOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -18751,6 +18811,7 @@ export interface JsonApiLlmProviderPatch {
 
 // @public (undocumented)
 export interface JsonApiLlmProviderPatchAttributes {
+    'defaultModelId'?: string | null;
     'description'?: string | null;
     'models'?: Array<JsonApiLlmProviderOutAttributesModelsInner> | null;
     // (undocumented)
@@ -18771,29 +18832,10 @@ export type JsonApiLlmProviderPatchTypeEnum = 'llmProvider';
 // @public
 export interface JsonApiMemoryItemIn {
     // (undocumented)
-    'attributes': JsonApiMemoryItemInAttributes;
+    'attributes': JsonApiMemoryItemPostOptionalIdAttributes;
     'id': string;
     'type': JsonApiMemoryItemInTypeEnum;
 }
-
-// @public (undocumented)
-export interface JsonApiMemoryItemInAttributes {
-    // (undocumented)
-    'areRelationsValid'?: boolean;
-    // (undocumented)
-    'description'?: string;
-    'instruction': string;
-    'isDisabled'?: boolean;
-    'keywords'?: Array<string>;
-    'strategy': JsonApiMemoryItemInAttributesStrategyEnum;
-    // (undocumented)
-    'tags'?: Array<string>;
-    // (undocumented)
-    'title'?: string;
-}
-
-// @public (undocumented)
-export type JsonApiMemoryItemInAttributesStrategyEnum = 'ALWAYS' | 'AUTO';
 
 // @public (undocumented)
 export interface JsonApiMemoryItemInDocument {
@@ -18854,7 +18896,7 @@ export interface JsonApiMemoryItemOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiApiTokenOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -18916,10 +18958,29 @@ export type JsonApiMemoryItemPatchTypeEnum = 'memoryItem';
 // @public
 export interface JsonApiMemoryItemPostOptionalId {
     // (undocumented)
-    'attributes': JsonApiMemoryItemInAttributes;
+    'attributes': JsonApiMemoryItemPostOptionalIdAttributes;
     'id'?: string;
     'type': JsonApiMemoryItemPostOptionalIdTypeEnum;
 }
+
+// @public (undocumented)
+export interface JsonApiMemoryItemPostOptionalIdAttributes {
+    // (undocumented)
+    'areRelationsValid'?: boolean;
+    // (undocumented)
+    'description'?: string;
+    'instruction': string;
+    'isDisabled'?: boolean;
+    'keywords'?: Array<string>;
+    'strategy': JsonApiMemoryItemPostOptionalIdAttributesStrategyEnum;
+    // (undocumented)
+    'tags'?: Array<string>;
+    // (undocumented)
+    'title'?: string;
+}
+
+// @public (undocumented)
+export type JsonApiMemoryItemPostOptionalIdAttributesStrategyEnum = 'ALWAYS' | 'AUTO';
 
 // @public (undocumented)
 export interface JsonApiMemoryItemPostOptionalIdDocument {
@@ -18933,27 +18994,9 @@ export type JsonApiMemoryItemPostOptionalIdTypeEnum = 'memoryItem';
 // @public
 export interface JsonApiMetricIn {
     // (undocumented)
-    'attributes': JsonApiMetricInAttributes;
+    'attributes': JsonApiMetricPostOptionalIdAttributes;
     'id': string;
     'type': JsonApiMetricInTypeEnum;
-}
-
-// @public (undocumented)
-export interface JsonApiMetricInAttributes {
-    // (undocumented)
-    'areRelationsValid'?: boolean;
-    // (undocumented)
-    'content': JsonApiMetricOutAttributesContent;
-    // (undocumented)
-    'description'?: string;
-    // (undocumented)
-    'isHidden'?: boolean;
-    // (undocumented)
-    'isHiddenFromKda'?: boolean;
-    // (undocumented)
-    'tags'?: Array<string>;
-    // (undocumented)
-    'title'?: string;
 }
 
 // @public (undocumented)
@@ -19045,7 +19088,7 @@ export interface JsonApiMetricOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiApiTokenOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -19106,9 +19149,27 @@ export type JsonApiMetricPatchTypeEnum = 'metric';
 // @public
 export interface JsonApiMetricPostOptionalId {
     // (undocumented)
-    'attributes': JsonApiMetricInAttributes;
+    'attributes': JsonApiMetricPostOptionalIdAttributes;
     'id'?: string;
     'type': JsonApiMetricPostOptionalIdTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiMetricPostOptionalIdAttributes {
+    // (undocumented)
+    'areRelationsValid'?: boolean;
+    // (undocumented)
+    'content': JsonApiMetricOutAttributesContent;
+    // (undocumented)
+    'description'?: string;
+    // (undocumented)
+    'isHidden'?: boolean;
+    // (undocumented)
+    'isHiddenFromKda'?: boolean;
+    // (undocumented)
+    'tags'?: Array<string>;
+    // (undocumented)
+    'title'?: string;
 }
 
 // @public (undocumented)
@@ -19160,7 +19221,7 @@ export interface JsonApiNotificationChannelIdentifierOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiApiTokenOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -19182,34 +19243,10 @@ export type JsonApiNotificationChannelIdentifierOutWithLinksTypeEnum = 'notifica
 // @public
 export interface JsonApiNotificationChannelIn {
     // (undocumented)
-    'attributes'?: JsonApiNotificationChannelInAttributes;
+    'attributes'?: JsonApiNotificationChannelPostOptionalIdAttributes;
     'id': string;
     'type': JsonApiNotificationChannelInTypeEnum;
 }
-
-// @public (undocumented)
-export interface JsonApiNotificationChannelInAttributes {
-    'allowedRecipients'?: JsonApiNotificationChannelInAttributesAllowedRecipientsEnum;
-    'customDashboardUrl'?: string;
-    'dashboardLinkVisibility'?: JsonApiNotificationChannelInAttributesDashboardLinkVisibilityEnum;
-    // (undocumented)
-    'description'?: string | null;
-    // (undocumented)
-    'destination'?: JsonApiNotificationChannelOutAttributesDestination;
-    'inPlatformNotification'?: JsonApiNotificationChannelInAttributesInPlatformNotificationEnum;
-    // (undocumented)
-    'name'?: string | null;
-    'notificationSource'?: string;
-}
-
-// @public (undocumented)
-export type JsonApiNotificationChannelInAttributesAllowedRecipientsEnum = 'CREATOR' | 'INTERNAL' | 'EXTERNAL';
-
-// @public (undocumented)
-export type JsonApiNotificationChannelInAttributesDashboardLinkVisibilityEnum = 'HIDDEN' | 'INTERNAL_ONLY' | 'ALL';
-
-// @public (undocumented)
-export type JsonApiNotificationChannelInAttributesInPlatformNotificationEnum = 'DISABLED' | 'ENABLED';
 
 // @public (undocumented)
 export interface JsonApiNotificationChannelInDocument {
@@ -19286,7 +19323,7 @@ export interface JsonApiNotificationChannelOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiApiTokenOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -19308,7 +19345,7 @@ export type JsonApiNotificationChannelOutWithLinksTypeEnum = 'notificationChanne
 // @public
 export interface JsonApiNotificationChannelPatch {
     // (undocumented)
-    'attributes'?: JsonApiNotificationChannelInAttributes;
+    'attributes'?: JsonApiNotificationChannelPostOptionalIdAttributes;
     'id': string;
     'type': JsonApiNotificationChannelPatchTypeEnum;
 }
@@ -19325,10 +19362,34 @@ export type JsonApiNotificationChannelPatchTypeEnum = 'notificationChannel';
 // @public
 export interface JsonApiNotificationChannelPostOptionalId {
     // (undocumented)
-    'attributes'?: JsonApiNotificationChannelInAttributes;
+    'attributes'?: JsonApiNotificationChannelPostOptionalIdAttributes;
     'id'?: string;
     'type': JsonApiNotificationChannelPostOptionalIdTypeEnum;
 }
+
+// @public (undocumented)
+export interface JsonApiNotificationChannelPostOptionalIdAttributes {
+    'allowedRecipients'?: JsonApiNotificationChannelPostOptionalIdAttributesAllowedRecipientsEnum;
+    'customDashboardUrl'?: string;
+    'dashboardLinkVisibility'?: JsonApiNotificationChannelPostOptionalIdAttributesDashboardLinkVisibilityEnum;
+    // (undocumented)
+    'description'?: string | null;
+    // (undocumented)
+    'destination'?: JsonApiNotificationChannelOutAttributesDestination;
+    'inPlatformNotification'?: JsonApiNotificationChannelPostOptionalIdAttributesInPlatformNotificationEnum;
+    // (undocumented)
+    'name'?: string | null;
+    'notificationSource'?: string;
+}
+
+// @public (undocumented)
+export type JsonApiNotificationChannelPostOptionalIdAttributesAllowedRecipientsEnum = 'CREATOR' | 'INTERNAL' | 'EXTERNAL';
+
+// @public (undocumented)
+export type JsonApiNotificationChannelPostOptionalIdAttributesDashboardLinkVisibilityEnum = 'HIDDEN' | 'INTERNAL_ONLY' | 'ALL';
+
+// @public (undocumented)
+export type JsonApiNotificationChannelPostOptionalIdAttributesInPlatformNotificationEnum = 'DISABLED' | 'ENABLED';
 
 // @public (undocumented)
 export interface JsonApiNotificationChannelPostOptionalIdDocument {
@@ -19478,7 +19539,7 @@ export type JsonApiOrganizationPatchTypeEnum = 'organization';
 // @public
 export interface JsonApiOrganizationSettingIn {
     // (undocumented)
-    'attributes'?: JsonApiOrganizationSettingOutAttributes;
+    'attributes'?: JsonApiUserSettingInAttributes;
     'id': string;
     'type': JsonApiOrganizationSettingInTypeEnum;
 }
@@ -19495,20 +19556,10 @@ export type JsonApiOrganizationSettingInTypeEnum = 'organizationSetting';
 // @public
 export interface JsonApiOrganizationSettingOut {
     // (undocumented)
-    'attributes'?: JsonApiOrganizationSettingOutAttributes;
+    'attributes'?: JsonApiUserSettingInAttributes;
     'id': string;
     'type': JsonApiOrganizationSettingOutTypeEnum;
 }
-
-// @public (undocumented)
-export interface JsonApiOrganizationSettingOutAttributes {
-    'content'?: object;
-    // (undocumented)
-    'type'?: JsonApiOrganizationSettingOutAttributesTypeEnum;
-}
-
-// @public (undocumented)
-export type JsonApiOrganizationSettingOutAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_ENDPOINT' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS';
 
 // @public (undocumented)
 export interface JsonApiOrganizationSettingOutDocument {
@@ -19525,7 +19576,7 @@ export interface JsonApiOrganizationSettingOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiApiTokenOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -19534,7 +19585,7 @@ export type JsonApiOrganizationSettingOutTypeEnum = 'organizationSetting';
 // @public (undocumented)
 export interface JsonApiOrganizationSettingOutWithLinks {
     // (undocumented)
-    'attributes'?: JsonApiOrganizationSettingOutAttributes;
+    'attributes'?: JsonApiUserSettingInAttributes;
     'id': string;
     // (undocumented)
     'links'?: ObjectLinks;
@@ -19547,7 +19598,7 @@ export type JsonApiOrganizationSettingOutWithLinksTypeEnum = 'organizationSettin
 // @public
 export interface JsonApiOrganizationSettingPatch {
     // (undocumented)
-    'attributes'?: JsonApiOrganizationSettingOutAttributes;
+    'attributes'?: JsonApiUserSettingInAttributes;
     'id': string;
     'type': JsonApiOrganizationSettingPatchTypeEnum;
 }
@@ -19601,7 +19652,7 @@ export interface JsonApiThemeOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiApiTokenOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -19702,7 +19753,7 @@ export interface JsonApiUserDataFilterOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiApiTokenOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -19872,7 +19923,7 @@ export interface JsonApiUserGroupOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiApiTokenOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -19967,7 +20018,7 @@ export interface JsonApiUserIdentifierOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiApiTokenOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -20055,7 +20106,7 @@ export interface JsonApiUserOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiApiTokenOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -20104,10 +20155,20 @@ export type JsonApiUserPatchTypeEnum = 'user';
 // @public
 export interface JsonApiUserSettingIn {
     // (undocumented)
-    'attributes'?: JsonApiOrganizationSettingOutAttributes;
+    'attributes'?: JsonApiUserSettingInAttributes;
     'id': string;
     'type': JsonApiUserSettingInTypeEnum;
 }
+
+// @public (undocumented)
+export interface JsonApiUserSettingInAttributes {
+    'content'?: object;
+    // (undocumented)
+    'type'?: JsonApiUserSettingInAttributesTypeEnum;
+}
+
+// @public (undocumented)
+export type JsonApiUserSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_ENDPOINT' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS';
 
 // @public (undocumented)
 export interface JsonApiUserSettingInDocument {
@@ -20121,7 +20182,7 @@ export type JsonApiUserSettingInTypeEnum = 'userSetting';
 // @public
 export interface JsonApiUserSettingOut {
     // (undocumented)
-    'attributes'?: JsonApiOrganizationSettingOutAttributes;
+    'attributes'?: JsonApiUserSettingInAttributes;
     'id': string;
     'type': JsonApiUserSettingOutTypeEnum;
 }
@@ -20141,7 +20202,7 @@ export interface JsonApiUserSettingOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiApiTokenOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -20150,7 +20211,7 @@ export type JsonApiUserSettingOutTypeEnum = 'userSetting';
 // @public (undocumented)
 export interface JsonApiUserSettingOutWithLinks {
     // (undocumented)
-    'attributes'?: JsonApiOrganizationSettingOutAttributes;
+    'attributes'?: JsonApiUserSettingInAttributes;
     'id': string;
     // (undocumented)
     'links'?: ObjectLinks;
@@ -20163,24 +20224,9 @@ export type JsonApiUserSettingOutWithLinksTypeEnum = 'userSetting';
 // @public
 export interface JsonApiVisualizationObjectIn {
     // (undocumented)
-    'attributes': JsonApiVisualizationObjectInAttributes;
+    'attributes': JsonApiVisualizationObjectPostOptionalIdAttributes;
     'id': string;
     'type': JsonApiVisualizationObjectInTypeEnum;
-}
-
-// @public (undocumented)
-export interface JsonApiVisualizationObjectInAttributes {
-    // (undocumented)
-    'areRelationsValid'?: boolean;
-    'content': object;
-    // (undocumented)
-    'description'?: string;
-    // (undocumented)
-    'isHidden'?: boolean;
-    // (undocumented)
-    'tags'?: Array<string>;
-    // (undocumented)
-    'title'?: string;
 }
 
 // @public (undocumented)
@@ -20255,7 +20301,7 @@ export interface JsonApiVisualizationObjectOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiApiTokenOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -20379,9 +20425,24 @@ export type JsonApiVisualizationObjectPatchTypeEnum = 'visualizationObject';
 // @public
 export interface JsonApiVisualizationObjectPostOptionalId {
     // (undocumented)
-    'attributes': JsonApiVisualizationObjectInAttributes;
+    'attributes': JsonApiVisualizationObjectPostOptionalIdAttributes;
     'id'?: string;
     'type': JsonApiVisualizationObjectPostOptionalIdTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiVisualizationObjectPostOptionalIdAttributes {
+    // (undocumented)
+    'areRelationsValid'?: boolean;
+    'content': object;
+    // (undocumented)
+    'description'?: string;
+    // (undocumented)
+    'isHidden'?: boolean;
+    // (undocumented)
+    'tags'?: Array<string>;
+    // (undocumented)
+    'title'?: string;
 }
 
 // @public (undocumented)
@@ -20458,7 +20519,7 @@ export interface JsonApiWorkspaceAutomationOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiApiTokenOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -20568,7 +20629,7 @@ export interface JsonApiWorkspaceDataFilterOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiApiTokenOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -20680,7 +20741,7 @@ export interface JsonApiWorkspaceDataFilterSettingOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiApiTokenOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -20825,7 +20886,7 @@ export interface JsonApiWorkspaceOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiApiTokenOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -20913,7 +20974,7 @@ export type JsonApiWorkspacePatchTypeEnum = 'workspace';
 // @public
 export interface JsonApiWorkspaceSettingIn {
     // (undocumented)
-    'attributes'?: JsonApiOrganizationSettingOutAttributes;
+    'attributes'?: JsonApiUserSettingInAttributes;
     'id': string;
     'type': JsonApiWorkspaceSettingInTypeEnum;
 }
@@ -20930,7 +20991,7 @@ export type JsonApiWorkspaceSettingInTypeEnum = 'workspaceSetting';
 // @public
 export interface JsonApiWorkspaceSettingOut {
     // (undocumented)
-    'attributes'?: JsonApiOrganizationSettingOutAttributes;
+    'attributes'?: JsonApiUserSettingInAttributes;
     'id': string;
     // (undocumented)
     'meta'?: JsonApiVisualizationObjectOutMeta;
@@ -20952,7 +21013,7 @@ export interface JsonApiWorkspaceSettingOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiApiTokenOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -20961,7 +21022,7 @@ export type JsonApiWorkspaceSettingOutTypeEnum = 'workspaceSetting';
 // @public (undocumented)
 export interface JsonApiWorkspaceSettingOutWithLinks {
     // (undocumented)
-    'attributes'?: JsonApiOrganizationSettingOutAttributes;
+    'attributes'?: JsonApiUserSettingInAttributes;
     'id': string;
     // (undocumented)
     'links'?: ObjectLinks;
@@ -20976,7 +21037,7 @@ export type JsonApiWorkspaceSettingOutWithLinksTypeEnum = 'workspaceSetting';
 // @public
 export interface JsonApiWorkspaceSettingPatch {
     // (undocumented)
-    'attributes'?: JsonApiOrganizationSettingOutAttributes;
+    'attributes'?: JsonApiUserSettingInAttributes;
     'id': string;
     'type': JsonApiWorkspaceSettingPatchTypeEnum;
 }
@@ -20993,7 +21054,7 @@ export type JsonApiWorkspaceSettingPatchTypeEnum = 'workspaceSetting';
 // @public
 export interface JsonApiWorkspaceSettingPostOptionalId {
     // (undocumented)
-    'attributes'?: JsonApiOrganizationSettingOutAttributes;
+    'attributes'?: JsonApiUserSettingInAttributes;
     'id'?: string;
     'type': JsonApiWorkspaceSettingPostOptionalIdTypeEnum;
 }
@@ -25592,7 +25653,7 @@ export interface ResolvedSetting {
 }
 
 // @public (undocumented)
-export type ResolvedSettingTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_ENDPOINT' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS';
+export type ResolvedSettingTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_ENDPOINT' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'ENABLE_NULL_JOINS' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS';
 
 // @public
 export interface ResolveSettingsRequest {

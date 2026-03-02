@@ -1,13 +1,13 @@
-/* eslint-disable */
-/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2025-12-08T12:35:49.297Z; */
-// @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)
+// (C) 2026 GoodData Corporation
+
+/* THIS FILE WAS AUTO-GENERATED USING CATALOG EXPORTER; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2026-02-16T09:04:15.975Z; */
 import {
+    type IAttribute,
+    type IMeasure,
+    type IMeasureDefinition,
+    idRef,
     newAttribute,
     newMeasure,
-    IAttribute,
-    IMeasure,
-    IMeasureDefinition,
-    idRef,
 } from "@gooddata/sdk-model";
 
 /**
@@ -46,18 +46,18 @@ export const Activity = {
  */
 export const Opportunity = {
     /**
-     * Display Form Title: Opportunity
-     * Display Form ID: attr.f_opportunity.opportunity
+     * Display Form Title: SFDC URL
+     * Display Form ID: label.f_opportunity.opportunity.sfdcurl
      */
-    Default: newAttribute("attr.f_opportunity.opportunity") /**
+    SFDCURL: newAttribute("label.f_opportunity.opportunity.sfdcurl") /**
      * Display Form Title: Opportunity Name
      * Display Form ID: label.f_opportunity.opportunity.name
      */,
     Name: newAttribute("label.f_opportunity.opportunity.name") /**
-     * Display Form Title: SFDC URL
-     * Display Form ID: label.f_opportunity.opportunity.sfdcurl
+     * Display Form Title: Opportunity
+     * Display Form ID: attr.f_opportunity.opportunity
      */,
-    SFDCURL: newAttribute("label.f_opportunity.opportunity.sfdcurl"),
+    Default: newAttribute("attr.f_opportunity.opportunity"),
 };
 /**
  * Attribute Title: Opp. Snapshot
@@ -70,14 +70,14 @@ export const OppSnapshot: IAttribute = newAttribute("attr.f_opportunitysnapshot.
  */
 export const SalesRep = {
     /**
-     * Display Form Title: Owner Name
-     * Display Form ID: label.f_owner.salesrep.ownername
-     */
-    OwnerName: newAttribute("label.f_owner.salesrep.ownername") /**
      * Display Form Title: Sales Rep
      * Display Form ID: attr.f_owner.salesrep
+     */
+    Default: newAttribute("attr.f_owner.salesrep") /**
+     * Display Form Title: Owner Name
+     * Display Form ID: label.f_owner.salesrep.ownername
      */,
-    Default: newAttribute("attr.f_owner.salesrep"),
+    OwnerName: newAttribute("label.f_owner.salesrep.ownername"),
 };
 /**
  * Attribute Title: Product
@@ -85,22 +85,41 @@ export const SalesRep = {
  */
 export const Product = {
     /**
-     * Display Form Title: Product
-     * Display Form ID: attr.f_product.product
-     */
-    Default: newAttribute("attr.f_product.product") /**
      * Display Form Title: Product Name
      * Display Form ID: label.f_product.product.name
-     */,
+     */
     Name: newAttribute("label.f_product.product.name") /**
-     * Display Form Title: Product Link
-     * Display Form ID: label.f_product.product.link
+     * Display Form Title: Product
+     * Display Form ID: attr.f_product.product
      */,
-    Link: newAttribute("label.f_product.product.link") /**
+    Default: newAttribute("attr.f_product.product") /**
      * Display Form Title: Product Image
      * Display Form ID: label.f_product.product.image
      */,
-    Image: newAttribute("label.f_product.product.image"),
+    Image: newAttribute("label.f_product.product.image") /**
+     * Display Form Title: Product Link
+     * Display Form ID: label.f_product.product.link
+     */,
+    Link: newAttribute("label.f_product.product.link"),
+};
+/**
+ * Attribute Title: Stage Name
+ * Attribute ID: attr.f_stage.stagename
+ */
+export const StageName = {
+    /**
+     * Display Form Title: Stage Name
+     * Display Form ID: attr.f_stage.stagename
+     */
+    Default: newAttribute("attr.f_stage.stagename") /**
+     * Display Form Title: Stage Name
+     * Display Form ID: label.f_stage.stagename.stagename
+     */,
+    _1: newAttribute("label.f_stage.stagename.stagename") /**
+     * Display Form Title: Order
+     * Display Form ID: label.f_stage.stagename.order
+     */,
+    Order: newAttribute("label.f_stage.stagename.order"),
 };
 /**
  * Attribute Title: Stage History
@@ -108,23 +127,19 @@ export const Product = {
  */
 export const StageHistory: IAttribute = newAttribute("attr.f_stagehistory.stagehistory");
 /**
- * Attribute Title: Stage Name
- * Attribute ID: attr.f_stage.stagename
+ * Attribute Title: Country
+ * Attribute ID: country
  */
-export const StageName = {
+export const Country = {
     /**
-     * Display Form Title: Order
-     * Display Form ID: label.f_stage.stagename.order
+     * Display Form Title: Country Code
+     * Display Form ID: country.country_code
      */
-    Order: newAttribute("label.f_stage.stagename.order") /**
-     * Display Form Title: Stage Name
-     * Display Form ID: attr.f_stage.stagename
+    Code: newAttribute("country.country_code") /**
+     * Display Form Title: Country
+     * Display Form ID: country
      */,
-    Default: newAttribute("attr.f_stage.stagename") /**
-     * Display Form Title: Stage Name Label
-     * Display Form ID: label.f_stage.stagename.stagename
-     */,
-    Label: newAttribute("label.f_stage.stagename.stagename"),
+    Default: newAttribute("country"),
 };
 /**
  * Attribute Title: County name
@@ -172,10 +187,10 @@ export const Status: IAttribute = newAttribute("f_activity.status_id");
  */
 export const City = {
     /**
-     * Display Form Title: City name
-     * Display Form ID: f_city.id.cityname
+     * Display Form Title: City ascii name
+     * Display Form ID: f_city.id.cityasciiname
      */
-    Name: newAttribute("f_city.id.cityname") /**
+    AsciiName: newAttribute("f_city.id.cityasciiname") /**
      * Display Form Title: City
      * Display Form ID: f_city.id
      */,
@@ -184,22 +199,22 @@ export const City = {
      * Display Form ID: f_city.id.longitude
      */,
     Longitude: newAttribute("f_city.id.longitude") /**
+     * Display Form Title: City name
+     * Display Form ID: f_city.id.cityname
+     */,
+    Name: newAttribute("f_city.id.cityname") /**
+     * Display Form Title: Location
+     * Display Form ID: f_city.id.location
+     */,
+    Location: newAttribute("f_city.id.location") /**
      * Display Form Title: City short name
      * Display Form ID: f_city.id.cityshortname
      */,
     ShortName: newAttribute("f_city.id.cityshortname") /**
-     * Display Form Title: City ascii name
-     * Display Form ID: f_city.id.cityasciiname
-     */,
-    AsciiName: newAttribute("f_city.id.cityasciiname") /**
      * Display Form Title: Latitude
      * Display Form ID: f_city.id.latitude
      */,
-    Latitude: newAttribute("f_city.id.latitude") /**
-     * Display Form Title: Location
-     * Display Form ID: f_city.id.location
-     */,
-    Location: newAttribute("f_city.id.location"),
+    Latitude: newAttribute("f_city.id.latitude"),
 };
 /**
  * Attribute Title: Opportunity Id
@@ -222,14 +237,14 @@ export const OppSnapshotId: IAttribute = newAttribute("f_opportunitysnapshot.id"
  */
 export const Department = {
     /**
-     * Display Form Title: Department
-     * Display Form ID: f_owner.department_id
-     */
-    Default: newAttribute("f_owner.department_id") /**
      * Display Form Title: Department hyperlink
      * Display Form ID: f_owner.department_id.departmenthyperlink
+     */
+    Hyperlink: newAttribute("f_owner.department_id.departmenthyperlink") /**
+     * Display Form Title: Department
+     * Display Form ID: f_owner.department_id
      */,
-    Hyperlink: newAttribute("f_owner.department_id.departmenthyperlink"),
+    Default: newAttribute("f_owner.department_id"),
 };
 /**
  * Attribute Title: Owner Id
@@ -242,25 +257,20 @@ export const OwnerId: IAttribute = newAttribute("f_owner.id");
  */
 export const Region = {
     /**
-     * Display Form Title: Region
-     * Display Form ID: f_owner.region_id
-     */
-    Default: newAttribute("f_owner.region_id") /**
      * Display Form Title: Region hyperlink
      * Display Form ID: f_owner.region_id.regionhyperlink
+     */
+    Hyperlink: newAttribute("f_owner.region_id.regionhyperlink") /**
+     * Display Form Title: Region
+     * Display Form ID: f_owner.region_id
      */,
-    Hyperlink: newAttribute("f_owner.region_id.regionhyperlink"),
+    Default: newAttribute("f_owner.region_id"),
 };
 /**
  * Attribute Title: Product Id
  * Attribute ID: f_product.id
  */
 export const ProductId: IAttribute = newAttribute("f_product.id");
-/**
- * Attribute Title: Stage History Id
- * Attribute ID: f_stagehistory.id
- */
-export const StageHistoryId: IAttribute = newAttribute("f_stagehistory.id");
 /**
  * Attribute Title: Stage Id
  * Attribute ID: f_stage.id
@@ -287,6 +297,11 @@ export const IsWon: IAttribute = newAttribute("f_stage.iswon_id");
  */
 export const Status_1: IAttribute = newAttribute("f_stage.status_id");
 /**
+ * Attribute Title: Stage History Id
+ * Attribute ID: f_stagehistory.id
+ */
+export const StageHistoryId: IAttribute = newAttribute("f_stagehistory.id");
+/**
  * Attribute Title: Timeline
  * Attribute ID: f_timeline.id
  */
@@ -297,16 +312,16 @@ export const Timeline: IAttribute = newAttribute("f_timeline.id");
  */
 export const ProductThatIsRenamedToTestTheLongAttributeName = {
     /**
-     * Display Form Title: Product that is renamed to test the long attribute name hyperlink
-     * Display Form ID: productthatisrenamedtotestthelongattributename.productthatisrenamedtotestthelongattributenamehyperlink
-     */
-    Hyperlink: newAttribute(
-        "productthatisrenamedtotestthelongattributename.productthatisrenamedtotestthelongattributenamehyperlink",
-    ) /**
      * Display Form Title: Product that is renamed to test the long attribute name
      * Display Form ID: productthatisrenamedtotestthelongattributename
+     */
+    Default: newAttribute("productthatisrenamedtotestthelongattributename") /**
+     * Display Form Title: Product that is renamed to test the long attribute name hyperlink
+     * Display Form ID: productthatisrenamedtotestthelongattributename.productthatisrenamedtotestthelongattributenamehyperlink
      */,
-    Default: newAttribute("productthatisrenamedtotestthelongattributename"),
+    Hyperlink: newAttribute(
+        "productthatisrenamedtotestthelongattributename.productthatisrenamedtotestthelongattributenamehyperlink",
+    ),
 };
 /**
  * Attribute Title: State
@@ -314,14 +329,22 @@ export const ProductThatIsRenamedToTestTheLongAttributeName = {
  */
 export const State = {
     /**
-     * Display Form Title: State name
-     * Display Form ID: state_id.statename
-     */
-    Name: newAttribute("state_id.statename") /**
      * Display Form Title: State
      * Display Form ID: state_id
+     */
+    Default: newAttribute("state_id") /**
+     * Display Form Title: State Code
+     * Display Form ID: state_id.statecode
      */,
-    Default: newAttribute("state_id"),
+    Code: newAttribute("state_id.statecode") /**
+     * Display Form Title: State name
+     * Display Form ID: state_id.statename
+     */,
+    Name: newAttribute("state_id.statename") /**
+     * Display Form Title: State id
+     * Display Form ID: state_id.stateid
+     */,
+    Id: newAttribute("state_id.stateid"),
 };
 /**
  * Attribute Title: User Id
@@ -329,18 +352,18 @@ export const State = {
  */
 export const UserId = {
     /**
+     * Display Form Title: User Email
+     * Display Form ID: user_id.useremail
+     */
+    UserEmail: newAttribute("user_id.useremail") /**
      * Display Form Title: User Id
      * Display Form ID: user_id
-     */
+     */,
     Default: newAttribute("user_id") /**
      * Display Form Title: User Name
      * Display Form ID: user_id.username
      */,
-    UserName: newAttribute("user_id.username") /**
-     * Display Form Title: User Email
-     * Display Form ID: user_id.useremail
-     */,
-    UserEmail: newAttribute("user_id.useremail"),
+    UserName: newAttribute("user_id.username"),
 };
 /**
  * Metric Title: _Timeline [EOP]
@@ -514,207 +537,6 @@ export const SnapshotBOP: IMeasure<IMeasureDefinition> = newMeasure(idRef("snaps
  * Metric Type: MAQL Metric
  */
 export const TimelineBOP: IMeasure<IMeasureDefinition> = newMeasure(idRef("timeline_bop", "measure"));
-/**
- * Fact Title: Activity (Date)
- * Fact ID: fact.f_activity.activitydate
- */
-export const ActivityDate = {
-    /**
-     * Fact Title: Activity (Date)
-     * Fact ID: fact.f_activity.activitydate
-     * Fact Aggregation: sum
-     */
-    Sum: newMeasure(idRef("fact.f_activity.activitydate", "fact"), (m) => m.aggregation("sum")) /**
-     * Fact Title: Activity (Date)
-     * Fact ID: fact.f_activity.activitydate
-     * Fact Aggregation: avg
-     */,
-    Avg: newMeasure(idRef("fact.f_activity.activitydate", "fact"), (m) => m.aggregation("avg")) /**
-     * Fact Title: Activity (Date)
-     * Fact ID: fact.f_activity.activitydate
-     * Fact Aggregation: min
-     */,
-    Min: newMeasure(idRef("fact.f_activity.activitydate", "fact"), (m) => m.aggregation("min")) /**
-     * Fact Title: Activity (Date)
-     * Fact ID: fact.f_activity.activitydate
-     * Fact Aggregation: max
-     */,
-    Max: newMeasure(idRef("fact.f_activity.activitydate", "fact"), (m) => m.aggregation("max")) /**
-     * Fact Title: Activity (Date)
-     * Fact ID: fact.f_activity.activitydate
-     * Fact Aggregation: median
-     */,
-    Median: newMeasure(idRef("fact.f_activity.activitydate", "fact"), (m) => m.aggregation("median")) /**
-     * Fact Title: Activity (Date)
-     * Fact ID: fact.f_activity.activitydate
-     * Fact Aggregation: runsum
-     */,
-    Runsum: newMeasure(idRef("fact.f_activity.activitydate", "fact"), (m) => m.aggregation("runsum")),
-};
-/**
- * Fact Title: Opp. Created (Date)
- * Fact ID: fact.f_opportunity.oppcreateddate
- */
-export const OppCreatedDate = {
-    /**
-     * Fact Title: Opp. Created (Date)
-     * Fact ID: fact.f_opportunity.oppcreateddate
-     * Fact Aggregation: sum
-     */
-    Sum: newMeasure(idRef("fact.f_opportunity.oppcreateddate", "fact"), (m) => m.aggregation("sum")) /**
-     * Fact Title: Opp. Created (Date)
-     * Fact ID: fact.f_opportunity.oppcreateddate
-     * Fact Aggregation: avg
-     */,
-    Avg: newMeasure(idRef("fact.f_opportunity.oppcreateddate", "fact"), (m) => m.aggregation("avg")) /**
-     * Fact Title: Opp. Created (Date)
-     * Fact ID: fact.f_opportunity.oppcreateddate
-     * Fact Aggregation: min
-     */,
-    Min: newMeasure(idRef("fact.f_opportunity.oppcreateddate", "fact"), (m) => m.aggregation("min")) /**
-     * Fact Title: Opp. Created (Date)
-     * Fact ID: fact.f_opportunity.oppcreateddate
-     * Fact Aggregation: max
-     */,
-    Max: newMeasure(idRef("fact.f_opportunity.oppcreateddate", "fact"), (m) => m.aggregation("max")) /**
-     * Fact Title: Opp. Created (Date)
-     * Fact ID: fact.f_opportunity.oppcreateddate
-     * Fact Aggregation: median
-     */,
-    Median: newMeasure(idRef("fact.f_opportunity.oppcreateddate", "fact"), (m) => m.aggregation("median")) /**
-     * Fact Title: Opp. Created (Date)
-     * Fact ID: fact.f_opportunity.oppcreateddate
-     * Fact Aggregation: runsum
-     */,
-    Runsum: newMeasure(idRef("fact.f_opportunity.oppcreateddate", "fact"), (m) => m.aggregation("runsum")),
-};
-/**
- * Fact Title: Opp. Close (Date)
- * Fact ID: fact.f_opportunitysnapshot.oppclosedate
- */
-export const OppCloseDate = {
-    /**
-     * Fact Title: Opp. Close (Date)
-     * Fact ID: fact.f_opportunitysnapshot.oppclosedate
-     * Fact Aggregation: sum
-     */
-    Sum: newMeasure(idRef("fact.f_opportunitysnapshot.oppclosedate", "fact"), (m) => m.aggregation("sum")) /**
-     * Fact Title: Opp. Close (Date)
-     * Fact ID: fact.f_opportunitysnapshot.oppclosedate
-     * Fact Aggregation: avg
-     */,
-    Avg: newMeasure(idRef("fact.f_opportunitysnapshot.oppclosedate", "fact"), (m) => m.aggregation("avg")) /**
-     * Fact Title: Opp. Close (Date)
-     * Fact ID: fact.f_opportunitysnapshot.oppclosedate
-     * Fact Aggregation: min
-     */,
-    Min: newMeasure(idRef("fact.f_opportunitysnapshot.oppclosedate", "fact"), (m) => m.aggregation("min")) /**
-     * Fact Title: Opp. Close (Date)
-     * Fact ID: fact.f_opportunitysnapshot.oppclosedate
-     * Fact Aggregation: max
-     */,
-    Max: newMeasure(idRef("fact.f_opportunitysnapshot.oppclosedate", "fact"), (m) => m.aggregation("max")) /**
-     * Fact Title: Opp. Close (Date)
-     * Fact ID: fact.f_opportunitysnapshot.oppclosedate
-     * Fact Aggregation: median
-     */,
-    Median: newMeasure(idRef("fact.f_opportunitysnapshot.oppclosedate", "fact"), (m) =>
-        m.aggregation("median"),
-    ) /**
-     * Fact Title: Opp. Close (Date)
-     * Fact ID: fact.f_opportunitysnapshot.oppclosedate
-     * Fact Aggregation: runsum
-     */,
-    Runsum: newMeasure(idRef("fact.f_opportunitysnapshot.oppclosedate", "fact"), (m) =>
-        m.aggregation("runsum"),
-    ),
-};
-/**
- * Fact Title: Opp. Snapshot (Date)
- * Fact ID: fact.f_opportunitysnapshot.oppsnapshotdate
- */
-export const OppSnapshotDate = {
-    /**
-     * Fact Title: Opp. Snapshot (Date)
-     * Fact ID: fact.f_opportunitysnapshot.oppsnapshotdate
-     * Fact Aggregation: sum
-     */
-    Sum: newMeasure(idRef("fact.f_opportunitysnapshot.oppsnapshotdate", "fact"), (m) =>
-        m.aggregation("sum"),
-    ) /**
-     * Fact Title: Opp. Snapshot (Date)
-     * Fact ID: fact.f_opportunitysnapshot.oppsnapshotdate
-     * Fact Aggregation: avg
-     */,
-    Avg: newMeasure(idRef("fact.f_opportunitysnapshot.oppsnapshotdate", "fact"), (m) =>
-        m.aggregation("avg"),
-    ) /**
-     * Fact Title: Opp. Snapshot (Date)
-     * Fact ID: fact.f_opportunitysnapshot.oppsnapshotdate
-     * Fact Aggregation: min
-     */,
-    Min: newMeasure(idRef("fact.f_opportunitysnapshot.oppsnapshotdate", "fact"), (m) =>
-        m.aggregation("min"),
-    ) /**
-     * Fact Title: Opp. Snapshot (Date)
-     * Fact ID: fact.f_opportunitysnapshot.oppsnapshotdate
-     * Fact Aggregation: max
-     */,
-    Max: newMeasure(idRef("fact.f_opportunitysnapshot.oppsnapshotdate", "fact"), (m) =>
-        m.aggregation("max"),
-    ) /**
-     * Fact Title: Opp. Snapshot (Date)
-     * Fact ID: fact.f_opportunitysnapshot.oppsnapshotdate
-     * Fact Aggregation: median
-     */,
-    Median: newMeasure(idRef("fact.f_opportunitysnapshot.oppsnapshotdate", "fact"), (m) =>
-        m.aggregation("median"),
-    ) /**
-     * Fact Title: Opp. Snapshot (Date)
-     * Fact ID: fact.f_opportunitysnapshot.oppsnapshotdate
-     * Fact Aggregation: runsum
-     */,
-    Runsum: newMeasure(idRef("fact.f_opportunitysnapshot.oppsnapshotdate", "fact"), (m) =>
-        m.aggregation("runsum"),
-    ),
-};
-/**
- * Fact Title: Timeline (Date)
- * Fact ID: fact.f_timeline.timelinedate
- */
-export const TimelineDate = {
-    /**
-     * Fact Title: Timeline (Date)
-     * Fact ID: fact.f_timeline.timelinedate
-     * Fact Aggregation: sum
-     */
-    Sum: newMeasure(idRef("fact.f_timeline.timelinedate", "fact"), (m) => m.aggregation("sum")) /**
-     * Fact Title: Timeline (Date)
-     * Fact ID: fact.f_timeline.timelinedate
-     * Fact Aggregation: avg
-     */,
-    Avg: newMeasure(idRef("fact.f_timeline.timelinedate", "fact"), (m) => m.aggregation("avg")) /**
-     * Fact Title: Timeline (Date)
-     * Fact ID: fact.f_timeline.timelinedate
-     * Fact Aggregation: min
-     */,
-    Min: newMeasure(idRef("fact.f_timeline.timelinedate", "fact"), (m) => m.aggregation("min")) /**
-     * Fact Title: Timeline (Date)
-     * Fact ID: fact.f_timeline.timelinedate
-     * Fact Aggregation: max
-     */,
-    Max: newMeasure(idRef("fact.f_timeline.timelinedate", "fact"), (m) => m.aggregation("max")) /**
-     * Fact Title: Timeline (Date)
-     * Fact ID: fact.f_timeline.timelinedate
-     * Fact Aggregation: median
-     */,
-    Median: newMeasure(idRef("fact.f_timeline.timelinedate", "fact"), (m) => m.aggregation("median")) /**
-     * Fact Title: Timeline (Date)
-     * Fact ID: fact.f_timeline.timelinedate
-     * Fact Aggregation: runsum
-     */,
-    Runsum: newMeasure(idRef("fact.f_timeline.timelinedate", "fact"), (m) => m.aggregation("runsum")),
-};
 /**
  * Fact Title: Density
  * Fact ID: f_density
@@ -978,6 +800,207 @@ export const Velocity = {
      */,
     Runsum: newMeasure(idRef("f_stagehistory.f_velocity", "fact"), (m) => m.aggregation("runsum")),
 };
+/**
+ * Fact Title: Activity (Date)
+ * Fact ID: fact.f_activity.activitydate
+ */
+export const ActivityDate = {
+    /**
+     * Fact Title: Activity (Date)
+     * Fact ID: fact.f_activity.activitydate
+     * Fact Aggregation: sum
+     */
+    Sum: newMeasure(idRef("fact.f_activity.activitydate", "fact"), (m) => m.aggregation("sum")) /**
+     * Fact Title: Activity (Date)
+     * Fact ID: fact.f_activity.activitydate
+     * Fact Aggregation: avg
+     */,
+    Avg: newMeasure(idRef("fact.f_activity.activitydate", "fact"), (m) => m.aggregation("avg")) /**
+     * Fact Title: Activity (Date)
+     * Fact ID: fact.f_activity.activitydate
+     * Fact Aggregation: min
+     */,
+    Min: newMeasure(idRef("fact.f_activity.activitydate", "fact"), (m) => m.aggregation("min")) /**
+     * Fact Title: Activity (Date)
+     * Fact ID: fact.f_activity.activitydate
+     * Fact Aggregation: max
+     */,
+    Max: newMeasure(idRef("fact.f_activity.activitydate", "fact"), (m) => m.aggregation("max")) /**
+     * Fact Title: Activity (Date)
+     * Fact ID: fact.f_activity.activitydate
+     * Fact Aggregation: median
+     */,
+    Median: newMeasure(idRef("fact.f_activity.activitydate", "fact"), (m) => m.aggregation("median")) /**
+     * Fact Title: Activity (Date)
+     * Fact ID: fact.f_activity.activitydate
+     * Fact Aggregation: runsum
+     */,
+    Runsum: newMeasure(idRef("fact.f_activity.activitydate", "fact"), (m) => m.aggregation("runsum")),
+};
+/**
+ * Fact Title: Opp. Created (Date)
+ * Fact ID: fact.f_opportunity.oppcreateddate
+ */
+export const OppCreatedDate = {
+    /**
+     * Fact Title: Opp. Created (Date)
+     * Fact ID: fact.f_opportunity.oppcreateddate
+     * Fact Aggregation: sum
+     */
+    Sum: newMeasure(idRef("fact.f_opportunity.oppcreateddate", "fact"), (m) => m.aggregation("sum")) /**
+     * Fact Title: Opp. Created (Date)
+     * Fact ID: fact.f_opportunity.oppcreateddate
+     * Fact Aggregation: avg
+     */,
+    Avg: newMeasure(idRef("fact.f_opportunity.oppcreateddate", "fact"), (m) => m.aggregation("avg")) /**
+     * Fact Title: Opp. Created (Date)
+     * Fact ID: fact.f_opportunity.oppcreateddate
+     * Fact Aggregation: min
+     */,
+    Min: newMeasure(idRef("fact.f_opportunity.oppcreateddate", "fact"), (m) => m.aggregation("min")) /**
+     * Fact Title: Opp. Created (Date)
+     * Fact ID: fact.f_opportunity.oppcreateddate
+     * Fact Aggregation: max
+     */,
+    Max: newMeasure(idRef("fact.f_opportunity.oppcreateddate", "fact"), (m) => m.aggregation("max")) /**
+     * Fact Title: Opp. Created (Date)
+     * Fact ID: fact.f_opportunity.oppcreateddate
+     * Fact Aggregation: median
+     */,
+    Median: newMeasure(idRef("fact.f_opportunity.oppcreateddate", "fact"), (m) => m.aggregation("median")) /**
+     * Fact Title: Opp. Created (Date)
+     * Fact ID: fact.f_opportunity.oppcreateddate
+     * Fact Aggregation: runsum
+     */,
+    Runsum: newMeasure(idRef("fact.f_opportunity.oppcreateddate", "fact"), (m) => m.aggregation("runsum")),
+};
+/**
+ * Fact Title: Opp. Close (Date)
+ * Fact ID: fact.f_opportunitysnapshot.oppclosedate
+ */
+export const OppCloseDate = {
+    /**
+     * Fact Title: Opp. Close (Date)
+     * Fact ID: fact.f_opportunitysnapshot.oppclosedate
+     * Fact Aggregation: sum
+     */
+    Sum: newMeasure(idRef("fact.f_opportunitysnapshot.oppclosedate", "fact"), (m) => m.aggregation("sum")) /**
+     * Fact Title: Opp. Close (Date)
+     * Fact ID: fact.f_opportunitysnapshot.oppclosedate
+     * Fact Aggregation: avg
+     */,
+    Avg: newMeasure(idRef("fact.f_opportunitysnapshot.oppclosedate", "fact"), (m) => m.aggregation("avg")) /**
+     * Fact Title: Opp. Close (Date)
+     * Fact ID: fact.f_opportunitysnapshot.oppclosedate
+     * Fact Aggregation: min
+     */,
+    Min: newMeasure(idRef("fact.f_opportunitysnapshot.oppclosedate", "fact"), (m) => m.aggregation("min")) /**
+     * Fact Title: Opp. Close (Date)
+     * Fact ID: fact.f_opportunitysnapshot.oppclosedate
+     * Fact Aggregation: max
+     */,
+    Max: newMeasure(idRef("fact.f_opportunitysnapshot.oppclosedate", "fact"), (m) => m.aggregation("max")) /**
+     * Fact Title: Opp. Close (Date)
+     * Fact ID: fact.f_opportunitysnapshot.oppclosedate
+     * Fact Aggregation: median
+     */,
+    Median: newMeasure(idRef("fact.f_opportunitysnapshot.oppclosedate", "fact"), (m) =>
+        m.aggregation("median"),
+    ) /**
+     * Fact Title: Opp. Close (Date)
+     * Fact ID: fact.f_opportunitysnapshot.oppclosedate
+     * Fact Aggregation: runsum
+     */,
+    Runsum: newMeasure(idRef("fact.f_opportunitysnapshot.oppclosedate", "fact"), (m) =>
+        m.aggregation("runsum"),
+    ),
+};
+/**
+ * Fact Title: Opp. Snapshot (Date)
+ * Fact ID: fact.f_opportunitysnapshot.oppsnapshotdate
+ */
+export const OppSnapshotDate = {
+    /**
+     * Fact Title: Opp. Snapshot (Date)
+     * Fact ID: fact.f_opportunitysnapshot.oppsnapshotdate
+     * Fact Aggregation: sum
+     */
+    Sum: newMeasure(idRef("fact.f_opportunitysnapshot.oppsnapshotdate", "fact"), (m) =>
+        m.aggregation("sum"),
+    ) /**
+     * Fact Title: Opp. Snapshot (Date)
+     * Fact ID: fact.f_opportunitysnapshot.oppsnapshotdate
+     * Fact Aggregation: avg
+     */,
+    Avg: newMeasure(idRef("fact.f_opportunitysnapshot.oppsnapshotdate", "fact"), (m) =>
+        m.aggregation("avg"),
+    ) /**
+     * Fact Title: Opp. Snapshot (Date)
+     * Fact ID: fact.f_opportunitysnapshot.oppsnapshotdate
+     * Fact Aggregation: min
+     */,
+    Min: newMeasure(idRef("fact.f_opportunitysnapshot.oppsnapshotdate", "fact"), (m) =>
+        m.aggregation("min"),
+    ) /**
+     * Fact Title: Opp. Snapshot (Date)
+     * Fact ID: fact.f_opportunitysnapshot.oppsnapshotdate
+     * Fact Aggregation: max
+     */,
+    Max: newMeasure(idRef("fact.f_opportunitysnapshot.oppsnapshotdate", "fact"), (m) =>
+        m.aggregation("max"),
+    ) /**
+     * Fact Title: Opp. Snapshot (Date)
+     * Fact ID: fact.f_opportunitysnapshot.oppsnapshotdate
+     * Fact Aggregation: median
+     */,
+    Median: newMeasure(idRef("fact.f_opportunitysnapshot.oppsnapshotdate", "fact"), (m) =>
+        m.aggregation("median"),
+    ) /**
+     * Fact Title: Opp. Snapshot (Date)
+     * Fact ID: fact.f_opportunitysnapshot.oppsnapshotdate
+     * Fact Aggregation: runsum
+     */,
+    Runsum: newMeasure(idRef("fact.f_opportunitysnapshot.oppsnapshotdate", "fact"), (m) =>
+        m.aggregation("runsum"),
+    ),
+};
+/**
+ * Fact Title: Timeline (Date)
+ * Fact ID: fact.f_timeline.timelinedate
+ */
+export const TimelineDate = {
+    /**
+     * Fact Title: Timeline (Date)
+     * Fact ID: fact.f_timeline.timelinedate
+     * Fact Aggregation: sum
+     */
+    Sum: newMeasure(idRef("fact.f_timeline.timelinedate", "fact"), (m) => m.aggregation("sum")) /**
+     * Fact Title: Timeline (Date)
+     * Fact ID: fact.f_timeline.timelinedate
+     * Fact Aggregation: avg
+     */,
+    Avg: newMeasure(idRef("fact.f_timeline.timelinedate", "fact"), (m) => m.aggregation("avg")) /**
+     * Fact Title: Timeline (Date)
+     * Fact ID: fact.f_timeline.timelinedate
+     * Fact Aggregation: min
+     */,
+    Min: newMeasure(idRef("fact.f_timeline.timelinedate", "fact"), (m) => m.aggregation("min")) /**
+     * Fact Title: Timeline (Date)
+     * Fact ID: fact.f_timeline.timelinedate
+     * Fact Aggregation: max
+     */,
+    Max: newMeasure(idRef("fact.f_timeline.timelinedate", "fact"), (m) => m.aggregation("max")) /**
+     * Fact Title: Timeline (Date)
+     * Fact ID: fact.f_timeline.timelinedate
+     * Fact Aggregation: median
+     */,
+    Median: newMeasure(idRef("fact.f_timeline.timelinedate", "fact"), (m) => m.aggregation("median")) /**
+     * Fact Title: Timeline (Date)
+     * Fact ID: fact.f_timeline.timelinedate
+     * Fact Aggregation: runsum
+     */,
+    Runsum: newMeasure(idRef("fact.f_timeline.timelinedate", "fact"), (m) => m.aggregation("runsum")),
+};
 /** Available Date Data Sets */
 export const DateDatasets = {
     /**
@@ -1224,6 +1247,39 @@ export const DateDatasets = {
              * Display Form ID: dt_closedate_timestamp.dayOfYear
              */,
             Default: newAttribute("dt_closedate_timestamp.dayOfYear"),
+        } /**
+         * Date Attribute: Closed - Fiscal Month
+         * Date Attribute ID: dt_closedate_timestamp.fiscalMonth
+         */,
+        ClosedFiscalMonth: {
+            ref: idRef("dt_closedate_timestamp.fiscalMonth", "attribute"),
+            identifier: "dt_closedate_timestamp.fiscalMonth" /**
+             * Display Form Title: Closed - Fiscal Month
+             * Display Form ID: dt_closedate_timestamp.fiscalMonth
+             */,
+            Default: newAttribute("dt_closedate_timestamp.fiscalMonth"),
+        } /**
+         * Date Attribute: Closed - Fiscal Quarter
+         * Date Attribute ID: dt_closedate_timestamp.fiscalQuarter
+         */,
+        ClosedFiscalQuarter: {
+            ref: idRef("dt_closedate_timestamp.fiscalQuarter", "attribute"),
+            identifier: "dt_closedate_timestamp.fiscalQuarter" /**
+             * Display Form Title: Closed - Fiscal Quarter
+             * Display Form ID: dt_closedate_timestamp.fiscalQuarter
+             */,
+            Default: newAttribute("dt_closedate_timestamp.fiscalQuarter"),
+        } /**
+         * Date Attribute: Closed - Fiscal Year
+         * Date Attribute ID: dt_closedate_timestamp.fiscalYear
+         */,
+        ClosedFiscalYear: {
+            ref: idRef("dt_closedate_timestamp.fiscalYear", "attribute"),
+            identifier: "dt_closedate_timestamp.fiscalYear" /**
+             * Display Form Title: Closed - Fiscal Year
+             * Display Form ID: dt_closedate_timestamp.fiscalYear
+             */,
+            Default: newAttribute("dt_closedate_timestamp.fiscalYear"),
         } /**
          * Date Attribute: Closed - Hour
          * Date Attribute ID: dt_closedate_timestamp.hour
@@ -1590,6 +1646,39 @@ export const DateDatasets = {
              * Display Form ID: dt_snapshotdate_timestamp.dayOfYear
              */,
             Default: newAttribute("dt_snapshotdate_timestamp.dayOfYear"),
+        } /**
+         * Date Attribute: Snapshot - Fiscal Month
+         * Date Attribute ID: dt_snapshotdate_timestamp.fiscalMonth
+         */,
+        SnapshotFiscalMonth: {
+            ref: idRef("dt_snapshotdate_timestamp.fiscalMonth", "attribute"),
+            identifier: "dt_snapshotdate_timestamp.fiscalMonth" /**
+             * Display Form Title: Snapshot - Fiscal Month
+             * Display Form ID: dt_snapshotdate_timestamp.fiscalMonth
+             */,
+            Default: newAttribute("dt_snapshotdate_timestamp.fiscalMonth"),
+        } /**
+         * Date Attribute: Snapshot - Fiscal Quarter
+         * Date Attribute ID: dt_snapshotdate_timestamp.fiscalQuarter
+         */,
+        SnapshotFiscalQuarter: {
+            ref: idRef("dt_snapshotdate_timestamp.fiscalQuarter", "attribute"),
+            identifier: "dt_snapshotdate_timestamp.fiscalQuarter" /**
+             * Display Form Title: Snapshot - Fiscal Quarter
+             * Display Form ID: dt_snapshotdate_timestamp.fiscalQuarter
+             */,
+            Default: newAttribute("dt_snapshotdate_timestamp.fiscalQuarter"),
+        } /**
+         * Date Attribute: Snapshot - Fiscal Year
+         * Date Attribute ID: dt_snapshotdate_timestamp.fiscalYear
+         */,
+        SnapshotFiscalYear: {
+            ref: idRef("dt_snapshotdate_timestamp.fiscalYear", "attribute"),
+            identifier: "dt_snapshotdate_timestamp.fiscalYear" /**
+             * Display Form Title: Snapshot - Fiscal Year
+             * Display Form ID: dt_snapshotdate_timestamp.fiscalYear
+             */,
+            Default: newAttribute("dt_snapshotdate_timestamp.fiscalYear"),
         } /**
          * Date Attribute: Snapshot - Hour
          * Date Attribute ID: dt_snapshotdate_timestamp.hour

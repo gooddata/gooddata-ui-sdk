@@ -285,7 +285,6 @@ describe("PluggableGeoPushpinChart", () => {
                     points: {
                         groupNearbyPoints: false,
                     },
-                    tooltipText: "/geo/attribute/displayform/uri/2",
                 },
             });
         });
@@ -369,7 +368,7 @@ describe("PluggableGeoPushpinChart", () => {
             ]);
         });
 
-        it("should generate latitude/longitude and tooltipText to properties", async () => {
+        it("should generate latitude/longitude to properties", async () => {
             const withLatitudeLongitudeSupported = dummyBackend();
             withLatitudeLongitudeSupported.capabilities.supportsSeparateLatitudeLongitudeLabels = true;
             const geoPushpinChart = createComponent({
@@ -383,7 +382,7 @@ describe("PluggableGeoPushpinChart", () => {
             expect(extendedReferencePoint.properties).toMatchSnapshot();
         });
 
-        it("should not generate latitude/longitude and tooltipText to properties when location item missing", async () => {
+        it("should not generate latitude/longitude to properties when location item missing", async () => {
             const withLatitudeLongitudeSupported = dummyBackend();
             withLatitudeLongitudeSupported.capabilities.supportsSeparateLatitudeLongitudeLabels = true;
             const geoPushpinChart = createComponent({

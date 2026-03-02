@@ -1,8 +1,13 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { defineMessages } from "react-intl";
 
+import { resolveMessages as resolveMessagesImpl } from "./presentation/localization/translations.js";
+
+export const resolveMessages = resolveMessagesImpl;
+
 export const messages = defineMessages({
+    untitled: { id: "untitled" },
     messagesDashboardSaveSuccess: { id: "messages.dashboardSaveSuccess" },
     messagesDashboardSaveFailed: { id: "messages.dashboardSaveFailed" },
     messagesExportResultStart: { id: "messages.exportResultStart" },

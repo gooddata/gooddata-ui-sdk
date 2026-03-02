@@ -2,6 +2,7 @@
 
 import { type IInsight } from "@gooddata/sdk-model";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 
@@ -55,7 +56,7 @@ export const SingleMeasure = () =>
                 visualizationUrl: "local:pie",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(13, 0, 0),
+        getScenariosGroupByIndexes(16, 0, 0),
     )();
 SingleMeasure.parameters = {
     kind: "single measure",
@@ -129,7 +130,7 @@ export const TwoMeasures = () =>
                 visualizationUrl: "local:pie",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(13, 0, 1),
+        getScenariosGroupByIndexes(16, 0, 1),
     )();
 TwoMeasures.parameters = {
     kind: "two measures",
@@ -200,7 +201,7 @@ export const SingleMeasureWithViewby = () =>
                 visualizationUrl: "local:pie",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(13, 0, 2),
+        getScenariosGroupByIndexes(16, 0, 2),
     )();
 SingleMeasureWithViewby.parameters = {
     kind: "single measure with viewBy",
@@ -304,7 +305,7 @@ export const ArithmeticMeasures = () =>
                 visualizationUrl: "local:pie",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(13, 0, 3),
+        getScenariosGroupByIndexes(16, 0, 3),
     )();
 ArithmeticMeasures.parameters = {
     kind: "arithmetic measures",

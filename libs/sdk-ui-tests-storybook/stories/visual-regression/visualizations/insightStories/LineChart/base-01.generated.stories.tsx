@@ -2,6 +2,7 @@
 
 import { type IInsight } from "@gooddata/sdk-model";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 
@@ -59,7 +60,7 @@ export const SingleMeasure = () =>
                 visualizationUrl: "local:line",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(12, 0, 0),
+        getScenariosGroupByIndexes(15, 0, 0),
     )();
 SingleMeasure.parameters = {
     kind: "single measure",
@@ -134,7 +135,7 @@ export const SingleMeasureWithTrendby = () =>
                 visualizationUrl: "local:line",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(12, 0, 1),
+        getScenariosGroupByIndexes(15, 0, 1),
     )();
 SingleMeasureWithTrendby.parameters = {
     kind: "single measure with trendBy",
@@ -209,7 +210,7 @@ export const SingleMeasureWithAndTrendby = () =>
                 visualizationUrl: "local:line",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(12, 0, 2),
+        getScenariosGroupByIndexes(15, 0, 2),
     )();
 SingleMeasureWithAndTrendby.parameters = {
     kind: "single measure with % and trendBy",
@@ -297,7 +298,7 @@ export const TwoMeasuresWithTrendby = () =>
                 visualizationUrl: "local:line",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(12, 0, 3),
+        getScenariosGroupByIndexes(15, 0, 3),
     )();
 TwoMeasuresWithTrendby.parameters = {
     kind: "two measures with trendBy",
@@ -398,7 +399,7 @@ export const TwoMeasuresWithTrendbyAndSortByMeasure = () =>
                 visualizationUrl: "local:line",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(12, 0, 4),
+        getScenariosGroupByIndexes(15, 0, 4),
     )();
 TwoMeasuresWithTrendbyAndSortByMeasure.parameters = {
     kind: "two measures with trendBy and sort by measure",
@@ -493,7 +494,7 @@ export const TwoMeasuresWithTrendbyAndSortByAttribute = () =>
                 visualizationUrl: "local:line",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(12, 0, 5),
+        getScenariosGroupByIndexes(15, 0, 5),
     )();
 TwoMeasuresWithTrendbyAndSortByAttribute.parameters = {
     kind: "two measures with trendBy and sort by attribute",
@@ -578,7 +579,7 @@ export const SingleMeasureWithTrendbyAndSegmentby = () =>
                 visualizationUrl: "local:line",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(12, 0, 6),
+        getScenariosGroupByIndexes(15, 0, 6),
     )();
 SingleMeasureWithTrendbyAndSegmentby.parameters = {
     kind: "single measure with trendBy and segmentBy",
@@ -696,7 +697,7 @@ export const ArithmeticMeasures = () =>
                 visualizationUrl: "local:line",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(12, 0, 7),
+        getScenariosGroupByIndexes(15, 0, 7),
     )();
 ArithmeticMeasures.parameters = {
     kind: "arithmetic measures",
@@ -771,7 +772,7 @@ export const WithOneMeasureAndSegmentByDate = () =>
                 visualizationUrl: "local:line",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(12, 0, 8),
+        getScenariosGroupByIndexes(15, 0, 8),
     )();
 WithOneMeasureAndSegmentByDate.parameters = {
     kind: "with one measure and segment by date",
@@ -856,7 +857,7 @@ export const WithOneMeasureAndTrendByDateAndSegmentByDate = () =>
                 visualizationUrl: "local:line",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(12, 0, 9),
+        getScenariosGroupByIndexes(15, 0, 9),
     )();
 WithOneMeasureAndTrendByDateAndSegmentByDate.parameters = {
     kind: "with one measure and trend by date and segment by date",
@@ -944,7 +945,7 @@ export const WithTwoMeasuresAndNullValues = () =>
                 visualizationUrl: "local:line",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(12, 0, 10),
+        getScenariosGroupByIndexes(15, 0, 10),
     )();
 WithTwoMeasuresAndNullValues.parameters = {
     kind: "with two measures and null values",

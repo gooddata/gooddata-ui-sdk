@@ -1,0 +1,68 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_city.id.latitude", "type": "displayForm" },
+                            "localIdentifier": "a_f_city.id.latitude"
+                        }
+                    }
+                ],
+                "localIdentifier": "location"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "alias": "Population",
+                            "definition": {
+                                "measureDefinition": {
+                                    "aggregation": "sum",
+                                    "item": { "identifier": "f_population", "type": "fact" }
+                                }
+                            },
+                            "localIdentifier": "m_f_population_sum"
+                        }
+                    }
+                ],
+                "localIdentifier": "color"
+            }
+        ],
+        "filters": [
+            {
+                "positiveAttributeFilter": {
+                    "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                    "in": { "values": ["West Coast", "East Coast"] }
+                }
+            }
+        ],
+        "identifier": "GeoPushpinChart.68fd1d32a5b1629dfd5e0a50140d751b",
+        "properties": {
+            "controls": {
+                "latitude": "f_city.id.latitude",
+                "longitude": "f_city.id.longitude",
+                "mapStyle": {
+                    "glyphs": "/geo-assets/glyphs/{fontstack}/{range}.pbf",
+                    "layers": [
+                        {
+                            "id": "background",
+                            "paint": { "background-color": "#ffffff" },
+                            "type": "background"
+                        }
+                    ],
+                    "name": "offline-minimal",
+                    "sources": {},
+                    "version": 8
+                },
+                "tooltipText": "f_city.id.cityname",
+                "viewport": { "area": "continent_na" }
+            }
+        },
+        "sorts": [],
+        "title": "GeoPushpinChart - pushpin chart-level custom gradient palette",
+        "uri": "GeoPushpinChart.68fd1d32a5b1629dfd5e0a50140d751b",
+        "visualizationUrl": "local:pushpin"
+    }
+}

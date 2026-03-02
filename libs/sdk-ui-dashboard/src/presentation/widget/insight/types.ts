@@ -25,6 +25,7 @@ import {
     type OnLoadingChanged,
 } from "@gooddata/sdk-ui";
 
+import { type ILayerTableDefinition } from "./insightToTable.js";
 import {
     type IDrillStep,
     type OnDashboardDrill,
@@ -312,6 +313,13 @@ export interface IInsightBodyProps extends Partial<IVisualizationCallbacks> {
      * It is defined when the insight is rendered in a drill dialog.
      */
     drillStep?: IDrillStep;
+
+    /**
+     * Optional precomputed per-layer table definitions for layered visualizations "show as table" rendering.
+     *
+     * @alpha
+     */
+    layerTables?: ILayerTableDefinition[];
 }
 
 ///

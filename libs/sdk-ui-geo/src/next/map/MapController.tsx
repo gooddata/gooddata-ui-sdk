@@ -11,6 +11,7 @@ import { MapRuntimeProvider, useMapRuntime } from "../context/MapRuntimeContext.
 import { useGeoAdapterContext } from "../hooks/layers/useGeoAdapterContext.js";
 import { useSyncLayersToMap } from "../hooks/layers/useSyncLayersToMap.js";
 import { useAfterRender } from "../hooks/map/useAfterRender.js";
+import { useApplyInitialViewport } from "../hooks/map/useApplyInitialViewport.js";
 import { useApplyViewportOnConfigChange } from "../hooks/map/useApplyViewportOnConfigChange.js";
 import { useMapCallbacks } from "../hooks/map/useMapCallbacks.js";
 import { useMapInitialization } from "../hooks/map/useMapInitialization.js";
@@ -22,6 +23,7 @@ import { type ILayerExecutionRecord } from "../types/props/geoChart/internal.js"
 
 export type MapControllerProps = {
     mapContainerRef: RefObject<HTMLDivElement | null>;
+    legendPanelRef?: RefObject<HTMLDivElement | null>;
     chartContainerRect: ContentRect | null;
     initialViewport: Partial<IMapViewport> | null;
     dataViewport: Partial<IMapViewport> | null;
@@ -33,6 +35,8 @@ export type MapControllerProps = {
     afterRender?: () => void;
     config: IGeoChartConfig | undefined;
     backend?: IAnalyticalBackend;
+    mapInstructionsId?: string;
+    mapCanvasTitle?: string;
 };
 
 /**
@@ -41,6 +45,7 @@ export type MapControllerProps = {
  */
 export function MapController({
     mapContainerRef,
+    legendPanelRef,
     chartContainerRect,
     initialViewport,
     dataViewport,
@@ -52,6 +57,8 @@ export function MapController({
     afterRender,
     config,
     backend,
+    mapInstructionsId,
+    mapCanvasTitle,
 }: MapControllerProps): ReactElement | null {
     const resolvedBackend = useBackend(backend);
     const { map, tooltip, isMapReady } = useMapInitialization(
@@ -59,6 +66,9 @@ export function MapController({
         config,
         initialViewport,
         resolvedBackend,
+        mapInstructionsId,
+        mapCanvasTitle,
+        legendPanelRef,
     );
     const adapterContext = useGeoAdapterContext();
 
@@ -116,6 +126,7 @@ function MapLifecycleEffects({
     const { map, isMapReady } = useMapRuntime();
 
     useMapResize(map, isMapReady, chartContainerRect, initialViewport);
+    useApplyInitialViewport(map, isMapReady, config, initialViewport);
     useApplyViewportOnConfigChange(map, isMapReady, config, dataViewport);
 
     useMapCallbacks(map, {

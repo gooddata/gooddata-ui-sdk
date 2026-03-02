@@ -2,6 +2,7 @@
 
 import { type IInsight } from "@gooddata/sdk-model";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 
@@ -65,7 +66,7 @@ export const Themed = () =>
                 visualizationUrl: "local:waterfall",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(21, 15, 0),
+        getScenariosGroupByIndexes(24, 15, 0),
     )();
 Themed.parameters = {
     kind: "themed",
@@ -161,7 +162,7 @@ export const MultiMeasuresWithThemed = () =>
                 visualizationUrl: "local:waterfall",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(21, 15, 1),
+        getScenariosGroupByIndexes(24, 15, 1),
     )();
 MultiMeasuresWithThemed.parameters = {
     kind: "multi measures with themed",
@@ -232,7 +233,7 @@ export const Font = () =>
                 visualizationUrl: "local:waterfall",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(21, 15, 2),
+        getScenariosGroupByIndexes(24, 15, 2),
     )();
 Font.parameters = {
     kind: "font",
@@ -328,7 +329,7 @@ export const MultiMeasuresWithFont = () =>
                 visualizationUrl: "local:waterfall",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(21, 15, 3),
+        getScenariosGroupByIndexes(24, 15, 3),
     )();
 MultiMeasuresWithFont.parameters = {
     kind: "multi measures with font",

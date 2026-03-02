@@ -2,6 +2,7 @@
 
 import { type IInsight } from "@gooddata/sdk-model";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 
@@ -142,7 +143,7 @@ export const TwoMeasuresWithSingleRowAttrSortedByFirstMeasure = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(15, 10, 2),
+        getScenariosGroupByIndexes(18, 10, 2),
     )();
 TwoMeasuresWithSingleRowAttrSortedByFirstMeasure.parameters = {
     kind: "two measures with single row attr sorted by first measure",
@@ -291,7 +292,7 @@ export const TwoMeasuresWithSingleRowAttrSortedBySecondMeasure = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(15, 10, 3),
+        getScenariosGroupByIndexes(18, 10, 3),
     )();
 TwoMeasuresWithSingleRowAttrSortedBySecondMeasure.parameters = {
     kind: "two measures with single row attr sorted by second measure",

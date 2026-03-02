@@ -65,6 +65,9 @@ export function createAttributeFilterHandlerStore(
     const displayFormRef = filterObjRef(context.attributeFilter);
     const localIdentifier = filterLocalIdentifier(context.attributeFilter);
     const elements = filterAttributeElements(context.attributeFilter);
+    if (!elements) {
+        throw new Error("Attribute filter must be a positive or negative attribute filter with selection");
+    }
     const elementsForm = isAttributeElementsByValue(elements) ? "values" : "uris";
     const elementKeys = isAttributeElementsByValue(elements) ? elements.values : elements.uris;
     const isInverted = isNegativeAttributeFilter(context.attributeFilter);

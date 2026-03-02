@@ -1,0 +1,126 @@
+[
+    {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_city.id.latitude", "type": "displayForm" },
+                            "localIdentifier": "a_f_city.id.latitude"
+                        }
+                    }
+                ],
+                "localIdentifier": "location"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "aggregation": "sum",
+                                    "item": { "identifier": "f_population", "type": "fact" }
+                                }
+                            },
+                            "localIdentifier": "m_f_population_sum"
+                        }
+                    }
+                ],
+                "localIdentifier": "size"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                        "type": "measure"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                        }
+                    }
+                ],
+                "localIdentifier": "color"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                            "localIdentifier": "a_f_owner.region_id"
+                        }
+                    }
+                ],
+                "localIdentifier": "segment"
+            }
+        ],
+        "scenario": "pushpin size color gradient and segment",
+        "vis": "GeoPushpinChart"
+    },
+    {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_city.id.latitude", "type": "displayForm" },
+                            "localIdentifier": "a_f_city.id.latitude"
+                        }
+                    }
+                ],
+                "localIdentifier": "location"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "aggregation": "sum",
+                                    "item": { "identifier": "f_population", "type": "fact" }
+                                }
+                            },
+                            "localIdentifier": "m_f_population_sum"
+                        }
+                    }
+                ],
+                "localIdentifier": "size"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                        "type": "measure"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                        }
+                    }
+                ],
+                "localIdentifier": "color"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                            "localIdentifier": "a_f_owner.region_id"
+                        }
+                    }
+                ],
+                "localIdentifier": "segment"
+            }
+        ],
+        "scenario": "legend size color-scale and category",
+        "vis": "GeoPushpinChart"
+    }
+]

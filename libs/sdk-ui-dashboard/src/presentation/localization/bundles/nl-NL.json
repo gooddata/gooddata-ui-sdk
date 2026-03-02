@@ -762,7 +762,7 @@
     "kdaDialog.dialog.keyDrives.button.trendUp": "Hoger",
     "kdaDialog.dialog.keyDrives.button.trendDown": "Lager",
     "kdaDialog.dialog.keyDrives.button.trendAll": "Alle",
-    "kdaDialog.dialog.keyDrives.drivers": "{count} driver{count, plural, one {} other {s}}",
+    "kdaDialog.dialog.keyDrives.drivers": "{count} {count, plural, one {driver} other {drivers}}",
     "kdaDialog.dialog.keyDrives.overview.summary.home": "Samenvatting",
     "kdaDialog.dialog.keyDrives.overview.summary.home.tooltip": "Ga naar Samenvatting analyse",
     "kdaDialog.dialog.keyDrives.overview.summary.breadcrumb.label": "Navigatie voor analyse van belangrijkste drijfveren",

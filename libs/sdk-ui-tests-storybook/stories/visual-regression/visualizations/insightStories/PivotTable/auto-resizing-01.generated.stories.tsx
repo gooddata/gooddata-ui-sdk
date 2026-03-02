@@ -2,6 +2,7 @@
 
 import { type IInsight } from "@gooddata/sdk-model";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 
@@ -55,7 +56,7 @@ export const WithColumnAttributesOnlyAndAutoResizing = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 0, 0),
+        getScenariosGroupByIndexes(17, 0, 0),
     )();
 WithColumnAttributesOnlyAndAutoResizing.parameters = {
     kind: "with column attributes only and auto-resizing",
@@ -159,7 +160,7 @@ export const WithSmallPageAndAutoResizing = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 0, 1),
+        getScenariosGroupByIndexes(17, 0, 1),
     )();
 WithSmallPageAndAutoResizing.parameters = {
     kind: "with small page and auto-resizing",
@@ -248,7 +249,7 @@ export const WithTwoMeasuresAndRowAttributeWithAutoResizing = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 0, 2),
+        getScenariosGroupByIndexes(17, 0, 2),
     )();
 WithTwoMeasuresAndRowAttributeWithAutoResizing.parameters = {
     kind: "with two measures and row attribute with auto-resizing",
@@ -337,7 +338,7 @@ export const WithTwoMeasuresAndRowAttributeWithAutoResizingAndGrowToFit = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 0, 3),
+        getScenariosGroupByIndexes(17, 0, 3),
     )();
 WithTwoMeasuresAndRowAttributeWithAutoResizingAndGrowToFit.parameters = {
     kind: "with two measures and row attribute with auto-resizing and grow to fit",
@@ -486,7 +487,7 @@ export const WithTwoMeasuresGrandTotalsAndSubtotalsWithAutoResizing = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 0, 4),
+        getScenariosGroupByIndexes(17, 0, 4),
     )();
 WithTwoMeasuresGrandTotalsAndSubtotalsWithAutoResizing.parameters = {
     kind: "with two measures, grand totals and subtotals with auto-resizing",
@@ -635,7 +636,7 @@ export const WithTwoMeasuresGrandTotalsAndSubtotalsWithAutoResizingAndGrowToFit 
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 0, 5),
+        getScenariosGroupByIndexes(17, 0, 5),
     )();
 WithTwoMeasuresGrandTotalsAndSubtotalsWithAutoResizingAndGrowToFit.parameters = {
     kind: "with two measures, grand totals and subtotals with auto-resizing and grow to fit",

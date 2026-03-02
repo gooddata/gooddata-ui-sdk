@@ -13,8 +13,10 @@ import {
     filterObjRef,
     isAbsoluteDateFilter,
     isAllTimeDateFilter,
-    isAttributeFilter,
+    isArbitraryAttributeFilter,
+    isAttributeFilterWithSelection,
     isDashboardAttributeFilter,
+    isMatchAttributeFilter,
     isNegativeAttributeFilter,
     isRelativeBoundedDateFilter,
     isRelativeDateFilter,
@@ -146,12 +148,35 @@ export function dashboardFilterToFilterContextItem(
     filter: IDashboardFilter,
     keepDatasets: boolean,
 ): FilterContextItem {
-    if (isAttributeFilter(filter)) {
+    if (isAttributeFilterWithSelection(filter)) {
         return {
             attributeFilter: {
                 negativeSelection: isNegativeAttributeFilter(filter),
                 displayForm: filterObjRef(filter),
                 attributeElements: filterAttributeElements(filter),
+                selectionMode: "multi",
+                localIdentifier: filterLocalIdentifier(filter),
+            },
+        };
+    } else if (isArbitraryAttributeFilter(filter)) {
+        return {
+            attributeFilter: {
+                negativeSelection: filter.arbitraryAttributeFilter.negativeSelection ?? false,
+                displayForm: filterObjRef(filter),
+                attributeElements: { values: filter.arbitraryAttributeFilter.values },
+                selectionMode: "multi",
+                localIdentifier: filterLocalIdentifier(filter),
+            },
+        };
+    } else if (isMatchAttributeFilter(filter)) {
+        // TODO INE: add support for match filters in CQ-2015
+        // operator/caseSensitive are not representable in FilterContextItem and are intentionally dropped here.
+
+        return {
+            attributeFilter: {
+                negativeSelection: filter.matchAttributeFilter.negativeSelection ?? false,
+                displayForm: filterObjRef(filter),
+                attributeElements: { values: [filter.matchAttributeFilter.literal] },
                 selectionMode: "multi",
                 localIdentifier: filterLocalIdentifier(filter),
             },

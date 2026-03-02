@@ -762,7 +762,7 @@
     "kdaDialog.dialog.keyDrives.button.trendUp": "Artır",
     "kdaDialog.dialog.keyDrives.button.trendDown": "Azalt",
     "kdaDialog.dialog.keyDrives.button.trendAll": "Tümü",
-    "kdaDialog.dialog.keyDrives.drivers": "{count} sürücü{count, plural, one {} other {ler}}",
+    "kdaDialog.dialog.keyDrives.drivers": "{count} {count, plural, one {sürücü} other {sürücüler}}",
     "kdaDialog.dialog.keyDrives.overview.summary.home": "Özet",
     "kdaDialog.dialog.keyDrives.overview.summary.home.tooltip": "Analiz özetine git",
     "kdaDialog.dialog.keyDrives.overview.summary.breadcrumb.label": "Anahtar sürücü analizi gezintisi",

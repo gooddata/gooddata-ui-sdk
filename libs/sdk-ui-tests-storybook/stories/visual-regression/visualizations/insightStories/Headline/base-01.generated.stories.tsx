@@ -2,6 +2,7 @@
 
 import { type IInsight } from "@gooddata/sdk-model";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 
@@ -55,7 +56,7 @@ export const MultiMeasuresWithOnlyPrimaryMeasure = () =>
                 visualizationUrl: "local:headline",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(10, 0, 0),
+        getScenariosGroupByIndexes(13, 0, 0),
     )();
 MultiMeasuresWithOnlyPrimaryMeasure.parameters = {
     kind: "multi measures with only primary measure",
@@ -135,7 +136,7 @@ export const MultiMeasuresWithTwoMeasures = () =>
                 visualizationUrl: "local:headline",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(10, 0, 1),
+        getScenariosGroupByIndexes(13, 0, 1),
     )();
 MultiMeasuresWithTwoMeasures.parameters = {
     kind: "multi measures with two measures",
@@ -224,7 +225,7 @@ export const MultiMeasuresWithThreeMeasures = () =>
                 visualizationUrl: "local:headline",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(10, 0, 2),
+        getScenariosGroupByIndexes(13, 0, 2),
     )();
 MultiMeasuresWithThreeMeasures.parameters = {
     kind: "multi measures with three measures",
@@ -307,7 +308,7 @@ export const MultiMeasuresWithTwoMeasuresOnePop = () =>
                 visualizationUrl: "local:headline",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(10, 0, 3),
+        getScenariosGroupByIndexes(13, 0, 3),
     )();
 MultiMeasuresWithTwoMeasuresOnePop.parameters = {
     kind: "multi measures with two measures one PoP",
@@ -387,7 +388,7 @@ export const MultiMeasuresWithTwoMeasuresWithGermanSeparators = () =>
                 visualizationUrl: "local:headline",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(10, 0, 4),
+        getScenariosGroupByIndexes(13, 0, 4),
     )();
 MultiMeasuresWithTwoMeasuresWithGermanSeparators.parameters = {
     kind: "multi measures with two measures with german separators",
@@ -471,7 +472,7 @@ export const TwoMeasuresWithComparison = () =>
                 visualizationUrl: "local:headline",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(10, 0, 5),
+        getScenariosGroupByIndexes(13, 0, 5),
     )();
 TwoMeasuresWithComparison.parameters = {
     kind: "two measures with comparison",

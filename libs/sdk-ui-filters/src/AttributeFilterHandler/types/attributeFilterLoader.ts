@@ -1,4 +1,5 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { type IAttributeFilter } from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
@@ -46,8 +47,9 @@ export interface IAttributeFilterLoader extends IAttributeLoader, IAttributeElem
      * You can provide a correlation that will be included in the payload of all callbacks fired as a result of calling this method.
      *
      * @param correlation - correlation that will be included in all callbacks fired by this method
+     * @param skipElementsLoading - when true, only loads attribute metadata (skips elements, selection, total count)
      */
-    init(correlation?: Correlation): void;
+    init(correlation?: Correlation, skipElementsLoading?: boolean): void;
 
     /**
      * Returns the current status of the initialization.

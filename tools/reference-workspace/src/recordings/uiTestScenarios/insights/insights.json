@@ -2668,6 +2668,241 @@
         "scenarioName": "single measure with viewBy sorted by attribute",
         "visName": "FunnelChart"
     },
+    "GeoAreaChart.01c882b5e1bcce4a67b78ca3b1d404c1": {
+        "comment": "Auto-generated insight for test scenario GeoAreaChart - area with color attribute.",
+        "scenarioName": "area with color attribute",
+        "visName": "GeoAreaChart"
+    },
+    "GeoAreaChart.0be13b5cb57cb3b17e9def4db8e2a53f": {
+        "comment": "Auto-generated insight for test scenario GeoAreaChart - area viewport world.",
+        "scenarioName": "area viewport world",
+        "visName": "GeoAreaChart"
+    },
+    "GeoAreaChart.19cfcb15d8749265d769ae87796ffa3f": {
+        "comment": "Auto-generated insight for test scenario GeoAreaChart - area with color and segment.",
+        "scenarioName": "area with color and segment",
+        "visName": "GeoAreaChart"
+    },
+    "GeoAreaChart.251227c8bb20949dc82b4559ea681c44": {
+        "comment": "Auto-generated insight for test scenario GeoAreaChart - area legend position bottom.",
+        "scenarioName": "area legend position bottom",
+        "visName": "GeoAreaChart"
+    },
+    "GeoAreaChart.3985ba32dfa5ff2a946c7a49c5b837b2": {
+        "comment": "Auto-generated insight for test scenario GeoAreaChart - area viewport north america.",
+        "scenarioName": "area viewport north america",
+        "visName": "GeoAreaChart"
+    },
+    "GeoAreaChart.4fe9f6ab697116f56ab06b3ed92a1dcd": {
+        "comment": "Auto-generated insight for test scenario GeoAreaChart - area with color gradient.",
+        "scenarioName": "area with color gradient",
+        "visName": "GeoAreaChart"
+    },
+    "GeoAreaChart.55c40cdb5c0ae31c93c348da5a9e4c01": {
+        "comment": "Auto-generated insight for test scenario GeoAreaChart - area legend with selection.",
+        "scenarioName": "area legend with selection",
+        "visName": "GeoAreaChart"
+    },
+    "GeoAreaChart.60b110131a437a26781d095391e04b0a": {
+        "comment": "Auto-generated insight for test scenario GeoAreaChart - area chart-level custom gradient palette.",
+        "scenarioName": "area chart-level custom gradient palette",
+        "visName": "GeoAreaChart"
+    },
+    "GeoAreaChart.669bdd0538fb74c508a22f2883810c88": {
+        "comment": "Auto-generated insight for test scenario GeoAreaChart - area legend with category and color-scale.",
+        "scenarioName": "area legend with category and color-scale",
+        "visName": "GeoAreaChart"
+    },
+    "GeoAreaChart.927eaba7ad215549e34c3d5748f44063": {
+        "comment": "Auto-generated insight for test scenario GeoAreaChart - area legend position left.",
+        "scenarioName": "area legend position left",
+        "visName": "GeoAreaChart"
+    },
+    "GeoAreaChart.a6329e977538ade1062a41e4372e9dba": {
+        "comment": "Auto-generated insight for test scenario GeoAreaChart - area with color attribute categories.",
+        "scenarioName": "area with color attribute categories",
+        "visName": "GeoAreaChart"
+    },
+    "GeoAreaChart.d2ee210a0efe88c32a329224909a69c8": {
+        "comment": "Auto-generated insight for test scenario GeoAreaChart - area legend position right.",
+        "scenarioName": "area legend position right",
+        "visName": "GeoAreaChart"
+    },
+    "GeoAreaChart.d9721f4cb94e76b8c4a6ece58db3f98d": {
+        "comment": "Auto-generated insight for test scenario GeoAreaChart - area legend with color-scale only.",
+        "scenarioName": "area legend with color-scale only",
+        "visName": "GeoAreaChart"
+    },
+    "GeoAreaChart.f71b96374c8601e0c843987d56dd8350": {
+        "comment": "Auto-generated insight for test scenario GeoAreaChart - area legend position top.",
+        "scenarioName": "area legend position top",
+        "visName": "GeoAreaChart"
+    },
+    "GeoAreaChart.fd2f906e5c8a51c9734bc745c3cc5fa1": {
+        "comment": "Auto-generated insight for test scenario GeoAreaChart - area chart-level custom segment mapping.",
+        "scenarioName": "area chart-level custom segment mapping",
+        "visName": "GeoAreaChart"
+    },
+    "GeoChart.1453572fe8d171ddfb09ce522255fc9a": {
+        "comment": "Auto-generated insight for test scenario GeoChart - multi-layer area override only.",
+        "scenarioName": "multi-layer area override only",
+        "visName": "GeoChart"
+    },
+    "GeoChart.1799ddde88c93b48c5b0b5a893beadbf": {
+        "comment": "Auto-generated insight for test scenario GeoChart - multi-layer both layer overrides with conflicting chart fallback.",
+        "scenarioName": "multi-layer both layer overrides with conflicting chart fallback",
+        "visName": "GeoChart"
+    },
+    "GeoChart.1b1e9fb7694fa25de62c64b8fab0df98": {
+        "comment": "Auto-generated insight for test scenario GeoChart - pushpin layer-level segment mapping overrides chart-level.",
+        "scenarioName": "pushpin layer-level segment mapping overrides chart-level",
+        "visName": "GeoChart"
+    },
+    "GeoChart.408635f5315222f713c811fe94582c9b": {
+        "comment": "Auto-generated insight for test scenario GeoChart - area primary with pushpin overlay.",
+        "scenarioName": "area primary with pushpin overlay",
+        "visName": "GeoChart"
+    },
+    "GeoChart.52df9fa11a3f1f3589d2dcd4d4c14d00": {
+        "comment": "Auto-generated insight for test scenario GeoChart - pushpin layer-level gradient palette overrides chart-level.",
+        "scenarioName": "pushpin layer-level gradient palette overrides chart-level",
+        "visName": "GeoChart"
+    },
+    "GeoChart.6978d23e9fac3f9b74ecd3f89c7374cd": {
+        "comment": "Auto-generated insight for test scenario GeoChart - multi-layer both inherit chart-level colors.",
+        "scenarioName": "multi-layer both inherit chart-level colors",
+        "visName": "GeoChart"
+    },
+    "GeoChart.781c89d454c9a9ce193902883aee7549": {
+        "comment": "Auto-generated insight for test scenario GeoChart - multi-layer pushpin override only.",
+        "scenarioName": "multi-layer pushpin override only",
+        "visName": "GeoChart"
+    },
+    "GeoChart.82bc11be13ff0ba30b513983ff398046": {
+        "comment": "Auto-generated insight for test scenario GeoChart - area layer-level gradient palette overrides chart-level.",
+        "scenarioName": "area layer-level gradient palette overrides chart-level",
+        "visName": "GeoChart"
+    },
+    "GeoChart.85d85b6bb96c8a2bcbbef992e5b4871b": {
+        "comment": "Auto-generated insight for test scenario GeoChart - multi-layer per-layer segment mapping override.",
+        "scenarioName": "multi-layer per-layer segment mapping override",
+        "visName": "GeoChart"
+    },
+    "GeoChart.d91bd2fd68c58d0b2ea9b057476b1a38": {
+        "comment": "Auto-generated insight for test scenario GeoChart - area with non-clustered pushpin overlay.",
+        "scenarioName": "area with non-clustered pushpin overlay",
+        "visName": "GeoChart"
+    },
+    "GeoChart.deea35ee0ff36f4286ba9c898047d4f6": {
+        "comment": "Auto-generated insight for test scenario GeoChart - area layer-level segment mapping overrides chart-level.",
+        "scenarioName": "area layer-level segment mapping overrides chart-level",
+        "visName": "GeoChart"
+    },
+    "GeoChart.e47963abcc763a71caa697cff2d567fd": {
+        "comment": "Auto-generated insight for test scenario GeoChart - area primary with two pushpin overlays.",
+        "scenarioName": "area primary with two pushpin overlays",
+        "visName": "GeoChart"
+    },
+    "GeoChart.eafdff297dd058f0f113ff6ba0ecc095": {
+        "comment": "Auto-generated insight for test scenario GeoChart - multi-layer chart-level segment mapping.",
+        "scenarioName": "multi-layer chart-level segment mapping",
+        "visName": "GeoChart"
+    },
+    "GeoChart.ee8396cc7124a2c1c2732d0937591270": {
+        "comment": "Auto-generated insight for test scenario GeoChart - area with clustered pushpin overlay.",
+        "scenarioName": "area with clustered pushpin overlay",
+        "visName": "GeoChart"
+    },
+    "GeoPushpinChart.012f83c3798c79404e324c0b2b9fb593": {
+        "comment": "Auto-generated insight for test scenario GeoPushpinChart - legend position left.",
+        "scenarioName": "legend position left",
+        "visName": "GeoPushpinChart"
+    },
+    "GeoPushpinChart.21af35fd7d32645842d4a26cbfa49507": {
+        "comment": "Auto-generated insight for test scenario GeoPushpinChart - legend position bottom.",
+        "scenarioName": "legend position bottom",
+        "visName": "GeoPushpinChart"
+    },
+    "GeoPushpinChart.2a4bfddafdaf950a22120387c5a9ef81": {
+        "comment": "Auto-generated insight for test scenario GeoPushpinChart - latitude/longitude with color attribute.",
+        "scenarioName": "latitude/longitude with color attribute",
+        "visName": "GeoPushpinChart"
+    },
+    "GeoPushpinChart.303408937f041d54fe38a62b727c0ee0": {
+        "comment": "Auto-generated insight for test scenario GeoPushpinChart - latitude/longitude with size and color.",
+        "scenarioName": "latitude/longitude with size and color",
+        "visName": "GeoPushpinChart"
+    },
+    "GeoPushpinChart.33d4cef846017327833cb10e0fe49242": {
+        "comment": "Auto-generated insight for test scenario GeoPushpinChart - viewport world.",
+        "scenarioName": "viewport world",
+        "visName": "GeoPushpinChart"
+    },
+    "GeoPushpinChart.3cab1f3562ec39e9c183c588ea15d34c": {
+        "comment": "Auto-generated insight for test scenario GeoPushpinChart - viewport europe.",
+        "scenarioName": "viewport europe",
+        "visName": "GeoPushpinChart"
+    },
+    "GeoPushpinChart.4db9cbbbb5ae89d41b7623d3f5ad8647": {
+        "comment": "Auto-generated insight for test scenario GeoPushpinChart - legend position top.",
+        "scenarioName": "legend position top",
+        "visName": "GeoPushpinChart"
+    },
+    "GeoPushpinChart.4ef0c8d4ea8a4ca22fdc8e0895b0bbb7": {
+        "comment": "Auto-generated insight for test scenario GeoPushpinChart - latitude/longitude with color and segment.",
+        "scenarioName": "latitude/longitude with color and segment",
+        "visName": "GeoPushpinChart"
+    },
+    "GeoPushpinChart.5834d3468e0d2141b08c9e44ecaa6697": {
+        "comment": "Auto-generated insight for test scenario GeoPushpinChart - non-clustered points.",
+        "scenarioName": "non-clustered points",
+        "visName": "GeoPushpinChart"
+    },
+    "GeoPushpinChart.68fd1d32a5b1629dfd5e0a50140d751b": {
+        "comment": "Auto-generated insight for test scenario GeoPushpinChart - pushpin chart-level custom gradient palette.",
+        "scenarioName": "pushpin chart-level custom gradient palette",
+        "visName": "GeoPushpinChart"
+    },
+    "GeoPushpinChart.8808def0b840c0eb08691642eda144bb": {
+        "comment": "Auto-generated insight for test scenario GeoPushpinChart - legend size color-scale and category.",
+        "scenarioName": "legend size color-scale and category",
+        "visName": "GeoPushpinChart"
+    },
+    "GeoPushpinChart.991908110406152b29c48a3e342cd2b0": {
+        "comment": "Auto-generated insight for test scenario GeoPushpinChart - legend category edge case with empty regions.",
+        "scenarioName": "legend category edge case with empty regions",
+        "visName": "GeoPushpinChart"
+    },
+    "GeoPushpinChart.a424eaf366a9dd2a7a0a38398d4994db": {
+        "comment": "Auto-generated insight for test scenario GeoPushpinChart - pushpin chart-level custom segment mapping.",
+        "scenarioName": "pushpin chart-level custom segment mapping",
+        "visName": "GeoPushpinChart"
+    },
+    "GeoPushpinChart.b27a30a10ad266e58dab1fec42820185": {
+        "comment": "Auto-generated insight for test scenario GeoPushpinChart - pushpin size color gradient and segment.",
+        "scenarioName": "pushpin size color gradient and segment",
+        "visName": "GeoPushpinChart"
+    },
+    "GeoPushpinChart.b9d042ecf17934f9c0471ccb4b9a9d5f": {
+        "comment": "Auto-generated insight for test scenario GeoPushpinChart - legend position right.",
+        "scenarioName": "legend position right",
+        "visName": "GeoPushpinChart"
+    },
+    "GeoPushpinChart.c8ad5ce0355f4921ba449ab37fc10d48": {
+        "comment": "Auto-generated insight for test scenario GeoPushpinChart - legend with selection.",
+        "scenarioName": "legend with selection",
+        "visName": "GeoPushpinChart"
+    },
+    "GeoPushpinChart.d536b0836471901d33dcd7d55c459e2b": {
+        "comment": "Auto-generated insight for test scenario GeoPushpinChart - clustered points.",
+        "scenarioName": "clustered points",
+        "visName": "GeoPushpinChart"
+    },
+    "GeoPushpinChart.df1a1a5f15158f01c3ab2ba29ee59fc8": {
+        "comment": "Auto-generated insight for test scenario GeoPushpinChart - viewport north america with segment.",
+        "scenarioName": "viewport north america with segment",
+        "visName": "GeoPushpinChart"
+    },
     "Headline.07812c19181ddb13069cad9383766cde": {
         "comment": "Auto-generated insight for test scenario Headline - comparison with default config.",
         "scenarioName": "comparison with default config",

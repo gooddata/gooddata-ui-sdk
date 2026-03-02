@@ -2,6 +2,7 @@
 
 import { type IInsight } from "@gooddata/sdk-model";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 
@@ -63,7 +64,7 @@ export const XAxisMeasure = () =>
                 visualizationUrl: "local:scatter",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(19, 0, 0),
+        getScenariosGroupByIndexes(22, 0, 0),
     )();
 XAxisMeasure.parameters = {
     kind: "x axis measure",
@@ -142,7 +143,7 @@ export const XAxisMeasureAndAttribute = () =>
                 visualizationUrl: "local:scatter",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(19, 0, 1),
+        getScenariosGroupByIndexes(22, 0, 1),
     )();
 XAxisMeasureAndAttribute.parameters = {
     kind: "x axis measure and attribute",
@@ -221,7 +222,7 @@ export const YAxisMeasureAndAttribute = () =>
                 visualizationUrl: "local:scatter",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(19, 0, 2),
+        getScenariosGroupByIndexes(22, 0, 2),
     )();
 YAxisMeasureAndAttribute.parameters = {
     kind: "y axis measure and attribute",
@@ -314,7 +315,7 @@ export const XAndYAxisMeasuresAndAttribute = () =>
                 visualizationUrl: "local:scatter",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(19, 0, 3),
+        getScenariosGroupByIndexes(22, 0, 3),
     )();
 XAndYAxisMeasuresAndAttribute.parameters = {
     kind: "x and y axis measures and attribute",
@@ -417,7 +418,7 @@ export const XAndYAxisMeasuresAttributeAndSegmentation = () =>
                 visualizationUrl: "local:scatter",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(19, 0, 4),
+        getScenariosGroupByIndexes(22, 0, 4),
     )();
 XAndYAxisMeasuresAttributeAndSegmentation.parameters = {
     kind: "x and y axis measures, attribute and segmentation",
@@ -517,7 +518,7 @@ export const XAndYAxisMeasuresAndAttributeWithAttrSorting = () =>
                 visualizationUrl: "local:scatter",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(19, 0, 5),
+        getScenariosGroupByIndexes(22, 0, 5),
     )();
 XAndYAxisMeasuresAndAttributeWithAttrSorting.parameters = {
     kind: "x and y axis measures and attribute with attr sorting",
@@ -610,7 +611,7 @@ export const XAndYAxisMeasuresAndAttributeWithNullsInData = () =>
                 visualizationUrl: "local:scatter",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(19, 0, 6),
+        getScenariosGroupByIndexes(22, 0, 6),
     )();
 XAndYAxisMeasuresAndAttributeWithNullsInData.parameters = {
     kind: "x and y axis measures and attribute with nulls in data",

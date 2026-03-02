@@ -7,7 +7,11 @@ import {
     type IAutomationAlertRelativeCondition,
     type IAutomationAnomalyDetectionCondition,
     type IAutomationMetadataObject,
+    type ICatalogDateDataset,
     type IDataSetMetadataObject,
+    type IInsight,
+    newInsightDefinition,
+    newMeasureValueFilter,
 } from "@gooddata/sdk-model";
 import { createIntlMock } from "@gooddata/sdk-ui-ext/internal";
 
@@ -39,6 +43,7 @@ import {
     isChangeOrDifferenceOperator,
     isDifferenceOperator,
 } from "../utils/guards.js";
+import { getSupportedInsightMeasuresByInsight } from "../utils/items.js";
 import {
     transformAlertByAnomalyDetection,
     transformAlertByAttribute,
@@ -486,7 +491,7 @@ describe("alert transforms", () => {
                         title: "metric_pp_1",
                         definition: {
                             previousPeriodMeasure: {
-                                measureIdentifier: "localMetric2",
+                                measureIdentifier: "localPPMetric2",
                                 dateDataSets: [{ dataSet: { uri: "dateDataSetUri" }, periodsAgo: 1 }],
                             },
                         },
@@ -523,7 +528,7 @@ describe("alert transforms", () => {
                         title: "metric_pp_1",
                         definition: {
                             previousPeriodMeasure: {
-                                measureIdentifier: "localMetric2",
+                                measureIdentifier: "localPPMetric2",
                                 dateDataSets: [{ dataSet: { uri: "dateDataSetUri" }, periodsAgo: 1 }],
                             },
                         },
@@ -561,7 +566,7 @@ describe("alert transforms", () => {
                         title: "metric_pp_1",
                         definition: {
                             previousPeriodMeasure: {
-                                measureIdentifier: "localMetric2",
+                                measureIdentifier: "localPPMetric1",
                                 dateDataSets: [{ dataSet: { uri: "dateDataSetUri" }, periodsAgo: 1 }],
                             },
                         },
@@ -1590,6 +1595,33 @@ describe("alert transforms", () => {
             });
             expect(res1.metadata?.filters).toEqual(["relativeDateFilter_date_GDC.time.quarter"]);
         });
+
+        it("includes comparator measure referenced by measure value filter in auxMeasures", () => {
+            const mvf = newMeasureValueFilter("localMetric_pp_1", "GREATER_THAN", 0);
+            const alertWithMvf: IAutomationMetadataObject = {
+                ...baseComparison,
+                alert: {
+                    ...baseComparison.alert!,
+                    execution: {
+                        ...baseComparison.alert!.execution,
+                        filters: [mvf],
+                        measures: [],
+                        auxMeasures: [],
+                        attributes: [],
+                    },
+                },
+            };
+
+            const res = transformAlertExecutionByMetric(
+                allMetrics,
+                alertWithMvf,
+                alertWithMvf.alert!.condition as unknown as IAutomationAlertCondition,
+                previousPeriodMetric,
+                undefined,
+            );
+
+            expect(res.execution.auxMeasures).toContain(previousPeriodMetric.comparators[0].measure);
+        });
     });
 
     describe("getter utils", () => {
@@ -1943,6 +1975,192 @@ describe("alert transforms", () => {
         it("isAlertValueDefined, baseAnomalyDetection", () => {
             const res = isAlertValueDefined(baseAnomalyDetection.alert);
             expect(res).toEqual(true);
+        });
+    });
+
+    describe("getSupportedInsightMeasuresByInsight", () => {
+        const dateDatasets: ICatalogDateDataset[] = [
+            {
+                type: "dateDataset",
+                relevance: 0,
+                dataSet: {
+                    type: "dataSet",
+                    ref: {
+                        identifier: "dateDataSetUri",
+                        type: "dataSet",
+                    },
+                    id: "dateDataSetUri",
+                    title: "Date",
+                    description: "",
+                    uri: "dateDataSetUri",
+                    production: true,
+                    unlisted: false,
+                    deprecated: false,
+                },
+                dateAttributes: [
+                    {
+                        granularity: "GDC.time.year",
+                        attribute: {
+                            type: "attribute",
+                            ref: {
+                                identifier: "date.year",
+                                type: "attribute",
+                            },
+                            id: "date.year",
+                            uri: "date.year",
+                            title: "Date - Year",
+                            description: "Year",
+                            tags: ["Date"],
+                            production: true,
+                            unlisted: false,
+                            deprecated: false,
+                            displayForms: [
+                                {
+                                    type: "displayForm",
+                                    ref: {
+                                        identifier: "date.year",
+                                        type: "displayForm",
+                                    },
+                                    id: "date.year",
+                                    uri: "date.year",
+                                    title: "Date - Year",
+                                    description: "Year",
+                                    tags: ["Date"],
+                                    attribute: {
+                                        identifier: "date.year",
+                                        type: "attribute",
+                                    },
+                                    isPrimary: true,
+                                    isDefault: false,
+                                    production: true,
+                                    unlisted: false,
+                                    deprecated: false,
+                                },
+                            ],
+                        },
+                        defaultDisplayForm: {
+                            type: "displayForm",
+                            ref: {
+                                identifier: "date.year",
+                                type: "displayForm",
+                            },
+                            id: "date.year",
+                            uri: "date.year",
+                            title: "Date - Year",
+                            description: "Year",
+                            tags: ["Date"],
+                            attribute: {
+                                identifier: "date.year",
+                                type: "attribute",
+                            },
+                            isPrimary: true,
+                            isDefault: false,
+                            production: true,
+                            unlisted: false,
+                            deprecated: false,
+                        },
+                    },
+                ],
+            },
+        ];
+
+        it("should return measures for headline insight with comparison enabled", () => {
+            const insight = newInsightDefinition("local:headline", (b) =>
+                b
+                    .title("Headline")
+                    .buckets([
+                        {
+                            localIdentifier: "measures",
+                            items: [
+                                previousPeriodMetric1.measure,
+                                previousPeriodMetric1.comparators[0].measure,
+                            ],
+                        },
+                    ])
+                    .filters([
+                        {
+                            relativeDateFilter: {
+                                dataSet: {
+                                    identifier: "dateDataSetUri",
+                                    type: "dataSet",
+                                },
+                                granularity: "GDC.time.year",
+                                from: 0,
+                                to: 0,
+                            },
+                        },
+                    ]),
+            );
+            const measures = getSupportedInsightMeasuresByInsight(insight as IInsight, dateDatasets, true);
+            expect(measures).toHaveLength(1);
+            expect(measures[0].measure.measure.localIdentifier).toBe(
+                previousPeriodMetric1.measure.measure.localIdentifier,
+            );
+            // It should have 2 generated comparators (PP and PoP) because headline always supports comparison
+            expect(measures[0].comparators).toHaveLength(2);
+            expect(measures[0].comparators[0].dataset?.id).toBe(undefined);
+            expect(measures[0].comparators[0].granularity).toBe(undefined);
+            expect(measures[0].comparators[1].dataset?.id).toBe("dateDataSetUri");
+            expect(measures[0].comparators[1].granularity).toBe("GDC.time.year");
+        });
+
+        it("should return measures for bar insight without comparison when canManageComparison is false", () => {
+            const insight = newInsightDefinition("local:bar", (b) =>
+                b.title("Bar").buckets([{ localIdentifier: "measures", items: [simpleMetric1.measure] }]),
+            );
+            const measures = getSupportedInsightMeasuresByInsight(insight as IInsight, dateDatasets, false);
+            expect(measures).toHaveLength(1);
+            expect(measures[0].comparators).toHaveLength(0);
+        });
+
+        it("should return measures with comparators for bar insight when comparison is enabled and valid buckets exist", () => {
+            const insight = newInsightDefinition("local:bar", (b) =>
+                b
+                    .title("Bar")
+                    .buckets([
+                        {
+                            localIdentifier: "measures",
+                            items: [
+                                previousPeriodMetric1.measure,
+                                previousPeriodMetric1.comparators[0].measure,
+                            ],
+                        },
+                    ])
+                    .filters([
+                        {
+                            relativeDateFilter: {
+                                dataSet: {
+                                    identifier: "dateDataSetUri",
+                                    type: "dataSet",
+                                },
+                                granularity: "GDC.time.year",
+                                from: 0,
+                                to: 0,
+                            },
+                        },
+                    ]),
+            );
+            // Bar chart has VIEW bucket as supported for comparison
+            const measures = getSupportedInsightMeasuresByInsight(insight as IInsight, dateDatasets, true);
+            expect(measures).toHaveLength(1);
+            expect(measures[0].comparators).toHaveLength(2);
+            expect(measures[0].comparators[0].dataset?.id).toBe(undefined);
+            expect(measures[0].comparators[0].granularity).toBe(undefined);
+            expect(measures[0].comparators[1].dataset?.id).toBe("dateDataSetUri");
+            expect(measures[0].comparators[1].granularity).toBe("GDC.time.year");
+        });
+
+        it("should not add comparators for insight type not supporting comparison", () => {
+            const insight = newInsightDefinition("local:unknown" as any, (b) =>
+                b.title("Unknown").buckets([{ localIdentifier: "measures", items: [simpleMetric1.measure] }]),
+            );
+            const measures = getSupportedInsightMeasuresByInsight(insight as IInsight, dateDatasets, true);
+            expect(measures).toHaveLength(0);
+        });
+
+        it("should handle null insight", () => {
+            const measures = getSupportedInsightMeasuresByInsight(null, dateDatasets, true);
+            expect(measures).toEqual([]);
         });
     });
 });

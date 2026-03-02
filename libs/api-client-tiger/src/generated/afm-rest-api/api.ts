@@ -459,6 +459,74 @@ export interface AttributeResultHeader {
     'primaryLabelValue': string;
 }
 
+export interface AwsBedrockAccessKeyAuth {
+    /**
+     * AWS Access Key ID.
+     */
+    'accessKeyId'?: string | null;
+    /**
+     * AWS Secret Access Key.
+     */
+    'secretAccessKey'?: string | null;
+    /**
+     * AWS Session Token (for temporary credentials).
+     */
+    'sessionToken'?: string | null;
+    /**
+     * Authentication type.
+     */
+    'type': AwsBedrockAccessKeyAuthTypeEnum;
+}
+
+export type AwsBedrockAccessKeyAuthTypeEnum = 'ACCESS_KEY';
+
+/**
+ * Configuration for AWS Bedrock provider.
+ */
+export interface AwsBedrockProviderConfig {
+    /**
+     * AWS region for Bedrock.
+     */
+    'region': string;
+    'auth': AwsBedrockAccessKeyAuth;
+    /**
+     * Provider type.
+     */
+    'type': AwsBedrockProviderConfigTypeEnum;
+}
+
+export type AwsBedrockProviderConfigTypeEnum = 'AWS_BEDROCK';
+
+export interface AzureFoundryApiKeyAuth {
+    /**
+     * Azure API key.
+     */
+    'apiKey'?: string | null;
+    /**
+     * Authentication type.
+     */
+    'type': AzureFoundryApiKeyAuthTypeEnum;
+}
+
+export type AzureFoundryApiKeyAuthTypeEnum = 'API_KEY';
+
+/**
+ * Configuration for Azure Foundry provider.
+ */
+export interface AzureFoundryProviderConfig {
+    /**
+     * Azure AI inference endpoint URL.
+     */
+    'endpoint': string;
+    'auth': AzureFoundryApiKeyAuth;
+    /**
+     * Provider type.
+     */
+    'type': AzureFoundryProviderConfigTypeEnum;
+}
+
+export type AzureFoundryProviderConfigTypeEnum = 'AZURE_FOUNDRY';
+
 /**
  * Bounding filter for this relative date filter. This can be used to limit the range of the relative date filter to a specific date range.
  */
@@ -840,6 +908,21 @@ export interface CompoundMeasureValueFilterCompoundMeasureValueFilter {
     'measure': AfmIdentifier;
 }
 
+export interface CreateKnowledgeDocumentRequestDto {
+    'filename': string;
+    'content': string;
+    'pageBoundaries'?: Array<number>;
+    'title'?: string;
+    'scopes'?: Array<string>;
+}
+
+export interface CreateKnowledgeDocumentResponseDto {
+    'filename': string;
+    'success': boolean;
+    'message': string;
+    'numChunks': number;
+}
+
 /**
  * List of created visualization objects
  */
@@ -962,6 +1045,11 @@ export interface DateRelativeFilter {
 }
 
 export type DateRelativeFilterGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
+
+export interface DeleteKnowledgeDocumentResponseDto {
+    'success': boolean;
+    'message': string;
+}
 
 /**
  * Filter definition type specified by label and values.
@@ -1362,6 +1450,30 @@ export interface GenerateDescriptionResponse {
     'note'?: string;
 }
 
+export interface GenerateTitleRequest {
+    /**
+     * Type of the object to title. Matches chat-search object types.
+     */
+    'objectType': GenerateTitleRequestObjectTypeEnum;
+    /**
+     * Identifier of the object to title
+     */
+    'objectId': string;
+}
+
+export type GenerateTitleRequestObjectTypeEnum = 'Visualization' | 'Dashboard' | 'Metric' | 'Fact' | 'Attribute';
+
+export interface GenerateTitleResponse {
+    /**
+     * Generated title of the requested object
+     */
+    'title'?: string;
+    /**
+     * Additional note with details in case generation was not performed
+     */
+    'note'?: string;
+}
+
 /**
  * Configuration specific to geo area labels.
  */
@@ -1402,7 +1514,7 @@ export interface GetQualityIssuesResponse {
     'status': GetQualityIssuesResponseStatusEnum;
 }
 
-export type GetQualityIssuesResponseStatusEnum = 'RUNNING' | 'SYNCING' | 'COMPLETED' | 'FAILED' | 'NOT_FOUND' | 'DISABLED';
+export type GetQualityIssuesResponseStatusEnum = 'RUNNING' | 'SYNCING' | 'COMPLETED' | 'FAILED' | 'CANCELLED' | 'NOT_FOUND' | 'DISABLED';
 
 /**
  * Contains the information specific for a group of headers. These groups correlate to attributes and metric groups.
@@ -1479,6 +1591,87 @@ export interface KeyDriversResponse {
 export interface KeyDriversResult {
     'data': object;
 }
+
+export interface KnowledgeDocumentMetadataDto {
+    'filename': string;
+    'workspaceId'?: string;
+    'title'?: string;
+    'numChunks': number;
+    'createdAt': string;
+    'updatedAt': string;
+    'createdBy': string;
+    'updatedBy': string;
+    'scopes': Array<string>;
+    'isDisabled'?: boolean;
+}
+
+export interface KnowledgeSearchResultDto {
+    'filename': string;
+    'content': string;
+    'score': number;
+    'chunkIndex': number;
+    'totalChunks': number;
+    'pageNumbers': Array<number>;
+    'workspaceId'?: string;
+    'title'?: string;
+    'scopes': Array<string>;
+}
+
+/**
+ * Paged response for listing AI Lake database instances
+ */
+export interface ListDatabaseInstancesResponse {
+    /**
+     * List of database instances
+     */
+    'databases': Array<DatabaseInstance>;
+    /**
+     * Total count of items (only set when metaInclude=page)
+     */
+    'totalCount'?: number;
+}
+
+export interface ListKnowledgeDocumentsResponseDto {
+    'documents': Array<KnowledgeDocumentMetadataDto>;
+    'totalCount'?: number;
+    'nextPageToken'?: string;
+}
+
+/**
+ * Paged response for listing AI Lake services
+ */
+export interface ListServicesResponse {
+    /**
+     * List of services
+     */
+    'services': Array<ServiceInfo>;
+    /**
+     * Total count of items (only set when metaInclude=page)
+     */
+    'totalCount'?: number;
+}
+
+/**
+ * LLM Model configuration (id, family) within a provider.
+ */
+export interface LlmModel {
+    /**
+     * Unique identifier of the model (e.g., gpt-5.3, claude-4.6).
+     */
+    'id': string;
+    /**
+     * Family of LLM models.
+     */
+    'family': LlmModelFamilyEnum;
+}
+
+export type LlmModelFamilyEnum = 'OPENAI' | 'ANTHROPIC' | 'META' | 'MISTRAL' | 'AMAZON' | 'GOOGLE' | 'COHERE';
+
+/**
+ * @type LlmProviderConfig
+ * Provider configuration to test.
+ */
+export type LlmProviderConfig = AwsBedrockProviderConfig | AzureFoundryProviderConfig | OpenAIProviderConfig;
 
 /**
  * Filter via label with given match type and literal value.
@@ -1689,6 +1882,24 @@ export interface MetricValueChange {
 }
 
 /**
+ * Per-model test results.
+ */
+export interface ModelTestResult {
+    /**
+     * The model ID that was tested.
+     */
+    'modelId': string;
+    /**
+     * Whether the model test was successful.
+     */
+    'successful': boolean;
+    /**
+     * Message about the model test result.
+     */
+    'message': string;
+}
+
+/**
  * Filter able to limit element values by label and related selected negated elements.
  */
 export interface NegativeAttributeFilter {
@@ -1703,6 +1914,40 @@ export interface NegativeAttributeFilterNegativeAttributeFilter {
 }
 
 /**
+ * Configuration for OpenAI provider.
+ */
+export interface OpenAIProviderConfig {
+    /**
+     * OpenAI organization ID.
+     */
+    'organization'?: string | null;
+    /**
+     * Custom base URL for OpenAI API.
+     */
+    'baseUrl'?: string | null;
+    'auth': OpenAiApiKeyAuth;
+    /**
+     * Provider type.
+     */
+    'type': OpenAIProviderConfigTypeEnum;
+}
+
+export type OpenAIProviderConfigTypeEnum = 'OPENAI';
+
+export interface OpenAiApiKeyAuth {
+    /**
+     * OpenAI API key.
+     */
+    'apiKey'?: string | null;
+    /**
+     * Authentication type.
+     */
+    'type': OpenAiApiKeyAuthTypeEnum;
+}
+
+export type OpenAiApiKeyAuthTypeEnum = 'API_KEY';
+
+/**
  * Represents a Long-Running Operation: a process that takes some time to complete.
  */
 export interface Operation {
@@ -1711,13 +1956,13 @@ export interface Operation {
      */
     'id': string;
     /**
-     * Type of the long-running operation.  * `provision-database` — Provisioning of an AI Lake database.  * `deprovision-database` — Deprovisioning (deletion) of an AI Lake database. 
+     * Type of the long-running operation. * `provision-database` — Provisioning of an AI Lake database. * `deprovision-database` — Deprovisioning (deletion) of an AI Lake database. * `run-service-command` — Running a command in a particular AI Lake service.
      */
     'kind': OperationKindEnum;
     'status': string;
 }
 
-export type OperationKindEnum = 'provision-database' | 'deprovision-database';
+export type OperationKindEnum = 'provision-database' | 'deprovision-database' | 'run-service-command';
 
 /**
  * Error information for a failed operation
@@ -1804,6 +2049,12 @@ export interface Paging {
      * Link to next page, or null if this is last page.
      */
     'next'?: string;
+}
+
+export interface PatchKnowledgeDocumentRequestDto {
+    'isDisabled'?: boolean;
+    'title'?: string;
+    'scopes'?: Array<string>;
 }
 
 /**
@@ -1963,7 +2214,7 @@ export interface QualityIssuesCalculationStatusResponse {
     'error'?: string;
 }
 
-export type QualityIssuesCalculationStatusResponseStatusEnum = 'RUNNING' | 'SYNCING' | 'COMPLETED' | 'FAILED' | 'NOT_FOUND' | 'DISABLED';
+export type QualityIssuesCalculationStatusResponseStatusEnum = 'RUNNING' | 'SYNCING' | 'COMPLETED' | 'FAILED' | 'CANCELLED' | 'NOT_FOUND' | 'DISABLED';
 
 /**
  * Condition that checks if the metric value is within a given range.
@@ -2172,6 +2423,20 @@ export interface RouteResult {
 export type RouteResultUseCaseEnum = 'INVALID' | 'GENERAL' | 'SEARCH' | 'CREATE_VISUALIZATION' | 'EXTEND_VISUALIZATION' | 'HOWTO' | 'CHANGE_ANALYSIS' | 'ALERT';
 
 /**
+ * Request to run an AI Lake Service Command
+ */
+export interface RunServiceCommandRequest {
+    /**
+     * The context to pass to the command
+     */
+    'context'?: { [key: string]: string | null; } | null;
+    /**
+     * The payload to pass to the command
+     */
+    'payload'?: object | null;
+}
+
+/**
  * Created and saved visualization IDs.
  */
 export interface SavedVisualization {
@@ -2183,6 +2448,11 @@ export interface SavedVisualization {
      * Saved visualization ID.
      */
     'savedVisualizationId': string;
+}
+
+export interface SearchKnowledgeResponseDto {
+    'results': Array<KnowledgeSearchResultDto>;
+    'statistics': SearchStatisticsDto;
 }
 
 export interface SearchRelationshipObject {
@@ -2334,6 +2604,11 @@ export interface SearchResultObject {
     'isHidden'?: boolean;
 }
 
+export interface SearchStatisticsDto {
+    'totalResults': number;
+    'averageSimilarityScore': number;
+}
+
 /**
  * Non-sensitive metadata for an AI Lake pipeline
  */
@@ -2470,6 +2745,34 @@ export interface Suggestion {
     'label': string;
 }
 
+export interface TestLlmProviderDefinitionRequest {
+    'providerConfig': TestLlmProviderDefinitionRequestProviderConfig;
+    /**
+     * Models to test.
+     */
+    'models'?: Array<LlmModel>;
+}
+
+/**
+ * @type TestLlmProviderDefinitionRequestProviderConfig
+ */
+export type TestLlmProviderDefinitionRequestProviderConfig = AwsBedrockProviderConfig | AzureFoundryProviderConfig | OpenAIProviderConfig;
+
+export interface TestLlmProviderResponse {
+    /**
+     * Whether the LLM provider is reachable.
+     */
+    'providerReachable': boolean;
+    /**
+     * Message about the provider connectivity test.
+     */
+    'providerMessage': string;
+    /**
+     * Per-model test results.
+     */
+    'modelResults': Array<ModelTestResult>;
+}
+
 /**
  * Detailed thoughts/messages within this step.
  */
@@ -2526,6 +2829,81 @@ export interface TotalResultHeader {
     'function': string;
 }
 
+/**
+ * Trending analytics catalog objects
+ */
+export interface TrendingObjectItem {
+    /**
+     * Object ID.
+     */
+    'id': string;
+    /**
+     * Object type, e.g. dashboard, visualization, metric.
+     */
+    'type': string;
+    /**
+     * Workspace ID the object belongs to.
+     */
+    'workspaceId': string;
+    /**
+     * Object title.
+     */
+    'title': string;
+    /**
+     * Object description.
+     */
+    'description'?: string;
+    'tags': Array<string>;
+    /**
+     * Timestamp when object was created.
+     */
+    'createdAt'?: string;
+    /**
+     * Timestamp when object was last modified.
+     */
+    'modifiedAt'?: string;
+    /**
+     * ID of the user who created the object.
+     */
+    'createdBy'?: string;
+    /**
+     * ID of the user who last modified the object.
+     */
+    'modifiedBy'?: string;
+    /**
+     * If true, this object is hidden from AI search results by default.
+     */
+    'isHidden'?: boolean;
+    /**
+     * If true, this object is hidden from KDA.
+     */
+    'isHiddenFromKda'?: boolean;
+    /**
+     * URL of the visualization, if applicable.
+     */
+    'visualizationUrl'?: string;
+    /**
+     * Type of the metric (e.g. MAQL), if applicable.
+     */
+    'metricType'?: string;
+    /**
+     * ID of the associated dataset, if applicable.
+     */
+    'datasetId'?: string;
+    /**
+     * Type of the associated dataset, if applicable.
+     */
+    'datasetType'?: string;
+    /**
+     * Title of the associated dataset, if applicable.
+     */
+    'datasetTitle'?: string;
+}
+
+export interface TrendingObjectsResult {
+    'objects': Array<TrendingObjectItem>;
+}
+
 export interface TriggerQualityIssuesCalculationResponse {
     /**
      * Process ID for tracking the calculation status
@@ -2537,7 +2915,22 @@ export interface TriggerQualityIssuesCalculationResponse {
     'status': TriggerQualityIssuesCalculationResponseStatusEnum;
 }
 
-export type TriggerQualityIssuesCalculationResponseStatusEnum = 'RUNNING' | 'COMPLETED' | 'FAILED' | 'DISABLED';
+export type TriggerQualityIssuesCalculationResponseStatusEnum = 'RUNNING' | 'COMPLETED' | 'FAILED' | 'CANCELLED' | 'DISABLED';
+
+export interface UpsertKnowledgeDocumentRequestDto {
+    'filename': string;
+    'content': string;
+    'pageBoundaries'?: Array<number>;
+    'title'?: string;
+    'scopes'?: Array<string>;
+}
+
+export interface UpsertKnowledgeDocumentResponseDto {
+    'filename': string;
+    'success': boolean;
+    'message': string;
+    'numChunks': number;
+}
 
 /**
  * User context, which can affect the behavior of the underlying AI features.
@@ -2624,28 +3017,6 @@ export interface VisualizationConfig {
     'whatIf'?: WhatIfScenarioConfig;
 }
 
-export interface WorkflowDashboardSummaryRequestDto {
-    'dashboardId': string;
-    'keyMetricIds'?: Array<string>;
-    'referenceQuarter'?: string;
-    'customUserPrompt'?: string;
-}
-
-export interface WorkflowDashboardSummaryResponseDto {
-    'runId': string;
-    'status': string;
-    'message': string;
-}
-
-export interface WorkflowStatusResponseDto {
-    'runId': string;
-    'status': string;
-    'message': string;
-    'result'?: { [key: string]: object; };
-    'error'?: string;
-    'currentPhase'?: string;
-}
-
 /**
  * Measure adjustments for this scenario
  */
@@ -2692,6 +3063,28 @@ export interface WhatIfScenarioItem {
     'adjustments': Array<WhatIfMeasureAdjustmentConfig>;
 }
 
+export interface WorkflowDashboardSummaryRequestDto {
+    'dashboardId': string;
+    'keyMetricIds'?: Array<string>;
+    'referenceQuarter'?: string;
+    'customUserPrompt'?: string;
+}
+
+export interface WorkflowDashboardSummaryResponseDto {
+    'runId': string;
+    'status': string;
+    'message': string;
+}
+
+export interface WorkflowStatusResponseDto {
+    'runId': string;
+    'status': string;
+    'message': string;
+    'result'?: { [key: string]: object; };
+    'error'?: string;
+    'currentPhase'?: string;
+}
+
 
 
 // AILakeApi FP - AILakeApiAxiosParamCreator
@@ -2711,7 +3104,7 @@ export async function AILakeApiAxiosParamCreator_DeprovisionAiLakeDatabaseInstan
 ): Promise<RequestArgs> {
     // verify required parameter 'instanceId' is not null or undefined
     assertParamExists('deprovisionAiLakeDatabaseInstance', 'instanceId', instanceId)
-    const localVarPath = `/api/v1/ailake/database/instance/{instanceId}`
+    const localVarPath = `/api/v1/ailake/database/instances/{instanceId}`
         .replace(`{${"instanceId"}}`, encodeURIComponent(String(instanceId)));
     // use dummy base URL string because the URL constructor only accepts absolute URLs.
     const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2760,7 +3153,7 @@ export async function AILakeApiAxiosParamCreator_GetAiLakeDatabaseInstance(
 ): Promise<RequestArgs> {
     // verify required parameter 'instanceId' is not null or undefined
     assertParamExists('getAiLakeDatabaseInstance', 'instanceId', instanceId)
-    const localVarPath = `/api/v1/ailake/database/instance/{instanceId}`
+    const localVarPath = `/api/v1/ailake/database/instances/{instanceId}`
         .replace(`{${"instanceId"}}`, encodeURIComponent(String(instanceId)));
     // use dummy base URL string because the URL constructor only accepts absolute URLs.
     const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2805,7 +3198,7 @@ export async function AILakeApiAxiosParamCreator_GetAiLakeOperation(
 ): Promise<RequestArgs> {
     // verify required parameter 'operationId' is not null or undefined
     assertParamExists('getAiLakeOperation', 'operationId', operationId)
-    const localVarPath = `/api/v1/ailake/operation/{operationId}`
+    const localVarPath = `/api/v1/ailake/operations/{operationId}`
         .replace(`{${"operationId"}}`, encodeURIComponent(String(operationId)));
     // use dummy base URL string because the URL constructor only accepts absolute URLs.
     const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2836,14 +3229,73 @@ export async function AILakeApiAxiosParamCreator_GetAiLakeOperation(
 
 // AILakeApi FP - AILakeApiAxiosParamCreator
 /**
- * (BETA) Lists services configured for the organization\'s AI Lake. Returns only non-sensitive fields (id, name).
+ * (BETA) Lists database instances in the organization\'s AI Lake. Supports paging via size and offset query parameters. Use metaInclude=page to get total count.
+ * @summary (BETA) List AI Lake Database instances
+ * @param {number} [size]
+ * @param {number} [offset]
+ * @param {Array<string>} [metaInclude]
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeApiAxiosParamCreator_ListAiLakeDatabaseInstances(
+    size?: number, offset?: number, metaInclude?: Array<string>,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    const localVarPath = `/api/v1/ailake/database/instances`;
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
+    }
+
+    if (offset !== undefined) {
+        localVarQueryParameter['offset'] = offset;
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude);
+    }
+
+
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// AILakeApi FP - AILakeApiAxiosParamCreator
+/**
+ * (BETA) Lists services configured for the organization\'s AI Lake. Returns only non-sensitive fields (id, name). Supports paging via size and offset query parameters. Use metaInclude=page to get total count.
  * @summary (BETA) List AI Lake services
+ * @param {number} [size]
+ * @param {number} [offset]
+ * @param {Array<string>} [metaInclude]
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function AILakeApiAxiosParamCreator_ListAiLakeServices(
-    
+    size?: number, offset?: number, metaInclude?: Array<string>,
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -2857,6 +3309,18 @@ export async function AILakeApiAxiosParamCreator_ListAiLakeServices(
     const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
+
+    if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
+    }
+
+    if (offset !== undefined) {
+        localVarQueryParameter['offset'] = offset;
+    }
+
+    if (metaInclude) {
+        localVarQueryParameter['metaInclude'] = Array.from(metaInclude);
+    }
 
 
     
@@ -2892,7 +3356,7 @@ export async function AILakeApiAxiosParamCreator_ProvisionAiLakeDatabaseInstance
 ): Promise<RequestArgs> {
     // verify required parameter 'provisionDatabaseInstanceRequest' is not null or undefined
     assertParamExists('provisionAiLakeDatabaseInstance', 'provisionDatabaseInstanceRequest', provisionDatabaseInstanceRequest)
-    const localVarPath = `/api/v1/ailake/database/instance`;
+    const localVarPath = `/api/v1/ailake/database/instances`;
     // use dummy base URL string because the URL constructor only accepts absolute URLs.
     const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
     let baseOptions;
@@ -2930,6 +3394,77 @@ export async function AILakeApiAxiosParamCreator_ProvisionAiLakeDatabaseInstance
     localVarRequestOptions.data = needsSerialization
         ? JSON.stringify(provisionDatabaseInstanceRequest !== undefined ? provisionDatabaseInstanceRequest : {})
         : provisionDatabaseInstanceRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// AILakeApi FP - AILakeApiAxiosParamCreator
+/**
+ * (BETA) Runs a specific AI Lake service command.
+ * @summary (BETA) Run an AI Lake services command
+ * @param {string} serviceId
+ * @param {string} commandName
+ * @param {RunServiceCommandRequest} runServiceCommandRequest
+ * @param {string} [operationId]
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeApiAxiosParamCreator_RunAiLakeServiceCommand(
+    serviceId: string, commandName: string, runServiceCommandRequest: RunServiceCommandRequest, operationId?: string,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'serviceId' is not null or undefined
+    assertParamExists('runAiLakeServiceCommand', 'serviceId', serviceId)
+    // verify required parameter 'commandName' is not null or undefined
+    assertParamExists('runAiLakeServiceCommand', 'commandName', commandName)
+    // verify required parameter 'runServiceCommandRequest' is not null or undefined
+    assertParamExists('runAiLakeServiceCommand', 'runServiceCommandRequest', runServiceCommandRequest)
+    const localVarPath = `/api/v1/ailake/services/{serviceId}/commands/{commandName}/run`
+        .replace(`{${"serviceId"}}`, encodeURIComponent(String(serviceId)))
+        .replace(`{${"commandName"}}`, encodeURIComponent(String(commandName)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (operationId !== undefined && operationId !== null) {
+        localVarHeaderParameter['operation-id'] = String(operationId);
+    }
+
+
+
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof runServiceCommandRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(runServiceCommandRequest !== undefined ? runServiceCommandRequest : {})
+        : runServiceCommandRequest || "";
 
     return {
         url: toPathString(localVarUrlObj),
@@ -3019,22 +3554,49 @@ export async function AILakeApi_GetAiLakeOperation(
 
 // AILakeApi Api FP
 /**
- * (BETA) Lists services configured for the organization\'s AI Lake. Returns only non-sensitive fields (id, name).
+ * (BETA) Lists database instances in the organization\'s AI Lake. Supports paging via size and offset query parameters. Use metaInclude=page to get total count.
+ * @summary (BETA) List AI Lake Database instances
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {AILakeApiListAiLakeDatabaseInstancesRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeApi_ListAiLakeDatabaseInstances(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: AILakeApiListAiLakeDatabaseInstancesRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ListDatabaseInstancesResponse> {
+    const localVarAxiosArgs = await AILakeApiAxiosParamCreator_ListAiLakeDatabaseInstances(
+        requestParameters.size, requestParameters.offset, requestParameters.metaInclude,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// AILakeApi Api FP
+/**
+ * (BETA) Lists services configured for the organization\'s AI Lake. Returns only non-sensitive fields (id, name). Supports paging via size and offset query parameters. Use metaInclude=page to get total count.
  * @summary (BETA) List AI Lake services
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
+ * @param {AILakeApiListAiLakeServicesRequest} requestParameters Request parameters.
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function AILakeApi_ListAiLakeServices(
     axios: AxiosInstance, basePath: string,
-    
+    requestParameters: AILakeApiListAiLakeServicesRequest,
     options?: AxiosRequestConfig,
     configuration?: Configuration,
-): AxiosPromise<Array<ServiceInfo>> {
+): AxiosPromise<ListServicesResponse> {
     const localVarAxiosArgs = await AILakeApiAxiosParamCreator_ListAiLakeServices(
-        
+        requestParameters.size, requestParameters.offset, requestParameters.metaInclude,
         options || {},
         configuration,
     );
@@ -3061,6 +3623,32 @@ export async function AILakeApi_ProvisionAiLakeDatabaseInstance(
 ): AxiosPromise<object> {
     const localVarAxiosArgs = await AILakeApiAxiosParamCreator_ProvisionAiLakeDatabaseInstance(
         requestParameters.provisionDatabaseInstanceRequest, requestParameters.operationId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// AILakeApi Api FP
+/**
+ * (BETA) Runs a specific AI Lake service command.
+ * @summary (BETA) Run an AI Lake services command
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {AILakeApiRunAiLakeServiceCommandRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function AILakeApi_RunAiLakeServiceCommand(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: AILakeApiRunAiLakeServiceCommandRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<object> {
+    const localVarAxiosArgs = await AILakeApiAxiosParamCreator_RunAiLakeServiceCommand(
+        requestParameters.serviceId, requestParameters.commandName, requestParameters.runServiceCommandRequest, requestParameters.operationId,
         options || {},
         configuration,
     );
@@ -3105,13 +3693,24 @@ export interface AILakeApiInterface {
     getAiLakeOperation(requestParameters: AILakeApiGetAiLakeOperationRequest, options?: AxiosRequestConfig): AxiosPromise<GetAiLakeOperation200Response>;
 
     /**
-     * (BETA) Lists services configured for the organization\'s AI Lake. Returns only non-sensitive fields (id, name).
-     * @summary (BETA) List AI Lake services
+     * (BETA) Lists database instances in the organization\'s AI Lake. Supports paging via size and offset query parameters. Use metaInclude=page to get total count.
+     * @summary (BETA) List AI Lake Database instances
+     * @param {AILakeApiListAiLakeDatabaseInstancesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AILakeApiInterface
      */
-    listAiLakeServices(options?: AxiosRequestConfig): AxiosPromise<Array<ServiceInfo>>;
+    listAiLakeDatabaseInstances(requestParameters: AILakeApiListAiLakeDatabaseInstancesRequest, options?: AxiosRequestConfig): AxiosPromise<ListDatabaseInstancesResponse>;
+
+    /**
+     * (BETA) Lists services configured for the organization\'s AI Lake. Returns only non-sensitive fields (id, name). Supports paging via size and offset query parameters. Use metaInclude=page to get total count.
+     * @summary (BETA) List AI Lake services
+     * @param {AILakeApiListAiLakeServicesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeApiInterface
+     */
+    listAiLakeServices(requestParameters: AILakeApiListAiLakeServicesRequest, options?: AxiosRequestConfig): AxiosPromise<ListServicesResponse>;
 
     /**
      * (BETA) Creates a new database in the organization\'s AI Lake. Returns an operation-id in the operation-id header the client can use to poll for the progress.
@@ -3122,6 +3721,16 @@ export interface AILakeApiInterface {
      * @memberof AILakeApiInterface
      */
     provisionAiLakeDatabaseInstance(requestParameters: AILakeApiProvisionAiLakeDatabaseInstanceRequest, options?: AxiosRequestConfig): AxiosPromise<object>;
+
+    /**
+     * (BETA) Runs a specific AI Lake service command.
+     * @summary (BETA) Run an AI Lake services command
+     * @param {AILakeApiRunAiLakeServiceCommandRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeApiInterface
+     */
+    runAiLakeServiceCommand(requestParameters: AILakeApiRunAiLakeServiceCommandRequest, options?: AxiosRequestConfig): AxiosPromise<object>;
 
 }
 
@@ -3175,6 +3784,62 @@ export interface AILakeApiGetAiLakeOperationRequest {
 }
 
 /**
+ * Request parameters for listAiLakeDatabaseInstances operation in AILakeApi.
+ * @export
+ * @interface AILakeApiListAiLakeDatabaseInstancesRequest
+ */
+export interface AILakeApiListAiLakeDatabaseInstancesRequest {
+    /**
+     *
+     * @type {number}
+     * @memberof AILakeApiListAiLakeDatabaseInstances
+     */
+    readonly size?: number
+
+    /**
+     *
+     * @type {number}
+     * @memberof AILakeApiListAiLakeDatabaseInstances
+     */
+    readonly offset?: number
+
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof AILakeApiListAiLakeDatabaseInstances
+     */
+    readonly metaInclude?: Array<string>
+}
+
+/**
+ * Request parameters for listAiLakeServices operation in AILakeApi.
+ * @export
+ * @interface AILakeApiListAiLakeServicesRequest
+ */
+export interface AILakeApiListAiLakeServicesRequest {
+    /**
+     *
+     * @type {number}
+     * @memberof AILakeApiListAiLakeServices
+     */
+    readonly size?: number
+
+    /**
+     *
+     * @type {number}
+     * @memberof AILakeApiListAiLakeServices
+     */
+    readonly offset?: number
+
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof AILakeApiListAiLakeServices
+     */
+    readonly metaInclude?: Array<string>
+}
+
+/**
  * Request parameters for provisionAiLakeDatabaseInstance operation in AILakeApi.
  * @export
  * @interface AILakeApiProvisionAiLakeDatabaseInstanceRequest
@@ -3191,6 +3856,41 @@ export interface AILakeApiProvisionAiLakeDatabaseInstanceRequest {
      * 
      * @type {string}
      * @memberof AILakeApiProvisionAiLakeDatabaseInstance
+     */
+    readonly operationId?: string
+}
+
+/**
+ * Request parameters for runAiLakeServiceCommand operation in AILakeApi.
+ * @export
+ * @interface AILakeApiRunAiLakeServiceCommandRequest
+ */
+export interface AILakeApiRunAiLakeServiceCommandRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof AILakeApiRunAiLakeServiceCommand
+     */
+    readonly serviceId: string
+
+    /**
+     *
+     * @type {string}
+     * @memberof AILakeApiRunAiLakeServiceCommand
+     */
+    readonly commandName: string
+
+    /**
+     *
+     * @type {RunServiceCommandRequest}
+     * @memberof AILakeApiRunAiLakeServiceCommand
+     */
+    readonly runServiceCommandRequest: RunServiceCommandRequest
+
+    /**
+     *
+     * @type {string}
+     * @memberof AILakeApiRunAiLakeServiceCommand
      */
     readonly operationId?: string
 }
@@ -3239,14 +3939,27 @@ export class AILakeApi extends BaseAPI implements AILakeApiInterface {
     }
 
     /**
-     * (BETA) Lists services configured for the organization\'s AI Lake. Returns only non-sensitive fields (id, name).
-     * @summary (BETA) List AI Lake services
+     * (BETA) Lists database instances in the organization\'s AI Lake. Supports paging via size and offset query parameters. Use metaInclude=page to get total count.
+     * @summary (BETA) List AI Lake Database instances
+     * @param {AILakeApiListAiLakeDatabaseInstancesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof AILakeApi
      */
-    public listAiLakeServices(options?: AxiosRequestConfig) {
-        return AILakeApi_ListAiLakeServices(this.axios, this.basePath, options, this.configuration);
+    public listAiLakeDatabaseInstances(requestParameters: AILakeApiListAiLakeDatabaseInstancesRequest = {}, options?: AxiosRequestConfig) {
+        return AILakeApi_ListAiLakeDatabaseInstances(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * (BETA) Lists services configured for the organization\'s AI Lake. Returns only non-sensitive fields (id, name). Supports paging via size and offset query parameters. Use metaInclude=page to get total count.
+     * @summary (BETA) List AI Lake services
+     * @param {AILakeApiListAiLakeServicesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeApi
+     */
+    public listAiLakeServices(requestParameters: AILakeApiListAiLakeServicesRequest = {}, options?: AxiosRequestConfig) {
+        return AILakeApi_ListAiLakeServices(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -3259,6 +3972,18 @@ export class AILakeApi extends BaseAPI implements AILakeApiInterface {
      */
     public provisionAiLakeDatabaseInstance(requestParameters: AILakeApiProvisionAiLakeDatabaseInstanceRequest, options?: AxiosRequestConfig) {
         return AILakeApi_ProvisionAiLakeDatabaseInstance(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * (BETA) Runs a specific AI Lake service command.
+     * @summary (BETA) Run an AI Lake services command
+     * @param {AILakeApiRunAiLakeServiceCommandRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AILakeApi
+     */
+    public runAiLakeServiceCommand(requestParameters: AILakeApiRunAiLakeServiceCommandRequest, options?: AxiosRequestConfig) {
+        return AILakeApi_RunAiLakeServiceCommand(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 }
 
@@ -4312,6 +5037,67 @@ export async function ActionsApiAxiosParamCreator_ComputeValidObjects(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
+ *
+ * @param {string} workspaceId Workspace identifier
+ * @param {CreateKnowledgeDocumentRequestDto} createKnowledgeDocumentRequestDto
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_CreateDocument(
+    workspaceId: string, createKnowledgeDocumentRequestDto: CreateKnowledgeDocumentRequestDto,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('createDocument', 'workspaceId', workspaceId)
+    // verify required parameter 'createKnowledgeDocumentRequestDto' is not null or undefined
+    assertParamExists('createDocument', 'createKnowledgeDocumentRequestDto', createKnowledgeDocumentRequestDto)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/knowledge/documents`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof createKnowledgeDocumentRequestDto !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(createKnowledgeDocumentRequestDto !== undefined ? createKnowledgeDocumentRequestDto : {})
+        : createKnowledgeDocumentRequestDto || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
  * Returns a list of Users who created any object for this workspace
  * @summary Get Analytics Catalog CreatedBy Users
  * @param {string} workspaceId Workspace identifier
@@ -4340,6 +5126,54 @@ export async function ActionsApiAxiosParamCreator_CreatedBy(
 
 
     
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ *
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} filename
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_DeleteDocument(
+    workspaceId: string, filename: string,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('deleteDocument', 'workspaceId', workspaceId)
+    // verify required parameter 'filename' is not null or undefined
+    assertParamExists('deleteDocument', 'filename', filename)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/knowledge/documents/{filename}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"filename"}}`, encodeURIComponent(String(filename)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
     localVarRequestOptions.headers = {
@@ -4677,6 +5511,116 @@ export async function ActionsApiAxiosParamCreator_GenerateDescription(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
+ * Generates a title for the specified analytics object. Returns title and a note with details if generation was not performed.
+ * @summary Generate Title for Analytics Object
+ * @param {string} workspaceId Workspace identifier
+ * @param {GenerateTitleRequest} generateTitleRequest
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_GenerateTitle(
+    workspaceId: string, generateTitleRequest: GenerateTitleRequest,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('generateTitle', 'workspaceId', workspaceId)
+    // verify required parameter 'generateTitleRequest' is not null or undefined
+    assertParamExists('generateTitle', 'generateTitleRequest', generateTitleRequest)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/analyticsCatalog/generateTitle`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof generateTitleRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(generateTitleRequest !== undefined ? generateTitleRequest : {})
+        : generateTitleRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ *
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} filename
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_GetDocument(
+    workspaceId: string, filename: string,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('getDocument', 'workspaceId', workspaceId)
+    // verify required parameter 'filename' is not null or undefined
+    assertParamExists('getDocument', 'filename', filename)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/knowledge/documents/{filename}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"filename"}}`, encodeURIComponent(String(filename)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
  * Returns metadata quality issues detected by the platform linter.
  * @summary Get Quality Issues
  * @param {string} workspaceId Workspace identifier
@@ -4945,6 +5889,70 @@ export async function ActionsApiAxiosParamCreator_KeyDriverAnalysisResult(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
+ *
+ * @param {string} workspaceId Workspace identifier
+ * @param {Array<string>} [scopes]
+ * @param {number} [size]
+ * @param {string} [pageToken]
+ * @param {string} [metaInclude]
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_ListDocuments(
+    workspaceId: string, scopes?: Array<string>, size?: number, pageToken?: string, metaInclude?: string,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('listDocuments', 'workspaceId', workspaceId)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/knowledge/documents`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (scopes) {
+        localVarQueryParameter['scopes'] = scopes;
+    }
+
+    if (size !== undefined) {
+        localVarQueryParameter['size'] = size;
+    }
+
+    if (pageToken !== undefined) {
+        localVarQueryParameter['pageToken'] = pageToken;
+    }
+
+    if (metaInclude !== undefined) {
+        localVarQueryParameter['metaInclude'] = metaInclude;
+    }
+
+
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
  * Returns a list of Users who created any memory item for this workspace
  * @summary Get AI Memory CreatedBy Users
  * @param {string} workspaceId Workspace identifier
@@ -5106,6 +6114,71 @@ export async function ActionsApiAxiosParamCreator_OutlierDetectionResult(
         ...headersFromBaseOptions,
         ...options.headers,
     };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ *
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} filename
+ * @param {PatchKnowledgeDocumentRequestDto} patchKnowledgeDocumentRequestDto
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_PatchDocument(
+    workspaceId: string, filename: string, patchKnowledgeDocumentRequestDto: PatchKnowledgeDocumentRequestDto,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('patchDocument', 'workspaceId', workspaceId)
+    // verify required parameter 'filename' is not null or undefined
+    assertParamExists('patchDocument', 'filename', filename)
+    // verify required parameter 'patchKnowledgeDocumentRequestDto' is not null or undefined
+    assertParamExists('patchDocument', 'patchKnowledgeDocumentRequestDto', patchKnowledgeDocumentRequestDto)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/knowledge/documents/{filename}`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"filename"}}`, encodeURIComponent(String(filename)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof patchKnowledgeDocumentRequestDto !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(patchKnowledgeDocumentRequestDto !== undefined ? patchKnowledgeDocumentRequestDto : {})
+        : patchKnowledgeDocumentRequestDto || "";
 
     return {
         url: toPathString(localVarUrlObj),
@@ -5279,6 +6352,72 @@ export async function ActionsApiAxiosParamCreator_RetrieveResult(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
+ *
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} query
+ * @param {number} [limit]
+ * @param {number} [minScore]
+ * @param {Array<string>} [scopes]
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_SearchKnowledge(
+    workspaceId: string, query: string, limit?: number, minScore?: number, scopes?: Array<string>,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('searchKnowledge', 'workspaceId', workspaceId)
+    // verify required parameter 'query' is not null or undefined
+    assertParamExists('searchKnowledge', 'query', query)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/knowledge/search`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+    if (query !== undefined) {
+        localVarQueryParameter['query'] = query;
+    }
+
+    if (limit !== undefined) {
+        localVarQueryParameter['limit'] = limit;
+    }
+
+    if (minScore !== undefined) {
+        localVarQueryParameter['minScore'] = minScore;
+    }
+
+    if (scopes) {
+        localVarQueryParameter['scopes'] = scopes;
+    }
+
+
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
  * Returns a list of tags for this workspace
  * @summary Get Analytics Catalog Tags
  * @param {string} workspaceId Workspace identifier
@@ -5302,6 +6441,109 @@ export async function ActionsApiAxiosParamCreator_Tags(
         baseOptions = configuration.baseOptions;
     }
     const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * Tests LLM provider connectivity with a full definition.
+ * @summary Test LLM Provider
+ * @param {TestLlmProviderDefinitionRequest} testLlmProviderDefinitionRequest
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_TestLlmProvider(
+    testLlmProviderDefinitionRequest: TestLlmProviderDefinitionRequest,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'testLlmProviderDefinitionRequest' is not null or undefined
+    assertParamExists('testLlmProvider', 'testLlmProviderDefinitionRequest', testLlmProviderDefinitionRequest)
+    const localVarPath = `/api/v1/actions/ai/llmProvider/test`;
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof testLlmProviderDefinitionRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(testLlmProviderDefinitionRequest !== undefined ? testLlmProviderDefinitionRequest : {})
+        : testLlmProviderDefinitionRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * Tests an existing LLM provider connectivity by its ID.
+ * @summary Test LLM Provider By Id
+ * @param {string} llmProviderId
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_TestLlmProviderById(
+    llmProviderId: string,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'llmProviderId' is not null or undefined
+    assertParamExists('testLlmProviderById', 'llmProviderId', llmProviderId)
+    const localVarPath = `/api/v1/actions/ai/llmProvider/{llmProviderId}/test`
+        .replace(`{${"llmProviderId"}}`, encodeURIComponent(String(llmProviderId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
     const localVarHeaderParameter = {} as any;
     const localVarQueryParameter = {} as any;
 
@@ -5359,6 +6601,67 @@ export async function ActionsApiAxiosParamCreator_TriggerQualityIssuesCalculatio
         ...headersFromBaseOptions,
         ...options.headers,
     };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ *
+ * @param {string} workspaceId Workspace identifier
+ * @param {UpsertKnowledgeDocumentRequestDto} upsertKnowledgeDocumentRequestDto
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_UpsertDocument(
+    workspaceId: string, upsertKnowledgeDocumentRequestDto: UpsertKnowledgeDocumentRequestDto,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('upsertDocument', 'workspaceId', workspaceId)
+    // verify required parameter 'upsertKnowledgeDocumentRequestDto' is not null or undefined
+    assertParamExists('upsertDocument', 'upsertKnowledgeDocumentRequestDto', upsertKnowledgeDocumentRequestDto)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/knowledge/documents`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof upsertKnowledgeDocumentRequestDto !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(upsertKnowledgeDocumentRequestDto !== undefined ? upsertKnowledgeDocumentRequestDto : {})
+        : upsertKnowledgeDocumentRequestDto || "";
 
     return {
         url: toPathString(localVarUrlObj),
@@ -5929,6 +7232,31 @@ export async function ActionsApi_ComputeValidObjects(
 
 // ActionsApi Api FP
 /**
+ *
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiCreateDocumentRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_CreateDocument(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiCreateDocumentRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<CreateKnowledgeDocumentResponseDto> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_CreateDocument(
+        requestParameters.workspaceId, requestParameters.createKnowledgeDocumentRequestDto,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
  * Returns a list of Users who created any object for this workspace
  * @summary Get Analytics Catalog CreatedBy Users
  * @param {AxiosInstance} axios Axios instance.
@@ -5946,6 +7274,31 @@ export async function ActionsApi_CreatedBy(
 ): AxiosPromise<AnalyticsCatalogCreatedBy> {
     const localVarAxiosArgs = await ActionsApiAxiosParamCreator_CreatedBy(
         requestParameters.workspaceId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
+ *
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiDeleteDocumentRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_DeleteDocument(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiDeleteDocumentRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<DeleteKnowledgeDocumentResponseDto> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_DeleteDocument(
+        requestParameters.workspaceId, requestParameters.filename,
         options || {},
         configuration,
     );
@@ -6084,6 +7437,57 @@ export async function ActionsApi_GenerateDescription(
 
 // ActionsApi Api FP
 /**
+ * Generates a title for the specified analytics object. Returns title and a note with details if generation was not performed.
+ * @summary Generate Title for Analytics Object
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiGenerateTitleRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_GenerateTitle(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiGenerateTitleRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<GenerateTitleResponse> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_GenerateTitle(
+        requestParameters.workspaceId, requestParameters.generateTitleRequest,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
+ *
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiGetDocumentRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_GetDocument(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiGetDocumentRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<KnowledgeDocumentMetadataDto> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_GetDocument(
+        requestParameters.workspaceId, requestParameters.filename,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
  * Returns metadata quality issues detected by the platform linter.
  * @summary Get Quality Issues
  * @param {AxiosInstance} axios Axios instance.
@@ -6213,6 +7617,31 @@ export async function ActionsApi_KeyDriverAnalysisResult(
 
 // ActionsApi Api FP
 /**
+ *
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiListDocumentsRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_ListDocuments(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiListDocumentsRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ListKnowledgeDocumentsResponseDto> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_ListDocuments(
+        requestParameters.workspaceId, requestParameters.scopes, requestParameters.size, requestParameters.pageToken, requestParameters.metaInclude,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
  * Returns a list of Users who created any memory item for this workspace
  * @summary Get AI Memory CreatedBy Users
  * @param {AxiosInstance} axios Axios instance.
@@ -6282,6 +7711,31 @@ export async function ActionsApi_OutlierDetectionResult(
 ): AxiosPromise<OutlierDetectionResult> {
     const localVarAxiosArgs = await ActionsApiAxiosParamCreator_OutlierDetectionResult(
         requestParameters.workspaceId, requestParameters.resultId, requestParameters.offset, requestParameters.limit, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
+ *
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiPatchDocumentRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_PatchDocument(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiPatchDocumentRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<KnowledgeDocumentMetadataDto> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_PatchDocument(
+        requestParameters.workspaceId, requestParameters.filename, requestParameters.patchKnowledgeDocumentRequestDto,
         options || {},
         configuration,
     );
@@ -6369,6 +7823,31 @@ export async function ActionsApi_RetrieveResult(
 
 // ActionsApi Api FP
 /**
+ *
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiSearchKnowledgeRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_SearchKnowledge(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiSearchKnowledgeRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<SearchKnowledgeResponseDto> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_SearchKnowledge(
+        requestParameters.workspaceId, requestParameters.query, requestParameters.limit, requestParameters.minScore, requestParameters.scopes,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
  * Returns a list of tags for this workspace
  * @summary Get Analytics Catalog Tags
  * @param {AxiosInstance} axios Axios instance.
@@ -6395,6 +7874,58 @@ export async function ActionsApi_Tags(
 
 // ActionsApi Api FP
 /**
+ * Tests LLM provider connectivity with a full definition.
+ * @summary Test LLM Provider
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiTestLlmProviderRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_TestLlmProvider(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiTestLlmProviderRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<TestLlmProviderResponse> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_TestLlmProvider(
+        requestParameters.testLlmProviderDefinitionRequest,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
+ * Tests an existing LLM provider connectivity by its ID.
+ * @summary Test LLM Provider By Id
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiTestLlmProviderByIdRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_TestLlmProviderById(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiTestLlmProviderByIdRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<TestLlmProviderResponse> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_TestLlmProviderById(
+        requestParameters.llmProviderId,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
  * Triggers asynchronous calculation of metadata quality issues and returns a process ID for status tracking.
  * @summary Trigger Quality Issues Calculation
  * @param {AxiosInstance} axios Axios instance.
@@ -6412,6 +7943,31 @@ export async function ActionsApi_TriggerQualityIssuesCalculation(
 ): AxiosPromise<TriggerQualityIssuesCalculationResponse> {
     const localVarAxiosArgs = await ActionsApiAxiosParamCreator_TriggerQualityIssuesCalculation(
         requestParameters.workspaceId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
+ *
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiUpsertDocumentRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_UpsertDocument(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiUpsertDocumentRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<UpsertKnowledgeDocumentResponseDto> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_UpsertDocument(
+        requestParameters.workspaceId, requestParameters.upsertKnowledgeDocumentRequestDto,
         options || {},
         configuration,
     );
@@ -6647,6 +8203,15 @@ export interface ActionsApiInterface {
     computeValidObjects(requestParameters: ActionsApiComputeValidObjectsRequest, options?: AxiosRequestConfig): AxiosPromise<AfmValidObjectsResponse>;
 
     /**
+     *
+     * @param {ActionsApiCreateDocumentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    createDocument(requestParameters: ActionsApiCreateDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<CreateKnowledgeDocumentResponseDto>;
+
+    /**
      * Returns a list of Users who created any object for this workspace
      * @summary Get Analytics Catalog CreatedBy Users
      * @param {ActionsApiCreatedByRequest} requestParameters Request parameters.
@@ -6655,6 +8220,15 @@ export interface ActionsApiInterface {
      * @memberof ActionsApiInterface
      */
     createdBy(requestParameters: ActionsApiCreatedByRequest, options?: AxiosRequestConfig): AxiosPromise<AnalyticsCatalogCreatedBy>;
+
+    /**
+     *
+     * @param {ActionsApiDeleteDocumentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    deleteDocument(requestParameters: ActionsApiDeleteDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<DeleteKnowledgeDocumentResponseDto>;
 
     /**
      * The resource provides static structures needed for investigation of a problem with given AFM.
@@ -6706,6 +8280,25 @@ export interface ActionsApiInterface {
     generateDescription(requestParameters: ActionsApiGenerateDescriptionRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateDescriptionResponse>;
 
     /**
+     * Generates a title for the specified analytics object. Returns title and a note with details if generation was not performed.
+     * @summary Generate Title for Analytics Object
+     * @param {ActionsApiGenerateTitleRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    generateTitle(requestParameters: ActionsApiGenerateTitleRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateTitleResponse>;
+
+    /**
+     *
+     * @param {ActionsApiGetDocumentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    getDocument(requestParameters: ActionsApiGetDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<KnowledgeDocumentMetadataDto>;
+
+    /**
      * Returns metadata quality issues detected by the platform linter.
      * @summary Get Quality Issues
      * @param {ActionsApiGetQualityIssuesRequest} requestParameters Request parameters.
@@ -6755,6 +8348,15 @@ export interface ActionsApiInterface {
     keyDriverAnalysisResult(requestParameters: ActionsApiKeyDriverAnalysisResultRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResult>;
 
     /**
+     *
+     * @param {ActionsApiListDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    listDocuments(requestParameters: ActionsApiListDocumentsRequest, options?: AxiosRequestConfig): AxiosPromise<ListKnowledgeDocumentsResponseDto>;
+
+    /**
      * Returns a list of Users who created any memory item for this workspace
      * @summary Get AI Memory CreatedBy Users
      * @param {ActionsApiMemoryCreatedByUsersRequest} requestParameters Request parameters.
@@ -6783,6 +8385,15 @@ export interface ActionsApiInterface {
      * @memberof ActionsApiInterface
      */
     outlierDetectionResult(requestParameters: ActionsApiOutlierDetectionResultRequest, options?: AxiosRequestConfig): AxiosPromise<OutlierDetectionResult>;
+
+    /**
+     *
+     * @param {ActionsApiPatchDocumentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    patchDocument(requestParameters: ActionsApiPatchDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<KnowledgeDocumentMetadataDto>;
 
     /**
      * Returns a list of available LLM Endpoints
@@ -6815,6 +8426,15 @@ export interface ActionsApiInterface {
     retrieveResult(requestParameters: ActionsApiRetrieveResultRequest, options?: AxiosRequestConfig): AxiosPromise<ExecutionResult>;
 
     /**
+     *
+     * @param {ActionsApiSearchKnowledgeRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    searchKnowledge(requestParameters: ActionsApiSearchKnowledgeRequest, options?: AxiosRequestConfig): AxiosPromise<SearchKnowledgeResponseDto>;
+
+    /**
      * Returns a list of tags for this workspace
      * @summary Get Analytics Catalog Tags
      * @param {ActionsApiTagsRequest} requestParameters Request parameters.
@@ -6825,6 +8445,26 @@ export interface ActionsApiInterface {
     tags(requestParameters: ActionsApiTagsRequest, options?: AxiosRequestConfig): AxiosPromise<AnalyticsCatalogTags>;
 
     /**
+     * Tests LLM provider connectivity with a full definition.
+     * @summary Test LLM Provider
+     * @param {ActionsApiTestLlmProviderRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    testLlmProvider(requestParameters: ActionsApiTestLlmProviderRequest, options?: AxiosRequestConfig): AxiosPromise<TestLlmProviderResponse>;
+
+    /**
+     * Tests an existing LLM provider connectivity by its ID.
+     * @summary Test LLM Provider By Id
+     * @param {ActionsApiTestLlmProviderByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    testLlmProviderById(requestParameters: ActionsApiTestLlmProviderByIdRequest, options?: AxiosRequestConfig): AxiosPromise<TestLlmProviderResponse>;
+
+    /**
      * Triggers asynchronous calculation of metadata quality issues and returns a process ID for status tracking.
      * @summary Trigger Quality Issues Calculation
      * @param {ActionsApiTriggerQualityIssuesCalculationRequest} requestParameters Request parameters.
@@ -6833,6 +8473,15 @@ export interface ActionsApiInterface {
      * @memberof ActionsApiInterface
      */
     triggerQualityIssuesCalculation(requestParameters: ActionsApiTriggerQualityIssuesCalculationRequest, options?: AxiosRequestConfig): AxiosPromise<TriggerQualityIssuesCalculationResponse>;
+
+    /**
+     *
+     * @param {ActionsApiUpsertDocumentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    upsertDocument(requestParameters: ActionsApiUpsertDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<UpsertKnowledgeDocumentResponseDto>;
 
     /**
      * Validates LLM endpoint with provided parameters.
@@ -7298,6 +8947,27 @@ export interface ActionsApiComputeValidObjectsRequest {
 }
 
 /**
+ * Request parameters for createDocument operation in ActionsApi.
+ * @export
+ * @interface ActionsApiCreateDocumentRequest
+ */
+export interface ActionsApiCreateDocumentRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiCreateDocument
+     */
+    readonly workspaceId: string
+
+    /**
+     *
+     * @type {CreateKnowledgeDocumentRequestDto}
+     * @memberof ActionsApiCreateDocument
+     */
+    readonly createKnowledgeDocumentRequestDto: CreateKnowledgeDocumentRequestDto
+}
+
+/**
  * Request parameters for createdBy operation in ActionsApi.
  * @export
  * @interface ActionsApiCreatedByRequest
@@ -7309,6 +8979,27 @@ export interface ActionsApiCreatedByRequest {
      * @memberof ActionsApiCreatedBy
      */
     readonly workspaceId: string
+}
+
+/**
+ * Request parameters for deleteDocument operation in ActionsApi.
+ * @export
+ * @interface ActionsApiDeleteDocumentRequest
+ */
+export interface ActionsApiDeleteDocumentRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiDeleteDocument
+     */
+    readonly workspaceId: string
+
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiDeleteDocument
+     */
+    readonly filename: string
 }
 
 /**
@@ -7452,6 +9143,48 @@ export interface ActionsApiGenerateDescriptionRequest {
 }
 
 /**
+ * Request parameters for generateTitle operation in ActionsApi.
+ * @export
+ * @interface ActionsApiGenerateTitleRequest
+ */
+export interface ActionsApiGenerateTitleRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiGenerateTitle
+     */
+    readonly workspaceId: string
+
+    /**
+     *
+     * @type {GenerateTitleRequest}
+     * @memberof ActionsApiGenerateTitle
+     */
+    readonly generateTitleRequest: GenerateTitleRequest
+}
+
+/**
+ * Request parameters for getDocument operation in ActionsApi.
+ * @export
+ * @interface ActionsApiGetDocumentRequest
+ */
+export interface ActionsApiGetDocumentRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiGetDocument
+     */
+    readonly workspaceId: string
+
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiGetDocument
+     */
+    readonly filename: string
+}
+
+/**
  * Request parameters for getQualityIssues operation in ActionsApi.
  * @export
  * @interface ActionsApiGetQualityIssuesRequest
@@ -7571,6 +9304,48 @@ export interface ActionsApiKeyDriverAnalysisResultRequest {
 }
 
 /**
+ * Request parameters for listDocuments operation in ActionsApi.
+ * @export
+ * @interface ActionsApiListDocumentsRequest
+ */
+export interface ActionsApiListDocumentsRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiListDocuments
+     */
+    readonly workspaceId: string
+
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof ActionsApiListDocuments
+     */
+    readonly scopes?: Array<string>
+
+    /**
+     *
+     * @type {number}
+     * @memberof ActionsApiListDocuments
+     */
+    readonly size?: number
+
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiListDocuments
+     */
+    readonly pageToken?: string
+
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiListDocuments
+     */
+    readonly metaInclude?: string
+}
+
+/**
  * Request parameters for memoryCreatedByUsers operation in ActionsApi.
  * @export
  * @interface ActionsApiMemoryCreatedByUsersRequest
@@ -7645,6 +9420,34 @@ export interface ActionsApiOutlierDetectionResultRequest {
      * @memberof ActionsApiOutlierDetectionResult
      */
     readonly limit?: number
+}
+
+/**
+ * Request parameters for patchDocument operation in ActionsApi.
+ * @export
+ * @interface ActionsApiPatchDocumentRequest
+ */
+export interface ActionsApiPatchDocumentRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiPatchDocument
+     */
+    readonly workspaceId: string
+
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiPatchDocument
+     */
+    readonly filename: string
+
+    /**
+     *
+     * @type {PatchKnowledgeDocumentRequestDto}
+     * @memberof ActionsApiPatchDocument
+     */
+    readonly patchKnowledgeDocumentRequestDto: PatchKnowledgeDocumentRequestDto
 }
 
 /**
@@ -7732,6 +9535,48 @@ export interface ActionsApiRetrieveResultRequest {
 }
 
 /**
+ * Request parameters for searchKnowledge operation in ActionsApi.
+ * @export
+ * @interface ActionsApiSearchKnowledgeRequest
+ */
+export interface ActionsApiSearchKnowledgeRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiSearchKnowledge
+     */
+    readonly workspaceId: string
+
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiSearchKnowledge
+     */
+    readonly query: string
+
+    /**
+     *
+     * @type {number}
+     * @memberof ActionsApiSearchKnowledge
+     */
+    readonly limit?: number
+
+    /**
+     *
+     * @type {number}
+     * @memberof ActionsApiSearchKnowledge
+     */
+    readonly minScore?: number
+
+    /**
+     *
+     * @type {Array<string>}
+     * @memberof ActionsApiSearchKnowledge
+     */
+    readonly scopes?: Array<string>
+}
+
+/**
  * Request parameters for tags operation in ActionsApi.
  * @export
  * @interface ActionsApiTagsRequest
@@ -7746,6 +9591,34 @@ export interface ActionsApiTagsRequest {
 }
 
 /**
+ * Request parameters for testLlmProvider operation in ActionsApi.
+ * @export
+ * @interface ActionsApiTestLlmProviderRequest
+ */
+export interface ActionsApiTestLlmProviderRequest {
+    /**
+     *
+     * @type {TestLlmProviderDefinitionRequest}
+     * @memberof ActionsApiTestLlmProvider
+     */
+    readonly testLlmProviderDefinitionRequest: TestLlmProviderDefinitionRequest
+}
+
+/**
+ * Request parameters for testLlmProviderById operation in ActionsApi.
+ * @export
+ * @interface ActionsApiTestLlmProviderByIdRequest
+ */
+export interface ActionsApiTestLlmProviderByIdRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof ActionsApiTestLlmProviderById
+     */
+    readonly llmProviderId: string
+}
+
+/**
  * Request parameters for triggerQualityIssuesCalculation operation in ActionsApi.
  * @export
  * @interface ActionsApiTriggerQualityIssuesCalculationRequest
@@ -7757,6 +9630,27 @@ export interface ActionsApiTriggerQualityIssuesCalculationRequest {
      * @memberof ActionsApiTriggerQualityIssuesCalculation
      */
     readonly workspaceId: string
+}
+
+/**
+ * Request parameters for upsertDocument operation in ActionsApi.
+ * @export
+ * @interface ActionsApiUpsertDocumentRequest
+ */
+export interface ActionsApiUpsertDocumentRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiUpsertDocument
+     */
+    readonly workspaceId: string
+
+    /**
+     *
+     * @type {UpsertKnowledgeDocumentRequestDto}
+     * @memberof ActionsApiUpsertDocument
+     */
+    readonly upsertKnowledgeDocumentRequestDto: UpsertKnowledgeDocumentRequestDto
 }
 
 /**
@@ -8005,6 +9899,17 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
+     *
+     * @param {ActionsApiCreateDocumentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public createDocument(requestParameters: ActionsApiCreateDocumentRequest, options?: AxiosRequestConfig) {
+        return ActionsApi_CreateDocument(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
      * Returns a list of Users who created any object for this workspace
      * @summary Get Analytics Catalog CreatedBy Users
      * @param {ActionsApiCreatedByRequest} requestParameters Request parameters.
@@ -8014,6 +9919,17 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      */
     public createdBy(requestParameters: ActionsApiCreatedByRequest, options?: AxiosRequestConfig) {
         return ActionsApi_CreatedBy(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     *
+     * @param {ActionsApiDeleteDocumentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public deleteDocument(requestParameters: ActionsApiDeleteDocumentRequest, options?: AxiosRequestConfig) {
+        return ActionsApi_DeleteDocument(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -8076,6 +9992,29 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
+     * Generates a title for the specified analytics object. Returns title and a note with details if generation was not performed.
+     * @summary Generate Title for Analytics Object
+     * @param {ActionsApiGenerateTitleRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public generateTitle(requestParameters: ActionsApiGenerateTitleRequest, options?: AxiosRequestConfig) {
+        return ActionsApi_GenerateTitle(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     *
+     * @param {ActionsApiGetDocumentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public getDocument(requestParameters: ActionsApiGetDocumentRequest, options?: AxiosRequestConfig) {
+        return ActionsApi_GetDocument(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
      * Returns metadata quality issues detected by the platform linter.
      * @summary Get Quality Issues
      * @param {ActionsApiGetQualityIssuesRequest} requestParameters Request parameters.
@@ -8135,6 +10074,17 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
+     *
+     * @param {ActionsApiListDocumentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public listDocuments(requestParameters: ActionsApiListDocumentsRequest, options?: AxiosRequestConfig) {
+        return ActionsApi_ListDocuments(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
      * Returns a list of Users who created any memory item for this workspace
      * @summary Get AI Memory CreatedBy Users
      * @param {ActionsApiMemoryCreatedByUsersRequest} requestParameters Request parameters.
@@ -8168,6 +10118,17 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      */
     public outlierDetectionResult(requestParameters: ActionsApiOutlierDetectionResultRequest, options?: AxiosRequestConfig) {
         return ActionsApi_OutlierDetectionResult(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     *
+     * @param {ActionsApiPatchDocumentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public patchDocument(requestParameters: ActionsApiPatchDocumentRequest, options?: AxiosRequestConfig) {
+        return ActionsApi_PatchDocument(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -8207,6 +10168,17 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
+     *
+     * @param {ActionsApiSearchKnowledgeRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public searchKnowledge(requestParameters: ActionsApiSearchKnowledgeRequest, options?: AxiosRequestConfig) {
+        return ActionsApi_SearchKnowledge(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
      * Returns a list of tags for this workspace
      * @summary Get Analytics Catalog Tags
      * @param {ActionsApiTagsRequest} requestParameters Request parameters.
@@ -8219,6 +10191,30 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
+     * Tests LLM provider connectivity with a full definition.
+     * @summary Test LLM Provider
+     * @param {ActionsApiTestLlmProviderRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public testLlmProvider(requestParameters: ActionsApiTestLlmProviderRequest, options?: AxiosRequestConfig) {
+        return ActionsApi_TestLlmProvider(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Tests an existing LLM provider connectivity by its ID.
+     * @summary Test LLM Provider By Id
+     * @param {ActionsApiTestLlmProviderByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public testLlmProviderById(requestParameters: ActionsApiTestLlmProviderByIdRequest, options?: AxiosRequestConfig) {
+        return ActionsApi_TestLlmProviderById(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
      * Triggers asynchronous calculation of metadata quality issues and returns a process ID for status tracking.
      * @summary Trigger Quality Issues Calculation
      * @param {ActionsApiTriggerQualityIssuesCalculationRequest} requestParameters Request parameters.
@@ -8228,6 +10224,17 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      */
     public triggerQualityIssuesCalculation(requestParameters: ActionsApiTriggerQualityIssuesCalculationRequest, options?: AxiosRequestConfig) {
         return ActionsApi_TriggerQualityIssuesCalculation(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     *
+     * @param {ActionsApiUpsertDocumentRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public upsertDocument(requestParameters: ActionsApiUpsertDocumentRequest, options?: AxiosRequestConfig) {
+        return ActionsApi_UpsertDocument(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -11027,6 +13034,68 @@ export async function SmartFunctionsApiAxiosParamCreator_GenerateDescription(
 
 // SmartFunctionsApi FP - SmartFunctionsApiAxiosParamCreator
 /**
+ * Generates a title for the specified analytics object. Returns title and a note with details if generation was not performed.
+ * @summary Generate Title for Analytics Object
+ * @param {string} workspaceId Workspace identifier
+ * @param {GenerateTitleRequest} generateTitleRequest
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApiAxiosParamCreator_GenerateTitle(
+    workspaceId: string, generateTitleRequest: GenerateTitleRequest,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('generateTitle', 'workspaceId', workspaceId)
+    // verify required parameter 'generateTitleRequest' is not null or undefined
+    assertParamExists('generateTitle', 'generateTitleRequest', generateTitleRequest)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/analyticsCatalog/generateTitle`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof generateTitleRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(generateTitleRequest !== undefined ? generateTitleRequest : {})
+        : generateTitleRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// SmartFunctionsApi FP - SmartFunctionsApiAxiosParamCreator
+/**
  * Returns metadata quality issues detected by the platform linter.
  * @summary Get Quality Issues
  * @param {string} workspaceId Workspace identifier
@@ -11239,6 +13308,109 @@ export async function SmartFunctionsApiAxiosParamCreator_Tags(
 
 
     
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// SmartFunctionsApi FP - SmartFunctionsApiAxiosParamCreator
+/**
+ * Tests LLM provider connectivity with a full definition.
+ * @summary Test LLM Provider
+ * @param {TestLlmProviderDefinitionRequest} testLlmProviderDefinitionRequest
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApiAxiosParamCreator_TestLlmProvider(
+    testLlmProviderDefinitionRequest: TestLlmProviderDefinitionRequest,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'testLlmProviderDefinitionRequest' is not null or undefined
+    assertParamExists('testLlmProvider', 'testLlmProviderDefinitionRequest', testLlmProviderDefinitionRequest)
+    const localVarPath = `/api/v1/actions/ai/llmProvider/test`;
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+
+    const consumes = [
+        'application/json'
+    ];
+    // use application/json if present, otherwise fallback to the first one
+    localVarHeaderParameter['Content-Type'] = consumes.includes('application/json')
+        ? 'application/json'
+        : consumes[0];
+
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+    const needsSerialization =
+        typeof testLlmProviderDefinitionRequest !== "string" ||
+        localVarRequestOptions.headers["Content-Type"] === "application/json";
+    localVarRequestOptions.data = needsSerialization
+        ? JSON.stringify(testLlmProviderDefinitionRequest !== undefined ? testLlmProviderDefinitionRequest : {})
+        : testLlmProviderDefinitionRequest || "";
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// SmartFunctionsApi FP - SmartFunctionsApiAxiosParamCreator
+/**
+ * Tests an existing LLM provider connectivity by its ID.
+ * @summary Test LLM Provider By Id
+ * @param {string} llmProviderId
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApiAxiosParamCreator_TestLlmProviderById(
+    llmProviderId: string,
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'llmProviderId' is not null or undefined
+    assertParamExists('testLlmProviderById', 'llmProviderId', llmProviderId)
+    const localVarPath = `/api/v1/actions/ai/llmProvider/{llmProviderId}/test`
+        .replace(`{${"llmProviderId"}}`, encodeURIComponent(String(llmProviderId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+
     setSearchParams(localVarUrlObj, localVarQueryParameter);
     const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
     localVarRequestOptions.headers = {
@@ -11758,6 +13930,32 @@ export async function SmartFunctionsApi_GenerateDescription(
 
 // SmartFunctionsApi Api FP
 /**
+ * Generates a title for the specified analytics object. Returns title and a note with details if generation was not performed.
+ * @summary Generate Title for Analytics Object
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {SmartFunctionsApiGenerateTitleRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApi_GenerateTitle(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: SmartFunctionsApiGenerateTitleRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<GenerateTitleResponse> {
+    const localVarAxiosArgs = await SmartFunctionsApiAxiosParamCreator_GenerateTitle(
+        requestParameters.workspaceId, requestParameters.generateTitleRequest,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// SmartFunctionsApi Api FP
+/**
  * Returns metadata quality issues detected by the platform linter.
  * @summary Get Quality Issues
  * @param {AxiosInstance} axios Axios instance.
@@ -11879,6 +14077,58 @@ export async function SmartFunctionsApi_Tags(
 ): AxiosPromise<AnalyticsCatalogTags> {
     const localVarAxiosArgs = await SmartFunctionsApiAxiosParamCreator_Tags(
         requestParameters.workspaceId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// SmartFunctionsApi Api FP
+/**
+ * Tests LLM provider connectivity with a full definition.
+ * @summary Test LLM Provider
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {SmartFunctionsApiTestLlmProviderRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApi_TestLlmProvider(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: SmartFunctionsApiTestLlmProviderRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<TestLlmProviderResponse> {
+    const localVarAxiosArgs = await SmartFunctionsApiAxiosParamCreator_TestLlmProvider(
+        requestParameters.testLlmProviderDefinitionRequest,
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// SmartFunctionsApi Api FP
+/**
+ * Tests an existing LLM provider connectivity by its ID.
+ * @summary Test LLM Provider By Id
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {SmartFunctionsApiTestLlmProviderByIdRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApi_TestLlmProviderById(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: SmartFunctionsApiTestLlmProviderByIdRequest,
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<TestLlmProviderResponse> {
+    const localVarAxiosArgs = await SmartFunctionsApiAxiosParamCreator_TestLlmProviderById(
+        requestParameters.llmProviderId,
         options || {},
         configuration,
     );
@@ -12101,6 +14351,16 @@ export interface SmartFunctionsApiInterface {
     generateDescription(requestParameters: SmartFunctionsApiGenerateDescriptionRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateDescriptionResponse>;
 
     /**
+     * Generates a title for the specified analytics object. Returns title and a note with details if generation was not performed.
+     * @summary Generate Title for Analytics Object
+     * @param {SmartFunctionsApiGenerateTitleRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApiInterface
+     */
+    generateTitle(requestParameters: SmartFunctionsApiGenerateTitleRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateTitleResponse>;
+
+    /**
      * Returns metadata quality issues detected by the platform linter.
      * @summary Get Quality Issues
      * @param {SmartFunctionsApiGetQualityIssuesRequest} requestParameters Request parameters.
@@ -12149,6 +14409,26 @@ export interface SmartFunctionsApiInterface {
      * @memberof SmartFunctionsApiInterface
      */
     tags(requestParameters: SmartFunctionsApiTagsRequest, options?: AxiosRequestConfig): AxiosPromise<AnalyticsCatalogTags>;
+
+    /**
+     * Tests LLM provider connectivity with a full definition.
+     * @summary Test LLM Provider
+     * @param {SmartFunctionsApiTestLlmProviderRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApiInterface
+     */
+    testLlmProvider(requestParameters: SmartFunctionsApiTestLlmProviderRequest, options?: AxiosRequestConfig): AxiosPromise<TestLlmProviderResponse>;
+
+    /**
+     * Tests an existing LLM provider connectivity by its ID.
+     * @summary Test LLM Provider By Id
+     * @param {SmartFunctionsApiTestLlmProviderByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApiInterface
+     */
+    testLlmProviderById(requestParameters: SmartFunctionsApiTestLlmProviderByIdRequest, options?: AxiosRequestConfig): AxiosPromise<TestLlmProviderResponse>;
 
     /**
      * Triggers asynchronous calculation of metadata quality issues and returns a process ID for status tracking.
@@ -12526,6 +14806,27 @@ export interface SmartFunctionsApiGenerateDescriptionRequest {
 }
 
 /**
+ * Request parameters for generateTitle operation in SmartFunctionsApi.
+ * @export
+ * @interface SmartFunctionsApiGenerateTitleRequest
+ */
+export interface SmartFunctionsApiGenerateTitleRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof SmartFunctionsApiGenerateTitle
+     */
+    readonly workspaceId: string
+
+    /**
+     *
+     * @type {GenerateTitleRequest}
+     * @memberof SmartFunctionsApiGenerateTitle
+     */
+    readonly generateTitleRequest: GenerateTitleRequest
+}
+
+/**
  * Request parameters for getQualityIssues operation in SmartFunctionsApi.
  * @export
  * @interface SmartFunctionsApiGetQualityIssuesRequest
@@ -12600,6 +14901,34 @@ export interface SmartFunctionsApiTagsRequest {
      * @memberof SmartFunctionsApiTags
      */
     readonly workspaceId: string
+}
+
+/**
+ * Request parameters for testLlmProvider operation in SmartFunctionsApi.
+ * @export
+ * @interface SmartFunctionsApiTestLlmProviderRequest
+ */
+export interface SmartFunctionsApiTestLlmProviderRequest {
+    /**
+     *
+     * @type {TestLlmProviderDefinitionRequest}
+     * @memberof SmartFunctionsApiTestLlmProvider
+     */
+    readonly testLlmProviderDefinitionRequest: TestLlmProviderDefinitionRequest
+}
+
+/**
+ * Request parameters for testLlmProviderById operation in SmartFunctionsApi.
+ * @export
+ * @interface SmartFunctionsApiTestLlmProviderByIdRequest
+ */
+export interface SmartFunctionsApiTestLlmProviderByIdRequest {
+    /**
+     *
+     * @type {string}
+     * @memberof SmartFunctionsApiTestLlmProviderById
+     */
+    readonly llmProviderId: string
 }
 
 /**
@@ -12815,6 +15144,18 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
     }
 
     /**
+     * Generates a title for the specified analytics object. Returns title and a note with details if generation was not performed.
+     * @summary Generate Title for Analytics Object
+     * @param {SmartFunctionsApiGenerateTitleRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApi
+     */
+    public generateTitle(requestParameters: SmartFunctionsApiGenerateTitleRequest, options?: AxiosRequestConfig) {
+        return SmartFunctionsApi_GenerateTitle(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
      * Returns metadata quality issues detected by the platform linter.
      * @summary Get Quality Issues
      * @param {SmartFunctionsApiGetQualityIssuesRequest} requestParameters Request parameters.
@@ -12872,6 +15213,30 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
      */
     public tags(requestParameters: SmartFunctionsApiTagsRequest, options?: AxiosRequestConfig) {
         return SmartFunctionsApi_Tags(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Tests LLM provider connectivity with a full definition.
+     * @summary Test LLM Provider
+     * @param {SmartFunctionsApiTestLlmProviderRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApi
+     */
+    public testLlmProvider(requestParameters: SmartFunctionsApiTestLlmProviderRequest, options?: AxiosRequestConfig) {
+        return SmartFunctionsApi_TestLlmProvider(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Tests an existing LLM provider connectivity by its ID.
+     * @summary Test LLM Provider By Id
+     * @param {SmartFunctionsApiTestLlmProviderByIdRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApi
+     */
+    public testLlmProviderById(requestParameters: SmartFunctionsApiTestLlmProviderByIdRequest, options?: AxiosRequestConfig) {
+        return SmartFunctionsApi_TestLlmProviderById(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**

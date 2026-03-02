@@ -762,7 +762,7 @@
     "kdaDialog.dialog.keyDrives.button.trendUp": "Lisäys",
     "kdaDialog.dialog.keyDrives.button.trendDown": "Vähennys",
     "kdaDialog.dialog.keyDrives.button.trendAll": "Kaikki",
-    "kdaDialog.dialog.keyDrives.drivers": "{count} ajuri{count, plural, one {} other {a}}",
+    "kdaDialog.dialog.keyDrives.drivers": "{count} {count, plural, one {avaintekijä} other {avaintekijää}}",
     "kdaDialog.dialog.keyDrives.overview.summary.home": "Yhteenveto",
     "kdaDialog.dialog.keyDrives.overview.summary.home.tooltip": "Siirry analyysin yhteenvetoon",
     "kdaDialog.dialog.keyDrives.overview.summary.breadcrumb.label": "Avaintekijäanalyysin navigointi",

@@ -56,6 +56,11 @@ function createMapFacadeStub(): IMapFacade {
         queryRenderedFeatures: vi.fn(() => []),
         setLayoutProperty: vi.fn(() => map),
         setFilter: vi.fn(() => map),
+        keyboard: {
+            enable: vi.fn(),
+            disable: vi.fn(),
+            disableRotation: vi.fn(),
+        },
     };
     return map;
 }
@@ -153,7 +158,15 @@ describe("MapController", () => {
             />,
         );
 
-        expect(initMock).toHaveBeenCalledWith(mapContainerRef, config, null, undefined);
+        expect(initMock).toHaveBeenCalledWith(
+            mapContainerRef,
+            config,
+            null,
+            undefined,
+            undefined,
+            undefined,
+            undefined,
+        );
         expect(resizeMock).toHaveBeenCalledWith(mapFacadeStub, true, null, null);
         expect(applyViewportOnConfigChangeMock).toHaveBeenCalledWith(mapFacadeStub, true, config, null);
         expect(callbacksMock).toHaveBeenCalledWith(mapFacadeStub, {
@@ -165,5 +178,32 @@ describe("MapController", () => {
             onDrill: undefined,
         });
         expect(afterRenderMock).toHaveBeenCalledWith(mapFacadeStub, afterRender, layerExecutions);
+    });
+
+    it("forwards mapCanvasTitle to map initialization", () => {
+        const mapContainerRef = { current: document.createElement("div") };
+
+        render(
+            <MapController
+                mapContainerRef={mapContainerRef}
+                chartContainerRect={null}
+                initialViewport={null}
+                dataViewport={null}
+                layerExecutions={[]}
+                drillablePredicates={[]}
+                config={undefined}
+                mapCanvasTitle="Geo accessibility title"
+            />,
+        );
+
+        expect(initMock).toHaveBeenCalledWith(
+            mapContainerRef,
+            undefined,
+            null,
+            undefined,
+            undefined,
+            "Geo accessibility title",
+            undefined,
+        );
     });
 });

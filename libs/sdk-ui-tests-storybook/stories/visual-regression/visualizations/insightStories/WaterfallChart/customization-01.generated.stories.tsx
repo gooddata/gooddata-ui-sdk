@@ -2,6 +2,7 @@
 
 import { type IInsight } from "@gooddata/sdk-model";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 
@@ -92,7 +93,7 @@ export const LegendPositionDefaultLegend = () =>
                 visualizationUrl: "local:waterfall",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(21, 1, 0),
+        getScenariosGroupByIndexes(24, 1, 0),
     )();
 LegendPositionDefaultLegend.parameters = {
     kind: "legend position - default legend",
@@ -193,7 +194,7 @@ export const LegendPositionAutoLegend = () =>
                 visualizationUrl: "local:waterfall",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(21, 1, 1),
+        getScenariosGroupByIndexes(24, 1, 1),
     )();
 LegendPositionAutoLegend.parameters = {
     kind: "legend position - auto legend",
@@ -294,7 +295,7 @@ export const LegendPositionLegendOnLeft = () =>
                 visualizationUrl: "local:waterfall",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(21, 1, 2),
+        getScenariosGroupByIndexes(24, 1, 2),
     )();
 LegendPositionLegendOnLeft.parameters = {
     kind: "legend position - legend on left",
@@ -395,7 +396,7 @@ export const LegendPositionLegendOnRight = () =>
                 visualizationUrl: "local:waterfall",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(21, 1, 3),
+        getScenariosGroupByIndexes(24, 1, 3),
     )();
 LegendPositionLegendOnRight.parameters = {
     kind: "legend position - legend on right",
@@ -496,7 +497,7 @@ export const LegendPositionLegendOnTop = () =>
                 visualizationUrl: "local:waterfall",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(21, 1, 4),
+        getScenariosGroupByIndexes(24, 1, 4),
     )();
 LegendPositionLegendOnTop.parameters = {
     kind: "legend position - legend on top",
@@ -597,7 +598,7 @@ export const LegendPositionLegendAtBottom = () =>
                 visualizationUrl: "local:waterfall",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(21, 1, 5),
+        getScenariosGroupByIndexes(24, 1, 5),
     )();
 LegendPositionLegendAtBottom.parameters = {
     kind: "legend position - legend at bottom",
@@ -697,7 +698,7 @@ export const LegendPositionDisabled = () =>
                 visualizationUrl: "local:waterfall",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(21, 1, 6),
+        getScenariosGroupByIndexes(24, 1, 6),
     )();
 LegendPositionDisabled.parameters = {
     kind: "legend position - disabled",

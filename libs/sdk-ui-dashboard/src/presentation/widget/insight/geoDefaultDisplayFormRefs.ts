@@ -3,6 +3,7 @@
 import { type IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
 import {
     type IAttributeDisplayFormMetadataObject,
+    type IBucket,
     type ICatalogAttribute,
     type IInsight,
     type ISettings,
@@ -48,22 +49,19 @@ function findAttributeByDisplayFormRef(
     )?.attribute;
 }
 
-export function getGeoDefaultDisplayFormRefs(
-    insight: IInsight,
-    settings: ISettings | undefined,
+/**
+ * Resolves geo display form → default display form mappings for a given layer type and buckets.
+ *
+ * @internal
+ */
+export function resolveGeoDefaultDisplayFormRefs(
+    layerType: "pushpin" | "area",
+    buckets: IBucket[],
     catalogAttributes: ICatalogAttribute[],
     preloadedAttributesWithReferences?: IAttributeWithReferences[],
 ): Map<string, ObjRef> | undefined {
-    const type = insightVisualizationType(insight);
-    const isNewGeoPushpin = type === VisualizationTypes.PUSHPIN && settings?.enableNewGeoPushpin;
-    const isNewGeoArea = type === VisualizationTypes.CHOROPLETH && settings?.enableGeoArea;
-
-    if (!isNewGeoPushpin && !isNewGeoArea) {
-        return undefined;
-    }
-
-    const buckets = insightBuckets(insight);
-    const geoBucket = bucketsFind(buckets, isNewGeoArea ? BucketNames.AREA : BucketNames.LOCATION);
+    const bucketName = layerType === "area" ? BucketNames.AREA : BucketNames.LOCATION;
+    const geoBucket = bucketsFind(buckets, bucketName);
     const geoAttr = geoBucket ? bucketAttribute(geoBucket) : undefined;
     if (!geoAttr) {
         return undefined;
@@ -85,4 +83,27 @@ export function getGeoDefaultDisplayFormRefs(
     }
 
     return new Map([[serializeObjRef(geoDisplayFormRef), defaultDisplayFormRef]]);
+}
+
+export function getGeoDefaultDisplayFormRefs(
+    insight: IInsight,
+    settings: ISettings | undefined,
+    catalogAttributes: ICatalogAttribute[],
+    preloadedAttributesWithReferences?: IAttributeWithReferences[],
+): Map<string, ObjRef> | undefined {
+    const type = insightVisualizationType(insight);
+    const isNewGeoPushpin = type === VisualizationTypes.PUSHPIN && settings?.enableNewGeoPushpin;
+    const isNewGeoArea = type === VisualizationTypes.CHOROPLETH && settings?.enableGeoArea;
+
+    if (!isNewGeoPushpin && !isNewGeoArea) {
+        return undefined;
+    }
+
+    const layerType = isNewGeoArea ? "area" : "pushpin";
+    return resolveGeoDefaultDisplayFormRefs(
+        layerType,
+        insightBuckets(insight),
+        catalogAttributes,
+        preloadedAttributesWithReferences,
+    );
 }

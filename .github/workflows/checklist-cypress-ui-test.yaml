@@ -111,7 +111,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 500
       - name: Git config user
         uses: snow-actions/git-config-user@v1.0.0
         with:
@@ -120,6 +120,7 @@ jobs:
       - name: Checkout the correct commit corresponding to $GIT_REVISION
         if: ${{ inputs.GIT_REVISION != 'master' }}
         run: |
+          git fetch origin "${{ inputs.GIT_REVISION }}" --depth=500 || git fetch origin "+refs/heads/*:refs/remotes/origin/*" --depth=500
           git checkout ${{ inputs.GIT_REVISION }}
       - name: Setup rush
         env:

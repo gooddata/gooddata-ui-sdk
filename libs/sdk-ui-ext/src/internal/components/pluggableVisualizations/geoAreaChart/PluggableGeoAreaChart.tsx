@@ -10,25 +10,19 @@ import {
 import {
     type IFilter,
     type IInsightDefinition,
-    bucketAttribute,
-    bucketItems,
-    insightBucket,
     insightBuckets,
     insightFilters,
     insightHasDataDefined,
     insightLayers,
     insightTitle,
 } from "@gooddata/sdk-model";
-import { BucketNames, GeoAreaMissingSdkError, VisualizationTypes } from "@gooddata/sdk-ui";
+import { GeoAreaMissingSdkError, VisualizationTypes } from "@gooddata/sdk-ui";
+import { type IGeoAreaChartConfig, type IGeoLayer, isGeoLayerPushpin } from "@gooddata/sdk-ui-geo";
 import {
-    type IGeoAreaChartConfig,
-    type IGeoLayer,
-    createAreaLayer,
-    isGeoLayerPushpin,
-} from "@gooddata/sdk-ui-geo";
-import {
+    AREA_LAYER_ID,
     GeoChartInternal,
     buildLayerExecution,
+    insightLayerToGeoLayer,
     insightLayersToGeoLayers,
 } from "@gooddata/sdk-ui-geo/internal";
 
@@ -272,6 +266,7 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
             supportedControls,
             colorMapping,
             environment: this.environment,
+            featureFlags: this.featureFlags,
         });
     }
 
@@ -320,37 +315,25 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
         const fullConfig = this.buildVisualizationConfig(options, supportedControls);
         const filters = insightFilters(insight);
         const sortBy = createAreaSortForSegment(insight);
+        const title = insightTitle(insight);
+        const controlsForPrimaryLayer = {
+            ...supportedControls,
+            ...(fullConfig.colorPalette ? { colorPalette: fullConfig.colorPalette } : {}),
+        };
 
-        const areaBucket = insightBucket(insight, BucketNames.AREA);
-        const area = areaBucket ? bucketAttribute(areaBucket) : undefined;
-        if (!area) {
+        const primaryLayer = insightLayerToGeoLayer({
+            id: AREA_LAYER_ID,
+            type: "area",
+            buckets: insightBuckets(insight),
+            sorts: sortBy,
+            properties: { controls: controlsForPrimaryLayer },
+            ...(title ? { name: title } : {}),
+        });
+
+        if (primaryLayer?.type !== "area") {
             // Invalid or incomplete geo config; validation is handled in checkBeforeRender().
             return undefined;
         }
-        const colorBucket = insightBucket(insight, BucketNames.COLOR);
-        const color = colorBucket ? bucketItems(colorBucket)[0] : undefined;
-        const segmentBucket = insightBucket(insight, BucketNames.SEGMENT);
-        const segmentBy = segmentBucket ? bucketAttribute(segmentBucket) : undefined;
-
-        // Set primary layer name to the insight title so legend/title logic is consistent for all layers.
-        const title = insightTitle(insight);
-        const primaryLayer = createAreaLayer({
-            ...(title ? { name: title } : {}),
-            area,
-            ...(color ? { color } : {}),
-            ...(segmentBy ? { segmentBy } : {}),
-            sortBy,
-            // Colors are ALWAYS per-layer.
-            // AD's "root" color config is just the primary (root insight) layer config.
-            ...(fullConfig.colorPalette || fullConfig.colorMapping
-                ? {
-                      config: {
-                          ...(fullConfig.colorPalette ? { colorPalette: fullConfig.colorPalette } : {}),
-                          ...(fullConfig.colorMapping ? { colorMapping: fullConfig.colorMapping } : {}),
-                      },
-                  }
-                : {}),
-        });
 
         return {
             primaryLayer,

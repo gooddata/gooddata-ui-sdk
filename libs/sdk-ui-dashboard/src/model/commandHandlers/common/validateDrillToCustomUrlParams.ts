@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, all, call, put, select } from "redux-saga/effects";
@@ -12,8 +12,10 @@ import {
     areObjRefsEqual,
     filterObjRef,
     idRef,
+    isArbitraryAttributeFilter,
     isAttributeFilter,
     isDrillToCustomUrl,
+    isMatchAttributeFilter,
     isNegativeAttributeFilter,
     widgetRef,
 } from "@gooddata/sdk-model";
@@ -157,6 +159,22 @@ function sanitizeAttributeFilter(
                 ...filter,
                 negativeAttributeFilter: {
                     ...filter.negativeAttributeFilter,
+                    displayForm: idRef(displayForm.id, "displayForm"),
+                },
+            };
+        } else if (isArbitraryAttributeFilter(filter)) {
+            return {
+                ...filter,
+                arbitraryAttributeFilter: {
+                    ...filter.arbitraryAttributeFilter,
+                    displayForm: idRef(displayForm.id, "displayForm"),
+                },
+            };
+        } else if (isMatchAttributeFilter(filter)) {
+            return {
+                ...filter,
+                matchAttributeFilter: {
+                    ...filter.matchAttributeFilter,
                     displayForm: idRef(displayForm.id, "displayForm"),
                 },
             };

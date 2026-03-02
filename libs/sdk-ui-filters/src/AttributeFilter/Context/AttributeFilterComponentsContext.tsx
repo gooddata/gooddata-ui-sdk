@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type ComponentType, type ReactNode, createContext, useContext } from "react";
 
@@ -17,6 +17,8 @@ import {
     type IAttributeFilterElementsSelectItemProps,
     type IAttributeFilterElementsSelectProps,
 } from "../Components/ElementsSelect/types.js";
+import { type IFilterModeMenuProps } from "../Components/FilterModeMenu/FilterModeMenu.js";
+import { type ITextFilterBodyProps } from "../Components/TextFilterBody/TextFilterBody.js";
 import { type IAttributeFilterCustomComponentProps } from "../types.js";
 import { ThrowMissingComponentError } from "../utils.js";
 
@@ -39,6 +41,8 @@ export interface IAttributeFilterComponentsContextValue {
     ElementsSelectActionsComponent: ComponentType<IAttributeFilterElementsActionsProps>;
     EmptyResultComponent: ComponentType<IAttributeFilterEmptyResultProps>;
     StatusBarComponent: ComponentType<IAttributeFilterStatusBarProps>;
+    FilterModeMenuComponent: ComponentType<IFilterModeMenuProps>;
+    TextFilterBodyComponent: ComponentType<ITextFilterBodyProps>;
 }
 
 const AttributeFilterComponentsContext = createContext<IAttributeFilterComponentsContextValue>({
@@ -85,6 +89,14 @@ const AttributeFilterComponentsContext = createContext<IAttributeFilterComponent
         "AttributeFilterComponentsContext",
     ),
     StatusBarComponent: ThrowMissingComponentError("StatusBarComponent", "AttributeFilterComponentsContext"),
+    FilterModeMenuComponent: ThrowMissingComponentError(
+        "FilterModeMenuComponent",
+        "AttributeFilterComponentsContext",
+    ),
+    TextFilterBodyComponent: ThrowMissingComponentError(
+        "TextFilterBodyComponent",
+        "AttributeFilterComponentsContext",
+    ),
 });
 
 AttributeFilterComponentsContext.displayName = "AttributeFilterComponentsContext";

@@ -36,7 +36,7 @@ npm run --prefix $BOILER_APP_NAME start &
 # Check if curl is installed and install it if not
 if ! command -v curl &> /dev/null; then
     echo "curl is not installed. Installing curl..."
-    apt-get update -y && apt-get install -y curl
+    apt-get update -y || true && apt-get install -y curl
 fi
 
 if ! health_check $BOILER_APP_HOST; then

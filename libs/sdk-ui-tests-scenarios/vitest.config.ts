@@ -1,11 +1,18 @@
 // (C) 2023-2026 GoodData Corporation
 
+import { URL, fileURLToPath } from "node:url";
+
 import { defineConfig } from "vitest/config";
 
 // Note: all unit tests which iterate on scenarios are skipped, as neoBackstop is now voting on pre-merge
 
 // eslint-disable-next-line no-restricted-exports
 export default defineConfig({
+    resolve: {
+        alias: {
+            "maplibre-gl": fileURLToPath(new URL("./tests/_infra/maplibre-gl.mock.ts", import.meta.url)),
+        },
+    },
     test: {
         environment: "happy-dom",
         setupFiles: "./vitest.setup.ts",

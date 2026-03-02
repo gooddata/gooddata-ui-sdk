@@ -41,7 +41,7 @@ import {
     idRef,
     isAbsoluteDateFilter,
     isAllTimeDateFilter,
-    isAttributeFilter,
+    isAttributeFilterWithSelection,
     isAutomationUserRecipient,
     isExportDefinitionVisualizationObjectRequestPayload,
     isFilter,
@@ -486,7 +486,7 @@ function convertLegacyTabularFiltersToFilterContext(
 }
 
 function convertExecutionFilterToFilterContextItem(filter: IFilter): FilterContextItem | undefined {
-    if (isAttributeFilter(filter)) {
+    if (isAttributeFilterWithSelection(filter)) {
         return {
             attributeFilter: {
                 negativeSelection: isNegativeAttributeFilter(filter),

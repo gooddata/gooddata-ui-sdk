@@ -20,6 +20,7 @@ import {
     absoluteDateFilterValues,
     filterAttributeElements,
     isAllTimeDateFilter,
+    isAttributeFilterWithSelection,
     isPositiveAttributeFilter,
     isRelativeBoundedDateFilter,
     isRelativeDateFilter,
@@ -789,13 +790,17 @@ export function applyAttributeFilter(
     filterLocalId: string,
     filter: IAttributeFilter,
     correlationId?: string,
-): ChangeAttributeFilterSelection {
-    return changeAttributeFilterSelection(
-        filterLocalId,
-        filterAttributeElements(filter),
-        isPositiveAttributeFilter(filter) ? "IN" : "NOT_IN",
-        correlationId,
-    );
+): ChangeAttributeFilterSelection | undefined {
+    if (isAttributeFilterWithSelection(filter)) {
+        return changeAttributeFilterSelection(
+            filterLocalId,
+            filterAttributeElements(filter) ?? { values: [] },
+            isPositiveAttributeFilter(filter) ? "IN" : "NOT_IN",
+            correlationId,
+        );
+    }
+    // TODO INE: add support for match/arbitrary filters in CQ-2015
+    return undefined;
 }
 
 /**

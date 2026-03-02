@@ -1078,3 +1078,15 @@ export const selectEnableKDEmptyDateValuesFilter: DashboardSelector<boolean> = c
         return state.settings?.enableKDEmptyDateValuesFilter ?? false;
     },
 );
+
+/**
+ * Returns whether visualization filtering by tags is enabled.
+ *
+ * @internal
+ */
+export const selectEnableVisualizationFilteringByTags: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableVisualizationFilteringByTags ?? false;
+    },
+);

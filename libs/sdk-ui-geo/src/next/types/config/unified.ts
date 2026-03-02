@@ -110,6 +110,21 @@ export interface IGeoChartConfig {
     showLabels?: boolean;
 
     /**
+     * Specify the accessibility title for the map canvas.
+     *
+     * @internal
+     */
+    a11yTitle?: string;
+
+    /**
+     * Enables geo accessibility enhancements introduced for map canvas, legend semantics,
+     * live announcements, and alternate table view.
+     *
+     * @internal
+     */
+    enableGeoChartA11yImprovements?: boolean;
+
+    /**
      * Requires Ctrl/Cmd + scroll to zoom (helps inside scroll containers).
      */
     cooperativeGestures?: boolean;

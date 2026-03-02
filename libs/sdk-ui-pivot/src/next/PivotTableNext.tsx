@@ -28,7 +28,7 @@ import { DrillableItemsRefProvider } from "./context/DrillableItemsRefContext.js
 import { HeaderMenuProvider } from "./context/HeaderMenuContext.js";
 import { InitialExecutionContextProvider } from "./context/InitialExecutionContext.js";
 import { PivotTablePropsProvider, usePivotTableProps } from "./context/PivotTablePropsContext.js";
-import { PivotTableSizingProvider, usePivotTableSizing } from "./context/PivotTableSizingContext.js";
+import { PivotTableSizingProvider, usePivotTableSizingActions } from "./context/PivotTableSizingContext.js";
 import { RuntimeErrorProvider, useRuntimeError } from "./context/RuntimeErrorContext.js";
 import { TableReadyProvider } from "./context/TableReadyContext.js";
 import { b } from "./features/styling/bem.js";
@@ -141,7 +141,7 @@ function PivotTableNextWithInitialization() {
 function RenderPivotTableNextAgGrid() {
     const agGridReactProps = useAgGridReactProps();
     const { config } = usePivotTableProps();
-    const { setContainerWidth } = usePivotTableSizing();
+    const { setContainerWidth } = usePivotTableSizingActions();
     const clearCellSelection = useClearCellSelection();
 
     useMemo(() => {

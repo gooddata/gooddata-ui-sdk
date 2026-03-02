@@ -131,6 +131,31 @@ function sanitizeCredentials(testFileMappings: string) {
                     delete mapping.request.bodyPatterns;
                     delete mapping.response.headers["Set-Cookie"];
                 }
+
+                const requestUrl = mapping?.request?.url;
+                if (
+                    typeof requestUrl === "string" &&
+                    /^\/api\/v1\/actions\/workspaces\/[^/]+\/resolveSettings$/.test(requestUrl)
+                ) {
+                    try {
+                        const parsedResponseBody = JSON.parse(mapping?.response?.body ?? "[]");
+                        if (Array.isArray(parsedResponseBody)) {
+                            parsedResponseBody.forEach((setting) => {
+                                if (setting?.id === "agGridToken" || setting?.id === "mapboxToken") {
+                                    if (setting?.content && typeof setting.content === "object") {
+                                        setting.content.value = "";
+                                    }
+                                }
+                            });
+                            mapping.response.body = JSON.stringify(parsedResponseBody);
+                        }
+                    } catch {
+                        cy.task(
+                            "log",
+                            `sanitizeCredentials - resolveSettings body is not valid JSON for url: ${requestUrl}`,
+                        );
+                    }
+                }
             });
             cy.writeFile(testFileMappings, JSON.stringify(data, null, 2) + "\n");
             cy.task("log", `sanitizeCredentials - mappings file: ${testFileMappings} is sanitized`);

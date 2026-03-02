@@ -2,6 +2,7 @@
 
 import { type IInsight } from "@gooddata/sdk-model";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 
@@ -104,7 +105,7 @@ export const SingleMeasurePivotSortedByFirstRowAttr = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 10, 0),
+        getScenariosGroupByIndexes(17, 10, 0),
     )();
 SingleMeasurePivotSortedByFirstRowAttr.parameters = {
     kind: "single measure pivot sorted by first row attr",
@@ -215,7 +216,7 @@ export const SingleMeasurePivotSortedBySecondRowAttr = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 10, 1),
+        getScenariosGroupByIndexes(17, 10, 1),
     )();
 SingleMeasurePivotSortedBySecondRowAttr.parameters = {
     kind: "single measure pivot sorted by second row attr",
@@ -317,7 +318,7 @@ export const TwoMeasuresWithSingleRowAttrSortedByFirstMeasure = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 10, 2),
+        getScenariosGroupByIndexes(17, 10, 2),
     )();
 TwoMeasuresWithSingleRowAttrSortedByFirstMeasure.parameters = {
     kind: "two measures with single row attr sorted by first measure",
@@ -419,7 +420,7 @@ export const TwoMeasuresWithSingleRowAttrSortedBySecondMeasure = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 10, 3),
+        getScenariosGroupByIndexes(17, 10, 3),
     )();
 TwoMeasuresWithSingleRowAttrSortedBySecondMeasure.parameters = {
     kind: "two measures with single row attr sorted by second measure",

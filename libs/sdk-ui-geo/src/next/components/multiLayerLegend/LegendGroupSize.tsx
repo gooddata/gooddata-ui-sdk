@@ -2,6 +2,7 @@
 
 import { type ReactElement, memo } from "react";
 
+import { LegendGroupContainer } from "./LegendGroupContainer.js";
 import {
     type ILegendGroup,
     type ILegendSizeAnchorItem,
@@ -18,6 +19,16 @@ export interface ILegendGroupSizeProps {
      * Legend group with size anchor items.
      */
     group: ILegendGroup;
+
+    /**
+     * Enables enhanced a11y semantics for the size list.
+     */
+    enableGeoChartA11yImprovements?: boolean;
+
+    /**
+     * Whether the size list can be reached via keyboard.
+     */
+    isFocusable?: boolean;
 }
 
 /**
@@ -25,15 +36,17 @@ export interface ILegendGroupSizeProps {
  */
 function SizeAnchorItem({ item }: { item: ILegendSizeAnchorItem }): ReactElement {
     return (
-        <div className="gd-geo-multi-layer-legend__size-anchor" aria-label={`Size: ${item.label}`}>
-            <span
-                className="gd-geo-multi-layer-legend__size-circle"
-                style={{
-                    width: item.sizePx,
-                    height: item.sizePx,
-                }}
-            />
-            <span className="gd-geo-multi-layer-legend__size-label">{item.label}</span>
+        <div className="gd-geo-multi-layer-legend__size-anchor-wrapper" role="listitem">
+            <div className="gd-geo-multi-layer-legend__size-anchor">
+                <span
+                    className="gd-geo-multi-layer-legend__size-circle"
+                    style={{
+                        width: item.sizePx,
+                        height: item.sizePx,
+                    }}
+                />
+                <span className="gd-geo-multi-layer-legend__size-label">{item.label}</span>
+            </div>
         </div>
     );
 }
@@ -48,21 +61,55 @@ function SizeAnchorItem({ item }: { item: ILegendSizeAnchorItem }): ReactElement
  *
  * @internal
  */
-export const LegendGroupSize = memo(function LegendGroupSize({ group }: ILegendGroupSizeProps): ReactElement {
+export const LegendGroupSize = memo(function LegendGroupSize({
+    group,
+    enableGeoChartA11yImprovements = false,
+    isFocusable = false,
+}: ILegendGroupSizeProps): ReactElement {
     const sizeItems = group.items.filter(isLegendSizeAnchorItem);
 
-    return (
-        <div className="gd-geo-multi-layer-legend__group gd-geo-multi-layer-legend__group--size">
-            {group.title ? (
-                <div className="gd-geo-multi-layer-legend__group-title" title={group.title}>
-                    {group.title}
+    if (!enableGeoChartA11yImprovements) {
+        return (
+            <div className="gd-geo-multi-layer-legend__group gd-geo-multi-layer-legend__group--size">
+                {group.title ? (
+                    <div className="gd-geo-multi-layer-legend__group-title" title={group.title}>
+                        {group.title}
+                    </div>
+                ) : null}
+                <div className="gd-geo-multi-layer-legend__size-list">
+                    {sizeItems.map((item, index) => (
+                        <div
+                            key={index}
+                            className="gd-geo-multi-layer-legend__size-anchor"
+                            aria-label={`Size: ${item.label}`}
+                        >
+                            <span
+                                className="gd-geo-multi-layer-legend__size-circle"
+                                style={{
+                                    width: item.sizePx,
+                                    height: item.sizePx,
+                                }}
+                            />
+                            <span className="gd-geo-multi-layer-legend__size-label">{item.label}</span>
+                        </div>
+                    ))}
                 </div>
-            ) : null}
-            <div className="gd-geo-multi-layer-legend__size-list">
+            </div>
+        );
+    }
+
+    return (
+        <LegendGroupContainer
+            variantClassName="gd-geo-multi-layer-legend__group--size"
+            title={group.title}
+            isFocusable={isFocusable}
+            useFocusTarget
+        >
+            <div className="gd-geo-multi-layer-legend__size-list" role="list" aria-label={group.title}>
                 {sizeItems.map((item, index) => (
                     <SizeAnchorItem key={index} item={item} />
                 ))}
             </div>
-        </div>
+        </LegendGroupContainer>
     );
 });

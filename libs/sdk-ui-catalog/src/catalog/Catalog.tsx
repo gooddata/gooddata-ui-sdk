@@ -12,11 +12,14 @@ import { Layout } from "./Layout.js";
 import type { OpenHandlerEvent } from "../catalogDetail/CatalogDetailContent.js";
 import { type ICatalogItemRef } from "../catalogItem/types.js";
 import { Header } from "../header/Header.js";
+import { useCatalogItemOpen } from "../main/hooks/useCatalogItemOpen.js";
 import { Main } from "../main/Main.js";
 import { PermissionsGate } from "../permission/PermissionsGate.js";
 import { useIsCatalogQualityEnabled } from "../quality/gate.js";
 import { QualityScoreCard } from "../quality/QualityScoreCard.js";
 import { FullTextSearchInput } from "../search/FullTextSearchInput.js";
+import { CatalogTabs } from "../tabs/CatalogTabs.js";
+import { useIsCatalogTrendingObjectsEnabled } from "../tabs/gate.js";
 
 type Props = {
     backend: IAnalyticalBackend;
@@ -38,8 +41,15 @@ export function Catalog({
     onCatalogDetailClosed,
 }: Props) {
     const intl = useIntl();
-
+    const isTrendingEnabled = useIsCatalogTrendingObjectsEnabled();
     const isQualityEnabled = useIsCatalogQualityEnabled();
+
+    const { open, openedItem, setItemOpened, onOpenDetail, onCloseDetail, onOpenClick } = useCatalogItemOpen(
+        onCatalogItemOpenClick,
+        onCatalogDetailOpened,
+        onCatalogDetailClosed,
+        openCatalogItemRef,
+    );
 
     return (
         <Layout>
@@ -63,14 +73,20 @@ export function Catalog({
                 }
             >
                 <Header searchNode={<FullTextSearchInput />} />
-                {isQualityEnabled ? <QualityScoreCard /> : null}
+                {isTrendingEnabled ? (
+                    <CatalogTabs onItemClick={onOpenDetail} />
+                ) : isQualityEnabled ? (
+                    <QualityScoreCard />
+                ) : null}
                 <Main
-                    openCatalogItemRef={openCatalogItemRef}
                     workspace={workspace}
                     backend={backend}
-                    onCatalogItemOpenClick={onCatalogItemOpenClick}
-                    onCatalogDetailOpened={onCatalogDetailOpened}
-                    onCatalogDetailClosed={onCatalogDetailClosed}
+                    open={open}
+                    openedItem={openedItem}
+                    setItemOpened={setItemOpened}
+                    onOpenDetail={onOpenDetail}
+                    onCloseDetail={onCloseDetail}
+                    onOpenClick={onOpenClick}
                     onCatalogItemNavigation={onCatalogItemNavigation}
                 />
             </PermissionsGate>

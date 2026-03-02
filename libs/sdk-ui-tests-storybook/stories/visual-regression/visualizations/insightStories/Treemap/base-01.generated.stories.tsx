@@ -2,6 +2,7 @@
 
 import { type IInsight } from "@gooddata/sdk-model";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 
@@ -59,7 +60,7 @@ export const SingleMeasure = () =>
                 visualizationUrl: "local:treemap",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(20, 0, 0),
+        getScenariosGroupByIndexes(23, 0, 0),
     )();
 SingleMeasure.parameters = {
     kind: "single measure",
@@ -134,7 +135,7 @@ export const SingleMeasureAndSegment = () =>
                 visualizationUrl: "local:treemap",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(20, 0, 1),
+        getScenariosGroupByIndexes(23, 0, 1),
     )();
 SingleMeasureAndSegment.parameters = {
     kind: "single measure and segment",
@@ -212,7 +213,7 @@ export const TwoMeasures = () =>
                 visualizationUrl: "local:treemap",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(20, 0, 2),
+        getScenariosGroupByIndexes(23, 0, 2),
     )();
 TwoMeasures.parameters = {
     kind: "two measures",
@@ -287,7 +288,7 @@ export const SingleMeasureAndViewby = () =>
                 visualizationUrl: "local:treemap",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(20, 0, 3),
+        getScenariosGroupByIndexes(23, 0, 3),
     )();
 SingleMeasureAndViewby.parameters = {
     kind: "single measure and viewBy",
@@ -374,7 +375,7 @@ export const SingleMeasureAndViewbyFilteredToOneElement = () =>
                 visualizationUrl: "local:treemap",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(20, 0, 4),
+        getScenariosGroupByIndexes(23, 0, 4),
     )();
 SingleMeasureAndViewbyFilteredToOneElement.parameters = {
     kind: "single measure and viewBy filtered to one element",
@@ -478,7 +479,7 @@ export const SingleMeasureViewbyAndSegment = () =>
                 visualizationUrl: "local:treemap",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(20, 0, 5),
+        getScenariosGroupByIndexes(23, 0, 5),
     )();
 SingleMeasureViewbyAndSegment.parameters = {
     kind: "single measure, viewBy and segment",
@@ -566,7 +567,7 @@ export const TwoMeasuresAndViewby = () =>
                 visualizationUrl: "local:treemap",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(20, 0, 6),
+        getScenariosGroupByIndexes(23, 0, 6),
     )();
 TwoMeasuresAndViewby.parameters = {
     kind: "two measures and viewBy",
@@ -654,7 +655,7 @@ export const TwoMeasuresAndSegmentby = () =>
                 visualizationUrl: "local:treemap",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(20, 0, 7),
+        getScenariosGroupByIndexes(23, 0, 7),
     )();
 TwoMeasuresAndSegmentby.parameters = {
     kind: "two measures and segmentBy",
@@ -757,7 +758,7 @@ export const ArithmeticMeasuresAndSegment = () =>
                 visualizationUrl: "local:treemap",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(20, 0, 8),
+        getScenariosGroupByIndexes(23, 0, 8),
     )();
 ArithmeticMeasuresAndSegment.parameters = {
     kind: "arithmetic measures and segment",
@@ -861,7 +862,7 @@ export const WithOneMeasureAndViewByDateAndSegmentByDate = () =>
                 visualizationUrl: "local:treemap",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(20, 0, 9),
+        getScenariosGroupByIndexes(23, 0, 9),
     )();
 WithOneMeasureAndViewByDateAndSegmentByDate.parameters = {
     kind: "with one measure and view by date and segment by date",

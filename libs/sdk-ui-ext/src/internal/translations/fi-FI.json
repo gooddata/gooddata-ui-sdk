@@ -530,5 +530,8 @@
     "automations.accessibility.search.alerts": "Hae hälytyksiä",
     "automations.accessibility.search.schedules": "Hae ajoitettuja vientejä",
     "automations.accessibility.gridLabel.alerts": "Hälytysluettelo",
-    "automations.accessibility.gridLabel.schedules": "Luettelo aikataulutetuista vienneistä"
+    "automations.accessibility.gridLabel.schedules": "Luettelo aikataulutetuista vienneistä",
+    "filters.allTime.exceptEmptyValues.title": "Kaikki ajanjaksot, paitsi tyhjät arvot",
+    "filters.emptyValues.label": "{title}, tyhjät arvot",
+    "filters.emptyValues.title": "Tyhjät arvot"
 }

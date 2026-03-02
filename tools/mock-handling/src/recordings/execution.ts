@@ -1,16 +1,26 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import * as fs from "fs";
 import * as path from "path";
 
 import { isEmpty, pickBy } from "lodash-es";
 
-import { type IAnalyticalBackend, type IDataView, type IExecutionResult } from "@gooddata/sdk-backend-spi";
+import {
+    collectionItemsIdentityKey,
+    normalizeCollectionItemsIdentityConfig,
+} from "@gooddata/sdk-backend-base";
+import {
+    type IAnalyticalBackend,
+    type ICollectionItemsConfig,
+    type IDataView,
+    type IExecutionResult,
+} from "@gooddata/sdk-backend-spi";
 import {
     type IDimensionDescriptor,
     type IExecutionDefinition,
     defFingerprint,
     isAttributeDescriptor,
+    isResultAttributeHeader,
 } from "@gooddata/sdk-model";
 
 import {
@@ -36,6 +46,8 @@ const ExecutionResultFile = "executionResult.json";
 const DataViewAllFile = "dataView_all.json";
 const DataViewWindowFile = (win: RequestedWindow) => `dataView_${dataViewWindowId(win)}.json`;
 const dataViewWindowId = (win: RequestedWindow) => `o${win.offset.join("_")}s${win.size.join("_")}`;
+const CollectionItemsDirName = "collectionItems";
+const CollectionItemsResultFile = "result.json";
 const DefaultDataViewRequests: DataViewRequests = {
     allData: true,
 };
@@ -227,6 +239,7 @@ export class ExecutionRecording implements IRecording {
             },
         );
 
+        const capturedCollectionItems = new Set<string>();
         const missingFiles = Object.entries(this.getRequiredDataViewFiles());
 
         for (const [filename, requestType] of missingFiles) {
@@ -239,6 +252,7 @@ export class ExecutionRecording implements IRecording {
             }
 
             writeAsJsonSync(filename, dataView, { pickKeys: DataViewPropsToSerialize, replaceString });
+            await captureCollectionItems(dataView, this.directory, capturedCollectionItems);
         }
     }
 
@@ -318,4 +332,103 @@ function stripRefsFromDimensions(dims: IDimensionDescriptor[]) {
     });
 
     return dims;
+}
+
+type CollectionItemsDescriptor = {
+    collectionId: string;
+    kind?: ICollectionItemsConfig["kind"];
+    dimensionIndex: number;
+    headerIndex: number;
+};
+
+function findCollectionItemsDescriptor(dataView: IDataView): CollectionItemsDescriptor | undefined {
+    const dimensions = dataView.result.dimensions ?? [];
+
+    for (let dimIdx = 0; dimIdx < dimensions.length; dimIdx++) {
+        const dimension = dimensions[dimIdx];
+
+        for (let headerIdx = 0; headerIdx < dimension.headers.length; headerIdx++) {
+            const header = dimension.headers[headerIdx];
+            if (!isAttributeDescriptor(header)) {
+                continue;
+            }
+
+            const collectionId = header.attributeHeader.geoAreaConfig?.collectionId;
+            if (collectionId) {
+                return {
+                    collectionId,
+                    kind: header.attributeHeader.geoAreaConfig?.kind,
+                    dimensionIndex: dimIdx,
+                    headerIndex: headerIdx,
+                };
+            }
+        }
+    }
+
+    return undefined;
+}
+
+function extractCollectionValues(dataView: IDataView, dimensionIndex: number, headerIndex: number): string[] {
+    const headers = dataView.headerItems[dimensionIndex]?.[headerIndex] ?? [];
+
+    return headers.flatMap((header) => {
+        if (!isResultAttributeHeader(header)) {
+            return [];
+        }
+
+        const name = header.attributeHeaderItem.name;
+        return name ? [name] : [];
+    });
+}
+
+function resolveCollectionItemsConfig(dataView: IDataView): ICollectionItemsConfig | undefined {
+    const descriptor = findCollectionItemsDescriptor(dataView);
+    if (!descriptor) {
+        return undefined;
+    }
+
+    const normalizedConfig = normalizeCollectionItemsIdentityConfig({
+        collectionId: descriptor.collectionId,
+        ...(descriptor.kind === undefined ? {} : { kind: descriptor.kind }),
+        values: extractCollectionValues(dataView, descriptor.dimensionIndex, descriptor.headerIndex),
+    });
+
+    return {
+        collectionId: normalizedConfig.collectionId,
+        ...(normalizedConfig.kind === undefined ? {} : { kind: normalizedConfig.kind }),
+        ...(normalizedConfig.values ? { values: normalizedConfig.values } : {}),
+    };
+}
+
+function collectionItemsResultPath(executionDirectory: string, key: string): string {
+    const recordingsRoot = path.resolve(executionDirectory, "..", "..");
+    return path.join(recordingsRoot, CollectionItemsDirName, key, CollectionItemsResultFile);
+}
+
+async function captureCollectionItems(
+    dataView: IDataView,
+    executionDirectory: string,
+    capturedKeys: Set<string>,
+): Promise<void> {
+    const rawConfig = resolveCollectionItemsConfig(dataView);
+    if (!rawConfig) {
+        return;
+    }
+
+    const config = normalizeCollectionItemsIdentityConfig(rawConfig);
+    const key = collectionItemsIdentityKey(config);
+    if (capturedKeys.has(key)) {
+        return;
+    }
+
+    capturedKeys.add(key);
+
+    const resultFile = collectionItemsResultPath(executionDirectory, key);
+    if (fs.existsSync(resultFile)) {
+        return;
+    }
+
+    const result = await dataView.readCollectionItems(config);
+    fs.mkdirSync(path.dirname(resultFile), { recursive: true });
+    writeAsJsonSync(resultFile, result);
 }

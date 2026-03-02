@@ -2,7 +2,6 @@
 
 import { useCallback } from "react";
 
-import { useAutoSizeReset } from "./useAutoSizeReset.js";
 import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
 import { usePivotTableSizing } from "../../context/PivotTableSizingContext.js";
 import { type AgGridColumnDef, type AgGridOnColumnResized, type AgGridProps } from "../../types/agGrid.js";
@@ -33,21 +32,19 @@ export function useColumnSizingForFullHorizontalSpaceAndAutoResize() {
     const getAgGridColumns = useGetAgGridColumns();
     const updateAgGridColumnDefs = useUpdateAgGridColumnDefs();
 
-    const { shouldSkipResize, markAsInitializedIfNeeded } = useAutoSizeReset();
-
     const initColumnWidths = useCallback<AgGridOnColumnResized>(
         (params) => {
             if (!["autosizeColumns", "sizeColumnsToFit"].includes(params.source)) {
                 return;
             }
 
+            if (containerWidth <= 0) {
+                return;
+            }
+
             const allColumns = getAgGridColumns(params.api);
             const allColumnsWidth =
                 allColumns?.reduce((acc, column) => acc + column.getActualWidth(), 0) ?? 0;
-
-            if (shouldSkipResize(allColumnsWidth, containerWidth)) {
-                return;
-            }
 
             const updatedColDefs = allColumns?.map((column) => {
                 const colDef = column.getColDef();
@@ -59,14 +56,14 @@ export function useColumnSizingForFullHorizontalSpaceAndAutoResize() {
                 }
 
                 if (allColumnsWidth < containerWidth) {
-                    //Fill the whole container width
+                    // Fill the whole container width
                     return {
                         ...colDef,
                         flex: width,
                     };
                 }
 
-                //Keep content-sized width
+                // Keep content-sized width
                 return {
                     ...colDef,
                     flex: undefined,
@@ -76,16 +73,8 @@ export function useColumnSizingForFullHorizontalSpaceAndAutoResize() {
             if (updatedColDefs) {
                 updateAgGridColumnDefs(updatedColDefs as AgGridColumnDef[], params.api);
             }
-
-            markAsInitializedIfNeeded(allColumnsWidth, containerWidth);
         },
-        [
-            getAgGridColumns,
-            updateAgGridColumnDefs,
-            containerWidth,
-            shouldSkipResize,
-            markAsInitializedIfNeeded,
-        ],
+        [containerWidth, getAgGridColumns, updateAgGridColumnDefs],
     );
 
     return isColumnSizingForGrowToFitAndAutoResize

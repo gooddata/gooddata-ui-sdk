@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { InvertableSelectAllCheckbox } from "@gooddata/sdk-ui-kit";
 
@@ -37,6 +37,12 @@ export interface IAttributeFilterElementsActionsProps {
      * @beta
      */
     totalItemsCount: number;
+
+    /**
+     * Indicate that total items count should be hidden or not
+     * @beta
+     */
+    hideTotalItemsCount?: boolean;
 
     /**
      * Indicate that elements that respect current search criteria are partially selected

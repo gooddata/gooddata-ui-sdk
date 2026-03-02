@@ -34,7 +34,7 @@ exports[`PluggableGeoPushpinChart > getExecution > should generate virtual bucke
 }
 `;
 
-exports[`PluggableGeoPushpinChart > getExtendedReferencePoint > should generate latitude/longitude and tooltipText to properties 1`] = `
+exports[`PluggableGeoPushpinChart > getExtendedReferencePoint > should generate latitude/longitude to properties 1`] = `
 {
   "controls": {
     "latitude": "/geo/attribute/displayform/uri/3",
@@ -42,12 +42,11 @@ exports[`PluggableGeoPushpinChart > getExtendedReferencePoint > should generate 
     "points": {
       "groupNearbyPoints": false,
     },
-    "tooltipText": "/geo/attribute/displayform/uri/2",
   },
 }
 `;
 
-exports[`PluggableGeoPushpinChart > getExtendedReferencePoint > should not generate latitude/longitude and tooltipText to properties when location item missing 1`] = `{}`;
+exports[`PluggableGeoPushpinChart > getExtendedReferencePoint > should not generate latitude/longitude to properties when location item missing 1`] = `{}`;
 
 exports[`PluggableGeoPushpinChart > getExtendedReferencePoint > should return a new reference point with geoPushpin UI config 1`] = `
 {

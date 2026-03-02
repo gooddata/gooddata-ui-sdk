@@ -2,6 +2,7 @@
 
 import { type IInsight } from "@gooddata/sdk-model";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 
@@ -65,7 +66,7 @@ export const ColoringCustomPalette = () =>
                 visualizationUrl: "local:pyramid",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(16, 4, 1),
+        getScenariosGroupByIndexes(19, 4, 1),
     )();
 ColoringCustomPalette.parameters = {
     kind: "coloring - custom palette",

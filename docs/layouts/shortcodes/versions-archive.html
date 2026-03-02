@@ -5,6 +5,7 @@
 
 {{ $allVersions := .Site.Params.versions }}
 {{ $changelogPageURL := "https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-all/CHANGELOG.md#" }}
+{{ $apiReferenceBaseURL := "https://sdk.gooddata.com/gooddata-ui-apidocs/" }}
 
 {{ if $allVersions }}
 <div id="versions-container">
@@ -29,12 +30,12 @@
                     </td>
                     <td>
                         {{ if .changelog}}
-                            <a href="{{ .changelog }}" aria-label="View changelog for version {{ .version }}">
+                            <a href="{{ .changelog }}" target="_blank" aria-label="View changelog for version {{ .version }}">
                                 <i class="fas fa-book me-1" aria-hidden="true"></i>View Changelog
                             </a>
                         {{ else }}
                             {{ $formattedVersion := partial "formatted-version.html" (dict "version" .version) }}
-                            <a href="{{ $changelogPageURL }}{{ $formattedVersion }}" aria-label="View changelog for version {{ .version }}">
+                            <a href="{{ $changelogPageURL }}{{ $formattedVersion }}" target="_blank" aria-label="View changelog for version {{ .version }}">
                                 <i class="fas fa-book me-1" aria-hidden="true"></i>View Changelog
                             </a>
                         {{ end }}
@@ -50,12 +51,12 @@
                             {{ end }}
                         {{ end }}
                         {{ if .apiReference }}
-                            <a href="{{ .apiReference }}" aria-label="View API reference for version {{ .version }}">
+                            <a href="{{ .apiReference }}" target="_blank" aria-label="View API reference for version {{ .version }}">
                                 <i class="fas fa-book me-1" aria-hidden="true"></i>View API Reference
                             </a>
                         {{ else if $isInLatest2 }}
                             {{ $formattedVersion := partial "formatted-version.html" (dict "version" .version) }}
-                            <a href="{{ $changelogPageURL }}{{ $formattedVersion }}" aria-label="View API reference for version {{ .version }}">
+                            <a href="{{ $apiReferenceBaseURL }}v{{ .version }}.0/docs/index.html" target="_blank" aria-label="View API reference for version {{ .version }}">
                                 <i class="fas fa-book me-1" aria-hidden="true"></i>View API Reference
                             </a>
                         {{ end }}

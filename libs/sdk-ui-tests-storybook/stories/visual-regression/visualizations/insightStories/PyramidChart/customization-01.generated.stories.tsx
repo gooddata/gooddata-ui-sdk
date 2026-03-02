@@ -2,6 +2,7 @@
 
 import { type IInsight } from "@gooddata/sdk-model";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 
@@ -72,7 +73,7 @@ export const LegendPositionTwoMeasuresAutoLegend = () =>
                 visualizationUrl: "local:pyramid",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(16, 1, 0),
+        getScenariosGroupByIndexes(19, 1, 0),
     )();
 LegendPositionTwoMeasuresAutoLegend.parameters = {
     kind: "legend position - two measures - auto legend",
@@ -150,7 +151,7 @@ export const LegendPositionTwoMeasuresLegendOnLeft = () =>
                 visualizationUrl: "local:pyramid",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(16, 1, 1),
+        getScenariosGroupByIndexes(19, 1, 1),
     )();
 LegendPositionTwoMeasuresLegendOnLeft.parameters = {
     kind: "legend position - two measures - legend on left",
@@ -228,7 +229,7 @@ export const LegendPositionTwoMeasuresLegendOnRight = () =>
                 visualizationUrl: "local:pyramid",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(16, 1, 2),
+        getScenariosGroupByIndexes(19, 1, 2),
     )();
 LegendPositionTwoMeasuresLegendOnRight.parameters = {
     kind: "legend position - two measures - legend on right",
@@ -306,7 +307,7 @@ export const LegendPositionTwoMeasuresLegendOnTop = () =>
                 visualizationUrl: "local:pyramid",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(16, 1, 3),
+        getScenariosGroupByIndexes(19, 1, 3),
     )();
 LegendPositionTwoMeasuresLegendOnTop.parameters = {
     kind: "legend position - two measures - legend on top",
@@ -384,7 +385,7 @@ export const LegendPositionTwoMeasuresLegendAtBottom = () =>
                 visualizationUrl: "local:pyramid",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(16, 1, 4),
+        getScenariosGroupByIndexes(19, 1, 4),
     )();
 LegendPositionTwoMeasuresLegendAtBottom.parameters = {
     kind: "legend position - two measures - legend at bottom",
@@ -462,7 +463,7 @@ export const LegendPositionTwoMeasuresDisabled = () =>
                 visualizationUrl: "local:pyramid",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(16, 1, 5),
+        getScenariosGroupByIndexes(19, 1, 5),
     )();
 LegendPositionTwoMeasuresDisabled.parameters = {
     kind: "legend position - two measures - disabled",
@@ -537,7 +538,7 @@ export const LegendPositionSingleMeasureAndViewbyAutoLegend = () =>
                 visualizationUrl: "local:pyramid",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(16, 1, 6),
+        getScenariosGroupByIndexes(19, 1, 6),
     )();
 LegendPositionSingleMeasureAndViewbyAutoLegend.parameters = {
     kind: "legend position - single measure and viewBy - auto legend",
@@ -612,7 +613,7 @@ export const LegendPositionSingleMeasureAndViewbyLegendOnLeft = () =>
                 visualizationUrl: "local:pyramid",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(16, 1, 7),
+        getScenariosGroupByIndexes(19, 1, 7),
     )();
 LegendPositionSingleMeasureAndViewbyLegendOnLeft.parameters = {
     kind: "legend position - single measure and viewBy - legend on left",
@@ -687,7 +688,7 @@ export const LegendPositionSingleMeasureAndViewbyLegendOnRight = () =>
                 visualizationUrl: "local:pyramid",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(16, 1, 8),
+        getScenariosGroupByIndexes(19, 1, 8),
     )();
 LegendPositionSingleMeasureAndViewbyLegendOnRight.parameters = {
     kind: "legend position - single measure and viewBy - legend on right",
@@ -762,7 +763,7 @@ export const LegendPositionSingleMeasureAndViewbyLegendOnTop = () =>
                 visualizationUrl: "local:pyramid",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(16, 1, 9),
+        getScenariosGroupByIndexes(19, 1, 9),
     )();
 LegendPositionSingleMeasureAndViewbyLegendOnTop.parameters = {
     kind: "legend position - single measure and viewBy - legend on top",
@@ -837,7 +838,7 @@ export const LegendPositionSingleMeasureAndViewbyLegendAtBottom = () =>
                 visualizationUrl: "local:pyramid",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(16, 1, 10),
+        getScenariosGroupByIndexes(19, 1, 10),
     )();
 LegendPositionSingleMeasureAndViewbyLegendAtBottom.parameters = {
     kind: "legend position - single measure and viewBy - legend at bottom",
@@ -912,7 +913,7 @@ export const LegendPositionSingleMeasureAndViewbyDisabled = () =>
                 visualizationUrl: "local:pyramid",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(16, 1, 11),
+        getScenariosGroupByIndexes(19, 1, 11),
     )();
 LegendPositionSingleMeasureAndViewbyDisabled.parameters = {
     kind: "legend position - single measure and viewBy - disabled",

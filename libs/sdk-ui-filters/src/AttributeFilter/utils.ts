@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
 import { type IntlShape } from "react-intl";
@@ -15,6 +15,9 @@ import {
 } from "@gooddata/sdk-model";
 import { UnexpectedSdkError } from "@gooddata/sdk-ui";
 
+import { getFilterModeFromFilter } from "./filterModeUtils.js";
+import { getOperatorFromFilter, getValuesFromFilter } from "./textFilterOperatorUtils.js";
+import { getTextFilterStateText } from "./textFilterStateSummaryUtils.js";
 import { type IAttributeFilterBaseProps } from "./types.js";
 import { getElementCacheKey } from "../AttributeFilterHandler/internal/redux/common/selectors.js";
 
@@ -151,4 +154,35 @@ export function getAttributeFilterSubtitle(
     }
 
     return subtitle;
+}
+
+/**
+ * Get subtitle for extended attribute filters (including arbitrary and match filters).
+ *
+ * @param filter - extended attribute filter
+ * @param intl - intl shape for formatting
+ * @returns formatted subtitle string
+ * @alpha
+ */
+export function getExtendedAttributeFilterSubtitle(
+    filter: IAttributeFilter | undefined,
+    intl: IntlShape,
+): string {
+    if (!filter) {
+        return intl.formatMessage({ id: "gs.list.all" });
+    }
+
+    const mode = getFilterModeFromFilter(filter);
+
+    if (mode === "text") {
+        const operator = getOperatorFromFilter(filter);
+        const valuesOrLiteral = getValuesFromFilter(filter);
+        const values = Array.isArray(valuesOrLiteral) ? valuesOrLiteral : [];
+        const literal = Array.isArray(valuesOrLiteral) ? "" : valuesOrLiteral;
+        return getTextFilterStateText(operator, values, literal, intl);
+    }
+
+    // For elements mode, we need to extract from the filter
+    // This is a fallback - the component should call the specific function
+    return intl.formatMessage({ id: "gs.list.all" });
 }

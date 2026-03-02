@@ -762,7 +762,7 @@
     "kdaDialog.dialog.keyDrives.button.trendUp": "Aumentar",
     "kdaDialog.dialog.keyDrives.button.trendDown": "Diminuir",
     "kdaDialog.dialog.keyDrives.button.trendAll": "Todos",
-    "kdaDialog.dialog.keyDrives.drivers": "{count} driver{count, plural, one {} other {s}}",
+    "kdaDialog.dialog.keyDrives.drivers": "{count} {count, plural, one {driver} other {drivers}}",
     "kdaDialog.dialog.keyDrives.overview.summary.home": "Resumo",
     "kdaDialog.dialog.keyDrives.overview.summary.home.tooltip": "Ir para Resumo da análise",
     "kdaDialog.dialog.keyDrives.overview.summary.breadcrumb.label": "Navegação da análise de fatores-chave",

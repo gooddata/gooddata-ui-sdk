@@ -530,5 +530,8 @@
     "automations.accessibility.search.alerts": "Alertas de pesquisa",
     "automations.accessibility.search.schedules": "Pesquisar exportações agendadas",
     "automations.accessibility.gridLabel.alerts": "Lista de alertas",
-    "automations.accessibility.gridLabel.schedules": "Lista de exportações programadas"
+    "automations.accessibility.gridLabel.schedules": "Lista de exportações programadas",
+    "filters.allTime.exceptEmptyValues.title": "Todo o período, exceto valores vazios",
+    "filters.emptyValues.label": "{title}, valores vazios",
+    "filters.emptyValues.title": "Valores vazios"
 }

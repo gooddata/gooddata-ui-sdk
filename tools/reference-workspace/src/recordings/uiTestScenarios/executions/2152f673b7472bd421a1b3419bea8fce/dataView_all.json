@@ -1,0 +1,13 @@
+{
+    "count": [1, 1],
+    "data": [[116625456.54]],
+    "headerItems": [
+        [[{ "measureHeaderItem": { "name": "Amount", "order": 0 } }]],
+        [
+            [{ "attributeHeaderItem": { "name": "US", "uri": "United States of America" } }],
+            [{ "attributeHeaderItem": { "name": "US", "uri": "United States of America" } }]
+        ]
+    ],
+    "offset": [0, 0],
+    "totalCount": [1, 1]
+}

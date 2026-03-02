@@ -119,6 +119,7 @@ const DefaultSelectors = [
     "highcharts-container",
     "s-headline-value",
     "s-error",
+    "maplibregl-canvas",
     loadedPivotTableSelector,
     loadedPivotTableNextSelector,
     loadedRepeaterSelector,

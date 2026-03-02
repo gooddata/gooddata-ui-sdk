@@ -46,6 +46,7 @@ import { IChatThreadHistory } from '@gooddata/sdk-backend-spi';
 import { IChatThreadQuery } from '@gooddata/sdk-backend-spi';
 import { IClusteringConfig } from '@gooddata/sdk-backend-spi';
 import { IClusteringResult } from '@gooddata/sdk-backend-spi';
+import { ICollectionItemsConfig } from '@gooddata/sdk-backend-spi';
 import { IDashboard } from '@gooddata/sdk-model';
 import { IDashboardAttributeFilterConfig } from '@gooddata/sdk-model';
 import { IDashboardBase } from '@gooddata/sdk-model';
@@ -379,6 +380,9 @@ export class CatalogMeasureBuilder<T extends ICatalogMeasure = ICatalogMeasure> 
     toExecutionModel(modifications?: MeasureModifications<MeasureBuilder>): IMeasure;
 }
 
+// @internal
+export function collectionItemsIdentityKey(config: ICollectionItemsConfig): string;
+
 // @beta
 export type CommonSettingsWrapper = (settings: ISettings) => ISettings;
 
@@ -704,6 +708,8 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
     setActiveCalendars(calendars: IActiveCalendars): Promise<void>;
     // (undocumented)
     setActiveLlmEndpoint(endpoint: string): Promise<void>;
+    // (undocumented)
+    setActiveLlmProvider(provider: string): Promise<void>;
     // (undocumented)
     setAlertDefault(value: IAlertDefault): Promise<void>;
     // (undocumented)
@@ -1174,6 +1180,12 @@ export type NormalizationState = {
 
 // @beta (undocumented)
 export type NormalizationWhenExecuteByRef = "prohibit" | "fallback";
+
+// @internal
+export function normalizeCollectionItemsIdentityConfig(config: ICollectionItemsConfig): NormalizedCollectionItemsIdentityConfig;
+
+// @internal
+export type NormalizedCollectionItemsIdentityConfig = Pick<ICollectionItemsConfig, "collectionId" | "kind" | "values" | "limit" | "bbox">;
 
 // @internal
 export class Normalizer {

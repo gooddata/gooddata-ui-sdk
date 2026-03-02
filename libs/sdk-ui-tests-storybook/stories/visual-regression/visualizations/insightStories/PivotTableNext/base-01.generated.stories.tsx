@@ -2,6 +2,7 @@
 
 import { type IInsight } from "@gooddata/sdk-model";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 
@@ -55,7 +56,7 @@ export const SingleAttribute = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(15, 1, 0),
+        getScenariosGroupByIndexes(18, 1, 0),
     )();
 SingleAttribute.parameters = {
     kind: "single attribute",
@@ -117,7 +118,7 @@ export const SingleColumn = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(15, 1, 1),
+        getScenariosGroupByIndexes(18, 1, 1),
     )();
 SingleColumn.parameters = {
     kind: "single column",
@@ -183,7 +184,7 @@ export const SingleMeasure = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(15, 1, 2),
+        getScenariosGroupByIndexes(18, 1, 2),
     )();
 SingleMeasure.parameters = {
     kind: "single measure",
@@ -259,7 +260,7 @@ export const SingleMeasureWithRowAttribute = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(15, 1, 3),
+        getScenariosGroupByIndexes(18, 1, 3),
     )();
 SingleMeasureWithRowAttribute.parameters = {
     kind: "single measure with row attribute",
@@ -335,7 +336,7 @@ export const SingleMeasureWithColumnAttribute = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(15, 1, 4),
+        getScenariosGroupByIndexes(18, 1, 4),
     )();
 SingleMeasureWithColumnAttribute.parameters = {
     kind: "single measure with column attribute",
@@ -421,7 +422,7 @@ export const SingleMeasureWithRowAndColumnAttributes = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(15, 1, 5),
+        getScenariosGroupByIndexes(18, 1, 5),
     )();
 SingleMeasureWithRowAndColumnAttributes.parameters = {
     kind: "single measure with row and column attributes",
@@ -516,7 +517,7 @@ export const SingleMeasureWithTwoRowAndOneColumnAttributes = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(15, 1, 6),
+        getScenariosGroupByIndexes(18, 1, 6),
     )();
 SingleMeasureWithTwoRowAndOneColumnAttributes.parameters = {
     kind: "single measure with two row and one column attributes",
@@ -620,7 +621,7 @@ export const SingleMeasureWithTwoRowAndTwoColumnAttributes = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(15, 1, 7),
+        getScenariosGroupByIndexes(18, 1, 7),
     )();
 SingleMeasureWithTwoRowAndTwoColumnAttributes.parameters = {
     kind: "single measure with two row and two column attributes",
@@ -699,7 +700,7 @@ export const TwoMeasures = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(15, 1, 8),
+        getScenariosGroupByIndexes(18, 1, 8),
     )();
 TwoMeasures.parameters = {
     kind: "two measures",
@@ -788,7 +789,7 @@ export const TwoMeasuresWithRowAttribute = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(15, 1, 9),
+        getScenariosGroupByIndexes(18, 1, 9),
     )();
 TwoMeasuresWithRowAttribute.parameters = {
     kind: "two measures with row attribute",
@@ -877,7 +878,7 @@ export const TwoMeasuresWithColumnAttribute = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(15, 1, 10),
+        getScenariosGroupByIndexes(18, 1, 10),
     )();
 TwoMeasuresWithColumnAttribute.parameters = {
     kind: "two measures with column attribute",
@@ -976,7 +977,7 @@ export const TwoMeasuresWithRowAndColumnAttributes = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(15, 1, 11),
+        getScenariosGroupByIndexes(18, 1, 11),
     )();
 TwoMeasuresWithRowAndColumnAttributes.parameters = {
     kind: "two measures with row and column attributes",
@@ -1084,7 +1085,7 @@ export const TwoMeasuresWithTwoRowAndOneColumnAttributes = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(15, 1, 12),
+        getScenariosGroupByIndexes(18, 1, 12),
     )();
 TwoMeasuresWithTwoRowAndOneColumnAttributes.parameters = {
     kind: "two measures with two row and one column attributes",
@@ -1201,7 +1202,7 @@ export const TwoMeasuresWithTwoRowAndTwoColumnAttributes = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(15, 1, 13),
+        getScenariosGroupByIndexes(18, 1, 13),
     )();
 TwoMeasuresWithTwoRowAndTwoColumnAttributes.parameters = {
     kind: "two measures with two row and two column attributes",
@@ -1327,7 +1328,7 @@ export const TwoMeasuresWithThreeRowsAndTwoColumnAttributes = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(15, 1, 14),
+        getScenariosGroupByIndexes(18, 1, 14),
     )();
 TwoMeasuresWithThreeRowsAndTwoColumnAttributes.parameters = {
     kind: "two measures with three rows and two column attributes",
@@ -1431,7 +1432,7 @@ export const EmptyValues = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(15, 1, 15),
+        getScenariosGroupByIndexes(18, 1, 15),
     )();
 EmptyValues.parameters = {
     kind: "empty values",
@@ -1550,7 +1551,7 @@ export const ArithmeticMeasures = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(15, 1, 16),
+        getScenariosGroupByIndexes(18, 1, 16),
     )();
 ArithmeticMeasures.parameters = {
     kind: "arithmetic measures",
@@ -1631,7 +1632,7 @@ export const WithAttributesWithoutMeasures = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(15, 1, 17),
+        getScenariosGroupByIndexes(18, 1, 17),
     )();
 WithAttributesWithoutMeasures.parameters = {
     kind: "with attributes without measures",
@@ -1716,7 +1717,7 @@ export const WithTwoSameDates = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(15, 1, 18),
+        getScenariosGroupByIndexes(18, 1, 18),
     )();
 WithTwoSameDates.parameters = {
     kind: "with two same dates",
@@ -1810,7 +1811,7 @@ export const OneMeasureAndRepeatingRowAttributesOnDifferentPositions = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(15, 1, 19),
+        getScenariosGroupByIndexes(18, 1, 19),
     )();
 OneMeasureAndRepeatingRowAttributesOnDifferentPositions.parameters = {
     kind: "one measure and repeating row attributes on different positions",

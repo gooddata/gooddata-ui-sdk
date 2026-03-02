@@ -1,0 +1,46 @@
+{
+    "count": [10],
+    "data": [],
+    "headerItems": [
+        [
+            [
+                { "attributeHeaderItem": { "name": "US-CA", "uri": "US-CA" } },
+                { "attributeHeaderItem": { "name": "US-CT", "uri": "US-CT" } },
+                { "attributeHeaderItem": { "name": "US-MA", "uri": "US-MA" } },
+                { "attributeHeaderItem": { "name": "US-NH", "uri": "US-NH" } },
+                { "attributeHeaderItem": { "name": "US-NY", "uri": "US-NY" } },
+                { "attributeHeaderItem": { "name": "US-OR", "uri": "US-OR" } },
+                { "attributeHeaderItem": { "name": "US-OR", "uri": "US-OR" } },
+                { "attributeHeaderItem": { "name": "US-PA", "uri": "US-PA" } },
+                { "attributeHeaderItem": { "name": "US-RI", "uri": "US-RI" } },
+                { "attributeHeaderItem": { "name": "US-WA", "uri": "US-WA" } }
+            ],
+            [
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } }
+            ],
+            [
+                { "attributeHeaderItem": { "name": "US-CA", "uri": "US-CA" } },
+                { "attributeHeaderItem": { "name": "US-CT", "uri": "US-CT" } },
+                { "attributeHeaderItem": { "name": "US-MA", "uri": "US-MA" } },
+                { "attributeHeaderItem": { "name": "US-NH", "uri": "US-NH" } },
+                { "attributeHeaderItem": { "name": "US-NY", "uri": "US-NY" } },
+                { "attributeHeaderItem": { "name": "US-OR", "uri": "US-OR" } },
+                { "attributeHeaderItem": { "name": "US-OR", "uri": "US-OR" } },
+                { "attributeHeaderItem": { "name": "US-PA", "uri": "US-PA" } },
+                { "attributeHeaderItem": { "name": "US-RI", "uri": "US-RI" } },
+                { "attributeHeaderItem": { "name": "US-WA", "uri": "US-WA" } }
+            ]
+        ]
+    ],
+    "offset": [0],
+    "totalCount": [10]
+}

@@ -99,6 +99,11 @@ export interface IMapFacade {
     queryRenderedFeatures(...args: QueryRenderedFeaturesArgs): QueryRenderedFeaturesResult;
     setLayoutProperty(...args: SetLayoutPropertyArgs): IMapFacade;
     setFilter(...args: SetFilterArgs): IMapFacade;
+    keyboard: {
+        enable(): void;
+        disable(): void;
+        disableRotation(): void;
+    };
     readonly [MAP_FACADE_SOURCE]?: MapLibreMap;
 }
 
@@ -196,6 +201,11 @@ export function createMapFacade(map: MapLibreMap): IMapFacade {
         setFilter: (...args: SetFilterArgs) => {
             map.setFilter(...args);
             return facade;
+        },
+        keyboard: {
+            enable: () => map.keyboard.enable(),
+            disable: () => map.keyboard.disable(),
+            disableRotation: () => map.keyboard.disableRotation(),
         },
         [MAP_FACADE_SOURCE]: map,
     };

@@ -50,6 +50,10 @@ export const DateFilterBodyRedesigned = forwardRef<HTMLDivElement, IDateFilterBo
     const absoluteButtonRef = useRef<HTMLButtonElement>(null);
     const relativeButtonRef = useRef<HTMLButtonElement>(null);
 
+    const rootRef = useRef<HTMLDivElement>(null);
+    const didResetMobileScroll = useRef(false);
+    const didSyncInitialMobileRoute = useRef(false);
+
     const intl = useIntl();
 
     const fiscalTabsConfig = getFiscalTabsConfig(props.filterOptions.relativePreset, props.activeCalendars);
@@ -131,14 +135,18 @@ export const DateFilterBodyRedesigned = forwardRef<HTMLDivElement, IDateFilterBo
     };
 
     useEffect(() => {
-        // Dropdown component does not expose isOpened prop but it mounts
-        // this component every time it is opened and un-mounts when closed
-        if (props.isMobile) {
-            if (isAbsoluteDateFilterForm(props.selectedFilterOption)) {
-                changeRoute("absoluteForm");
-            } else if (isRelativeDateFilterForm(props.selectedFilterOption)) {
-                changeRoute("relativeForm");
-            }
+        // Sync route from selected option only once after mount on mobile.
+        // Without this guard, later option updates (e.g. checkbox toggles that keep the same form type)
+        // would unexpectedly reopen the form after the user navigated back to the list.
+        if (!props.isMobile || didSyncInitialMobileRoute.current) {
+            return;
+        }
+
+        didSyncInitialMobileRoute.current = true;
+        if (isAbsoluteDateFilterForm(props.selectedFilterOption)) {
+            changeRoute("absoluteForm");
+        } else if (isRelativeDateFilterForm(props.selectedFilterOption)) {
+            changeRoute("relativeForm");
         }
     }, [props.isMobile, props.selectedFilterOption]);
 
@@ -232,6 +240,13 @@ export const DateFilterBodyRedesigned = forwardRef<HTMLDivElement, IDateFilterBo
         }
     };
 
+    const handleFocus = () => {
+        if (isMobile && !didResetMobileScroll.current) {
+            didResetMobileScroll.current = true;
+            rootRef.current?.scrollIntoView({ block: "start" });
+        }
+    };
+
     const idBase = useIdPrefixed();
 
     const absoluteFormId = "absoluteForm" + idBase;
@@ -247,6 +262,7 @@ export const DateFilterBodyRedesigned = forwardRef<HTMLDivElement, IDateFilterBo
 
     return (
         <div
+            ref={rootRef}
             className={cx(
                 !isMobile && "gd-extended-date-filter-body-redesigned",
                 "gd-extended-date-filter-body",
@@ -255,12 +271,14 @@ export const DateFilterBodyRedesigned = forwardRef<HTMLDivElement, IDateFilterBo
                 route && "gd-active-form",
             )}
             onKeyDown={handleKeyDown}
+            onFocus={handleFocus}
             role={"dialog"}
             id={formId}
             aria-label={formLabel}
         >
             {route === null && isMobile ? (
                 <div
+                    className="gd-extended-date-filter-mobile-header"
                     onClick={() => {
                         onCancelClick();
                         closeDropdown();
@@ -350,7 +368,7 @@ export const DateFilterBodyRedesigned = forwardRef<HTMLDivElement, IDateFilterBo
 
             {hasFormOptions && !route ? (
                 <>
-                    <div className="gd-date-filter-menu-divider" />
+                    {isMobile ? null : <div className="gd-date-filter-menu-divider" />}
                     <DateFilterCustomPeriodButtons
                         filterOptions={filterOptions}
                         selectedFilterOption={selectedFilterOption}
@@ -412,7 +430,8 @@ export const DateFilterBodyRedesigned = forwardRef<HTMLDivElement, IDateFilterBo
                     <DateFilterBodyButton
                         messageId={withoutApply ? "close" : "cancel"}
                         className={cx(
-                            "gd-button-secondary gd-button-small",
+                            "gd-button-secondary",
+                            isMobile ? "gd-button-medium" : "gd-button-small",
                             withoutApply ? "s-date-filter-close" : "s-date-filter-cancel",
                         )}
                         onClick={() => {
@@ -423,7 +442,11 @@ export const DateFilterBodyRedesigned = forwardRef<HTMLDivElement, IDateFilterBo
                     {!withoutApply && (
                         <DateFilterBodyButton
                             messageId="apply"
-                            className="gd-button-action gd-button-small s-date-filter-apply"
+                            className={cx(
+                                "gd-button-action",
+                                isMobile ? "gd-button-medium" : "gd-button-small",
+                                "s-date-filter-apply",
+                            )}
                             disabled={!isEmpty(errors)}
                             onClick={() => {
                                 onApplyClick();

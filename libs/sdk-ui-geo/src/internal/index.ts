@@ -21,4 +21,6 @@ export {
     GEO_LAYER_TYPES,
     insightLayerToGeoLayer,
     insightLayersToGeoLayers,
+    geoLayerToInsightLayer,
+    geoLayersToInsightLayers,
 } from "../next/utils/layerConversion.js";

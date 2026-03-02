@@ -14,4 +14,9 @@
         min-width: 0;
         min-height: 0;
     }
+
+    .maplibregl-canvas:focus-visible {
+        outline: 2px solid var(--gd-palette-primary-base);
+        outline-offset: -2px;
+    }
 }

@@ -11,6 +11,8 @@ import { type IInsight, type ISettings } from "@gooddata/sdk-model";
 import { type IExecuteProps } from "@gooddata/sdk-ui";
 import { type IBucketChartProps } from "@gooddata/sdk-ui-charts";
 import {
+    type IGeoAreaChartProps,
+    type IGeoChartProps,
     type IGeoPushpinChartLatitudeLongitudeProps,
     type IGeoPushpinChartProps,
 } from "@gooddata/sdk-ui-geo";
@@ -20,9 +22,11 @@ export type VisProps =
     | IPivotTableProps
     | IBucketChartProps
     | IExecuteProps
+    | IGeoChartProps
+    | IGeoAreaChartProps
     | IGeoPushpinChartProps
     | IGeoPushpinChartLatitudeLongitudeProps;
-export type UnboundVisProps<T extends VisProps> = Omit<T, "backend" | "workspace">;
+export type UnboundVisProps<T extends VisProps> = T extends any ? Omit<T, "backend" | "workspace"> : never;
 export type PropsFactory<T extends VisProps> = (backend: IAnalyticalBackend, workspace: string) => T;
 export type InsightConverter = (defaultInsight: IInsight) => IInsight;
 

@@ -762,7 +762,7 @@
     "kdaDialog.dialog.keyDrives.button.trendUp": "Erhöhen",
     "kdaDialog.dialog.keyDrives.button.trendDown": "Verringeren",
     "kdaDialog.dialog.keyDrives.button.trendAll": "Alle",
-    "kdaDialog.dialog.keyDrives.drivers": "{count} Treiber{count, plural, one {} other {}}",
+    "kdaDialog.dialog.keyDrives.drivers": "{count} {count, plural, one {Treiber} other {Treiber}}",
     "kdaDialog.dialog.keyDrives.overview.summary.home": "Zusammenfassung",
     "kdaDialog.dialog.keyDrives.overview.summary.home.tooltip": "Zur Analysezusammenfassung wechseln",
     "kdaDialog.dialog.keyDrives.overview.summary.breadcrumb.label": "Navigation der Schlüsseltreiberanalyse",

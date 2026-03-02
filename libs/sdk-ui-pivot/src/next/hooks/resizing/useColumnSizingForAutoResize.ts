@@ -1,10 +1,8 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 
-import { useColumnDefs } from "../../context/ColumnDefsContext.js";
 import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
-import { usePivotTableSizing } from "../../context/PivotTableSizingContext.js";
 import { type AgGridColumnDef, type AgGridOnColumnResized, type AgGridProps } from "../../types/agGrid.js";
 import { useGetAgGridColumns } from "../columns/useGetAgGridColumns.js";
 import { useUpdateAgGridColumnDefs } from "../columns/useUpdateAgGridColumnDefs.js";
@@ -27,19 +25,12 @@ export function useColumnSizingForAutoResize() {
     const shouldFillFullHorizontalSpace = growToFit ?? false;
     const isColumnSizingForAutoResize = shouldAdaptSizeToCellContent && !shouldFillFullHorizontalSpace;
 
-    const { autoSizeInitialized, setAutoSizeInitialized } = usePivotTableSizing();
-    const { columnDefsFlat } = useColumnDefs();
     const getAgGridColumns = useGetAgGridColumns();
     const updateAgGridColumnDefs = useUpdateAgGridColumnDefs();
 
-    // Reset autoSizeInitialized when column structure changes (e.g., adding totals)
-    useEffect(() => {
-        setAutoSizeInitialized(false);
-    }, [columnDefsFlat, setAutoSizeInitialized]);
-
     const initColumnWidths = useCallback<AgGridOnColumnResized>(
         (params) => {
-            if (!["autosizeColumns", "sizeColumnsToFit"].includes(params.source) || autoSizeInitialized) {
+            if (!["autosizeColumns", "sizeColumnsToFit"].includes(params.source)) {
                 return;
             }
 
@@ -51,11 +42,8 @@ export function useColumnSizingForAutoResize() {
             if (updatedColDefs) {
                 updateAgGridColumnDefs(updatedColDefs as AgGridColumnDef[], params.api);
             }
-
-            // Mark autosize as initialized to prevent future runs
-            setAutoSizeInitialized(true);
         },
-        [getAgGridColumns, updateAgGridColumnDefs, autoSizeInitialized, setAutoSizeInitialized],
+        [getAgGridColumns, updateAgGridColumnDefs],
     );
 
     return isColumnSizingForAutoResize

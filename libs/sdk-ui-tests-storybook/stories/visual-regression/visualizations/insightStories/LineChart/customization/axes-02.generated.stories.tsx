@@ -2,6 +2,7 @@
 
 import { type IInsight } from "@gooddata/sdk-model";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 
@@ -103,7 +104,7 @@ export const SingleAxisNameConfigurationLow = () =>
                 visualizationUrl: "local:line",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(12, 8, 0),
+        getScenariosGroupByIndexes(15, 8, 0),
     )();
 SingleAxisNameConfigurationLow.parameters = {
     kind: "single axis name configuration - low",
@@ -212,7 +213,7 @@ export const SingleAxisNameConfigurationMiddle = () =>
                 visualizationUrl: "local:line",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(12, 8, 1),
+        getScenariosGroupByIndexes(15, 8, 1),
     )();
 SingleAxisNameConfigurationMiddle.parameters = {
     kind: "single axis name configuration - middle",
@@ -321,7 +322,7 @@ export const SingleAxisNameConfigurationHigh = () =>
                 visualizationUrl: "local:line",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(12, 8, 2),
+        getScenariosGroupByIndexes(15, 8, 2),
     )();
 SingleAxisNameConfigurationHigh.parameters = {
     kind: "single axis name configuration - high",
@@ -430,7 +431,7 @@ export const SingleAxisNameConfigurationInvisible = () =>
                 visualizationUrl: "local:line",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(12, 8, 3),
+        getScenariosGroupByIndexes(15, 8, 3),
     )();
 SingleAxisNameConfigurationInvisible.parameters = {
     kind: "single axis name configuration - invisible",

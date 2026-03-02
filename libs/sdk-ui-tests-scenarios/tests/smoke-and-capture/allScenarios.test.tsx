@@ -74,25 +74,30 @@ async function scenarioSaveDataCaptureRequests(
 async function scenarioSaveDefinition(
     scenario: IScenario<any>,
     dir: string,
+    execution: ChartInteractions["triggeredExecution"],
     interactions: ChartInteractions,
 ): Promise<string> {
-    let { triggeredExecution } = interactions;
-    const fp = defFingerprint(triggeredExecution!);
+    if (!execution) {
+        throw new Error(`Missing execution while storing scenario ${scenario.vis} / ${scenario.name}.`);
+    }
+
+    let executionToStore = execution;
+    const fp = defFingerprint(executionToStore);
     const recordingDir = path.join(dir, fp);
 
     if (!fs.existsSync(recordingDir)) {
         fs.mkdirSync(recordingDir);
     }
 
-    if (triggeredExecution?.postProcessing) {
-        triggeredExecution = {
-            ...triggeredExecution,
+    if (executionToStore.postProcessing) {
+        executionToStore = {
+            ...executionToStore,
             postProcessing: undefined,
         };
     }
 
     await writeAsJsonSync(path.join(recordingDir, RecordingFiles.Execution.Definition), {
-        ...triggeredExecution,
+        ...executionToStore,
     });
 
     await scenarioSaveDataCaptureRequests(scenario, recordingDir, interactions);
@@ -181,21 +186,59 @@ async function scenarioSave(
     }
 
     const { triggeredExecution: componentExecution } = interactions;
-    const { triggeredExecution: plugVizExecution } = plugVizInteractions ?? {};
-    const recordingDir = await scenarioSaveDefinition(scenario, storeDir, interactions);
+    const recordedFingerprints = new Set<string>();
+    let recordingDir: string | undefined;
+    const allRecordingDirs: Array<{ dir: string; execution: ChartInteractions["triggeredExecution"] }> = [];
 
-    if (plugVizExecution && defFingerprint(componentExecution!) !== defFingerprint(plugVizExecution)) {
-        /*
-         * As-is, react components and plug viz for the same bucket MAY lead to different executions
-         * due to plug viz auto-magically adding sorts (desired UX). different sorts in exec means different
-         * execution. if that happens, make sure the exec definition for the plug viz variant of the
-         * scenario is also stored.
-         */
-        await scenarioSaveDefinition(scenario, storeDir, plugVizInteractions!);
+    const saveExecution = async (
+        execution: ChartInteractions["triggeredExecution"],
+        sourceInteractions: ChartInteractions,
+        markAsPrimary: boolean = false,
+    ): Promise<void> => {
+        if (!execution) {
+            return;
+        }
+
+        const fp = defFingerprint(execution);
+        if (recordedFingerprints.has(fp)) {
+            return;
+        }
+
+        recordedFingerprints.add(fp);
+        const savedDir = await scenarioSaveDefinition(scenario, storeDir, execution, sourceInteractions);
+        allRecordingDirs.push({ dir: savedDir, execution });
+
+        if (markAsPrimary) {
+            recordingDir = savedDir;
+        }
+    };
+
+    await saveExecution(componentExecution, interactions, true);
+    for (const execution of interactions.triggeredExecutions) {
+        await saveExecution(execution, interactions);
+    }
+
+    if (plugVizInteractions) {
+        await saveExecution(plugVizInteractions.triggeredExecution, plugVizInteractions);
+        for (const execution of plugVizInteractions.triggeredExecutions) {
+            await saveExecution(execution, plugVizInteractions);
+        }
     }
 
     if (!scenario.tags.includes("mock-no-scenario-meta")) {
-        await scenarioSaveDescriptors(scenario, recordingDir, interactions);
+        // Save scenario descriptors for ALL recording directories
+        // For primary execution, use full normalizationState from interactions
+        // For secondary executions, use just the buckets from the execution definition
+        for (const { dir, execution } of allRecordingDirs) {
+            const isPrimary = dir === recordingDir;
+            await scenarioSaveDescriptors(
+                scenario,
+                dir,
+                isPrimary
+                    ? interactions
+                    : { ...interactions, normalizationState: undefined, triggeredExecution: execution },
+            );
+        }
     }
 }
 
@@ -250,7 +293,7 @@ async function scenarioStoreInsight(scenario: IScenario<any>, def: IInsightDefin
  */
 const PlugVisUnsupported: string[] = [];
 
-describe.skip("all scenarios", () => {
+describe("all scenarios", () => {
     const Scenarios: AllScenariosType[] = allScenarios.flatMap((s): AllScenariosType[] => {
         const testInputs: Array<IScenario<any>> = s.asScenarioList();
 

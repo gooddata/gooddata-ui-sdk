@@ -1,0 +1,77 @@
+{
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": { "identifier": "country.country_code", "type": "displayForm" },
+                "localIdentifier": "a_country.country_code"
+            }
+        },
+        {
+            "attribute": {
+                "displayForm": { "identifier": "country.country_code", "type": "displayForm" },
+                "localIdentifier": "a_country.country_code_1"
+            }
+        }
+    ],
+    "buckets": [
+        {
+            "items": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "country.country_code", "type": "displayForm" },
+                        "localIdentifier": "a_country.country_code"
+                    }
+                }
+            ],
+            "localIdentifier": "area"
+        },
+        {
+            "items": [
+                {
+                    "measure": {
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                    "type": "measure"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                    }
+                }
+            ],
+            "localIdentifier": "color"
+        },
+        {
+            "items": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "country.country_code", "type": "displayForm" },
+                        "localIdentifier": "a_country.country_code_1"
+                    }
+                }
+            ],
+            "localIdentifier": "tooltipText"
+        }
+    ],
+    "dimensions": [
+        { "itemIdentifiers": ["measureGroup"] },
+        { "itemIdentifiers": ["a_country.country_code", "a_country.country_code_1"] }
+    ],
+    "filters": [],
+    "measures": [
+        {
+            "measure": {
+                "definition": {
+                    "measureDefinition": {
+                        "item": { "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050", "type": "measure" }
+                    }
+                },
+                "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+            }
+        }
+    ],
+    "sortBy": [],
+    "workspace": "reference-workspace"
+}

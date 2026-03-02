@@ -12,7 +12,7 @@ import {
 import { ShortenedText } from "@gooddata/sdk-ui-kit";
 import { simplifyText } from "@gooddata/util";
 
-const getDisplayFormIcon = (type: AttributeDisplayFormType) => {
+const getDisplayFormIcon = (type?: AttributeDisplayFormType | string) => {
     switch (type) {
         case "GDC.link":
             return "gd-icon-hyperlink-warning";
@@ -21,6 +21,7 @@ const getDisplayFormIcon = (type: AttributeDisplayFormType) => {
         case "GDC.geo.pin":
         case "GDC.geo.pin_latitude":
         case "GDC.geo.pin_longitude":
+        case "GDC.geo.area":
             return "gd-icon-earth";
         default:
             return "gd-icon-label-warning";
@@ -46,14 +47,14 @@ export interface IAttributeDisplayFormSelectItemProps {
  */
 export function AttributeDisplayFormSelectItem(props: IAttributeDisplayFormSelectItemProps) {
     const { displayForm, selected } = props;
-    const { title, type } = displayForm;
+    const { title, displayFormType } = displayForm;
 
     const className = classNames(
         "gd-list-item",
         "gd-attribute-display-form",
         "s-attribute-display-form-name",
         `s-attribute-display-form-name-${simplifyText(title)}`,
-        getDisplayFormIcon(type as AttributeDisplayFormType),
+        getDisplayFormIcon(displayFormType),
         {
             "is-selected": selected,
         },

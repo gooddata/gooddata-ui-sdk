@@ -14,7 +14,7 @@ export default {
 
 export const CellTextWrappingEnabled = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(21, 4).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(24, 4).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(([name]) => name === "cell text wrapping enabled");
         if (scenarioAndDescriptions.length === 0)
             throw new Error("Failed to find scenario 'cell text wrapping enabled'");
@@ -40,7 +40,7 @@ CellTextWrappingEnabled.parameters = {
 
 export const HeaderTextWrappingEnabled = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(21, 4).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(24, 4).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(([name]) => name === "header text wrapping enabled");
         if (scenarioAndDescriptions.length === 0)
             throw new Error("Failed to find scenario 'header text wrapping enabled'");

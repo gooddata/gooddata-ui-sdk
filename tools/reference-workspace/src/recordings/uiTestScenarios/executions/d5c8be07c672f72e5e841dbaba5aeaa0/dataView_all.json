@@ -1,0 +1,38 @@
+{
+    "count": [1, 9],
+    "data": [
+        [
+            73449627.36, 11871174.37, 7670034.06, 7395919.19, 6005438.46, 3461373.87, 2376100.41, 2267528.48,
+            2128260.34
+        ]
+    ],
+    "headerItems": [
+        [[{ "measureHeaderItem": { "name": "Amount", "order": 0 } }]],
+        [
+            [
+                { "attributeHeaderItem": { "name": "US-CA", "uri": "US-CA" } },
+                { "attributeHeaderItem": { "name": "US-OR", "uri": "US-OR" } },
+                { "attributeHeaderItem": { "name": "US-NY", "uri": "US-NY" } },
+                { "attributeHeaderItem": { "name": "US-WA", "uri": "US-WA" } },
+                { "attributeHeaderItem": { "name": "US-CT", "uri": "US-CT" } },
+                { "attributeHeaderItem": { "name": "US-NH", "uri": "US-NH" } },
+                { "attributeHeaderItem": { "name": "US-RI", "uri": "US-RI" } },
+                { "attributeHeaderItem": { "name": "US-MA", "uri": "US-MA" } },
+                { "attributeHeaderItem": { "name": "US-PA", "uri": "US-PA" } }
+            ],
+            [
+                { "attributeHeaderItem": { "name": "US-CA", "uri": "US-CA" } },
+                { "attributeHeaderItem": { "name": "US-OR", "uri": "US-OR" } },
+                { "attributeHeaderItem": { "name": "US-NY", "uri": "US-NY" } },
+                { "attributeHeaderItem": { "name": "US-WA", "uri": "US-WA" } },
+                { "attributeHeaderItem": { "name": "US-CT", "uri": "US-CT" } },
+                { "attributeHeaderItem": { "name": "US-NH", "uri": "US-NH" } },
+                { "attributeHeaderItem": { "name": "US-RI", "uri": "US-RI" } },
+                { "attributeHeaderItem": { "name": "US-MA", "uri": "US-MA" } },
+                { "attributeHeaderItem": { "name": "US-PA", "uri": "US-PA" } }
+            ]
+        ]
+    ],
+    "offset": [0, 0],
+    "totalCount": [1, 9]
+}

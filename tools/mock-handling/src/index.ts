@@ -23,6 +23,7 @@ import { log, logError, logInfo, logSuccess } from "./cli/loggers.js";
 import { promptProjectId, promptTigerToken } from "./cli/prompts.js";
 import { generateAllFiles } from "./codegen/index.js";
 import { discoverCatalogRecordings } from "./recordings/catalogRepository.js";
+import { discoverCollectionItemsRecordings } from "./recordings/collectionItemsRepository.js";
 import { type IRecording } from "./recordings/common.js";
 import { discoverDashboardRecordings } from "./recordings/dashboardsRepository.js";
 import { discoverDisplayFormRecordings } from "./recordings/displayFormsRepository.js";
@@ -164,6 +165,7 @@ async function run() {
     const absoluteRecordingDir = path.resolve(recordingDir);
     const recordings = [
         ...discoverExecutionRecordings(absoluteRecordingDir),
+        ...discoverCollectionItemsRecordings(absoluteRecordingDir),
         ...discoverDisplayFormRecordings(absoluteRecordingDir),
         ...discoverInsightRecordings(absoluteRecordingDir),
         ...discoverCatalogRecordings(absoluteRecordingDir),
@@ -195,6 +197,18 @@ async function run() {
         const newRecordings = await captureRecordings(incompleteRecordings, backend, fullConfig);
 
         recordingsToIndex = recordingsToIndex.concat(newRecordings.filter((e) => e.isComplete()));
+
+        /*
+         * Some recordings (notably collectionItems) can be created as a side-effect while capturing executions.
+         * Those are not part of the initial discovery set, so re-discover them here to make sure they are indexed
+         * in the same run.
+         */
+        const refreshedCollectionItems = discoverCollectionItemsRecordings(absoluteRecordingDir).filter((e) =>
+            e.isComplete(),
+        );
+        const byName = new Map(recordingsToIndex.map((r) => [r.getRecordingName(), r]));
+        refreshedCollectionItems.forEach((r) => byName.set(r.getRecordingName(), r));
+        recordingsToIndex = Array.from(byName.values());
     }
 
     logInfo(`Building recording index for all executions with captured data in ${absoluteRecordingDir}`);

@@ -14,7 +14,7 @@ export default {
 
 export const WithColumnAttributesOnlyAndAutoResizing = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 0).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 0).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "with column attributes only and auto-resizing",
         );
@@ -42,7 +42,7 @@ WithColumnAttributesOnlyAndAutoResizing.parameters = {
 
 export const WithSmallPageAndAutoResizing = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 0).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 0).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "with small page and auto-resizing",
         );
@@ -70,7 +70,7 @@ WithSmallPageAndAutoResizing.parameters = {
 
 export const WithTwoMeasuresAndRowAttributeWithAutoResizing = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 0).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 0).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "with two measures and row attribute with auto-resizing",
         );
@@ -102,7 +102,7 @@ WithTwoMeasuresAndRowAttributeWithAutoResizing.parameters = {
 
 export const WithTwoMeasuresAndRowAttributeWithAutoResizingAndGrowToFit = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 0).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 0).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "with two measures and row attribute with auto-resizing and grow to fit",
         );
@@ -134,7 +134,7 @@ WithTwoMeasuresAndRowAttributeWithAutoResizingAndGrowToFit.parameters = {
 
 export const WithTwoMeasuresGrandTotalsAndSubtotalsWithAutoResizing = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 0).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 0).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "with two measures, grand totals and subtotals with auto-resizing",
         );
@@ -166,7 +166,7 @@ WithTwoMeasuresGrandTotalsAndSubtotalsWithAutoResizing.parameters = {
 
 export const WithTwoMeasuresGrandTotalsAndSubtotalsWithAutoResizingAndGrowToFit = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 0).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 0).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) =>
                 name === "with two measures, grand totals and subtotals with auto-resizing and grow to fit",

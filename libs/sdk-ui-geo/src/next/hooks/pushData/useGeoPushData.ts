@@ -3,7 +3,13 @@
 import { useEffect, useMemo } from "react";
 
 import { type AttributeDisplayFormType, type IColorPalette } from "@gooddata/sdk-model";
-import { type IAvailableDrillTargets, type IPushData, getMultiLayerDrillTargets } from "@gooddata/sdk-ui";
+import {
+    type IAvailableDrillTargets,
+    type IColorAssignment,
+    type IPushData,
+    getMappingHeaderName,
+    getMultiLayerDrillTargets,
+} from "@gooddata/sdk-ui";
 import { type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
 import { useGeoLayers } from "../../context/GeoLayersContext.js";
@@ -11,6 +17,7 @@ import { useInitialExecution } from "../../context/InitialExecutionContext.js";
 import { normalizeAttributeDescriptorLocalIdentifier } from "../../layers/common/drillUtils.js";
 import { type IAvailableLegends } from "../../types/common/legends.js";
 import { type GeoLayerType } from "../../types/layers/index.js";
+import { compareAlphabetically } from "../../utils/alphabeticalSorting.js";
 
 interface ILegendContext {
     availableLegends: IAvailableLegends;
@@ -36,6 +43,24 @@ const defaultLegendVisibility = (availableLegends: IAvailableLegends): boolean =
     const hasSizeLegend = availableLegends.hasSizeLegend ?? false;
     return Boolean(availableLegends.hasCategoryLegend || availableLegends.hasColorLegend || hasSizeLegend);
 };
+
+export function sortColorAssignmentsAlphabetically(colorAssignments: IColorAssignment[]): IColorAssignment[] {
+    return colorAssignments
+        .map((assignment, index) => ({
+            assignment,
+            index,
+            name: getMappingHeaderName(assignment.headerItem) ?? "",
+        }))
+        .sort((left, right) => {
+            const byName = compareAlphabetically(left.name, right.name);
+            if (byName !== 0) {
+                return byName;
+            }
+
+            return left.index - right.index;
+        })
+        .map(({ assignment }) => assignment);
+}
 
 /**
  * Maps geo layer type to the preferred display form type for drill-down targets.
@@ -89,6 +114,10 @@ export function useGeoPushData<TProps extends IPushDataProps, TLegendContext ext
     const legendVisibilitySelector = getLegendVisibility ?? defaultLegendVisibility;
 
     const isLegendVisible = legendVisibilitySelector(availableLegends);
+    const colorAssignments = useMemo(
+        () => (colorStrategy ? sortColorAssignmentsAlphabetically(colorStrategy.getColorAssignment()) : []),
+        [colorStrategy],
+    );
 
     // Build drill targets from all layers (combines measures from all layers)
     const layerDataViews = Array.from(layers.values()).map((l) => l.dataView);
@@ -133,9 +162,17 @@ export function useGeoPushData<TProps extends IPushDataProps, TLegendContext ext
                 legend_enabled: isLegendVisible,
             },
             colors: {
-                colorAssignments: colorStrategy.getColorAssignment(),
+                colorAssignments,
                 colorPalette,
             },
         });
-    }, [pushData, colorStrategy, colorPalette, initialDataView, isLegendVisible, availableDrillTargets]);
+    }, [
+        pushData,
+        colorStrategy,
+        colorAssignments,
+        colorPalette,
+        initialDataView,
+        isLegendVisible,
+        availableDrillTargets,
+    ]);
 }

@@ -530,5 +530,8 @@
     "automations.accessibility.search.alerts": "Iskanje opozoril",
     "automations.accessibility.search.schedules": "Iskanje načrtovanih izvozov",
     "automations.accessibility.gridLabel.alerts": "Seznam opozoril",
-    "automations.accessibility.gridLabel.schedules": "Seznam načrtovanih izvozov"
+    "automations.accessibility.gridLabel.schedules": "Seznam načrtovanih izvozov",
+    "filters.allTime.exceptEmptyValues.title": "Ves čas, razen praznih vrednosti",
+    "filters.emptyValues.label": "{title}, prazne vrednosti",
+    "filters.emptyValues.title": "Prazne vrednosti"
 }

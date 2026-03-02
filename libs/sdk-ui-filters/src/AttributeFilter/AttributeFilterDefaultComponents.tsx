@@ -1,4 +1,5 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { AttributeFilterError } from "./Components/AttributeFilterError.js";
 import { AttributeFilterLoading } from "./Components/AttributeFilterLoading.js";
 import { AttributeFilterDropdownActions } from "./Components/Dropdown/AttributeFilterDropdownActions.js";
@@ -16,6 +17,8 @@ import { SingleSelectionAttributeFilterElementsSelectActions } from "./Component
 import { SingleSelectionAttributeFilterElementsSelectItem } from "./Components/ElementsSelect/SingleSelectionAttributeFilterElementsSelectItem.js";
 import { AttributeFilterStatusBar } from "./Components/ElementsSelect/StatusBar/AttributeFilterStatusBar.js";
 import { SingleSelectionAttributeFilterStatusBar } from "./Components/ElementsSelect/StatusBar/SingleSelectionAttributeFilterStatusBar.js";
+import { FilterModeMenu } from "./Components/FilterModeMenu/FilterModeMenu.js";
+import { TextFilterBody } from "./Components/TextFilterBody/TextFilterBody.js";
 import { type IAttributeFilterBaseProps, type IAttributeFilterCustomComponentProps } from "./types.js";
 
 /**
@@ -35,6 +38,8 @@ export const AttributeFilterDefaultComponents: Required<IAttributeFilterCustomCo
     ElementsSelectActionsComponent: AttributeFilterElementsActions,
     EmptyResultComponent: AttributeFilterEmptyResult,
     StatusBarComponent: AttributeFilterStatusBar,
+    FilterModeMenuComponent: FilterModeMenu,
+    TextFilterBodyComponent: TextFilterBody,
 };
 
 /**

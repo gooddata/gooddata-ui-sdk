@@ -1,9 +1,10 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type ReactElement, useMemo, useRef, useState } from "react";
+import { type ReactElement, useCallback, useMemo, useRef, useState } from "react";
 
 import cx from "classnames";
 import { defaultImport } from "default-import";
+import { useIntl } from "react-intl";
 import ReactMeasure, { type ContentRect, type MeasuredComponentProps } from "react-measure";
 import { v4 } from "uuid";
 
@@ -14,12 +15,18 @@ import {
 } from "@gooddata/sdk-ui";
 
 import { GeoChartLegendOverlay } from "./multiLayerLegend/GeoChartLegendOverlay.js";
+import { type LegendMessageFormatter, legendMessagesById } from "./multiLayerLegend/legendMessages.js";
 import { useGeoChartProps } from "../context/GeoChartContext.js";
 import { useGeoLayers } from "../context/GeoLayersContext.js";
 import { MapController } from "../map/MapController.js";
 import { computeViewportFromConfig } from "../map/viewport/viewportResolution.js";
 import { computeCombinedViewport } from "../map/viewport.js";
 import { PushDataSync } from "../pushData/PushDataSync.js";
+import {
+    getMapCanvasInstructionMessageId,
+    getMapCanvasRuntimeCapabilities,
+    mapCanvasInstructionMessagesById,
+} from "../utils/mapCanvasAccessibility.js";
 
 // There are known compatibility issues between CommonJS (CJS) and ECMAScript modules (ESM).
 const Measure = defaultImport(ReactMeasure);
@@ -43,9 +50,36 @@ const containerBaseId = "geo-chart-next";
  */
 export function RenderGeoChart(): ReactElement {
     const props = useGeoChartProps();
+    const intl = useIntl();
     const { layers, layerExecutions, primaryLayer } = useGeoLayers();
     const mapContainerRef = useRef<HTMLDivElement>(null);
+    const legendPanelRef = useRef<HTMLDivElement>(null);
     const containerId = useMemo(() => `${containerBaseId}-${v4()}`, []);
+    const isGeoChartA11yImprovementsEnabled = props.config?.enableGeoChartA11yImprovements ?? false;
+    const mapInstructionsId = useMemo(
+        () => (isGeoChartA11yImprovementsEnabled ? `${containerBaseId}-instructions-${v4()}` : undefined),
+        [isGeoChartA11yImprovementsEnabled],
+    );
+
+    const mapCanvasCapabilities = useMemo(
+        () => (isGeoChartA11yImprovementsEnabled ? getMapCanvasRuntimeCapabilities(props.config) : undefined),
+        [isGeoChartA11yImprovementsEnabled, props.config],
+    );
+    const instructionMessage = useMemo(() => {
+        if (!mapCanvasCapabilities) {
+            return "";
+        }
+
+        const instructionMessageId = getMapCanvasInstructionMessageId(mapCanvasCapabilities);
+        return intl.formatMessage(mapCanvasInstructionMessagesById[instructionMessageId]);
+    }, [mapCanvasCapabilities, intl]);
+    const mapCanvasTitle = isGeoChartA11yImprovementsEnabled ? props.config?.a11yTitle : undefined;
+    const legendMessageFormatter = useCallback<LegendMessageFormatter>(
+        (id, values) => {
+            return intl.formatMessage(legendMessagesById[id], values);
+        },
+        [intl],
+    );
 
     const [chartContainerRect, setChartContainerRect] = useState<ContentRect | null>(null);
 
@@ -92,10 +126,19 @@ export function RenderGeoChart(): ReactElement {
                                     layerExecutions={layerExecutions}
                                     primaryLayer={primaryLayer}
                                     numericSymbols={translationProps.numericSymbols}
+                                    formatMessage={legendMessageFormatter}
+                                    setLegendPanelElementRef={(element) => {
+                                        legendPanelRef.current = element;
+                                    }}
                                 />
                             )}
                         </IntlTranslationsProvider>
                     </div>
+                    {isGeoChartA11yImprovementsEnabled && mapInstructionsId ? (
+                        <p id={mapInstructionsId} className="sr-only">
+                            {instructionMessage}
+                        </p>
+                    ) : null}
                     <MapController
                         mapContainerRef={mapContainerRef}
                         chartContainerRect={chartContainerRect}
@@ -109,6 +152,9 @@ export function RenderGeoChart(): ReactElement {
                         afterRender={props.afterRender}
                         config={props.config}
                         backend={props.backend}
+                        mapInstructionsId={mapInstructionsId}
+                        mapCanvasTitle={mapCanvasTitle}
+                        legendPanelRef={legendPanelRef}
                     />
                     <PushDataSync availableLegends={availableLegends} geoLayerType={props.type} />
                 </div>

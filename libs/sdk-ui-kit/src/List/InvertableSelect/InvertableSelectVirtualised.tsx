@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import {
     type FocusEventHandler,
@@ -117,6 +117,7 @@ export interface IInvertableSelectVirtualisedRenderActionsProps {
     onChange: (value: boolean) => void;
     onToggle: () => void;
     totalItemsCount: number;
+    hideTotalItemsCount?: boolean;
     isFiltered: boolean;
     isPartialSelection: boolean;
     isVisible: boolean;
@@ -136,6 +137,7 @@ export interface IInvertableSelectVirtualisedProps<T> {
 
     items: T[];
     totalItemsCount?: number;
+    hideTotalItemsCount?: boolean;
     itemHeight?: number;
     getItemTitle: (item: T) => string;
     getItemKey: (item: T) => string;
@@ -184,6 +186,7 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
 
         items,
         totalItemsCount,
+        hideTotalItemsCount = false,
         itemHeight,
 
         getItemTitle,
@@ -461,6 +464,7 @@ export function InvertableSelectVirtualised<T>(props: IInvertableSelectVirtualis
                             onChange: onSelectAllCheckboxChange,
                             isFiltered: (searchString?.length ?? 0) > 0,
                             totalItemsCount: totalItemsCount ?? 0,
+                            hideTotalItemsCount,
                             isPartialSelection: selectionState === "partial",
                         })}
                         {items.length > 0 && (
@@ -608,6 +612,7 @@ function defaultActions({
     totalItemsCount,
     isPartialSelection,
     isVisible,
+    hideTotalItemsCount = false,
 }: IInvertableSelectVirtualisedRenderActionsProps): ReactElement {
     return (
         <InvertableSelectAllCheckbox
@@ -618,6 +623,7 @@ function defaultActions({
             isFiltered={isFiltered}
             totalItemsCount={totalItemsCount}
             isPartialSelection={isPartialSelection}
+            hideTotalItemsCount={hideTotalItemsCount}
         />
     );
 }

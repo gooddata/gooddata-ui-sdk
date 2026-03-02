@@ -1,38 +1,42 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import {
     type IAttributeDisplayFormMetadataObject,
     type IAttributeElement,
+    type IAttributeFilter,
     type IAttributeMetadataObject,
     type ObjRef,
 } from "@gooddata/sdk-model";
 import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
+import { type AttributeFilterMode, type AttributeFilterTextMode } from "../filterModeTypes.js";
+import { type TextFilterOperator } from "../textFilterOperatorUtils.js";
+
 /**
- * AttributeFilter controller state.
+ * Shared filter controller state (common across all modes).
  *
  * @public
  */
-export type AttributeFilterControllerData = {
+export type CommonFilterControllerData = {
     /**
      * Loaded attribute.
      */
     attribute?: IAttributeMetadataObject;
 
     /**
-     * Current offset used for the attribute element loading.
+     * Display forms of the attribute.
      */
-    offset: number;
+    displayForms: IAttributeDisplayFormMetadataObject[];
 
     /**
-     * Current limit used for the attribute element loading.
+     * Current attribute filter display form {@link @gooddata/sdk-model#ObjRef}.
      */
-    limit: number;
+    currentDisplayFormRef: ObjRef;
 
     /**
-     * If true, AttributeFilter is filtering elements.
+     * Current attribute filter display form used for displaying filter's elements {@link @gooddata/sdk-model#ObjRef}.
      */
-    isFiltering: boolean;
+    currentDisplayAsDisplayFormRef?: ObjRef;
 
     /**
      * If true, AttributeFilter is initializing internal data and elements
@@ -43,6 +47,44 @@ export type AttributeFilterControllerData = {
      * Error that occurred during the initialization, if any.
      */
     initError?: GoodDataSdkError;
+
+    /**
+     * If true, AttributeFilter is filtering elements.
+     */
+    isFiltering: boolean;
+
+    /**
+     * If true, current selection is considered not valid and should not be applied.
+     * The number of selected elements reached the limit of maximum selection size or no elements are selected.
+     */
+    isSelectionInvalid: boolean;
+
+    /**
+     * If true, selection has no changes or the selection is invalid. See isSelectionInvalid.
+     */
+    isApplyDisabled: boolean;
+
+    /**
+     * Indicates whether the working selection has changed since the last commit.
+     */
+    isWorkingSelectionChanged?: boolean;
+};
+
+/**
+ * Elements mode filter controller state.
+ *
+ * @public
+ */
+export type ElementsFilterControllerData = {
+    /**
+     * Current offset used for the attribute element loading.
+     */
+    offset: number;
+
+    /**
+     * Current limit used for the attribute element loading.
+     */
+    limit: number;
 
     /**
      * If true, the first elements page is loading.
@@ -85,17 +127,6 @@ export type AttributeFilterControllerData = {
     totalElementsCountWithCurrentSettings: number | undefined;
 
     /**
-     * If true, current selection is considered not valid and should not be applied.
-     * The number of selected elements reached the limit of maximum selection size or no elements are selected.
-     */
-    isSelectionInvalid: boolean;
-
-    /**
-     * If true, selection has no changes or the selection si invalid. see {@link AttributeFilterControllerData.isSelectionInvalid}.
-     */
-    isApplyDisabled: boolean;
-
-    /**
      * If true, the current working selection is inverted.
      */
     isWorkingSelectionInverted: boolean;
@@ -131,21 +162,6 @@ export type AttributeFilterControllerData = {
     parentFilterAttributes: IAttributeMetadataObject[];
 
     /**
-     * Display forms of the attribute.
-     */
-    displayForms: IAttributeDisplayFormMetadataObject[];
-
-    /**
-     * Current attribute filter display form {@link @gooddata/sdk-model#ObjRef}.
-     */
-    currentDisplayFormRef: ObjRef;
-
-    /**
-     * Current attribute filter display form used for displaying filter's elements {@link @gooddata/sdk-model#ObjRef}.
-     */
-    currentDisplayAsDisplayFormRef?: ObjRef;
-
-    /**
      * This enables "show filtered elements" option which manages showing filtered elements.
      */
     enableShowingFilteredElements?: boolean;
@@ -173,19 +189,122 @@ export type AttributeFilterControllerData = {
      * @beta
      */
     isFilteredByDependentDateFilters?: boolean;
-
-    /**
-     * Indicates whether the working selection has changed since the last commit.
-     */
-    isWorkingSelectionChanged?: boolean;
 };
 
 /**
- * AttributeFilter controller callbacks.
+ * Text mode filter controller state.
  *
  * @public
  */
-export type AttributeFilterControllerCallbacks = {
+export type TextFilterControllerData = {
+    /**
+     * Text filter mode - current operator.
+     *
+     * @alpha
+     */
+    textFilterOperator: TextFilterOperator;
+
+    /**
+     * Text filter mode - values for "is/is not" operators (chips).
+     *
+     * @alpha
+     */
+    textFilterValues?: string[];
+
+    /**
+     * Text filter mode - literal for like operators.
+     *
+     * @alpha
+     */
+    textFilterLiteral?: string;
+
+    /**
+     * Text filter mode - true when empty literal validation should be shown.
+     *
+     * @alpha
+     */
+    textFilterLiteralEmptyError?: boolean;
+
+    /**
+     * Text filter mode - true when empty arbitrary values validation should be shown.
+     *
+     * @alpha
+     */
+    textFilterValuesEmptyError?: boolean;
+
+    /**
+     * Text filter mode - true when at value limit (warning shown, Apply enabled).
+     *
+     * @alpha
+     */
+    textFilterValuesLimitReachedWarning?: boolean;
+
+    /**
+     * Text filter mode - true when value limit exceeded (error shown, Apply disabled).
+     *
+     * @alpha
+     */
+    textFilterValuesLimitExceededError?: boolean;
+
+    /**
+     * Text filter mode - case sensitivity for like operators.
+     *
+     * @alpha
+     */
+    textFilterCaseSensitive?: boolean;
+
+    /**
+     * Text filter mode - committed/applied filter snapshot.
+     *
+     * @alpha
+     */
+    textFilterCommittedFilter?: IAttributeFilter;
+};
+
+/**
+ * Filter mode state (elements vs text mode switching).
+ *
+ * @public
+ */
+export type FilterModeControllerData = {
+    /**
+     * Current filter mode (derived from filter type).
+     *
+     * @alpha
+     */
+    currentFilterMode: AttributeFilterMode;
+
+    /**
+     * Available internal filter modes for menu rendering.
+     *
+     * @alpha
+     */
+    availableInternalFilterModes?: AttributeFilterMode[];
+
+    /**
+     * Available text filter sub-modes.
+     *
+     * @alpha
+     */
+    availableTextFilterModes?: AttributeFilterTextMode[];
+};
+
+/**
+ * AttributeFilter controller state.
+ *
+ * @public
+ */
+export type AttributeFilterControllerData = CommonFilterControllerData &
+    ElementsFilterControllerData &
+    FilterModeControllerData &
+    Partial<TextFilterControllerData>;
+
+/**
+ * Shared filter controller callbacks (common across all modes).
+ *
+ * @public
+ */
+export type CommonFilterControllerCallbacks = {
     /**
      * Apply changes from working selection to committed selection.
      * @param applyRegardlessWithoutApplySetting - If true, apply changes regardless of the withoutApply setting.
@@ -193,6 +312,28 @@ export type AttributeFilterControllerCallbacks = {
      */
     onApply: (applyRegardlessWithoutApplySetting?: boolean, applyToWorkingOnly?: boolean) => void;
 
+    /**
+     * Reset working selection.
+     */
+    onReset: () => void;
+
+    /**
+     * Load sample elements for the details tooltip bubble.
+     * Returns up to 5 elements and total count for the given display form.
+     *
+     * @alpha
+     */
+    filterDetailRequestHandler?: (
+        labelRef: ObjRef,
+    ) => Promise<{ elements: IAttributeElement[]; totalCount: number }>;
+};
+
+/**
+ * Elements mode filter controller callbacks.
+ *
+ * @public
+ */
+export type ElementsFilterControllerCallbacks = {
     /**
      * Request next page of elements that respect current search criteria.
      */
@@ -207,11 +348,6 @@ export type AttributeFilterControllerCallbacks = {
      * Change working selection.
      */
     onSelect: (selectedItems: IAttributeElement[], isInverted: boolean) => void;
-
-    /**
-     * Reset working selection.
-     */
-    onReset: () => void;
 
     /**
      * Filter open callback.
@@ -230,8 +366,142 @@ export type AttributeFilterControllerCallbacks = {
 };
 
 /**
+ * Text mode filter controller callbacks.
+ *
+ * @public
+ */
+export type TextFilterControllerCallbacks = {
+    /**
+     * Text mode - change operator.
+     *
+     * @alpha
+     */
+    onTextFilterOperatorChange?: (operator: TextFilterOperator) => void;
+
+    /**
+     * Text mode - change values (for is/is not operators).
+     *
+     * @alpha
+     */
+    onTextFilterValuesChange?: (values: string[]) => void;
+
+    /**
+     * Text mode - change literal (for like operators).
+     *
+     * @alpha
+     */
+    onTextFilterLiteralChange?: (literal: string) => void;
+
+    /**
+     * Text mode - mark literal field as touched (used for blur validation).
+     *
+     * @alpha
+     */
+    onTextFilterLiteralBlur?: () => void;
+
+    /**
+     * Text mode - mark arbitrary values field as touched (used for blur validation).
+     *
+     * @alpha
+     */
+    onTextFilterValuesBlur?: () => void;
+
+    /**
+     * Text mode - toggle case sensitivity.
+     *
+     * @alpha
+     */
+    onToggleTextFilterCaseSensitive?: () => void;
+
+    /**
+     * Text mode - commit current draft as applied state.
+     *
+     * @alpha
+     */
+    onCommitTextFilter?: () => void;
+};
+
+/**
+ * Filter mode callbacks (elements vs text mode switching).
+ *
+ * @public
+ */
+export type FilterModeControllerCallbacks = {
+    /**
+     * Switch filter mode callback.
+     * Resets filter to empty state of new mode.
+     *
+     * @alpha
+     */
+    onFilterModeChange?: (newMode: AttributeFilterMode) => void;
+
+    /**
+     * Change the display form (attribute label) used for filter values.
+     *
+     * @alpha
+     */
+    setDisplayForm?: (displayFormRef: ObjRef) => void;
+
+    /**
+     * Imperatively reset controller state to new filter (used during mode switch).
+     *
+     * @internal
+     */
+    resetForModeSwitch?: (newFilter: IAttributeFilter, newDisplayAsLabel?: ObjRef) => void;
+};
+
+/**
+ * AttributeFilter controller callbacks.
+ *
+ * @public
+ */
+export type AttributeFilterControllerCallbacks = CommonFilterControllerCallbacks &
+    ElementsFilterControllerCallbacks &
+    TextFilterControllerCallbacks &
+    FilterModeControllerCallbacks;
+
+/**
  * AttributeFilter controller return type.
  *
  * @public
  */
 export type AttributeFilterController = AttributeFilterControllerData & AttributeFilterControllerCallbacks;
+
+/**
+ * Elements mode controller return type.
+ *
+ * @internal
+ */
+export type ElementsFilterController = CommonFilterControllerData &
+    ElementsFilterControllerData &
+    CommonFilterControllerCallbacks &
+    ElementsFilterControllerCallbacks &
+    Pick<FilterModeControllerCallbacks, "setDisplayForm" | "resetForModeSwitch">;
+
+/**
+ * Text mode controller return type.
+ * Only text-specific data and callbacks; root controller merges with common data and elements stubs.
+ *
+ * @internal
+ */
+export type TextFilterController = TextFilterControllerCallbacks & {
+    currentDisplayFormRef: ObjRef;
+    isApplyDisabled: boolean;
+    isTextFilterInvalid: boolean;
+    isWorkingSelectionChanged?: boolean;
+    textFilterOperator: TextFilterOperator;
+    textFilterValues?: string[];
+    textFilterLiteral?: string;
+    textFilterLiteralEmptyError?: boolean;
+    textFilterValuesEmptyError?: boolean;
+    textFilterValuesLimitReachedWarning?: boolean;
+    textFilterValuesLimitExceededError?: boolean;
+    textFilterCaseSensitive?: boolean;
+    textFilterCommittedFilter?: IAttributeFilter;
+    syncFromFilter?: (nextFilter: IAttributeFilter, updateCommitted?: boolean) => void;
+    onResetForDisplayFormChange?: (newDisplayFormRef: ObjRef) => void;
+    resetForModeSwitch?: (newFilter: IAttributeFilter) => void;
+    onCommitTextFilter?: () => void;
+    onReset?: () => void;
+    setDisplayForm?: (displayFormRef: ObjRef) => void;
+};

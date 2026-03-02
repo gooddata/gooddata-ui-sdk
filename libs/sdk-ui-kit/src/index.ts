@@ -57,6 +57,7 @@ export {
     isSpaceKey,
     isEnterKey,
     isArrowKey,
+    isArrowDownKey,
     isTypingKey,
     isEscapeKey,
     isCopyKey,
@@ -507,6 +508,40 @@ export {
 } from "./CustomizableCheckmark/CustomizableCheckmark.js";
 export { AutoSize, type IAutoSizeProps, type IAutoSizeChildren } from "./AutoSize/AutoSize.js";
 export { type SpinnerSize, type ILoadingMaskProps, LoadingMask } from "./LoadingMask/LoadingMask.js";
+export {
+    FileDropzone,
+    type IFileDropzoneHandle,
+    type IFileDropzoneProps,
+} from "./FileUpload/FileDropzone/FileDropzone.js";
+export {
+    FilePickerButton,
+    type IFilePickerButtonProps,
+} from "./FileUpload/FilePickerButton/FilePickerButton.js";
+export { UploadFileList, type IUploadFileListProps } from "./FileUpload/UploadFileList/UploadFileList.js";
+export {
+    UploadStatusDialog,
+    type IUploadStatusDialogProps,
+} from "./FileUpload/UploadStatusDialog/UploadStatusDialog.js";
+export {
+    useFileSelection,
+    type IUseFileSelectionConfig,
+    type IUseFileSelectionResult,
+} from "./FileUpload/hooks/useFileSelection.js";
+export {
+    useUploadQueue,
+    type IUseUploadQueueConfig,
+    type IUseUploadQueueResult,
+} from "./FileUpload/hooks/useUploadQueue.js";
+export { validateFile } from "./FileUpload/hooks/validateFile.js";
+export {
+    UploadItemStatus,
+    FileValidationErrorCode,
+    type IFileValidationResult,
+    type IFileValidationRules,
+    type IFileRejection,
+    type IUploadActionCallbacks,
+    type IUploadFileItem,
+} from "./FileUpload/types.js";
 export { type INoDataProps, NoData } from "./NoData/NoData.js";
 export { DocumentHeader, type IDocumentHeaderProps } from "./DocumentHeader/DocumentHeader.js";
 export {
@@ -1107,10 +1142,10 @@ export type { IUiComboboxOption, IUiComboboxParams, IUiComboboxState } from "./@
 
 export { UiCopyButton, type IUiCopyButtonProps } from "./@ui/UiCopyButton/UiCopyButton.js";
 export {
-    UiGenerateTextDialog,
-    type IUiGenerateTextDialogProps,
-    type IUiGenerateTextDialogResult,
-} from "./@ui/UiGenerateTextDialog/UiGenerateTextDialog.js";
+    UiInlineTextGenerator,
+    type IUiInlineTextGeneratorProps,
+    type IUiInlineTextGeneratorResult,
+} from "./@ui/UiInlineTextGenerator/UiInlineTextGenerator.js";
 
 export { DomainHomepageLink, type IDomainHomepageLinkProps } from "./Header/HomepageLink.js";
 

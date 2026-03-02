@@ -167,6 +167,50 @@
         "text": "Use two fingers to move the map",
         "crowdinContext": "This message will appear when moving map on GeoChart is disabled by one finger and available only with two."
     },
+    "geochart.map.canvas.label": {
+        "text": "GeoChart: {title} map canvas",
+        "crowdinContext": "Accessible name for the geo chart map canvas element; includes chart title when available."
+    },
+    "geochart.map.canvas.label.fallback": {
+        "text": "GeoChart map canvas",
+        "crowdinContext": "Fallback accessible name for the geo chart map canvas element when chart title is unavailable."
+    },
+    "geochart.map.canvas.instructions.panZoom": {
+        "text": "Map canvas. Use arrow keys to pan. Use plus and minus to zoom. Press Tab to move to the next control.",
+        "crowdinContext": "Screen reader instructions for geo chart map keyboard usage when pan and zoom shortcuts are enabled."
+    },
+    "geochart.map.canvas.instructions.panZoomRotatePitch": {
+        "text": "Map canvas. Use arrow keys to pan. Use plus and minus to zoom. Use Shift with arrow keys to rotate or change pitch. Press Tab to move to the next control.",
+        "crowdinContext": "Screen reader instructions for geo chart map keyboard usage when pan, zoom, and rotate/pitch shortcuts are enabled."
+    },
+    "geochart.map.canvas.instructions.panOnly": {
+        "text": "Map canvas. Use arrow keys to pan. Press Tab to move to the next control.",
+        "crowdinContext": "Screen reader instructions for geo chart map keyboard usage when only pan shortcut is enabled."
+    },
+    "geochart.map.canvas.static": {
+        "text": "Map is static. Keyboard navigation is disabled.",
+        "crowdinContext": "Screen reader message when geo chart viewport is frozen and keyboard interactions are disabled."
+    },
+    "geochart.legend.colorScale.label": {
+        "text": "Color scale from {min} to {max}",
+        "crowdinContext": "Screen reader description for the gradient color scale bar in geo chart legend, conveying the numeric range."
+    },
+    "geochart.legend.layer.hidden": {
+        "text": "Map layer {name} hidden",
+        "crowdinContext": "Screen reader announcement when a map layer is toggled off in the geo chart legend. {name} is replaced with the layer title."
+    },
+    "geochart.legend.layer.shown": {
+        "text": "Map layer {name} shown",
+        "crowdinContext": "Screen reader announcement when a map layer is toggled on in the geo chart legend. {name} is replaced with the layer title."
+    },
+    "geochart.legend.item.hidden": {
+        "text": "{name} hidden",
+        "crowdinContext": "Screen reader announcement when a legend item (category) is toggled off in the geo chart legend. {name} is replaced with the item label."
+    },
+    "geochart.legend.item.shown": {
+        "text": "{name} shown",
+        "crowdinContext": "Screen reader announcement when a legend item (category) is toggled on in the geo chart legend. {name} is replaced with the item label."
+    },
     "visualizations.of": {
         "text": "{page} of {pagesCount}",
         "crowdinContext": "Pagination indicator showing current page number and total pages (e.g., '2 of 5'). The {page} and {pagesCount} placeholders will be replaced with actual numbers."
@@ -436,11 +480,11 @@
         "crowdinContext": "Error message shown when a user exceeds the maximum allowed number of selections in a list component. The {limit} placeholder will be replaced with the actual limit number."
     },
     "gs.list.limitReached": {
-        "text": "You have reached the limit of {limit} selected values.",
+        "text": "Warning: You have reached the limit of {limit} selected values.",
         "crowdinContext": "Informational message shown when a user reaches the maximum allowed number of selections in a list component. The {limit} placeholder will be replaced with the actual limit number."
     },
     "gs.list.cannotSelectMoreValues": {
-        "text": "You cannot select more than {limit} values.",
+        "text": "Error: Too many values — you can add up to {limit} values.",
         "crowdinContext": "Error message shown when a user attempts to select more items than allowed in a list component. The {limit} placeholder will be replaced with the maximum allowed number of selections."
     },
     "gs.list.noItemsFound": {
@@ -1534,6 +1578,158 @@
     "filters.locked.filter.tooltip": {
         "text": "This filter is locked",
         "crowdinContext": "Tooltip explaining that the current filter is locked and cannot be interactive."
+    },
+    "attributeFilter.operator.is": {
+        "text": "is",
+        "crowdinContext": "Text filter operator label for arbitrary positive selection."
+    },
+    "attributeFilter.operator.isNot": {
+        "text": "is not",
+        "crowdinContext": "Text filter operator label for arbitrary negative selection."
+    },
+    "attributeFilter.operator.contains": {
+        "text": "contains",
+        "crowdinContext": "Text filter operator label for like contains."
+    },
+    "attributeFilter.operator.doesNotContain": {
+        "text": "does not contain",
+        "crowdinContext": "Text filter operator label for like does not contain."
+    },
+    "attributeFilter.operator.startsWith": {
+        "text": "starts with",
+        "crowdinContext": "Text filter operator label for like starts with."
+    },
+    "attributeFilter.operator.doesNotStartWith": {
+        "text": "does not start with",
+        "crowdinContext": "Text filter operator label for like does not start with."
+    },
+    "attributeFilter.operator.endsWith": {
+        "text": "ends with",
+        "crowdinContext": "Text filter operator label for like ends with."
+    },
+    "attributeFilter.operator.doesNotEndWith": {
+        "text": "does not end with",
+        "crowdinContext": "Text filter operator label for like does not end with."
+    },
+    "attributeFilter.mode.selection": {
+        "text": "Selection",
+        "crowdinContext": "Section title for choosing attribute filter mode."
+    },
+    "attributeFilter.mode.list": {
+        "text": "List",
+        "crowdinContext": "Attribute filter mode label for list selection."
+    },
+    "attributeFilter.mode.text": {
+        "text": "Text",
+        "crowdinContext": "Attribute filter mode label for text selection."
+    },
+    "attributeFilter.mode.valuesAs": {
+        "text": "Values as",
+        "crowdinContext": "Section title for choosing which display form to use for filter values."
+    },
+    "attributeFilter.text.caseSensitive": {
+        "text": "Case sensitive",
+        "crowdinContext": "Label for toggling case sensitivity in text attribute filter."
+    },
+    "attributeFilter.text.condition": {
+        "text": "Condition",
+        "crowdinContext": "Label for text filter operator dropdown."
+    },
+    "attributeFilter.text.arbitrary.placeholder": {
+        "text": "Enter values ...",
+        "crowdinContext": "Placeholder shown in text attribute filter value input before user enters any value."
+    },
+    "attributeFilter.text.match.placeholder": {
+        "text": "Enter value ...",
+        "crowdinContext": "Placeholder shown in text attribute filter value input before user enters any value."
+    },
+    "attributeFilter.text.applyButton.tooltip.valuesLimitExceeded": {
+        "text": "You cannot have more than {maxValues} values.",
+        "crowdinContext": "Tooltip shown on the Apply button in text attribute filter when the value limit is exceeded. {maxValues} is the maximum allowed count (e.g. 500)."
+    },
+    "attributeFilter.text.applyButton.tooltip.emptyValue": {
+        "text": "Value in the condition is empty.",
+        "crowdinContext": "Tooltip shown on the Apply button in text attribute filter when the value input is empty after user interaction."
+    },
+    "attributeFilter.text.applyButton.tooltip.noChanges": {
+        "text": "No changes to apply",
+        "crowdinContext": "Tooltip shown on the Apply button in attribute filter when there are no staged changes."
+    },
+    "attributeFilter.text.validation.valuesLimitReached": {
+        "text": "Warning: You have reached the maximum of {maxValues} values.",
+        "crowdinContext": "Warning shown below the Values input in text attribute filter when the user has reached the value limit. Example output: 'Warning: You have reached the maximum of 500 values.' {maxValues} is the maximum allowed count (e.g. 500)."
+    },
+    "attributeFilter.text.validation.valuesLimitExceeded": {
+        "text": "Error: Too many values — you can add up to {maxValues} values.",
+        "crowdinContext": "Error message shown below the Values input in text attribute filter when the user exceeds the value limit. Example output: 'Error: You cannot have more than 500 values.' {maxValues} is the maximum allowed count (e.g. 500)."
+    },
+    "attributeFilter.text.validation.valueCannotBeEmpty": {
+        "text": "Error: Value cannot be empty.",
+        "crowdinContext": "Inline validation message shown under text filter input after blur when the value is empty."
+    },
+    "attributeFilter.text.isNone": {
+        "text": "None",
+        "crowdinContext": "Status text when no values or literal are entered in text attribute filter."
+    },
+    "attributeFilter.text.summary.plain": {
+        "text": "{operator} {value}",
+        "crowdinContext": "Plain text summary of current text filter state for button subtitle."
+    },
+    "attributeFilter.text.summary.rich": {
+        "text": "{operator} <b>{value}</b>",
+        "crowdinContext": "Rich text summary of current text filter state shown in text filter body."
+    },
+    "attributeFilter.text.arbitrary.values": {
+        "text": "Values",
+        "crowdinContext": "Label for values input in text attribute filter."
+    },
+    "attributeFilter.text.match.value": {
+        "text": "Value",
+        "crowdinContext": "Label for values input in text attribute filter."
+    },
+    "attributeFilter.text.values.tooltip": {
+        "text": "Separate values with commas or newlines.\nUse double quotes if what you are adding has commas.\nTo filter empty and null values use {emptyValue}.\nYou can add up to {maxValues} values.",
+        "crowdinContext": "Help tooltip for the Values input in text attribute filter, explaining how to enter multiple values, handle commas, filter empty/null values, and the value limit. {emptyValue} is the localized representation of (empty value), e.g. '(empty value)' in English. {maxValues} is the maximum allowed count (e.g. 500)."
+    },
+    "attributeFilter.text.values.helpIconLabel": {
+        "text": "Help",
+        "crowdinContext": "Accessible label for the help icon next to the Values input in text attribute filter."
+    },
+    "attributeFilter.text.values.removeTagAriaLabel": {
+        "text": "Remove {value}",
+        "crowdinContext": "Accessible label for the remove button on a value tag in text attribute filter. {value} is the displayed value being removed."
+    },
+    "attributeFilter.text.autocomplete.listLabel": {
+        "text": "Suggestions",
+        "crowdinContext": "Accessible label for the autocomplete suggestions listbox in the text attribute filter values input."
+    },
+    "attributeFilter.details.infoButtonLabel": {
+        "text": "Show attribute details",
+        "crowdinContext": "Accessible label for the info button that opens the attribute details bubble in the attribute filter header."
+    },
+    "attributeFilter.details.label": {
+        "text": "Label",
+        "crowdinContext": "Section heading for the display form (label) used in the attribute filter details bubble."
+    },
+    "attributeFilter.details.elementsMore": {
+        "text": "…and {count} more",
+        "crowdinContext": "Shown in attribute filter details bubble when the count of displayed sample values is less than total. Example: '…and 42 more'."
+    },
+    "attributeFilter.details.type": {
+        "text": "Type",
+        "crowdinContext": "Section heading for the attribute type in the attribute filter details bubble."
+    },
+    "attributeFilter.details.dataset": {
+        "text": "Dataset",
+        "crowdinContext": "Section heading for the dataset name in the attribute filter details bubble."
+    },
+    "attributeFilter.details.id": {
+        "text": "ID",
+        "crowdinContext": "Section heading for the attribute identifier in the attribute filter details bubble."
+    },
+    "attributeFilter.details.typeValue": {
+        "text": "Attribute",
+        "crowdinContext": "Value displayed for attribute type in the attribute filter details bubble."
     },
     "mvf.operator.all": {
         "text": "all",
@@ -3970,5 +4166,41 @@
     "gs.date.yesterday": {
         "text": "Yesterday",
         "crowdinContext": "Label for the day before today in date filters and selectors"
+    },
+    "fileUpload.status.uploading": {
+        "text": "Uploading",
+        "crowdinContext": "Status label shown when a file is being uploaded"
+    },
+    "fileUpload.status.uploaded": {
+        "text": "Uploaded",
+        "crowdinContext": "Status label shown when a file has been successfully uploaded"
+    },
+    "fileUpload.status.failed": {
+        "text": "Upload failed",
+        "crowdinContext": "Fallback status label shown when a file upload has failed and no specific error message is available"
+    },
+    "fileUpload.status.ready": {
+        "text": "Ready",
+        "crowdinContext": "Status label shown when a file is queued and ready to be uploaded"
+    },
+    "fileUpload.action.retry": {
+        "text": "Retry",
+        "crowdinContext": "Button label to retry a failed file upload"
+    },
+    "fileUpload.action.remove": {
+        "text": "Remove",
+        "crowdinContext": "Button label to remove a file from the upload list"
+    },
+    "fileUpload.list.label": {
+        "text": "Upload files",
+        "crowdinContext": "Accessible label for the file upload list element"
+    },
+    "fileUpload.action.retryFile": {
+        "text": "Retry {fileName}",
+        "crowdinContext": "Accessible label for the retry button including the file name, e.g. Retry data.csv"
+    },
+    "fileUpload.action.removeFile": {
+        "text": "Remove {fileName}",
+        "crowdinContext": "Accessible label for the remove button including the file name, e.g. Remove data.csv"
     }
 }

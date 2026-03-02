@@ -131,6 +131,9 @@ for (const [groupsIndex, groups] of ScenarioGroupsByVis.entries()) {
                 source: "@gooddata/sdk-ui-pivot/styles/css/main.css",
             },
             {
+                source: "@gooddata/sdk-ui-geo/styles/css/main.css",
+            },
+            {
                 source: "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css",
             },
             {
@@ -213,16 +216,16 @@ for (const [groupsIndex, groups] of ScenarioGroupsByVis.entries()) {
                 null,
                 4,
             )} as unknown as IInsight, getScenariosGroupByIndexes(${groupsIndex}, ${groupIndex}, ${scenarioIndex}))();
-${exportName}.parameters = ${unquoteStateInJson(
-                JSON.stringify(
-                    {
-                        kind: scenario.name,
-                        screenshot: screenshotConfig,
-                    } satisfies IStoryParameters,
-                    null,
-                    4,
-                ),
-            )} satisfies IStoryParameters;`);
+    ${exportName}.parameters = ${unquoteStateInJson(
+        JSON.stringify(
+            {
+                kind: scenario.name,
+                screenshot: screenshotConfig,
+            } satisfies IStoryParameters,
+            null,
+            4,
+        ),
+    )} satisfies IStoryParameters;`);
         });
 
         if (storyExports.length === 0) continue;

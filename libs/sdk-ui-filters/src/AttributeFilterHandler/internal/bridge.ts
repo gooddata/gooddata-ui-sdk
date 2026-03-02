@@ -142,10 +142,11 @@ export class AttributeFilterReduxBridge {
     // Init
     //
 
-    init = (correlation: Correlation): void => {
+    init = (correlation: Correlation, skipElementsLoading?: boolean): void => {
         this.redux.dispatch(
             actions.init({
                 correlation,
+                skipElementsLoading,
             }),
         );
     };

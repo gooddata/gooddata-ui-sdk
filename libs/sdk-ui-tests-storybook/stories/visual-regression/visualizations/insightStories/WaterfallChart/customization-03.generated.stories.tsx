@@ -2,6 +2,7 @@
 
 import { type IInsight } from "@gooddata/sdk-model";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 
@@ -94,7 +95,7 @@ export const DisableTotalColumn = () =>
                 visualizationUrl: "local:waterfall",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(21, 3, 0),
+        getScenariosGroupByIndexes(24, 3, 0),
     )();
 DisableTotalColumn.parameters = {
     kind: "disable total column",
@@ -195,7 +196,7 @@ export const ChangeTheTotalColumnName = () =>
                 visualizationUrl: "local:waterfall",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(21, 3, 1),
+        getScenariosGroupByIndexes(24, 3, 1),
     )();
 ChangeTheTotalColumnName.parameters = {
     kind: "change the total column name",

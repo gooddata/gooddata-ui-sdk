@@ -34,7 +34,7 @@
         "build-ts": "tsgo -p tsconfig.build.json",
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci esm dist coverage *.log tsconfig.tsbuildinfo",
         "dep-cruiser": "depcruise --validate .dependency-cruiser.cjs --output-type err-long src/",
-        "populate-ref": "GDC_STORE_DEFS=\"../../tools\" vitest run tests/smoke-and-capture/",
+        "populate-ref": "GDC_STORE_DEFS=\"../../tools\" vitest run tests/smoke-and-capture/ --bail=1 --reporter=verbose",
         "format-check": "oxfmt --check .",
         "format-write": "oxfmt .",
         "test": "vitest watch",

@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
 import { invariant } from "ts-invariant";
@@ -139,6 +139,9 @@ async function resolveAttributeFilterValues(
     const attributesService = backend.workspace(workspace).attributes();
     const elementsQuery = attributesService.elements().forFilter(filter);
     const selectedElements = filterAttributeElements(filter);
+    if (!selectedElements) {
+        return result;
+    }
     const selectedElementsCount = attributeElementsCount(selectedElements);
     // nothing to resolve at all (eg. ALL filter)
     if (selectedElementsCount === 0) {

@@ -2,6 +2,7 @@
 
 import { type IInsight } from "@gooddata/sdk-model";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 
@@ -90,7 +91,7 @@ export const DefaultState = () =>
                 visualizationUrl: "local:waterfall",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(21, 4, 0),
+        getScenariosGroupByIndexes(24, 4, 0),
     )();
 DefaultState.parameters = {
     kind: "default state",
@@ -190,7 +191,7 @@ export const ChangeTheOrientationConfiguration = () =>
                 visualizationUrl: "local:waterfall",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(21, 4, 1),
+        getScenariosGroupByIndexes(24, 4, 1),
     )();
 ChangeTheOrientationConfiguration.parameters = {
     kind: "change the orientation configuration",
@@ -277,7 +278,7 @@ export const VerticalOrientationWithCustomAxesConfiguration = () =>
                 visualizationUrl: "local:waterfall",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(21, 4, 2),
+        getScenariosGroupByIndexes(24, 4, 2),
     )();
 VerticalOrientationWithCustomAxesConfiguration.parameters = {
     kind: "vertical orientation with custom axes configuration",
@@ -361,7 +362,7 @@ export const HorizontalOrientationWithCustomAxesConfiguration = () =>
                 visualizationUrl: "local:waterfall",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(21, 4, 3),
+        getScenariosGroupByIndexes(24, 4, 3),
     )();
 HorizontalOrientationWithCustomAxesConfiguration.parameters = {
     kind: "horizontal orientation with custom axes configuration",

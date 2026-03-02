@@ -762,7 +762,7 @@
     "kdaDialog.dialog.keyDrives.button.trendUp": "Увеличение",
     "kdaDialog.dialog.keyDrives.button.trendDown": "Уменьшение",
     "kdaDialog.dialog.keyDrives.button.trendAll": "Все",
-    "kdaDialog.dialog.keyDrives.drivers": "{count} {count, plural, one {фактор} few {фактора} many {факторов} other {фактора}}",
+    "kdaDialog.dialog.keyDrives.drivers": "{count} {count, plural, one {драйвер} few {драйвера} many {драйверов} other {драйверов}}",
     "kdaDialog.dialog.keyDrives.overview.summary.home": "Сводка",
     "kdaDialog.dialog.keyDrives.overview.summary.home.tooltip": "Перейти к сводке анализа",
     "kdaDialog.dialog.keyDrives.overview.summary.breadcrumb.label": "Навигация по анализу ключевых факторов",

@@ -860,6 +860,21 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
     height: 100%;
 }
 
+.gd-layered-table-view {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    &__panels {
+        flex: 1 1 auto;
+        min-height: 0;
+    }
+
+    &__panel--active {
+        height: 100%;
+    }
+}
+
 .insight-view-loader {
     position: absolute;
     top: 0;

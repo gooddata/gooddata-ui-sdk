@@ -6,8 +6,10 @@ import {
     type DrillDefinition,
     type IAbsoluteDateFilter,
     type IAccessGrantee,
+    type IArbitraryAttributeFilter,
     type IAutomationMetadataObject,
     type IInsight,
+    type IMatchAttributeFilter,
     type INegativeAttributeFilter,
     type IPositiveAttributeFilter,
     type IRelativeDateFilter,
@@ -31,7 +33,9 @@ export type IDashboardFilter =
     | IAbsoluteDateFilter
     | IRelativeDateFilter
     | IPositiveAttributeFilter
-    | INegativeAttributeFilter;
+    | INegativeAttributeFilter
+    | IArbitraryAttributeFilter
+    | IMatchAttributeFilter;
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link IDashboardFilter}.

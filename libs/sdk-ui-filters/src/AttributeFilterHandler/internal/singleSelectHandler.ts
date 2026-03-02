@@ -28,6 +28,9 @@ export class SingleSelectAttributeFilterHandler
 {
     private static sanitizeConfig(config: AttributeFilterHandlerConfig): AttributeFilterHandlerConfig {
         const elements = filterAttributeElements(config["attributeFilter"]);
+        if (!elements) {
+            return config;
+        }
         const keys = isAttributeElementsByRef(elements) ? elements.uris : elements.values;
         const firstItem = keys[0];
         const sanitizedItems = isAttributeElementsByRef(elements)

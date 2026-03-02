@@ -10,6 +10,7 @@ import { getAreaAreaColors } from "./coloring/palette.js";
 import { DEFAULT_AREA_FILL_COLOR } from "./constants.js";
 import { type IGeoAreaChartConfig } from "../../types/config/areaChart.js";
 import { type IAreaGeoData } from "../../types/geoData/area.js";
+import { EMPTY_SEGMENT_VALUE } from "../pushpin/constants.js";
 import type { IAreaLayerOutput, IGeoAdapterContext } from "../registry/adapterTypes.js";
 
 /**
@@ -310,7 +311,9 @@ export function applyCurrentColorsToAreaOutputSource(
         if (fillByKey.has(key)) {
             continue;
         }
-        fillByKey.set(key, areaColors[i]?.fill);
+        // In area-only mode (no color/segment buckets), strategy resolves a single base color.
+        // Apply that one color to all areas during in-place recolor updates.
+        fillByKey.set(key, areaColors[i]?.fill ?? areaColors[0]?.fill ?? DEFAULT_AREA_FILL_COLOR);
     }
 
     return recolorAreaDataSource(output.source, fillByKey);
@@ -346,7 +349,7 @@ function createAreaFeatures({
     const tooltipTextData = tooltipText?.data ?? [];
     const tooltipTextTitle = tooltipText?.name ?? (tooltipTextData.length ? "Tooltip" : undefined);
     const segmentData = segment?.data ?? [];
-    const segmentUris = segment?.uris ?? [];
+    const segmentUris = (segment?.uris ?? []).map((uri) => uri ?? EMPTY_SEGMENT_VALUE);
     const colorData = color?.data ?? [];
     const colorFormat = color?.format ?? "";
 

@@ -1,0 +1,323 @@
+// (C) 2007-2026 GoodData Corporation
+@use "@gooddata/sdk-ui-kit/styles/scss/variables";
+@use "@gooddata/sdk-ui-kit/styles/scss/mixins";
+
+.gd-text-filter-body {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    &__operator,
+    &__values {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__label {
+        font-size: 12px;
+        font-weight: 400;
+        color: var(--gd-palette-complementary-7, #6d7680);
+
+        &-with-help {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+    }
+
+    &__values-help-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        margin: 5px 0 0 0;
+        border: none;
+        background: none;
+        cursor: help;
+
+        &:focus-visible {
+            outline: 2px solid var(--gd-palette-primary-base, variables.$gd-color-highlight);
+            outline-offset: 2px;
+        }
+    }
+
+    &__input {
+        width: 100%;
+        box-sizing: border-box;
+
+        .gd-input-field {
+            height: 27px;
+        }
+
+        .gd-input-field::placeholder {
+            color: var(--gd-palette-complementary-6, #94a1ad);
+        }
+
+        .gd-input-field:disabled {
+            cursor: not-allowed;
+        }
+    }
+
+    &__input--error {
+        .gd-input-field {
+            border-color: var(--gd-palette-error-base, variables.$gd-color-negative);
+        }
+    }
+
+    &__error {
+        padding-top: 5px;
+        font-size: 12px;
+        line-height: 13px;
+        color: var(--gd-palette-error-base, variables.$gd-color-negative);
+
+        &--limit {
+            color: var(--gd-palette-warning-base, variables.$gd-color-warning);
+        }
+    }
+
+    &__options {
+        margin-top: -2px;
+
+        .input-checkbox-label {
+            margin-left: -3px;
+        }
+    }
+}
+
+.gd-text-filter-state-summary {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-top: 6px;
+
+    &__divider {
+        height: 1px;
+        width: 100%;
+        background-color: var(--gd-palette-complementary-3, #dde4eb);
+    }
+
+    &__text {
+        display: flex;
+        align-items: baseline;
+        font-size: 12px;
+        line-height: 20px;
+        color: var(--gd-palette-complementary-8, #464e56);
+        overflow: hidden;
+    }
+
+    &__content {
+        flex: 1 1 auto;
+        min-width: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    &__operator {
+        font-weight: 400;
+    }
+
+    &__value {
+        font-weight: 700;
+    }
+
+    &__count {
+        flex: 0 0 auto;
+        font-weight: 400;
+    }
+}
+
+.gd-text-filter-operator-dropdown {
+    &__button {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        height: 27px;
+        padding: 8px;
+        font-size: 12px;
+        border: 1px solid var(--gd-palette-complementary-4, #ccd8e2);
+        border-radius: var(--gd-button-borderRadius, 3px);
+        box-sizing: border-box;
+        background-color: variables.$gd-color-white;
+        text-align: left;
+
+        &:focus {
+            outline: none;
+            border-color: var(--gd-palette-primary-base, variables.$gd-color-highlight);
+        }
+
+        &:disabled {
+            background-color: var(--gd-palette-complementary-1, #f5f8fa);
+            cursor: not-allowed;
+        }
+    }
+
+    &__icon {
+        margin-left: 8px;
+        transition: transform 0.2s ease;
+    }
+
+    &__icon.is-open {
+        transform: rotate(180deg);
+    }
+
+    &__menu {
+        width: 100%;
+        min-width: 220px;
+        background: variables.$gd-color-white;
+    }
+
+    &__item {
+        font-size: 12px;
+    }
+}
+
+// Chips Input
+.gd-chips-input {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+
+    &__container {
+        border: 1px solid var(--gd-palette-complementary-4, #ccd8e2);
+        border-radius: var(--gd-button-borderRadius, 3px);
+        background-color: variables.$gd-color-white;
+        min-height: 38px;
+
+        &:focus-within {
+            border-color: var(--gd-palette-primary-base, variables.$gd-color-highlight);
+        }
+
+        // When values exist: chips framed on top, input below touching
+        &--with-values {
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+
+            .gd-chips-input__chips-frame {
+                padding: 4px 8px;
+                max-height: 120px;
+                overflow-y: auto;
+                overscroll-behavior: contain;
+                border-bottom: 1px solid var(--gd-palette-complementary-4, #ccd8e2);
+                border-radius: var(--gd-button-borderRadius, 3px) var(--gd-button-borderRadius, 3px) 0 0;
+            }
+
+            .gd-chips-input__input-frame {
+                padding: 0 8px 4px;
+            }
+        }
+    }
+
+    &__container--warning {
+        border-color: var(--gd-palette-warning-base, variables.$gd-color-warning);
+
+        &:focus-within {
+            border-color: var(--gd-palette-warning-base, variables.$gd-color-warning);
+        }
+
+        &.gd-chips-input__container--with-values .gd-chips-input__chips-frame {
+            border-bottom-color: var(--gd-palette-warning-base, variables.$gd-color-warning);
+        }
+    }
+
+    &__container--error {
+        border-color: var(--gd-palette-error-base, variables.$gd-color-negative);
+
+        &:focus-within {
+            border-color: var(--gd-palette-error-base, variables.$gd-color-negative);
+        }
+
+        &.gd-chips-input__container--with-values .gd-chips-input__chips-frame {
+            border-bottom-color: var(--gd-palette-error-base, variables.$gd-color-negative);
+        }
+    }
+
+    &__chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        align-items: center;
+    }
+
+    &__input-frame {
+        &--standalone {
+            padding: 4px 8px;
+        }
+    }
+
+    &__input {
+        flex: 1;
+        min-width: 120px;
+        display: block;
+
+        .gd-input-field {
+            border: none;
+            outline: none;
+            padding: 4px 0;
+            font-size: 13px;
+            background: transparent;
+            box-shadow: none;
+
+            &:focus-visible {
+                outline: none;
+            }
+
+            &::placeholder {
+                color: var(--gd-palette-complementary-6, #94a1ad);
+            }
+        }
+
+        .gd-input-field:disabled {
+            cursor: not-allowed;
+        }
+    }
+
+    &__autocomplete {
+        position: absolute;
+        top: calc(100%);
+        left: 0;
+        right: 0;
+        z-index: 100;
+        list-style: none;
+        margin: 0;
+        padding: 6px 0;
+        background-color: #fcfcfd;
+        border: 1px solid var(--gd-palette-complementary-3, #dde4eb);
+        border-radius: var(--gd-button-borderRadius, 3px);
+        box-shadow: 0 2px 20px 0 rgb(20 56 93 / 20%);
+        max-height: 200px;
+        overflow: hidden;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+    }
+
+    &__autocomplete-item {
+        padding: 5px 10px;
+        font-size: 12px;
+        line-height: 18px;
+        cursor: pointer;
+        color: var(--gd-palette-complementary-8, #464e56);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        strong {
+            font-weight: 700;
+            text-decoration: underline;
+            text-decoration-style: solid;
+            color: inherit;
+        }
+
+        &:hover {
+            background-color: var(--gd-palette-complementary-2, #ebeff4);
+        }
+
+        &--active {
+            background-color: var(--gd-palette-complementary-2, #ebeff4);
+        }
+    }
+}

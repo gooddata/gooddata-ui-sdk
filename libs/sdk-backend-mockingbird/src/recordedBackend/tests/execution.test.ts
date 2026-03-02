@@ -1,8 +1,10 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { ReferenceRecordings } from "@gooddata/reference-workspace";
-import { type IExecutionResult } from "@gooddata/sdk-backend-spi";
+import { collectionItemsIdentityKey } from "@gooddata/sdk-backend-base";
+import { type ICollectionItemsConfig, type IExecutionResult, NoDataError } from "@gooddata/sdk-backend-spi";
 import {
     type IExecutionDefinition,
     type ObjRef,
@@ -49,7 +51,9 @@ describe("recordedDataView", () => {
 
 describe("execution factory", () => {
     it("should load result with idRefs if asked to", async () => {
-        const result = await recordedBackend(ReferenceRecordings.Recordings, { useRefType: "id" })
+        const result = await recordedBackend(ReferenceRecordings.Recordings, {
+            useRefType: "id",
+        })
             .workspace("reference-workspace")
             .execution()
             .forDefinition(
@@ -61,6 +65,101 @@ describe("execution factory", () => {
         assertExpectedRefs(result, isIdentifierRef);
     });
 });
+
+describe("readCollectionItems", () => {
+    it("returns recorded collection items when key exists and has features", async () => {
+        const config: ICollectionItemsConfig = {
+            collectionId: "regions",
+            values: ["CA"],
+        };
+        const key = collectionItemsIdentityKey(config);
+        const recordings = {
+            ...ReferenceRecordings.Recordings,
+            collectionItems: {
+                [key]: {
+                    type: "FeatureCollection",
+                    features: [createFeature("US-CA")],
+                },
+            },
+        };
+
+        const dataView = await readAllFromReferenceScenario(recordings);
+        const result = await dataView.readCollectionItems(config);
+
+        expect(result.type).toBe("FeatureCollection");
+        expect(result.features).toHaveLength(1);
+    });
+
+    it("returns empty collection items when key exists and has no features", async () => {
+        const config: ICollectionItemsConfig = {
+            collectionId: "regions",
+            values: ["CA"],
+        };
+        const key = collectionItemsIdentityKey(config);
+        const recordings = {
+            ...ReferenceRecordings.Recordings,
+            collectionItems: {
+                [key]: {
+                    type: "FeatureCollection",
+                    features: [],
+                },
+            },
+        };
+
+        const dataView = await readAllFromReferenceScenario(recordings);
+        const result = await dataView.readCollectionItems(config);
+
+        expect(result.type).toBe("FeatureCollection");
+        expect(result.features).toEqual([]);
+    });
+
+    it("throws NoDataError when collection items key is missing", async () => {
+        const config: ICollectionItemsConfig = {
+            collectionId: "regions",
+            values: ["CA"],
+        };
+        const recordings = {
+            ...ReferenceRecordings.Recordings,
+            collectionItems: {},
+        };
+
+        const dataView = await readAllFromReferenceScenario(recordings);
+
+        await expect(dataView.readCollectionItems(config)).rejects.toThrow(NoDataError);
+    });
+});
+
+async function readAllFromReferenceScenario(recordings: typeof ReferenceRecordings.Recordings) {
+    const definition = ReferenceRecordings.Scenarios.BarChart.SingleMeasure.execution
+        .definition as IExecutionDefinition;
+    const result = await recordedBackend(recordings)
+        .workspace("reference-workspace")
+        .execution()
+        .forDefinition(definition)
+        .execute();
+
+    return result.readAll();
+}
+
+function createFeature(id: string): GeoJSON.Feature<GeoJSON.Geometry, GeoJSON.GeoJsonProperties> {
+    return {
+        type: "Feature",
+        id,
+        geometry: {
+            type: "Polygon",
+            coordinates: [
+                [
+                    [0, 0],
+                    [1, 0],
+                    [1, 1],
+                    [0, 1],
+                    [0, 0],
+                ],
+            ],
+        },
+        properties: {},
+    };
+}
 
 function assertExpectedRefs(result: IExecutionResult, verifyFun: (ref: ObjRef) => boolean) {
     result.dimensions.forEach((dim) => {

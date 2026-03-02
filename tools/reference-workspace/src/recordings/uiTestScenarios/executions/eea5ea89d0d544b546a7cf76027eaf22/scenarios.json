@@ -1,0 +1,108 @@
+[
+    {
+        "n2oMap": {
+            "a_f_city.id.cityname": "tooltipText_df",
+            "a_f_city.id.latitude": "a_f_city.id.latitude",
+            "a_f_city.id.longitude": "a_f_city.id.longitude",
+            "a_f_owner.region_id": "a_f_owner.region_id"
+        },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "f_city.id.latitude", "type": "displayForm" },
+                        "localIdentifier": "a_f_city.id.latitude"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "f_city.id.longitude", "type": "displayForm" },
+                        "localIdentifier": "a_f_city.id.longitude"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                        "localIdentifier": "a_f_owner.region_id"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "f_city.id.cityname", "type": "displayForm" },
+                        "localIdentifier": "tooltipText_df"
+                    }
+                }
+            ],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "f_city.id.latitude", "type": "displayForm" },
+                                "localIdentifier": "a_f_city.id.latitude"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "latitude"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "f_city.id.longitude", "type": "displayForm" },
+                                "localIdentifier": "a_f_city.id.longitude"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "longitude"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                                "localIdentifier": "a_f_owner.region_id"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "color"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "f_city.id.cityname", "type": "displayForm" },
+                                "localIdentifier": "tooltipText_df"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "tooltipText"
+                }
+            ],
+            "dimensions": [
+                {
+                    "itemIdentifiers": [
+                        "a_f_city.id.latitude",
+                        "a_f_city.id.longitude",
+                        "a_f_owner.region_id",
+                        "tooltipText_df"
+                    ]
+                }
+            ],
+            "filters": [
+                {
+                    "positiveAttributeFilter": {
+                        "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                        "in": { "values": ["West Coast", "East Coast"] }
+                    }
+                }
+            ],
+            "measures": [],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "latitude/longitude with color attribute",
+        "vis": "GeoPushpinChart"
+    }
+]

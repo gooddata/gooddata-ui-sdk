@@ -10,8 +10,8 @@ import {
     type IDashboardAttributeFilter,
     type IFilter,
     type IMeasure,
+    filterObjRef,
     isAttributeFilter,
-    isNegativeAttributeFilter,
     objRefToString,
 } from "@gooddata/sdk-model";
 import { type IDrillEvent } from "@gooddata/sdk-ui";
@@ -153,9 +153,7 @@ export function createKdaDefinitionFromDrill(
 
 export function getDashboardAttributeFilter(f: IFilter) {
     if (isAttributeFilter(f)) {
-        const ref = isNegativeAttributeFilter(f)
-            ? f.negativeAttributeFilter.displayForm
-            : f.positiveAttributeFilter.displayForm;
+        const ref = filterObjRef(f);
         const id = objRefToString(ref);
         return attributeFilterToDashboardAttributeFilter(f, `local_${id}`, undefined);
     }

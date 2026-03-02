@@ -1,4 +1,5 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import {
     type IAbsoluteDateFilter,
     type IAttribute,
@@ -120,6 +121,7 @@ export type NullableFiltersOrPlaceholders = Array<
     | ValueOrMultiValuePlaceholder<INegativeAttributeFilter | null>
     | ValueOrMultiValuePlaceholder<IMeasureValueFilter | null>
     | ValueOrMultiValuePlaceholder<IRankingFilter | null>
+    // TODO INE: do we need to add arbitrary and match filters here?
 >;
 
 ///

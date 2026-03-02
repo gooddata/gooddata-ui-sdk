@@ -530,5 +530,8 @@
     "automations.accessibility.search.alerts": "검색 알림",
     "automations.accessibility.search.schedules": "예약된 내보내기 검색",
     "automations.accessibility.gridLabel.alerts": "알림 목록",
-    "automations.accessibility.gridLabel.schedules": "예약된 내보내기 목록"
+    "automations.accessibility.gridLabel.schedules": "예약된 내보내기 목록",
+    "filters.allTime.exceptEmptyValues.title": "빈 값 제외, 전체 기간",
+    "filters.emptyValues.label": "{title}, 빈 값",
+    "filters.emptyValues.title": "빈 값들"
 }

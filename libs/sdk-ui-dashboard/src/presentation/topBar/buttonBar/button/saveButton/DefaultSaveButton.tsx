@@ -14,10 +14,7 @@ import {
     useDashboardSelector,
 } from "../../../../../model/react/DashboardStoreProvider.js";
 import { dispatchAndWaitFor } from "../../../../../model/store/_infra/dispatchAndWaitFor.js";
-import {
-    selectDashboardTitle,
-    selectIsDashboardDirty,
-} from "../../../../../model/store/meta/metaSelectors.js";
+import { selectIsDashboardDirty } from "../../../../../model/store/meta/metaSelectors.js";
 import { selectIsInEditMode } from "../../../../../model/store/renderMode/renderModeSelectors.js";
 import { selectIsDashboardSaving } from "../../../../../model/store/saving/savingSelectors.js";
 import { selectLayoutHasAnalyticalWidgets } from "../../../../../model/store/tabs/layout/layoutSelectors.js";
@@ -32,10 +29,6 @@ import {
 export function useSaveButtonProps(): ISaveButtonProps {
     const dispatch = useDashboardDispatch();
 
-    const title = useDashboardSelector(selectDashboardTitle);
-    const intl = useIntl();
-    const emptyTitle = intl.formatMessage({ id: "untitled" });
-
     // In some cases, when you click the save button (for example immediately after you insert an insight)
     // and the dashboard is still processing some related requests to this insight, it can take few seconds,
     // before the CMD.SAVE starts to process (as dashboard can process only 1 command at a time).
@@ -45,18 +38,14 @@ export function useSaveButtonProps(): ISaveButtonProps {
 
     const onSaveClick = useCallback(() => {
         setOptimisticIsSaving(true);
-        dispatchAndWaitFor(
-            dispatch,
-            // the || is intentional, we want to replace empty string as well
-            saveDashboard(title || emptyTitle),
-        )
+        dispatchAndWaitFor(dispatch, saveDashboard())
             .then(() => {
                 setOptimisticIsSaving(false);
             })
             .catch(() => {
                 setOptimisticIsSaving(false);
             });
-    }, [dispatch, emptyTitle, title]);
+    }, [dispatch]);
 
     const isEditing = useDashboardSelector(selectIsInEditMode);
     const isSavingDashboard = useDashboardSelector(selectIsDashboardSaving);

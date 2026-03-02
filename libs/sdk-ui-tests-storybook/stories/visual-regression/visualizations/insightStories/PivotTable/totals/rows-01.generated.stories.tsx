@@ -2,6 +2,7 @@
 
 import { type IInsight } from "@gooddata/sdk-model";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 
@@ -143,7 +144,7 @@ export const SingleMeasureAndSingleGrandTotal = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 12, 0),
+        getScenariosGroupByIndexes(17, 12, 0),
     )();
 SingleMeasureAndSingleGrandTotal.parameters = {
     kind: "single measure and single grand total",
@@ -264,7 +265,7 @@ export const SingleMeasureAndMultipleGrandTotals = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 12, 1),
+        getScenariosGroupByIndexes(17, 12, 1),
     )();
 SingleMeasureAndMultipleGrandTotals.parameters = {
     kind: "single measure and multiple grand totals",
@@ -388,7 +389,7 @@ export const TwoMeasuresAndSingleGrandTotalForOne = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 12, 2),
+        getScenariosGroupByIndexes(17, 12, 2),
     )();
 TwoMeasuresAndSingleGrandTotalForOne.parameters = {
     kind: "two measures and single grand total for one",
@@ -564,7 +565,7 @@ export const TwoMeasuresAndSingleGrandTotalForEach = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 12, 3),
+        getScenariosGroupByIndexes(17, 12, 3),
     )();
 TwoMeasuresAndSingleGrandTotalForEach.parameters = {
     kind: "two measures and single grand total for each",
@@ -698,7 +699,7 @@ export const TwoMeasuresAndMultipleGrandTotalsForEach = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 12, 4),
+        getScenariosGroupByIndexes(17, 12, 4),
     )();
 TwoMeasuresAndMultipleGrandTotalsForEach.parameters = {
     kind: "two measures and multiple grand totals for each",
@@ -822,7 +823,7 @@ export const TwoMeasuresAndOneSubtotal = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 12, 5),
+        getScenariosGroupByIndexes(17, 12, 5),
     )();
 TwoMeasuresAndOneSubtotal.parameters = {
     kind: "two measures and one subtotal",
@@ -956,7 +957,7 @@ export const TwoMeasuresAndMultipleSubtotals = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 12, 6),
+        getScenariosGroupByIndexes(17, 12, 6),
     )();
 TwoMeasuresAndMultipleSubtotals.parameters = {
     kind: "two measures and multiple subtotals",
@@ -1160,7 +1161,7 @@ export const TwoMeasuresAndGrandTotalsAndMultipleSubtotals = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 12, 7),
+        getScenariosGroupByIndexes(17, 12, 7),
     )();
 TwoMeasuresAndGrandTotalsAndMultipleSubtotals.parameters = {
     kind: "two measures and grand totals and multiple subtotals",
@@ -1291,7 +1292,7 @@ export const TwoMeasuresAndSingleGrandTotalSortedBySecondAttribute = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 12, 8),
+        getScenariosGroupByIndexes(17, 12, 8),
     )();
 TwoMeasuresAndSingleGrandTotalSortedBySecondAttribute.parameters = {
     kind: "two measures and single grand total sorted by second attribute",

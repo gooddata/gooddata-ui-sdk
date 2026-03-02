@@ -14,7 +14,7 @@ export default {
 
 export const Themed = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 3).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 3).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(([name]) => name === "themed");
         if (scenarioAndDescriptions.length === 0) throw new Error("Failed to find scenario 'themed'");
         if (scenarioAndDescriptions.length > 1) throw new Error("Multiple 'themed' scenarios found");
@@ -38,7 +38,7 @@ Themed.parameters = {
 
 export const Font = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 3).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 3).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(([name]) => name === "font");
         if (scenarioAndDescriptions.length === 0) throw new Error("Failed to find scenario 'font'");
         if (scenarioAndDescriptions.length > 1) throw new Error("Multiple 'font' scenarios found");

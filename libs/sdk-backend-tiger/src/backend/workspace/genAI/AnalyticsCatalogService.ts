@@ -4,13 +4,18 @@ import {
     type ActionsApiGenerateDescriptionRequest,
     ActionsApi_GenerateDescription,
 } from "@gooddata/api-client-tiger/endpoints/actions";
-import { GenAiApi_CreatedBy, GenAiApi_Tags } from "@gooddata/api-client-tiger/endpoints/genAI";
+import {
+    GenAiApi_CreatedBy,
+    GenAiApi_Tags,
+    GenAiApi_TrendingObjects,
+} from "@gooddata/api-client-tiger/endpoints/genAI";
 import type {
     IAnalyticsCatalogCreatedBy,
     IAnalyticsCatalogGenerateDescriptionRequest,
     IAnalyticsCatalogGenerateDescriptionResponse,
     IAnalyticsCatalogService,
     IAnalyticsCatalogTags,
+    IAnalyticsCatalogTrendingObjects,
 } from "@gooddata/sdk-backend-spi";
 
 import { convertAnalyticsCatalogCreatedBy } from "../../../convertors/fromBackend/AnalyticsCatalogConverter.js";
@@ -60,6 +65,29 @@ export class AnalyticsCatalogService implements IAnalyticsCatalogService {
             GenAiApi_CreatedBy(client.axios, client.basePath, { workspaceId: this.workspaceId }),
         );
         return convertAnalyticsCatalogCreatedBy(response.data);
+    }
+
+    async getTrendingObjects(): Promise<IAnalyticsCatalogTrendingObjects> {
+        const response = await this.authCall((client) =>
+            GenAiApi_TrendingObjects(client.axios, client.basePath, {
+                workspaceId: this.workspaceId,
+            }),
+        );
+        return {
+            objects: response.data.objects.map((item) => ({
+                id: item.id,
+                type: item.type,
+                title: item.title,
+                tags: item.tags,
+                createdAt: item.createdAt,
+                modifiedAt: item.modifiedAt,
+                createdBy: item.createdBy,
+                modifiedBy: item.modifiedBy,
+                isHidden: item.isHidden,
+                isHiddenFromKda: item.isHiddenFromKda,
+                visualizationUrl: item.visualizationUrl,
+            })),
+        };
     }
 }
 

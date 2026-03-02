@@ -90,9 +90,9 @@ export class AttributeFilterLoader implements IAttributeFilterLoader {
     //
     // Init
     //
-    init = (correlation: Correlation = uuid()): void => {
+    init = (correlation: Correlation = uuid(), skipElementsLoading?: boolean): void => {
         this.validateStaticElementsLoad();
-        this.bridge.init(correlation);
+        this.bridge.init(correlation, skipElementsLoading);
     };
 
     onInitStart: CallbackRegistration<OnInitStartCallbackPayload> = (cb) => {

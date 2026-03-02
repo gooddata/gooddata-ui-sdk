@@ -1,0 +1,22 @@
+{
+    "count": [2],
+    "data": [],
+    "headerItems": [
+        [
+            [
+                { "attributeHeaderItem": { "name": "US", "uri": "United States of America" } },
+                { "attributeHeaderItem": { "name": "US", "uri": "United States of America" } }
+            ],
+            [
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } }
+            ],
+            [
+                { "attributeHeaderItem": { "name": "US", "uri": "United States of America" } },
+                { "attributeHeaderItem": { "name": "US", "uri": "United States of America" } }
+            ]
+        ]
+    ],
+    "offset": [0],
+    "totalCount": [2]
+}

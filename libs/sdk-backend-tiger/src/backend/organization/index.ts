@@ -10,6 +10,7 @@ import {
     type IOrganization,
     type IOrganizationAutomationService,
     type IOrganizationLlmEndpointsService,
+    type IOrganizationLlmProvidersService,
     type IOrganizationNotificationChannelService,
     type IOrganizationNotificationService,
     type IOrganizationPermissionService,
@@ -23,6 +24,7 @@ import { type IOrganizationDescriptor, type IOrganizationDescriptorUpdate, idRef
 
 import { TigerOrganizationAutomationService } from "./automations/index.js";
 import { OrganizationLlmEndpointsService } from "./llmEndpoints.js";
+import { OrganizationLlmProvidersService } from "./llmProviders.js";
 import { OrganizationNotificationChannelService } from "./notificationChannels.js";
 import { OrganizationNotificationService } from "./notifications.js";
 import { OrganizationPermissionService } from "./permissions.js";
@@ -165,6 +167,10 @@ export class TigerOrganization implements IOrganization {
 
     public llmEndpoints(): IOrganizationLlmEndpointsService {
         return new OrganizationLlmEndpointsService(this.authCall);
+    }
+
+    public llmProviders(): IOrganizationLlmProvidersService {
+        return new OrganizationLlmProvidersService(this.authCall);
     }
 
     public notifications(): IOrganizationNotificationService {

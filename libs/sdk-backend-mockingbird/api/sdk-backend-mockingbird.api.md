@@ -22,6 +22,7 @@ import { ICatalogDateDataset } from '@gooddata/sdk-model';
 import { ICatalogFact } from '@gooddata/sdk-model';
 import { ICatalogGroup } from '@gooddata/sdk-model';
 import { ICatalogMeasure } from '@gooddata/sdk-model';
+import { ICollectionItemsResult } from '@gooddata/sdk-backend-spi';
 import { IColorPalette } from '@gooddata/sdk-model';
 import { IDashboardWithReferences } from '@gooddata/sdk-backend-spi';
 import { IDataView } from '@gooddata/sdk-backend-spi';
@@ -240,6 +241,7 @@ export type RecordingIndex = {
         visClasses?: VisClassesRecording;
         dashboards?: Record<string, DashboardRecording>;
     };
+    collectionItems?: Record<string, ICollectionItemsResult>;
 };
 
 // @internal (undocumented)

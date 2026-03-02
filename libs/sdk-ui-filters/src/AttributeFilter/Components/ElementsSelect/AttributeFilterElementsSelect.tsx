@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { useCallback, useMemo, useState } from "react";
 
@@ -11,7 +11,7 @@ import { InvertableSelectVirtualised, UiAutofocus, useMediaQuery } from "@goodda
 import { type IAttributeFilterElementsSelectProps } from "./types.js";
 import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilterComponentsContext.js";
 import { useAttributeFilterContext } from "../../Context/AttributeFilterContext.js";
-import { MAX_SELECTION_SIZE } from "../../hooks/constants.js";
+import { BACKEND_PAGE_SIZE, MAX_SELECTION_SIZE } from "../../hooks/constants.js";
 import { getElementKey, getElementPrimaryTitle, getElementTitle } from "../../utils.js";
 
 const ITEM_HEIGHT = 28;
@@ -194,6 +194,7 @@ export function AttributeFilterElementsSelect({
                     isVisible,
                 }) => (
                     <ElementsSelectActionsComponent
+                        hideTotalItemsCount={totalItemsCountWithCurrentSettings === BACKEND_PAGE_SIZE}
                         isVisible={isVisible}
                         checked={checked}
                         onChange={onChange}

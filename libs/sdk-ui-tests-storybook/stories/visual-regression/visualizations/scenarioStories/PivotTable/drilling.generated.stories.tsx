@@ -14,7 +14,7 @@ export default {
 
 export const WithDrillOnAllRowAtributes = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 4).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 4).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "with drill on all row atributes",
         );
@@ -42,7 +42,7 @@ WithDrillOnAllRowAtributes.parameters = {
 
 export const WithDrillOnAllRowAttributesAndMeasures = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 4).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 4).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "with drill on all row attributes and measures",
         );

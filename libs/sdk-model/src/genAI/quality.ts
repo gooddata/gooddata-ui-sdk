@@ -144,4 +144,5 @@ export type SemanticQualityIssuesCalculationStatus =
     | "FAILED"
     | "NOT_FOUND"
     | "SYNCING"
+    | "CANCELLED"
     | "DISABLED";

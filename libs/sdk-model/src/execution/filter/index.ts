@@ -132,6 +132,95 @@ export interface INegativeAttributeFilter {
 }
 
 /**
+ * Object defining the {@link IArbitraryAttributeFilter} object body.
+ *
+ * @public
+ */
+export interface IArbitraryAttributeFilterBody extends IIdentifiableFilter {
+    /**
+     * Display form whose attribute elements are being filtered
+     */
+    label: ObjRef;
+
+    /**
+     * Arbitrary string values to filter by.
+     * These values don't need to exist as actual attribute elements.
+     */
+    values: string[];
+
+    /**
+     * Whether this is a negative filter (NOT IN).
+     * @defaultValue false
+     */
+    negativeSelection?: boolean;
+}
+
+/**
+ * Arbitrary attribute filter - allows filtering by custom string values that may not exist as attribute elements.
+ *
+ * @remarks
+ * This filter type allows users to specify arbitrary string values for filtering without needing to
+ * load or validate them against actual attribute elements. Useful for custom/external data integration.
+ *
+ * @public
+ */
+export interface IArbitraryAttributeFilter {
+    arbitraryAttributeFilter: IArbitraryAttributeFilterBody;
+}
+
+/**
+ * Match filter operators for literal matching.
+ *
+ * @public
+ */
+export type MatchFilterOperator = "contains" | "startsWith" | "endsWith";
+
+/**
+ * Object defining the {@link IMatchAttributeFilter} object body.
+ *
+ * @public
+ */
+export interface IMatchAttributeFilterBody extends IIdentifiableFilter {
+    /**
+     * Display form to apply the match filter on
+     */
+    label: ObjRef;
+
+    /**
+     * Match operator
+     */
+    operator: MatchFilterOperator;
+
+    /**
+     * Literal string to match (cannot be empty for valid filter)
+     */
+    literal: string;
+
+    /**
+     * Whether the literal matching is case sensitive
+     */
+    caseSensitive?: boolean;
+
+    /**
+     * Whether to negate the match (NOT LIKE)
+     */
+    negativeSelection?: boolean;
+}
+
+/**
+ * Match attribute filter - literal matching filter for attribute values.
+ *
+ * @remarks
+ * This filter type allows literal-based filtering with various operators (contains, startsWith, endsWith).
+ * Supports both positive and negative matching, as well as case-sensitive/insensitive comparison.
+ *
+ * @public
+ */
+export interface IMatchAttributeFilter {
+    matchAttributeFilter: IMatchAttributeFilterBody;
+}
+
+/**
  * Filters results to an absolute date range - from one fixed date to another.
  *
  * @public
@@ -252,12 +341,26 @@ export interface IRelativeDateFilterAllTimeBody extends IIdentifiableFilter {
 }
 
 /**
+ * Attribute filter with element selection - either positive (IN) or negative (NOT IN).
+ *
+ * @remarks
+ * This type represents attribute filters that work with attribute elements selection,
+ * as opposed to arbitrary and match filters which do not contain elements.
+ *
+ * @public
+ */
+export type IAttributeFilterWithSelection = IPositiveAttributeFilter | INegativeAttributeFilter;
+
+/**
  * Attribute filters limit results of execution to data pertaining to attributes that are or are not specified
  * by the filters.
  *
  * @public
  */
-export type IAttributeFilter = IPositiveAttributeFilter | INegativeAttributeFilter;
+export type IAttributeFilter =
+    | IAttributeFilterWithSelection
+    | IArbitraryAttributeFilter
+    | IMatchAttributeFilter;
 
 /**
  * Date filters limit the range of results to data within relative or absolute date range.
@@ -393,7 +496,9 @@ export type IFilter =
     | IPositiveAttributeFilter
     | INegativeAttributeFilter
     | IMeasureValueFilter
-    | IRankingFilter;
+    | IRankingFilter
+    | IArbitraryAttributeFilter
+    | IMatchAttributeFilter;
 
 /**
  * Filter able to identify itself via local identifier
@@ -460,6 +565,42 @@ export function isNegativeAttributeFilter(obj: unknown): obj is INegativeAttribu
 }
 
 /**
+ * Helper function checking whether the provided filter has negative meaning.
+ *
+ * @public
+ */
+export function isNegativeFilter(filter: IAttributeFilter): boolean {
+    if (isNegativeAttributeFilter(filter)) {
+        return true;
+    }
+    if (isArbitraryAttributeFilter(filter)) {
+        return filter.arbitraryAttributeFilter.negativeSelection ?? false;
+    }
+    if (isMatchAttributeFilter(filter)) {
+        return filter.matchAttributeFilter.negativeSelection ?? false;
+    }
+    return false;
+}
+
+/**
+ * Type guard checking whether the provided object is an arbitrary attribute filter.
+ *
+ * @alpha
+ */
+export function isArbitraryAttributeFilter(obj: unknown): obj is IArbitraryAttributeFilter {
+    return !isEmpty(obj) && (obj as IArbitraryAttributeFilter).arbitraryAttributeFilter !== undefined;
+}
+
+/**
+ * Type guard checking whether the provided object is a match attribute filter.
+ *
+ * @alpha
+ */
+export function isMatchAttributeFilter(obj: unknown): obj is IMatchAttributeFilter {
+    return !isEmpty(obj) && (obj as IMatchAttributeFilter).matchAttributeFilter !== undefined;
+}
+
+/**
  * Type guard checking whether the provided object is an absolute date filter.
  *
  * @public
@@ -491,9 +632,9 @@ export function isRelativeBoundedDateFilterBody(obj: unknown): obj is IRelativeB
  *
  * @public
  */
-export function isRelativeUpperBoundedDateFilterBody(
-    obj: unknown,
-): obj is IRelativeBoundedDateFilterBody & { boundedFilter: IUpperBoundedFilter } {
+export function isRelativeUpperBoundedDateFilterBody(obj: unknown): obj is IRelativeBoundedDateFilterBody & {
+    boundedFilter: IUpperBoundedFilter;
+} {
     return (
         isRelativeBoundedDateFilterBody(obj) && (obj.boundedFilter as IUpperBoundedFilter).to !== undefined
     );
@@ -522,9 +663,9 @@ export function isLowerBound(obj: unknown): obj is ILowerBoundedFilter {
  *
  * @public
  */
-export function isRelativeLowerBoundedDateFilterBody(
-    obj: unknown,
-): obj is IRelativeBoundedDateFilterBody & { boundedFilter: ILowerBoundedFilter } {
+export function isRelativeLowerBoundedDateFilterBody(obj: unknown): obj is IRelativeBoundedDateFilterBody & {
+    boundedFilter: ILowerBoundedFilter;
+} {
     return (
         isRelativeBoundedDateFilterBody(obj) && (obj.boundedFilter as ILowerBoundedFilter).from !== undefined
     );
@@ -535,9 +676,9 @@ export function isRelativeLowerBoundedDateFilterBody(
  *
  * @public
  */
-export function isRelativeBoundedDateFilter(
-    obj: unknown,
-): obj is IRelativeDateFilter & { relativeDateFilter: IRelativeBoundedDateFilterBody } {
+export function isRelativeBoundedDateFilter(obj: unknown): obj is IRelativeDateFilter & {
+    relativeDateFilter: IRelativeBoundedDateFilterBody;
+} {
     return isRelativeDateFilter(obj) && isRelativeBoundedDateFilterBody(obj.relativeDateFilter);
 }
 
@@ -547,7 +688,9 @@ export function isRelativeBoundedDateFilter(
  * @public
  */
 export function isRelativeUpperBoundedDateFilter(obj: unknown): obj is IRelativeDateFilter & {
-    relativeDateFilter: IRelativeBoundedDateFilterBody & { boundedFilter: IUpperBoundedFilter };
+    relativeDateFilter: IRelativeBoundedDateFilterBody & {
+        boundedFilter: IUpperBoundedFilter;
+    };
 } {
     return isRelativeDateFilter(obj) && isRelativeUpperBoundedDateFilterBody(obj.relativeDateFilter);
 }
@@ -558,7 +701,9 @@ export function isRelativeUpperBoundedDateFilter(obj: unknown): obj is IRelative
  * @public
  */
 export function isRelativeLowerBoundedDateFilter(obj: unknown): obj is IRelativeDateFilter & {
-    relativeDateFilter: IRelativeBoundedDateFilterBody & { boundedFilter: ILowerBoundedFilter };
+    relativeDateFilter: IRelativeBoundedDateFilterBody & {
+        boundedFilter: ILowerBoundedFilter;
+    };
 } {
     return isRelativeDateFilter(obj) && isRelativeLowerBoundedDateFilterBody(obj.relativeDateFilter);
 }
@@ -568,9 +713,9 @@ export function isRelativeLowerBoundedDateFilter(obj: unknown): obj is IRelative
  *
  * @public
  */
-export function isAllTimeDateFilter(
-    obj: unknown,
-): obj is IRelativeDateFilter & { relativeDateFilter: { granularity: "ALL_TIME_GRANULARITY" } } {
+export function isAllTimeDateFilter(obj: unknown): obj is IRelativeDateFilter & {
+    relativeDateFilter: { granularity: "ALL_TIME_GRANULARITY" };
+} {
     return (
         !isEmpty(obj) &&
         (obj as IRelativeDateFilter).relativeDateFilter?.granularity === "ALL_TIME_GRANULARITY"
@@ -588,7 +733,9 @@ export function isAllTimeDateFilter(
  * @public
  */
 export function isAllTimeDateFilterWithEmptyValueHandling(obj: unknown): obj is IRelativeDateFilter & {
-    relativeDateFilter: IRelativeDateFilterAllTimeBody & { emptyValueHandling: EmptyValues };
+    relativeDateFilter: IRelativeDateFilterAllTimeBody & {
+        emptyValueHandling: EmptyValues;
+    };
 } {
     return (
         isAllTimeDateFilter(obj) &&
@@ -617,7 +764,9 @@ export function isNoopAllTimeDateFilter(obj: unknown): boolean {
  */
 export function isDateFilterWithEmptyValueHandling(obj: unknown): obj is
     | (IAbsoluteDateFilter & {
-          absoluteDateFilter: IAbsoluteDateFilterBody & { emptyValueHandling: EmptyValues };
+          absoluteDateFilter: IAbsoluteDateFilterBody & {
+              emptyValueHandling: EmptyValues;
+          };
       })
     | (IRelativeDateFilter & {
           relativeDateFilter: (IRelativeDateFilterBody | IRelativeDateFilterAllTimeBody) & {
@@ -639,6 +788,20 @@ export function isDateFilterWithEmptyValueHandling(obj: unknown): obj is
  * @public
  */
 export function isAttributeFilter(obj: unknown): obj is IAttributeFilter {
+    return (
+        isPositiveAttributeFilter(obj) ||
+        isNegativeAttributeFilter(obj) ||
+        isArbitraryAttributeFilter(obj) ||
+        isMatchAttributeFilter(obj)
+    );
+}
+
+/**
+ * Type guard checking whether the provided object is an attribute filter with selection by elements.
+ *
+ * @public
+ */
+export function isAttributeFilterWithSelection(obj: unknown): obj is IAttributeFilterWithSelection {
     return isPositiveAttributeFilter(obj) || isNegativeAttributeFilter(obj);
 }
 
@@ -757,6 +920,30 @@ export function filterIsEmpty(filter: IAttributeFilter): boolean {
         return attributeElementsIsEmpty(filter.positiveAttributeFilter.in);
     }
 
+    if (isArbitraryAttributeFilter(filter)) {
+        return isEmpty(filter.arbitraryAttributeFilter.values);
+    }
+
+    if (isMatchAttributeFilter(filter)) {
+        return isEmpty(filter.matchAttributeFilter.literal);
+    }
+
+    return attributeElementsIsEmpty(filter.negativeAttributeFilter.notIn);
+}
+
+/**
+ * Tests whether the provided filter is an "All values" attribute filter
+ * (a negative attribute filter with an empty exclusion list).
+ *
+ * @param filter - filter to test
+ * @returns true if the filter is a negative attribute filter selecting all values
+ * @internal
+ */
+export function isAllValuesAttributeFilter(filter: unknown): filter is INegativeAttributeFilter {
+    if (!isNegativeAttributeFilter(filter)) {
+        return false;
+    }
+
     return attributeElementsIsEmpty(filter.negativeAttributeFilter.notIn);
 }
 
@@ -845,9 +1032,7 @@ export function updateAttributeElementsItems(
  * @returns attribute elements, undefined if not available
  * @public
  */
-export function filterAttributeElements(
-    filter: IPositiveAttributeFilter | INegativeAttributeFilter,
-): IAttributeElements;
+export function filterAttributeElements(filter: IAttributeFilterWithSelection): IAttributeElements;
 /**
  * Gets attribute elements specified on a filter. If the provided filter is not an attribute filter, then
  * undefined is returned
@@ -860,7 +1045,7 @@ export function filterAttributeElements(filter: IFilter): IAttributeElements | u
 export function filterAttributeElements(filter: IFilter): IAttributeElements | undefined {
     invariant(filter, "attribute elements must be specified");
 
-    if (!isAttributeFilter(filter)) {
+    if (!isAttributeFilterWithSelection(filter)) {
         return undefined;
     }
 
@@ -874,24 +1059,32 @@ export function filterAttributeElements(filter: IFilter): IAttributeElements | u
  *
  * @remarks
  * For attribute filters, this will be reference to the display form. For date filters this will be reference to the data set.
+ * This overload applies to filter types that always have an ObjRef (date filters, arbitrary attribute filter, match attribute filter).
+ * Positive and negative attribute filters use ObjRef | ObjRefInScope for displayForm and may return undefined when using local identifiers.
  *
  * @param filter - filter to work with
  * @returns reference to object used for filtering (display form for attr filters, data set for date filters)
  * @public
  */
 export function filterObjRef(
-    filter: IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter,
+    filter:
+        | IAbsoluteDateFilter
+        | IRelativeDateFilter
+        | IPositiveAttributeFilter
+        | INegativeAttributeFilter
+        | IArbitraryAttributeFilter
+        | IMatchAttributeFilter,
 ): ObjRef;
 /**
  * Gets reference to object being used for filtering.
  *
  * @remarks
  * For attribute filters, this will be reference to the display form.
- * For date filters this will be reference to the data set. For measure value filter, this will be undefined.
+ * For date filters this will be reference to the data set. For measure value filter and ranking filter, this will be undefined.
  *
  * @param filter - filter to work with
  * @returns reference to object used for filtering (display form for attr filters, data set for date filters), undefined
- *  for measure value filters
+ *  for measure value filters and ranking filters
  * @public
  */
 export function filterObjRef(filter: IFilter): ObjRef | undefined;
@@ -909,6 +1102,12 @@ export function filterObjRef(filter: IFilter): ObjRef | undefined {
     }
     if (isRelativeDateFilter(filter)) {
         return filter.relativeDateFilter.dataSet;
+    }
+    if (isArbitraryAttributeFilter(filter)) {
+        return filter.arbitraryAttributeFilter.label;
+    }
+    if (isMatchAttributeFilter(filter)) {
+        return filter.matchAttributeFilter.label;
     }
     return undefined;
 }
@@ -942,6 +1141,12 @@ export function filterLocalIdentifier(filter: IFilter): string | undefined {
     }
     if (isRelativeDateFilter(filter)) {
         return filter.relativeDateFilter.localIdentifier;
+    }
+    if (isArbitraryAttributeFilter(filter)) {
+        return filter.arbitraryAttributeFilter.localIdentifier;
+    }
+    if (isMatchAttributeFilter(filter)) {
+        return filter.matchAttributeFilter.localIdentifier;
     }
     return undefined;
 }

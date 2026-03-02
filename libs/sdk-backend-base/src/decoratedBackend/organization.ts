@@ -1,8 +1,10 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
+
 import {
     type IOrganization,
     type IOrganizationAutomationService,
     type IOrganizationLlmEndpointsService,
+    type IOrganizationLlmProvidersService,
     type IOrganizationNotificationChannelService,
     type IOrganizationNotificationService,
     type IOrganizationPermissionService,
@@ -66,6 +68,10 @@ export class OrganizationDecorator implements IOrganization {
 
     public llmEndpoints(): IOrganizationLlmEndpointsService {
         return this.decorated.llmEndpoints();
+    }
+
+    public llmProviders(): IOrganizationLlmProvidersService {
+        return this.decorated.llmProviders();
     }
 
     public notifications(): IOrganizationNotificationService {

@@ -114,6 +114,8 @@ export type {
     IAnalyticsCatalogGenerateDescriptionResponse,
     IAnalyticsCatalogTags,
     IAnalyticsCatalogCreatedBy,
+    IAnalyticsCatalogTrendingObject,
+    IAnalyticsCatalogTrendingObjects,
     ISemanticSearchQuery,
     ISemanticSearchResult,
     IChatThread,
@@ -126,6 +128,17 @@ export type {
     IMemoryItemsQuery,
     IMemoryItemsFilterOptions,
     IMemoryItemsQueryResult,
+    IKnowledgeDocumentsService,
+    IKnowledgeDocumentMetadata,
+    ICreateKnowledgeDocumentRequest,
+    ICreateKnowledgeDocumentResponse,
+    IUpsertKnowledgeDocumentRequest,
+    IUpsertKnowledgeDocumentResponse,
+    IDeleteKnowledgeDocumentResponse,
+    IKnowledgeSearchResult,
+    IKnowledgeSearchStatistics,
+    ISearchKnowledgeResponse,
+    ISearchKnowledgeOptions,
 } from "./workspace/genAI/index.js";
 
 export type {
@@ -345,6 +358,7 @@ export type {
 } from "./workspace/keyDriverAnalysis/index.js";
 
 export type { IOrganizationLlmEndpointsService } from "./organization/llmEndpoints/index.js";
+export type { IOrganizationLlmProvidersService } from "./organization/llmProviders/index.js";
 
 export type { IOrganizationNotificationService } from "./organization/notifications/index.js";
 export type { INotificationsQuery, INotificationsQueryResult } from "./organization/notifications/query.js";

@@ -811,7 +811,11 @@ export interface IUsePagedDropdownConfig {
     // (undocumented)
     backend: IAnalyticalBackend;
     // (undocumented)
+    excludeTags?: string[];
+    // (undocumented)
     tabsIds: ITabsIds;
+    // (undocumented)
+    tags?: string[];
     // (undocumented)
     workspaceId: string;
 }
@@ -982,7 +986,7 @@ export type TelemetryEvent = "multiple-users-deleted" | "multiple-groups-deleted
 export type TrackEventCallback = (event: TelemetryEvent) => void;
 
 // @internal
-export function useInsightPagedList({ backend, workspaceId, author, tabsIds }: IUsePagedDropdownConfig): IUsePagedDropdownResult;
+export function useInsightPagedList({ backend, workspaceId, author, tabsIds, tags, excludeTags }: IUsePagedDropdownConfig): IUsePagedDropdownResult;
 
 // @internal (undocumented)
 export const UserEditDialog: {

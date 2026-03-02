@@ -14,7 +14,7 @@ export default {
 
 export const SingleAttribute = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 1).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 1).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(([name]) => name === "single attribute");
         if (scenarioAndDescriptions.length === 0)
             throw new Error("Failed to find scenario 'single attribute'");
@@ -40,7 +40,7 @@ SingleAttribute.parameters = {
 
 export const SingleColumn = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 1).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 1).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(([name]) => name === "single column");
         if (scenarioAndDescriptions.length === 0) throw new Error("Failed to find scenario 'single column'");
         if (scenarioAndDescriptions.length > 1) throw new Error("Multiple 'single column' scenarios found");
@@ -64,7 +64,7 @@ SingleColumn.parameters = {
 
 export const SingleMeasure = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 1).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 1).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(([name]) => name === "single measure");
         if (scenarioAndDescriptions.length === 0) throw new Error("Failed to find scenario 'single measure'");
         if (scenarioAndDescriptions.length > 1) throw new Error("Multiple 'single measure' scenarios found");
@@ -88,7 +88,7 @@ SingleMeasure.parameters = {
 
 export const SingleMeasureWithRowAttribute = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 1).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 1).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "single measure with row attribute",
         );
@@ -116,7 +116,7 @@ SingleMeasureWithRowAttribute.parameters = {
 
 export const SingleMeasureWithColumnAttribute = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 1).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 1).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "single measure with column attribute",
         );
@@ -144,7 +144,7 @@ SingleMeasureWithColumnAttribute.parameters = {
 
 export const SingleMeasureWithRowAndColumnAttributes = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 1).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 1).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "single measure with row and column attributes",
         );
@@ -172,7 +172,7 @@ SingleMeasureWithRowAndColumnAttributes.parameters = {
 
 export const SingleMeasureWithTwoRowAndOneColumnAttributes = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 1).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 1).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "single measure with two row and one column attributes",
         );
@@ -204,7 +204,7 @@ SingleMeasureWithTwoRowAndOneColumnAttributes.parameters = {
 
 export const SingleMeasureWithTwoRowAndTwoColumnAttributes = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 1).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 1).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "single measure with two row and two column attributes",
         );
@@ -236,7 +236,7 @@ SingleMeasureWithTwoRowAndTwoColumnAttributes.parameters = {
 
 export const TwoMeasures = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 1).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 1).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(([name]) => name === "two measures");
         if (scenarioAndDescriptions.length === 0) throw new Error("Failed to find scenario 'two measures'");
         if (scenarioAndDescriptions.length > 1) throw new Error("Multiple 'two measures' scenarios found");
@@ -260,7 +260,7 @@ TwoMeasures.parameters = {
 
 export const TwoMeasuresWithRowAttribute = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 1).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 1).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "two measures with row attribute",
         );
@@ -288,7 +288,7 @@ TwoMeasuresWithRowAttribute.parameters = {
 
 export const TwoMeasuresWithColumnAttribute = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 1).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 1).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "two measures with column attribute",
         );
@@ -316,7 +316,7 @@ TwoMeasuresWithColumnAttribute.parameters = {
 
 export const TwoMeasuresWithRowAndColumnAttributes = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 1).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 1).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "two measures with row and column attributes",
         );
@@ -344,7 +344,7 @@ TwoMeasuresWithRowAndColumnAttributes.parameters = {
 
 export const TwoMeasuresWithTwoRowAndOneColumnAttributes = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 1).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 1).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "two measures with two row and one column attributes",
         );
@@ -372,7 +372,7 @@ TwoMeasuresWithTwoRowAndOneColumnAttributes.parameters = {
 
 export const TwoMeasuresWithTwoRowAndTwoColumnAttributes = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 1).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 1).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "two measures with two row and two column attributes",
         );
@@ -400,7 +400,7 @@ TwoMeasuresWithTwoRowAndTwoColumnAttributes.parameters = {
 
 export const TwoMeasuresWithThreeRowsAndTwoColumnAttributes = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 1).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 1).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "two measures with three rows and two column attributes",
         );
@@ -432,7 +432,7 @@ TwoMeasuresWithThreeRowsAndTwoColumnAttributes.parameters = {
 
 export const EmptyValues = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 1).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 1).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(([name]) => name === "empty values");
         if (scenarioAndDescriptions.length === 0) throw new Error("Failed to find scenario 'empty values'");
         if (scenarioAndDescriptions.length > 1) throw new Error("Multiple 'empty values' scenarios found");
@@ -456,7 +456,7 @@ EmptyValues.parameters = {
 
 export const ArithmeticMeasures = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 1).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 1).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(([name]) => name === "arithmetic measures");
         if (scenarioAndDescriptions.length === 0)
             throw new Error("Failed to find scenario 'arithmetic measures'");
@@ -482,7 +482,7 @@ ArithmeticMeasures.parameters = {
 
 export const WithAttributesWithoutMeasures = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 1).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 1).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "with attributes without measures",
         );
@@ -510,7 +510,7 @@ WithAttributesWithoutMeasures.parameters = {
 
 export const WithTwoSameDates = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 1).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 1).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(([name]) => name === "with two same dates");
         if (scenarioAndDescriptions.length === 0)
             throw new Error("Failed to find scenario 'with two same dates'");
@@ -536,7 +536,7 @@ WithTwoSameDates.parameters = {
 
 export const OneMeasureAndRepeatingRowAttributesOnDifferentPositions = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 1).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 1).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "one measure and repeating row attributes on different positions",
         );

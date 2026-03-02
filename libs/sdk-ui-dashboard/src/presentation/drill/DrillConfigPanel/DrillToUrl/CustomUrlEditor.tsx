@@ -13,8 +13,11 @@ import {
     type ObjRef,
     filterObjRef,
     idRef,
+    isArbitraryAttributeFilter,
     isAttributeFilter,
+    isMatchAttributeFilter,
     isNegativeAttributeFilter,
+    isPositiveAttributeFilter,
     isUriRef,
     objRefToString,
     serializeObjRef,
@@ -503,12 +506,28 @@ function useSanitizeAttributeFilter() {
                             displayForm: idRef(displayForm.id, "displayForm"),
                         },
                     };
-                } else {
+                } else if (isPositiveAttributeFilter(filter)) {
                     return {
                         ...filter,
                         positiveAttributeFilter: {
                             ...filter.positiveAttributeFilter,
                             displayForm: idRef(displayForm.id, "displayForm"),
+                        },
+                    };
+                } else if (isArbitraryAttributeFilter(filter)) {
+                    return {
+                        ...filter,
+                        arbitraryAttributeFilter: {
+                            ...filter.arbitraryAttributeFilter,
+                            label: idRef(displayForm.id, "displayForm"),
+                        },
+                    };
+                } else if (isMatchAttributeFilter(filter)) {
+                    return {
+                        ...filter,
+                        matchAttributeFilter: {
+                            ...filter.matchAttributeFilter,
+                            label: idRef(displayForm.id, "displayForm"),
                         },
                     };
                 }

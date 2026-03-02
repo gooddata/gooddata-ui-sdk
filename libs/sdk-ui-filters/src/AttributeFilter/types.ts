@@ -35,6 +35,9 @@ import {
     type IAttributeFilterElementsSelectItemProps,
     type IAttributeFilterElementsSelectProps,
 } from "./Components/ElementsSelect/types.js";
+import { type IFilterModeMenuProps } from "./Components/FilterModeMenu/FilterModeMenu.js";
+import { type ITextFilterBodyProps } from "./Components/TextFilterBody/TextFilterBody.js";
+import { type AttributeFilterAvailableMode } from "./filterModeTypes.js";
 
 /**
  * @public
@@ -53,9 +56,12 @@ export type OnApplyCallbackType = (
 ) => void;
 
 /**
+ * Callback type for filter working selection changes.
+ * Covers all modes: elements, arbitrary, match.
+ *
  * @public
  */
-export type OnSelectCallbackType = (
+export type OnChangeCallbackType = (
     filter: IAttributeFilter,
     isInverted: boolean,
     selectionMode?: DashboardAttributeFilterSelectionMode,
@@ -67,6 +73,12 @@ export type OnSelectCallbackType = (
         applyToWorkingOnly?: boolean;
     },
 ) => void;
+
+/**
+ * @public
+ * @deprecated Use {@link OnChangeCallbackType} via onChange prop instead.
+ */
+export type OnSelectCallbackType = OnChangeCallbackType;
 
 /**
  * @public
@@ -115,6 +127,10 @@ export interface IAttributeFilterCoreProps {
      *
      * @remarks
      * The component will use content of the filter and select the items that are already specified on the filter.
+     * The filter type determines the filter mode internally:
+     * - IPositiveAttributeFilter | INegativeAttributeFilter → elements mode
+     * - IArbitraryAttributeFilter → arbitrary mode
+     * - IMatchAttributeFilter → match mode
      *
      * Note: It's not possible to combine this property with "connectToPlaceholder" property. Either - provide a value, or a placeholder.
      * The 'onApply' callback must be specified in order to handle filter changes.
@@ -149,6 +165,7 @@ export interface IAttributeFilterCoreProps {
      * Note: It's not possible to combine this property with "filter" property. Either - provide a value, or a placeholder.
      * There is no need to specify 'onApply' callback if 'connectToPlaceholder' property is used as the value of the filter
      * is set via this placeholder.
+     * Supports all filter modes: elements (positive/negative), arbitrary, and match.
      */
     connectToPlaceholder?: IPlaceholder<IAttributeFilter>;
 
@@ -270,8 +287,8 @@ export interface IAttributeFilterCoreProps {
 
     /**
      * This enables filter mode without apply button.
-     * If true, it is responsibility of a client, to appy filters when needed.
-     * Typically uses onSelect callback to catch filter state.
+     * If true, it is responsibility of a client, to apply filters when needed.
+     * Typically uses onChange callback to catch filter state.
      * Note, onApply callback is not called when this is true.
      *
      * @alpha
@@ -294,11 +311,19 @@ export interface IAttributeFilterCoreProps {
     /**
      * Specify function which will be called when user changes filter working selection.
      * This is the selection that is staged for application. Not applied yet.
+     * Covers all filter modes: elements, arbitrary, match.
      *
      * @remarks
      * The function will receive the current specification of the filter, as it was updated by the user.
      *
      * @param filter - new value of the filter.
+     */
+    onChange?: OnChangeCallbackType;
+
+    /**
+     * Specify function which will be called when user changes filter working selection.
+     *
+     * @deprecated Use onChange prop instead. Will be removed in a future release.
      */
     onSelect?: OnSelectCallbackType;
 
@@ -330,6 +355,19 @@ export interface IAttributeFilterCoreProps {
      * In other words where the dropdown body should be placed.
      */
     alignPoints?: IAlignPoint[];
+
+    /**
+     * Limit which filter modes are available for switching.
+     *
+     * @remarks
+     * When more than one mode is available, the mode switch menu is shown.
+     * Defaults to all modes: ["elements", "arbitrary", "match"].
+     * The UI maps arbitrary/match to internal text mode and distinguishes them by operator:
+     * "is"/"isNot" = arbitrary, others = match.
+     *
+     * @alpha
+     */
+    availableFilterModes?: AttributeFilterAvailableMode[];
 }
 
 /**
@@ -465,4 +503,20 @@ export interface IAttributeFilterCustomComponentProps {
      * @beta
      */
     StatusBarComponent?: ComponentType<IAttributeFilterStatusBarProps>;
+
+    /**
+     * Customize filter mode menu component.
+     * @remarks
+     * -  If not provided, the default implementation {@link FilterModeMenu} will be used.
+     * @alpha
+     */
+    FilterModeMenuComponent?: ComponentType<IFilterModeMenuProps>;
+
+    /**
+     * Customize text filter body component.
+     * @remarks
+     * -  If not provided, the default implementation {@link TextFilterBody} will be used.
+     * @alpha
+     */
+    TextFilterBodyComponent?: ComponentType<ITextFilterBodyProps>;
 }

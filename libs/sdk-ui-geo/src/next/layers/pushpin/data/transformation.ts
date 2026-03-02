@@ -28,6 +28,7 @@ import {
 } from "../../../types/geoData/common.js";
 import { type IPushpinGeoData, type IPushpinLocationItem } from "../../../types/geoData/pushpin.js";
 import { type JsonValue } from "../../../utils/guards.js";
+import { EMPTY_SEGMENT_VALUE } from "../constants.js";
 import { getMinMax } from "../size/calculations.js";
 
 /**
@@ -98,6 +99,7 @@ function getFormatFromExecutionResponse(dv: DataViewFacade, indexMeasure: number
 function getSegmentDataAndUris(
     attributeHeaderItems: IResultHeader[][],
     dataIndex: number,
+    emptyHeaderString: string,
     nullHeaderString: string,
 ): ISegmentData {
     const headerItems = attributeHeaderItems[dataIndex];
@@ -105,7 +107,12 @@ function getSegmentDataAndUris(
         (result: ISegmentData, headerItem: IResultHeader): ISegmentData => {
             if (headerItem && isResultAttributeHeader(headerItem)) {
                 const { uri, name } = headerItem.attributeHeaderItem;
-                return { uris: [...result.uris, uri], data: [...result.data, name ?? nullHeaderString] };
+                const displayName = name ?? nullHeaderString;
+                const finalName = name === "" ? emptyHeaderString : displayName;
+                return {
+                    uris: [...result.uris, uri ?? EMPTY_SEGMENT_VALUE],
+                    data: [...result.data, finalName],
+                };
             }
             return result;
         },
@@ -286,16 +293,16 @@ function processLatLongBuckets(ctx: IBucketProcessingContext): IPushpinLocationI
         nullHeaderString,
     );
 
-    const parsedCoordinates = latitudeData
-        .map((value, index) => {
-            const lat = parseCoordinate(value);
-            const lng = parseCoordinate(longitudeData[index]);
-            if (lat === null || lng === null) {
-                return null;
-            }
-            return { lat, lng };
-        })
-        .filter((coord): coord is IGeoLngLat => coord !== null);
+    // Keep row index alignment with measures/attributes.
+    // Invalid coordinates are represented as NaN and filtered later when creating features.
+    const parsedCoordinates = latitudeData.map((value, index) => {
+        const lat = parseCoordinate(value);
+        const lng = parseCoordinate(longitudeData[index]);
+        return {
+            lat: lat ?? NaN,
+            lng: lng ?? NaN,
+        } satisfies IGeoLngLat;
+    });
 
     return {
         index: latitudeBucket.index,
@@ -308,7 +315,7 @@ function processLatLongBuckets(ctx: IBucketProcessingContext): IPushpinLocationI
  * Processes segment bucket
  */
 function processSegmentBucket(ctx: IBucketProcessingContext): IGeoSegmentItem | undefined {
-    const { bucketInfo, attributeHeaderItems, nullHeaderString } = ctx;
+    const { bucketInfo, attributeHeaderItems, emptyHeaderString, nullHeaderString } = ctx;
     const segmentIndex = bucketInfo.segment?.index;
     const segmentBucket = bucketInfo[BucketNames.SEGMENT];
 
@@ -316,7 +323,12 @@ function processSegmentBucket(ctx: IBucketProcessingContext): IGeoSegmentItem | 
         return undefined;
     }
 
-    const { data, uris } = getSegmentDataAndUris(attributeHeaderItems, segmentIndex, nullHeaderString);
+    const { data, uris } = getSegmentDataAndUris(
+        attributeHeaderItems,
+        segmentIndex,
+        emptyHeaderString,
+        nullHeaderString,
+    );
 
     return {
         index: segmentBucket.index,

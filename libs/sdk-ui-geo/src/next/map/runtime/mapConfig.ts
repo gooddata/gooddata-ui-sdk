@@ -79,7 +79,9 @@ export const DEFAULT_CLUSTER_LABELS_CONFIG = {
     layout: {
         "text-allow-overlap": true,
         "text-field": "{point_count_abbreviated}",
-        // "text-font": ["Open Sans Semibold"], // Commented out to allow MapLibre to use style's default fonts
+        // Commented out to let MapLibre use its style-spec default (["Open Sans Regular", "Arial Unicode MS Regular"]).
+        // Offline visual tests serve glyphs under that default fontstack name — see offlineMapStyle.ts.
+        // "text-font": ["Open Sans Regular"],
         "text-size": 14,
     },
     paint: {
@@ -117,6 +119,49 @@ export const DEFAULT_MAPLIBRE_OPTIONS: Partial<MapOptions> = {
     // If false, the "pinch to rotate and zoom" interaction is disabled
     touchZoomRotate: false,
 };
+
+/**
+ * Interaction-related subset of MapLibre options used by accessibility/runtime capability logic.
+ *
+ * @internal
+ */
+export interface IMapInteractionOptions {
+    interactive: boolean;
+    dragRotate: boolean;
+    pitchWithRotate: boolean;
+    touchZoomRotate: boolean;
+}
+
+/**
+ * Resolve effective interaction options from defaults and optional runtime overrides.
+ *
+ * @internal
+ */
+export function resolveMapInteractionOptions(
+    overrides?: Partial<IMapInteractionOptions>,
+): IMapInteractionOptions {
+    return {
+        interactive: overrides?.interactive ?? true,
+        dragRotate: overrides?.dragRotate ?? DEFAULT_MAPLIBRE_OPTIONS.dragRotate !== false,
+        pitchWithRotate: overrides?.pitchWithRotate ?? DEFAULT_MAPLIBRE_OPTIONS.pitchWithRotate !== false,
+        touchZoomRotate: overrides?.touchZoomRotate ?? DEFAULT_MAPLIBRE_OPTIONS.touchZoomRotate !== false,
+    };
+}
+
+/**
+ * Whether rotation/pitch interaction is effectively enabled for the map.
+ *
+ * @internal
+ */
+export function isMapRotationInteractionEnabled(options: IMapInteractionOptions): boolean {
+    if (options.interactive === false) {
+        return false;
+    }
+
+    return (
+        options.dragRotate !== false || options.pitchWithRotate !== false || options.touchZoomRotate !== false
+    );
+}
 
 /**
  * Default tooltip popup options

@@ -530,5 +530,8 @@
     "automations.accessibility.search.alerts": "Search notifications",
     "automations.accessibility.search.schedules": "Search for scheduled exports",
     "automations.accessibility.gridLabel.alerts": "List of alerts",
-    "automations.accessibility.gridLabel.schedules": "List of scheduled exports"
+    "automations.accessibility.gridLabel.schedules": "List of scheduled exports",
+    "filters.allTime.exceptEmptyValues.title": "All time except empty values",
+    "filters.emptyValues.label": "{title}, empty values",
+    "filters.emptyValues.title": "Empty values"
 }

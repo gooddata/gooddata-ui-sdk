@@ -1,0 +1,92 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                            "localIdentifier": "geo.area"
+                        }
+                    }
+                ],
+                "localIdentifier": "area"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "alias": "Revenue",
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                        "type": "measure"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                        }
+                    }
+                ],
+                "localIdentifier": "color"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                            "localIdentifier": "a_f_owner.region_id"
+                        }
+                    }
+                ],
+                "localIdentifier": "segment"
+            }
+        ],
+        "filters": [
+            {
+                "positiveAttributeFilter": {
+                    "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                    "in": { "values": ["West Coast", "East Coast"] }
+                }
+            }
+        ],
+        "identifier": "GeoAreaChart.19cfcb15d8749265d769ae87796ffa3f",
+        "properties": {
+            "controls": {
+                "areas": { "borderColor": "#000000", "borderWidth": 2, "fillOpacity": 0.9 },
+                "mapStyle": {
+                    "glyphs": "/geo-assets/glyphs/{fontstack}/{range}.pbf",
+                    "layers": [
+                        {
+                            "id": "background",
+                            "paint": { "background-color": "#ffffff" },
+                            "type": "background"
+                        }
+                    ],
+                    "name": "offline-minimal",
+                    "sources": {},
+                    "version": 8
+                },
+                "viewport": { "area": "continent_na" }
+            }
+        },
+        "sorts": [
+            {
+                "measureSortItem": {
+                    "direction": "desc",
+                    "locators": [
+                        {
+                            "measureLocatorItem": {
+                                "measureIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                            }
+                        }
+                    ]
+                }
+            }
+        ],
+        "title": "GeoAreaChart - area with color and segment",
+        "uri": "GeoAreaChart.19cfcb15d8749265d769ae87796ffa3f",
+        "visualizationUrl": "local:choropleth"
+    }
+}

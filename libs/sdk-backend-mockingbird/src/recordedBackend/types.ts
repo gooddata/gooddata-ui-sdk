@@ -1,7 +1,8 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import {
     type IAnalyticalBackendConfig,
+    type ICollectionItemsResult,
     type IDashboardWithReferences,
     type IGeoStyleSpecification,
     type IWorkspaceDescriptor,
@@ -211,6 +212,7 @@ export type RecordingIndex = {
         visClasses?: VisClassesRecording;
         dashboards?: Record<string, DashboardRecording>;
     };
+    collectionItems?: Record<string, ICollectionItemsResult>;
 };
 
 /**

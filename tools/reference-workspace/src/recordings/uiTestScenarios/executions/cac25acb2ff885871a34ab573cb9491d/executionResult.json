@@ -1,0 +1,48 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": { "identifier": "country", "name": "Country", "uri": "" },
+                        "geoAreaConfig": { "collectionId": "countries", "kind": "STATIC" },
+                        "granularity": null,
+                        "identifier": "country.country_code",
+                        "labelType": "GDC.geo.area",
+                        "localIdentifier": "a_country.country_code",
+                        "name": "Country Code",
+                        "primaryLabel": { "identifier": "country", "type": "displayForm" },
+                        "totalItems": [],
+                        "uri": ""
+                    }
+                },
+                {
+                    "attributeHeader": {
+                        "formOf": { "identifier": "f_owner.region_id", "name": "Region", "uri": "" },
+                        "granularity": null,
+                        "identifier": "f_owner.region_id",
+                        "localIdentifier": "a_f_owner.region_id",
+                        "name": "Region",
+                        "primaryLabel": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                        "totalItems": [],
+                        "uri": ""
+                    }
+                },
+                {
+                    "attributeHeader": {
+                        "formOf": { "identifier": "country", "name": "Country", "uri": "" },
+                        "geoAreaConfig": { "collectionId": "countries", "kind": "STATIC" },
+                        "granularity": null,
+                        "identifier": "country.country_code",
+                        "labelType": "GDC.geo.area",
+                        "localIdentifier": "a_country.country_code_1",
+                        "name": "Country Code",
+                        "primaryLabel": { "identifier": "country", "type": "displayForm" },
+                        "totalItems": [],
+                        "uri": ""
+                    }
+                }
+            ]
+        }
+    ]
+}

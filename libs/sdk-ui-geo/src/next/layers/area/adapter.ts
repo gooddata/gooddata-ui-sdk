@@ -26,7 +26,7 @@ import { getHeaderPredicateFingerprint } from "../../utils/predicateFingerprint.
 import { computeLegend } from "../common/computeLegend.js";
 import { getGeoChartDimensions } from "../common/dimensions.js";
 import { canSetGeoJsonSourceData, trySetGeoJsonSourceData } from "../common/layerOps.js";
-import { createLayerInsight, sanitizeGlobalFilters } from "../execution/layerInsightFactory.js";
+import { createLayerInsight, sanitizeDeduplicatedGlobalFilters } from "../execution/layerInsightFactory.js";
 import { prepareExecutionWithTooltipText } from "../execution/prepareTooltipExecution.js";
 import {
     type IAreaLayerOutput,
@@ -82,7 +82,7 @@ function createExecution(layer: IGeoLayerArea, context: IGeoAdapterContext): IPr
         sortBy,
     });
     const factory = executionFactory ?? backend.workspace(workspace).execution();
-    const mergedGlobalFilters = sanitizeGlobalFilters(globalFilters);
+    const mergedGlobalFilters = sanitizeDeduplicatedGlobalFilters(filters, globalFilters);
     let execution = factory
         .forInsight(layerInsight, mergedGlobalFilters)
         .withDimensions(getGeoChartDimensions);

@@ -35,7 +35,6 @@ export function Example() {
         ]),
     );
     const sortBy = [newMeasureSort(GrossProfit, "desc")];
-
     return (
         <>
             <h1>Dependent Attribute Filters</h1>

@@ -31,7 +31,7 @@ export function OtherPresetsSection({
 
     return (
         <>
-            <ListHeading>
+            <ListHeading className={isMobile ? ITEM_CLASS_MOBILE : undefined}>
                 <FormattedMessage id="filters.other.heading" />
             </ListHeading>
             <ListItem

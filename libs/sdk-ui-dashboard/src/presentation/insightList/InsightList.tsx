@@ -29,6 +29,8 @@ import {
     selectAllowCreateInsightRequest,
     selectEnableRichTextDescriptions,
     selectEnableRichTextDynamicReferences,
+    selectEnableVisualizationFilteringByTags,
+    selectObjectAvailabilityConfig,
     selectSettings,
 } from "../../model/store/config/configSelectors.js";
 import { selectCanCreateVisualization } from "../../model/store/permissions/permissionsSelectors.js";
@@ -90,7 +92,13 @@ export function InsightList({
     const useRichText = useDashboardSelector(selectEnableRichTextDescriptions);
     const useReferences = useDashboardSelector(selectEnableRichTextDynamicReferences);
     const executionTimestamp = useDashboardSelector(selectExecutionTimestamp);
+    const objectAvailability = useDashboardSelector(selectObjectAvailabilityConfig);
+    const isFilteringByTagsEnabled = useDashboardSelector(selectEnableVisualizationFilteringByTags);
     const { LoadingComponent } = useDashboardComponentsContext();
+
+    // Extract tag identifiers from object availability config only when the feature flag is enabled
+    const tags = isFilteringByTagsEnabled ? objectAvailability?.includeObjectsWithTags : undefined;
+    const excludeTags = isFilteringByTagsEnabled ? objectAvailability?.excludeObjectsWithTags : undefined;
 
     const {
         items: insights,
@@ -113,6 +121,8 @@ export function InsightList({
         workspaceId,
         author,
         tabsIds,
+        tags,
+        excludeTags,
     });
 
     const prevInsightListLastUpdateRequestedRef = useRef(insightListLastUpdateRequested);

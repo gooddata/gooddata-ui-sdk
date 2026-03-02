@@ -2,6 +2,7 @@
 
 import { type IInsight } from "@gooddata/sdk-model";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 
@@ -90,7 +91,7 @@ export const DataLabelsDefault = () =>
                 visualizationUrl: "local:waterfall",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(21, 2, 0),
+        getScenariosGroupByIndexes(24, 2, 0),
     )();
 DataLabelsDefault.parameters = {
     kind: "data labels - default",
@@ -190,7 +191,7 @@ export const DataLabelsDataLabelsAutoVisibility = () =>
                 visualizationUrl: "local:waterfall",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(21, 2, 1),
+        getScenariosGroupByIndexes(24, 2, 1),
     )();
 DataLabelsDataLabelsAutoVisibility.parameters = {
     kind: "data labels - data labels auto visibility",
@@ -290,7 +291,7 @@ export const DataLabelsDataLabelsForcedVisible = () =>
                 visualizationUrl: "local:waterfall",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(21, 2, 2),
+        getScenariosGroupByIndexes(24, 2, 2),
     )();
 DataLabelsDataLabelsForcedVisible.parameters = {
     kind: "data labels - data labels forced visible",
@@ -390,7 +391,7 @@ export const DataLabelsDataLabelsForcedHidden = () =>
                 visualizationUrl: "local:waterfall",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(21, 2, 3),
+        getScenariosGroupByIndexes(24, 2, 3),
     )();
 DataLabelsDataLabelsForcedHidden.parameters = {
     kind: "data labels - data labels forced hidden",
@@ -490,7 +491,7 @@ export const DataLabelsForcedDatalabelsVisibleAndGermanSeparators = () =>
                 visualizationUrl: "local:waterfall",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(21, 2, 4),
+        getScenariosGroupByIndexes(24, 2, 4),
     )();
 DataLabelsForcedDatalabelsVisibleAndGermanSeparators.parameters = {
     kind: "data labels - forced dataLabels visible and german separators",
@@ -591,7 +592,7 @@ export const DataLabelsDataLabelsAndTotalsWithAutoVisibility = () =>
                 visualizationUrl: "local:waterfall",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(21, 2, 5),
+        getScenariosGroupByIndexes(24, 2, 5),
     )();
 DataLabelsDataLabelsAndTotalsWithAutoVisibility.parameters = {
     kind: "data labels - data labels and totals with auto visibility",
@@ -692,7 +693,7 @@ export const DataLabelsDataLabelsForcedHiddenTotalsForcedVisible = () =>
                 visualizationUrl: "local:waterfall",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(21, 2, 6),
+        getScenariosGroupByIndexes(24, 2, 6),
     )();
 DataLabelsDataLabelsForcedHiddenTotalsForcedVisible.parameters = {
     kind: "data labels - data labels forced hidden totals forced visible",
@@ -793,7 +794,7 @@ export const DataLabelsDataLabelsForcedHiddenTotalsForcedHidden = () =>
                 visualizationUrl: "local:waterfall",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(21, 2, 7),
+        getScenariosGroupByIndexes(24, 2, 7),
     )();
 DataLabelsDataLabelsForcedHiddenTotalsForcedHidden.parameters = {
     kind: "data labels - data labels forced hidden totals forced hidden",
@@ -894,7 +895,7 @@ export const DataLabelsLabelsForcedHiddenTotalsAutoVisibility = () =>
                 visualizationUrl: "local:waterfall",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(21, 2, 8),
+        getScenariosGroupByIndexes(24, 2, 8),
     )();
 DataLabelsLabelsForcedHiddenTotalsAutoVisibility.parameters = {
     kind: "data labels - labels forced hidden totals auto visibility",
@@ -996,7 +997,7 @@ export const DataLabelsDataLabelsWithBackplateStyle = () =>
                 visualizationUrl: "local:waterfall",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(21, 2, 9),
+        getScenariosGroupByIndexes(24, 2, 9),
     )();
 DataLabelsDataLabelsWithBackplateStyle.parameters = {
     kind: "data labels - data labels with backplate style",

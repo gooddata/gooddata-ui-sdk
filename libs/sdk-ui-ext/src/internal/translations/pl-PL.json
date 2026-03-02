@@ -530,5 +530,8 @@
     "automations.accessibility.search.alerts": "Wyszukaj alerty",
     "automations.accessibility.search.schedules": "Wyszukaj zaplanowane eksporty",
     "automations.accessibility.gridLabel.alerts": "Lista alertów",
-    "automations.accessibility.gridLabel.schedules": "Lista zaplanowanych eksportów"
+    "automations.accessibility.gridLabel.schedules": "Lista zaplanowanych eksportów",
+    "filters.allTime.exceptEmptyValues.title": "Cały czas z wyłączeniem pustych wartości",
+    "filters.emptyValues.label": "{title}, puste wartości",
+    "filters.emptyValues.title": "Puste wartości"
 }

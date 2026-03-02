@@ -1,10 +1,10 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { describe, expect, it, vi } from "vitest";
 
 import type { IMapFacade, StyleSpecification } from "../../../layers/common/mapFacade.js";
 import { createStylePlan } from "../planBuilder.js";
-import { applyStylePlan } from "../reconcileStyle.js";
+import { applyStylePlan, reconcileStyle } from "../reconcileStyle.js";
 
 function createMapFacadeStub(initial?: { layers?: string[]; sources?: string[] }) {
     const layerStore = new Map<string, Parameters<IMapFacade["addLayer"]>[0]>(
@@ -114,5 +114,24 @@ describe("style reconciliation helpers", () => {
 
         expect(plan.layers[0].id).toBe("custom-id");
         expect(plan.layers[0].layer.id).toBe("custom-id");
+    });
+
+    it("reconcileStyle removes declared existing ids and applies plan immediately", () => {
+        const { map, layerStore, sourceStore } = createMapFacadeStub({
+            layers: ["legacy-layer"],
+            sources: ["legacy-source"],
+        });
+
+        const plan = createStylePlan()
+            .addSource("source-a", { type: "geojson", data: { type: "FeatureCollection", features: [] } })
+            .addLayer({ id: "layer-a", type: "fill", source: "source-a" })
+            .build();
+
+        reconcileStyle(map, plan, { layers: ["legacy-layer"], sources: ["legacy-source"] });
+
+        expect(map.removeLayer).toHaveBeenCalledWith("legacy-layer");
+        expect(map.removeSource).toHaveBeenCalledWith("legacy-source");
+        expect(layerStore.has("layer-a")).toBe(true);
+        expect(sourceStore.has("source-a")).toBe(true);
     });
 });

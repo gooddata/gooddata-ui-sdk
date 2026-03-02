@@ -1,0 +1,57 @@
+// (C) 2026 GoodData Corporation
+
+.gd-file-dropzone {
+    flex-grow: 1;
+    box-sizing: border-box;
+    display: flex;
+    flex-flow: wrap;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    border: 2px dashed var(--gd-palette-complementary-3, #dde4eb);
+    border-radius: 3px;
+    padding: 20px;
+    min-height: 126px;
+    cursor: pointer;
+    text-align: center;
+    font-family: var(--gd-font-family);
+    font-size: 14px;
+    color: var(--gd-palette-complementary-8, #464e56);
+
+    &:hover,
+    &:focus-visible {
+        border-color: var(--gd-palette-primary-base, #14b2e2);
+        background-color: var(--gd-palette-primary-dimmed, #e8f7fc);
+    }
+
+    &--active {
+        border-color: var(--gd-palette-primary-base, #14b2e2);
+        background-color: var(--gd-palette-primary-dimmed, #e8f7fc);
+    }
+
+    &--invalid {
+        border-color: var(--gd-palette-error-base, #e54d42);
+        background-color: var(--gd-palette-error-dimmed, #fcedec);
+        cursor: no-drop;
+
+        &:hover,
+        &:focus-visible {
+            border-color: var(--gd-palette-error-base, #e54d42);
+            background-color: var(--gd-palette-error-dimmed, #fcedec);
+        }
+    }
+
+    &--disabled {
+        cursor: default;
+        color: var(--gd-palette-complementary-5, #b0beca);
+        border-color: var(--gd-palette-complementary-3, #dde4eb);
+        background-color: transparent;
+
+        &:hover,
+        &:focus-visible {
+            border-color: var(--gd-palette-complementary-3, #dde4eb);
+            background-color: transparent;
+        }
+    }
+}

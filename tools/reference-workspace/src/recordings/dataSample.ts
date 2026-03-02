@@ -1,7 +1,7 @@
-// (C) 2025-2026 GoodData Corporation
+// (C) 2026 GoodData Corporation
 
 /* eslint-disable import-x/order */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2025-12-26T19:14:53.550Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2026-02-18T13:52:09.924Z; */
 
 import df_label_f_activity_subject from "./metadata/displayForms/label.f_activity.subject/elements.json" with { type: "json" };
 import df_label_f_product_product_name from "./metadata/displayForms/label.f_product.product.name/elements.json" with { type: "json" };

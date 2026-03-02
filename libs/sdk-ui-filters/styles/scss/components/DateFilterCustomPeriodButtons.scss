@@ -2,8 +2,8 @@
 // Date Filter Form Buttons styling
 
 .gd-date-filter-form-buttons {
-    padding-top: 5px;
-    padding-bottom: 10px;
+    padding-top: 2px;
+    padding-bottom: 2px;
 
     .gd-date-filter-form-buttons-container {
         display: flex;
@@ -22,14 +22,16 @@
 
 // Mobile specific adjustments
 @media screen and (max-width: 768px) {
-    .gd-date-filter-form-buttons {
+    .gd-extended-date-filter-body-mobile .gd-date-filter-form-buttons {
         padding-top: 10px;
         padding-bottom: 10px;
+        background-color: transparent;
 
         .gd-date-filter-form-buttons-container {
             .gd-date-filter-form-button {
-                min-height: 44px; // Larger touch targets on mobile
-                font-size: 16px;
+                min-height: 42px;
+                font-size: 14px;
+                border-bottom: 0;
             }
         }
 

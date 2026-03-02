@@ -2,6 +2,7 @@
 
 import { type IInsight } from "@gooddata/sdk-model";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 
@@ -90,7 +91,7 @@ export const LegendPositionAutoLegend = () =>
                 visualizationUrl: "local:heatmap",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(11, 2, 0),
+        getScenariosGroupByIndexes(14, 2, 0),
     )();
 LegendPositionAutoLegend.parameters = {
     kind: "legend position - auto legend",
@@ -186,7 +187,7 @@ export const LegendPositionLegendOnLeft = () =>
                 visualizationUrl: "local:heatmap",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(11, 2, 1),
+        getScenariosGroupByIndexes(14, 2, 1),
     )();
 LegendPositionLegendOnLeft.parameters = {
     kind: "legend position - legend on left",
@@ -282,7 +283,7 @@ export const LegendPositionLegendOnRight = () =>
                 visualizationUrl: "local:heatmap",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(11, 2, 2),
+        getScenariosGroupByIndexes(14, 2, 2),
     )();
 LegendPositionLegendOnRight.parameters = {
     kind: "legend position - legend on right",
@@ -378,7 +379,7 @@ export const LegendPositionLegendOnTop = () =>
                 visualizationUrl: "local:heatmap",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(11, 2, 3),
+        getScenariosGroupByIndexes(14, 2, 3),
     )();
 LegendPositionLegendOnTop.parameters = {
     kind: "legend position - legend on top",
@@ -474,7 +475,7 @@ export const LegendPositionLegendAtBottom = () =>
                 visualizationUrl: "local:heatmap",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(11, 2, 4),
+        getScenariosGroupByIndexes(14, 2, 4),
     )();
 LegendPositionLegendAtBottom.parameters = {
     kind: "legend position - legend at bottom",
@@ -570,7 +571,7 @@ export const LegendPositionDisabled = () =>
                 visualizationUrl: "local:heatmap",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(11, 2, 5),
+        getScenariosGroupByIndexes(14, 2, 5),
     )();
 LegendPositionDisabled.parameters = {
     kind: "legend position - disabled",

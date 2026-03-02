@@ -13,6 +13,8 @@ import {
     type IRelativeDateFilter,
     dashboardFilterLocalIdentifier,
     filterLocalIdentifier,
+    isAllValuesAttributeFilter,
+    isAllValuesDashboardAttributeFilter,
     isDashboardCommonDateFilter,
     isDateFilter,
     isInsightWidget,
@@ -437,6 +439,10 @@ function validateHiddenFilters(
         if (isNoopAllTimeDateFilterFixed(hiddenFilter)) {
             continue;
         }
+        // Noop "all values" attribute filters are not saved in automation filters, so we can skip them
+        if (isAllValuesAttributeFilter(hiddenFilter)) {
+            continue;
+        }
 
         const storedHiddenFilter = savedAutomationFilters.find(
             (f) => filterLocalIdentifier(f) === filterLocalIdentifier(hiddenFilter),
@@ -484,6 +490,10 @@ function validateLockedFilters(
     for (const lockedFilter of lockedFilterAsIFilter) {
         // Noop "all time" date filters are not saved in automation filters, so we can skip them
         if (isNoopAllTimeDateFilterFixed(lockedFilter)) {
+            continue;
+        }
+        // Noop "all values" attribute filters are not saved in automation filters, so we can skip them
+        if (isAllValuesAttributeFilter(lockedFilter)) {
             continue;
         }
 
@@ -598,6 +608,14 @@ function validateVisibleFilters(
         const savedFilter = savedAutomationFilters.find((f) => filterLocalIdentifier(f) === localIdentifier);
 
         if (!savedFilter && !visibleFilterIsMissingInSavedFilters) {
+            // Check if the current dashboard filter is "All values" - noop attribute filters
+            // are intentionally not saved in execution filters, so a missing match is expected.
+            const currentDashboardFilter = dashboardFilters.find(
+                (dashboardFilter) => dashboardFilterLocalIdentifier(dashboardFilter) === localIdentifier,
+            );
+            if (isAllValuesDashboardAttributeFilter(currentDashboardFilter)) {
+                continue;
+            }
             visibleFilterIsMissingInSavedFilters = true;
         }
     }

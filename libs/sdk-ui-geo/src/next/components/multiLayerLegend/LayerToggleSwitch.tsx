@@ -1,6 +1,6 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
-import { type KeyboardEvent, type ReactElement, memo } from "react";
+import { type ReactElement, memo } from "react";
 
 import cx from "classnames";
 
@@ -58,13 +58,6 @@ export const LayerToggleSwitch = memo(function LayerToggleSwitch({
         }
     };
 
-    const handleKeyDown = (event: KeyboardEvent) => {
-        if (!disabled && (event.key === "Enter" || event.key === " ")) {
-            event.preventDefault();
-            onChange(!checked);
-        }
-    };
-
     const toggleClassName = cx("gd-geo-legend-toggle", {
         "gd-geo-legend-toggle--checked": checked,
         "gd-geo-legend-toggle--disabled": disabled,
@@ -80,7 +73,6 @@ export const LayerToggleSwitch = memo(function LayerToggleSwitch({
             aria-label={ariaLabel}
             disabled={disabled}
             onClick={handleChange}
-            onKeyDown={handleKeyDown}
             data-testid={`gd-geo-legend-toggle-${id}`}
         >
             <span className="gd-geo-legend-toggle__track" />

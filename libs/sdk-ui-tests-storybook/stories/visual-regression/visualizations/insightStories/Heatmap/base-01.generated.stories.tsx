@@ -2,6 +2,7 @@
 
 import { type IInsight } from "@gooddata/sdk-model";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 
@@ -59,7 +60,7 @@ export const MeasureOnly = () =>
                 visualizationUrl: "local:heatmap",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(11, 0, 0),
+        getScenariosGroupByIndexes(14, 0, 0),
     )();
 MeasureOnly.parameters = {
     kind: "measure only",
@@ -141,7 +142,7 @@ export const MeasureAndRows = () =>
                 visualizationUrl: "local:heatmap",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(11, 0, 1),
+        getScenariosGroupByIndexes(14, 0, 1),
     )();
 MeasureAndRows.parameters = {
     kind: "measure and rows",
@@ -216,7 +217,7 @@ export const MeasureAndColumns = () =>
                 visualizationUrl: "local:heatmap",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(11, 0, 2),
+        getScenariosGroupByIndexes(14, 0, 2),
     )();
 MeasureAndColumns.parameters = {
     kind: "measure and columns",
@@ -308,7 +309,7 @@ export const MeasureRowsAndColumns = () =>
                 visualizationUrl: "local:heatmap",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(11, 0, 3),
+        getScenariosGroupByIndexes(14, 0, 3),
     )();
 MeasureRowsAndColumns.parameters = {
     kind: "measure, rows and columns",
@@ -400,7 +401,7 @@ export const MeasureRowsAndColumnsWithNullDataPoints = () =>
                 visualizationUrl: "local:heatmap",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(11, 0, 4),
+        getScenariosGroupByIndexes(14, 0, 4),
     )();
 MeasureRowsAndColumnsWithNullDataPoints.parameters = {
     kind: "measure, rows and columns with null data points",

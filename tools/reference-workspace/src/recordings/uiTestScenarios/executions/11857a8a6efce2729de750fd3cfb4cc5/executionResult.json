@@ -1,0 +1,72 @@
+{
+    "dimensions": [
+        {
+            "headers": [
+                {
+                    "measureGroupHeader": {
+                        "items": [
+                            {
+                                "measureHeaderItem": {
+                                    "format": "#,#.##",
+                                    "identifier": "f_population",
+                                    "localIdentifier": "m_f_population_sum",
+                                    "name": "m_f_population_sum"
+                                }
+                            },
+                            {
+                                "measureHeaderItem": {
+                                    "format": "$#,##0.00",
+                                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                    "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050",
+                                    "name": "Amount"
+                                }
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        {
+            "headers": [
+                {
+                    "attributeHeader": {
+                        "formOf": { "identifier": "f_city.id", "name": "City", "uri": "" },
+                        "granularity": null,
+                        "identifier": "f_city.id.latitude",
+                        "labelType": "GDC.geo.pin_latitude",
+                        "localIdentifier": "a_f_city.id.latitude",
+                        "name": "Latitude",
+                        "primaryLabel": { "identifier": "f_city.id", "type": "displayForm" },
+                        "totalItems": [],
+                        "uri": ""
+                    }
+                },
+                {
+                    "attributeHeader": {
+                        "formOf": { "identifier": "f_city.id", "name": "City", "uri": "" },
+                        "granularity": null,
+                        "identifier": "f_city.id.longitude",
+                        "labelType": "GDC.geo.pin_longitude",
+                        "localIdentifier": "a_f_city.id.longitude",
+                        "name": "Longitude",
+                        "primaryLabel": { "identifier": "f_city.id", "type": "displayForm" },
+                        "totalItems": [],
+                        "uri": ""
+                    }
+                },
+                {
+                    "attributeHeader": {
+                        "formOf": { "identifier": "f_city.id", "name": "City", "uri": "" },
+                        "granularity": null,
+                        "identifier": "f_city.id.cityname",
+                        "localIdentifier": "a_f_city.id.cityname",
+                        "name": "City name",
+                        "primaryLabel": { "identifier": "f_city.id", "type": "displayForm" },
+                        "totalItems": [],
+                        "uri": ""
+                    }
+                }
+            ]
+        }
+    ]
+}

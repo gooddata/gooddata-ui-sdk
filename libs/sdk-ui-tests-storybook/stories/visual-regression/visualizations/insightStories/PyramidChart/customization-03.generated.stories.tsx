@@ -2,6 +2,7 @@
 
 import { type IInsight } from "@gooddata/sdk-model";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 
@@ -69,7 +70,7 @@ export const VerticalAlignmentBottom = () =>
                 visualizationUrl: "local:pyramid",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(16, 3, 0),
+        getScenariosGroupByIndexes(19, 3, 0),
     )();
 VerticalAlignmentBottom.parameters = {
     kind: "vertical alignment - bottom",
@@ -144,7 +145,7 @@ export const VerticalAlignmentMiddle = () =>
                 visualizationUrl: "local:pyramid",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(16, 3, 1),
+        getScenariosGroupByIndexes(19, 3, 1),
     )();
 VerticalAlignmentMiddle.parameters = {
     kind: "vertical alignment - middle",
@@ -219,7 +220,7 @@ export const VerticalAlignmentTop = () =>
                 visualizationUrl: "local:pyramid",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(16, 3, 2),
+        getScenariosGroupByIndexes(19, 3, 2),
     )();
 VerticalAlignmentTop.parameters = {
     kind: "vertical alignment - top",
@@ -290,7 +291,7 @@ export const VerticalAlignmentDefault = () =>
                 visualizationUrl: "local:pyramid",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(16, 3, 3),
+        getScenariosGroupByIndexes(19, 3, 3),
     )();
 VerticalAlignmentDefault.parameters = {
     kind: "vertical alignment - default",

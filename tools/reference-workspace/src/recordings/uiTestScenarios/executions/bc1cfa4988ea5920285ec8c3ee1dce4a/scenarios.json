@@ -1,0 +1,1289 @@
+[
+    {
+        "n2oMap": {
+            "a_f_owner.region_id": "a_f_owner.region_id",
+            "a_state_id.statecode": "geo.area",
+            "a_state_id.statename": "tooltipText_df",
+            "m_87a053b0_3947_49f3_b0c5_de53fd01f050": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+        },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                        "localIdentifier": "geo.area"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                        "localIdentifier": "a_f_owner.region_id"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "state_id.statename", "type": "displayForm" },
+                        "localIdentifier": "tooltipText_df"
+                    }
+                }
+            ],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                                "localIdentifier": "geo.area"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "area"
+                },
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "alias": "Revenue",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                            "type": "measure"
+                                        }
+                                    }
+                                },
+                                "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "color"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                                "localIdentifier": "a_f_owner.region_id"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "segment"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "state_id.statename", "type": "displayForm" },
+                                "localIdentifier": "tooltipText_df"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "tooltipText"
+                }
+            ],
+            "dimensions": [
+                { "itemIdentifiers": ["measureGroup"] },
+                { "itemIdentifiers": ["geo.area", "a_f_owner.region_id", "tooltipText_df"] }
+            ],
+            "filters": [
+                {
+                    "positiveAttributeFilter": {
+                        "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                        "in": { "values": ["West Coast", "East Coast"] }
+                    }
+                }
+            ],
+            "measures": [
+                {
+                    "measure": {
+                        "alias": "Revenue",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                    "type": "measure"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "area layer-level segment mapping overrides chart-level",
+        "vis": "GeoChart"
+    },
+    {
+        "n2oMap": {
+            "a_f_owner.region_id": "a_f_owner.region_id",
+            "a_state_id.statecode": "geo.area",
+            "a_state_id.statename": "tooltipText_df",
+            "m_87a053b0_3947_49f3_b0c5_de53fd01f050": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+        },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                        "localIdentifier": "geo.area"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                        "localIdentifier": "a_f_owner.region_id"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "state_id.statename", "type": "displayForm" },
+                        "localIdentifier": "tooltipText_df"
+                    }
+                }
+            ],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                                "localIdentifier": "geo.area"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "area"
+                },
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "alias": "Revenue",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                            "type": "measure"
+                                        }
+                                    }
+                                },
+                                "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "color"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                                "localIdentifier": "a_f_owner.region_id"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "segment"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "state_id.statename", "type": "displayForm" },
+                                "localIdentifier": "tooltipText_df"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "tooltipText"
+                }
+            ],
+            "dimensions": [
+                { "itemIdentifiers": ["measureGroup"] },
+                { "itemIdentifiers": ["geo.area", "a_f_owner.region_id", "tooltipText_df"] }
+            ],
+            "filters": [
+                {
+                    "positiveAttributeFilter": {
+                        "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                        "in": { "values": ["West Coast", "East Coast"] }
+                    }
+                }
+            ],
+            "measures": [
+                {
+                    "measure": {
+                        "alias": "Revenue",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                    "type": "measure"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "multi-layer both inherit chart-level colors",
+        "vis": "GeoChart"
+    },
+    {
+        "n2oMap": {
+            "a_f_owner.region_id": "a_f_owner.region_id",
+            "a_state_id.statecode": "geo.area",
+            "a_state_id.statename": "tooltipText_df",
+            "m_87a053b0_3947_49f3_b0c5_de53fd01f050": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+        },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                        "localIdentifier": "geo.area"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                        "localIdentifier": "a_f_owner.region_id"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "state_id.statename", "type": "displayForm" },
+                        "localIdentifier": "tooltipText_df"
+                    }
+                }
+            ],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                                "localIdentifier": "geo.area"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "area"
+                },
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "alias": "Revenue",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                            "type": "measure"
+                                        }
+                                    }
+                                },
+                                "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "color"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                                "localIdentifier": "a_f_owner.region_id"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "segment"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "state_id.statename", "type": "displayForm" },
+                                "localIdentifier": "tooltipText_df"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "tooltipText"
+                }
+            ],
+            "dimensions": [
+                { "itemIdentifiers": ["measureGroup"] },
+                { "itemIdentifiers": ["geo.area", "a_f_owner.region_id", "tooltipText_df"] }
+            ],
+            "filters": [
+                {
+                    "positiveAttributeFilter": {
+                        "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                        "in": { "values": ["West Coast", "East Coast"] }
+                    }
+                }
+            ],
+            "measures": [
+                {
+                    "measure": {
+                        "alias": "Revenue",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                    "type": "measure"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "multi-layer pushpin override only",
+        "vis": "GeoChart"
+    },
+    {
+        "n2oMap": {
+            "a_f_owner.region_id": "a_f_owner.region_id",
+            "a_state_id.statecode": "geo.area",
+            "a_state_id.statename": "tooltipText_df",
+            "m_87a053b0_3947_49f3_b0c5_de53fd01f050": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+        },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                        "localIdentifier": "geo.area"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                        "localIdentifier": "a_f_owner.region_id"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "state_id.statename", "type": "displayForm" },
+                        "localIdentifier": "tooltipText_df"
+                    }
+                }
+            ],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                                "localIdentifier": "geo.area"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "area"
+                },
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "alias": "Revenue",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                            "type": "measure"
+                                        }
+                                    }
+                                },
+                                "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "color"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                                "localIdentifier": "a_f_owner.region_id"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "segment"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "state_id.statename", "type": "displayForm" },
+                                "localIdentifier": "tooltipText_df"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "tooltipText"
+                }
+            ],
+            "dimensions": [
+                { "itemIdentifiers": ["measureGroup"] },
+                { "itemIdentifiers": ["geo.area", "a_f_owner.region_id", "tooltipText_df"] }
+            ],
+            "filters": [
+                {
+                    "positiveAttributeFilter": {
+                        "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                        "in": { "values": ["West Coast", "East Coast"] }
+                    }
+                }
+            ],
+            "measures": [
+                {
+                    "measure": {
+                        "alias": "Revenue",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                    "type": "measure"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "multi-layer area override only",
+        "vis": "GeoChart"
+    },
+    {
+        "n2oMap": {
+            "a_f_owner.region_id": "a_f_owner.region_id",
+            "a_state_id.statecode": "geo.area",
+            "a_state_id.statename": "tooltipText_df",
+            "m_87a053b0_3947_49f3_b0c5_de53fd01f050": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+        },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                        "localIdentifier": "geo.area"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                        "localIdentifier": "a_f_owner.region_id"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "state_id.statename", "type": "displayForm" },
+                        "localIdentifier": "tooltipText_df"
+                    }
+                }
+            ],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                                "localIdentifier": "geo.area"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "area"
+                },
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "alias": "Revenue",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                            "type": "measure"
+                                        }
+                                    }
+                                },
+                                "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "color"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                                "localIdentifier": "a_f_owner.region_id"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "segment"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "state_id.statename", "type": "displayForm" },
+                                "localIdentifier": "tooltipText_df"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "tooltipText"
+                }
+            ],
+            "dimensions": [
+                { "itemIdentifiers": ["measureGroup"] },
+                { "itemIdentifiers": ["geo.area", "a_f_owner.region_id", "tooltipText_df"] }
+            ],
+            "filters": [
+                {
+                    "positiveAttributeFilter": {
+                        "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                        "in": { "values": ["West Coast", "East Coast"] }
+                    }
+                }
+            ],
+            "measures": [
+                {
+                    "measure": {
+                        "alias": "Revenue",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                    "type": "measure"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "multi-layer both layer overrides with conflicting chart fallback",
+        "vis": "GeoChart"
+    },
+    {
+        "n2oMap": {
+            "a_f_owner.region_id": "a_f_owner.region_id",
+            "a_state_id.statecode": "geo.area",
+            "a_state_id.statename": "tooltipText_df",
+            "m_87a053b0_3947_49f3_b0c5_de53fd01f050": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+        },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                        "localIdentifier": "geo.area"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                        "localIdentifier": "a_f_owner.region_id"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "state_id.statename", "type": "displayForm" },
+                        "localIdentifier": "tooltipText_df"
+                    }
+                }
+            ],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                                "localIdentifier": "geo.area"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "area"
+                },
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "alias": "Revenue",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                            "type": "measure"
+                                        }
+                                    }
+                                },
+                                "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "color"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                                "localIdentifier": "a_f_owner.region_id"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "segment"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "state_id.statename", "type": "displayForm" },
+                                "localIdentifier": "tooltipText_df"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "tooltipText"
+                }
+            ],
+            "dimensions": [
+                { "itemIdentifiers": ["measureGroup"] },
+                { "itemIdentifiers": ["geo.area", "a_f_owner.region_id", "tooltipText_df"] }
+            ],
+            "filters": [
+                {
+                    "positiveAttributeFilter": {
+                        "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                        "in": { "values": ["West Coast", "East Coast"] }
+                    }
+                }
+            ],
+            "measures": [
+                {
+                    "measure": {
+                        "alias": "Revenue",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                    "type": "measure"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "area primary with pushpin overlay",
+        "vis": "GeoChart"
+    },
+    {
+        "n2oMap": {
+            "a_f_owner.region_id": "a_f_owner.region_id",
+            "a_state_id.statecode": "geo.area",
+            "a_state_id.statename": "tooltipText_df",
+            "m_87a053b0_3947_49f3_b0c5_de53fd01f050": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+        },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                        "localIdentifier": "geo.area"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                        "localIdentifier": "a_f_owner.region_id"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "state_id.statename", "type": "displayForm" },
+                        "localIdentifier": "tooltipText_df"
+                    }
+                }
+            ],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                                "localIdentifier": "geo.area"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "area"
+                },
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "alias": "Revenue",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                            "type": "measure"
+                                        }
+                                    }
+                                },
+                                "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "color"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                                "localIdentifier": "a_f_owner.region_id"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "segment"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "state_id.statename", "type": "displayForm" },
+                                "localIdentifier": "tooltipText_df"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "tooltipText"
+                }
+            ],
+            "dimensions": [
+                { "itemIdentifiers": ["measureGroup"] },
+                { "itemIdentifiers": ["geo.area", "a_f_owner.region_id", "tooltipText_df"] }
+            ],
+            "filters": [
+                {
+                    "positiveAttributeFilter": {
+                        "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                        "in": { "values": ["West Coast", "East Coast"] }
+                    }
+                }
+            ],
+            "measures": [
+                {
+                    "measure": {
+                        "alias": "Revenue",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                    "type": "measure"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "area primary with two pushpin overlays",
+        "vis": "GeoChart"
+    },
+    {
+        "n2oMap": {
+            "a_f_owner.region_id": "a_f_owner.region_id",
+            "a_state_id.statecode": "geo.area",
+            "a_state_id.statename": "tooltipText_df",
+            "m_87a053b0_3947_49f3_b0c5_de53fd01f050": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+        },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                        "localIdentifier": "geo.area"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                        "localIdentifier": "a_f_owner.region_id"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "state_id.statename", "type": "displayForm" },
+                        "localIdentifier": "tooltipText_df"
+                    }
+                }
+            ],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                                "localIdentifier": "geo.area"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "area"
+                },
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "alias": "Revenue",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                            "type": "measure"
+                                        }
+                                    }
+                                },
+                                "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "color"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                                "localIdentifier": "a_f_owner.region_id"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "segment"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "state_id.statename", "type": "displayForm" },
+                                "localIdentifier": "tooltipText_df"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "tooltipText"
+                }
+            ],
+            "dimensions": [
+                { "itemIdentifiers": ["measureGroup"] },
+                { "itemIdentifiers": ["geo.area", "a_f_owner.region_id", "tooltipText_df"] }
+            ],
+            "filters": [
+                {
+                    "positiveAttributeFilter": {
+                        "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                        "in": { "values": ["West Coast", "East Coast"] }
+                    }
+                }
+            ],
+            "measures": [
+                {
+                    "measure": {
+                        "alias": "Revenue",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                    "type": "measure"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "multi-layer chart-level segment mapping",
+        "vis": "GeoChart"
+    },
+    {
+        "n2oMap": {
+            "a_f_owner.region_id": "a_f_owner.region_id",
+            "a_state_id.statecode": "geo.area",
+            "a_state_id.statename": "tooltipText_df",
+            "m_87a053b0_3947_49f3_b0c5_de53fd01f050": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+        },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                        "localIdentifier": "geo.area"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                        "localIdentifier": "a_f_owner.region_id"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "state_id.statename", "type": "displayForm" },
+                        "localIdentifier": "tooltipText_df"
+                    }
+                }
+            ],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                                "localIdentifier": "geo.area"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "area"
+                },
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "alias": "Revenue",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                            "type": "measure"
+                                        }
+                                    }
+                                },
+                                "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "color"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                                "localIdentifier": "a_f_owner.region_id"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "segment"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "state_id.statename", "type": "displayForm" },
+                                "localIdentifier": "tooltipText_df"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "tooltipText"
+                }
+            ],
+            "dimensions": [
+                { "itemIdentifiers": ["measureGroup"] },
+                { "itemIdentifiers": ["geo.area", "a_f_owner.region_id", "tooltipText_df"] }
+            ],
+            "filters": [
+                {
+                    "positiveAttributeFilter": {
+                        "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                        "in": { "values": ["West Coast", "East Coast"] }
+                    }
+                }
+            ],
+            "measures": [
+                {
+                    "measure": {
+                        "alias": "Revenue",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                    "type": "measure"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "multi-layer per-layer segment mapping override",
+        "vis": "GeoChart"
+    },
+    {
+        "n2oMap": {
+            "a_f_owner.region_id": "a_f_owner.region_id",
+            "a_state_id.statecode": "geo.area",
+            "a_state_id.statename": "tooltipText_df",
+            "m_87a053b0_3947_49f3_b0c5_de53fd01f050": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+        },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                        "localIdentifier": "geo.area"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                        "localIdentifier": "a_f_owner.region_id"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "state_id.statename", "type": "displayForm" },
+                        "localIdentifier": "tooltipText_df"
+                    }
+                }
+            ],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                                "localIdentifier": "geo.area"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "area"
+                },
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "alias": "Revenue",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                            "type": "measure"
+                                        }
+                                    }
+                                },
+                                "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "color"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                                "localIdentifier": "a_f_owner.region_id"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "segment"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "state_id.statename", "type": "displayForm" },
+                                "localIdentifier": "tooltipText_df"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "tooltipText"
+                }
+            ],
+            "dimensions": [
+                { "itemIdentifiers": ["measureGroup"] },
+                { "itemIdentifiers": ["geo.area", "a_f_owner.region_id", "tooltipText_df"] }
+            ],
+            "filters": [
+                {
+                    "positiveAttributeFilter": {
+                        "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                        "in": { "values": ["West Coast", "East Coast"] }
+                    }
+                }
+            ],
+            "measures": [
+                {
+                    "measure": {
+                        "alias": "Revenue",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                    "type": "measure"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "area with clustered pushpin overlay",
+        "vis": "GeoChart"
+    },
+    {
+        "n2oMap": {
+            "a_f_owner.region_id": "a_f_owner.region_id",
+            "a_state_id.statecode": "geo.area",
+            "a_state_id.statename": "tooltipText_df",
+            "m_87a053b0_3947_49f3_b0c5_de53fd01f050": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+        },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                        "localIdentifier": "geo.area"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                        "localIdentifier": "a_f_owner.region_id"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "state_id.statename", "type": "displayForm" },
+                        "localIdentifier": "tooltipText_df"
+                    }
+                }
+            ],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                                "localIdentifier": "geo.area"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "area"
+                },
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "alias": "Revenue",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "item": {
+                                            "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                            "type": "measure"
+                                        }
+                                    }
+                                },
+                                "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "color"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                                "localIdentifier": "a_f_owner.region_id"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "segment"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "state_id.statename", "type": "displayForm" },
+                                "localIdentifier": "tooltipText_df"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "tooltipText"
+                }
+            ],
+            "dimensions": [
+                { "itemIdentifiers": ["measureGroup"] },
+                { "itemIdentifiers": ["geo.area", "a_f_owner.region_id", "tooltipText_df"] }
+            ],
+            "filters": [
+                {
+                    "positiveAttributeFilter": {
+                        "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                        "in": { "values": ["West Coast", "East Coast"] }
+                    }
+                }
+            ],
+            "measures": [
+                {
+                    "measure": {
+                        "alias": "Revenue",
+                        "definition": {
+                            "measureDefinition": {
+                                "item": {
+                                    "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                    "type": "measure"
+                                }
+                            }
+                        },
+                        "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "area with non-clustered pushpin overlay",
+        "vis": "GeoChart"
+    }
+]

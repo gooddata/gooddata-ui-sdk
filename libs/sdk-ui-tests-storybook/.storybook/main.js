@@ -124,6 +124,10 @@ export default {
                 viteStaticCopy({
                     targets: [
                         {
+                            src: "./stories/geo-assets/**/*",
+                            dest: "geo-assets",
+                        },
+                        {
                             src: "./node_modules/@gooddata/sdk-ui-web-components/esm/**/*",
                             dest: "web-components",
                         },

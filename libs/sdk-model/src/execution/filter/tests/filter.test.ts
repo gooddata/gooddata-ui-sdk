@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
@@ -22,6 +22,7 @@ import {
     filterIsEmpty,
     filterMeasureRef,
     filterObjRef,
+    isAllValuesAttributeFilter,
     measureValueFilterCondition,
     measureValueFilterDimensionality,
     measureValueFilterMeasure,
@@ -61,6 +62,25 @@ describe("filterIsEmpty", () => {
 
     it.each(InvalidScenarios)("should throw when %s", (_desc, input) => {
         expect(() => filterIsEmpty(input)).toThrow();
+    });
+});
+
+describe("isAllValuesAttributeFilter", () => {
+    const Scenarios: Array<[boolean, string, IFilter]> = [
+        [true, "negative filter with no values", newNegativeAttributeFilter(Account.Name, [])],
+        [true, "negative filter with no uris", newNegativeAttributeFilter(Account.Name, { uris: [] })],
+        [false, "negative filter with values", newNegativeAttributeFilter(Account.Name, ["value1"])],
+        [false, "negative filter with uris", newNegativeAttributeFilter(Account.Name, { uris: ["/uri1"] })],
+        [false, "positive filter with no values", newPositiveAttributeFilter(Account.Name, [])],
+        [false, "positive filter with values", newPositiveAttributeFilter(Account.Name, ["value1"])],
+        [false, "absolute date filter", AbsoluteDateFilter],
+        [false, "relative date filter", RelativeDateFilter],
+        [false, "measure value filter", MeasureValueFilter],
+        [false, "ranking filter", RankingFilter],
+    ];
+
+    it.each(Scenarios)("should return %s for %s", (expectedResult, _desc, input) => {
+        expect(isAllValuesAttributeFilter(input)).toEqual(expectedResult);
     });
 });
 

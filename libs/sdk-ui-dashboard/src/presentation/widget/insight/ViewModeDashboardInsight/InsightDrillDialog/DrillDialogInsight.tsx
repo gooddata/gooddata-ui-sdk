@@ -43,7 +43,7 @@ import { selectExecutionTimestamp } from "../../../../../model/store/ui/uiSelect
 import { IntlWrapper } from "../../../../localization/IntlWrapper.js";
 import { getGeoDefaultDisplayFormRefs } from "../../geoDefaultDisplayFormRefs.js";
 import { InsightBody } from "../../InsightBody.js";
-import { convertInsightToTableDefinition } from "../../insightToTable.js";
+import { convertInsightToLayerTables, convertInsightToTableDefinition } from "../../insightToTable.js";
 import { type IDashboardInsightProps } from "../../types.js";
 import { CustomError } from "../CustomError/CustomError.js";
 import { useInsightPositionStyle } from "../useInsightPositionStyle.js";
@@ -144,6 +144,19 @@ export function DrillDialogInsight({
         isWidgetAsTable,
     });
 
+    // Multi-layer geo → per-layer table tabs
+    const layerTables = useMemo(
+        () =>
+            isWidgetAsTable
+                ? convertInsightToLayerTables(syncedInsight, {
+                      settings,
+                      catalogAttributes,
+                      preloadedAttributesWithReferences,
+                  })
+                : undefined,
+        [isWidgetAsTable, syncedInsight, settings, catalogAttributes, preloadedAttributesWithReferences],
+    );
+
     // Convert insight to table format if needed for drill dialog
     const finalInsight = useMemo(() => {
         const defaultDisplayFormRefs = getGeoDefaultDisplayFormRefs(
@@ -206,6 +219,7 @@ export function DrillDialogInsight({
                             <InsightBody
                                 widget={widget}
                                 insight={finalInsight}
+                                layerTables={layerTables && layerTables.length > 1 ? layerTables : undefined}
                                 backend={effectiveBackend}
                                 workspace={effectiveWorkspace}
                                 drillableItems={drillableItems}

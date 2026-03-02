@@ -25,6 +25,7 @@ import {
     dashboardLayoutWidgetIdentityMap,
 } from "../../../_staging/dashboard/dashboardLayout.js";
 import { createListedDashboard } from "../../../_staging/listedDashboard/listedDashboardUtils.js";
+import { messages, resolveMessages } from "../../../locales.js";
 import { type ISaveDashboard } from "../../commands/dashboard.js";
 import { changeRenderMode } from "../../commands/renderMode.js";
 import { switchDashboardTab } from "../../commands/tabs.js";
@@ -32,6 +33,7 @@ import { type DashboardSaved, dashboardSaved } from "../../events/dashboard.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
 import { accessibleDashboardsActions } from "../../store/accessibleDashboards/index.js";
 import { selectBackendCapabilities } from "../../store/backendCapabilities/backendCapabilitiesSelectors.js";
+import { selectLocale } from "../../store/config/configSelectors.js";
 import { listedDashboardsActions } from "../../store/listedDashboards/index.js";
 import { metaActions } from "../../store/meta/index.js";
 import { selectDashboardDescriptor, selectPersistedDashboard } from "../../store/meta/metaSelectors.js";
@@ -299,12 +301,16 @@ function* createDashboardSaveContext(
         dateFilterConfigs,
     );
 
+    const locale: ReturnType<typeof selectLocale> = yield select(selectLocale);
+    const translations: Record<string, string> = yield call(resolveMessages, locale);
+    const title = (cmd.payload.title ?? dashboardDescriptor.title) || translations[messages.untitled.id];
+
     // Note: activeTabLocalIdentifier is NOT saved to dashboard MD - it's app state only
     // Dashboard always opens on first tab by default
     const dashboardFromState: IDashboardDefinition = {
         type: "IDashboard",
         ...dashboardDescriptor,
-        title: cmd.payload.title ?? dashboardDescriptor.title,
+        title,
         ...dashboardIdentity,
         filterContext: {
             ...filterContextIdentity,

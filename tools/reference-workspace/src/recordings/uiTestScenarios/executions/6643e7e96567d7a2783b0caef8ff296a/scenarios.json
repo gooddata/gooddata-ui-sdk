@@ -1,0 +1,81 @@
+[
+    {
+        "n2oMap": {
+            "a_f_owner.region_id": "a_f_owner.region_id",
+            "a_state_id.statecode": "geo.area",
+            "a_state_id.statecode_1": "tooltipText_df"
+        },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                        "localIdentifier": "geo.area"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                        "localIdentifier": "a_f_owner.region_id"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                        "localIdentifier": "tooltipText_df"
+                    }
+                }
+            ],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                                "localIdentifier": "geo.area"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "area"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                                "localIdentifier": "a_f_owner.region_id"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "color"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                                "localIdentifier": "tooltipText_df"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "tooltipText"
+                }
+            ],
+            "dimensions": [{ "itemIdentifiers": ["geo.area", "a_f_owner.region_id", "tooltipText_df"] }],
+            "filters": [
+                {
+                    "positiveAttributeFilter": {
+                        "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                        "in": { "values": ["West Coast", "East Coast"] }
+                    }
+                }
+            ],
+            "measures": [],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "area with color attribute categories",
+        "vis": "GeoAreaChart"
+    }
+]

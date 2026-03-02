@@ -41,6 +41,7 @@ import { IAccessGrantee } from '@gooddata/sdk-model';
 import { IActiveCalendars } from '@gooddata/sdk-model';
 import { IAlertTriggerMode } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
+import { IArbitraryAttributeFilter } from '@gooddata/sdk-model';
 import { IAttributeDescriptorBody } from '@gooddata/sdk-model';
 import { IAttributeDisplayFormMetadataObject } from '@gooddata/sdk-model';
 import { IAttributeElement } from '@gooddata/sdk-model';
@@ -136,6 +137,7 @@ import { IListedDashboard } from '@gooddata/sdk-model';
 import { ILoadingProps } from '@gooddata/sdk-ui';
 import { ILocale } from '@gooddata/sdk-ui';
 import { ILowerBoundedFilter } from '@gooddata/sdk-model';
+import { IMatchAttributeFilter } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
 import { IMeasureDescriptor } from '@gooddata/sdk-model';
 import { IMeasureMetadataObject } from '@gooddata/sdk-model';
@@ -284,7 +286,7 @@ export function anyDashboardEventHandler(handler: DashboardEventHandler["handler
 export function anyEventHandler(handler: DashboardEventHandler["handler"]): DashboardEventHandler;
 
 // @public
-export function applyAttributeFilter(filterLocalId: string, filter: IAttributeFilter, correlationId?: string): ChangeAttributeFilterSelection;
+export function applyAttributeFilter(filterLocalId: string, filter: IAttributeFilter, correlationId?: string): ChangeAttributeFilterSelection | undefined;
 
 // @public
 export function applyDateFilter(filter: IDateFilter, correlationId?: string): ChangeDateFilterSelection;
@@ -3664,7 +3666,7 @@ export interface IDashboardExtensionProps extends IDashboardEventing, IDashboard
 }
 
 // @public
-export type IDashboardFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter;
+export type IDashboardFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter | IArbitraryAttributeFilter | IMatchAttributeFilter;
 
 // @alpha
 export interface IDashboardFilterContextSelectionReset extends IDashboardEvent {
@@ -5689,6 +5691,8 @@ export interface IInsightBodyProps extends Partial<IVisualizationCallbacks> {
     ErrorComponent: ComponentType<IErrorProps>;
     execConfig?: IExecutionConfig;
     insight: IInsight;
+    // @alpha
+    layerTables?: ILayerTableDefinition[];
     LoadingComponent: ComponentType<ILoadingProps>;
     locale: ILocale;
     permissions?: IWorkspacePermissions;
@@ -5929,6 +5933,14 @@ export interface IKpiPlaceholderWidget extends ICustomWidget {
 export interface IKpiWidgetComparison {
     comparisonDirection?: IKpiComparisonDirection;
     comparisonType?: IKpiComparisonTypeComparison;
+}
+
+// @alpha
+export interface ILayerTableDefinition {
+    layerId: string;
+    layerName: string;
+    layerType: string;
+    tableInsight: IInsight;
 }
 
 // @beta

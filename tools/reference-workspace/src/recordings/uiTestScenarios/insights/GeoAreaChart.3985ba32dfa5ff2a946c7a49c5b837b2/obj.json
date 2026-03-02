@@ -1,0 +1,59 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "country.country_code", "type": "displayForm" },
+                            "localIdentifier": "geo.area"
+                        }
+                    }
+                ],
+                "localIdentifier": "area"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                        "type": "measure"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                        }
+                    }
+                ],
+                "localIdentifier": "color"
+            }
+        ],
+        "filters": [],
+        "identifier": "GeoAreaChart.3985ba32dfa5ff2a946c7a49c5b837b2",
+        "properties": {
+            "controls": {
+                "mapStyle": {
+                    "glyphs": "/geo-assets/glyphs/{fontstack}/{range}.pbf",
+                    "layers": [
+                        {
+                            "id": "background",
+                            "paint": { "background-color": "#ffffff" },
+                            "type": "background"
+                        }
+                    ],
+                    "name": "offline-minimal",
+                    "sources": {},
+                    "version": 8
+                },
+                "viewport": { "area": "continent_na" }
+            }
+        },
+        "sorts": [],
+        "title": "GeoAreaChart - area viewport north america",
+        "uri": "GeoAreaChart.3985ba32dfa5ff2a946c7a49c5b837b2",
+        "visualizationUrl": "local:choropleth"
+    }
+}

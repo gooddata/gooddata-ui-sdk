@@ -117,6 +117,7 @@ export function DateFilterBodyContentFiltered({
                 <CalendarTypeTabs
                     selectedTab={selectedTab}
                     onTabSelect={onTabSelect}
+                    isMobile={isMobile}
                     tabIds={tabIds}
                     panelId={panelId}
                 />

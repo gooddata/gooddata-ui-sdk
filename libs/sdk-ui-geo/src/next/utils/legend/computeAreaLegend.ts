@@ -69,9 +69,10 @@ export function computeAreaLegend(params: IComputeAreaLegendParams): ILegendSect
     } = params;
 
     const groups: ILegendGroup[] = [];
+    const hasCategoryLegend = availableLegends.hasCategoryLegend && legendItems.length > 0;
 
     // Add categorical color legend group if available (segment attribute)
-    if (availableLegends.hasCategoryLegend && legendItems.length > 0) {
+    if (hasCategoryLegend) {
         const colorCategories = convertToColorCategories(legendItems);
         groups.push({
             kind: "color",
@@ -80,13 +81,16 @@ export function computeAreaLegend(params: IComputeAreaLegendParams): ILegendSect
         });
     }
 
-    // Add numeric color scale group if available (color measure)
-    if (availableLegends.hasColorLegend && geoData.color) {
+    // Add numeric color scale group if available (color measure).
+    // Segment/category legend has precedence over gradient, so we only render the
+    // color scale when no category legend is present.
+    if (availableLegends.hasColorLegend && geoData.color && !hasCategoryLegend) {
         const colorScale = computeColorScale(
             geoData.color.data,
             geoData.color.format,
             numericSymbols,
             colorScaleBaseColor,
+            { allowFlatScale: true },
         );
         if (colorScale) {
             groups.push({

@@ -1,0 +1,86 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_city.id.latitude", "type": "displayForm" },
+                            "localIdentifier": "a_f_city.id.latitude"
+                        }
+                    }
+                ],
+                "localIdentifier": "location"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "alias": "Population",
+                            "definition": {
+                                "measureDefinition": {
+                                    "aggregation": "sum",
+                                    "item": { "identifier": "f_population", "type": "fact" }
+                                }
+                            },
+                            "localIdentifier": "m_f_population_sum"
+                        }
+                    }
+                ],
+                "localIdentifier": "color"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                            "localIdentifier": "a_f_owner.region_id"
+                        }
+                    }
+                ],
+                "localIdentifier": "segment"
+            }
+        ],
+        "filters": [
+            {
+                "positiveAttributeFilter": {
+                    "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                    "in": { "values": ["West Coast", "East Coast"] }
+                }
+            }
+        ],
+        "identifier": "GeoPushpinChart.4ef0c8d4ea8a4ca22fdc8e0895b0bbb7",
+        "properties": {
+            "controls": {
+                "latitude": "f_city.id.latitude",
+                "longitude": "f_city.id.longitude",
+                "mapStyle": {
+                    "glyphs": "/geo-assets/glyphs/{fontstack}/{range}.pbf",
+                    "layers": [
+                        {
+                            "id": "background",
+                            "paint": { "background-color": "#ffffff" },
+                            "type": "background"
+                        }
+                    ],
+                    "name": "offline-minimal",
+                    "sources": {},
+                    "version": 8
+                },
+                "tooltipText": "f_city.id.cityname",
+                "viewport": { "area": "world" }
+            }
+        },
+        "sorts": [
+            {
+                "measureSortItem": {
+                    "direction": "desc",
+                    "locators": [{ "measureLocatorItem": { "measureIdentifier": "m_f_population_sum" } }]
+                }
+            }
+        ],
+        "title": "GeoPushpinChart - latitude/longitude with color and segment",
+        "uri": "GeoPushpinChart.4ef0c8d4ea8a4ca22fdc8e0895b0bbb7",
+        "visualizationUrl": "local:pushpin"
+    }
+}

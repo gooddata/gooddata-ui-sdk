@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type ReactNode } from "react";
 
@@ -38,7 +38,9 @@ export function AttributeFilterProviders(props: IAttributeFilterBaseProps & { ch
         withoutApply = false,
         overlayPositionType,
         alignPoints,
+        availableFilterModes,
         onApply,
+        onChange,
         onSelect,
         onError,
         onInitLoadingChanged,
@@ -55,6 +57,8 @@ export function AttributeFilterProviders(props: IAttributeFilterBaseProps & { ch
         ElementsSelectActionsComponent,
         EmptyResultComponent,
         StatusBarComponent,
+        FilterModeMenuComponent,
+        TextFilterBodyComponent,
         enableImmediateAttributeFilterDisplayAsLabelMigration = false,
     } = props;
 
@@ -88,6 +92,8 @@ export function AttributeFilterProviders(props: IAttributeFilterBaseProps & { ch
                 }
                 EmptyResultComponent={EmptyResultComponent ?? DefaultComponents.EmptyResultComponent}
                 StatusBarComponent={StatusBarComponent ?? DefaultComponents.StatusBarComponent}
+                FilterModeMenuComponent={FilterModeMenuComponent ?? DefaultComponents.FilterModeMenuComponent}
+                TextFilterBodyComponent={TextFilterBodyComponent ?? DefaultComponents.TextFilterBodyComponent}
             >
                 <AttributeFilterContextProvider
                     backend={backend}
@@ -103,7 +109,7 @@ export function AttributeFilterProviders(props: IAttributeFilterBaseProps & { ch
                     parentFilterOverAttribute={parentFilterOverAttribute}
                     validateElementsBy={validateElementsBy}
                     onApply={onApply}
-                    onSelect={onSelect}
+                    onChange={onChange ?? onSelect}
                     onError={onError}
                     onInitLoadingChanged={onInitLoadingChanged}
                     hiddenElements={hiddenElements}
@@ -119,6 +125,7 @@ export function AttributeFilterProviders(props: IAttributeFilterBaseProps & { ch
                     withoutApply={withoutApply}
                     overlayPositionType={overlayPositionType}
                     alignPoints={alignPoints}
+                    availableFilterModes={availableFilterModes}
                 >
                     {children}
                 </AttributeFilterContextProvider>

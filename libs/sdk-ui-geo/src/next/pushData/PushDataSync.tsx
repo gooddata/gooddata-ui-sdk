@@ -3,8 +3,7 @@
 import { type ReactElement, useMemo } from "react";
 
 import { type IColorPalette } from "@gooddata/sdk-model";
-import { DefaultColorPalette } from "@gooddata/sdk-ui";
-import { type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
+import { type IColorMapping, type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
 import { useGeoChartProps } from "../context/GeoChartContext.js";
 import { useGeoLayers } from "../context/GeoLayersContext.js";
@@ -13,13 +12,15 @@ import { getAreaColorStrategy } from "../layers/area/coloring/colorStrategy.js";
 import { getPushpinColorStrategy } from "../layers/pushpin/coloring/colorStrategy.js";
 import { type IAvailableLegends } from "../types/common/legends.js";
 import { type GeoLayerType } from "../types/layers/index.js";
+import { resolveLayerColorConfig } from "../utils/color/resolveLayerColorConfig.js";
+import { getHeaderPredicateFingerprint } from "../utils/predicateFingerprint.js";
 
 type PushDataSyncProps = {
     availableLegends?: IAvailableLegends;
     geoLayerType: GeoLayerType;
 };
 
-const EMPTY_COLOR_MAPPING: [] = [];
+const EMPTY_COLOR_MAPPING: IColorMapping[] = [];
 
 function stringify(value: unknown): string {
     try {
@@ -33,15 +34,22 @@ function colorPaletteKey(palette: IColorPalette): string {
     return palette.map((p) => `${p.guid}:${stringify(p.fill)}`).join("|");
 }
 
-function colorMappingKey(colorMapping: readonly { id?: string; color: unknown }[]): string {
-    return colorMapping.map((m, index) => `${m.id ?? index}:${stringify(m.color)}`).join("|");
+function colorMappingKey(colorMapping: readonly IColorMapping[]): string {
+    return colorMapping
+        .map(
+            (mapping, index) =>
+                `${mapping.id ?? index}:${getHeaderPredicateFingerprint(mapping.predicate)}:${stringify(mapping.color)}`,
+        )
+        .join("|");
 }
 
 export function PushDataSync({ availableLegends, geoLayerType }: PushDataSyncProps): ReactElement | null {
+    const { config } = useGeoChartProps();
     const { primaryLayer, layerExecutions } = useGeoLayers();
     const primaryLayerDefinition = layerExecutions[0]?.layer;
-    const colorPalette = primaryLayerDefinition?.config?.colorPalette ?? DefaultColorPalette;
-    const colorMapping = primaryLayerDefinition?.config?.colorMapping ?? EMPTY_COLOR_MAPPING;
+    const resolvedColorConfig = resolveLayerColorConfig(primaryLayerDefinition, config);
+    const colorPalette = resolvedColorConfig.colorPalette;
+    const colorMapping = resolvedColorConfig.colorMapping ?? EMPTY_COLOR_MAPPING;
 
     const paletteKey = useMemo(() => colorPaletteKey(colorPalette), [colorPalette]);
     const mappingKey = useMemo(() => colorMappingKey(colorMapping), [colorMapping]);

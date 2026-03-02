@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type KeyboardEvent } from "react";
 
@@ -48,6 +48,18 @@ export const isEnterKey = (event: KeyboardEvent): boolean => {
  */
 export const isArrowKey = (event: KeyboardEvent): boolean => {
     return event.key.startsWith("Arrow");
+};
+
+/**
+ * Checks if the given keyboard event is triggered by an ArrowDown key.
+ *
+ * @param event - The keyboard event to check.
+ * @returns `true` if the event has been triggered by an ArrowDown key, `false` otherwise.
+ *
+ * @internal
+ */
+export const isArrowDownKey = (event: KeyboardEvent): boolean => {
+    return event.key === "ArrowDown";
 };
 
 /**

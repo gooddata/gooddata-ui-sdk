@@ -6,7 +6,12 @@ import { type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 import type { GeoJSONSourceSpecification } from "../common/mapFacade.js";
 import { getPushpinColorStrategy } from "./coloring/colorStrategy.js";
 import { getPushpinColors } from "./coloring/palette.js";
-import { DEFAULT_CLUSTER_MAX_ZOOM, DEFAULT_CLUSTER_RADIUS, PUSHPIN_SIZE_OPTIONS_MAP } from "./constants.js";
+import {
+    DEFAULT_CLUSTER_MAX_ZOOM,
+    DEFAULT_CLUSTER_RADIUS,
+    EMPTY_SEGMENT_VALUE,
+    PUSHPIN_SIZE_OPTIONS_MAP,
+} from "./constants.js";
 import { getMinMax } from "./size/calculations.js";
 import { type IGeoLngLat } from "../../types/common/coordinates.js";
 import { type IGeoChartPointsConfig } from "../../types/config/points.js";
@@ -134,7 +139,7 @@ function buildPushpinFeatureProperties(
         segment: {
             title: segmentTitle,
             value: segmentData[index],
-            uri: segmentUris[index],
+            uri: segmentUris[index] ?? EMPTY_SEGMENT_VALUE,
             attrId: segmentAttrId,
         },
     };
@@ -168,7 +173,7 @@ function createPushpinFeatures({
         colorFormat: color?.format ?? "",
         locationNameData,
         segmentData: segment?.data ?? [],
-        segmentUris: segment?.uris ?? [],
+        segmentUris: (segment?.uris ?? []).map((uri) => uri ?? EMPTY_SEGMENT_VALUE),
         sizeData,
         colorData,
         pushpinColors: getPushpinColors(colorData, segment?.data ?? [], colorStrategy),

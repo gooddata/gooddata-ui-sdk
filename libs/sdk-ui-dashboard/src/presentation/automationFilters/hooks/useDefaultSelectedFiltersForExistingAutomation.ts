@@ -8,6 +8,7 @@ import {
     type IAutomationVisibleFilter,
     dashboardFilterLocalIdentifier,
     filterLocalIdentifier,
+    isAllValuesDashboardAttributeFilter,
     isDashboardAttributeFilter,
     isDashboardDateFilter,
     newAllTimeDashboardDateFilter,
@@ -135,12 +136,20 @@ function getDefaultSelectedFiltersByVisibleFilters(
         }
 
         // Rest of the filters should be saved, so match them by local identifier.
-        return (
-            savedAutomationFilters?.find(
-                (savedFilter) =>
-                    visibleFilter.localIdentifier === dashboardFilterLocalIdentifier(savedFilter),
-            ) ?? []
+        const matchedSavedFilter = savedAutomationFilters?.find(
+            (savedFilter) => visibleFilter.localIdentifier === dashboardFilterLocalIdentifier(savedFilter),
         );
+        if (matchedSavedFilter) {
+            return matchedSavedFilter;
+        }
+
+        // If no saved execution filter matches, check if the current dashboard filter is "All values".
+        // Noop "All values" attribute filters are intentionally not saved, so reconstruct from dashboard.
+        if (targetDashboardFilter && isAllValuesDashboardAttributeFilter(targetDashboardFilter)) {
+            return targetDashboardFilter;
+        }
+
+        return [];
     });
 }
 

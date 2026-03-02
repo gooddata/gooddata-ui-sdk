@@ -762,7 +762,7 @@
     "kdaDialog.dialog.keyDrives.button.trendUp": "증가",
     "kdaDialog.dialog.keyDrives.button.trendDown": "감소",
     "kdaDialog.dialog.keyDrives.button.trendAll": "모두",
-    "kdaDialog.dialog.keyDrives.drivers": "{count}개 드라이버",
+    "kdaDialog.dialog.keyDrives.drivers": "{count} {count, plural, other {드라이버}}",
     "kdaDialog.dialog.keyDrives.overview.summary.home": "요약",
     "kdaDialog.dialog.keyDrives.overview.summary.home.tooltip": "분석 요약으로 이동",
     "kdaDialog.dialog.keyDrives.overview.summary.breadcrumb.label": "주요 동인 분석 탐색",

@@ -90,6 +90,15 @@ export interface IWorkspaceSettingsService {
     setActiveLlmEndpoint(endpoint: string): Promise<void>;
 
     /**
+     * Set active LLM provider for the organization.
+     *
+     * @param provider - id of the LLM provider to set as active for the organization.
+     *
+     * @returns promise
+     */
+    setActiveLlmProvider(provider: string): Promise<void>;
+
+    /**
      * Sets timezone for current workspace.
      *
      * @param timezone - the value based on IANA time zone database naming convention.

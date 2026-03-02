@@ -2,6 +2,7 @@
 
 import { type IInsight } from "@gooddata/sdk-model";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 
@@ -99,7 +100,7 @@ export const SingleMeasurePivotWithBothAttributesAndMetricsInRows = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 14, 0),
+        getScenariosGroupByIndexes(17, 14, 0),
     )();
 SingleMeasurePivotWithBothAttributesAndMetricsInRows.parameters = {
     kind: "single measure pivot with both attributes and metrics in rows",
@@ -190,7 +191,7 @@ export const TwoMeasuresWithSingleRowAttrWithMetricsInRows = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 14, 1),
+        getScenariosGroupByIndexes(17, 14, 1),
     )();
 TwoMeasuresWithSingleRowAttrWithMetricsInRows.parameters = {
     kind: "two measures with single row attr with metrics in rows",
@@ -407,7 +408,7 @@ export const TwoMeasuresAndMultipleColumnRowSubtotalsWithMetricsInRows = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 14, 2),
+        getScenariosGroupByIndexes(17, 14, 2),
     )();
 TwoMeasuresAndMultipleColumnRowSubtotalsWithMetricsInRows.parameters = {
     kind: "two measures and multiple column/row subtotals with metrics in rows",
@@ -588,7 +589,7 @@ export const MultipleMeasuresAndNoColumnsWithTotals = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 14, 3),
+        getScenariosGroupByIndexes(17, 14, 3),
     )();
 MultipleMeasuresAndNoColumnsWithTotals.parameters = {
     kind: "multiple measures and no columns, with totals",
@@ -696,7 +697,7 @@ export const MultipleMeasuresAndNoRowsWithTotals = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 14, 4),
+        getScenariosGroupByIndexes(17, 14, 4),
     )();
 MultipleMeasuresAndNoRowsWithTotals.parameters = {
     kind: "multiple measures and no rows, with totals",
@@ -815,7 +816,7 @@ export const MultipleMeasuresAndRowAttributesWithMetricsInRowsWithDrilling = () 
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 14, 5),
+        getScenariosGroupByIndexes(17, 14, 5),
     )();
 MultipleMeasuresAndRowAttributesWithMetricsInRowsWithDrilling.parameters = {
     kind: "multiple measures and row attributes with metrics in rows, with drilling",
@@ -916,7 +917,7 @@ export const TwoMeasuresInRowsAndOnlyColumnAttrsOnLeft = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 14, 6),
+        getScenariosGroupByIndexes(17, 14, 6),
     )();
 TwoMeasuresInRowsAndOnlyColumnAttrsOnLeft.parameters = {
     kind: "two measures in rows and only column attrs on left",
@@ -1017,7 +1018,7 @@ export const TwoMeasuresInRowsAndOnlyColumnAttrsOnLeftWithDrilling = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 14, 7),
+        getScenariosGroupByIndexes(17, 14, 7),
     )();
 TwoMeasuresInRowsAndOnlyColumnAttrsOnLeftWithDrilling.parameters = {
     kind: "two measures in rows and only column attrs on left, with drilling",
@@ -1118,7 +1119,7 @@ export const TwoMeasuresInRowsAndColumnAttrsOnTopWithInvalidDrillingOnAttributes
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 14, 8),
+        getScenariosGroupByIndexes(17, 14, 8),
     )();
 TwoMeasuresInRowsAndColumnAttrsOnTopWithInvalidDrillingOnAttributes.parameters = {
     kind: "two measures in rows and column attrs on top, with invalid drilling on attributes",
@@ -1219,7 +1220,7 @@ export const TwoMeasuresInRowsAndColumnAttrsOnTopWithDrillingOnMetrics = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 14, 9),
+        getScenariosGroupByIndexes(17, 14, 9),
     )();
 TwoMeasuresInRowsAndColumnAttrsOnTopWithDrillingOnMetrics.parameters = {
     kind: "two measures in rows and column attrs on top, with drilling on metrics",
@@ -1332,7 +1333,7 @@ export const TwoMeasuresInRowsAndColumnAttrsOnLeftWithTotals = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 14, 10),
+        getScenariosGroupByIndexes(17, 14, 10),
     )();
 TwoMeasuresInRowsAndColumnAttrsOnLeftWithTotals.parameters = {
     kind: "two measures in rows and column attrs on left, with totals",
@@ -1441,7 +1442,7 @@ export const TwoMeasuresInRowsAndOnlyColumnAttrsOnLeftWithTotals = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 14, 11),
+        getScenariosGroupByIndexes(17, 14, 11),
     )();
 TwoMeasuresInRowsAndOnlyColumnAttrsOnLeftWithTotals.parameters = {
     kind: "two measures in rows and only column attrs on left, with totals",

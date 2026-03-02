@@ -14,7 +14,7 @@ export default {
 
 export const SingleMeasurePivotWithBothAttributesAndMetricsInRows = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 14).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 14).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "single measure pivot with both attributes and metrics in rows",
         );
@@ -46,7 +46,7 @@ SingleMeasurePivotWithBothAttributesAndMetricsInRows.parameters = {
 
 export const TwoMeasuresWithSingleRowAttrWithMetricsInRows = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 14).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 14).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "two measures with single row attr with metrics in rows",
         );
@@ -78,7 +78,7 @@ TwoMeasuresWithSingleRowAttrWithMetricsInRows.parameters = {
 
 export const TwoMeasuresAndMultipleColumnRowSubtotalsWithMetricsInRows = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 14).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 14).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "two measures and multiple column/row subtotals with metrics in rows",
         );
@@ -110,7 +110,7 @@ TwoMeasuresAndMultipleColumnRowSubtotalsWithMetricsInRows.parameters = {
 
 export const MultipleMeasuresAndNoColumnsWithTotals = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 14).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 14).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "multiple measures and no columns, with totals",
         );
@@ -138,7 +138,7 @@ MultipleMeasuresAndNoColumnsWithTotals.parameters = {
 
 export const MultipleMeasuresAndNoRowsWithTotals = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 14).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 14).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "multiple measures and no rows, with totals",
         );
@@ -166,7 +166,7 @@ MultipleMeasuresAndNoRowsWithTotals.parameters = {
 
 export const MultipleMeasuresAndRowAttributesWithMetricsInRowsWithDrilling = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 14).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 14).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "multiple measures and row attributes with metrics in rows, with drilling",
         );
@@ -198,7 +198,7 @@ MultipleMeasuresAndRowAttributesWithMetricsInRowsWithDrilling.parameters = {
 
 export const TwoMeasuresInRowsAndOnlyColumnAttrsOnLeft = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 14).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 14).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "two measures in rows and only column attrs on left",
         );
@@ -226,7 +226,7 @@ TwoMeasuresInRowsAndOnlyColumnAttrsOnLeft.parameters = {
 
 export const TwoMeasuresInRowsAndOnlyColumnAttrsOnLeftWithDrilling = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 14).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 14).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "two measures in rows and only column attrs on left, with drilling",
         );
@@ -258,7 +258,7 @@ TwoMeasuresInRowsAndOnlyColumnAttrsOnLeftWithDrilling.parameters = {
 
 export const TwoMeasuresInRowsAndColumnAttrsOnTopWithInvalidDrillingOnAttributes = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 14).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 14).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) =>
                 name === "two measures in rows and column attrs on top, with invalid drilling on attributes",
@@ -291,7 +291,7 @@ TwoMeasuresInRowsAndColumnAttrsOnTopWithInvalidDrillingOnAttributes.parameters =
 
 export const TwoMeasuresInRowsAndColumnAttrsOnTopWithDrillingOnMetrics = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 14).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 14).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "two measures in rows and column attrs on top, with drilling on metrics",
         );
@@ -323,7 +323,7 @@ TwoMeasuresInRowsAndColumnAttrsOnTopWithDrillingOnMetrics.parameters = {
 
 export const TwoMeasuresInRowsAndColumnAttrsOnLeftWithTotals = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 14).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 14).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "two measures in rows and column attrs on left, with totals",
         );
@@ -355,7 +355,7 @@ TwoMeasuresInRowsAndColumnAttrsOnLeftWithTotals.parameters = {
 
 export const TwoMeasuresInRowsAndOnlyColumnAttrsOnLeftWithTotals = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 14).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 14).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "two measures in rows and only column attrs on left, with totals",
         );

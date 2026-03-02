@@ -1,0 +1,61 @@
+// (C) 2026 GoodData Corporation
+
+.gd-upload-status-dialog {
+    width: 425px;
+    min-height: 246px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    &__content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        text-align: center;
+        gap: 30px;
+
+        h3 {
+            font-size: 17px;
+            font-weight: 700;
+            line-height: 23px;
+            color: var(--gd-palette-complementary-8, #464e56);
+            margin: 0;
+        }
+
+        p {
+            font-family: var(--gd-font-family);
+            font-size: 14px;
+            line-height: 20px;
+            color: var(--gd-palette-complementary-6, #94a1ad);
+        }
+    }
+
+    &__hero-image {
+        position: relative;
+    }
+
+    &__status-icon {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        transform: translate(30%, 30%);
+
+        @keyframes gd-upload-status-spin {
+            from {
+                transform: translate(30%, 30%) rotate(0deg);
+            }
+            to {
+                transform: translate(30%, 30%) rotate(180deg);
+            }
+        }
+
+        transform-origin: center center;
+
+        &--spinning {
+            animation: gd-upload-status-spin 0.7s ease-in-out infinite;
+        }
+    }
+}

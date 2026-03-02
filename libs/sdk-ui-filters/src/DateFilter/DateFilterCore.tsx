@@ -349,7 +349,9 @@ export function DateFilterCore({
                                                 filterOptions={filteredFilterOptions}
                                                 isMobile={isMobile}
                                                 closeDropdown={closeDropdown}
-                                                dateFilterButton={dateFilterButton()}
+                                                // This button is rendered inside the open dropdown body on mobile,
+                                                // so it should use the "open" visual state (chevron up).
+                                                dateFilterButton={dateFilterButton(isMobile)}
                                                 dateFormat={verifiedDateFormat}
                                                 isTimeForAbsoluteRangeEnabled={isTimeForAbsoluteRangeEnabled}
                                                 weekStart={weekStart}

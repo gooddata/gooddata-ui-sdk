@@ -2,6 +2,7 @@
 
 import { type IInsight } from "@gooddata/sdk-model";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 
@@ -112,7 +113,7 @@ export const DataPointsSparseChartDefault = () =>
                 visualizationUrl: "local:line",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(12, 3, 0),
+        getScenariosGroupByIndexes(15, 3, 0),
     )();
 DataPointsSparseChartDefault.parameters = {
     kind: "data points - sparse chart - default",
@@ -234,7 +235,7 @@ export const DataPointsSparseChartAutoVisibility = () =>
                 visualizationUrl: "local:line",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(12, 3, 1),
+        getScenariosGroupByIndexes(15, 3, 1),
     )();
 DataPointsSparseChartAutoVisibility.parameters = {
     kind: "data points - sparse chart - auto visibility",
@@ -356,7 +357,7 @@ export const DataPointsSparseChartForcedVisible = () =>
                 visualizationUrl: "local:line",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(12, 3, 2),
+        getScenariosGroupByIndexes(15, 3, 2),
     )();
 DataPointsSparseChartForcedVisible.parameters = {
     kind: "data points - sparse chart - forced visible",
@@ -478,7 +479,7 @@ export const DataPointsSparseChartForcedHidden = () =>
                 visualizationUrl: "local:line",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(12, 3, 3),
+        getScenariosGroupByIndexes(15, 3, 3),
     )();
 DataPointsSparseChartForcedHidden.parameters = {
     kind: "data points - sparse chart - forced hidden",
@@ -567,7 +568,7 @@ export const DataPointsDenseChartDefault = () =>
                 visualizationUrl: "local:line",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(12, 3, 4),
+        getScenariosGroupByIndexes(15, 3, 4),
     )();
 DataPointsDenseChartDefault.parameters = {
     kind: "data points - dense chart - default",
@@ -660,7 +661,7 @@ export const DataPointsDenseChartAutoVisibility = () =>
                 visualizationUrl: "local:line",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(12, 3, 5),
+        getScenariosGroupByIndexes(15, 3, 5),
     )();
 DataPointsDenseChartAutoVisibility.parameters = {
     kind: "data points - dense chart - auto visibility",
@@ -753,7 +754,7 @@ export const DataPointsDenseChartForcedVisible = () =>
                 visualizationUrl: "local:line",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(12, 3, 6),
+        getScenariosGroupByIndexes(15, 3, 6),
     )();
 DataPointsDenseChartForcedVisible.parameters = {
     kind: "data points - dense chart - forced visible",
@@ -846,7 +847,7 @@ export const DataPointsDenseChartForcedHidden = () =>
                 visualizationUrl: "local:line",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(12, 3, 7),
+        getScenariosGroupByIndexes(15, 3, 7),
     )();
 DataPointsDenseChartForcedHidden.parameters = {
     kind: "data points - dense chart - forced hidden",

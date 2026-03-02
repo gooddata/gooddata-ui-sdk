@@ -27,6 +27,7 @@ import {
 } from "@gooddata/sdk-ui-tests-scenarios";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
 import "@gooddata/sdk-ui-charts/styles/css/main.css";
+import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
@@ -95,10 +96,12 @@ const ReportReadyResolver = andResolver(
 
 export function plugVizStory(insight: IInsight, testScenario: IScenario<any>) {
     const isPivotTableNext = testScenario.vis === "PivotTableNext";
+
     const settings = {
         ...DefaultSettings,
         ...testScenario.backendSettings,
         enableNewPivotTable: isPivotTableNext,
+        enableNewGeoPushpin: true,
     };
 
     const backend = StorybookBackend({ globalSettings: settings });

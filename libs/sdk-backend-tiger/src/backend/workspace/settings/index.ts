@@ -84,6 +84,10 @@ export class TigerWorkspaceSettings
         return this.setSetting("ACTIVE_LLM_ENDPOINT", { id: endpoint, type: "llmEndpoint" });
     }
 
+    public async setActiveLlmProvider(provider: string): Promise<void> {
+        return this.setSetting("ACTIVE_LLM_PROVIDER", { id: provider, type: "llmProvider" });
+    }
+
     public async setTimezone(timezone: string): Promise<void> {
         return this.setSetting("TIMEZONE", { value: timezone });
     }

@@ -1,9 +1,8 @@
 // (C) 2007-2026 GoodData Corporation
 
-// todo: MKN uncomment all commented code when merging new browser alias
 export enum BrowserAlias {
     Chromium = "chromium", // regular chromium, very stable rendering
-    // ChromiumSwiftShader = "chromium_swiftshader", // chromium with SwiftShader, slightly less stable rendering
+    ChromiumSwiftShader = "chromium_swiftshader", // chromium with SwiftShader, slightly less stable rendering
     Firefox = "firefox", // regular firefox, most stable rendering
 }
 

@@ -95,6 +95,10 @@
         "text": "To apply changes, select valid values for these filters: {names}",
         "crowdinContext": "Message shown on disabled Apply button."
     },
+    "geochart.alternateView.tablist.label": {
+        "text": "Layer tables",
+        "crowdinContext": "Accessible label for the tablist in the geo chart alternate table view. Describes the set of tabs, each representing a map layer converted to a table."
+    },
     "filterBar.executionTimestampNotificationMessage": {
         "text": "<bold>Note.</bold> You're viewing up-to-date data, but for any relative date filters the dashboard treats {date} as “today.”",
         "crowdinContext": "Message banner describing dashboard with specific data timestamp. Placeholder {date} is replaced with the current date."
@@ -3052,7 +3056,7 @@
         "crowdinContext": "Key drivers button trend down in key driver analysis dialog"
     },
     "kdaDialog.dialog.keyDrives.drivers": {
-        "text": "{count} driver{count, plural, other {s}}",
+        "text": "{count} {count, plural, one {driver} other {drivers}}",
         "crowdinContext": "Used to show the number of key drivers in the dialog. Example: '2 drivers'."
     },
     "kdaDialog.dialog.keyDrives.overview.summary.home": {

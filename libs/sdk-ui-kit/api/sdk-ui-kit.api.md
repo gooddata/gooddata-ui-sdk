@@ -550,6 +550,22 @@ export const ExportDialogBase: NamedExoticComponent<IExportDialogBaseProps>;
 export const ExportTabularPdfDialog: NamedExoticComponent<IExportTabularPdfDialogProps>;
 
 // @internal (undocumented)
+export const FileDropzone: ForwardRefExoticComponent<IFileDropzoneProps & RefAttributes<IFileDropzoneHandle>>;
+
+// @internal (undocumented)
+export function FilePickerButton({ buttonLabel, acceptedFileTypes, multiple, disabled, ariaLabel, onFilesSelected, buttonProps }: IFilePickerButtonProps): JSX.Element;
+
+// @internal (undocumented)
+export const FileValidationErrorCode: {
+    readonly InvalidFileType: "invalidFileType";
+    readonly TooManyFiles: "tooManyFiles";
+    readonly FileTooLarge: "fileTooLarge";
+};
+
+// @internal (undocumented)
+export type FileValidationErrorCode = (typeof FileValidationErrorCode)[keyof typeof FileValidationErrorCode];
+
+// @internal (undocumented)
 export function FilterGroupItem({ title, subtitle, selectedItemsCount, totalItemsCount, showSelectionCount, isOpen, isLoading, isLoaded, isError, icon, titleExtension, onClick, buttonRef, dropdownId, disabled }: IFilterGroupItemProps): JSX.Element;
 
 // @internal (undocumented)
@@ -1832,7 +1848,7 @@ export function IconTrash({ color, className, width, height }: IIconProps): JSX.
 export function IconTreeMap({ className, width, height, color, ariaHidden }: IIconProps): JSX.Element;
 
 // @internal (undocumented)
-export type IconType = "brain" | "brainDisabled" | "check" | "checkCircle" | "certification" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "navigateLeft" | "download" | "slack" | "expand" | "exclamationCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "drawerEmpty" | "prohibited" | "dropDown" | "dropRight" | "clock" | "clockPaused" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "rain" | "earth" | "minimize" | "shrink" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "printer" | "picture" | "visualization" | "dashboard" | "metric" | "fact" | "ldmAttribute" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "header" | "genai" | "genai2" | "explainai" | "hiddenForAi" | "box" | "ellipsisVertical" | "list" | "drillTo" | "hierarchy" | "history" | "thumbsUp" | "thumbsDown" | "send" | "visualizationArea" | "visualizationTable" | "visualizationTreemap" | "visualizationScatter" | "visualizationDonut" | "visualizationHeadline" | "visualizationColumn" | "visualizationLine" | "visualizationPyramid" | "visualizationFunnel" | "visualizationHeatmap" | "visualizationBubble" | "visualizationPie" | "visualizationBar" | "visualizationCombo" | "visualizationBullet" | "visualizationWaterfall" | "visualizationDependencywheel" | "visualizationSankey" | "visualizationPushpin" | "visualizationRepeater" | "visualizationXirr" | "link" | "click" | "fileXlsx" | "filePptx" | "filePdf" | "fileImage" | "fileCsvFormatted" | "fileCsvRaw" | "recommendation";
+export type IconType = "brain" | "brainDisabled" | "check" | "checkCircle" | "certification" | "plus" | "plusCircle" | "sync" | "alert" | "alertPaused" | "close" | "cross" | "crossCircle" | "question" | "chevronUp" | "chevronRight" | "chevronDown" | "chevronLeft" | "date" | "navigateUp" | "navigateDown" | "navigateRight" | "navigateLeft" | "download" | "slack" | "expand" | "exclamationCircle" | "book" | "visible" | "invisible" | "lock" | "unlock" | "ai" | "aiFill" | "drawer" | "drawerEmpty" | "prohibited" | "dropDown" | "dropRight" | "clock" | "clockPaused" | "questionMark" | "upload" | "expandRectangle" | "file" | "number" | "code" | "user" | "userPlus" | "users" | "magic" | "tab" | "pauseCircle" | "filter" | "timer" | "mail" | "envelope" | "copy" | "rain" | "earth" | "minimize" | "shrink" | "copyright" | "ellipsis" | "pencil" | "folder" | "folderPlus" | "trash" | "arrowUp" | "arrowRight" | "arrowDown" | "arrowLeft" | "undo" | "redo" | "trendDown" | "trendUp" | "save" | "minus" | "minusCircle" | "percent" | "enter" | "enterRight" | "money" | "ghost" | "warning" | "home" | "settings" | "search" | "university" | "printer" | "picture" | "visualization" | "dashboard" | "metric" | "fact" | "ldmAttribute" | "sharp" | "attribute" | "horn" | "cw" | "ccw" | "table" | "directionColumn" | "directionRow" | "header" | "genai" | "genai2" | "explainai" | "hiddenForAi" | "box" | "ellipsisVertical" | "list" | "drillTo" | "hierarchy" | "history" | "thumbsUp" | "thumbsDown" | "send" | "visualizationArea" | "visualizationTable" | "visualizationTreemap" | "visualizationScatter" | "visualizationDonut" | "visualizationHeadline" | "visualizationColumn" | "visualizationLine" | "visualizationPyramid" | "visualizationFunnel" | "visualizationHeatmap" | "visualizationBubble" | "visualizationPie" | "visualizationBar" | "visualizationCombo" | "visualizationBullet" | "visualizationWaterfall" | "visualizationDependencywheel" | "visualizationSankey" | "visualizationPushpin" | "visualizationRepeater" | "visualizationXirr" | "link" | "click" | "fileXlsx" | "filePptx" | "filePdf" | "fileImage" | "fileCsvFormatted" | "fileCsvRaw" | "fileAi" | "recommendation" | "streamUp" | "streamDown" | "stream";
 
 // @internal (undocumented)
 export function IconUndo({ color, className, width, height, ariaHidden }: IIconProps): JSX.Element;
@@ -2658,6 +2674,75 @@ export interface IExportTabularPdfDialogProps {
 }
 
 // @internal (undocumented)
+export interface IFileDropzoneHandle {
+    // (undocumented)
+    open: () => void;
+}
+
+// @internal (undocumented)
+export interface IFileDropzoneProps {
+    acceptedFileTypes?: string;
+    // (undocumented)
+    activeLabel?: ReactNode;
+    // (undocumented)
+    ariaLabel?: string;
+    // (undocumented)
+    disabled?: boolean;
+    // (undocumented)
+    idleLabel: ReactNode;
+    inputProps?: {
+        className?: string;
+        testId?: string;
+    };
+    invalidLabel?: ReactNode | ((errorCode: FileValidationErrorCode | undefined) => ReactNode);
+    // (undocumented)
+    multiple?: boolean;
+    // (undocumented)
+    onFilesSelected: (files: File[]) => void;
+}
+
+// @internal (undocumented)
+export interface IFilePickerButtonProps {
+    // (undocumented)
+    acceptedFileTypes?: string;
+    // (undocumented)
+    ariaLabel?: string;
+    // (undocumented)
+    buttonLabel: string;
+    // (undocumented)
+    buttonProps?: Omit<IUiButtonProps, "label">;
+    // (undocumented)
+    disabled?: boolean;
+    // (undocumented)
+    multiple?: boolean;
+    // (undocumented)
+    onFilesSelected: (files: File[]) => void;
+}
+
+// @internal (undocumented)
+export interface IFileRejection {
+    // (undocumented)
+    file: File;
+    // (undocumented)
+    validation: IFileValidationResult;
+}
+
+// @internal (undocumented)
+export interface IFileValidationResult {
+    // (undocumented)
+    errorCode?: FileValidationErrorCode;
+    // (undocumented)
+    isValid: boolean;
+}
+
+// @internal (undocumented)
+export interface IFileValidationRules {
+    allowedFileTypes?: string;
+    // (undocumented)
+    maxFileSizeInBytes?: number;
+}
+
+// @internal (undocumented)
 export interface IFilterGroupItemProps {
     // @beta
     buttonRef?: MutableRefObject<HTMLElement | null>;
@@ -3266,6 +3351,8 @@ export interface IInvertableSelectAllCheckboxProps {
     // (undocumented)
     checked: boolean;
     // (undocumented)
+    hideTotalItemsCount?: boolean;
+    // (undocumented)
     isApplyDisabled?: boolean;
     // (undocumented)
     isFiltered: boolean;
@@ -3536,6 +3623,8 @@ export interface IInvertableSelectVirtualisedProps<T> {
     // (undocumented)
     height?: number;
     // (undocumented)
+    hideTotalItemsCount?: boolean;
+    // (undocumented)
     isInverted: boolean;
     // (undocumented)
     isItemQuestionMarkEnabled?: (item: T) => boolean;
@@ -3595,6 +3684,8 @@ export interface IInvertableSelectVirtualisedProps<T> {
 export interface IInvertableSelectVirtualisedRenderActionsProps {
     // (undocumented)
     checked: boolean;
+    // (undocumented)
+    hideTotalItemsCount?: boolean;
     // (undocumented)
     isFiltered: boolean;
     // (undocumented)
@@ -4385,7 +4476,7 @@ export interface INumericInputProps {
 export function InvertableSelect<T>(props: IInvertableSelectProps<T>): JSX.Element;
 
 // @internal (undocumented)
-export function InvertableSelectAllCheckbox({ isVisible, checked, onToggle, onApplyButtonClick, isApplyDisabled, isFiltered, totalItemsCount, isPartialSelection }: IInvertableSelectAllCheckboxProps): JSX.Element | null;
+export function InvertableSelectAllCheckbox({ isVisible, checked, onToggle, onApplyButtonClick, isApplyDisabled, isFiltered, totalItemsCount, isPartialSelection, hideTotalItemsCount }: IInvertableSelectAllCheckboxProps): JSX.Element | null;
 
 // @internal (undocumented)
 export function InvertableSelectItem({ title, onClick, onMouseOver, onMouseOut, isSelected, onOnly, renderOnly, renderRight, icon, isDisabled, accessibilityConfig }: IInvertableSelectItem): JSX.Element;
@@ -4771,6 +4862,9 @@ export interface IRowsIconProps extends IIconProps {
 
 // @internal
 export const isActionKey: (event: KeyboardEvent_2<Element>) => boolean;
+
+// @internal
+export const isArrowDownKey: (event: KeyboardEvent_2<Element>) => boolean;
 
 // @internal
 export const isArrowKey: (event: KeyboardEvent_2<Element>) => boolean;
@@ -6212,48 +6306,6 @@ export type IUiFocusManagerProps = {
 };
 
 // @internal (undocumented)
-export interface IUiGenerateTextDialogProps {
-    // (undocumented)
-    acceptLabel: string;
-    // (undocumented)
-    buttonDataTestId?: string;
-    // (undocumented)
-    buttonIcon?: IconType;
-    // (undocumented)
-    buttonLabel: string;
-    // (undocumented)
-    buttonSize?: UiIconButtonProps["size"];
-    // (undocumented)
-    buttonVariant?: UiIconButtonProps["variant"];
-    // (undocumented)
-    declineLabel: string;
-    // (undocumented)
-    dialogDisclaimer: string;
-    // (undocumented)
-    dialogTitle: string;
-    // (undocumented)
-    initialText: string;
-    // (undocumented)
-    noteLabel: string;
-    // (undocumented)
-    onAccept: (text: string) => void;
-    // (undocumented)
-    onGenerate: () => Promise<IUiGenerateTextDialogResult>;
-    // (undocumented)
-    textAreaAriaLabel: string;
-    // (undocumented)
-    textAreaRows?: number;
-}
-
-// @internal (undocumented)
-export interface IUiGenerateTextDialogResult {
-    // (undocumented)
-    note?: string;
-    // (undocumented)
-    text?: string;
-}
-
-// @internal (undocumented)
 export interface IUiIconButtonPublicProps {
     // (undocumented)
     accessibilityConfig?: IDropdownButtonRenderProps["accessibilityConfig"];
@@ -6314,6 +6366,40 @@ export interface IUiIconProps {
     size?: number;
     // (undocumented)
     type: IconType;
+}
+
+// @internal (undocumented)
+export interface IUiInlineTextGeneratorProps extends Omit<IEditableLabelProps, "onSubmit" | "onCancel" | "onEditingStart"> {
+    // (undocumented)
+    dataTestId?: string;
+    // (undocumented)
+    generateButtonDataTestId?: string;
+    // (undocumented)
+    generateButtonLabel: string;
+    // (undocumented)
+    generatingLabel?: string;
+    // (undocumented)
+    onCancel?: (value: string) => void;
+    // (undocumented)
+    onEditingStart?: () => void;
+    // (undocumented)
+    onGenerate: () => Promise<IUiInlineTextGeneratorResult>;
+    // (undocumented)
+    onGenerateError?: (error: Error) => void;
+    // (undocumented)
+    onSubmit: (value: string) => void;
+    // (undocumented)
+    onUndo?: () => void;
+    // (undocumented)
+    undoButtonDataTestId?: string;
+    // (undocumented)
+    undoButtonLabel: string;
+}
+
+// @internal
+export interface IUiInlineTextGeneratorResult {
+    // (undocumented)
+    text: string;
 }
 
 // @internal (undocumented)
@@ -7192,6 +7278,48 @@ export interface IUiTreeViewSelectionMods {
 }
 
 // @internal (undocumented)
+export interface IUploadActionCallbacks {
+    // (undocumented)
+    onRemoveFile?: (fileId: string) => void;
+    // (undocumented)
+    onRetryFile?: (fileId: string) => void;
+}
+
+// @internal (undocumented)
+export interface IUploadFileItem {
+    // (undocumented)
+    errorMessage?: string;
+    // (undocumented)
+    file: File;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    status: UploadItemStatus;
+}
+
+// @internal (undocumented)
+export interface IUploadFileListProps extends IUploadActionCallbacks {
+    // (undocumented)
+    emptyStateLabel?: ReactNode;
+    // (undocumented)
+    files: IUploadFileItem[];
+}
+
+// @internal (undocumented)
+export interface IUploadStatusDialogProps {
+    // (undocumented)
+    fileName?: string;
+    // (undocumented)
+    isOpen: boolean;
+    // (undocumented)
+    onClose?: () => void;
+    // (undocumented)
+    status: UploadItemStatus;
+    // (undocumented)
+    title: ReactNode;
+}
+
+// @internal (undocumented)
 export interface IUseCloseOnOutsideClickOptions {
     // (undocumented)
     anchorRef: RefObject<ReferenceType | null>;
@@ -7201,6 +7329,36 @@ export interface IUseCloseOnOutsideClickOptions {
     ignoreClicksOn?: Array<string | HTMLElement>;
     // (undocumented)
     shouldCloseOnClick?: (event: Event) => boolean;
+}
+
+// @internal (undocumented)
+export interface IUseFileSelectionConfig {
+    // (undocumented)
+    multiple?: boolean;
+    // (undocumented)
+    onFilesAccepted?: (files: File[]) => void;
+    // (undocumented)
+    onFilesRejected?: (rejections: IFileRejection[]) => void;
+    // (undocumented)
+    onValidateFile?: (file: File) => IFileValidationResult;
+    // (undocumented)
+    rules?: IFileValidationRules;
+}
+
+// @internal (undocumented)
+export interface IUseFileSelectionResult {
+    // (undocumented)
+    clearSelection: () => void;
+    // (undocumented)
+    rejections: IFileRejection[];
+    // (undocumented)
+    removeFile: (file: File) => void;
+    // (undocumented)
+    selectedFiles: File[];
+    // (undocumented)
+    selectFiles: (files: File[] | FileList | null | undefined) => void;
+    // (undocumented)
+    setSelectedFiles: Dispatch<SetStateAction<File[]>>;
 }
 
 // @internal (undocumented)
@@ -7293,6 +7451,40 @@ export interface IUseToastMessageType {
     removeAllMessages: () => void;
     // (undocumented)
     removeMessage: (id: string) => void;
+}
+
+// @internal (undocumented)
+export interface IUseUploadQueueConfig {
+    // (undocumented)
+    onUploadError?: (file: File, error: unknown) => void;
+    // (undocumented)
+    onUploadSuccess?: (file: File) => void;
+    // (undocumented)
+    uploadFn: (file: File) => Promise<void>;
+}
+
+// @internal (undocumented)
+export interface IUseUploadQueueResult {
+    // (undocumented)
+    addToQueue: (files: File[]) => void;
+    // (undocumented)
+    clearQueue: () => void;
+    // (undocumented)
+    getItemById: (id: string) => IUploadFileItem | undefined;
+    // (undocumented)
+    isUploading: boolean;
+    // (undocumented)
+    queue: IUploadFileItem[];
+    // (undocumented)
+    removeFromQueue: (fileId: string) => void;
+    // (undocumented)
+    requireItemById: (id: string) => IUploadFileItem;
+    // (undocumented)
+    updateFileStatus: (fileId: string, status: IUploadFileItem["status"], errorMessage?: string) => void;
+    // (undocumented)
+    uploadAll: () => Promise<IUploadFileItem[]>;
+    // (undocumented)
+    uploadFile: (fileId: string) => Promise<IUploadFileItem>;
 }
 
 // @internal (undocumented)
@@ -8064,9 +8256,6 @@ export function UiFocusTrap({ root, children, focusCheckFn }: {
     focusCheckFn?: (element: HTMLElement) => boolean;
 }): FunctionComponentElement<any>;
 
-// @internal
-export function UiGenerateTextDialog({ buttonLabel, buttonDataTestId, buttonIcon, buttonSize, buttonVariant, dialogTitle, dialogDisclaimer, acceptLabel, declineLabel, noteLabel, textAreaAriaLabel, initialText, textAreaRows, onGenerate, onAccept }: IUiGenerateTextDialogProps): JSX.Element;
-
 // @internal (undocumented)
 export function UiIcon({ type, color, layout, disableAnimation, accessibilityConfig, size, backgroundSize, backgroundColor, backgroundType, backgroundShape }: IUiIconProps): JSX.Element;
 
@@ -8075,6 +8264,9 @@ export const UiIconButton: ForwardRefExoticComponent<IUiIconButtonPublicProps & 
 
 // @internal (undocumented)
 export type UiIconButtonProps = IUiIconButtonPublicProps;
+
+// @internal (undocumented)
+export const UiInlineTextGenerator: ForwardRefExoticComponent<IUiInlineTextGeneratorProps & RefAttributes<HTMLDivElement>>;
 
 // @internal (undocumented)
 export type UiLeveledTreeView<Levels extends unknown[]> = UiTreeViewNode<Levels>;
@@ -8228,6 +8420,23 @@ export const unrelatedHeader: IDateDatasetHeader;
 // @internal
 export function unwrapGroupItems<T extends IUiMenuItemData = object>(items: IUiMenuItem<T>[]): IUiMenuItem<T>[];
 
+// @internal (undocumented)
+export function UploadFileList({ files, emptyStateLabel, onRemoveFile, onRetryFile }: IUploadFileListProps): JSX.Element | null;
+
+// @internal (undocumented)
+export const UploadItemStatus: {
+    readonly Idle: "idle";
+    readonly Uploading: "uploading";
+    readonly Success: "success";
+    readonly Error: "error";
+};
+
+// @internal (undocumented)
+export type UploadItemStatus = (typeof UploadItemStatus)[keyof typeof UploadItemStatus];
+
+// @internal (undocumented)
+export function UploadStatusDialog({ isOpen, title, fileName, status, onClose }: IUploadStatusDialogProps): JSX.Element | null;
+
 // @internal
 export function useAsyncTableResponsiveColumns<T>(columns: Array<IUiAsyncTableColumnDefinitionResponsive<T>>, hasCheckbox?: boolean): {
     ref: RefObject<HTMLDivElement | null>;
@@ -8267,6 +8476,9 @@ export function useElementSize<T extends HTMLElement>(): {
     height: number;
     width: number;
 };
+
+// @internal (undocumented)
+export function useFileSelection({ rules, multiple, onValidateFile, onFilesAccepted, onFilesRejected }?: IUseFileSelectionConfig): IUseFileSelectionResult;
 
 // @internal
 export function useFloatingPosition({ isOpen, onOpenChange, placement: placementProp, alignPoints, strategy, offset: offsetProp, autoFlip, fallbackPlacements: fallbackPlacementsProp, arrowRef, customMiddleware, maxWidth, maxHeight, zIndex: zIndexProp, shiftPadding }: IUseFloatingPositionOptions): IUseFloatingPositionResult;
@@ -8414,11 +8626,17 @@ export function useUiTreeViewEventPublisher<T extends UiTreeViewEventType>(event
 // @internal (undocumented)
 export function useUiTreeViewEventSubscriber<T extends UiTreeViewEventType>(eventType: T, handler: (event: UiTreeViewEvents[T]) => void): void;
 
+// @internal (undocumented)
+export function useUploadQueue({ uploadFn, onUploadSuccess, onUploadError }: IUseUploadQueueConfig): IUseUploadQueueResult;
+
 // @internal
 export const useZoom: () => IZoomContextState;
 
 // @alpha
 export function validateCurrencyFormat(format: string | undefined | null, options?: ICurrencyFormatValidationOptions): ICurrencyFormatValidationResult;
+
+// @internal (undocumented)
+export function validateFile(file: File, rules?: IFileValidationRules): IFileValidationResult;
 
 // @internal
 export type VariantBare = "bare";

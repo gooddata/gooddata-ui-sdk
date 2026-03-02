@@ -1,7 +1,7 @@
-// (C) 2025-2026 GoodData Corporation
+// (C) 2026 GoodData Corporation
 
 /* eslint-disable import-x/order */
-/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2025-12-26T19:14:53.550Z; */
+/* THIS FILE WAS AUTO-GENERATED USING MOCK HANDLING TOOL; YOU SHOULD NOT EDIT THIS FILE; GENERATE TIME: 2026-02-18T13:52:09.924Z; */
 
 import fp_004031cbc9081950b7284311b004fe11_definition from "./uiTestScenarios/executions/004031cbc9081950b7284311b004fe11/definition.json" with { type: "json" };
 import fp_004031cbc9081950b7284311b004fe11_executionResult from "./uiTestScenarios/executions/004031cbc9081950b7284311b004fe11/executionResult.json" with { type: "json" };
@@ -548,10 +548,12 @@ const fp_3b40ee2e1cbc3fc40ebbe453480df5be = {
 import fp_3bd6cf5d3fd5296f34a817fb1e8520bd_definition from "./uiTestScenarios/executions/3bd6cf5d3fd5296f34a817fb1e8520bd/definition.json" with { type: "json" };
 import fp_3bd6cf5d3fd5296f34a817fb1e8520bd_executionResult from "./uiTestScenarios/executions/3bd6cf5d3fd5296f34a817fb1e8520bd/executionResult.json" with { type: "json" };
 import fp_3bd6cf5d3fd5296f34a817fb1e8520bd_dataView_all from "./uiTestScenarios/executions/3bd6cf5d3fd5296f34a817fb1e8520bd/dataView_all.json" with { type: "json" };
+import fp_3bd6cf5d3fd5296f34a817fb1e8520bd_scenarios from "./uiTestScenarios/executions/3bd6cf5d3fd5296f34a817fb1e8520bd/scenarios.json" with { type: "json" };
 const fp_3bd6cf5d3fd5296f34a817fb1e8520bd = {
     definition: fp_3bd6cf5d3fd5296f34a817fb1e8520bd_definition,
     executionResult: fp_3bd6cf5d3fd5296f34a817fb1e8520bd_executionResult,
     dataView_all: fp_3bd6cf5d3fd5296f34a817fb1e8520bd_dataView_all,
+    scenarios: fp_3bd6cf5d3fd5296f34a817fb1e8520bd_scenarios,
 };
 import fp_3c8501c4836dd44339feeb3f1a3c0893_definition from "./uiTestScenarios/executions/3c8501c4836dd44339feeb3f1a3c0893/definition.json" with { type: "json" };
 import fp_3c8501c4836dd44339feeb3f1a3c0893_executionResult from "./uiTestScenarios/executions/3c8501c4836dd44339feeb3f1a3c0893/executionResult.json" with { type: "json" };
@@ -682,10 +684,12 @@ const fp_4cdc667f04ae02a702635fec938d0787 = {
 import fp_4d098565443e4272e26c2794d7898a91_definition from "./uiTestScenarios/executions/4d098565443e4272e26c2794d7898a91/definition.json" with { type: "json" };
 import fp_4d098565443e4272e26c2794d7898a91_executionResult from "./uiTestScenarios/executions/4d098565443e4272e26c2794d7898a91/executionResult.json" with { type: "json" };
 import fp_4d098565443e4272e26c2794d7898a91_dataView_all from "./uiTestScenarios/executions/4d098565443e4272e26c2794d7898a91/dataView_all.json" with { type: "json" };
+import fp_4d098565443e4272e26c2794d7898a91_scenarios from "./uiTestScenarios/executions/4d098565443e4272e26c2794d7898a91/scenarios.json" with { type: "json" };
 const fp_4d098565443e4272e26c2794d7898a91 = {
     definition: fp_4d098565443e4272e26c2794d7898a91_definition,
     executionResult: fp_4d098565443e4272e26c2794d7898a91_executionResult,
     dataView_all: fp_4d098565443e4272e26c2794d7898a91_dataView_all,
+    scenarios: fp_4d098565443e4272e26c2794d7898a91_scenarios,
 };
 import fp_4f7bde3e192a811ff8af8feab5441a01_definition from "./uiTestScenarios/executions/4f7bde3e192a811ff8af8feab5441a01/definition.json" with { type: "json" };
 import fp_4f7bde3e192a811ff8af8feab5441a01_executionResult from "./uiTestScenarios/executions/4f7bde3e192a811ff8af8feab5441a01/executionResult.json" with { type: "json" };
@@ -716,10 +720,12 @@ const fp_4f8c6666d1a48123e1a2fa4bc4f525e0 = {
 import fp_4fd9053d59d6ff66976fbc38f4581c04_definition from "./uiTestScenarios/executions/4fd9053d59d6ff66976fbc38f4581c04/definition.json" with { type: "json" };
 import fp_4fd9053d59d6ff66976fbc38f4581c04_executionResult from "./uiTestScenarios/executions/4fd9053d59d6ff66976fbc38f4581c04/executionResult.json" with { type: "json" };
 import fp_4fd9053d59d6ff66976fbc38f4581c04_dataView_all from "./uiTestScenarios/executions/4fd9053d59d6ff66976fbc38f4581c04/dataView_all.json" with { type: "json" };
+import fp_4fd9053d59d6ff66976fbc38f4581c04_scenarios from "./uiTestScenarios/executions/4fd9053d59d6ff66976fbc38f4581c04/scenarios.json" with { type: "json" };
 const fp_4fd9053d59d6ff66976fbc38f4581c04 = {
     definition: fp_4fd9053d59d6ff66976fbc38f4581c04_definition,
     executionResult: fp_4fd9053d59d6ff66976fbc38f4581c04_executionResult,
     dataView_all: fp_4fd9053d59d6ff66976fbc38f4581c04_dataView_all,
+    scenarios: fp_4fd9053d59d6ff66976fbc38f4581c04_scenarios,
 };
 import fp_4ff767e70293368c333c7f905aa7ce96_definition from "./uiTestScenarios/executions/4ff767e70293368c333c7f905aa7ce96/definition.json" with { type: "json" };
 import fp_4ff767e70293368c333c7f905aa7ce96_executionResult from "./uiTestScenarios/executions/4ff767e70293368c333c7f905aa7ce96/executionResult.json" with { type: "json" };
@@ -1006,10 +1012,12 @@ const fp_6d744aacff949cf033683d86262b4e77 = {
 import fp_6d9544a54f9461b6f120679029ad902d_definition from "./uiTestScenarios/executions/6d9544a54f9461b6f120679029ad902d/definition.json" with { type: "json" };
 import fp_6d9544a54f9461b6f120679029ad902d_executionResult from "./uiTestScenarios/executions/6d9544a54f9461b6f120679029ad902d/executionResult.json" with { type: "json" };
 import fp_6d9544a54f9461b6f120679029ad902d_dataView_all from "./uiTestScenarios/executions/6d9544a54f9461b6f120679029ad902d/dataView_all.json" with { type: "json" };
+import fp_6d9544a54f9461b6f120679029ad902d_scenarios from "./uiTestScenarios/executions/6d9544a54f9461b6f120679029ad902d/scenarios.json" with { type: "json" };
 const fp_6d9544a54f9461b6f120679029ad902d = {
     definition: fp_6d9544a54f9461b6f120679029ad902d_definition,
     executionResult: fp_6d9544a54f9461b6f120679029ad902d_executionResult,
     dataView_all: fp_6d9544a54f9461b6f120679029ad902d_dataView_all,
+    scenarios: fp_6d9544a54f9461b6f120679029ad902d_scenarios,
 };
 import fp_6ef5731c63a579f03fde4a9b01f7c607_definition from "./uiTestScenarios/executions/6ef5731c63a579f03fde4a9b01f7c607/definition.json" with { type: "json" };
 import fp_6ef5731c63a579f03fde4a9b01f7c607_executionResult from "./uiTestScenarios/executions/6ef5731c63a579f03fde4a9b01f7c607/executionResult.json" with { type: "json" };
@@ -1446,10 +1454,12 @@ const fp_a523e44f3523b4d118c53712590ba3ca = {
 import fp_a5d8e7aae0bf69665b31d1b4602b9b12_definition from "./uiTestScenarios/executions/a5d8e7aae0bf69665b31d1b4602b9b12/definition.json" with { type: "json" };
 import fp_a5d8e7aae0bf69665b31d1b4602b9b12_executionResult from "./uiTestScenarios/executions/a5d8e7aae0bf69665b31d1b4602b9b12/executionResult.json" with { type: "json" };
 import fp_a5d8e7aae0bf69665b31d1b4602b9b12_dataView_all from "./uiTestScenarios/executions/a5d8e7aae0bf69665b31d1b4602b9b12/dataView_all.json" with { type: "json" };
+import fp_a5d8e7aae0bf69665b31d1b4602b9b12_scenarios from "./uiTestScenarios/executions/a5d8e7aae0bf69665b31d1b4602b9b12/scenarios.json" with { type: "json" };
 const fp_a5d8e7aae0bf69665b31d1b4602b9b12 = {
     definition: fp_a5d8e7aae0bf69665b31d1b4602b9b12_definition,
     executionResult: fp_a5d8e7aae0bf69665b31d1b4602b9b12_executionResult,
     dataView_all: fp_a5d8e7aae0bf69665b31d1b4602b9b12_dataView_all,
+    scenarios: fp_a5d8e7aae0bf69665b31d1b4602b9b12_scenarios,
 };
 import fp_a88209ff899d0aab5cdbce9321916202_definition from "./uiTestScenarios/executions/a88209ff899d0aab5cdbce9321916202/definition.json" with { type: "json" };
 import fp_a88209ff899d0aab5cdbce9321916202_executionResult from "./uiTestScenarios/executions/a88209ff899d0aab5cdbce9321916202/executionResult.json" with { type: "json" };
@@ -1734,10 +1744,12 @@ const fp_c1825c6987a5585a08614cacdcba4038 = {
 import fp_c1cdbf8168fcc557bb51ff4e600d9b26_definition from "./uiTestScenarios/executions/c1cdbf8168fcc557bb51ff4e600d9b26/definition.json" with { type: "json" };
 import fp_c1cdbf8168fcc557bb51ff4e600d9b26_executionResult from "./uiTestScenarios/executions/c1cdbf8168fcc557bb51ff4e600d9b26/executionResult.json" with { type: "json" };
 import fp_c1cdbf8168fcc557bb51ff4e600d9b26_dataView_all from "./uiTestScenarios/executions/c1cdbf8168fcc557bb51ff4e600d9b26/dataView_all.json" with { type: "json" };
+import fp_c1cdbf8168fcc557bb51ff4e600d9b26_scenarios from "./uiTestScenarios/executions/c1cdbf8168fcc557bb51ff4e600d9b26/scenarios.json" with { type: "json" };
 const fp_c1cdbf8168fcc557bb51ff4e600d9b26 = {
     definition: fp_c1cdbf8168fcc557bb51ff4e600d9b26_definition,
     executionResult: fp_c1cdbf8168fcc557bb51ff4e600d9b26_executionResult,
     dataView_all: fp_c1cdbf8168fcc557bb51ff4e600d9b26_dataView_all,
+    scenarios: fp_c1cdbf8168fcc557bb51ff4e600d9b26_scenarios,
 };
 import fp_c2b850d7baff511e45e237d6707d5f7c_definition from "./uiTestScenarios/executions/c2b850d7baff511e45e237d6707d5f7c/definition.json" with { type: "json" };
 import fp_c2b850d7baff511e45e237d6707d5f7c_executionResult from "./uiTestScenarios/executions/c2b850d7baff511e45e237d6707d5f7c/executionResult.json" with { type: "json" };
@@ -1892,18 +1904,22 @@ const fp_d1829d7c8b6eed85fdb839f4f78dc813 = {
 import fp_d1a4099ac31a568a7e645ed36a71e9a7_definition from "./uiTestScenarios/executions/d1a4099ac31a568a7e645ed36a71e9a7/definition.json" with { type: "json" };
 import fp_d1a4099ac31a568a7e645ed36a71e9a7_executionResult from "./uiTestScenarios/executions/d1a4099ac31a568a7e645ed36a71e9a7/executionResult.json" with { type: "json" };
 import fp_d1a4099ac31a568a7e645ed36a71e9a7_dataView_all from "./uiTestScenarios/executions/d1a4099ac31a568a7e645ed36a71e9a7/dataView_all.json" with { type: "json" };
+import fp_d1a4099ac31a568a7e645ed36a71e9a7_scenarios from "./uiTestScenarios/executions/d1a4099ac31a568a7e645ed36a71e9a7/scenarios.json" with { type: "json" };
 const fp_d1a4099ac31a568a7e645ed36a71e9a7 = {
     definition: fp_d1a4099ac31a568a7e645ed36a71e9a7_definition,
     executionResult: fp_d1a4099ac31a568a7e645ed36a71e9a7_executionResult,
     dataView_all: fp_d1a4099ac31a568a7e645ed36a71e9a7_dataView_all,
+    scenarios: fp_d1a4099ac31a568a7e645ed36a71e9a7_scenarios,
 };
 import fp_d20a64ba596c5eebd0274f558d75ea8a_definition from "./uiTestScenarios/executions/d20a64ba596c5eebd0274f558d75ea8a/definition.json" with { type: "json" };
 import fp_d20a64ba596c5eebd0274f558d75ea8a_executionResult from "./uiTestScenarios/executions/d20a64ba596c5eebd0274f558d75ea8a/executionResult.json" with { type: "json" };
 import fp_d20a64ba596c5eebd0274f558d75ea8a_dataView_all from "./uiTestScenarios/executions/d20a64ba596c5eebd0274f558d75ea8a/dataView_all.json" with { type: "json" };
+import fp_d20a64ba596c5eebd0274f558d75ea8a_scenarios from "./uiTestScenarios/executions/d20a64ba596c5eebd0274f558d75ea8a/scenarios.json" with { type: "json" };
 const fp_d20a64ba596c5eebd0274f558d75ea8a = {
     definition: fp_d20a64ba596c5eebd0274f558d75ea8a_definition,
     executionResult: fp_d20a64ba596c5eebd0274f558d75ea8a_executionResult,
     dataView_all: fp_d20a64ba596c5eebd0274f558d75ea8a_dataView_all,
+    scenarios: fp_d20a64ba596c5eebd0274f558d75ea8a_scenarios,
 };
 import fp_d5fe35d865cc73bd6090e9f8c121bf99_definition from "./uiTestScenarios/executions/d5fe35d865cc73bd6090e9f8c121bf99/definition.json" with { type: "json" };
 import fp_d5fe35d865cc73bd6090e9f8c121bf99_executionResult from "./uiTestScenarios/executions/d5fe35d865cc73bd6090e9f8c121bf99/executionResult.json" with { type: "json" };
@@ -2002,10 +2018,12 @@ const fp_dfeebd400b7a16d1e3c434152fc9dd09 = {
 import fp_e11f83e4d09220b8adaf1216662fb05e_definition from "./uiTestScenarios/executions/e11f83e4d09220b8adaf1216662fb05e/definition.json" with { type: "json" };
 import fp_e11f83e4d09220b8adaf1216662fb05e_executionResult from "./uiTestScenarios/executions/e11f83e4d09220b8adaf1216662fb05e/executionResult.json" with { type: "json" };
 import fp_e11f83e4d09220b8adaf1216662fb05e_dataView_all from "./uiTestScenarios/executions/e11f83e4d09220b8adaf1216662fb05e/dataView_all.json" with { type: "json" };
+import fp_e11f83e4d09220b8adaf1216662fb05e_scenarios from "./uiTestScenarios/executions/e11f83e4d09220b8adaf1216662fb05e/scenarios.json" with { type: "json" };
 const fp_e11f83e4d09220b8adaf1216662fb05e = {
     definition: fp_e11f83e4d09220b8adaf1216662fb05e_definition,
     executionResult: fp_e11f83e4d09220b8adaf1216662fb05e_executionResult,
     dataView_all: fp_e11f83e4d09220b8adaf1216662fb05e_dataView_all,
+    scenarios: fp_e11f83e4d09220b8adaf1216662fb05e_scenarios,
 };
 import fp_e2854c55ab10a6e23413a2322183ae8b_definition from "./uiTestScenarios/executions/e2854c55ab10a6e23413a2322183ae8b/definition.json" with { type: "json" };
 import fp_e2854c55ab10a6e23413a2322183ae8b_executionResult from "./uiTestScenarios/executions/e2854c55ab10a6e23413a2322183ae8b/executionResult.json" with { type: "json" };
@@ -2038,10 +2056,12 @@ const fp_e480af73cb3da22e143deba5b7f4b3e3 = {
 import fp_e6587a76491e11317f5bc7379eb29cab_definition from "./uiTestScenarios/executions/e6587a76491e11317f5bc7379eb29cab/definition.json" with { type: "json" };
 import fp_e6587a76491e11317f5bc7379eb29cab_executionResult from "./uiTestScenarios/executions/e6587a76491e11317f5bc7379eb29cab/executionResult.json" with { type: "json" };
 import fp_e6587a76491e11317f5bc7379eb29cab_dataView_all from "./uiTestScenarios/executions/e6587a76491e11317f5bc7379eb29cab/dataView_all.json" with { type: "json" };
+import fp_e6587a76491e11317f5bc7379eb29cab_scenarios from "./uiTestScenarios/executions/e6587a76491e11317f5bc7379eb29cab/scenarios.json" with { type: "json" };
 const fp_e6587a76491e11317f5bc7379eb29cab = {
     definition: fp_e6587a76491e11317f5bc7379eb29cab_definition,
     executionResult: fp_e6587a76491e11317f5bc7379eb29cab_executionResult,
     dataView_all: fp_e6587a76491e11317f5bc7379eb29cab_dataView_all,
+    scenarios: fp_e6587a76491e11317f5bc7379eb29cab_scenarios,
 };
 import fp_e81760d00cbd1b4c1cb5661d53e977b6_definition from "./uiTestScenarios/executions/e81760d00cbd1b4c1cb5661d53e977b6/definition.json" with { type: "json" };
 import fp_e81760d00cbd1b4c1cb5661d53e977b6_executionResult from "./uiTestScenarios/executions/e81760d00cbd1b4c1cb5661d53e977b6/executionResult.json" with { type: "json" };
@@ -2297,905 +2317,1241 @@ const fp_ffefe1e672ff7d55be2bb41581749dd4 = {
     executionResult: fp_ffefe1e672ff7d55be2bb41581749dd4_executionResult,
     dataView_all: fp_ffefe1e672ff7d55be2bb41581749dd4_dataView_all,
 };
-export const Scenarios = {
-    ColumnChart: {
-        SingleMeasureWithOneViewByAndOneStackByWithMultipleItems: {
-            scenarioIndex: 0,
-            execution: fp_004031cbc9081950b7284311b004fe11,
-        },
-        SingleMeasure: { scenarioIndex: 2, execution: fp_13de8b21eccb15fb383defb77a8e9bb5 },
-        SingleMeasureWithViewBy: { scenarioIndex: 2, execution: fp_334febec1d24c565faab8bb5138542f7 },
-        TwoMeasuresWithViewBy: { scenarioIndex: 4, execution: fp_355096b0de4fc0081470f2facee34bac },
-        Themed: { scenarioIndex: 5, execution: fp_355096b0de4fc0081470f2facee34bac },
-        Font: { scenarioIndex: 6, execution: fp_355096b0de4fc0081470f2facee34bac },
-        ViewByDateAndPoPMeasure: { scenarioIndex: 1, execution: fp_4ff767e70293368c333c7f905aa7ce96 },
-        SingleRatioMeasureWithViewBy: { scenarioIndex: 0, execution: fp_7956d979dff149b869041ef428737ef8 },
-        DenseChartWithTwoViewBy: { scenarioIndex: 0, execution: fp_8673cd5970ce3fd865367e7c626159ab },
-        SingleMeasureWithViewByAndStackBy: {
-            scenarioIndex: 5,
-            execution: fp_a523e44f3523b4d118c53712590ba3ca,
-        },
-        SingleMeasureWithTwoViewByAndStack: {
-            scenarioIndex: 1,
-            execution: fp_a987c14f422c16be1788cb94e3f256e9,
-        },
-        StackByWithOneDate: { scenarioIndex: 1, execution: fp_b7a155ebd4d17e9cc9d7babcc2cb86a6 },
-        ViewByWithTwoDates: { scenarioIndex: 1, execution: fp_c2b850d7baff511e45e237d6707d5f7c },
-        TwoMeasuresWithViewBySortedByMeasure: {
-            scenarioIndex: 2,
-            execution: fp_c322b5a7579d7172e11bac46018bb95b,
-        },
-        TwoMeasuresWithViewBySortedByAttribute: {
-            scenarioIndex: 2,
-            execution: fp_e480af73cb3da22e143deba5b7f4b3e3,
-        },
-        TwoMeasuresWithTwoViewBy: { scenarioIndex: 1, execution: fp_eae1c9a65cf05e9e0a8fde6173ef7141 },
-        TwoMeasures: { scenarioIndex: 0, execution: fp_f39ed708ee551a9ff3e9acc3ec249a8c },
-        SingleMeasureWithViewByAndStackByFilteredToSingleStack: {
-            scenarioIndex: 0,
-            execution: fp_fa9ce8aba21b38cbed227af04fbaa1e7,
-        },
+import fp_0e21f10e38db5f14843b7d214c65f08e_definition from "./uiTestScenarios/executions/0e21f10e38db5f14843b7d214c65f08e/definition.json" with { type: "json" };
+import fp_0e21f10e38db5f14843b7d214c65f08e_executionResult from "./uiTestScenarios/executions/0e21f10e38db5f14843b7d214c65f08e/executionResult.json" with { type: "json" };
+import fp_0e21f10e38db5f14843b7d214c65f08e_dataView_all from "./uiTestScenarios/executions/0e21f10e38db5f14843b7d214c65f08e/dataView_all.json" with { type: "json" };
+import fp_0e21f10e38db5f14843b7d214c65f08e_scenarios from "./uiTestScenarios/executions/0e21f10e38db5f14843b7d214c65f08e/scenarios.json" with { type: "json" };
+const fp_0e21f10e38db5f14843b7d214c65f08e = {
+    definition: fp_0e21f10e38db5f14843b7d214c65f08e_definition,
+    executionResult: fp_0e21f10e38db5f14843b7d214c65f08e_executionResult,
+    dataView_all: fp_0e21f10e38db5f14843b7d214c65f08e_dataView_all,
+    scenarios: fp_0e21f10e38db5f14843b7d214c65f08e_scenarios,
+};
+import fp_11857a8a6efce2729de750fd3cfb4cc5_definition from "./uiTestScenarios/executions/11857a8a6efce2729de750fd3cfb4cc5/definition.json" with { type: "json" };
+import fp_11857a8a6efce2729de750fd3cfb4cc5_executionResult from "./uiTestScenarios/executions/11857a8a6efce2729de750fd3cfb4cc5/executionResult.json" with { type: "json" };
+import fp_11857a8a6efce2729de750fd3cfb4cc5_dataView_all from "./uiTestScenarios/executions/11857a8a6efce2729de750fd3cfb4cc5/dataView_all.json" with { type: "json" };
+import fp_11857a8a6efce2729de750fd3cfb4cc5_scenarios from "./uiTestScenarios/executions/11857a8a6efce2729de750fd3cfb4cc5/scenarios.json" with { type: "json" };
+const fp_11857a8a6efce2729de750fd3cfb4cc5 = {
+    definition: fp_11857a8a6efce2729de750fd3cfb4cc5_definition,
+    executionResult: fp_11857a8a6efce2729de750fd3cfb4cc5_executionResult,
+    dataView_all: fp_11857a8a6efce2729de750fd3cfb4cc5_dataView_all,
+    scenarios: fp_11857a8a6efce2729de750fd3cfb4cc5_scenarios,
+};
+import fp_122e712c7de75978c00074e37eaa2ce6_definition from "./uiTestScenarios/executions/122e712c7de75978c00074e37eaa2ce6/definition.json" with { type: "json" };
+import fp_122e712c7de75978c00074e37eaa2ce6_executionResult from "./uiTestScenarios/executions/122e712c7de75978c00074e37eaa2ce6/executionResult.json" with { type: "json" };
+import fp_122e712c7de75978c00074e37eaa2ce6_dataView_all from "./uiTestScenarios/executions/122e712c7de75978c00074e37eaa2ce6/dataView_all.json" with { type: "json" };
+import fp_122e712c7de75978c00074e37eaa2ce6_scenarios from "./uiTestScenarios/executions/122e712c7de75978c00074e37eaa2ce6/scenarios.json" with { type: "json" };
+const fp_122e712c7de75978c00074e37eaa2ce6 = {
+    definition: fp_122e712c7de75978c00074e37eaa2ce6_definition,
+    executionResult: fp_122e712c7de75978c00074e37eaa2ce6_executionResult,
+    dataView_all: fp_122e712c7de75978c00074e37eaa2ce6_dataView_all,
+    scenarios: fp_122e712c7de75978c00074e37eaa2ce6_scenarios,
+};
+import fp_2152f673b7472bd421a1b3419bea8fce_definition from "./uiTestScenarios/executions/2152f673b7472bd421a1b3419bea8fce/definition.json" with { type: "json" };
+import fp_2152f673b7472bd421a1b3419bea8fce_executionResult from "./uiTestScenarios/executions/2152f673b7472bd421a1b3419bea8fce/executionResult.json" with { type: "json" };
+import fp_2152f673b7472bd421a1b3419bea8fce_dataView_all from "./uiTestScenarios/executions/2152f673b7472bd421a1b3419bea8fce/dataView_all.json" with { type: "json" };
+import fp_2152f673b7472bd421a1b3419bea8fce_scenarios from "./uiTestScenarios/executions/2152f673b7472bd421a1b3419bea8fce/scenarios.json" with { type: "json" };
+const fp_2152f673b7472bd421a1b3419bea8fce = {
+    definition: fp_2152f673b7472bd421a1b3419bea8fce_definition,
+    executionResult: fp_2152f673b7472bd421a1b3419bea8fce_executionResult,
+    dataView_all: fp_2152f673b7472bd421a1b3419bea8fce_dataView_all,
+    scenarios: fp_2152f673b7472bd421a1b3419bea8fce_scenarios,
+};
+import fp_2c89a91229a17cab03de5b8bee7da13f_definition from "./uiTestScenarios/executions/2c89a91229a17cab03de5b8bee7da13f/definition.json" with { type: "json" };
+import fp_2c89a91229a17cab03de5b8bee7da13f_executionResult from "./uiTestScenarios/executions/2c89a91229a17cab03de5b8bee7da13f/executionResult.json" with { type: "json" };
+import fp_2c89a91229a17cab03de5b8bee7da13f_dataView_all from "./uiTestScenarios/executions/2c89a91229a17cab03de5b8bee7da13f/dataView_all.json" with { type: "json" };
+import fp_2c89a91229a17cab03de5b8bee7da13f_scenarios from "./uiTestScenarios/executions/2c89a91229a17cab03de5b8bee7da13f/scenarios.json" with { type: "json" };
+const fp_2c89a91229a17cab03de5b8bee7da13f = {
+    definition: fp_2c89a91229a17cab03de5b8bee7da13f_definition,
+    executionResult: fp_2c89a91229a17cab03de5b8bee7da13f_executionResult,
+    dataView_all: fp_2c89a91229a17cab03de5b8bee7da13f_dataView_all,
+    scenarios: fp_2c89a91229a17cab03de5b8bee7da13f_scenarios,
+};
+import fp_59cfa3efd22fd85c35001e31f690593c_definition from "./uiTestScenarios/executions/59cfa3efd22fd85c35001e31f690593c/definition.json" with { type: "json" };
+import fp_59cfa3efd22fd85c35001e31f690593c_executionResult from "./uiTestScenarios/executions/59cfa3efd22fd85c35001e31f690593c/executionResult.json" with { type: "json" };
+import fp_59cfa3efd22fd85c35001e31f690593c_dataView_all from "./uiTestScenarios/executions/59cfa3efd22fd85c35001e31f690593c/dataView_all.json" with { type: "json" };
+import fp_59cfa3efd22fd85c35001e31f690593c_scenarios from "./uiTestScenarios/executions/59cfa3efd22fd85c35001e31f690593c/scenarios.json" with { type: "json" };
+const fp_59cfa3efd22fd85c35001e31f690593c = {
+    definition: fp_59cfa3efd22fd85c35001e31f690593c_definition,
+    executionResult: fp_59cfa3efd22fd85c35001e31f690593c_executionResult,
+    dataView_all: fp_59cfa3efd22fd85c35001e31f690593c_dataView_all,
+    scenarios: fp_59cfa3efd22fd85c35001e31f690593c_scenarios,
+};
+import fp_5b598dbcbbce2511e0199fa356faee7a_definition from "./uiTestScenarios/executions/5b598dbcbbce2511e0199fa356faee7a/definition.json" with { type: "json" };
+import fp_5b598dbcbbce2511e0199fa356faee7a_executionResult from "./uiTestScenarios/executions/5b598dbcbbce2511e0199fa356faee7a/executionResult.json" with { type: "json" };
+import fp_5b598dbcbbce2511e0199fa356faee7a_dataView_all from "./uiTestScenarios/executions/5b598dbcbbce2511e0199fa356faee7a/dataView_all.json" with { type: "json" };
+import fp_5b598dbcbbce2511e0199fa356faee7a_scenarios from "./uiTestScenarios/executions/5b598dbcbbce2511e0199fa356faee7a/scenarios.json" with { type: "json" };
+const fp_5b598dbcbbce2511e0199fa356faee7a = {
+    definition: fp_5b598dbcbbce2511e0199fa356faee7a_definition,
+    executionResult: fp_5b598dbcbbce2511e0199fa356faee7a_executionResult,
+    dataView_all: fp_5b598dbcbbce2511e0199fa356faee7a_dataView_all,
+    scenarios: fp_5b598dbcbbce2511e0199fa356faee7a_scenarios,
+};
+import fp_5f9ae9e80f6eb7ed5c4f50ac89ecdfac_definition from "./uiTestScenarios/executions/5f9ae9e80f6eb7ed5c4f50ac89ecdfac/definition.json" with { type: "json" };
+import fp_5f9ae9e80f6eb7ed5c4f50ac89ecdfac_executionResult from "./uiTestScenarios/executions/5f9ae9e80f6eb7ed5c4f50ac89ecdfac/executionResult.json" with { type: "json" };
+import fp_5f9ae9e80f6eb7ed5c4f50ac89ecdfac_dataView_all from "./uiTestScenarios/executions/5f9ae9e80f6eb7ed5c4f50ac89ecdfac/dataView_all.json" with { type: "json" };
+import fp_5f9ae9e80f6eb7ed5c4f50ac89ecdfac_scenarios from "./uiTestScenarios/executions/5f9ae9e80f6eb7ed5c4f50ac89ecdfac/scenarios.json" with { type: "json" };
+const fp_5f9ae9e80f6eb7ed5c4f50ac89ecdfac = {
+    definition: fp_5f9ae9e80f6eb7ed5c4f50ac89ecdfac_definition,
+    executionResult: fp_5f9ae9e80f6eb7ed5c4f50ac89ecdfac_executionResult,
+    dataView_all: fp_5f9ae9e80f6eb7ed5c4f50ac89ecdfac_dataView_all,
+    scenarios: fp_5f9ae9e80f6eb7ed5c4f50ac89ecdfac_scenarios,
+};
+import fp_6643e7e96567d7a2783b0caef8ff296a_definition from "./uiTestScenarios/executions/6643e7e96567d7a2783b0caef8ff296a/definition.json" with { type: "json" };
+import fp_6643e7e96567d7a2783b0caef8ff296a_executionResult from "./uiTestScenarios/executions/6643e7e96567d7a2783b0caef8ff296a/executionResult.json" with { type: "json" };
+import fp_6643e7e96567d7a2783b0caef8ff296a_dataView_all from "./uiTestScenarios/executions/6643e7e96567d7a2783b0caef8ff296a/dataView_all.json" with { type: "json" };
+import fp_6643e7e96567d7a2783b0caef8ff296a_scenarios from "./uiTestScenarios/executions/6643e7e96567d7a2783b0caef8ff296a/scenarios.json" with { type: "json" };
+const fp_6643e7e96567d7a2783b0caef8ff296a = {
+    definition: fp_6643e7e96567d7a2783b0caef8ff296a_definition,
+    executionResult: fp_6643e7e96567d7a2783b0caef8ff296a_executionResult,
+    dataView_all: fp_6643e7e96567d7a2783b0caef8ff296a_dataView_all,
+    scenarios: fp_6643e7e96567d7a2783b0caef8ff296a_scenarios,
+};
+import fp_84e4357d37e7dd9a0f35268b6d16c9b8_definition from "./uiTestScenarios/executions/84e4357d37e7dd9a0f35268b6d16c9b8/definition.json" with { type: "json" };
+import fp_84e4357d37e7dd9a0f35268b6d16c9b8_executionResult from "./uiTestScenarios/executions/84e4357d37e7dd9a0f35268b6d16c9b8/executionResult.json" with { type: "json" };
+import fp_84e4357d37e7dd9a0f35268b6d16c9b8_dataView_all from "./uiTestScenarios/executions/84e4357d37e7dd9a0f35268b6d16c9b8/dataView_all.json" with { type: "json" };
+import fp_84e4357d37e7dd9a0f35268b6d16c9b8_scenarios from "./uiTestScenarios/executions/84e4357d37e7dd9a0f35268b6d16c9b8/scenarios.json" with { type: "json" };
+const fp_84e4357d37e7dd9a0f35268b6d16c9b8 = {
+    definition: fp_84e4357d37e7dd9a0f35268b6d16c9b8_definition,
+    executionResult: fp_84e4357d37e7dd9a0f35268b6d16c9b8_executionResult,
+    dataView_all: fp_84e4357d37e7dd9a0f35268b6d16c9b8_dataView_all,
+    scenarios: fp_84e4357d37e7dd9a0f35268b6d16c9b8_scenarios,
+};
+import fp_8f042616f494ec0fa147d6cbbb282fc0_definition from "./uiTestScenarios/executions/8f042616f494ec0fa147d6cbbb282fc0/definition.json" with { type: "json" };
+import fp_8f042616f494ec0fa147d6cbbb282fc0_executionResult from "./uiTestScenarios/executions/8f042616f494ec0fa147d6cbbb282fc0/executionResult.json" with { type: "json" };
+import fp_8f042616f494ec0fa147d6cbbb282fc0_dataView_all from "./uiTestScenarios/executions/8f042616f494ec0fa147d6cbbb282fc0/dataView_all.json" with { type: "json" };
+import fp_8f042616f494ec0fa147d6cbbb282fc0_scenarios from "./uiTestScenarios/executions/8f042616f494ec0fa147d6cbbb282fc0/scenarios.json" with { type: "json" };
+const fp_8f042616f494ec0fa147d6cbbb282fc0 = {
+    definition: fp_8f042616f494ec0fa147d6cbbb282fc0_definition,
+    executionResult: fp_8f042616f494ec0fa147d6cbbb282fc0_executionResult,
+    dataView_all: fp_8f042616f494ec0fa147d6cbbb282fc0_dataView_all,
+    scenarios: fp_8f042616f494ec0fa147d6cbbb282fc0_scenarios,
+};
+import fp_9584a1187e922440742a818feafad4ce_definition from "./uiTestScenarios/executions/9584a1187e922440742a818feafad4ce/definition.json" with { type: "json" };
+import fp_9584a1187e922440742a818feafad4ce_executionResult from "./uiTestScenarios/executions/9584a1187e922440742a818feafad4ce/executionResult.json" with { type: "json" };
+import fp_9584a1187e922440742a818feafad4ce_dataView_all from "./uiTestScenarios/executions/9584a1187e922440742a818feafad4ce/dataView_all.json" with { type: "json" };
+import fp_9584a1187e922440742a818feafad4ce_scenarios from "./uiTestScenarios/executions/9584a1187e922440742a818feafad4ce/scenarios.json" with { type: "json" };
+const fp_9584a1187e922440742a818feafad4ce = {
+    definition: fp_9584a1187e922440742a818feafad4ce_definition,
+    executionResult: fp_9584a1187e922440742a818feafad4ce_executionResult,
+    dataView_all: fp_9584a1187e922440742a818feafad4ce_dataView_all,
+    scenarios: fp_9584a1187e922440742a818feafad4ce_scenarios,
+};
+import fp_9906ebe07bd59e04c10e6e280b6ce4d9_definition from "./uiTestScenarios/executions/9906ebe07bd59e04c10e6e280b6ce4d9/definition.json" with { type: "json" };
+import fp_9906ebe07bd59e04c10e6e280b6ce4d9_executionResult from "./uiTestScenarios/executions/9906ebe07bd59e04c10e6e280b6ce4d9/executionResult.json" with { type: "json" };
+import fp_9906ebe07bd59e04c10e6e280b6ce4d9_dataView_all from "./uiTestScenarios/executions/9906ebe07bd59e04c10e6e280b6ce4d9/dataView_all.json" with { type: "json" };
+import fp_9906ebe07bd59e04c10e6e280b6ce4d9_scenarios from "./uiTestScenarios/executions/9906ebe07bd59e04c10e6e280b6ce4d9/scenarios.json" with { type: "json" };
+const fp_9906ebe07bd59e04c10e6e280b6ce4d9 = {
+    definition: fp_9906ebe07bd59e04c10e6e280b6ce4d9_definition,
+    executionResult: fp_9906ebe07bd59e04c10e6e280b6ce4d9_executionResult,
+    dataView_all: fp_9906ebe07bd59e04c10e6e280b6ce4d9_dataView_all,
+    scenarios: fp_9906ebe07bd59e04c10e6e280b6ce4d9_scenarios,
+};
+import fp_9c97fad86d7c8114a33f2148730f2fde_definition from "./uiTestScenarios/executions/9c97fad86d7c8114a33f2148730f2fde/definition.json" with { type: "json" };
+import fp_9c97fad86d7c8114a33f2148730f2fde_executionResult from "./uiTestScenarios/executions/9c97fad86d7c8114a33f2148730f2fde/executionResult.json" with { type: "json" };
+import fp_9c97fad86d7c8114a33f2148730f2fde_dataView_all from "./uiTestScenarios/executions/9c97fad86d7c8114a33f2148730f2fde/dataView_all.json" with { type: "json" };
+import fp_9c97fad86d7c8114a33f2148730f2fde_scenarios from "./uiTestScenarios/executions/9c97fad86d7c8114a33f2148730f2fde/scenarios.json" with { type: "json" };
+const fp_9c97fad86d7c8114a33f2148730f2fde = {
+    definition: fp_9c97fad86d7c8114a33f2148730f2fde_definition,
+    executionResult: fp_9c97fad86d7c8114a33f2148730f2fde_executionResult,
+    dataView_all: fp_9c97fad86d7c8114a33f2148730f2fde_dataView_all,
+    scenarios: fp_9c97fad86d7c8114a33f2148730f2fde_scenarios,
+};
+import fp_9fb9065cb5efbb787ad4321b2c452d3b_definition from "./uiTestScenarios/executions/9fb9065cb5efbb787ad4321b2c452d3b/definition.json" with { type: "json" };
+import fp_9fb9065cb5efbb787ad4321b2c452d3b_executionResult from "./uiTestScenarios/executions/9fb9065cb5efbb787ad4321b2c452d3b/executionResult.json" with { type: "json" };
+import fp_9fb9065cb5efbb787ad4321b2c452d3b_dataView_all from "./uiTestScenarios/executions/9fb9065cb5efbb787ad4321b2c452d3b/dataView_all.json" with { type: "json" };
+import fp_9fb9065cb5efbb787ad4321b2c452d3b_scenarios from "./uiTestScenarios/executions/9fb9065cb5efbb787ad4321b2c452d3b/scenarios.json" with { type: "json" };
+const fp_9fb9065cb5efbb787ad4321b2c452d3b = {
+    definition: fp_9fb9065cb5efbb787ad4321b2c452d3b_definition,
+    executionResult: fp_9fb9065cb5efbb787ad4321b2c452d3b_executionResult,
+    dataView_all: fp_9fb9065cb5efbb787ad4321b2c452d3b_dataView_all,
+    scenarios: fp_9fb9065cb5efbb787ad4321b2c452d3b_scenarios,
+};
+import fp_a797e8411cb0c43a8240ba361654b89a_definition from "./uiTestScenarios/executions/a797e8411cb0c43a8240ba361654b89a/definition.json" with { type: "json" };
+import fp_a797e8411cb0c43a8240ba361654b89a_executionResult from "./uiTestScenarios/executions/a797e8411cb0c43a8240ba361654b89a/executionResult.json" with { type: "json" };
+import fp_a797e8411cb0c43a8240ba361654b89a_dataView_all from "./uiTestScenarios/executions/a797e8411cb0c43a8240ba361654b89a/dataView_all.json" with { type: "json" };
+import fp_a797e8411cb0c43a8240ba361654b89a_scenarios from "./uiTestScenarios/executions/a797e8411cb0c43a8240ba361654b89a/scenarios.json" with { type: "json" };
+const fp_a797e8411cb0c43a8240ba361654b89a = {
+    definition: fp_a797e8411cb0c43a8240ba361654b89a_definition,
+    executionResult: fp_a797e8411cb0c43a8240ba361654b89a_executionResult,
+    dataView_all: fp_a797e8411cb0c43a8240ba361654b89a_dataView_all,
+    scenarios: fp_a797e8411cb0c43a8240ba361654b89a_scenarios,
+};
+import fp_b5b2a62be4133ffcc8688bcf965e16c9_definition from "./uiTestScenarios/executions/b5b2a62be4133ffcc8688bcf965e16c9/definition.json" with { type: "json" };
+import fp_b5b2a62be4133ffcc8688bcf965e16c9_executionResult from "./uiTestScenarios/executions/b5b2a62be4133ffcc8688bcf965e16c9/executionResult.json" with { type: "json" };
+import fp_b5b2a62be4133ffcc8688bcf965e16c9_dataView_all from "./uiTestScenarios/executions/b5b2a62be4133ffcc8688bcf965e16c9/dataView_all.json" with { type: "json" };
+import fp_b5b2a62be4133ffcc8688bcf965e16c9_scenarios from "./uiTestScenarios/executions/b5b2a62be4133ffcc8688bcf965e16c9/scenarios.json" with { type: "json" };
+const fp_b5b2a62be4133ffcc8688bcf965e16c9 = {
+    definition: fp_b5b2a62be4133ffcc8688bcf965e16c9_definition,
+    executionResult: fp_b5b2a62be4133ffcc8688bcf965e16c9_executionResult,
+    dataView_all: fp_b5b2a62be4133ffcc8688bcf965e16c9_dataView_all,
+    scenarios: fp_b5b2a62be4133ffcc8688bcf965e16c9_scenarios,
+};
+import fp_bc1cfa4988ea5920285ec8c3ee1dce4a_definition from "./uiTestScenarios/executions/bc1cfa4988ea5920285ec8c3ee1dce4a/definition.json" with { type: "json" };
+import fp_bc1cfa4988ea5920285ec8c3ee1dce4a_executionResult from "./uiTestScenarios/executions/bc1cfa4988ea5920285ec8c3ee1dce4a/executionResult.json" with { type: "json" };
+import fp_bc1cfa4988ea5920285ec8c3ee1dce4a_dataView_all from "./uiTestScenarios/executions/bc1cfa4988ea5920285ec8c3ee1dce4a/dataView_all.json" with { type: "json" };
+import fp_bc1cfa4988ea5920285ec8c3ee1dce4a_scenarios from "./uiTestScenarios/executions/bc1cfa4988ea5920285ec8c3ee1dce4a/scenarios.json" with { type: "json" };
+const fp_bc1cfa4988ea5920285ec8c3ee1dce4a = {
+    definition: fp_bc1cfa4988ea5920285ec8c3ee1dce4a_definition,
+    executionResult: fp_bc1cfa4988ea5920285ec8c3ee1dce4a_executionResult,
+    dataView_all: fp_bc1cfa4988ea5920285ec8c3ee1dce4a_dataView_all,
+    scenarios: fp_bc1cfa4988ea5920285ec8c3ee1dce4a_scenarios,
+};
+import fp_c2def3edc85b9521ba53f7c5eea4d5b8_definition from "./uiTestScenarios/executions/c2def3edc85b9521ba53f7c5eea4d5b8/definition.json" with { type: "json" };
+import fp_c2def3edc85b9521ba53f7c5eea4d5b8_executionResult from "./uiTestScenarios/executions/c2def3edc85b9521ba53f7c5eea4d5b8/executionResult.json" with { type: "json" };
+import fp_c2def3edc85b9521ba53f7c5eea4d5b8_dataView_all from "./uiTestScenarios/executions/c2def3edc85b9521ba53f7c5eea4d5b8/dataView_all.json" with { type: "json" };
+import fp_c2def3edc85b9521ba53f7c5eea4d5b8_scenarios from "./uiTestScenarios/executions/c2def3edc85b9521ba53f7c5eea4d5b8/scenarios.json" with { type: "json" };
+const fp_c2def3edc85b9521ba53f7c5eea4d5b8 = {
+    definition: fp_c2def3edc85b9521ba53f7c5eea4d5b8_definition,
+    executionResult: fp_c2def3edc85b9521ba53f7c5eea4d5b8_executionResult,
+    dataView_all: fp_c2def3edc85b9521ba53f7c5eea4d5b8_dataView_all,
+    scenarios: fp_c2def3edc85b9521ba53f7c5eea4d5b8_scenarios,
+};
+import fp_ca8bcbf03a02348c8a89c38dce59d640_definition from "./uiTestScenarios/executions/ca8bcbf03a02348c8a89c38dce59d640/definition.json" with { type: "json" };
+import fp_ca8bcbf03a02348c8a89c38dce59d640_executionResult from "./uiTestScenarios/executions/ca8bcbf03a02348c8a89c38dce59d640/executionResult.json" with { type: "json" };
+import fp_ca8bcbf03a02348c8a89c38dce59d640_dataView_all from "./uiTestScenarios/executions/ca8bcbf03a02348c8a89c38dce59d640/dataView_all.json" with { type: "json" };
+import fp_ca8bcbf03a02348c8a89c38dce59d640_scenarios from "./uiTestScenarios/executions/ca8bcbf03a02348c8a89c38dce59d640/scenarios.json" with { type: "json" };
+const fp_ca8bcbf03a02348c8a89c38dce59d640 = {
+    definition: fp_ca8bcbf03a02348c8a89c38dce59d640_definition,
+    executionResult: fp_ca8bcbf03a02348c8a89c38dce59d640_executionResult,
+    dataView_all: fp_ca8bcbf03a02348c8a89c38dce59d640_dataView_all,
+    scenarios: fp_ca8bcbf03a02348c8a89c38dce59d640_scenarios,
+};
+import fp_cac25acb2ff885871a34ab573cb9491d_definition from "./uiTestScenarios/executions/cac25acb2ff885871a34ab573cb9491d/definition.json" with { type: "json" };
+import fp_cac25acb2ff885871a34ab573cb9491d_executionResult from "./uiTestScenarios/executions/cac25acb2ff885871a34ab573cb9491d/executionResult.json" with { type: "json" };
+import fp_cac25acb2ff885871a34ab573cb9491d_dataView_all from "./uiTestScenarios/executions/cac25acb2ff885871a34ab573cb9491d/dataView_all.json" with { type: "json" };
+import fp_cac25acb2ff885871a34ab573cb9491d_scenarios from "./uiTestScenarios/executions/cac25acb2ff885871a34ab573cb9491d/scenarios.json" with { type: "json" };
+const fp_cac25acb2ff885871a34ab573cb9491d = {
+    definition: fp_cac25acb2ff885871a34ab573cb9491d_definition,
+    executionResult: fp_cac25acb2ff885871a34ab573cb9491d_executionResult,
+    dataView_all: fp_cac25acb2ff885871a34ab573cb9491d_dataView_all,
+    scenarios: fp_cac25acb2ff885871a34ab573cb9491d_scenarios,
+};
+import fp_ce0ef10af343228e6eb6a59c4ad701ab_definition from "./uiTestScenarios/executions/ce0ef10af343228e6eb6a59c4ad701ab/definition.json" with { type: "json" };
+import fp_ce0ef10af343228e6eb6a59c4ad701ab_executionResult from "./uiTestScenarios/executions/ce0ef10af343228e6eb6a59c4ad701ab/executionResult.json" with { type: "json" };
+import fp_ce0ef10af343228e6eb6a59c4ad701ab_dataView_all from "./uiTestScenarios/executions/ce0ef10af343228e6eb6a59c4ad701ab/dataView_all.json" with { type: "json" };
+import fp_ce0ef10af343228e6eb6a59c4ad701ab_scenarios from "./uiTestScenarios/executions/ce0ef10af343228e6eb6a59c4ad701ab/scenarios.json" with { type: "json" };
+const fp_ce0ef10af343228e6eb6a59c4ad701ab = {
+    definition: fp_ce0ef10af343228e6eb6a59c4ad701ab_definition,
+    executionResult: fp_ce0ef10af343228e6eb6a59c4ad701ab_executionResult,
+    dataView_all: fp_ce0ef10af343228e6eb6a59c4ad701ab_dataView_all,
+    scenarios: fp_ce0ef10af343228e6eb6a59c4ad701ab_scenarios,
+};
+import fp_d5a808b43319ffd0395639ff3b9e142a_definition from "./uiTestScenarios/executions/d5a808b43319ffd0395639ff3b9e142a/definition.json" with { type: "json" };
+import fp_d5a808b43319ffd0395639ff3b9e142a_executionResult from "./uiTestScenarios/executions/d5a808b43319ffd0395639ff3b9e142a/executionResult.json" with { type: "json" };
+import fp_d5a808b43319ffd0395639ff3b9e142a_dataView_all from "./uiTestScenarios/executions/d5a808b43319ffd0395639ff3b9e142a/dataView_all.json" with { type: "json" };
+import fp_d5a808b43319ffd0395639ff3b9e142a_scenarios from "./uiTestScenarios/executions/d5a808b43319ffd0395639ff3b9e142a/scenarios.json" with { type: "json" };
+const fp_d5a808b43319ffd0395639ff3b9e142a = {
+    definition: fp_d5a808b43319ffd0395639ff3b9e142a_definition,
+    executionResult: fp_d5a808b43319ffd0395639ff3b9e142a_executionResult,
+    dataView_all: fp_d5a808b43319ffd0395639ff3b9e142a_dataView_all,
+    scenarios: fp_d5a808b43319ffd0395639ff3b9e142a_scenarios,
+};
+import fp_d5c8be07c672f72e5e841dbaba5aeaa0_definition from "./uiTestScenarios/executions/d5c8be07c672f72e5e841dbaba5aeaa0/definition.json" with { type: "json" };
+import fp_d5c8be07c672f72e5e841dbaba5aeaa0_executionResult from "./uiTestScenarios/executions/d5c8be07c672f72e5e841dbaba5aeaa0/executionResult.json" with { type: "json" };
+import fp_d5c8be07c672f72e5e841dbaba5aeaa0_dataView_all from "./uiTestScenarios/executions/d5c8be07c672f72e5e841dbaba5aeaa0/dataView_all.json" with { type: "json" };
+import fp_d5c8be07c672f72e5e841dbaba5aeaa0_scenarios from "./uiTestScenarios/executions/d5c8be07c672f72e5e841dbaba5aeaa0/scenarios.json" with { type: "json" };
+const fp_d5c8be07c672f72e5e841dbaba5aeaa0 = {
+    definition: fp_d5c8be07c672f72e5e841dbaba5aeaa0_definition,
+    executionResult: fp_d5c8be07c672f72e5e841dbaba5aeaa0_executionResult,
+    dataView_all: fp_d5c8be07c672f72e5e841dbaba5aeaa0_dataView_all,
+    scenarios: fp_d5c8be07c672f72e5e841dbaba5aeaa0_scenarios,
+};
+import fp_daf77bbdd04f638fe63b2d4a18c7babd_definition from "./uiTestScenarios/executions/daf77bbdd04f638fe63b2d4a18c7babd/definition.json" with { type: "json" };
+import fp_daf77bbdd04f638fe63b2d4a18c7babd_executionResult from "./uiTestScenarios/executions/daf77bbdd04f638fe63b2d4a18c7babd/executionResult.json" with { type: "json" };
+import fp_daf77bbdd04f638fe63b2d4a18c7babd_dataView_all from "./uiTestScenarios/executions/daf77bbdd04f638fe63b2d4a18c7babd/dataView_all.json" with { type: "json" };
+import fp_daf77bbdd04f638fe63b2d4a18c7babd_scenarios from "./uiTestScenarios/executions/daf77bbdd04f638fe63b2d4a18c7babd/scenarios.json" with { type: "json" };
+const fp_daf77bbdd04f638fe63b2d4a18c7babd = {
+    definition: fp_daf77bbdd04f638fe63b2d4a18c7babd_definition,
+    executionResult: fp_daf77bbdd04f638fe63b2d4a18c7babd_executionResult,
+    dataView_all: fp_daf77bbdd04f638fe63b2d4a18c7babd_dataView_all,
+    scenarios: fp_daf77bbdd04f638fe63b2d4a18c7babd_scenarios,
+};
+import fp_ea357e5a6be7c32673329e84a81d0552_definition from "./uiTestScenarios/executions/ea357e5a6be7c32673329e84a81d0552/definition.json" with { type: "json" };
+import fp_ea357e5a6be7c32673329e84a81d0552_executionResult from "./uiTestScenarios/executions/ea357e5a6be7c32673329e84a81d0552/executionResult.json" with { type: "json" };
+import fp_ea357e5a6be7c32673329e84a81d0552_dataView_all from "./uiTestScenarios/executions/ea357e5a6be7c32673329e84a81d0552/dataView_all.json" with { type: "json" };
+import fp_ea357e5a6be7c32673329e84a81d0552_scenarios from "./uiTestScenarios/executions/ea357e5a6be7c32673329e84a81d0552/scenarios.json" with { type: "json" };
+const fp_ea357e5a6be7c32673329e84a81d0552 = {
+    definition: fp_ea357e5a6be7c32673329e84a81d0552_definition,
+    executionResult: fp_ea357e5a6be7c32673329e84a81d0552_executionResult,
+    dataView_all: fp_ea357e5a6be7c32673329e84a81d0552_dataView_all,
+    scenarios: fp_ea357e5a6be7c32673329e84a81d0552_scenarios,
+};
+import fp_eea5ea89d0d544b546a7cf76027eaf22_definition from "./uiTestScenarios/executions/eea5ea89d0d544b546a7cf76027eaf22/definition.json" with { type: "json" };
+import fp_eea5ea89d0d544b546a7cf76027eaf22_executionResult from "./uiTestScenarios/executions/eea5ea89d0d544b546a7cf76027eaf22/executionResult.json" with { type: "json" };
+import fp_eea5ea89d0d544b546a7cf76027eaf22_dataView_all from "./uiTestScenarios/executions/eea5ea89d0d544b546a7cf76027eaf22/dataView_all.json" with { type: "json" };
+import fp_eea5ea89d0d544b546a7cf76027eaf22_scenarios from "./uiTestScenarios/executions/eea5ea89d0d544b546a7cf76027eaf22/scenarios.json" with { type: "json" };
+const fp_eea5ea89d0d544b546a7cf76027eaf22 = {
+    definition: fp_eea5ea89d0d544b546a7cf76027eaf22_definition,
+    executionResult: fp_eea5ea89d0d544b546a7cf76027eaf22_executionResult,
+    dataView_all: fp_eea5ea89d0d544b546a7cf76027eaf22_dataView_all,
+    scenarios: fp_eea5ea89d0d544b546a7cf76027eaf22_scenarios,
+};
+import fp_ef51aca8c5794b4ff3e3de92d7fd2fb1_definition from "./uiTestScenarios/executions/ef51aca8c5794b4ff3e3de92d7fd2fb1/definition.json" with { type: "json" };
+import fp_ef51aca8c5794b4ff3e3de92d7fd2fb1_executionResult from "./uiTestScenarios/executions/ef51aca8c5794b4ff3e3de92d7fd2fb1/executionResult.json" with { type: "json" };
+import fp_ef51aca8c5794b4ff3e3de92d7fd2fb1_dataView_all from "./uiTestScenarios/executions/ef51aca8c5794b4ff3e3de92d7fd2fb1/dataView_all.json" with { type: "json" };
+import fp_ef51aca8c5794b4ff3e3de92d7fd2fb1_scenarios from "./uiTestScenarios/executions/ef51aca8c5794b4ff3e3de92d7fd2fb1/scenarios.json" with { type: "json" };
+const fp_ef51aca8c5794b4ff3e3de92d7fd2fb1 = {
+    definition: fp_ef51aca8c5794b4ff3e3de92d7fd2fb1_definition,
+    executionResult: fp_ef51aca8c5794b4ff3e3de92d7fd2fb1_executionResult,
+    dataView_all: fp_ef51aca8c5794b4ff3e3de92d7fd2fb1_dataView_all,
+    scenarios: fp_ef51aca8c5794b4ff3e3de92d7fd2fb1_scenarios,
+};
+const scenarios_ColumnChart = {
+    SingleMeasureWithOneViewByAndOneStackByWithMultipleItems: {
+        scenarioIndex: 0,
+        execution: fp_004031cbc9081950b7284311b004fe11,
     },
-    PivotTableNext: {
-        TwoMeasuresAndGrandTotalsAndMultipleSubtotals: {
-            scenarioIndex: 0,
-            execution: fp_6ef5731c63a579f03fde4a9b01f7c607,
-        },
-        SingleMeasureAndSingleColumnGrandTotal: {
-            scenarioIndex: 1,
-            execution: fp_08a6c636ea0d007de91e886fc9fbd1bb,
-        },
-        TwoMeasuresAndOneSubtotal: { scenarioIndex: 1, execution: fp_10a1791bf91af3f9d71fec403da50bfc },
-        TwoMeasuresWithThreeRowsAndTwoColumnAttributes: {
-            scenarioIndex: 1,
-            execution: fp_12d1eb593ce811011cea335d45b4e7d9,
-        },
-        TwoMeasuresAndSingleGrandTotalSortedBySecondAttribute: {
-            scenarioIndex: 1,
-            execution: fp_17e1400e22cf959015e4be5bdb618c37,
-        },
-        WithTwoSameDates: { scenarioIndex: 1, execution: fp_1dee8e67d6f87c8f37dce28126fc893e },
-        TwoMeasuresAndMultipleGrandTotalsForEach: {
-            scenarioIndex: 1,
-            execution: fp_b15be8f3c2c0e721956f0563e80f2e07,
-        },
-        SingleAttribute: { scenarioIndex: 1, execution: fp_245cabd1fb1f98e24cd680cc9c52254b },
-        MultipleMeasuresAndNoColumnsWithTotals: {
-            scenarioIndex: 0,
-            execution: fp_dcaded12a70ed9c7556c96b4d4d54763,
-        },
-        SingleMeasurePivotSortedByFirstAndSecondRowAttr: {
-            scenarioIndex: 0,
-            execution: fp_300c0b908199156a328388972230be9a,
-        },
-        TwoMeasuresAndMultipleColumnRowGrandTotalsForEach: {
-            scenarioIndex: 1,
-            execution: fp_6d744aacff949cf033683d86262b4e77,
-        },
-        MultipleMeasuresAndRowAttributesWithMetricsInRowsWithDrilling: {
-            scenarioIndex: 1,
-            execution: fp_38b3cbb3e3c8b075d1b11de44c78a01e,
-        },
-        WithDateFilter: { scenarioIndex: 1, execution: fp_4765fcec9e0cf6a0f6474dfcc89346f9 },
-        SingleMeasure: { scenarioIndex: 10, execution: fp_48d6b389940c3f7522eddc93458a0b0b },
-        SingleMeasureAndMultipleGrandTotals: {
-            scenarioIndex: 1,
-            execution: fp_93b4400696ea330b3d49c0506eb90538,
-        },
-        SingleMeasureAndMultipleColumnGrandTotals: {
-            scenarioIndex: 0,
-            execution: fp_50c6b990ee6e7496159726ebb00e82e7,
-        },
-        TwoMeasuresAndMultipleColumnGrandTotalsForEach: {
-            scenarioIndex: 1,
-            execution: fp_b30b06df758636e35e03b96a9662e53f,
-        },
-        TwoMeasuresInRowsAndColumnAttrsOnLeftWithTotals: {
-            scenarioIndex: 1,
-            execution: fp_55a6a5d0f818f5a7676513e4378a2868,
-        },
-        TwoMeasuresAndColumnRowGrandTotalsAndMultipleSubtotals: {
-            scenarioIndex: 0,
-            execution: fp_f1e4efd7d700c6c819fa3568fc9bcae8,
-        },
-        MultipleMeasuresAndNoRowsWithTotals: {
-            scenarioIndex: 2,
-            execution: fp_568f6f8fe45127977df23f1e7c16c3e0,
-        },
-        TwoMeasuresInRowsAndOnlyColumnAttrsOnLeftWithTotals: {
-            scenarioIndex: 3,
-            execution: fp_568f6f8fe45127977df23f1e7c16c3e0,
-        },
-        TwoMeasuresAndOneColumnRowSubtotal: {
-            scenarioIndex: 1,
-            execution: fp_57e4abf06e14ca7c6ca589f5ba620932,
-        },
-        TwoMeasuresWithSingleRowAttrWithMetricsInRows: {
-            scenarioIndex: 1,
-            execution: fp_628456d9adb09d97807468db6d357f34,
-        },
-        TwoMeasuresAndColumnSingleGrandTotalSortedBySecondAttribute: {
-            scenarioIndex: 1,
-            execution: fp_63e53a643477c7f0a1e4b96443d1a072,
-        },
-        TwoMeasures: { scenarioIndex: 6, execution: fp_681fd174545bf5e693b9b0df873870cb },
-        SingleMeasurePivotSortedBySecondRowAttr: {
-            scenarioIndex: 1,
-            execution: fp_6ad17cce441c93f0c1f6c5cfffb7d7af,
-        },
-        TwoMeasuresWithColumnAttribute: { scenarioIndex: 1, execution: fp_6b38289e3de520261ba662868a3bc5ba },
-        ArithmeticMeasures: { scenarioIndex: 1, execution: fp_70330fa367d33c4c428d5d3e54df8eb9 },
-        TwoMeasuresAndMultipleSubtotals: { scenarioIndex: 1, execution: fp_743dad3dce349764d1e2617b3e87026f },
-        TwoMeasuresAndMultipleColumnSubtotals: {
-            scenarioIndex: 1,
-            execution: fp_77f869ae69c392717c13b188e2074842,
-        },
-        TwoMeasuresAndSingleGrandTotalForEach: {
-            scenarioIndex: 1,
-            execution: fp_7aacee42d5804a99f3dab100b0a5669e,
-        },
-        PaginationWith5RowsPerPageAndTotals: {
-            scenarioIndex: 2,
-            execution: fp_7aacee42d5804a99f3dab100b0a5669e,
-        },
-        GrandTotalsPinnedAtBottomDefault: {
-            scenarioIndex: 3,
-            execution: fp_7aacee42d5804a99f3dab100b0a5669e,
-        },
-        GrandTotalsPinnedAtTop: { scenarioIndex: 4, execution: fp_7aacee42d5804a99f3dab100b0a5669e },
-        GrandTotalsAtBottomNotPinned: { scenarioIndex: 5, execution: fp_7aacee42d5804a99f3dab100b0a5669e },
-        GrandTotalsAtTopNotPinned: { scenarioIndex: 6, execution: fp_7aacee42d5804a99f3dab100b0a5669e },
-        TwoMeasuresAndMultipleColumnRowSubtotalsWithMetricsInRows: {
-            scenarioIndex: 0,
-            execution: fp_dfeebd400b7a16d1e3c434152fc9dd09,
-        },
-        SingleMeasureWithRowAndColumnAttributes: {
-            scenarioIndex: 1,
-            execution: fp_8c58de518b0e42711e9379cce480a63b,
-        },
-        TwoMeasuresWithRowAndColumnAttributes: {
-            scenarioIndex: 1,
-            execution: fp_8eaf6e86ea212a22493eb7c06370a1b1,
-        },
-        WithAttributesWithoutMeasures: { scenarioIndex: 1, execution: fp_956c1be097a9bb7880556e5ba651ad33 },
-        SingleMeasurePivotSortedByFirstRowAttr: {
-            scenarioIndex: 1,
-            execution: fp_9bbaf756a6a44325dc1a9315de17d0fb,
-        },
-        SingleMeasureWithColumnAttribute: {
-            scenarioIndex: 1,
-            execution: fp_9bcc3db7967bd54930a357186a0d39f9,
-        },
-        SingleMeasureAndSingleGrandTotal: {
-            scenarioIndex: 1,
-            execution: fp_a49032eb49179fa4f6f56427072f88bf,
-        },
-        SingleMeasureWithTwoRowAndTwoColumnAttributes: {
-            scenarioIndex: 4,
-            execution: fp_aea45a374b1f55e749275b328e30d94d,
-        },
-        EmptyValues: { scenarioIndex: 5, execution: fp_aea45a374b1f55e749275b328e30d94d },
-        TableWithMultipleMeasureColumnsAndWeakMeasureSize: {
-            scenarioIndex: 6,
-            execution: fp_aea45a374b1f55e749275b328e30d94d,
-        },
-        TwoMeasuresAndSingleColumnGrandTotalAndSingleSubtotalSortedBySecondAttribute: {
-            scenarioIndex: 1,
-            execution: fp_b01bccbf9167508268b7a901b4ccd063,
-        },
-        TwoMeasuresWithTwoRowAndOneColumnAttributes: {
-            scenarioIndex: 1,
-            execution: fp_b034871dc7b2c8d7d9fc10a81b1b5fae,
-        },
-        SingleMeasureAndMultipleColumnRowGrandTotals: {
-            scenarioIndex: 1,
-            execution: fp_b3727c142e53427d1ac555b048019f88,
-        },
-        TwoMeasuresAndSingleColumnGrandTotalForOne: {
-            scenarioIndex: 1,
-            execution: fp_b8402b07097387493122f955cdae5e61,
-        },
-        TwoMeasuresAndOneColumnSubtotal: { scenarioIndex: 1, execution: fp_ba1ccbfca6ce3c9311d8becc13b28093 },
-        SingleMeasureWithRowAttribute: { scenarioIndex: 4, execution: fp_ba8c7b4230cdc8e9271694befe40abf4 },
-        SingleMeasureWithTwoRowAndOneColumnAttributes: {
-            scenarioIndex: 1,
-            execution: fp_bd4b4956516e1f429c2344f9b263c8df,
-        },
-        TwoMeasuresAndColumnGrandTotalsAndMultipleSubtotals: {
-            scenarioIndex: 0,
-            execution: fp_e2854c55ab10a6e23413a2322183ae8b,
-        },
-        OneMeasureAndRepeatingRowAttributesOnDifferentPositions: {
-            scenarioIndex: 1,
-            execution: fp_c1444f217c8e0aecfb14f64996bd7b7e,
-        },
-        TwoMeasuresWithTwoRowAndTwoColumnAttributes: {
-            scenarioIndex: 1,
-            execution: fp_c2ed90caa1677729885f2f90df6bdd73,
-        },
-        PaginationWith5RowsPerPage: { scenarioIndex: 2, execution: fp_c2ed90caa1677729885f2f90df6bdd73 },
-        TwoMeasuresAndSingleGrandTotalForOne: {
-            scenarioIndex: 1,
-            execution: fp_c32086d6716aa4b42b64be41f1dbdd04,
-        },
-        SingleColumn: { scenarioIndex: 1, execution: fp_c4c31413a7b65502296aba901f6b50f8 },
-        TwoMeasuresAndSingleColumnRowGrandTotalForEach: {
-            scenarioIndex: 1,
-            execution: fp_cd90f05d3866c307575d70866a88b1de,
-        },
-        TwoMeasuresAndSingleColumnRowGrandTotalForOne: {
-            scenarioIndex: 1,
-            execution: fp_d7a8d8ff7ac29c8223bb3ed015131833,
-        },
-        TwoMeasuresAndSingleColumnGrandTotalForEach: {
-            scenarioIndex: 1,
-            execution: fp_d7a98fc9b39a99b72c72f135740f2e54,
-        },
-        TwoMeasuresWithSingleRowAttrSortedBySecondMeasure: {
-            scenarioIndex: 1,
-            execution: fp_f304c0180efbca32eeccaa096410dc8f,
-        },
-        SingleMeasurePivotWithBothAttributesAndMetricsInRows: {
-            scenarioIndex: 1,
-            execution: fp_f46be32e6d2334de1d485921c52cc8e4,
-        },
-        TwoMeasuresWithSingleRowAttrSortedByFirstMeasure: {
-            scenarioIndex: 1,
-            execution: fp_f5008c073c235b861044fc2ec3f4b0bc,
-        },
-        TwoMeasuresInRowsAndOnlyColumnAttrsOnLeft: {
-            scenarioIndex: 4,
-            execution: fp_f57b0aa05b172c7db09c6fc0e29d3198,
-        },
-        TwoMeasuresInRowsAndOnlyColumnAttrsOnLeftWithDrilling: {
-            scenarioIndex: 5,
-            execution: fp_f57b0aa05b172c7db09c6fc0e29d3198,
-        },
-        TwoMeasuresInRowsAndColumnAttrsOnTopWithInvalidDrillingOnAttributes: {
-            scenarioIndex: 6,
-            execution: fp_f57b0aa05b172c7db09c6fc0e29d3198,
-        },
-        TwoMeasuresInRowsAndColumnAttrsOnTopWithDrillingOnMetrics: {
-            scenarioIndex: 7,
-            execution: fp_f57b0aa05b172c7db09c6fc0e29d3198,
-        },
-        TwoMeasuresWithRowAttribute: { scenarioIndex: 1, execution: fp_f6db2dc71e518b432dd21209ebdd0521 },
-        CellTextWrappingEnabled: { scenarioIndex: 2, execution: fp_f6db2dc71e518b432dd21209ebdd0521 },
-        HeaderTextWrappingEnabled: { scenarioIndex: 3, execution: fp_f6db2dc71e518b432dd21209ebdd0521 },
-        SimpleTableWithAttributeAndMetricColumnSize: {
-            scenarioIndex: 4,
-            execution: fp_f6db2dc71e518b432dd21209ebdd0521,
-        },
-        SingleMeasureAndSingleColumnRowGrandTotal: {
-            scenarioIndex: 1,
-            execution: fp_f997d8a8ee1a67def6bb63d28708cbc3,
-        },
-        TwoMeasuresAndMultipleColumnRowSubtotals: {
-            scenarioIndex: 1,
-            execution: fp_fe9b7d7da26bca841ea91d1f0b83b67e,
-        },
+    SingleMeasure: { scenarioIndex: 2, execution: fp_13de8b21eccb15fb383defb77a8e9bb5 },
+    SingleMeasureWithViewBy: { scenarioIndex: 2, execution: fp_334febec1d24c565faab8bb5138542f7 },
+    TwoMeasuresWithViewBy: { scenarioIndex: 4, execution: fp_355096b0de4fc0081470f2facee34bac },
+    Themed: { scenarioIndex: 5, execution: fp_355096b0de4fc0081470f2facee34bac },
+    Font: { scenarioIndex: 6, execution: fp_355096b0de4fc0081470f2facee34bac },
+    ViewByDateAndPoPMeasure: { scenarioIndex: 1, execution: fp_4ff767e70293368c333c7f905aa7ce96 },
+    SingleRatioMeasureWithViewBy: { scenarioIndex: 0, execution: fp_7956d979dff149b869041ef428737ef8 },
+    DenseChartWithTwoViewBy: { scenarioIndex: 0, execution: fp_8673cd5970ce3fd865367e7c626159ab },
+    SingleMeasureWithViewByAndStackBy: { scenarioIndex: 5, execution: fp_a523e44f3523b4d118c53712590ba3ca },
+    SingleMeasureWithTwoViewByAndStack: { scenarioIndex: 1, execution: fp_a987c14f422c16be1788cb94e3f256e9 },
+    StackByWithOneDate: { scenarioIndex: 1, execution: fp_b7a155ebd4d17e9cc9d7babcc2cb86a6 },
+    ViewByWithTwoDates: { scenarioIndex: 1, execution: fp_c2b850d7baff511e45e237d6707d5f7c },
+    TwoMeasuresWithViewBySortedByMeasure: {
+        scenarioIndex: 2,
+        execution: fp_c322b5a7579d7172e11bac46018bb95b,
     },
-    Repeater: {
-        OneAttributeAndOneVisualisation: { scenarioIndex: 0, execution: fp_013e1b802f58fb8ec4e3d1d116f74116 },
-        Themed: { scenarioIndex: 1, execution: fp_013e1b802f58fb8ec4e3d1d116f74116 },
-        Font: { scenarioIndex: 2, execution: fp_013e1b802f58fb8ec4e3d1d116f74116 },
-        OneAttributeAndOneMeasure: { scenarioIndex: 0, execution: fp_2eb966d16acbb32e1d4c79db521ae692 },
-        OneAttribute: { scenarioIndex: 0, execution: fp_3a7ab7c6ab0f61de59e2f2c5e6b3d92d },
+    TwoMeasuresWithViewBySortedByAttribute: {
+        scenarioIndex: 2,
+        execution: fp_e480af73cb3da22e143deba5b7f4b3e3,
     },
-    Execute: {
-        ScopedSeriesWithSlicing: { scenarioIndex: 0, execution: fp_016b56ca4717dd774265c039a39234cd },
-        ScopedSeries: { scenarioIndex: 0, execution: fp_31e13a5611cf85a7e0b275b8beeb923d },
-        TwoUnscopedSeries: { scenarioIndex: 0, execution: fp_31fb4f2ee42e8414a1a92bc2f4eaae12 },
-        SingleUnscopedSeries: { scenarioIndex: 0, execution: fp_c3760115df8f062a7eba3a003a00ff0d },
+    TwoMeasuresWithTwoViewBy: { scenarioIndex: 1, execution: fp_eae1c9a65cf05e9e0a8fde6173ef7141 },
+    TwoMeasures: { scenarioIndex: 0, execution: fp_f39ed708ee551a9ff3e9acc3ec249a8c },
+    SingleMeasureWithViewByAndStackByFilteredToSingleStack: {
+        scenarioIndex: 0,
+        execution: fp_fa9ce8aba21b38cbed227af04fbaa1e7,
     },
-    PivotTable: {
-        SingleMeasurePivotWithGroupingSortedBySecondRowAttr: {
-            scenarioIndex: 0,
-            execution: fp_0207504a4a78e1e63578b8a0f6d2f5b0,
-        },
-        SingleMeasureAndSingleColumnGrandTotal: {
-            scenarioIndex: 0,
-            execution: fp_08a6c636ea0d007de91e886fc9fbd1bb,
-        },
-        TwoMeasuresAndGrandTotalsAndMultipleSubtotals: {
-            scenarioIndex: 0,
-            execution: fp_0ad53f3c7db666135fc6971aeb4a241f,
-        },
-        TwoMeasuresAndOneSubtotal: { scenarioIndex: 0, execution: fp_10a1791bf91af3f9d71fec403da50bfc },
-        TwoMeasuresWithThreeRowsAndTwoColumnAttributes: {
-            scenarioIndex: 0,
-            execution: fp_12d1eb593ce811011cea335d45b4e7d9,
-        },
-        TwoMeasuresAndSingleGrandTotalSortedBySecondAttribute: {
-            scenarioIndex: 0,
-            execution: fp_17e1400e22cf959015e4be5bdb618c37,
-        },
-        WithTwoSameDates: { scenarioIndex: 0, execution: fp_1dee8e67d6f87c8f37dce28126fc893e },
-        SingleAttribute: { scenarioIndex: 0, execution: fp_245cabd1fb1f98e24cd680cc9c52254b },
-        MultipleMeasuresAndNoColumnsWithTotals: {
-            scenarioIndex: 0,
-            execution: fp_2c58bdd28e3e7df3cfb5eb992aaaad40,
-        },
-        SingleMeasurePivotWithGroupingSortedByMeasure: {
-            scenarioIndex: 0,
-            execution: fp_36743caf34c6a9ea7496afe5443b73e0,
-        },
-        MultipleMeasuresAndRowAttributesWithMetricsInRowsWithDrilling: {
-            scenarioIndex: 0,
-            execution: fp_38b3cbb3e3c8b075d1b11de44c78a01e,
-        },
-        WithDateFilter: { scenarioIndex: 0, execution: fp_4765fcec9e0cf6a0f6474dfcc89346f9 },
-        SingleMeasure: { scenarioIndex: 9, execution: fp_48d6b389940c3f7522eddc93458a0b0b },
-        SingleMeasureAndMultipleColumnGrandTotals: {
-            scenarioIndex: 0,
-            execution: fp_4f8c6666d1a48123e1a2fa4bc4f525e0,
-        },
-        TwoMeasuresInRowsAndColumnAttrsOnLeftWithTotals: {
-            scenarioIndex: 0,
-            execution: fp_55a6a5d0f818f5a7676513e4378a2868,
-        },
-        TwoMeasuresAndColumnRowGrandTotalsAndMultipleSubtotals: {
-            scenarioIndex: 0,
-            execution: fp_55d063736eafa8d70a6146e52a4a8406,
-        },
-        SingleMeasurePivotWithGroupingSortedByFirstRowAttr: {
-            scenarioIndex: 0,
-            execution: fp_56477ba0554dc70e4e983c60a93cbecd,
-        },
-        MultipleMeasuresAndNoRowsWithTotals: {
-            scenarioIndex: 0,
-            execution: fp_568f6f8fe45127977df23f1e7c16c3e0,
-        },
-        TwoMeasuresInRowsAndOnlyColumnAttrsOnLeftWithTotals: {
-            scenarioIndex: 1,
-            execution: fp_568f6f8fe45127977df23f1e7c16c3e0,
-        },
-        TwoMeasuresAndOneColumnRowSubtotal: {
-            scenarioIndex: 0,
-            execution: fp_57e4abf06e14ca7c6ca589f5ba620932,
-        },
-        TwoMeasuresWithSingleRowAttrWithMetricsInRows: {
-            scenarioIndex: 0,
-            execution: fp_628456d9adb09d97807468db6d357f34,
-        },
-        TwoMeasuresAndColumnSingleGrandTotalSortedBySecondAttribute: {
-            scenarioIndex: 0,
-            execution: fp_63e53a643477c7f0a1e4b96443d1a072,
-        },
-        TwoMeasures: { scenarioIndex: 5, execution: fp_681fd174545bf5e693b9b0df873870cb },
-        SingleMeasurePivotSortedBySecondRowAttr: {
-            scenarioIndex: 0,
-            execution: fp_6ad17cce441c93f0c1f6c5cfffb7d7af,
-        },
-        TwoMeasuresWithColumnAttribute: { scenarioIndex: 0, execution: fp_6b38289e3de520261ba662868a3bc5ba },
-        TwoMeasuresAndMultipleColumnRowGrandTotalsForEach: {
-            scenarioIndex: 0,
-            execution: fp_6d744aacff949cf033683d86262b4e77,
-        },
-        ArithmeticMeasures: { scenarioIndex: 0, execution: fp_70330fa367d33c4c428d5d3e54df8eb9 },
-        TwoMeasuresAndMultipleSubtotals: { scenarioIndex: 0, execution: fp_743dad3dce349764d1e2617b3e87026f },
-        TwoMeasuresAndMultipleColumnSubtotals: {
-            scenarioIndex: 0,
-            execution: fp_77f869ae69c392717c13b188e2074842,
-        },
-        TwoMeasuresAndSingleGrandTotalForEach: {
-            scenarioIndex: 0,
-            execution: fp_7aacee42d5804a99f3dab100b0a5669e,
-        },
-        TwoMeasuresAndMultipleColumnRowSubtotalsWithMetricsInRows: {
-            scenarioIndex: 0,
-            execution: fp_862a9ba209c70cd36892eedeb8fe9c83,
-        },
-        SingleMeasureWithRowAndColumnAttributes: {
-            scenarioIndex: 0,
-            execution: fp_8c58de518b0e42711e9379cce480a63b,
-        },
-        TwoMeasuresWithRowAndColumnAttributes: {
-            scenarioIndex: 0,
-            execution: fp_8eaf6e86ea212a22493eb7c06370a1b1,
-        },
-        SingleMeasureAndMultipleGrandTotals: {
-            scenarioIndex: 0,
-            execution: fp_93b4400696ea330b3d49c0506eb90538,
-        },
-        WithAttributesWithoutMeasures: { scenarioIndex: 0, execution: fp_956c1be097a9bb7880556e5ba651ad33 },
-        SingleMeasurePivotSortedByFirstRowAttr: {
-            scenarioIndex: 0,
-            execution: fp_9bbaf756a6a44325dc1a9315de17d0fb,
-        },
-        SingleMeasureWithColumnAttribute: {
-            scenarioIndex: 0,
-            execution: fp_9bcc3db7967bd54930a357186a0d39f9,
-        },
-        SingleMeasureAndSingleGrandTotal: {
-            scenarioIndex: 0,
-            execution: fp_a49032eb49179fa4f6f56427072f88bf,
-        },
-        SingleMeasureWithTwoRowAndTwoColumnAttributes: {
-            scenarioIndex: 0,
-            execution: fp_aea45a374b1f55e749275b328e30d94d,
-        },
-        EmptyValues: { scenarioIndex: 1, execution: fp_aea45a374b1f55e749275b328e30d94d },
-        Themed: { scenarioIndex: 2, execution: fp_aea45a374b1f55e749275b328e30d94d },
-        Font: { scenarioIndex: 3, execution: fp_aea45a374b1f55e749275b328e30d94d },
-        TwoMeasuresAndSingleColumnGrandTotalAndSingleSubtotalSortedBySecondAttribute: {
-            scenarioIndex: 0,
-            execution: fp_b01bccbf9167508268b7a901b4ccd063,
-        },
-        TwoMeasuresWithTwoRowAndOneColumnAttributes: {
-            scenarioIndex: 0,
-            execution: fp_b034871dc7b2c8d7d9fc10a81b1b5fae,
-        },
-        TwoMeasuresAndMultipleGrandTotalsForEach: {
-            scenarioIndex: 0,
-            execution: fp_b15be8f3c2c0e721956f0563e80f2e07,
-        },
-        TwoMeasuresAndMultipleColumnGrandTotalsForEach: {
-            scenarioIndex: 0,
-            execution: fp_b30b06df758636e35e03b96a9662e53f,
-        },
-        SingleMeasureAndMultipleColumnRowGrandTotals: {
-            scenarioIndex: 0,
-            execution: fp_b3727c142e53427d1ac555b048019f88,
-        },
-        TwoMeasuresAndSingleColumnGrandTotalForOne: {
-            scenarioIndex: 0,
-            execution: fp_b8402b07097387493122f955cdae5e61,
-        },
-        TwoMeasuresAndOneColumnSubtotal: { scenarioIndex: 0, execution: fp_ba1ccbfca6ce3c9311d8becc13b28093 },
-        SingleMeasureWithRowAttribute: { scenarioIndex: 3, execution: fp_ba8c7b4230cdc8e9271694befe40abf4 },
-        SingleMeasureWithTwoRowAndOneColumnAttributes: {
-            scenarioIndex: 0,
-            execution: fp_bd4b4956516e1f429c2344f9b263c8df,
-        },
-        TwoMeasuresAndColumnGrandTotalsAndMultipleSubtotals: {
-            scenarioIndex: 0,
-            execution: fp_c0b87cf504b8920cc6897c31274f1a51,
-        },
-        OneMeasureAndRepeatingRowAttributesOnDifferentPositions: {
-            scenarioIndex: 0,
-            execution: fp_c1444f217c8e0aecfb14f64996bd7b7e,
-        },
-        TwoMeasuresWithTwoRowAndTwoColumnAttributes: {
-            scenarioIndex: 0,
-            execution: fp_c2ed90caa1677729885f2f90df6bdd73,
-        },
-        TwoMeasuresAndSingleGrandTotalForOne: {
-            scenarioIndex: 0,
-            execution: fp_c32086d6716aa4b42b64be41f1dbdd04,
-        },
-        SingleColumn: { scenarioIndex: 0, execution: fp_c4c31413a7b65502296aba901f6b50f8 },
-        TwoMeasuresAndSingleColumnRowGrandTotalForEach: {
-            scenarioIndex: 0,
-            execution: fp_cd90f05d3866c307575d70866a88b1de,
-        },
-        TwoMeasuresAndSingleColumnRowGrandTotalForOne: {
-            scenarioIndex: 0,
-            execution: fp_d7a8d8ff7ac29c8223bb3ed015131833,
-        },
-        TwoMeasuresAndSingleColumnGrandTotalForEach: {
-            scenarioIndex: 0,
-            execution: fp_d7a98fc9b39a99b72c72f135740f2e54,
-        },
-        TwoMeasuresWithSingleRowAttrSortedBySecondMeasure: {
-            scenarioIndex: 0,
-            execution: fp_f304c0180efbca32eeccaa096410dc8f,
-        },
-        SingleMeasurePivotWithBothAttributesAndMetricsInRows: {
-            scenarioIndex: 0,
-            execution: fp_f46be32e6d2334de1d485921c52cc8e4,
-        },
-        TwoMeasuresWithSingleRowAttrSortedByFirstMeasure: {
-            scenarioIndex: 0,
-            execution: fp_f5008c073c235b861044fc2ec3f4b0bc,
-        },
-        TwoMeasuresInRowsAndOnlyColumnAttrsOnLeft: {
-            scenarioIndex: 0,
-            execution: fp_f57b0aa05b172c7db09c6fc0e29d3198,
-        },
-        TwoMeasuresInRowsAndOnlyColumnAttrsOnLeftWithDrilling: {
-            scenarioIndex: 1,
-            execution: fp_f57b0aa05b172c7db09c6fc0e29d3198,
-        },
-        TwoMeasuresInRowsAndColumnAttrsOnTopWithInvalidDrillingOnAttributes: {
-            scenarioIndex: 2,
-            execution: fp_f57b0aa05b172c7db09c6fc0e29d3198,
-        },
-        TwoMeasuresInRowsAndColumnAttrsOnTopWithDrillingOnMetrics: {
-            scenarioIndex: 3,
-            execution: fp_f57b0aa05b172c7db09c6fc0e29d3198,
-        },
-        TwoMeasuresWithRowAttribute: { scenarioIndex: 0, execution: fp_f6db2dc71e518b432dd21209ebdd0521 },
-        SingleMeasureAndSingleColumnRowGrandTotal: {
-            scenarioIndex: 0,
-            execution: fp_f997d8a8ee1a67def6bb63d28708cbc3,
-        },
-        TwoMeasuresAndMultipleColumnRowSubtotals: {
-            scenarioIndex: 0,
-            execution: fp_fe9b7d7da26bca841ea91d1f0b83b67e,
-        },
+};
+const scenarios_PivotTableNext = {
+    TwoMeasuresAndGrandTotalsAndMultipleSubtotals: {
+        scenarioIndex: 0,
+        execution: fp_6ef5731c63a579f03fde4a9b01f7c607,
     },
-    Heatmap: {
-        MeasureAndRows: { scenarioIndex: 0, execution: fp_0284e286d159ff513193edf047e0512e },
-        MeasureRowsAndColumnsWithNullDataPoints: {
-            scenarioIndex: 0,
-            execution: fp_2d5760d55de373dbe284995a5d2d4322,
-        },
-        ThemedWithNullValues: { scenarioIndex: 1, execution: fp_2d5760d55de373dbe284995a5d2d4322 },
-        MeasureAndColumns: { scenarioIndex: 0, execution: fp_3c8501c4836dd44339feeb3f1a3c0893 },
-        MeasureOnly: { scenarioIndex: 4, execution: fp_48d6b389940c3f7522eddc93458a0b0b },
-        MeasureRowsAndColumns: { scenarioIndex: 0, execution: fp_b51cdaac06f843aa9d608b65699a71e9 },
-        Themed: { scenarioIndex: 1, execution: fp_b51cdaac06f843aa9d608b65699a71e9 },
-        Font: { scenarioIndex: 2, execution: fp_b51cdaac06f843aa9d608b65699a71e9 },
+    SingleMeasureAndSingleColumnGrandTotal: {
+        scenarioIndex: 1,
+        execution: fp_08a6c636ea0d007de91e886fc9fbd1bb,
     },
-    Headline: {
-        ComparisonWithEqualsArrow: { scenarioIndex: 0, execution: fp_078871bd4f547dce1aea2d580c99928c },
-        ComparisonWithEqualsArrowAndColor: {
-            scenarioIndex: 1,
-            execution: fp_078871bd4f547dce1aea2d580c99928c,
-        },
-        TwoMeasuresWithComparison: { scenarioIndex: 0, execution: fp_17d99baa7d1c617990b2f473a6f99bea },
-        ComparisonWithDefaultConfig: { scenarioIndex: 1, execution: fp_17d99baa7d1c617990b2f473a6f99bea },
-        ComparisonWithDecimal1Format: { scenarioIndex: 2, execution: fp_17d99baa7d1c617990b2f473a6f99bea },
-        ComparisonWithCustomFormat: { scenarioIndex: 3, execution: fp_17d99baa7d1c617990b2f473a6f99bea },
-        ComparisonWithPositiveArrow: { scenarioIndex: 4, execution: fp_17d99baa7d1c617990b2f473a6f99bea },
-        ComparisonWithPositiveArrowAndColor: {
-            scenarioIndex: 5,
-            execution: fp_17d99baa7d1c617990b2f473a6f99bea,
-        },
-        ComparisonWithCustomLabel: { scenarioIndex: 6, execution: fp_17d99baa7d1c617990b2f473a6f99bea },
-        ComparisonWithPositionOnTop: { scenarioIndex: 7, execution: fp_17d99baa7d1c617990b2f473a6f99bea },
-        ComparisonWithPositionOnRight: { scenarioIndex: 8, execution: fp_17d99baa7d1c617990b2f473a6f99bea },
-        MultiMeasuresWithOnlyPrimaryMeasure: {
-            scenarioIndex: 0,
-            execution: fp_2af92f7ce4af4af38b97ce06e64e96b3,
-        },
-        ComparisonWithCalculateAsDifferentAndDefaultFormat: {
-            scenarioIndex: 0,
-            execution: fp_3014bf2b850217c6e41b106f1f63aa2e,
-        },
-        ComparisonWithDefaultConfigWithSecondaryMeasureIsPoP: {
-            scenarioIndex: 0,
-            execution: fp_420e7d54c04ecb3b38b29322a4204e82,
-        },
-        ComparisonWithCalculateAsChangeDifferenceAndDefaultSubFormat: {
-            scenarioIndex: 0,
-            execution: fp_466cd63df0b7a28ca110a49c9319d692,
-        },
-        ComparisonWithCalculateAsChangeDifferenceAndCustomFormat: {
-            scenarioIndex: 1,
-            execution: fp_466cd63df0b7a28ca110a49c9319d692,
-        },
-        MultiMeasuresWithTwoMeasuresOnePoP: {
-            scenarioIndex: 0,
-            execution: fp_798df950f4dbb5d1df536bb33ba80a11,
-        },
-        MultiMeasuresWithThreeMeasures: { scenarioIndex: 0, execution: fp_914d0eda9a14c9ad9d6f77412f57134d },
-        MultiMeasuresWithTwoMeasures: { scenarioIndex: 0, execution: fp_a028b9af8e61d7a059883415bdea675d },
-        MultiMeasuresWithTwoMeasuresWithGermanSeparators: {
-            scenarioIndex: 1,
-            execution: fp_a028b9af8e61d7a059883415bdea675d,
-        },
-        Themed: { scenarioIndex: 0, execution: fp_f1fcc87ce7a6cb76e0e0d1bfa7f17e50 },
-        Font: { scenarioIndex: 1, execution: fp_f1fcc87ce7a6cb76e0e0d1bfa7f17e50 },
-        ComparisonWithNegativeArrow: { scenarioIndex: 2, execution: fp_f1fcc87ce7a6cb76e0e0d1bfa7f17e50 },
-        ComparisonWithNegativeArrowAndColor: {
-            scenarioIndex: 3,
-            execution: fp_f1fcc87ce7a6cb76e0e0d1bfa7f17e50,
-        },
+    TwoMeasuresAndOneSubtotal: { scenarioIndex: 1, execution: fp_10a1791bf91af3f9d71fec403da50bfc },
+    TwoMeasuresWithThreeRowsAndTwoColumnAttributes: {
+        scenarioIndex: 1,
+        execution: fp_12d1eb593ce811011cea335d45b4e7d9,
     },
-    LineChart: {
-        WithOneMeasureAndTrendByDateAndSegmentByDate: {
-            scenarioIndex: 0,
-            execution: fp_0dd86d9973d6b371b28eb46dbcffe070,
-        },
-        SingleMeasure: { scenarioIndex: 4, execution: fp_13de8b21eccb15fb383defb77a8e9bb5 },
-        SingleMeasureWithTrendByAndSegmentBy: {
-            scenarioIndex: 0,
-            execution: fp_3e269905e8197c70e7c4bd492d36a9e0,
-        },
-        TwoMeasuresWithTrendByAndSortByAttribute: {
-            scenarioIndex: 0,
-            execution: fp_4a27950118c41b55cee99e7f16252be2,
-        },
-        WithTwoMeasuresAndNullValues: { scenarioIndex: 2, execution: fp_62fe61cc85604cf63bbb67ca744dc04f },
-        WithOneMeasureAndSegmentByDate: { scenarioIndex: 0, execution: fp_89757d58df661d4465e4dc9586096a34 },
-        TwoMeasuresWithTrendByAndSortByMeasure: {
-            scenarioIndex: 0,
-            execution: fp_8d8121e8f9ff6a8fd9660b3359376a6c,
-        },
-        SingleMeasureWithPercentAndTrendBy: {
-            scenarioIndex: 0,
-            execution: fp_93f2f2113af0d1b68bc490daca8180d9,
-        },
-        SingleMeasureWithTrendBy: { scenarioIndex: 0, execution: fp_afde79742c581671ba35008bf5c3a1e6 },
-        StackedThresholdZones: { scenarioIndex: 0, execution: fp_c925112d00db27fd227dcc3945f3467e },
-        ThresholdZones: { scenarioIndex: 0, execution: fp_d1829d7c8b6eed85fdb839f4f78dc813 },
-        TwoMeasuresWithTrendBy: { scenarioIndex: 0, execution: fp_d5fe35d865cc73bd6090e9f8c121bf99 },
-        Themed: { scenarioIndex: 1, execution: fp_d5fe35d865cc73bd6090e9f8c121bf99 },
-        Font: { scenarioIndex: 2, execution: fp_d5fe35d865cc73bd6090e9f8c121bf99 },
-        ArithmeticMeasures: { scenarioIndex: 0, execution: fp_ebdb85c15f6c241e047d0784d2327b33 },
+    TwoMeasuresAndSingleGrandTotalSortedBySecondAttribute: {
+        scenarioIndex: 1,
+        execution: fp_17e1400e22cf959015e4be5bdb618c37,
     },
-    ComboChart: {
-        OnePrimaryAndSecondaryMeasureWithViewBySortedByPrimaryMeasure: {
-            scenarioIndex: 0,
-            execution: fp_0f77c470c65b141d58c4e28cd8e03b2f,
-        },
-        OnePrimaryMeasure: { scenarioIndex: 3, execution: fp_13de8b21eccb15fb383defb77a8e9bb5 },
-        OnePrimaryMeasureWithViewBy: { scenarioIndex: 3, execution: fp_334febec1d24c565faab8bb5138542f7 },
-        OneSecondaryMeasureWithViewBy: { scenarioIndex: 4, execution: fp_334febec1d24c565faab8bb5138542f7 },
-        TwoSecondaryMeasureWithViewBy: { scenarioIndex: 7, execution: fp_355096b0de4fc0081470f2facee34bac },
-        OnePrimaryAndSecondaryMeasureWithViewBy: {
-            scenarioIndex: 8,
-            execution: fp_355096b0de4fc0081470f2facee34bac,
-        },
-        ThresholdComboZones: { scenarioIndex: 0, execution: fp_39b0cfde3518f5db3ee3afa7ad305c54 },
-        ThresholdComboZonesWithExcludedMeasures: {
-            scenarioIndex: 1,
-            execution: fp_39b0cfde3518f5db3ee3afa7ad305c54,
-        },
-        OnePrimaryAndSecondaryMeasureWithViewBySortedBySecondaryMeasure: {
-            scenarioIndex: 0,
-            execution: fp_4cb0e0490ebf39c75d48a129089058be,
-        },
-        TwoMeasuresWithNullValues: { scenarioIndex: 1, execution: fp_62fe61cc85604cf63bbb67ca744dc04f },
-        MultipleMeasuresAndNoViewBy: { scenarioIndex: 0, execution: fp_bbf89ea03e19ccd63ff4d2f8a61b76c3 },
-        ArithmeticMeasures: { scenarioIndex: 2, execution: fp_c104b12ddebf5464edb6fbaca79dcf05 },
-        Themed: { scenarioIndex: 3, execution: fp_c104b12ddebf5464edb6fbaca79dcf05 },
-        Font: { scenarioIndex: 4, execution: fp_c104b12ddebf5464edb6fbaca79dcf05 },
-        OnePrimaryAndSecondaryMeasureWithViewBySortedByAttr: {
-            scenarioIndex: 3,
-            execution: fp_e480af73cb3da22e143deba5b7f4b3e3,
-        },
-        MultiplePrimaryAndSecondaryMeasuresWithViewBy: {
-            scenarioIndex: 0,
-            execution: fp_ea3ba97511ee18ece1e428c4b694abc2,
-        },
-        OnePrimaryAndSecondaryMeasureNoViewBy: {
-            scenarioIndex: 1,
-            execution: fp_f39ed708ee551a9ff3e9acc3ec249a8c,
-        },
+    WithTwoSameDates: { scenarioIndex: 1, execution: fp_1dee8e67d6f87c8f37dce28126fc893e },
+    TwoMeasuresAndMultipleGrandTotalsForEach: {
+        scenarioIndex: 1,
+        execution: fp_b15be8f3c2c0e721956f0563e80f2e07,
     },
-    AreaChart: {
-        SingleMeasure: { scenarioIndex: 0, execution: fp_13de8b21eccb15fb383defb77a8e9bb5 },
-        SingleMeasureWithViewBy: { scenarioIndex: 0, execution: fp_334febec1d24c565faab8bb5138542f7 },
-        TwoMeasuresWithViewBy: { scenarioIndex: 0, execution: fp_355096b0de4fc0081470f2facee34bac },
-        Themed: { scenarioIndex: 1, execution: fp_355096b0de4fc0081470f2facee34bac },
-        Font: { scenarioIndex: 2, execution: fp_355096b0de4fc0081470f2facee34bac },
-        WithOneMeasureAndViewByDateAndStackByDate: {
-            scenarioIndex: 0,
-            execution: fp_48a48586c11c74bc51d85de395b0d353,
-        },
-        TwoMeasuresWithUndefinedValues: { scenarioIndex: 0, execution: fp_62fe61cc85604cf63bbb67ca744dc04f },
-        SingleMeasureWithViewByAndStackBy: {
-            scenarioIndex: 0,
-            execution: fp_a523e44f3523b4d118c53712590ba3ca,
-        },
-        SingleMeasureWithTwoViewBy: { scenarioIndex: 1, execution: fp_a523e44f3523b4d118c53712590ba3ca },
-        ArithmeticMeasures: { scenarioIndex: 0, execution: fp_c104b12ddebf5464edb6fbaca79dcf05 },
-        TwoMeasuresWithViewBySortedByMeasure: {
-            scenarioIndex: 0,
-            execution: fp_c322b5a7579d7172e11bac46018bb95b,
-        },
-        TwoMeasuresWithViewBySortedByAttribute: {
-            scenarioIndex: 0,
-            execution: fp_e480af73cb3da22e143deba5b7f4b3e3,
-        },
+    SingleAttribute: { scenarioIndex: 1, execution: fp_245cabd1fb1f98e24cd680cc9c52254b },
+    MultipleMeasuresAndNoColumnsWithTotals: {
+        scenarioIndex: 0,
+        execution: fp_dcaded12a70ed9c7556c96b4d4d54763,
     },
-    BarChart: {
-        SingleMeasure: { scenarioIndex: 1, execution: fp_13de8b21eccb15fb383defb77a8e9bb5 },
-        SingleMeasureWithViewBy: { scenarioIndex: 1, execution: fp_334febec1d24c565faab8bb5138542f7 },
-        TwoMeasuresWithViewBy: { scenarioIndex: 3, execution: fp_355096b0de4fc0081470f2facee34bac },
-        ViewByDateAndPoPMeasure: { scenarioIndex: 0, execution: fp_4ff767e70293368c333c7f905aa7ce96 },
-        FourMeasuresAndPoP: { scenarioIndex: 0, execution: fp_72c593c83e34d0da4f1bf9e96ba9eaa6 },
-        SingleMeasureWithViewByAndStackBy: {
-            scenarioIndex: 2,
-            execution: fp_a523e44f3523b4d118c53712590ba3ca,
-        },
-        Themed: { scenarioIndex: 3, execution: fp_a523e44f3523b4d118c53712590ba3ca },
-        Font: { scenarioIndex: 4, execution: fp_a523e44f3523b4d118c53712590ba3ca },
-        SingleMeasureWithTwoViewByAndStack: {
-            scenarioIndex: 0,
-            execution: fp_a987c14f422c16be1788cb94e3f256e9,
-        },
-        StackByWithOneDate: { scenarioIndex: 0, execution: fp_b7a155ebd4d17e9cc9d7babcc2cb86a6 },
-        ArithmeticMeasures: { scenarioIndex: 1, execution: fp_c104b12ddebf5464edb6fbaca79dcf05 },
-        ViewByWithTwoDates: { scenarioIndex: 0, execution: fp_c2b850d7baff511e45e237d6707d5f7c },
-        TwoMeasuresWithViewBySortedByMeasure: {
-            scenarioIndex: 1,
-            execution: fp_c322b5a7579d7172e11bac46018bb95b,
-        },
-        TwoMeasuresWithTwoViewByFilteredToSingleValue: {
-            scenarioIndex: 0,
-            execution: fp_df84d4212055cb41d2547e98df70ed09,
-        },
-        TwoMeasuresWithViewBySortedByAttribute: {
-            scenarioIndex: 1,
-            execution: fp_e480af73cb3da22e143deba5b7f4b3e3,
-        },
-        TwoMeasuresWithTwoViewBy: { scenarioIndex: 0, execution: fp_eae1c9a65cf05e9e0a8fde6173ef7141 },
+    SingleMeasurePivotSortedByFirstAndSecondRowAttr: {
+        scenarioIndex: 0,
+        execution: fp_300c0b908199156a328388972230be9a,
     },
-    SankeyChart: {
-        MeasureOnly: { scenarioIndex: 5, execution: fp_13de8b21eccb15fb383defb77a8e9bb5 },
-        MeasureAndAttributeFrom: { scenarioIndex: 18, execution: fp_334febec1d24c565faab8bb5138542f7 },
-        MeasureAndAttributeTo: { scenarioIndex: 1, execution: fp_9a050396d17168ec48baeb6ce31180c9 },
-        MeasureAttributeFromAndAttributeTo: {
-            scenarioIndex: 0,
-            execution: fp_a88209ff899d0aab5cdbce9321916202,
-        },
-        Themed: { scenarioIndex: 1, execution: fp_a88209ff899d0aab5cdbce9321916202 },
-        Font: { scenarioIndex: 2, execution: fp_a88209ff899d0aab5cdbce9321916202 },
+    TwoMeasuresAndMultipleColumnRowGrandTotalsForEach: {
+        scenarioIndex: 1,
+        execution: fp_6d744aacff949cf033683d86262b4e77,
     },
-    DependencyWheelChart: {
-        MeasureOnly: { scenarioIndex: 6, execution: fp_13de8b21eccb15fb383defb77a8e9bb5 },
-        MeasureAndAttributeFrom: { scenarioIndex: 19, execution: fp_334febec1d24c565faab8bb5138542f7 },
-        MeasureAndAttributeTo: { scenarioIndex: 2, execution: fp_9a050396d17168ec48baeb6ce31180c9 },
-        MeasureAttributeFromAndAttributeTo: {
-            scenarioIndex: 3,
-            execution: fp_a88209ff899d0aab5cdbce9321916202,
-        },
-        Themed: { scenarioIndex: 4, execution: fp_a88209ff899d0aab5cdbce9321916202 },
-        Font: { scenarioIndex: 5, execution: fp_a88209ff899d0aab5cdbce9321916202 },
+    MultipleMeasuresAndRowAttributesWithMetricsInRowsWithDrilling: {
+        scenarioIndex: 1,
+        execution: fp_38b3cbb3e3c8b075d1b11de44c78a01e,
     },
-    FunnelChart: {
-        ArithmeticMeasures: { scenarioIndex: 0, execution: fp_1e8cbb124adecad24fd8b2411feb0ba4 },
-        SingleMeasureWithViewBy: { scenarioIndex: 8, execution: fp_334febec1d24c565faab8bb5138542f7 },
-        Themed: { scenarioIndex: 9, execution: fp_334febec1d24c565faab8bb5138542f7 },
-        Font: { scenarioIndex: 10, execution: fp_334febec1d24c565faab8bb5138542f7 },
-        SingleMeasure: { scenarioIndex: 2, execution: fp_48d6b389940c3f7522eddc93458a0b0b },
-        SingleMeasureWithViewBySortedByAttribute: {
-            scenarioIndex: 0,
-            execution: fp_63474f48ac4c0983037362b87f750dab,
-        },
-        TwoMeasures: { scenarioIndex: 1, execution: fp_681fd174545bf5e693b9b0df873870cb },
-        SingleMeasureWithViewBySortedByMeasure: {
-            scenarioIndex: 0,
-            execution: fp_ab512ffee181d65e86c4064a9168fc7e,
-        },
+    WithDateFilter: { scenarioIndex: 1, execution: fp_4765fcec9e0cf6a0f6474dfcc89346f9 },
+    SingleMeasure: { scenarioIndex: 10, execution: fp_48d6b389940c3f7522eddc93458a0b0b },
+    SingleMeasureAndMultipleGrandTotals: { scenarioIndex: 1, execution: fp_93b4400696ea330b3d49c0506eb90538 },
+    SingleMeasureAndMultipleColumnGrandTotals: {
+        scenarioIndex: 0,
+        execution: fp_50c6b990ee6e7496159726ebb00e82e7,
     },
-    PyramidChart: {
-        ArithmeticMeasures: { scenarioIndex: 1, execution: fp_1e8cbb124adecad24fd8b2411feb0ba4 },
-        SingleMeasureWithViewBy: { scenarioIndex: 11, execution: fp_334febec1d24c565faab8bb5138542f7 },
-        Themed: { scenarioIndex: 12, execution: fp_334febec1d24c565faab8bb5138542f7 },
-        Font: { scenarioIndex: 13, execution: fp_334febec1d24c565faab8bb5138542f7 },
-        SingleMeasure: { scenarioIndex: 3, execution: fp_48d6b389940c3f7522eddc93458a0b0b },
-        SingleMeasureWithViewBySortedByAttribute: {
-            scenarioIndex: 1,
-            execution: fp_63474f48ac4c0983037362b87f750dab,
-        },
-        TwoMeasures: { scenarioIndex: 2, execution: fp_681fd174545bf5e693b9b0df873870cb },
-        SingleMeasureWithViewBySortedByMeasure: {
-            scenarioIndex: 1,
-            execution: fp_ab512ffee181d65e86c4064a9168fc7e,
-        },
+    TwoMeasuresAndMultipleColumnGrandTotalsForEach: {
+        scenarioIndex: 1,
+        execution: fp_b30b06df758636e35e03b96a9662e53f,
     },
-    BubbleChart: {
-        XAndYAxisAndSizeMeasuresWithViewByAndSortedByAttr: {
-            scenarioIndex: 0,
-            execution: fp_2da2713503f38f8746724eaa5d4b144b,
-        },
-        XAndYAxisMeasuresWithViewBy: { scenarioIndex: 0, execution: fp_38679dbd273113f1de475b82242c7e2f },
-        XAxisMeasure: { scenarioIndex: 0, execution: fp_48d6b389940c3f7522eddc93458a0b0b },
-        XAndYAxisAndSizeMeasuresWithViewBy: {
-            scenarioIndex: 0,
-            execution: fp_58e266e9ba1de6e8bc9e94d211dd5219,
-        },
-        Themed: { scenarioIndex: 1, execution: fp_58e266e9ba1de6e8bc9e94d211dd5219 },
-        Font: { scenarioIndex: 2, execution: fp_58e266e9ba1de6e8bc9e94d211dd5219 },
-        XAxisAndSizeMeasuresWithViewBy: { scenarioIndex: 0, execution: fp_6f71a7a6d3124ff4e43caff22276fad9 },
-        YAxisAndSizeMeasuresWithViewBy: { scenarioIndex: 1, execution: fp_6f71a7a6d3124ff4e43caff22276fad9 },
-        XAndYAxisAndSizeMeasuresWithViewByWithNullsInData: {
-            scenarioIndex: 0,
-            execution: fp_b29c9a93475a553e7a80b1efce5f7727,
-        },
-        XAxisMeasureWithViewBy: { scenarioIndex: 0, execution: fp_ba8c7b4230cdc8e9271694befe40abf4 },
-        ArithmeticMeasure: { scenarioIndex: 0, execution: fp_ecc932bf0dd45630eb7993b3cbc0e6f0 },
+    TwoMeasuresInRowsAndColumnAttrsOnLeftWithTotals: {
+        scenarioIndex: 1,
+        execution: fp_55a6a5d0f818f5a7676513e4378a2868,
     },
-    BulletChart: {
-        PrimaryTargetAndComparativeMeasures: {
-            scenarioIndex: 0,
-            execution: fp_2dea042defd6bc6fd9a7f87e81d01975,
-        },
-        PrimaryMeasure: { scenarioIndex: 0, execution: fp_57b711ed3d39b337352474253951775c },
-        PrimaryAndTargetMeasuresWithViewBy: {
-            scenarioIndex: 0,
-            execution: fp_58aeef8c8b7229b10848cbcba8dde13a,
-        },
-        PrimaryTargetAndComparativeMeasuresWithTwoViewBy: {
-            scenarioIndex: 0,
-            execution: fp_7f584ba03889cfa727423cd7a1c6563b,
-        },
-        PrimaryAndTargetMeasures: { scenarioIndex: 0, execution: fp_93e82ae205d1914c5bb7ffca48e5ca43 },
-        PrimaryAndComparativeMeasures: { scenarioIndex: 1, execution: fp_93e82ae205d1914c5bb7ffca48e5ca43 },
-        PrimaryTargetAndComparativeMeasuresWithViewByAndSort: {
-            scenarioIndex: 0,
-            execution: fp_97c7f6001b8d57bc669b3d2e80331e6a,
-        },
-        PrimaryWithTwoViewByDates: { scenarioIndex: 0, execution: fp_a9c716ad99eb48aa765104c9275cc6e3 },
-        PrimaryTargetAndComparativeMeasuresWithViewBy: {
-            scenarioIndex: 0,
-            execution: fp_b5aa784e7575597633778428e490b4f6,
-        },
-        Themed: { scenarioIndex: 1, execution: fp_b5aa784e7575597633778428e490b4f6 },
-        Font: { scenarioIndex: 2, execution: fp_b5aa784e7575597633778428e490b4f6 },
-        PrimaryTargetAndComparativeMeasuresWithTwoViewByDates: {
-            scenarioIndex: 0,
-            execution: fp_ea7171a44b29651da69295e0556ed18a,
-        },
+    TwoMeasuresAndColumnRowGrandTotalsAndMultipleSubtotals: {
+        scenarioIndex: 0,
+        execution: fp_f1e4efd7d700c6c819fa3568fc9bcae8,
     },
-    Treemap: {
-        WithOneMeasureAndViewByDateAndSegmentByDate: {
-            scenarioIndex: 0,
-            execution: fp_2f0d37f1da514db95959c120a62ffd4c,
-        },
-        SingleMeasureAndViewBy: { scenarioIndex: 17, execution: fp_334febec1d24c565faab8bb5138542f7 },
-        TwoMeasuresAndViewBy: { scenarioIndex: 9, execution: fp_355096b0de4fc0081470f2facee34bac },
-        TwoMeasuresAndSegmentBy: { scenarioIndex: 10, execution: fp_355096b0de4fc0081470f2facee34bac },
-        SingleMeasure: { scenarioIndex: 7, execution: fp_48d6b389940c3f7522eddc93458a0b0b },
-        TwoMeasures: { scenarioIndex: 4, execution: fp_681fd174545bf5e693b9b0df873870cb },
-        SingleMeasureAndSegment: { scenarioIndex: 0, execution: fp_9a050396d17168ec48baeb6ce31180c9 },
-        ArithmeticMeasuresAndSegment: { scenarioIndex: 0, execution: fp_d9512e1db89354846f5d3c1468fbe009 },
-        SingleMeasureAndViewByFilteredToOneElement: {
-            scenarioIndex: 0,
-            execution: fp_f1739290f72c804221e22ae2ecd66e55,
-        },
-        SingleMeasureViewByAndSegment: { scenarioIndex: 0, execution: fp_f950ae585fdee44ac65839426d307654 },
-        Themed: { scenarioIndex: 1, execution: fp_f950ae585fdee44ac65839426d307654 },
-        Font: { scenarioIndex: 2, execution: fp_f950ae585fdee44ac65839426d307654 },
+    MultipleMeasuresAndNoRowsWithTotals: { scenarioIndex: 2, execution: fp_568f6f8fe45127977df23f1e7c16c3e0 },
+    TwoMeasuresInRowsAndOnlyColumnAttrsOnLeftWithTotals: {
+        scenarioIndex: 3,
+        execution: fp_568f6f8fe45127977df23f1e7c16c3e0,
     },
-    DonutChart: {
-        SingleMeasureWithViewBy: { scenarioIndex: 5, execution: fp_334febec1d24c565faab8bb5138542f7 },
-        Themed: { scenarioIndex: 6, execution: fp_334febec1d24c565faab8bb5138542f7 },
-        Font: { scenarioIndex: 7, execution: fp_334febec1d24c565faab8bb5138542f7 },
-        SingleMeasure: { scenarioIndex: 1, execution: fp_48d6b389940c3f7522eddc93458a0b0b },
-        TwoMeasures: { scenarioIndex: 0, execution: fp_681fd174545bf5e693b9b0df873870cb },
-        ArithmeticMeasures: { scenarioIndex: 0, execution: fp_848a2ca02edb3c73e3a1298bd639a5d3 },
+    TwoMeasuresAndOneColumnRowSubtotal: { scenarioIndex: 1, execution: fp_57e4abf06e14ca7c6ca589f5ba620932 },
+    TwoMeasuresWithSingleRowAttrWithMetricsInRows: {
+        scenarioIndex: 1,
+        execution: fp_628456d9adb09d97807468db6d357f34,
     },
-    PieChart: {
-        SingleMeasureWithViewBy: { scenarioIndex: 14, execution: fp_334febec1d24c565faab8bb5138542f7 },
-        Themed: { scenarioIndex: 15, execution: fp_334febec1d24c565faab8bb5138542f7 },
-        Font: { scenarioIndex: 16, execution: fp_334febec1d24c565faab8bb5138542f7 },
-        SingleMeasure: { scenarioIndex: 5, execution: fp_48d6b389940c3f7522eddc93458a0b0b },
-        TwoMeasures: { scenarioIndex: 3, execution: fp_681fd174545bf5e693b9b0df873870cb },
-        ArithmeticMeasures: { scenarioIndex: 1, execution: fp_848a2ca02edb3c73e3a1298bd639a5d3 },
+    TwoMeasuresAndColumnSingleGrandTotalSortedBySecondAttribute: {
+        scenarioIndex: 1,
+        execution: fp_63e53a643477c7f0a1e4b96443d1a072,
     },
-    WaterfallChart: {
-        SingleMeasureWithViewBy: { scenarioIndex: 20, execution: fp_334febec1d24c565faab8bb5138542f7 },
-        Themed: { scenarioIndex: 21, execution: fp_334febec1d24c565faab8bb5138542f7 },
-        Font: { scenarioIndex: 22, execution: fp_334febec1d24c565faab8bb5138542f7 },
-        MultiMeasures: { scenarioIndex: 0, execution: fp_383982db062df5c469a9518684a3ec13 },
-        MultiMeasuresWithATotalMeasure: { scenarioIndex: 1, execution: fp_383982db062df5c469a9518684a3ec13 },
-        MultiMeasuresWithThemed: { scenarioIndex: 2, execution: fp_383982db062df5c469a9518684a3ec13 },
-        MultiMeasuresWithFont: { scenarioIndex: 3, execution: fp_383982db062df5c469a9518684a3ec13 },
-        SingleMeasure: { scenarioIndex: 8, execution: fp_48d6b389940c3f7522eddc93458a0b0b },
+    TwoMeasures: { scenarioIndex: 6, execution: fp_681fd174545bf5e693b9b0df873870cb },
+    SingleMeasurePivotSortedBySecondRowAttr: {
+        scenarioIndex: 1,
+        execution: fp_6ad17cce441c93f0c1f6c5cfffb7d7af,
     },
-    Xirr: {
-        SemanticallyWrongMeasure: { scenarioIndex: 0, execution: fp_38319193c822c712c2c299d77330a31d },
-        CorrectConfig: { scenarioIndex: 0, execution: fp_9453667cb202cb4c42a0231df043dc65 },
-        Themed: { scenarioIndex: 1, execution: fp_9453667cb202cb4c42a0231df043dc65 },
-        Font: { scenarioIndex: 2, execution: fp_9453667cb202cb4c42a0231df043dc65 },
-        OnlyMeasure: { scenarioIndex: 0, execution: fp_b1f7450765b8dc0fd38667904a299266 },
+    TwoMeasuresWithColumnAttribute: { scenarioIndex: 1, execution: fp_6b38289e3de520261ba662868a3bc5ba },
+    ArithmeticMeasures: { scenarioIndex: 1, execution: fp_70330fa367d33c4c428d5d3e54df8eb9 },
+    TwoMeasuresAndMultipleSubtotals: { scenarioIndex: 1, execution: fp_743dad3dce349764d1e2617b3e87026f },
+    TwoMeasuresAndMultipleColumnSubtotals: {
+        scenarioIndex: 1,
+        execution: fp_77f869ae69c392717c13b188e2074842,
     },
-    ScatterPlot: {
-        XAndYAxisMeasuresAndAttribute: { scenarioIndex: 1, execution: fp_38679dbd273113f1de475b82242c7e2f },
-        Themed: { scenarioIndex: 2, execution: fp_38679dbd273113f1de475b82242c7e2f },
-        Font: { scenarioIndex: 3, execution: fp_38679dbd273113f1de475b82242c7e2f },
-        XAndYAxisMeasuresAndAttributeWithAttrSorting: {
-            scenarioIndex: 0,
-            execution: fp_3aac682f5fe543d9e1a4e80fe108f613,
-        },
-        XAxisMeasure: { scenarioIndex: 6, execution: fp_48d6b389940c3f7522eddc93458a0b0b },
-        XAxisMeasureAndAttribute: { scenarioIndex: 1, execution: fp_ba8c7b4230cdc8e9271694befe40abf4 },
-        YAxisMeasureAndAttribute: { scenarioIndex: 2, execution: fp_ba8c7b4230cdc8e9271694befe40abf4 },
-        XAndYAxisMeasuresAndAttributeWithNullsInData: {
-            scenarioIndex: 0,
-            execution: fp_c1825c6987a5585a08614cacdcba4038,
-        },
-        XAndYAxisMeasuresAttributeAndSegmentation: {
-            scenarioIndex: 0,
-            execution: fp_cfa87f64d11e0f72705ca631d6d73a52,
-        },
+    TwoMeasuresAndSingleGrandTotalForEach: {
+        scenarioIndex: 1,
+        execution: fp_7aacee42d5804a99f3dab100b0a5669e,
     },
+    PaginationWith5RowsPerPageAndTotals: { scenarioIndex: 2, execution: fp_7aacee42d5804a99f3dab100b0a5669e },
+    GrandTotalsPinnedAtBottomDefault: { scenarioIndex: 3, execution: fp_7aacee42d5804a99f3dab100b0a5669e },
+    GrandTotalsPinnedAtTop: { scenarioIndex: 4, execution: fp_7aacee42d5804a99f3dab100b0a5669e },
+    GrandTotalsAtBottomNotPinned: { scenarioIndex: 5, execution: fp_7aacee42d5804a99f3dab100b0a5669e },
+    GrandTotalsAtTopNotPinned: { scenarioIndex: 6, execution: fp_7aacee42d5804a99f3dab100b0a5669e },
+    TwoMeasuresAndMultipleColumnRowSubtotalsWithMetricsInRows: {
+        scenarioIndex: 0,
+        execution: fp_dfeebd400b7a16d1e3c434152fc9dd09,
+    },
+    SingleMeasureWithRowAndColumnAttributes: {
+        scenarioIndex: 1,
+        execution: fp_8c58de518b0e42711e9379cce480a63b,
+    },
+    TwoMeasuresWithRowAndColumnAttributes: {
+        scenarioIndex: 1,
+        execution: fp_8eaf6e86ea212a22493eb7c06370a1b1,
+    },
+    WithAttributesWithoutMeasures: { scenarioIndex: 1, execution: fp_956c1be097a9bb7880556e5ba651ad33 },
+    SingleMeasurePivotSortedByFirstRowAttr: {
+        scenarioIndex: 1,
+        execution: fp_9bbaf756a6a44325dc1a9315de17d0fb,
+    },
+    SingleMeasureWithColumnAttribute: { scenarioIndex: 1, execution: fp_9bcc3db7967bd54930a357186a0d39f9 },
+    SingleMeasureAndSingleGrandTotal: { scenarioIndex: 1, execution: fp_a49032eb49179fa4f6f56427072f88bf },
+    SingleMeasureWithTwoRowAndTwoColumnAttributes: {
+        scenarioIndex: 4,
+        execution: fp_aea45a374b1f55e749275b328e30d94d,
+    },
+    EmptyValues: { scenarioIndex: 5, execution: fp_aea45a374b1f55e749275b328e30d94d },
+    TableWithMultipleMeasureColumnsAndWeakMeasureSize: {
+        scenarioIndex: 6,
+        execution: fp_aea45a374b1f55e749275b328e30d94d,
+    },
+    TwoMeasuresAndSingleColumnGrandTotalAndSingleSubtotalSortedBySecondAttribute: {
+        scenarioIndex: 1,
+        execution: fp_b01bccbf9167508268b7a901b4ccd063,
+    },
+    TwoMeasuresWithTwoRowAndOneColumnAttributes: {
+        scenarioIndex: 1,
+        execution: fp_b034871dc7b2c8d7d9fc10a81b1b5fae,
+    },
+    SingleMeasureAndMultipleColumnRowGrandTotals: {
+        scenarioIndex: 1,
+        execution: fp_b3727c142e53427d1ac555b048019f88,
+    },
+    TwoMeasuresAndSingleColumnGrandTotalForOne: {
+        scenarioIndex: 1,
+        execution: fp_b8402b07097387493122f955cdae5e61,
+    },
+    TwoMeasuresAndOneColumnSubtotal: { scenarioIndex: 1, execution: fp_ba1ccbfca6ce3c9311d8becc13b28093 },
+    SingleMeasureWithRowAttribute: { scenarioIndex: 4, execution: fp_ba8c7b4230cdc8e9271694befe40abf4 },
+    SingleMeasureWithTwoRowAndOneColumnAttributes: {
+        scenarioIndex: 1,
+        execution: fp_bd4b4956516e1f429c2344f9b263c8df,
+    },
+    TwoMeasuresAndColumnGrandTotalsAndMultipleSubtotals: {
+        scenarioIndex: 0,
+        execution: fp_e2854c55ab10a6e23413a2322183ae8b,
+    },
+    OneMeasureAndRepeatingRowAttributesOnDifferentPositions: {
+        scenarioIndex: 1,
+        execution: fp_c1444f217c8e0aecfb14f64996bd7b7e,
+    },
+    TwoMeasuresWithTwoRowAndTwoColumnAttributes: {
+        scenarioIndex: 1,
+        execution: fp_c2ed90caa1677729885f2f90df6bdd73,
+    },
+    PaginationWith5RowsPerPage: { scenarioIndex: 2, execution: fp_c2ed90caa1677729885f2f90df6bdd73 },
+    TwoMeasuresAndSingleGrandTotalForOne: {
+        scenarioIndex: 1,
+        execution: fp_c32086d6716aa4b42b64be41f1dbdd04,
+    },
+    SingleColumn: { scenarioIndex: 1, execution: fp_c4c31413a7b65502296aba901f6b50f8 },
+    TwoMeasuresAndSingleColumnRowGrandTotalForEach: {
+        scenarioIndex: 1,
+        execution: fp_cd90f05d3866c307575d70866a88b1de,
+    },
+    TwoMeasuresAndSingleColumnRowGrandTotalForOne: {
+        scenarioIndex: 1,
+        execution: fp_d7a8d8ff7ac29c8223bb3ed015131833,
+    },
+    TwoMeasuresAndSingleColumnGrandTotalForEach: {
+        scenarioIndex: 1,
+        execution: fp_d7a98fc9b39a99b72c72f135740f2e54,
+    },
+    TwoMeasuresWithSingleRowAttrSortedBySecondMeasure: {
+        scenarioIndex: 1,
+        execution: fp_f304c0180efbca32eeccaa096410dc8f,
+    },
+    SingleMeasurePivotWithBothAttributesAndMetricsInRows: {
+        scenarioIndex: 1,
+        execution: fp_f46be32e6d2334de1d485921c52cc8e4,
+    },
+    TwoMeasuresWithSingleRowAttrSortedByFirstMeasure: {
+        scenarioIndex: 1,
+        execution: fp_f5008c073c235b861044fc2ec3f4b0bc,
+    },
+    TwoMeasuresInRowsAndOnlyColumnAttrsOnLeft: {
+        scenarioIndex: 4,
+        execution: fp_f57b0aa05b172c7db09c6fc0e29d3198,
+    },
+    TwoMeasuresInRowsAndOnlyColumnAttrsOnLeftWithDrilling: {
+        scenarioIndex: 5,
+        execution: fp_f57b0aa05b172c7db09c6fc0e29d3198,
+    },
+    TwoMeasuresInRowsAndColumnAttrsOnTopWithInvalidDrillingOnAttributes: {
+        scenarioIndex: 6,
+        execution: fp_f57b0aa05b172c7db09c6fc0e29d3198,
+    },
+    TwoMeasuresInRowsAndColumnAttrsOnTopWithDrillingOnMetrics: {
+        scenarioIndex: 7,
+        execution: fp_f57b0aa05b172c7db09c6fc0e29d3198,
+    },
+    TwoMeasuresWithRowAttribute: { scenarioIndex: 1, execution: fp_f6db2dc71e518b432dd21209ebdd0521 },
+    CellTextWrappingEnabled: { scenarioIndex: 2, execution: fp_f6db2dc71e518b432dd21209ebdd0521 },
+    HeaderTextWrappingEnabled: { scenarioIndex: 3, execution: fp_f6db2dc71e518b432dd21209ebdd0521 },
+    SimpleTableWithAttributeAndMetricColumnSize: {
+        scenarioIndex: 4,
+        execution: fp_f6db2dc71e518b432dd21209ebdd0521,
+    },
+    SingleMeasureAndSingleColumnRowGrandTotal: {
+        scenarioIndex: 1,
+        execution: fp_f997d8a8ee1a67def6bb63d28708cbc3,
+    },
+    TwoMeasuresAndMultipleColumnRowSubtotals: {
+        scenarioIndex: 1,
+        execution: fp_fe9b7d7da26bca841ea91d1f0b83b67e,
+    },
+};
+const scenarios_Repeater = {
+    OneAttributeAndOneVisualisation: { scenarioIndex: 0, execution: fp_013e1b802f58fb8ec4e3d1d116f74116 },
+    Themed: { scenarioIndex: 1, execution: fp_013e1b802f58fb8ec4e3d1d116f74116 },
+    Font: { scenarioIndex: 2, execution: fp_013e1b802f58fb8ec4e3d1d116f74116 },
+    OneAttributeAndOneMeasure: { scenarioIndex: 0, execution: fp_2eb966d16acbb32e1d4c79db521ae692 },
+    OneAttribute: { scenarioIndex: 0, execution: fp_3a7ab7c6ab0f61de59e2f2c5e6b3d92d },
+};
+const scenarios_Execute = {
+    ScopedSeriesWithSlicing: { scenarioIndex: 0, execution: fp_016b56ca4717dd774265c039a39234cd },
+    ScopedSeries: { scenarioIndex: 0, execution: fp_31e13a5611cf85a7e0b275b8beeb923d },
+    TwoUnscopedSeries: { scenarioIndex: 0, execution: fp_31fb4f2ee42e8414a1a92bc2f4eaae12 },
+    SingleUnscopedSeries: { scenarioIndex: 0, execution: fp_c3760115df8f062a7eba3a003a00ff0d },
+};
+const scenarios_PivotTable = {
+    SingleMeasurePivotWithGroupingSortedBySecondRowAttr: {
+        scenarioIndex: 0,
+        execution: fp_0207504a4a78e1e63578b8a0f6d2f5b0,
+    },
+    SingleMeasureAndSingleColumnGrandTotal: {
+        scenarioIndex: 0,
+        execution: fp_08a6c636ea0d007de91e886fc9fbd1bb,
+    },
+    TwoMeasuresAndGrandTotalsAndMultipleSubtotals: {
+        scenarioIndex: 0,
+        execution: fp_0ad53f3c7db666135fc6971aeb4a241f,
+    },
+    TwoMeasuresAndOneSubtotal: { scenarioIndex: 0, execution: fp_10a1791bf91af3f9d71fec403da50bfc },
+    TwoMeasuresWithThreeRowsAndTwoColumnAttributes: {
+        scenarioIndex: 0,
+        execution: fp_12d1eb593ce811011cea335d45b4e7d9,
+    },
+    TwoMeasuresAndSingleGrandTotalSortedBySecondAttribute: {
+        scenarioIndex: 0,
+        execution: fp_17e1400e22cf959015e4be5bdb618c37,
+    },
+    WithTwoSameDates: { scenarioIndex: 0, execution: fp_1dee8e67d6f87c8f37dce28126fc893e },
+    SingleAttribute: { scenarioIndex: 0, execution: fp_245cabd1fb1f98e24cd680cc9c52254b },
+    MultipleMeasuresAndNoColumnsWithTotals: {
+        scenarioIndex: 0,
+        execution: fp_2c58bdd28e3e7df3cfb5eb992aaaad40,
+    },
+    SingleMeasurePivotWithGroupingSortedByMeasure: {
+        scenarioIndex: 0,
+        execution: fp_36743caf34c6a9ea7496afe5443b73e0,
+    },
+    MultipleMeasuresAndRowAttributesWithMetricsInRowsWithDrilling: {
+        scenarioIndex: 0,
+        execution: fp_38b3cbb3e3c8b075d1b11de44c78a01e,
+    },
+    WithDateFilter: { scenarioIndex: 0, execution: fp_4765fcec9e0cf6a0f6474dfcc89346f9 },
+    SingleMeasure: { scenarioIndex: 9, execution: fp_48d6b389940c3f7522eddc93458a0b0b },
+    SingleMeasureAndMultipleColumnGrandTotals: {
+        scenarioIndex: 0,
+        execution: fp_4f8c6666d1a48123e1a2fa4bc4f525e0,
+    },
+    TwoMeasuresInRowsAndColumnAttrsOnLeftWithTotals: {
+        scenarioIndex: 0,
+        execution: fp_55a6a5d0f818f5a7676513e4378a2868,
+    },
+    TwoMeasuresAndColumnRowGrandTotalsAndMultipleSubtotals: {
+        scenarioIndex: 0,
+        execution: fp_55d063736eafa8d70a6146e52a4a8406,
+    },
+    SingleMeasurePivotWithGroupingSortedByFirstRowAttr: {
+        scenarioIndex: 0,
+        execution: fp_56477ba0554dc70e4e983c60a93cbecd,
+    },
+    MultipleMeasuresAndNoRowsWithTotals: { scenarioIndex: 0, execution: fp_568f6f8fe45127977df23f1e7c16c3e0 },
+    TwoMeasuresInRowsAndOnlyColumnAttrsOnLeftWithTotals: {
+        scenarioIndex: 1,
+        execution: fp_568f6f8fe45127977df23f1e7c16c3e0,
+    },
+    TwoMeasuresAndOneColumnRowSubtotal: { scenarioIndex: 0, execution: fp_57e4abf06e14ca7c6ca589f5ba620932 },
+    TwoMeasuresWithSingleRowAttrWithMetricsInRows: {
+        scenarioIndex: 0,
+        execution: fp_628456d9adb09d97807468db6d357f34,
+    },
+    TwoMeasuresAndColumnSingleGrandTotalSortedBySecondAttribute: {
+        scenarioIndex: 0,
+        execution: fp_63e53a643477c7f0a1e4b96443d1a072,
+    },
+    TwoMeasures: { scenarioIndex: 5, execution: fp_681fd174545bf5e693b9b0df873870cb },
+    SingleMeasurePivotSortedBySecondRowAttr: {
+        scenarioIndex: 0,
+        execution: fp_6ad17cce441c93f0c1f6c5cfffb7d7af,
+    },
+    TwoMeasuresWithColumnAttribute: { scenarioIndex: 0, execution: fp_6b38289e3de520261ba662868a3bc5ba },
+    TwoMeasuresAndMultipleColumnRowGrandTotalsForEach: {
+        scenarioIndex: 0,
+        execution: fp_6d744aacff949cf033683d86262b4e77,
+    },
+    ArithmeticMeasures: { scenarioIndex: 0, execution: fp_70330fa367d33c4c428d5d3e54df8eb9 },
+    TwoMeasuresAndMultipleSubtotals: { scenarioIndex: 0, execution: fp_743dad3dce349764d1e2617b3e87026f },
+    TwoMeasuresAndMultipleColumnSubtotals: {
+        scenarioIndex: 0,
+        execution: fp_77f869ae69c392717c13b188e2074842,
+    },
+    TwoMeasuresAndSingleGrandTotalForEach: {
+        scenarioIndex: 0,
+        execution: fp_7aacee42d5804a99f3dab100b0a5669e,
+    },
+    TwoMeasuresAndMultipleColumnRowSubtotalsWithMetricsInRows: {
+        scenarioIndex: 0,
+        execution: fp_862a9ba209c70cd36892eedeb8fe9c83,
+    },
+    SingleMeasureWithRowAndColumnAttributes: {
+        scenarioIndex: 0,
+        execution: fp_8c58de518b0e42711e9379cce480a63b,
+    },
+    TwoMeasuresWithRowAndColumnAttributes: {
+        scenarioIndex: 0,
+        execution: fp_8eaf6e86ea212a22493eb7c06370a1b1,
+    },
+    SingleMeasureAndMultipleGrandTotals: { scenarioIndex: 0, execution: fp_93b4400696ea330b3d49c0506eb90538 },
+    WithAttributesWithoutMeasures: { scenarioIndex: 0, execution: fp_956c1be097a9bb7880556e5ba651ad33 },
+    SingleMeasurePivotSortedByFirstRowAttr: {
+        scenarioIndex: 0,
+        execution: fp_9bbaf756a6a44325dc1a9315de17d0fb,
+    },
+    SingleMeasureWithColumnAttribute: { scenarioIndex: 0, execution: fp_9bcc3db7967bd54930a357186a0d39f9 },
+    SingleMeasureAndSingleGrandTotal: { scenarioIndex: 0, execution: fp_a49032eb49179fa4f6f56427072f88bf },
+    SingleMeasureWithTwoRowAndTwoColumnAttributes: {
+        scenarioIndex: 0,
+        execution: fp_aea45a374b1f55e749275b328e30d94d,
+    },
+    EmptyValues: { scenarioIndex: 1, execution: fp_aea45a374b1f55e749275b328e30d94d },
+    Themed: { scenarioIndex: 2, execution: fp_aea45a374b1f55e749275b328e30d94d },
+    Font: { scenarioIndex: 3, execution: fp_aea45a374b1f55e749275b328e30d94d },
+    TwoMeasuresAndSingleColumnGrandTotalAndSingleSubtotalSortedBySecondAttribute: {
+        scenarioIndex: 0,
+        execution: fp_b01bccbf9167508268b7a901b4ccd063,
+    },
+    TwoMeasuresWithTwoRowAndOneColumnAttributes: {
+        scenarioIndex: 0,
+        execution: fp_b034871dc7b2c8d7d9fc10a81b1b5fae,
+    },
+    TwoMeasuresAndMultipleGrandTotalsForEach: {
+        scenarioIndex: 0,
+        execution: fp_b15be8f3c2c0e721956f0563e80f2e07,
+    },
+    TwoMeasuresAndMultipleColumnGrandTotalsForEach: {
+        scenarioIndex: 0,
+        execution: fp_b30b06df758636e35e03b96a9662e53f,
+    },
+    SingleMeasureAndMultipleColumnRowGrandTotals: {
+        scenarioIndex: 0,
+        execution: fp_b3727c142e53427d1ac555b048019f88,
+    },
+    TwoMeasuresAndSingleColumnGrandTotalForOne: {
+        scenarioIndex: 0,
+        execution: fp_b8402b07097387493122f955cdae5e61,
+    },
+    TwoMeasuresAndOneColumnSubtotal: { scenarioIndex: 0, execution: fp_ba1ccbfca6ce3c9311d8becc13b28093 },
+    SingleMeasureWithRowAttribute: { scenarioIndex: 3, execution: fp_ba8c7b4230cdc8e9271694befe40abf4 },
+    SingleMeasureWithTwoRowAndOneColumnAttributes: {
+        scenarioIndex: 0,
+        execution: fp_bd4b4956516e1f429c2344f9b263c8df,
+    },
+    TwoMeasuresAndColumnGrandTotalsAndMultipleSubtotals: {
+        scenarioIndex: 0,
+        execution: fp_c0b87cf504b8920cc6897c31274f1a51,
+    },
+    OneMeasureAndRepeatingRowAttributesOnDifferentPositions: {
+        scenarioIndex: 0,
+        execution: fp_c1444f217c8e0aecfb14f64996bd7b7e,
+    },
+    TwoMeasuresWithTwoRowAndTwoColumnAttributes: {
+        scenarioIndex: 0,
+        execution: fp_c2ed90caa1677729885f2f90df6bdd73,
+    },
+    TwoMeasuresAndSingleGrandTotalForOne: {
+        scenarioIndex: 0,
+        execution: fp_c32086d6716aa4b42b64be41f1dbdd04,
+    },
+    SingleColumn: { scenarioIndex: 0, execution: fp_c4c31413a7b65502296aba901f6b50f8 },
+    TwoMeasuresAndSingleColumnRowGrandTotalForEach: {
+        scenarioIndex: 0,
+        execution: fp_cd90f05d3866c307575d70866a88b1de,
+    },
+    TwoMeasuresAndSingleColumnRowGrandTotalForOne: {
+        scenarioIndex: 0,
+        execution: fp_d7a8d8ff7ac29c8223bb3ed015131833,
+    },
+    TwoMeasuresAndSingleColumnGrandTotalForEach: {
+        scenarioIndex: 0,
+        execution: fp_d7a98fc9b39a99b72c72f135740f2e54,
+    },
+    TwoMeasuresWithSingleRowAttrSortedBySecondMeasure: {
+        scenarioIndex: 0,
+        execution: fp_f304c0180efbca32eeccaa096410dc8f,
+    },
+    SingleMeasurePivotWithBothAttributesAndMetricsInRows: {
+        scenarioIndex: 0,
+        execution: fp_f46be32e6d2334de1d485921c52cc8e4,
+    },
+    TwoMeasuresWithSingleRowAttrSortedByFirstMeasure: {
+        scenarioIndex: 0,
+        execution: fp_f5008c073c235b861044fc2ec3f4b0bc,
+    },
+    TwoMeasuresInRowsAndOnlyColumnAttrsOnLeft: {
+        scenarioIndex: 0,
+        execution: fp_f57b0aa05b172c7db09c6fc0e29d3198,
+    },
+    TwoMeasuresInRowsAndOnlyColumnAttrsOnLeftWithDrilling: {
+        scenarioIndex: 1,
+        execution: fp_f57b0aa05b172c7db09c6fc0e29d3198,
+    },
+    TwoMeasuresInRowsAndColumnAttrsOnTopWithInvalidDrillingOnAttributes: {
+        scenarioIndex: 2,
+        execution: fp_f57b0aa05b172c7db09c6fc0e29d3198,
+    },
+    TwoMeasuresInRowsAndColumnAttrsOnTopWithDrillingOnMetrics: {
+        scenarioIndex: 3,
+        execution: fp_f57b0aa05b172c7db09c6fc0e29d3198,
+    },
+    TwoMeasuresWithRowAttribute: { scenarioIndex: 0, execution: fp_f6db2dc71e518b432dd21209ebdd0521 },
+    SingleMeasureAndSingleColumnRowGrandTotal: {
+        scenarioIndex: 0,
+        execution: fp_f997d8a8ee1a67def6bb63d28708cbc3,
+    },
+    TwoMeasuresAndMultipleColumnRowSubtotals: {
+        scenarioIndex: 0,
+        execution: fp_fe9b7d7da26bca841ea91d1f0b83b67e,
+    },
+};
+const scenarios_Heatmap = {
+    MeasureAndRows: { scenarioIndex: 0, execution: fp_0284e286d159ff513193edf047e0512e },
+    MeasureRowsAndColumnsWithNullDataPoints: {
+        scenarioIndex: 0,
+        execution: fp_2d5760d55de373dbe284995a5d2d4322,
+    },
+    ThemedWithNullValues: { scenarioIndex: 1, execution: fp_2d5760d55de373dbe284995a5d2d4322 },
+    MeasureAndColumns: { scenarioIndex: 0, execution: fp_3c8501c4836dd44339feeb3f1a3c0893 },
+    MeasureOnly: { scenarioIndex: 4, execution: fp_48d6b389940c3f7522eddc93458a0b0b },
+    MeasureRowsAndColumns: { scenarioIndex: 0, execution: fp_b51cdaac06f843aa9d608b65699a71e9 },
+    Themed: { scenarioIndex: 1, execution: fp_b51cdaac06f843aa9d608b65699a71e9 },
+    Font: { scenarioIndex: 2, execution: fp_b51cdaac06f843aa9d608b65699a71e9 },
+};
+const scenarios_Headline = {
+    ComparisonWithEqualsArrow: { scenarioIndex: 0, execution: fp_078871bd4f547dce1aea2d580c99928c },
+    ComparisonWithEqualsArrowAndColor: { scenarioIndex: 1, execution: fp_078871bd4f547dce1aea2d580c99928c },
+    TwoMeasuresWithComparison: { scenarioIndex: 0, execution: fp_17d99baa7d1c617990b2f473a6f99bea },
+    ComparisonWithDefaultConfig: { scenarioIndex: 1, execution: fp_17d99baa7d1c617990b2f473a6f99bea },
+    ComparisonWithDecimal1Format: { scenarioIndex: 2, execution: fp_17d99baa7d1c617990b2f473a6f99bea },
+    ComparisonWithCustomFormat: { scenarioIndex: 3, execution: fp_17d99baa7d1c617990b2f473a6f99bea },
+    ComparisonWithPositiveArrow: { scenarioIndex: 4, execution: fp_17d99baa7d1c617990b2f473a6f99bea },
+    ComparisonWithPositiveArrowAndColor: { scenarioIndex: 5, execution: fp_17d99baa7d1c617990b2f473a6f99bea },
+    ComparisonWithCustomLabel: { scenarioIndex: 6, execution: fp_17d99baa7d1c617990b2f473a6f99bea },
+    ComparisonWithPositionOnTop: { scenarioIndex: 7, execution: fp_17d99baa7d1c617990b2f473a6f99bea },
+    ComparisonWithPositionOnRight: { scenarioIndex: 8, execution: fp_17d99baa7d1c617990b2f473a6f99bea },
+    MultiMeasuresWithOnlyPrimaryMeasure: { scenarioIndex: 0, execution: fp_2af92f7ce4af4af38b97ce06e64e96b3 },
+    ComparisonWithCalculateAsDifferentAndDefaultFormat: {
+        scenarioIndex: 0,
+        execution: fp_3014bf2b850217c6e41b106f1f63aa2e,
+    },
+    ComparisonWithDefaultConfigWithSecondaryMeasureIsPoP: {
+        scenarioIndex: 0,
+        execution: fp_420e7d54c04ecb3b38b29322a4204e82,
+    },
+    ComparisonWithCalculateAsChangeDifferenceAndDefaultSubFormat: {
+        scenarioIndex: 0,
+        execution: fp_466cd63df0b7a28ca110a49c9319d692,
+    },
+    ComparisonWithCalculateAsChangeDifferenceAndCustomFormat: {
+        scenarioIndex: 1,
+        execution: fp_466cd63df0b7a28ca110a49c9319d692,
+    },
+    MultiMeasuresWithTwoMeasuresOnePoP: { scenarioIndex: 0, execution: fp_798df950f4dbb5d1df536bb33ba80a11 },
+    MultiMeasuresWithThreeMeasures: { scenarioIndex: 0, execution: fp_914d0eda9a14c9ad9d6f77412f57134d },
+    MultiMeasuresWithTwoMeasures: { scenarioIndex: 0, execution: fp_a028b9af8e61d7a059883415bdea675d },
+    MultiMeasuresWithTwoMeasuresWithGermanSeparators: {
+        scenarioIndex: 1,
+        execution: fp_a028b9af8e61d7a059883415bdea675d,
+    },
+    Themed: { scenarioIndex: 0, execution: fp_f1fcc87ce7a6cb76e0e0d1bfa7f17e50 },
+    Font: { scenarioIndex: 1, execution: fp_f1fcc87ce7a6cb76e0e0d1bfa7f17e50 },
+    ComparisonWithNegativeArrow: { scenarioIndex: 2, execution: fp_f1fcc87ce7a6cb76e0e0d1bfa7f17e50 },
+    ComparisonWithNegativeArrowAndColor: { scenarioIndex: 3, execution: fp_f1fcc87ce7a6cb76e0e0d1bfa7f17e50 },
+};
+const scenarios_LineChart = {
+    WithOneMeasureAndTrendByDateAndSegmentByDate: {
+        scenarioIndex: 0,
+        execution: fp_0dd86d9973d6b371b28eb46dbcffe070,
+    },
+    SingleMeasure: { scenarioIndex: 4, execution: fp_13de8b21eccb15fb383defb77a8e9bb5 },
+    SingleMeasureWithTrendByAndSegmentBy: {
+        scenarioIndex: 0,
+        execution: fp_3e269905e8197c70e7c4bd492d36a9e0,
+    },
+    TwoMeasuresWithTrendByAndSortByAttribute: {
+        scenarioIndex: 0,
+        execution: fp_4a27950118c41b55cee99e7f16252be2,
+    },
+    WithTwoMeasuresAndNullValues: { scenarioIndex: 2, execution: fp_62fe61cc85604cf63bbb67ca744dc04f },
+    WithOneMeasureAndSegmentByDate: { scenarioIndex: 0, execution: fp_89757d58df661d4465e4dc9586096a34 },
+    TwoMeasuresWithTrendByAndSortByMeasure: {
+        scenarioIndex: 0,
+        execution: fp_8d8121e8f9ff6a8fd9660b3359376a6c,
+    },
+    SingleMeasureWithPercentAndTrendBy: { scenarioIndex: 0, execution: fp_93f2f2113af0d1b68bc490daca8180d9 },
+    SingleMeasureWithTrendBy: { scenarioIndex: 0, execution: fp_afde79742c581671ba35008bf5c3a1e6 },
+    StackedThresholdZones: { scenarioIndex: 0, execution: fp_c925112d00db27fd227dcc3945f3467e },
+    ThresholdZones: { scenarioIndex: 0, execution: fp_d1829d7c8b6eed85fdb839f4f78dc813 },
+    TwoMeasuresWithTrendBy: { scenarioIndex: 0, execution: fp_d5fe35d865cc73bd6090e9f8c121bf99 },
+    Themed: { scenarioIndex: 1, execution: fp_d5fe35d865cc73bd6090e9f8c121bf99 },
+    Font: { scenarioIndex: 2, execution: fp_d5fe35d865cc73bd6090e9f8c121bf99 },
+    ArithmeticMeasures: { scenarioIndex: 0, execution: fp_ebdb85c15f6c241e047d0784d2327b33 },
+};
+const scenarios_ComboChart = {
+    OnePrimaryAndSecondaryMeasureWithViewBySortedByPrimaryMeasure: {
+        scenarioIndex: 0,
+        execution: fp_0f77c470c65b141d58c4e28cd8e03b2f,
+    },
+    OnePrimaryMeasure: { scenarioIndex: 3, execution: fp_13de8b21eccb15fb383defb77a8e9bb5 },
+    OnePrimaryMeasureWithViewBy: { scenarioIndex: 3, execution: fp_334febec1d24c565faab8bb5138542f7 },
+    OneSecondaryMeasureWithViewBy: { scenarioIndex: 4, execution: fp_334febec1d24c565faab8bb5138542f7 },
+    TwoSecondaryMeasureWithViewBy: { scenarioIndex: 7, execution: fp_355096b0de4fc0081470f2facee34bac },
+    OnePrimaryAndSecondaryMeasureWithViewBy: {
+        scenarioIndex: 8,
+        execution: fp_355096b0de4fc0081470f2facee34bac,
+    },
+    ThresholdComboZones: { scenarioIndex: 0, execution: fp_39b0cfde3518f5db3ee3afa7ad305c54 },
+    ThresholdComboZonesWithExcludedMeasures: {
+        scenarioIndex: 1,
+        execution: fp_39b0cfde3518f5db3ee3afa7ad305c54,
+    },
+    OnePrimaryAndSecondaryMeasureWithViewBySortedBySecondaryMeasure: {
+        scenarioIndex: 0,
+        execution: fp_4cb0e0490ebf39c75d48a129089058be,
+    },
+    TwoMeasuresWithNullValues: { scenarioIndex: 1, execution: fp_62fe61cc85604cf63bbb67ca744dc04f },
+    MultipleMeasuresAndNoViewBy: { scenarioIndex: 0, execution: fp_bbf89ea03e19ccd63ff4d2f8a61b76c3 },
+    ArithmeticMeasures: { scenarioIndex: 2, execution: fp_c104b12ddebf5464edb6fbaca79dcf05 },
+    Themed: { scenarioIndex: 3, execution: fp_c104b12ddebf5464edb6fbaca79dcf05 },
+    Font: { scenarioIndex: 4, execution: fp_c104b12ddebf5464edb6fbaca79dcf05 },
+    OnePrimaryAndSecondaryMeasureWithViewBySortedByAttr: {
+        scenarioIndex: 3,
+        execution: fp_e480af73cb3da22e143deba5b7f4b3e3,
+    },
+    MultiplePrimaryAndSecondaryMeasuresWithViewBy: {
+        scenarioIndex: 0,
+        execution: fp_ea3ba97511ee18ece1e428c4b694abc2,
+    },
+    OnePrimaryAndSecondaryMeasureNoViewBy: {
+        scenarioIndex: 1,
+        execution: fp_f39ed708ee551a9ff3e9acc3ec249a8c,
+    },
+};
+const scenarios_BarChart = {
+    TwoMeasuresWithViewBy: { scenarioIndex: 3, execution: fp_355096b0de4fc0081470f2facee34bac },
+    SingleMeasure: { scenarioIndex: 0, execution: fp_3bd6cf5d3fd5296f34a817fb1e8520bd },
+    SingleMeasureWithViewBy: { scenarioIndex: 0, execution: fp_d1a4099ac31a568a7e645ed36a71e9a7 },
+    ArithmeticMeasures: { scenarioIndex: 1, execution: fp_c104b12ddebf5464edb6fbaca79dcf05 },
+    ViewByWithTwoDates: { scenarioIndex: 0, execution: fp_c2b850d7baff511e45e237d6707d5f7c },
+    ViewByDateAndPoPMeasure: { scenarioIndex: 0, execution: fp_e6587a76491e11317f5bc7379eb29cab },
+    TwoMeasuresWithTwoViewByFilteredToSingleValue: {
+        scenarioIndex: 0,
+        execution: fp_df84d4212055cb41d2547e98df70ed09,
+    },
+    FourMeasuresAndPoP: { scenarioIndex: 0, execution: fp_c1cdbf8168fcc557bb51ff4e600d9b26 },
+    SingleMeasureWithViewByAndStackBy: { scenarioIndex: 0, execution: fp_e11f83e4d09220b8adaf1216662fb05e },
+    Themed: { scenarioIndex: 1, execution: fp_e11f83e4d09220b8adaf1216662fb05e },
+    Font: { scenarioIndex: 2, execution: fp_e11f83e4d09220b8adaf1216662fb05e },
+    SingleMeasureWithTwoViewByAndStack: { scenarioIndex: 0, execution: fp_a987c14f422c16be1788cb94e3f256e9 },
+    StackByWithOneDate: { scenarioIndex: 0, execution: fp_b7a155ebd4d17e9cc9d7babcc2cb86a6 },
+    TwoMeasuresWithViewBySortedByMeasure: {
+        scenarioIndex: 1,
+        execution: fp_c322b5a7579d7172e11bac46018bb95b,
+    },
+    TwoMeasuresWithTwoViewBy: { scenarioIndex: 0, execution: fp_eae1c9a65cf05e9e0a8fde6173ef7141 },
+    TwoMeasuresWithViewBySortedByAttribute: {
+        scenarioIndex: 1,
+        execution: fp_e480af73cb3da22e143deba5b7f4b3e3,
+    },
+};
+const scenarios_AreaChart = {
+    SingleMeasure: { scenarioIndex: 0, execution: fp_13de8b21eccb15fb383defb77a8e9bb5 },
+    SingleMeasureWithViewBy: { scenarioIndex: 0, execution: fp_334febec1d24c565faab8bb5138542f7 },
+    TwoMeasuresWithViewBy: { scenarioIndex: 0, execution: fp_355096b0de4fc0081470f2facee34bac },
+    Themed: { scenarioIndex: 1, execution: fp_355096b0de4fc0081470f2facee34bac },
+    Font: { scenarioIndex: 2, execution: fp_355096b0de4fc0081470f2facee34bac },
+    WithOneMeasureAndViewByDateAndStackByDate: {
+        scenarioIndex: 0,
+        execution: fp_48a48586c11c74bc51d85de395b0d353,
+    },
+    TwoMeasuresWithUndefinedValues: { scenarioIndex: 0, execution: fp_62fe61cc85604cf63bbb67ca744dc04f },
+    SingleMeasureWithViewByAndStackBy: { scenarioIndex: 0, execution: fp_a523e44f3523b4d118c53712590ba3ca },
+    SingleMeasureWithTwoViewBy: { scenarioIndex: 1, execution: fp_a523e44f3523b4d118c53712590ba3ca },
+    ArithmeticMeasures: { scenarioIndex: 0, execution: fp_c104b12ddebf5464edb6fbaca79dcf05 },
+    TwoMeasuresWithViewBySortedByMeasure: {
+        scenarioIndex: 0,
+        execution: fp_c322b5a7579d7172e11bac46018bb95b,
+    },
+    TwoMeasuresWithViewBySortedByAttribute: {
+        scenarioIndex: 0,
+        execution: fp_e480af73cb3da22e143deba5b7f4b3e3,
+    },
+};
+const scenarios_SankeyChart = {
+    MeasureOnly: { scenarioIndex: 5, execution: fp_13de8b21eccb15fb383defb77a8e9bb5 },
+    MeasureAndAttributeFrom: { scenarioIndex: 18, execution: fp_334febec1d24c565faab8bb5138542f7 },
+    MeasureAndAttributeTo: { scenarioIndex: 1, execution: fp_9a050396d17168ec48baeb6ce31180c9 },
+    MeasureAttributeFromAndAttributeTo: { scenarioIndex: 0, execution: fp_a88209ff899d0aab5cdbce9321916202 },
+    Themed: { scenarioIndex: 1, execution: fp_a88209ff899d0aab5cdbce9321916202 },
+    Font: { scenarioIndex: 2, execution: fp_a88209ff899d0aab5cdbce9321916202 },
+};
+const scenarios_DependencyWheelChart = {
+    MeasureOnly: { scenarioIndex: 6, execution: fp_13de8b21eccb15fb383defb77a8e9bb5 },
+    MeasureAndAttributeFrom: { scenarioIndex: 19, execution: fp_334febec1d24c565faab8bb5138542f7 },
+    MeasureAndAttributeTo: { scenarioIndex: 2, execution: fp_9a050396d17168ec48baeb6ce31180c9 },
+    MeasureAttributeFromAndAttributeTo: { scenarioIndex: 3, execution: fp_a88209ff899d0aab5cdbce9321916202 },
+    Themed: { scenarioIndex: 4, execution: fp_a88209ff899d0aab5cdbce9321916202 },
+    Font: { scenarioIndex: 5, execution: fp_a88209ff899d0aab5cdbce9321916202 },
+};
+const scenarios_FunnelChart = {
+    ArithmeticMeasures: { scenarioIndex: 0, execution: fp_1e8cbb124adecad24fd8b2411feb0ba4 },
+    SingleMeasureWithViewBy: { scenarioIndex: 4, execution: fp_d1a4099ac31a568a7e645ed36a71e9a7 },
+    Themed: { scenarioIndex: 5, execution: fp_d1a4099ac31a568a7e645ed36a71e9a7 },
+    Font: { scenarioIndex: 6, execution: fp_d1a4099ac31a568a7e645ed36a71e9a7 },
+    SingleMeasure: { scenarioIndex: 2, execution: fp_48d6b389940c3f7522eddc93458a0b0b },
+    SingleMeasureWithViewBySortedByAttribute: {
+        scenarioIndex: 0,
+        execution: fp_63474f48ac4c0983037362b87f750dab,
+    },
+    TwoMeasures: { scenarioIndex: 1, execution: fp_681fd174545bf5e693b9b0df873870cb },
+    SingleMeasureWithViewBySortedByMeasure: {
+        scenarioIndex: 0,
+        execution: fp_ab512ffee181d65e86c4064a9168fc7e,
+    },
+};
+const scenarios_PyramidChart = {
+    ArithmeticMeasures: { scenarioIndex: 1, execution: fp_1e8cbb124adecad24fd8b2411feb0ba4 },
+    SingleMeasureWithViewBy: { scenarioIndex: 7, execution: fp_d1a4099ac31a568a7e645ed36a71e9a7 },
+    Themed: { scenarioIndex: 8, execution: fp_d1a4099ac31a568a7e645ed36a71e9a7 },
+    Font: { scenarioIndex: 9, execution: fp_d1a4099ac31a568a7e645ed36a71e9a7 },
+    SingleMeasure: { scenarioIndex: 3, execution: fp_48d6b389940c3f7522eddc93458a0b0b },
+    SingleMeasureWithViewBySortedByAttribute: {
+        scenarioIndex: 1,
+        execution: fp_63474f48ac4c0983037362b87f750dab,
+    },
+    TwoMeasures: { scenarioIndex: 2, execution: fp_681fd174545bf5e693b9b0df873870cb },
+    SingleMeasureWithViewBySortedByMeasure: {
+        scenarioIndex: 1,
+        execution: fp_ab512ffee181d65e86c4064a9168fc7e,
+    },
+};
+const scenarios_BubbleChart = {
+    XAndYAxisAndSizeMeasuresWithViewByAndSortedByAttr: {
+        scenarioIndex: 0,
+        execution: fp_2da2713503f38f8746724eaa5d4b144b,
+    },
+    XAndYAxisMeasuresWithViewBy: { scenarioIndex: 0, execution: fp_38679dbd273113f1de475b82242c7e2f },
+    XAxisMeasure: { scenarioIndex: 0, execution: fp_48d6b389940c3f7522eddc93458a0b0b },
+    XAndYAxisAndSizeMeasuresWithViewBy: { scenarioIndex: 0, execution: fp_58e266e9ba1de6e8bc9e94d211dd5219 },
+    Themed: { scenarioIndex: 1, execution: fp_58e266e9ba1de6e8bc9e94d211dd5219 },
+    Font: { scenarioIndex: 2, execution: fp_58e266e9ba1de6e8bc9e94d211dd5219 },
+    XAxisAndSizeMeasuresWithViewBy: { scenarioIndex: 0, execution: fp_6f71a7a6d3124ff4e43caff22276fad9 },
+    YAxisAndSizeMeasuresWithViewBy: { scenarioIndex: 1, execution: fp_6f71a7a6d3124ff4e43caff22276fad9 },
+    XAndYAxisAndSizeMeasuresWithViewByWithNullsInData: {
+        scenarioIndex: 0,
+        execution: fp_b29c9a93475a553e7a80b1efce5f7727,
+    },
+    XAxisMeasureWithViewBy: { scenarioIndex: 0, execution: fp_ba8c7b4230cdc8e9271694befe40abf4 },
+    ArithmeticMeasure: { scenarioIndex: 0, execution: fp_ecc932bf0dd45630eb7993b3cbc0e6f0 },
+};
+const scenarios_BulletChart = {
+    PrimaryTargetAndComparativeMeasures: { scenarioIndex: 0, execution: fp_2dea042defd6bc6fd9a7f87e81d01975 },
+    PrimaryMeasure: { scenarioIndex: 0, execution: fp_57b711ed3d39b337352474253951775c },
+    PrimaryAndTargetMeasuresWithViewBy: { scenarioIndex: 0, execution: fp_58aeef8c8b7229b10848cbcba8dde13a },
+    PrimaryTargetAndComparativeMeasuresWithTwoViewBy: {
+        scenarioIndex: 0,
+        execution: fp_7f584ba03889cfa727423cd7a1c6563b,
+    },
+    PrimaryAndTargetMeasures: { scenarioIndex: 0, execution: fp_93e82ae205d1914c5bb7ffca48e5ca43 },
+    PrimaryAndComparativeMeasures: { scenarioIndex: 1, execution: fp_93e82ae205d1914c5bb7ffca48e5ca43 },
+    PrimaryTargetAndComparativeMeasuresWithViewByAndSort: {
+        scenarioIndex: 0,
+        execution: fp_97c7f6001b8d57bc669b3d2e80331e6a,
+    },
+    PrimaryWithTwoViewByDates: { scenarioIndex: 0, execution: fp_a9c716ad99eb48aa765104c9275cc6e3 },
+    PrimaryTargetAndComparativeMeasuresWithViewBy: {
+        scenarioIndex: 0,
+        execution: fp_b5aa784e7575597633778428e490b4f6,
+    },
+    Themed: { scenarioIndex: 1, execution: fp_b5aa784e7575597633778428e490b4f6 },
+    Font: { scenarioIndex: 2, execution: fp_b5aa784e7575597633778428e490b4f6 },
+    PrimaryTargetAndComparativeMeasuresWithTwoViewByDates: {
+        scenarioIndex: 0,
+        execution: fp_ea7171a44b29651da69295e0556ed18a,
+    },
+};
+const scenarios_Treemap = {
+    WithOneMeasureAndViewByDateAndSegmentByDate: {
+        scenarioIndex: 0,
+        execution: fp_2f0d37f1da514db95959c120a62ffd4c,
+    },
+    SingleMeasureAndViewBy: { scenarioIndex: 17, execution: fp_334febec1d24c565faab8bb5138542f7 },
+    TwoMeasuresAndViewBy: { scenarioIndex: 9, execution: fp_355096b0de4fc0081470f2facee34bac },
+    TwoMeasuresAndSegmentBy: { scenarioIndex: 10, execution: fp_355096b0de4fc0081470f2facee34bac },
+    SingleMeasure: { scenarioIndex: 7, execution: fp_48d6b389940c3f7522eddc93458a0b0b },
+    TwoMeasures: { scenarioIndex: 4, execution: fp_681fd174545bf5e693b9b0df873870cb },
+    SingleMeasureAndSegment: { scenarioIndex: 0, execution: fp_9a050396d17168ec48baeb6ce31180c9 },
+    ArithmeticMeasuresAndSegment: { scenarioIndex: 0, execution: fp_d9512e1db89354846f5d3c1468fbe009 },
+    SingleMeasureAndViewByFilteredToOneElement: {
+        scenarioIndex: 0,
+        execution: fp_f1739290f72c804221e22ae2ecd66e55,
+    },
+    SingleMeasureViewByAndSegment: { scenarioIndex: 0, execution: fp_f950ae585fdee44ac65839426d307654 },
+    Themed: { scenarioIndex: 1, execution: fp_f950ae585fdee44ac65839426d307654 },
+    Font: { scenarioIndex: 2, execution: fp_f950ae585fdee44ac65839426d307654 },
+};
+const scenarios_DonutChart = {
+    SingleMeasureWithViewBy: { scenarioIndex: 1, execution: fp_d1a4099ac31a568a7e645ed36a71e9a7 },
+    Themed: { scenarioIndex: 2, execution: fp_d1a4099ac31a568a7e645ed36a71e9a7 },
+    Font: { scenarioIndex: 3, execution: fp_d1a4099ac31a568a7e645ed36a71e9a7 },
+    SingleMeasure: { scenarioIndex: 1, execution: fp_48d6b389940c3f7522eddc93458a0b0b },
+    TwoMeasures: { scenarioIndex: 0, execution: fp_681fd174545bf5e693b9b0df873870cb },
+    ArithmeticMeasures: { scenarioIndex: 0, execution: fp_848a2ca02edb3c73e3a1298bd639a5d3 },
+};
+const scenarios_PieChart = {
+    SingleMeasureWithViewBy: { scenarioIndex: 10, execution: fp_d1a4099ac31a568a7e645ed36a71e9a7 },
+    Themed: { scenarioIndex: 11, execution: fp_d1a4099ac31a568a7e645ed36a71e9a7 },
+    Font: { scenarioIndex: 12, execution: fp_d1a4099ac31a568a7e645ed36a71e9a7 },
+    SingleMeasure: { scenarioIndex: 5, execution: fp_48d6b389940c3f7522eddc93458a0b0b },
+    TwoMeasures: { scenarioIndex: 3, execution: fp_681fd174545bf5e693b9b0df873870cb },
+    ArithmeticMeasures: { scenarioIndex: 1, execution: fp_848a2ca02edb3c73e3a1298bd639a5d3 },
+};
+const scenarios_WaterfallChart = {
+    SingleMeasureWithViewBy: { scenarioIndex: 13, execution: fp_d1a4099ac31a568a7e645ed36a71e9a7 },
+    Themed: { scenarioIndex: 14, execution: fp_d1a4099ac31a568a7e645ed36a71e9a7 },
+    Font: { scenarioIndex: 15, execution: fp_d1a4099ac31a568a7e645ed36a71e9a7 },
+    MultiMeasures: { scenarioIndex: 0, execution: fp_383982db062df5c469a9518684a3ec13 },
+    MultiMeasuresWithATotalMeasure: { scenarioIndex: 1, execution: fp_383982db062df5c469a9518684a3ec13 },
+    MultiMeasuresWithThemed: { scenarioIndex: 2, execution: fp_383982db062df5c469a9518684a3ec13 },
+    MultiMeasuresWithFont: { scenarioIndex: 3, execution: fp_383982db062df5c469a9518684a3ec13 },
+    SingleMeasure: { scenarioIndex: 8, execution: fp_48d6b389940c3f7522eddc93458a0b0b },
+};
+const scenarios_Xirr = {
+    SemanticallyWrongMeasure: { scenarioIndex: 0, execution: fp_38319193c822c712c2c299d77330a31d },
+    CorrectConfig: { scenarioIndex: 0, execution: fp_9453667cb202cb4c42a0231df043dc65 },
+    Themed: { scenarioIndex: 1, execution: fp_9453667cb202cb4c42a0231df043dc65 },
+    Font: { scenarioIndex: 2, execution: fp_9453667cb202cb4c42a0231df043dc65 },
+    OnlyMeasure: { scenarioIndex: 0, execution: fp_b1f7450765b8dc0fd38667904a299266 },
+};
+const scenarios_ScatterPlot = {
+    XAndYAxisMeasuresAndAttribute: { scenarioIndex: 1, execution: fp_38679dbd273113f1de475b82242c7e2f },
+    Themed: { scenarioIndex: 2, execution: fp_38679dbd273113f1de475b82242c7e2f },
+    Font: { scenarioIndex: 3, execution: fp_38679dbd273113f1de475b82242c7e2f },
+    XAndYAxisMeasuresAndAttributeWithAttrSorting: {
+        scenarioIndex: 0,
+        execution: fp_3aac682f5fe543d9e1a4e80fe108f613,
+    },
+    XAxisMeasure: { scenarioIndex: 6, execution: fp_48d6b389940c3f7522eddc93458a0b0b },
+    XAxisMeasureAndAttribute: { scenarioIndex: 1, execution: fp_ba8c7b4230cdc8e9271694befe40abf4 },
+    YAxisMeasureAndAttribute: { scenarioIndex: 2, execution: fp_ba8c7b4230cdc8e9271694befe40abf4 },
+    XAndYAxisMeasuresAndAttributeWithNullsInData: {
+        scenarioIndex: 0,
+        execution: fp_c1825c6987a5585a08614cacdcba4038,
+    },
+    XAndYAxisMeasuresAttributeAndSegmentation: {
+        scenarioIndex: 0,
+        execution: fp_cfa87f64d11e0f72705ca631d6d73a52,
+    },
+};
+const scenarios_GeoAreaChart = {
+    AreaWithColorAndSegment: { scenarioIndex: 0, execution: fp_ef51aca8c5794b4ff3e3de92d7fd2fb1 },
+    AreaChartLevelCustomSegmentMapping: { scenarioIndex: 0, execution: fp_9c97fad86d7c8114a33f2148730f2fde },
+    AreaLegendPositionTop: { scenarioIndex: 1, execution: fp_9c97fad86d7c8114a33f2148730f2fde },
+    AreaLegendPositionRight: { scenarioIndex: 2, execution: fp_9c97fad86d7c8114a33f2148730f2fde },
+    AreaLegendPositionBottom: { scenarioIndex: 3, execution: fp_9c97fad86d7c8114a33f2148730f2fde },
+    AreaLegendPositionLeft: { scenarioIndex: 4, execution: fp_9c97fad86d7c8114a33f2148730f2fde },
+    AreaLegendWithSelection: { scenarioIndex: 5, execution: fp_9c97fad86d7c8114a33f2148730f2fde },
+    AreaLegendWithCategoryAndColorScale: { scenarioIndex: 6, execution: fp_9c97fad86d7c8114a33f2148730f2fde },
+    AreaViewportNorthAmerica: { scenarioIndex: 0, execution: fp_2152f673b7472bd421a1b3419bea8fce },
+    AreaViewportWorld: { scenarioIndex: 1, execution: fp_2152f673b7472bd421a1b3419bea8fce },
+    AreaWithColorAttributeCategories: { scenarioIndex: 0, execution: fp_6643e7e96567d7a2783b0caef8ff296a },
+    AreaWithColorGradient: { scenarioIndex: 0, execution: fp_d5c8be07c672f72e5e841dbaba5aeaa0 },
+    AreaChartLevelCustomGradientPalette: { scenarioIndex: 1, execution: fp_b5b2a62be4133ffcc8688bcf965e16c9 },
+    AreaLegendWithColorScaleOnly: { scenarioIndex: 3, execution: fp_b5b2a62be4133ffcc8688bcf965e16c9 },
+    AreaWithColorAttribute: { scenarioIndex: 0, execution: fp_cac25acb2ff885871a34ab573cb9491d },
+};
+const scenarios_GeoChart = {
+    AreaLayerLevelSegmentMappingOverridesChartLevel: {
+        scenarioIndex: 0,
+        execution: fp_bc1cfa4988ea5920285ec8c3ee1dce4a,
+    },
+    MultiLayerBothInheritChartLevelColors: {
+        scenarioIndex: 1,
+        execution: fp_bc1cfa4988ea5920285ec8c3ee1dce4a,
+    },
+    MultiLayerPushpinOverrideOnly: { scenarioIndex: 2, execution: fp_bc1cfa4988ea5920285ec8c3ee1dce4a },
+    MultiLayerAreaOverrideOnly: { scenarioIndex: 3, execution: fp_bc1cfa4988ea5920285ec8c3ee1dce4a },
+    MultiLayerBothLayerOverridesWithConflictingChartFallback: {
+        scenarioIndex: 4,
+        execution: fp_bc1cfa4988ea5920285ec8c3ee1dce4a,
+    },
+    AreaPrimaryWithPushpinOverlay: { scenarioIndex: 2, execution: fp_ce0ef10af343228e6eb6a59c4ad701ab },
+    AreaPrimaryWithTwoPushpinOverlays: { scenarioIndex: 3, execution: fp_ce0ef10af343228e6eb6a59c4ad701ab },
+    MultiLayerChartLevelSegmentMapping: { scenarioIndex: 7, execution: fp_bc1cfa4988ea5920285ec8c3ee1dce4a },
+    MultiLayerPerLayerSegmentMappingOverride: {
+        scenarioIndex: 8,
+        execution: fp_bc1cfa4988ea5920285ec8c3ee1dce4a,
+    },
+    AreaWithClusteredPushpinOverlay: { scenarioIndex: 9, execution: fp_bc1cfa4988ea5920285ec8c3ee1dce4a },
+    AreaWithNonClusteredPushpinOverlay: { scenarioIndex: 10, execution: fp_bc1cfa4988ea5920285ec8c3ee1dce4a },
+    AreaLayerLevelGradientPaletteOverridesChartLevel: {
+        scenarioIndex: 2,
+        execution: fp_b5b2a62be4133ffcc8688bcf965e16c9,
+    },
+    PushpinLayerLevelSegmentMappingOverridesChartLevel: {
+        scenarioIndex: 2,
+        execution: fp_c2def3edc85b9521ba53f7c5eea4d5b8,
+    },
+    PushpinLayerLevelGradientPaletteOverridesChartLevel: {
+        scenarioIndex: 1,
+        execution: fp_ce0ef10af343228e6eb6a59c4ad701ab,
+    },
+};
+const scenarios_GeoPushpinChart = {
+    LatitudeLongitudeWithSizeAndColor: { scenarioIndex: 0, execution: fp_a797e8411cb0c43a8240ba361654b89a },
+    ViewportWorld: { scenarioIndex: 0, execution: fp_9584a1187e922440742a818feafad4ce },
+    ViewportEurope: { scenarioIndex: 1, execution: fp_9584a1187e922440742a818feafad4ce },
+    ClusteredPoints: { scenarioIndex: 0, execution: fp_9906ebe07bd59e04c10e6e280b6ce4d9 },
+    NonClusteredPoints: { scenarioIndex: 1, execution: fp_9906ebe07bd59e04c10e6e280b6ce4d9 },
+    LegendCategoryEdgeCaseWithEmptyRegions: {
+        scenarioIndex: 0,
+        execution: fp_84e4357d37e7dd9a0f35268b6d16c9b8,
+    },
+    ViewportNorthAmericaWithSegment: { scenarioIndex: 1, execution: fp_84e4357d37e7dd9a0f35268b6d16c9b8 },
+    PushpinSizeColorGradientAndSegment: { scenarioIndex: 0, execution: fp_ea357e5a6be7c32673329e84a81d0552 },
+    LegendSizeColorScaleAndCategory: { scenarioIndex: 1, execution: fp_ea357e5a6be7c32673329e84a81d0552 },
+    PushpinChartLevelCustomSegmentMapping: {
+        scenarioIndex: 1,
+        execution: fp_c2def3edc85b9521ba53f7c5eea4d5b8,
+    },
+    LegendPositionTop: { scenarioIndex: 3, execution: fp_c2def3edc85b9521ba53f7c5eea4d5b8 },
+    LegendPositionRight: { scenarioIndex: 4, execution: fp_c2def3edc85b9521ba53f7c5eea4d5b8 },
+    LegendPositionBottom: { scenarioIndex: 5, execution: fp_c2def3edc85b9521ba53f7c5eea4d5b8 },
+    LegendPositionLeft: { scenarioIndex: 6, execution: fp_c2def3edc85b9521ba53f7c5eea4d5b8 },
+    LegendWithSelection: { scenarioIndex: 7, execution: fp_c2def3edc85b9521ba53f7c5eea4d5b8 },
+    LatitudeLongitudeWithColorAndSegment: {
+        scenarioIndex: 0,
+        execution: fp_d5a808b43319ffd0395639ff3b9e142a,
+    },
+    PushpinChartLevelCustomGradientPalette: {
+        scenarioIndex: 0,
+        execution: fp_ce0ef10af343228e6eb6a59c4ad701ab,
+    },
+    LatitudeLongitudeWithColorAttribute: { scenarioIndex: 0, execution: fp_eea5ea89d0d544b546a7cf76027eaf22 },
+};
+type ScenariosType = {
+    ColumnChart: typeof scenarios_ColumnChart;
+    PivotTableNext: typeof scenarios_PivotTableNext;
+    Repeater: typeof scenarios_Repeater;
+    Execute: typeof scenarios_Execute;
+    PivotTable: typeof scenarios_PivotTable;
+    Heatmap: typeof scenarios_Heatmap;
+    Headline: typeof scenarios_Headline;
+    LineChart: typeof scenarios_LineChart;
+    ComboChart: typeof scenarios_ComboChart;
+    BarChart: typeof scenarios_BarChart;
+    AreaChart: typeof scenarios_AreaChart;
+    SankeyChart: typeof scenarios_SankeyChart;
+    DependencyWheelChart: typeof scenarios_DependencyWheelChart;
+    FunnelChart: typeof scenarios_FunnelChart;
+    PyramidChart: typeof scenarios_PyramidChart;
+    BubbleChart: typeof scenarios_BubbleChart;
+    BulletChart: typeof scenarios_BulletChart;
+    Treemap: typeof scenarios_Treemap;
+    DonutChart: typeof scenarios_DonutChart;
+    PieChart: typeof scenarios_PieChart;
+    WaterfallChart: typeof scenarios_WaterfallChart;
+    Xirr: typeof scenarios_Xirr;
+    ScatterPlot: typeof scenarios_ScatterPlot;
+    GeoAreaChart: typeof scenarios_GeoAreaChart;
+    GeoChart: typeof scenarios_GeoChart;
+    GeoPushpinChart: typeof scenarios_GeoPushpinChart;
+};
+export const Scenarios: ScenariosType = {
+    ColumnChart: scenarios_ColumnChart,
+    PivotTableNext: scenarios_PivotTableNext,
+    Repeater: scenarios_Repeater,
+    Execute: scenarios_Execute,
+    PivotTable: scenarios_PivotTable,
+    Heatmap: scenarios_Heatmap,
+    Headline: scenarios_Headline,
+    LineChart: scenarios_LineChart,
+    ComboChart: scenarios_ComboChart,
+    BarChart: scenarios_BarChart,
+    AreaChart: scenarios_AreaChart,
+    SankeyChart: scenarios_SankeyChart,
+    DependencyWheelChart: scenarios_DependencyWheelChart,
+    FunnelChart: scenarios_FunnelChart,
+    PyramidChart: scenarios_PyramidChart,
+    BubbleChart: scenarios_BubbleChart,
+    BulletChart: scenarios_BulletChart,
+    Treemap: scenarios_Treemap,
+    DonutChart: scenarios_DonutChart,
+    PieChart: scenarios_PieChart,
+    WaterfallChart: scenarios_WaterfallChart,
+    Xirr: scenarios_Xirr,
+    ScatterPlot: scenarios_ScatterPlot,
+    GeoAreaChart: scenarios_GeoAreaChart,
+    GeoChart: scenarios_GeoChart,
+    GeoPushpinChart: scenarios_GeoPushpinChart,
 };
 
 import df_label_f_activity_subject_elements from "./metadata/displayForms/label.f_activity.subject/elements.json" with { type: "json" };
@@ -6335,6 +6691,166 @@ import i_FunnelChart_fa2e577f1efafd0722d957e1ad78d955_obj from "./uiTestScenario
 const i_FunnelChart_fa2e577f1efafd0722d957e1ad78d955 = {
     obj: i_FunnelChart_fa2e577f1efafd0722d957e1ad78d955_obj,
 };
+import i_GeoAreaChart_01c882b5e1bcce4a67b78ca3b1d404c1_obj from "./uiTestScenarios/insights/GeoAreaChart.01c882b5e1bcce4a67b78ca3b1d404c1/obj.json" with { type: "json" };
+const i_GeoAreaChart_01c882b5e1bcce4a67b78ca3b1d404c1 = {
+    obj: i_GeoAreaChart_01c882b5e1bcce4a67b78ca3b1d404c1_obj,
+};
+import i_GeoAreaChart_0be13b5cb57cb3b17e9def4db8e2a53f_obj from "./uiTestScenarios/insights/GeoAreaChart.0be13b5cb57cb3b17e9def4db8e2a53f/obj.json" with { type: "json" };
+const i_GeoAreaChart_0be13b5cb57cb3b17e9def4db8e2a53f = {
+    obj: i_GeoAreaChart_0be13b5cb57cb3b17e9def4db8e2a53f_obj,
+};
+import i_GeoAreaChart_19cfcb15d8749265d769ae87796ffa3f_obj from "./uiTestScenarios/insights/GeoAreaChart.19cfcb15d8749265d769ae87796ffa3f/obj.json" with { type: "json" };
+const i_GeoAreaChart_19cfcb15d8749265d769ae87796ffa3f = {
+    obj: i_GeoAreaChart_19cfcb15d8749265d769ae87796ffa3f_obj,
+};
+import i_GeoAreaChart_251227c8bb20949dc82b4559ea681c44_obj from "./uiTestScenarios/insights/GeoAreaChart.251227c8bb20949dc82b4559ea681c44/obj.json" with { type: "json" };
+const i_GeoAreaChart_251227c8bb20949dc82b4559ea681c44 = {
+    obj: i_GeoAreaChart_251227c8bb20949dc82b4559ea681c44_obj,
+};
+import i_GeoAreaChart_3985ba32dfa5ff2a946c7a49c5b837b2_obj from "./uiTestScenarios/insights/GeoAreaChart.3985ba32dfa5ff2a946c7a49c5b837b2/obj.json" with { type: "json" };
+const i_GeoAreaChart_3985ba32dfa5ff2a946c7a49c5b837b2 = {
+    obj: i_GeoAreaChart_3985ba32dfa5ff2a946c7a49c5b837b2_obj,
+};
+import i_GeoAreaChart_4fe9f6ab697116f56ab06b3ed92a1dcd_obj from "./uiTestScenarios/insights/GeoAreaChart.4fe9f6ab697116f56ab06b3ed92a1dcd/obj.json" with { type: "json" };
+const i_GeoAreaChart_4fe9f6ab697116f56ab06b3ed92a1dcd = {
+    obj: i_GeoAreaChart_4fe9f6ab697116f56ab06b3ed92a1dcd_obj,
+};
+import i_GeoAreaChart_55c40cdb5c0ae31c93c348da5a9e4c01_obj from "./uiTestScenarios/insights/GeoAreaChart.55c40cdb5c0ae31c93c348da5a9e4c01/obj.json" with { type: "json" };
+const i_GeoAreaChart_55c40cdb5c0ae31c93c348da5a9e4c01 = {
+    obj: i_GeoAreaChart_55c40cdb5c0ae31c93c348da5a9e4c01_obj,
+};
+import i_GeoAreaChart_60b110131a437a26781d095391e04b0a_obj from "./uiTestScenarios/insights/GeoAreaChart.60b110131a437a26781d095391e04b0a/obj.json" with { type: "json" };
+const i_GeoAreaChart_60b110131a437a26781d095391e04b0a = {
+    obj: i_GeoAreaChart_60b110131a437a26781d095391e04b0a_obj,
+};
+import i_GeoAreaChart_669bdd0538fb74c508a22f2883810c88_obj from "./uiTestScenarios/insights/GeoAreaChart.669bdd0538fb74c508a22f2883810c88/obj.json" with { type: "json" };
+const i_GeoAreaChart_669bdd0538fb74c508a22f2883810c88 = {
+    obj: i_GeoAreaChart_669bdd0538fb74c508a22f2883810c88_obj,
+};
+import i_GeoAreaChart_927eaba7ad215549e34c3d5748f44063_obj from "./uiTestScenarios/insights/GeoAreaChart.927eaba7ad215549e34c3d5748f44063/obj.json" with { type: "json" };
+const i_GeoAreaChart_927eaba7ad215549e34c3d5748f44063 = {
+    obj: i_GeoAreaChart_927eaba7ad215549e34c3d5748f44063_obj,
+};
+import i_GeoAreaChart_a6329e977538ade1062a41e4372e9dba_obj from "./uiTestScenarios/insights/GeoAreaChart.a6329e977538ade1062a41e4372e9dba/obj.json" with { type: "json" };
+const i_GeoAreaChart_a6329e977538ade1062a41e4372e9dba = {
+    obj: i_GeoAreaChart_a6329e977538ade1062a41e4372e9dba_obj,
+};
+import i_GeoAreaChart_d2ee210a0efe88c32a329224909a69c8_obj from "./uiTestScenarios/insights/GeoAreaChart.d2ee210a0efe88c32a329224909a69c8/obj.json" with { type: "json" };
+const i_GeoAreaChart_d2ee210a0efe88c32a329224909a69c8 = {
+    obj: i_GeoAreaChart_d2ee210a0efe88c32a329224909a69c8_obj,
+};
+import i_GeoAreaChart_d9721f4cb94e76b8c4a6ece58db3f98d_obj from "./uiTestScenarios/insights/GeoAreaChart.d9721f4cb94e76b8c4a6ece58db3f98d/obj.json" with { type: "json" };
+const i_GeoAreaChart_d9721f4cb94e76b8c4a6ece58db3f98d = {
+    obj: i_GeoAreaChart_d9721f4cb94e76b8c4a6ece58db3f98d_obj,
+};
+import i_GeoAreaChart_f71b96374c8601e0c843987d56dd8350_obj from "./uiTestScenarios/insights/GeoAreaChart.f71b96374c8601e0c843987d56dd8350/obj.json" with { type: "json" };
+const i_GeoAreaChart_f71b96374c8601e0c843987d56dd8350 = {
+    obj: i_GeoAreaChart_f71b96374c8601e0c843987d56dd8350_obj,
+};
+import i_GeoAreaChart_fd2f906e5c8a51c9734bc745c3cc5fa1_obj from "./uiTestScenarios/insights/GeoAreaChart.fd2f906e5c8a51c9734bc745c3cc5fa1/obj.json" with { type: "json" };
+const i_GeoAreaChart_fd2f906e5c8a51c9734bc745c3cc5fa1 = {
+    obj: i_GeoAreaChart_fd2f906e5c8a51c9734bc745c3cc5fa1_obj,
+};
+import i_GeoChart_1453572fe8d171ddfb09ce522255fc9a_obj from "./uiTestScenarios/insights/GeoChart.1453572fe8d171ddfb09ce522255fc9a/obj.json" with { type: "json" };
+const i_GeoChart_1453572fe8d171ddfb09ce522255fc9a = { obj: i_GeoChart_1453572fe8d171ddfb09ce522255fc9a_obj };
+import i_GeoChart_1799ddde88c93b48c5b0b5a893beadbf_obj from "./uiTestScenarios/insights/GeoChart.1799ddde88c93b48c5b0b5a893beadbf/obj.json" with { type: "json" };
+const i_GeoChart_1799ddde88c93b48c5b0b5a893beadbf = { obj: i_GeoChart_1799ddde88c93b48c5b0b5a893beadbf_obj };
+import i_GeoChart_1b1e9fb7694fa25de62c64b8fab0df98_obj from "./uiTestScenarios/insights/GeoChart.1b1e9fb7694fa25de62c64b8fab0df98/obj.json" with { type: "json" };
+const i_GeoChart_1b1e9fb7694fa25de62c64b8fab0df98 = { obj: i_GeoChart_1b1e9fb7694fa25de62c64b8fab0df98_obj };
+import i_GeoChart_408635f5315222f713c811fe94582c9b_obj from "./uiTestScenarios/insights/GeoChart.408635f5315222f713c811fe94582c9b/obj.json" with { type: "json" };
+const i_GeoChart_408635f5315222f713c811fe94582c9b = { obj: i_GeoChart_408635f5315222f713c811fe94582c9b_obj };
+import i_GeoChart_52df9fa11a3f1f3589d2dcd4d4c14d00_obj from "./uiTestScenarios/insights/GeoChart.52df9fa11a3f1f3589d2dcd4d4c14d00/obj.json" with { type: "json" };
+const i_GeoChart_52df9fa11a3f1f3589d2dcd4d4c14d00 = { obj: i_GeoChart_52df9fa11a3f1f3589d2dcd4d4c14d00_obj };
+import i_GeoChart_6978d23e9fac3f9b74ecd3f89c7374cd_obj from "./uiTestScenarios/insights/GeoChart.6978d23e9fac3f9b74ecd3f89c7374cd/obj.json" with { type: "json" };
+const i_GeoChart_6978d23e9fac3f9b74ecd3f89c7374cd = { obj: i_GeoChart_6978d23e9fac3f9b74ecd3f89c7374cd_obj };
+import i_GeoChart_781c89d454c9a9ce193902883aee7549_obj from "./uiTestScenarios/insights/GeoChart.781c89d454c9a9ce193902883aee7549/obj.json" with { type: "json" };
+const i_GeoChart_781c89d454c9a9ce193902883aee7549 = { obj: i_GeoChart_781c89d454c9a9ce193902883aee7549_obj };
+import i_GeoChart_82bc11be13ff0ba30b513983ff398046_obj from "./uiTestScenarios/insights/GeoChart.82bc11be13ff0ba30b513983ff398046/obj.json" with { type: "json" };
+const i_GeoChart_82bc11be13ff0ba30b513983ff398046 = { obj: i_GeoChart_82bc11be13ff0ba30b513983ff398046_obj };
+import i_GeoChart_85d85b6bb96c8a2bcbbef992e5b4871b_obj from "./uiTestScenarios/insights/GeoChart.85d85b6bb96c8a2bcbbef992e5b4871b/obj.json" with { type: "json" };
+const i_GeoChart_85d85b6bb96c8a2bcbbef992e5b4871b = { obj: i_GeoChart_85d85b6bb96c8a2bcbbef992e5b4871b_obj };
+import i_GeoChart_d91bd2fd68c58d0b2ea9b057476b1a38_obj from "./uiTestScenarios/insights/GeoChart.d91bd2fd68c58d0b2ea9b057476b1a38/obj.json" with { type: "json" };
+const i_GeoChart_d91bd2fd68c58d0b2ea9b057476b1a38 = { obj: i_GeoChart_d91bd2fd68c58d0b2ea9b057476b1a38_obj };
+import i_GeoChart_deea35ee0ff36f4286ba9c898047d4f6_obj from "./uiTestScenarios/insights/GeoChart.deea35ee0ff36f4286ba9c898047d4f6/obj.json" with { type: "json" };
+const i_GeoChart_deea35ee0ff36f4286ba9c898047d4f6 = { obj: i_GeoChart_deea35ee0ff36f4286ba9c898047d4f6_obj };
+import i_GeoChart_e47963abcc763a71caa697cff2d567fd_obj from "./uiTestScenarios/insights/GeoChart.e47963abcc763a71caa697cff2d567fd/obj.json" with { type: "json" };
+const i_GeoChart_e47963abcc763a71caa697cff2d567fd = { obj: i_GeoChart_e47963abcc763a71caa697cff2d567fd_obj };
+import i_GeoChart_eafdff297dd058f0f113ff6ba0ecc095_obj from "./uiTestScenarios/insights/GeoChart.eafdff297dd058f0f113ff6ba0ecc095/obj.json" with { type: "json" };
+const i_GeoChart_eafdff297dd058f0f113ff6ba0ecc095 = { obj: i_GeoChart_eafdff297dd058f0f113ff6ba0ecc095_obj };
+import i_GeoChart_ee8396cc7124a2c1c2732d0937591270_obj from "./uiTestScenarios/insights/GeoChart.ee8396cc7124a2c1c2732d0937591270/obj.json" with { type: "json" };
+const i_GeoChart_ee8396cc7124a2c1c2732d0937591270 = { obj: i_GeoChart_ee8396cc7124a2c1c2732d0937591270_obj };
+import i_GeoPushpinChart_012f83c3798c79404e324c0b2b9fb593_obj from "./uiTestScenarios/insights/GeoPushpinChart.012f83c3798c79404e324c0b2b9fb593/obj.json" with { type: "json" };
+const i_GeoPushpinChart_012f83c3798c79404e324c0b2b9fb593 = {
+    obj: i_GeoPushpinChart_012f83c3798c79404e324c0b2b9fb593_obj,
+};
+import i_GeoPushpinChart_21af35fd7d32645842d4a26cbfa49507_obj from "./uiTestScenarios/insights/GeoPushpinChart.21af35fd7d32645842d4a26cbfa49507/obj.json" with { type: "json" };
+const i_GeoPushpinChart_21af35fd7d32645842d4a26cbfa49507 = {
+    obj: i_GeoPushpinChart_21af35fd7d32645842d4a26cbfa49507_obj,
+};
+import i_GeoPushpinChart_2a4bfddafdaf950a22120387c5a9ef81_obj from "./uiTestScenarios/insights/GeoPushpinChart.2a4bfddafdaf950a22120387c5a9ef81/obj.json" with { type: "json" };
+const i_GeoPushpinChart_2a4bfddafdaf950a22120387c5a9ef81 = {
+    obj: i_GeoPushpinChart_2a4bfddafdaf950a22120387c5a9ef81_obj,
+};
+import i_GeoPushpinChart_303408937f041d54fe38a62b727c0ee0_obj from "./uiTestScenarios/insights/GeoPushpinChart.303408937f041d54fe38a62b727c0ee0/obj.json" with { type: "json" };
+const i_GeoPushpinChart_303408937f041d54fe38a62b727c0ee0 = {
+    obj: i_GeoPushpinChart_303408937f041d54fe38a62b727c0ee0_obj,
+};
+import i_GeoPushpinChart_33d4cef846017327833cb10e0fe49242_obj from "./uiTestScenarios/insights/GeoPushpinChart.33d4cef846017327833cb10e0fe49242/obj.json" with { type: "json" };
+const i_GeoPushpinChart_33d4cef846017327833cb10e0fe49242 = {
+    obj: i_GeoPushpinChart_33d4cef846017327833cb10e0fe49242_obj,
+};
+import i_GeoPushpinChart_3cab1f3562ec39e9c183c588ea15d34c_obj from "./uiTestScenarios/insights/GeoPushpinChart.3cab1f3562ec39e9c183c588ea15d34c/obj.json" with { type: "json" };
+const i_GeoPushpinChart_3cab1f3562ec39e9c183c588ea15d34c = {
+    obj: i_GeoPushpinChart_3cab1f3562ec39e9c183c588ea15d34c_obj,
+};
+import i_GeoPushpinChart_4db9cbbbb5ae89d41b7623d3f5ad8647_obj from "./uiTestScenarios/insights/GeoPushpinChart.4db9cbbbb5ae89d41b7623d3f5ad8647/obj.json" with { type: "json" };
+const i_GeoPushpinChart_4db9cbbbb5ae89d41b7623d3f5ad8647 = {
+    obj: i_GeoPushpinChart_4db9cbbbb5ae89d41b7623d3f5ad8647_obj,
+};
+import i_GeoPushpinChart_4ef0c8d4ea8a4ca22fdc8e0895b0bbb7_obj from "./uiTestScenarios/insights/GeoPushpinChart.4ef0c8d4ea8a4ca22fdc8e0895b0bbb7/obj.json" with { type: "json" };
+const i_GeoPushpinChart_4ef0c8d4ea8a4ca22fdc8e0895b0bbb7 = {
+    obj: i_GeoPushpinChart_4ef0c8d4ea8a4ca22fdc8e0895b0bbb7_obj,
+};
+import i_GeoPushpinChart_5834d3468e0d2141b08c9e44ecaa6697_obj from "./uiTestScenarios/insights/GeoPushpinChart.5834d3468e0d2141b08c9e44ecaa6697/obj.json" with { type: "json" };
+const i_GeoPushpinChart_5834d3468e0d2141b08c9e44ecaa6697 = {
+    obj: i_GeoPushpinChart_5834d3468e0d2141b08c9e44ecaa6697_obj,
+};
+import i_GeoPushpinChart_68fd1d32a5b1629dfd5e0a50140d751b_obj from "./uiTestScenarios/insights/GeoPushpinChart.68fd1d32a5b1629dfd5e0a50140d751b/obj.json" with { type: "json" };
+const i_GeoPushpinChart_68fd1d32a5b1629dfd5e0a50140d751b = {
+    obj: i_GeoPushpinChart_68fd1d32a5b1629dfd5e0a50140d751b_obj,
+};
+import i_GeoPushpinChart_8808def0b840c0eb08691642eda144bb_obj from "./uiTestScenarios/insights/GeoPushpinChart.8808def0b840c0eb08691642eda144bb/obj.json" with { type: "json" };
+const i_GeoPushpinChart_8808def0b840c0eb08691642eda144bb = {
+    obj: i_GeoPushpinChart_8808def0b840c0eb08691642eda144bb_obj,
+};
+import i_GeoPushpinChart_991908110406152b29c48a3e342cd2b0_obj from "./uiTestScenarios/insights/GeoPushpinChart.991908110406152b29c48a3e342cd2b0/obj.json" with { type: "json" };
+const i_GeoPushpinChart_991908110406152b29c48a3e342cd2b0 = {
+    obj: i_GeoPushpinChart_991908110406152b29c48a3e342cd2b0_obj,
+};
+import i_GeoPushpinChart_a424eaf366a9dd2a7a0a38398d4994db_obj from "./uiTestScenarios/insights/GeoPushpinChart.a424eaf366a9dd2a7a0a38398d4994db/obj.json" with { type: "json" };
+const i_GeoPushpinChart_a424eaf366a9dd2a7a0a38398d4994db = {
+    obj: i_GeoPushpinChart_a424eaf366a9dd2a7a0a38398d4994db_obj,
+};
+import i_GeoPushpinChart_b27a30a10ad266e58dab1fec42820185_obj from "./uiTestScenarios/insights/GeoPushpinChart.b27a30a10ad266e58dab1fec42820185/obj.json" with { type: "json" };
+const i_GeoPushpinChart_b27a30a10ad266e58dab1fec42820185 = {
+    obj: i_GeoPushpinChart_b27a30a10ad266e58dab1fec42820185_obj,
+};
+import i_GeoPushpinChart_b9d042ecf17934f9c0471ccb4b9a9d5f_obj from "./uiTestScenarios/insights/GeoPushpinChart.b9d042ecf17934f9c0471ccb4b9a9d5f/obj.json" with { type: "json" };
+const i_GeoPushpinChart_b9d042ecf17934f9c0471ccb4b9a9d5f = {
+    obj: i_GeoPushpinChart_b9d042ecf17934f9c0471ccb4b9a9d5f_obj,
+};
+import i_GeoPushpinChart_c8ad5ce0355f4921ba449ab37fc10d48_obj from "./uiTestScenarios/insights/GeoPushpinChart.c8ad5ce0355f4921ba449ab37fc10d48/obj.json" with { type: "json" };
+const i_GeoPushpinChart_c8ad5ce0355f4921ba449ab37fc10d48 = {
+    obj: i_GeoPushpinChart_c8ad5ce0355f4921ba449ab37fc10d48_obj,
+};
+import i_GeoPushpinChart_d536b0836471901d33dcd7d55c459e2b_obj from "./uiTestScenarios/insights/GeoPushpinChart.d536b0836471901d33dcd7d55c459e2b/obj.json" with { type: "json" };
+const i_GeoPushpinChart_d536b0836471901d33dcd7d55c459e2b = {
+    obj: i_GeoPushpinChart_d536b0836471901d33dcd7d55c459e2b_obj,
+};
+import i_GeoPushpinChart_df1a1a5f15158f01c3ab2ba29ee59fc8_obj from "./uiTestScenarios/insights/GeoPushpinChart.df1a1a5f15158f01c3ab2ba29ee59fc8/obj.json" with { type: "json" };
+const i_GeoPushpinChart_df1a1a5f15158f01c3ab2ba29ee59fc8 = {
+    obj: i_GeoPushpinChart_df1a1a5f15158f01c3ab2ba29ee59fc8_obj,
+};
 import i_Headline_07812c19181ddb13069cad9383766cde_obj from "./uiTestScenarios/insights/Headline.07812c19181ddb13069cad9383766cde/obj.json" with { type: "json" };
 const i_Headline_07812c19181ddb13069cad9383766cde = { obj: i_Headline_07812c19181ddb13069cad9383766cde_obj };
 import i_Headline_0ae91ea68160e9bcfd8fb88354a0aeca_obj from "./uiTestScenarios/insights/Headline.0ae91ea68160e9bcfd8fb88354a0aeca/obj.json" with { type: "json" };
@@ -9048,6 +9564,59 @@ export const Insights = {
         Font: i_FunnelChart_ec97a9a234a510f8a9eb9a8ef86ac1e2,
         SingleMeasureWithViewBySortedByAttribute: i_FunnelChart_fa2e577f1efafd0722d957e1ad78d955,
     },
+    GeoAreaChart: {
+        AreaWithColorAttribute: i_GeoAreaChart_01c882b5e1bcce4a67b78ca3b1d404c1,
+        AreaViewportWorld: i_GeoAreaChart_0be13b5cb57cb3b17e9def4db8e2a53f,
+        AreaWithColorAndSegment: i_GeoAreaChart_19cfcb15d8749265d769ae87796ffa3f,
+        AreaLegendPositionBottom: i_GeoAreaChart_251227c8bb20949dc82b4559ea681c44,
+        AreaViewportNorthAmerica: i_GeoAreaChart_3985ba32dfa5ff2a946c7a49c5b837b2,
+        AreaWithColorGradient: i_GeoAreaChart_4fe9f6ab697116f56ab06b3ed92a1dcd,
+        AreaLegendWithSelection: i_GeoAreaChart_55c40cdb5c0ae31c93c348da5a9e4c01,
+        AreaChartLevelCustomGradientPalette: i_GeoAreaChart_60b110131a437a26781d095391e04b0a,
+        AreaLegendWithCategoryAndColorScale: i_GeoAreaChart_669bdd0538fb74c508a22f2883810c88,
+        AreaLegendPositionLeft: i_GeoAreaChart_927eaba7ad215549e34c3d5748f44063,
+        AreaWithColorAttributeCategories: i_GeoAreaChart_a6329e977538ade1062a41e4372e9dba,
+        AreaLegendPositionRight: i_GeoAreaChart_d2ee210a0efe88c32a329224909a69c8,
+        AreaLegendWithColorScaleOnly: i_GeoAreaChart_d9721f4cb94e76b8c4a6ece58db3f98d,
+        AreaLegendPositionTop: i_GeoAreaChart_f71b96374c8601e0c843987d56dd8350,
+        AreaChartLevelCustomSegmentMapping: i_GeoAreaChart_fd2f906e5c8a51c9734bc745c3cc5fa1,
+    },
+    GeoChart: {
+        MultiLayerAreaOverrideOnly: i_GeoChart_1453572fe8d171ddfb09ce522255fc9a,
+        MultiLayerBothLayerOverridesWithConflictingChartFallback: i_GeoChart_1799ddde88c93b48c5b0b5a893beadbf,
+        PushpinLayerLevelSegmentMappingOverridesChartLevel: i_GeoChart_1b1e9fb7694fa25de62c64b8fab0df98,
+        AreaPrimaryWithPushpinOverlay: i_GeoChart_408635f5315222f713c811fe94582c9b,
+        PushpinLayerLevelGradientPaletteOverridesChartLevel: i_GeoChart_52df9fa11a3f1f3589d2dcd4d4c14d00,
+        MultiLayerBothInheritChartLevelColors: i_GeoChart_6978d23e9fac3f9b74ecd3f89c7374cd,
+        MultiLayerPushpinOverrideOnly: i_GeoChart_781c89d454c9a9ce193902883aee7549,
+        AreaLayerLevelGradientPaletteOverridesChartLevel: i_GeoChart_82bc11be13ff0ba30b513983ff398046,
+        MultiLayerPerLayerSegmentMappingOverride: i_GeoChart_85d85b6bb96c8a2bcbbef992e5b4871b,
+        AreaWithNonClusteredPushpinOverlay: i_GeoChart_d91bd2fd68c58d0b2ea9b057476b1a38,
+        AreaLayerLevelSegmentMappingOverridesChartLevel: i_GeoChart_deea35ee0ff36f4286ba9c898047d4f6,
+        AreaPrimaryWithTwoPushpinOverlays: i_GeoChart_e47963abcc763a71caa697cff2d567fd,
+        MultiLayerChartLevelSegmentMapping: i_GeoChart_eafdff297dd058f0f113ff6ba0ecc095,
+        AreaWithClusteredPushpinOverlay: i_GeoChart_ee8396cc7124a2c1c2732d0937591270,
+    },
+    GeoPushpinChart: {
+        LegendPositionLeft: i_GeoPushpinChart_012f83c3798c79404e324c0b2b9fb593,
+        LegendPositionBottom: i_GeoPushpinChart_21af35fd7d32645842d4a26cbfa49507,
+        LatitudeLongitudeWithColorAttribute: i_GeoPushpinChart_2a4bfddafdaf950a22120387c5a9ef81,
+        LatitudeLongitudeWithSizeAndColor: i_GeoPushpinChart_303408937f041d54fe38a62b727c0ee0,
+        ViewportWorld: i_GeoPushpinChart_33d4cef846017327833cb10e0fe49242,
+        ViewportEurope: i_GeoPushpinChart_3cab1f3562ec39e9c183c588ea15d34c,
+        LegendPositionTop: i_GeoPushpinChart_4db9cbbbb5ae89d41b7623d3f5ad8647,
+        LatitudeLongitudeWithColorAndSegment: i_GeoPushpinChart_4ef0c8d4ea8a4ca22fdc8e0895b0bbb7,
+        NonClusteredPoints: i_GeoPushpinChart_5834d3468e0d2141b08c9e44ecaa6697,
+        PushpinChartLevelCustomGradientPalette: i_GeoPushpinChart_68fd1d32a5b1629dfd5e0a50140d751b,
+        LegendSizeColorScaleAndCategory: i_GeoPushpinChart_8808def0b840c0eb08691642eda144bb,
+        LegendCategoryEdgeCaseWithEmptyRegions: i_GeoPushpinChart_991908110406152b29c48a3e342cd2b0,
+        PushpinChartLevelCustomSegmentMapping: i_GeoPushpinChart_a424eaf366a9dd2a7a0a38398d4994db,
+        PushpinSizeColorGradientAndSegment: i_GeoPushpinChart_b27a30a10ad266e58dab1fec42820185,
+        LegendPositionRight: i_GeoPushpinChart_b9d042ecf17934f9c0471ccb4b9a9d5f,
+        LegendWithSelection: i_GeoPushpinChart_c8ad5ce0355f4921ba449ab37fc10d48,
+        ClusteredPoints: i_GeoPushpinChart_d536b0836471901d33dcd7d55c459e2b,
+        ViewportNorthAmericaWithSegment: i_GeoPushpinChart_df1a1a5f15158f01c3ab2ba29ee59fc8,
+    },
     Headline: {
         ComparisonWithDefaultConfig: i_Headline_07812c19181ddb13069cad9383766cde,
         ComparisonWithNegativeArrow: i_Headline_0ae91ea68160e9bcfd8fb88354a0aeca,
@@ -9363,18 +9932,26 @@ const dash_44a9d0ed_8a06_4ffd_b16c_6281707acfcf = { obj: dash_44a9d0ed_8a06_4ffd
 import dash_emptyDashboard_obj from "./metadata/dashboards/emptyDashboard/obj.json" with { type: "json" };
 const dash_emptyDashboard = { obj: dash_emptyDashboard_obj };
 
-import {
-    type CatalogItem,
-    type IAttributeDisplayFormMetadataObject,
-    type IAttributeElement,
-    type ICatalogGroup,
-    type IDashboard,
-    type IDashboardPlugin,
-    type IDataSetMetadataObject,
-    type IExecutionDefinition,
-    type IInsight,
-    type IVisualizationClass,
+import collectionItems_0fb8ef7c99a0027b6349442a66b84d43_result from "./uiTestScenarios/collectionItems/0fb8ef7c99a0027b6349442a66b84d43/result.json" with { type: "json" };
+const collectionItems_0fb8ef7c99a0027b6349442a66b84d43 =
+    collectionItems_0fb8ef7c99a0027b6349442a66b84d43_result;
+import collectionItems_d23f653238df16ddf1315dcdfaee5002_result from "./uiTestScenarios/collectionItems/d23f653238df16ddf1315dcdfaee5002/result.json" with { type: "json" };
+const collectionItems_d23f653238df16ddf1315dcdfaee5002 =
+    collectionItems_d23f653238df16ddf1315dcdfaee5002_result;
+
+import type {
+    IExecutionDefinition,
+    CatalogItem,
+    ICatalogGroup,
+    IVisualizationClass,
+    IAttributeDisplayFormMetadataObject,
+    IAttributeElement,
+    IInsight,
+    IDashboard,
+    IDashboardPlugin,
+    IDataSetMetadataObject,
 } from "@gooddata/sdk-model";
+import type { ICollectionItemsResult } from "@gooddata/sdk-backend-spi";
 
 type ExecutionRecording = {
     scenarios?: any[];
@@ -9427,6 +10004,7 @@ type RecordingIndex = {
         visClasses?: VisClassesRecording;
         dashboards?: Record<string, DashboardRecording>;
     };
+    collectionItems?: Record<string, ICollectionItemsResult>;
 };
 
 export const Recordings: RecordingIndex = {
@@ -9668,6 +10246,34 @@ export const Recordings: RecordingIndex = {
         fp_fe88554dffc6b1cb444799b63bdbef5d,
         fp_fe9b7d7da26bca841ea91d1f0b83b67e,
         fp_ffefe1e672ff7d55be2bb41581749dd4,
+        fp_0e21f10e38db5f14843b7d214c65f08e,
+        fp_11857a8a6efce2729de750fd3cfb4cc5,
+        fp_122e712c7de75978c00074e37eaa2ce6,
+        fp_2152f673b7472bd421a1b3419bea8fce,
+        fp_2c89a91229a17cab03de5b8bee7da13f,
+        fp_59cfa3efd22fd85c35001e31f690593c,
+        fp_5b598dbcbbce2511e0199fa356faee7a,
+        fp_5f9ae9e80f6eb7ed5c4f50ac89ecdfac,
+        fp_6643e7e96567d7a2783b0caef8ff296a,
+        fp_84e4357d37e7dd9a0f35268b6d16c9b8,
+        fp_8f042616f494ec0fa147d6cbbb282fc0,
+        fp_9584a1187e922440742a818feafad4ce,
+        fp_9906ebe07bd59e04c10e6e280b6ce4d9,
+        fp_9c97fad86d7c8114a33f2148730f2fde,
+        fp_9fb9065cb5efbb787ad4321b2c452d3b,
+        fp_a797e8411cb0c43a8240ba361654b89a,
+        fp_b5b2a62be4133ffcc8688bcf965e16c9,
+        fp_bc1cfa4988ea5920285ec8c3ee1dce4a,
+        fp_c2def3edc85b9521ba53f7c5eea4d5b8,
+        fp_ca8bcbf03a02348c8a89c38dce59d640,
+        fp_cac25acb2ff885871a34ab573cb9491d,
+        fp_ce0ef10af343228e6eb6a59c4ad701ab,
+        fp_d5a808b43319ffd0395639ff3b9e142a,
+        fp_d5c8be07c672f72e5e841dbaba5aeaa0,
+        fp_daf77bbdd04f638fe63b2d4a18c7babd,
+        fp_ea357e5a6be7c32673329e84a81d0552,
+        fp_eea5ea89d0d544b546a7cf76027eaf22,
+        fp_ef51aca8c5794b4ff3e3de92d7fd2fb1,
     },
     metadata: {
         catalog,
@@ -10505,6 +11111,53 @@ export const Recordings: RecordingIndex = {
             i_FunnelChart_f7181c58469d3fb723e62e92d315e8cf,
             i_FunnelChart_f81e4fee4294286b6e354c2711bbb708,
             i_FunnelChart_fa2e577f1efafd0722d957e1ad78d955,
+            i_GeoAreaChart_01c882b5e1bcce4a67b78ca3b1d404c1,
+            i_GeoAreaChart_0be13b5cb57cb3b17e9def4db8e2a53f,
+            i_GeoAreaChart_19cfcb15d8749265d769ae87796ffa3f,
+            i_GeoAreaChart_251227c8bb20949dc82b4559ea681c44,
+            i_GeoAreaChart_3985ba32dfa5ff2a946c7a49c5b837b2,
+            i_GeoAreaChart_4fe9f6ab697116f56ab06b3ed92a1dcd,
+            i_GeoAreaChart_55c40cdb5c0ae31c93c348da5a9e4c01,
+            i_GeoAreaChart_60b110131a437a26781d095391e04b0a,
+            i_GeoAreaChart_669bdd0538fb74c508a22f2883810c88,
+            i_GeoAreaChart_927eaba7ad215549e34c3d5748f44063,
+            i_GeoAreaChart_a6329e977538ade1062a41e4372e9dba,
+            i_GeoAreaChart_d2ee210a0efe88c32a329224909a69c8,
+            i_GeoAreaChart_d9721f4cb94e76b8c4a6ece58db3f98d,
+            i_GeoAreaChart_f71b96374c8601e0c843987d56dd8350,
+            i_GeoAreaChart_fd2f906e5c8a51c9734bc745c3cc5fa1,
+            i_GeoChart_1453572fe8d171ddfb09ce522255fc9a,
+            i_GeoChart_1799ddde88c93b48c5b0b5a893beadbf,
+            i_GeoChart_1b1e9fb7694fa25de62c64b8fab0df98,
+            i_GeoChart_408635f5315222f713c811fe94582c9b,
+            i_GeoChart_52df9fa11a3f1f3589d2dcd4d4c14d00,
+            i_GeoChart_6978d23e9fac3f9b74ecd3f89c7374cd,
+            i_GeoChart_781c89d454c9a9ce193902883aee7549,
+            i_GeoChart_82bc11be13ff0ba30b513983ff398046,
+            i_GeoChart_85d85b6bb96c8a2bcbbef992e5b4871b,
+            i_GeoChart_d91bd2fd68c58d0b2ea9b057476b1a38,
+            i_GeoChart_deea35ee0ff36f4286ba9c898047d4f6,
+            i_GeoChart_e47963abcc763a71caa697cff2d567fd,
+            i_GeoChart_eafdff297dd058f0f113ff6ba0ecc095,
+            i_GeoChart_ee8396cc7124a2c1c2732d0937591270,
+            i_GeoPushpinChart_012f83c3798c79404e324c0b2b9fb593,
+            i_GeoPushpinChart_21af35fd7d32645842d4a26cbfa49507,
+            i_GeoPushpinChart_2a4bfddafdaf950a22120387c5a9ef81,
+            i_GeoPushpinChart_303408937f041d54fe38a62b727c0ee0,
+            i_GeoPushpinChart_33d4cef846017327833cb10e0fe49242,
+            i_GeoPushpinChart_3cab1f3562ec39e9c183c588ea15d34c,
+            i_GeoPushpinChart_4db9cbbbb5ae89d41b7623d3f5ad8647,
+            i_GeoPushpinChart_4ef0c8d4ea8a4ca22fdc8e0895b0bbb7,
+            i_GeoPushpinChart_5834d3468e0d2141b08c9e44ecaa6697,
+            i_GeoPushpinChart_68fd1d32a5b1629dfd5e0a50140d751b,
+            i_GeoPushpinChart_8808def0b840c0eb08691642eda144bb,
+            i_GeoPushpinChart_991908110406152b29c48a3e342cd2b0,
+            i_GeoPushpinChart_a424eaf366a9dd2a7a0a38398d4994db,
+            i_GeoPushpinChart_b27a30a10ad266e58dab1fec42820185,
+            i_GeoPushpinChart_b9d042ecf17934f9c0471ccb4b9a9d5f,
+            i_GeoPushpinChart_c8ad5ce0355f4921ba449ab37fc10d48,
+            i_GeoPushpinChart_d536b0836471901d33dcd7d55c459e2b,
+            i_GeoPushpinChart_df1a1a5f15158f01c3ab2ba29ee59fc8,
             i_Headline_07812c19181ddb13069cad9383766cde,
             i_Headline_0ae91ea68160e9bcfd8fb88354a0aeca,
             i_Headline_0c397a87524b15d4156d4902c93b32f8,
@@ -11262,5 +11915,9 @@ export const Recordings: RecordingIndex = {
             dash_44a9d0ed_8a06_4ffd_b16c_6281707acfcf,
             dash_emptyDashboard,
         },
+    },
+    collectionItems: {
+        "0fb8ef7c99a0027b6349442a66b84d43": collectionItems_0fb8ef7c99a0027b6349442a66b84d43,
+        d23f653238df16ddf1315dcdfaee5002: collectionItems_d23f653238df16ddf1315dcdfaee5002,
     },
 } as unknown as RecordingIndex;

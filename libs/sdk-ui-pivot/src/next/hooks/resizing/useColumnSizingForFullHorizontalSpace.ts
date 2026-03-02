@@ -2,9 +2,7 @@
 
 import { useCallback } from "react";
 
-import { useAutoSizeReset } from "./useAutoSizeReset.js";
 import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
-import { usePivotTableSizing } from "../../context/PivotTableSizingContext.js";
 import { type AgGridColumnDef, type AgGridOnColumnResized, type AgGridProps } from "../../types/agGrid.js";
 import { useGetAgGridColumns } from "../columns/useGetAgGridColumns.js";
 import { useUpdateAgGridColumnDefs } from "../columns/useUpdateAgGridColumnDefs.js";
@@ -30,12 +28,9 @@ export function useColumnSizingForFullHorizontalSpace() {
     const getAgGridColumns = useGetAgGridColumns();
     const updateAgGridColumnDefs = useUpdateAgGridColumnDefs();
 
-    useAutoSizeReset();
-    const { autoSizeInitialized, setAutoSizeInitialized } = usePivotTableSizing();
-
     const initColumnWidths = useCallback<AgGridOnColumnResized>(
         (params) => {
-            if (!["autosizeColumns", "sizeColumnsToFit"].includes(params.source) || autoSizeInitialized) {
+            if (!["autosizeColumns", "sizeColumnsToFit"].includes(params.source)) {
                 return;
             }
 
@@ -59,11 +54,8 @@ export function useColumnSizingForFullHorizontalSpace() {
             if (updatedColDefs) {
                 updateAgGridColumnDefs(updatedColDefs as AgGridColumnDef[], params.api);
             }
-
-            // Mark autosize as initialized to prevent future runs
-            setAutoSizeInitialized(true);
         },
-        [getAgGridColumns, updateAgGridColumnDefs, autoSizeInitialized, setAutoSizeInitialized],
+        [getAgGridColumns, updateAgGridColumnDefs],
     );
 
     return isColumnSizingForFullHorizontalSpace

@@ -14,7 +14,7 @@ export default {
 
 export const SingleMeasurePivotSortedByFirstRowAttr = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 10).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 10).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "single measure pivot sorted by first row attr",
         );
@@ -42,7 +42,7 @@ SingleMeasurePivotSortedByFirstRowAttr.parameters = {
 
 export const SingleMeasurePivotSortedBySecondRowAttr = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 10).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 10).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "single measure pivot sorted by second row attr",
         );
@@ -70,7 +70,7 @@ SingleMeasurePivotSortedBySecondRowAttr.parameters = {
 
 export const TwoMeasuresWithSingleRowAttrSortedByFirstMeasure = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 10).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 10).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "two measures with single row attr sorted by first measure",
         );
@@ -102,7 +102,7 @@ TwoMeasuresWithSingleRowAttrSortedByFirstMeasure.parameters = {
 
 export const TwoMeasuresWithSingleRowAttrSortedBySecondMeasure = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 10).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 10).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "two measures with single row attr sorted by second measure",
         );

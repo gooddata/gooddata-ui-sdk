@@ -25,6 +25,9 @@ import {
     insightAttributes,
     isAbsoluteDateFilter,
     isAllTimeDateFilter,
+    isAllValuesAttributeFilter,
+    isAllValuesDashboardAttributeFilter,
+    isArbitraryAttributeFilter,
     isAttributeFilter,
     isDashboardAttributeFilter,
     isDashboardCommonDateFilter,
@@ -32,7 +35,9 @@ import {
     isDateFilter,
     isInsightWidget,
     isLocalIdRef,
+    isMatchAttributeFilter,
     isMeasureValueFilter,
+    isNegativeAttributeFilter,
     isNoopAllTimeDashboardDateFilter,
     isPositiveAttributeFilter,
     isRelativeDateFilter,
@@ -295,13 +300,14 @@ export const getAppliedWidgetFilters = (
     // alert executions (which have empty attributes) don't contain dangling refs.
     const resolvedFilters = resolveMvfDimensionalityLocalRefs(filtersToUse, insight);
 
-    // Strip noop "all time" date filters - we don't want to save them, they have no effect on execution.
-    return resolvedFilters.filter((f) => {
-        if (isDateFilter(f)) {
-            return !isNoopAllTimeDateFilterFixed(f);
+    // Strip noop filters - they have no effect on execution.
+    return resolvedFilters.filter((filter) => {
+        // Strip noop "All time" date filters (implicit default with no extra configuration).
+        if (isDateFilter(filter)) {
+            return !isNoopAllTimeDateFilterFixed(filter);
         }
-
-        return true;
+        // Strip noop "All values" attribute filters (negative filter with empty exclusion list).
+        return !isAllValuesAttributeFilter(filter);
     });
 };
 
@@ -320,13 +326,14 @@ export const getAppliedDashboardFilters = (
     // but we need them to construct proper execution filters, so merge them.
     const selectedFiltersWithHiddenFilters = [...selectedAutomationFilters, ...dashboardHiddenFilters];
 
-    // And finally, strip noop "all time" date filters - we don't want to save them, they have no effect on execution.
-    return selectedFiltersWithHiddenFilters.filter((f) => {
-        if (isDashboardDateFilter(f)) {
-            return !isNoopAllTimeDashboardDateFilter(f);
+    // Strip noop filters - they have no effect on execution.
+    return selectedFiltersWithHiddenFilters.filter((filter) => {
+        // Strip noop "All time" date filters (implicit default with no extra configuration).
+        if (isDashboardDateFilter(filter)) {
+            return !isNoopAllTimeDashboardDateFilter(filter);
         }
-
-        return true;
+        // Strip noop "All values" attribute filters (negative selection with empty element list).
+        return !isAllValuesDashboardAttributeFilter(filter);
     });
 };
 
@@ -436,17 +443,44 @@ export function isNoopAllTimeDateFilterFixed(f: IFilter): boolean {
 export function areFiltersEqual(filter1: IFilter, filter2: IFilter): boolean {
     if (isAttributeFilter(filter1) && isAttributeFilter(filter2)) {
         const filter1Ref = filterObjRef(filter1);
-        const filter1Values = [...getAttributeElementsItems(filterAttributeElements(filter1))].sort();
         const filter2Ref = filterObjRef(filter2);
-        const filter1Type = isPositiveAttributeFilter(filter1) ? "positive" : "negative";
-        const filter2Values = [...getAttributeElementsItems(filterAttributeElements(filter2))].sort();
-        const filter2Type = isPositiveAttributeFilter(filter2) ? "positive" : "negative";
 
-        return (
-            areObjRefsEqual(filter1Ref, filter2Ref) &&
-            isEqual(filter1Values, filter2Values) &&
-            filter1Type === filter2Type
-        );
+        if (isArbitraryAttributeFilter(filter1) && isArbitraryAttributeFilter(filter2)) {
+            return (
+                areObjRefsEqual(filter1Ref, filter2Ref) &&
+                isEqual(filter1.arbitraryAttributeFilter.values, filter2.arbitraryAttributeFilter.values) &&
+                (filter1.arbitraryAttributeFilter.negativeSelection ?? false) ===
+                    (filter2.arbitraryAttributeFilter.negativeSelection ?? false)
+            );
+        }
+
+        if (isMatchAttributeFilter(filter1) && isMatchAttributeFilter(filter2)) {
+            const m1 = filter1.matchAttributeFilter;
+            const m2 = filter2.matchAttributeFilter;
+            return (
+                areObjRefsEqual(filter1Ref, filter2Ref) &&
+                m1.literal === m2.literal &&
+                m1.operator === m2.operator &&
+                (m1.caseSensitive ?? false) === (m2.caseSensitive ?? false) &&
+                (m1.negativeSelection ?? false) === (m2.negativeSelection ?? false)
+            );
+        }
+
+        if (
+            (isPositiveAttributeFilter(filter1) && isPositiveAttributeFilter(filter2)) ||
+            (isNegativeAttributeFilter(filter1) && isNegativeAttributeFilter(filter2))
+        ) {
+            const filter1Values = [...getAttributeElementsItems(filterAttributeElements(filter1))].sort();
+            const filter1Type = isPositiveAttributeFilter(filter1) ? "positive" : "negative";
+            const filter2Values = [...getAttributeElementsItems(filterAttributeElements(filter2))].sort();
+            const filter2Type = isPositiveAttributeFilter(filter2) ? "positive" : "negative";
+
+            return (
+                areObjRefsEqual(filter1Ref, filter2Ref) &&
+                isEqual(filter1Values, filter2Values) &&
+                filter1Type === filter2Type
+            );
+        }
     } else if (isDateFilter(filter1) && isDateFilter(filter2)) {
         return isEqual(dateFilterValues(filter1), dateFilterValues(filter2));
     }

@@ -2,6 +2,7 @@
 
 import { type IInsight } from "@gooddata/sdk-model";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 
@@ -55,7 +56,7 @@ export const SingleMeasure = () =>
                 visualizationUrl: "local:pyramid",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(16, 0, 0),
+        getScenariosGroupByIndexes(19, 0, 0),
     )();
 SingleMeasure.parameters = {
     kind: "single measure",
@@ -129,7 +130,7 @@ export const TwoMeasures = () =>
                 visualizationUrl: "local:pyramid",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(16, 0, 1),
+        getScenariosGroupByIndexes(19, 0, 1),
     )();
 TwoMeasures.parameters = {
     kind: "two measures",
@@ -200,7 +201,7 @@ export const SingleMeasureWithViewby = () =>
                 visualizationUrl: "local:pyramid",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(16, 0, 2),
+        getScenariosGroupByIndexes(19, 0, 2),
     )();
 SingleMeasureWithViewby.parameters = {
     kind: "single measure with viewBy",
@@ -280,7 +281,7 @@ export const SingleMeasureWithViewbySortedByAttribute = () =>
                 visualizationUrl: "local:pyramid",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(16, 0, 3),
+        getScenariosGroupByIndexes(19, 0, 3),
     )();
 SingleMeasureWithViewbySortedByAttribute.parameters = {
     kind: "single measure with viewBy sorted by attribute",
@@ -366,7 +367,7 @@ export const SingleMeasureWithViewbySortedByMeasure = () =>
                 visualizationUrl: "local:pyramid",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(16, 0, 4),
+        getScenariosGroupByIndexes(19, 0, 4),
     )();
 SingleMeasureWithViewbySortedByMeasure.parameters = {
     kind: "single measure with viewBy sorted by measure",
@@ -455,7 +456,7 @@ export const ArithmeticMeasures = () =>
                 visualizationUrl: "local:pyramid",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(16, 0, 5),
+        getScenariosGroupByIndexes(19, 0, 5),
     )();
 ArithmeticMeasures.parameters = {
     kind: "arithmetic measures",
