@@ -7,11 +7,10 @@ import { FormattedMessage, defineMessages, useIntl } from "react-intl";
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
 
-import { useCatalogItemOpen } from "./hooks/useCatalogItemOpen.js";
 import { CatalogDetail } from "../catalogDetail/CatalogDetail.js";
 import type { OpenHandlerEvent } from "../catalogDetail/CatalogDetailContent.js";
 import { CatalogItemFeed } from "../catalogItem/CatalogItemFeed.js";
-import { type ICatalogItemRef } from "../catalogItem/types.js";
+import { type ICatalogItem, type ICatalogItemRef } from "../catalogItem/types.js";
 import { FilterCertificationMemo } from "../filter/FilterCertification.js";
 import { useFilterActions } from "../filter/FilterContext.js";
 import { FilterCreatedByMemo } from "../filter/FilterCreatedBy.js";
@@ -28,11 +27,13 @@ import { Table } from "../table/Table.js";
 type Props = {
     backend: IAnalyticalBackend;
     workspace: string;
-    openCatalogItemRef?: ICatalogItemRef;
-    onCatalogItemOpenClick?: (event: MouseEvent, linkClickEvent: OpenHandlerEvent) => void;
+    open: boolean;
+    openedItem: Partial<ICatalogItem> | null;
+    setItemOpened: (item: Partial<ICatalogItem> | null) => void;
+    onOpenDetail: (item: ICatalogItem) => void;
+    onCloseDetail: () => void;
+    onOpenClick: (event: MouseEvent, linkClickEvent: OpenHandlerEvent) => void;
     onCatalogItemNavigation?: (event: MouseEvent, ref: ICatalogItemRef) => void;
-    onCatalogDetailOpened?: (ref: ICatalogItemRef) => void;
-    onCatalogDetailClosed?: () => void;
 };
 
 const messages = defineMessages({
@@ -42,25 +43,20 @@ const messages = defineMessages({
 });
 
 export function Main({
-    openCatalogItemRef,
     backend,
     workspace,
-    onCatalogItemOpenClick,
-    onCatalogDetailOpened,
-    onCatalogDetailClosed,
+    open,
+    openedItem,
+    setItemOpened,
+    onOpenDetail,
+    onCloseDetail,
+    onOpenClick,
     onCatalogItemNavigation,
 }: Props) {
     const intl = useIntl();
     const { addError } = useToastMessage();
     const { toggleTag } = useFilterActions();
     const isQualityEnabled = useIsCatalogQualityEnabled();
-
-    const { open, openedItem, setItemOpened, onOpenDetail, onCloseDetail, onOpenClick } = useCatalogItemOpen(
-        onCatalogItemOpenClick,
-        onCatalogDetailOpened,
-        onCatalogDetailClosed,
-        openCatalogItemRef,
-    );
 
     return (
         <section className="gd-analytics-catalog__main">

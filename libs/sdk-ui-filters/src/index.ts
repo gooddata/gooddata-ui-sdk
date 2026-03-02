@@ -184,6 +184,7 @@ export {
 export type {
     ParentFilterOverAttributeType,
     OnApplyCallbackType,
+    OnChangeCallbackType,
     OnSelectCallbackType,
     IAttributeFilterBaseProps,
     IAttributeFilterCoreProps,
@@ -206,6 +207,14 @@ export type {
     AttributeFilterController,
     AttributeFilterControllerData,
     AttributeFilterControllerCallbacks,
+    CommonFilterControllerData,
+    CommonFilterControllerCallbacks,
+    ElementsFilterControllerData,
+    ElementsFilterControllerCallbacks,
+    TextFilterControllerData,
+    TextFilterControllerCallbacks,
+    FilterModeControllerData,
+    FilterModeControllerCallbacks,
 } from "./AttributeFilter/hooks/types.js";
 export {
     type IUseAttributeFilterHandlerProps,
@@ -219,7 +228,29 @@ export {
     type IUseAttributeFilterSearchProps,
     useAttributeFilterSearch,
 } from "./AttributeFilter/hooks/useAttributeFilterSearch.js";
-export { getAttributeFilterSubtitle } from "./AttributeFilter/utils.js";
+export { getAttributeFilterSubtitle, getExtendedAttributeFilterSubtitle } from "./AttributeFilter/utils.js";
+export type {
+    AttributeFilterAvailableMode,
+    AttributeFilterMode,
+    AttributeFilterTextMode,
+} from "./AttributeFilter/filterModeTypes.js";
+export {
+    getAvailableModeFromFilter,
+    getAvailableTextModes,
+    getFilterModeFromFilter,
+    mapAvailableModesToInternal,
+    createEmptyFilterForMode,
+    createEmptyFilterForAvailableMode,
+} from "./AttributeFilter/filterModeUtils.js";
+export {
+    type TextFilterOperator,
+    type TextFilterNegativeOperator,
+    getOperatorFromFilter,
+    isArbitraryOperator,
+    isMatchOperator,
+    createFilterFromOperator,
+    getValuesFromFilter,
+} from "./AttributeFilter/textFilterOperatorUtils.js";
 
 // AttributeFilter Components - DropdownButton
 export {
@@ -289,6 +320,38 @@ export {
 export type { IAttributeFilterStatusBarProps } from "./AttributeFilter/Components/ElementsSelect/StatusBar/types.js";
 export { AttributeFilterStatusBar } from "./AttributeFilter/Components/ElementsSelect/StatusBar/AttributeFilterStatusBar.js";
 export { SingleSelectionAttributeFilterStatusBar } from "./AttributeFilter/Components/ElementsSelect/StatusBar/SingleSelectionAttributeFilterStatusBar.js";
+
+// AttributeFilter Components - Filter Mode Menu
+export {
+    type IFilterModeMenuProps,
+    FilterModeMenu,
+} from "./AttributeFilter/Components/FilterModeMenu/FilterModeMenu.js";
+export {
+    type IFilterModeMenuButtonProps,
+    FilterModeMenuButton,
+} from "./AttributeFilter/Components/FilterModeMenu/FilterModeMenuButton.js";
+export {
+    type IFilterModeMenuItemProps,
+    FilterModeMenuItem,
+} from "./AttributeFilter/Components/FilterModeMenu/FilterModeMenuItem.js";
+
+// AttributeFilter Components - Text Filter Body
+export {
+    type ITextFilterBodyProps,
+    TextFilterBody,
+} from "./AttributeFilter/Components/TextFilterBody/TextFilterBody.js";
+export {
+    type IArbitraryValuesInputProps,
+    ArbitraryValuesInput,
+} from "./AttributeFilter/Components/TextFilterBody/ArbitraryValuesInput.js";
+export {
+    type ITextFilterOperatorDropdownProps,
+    TextFilterOperatorDropdown,
+} from "./AttributeFilter/Components/TextFilterBody/TextFilterOperatorDropdown.js";
+export {
+    type ITextFilterStateSummaryProps,
+    TextFilterStateSummary,
+} from "./AttributeFilter/Components/TextFilterBody/TextFilterStateSummary.js";
 
 // AttributeFilter Components - Error and Loading
 export {

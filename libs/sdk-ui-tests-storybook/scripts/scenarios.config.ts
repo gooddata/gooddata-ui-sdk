@@ -21,6 +21,7 @@
  * If no config matches the scenario ID, then the scenario will not be tested using BackstopJS
  */
 
+import { BrowserAlias } from "../stories/_infra/backstopScenario.js";
 import { type IStoryInfo } from "../stories/_infra/toBackstop.js";
 
 const ScenarioConfig = [
@@ -125,6 +126,15 @@ const ScenarioConfig = [
             delay: {
                 postReady: 500,
             },
+        },
+    },
+    {
+        /*
+         * Use Chromium with SwiftShader for all GeoChart variants
+         */
+        idRegex: /.*Geo(Area|Pushpin)?Chart.*/g,
+        config: {
+            browsers: [BrowserAlias.ChromiumSwiftShader],
         },
     },
 ];

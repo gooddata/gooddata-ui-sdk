@@ -4,6 +4,7 @@ import { type ReactElement, useCallback, useMemo } from "react";
 
 import { type ContentRect } from "react-measure";
 
+import { type LegendMessageFormatter } from "./legendMessages.js";
 import { MultiLayerLegendPanel } from "./MultiLayerLegendPanel.js";
 import type { IGeoLayerData } from "../../context/GeoLayersContext.js";
 import { useGeoLegend } from "../../context/GeoLegendContext.js";
@@ -29,6 +30,8 @@ export interface IGeoChartLegendOverlayProps {
     layerExecutions: ILayerExecutionRecord[];
     primaryLayer: IGeoLayerData | null;
     numericSymbols?: string[];
+    formatMessage?: LegendMessageFormatter;
+    setLegendPanelElementRef?: (element: HTMLDivElement | null) => void;
 }
 
 /**
@@ -43,6 +46,8 @@ export function GeoChartLegendOverlay({
     layerExecutions,
     primaryLayer,
     numericSymbols,
+    formatMessage,
+    setLegendPanelElementRef,
 }: IGeoChartLegendOverlayProps): ReactElement | null {
     const { toggleLegendItem, toggleLayerVisibility, hiddenLayers } = useGeoLegend();
 
@@ -73,6 +78,7 @@ export function GeoChartLegendOverlay({
     );
 
     const enabled = useMemo(() => legendConfig.enabled, [legendConfig.enabled]);
+    const enableGeoChartA11yImprovements = config?.enableGeoChartA11yImprovements ?? false;
 
     // Don't render until container is measured (needed for height calculations)
     if (!chartContainerRect?.client?.height) {
@@ -87,6 +93,9 @@ export function GeoChartLegendOverlay({
             hiddenLayers={hiddenLayers}
             onLayerVisibilityChange={handleLayerVisibilityChange}
             onItemClick={handleLegendItemClick}
+            enableGeoChartA11yImprovements={enableGeoChartA11yImprovements}
+            formatMessage={formatMessage}
+            setPanelElementRef={setLegendPanelElementRef}
         />
     );
 }

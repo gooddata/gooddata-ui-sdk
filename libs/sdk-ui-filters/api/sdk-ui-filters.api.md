@@ -12,6 +12,7 @@ import { DateFilterGranularity } from '@gooddata/sdk-model';
 import { DateString } from '@gooddata/sdk-model';
 import { ElementsQueryOptionsElementsSpecification } from '@gooddata/sdk-backend-spi';
 import { EmptyValues } from '@gooddata/sdk-model';
+import { FocusEventHandler } from 'react';
 import { GoodDataSdkError } from '@gooddata/sdk-ui';
 import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
 import { IAbsoluteDateFilterForm } from '@gooddata/sdk-model';
@@ -62,6 +63,9 @@ import { WeekStart } from '@gooddata/sdk-model';
 // @public
 export type AbsoluteDateFilterOption = IUiAbsoluteDateFilterForm | IAbsoluteDateFilterPreset;
 
+// @alpha
+export function ArbitraryValuesInput(props: IArbitraryValuesInputProps): JSX.Element;
+
 // @public
 export type AsyncOperationStatus = "pending" | "loading" | "success" | "error" | "canceled";
 
@@ -80,6 +84,9 @@ export function AttributeFilter(props: IAttributeFilterProps): JSX.Element;
 // @beta
 export function AttributeFilterAllValuesFilteredResult({ parentFilterTitles, searchString, enableShowingFilteredElements }: IAttributeFilterAllValuesFilteredResultProps): JSX.Element;
 
+// @alpha
+export type AttributeFilterAvailableMode = "elements" | "arbitrary" | "match";
+
 // @public
 export function AttributeFilterButton(props: IAttributeFilterButtonProps): JSX.Element | null;
 
@@ -95,52 +102,10 @@ export function AttributeFilterConfigurationButton({ onConfiguration }: IAttribu
 export type AttributeFilterController = AttributeFilterControllerData & AttributeFilterControllerCallbacks;
 
 // @public
-export type AttributeFilterControllerCallbacks = {
-    onApply: (applyRegardlessWithoutApplySetting?: boolean, applyToWorkingOnly?: boolean) => void;
-    onLoadNextElementsPage: () => void;
-    onSearch: (search: string) => void;
-    onSelect: (selectedItems: IAttributeElement[], isInverted: boolean) => void;
-    onReset: () => void;
-    onOpen: () => void;
-    onShowFilteredElements: () => void;
-    onClearIrrelevantSelection: () => void;
-};
+export type AttributeFilterControllerCallbacks = CommonFilterControllerCallbacks & ElementsFilterControllerCallbacks & TextFilterControllerCallbacks & FilterModeControllerCallbacks;
 
 // @public
-export type AttributeFilterControllerData = {
-    attribute?: IAttributeMetadataObject;
-    offset: number;
-    limit: number;
-    isFiltering: boolean;
-    isInitializing: boolean;
-    initError?: GoodDataSdkError;
-    isLoadingInitialElementsPage: boolean;
-    initialElementsPageError?: GoodDataSdkError;
-    isLoadingNextElementsPage: boolean;
-    nextElementsPageError?: GoodDataSdkError;
-    nextElementsPageSize: number;
-    elements: IAttributeElement[];
-    totalElementsCount: number | undefined;
-    totalElementsCountWithCurrentSettings: number | undefined;
-    isSelectionInvalid: boolean;
-    isApplyDisabled: boolean;
-    isWorkingSelectionInverted: boolean;
-    workingSelectionElements: IAttributeElement[];
-    isCommittedSelectionInverted: boolean;
-    committedSelectionElements: IAttributeElement[];
-    searchString: string;
-    isFilteredByParentFilters: boolean;
-    parentFilterAttributes: IAttributeMetadataObject[];
-    displayForms: IAttributeDisplayFormMetadataObject[];
-    currentDisplayFormRef: ObjRef;
-    currentDisplayAsDisplayFormRef?: ObjRef;
-    enableShowingFilteredElements?: boolean;
-    irrelevantSelection?: IAttributeElement[];
-    limitingValidationItems?: ObjRef[];
-    isFilteredByLimitingValidationItems?: boolean;
-    isFilteredByDependentDateFilters?: boolean;
-    isWorkingSelectionChanged?: boolean;
-};
+export type AttributeFilterControllerData = CommonFilterControllerData & ElementsFilterControllerData & FilterModeControllerData & Partial<TextFilterControllerData>;
 
 // @internal (undocumented)
 export function AttributeFilterDeleteButton({ onDelete }: IAttributeFilterDeleteButtonProps): JSX.Element;
@@ -149,7 +114,7 @@ export function AttributeFilterDeleteButton({ onDelete }: IAttributeFilterDelete
 export function AttributeFilterDependencyTooltip({ tooltipContent }: IAttributeFilterDependencyTooltipProps): JSX.Element;
 
 // @beta
-export function AttributeFilterDropdownActions({ isApplyDisabled, onApplyButtonClick, onCancelButtonClick, withoutApply }: IAttributeFilterDropdownActionsProps): JSX.Element;
+export function AttributeFilterDropdownActions({ isApplyDisabled, onApplyButtonClick, onCancelButtonClick, applyDisabledTooltip, withoutApply }: IAttributeFilterDropdownActionsProps): JSX.Element;
 
 // @beta
 export function AttributeFilterDropdownBody({ onApplyButtonClick, onCancelButtonClick, width }: IAttributeFilterDropdownBodyProps): JSX.Element;
@@ -193,6 +158,9 @@ export function AttributeFilterFilteredStatus({ parentFilterTitles }: IAttribute
 // @beta
 export function AttributeFilterLoading({ onClick }: IAttributeFilterLoadingProps): JSX.Element;
 
+// @alpha
+export type AttributeFilterMode = "elements" | "text";
+
 // @beta
 export function AttributeFilterSelectionStatus({ isInverted, selectedItems, getItemTitle, selectedItemsLimit, showSelectionStatus }: IAttributeFilterSelectionStatusProps): JSX.Element;
 
@@ -204,6 +172,9 @@ export function AttributeFilterSimpleDropdownButtonWithSelection({ isOpen, subti
 
 // @beta
 export function AttributeFilterStatusBar({ attributeTitle, isFilteredByParentFilters, parentFilterTitles, totalElementsCountWithCurrentSettings, getItemTitle, isInverted, selectedItems, selectedItemsLimit, enableShowingFilteredElements, onShowFilteredElements, irrelevantSelection, onClearIrrelevantSelection, isFilteredByLimitingValidationItems, isFilteredByDependentDateFilters, withoutApply }: IAttributeFilterStatusBarProps): JSX.Element;
+
+// @alpha
+export type AttributeFilterTextMode = Extract<AttributeFilterAvailableMode, "arbitrary" | "match">;
 
 // @alpha
 export type CalendarTabType = "standard" | "fiscal";
@@ -219,8 +190,41 @@ export type CallbackPayloadWithCorrelation<T = {}> = T & {
 // @public (undocumented)
 export type CallbackRegistration<T> = (cb: Callback<T>) => Unsubscribe;
 
+// @public
+export type CommonFilterControllerCallbacks = {
+    onApply: (applyRegardlessWithoutApplySetting?: boolean, applyToWorkingOnly?: boolean) => void;
+    onReset: () => void;
+    filterDetailRequestHandler?: (labelRef: ObjRef) => Promise<{
+        elements: IAttributeElement[];
+        totalCount: number;
+    }>;
+};
+
+// @public
+export type CommonFilterControllerData = {
+    attribute?: IAttributeMetadataObject;
+    displayForms: IAttributeDisplayFormMetadataObject[];
+    currentDisplayFormRef: ObjRef;
+    currentDisplayAsDisplayFormRef?: ObjRef;
+    isInitializing: boolean;
+    initError?: GoodDataSdkError;
+    isFiltering: boolean;
+    isSelectionInvalid: boolean;
+    isApplyDisabled: boolean;
+    isWorkingSelectionChanged?: boolean;
+};
+
 // @public (undocumented)
 export type Correlation = string;
+
+// @alpha
+export function createEmptyFilterForAvailableMode(mode: AttributeFilterAvailableMode, displayForm: ObjRef, localIdentifier?: string): IAttributeFilter;
+
+// @alpha
+export function createEmptyFilterForMode(mode: AttributeFilterMode, displayForm: ObjRef, localIdentifier?: string): IAttributeFilter;
+
+// @alpha
+export function createFilterFromOperator(operator: TextFilterOperator, valuesOrLiteral: string[] | string, displayForm: ObjRef, localIdentifier?: string, caseSensitive?: boolean): IAttributeFilter;
 
 // @public
 export class DateFilter extends PureComponent<IDateFilterProps, IDateFilterState> {
@@ -281,6 +285,42 @@ export const defaultDateFilterOptions: IDateFilterOptionsByType;
 // @beta
 export type DimensionalityItemType = "attribute" | "chronologicalDate" | "genericDate";
 
+// @public
+export type ElementsFilterControllerCallbacks = {
+    onLoadNextElementsPage: () => void;
+    onSearch: (search: string) => void;
+    onSelect: (selectedItems: IAttributeElement[], isInverted: boolean) => void;
+    onOpen: () => void;
+    onShowFilteredElements: () => void;
+    onClearIrrelevantSelection: () => void;
+};
+
+// @public
+export type ElementsFilterControllerData = {
+    offset: number;
+    limit: number;
+    isLoadingInitialElementsPage: boolean;
+    initialElementsPageError?: GoodDataSdkError;
+    isLoadingNextElementsPage: boolean;
+    nextElementsPageError?: GoodDataSdkError;
+    nextElementsPageSize: number;
+    elements: IAttributeElement[];
+    totalElementsCount: number | undefined;
+    totalElementsCountWithCurrentSettings: number | undefined;
+    isWorkingSelectionInverted: boolean;
+    workingSelectionElements: IAttributeElement[];
+    isCommittedSelectionInverted: boolean;
+    committedSelectionElements: IAttributeElement[];
+    searchString: string;
+    isFilteredByParentFilters: boolean;
+    parentFilterAttributes: IAttributeMetadataObject[];
+    enableShowingFilteredElements?: boolean;
+    irrelevantSelection?: IAttributeElement[];
+    limitingValidationItems?: ObjRef[];
+    isFilteredByLimitingValidationItems?: boolean;
+    isFilteredByDependentDateFilters?: boolean;
+};
+
 // @internal
 export function EmptyElementsSearchBar(_props: IAttributeFilterElementsSearchBarProps): JSX.Element;
 
@@ -296,6 +336,29 @@ export function filterFiscalPresets(presets: DateFilterRelativeOptionGroup): Dat
 // @public
 export function FilterGroup<P>(props: IFilterGroupProps<P>): JSX.Element;
 
+// @public
+export type FilterModeControllerCallbacks = {
+    onFilterModeChange?: (newMode: AttributeFilterMode) => void;
+    setDisplayForm?: (displayFormRef: ObjRef) => void;
+    resetForModeSwitch?: (newFilter: IAttributeFilter, newDisplayAsLabel?: ObjRef) => void;
+};
+
+// @public
+export type FilterModeControllerData = {
+    currentFilterMode: AttributeFilterMode;
+    availableInternalFilterModes?: AttributeFilterMode[];
+    availableTextFilterModes?: AttributeFilterTextMode[];
+};
+
+// @alpha
+export function FilterModeMenu(props: IFilterModeMenuProps): JSX.Element | null;
+
+// @alpha
+export function FilterModeMenuButton(props: IFilterModeMenuButtonProps): JSX.Element;
+
+// @alpha
+export function FilterModeMenuItem(props: IFilterModeMenuItemProps): JSX.Element;
+
 // @internal
 export function filterStandardGranularities(granularities: DateFilterGranularity[]): DateFilterGranularity[];
 
@@ -309,7 +372,16 @@ export function filterVisibleDateFilterOptions(dateFilterOptions: IDateFilterOpt
 export function getAttributeFilterSubtitle(isCommittedSelectionInverted: boolean, committedSelectionElements: IAttributeElement[], intl: IntlShape): string;
 
 // @alpha
+export function getAvailableModeFromFilter(filter: IAttributeFilter | undefined): AttributeFilterAvailableMode;
+
+// @alpha
+export function getAvailableTextModes(modes: AttributeFilterAvailableMode[] | undefined): AttributeFilterTextMode[];
+
+// @alpha
 export function getDefaultCalendarTab(activeCalendars?: IActiveCalendars, currentPreset?: DateFilterOption): CalendarTabType;
+
+// @alpha
+export function getExtendedAttributeFilterSubtitle(filter: IAttributeFilter | undefined, intl: IntlShape): string;
 
 // @internal
 export function getFilteredGranularities(granularities: DateFilterGranularity[] | undefined, config: IFiscalTabsConfig, selectedTab: CalendarTabType): DateFilterGranularity[];
@@ -318,13 +390,22 @@ export function getFilteredGranularities(granularities: DateFilterGranularity[] 
 export function getFilteredPresets(presets: DateFilterRelativeOptionGroup | undefined, config: IFiscalTabsConfig, selectedTab: CalendarTabType): DateFilterRelativeOptionGroup | undefined;
 
 // @alpha
+export function getFilterModeFromFilter(filter: IAttributeFilter | undefined): AttributeFilterMode;
+
+// @alpha
 export function getFiscalTabsConfig(presets: DateFilterRelativeOptionGroup | undefined, activeCalendars?: IActiveCalendars): IFiscalTabsConfig;
 
 // @internal
 export const getLocalizedIcuDateFormatPattern: (locale: string) => string;
 
 // @alpha
+export function getOperatorFromFilter(filter: IAttributeFilter | undefined): TextFilterOperator;
+
+// @alpha
 export function getTabForPreset(preset: DateFilterOption): CalendarTabType;
+
+// @alpha
+export function getValuesFromFilter(filter: IAttributeFilter | undefined): string[] | string;
 
 // @beta
 export type GranularityIntlKey = "day" | "minute" | "hour" | "week" | "month" | "quarter" | "year" | "period";
@@ -334,6 +415,20 @@ export function hasFiscalPresets(presets: DateFilterRelativeOptionGroup): boolea
 
 // @alpha
 export function hasStandardPresets(presets: DateFilterRelativeOptionGroup): boolean;
+
+// @alpha
+export interface IArbitraryValuesInputProps {
+    autocompleteOptions?: string[];
+    disabled?: boolean;
+    emptyValueDisplay: string;
+    hasEmptyError?: boolean;
+    hasValuesLimitExceededError?: boolean;
+    hasValuesLimitReachedWarning?: boolean;
+    onBlur?: FocusEventHandler<HTMLInputElement>;
+    onValuesChange?: (values: string[]) => void;
+    placeholder?: string;
+    values: string[];
+}
 
 // @internal (undocumented)
 export interface IAttributeDatasetInfoProps {
@@ -414,7 +509,7 @@ export interface IAttributeElementLoader {
     onLoadNextElementsPageError: CallbackRegistration<OnLoadNextElementsPageErrorCallbackPayload>;
     onLoadNextElementsPageStart: CallbackRegistration<OnLoadNextElementsPageStartCallbackPayload>;
     onLoadNextElementsPageSuccess: CallbackRegistration<OnLoadNextElementsPageSuccessCallbackPayload>;
-    setDisplayAsLabel(displayAsLabel: ObjRef): void;
+    setDisplayAsLabel(displayAsLabel: ObjRef | undefined): void;
     setDisplayForm(displayForm: ObjRef): void;
     setLimit(limit: number): void;
     setLimitingAttributeFilters(filters: IElementsQueryAttributeFilter[]): void;
@@ -456,6 +551,8 @@ export type IAttributeFilterContext = AttributeFilterController & Pick<IAttribut
 // @public (undocumented)
 export interface IAttributeFilterCoreProps {
     alignPoints?: IAlignPoint[];
+    // @alpha
+    availableFilterModes?: AttributeFilterAvailableMode[];
     backend?: IAnalyticalBackend;
     connectToPlaceholder?: IPlaceholder<IAttributeFilter>;
     // @alpha
@@ -472,8 +569,10 @@ export interface IAttributeFilterCoreProps {
     hiddenElements?: string[];
     locale?: ILocale;
     onApply?: OnApplyCallbackType;
+    onChange?: OnChangeCallbackType;
     onError?: (error: GoodDataSdkError) => void;
     onInitLoadingChanged?: (loading: boolean, attribute?: IAttributeMetadataObject) => void;
+    // @deprecated
     onSelect?: OnSelectCallbackType;
     overlayPositionType?: OverlayPositionType;
     parentFilterOverAttribute?: ParentFilterOverAttributeType;
@@ -516,10 +615,14 @@ export interface IAttributeFilterCustomComponentProps {
     EmptyResultComponent?: ComponentType<IAttributeFilterEmptyResultProps>;
     // @beta
     ErrorComponent?: ComponentType<IAttributeFilterErrorProps>;
+    // @alpha
+    FilterModeMenuComponent?: ComponentType<IFilterModeMenuProps>;
     // @beta
     LoadingComponent?: ComponentType<IAttributeFilterLoadingProps>;
     // @beta
     StatusBarComponent?: ComponentType<IAttributeFilterStatusBarProps>;
+    // @alpha
+    TextFilterBodyComponent?: ComponentType<ITextFilterBodyProps>;
 }
 
 // @internal (undocumented)
@@ -536,6 +639,8 @@ export interface IAttributeFilterDependencyTooltipProps {
 
 // @beta
 export interface IAttributeFilterDropdownActionsProps {
+    // @alpha
+    applyDisabledTooltip?: string;
     isApplyDisabled?: boolean;
     isSelectionChanged?: boolean;
     onApplyButtonClick: () => void;
@@ -583,6 +688,7 @@ export interface IAttributeFilterDropdownButtonProps {
 // @beta
 export interface IAttributeFilterElementsActionsProps {
     checked: boolean;
+    hideTotalItemsCount?: boolean;
     // (undocumented)
     isApplyDisabled?: boolean;
     isFiltered: boolean;
@@ -706,7 +812,7 @@ export interface IAttributeFilterLoader extends IAttributeLoader, IAttributeElem
     getInitError(): GoodDataSdkError | undefined;
     getInitStatus(): AsyncOperationStatus;
     getOriginalFilter(): IAttributeFilter | undefined;
-    init(correlation?: Correlation): void;
+    init(correlation?: Correlation, skipElementsLoading?: boolean): void;
     onInitCancel: CallbackRegistration<OnInitCancelCallbackPayload>;
     onInitError: CallbackRegistration<OnInitErrorCallbackPayload>;
     onInitStart: CallbackRegistration<OnInitStartCallbackPayload>;
@@ -977,6 +1083,29 @@ export interface IFilterGroupProps<P> {
 }
 
 // @alpha
+export interface IFilterModeMenuButtonProps {
+    isOpen: boolean;
+    onClick: () => void;
+}
+
+// @alpha
+export interface IFilterModeMenuItemProps {
+    isSelected: boolean;
+    mode: AttributeFilterMode;
+    onClick: () => void;
+}
+
+// @alpha
+export interface IFilterModeMenuProps {
+    availableModes?: AttributeFilterMode[];
+    currentMode: AttributeFilterMode;
+    labels?: IAttributeDisplayFormMetadataObject[];
+    onLabelChange?: (labelRef: ObjRef) => void;
+    onModeChange: (mode: AttributeFilterMode) => void;
+    selectedLabelRef?: ObjRef;
+}
+
+// @alpha
 export interface IFiscalTabsConfig {
     // (undocumented)
     hasFiscal: boolean;
@@ -1195,6 +1324,9 @@ export interface IRankingFilterProps {
 export const isAbsoluteDateFilterOption: (obj: unknown) => obj is AbsoluteDateFilterOption;
 
 // @alpha
+export function isArbitraryOperator(operator: TextFilterOperator): boolean;
+
+// @alpha
 export function isFiscalGranularity(granularity: DateFilterGranularity): boolean;
 
 // @public
@@ -1213,6 +1345,9 @@ export interface ISingleSelectionHandler<T> {
     getSelection(): T;
     onSelectionChanged: CallbackRegistration<OnSelectionChangedCallbackPayload<T>>;
 }
+
+// @alpha
+export function isMatchOperator(operator: TextFilterOperator): boolean;
 
 // @public
 export const isRelativeDateFilterOption: (obj: unknown) => obj is RelativeDateFilterOption;
@@ -1247,6 +1382,43 @@ export const isUiRelativeDateFilterForm: (obj: unknown) => obj is IUiRelativeDat
 
 // @alpha (undocumented)
 export function isWarningMessage(obj: unknown): obj is IWarningMessage;
+
+// @alpha
+export interface ITextFilterBodyProps {
+    attributeTitle: string;
+    autocompleteOptions?: string[];
+    availableTextModes?: AttributeFilterTextMode[];
+    caseSensitive: boolean;
+    disabled?: boolean;
+    hasLiteralEmptyError?: boolean;
+    hasValuesEmptyError?: boolean;
+    hasValuesLimitExceededError?: boolean;
+    hasValuesLimitReachedWarning?: boolean;
+    literal: string;
+    onLiteralBlur?: () => void;
+    onLiteralChange?: (literal: string) => void;
+    onOperatorChange?: (operator: TextFilterOperator) => void;
+    onToggleCaseSensitive?: () => void;
+    onValuesBlur?: () => void;
+    onValuesChange?: (values: string[]) => void;
+    operator: TextFilterOperator;
+    values: string[];
+}
+
+// @alpha
+export interface ITextFilterOperatorDropdownProps {
+    availableTextModes?: AttributeFilterTextMode[];
+    disabled?: boolean;
+    onOperatorChange?: (operator: TextFilterOperator) => void;
+    operator: TextFilterOperator;
+}
+
+// @alpha
+export interface ITextFilterStateSummaryProps {
+    literal: string;
+    operator: TextFilterOperator;
+    values: string[];
+}
 
 // @public
 export interface IUiAbsoluteDateFilterForm extends IAbsoluteDateFilterForm {
@@ -1287,7 +1459,7 @@ export interface IUseAttributeFilterHandlerProps {
     // (undocumented)
     backend: IAnalyticalBackend;
     // (undocumented)
-    displayAsLabel: ObjRef;
+    displayAsLabel?: ObjRef;
     // (undocumented)
     filter: IAttributeFilter;
     // (undocumented)
@@ -1312,6 +1484,9 @@ export type IWarningMessage = {
     severity: "low" | "medium" | "high";
 };
 
+// @alpha
+export function mapAvailableModesToInternal(modes: AttributeFilterAvailableMode[] | undefined): AttributeFilterMode[];
+
 // @beta (undocumented)
 export const MeasureValueFilter: NamedExoticComponent<IMeasureValueFilterProps>;
 
@@ -1329,6 +1504,12 @@ export function newAttributeFilterHandler(backend: IAnalyticalBackend, workspace
 
 // @public (undocumented)
 export type OnApplyCallbackType = (filter: IAttributeFilter, isInverted: boolean, selectionMode?: DashboardAttributeFilterSelectionMode, selectionTitles?: IAttributeElement[], displayAsLabel?: ObjRef, isResultOfMigration?: boolean, additionalProps?: {
+    isSelectionInvalid?: boolean;
+    applyToWorkingOnly?: boolean;
+}) => void;
+
+// @public
+export type OnChangeCallbackType = (filter: IAttributeFilter, isInverted: boolean, selectionMode?: DashboardAttributeFilterSelectionMode, selectionTitles?: IAttributeElement[], displayAsLabel?: ObjRef, isResultOfMigration?: boolean, additionalProps?: {
     isSelectionInvalid?: boolean;
     applyToWorkingOnly?: boolean;
 }) => void;
@@ -1433,11 +1614,8 @@ export type OnLoadNextElementsPageStartCallbackPayload = CallbackPayloadWithCorr
 // @public
 export type OnLoadNextElementsPageSuccessCallbackPayload = CallbackPayloadWithCorrelation<ILoadElementsResult>;
 
-// @public (undocumented)
-export type OnSelectCallbackType = (filter: IAttributeFilter, isInverted: boolean, selectionMode?: DashboardAttributeFilterSelectionMode, selectionTitles?: IAttributeElement[], displayAsLabel?: ObjRef, isResultOfMigration?: boolean, additionalProps?: {
-    isSelectionInvalid?: boolean;
-    applyToWorkingOnly?: boolean;
-}) => void;
+// @public @deprecated (undocumented)
+export type OnSelectCallbackType = OnChangeCallbackType;
 
 // @public
 export type OnSelectionChangedCallbackPayload<T> = {
@@ -1469,6 +1647,45 @@ export function SingleSelectionAttributeFilterStatusBar({ enableShowingFilteredE
 
 // @alpha
 export const STANDARD_GRANULARITIES_WITH_FISCAL_EQUIVALENT: DateFilterGranularity[];
+
+// @alpha
+export function TextFilterBody(props: ITextFilterBodyProps): JSX.Element;
+
+// @public
+export type TextFilterControllerCallbacks = {
+    onTextFilterOperatorChange?: (operator: TextFilterOperator) => void;
+    onTextFilterValuesChange?: (values: string[]) => void;
+    onTextFilterLiteralChange?: (literal: string) => void;
+    onTextFilterLiteralBlur?: () => void;
+    onTextFilterValuesBlur?: () => void;
+    onToggleTextFilterCaseSensitive?: () => void;
+    onCommitTextFilter?: () => void;
+};
+
+// @public
+export type TextFilterControllerData = {
+    textFilterOperator: TextFilterOperator;
+    textFilterValues?: string[];
+    textFilterLiteral?: string;
+    textFilterLiteralEmptyError?: boolean;
+    textFilterValuesEmptyError?: boolean;
+    textFilterValuesLimitReachedWarning?: boolean;
+    textFilterValuesLimitExceededError?: boolean;
+    textFilterCaseSensitive?: boolean;
+    textFilterCommittedFilter?: IAttributeFilter;
+};
+
+// @alpha
+export type TextFilterNegativeOperator = "isNot" | "doesNotContain" | "doesNotStartWith" | "doesNotEndWith";
+
+// @alpha
+export type TextFilterOperator = "is" | "contains" | "startsWith" | "endsWith" | TextFilterNegativeOperator;
+
+// @alpha
+export function TextFilterOperatorDropdown(props: ITextFilterOperatorDropdownProps): JSX.Element;
+
+// @alpha
+export function TextFilterStateSummary(props: ITextFilterStateSummaryProps): JSX.Element;
 
 // @public (undocumented)
 export type Unsubscribe = () => void;

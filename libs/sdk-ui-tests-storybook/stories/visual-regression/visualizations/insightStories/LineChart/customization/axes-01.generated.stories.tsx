@@ -2,6 +2,7 @@
 
 import { type IInsight } from "@gooddata/sdk-model";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 
@@ -87,7 +88,7 @@ export const YAxisMinMaxConfiguration = () =>
                 visualizationUrl: "local:line",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(12, 7, 0),
+        getScenariosGroupByIndexes(15, 7, 0),
     )();
 YAxisMinMaxConfiguration.parameters = {
     kind: "Y axis min/max configuration",
@@ -182,7 +183,7 @@ export const YAxisOnTheRight = () =>
                 visualizationUrl: "local:line",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(12, 7, 1),
+        getScenariosGroupByIndexes(15, 7, 1),
     )();
 YAxisOnTheRight.parameters = {
     kind: "Y axis on the right",
@@ -304,7 +305,7 @@ export const DualAxesWithOneRightMeasure = () =>
                 visualizationUrl: "local:line",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(12, 7, 2),
+        getScenariosGroupByIndexes(15, 7, 2),
     )();
 DualAxesWithOneRightMeasure.parameters = {
     kind: "dual axes with one right measure",

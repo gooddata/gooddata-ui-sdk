@@ -2,6 +2,7 @@
 
 import { type IInsight } from "@gooddata/sdk-model";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 
@@ -65,7 +66,7 @@ export const DataLabelsDefault = () =>
                 visualizationUrl: "local:pie",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(13, 2, 0),
+        getScenariosGroupByIndexes(16, 2, 0),
     )();
 DataLabelsDefault.parameters = {
     kind: "data labels - default",
@@ -140,7 +141,7 @@ export const DataLabelsAutoVisibility = () =>
                 visualizationUrl: "local:pie",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(13, 2, 1),
+        getScenariosGroupByIndexes(16, 2, 1),
     )();
 DataLabelsAutoVisibility.parameters = {
     kind: "data labels - auto visibility",
@@ -215,7 +216,7 @@ export const DataLabelsForcedVisible = () =>
                 visualizationUrl: "local:pie",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(13, 2, 2),
+        getScenariosGroupByIndexes(16, 2, 2),
     )();
 DataLabelsForcedVisible.parameters = {
     kind: "data labels - forced visible",
@@ -290,7 +291,7 @@ export const DataLabelsForcedVisibleAndGermanSeparators = () =>
                 visualizationUrl: "local:pie",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(13, 2, 3),
+        getScenariosGroupByIndexes(16, 2, 3),
     )();
 DataLabelsForcedVisibleAndGermanSeparators.parameters = {
     kind: "data labels - forced visible and german separators",
@@ -365,7 +366,7 @@ export const DataLabelsForcedHidden = () =>
                 visualizationUrl: "local:pie",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(13, 2, 4),
+        getScenariosGroupByIndexes(16, 2, 4),
     )();
 DataLabelsForcedHidden.parameters = {
     kind: "data labels - forced hidden",

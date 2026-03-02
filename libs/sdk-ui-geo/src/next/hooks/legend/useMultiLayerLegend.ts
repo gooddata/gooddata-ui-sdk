@@ -2,6 +2,7 @@
 
 import { useMemo } from "react";
 
+import { useGeoChartProps } from "../../context/GeoChartContext.js";
 import { type IGeoLayerData } from "../../context/GeoLayersContext.js";
 import { useGeoLegend } from "../../context/GeoLegendContext.js";
 import { type ILegendModel } from "../../types/legend/model.js";
@@ -46,6 +47,7 @@ export function useMultiLayerLegend(
     options?: IUseMultiLayerLegendOptions,
 ): ILegendModel {
     const { enabledItemsByLayer } = useGeoLegend();
+    const { config } = useGeoChartProps();
 
     return useMemo(
         () =>
@@ -53,7 +55,8 @@ export function useMultiLayerLegend(
                 title: options?.title,
                 numericSymbols: options?.numericSymbols,
                 enabledItemsByLayer,
+                chartConfig: config,
             }),
-        [layerExecutions, layers, options?.title, options?.numericSymbols, enabledItemsByLayer],
+        [layerExecutions, layers, options?.title, options?.numericSymbols, enabledItemsByLayer, config],
     );
 }

@@ -1,0 +1,62 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_city.id.latitude", "type": "displayForm" },
+                            "localIdentifier": "a_f_city.id.latitude"
+                        }
+                    }
+                ],
+                "localIdentifier": "location"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                            "localIdentifier": "a_f_owner.region_id"
+                        }
+                    }
+                ],
+                "localIdentifier": "color"
+            }
+        ],
+        "filters": [
+            {
+                "positiveAttributeFilter": {
+                    "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                    "in": { "values": ["West Coast", "East Coast"] }
+                }
+            }
+        ],
+        "identifier": "GeoPushpinChart.2a4bfddafdaf950a22120387c5a9ef81",
+        "properties": {
+            "controls": {
+                "latitude": "f_city.id.latitude",
+                "longitude": "f_city.id.longitude",
+                "mapStyle": {
+                    "glyphs": "/geo-assets/glyphs/{fontstack}/{range}.pbf",
+                    "layers": [
+                        {
+                            "id": "background",
+                            "paint": { "background-color": "#ffffff" },
+                            "type": "background"
+                        }
+                    ],
+                    "name": "offline-minimal",
+                    "sources": {},
+                    "version": 8
+                },
+                "tooltipText": "f_city.id.cityname",
+                "viewport": { "area": "continent_na" }
+            }
+        },
+        "sorts": [],
+        "title": "GeoPushpinChart - latitude/longitude with color attribute",
+        "uri": "GeoPushpinChart.2a4bfddafdaf950a22120387c5a9ef81",
+        "visualizationUrl": "local:pushpin"
+    }
+}

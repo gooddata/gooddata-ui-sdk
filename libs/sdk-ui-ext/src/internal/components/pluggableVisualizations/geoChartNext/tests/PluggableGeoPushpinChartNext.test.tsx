@@ -9,6 +9,7 @@ import {
     type IInsightDefinition,
     localIdRef,
     newAttribute,
+    newAttributeSort,
     newBucket,
     newInsightDefinition,
     newMeasure,
@@ -20,6 +21,11 @@ import { BucketNames, GeoLocationMissingSdkError } from "@gooddata/sdk-ui";
 import { GeoChartInternal, PUSHPIN_LAYER_ID } from "@gooddata/sdk-ui-geo/internal";
 
 import { type IReferencePoint, type IVisConstruct } from "../../../../interfaces/Visualization.js";
+import {
+    firstMeasureArithmeticNoAttributeReferencePoint,
+    samePeriodPreviousYearRefPoint,
+    twoMeasuresWithShowInPercentOnSecondaryAxisReferencePoint,
+} from "../../../../tests/mocks/referencePointMocks.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../../utils/translations.js";
 import { PluggableGeoPushpinChartNext } from "../PluggableGeoPushpinChartNext.js";
 
@@ -87,6 +93,29 @@ describe("PluggableGeoPushpinChartNext", () => {
                     longitude: "longitude_df",
                 },
             }),
+    );
+
+    const insightWithLocationAndSegment: IInsightDefinition = newInsightDefinition(
+        visualizationUrl,
+        (builder) =>
+            builder
+                .title("with location and segment")
+                .buckets([
+                    newBucket(
+                        BucketNames.LOCATION,
+                        newAttribute("attr.region", (attribute) => attribute.localId("a1")),
+                    ),
+                    newBucket(
+                        BucketNames.SEGMENT,
+                        newAttribute("attr.category", (attribute) => attribute.localId("a_segment")),
+                    ),
+                ])
+                .properties({
+                    controls: {
+                        latitude: "latitude_df",
+                        longitude: "longitude_df",
+                    },
+                }),
     );
 
     it("should surface GeoLocationMissingSdkError when location bucket is empty", () => {
@@ -236,6 +265,71 @@ describe("PluggableGeoPushpinChartNext", () => {
         expect(props.execution).toBeDefined();
         expect(props.executions).toEqual([]);
         expect(props.execution?.context?.id).toBe(PUSHPIN_LAYER_ID);
+    });
+
+    it("should keep empty sort list when insight has no explicit sorts", () => {
+        const { visualization } = createComponent();
+
+        visualization.update({ messages }, insightWithLocationAndSegment, {}, executionFactory);
+
+        const chartCall = mockRenderFun.mock.calls.find(
+            ([node]) => (node as ReactElement)?.type === GeoChartInternal,
+        );
+
+        expect(chartCall).toBeDefined();
+        const element = chartCall?.[0] as ReactElement;
+        const props = element.props as {
+            execution?: {
+                context?: {
+                    sortBy?: unknown[];
+                };
+            };
+        };
+
+        expect(props.execution?.context?.sortBy).toEqual([]);
+    });
+
+    it("should prefer explicit insight sorts over default segment sort", () => {
+        const { visualization } = createComponent();
+        const insightWithCustomSort = newInsightDefinition(visualizationUrl, (builder) =>
+            builder
+                .title("with custom sort")
+                .buckets([
+                    newBucket(
+                        BucketNames.LOCATION,
+                        newAttribute("attr.region", (attribute) => attribute.localId("a1")),
+                    ),
+                    newBucket(
+                        BucketNames.SEGMENT,
+                        newAttribute("attr.category", (attribute) => attribute.localId("a_segment")),
+                    ),
+                ])
+                .sorts([newAttributeSort("a_segment", "desc")])
+                .properties({
+                    controls: {
+                        latitude: "latitude_df",
+                        longitude: "longitude_df",
+                    },
+                }),
+        );
+
+        visualization.update({ messages }, insightWithCustomSort, {}, executionFactory);
+
+        const chartCall = mockRenderFun.mock.calls.find(
+            ([node]) => (node as ReactElement)?.type === GeoChartInternal,
+        );
+
+        expect(chartCall).toBeDefined();
+        const element = chartCall?.[0] as ReactElement;
+        const props = element.props as {
+            execution?: {
+                context?: {
+                    sortBy?: unknown[];
+                };
+            };
+        };
+
+        expect(props.execution?.context?.sortBy).toEqual([newAttributeSort("a_segment", "desc")]);
     });
 
     it("should derive latitude/longitude from layer controls when buckets only contain location", () => {
@@ -413,5 +507,63 @@ describe("PluggableGeoPushpinChartNext", () => {
         // not present in that layer (otherwise backend normalization would fail with dangling localId reference).
         const additionalLayerFilters = props.executions?.[0]?.definition?.filters ?? [];
         expect(additionalLayerFilters).toEqual([]);
+    });
+
+    describe("getExtendedReferencePoint (legacy parity cases)", () => {
+        it("should reset showInPercent and showOnSecondaryAxis for size and color measures", async () => {
+            const { visualization } = createComponent();
+            const extendedReferencePoint = await visualization.getExtendedReferencePoint(
+                twoMeasuresWithShowInPercentOnSecondaryAxisReferencePoint,
+            );
+
+            const sizeBucket = extendedReferencePoint.buckets.find(
+                (b) => b.localIdentifier === BucketNames.SIZE,
+            );
+            const colorBucket = extendedReferencePoint.buckets.find(
+                (b) => b.localIdentifier === BucketNames.COLOR,
+            );
+
+            expect(sizeBucket?.items[0]).toMatchObject({
+                localIdentifier: "m3",
+                showInPercent: null,
+                showOnSecondaryAxis: null,
+            });
+            expect(colorBucket?.items[0]).toMatchObject({
+                localIdentifier: "m4",
+                showInPercent: null,
+                showOnSecondaryAxis: null,
+            });
+        });
+
+        it("should remove all derived measures", async () => {
+            const { visualization } = createComponent();
+            const extendedReferencePoint = await visualization.getExtendedReferencePoint(
+                samePeriodPreviousYearRefPoint,
+            );
+
+            const measureLocalIds = extendedReferencePoint.buckets
+                .flatMap((b) => b.items ?? [])
+                .filter((i) => i.type === "metric")
+                .map((i) => i.localIdentifier);
+
+            expect(measureLocalIds).toEqual(["m1"]);
+        });
+
+        it("should remove all arithmetic measures", async () => {
+            const { visualization } = createComponent();
+            const extendedReferencePoint = await visualization.getExtendedReferencePoint(
+                firstMeasureArithmeticNoAttributeReferencePoint,
+            );
+
+            const sizeBucket = extendedReferencePoint.buckets.find(
+                (b) => b.localIdentifier === BucketNames.SIZE,
+            );
+            const colorBucket = extendedReferencePoint.buckets.find(
+                (b) => b.localIdentifier === BucketNames.COLOR,
+            );
+
+            expect(sizeBucket?.items.map((i) => i.localIdentifier)).toEqual(["m1"]);
+            expect(colorBucket?.items.map((i) => i.localIdentifier)).toEqual(["m2"]);
+        });
     });
 });

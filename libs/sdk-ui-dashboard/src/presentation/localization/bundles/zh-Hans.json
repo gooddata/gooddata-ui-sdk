@@ -762,7 +762,7 @@
     "kdaDialog.dialog.keyDrives.button.trendUp": "增加",
     "kdaDialog.dialog.keyDrives.button.trendDown": "减少",
     "kdaDialog.dialog.keyDrives.button.trendAll": "全部",
-    "kdaDialog.dialog.keyDrives.drivers": "{count} 个驱动因素",
+    "kdaDialog.dialog.keyDrives.drivers": "{count} {count, plural, other {驱动因素}}",
     "kdaDialog.dialog.keyDrives.overview.summary.home": "总结",
     "kdaDialog.dialog.keyDrives.overview.summary.home.tooltip": "转到分析总结",
     "kdaDialog.dialog.keyDrives.overview.summary.breadcrumb.label": "关键驱动因素分析导航",

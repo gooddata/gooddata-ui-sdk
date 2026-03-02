@@ -21,7 +21,300 @@
         }
     ],
     "paths": {
-        "/api/v1/ailake/database/instance": {
+        "/api/v1/actions/workspaces/{workspaceId}/ai/knowledge/documents": {
+            "get": {
+                "tags": [
+                    "actions"
+                ],
+                "operationId": "listDocuments",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "scopes",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 50
+                        }
+                    },
+                    {
+                        "name": "pageToken",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "metaInclude",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ListKnowledgeDocumentsResponseDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "actions"
+                ],
+                "operationId": "upsertDocument",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpsertKnowledgeDocumentRequestDto"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UpsertKnowledgeDocumentResponseDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "actions"
+                ],
+                "operationId": "createDocument",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateKnowledgeDocumentRequestDto"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CreateKnowledgeDocumentResponseDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/ailake/services/{serviceId}/commands/{commandName}/run": {
+            "post": {
+                "tags": [
+                    "AI Lake"
+                ],
+                "summary": "(BETA) Run an AI Lake services command",
+                "description": "(BETA) Runs a specific AI Lake service command.",
+                "operationId": "runAiLakeServiceCommand",
+                "parameters": [
+                    {
+                        "name": "serviceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "commandName",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "operation-id",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RunServiceCommandRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "202": {
+                        "description": "Accepted",
+                        "headers": {
+                            "operation-location": {
+                                "description": "Operation location URL that can be used for polling.",
+                                "required": true,
+                                "style": "simple",
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "/api/v1/ailake/operations/e9fd5d74-8a1b-46bd-ac60-bd91e9206897"
+                            },
+                            "operation-id": {
+                                "description": "Operation ID to use for polling.",
+                                "required": true,
+                                "style": "simple",
+                                "schema": {
+                                    "type": "string"
+                                },
+                                "example": "e9fd5d74-8a1b-46bd-ac60-bd91e9206897"
+                            }
+                        },
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Unit"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Permissions required to run AI Lake service commands."
+                }
+            }
+        },
+        "/api/v1/ailake/database/instances": {
+            "get": {
+                "tags": [
+                    "AI Lake"
+                ],
+                "summary": "(BETA) List AI Lake Database instances",
+                "description": "(BETA) Lists database instances in the organization's AI Lake. Supports paging via size and offset query parameters. Use metaInclude=page to get total count.",
+                "operationId": "listAiLakeDatabaseInstances",
+                "parameters": [
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 50
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 0
+                        }
+                    },
+                    {
+                        "name": "metaInclude",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "uniqueItems": true,
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "AI Lake database instances successfully retrieved",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ListDatabaseInstancesResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Permissions required to list AI Lake database instances."
+                }
+            },
             "post": {
                 "tags": [
                     "AI Lake"
@@ -60,7 +353,7 @@
                                 "schema": {
                                     "type": "string"
                                 },
-                                "example": "/api/v1/ailake/operation/e9fd5d74-8a1b-46bd-ac60-bd91e9206897"
+                                "example": "/api/v1/ailake/operations/e9fd5d74-8a1b-46bd-ac60-bd91e9206897"
                             },
                             "operation-id": {
                                 "description": "Operation ID to use for polling.",
@@ -1142,6 +1435,51 @@
                 }
             }
         },
+        "/api/v1/actions/workspaces/{workspaceId}/ai/analyticsCatalog/generateTitle": {
+            "post": {
+                "tags": [
+                    "Smart Functions",
+                    "actions"
+                ],
+                "summary": "Generate Title for Analytics Object",
+                "description": "Generates a title for the specified analytics object. Returns title and a note with details if generation was not performed.",
+                "operationId": "generateTitle",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/GenerateTitleRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GenerateTitleResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/actions/workspaces/{workspaceId}/ai/analyticsCatalog/generateDescription": {
             "post": {
                 "tags": [
@@ -1180,6 +1518,72 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/GenerateDescriptionResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/actions/ai/llmProvider/{llmProviderId}/test": {
+            "post": {
+                "tags": [
+                    "Smart Functions",
+                    "actions"
+                ],
+                "summary": "Test LLM Provider By Id",
+                "description": "Tests an existing LLM provider connectivity by its ID.",
+                "operationId": "testLlmProviderById",
+                "parameters": [
+                    {
+                        "name": "llmProviderId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TestLlmProviderResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/actions/ai/llmProvider/test": {
+            "post": {
+                "tags": [
+                    "Smart Functions",
+                    "actions"
+                ],
+                "summary": "Test LLM Provider",
+                "description": "Tests LLM provider connectivity with a full definition.",
+                "operationId": "testLlmProvider",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TestLlmProviderDefinitionRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TestLlmProviderResponse"
                                 }
                             }
                         }
@@ -1262,24 +1666,181 @@
                 }
             }
         },
+        "/api/v1/actions/workspaces/{workspaceId}/ai/knowledge/documents/{filename}": {
+            "get": {
+                "tags": [
+                    "actions"
+                ],
+                "operationId": "getDocument",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filename",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/KnowledgeDocumentMetadataDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "actions"
+                ],
+                "operationId": "deleteDocument",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filename",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DeleteKnowledgeDocumentResponseDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "actions"
+                ],
+                "operationId": "patchDocument",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filename",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PatchKnowledgeDocumentRequestDto"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/KnowledgeDocumentMetadataDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/ailake/services": {
             "get": {
                 "tags": [
                     "AI Lake"
                 ],
                 "summary": "(BETA) List AI Lake services",
-                "description": "(BETA) Lists services configured for the organization's AI Lake. Returns only non-sensitive fields (id, name).",
+                "description": "(BETA) Lists services configured for the organization's AI Lake. Returns only non-sensitive fields (id, name). Supports paging via size and offset query parameters. Use metaInclude=page to get total count.",
                 "operationId": "listAiLakeServices",
+                "parameters": [
+                    {
+                        "name": "size",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 50
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 0
+                        }
+                    },
+                    {
+                        "name": "metaInclude",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "uniqueItems": true,
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "AI Lake services successfully retrieved",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/ServiceInfo"
-                                    }
+                                    "$ref": "#/components/schemas/ListServicesResponse"
                                 }
                             }
                         }
@@ -1293,7 +1854,7 @@
                 }
             }
         },
-        "/api/v1/ailake/operation/{operationId}": {
+        "/api/v1/ailake/operations/{operationId}": {
             "get": {
                 "tags": [
                     "AI Lake"
@@ -1343,7 +1904,7 @@
                 }
             }
         },
-        "/api/v1/ailake/database/instance/{instanceId}": {
+        "/api/v1/ailake/database/instances/{instanceId}": {
             "get": {
                 "tags": [
                     "AI Lake"
@@ -1416,7 +1977,7 @@
                                 "schema": {
                                     "type": "string"
                                 },
-                                "example": "/api/v1/ailake/operation/e9fd5d74-8a1b-46bd-ac60-bd91e9206897"
+                                "example": "/api/v1/ailake/operations/e9fd5d74-8a1b-46bd-ac60-bd91e9206897"
                             },
                             "operation-id": {
                                 "description": "Operation ID to use for polling.",
@@ -2075,6 +2636,77 @@
                 }
             }
         },
+        "/api/v1/actions/workspaces/{workspaceId}/ai/knowledge/search": {
+            "get": {
+                "tags": [
+                    "actions"
+                ],
+                "operationId": "searchKnowledge",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32",
+                            "default": 10
+                        }
+                    },
+                    {
+                        "name": "minScore",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "number",
+                            "format": "double",
+                            "default": 0
+                        }
+                    },
+                    {
+                        "name": "scopes",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SearchKnowledgeResponseDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/actions/workspaces/{workspaceId}/ai/issues/status/{processId}": {
             "get": {
                 "tags": [
@@ -2188,6 +2820,41 @@
                 }
             }
         },
+        "/api/v1/actions/workspaces/{workspaceId}/ai/analyticsCatalog/trendingObjects": {
+            "get": {
+                "tags": [
+                    "Smart Functions",
+                    "actions"
+                ],
+                "summary": "Get Trending Analytics Catalog Objects",
+                "description": "Returns a list of trending objects for this workspace",
+                "operationId": "trendingObjects",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TrendingObjectsResult"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/actions/workspaces/{workspaceId}/ai/analyticsCatalog/tags": {
             "get": {
                 "tags": [
@@ -2261,6 +2928,88 @@
     },
     "components": {
         "schemas": {
+            "UpsertKnowledgeDocumentRequestDto": {
+                "required": [
+                    "content",
+                    "filename"
+                ],
+                "type": "object",
+                "properties": {
+                    "filename": {
+                        "type": "string"
+                    },
+                    "content": {
+                        "type": "string"
+                    },
+                    "pageBoundaries": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "scopes": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "UpsertKnowledgeDocumentResponseDto": {
+                "required": [
+                    "filename",
+                    "message",
+                    "numChunks",
+                    "success"
+                ],
+                "type": "object",
+                "properties": {
+                    "filename": {
+                        "type": "string"
+                    },
+                    "success": {
+                        "type": "boolean"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "numChunks": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
+            "JsonNode": {
+                "type": "object",
+                "description": "The payload to pass to the command",
+                "nullable": true
+            },
+            "RunServiceCommandRequest": {
+                "type": "object",
+                "properties": {
+                    "context": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "type": "string",
+                            "description": "The context to pass to the command",
+                            "nullable": true
+                        },
+                        "description": "The context to pass to the command",
+                        "nullable": true
+                    },
+                    "payload": {
+                        "$ref": "#/components/schemas/JsonNode"
+                    }
+                },
+                "description": "Request to run an AI Lake Service Command"
+            },
+            "Unit": {
+                "type": "object"
+            },
             "ProvisionDatabaseInstanceRequest": {
                 "required": [
                     "name",
@@ -2283,9 +3032,6 @@
                     }
                 },
                 "description": "Request to provision a new AILake Database instance"
-            },
-            "Unit": {
-                "type": "object"
             },
             "ForecastRequest": {
                 "required": [
@@ -5252,6 +5998,61 @@
                     }
                 }
             },
+            "CreateKnowledgeDocumentRequestDto": {
+                "required": [
+                    "content",
+                    "filename"
+                ],
+                "type": "object",
+                "properties": {
+                    "filename": {
+                        "type": "string"
+                    },
+                    "content": {
+                        "type": "string"
+                    },
+                    "pageBoundaries": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "scopes": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "CreateKnowledgeDocumentResponseDto": {
+                "required": [
+                    "filename",
+                    "message",
+                    "numChunks",
+                    "success"
+                ],
+                "type": "object",
+                "properties": {
+                    "filename": {
+                        "type": "string"
+                    },
+                    "success": {
+                        "type": "boolean"
+                    },
+                    "message": {
+                        "type": "string"
+                    },
+                    "numChunks": {
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                }
+            },
             "TriggerQualityIssuesCalculationResponse": {
                 "required": [
                     "processId",
@@ -5270,6 +6071,7 @@
                             "RUNNING",
                             "COMPLETED",
                             "FAILED",
+                            "CANCELLED",
                             "DISABLED"
                         ]
                     }
@@ -6241,6 +7043,43 @@
                     }
                 }
             },
+            "GenerateTitleRequest": {
+                "required": [
+                    "objectId",
+                    "objectType"
+                ],
+                "type": "object",
+                "properties": {
+                    "objectType": {
+                        "type": "string",
+                        "description": "Type of the object to title. Matches chat-search object types.",
+                        "enum": [
+                            "Visualization",
+                            "Dashboard",
+                            "Metric",
+                            "Fact",
+                            "Attribute"
+                        ]
+                    },
+                    "objectId": {
+                        "type": "string",
+                        "description": "Identifier of the object to title"
+                    }
+                }
+            },
+            "GenerateTitleResponse": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string",
+                        "description": "Generated title of the requested object"
+                    },
+                    "note": {
+                        "type": "string",
+                        "description": "Additional note with details in case generation was not performed"
+                    }
+                }
+            },
             "GenerateDescriptionRequest": {
                 "required": [
                     "objectId",
@@ -6275,6 +7114,333 @@
                     "note": {
                         "type": "string",
                         "description": "Additional note with details in case generation was not performed"
+                    }
+                }
+            },
+            "ModelTestResult": {
+                "required": [
+                    "message",
+                    "modelId",
+                    "successful"
+                ],
+                "type": "object",
+                "properties": {
+                    "modelId": {
+                        "type": "string",
+                        "description": "The model ID that was tested."
+                    },
+                    "successful": {
+                        "type": "boolean",
+                        "description": "Whether the model test was successful."
+                    },
+                    "message": {
+                        "type": "string",
+                        "description": "Message about the model test result."
+                    }
+                },
+                "description": "Per-model test results."
+            },
+            "TestLlmProviderResponse": {
+                "required": [
+                    "modelResults",
+                    "providerMessage",
+                    "providerReachable"
+                ],
+                "type": "object",
+                "properties": {
+                    "providerReachable": {
+                        "type": "boolean",
+                        "description": "Whether the LLM provider is reachable."
+                    },
+                    "providerMessage": {
+                        "type": "string",
+                        "description": "Message about the provider connectivity test."
+                    },
+                    "modelResults": {
+                        "type": "array",
+                        "description": "Per-model test results.",
+                        "items": {
+                            "$ref": "#/components/schemas/ModelTestResult"
+                        }
+                    }
+                }
+            },
+            "AwsBedrockAccessKeyAuth": {
+                "required": [
+                    "type"
+                ],
+                "type": "object",
+                "allOf": [
+                    {
+                        "type": "object",
+                        "properties": {
+                            "accessKeyId": {
+                                "maxLength": 255,
+                                "type": "string",
+                                "description": "AWS Access Key ID.",
+                                "nullable": true,
+                                "writeOnly": true
+                            },
+                            "secretAccessKey": {
+                                "maxLength": 10000,
+                                "type": "string",
+                                "description": "AWS Secret Access Key.",
+                                "nullable": true,
+                                "writeOnly": true
+                            },
+                            "sessionToken": {
+                                "maxLength": 10000,
+                                "type": "string",
+                                "description": "AWS Session Token (for temporary credentials).",
+                                "nullable": true,
+                                "writeOnly": true
+                            },
+                            "type": {
+                                "type": "string",
+                                "description": "Authentication type.",
+                                "enum": [
+                                    "ACCESS_KEY"
+                                ]
+                            }
+                        }
+                    }
+                ]
+            },
+            "AwsBedrockProviderConfig": {
+                "required": [
+                    "auth",
+                    "region",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "region": {
+                        "maxLength": 255,
+                        "type": "string",
+                        "description": "AWS region for Bedrock.",
+                        "example": "us-east-1"
+                    },
+                    "auth": {
+                        "$ref": "#/components/schemas/BedrockProviderAuth"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Provider type.",
+                        "enum": [
+                            "AWS_BEDROCK"
+                        ]
+                    }
+                },
+                "description": "Configuration for AWS Bedrock provider."
+            },
+            "AzureFoundryApiKeyAuth": {
+                "required": [
+                    "type"
+                ],
+                "type": "object",
+                "allOf": [
+                    {
+                        "type": "object",
+                        "properties": {
+                            "apiKey": {
+                                "maxLength": 255,
+                                "type": "string",
+                                "description": "Azure API key.",
+                                "nullable": true,
+                                "writeOnly": true
+                            },
+                            "type": {
+                                "type": "string",
+                                "description": "Authentication type.",
+                                "enum": [
+                                    "API_KEY"
+                                ]
+                            }
+                        }
+                    }
+                ]
+            },
+            "AzureFoundryProviderAuth": {
+                "type": "object",
+                "description": "Authentication configuration.",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/AzureFoundryApiKeyAuth"
+                    }
+                ]
+            },
+            "AzureFoundryProviderConfig": {
+                "required": [
+                    "auth",
+                    "endpoint",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "endpoint": {
+                        "maxLength": 255,
+                        "type": "string",
+                        "description": "Azure AI inference endpoint URL.",
+                        "example": "https://my-resource.services.ai.azure.com/models"
+                    },
+                    "auth": {
+                        "$ref": "#/components/schemas/AzureFoundryProviderAuth"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Provider type.",
+                        "enum": [
+                            "AZURE_FOUNDRY"
+                        ]
+                    }
+                },
+                "description": "Configuration for Azure Foundry provider."
+            },
+            "BedrockProviderAuth": {
+                "type": "object",
+                "description": "Authentication configuration.",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/AwsBedrockAccessKeyAuth"
+                    }
+                ]
+            },
+            "LlmModel": {
+                "required": [
+                    "family",
+                    "id"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "maxLength": 255,
+                        "type": "string",
+                        "description": "Unique identifier of the model (e.g., gpt-5.3, claude-4.6)."
+                    },
+                    "family": {
+                        "type": "string",
+                        "description": "Family of LLM models.",
+                        "enum": [
+                            "OPENAI",
+                            "ANTHROPIC",
+                            "META",
+                            "MISTRAL",
+                            "AMAZON",
+                            "GOOGLE",
+                            "COHERE"
+                        ]
+                    }
+                },
+                "description": "LLM Model configuration (id, family) within a provider."
+            },
+            "LlmProviderConfig": {
+                "description": "Provider configuration to test.",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/AwsBedrockProviderConfig"
+                    },
+                    {
+                        "$ref": "#/components/schemas/AzureFoundryProviderConfig"
+                    },
+                    {
+                        "$ref": "#/components/schemas/OpenAIProviderConfig"
+                    }
+                ]
+            },
+            "OpenAIProviderConfig": {
+                "required": [
+                    "auth",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "organization": {
+                        "maxLength": 255,
+                        "type": "string",
+                        "description": "OpenAI organization ID.",
+                        "nullable": true
+                    },
+                    "baseUrl": {
+                        "maxLength": 255,
+                        "type": "string",
+                        "description": "Custom base URL for OpenAI API.",
+                        "nullable": true,
+                        "default": "https://api.openai.com"
+                    },
+                    "auth": {
+                        "$ref": "#/components/schemas/OpenAiProviderAuth"
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Provider type.",
+                        "enum": [
+                            "OPENAI"
+                        ]
+                    }
+                },
+                "description": "Configuration for OpenAI provider."
+            },
+            "OpenAiApiKeyAuth": {
+                "required": [
+                    "type"
+                ],
+                "type": "object",
+                "allOf": [
+                    {
+                        "type": "object",
+                        "properties": {
+                            "apiKey": {
+                                "maxLength": 255,
+                                "type": "string",
+                                "description": "OpenAI API key.",
+                                "nullable": true,
+                                "writeOnly": true
+                            },
+                            "type": {
+                                "type": "string",
+                                "description": "Authentication type.",
+                                "enum": [
+                                    "API_KEY"
+                                ]
+                            }
+                        }
+                    }
+                ]
+            },
+            "OpenAiProviderAuth": {
+                "type": "object",
+                "description": "Authentication configuration.",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/OpenAiApiKeyAuth"
+                    }
+                ]
+            },
+            "TestLlmProviderDefinitionRequest": {
+                "required": [
+                    "providerConfig"
+                ],
+                "type": "object",
+                "properties": {
+                    "providerConfig": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/AwsBedrockProviderConfig"
+                            },
+                            {
+                                "$ref": "#/components/schemas/AzureFoundryProviderConfig"
+                            },
+                            {
+                                "$ref": "#/components/schemas/OpenAIProviderConfig"
+                            }
+                        ]
+                    },
+                    "models": {
+                        "type": "array",
+                        "description": "Models to test.",
+                        "items": {
+                            "$ref": "#/components/schemas/LlmModel"
+                        }
                     }
                 }
             },
@@ -6349,6 +7515,92 @@
                     }
                 }
             },
+            "PatchKnowledgeDocumentRequestDto": {
+                "type": "object",
+                "properties": {
+                    "isDisabled": {
+                        "type": "boolean"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "scopes": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "KnowledgeDocumentMetadataDto": {
+                "required": [
+                    "createdAt",
+                    "createdBy",
+                    "filename",
+                    "numChunks",
+                    "scopes",
+                    "updatedAt",
+                    "updatedBy"
+                ],
+                "type": "object",
+                "properties": {
+                    "filename": {
+                        "type": "string"
+                    },
+                    "workspaceId": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "numChunks": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "createdAt": {
+                        "type": "string"
+                    },
+                    "updatedAt": {
+                        "type": "string"
+                    },
+                    "createdBy": {
+                        "type": "string"
+                    },
+                    "updatedBy": {
+                        "type": "string"
+                    },
+                    "scopes": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "isDisabled": {
+                        "type": "boolean"
+                    }
+                }
+            },
+            "ListServicesResponse": {
+                "required": [
+                    "services"
+                ],
+                "type": "object",
+                "properties": {
+                    "services": {
+                        "type": "array",
+                        "description": "List of services",
+                        "items": {
+                            "$ref": "#/components/schemas/ServiceInfo"
+                        }
+                    },
+                    "totalCount": {
+                        "type": "integer",
+                        "description": "Total count of items (only set when metaInclude=page)",
+                        "format": "int32"
+                    }
+                },
+                "description": "Paged response for listing AI Lake services"
+            },
             "ServiceInfo": {
                 "required": [
                     "name",
@@ -6403,10 +7655,11 @@
                     },
                     "kind": {
                         "type": "string",
-                        "description": "Type of the long-running operation. \n* `provision-database` — Provisioning of an AI Lake database. \n* `deprovision-database` — Deprovisioning (deletion) of an AI Lake database.\n",
+                        "description": "Type of the long-running operation.\n* `provision-database` — Provisioning of an AI Lake database.\n* `deprovision-database` — Deprovisioning (deletion) of an AI Lake database.\n* `run-service-command` — Running a command in a particular AI Lake service.\n",
                         "enum": [
                             "provision-database",
-                            "deprovision-database"
+                            "deprovision-database",
+                            "run-service-command"
                         ]
                     },
                     "status": {
@@ -6509,6 +7762,27 @@
                     }
                 },
                 "description": "A single AI Lake Database instance"
+            },
+            "ListDatabaseInstancesResponse": {
+                "required": [
+                    "databases"
+                ],
+                "type": "object",
+                "properties": {
+                    "databases": {
+                        "type": "array",
+                        "description": "List of database instances",
+                        "items": {
+                            "$ref": "#/components/schemas/DatabaseInstance"
+                        }
+                    },
+                    "totalCount": {
+                        "type": "integer",
+                        "description": "Total count of items (only set when metaInclude=page)",
+                        "format": "int32"
+                    }
+                },
+                "description": "Paged response for listing AI Lake database instances"
             },
             "ForecastResult": {
                 "required": [
@@ -7208,6 +8482,113 @@
                 },
                 "description": "Users who created memory item"
             },
+            "KnowledgeSearchResultDto": {
+                "required": [
+                    "chunkIndex",
+                    "content",
+                    "filename",
+                    "pageNumbers",
+                    "scopes",
+                    "score",
+                    "totalChunks"
+                ],
+                "type": "object",
+                "properties": {
+                    "filename": {
+                        "type": "string"
+                    },
+                    "content": {
+                        "type": "string"
+                    },
+                    "score": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "chunkIndex": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "totalChunks": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "pageNumbers": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    "workspaceId": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "scopes": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "SearchKnowledgeResponseDto": {
+                "required": [
+                    "results",
+                    "statistics"
+                ],
+                "type": "object",
+                "properties": {
+                    "results": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/KnowledgeSearchResultDto"
+                        }
+                    },
+                    "statistics": {
+                        "$ref": "#/components/schemas/SearchStatisticsDto"
+                    }
+                }
+            },
+            "SearchStatisticsDto": {
+                "required": [
+                    "averageSimilarityScore",
+                    "totalResults"
+                ],
+                "type": "object",
+                "properties": {
+                    "totalResults": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "averageSimilarityScore": {
+                        "type": "number",
+                        "format": "float"
+                    }
+                }
+            },
+            "ListKnowledgeDocumentsResponseDto": {
+                "required": [
+                    "documents"
+                ],
+                "type": "object",
+                "properties": {
+                    "documents": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/KnowledgeDocumentMetadataDto"
+                        }
+                    },
+                    "totalCount": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "nextPageToken": {
+                        "type": "string"
+                    }
+                }
+            },
             "QualityIssue": {
                 "required": [
                     "code",
@@ -7299,6 +8680,7 @@
                             "SYNCING",
                             "COMPLETED",
                             "FAILED",
+                            "CANCELLED",
                             "NOT_FOUND",
                             "DISABLED"
                         ]
@@ -7342,6 +8724,7 @@
                             "SYNCING",
                             "COMPLETED",
                             "FAILED",
+                            "CANCELLED",
                             "NOT_FOUND",
                             "DISABLED"
                         ]
@@ -7430,6 +8813,21 @@
                     }
                 },
                 "description": "Users who created any object in the catalog"
+            },
+            "DeleteKnowledgeDocumentResponseDto": {
+                "required": [
+                    "message",
+                    "success"
+                ],
+                "type": "object",
+                "properties": {
+                    "success": {
+                        "type": "boolean"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
             }
         }
     }

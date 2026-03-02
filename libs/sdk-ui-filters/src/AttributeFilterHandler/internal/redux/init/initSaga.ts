@@ -1,4 +1,5 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
+
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, all, call, cancelled, put, select, takeLatest } from "redux-saga/effects";
 
@@ -27,9 +28,17 @@ export function* initWorker(): SagaIterator<void> {
     yield takeLatest(actions.init.match, initSaga);
 }
 
-function* initSaga({ payload: { correlation } }: ReturnType<typeof actions.init>): SagaIterator<void> {
+function* initSaga({
+    payload: { correlation, skipElementsLoading = false },
+}: ReturnType<typeof actions.init>): SagaIterator<void> {
     try {
         yield put(actions.initStart({ correlation }));
+
+        if (skipElementsLoading) {
+            yield call(initAttributeSaga, correlation);
+            yield put(actions.initSuccess({ correlation: correlation }));
+            return;
+        }
 
         const context: SagaReturnType<typeof getAttributeFilterContext> =
             yield call(getAttributeFilterContext);

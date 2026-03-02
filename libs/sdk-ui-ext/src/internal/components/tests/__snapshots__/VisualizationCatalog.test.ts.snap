@@ -35331,6 +35331,2240 @@ export function MyComponent() {
 "
 `;
 
+exports[`getEmbeddingCode functionality > should generate code for GeoAreaChart - area chart-level custom gradient palette 1`] = `
+"import React from "react";
+import { GeoChart, IGeoAreaChartConfig, IGeoLayer } from "@gooddata/sdk-ui-geo";
+import { idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+
+const type = "area";
+const layers: IGeoLayer[] = [
+    {
+        id: "primary",
+        type: "area",
+        color: newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.alias("Revenue").localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+        area: newAttribute(idRef("state_id.statecode", "displayForm"), a => a.localId("a_state_id.statecode"))
+    }
+];
+const config: IGeoAreaChartConfig = {
+    mapStyle: {
+        glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
+        layers: [
+            {
+                id: "background",
+                paint: {"background-color": "#ffffff"},
+                type: "background"
+            }
+        ],
+        name: "offline-minimal",
+        sources: {},
+        version: 8
+    },
+    viewport: {area: "continent_na"},
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoChart
+                type={type}
+                layers={layers}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoAreaChart - area chart-level custom segment mapping 1`] = `
+"import React from "react";
+import { GeoChart, IGeoAreaChartConfig, IGeoLayer } from "@gooddata/sdk-ui-geo";
+import { idRef, IFilter, newAttribute, newMeasure, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+
+const type = "area";
+const layers: IGeoLayer[] = [
+    {
+        id: "primary",
+        type: "area",
+        color: newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.alias("Revenue").localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+        segmentBy: newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id")),
+        area: newAttribute(idRef("state_id.statecode", "displayForm"), a => a.localId("a_state_id.statecode"))
+    }
+];
+const filters: IFilter[] = [
+    newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
+];
+const config: IGeoAreaChartConfig = {
+    mapStyle: {
+        glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
+        layers: [
+            {
+                id: "background",
+                paint: {"background-color": "#ffffff"},
+                type: "background"
+            }
+        ],
+        name: "offline-minimal",
+        sources: {},
+        version: 8
+    },
+    viewport: {area: "continent_na"},
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoChart
+                type={type}
+                layers={layers}
+                filters={filters}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoAreaChart - area legend position bottom 1`] = `
+"import React from "react";
+import { GeoChart, IGeoAreaChartConfig, IGeoLayer } from "@gooddata/sdk-ui-geo";
+import { idRef, IFilter, newAttribute, newMeasure, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+
+const type = "area";
+const layers: IGeoLayer[] = [
+    {
+        id: "primary",
+        type: "area",
+        color: newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.alias("Revenue").localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+        segmentBy: newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id")),
+        area: newAttribute(idRef("state_id.statecode", "displayForm"), a => a.localId("a_state_id.statecode"))
+    }
+];
+const filters: IFilter[] = [
+    newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
+];
+const config: IGeoAreaChartConfig = {
+    legend: {position: "bottom"},
+    mapStyle: {
+        glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
+        layers: [
+            {
+                id: "background",
+                paint: {"background-color": "#ffffff"},
+                type: "background"
+            }
+        ],
+        name: "offline-minimal",
+        sources: {},
+        version: 8
+    },
+    viewport: {area: "continent_na"},
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoChart
+                type={type}
+                layers={layers}
+                filters={filters}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoAreaChart - area legend position left 1`] = `
+"import React from "react";
+import { GeoChart, IGeoAreaChartConfig, IGeoLayer } from "@gooddata/sdk-ui-geo";
+import { idRef, IFilter, newAttribute, newMeasure, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+
+const type = "area";
+const layers: IGeoLayer[] = [
+    {
+        id: "primary",
+        type: "area",
+        color: newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.alias("Revenue").localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+        segmentBy: newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id")),
+        area: newAttribute(idRef("state_id.statecode", "displayForm"), a => a.localId("a_state_id.statecode"))
+    }
+];
+const filters: IFilter[] = [
+    newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
+];
+const config: IGeoAreaChartConfig = {
+    legend: {position: "left"},
+    mapStyle: {
+        glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
+        layers: [
+            {
+                id: "background",
+                paint: {"background-color": "#ffffff"},
+                type: "background"
+            }
+        ],
+        name: "offline-minimal",
+        sources: {},
+        version: 8
+    },
+    viewport: {area: "continent_na"},
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoChart
+                type={type}
+                layers={layers}
+                filters={filters}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoAreaChart - area legend position right 1`] = `
+"import React from "react";
+import { GeoChart, IGeoAreaChartConfig, IGeoLayer } from "@gooddata/sdk-ui-geo";
+import { idRef, IFilter, newAttribute, newMeasure, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+
+const type = "area";
+const layers: IGeoLayer[] = [
+    {
+        id: "primary",
+        type: "area",
+        color: newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.alias("Revenue").localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+        segmentBy: newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id")),
+        area: newAttribute(idRef("state_id.statecode", "displayForm"), a => a.localId("a_state_id.statecode"))
+    }
+];
+const filters: IFilter[] = [
+    newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
+];
+const config: IGeoAreaChartConfig = {
+    legend: {position: "right"},
+    mapStyle: {
+        glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
+        layers: [
+            {
+                id: "background",
+                paint: {"background-color": "#ffffff"},
+                type: "background"
+            }
+        ],
+        name: "offline-minimal",
+        sources: {},
+        version: 8
+    },
+    viewport: {area: "continent_na"},
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoChart
+                type={type}
+                layers={layers}
+                filters={filters}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoAreaChart - area legend position top 1`] = `
+"import React from "react";
+import { GeoChart, IGeoAreaChartConfig, IGeoLayer } from "@gooddata/sdk-ui-geo";
+import { idRef, IFilter, newAttribute, newMeasure, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+
+const type = "area";
+const layers: IGeoLayer[] = [
+    {
+        id: "primary",
+        type: "area",
+        color: newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.alias("Revenue").localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+        segmentBy: newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id")),
+        area: newAttribute(idRef("state_id.statecode", "displayForm"), a => a.localId("a_state_id.statecode"))
+    }
+];
+const filters: IFilter[] = [
+    newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
+];
+const config: IGeoAreaChartConfig = {
+    legend: {position: "top"},
+    mapStyle: {
+        glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
+        layers: [
+            {
+                id: "background",
+                paint: {"background-color": "#ffffff"},
+                type: "background"
+            }
+        ],
+        name: "offline-minimal",
+        sources: {},
+        version: 8
+    },
+    viewport: {area: "continent_na"},
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoChart
+                type={type}
+                layers={layers}
+                filters={filters}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoAreaChart - area legend with category and color-scale 1`] = `
+"import React from "react";
+import { GeoChart, IGeoAreaChartConfig, IGeoLayer } from "@gooddata/sdk-ui-geo";
+import { idRef, IFilter, newAttribute, newMeasure, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+
+const type = "area";
+const layers: IGeoLayer[] = [
+    {
+        id: "primary",
+        type: "area",
+        color: newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.alias("Revenue").localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+        segmentBy: newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id")),
+        area: newAttribute(idRef("state_id.statecode", "displayForm"), a => a.localId("a_state_id.statecode"))
+    }
+];
+const filters: IFilter[] = [
+    newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
+];
+const config: IGeoAreaChartConfig = {
+    legend: {position: "right"},
+    mapStyle: {
+        glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
+        layers: [
+            {
+                id: "background",
+                paint: {"background-color": "#ffffff"},
+                type: "background"
+            }
+        ],
+        name: "offline-minimal",
+        sources: {},
+        version: 8
+    },
+    viewport: {area: "continent_na"},
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoChart
+                type={type}
+                layers={layers}
+                filters={filters}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoAreaChart - area legend with color-scale only 1`] = `
+"import React from "react";
+import { GeoChart, IGeoAreaChartConfig, IGeoLayer } from "@gooddata/sdk-ui-geo";
+import { idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+
+const type = "area";
+const layers: IGeoLayer[] = [
+    {
+        id: "primary",
+        type: "area",
+        color: newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.alias("Revenue").localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+        area: newAttribute(idRef("state_id.statecode", "displayForm"), a => a.localId("a_state_id.statecode"))
+    }
+];
+const config: IGeoAreaChartConfig = {
+    legend: {position: "bottom"},
+    mapStyle: {
+        glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
+        layers: [
+            {
+                id: "background",
+                paint: {"background-color": "#ffffff"},
+                type: "background"
+            }
+        ],
+        name: "offline-minimal",
+        sources: {},
+        version: 8
+    },
+    viewport: {area: "continent_na"},
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoChart
+                type={type}
+                layers={layers}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoAreaChart - area legend with selection 1`] = `
+"import React from "react";
+import { GeoChart, IGeoAreaChartConfig, IGeoLayer } from "@gooddata/sdk-ui-geo";
+import { idRef, IFilter, newAttribute, newMeasure, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+
+const type = "area";
+const layers: IGeoLayer[] = [
+    {
+        id: "primary",
+        type: "area",
+        color: newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.alias("Revenue").localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+        segmentBy: newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id")),
+        area: newAttribute(idRef("state_id.statecode", "displayForm"), a => a.localId("a_state_id.statecode"))
+    }
+];
+const filters: IFilter[] = [
+    newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
+];
+const config: IGeoAreaChartConfig = {
+    legend: {position: "right"},
+    mapStyle: {
+        glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
+        layers: [
+            {
+                id: "background",
+                paint: {"background-color": "#ffffff"},
+                type: "background"
+            }
+        ],
+        name: "offline-minimal",
+        sources: {},
+        version: 8
+    },
+    selectedSegmentItems: ["West Coast", "East Coast"],
+    viewport: {area: "continent_na"},
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoChart
+                type={type}
+                layers={layers}
+                filters={filters}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoAreaChart - area viewport north america 1`] = `
+"import React from "react";
+import { GeoChart, IGeoAreaChartConfig, IGeoLayer } from "@gooddata/sdk-ui-geo";
+import { idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+
+const type = "area";
+const layers: IGeoLayer[] = [
+    {
+        id: "primary",
+        type: "area",
+        color: newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+        area: newAttribute(idRef("country.country_code", "displayForm"), a => a.localId("a_country.country_code"))
+    }
+];
+const config: IGeoAreaChartConfig = {
+    mapStyle: {
+        glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
+        layers: [
+            {
+                id: "background",
+                paint: {"background-color": "#ffffff"},
+                type: "background"
+            }
+        ],
+        name: "offline-minimal",
+        sources: {},
+        version: 8
+    },
+    viewport: {area: "continent_na"},
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoChart
+                type={type}
+                layers={layers}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoAreaChart - area viewport world 1`] = `
+"import React from "react";
+import { GeoChart, IGeoAreaChartConfig, IGeoLayer } from "@gooddata/sdk-ui-geo";
+import { idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+
+const type = "area";
+const layers: IGeoLayer[] = [
+    {
+        id: "primary",
+        type: "area",
+        color: newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+        area: newAttribute(idRef("country.country_code", "displayForm"), a => a.localId("a_country.country_code"))
+    }
+];
+const config: IGeoAreaChartConfig = {
+    mapStyle: {
+        glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
+        layers: [
+            {
+                id: "background",
+                paint: {"background-color": "#ffffff"},
+                type: "background"
+            }
+        ],
+        name: "offline-minimal",
+        sources: {},
+        version: 8
+    },
+    viewport: {area: "world"},
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoChart
+                type={type}
+                layers={layers}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoAreaChart - area with color and segment 1`] = `
+"import React from "react";
+import { GeoChart, IGeoAreaChartConfig, IGeoLayer } from "@gooddata/sdk-ui-geo";
+import { idRef, IFilter, newAttribute, newMeasure, newMeasureSort, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+
+const type = "area";
+const layers: IGeoLayer[] = [
+    {
+        id: "primary",
+        type: "area",
+        color: newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.alias("Revenue").localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+        segmentBy: newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id")),
+        sortBy: [
+            newMeasureSort("m_87a053b0_3947_49f3_b0c5_de53fd01f050", "desc")
+        ],
+        area: newAttribute(idRef("state_id.statecode", "displayForm"), a => a.localId("a_state_id.statecode"))
+    }
+];
+const filters: IFilter[] = [
+    newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
+];
+const config: IGeoAreaChartConfig = {
+    mapStyle: {
+        glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
+        layers: [
+            {
+                id: "background",
+                paint: {"background-color": "#ffffff"},
+                type: "background"
+            }
+        ],
+        name: "offline-minimal",
+        sources: {},
+        version: 8
+    },
+    viewport: {area: "continent_na"},
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoChart
+                type={type}
+                layers={layers}
+                filters={filters}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoAreaChart - area with color attribute 1`] = `
+"import React from "react";
+import { GeoChart, IGeoAreaChartConfig, IGeoLayer } from "@gooddata/sdk-ui-geo";
+import { idRef, IFilter, newAttribute, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+
+const type = "area";
+const layers: IGeoLayer[] = [
+    {
+        id: "primary",
+        type: "area",
+        color: newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id")),
+        area: newAttribute(idRef("country.country_code", "displayForm"), a => a.localId("a_country.country_code"))
+    }
+];
+const filters: IFilter[] = [
+    newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
+];
+const config: IGeoAreaChartConfig = {
+    mapStyle: {
+        glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
+        layers: [
+            {
+                id: "background",
+                paint: {"background-color": "#ffffff"},
+                type: "background"
+            }
+        ],
+        name: "offline-minimal",
+        sources: {},
+        version: 8
+    },
+    viewport: {area: "continent_na"},
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoChart
+                type={type}
+                layers={layers}
+                filters={filters}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoAreaChart - area with color attribute categories 1`] = `
+"import React from "react";
+import { GeoChart, IGeoAreaChartConfig, IGeoLayer } from "@gooddata/sdk-ui-geo";
+import { idRef, IFilter, newAttribute, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+
+const type = "area";
+const layers: IGeoLayer[] = [
+    {
+        id: "primary",
+        type: "area",
+        color: newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id")),
+        area: newAttribute(idRef("state_id.statecode", "displayForm"), a => a.localId("a_state_id.statecode"))
+    }
+];
+const filters: IFilter[] = [
+    newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
+];
+const config: IGeoAreaChartConfig = {
+    mapStyle: {
+        glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
+        layers: [
+            {
+                id: "background",
+                paint: {"background-color": "#ffffff"},
+                type: "background"
+            }
+        ],
+        name: "offline-minimal",
+        sources: {},
+        version: 8
+    },
+    viewport: {area: "continent_na"},
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoChart
+                type={type}
+                layers={layers}
+                filters={filters}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoAreaChart - area with color gradient 1`] = `
+"import React from "react";
+import { GeoChart, IGeoAreaChartConfig, IGeoLayer } from "@gooddata/sdk-ui-geo";
+import { idRef, newAttribute, newMeasure, newMeasureSort } from "@gooddata/sdk-model";
+
+const type = "area";
+const layers: IGeoLayer[] = [
+    {
+        id: "primary",
+        type: "area",
+        color: newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.alias("Revenue").localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+        sortBy: [
+            newMeasureSort("m_87a053b0_3947_49f3_b0c5_de53fd01f050", "desc")
+        ],
+        area: newAttribute(idRef("state_id.statecode", "displayForm"), a => a.localId("a_state_id.statecode"))
+    }
+];
+const config: IGeoAreaChartConfig = {
+    mapStyle: {
+        glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
+        layers: [
+            {
+                id: "background",
+                paint: {"background-color": "#ffffff"},
+                type: "background"
+            }
+        ],
+        name: "offline-minimal",
+        sources: {},
+        version: 8
+    },
+    viewport: {area: "continent_na"},
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoChart
+                type={type}
+                layers={layers}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoChart - area layer-level gradient palette overrides chart-level 1`] = `
+"import React from "react";
+import { GeoChart, IGeoAreaChartConfig, IGeoLayer } from "@gooddata/sdk-ui-geo";
+import { idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+
+const type = "area";
+const layers: IGeoLayer[] = [
+    {
+        id: "primary",
+        type: "area",
+        color: newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.alias("Revenue").localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+        area: newAttribute(idRef("state_id.statecode", "displayForm"), a => a.localId("a_state_id.statecode"))
+    }
+];
+const config: IGeoAreaChartConfig = {
+    legend: {position: "right"},
+    mapStyle: {
+        glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
+        layers: [
+            {
+                id: "background",
+                paint: {"background-color": "#ffffff"},
+                type: "background"
+            }
+        ],
+        name: "offline-minimal",
+        sources: {},
+        version: 8
+    },
+    viewport: {area: "continent_na"},
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoChart
+                type={type}
+                layers={layers}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoChart - area layer-level segment mapping overrides chart-level 1`] = `
+"import React from "react";
+import { GeoChart, IGeoAreaChartConfig, IGeoLayer } from "@gooddata/sdk-ui-geo";
+import { idRef, IFilter, newAttribute, newMeasure, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+
+const type = "area";
+const layers: IGeoLayer[] = [
+    {
+        id: "primary",
+        type: "area",
+        color: newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.alias("Revenue").localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+        segmentBy: newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id")),
+        area: newAttribute(idRef("state_id.statecode", "displayForm"), a => a.localId("a_state_id.statecode"))
+    }
+];
+const filters: IFilter[] = [
+    newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
+];
+const config: IGeoAreaChartConfig = {
+    legend: {position: "right"},
+    mapStyle: {
+        glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
+        layers: [
+            {
+                id: "background",
+                paint: {"background-color": "#ffffff"},
+                type: "background"
+            }
+        ],
+        name: "offline-minimal",
+        sources: {},
+        version: 8
+    },
+    viewport: {area: "continent_na"},
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoChart
+                type={type}
+                layers={layers}
+                filters={filters}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoChart - area primary with pushpin overlay 1`] = `
+"import React from "react";
+import { GeoChart, IGeoAreaChartConfig, IGeoLayer } from "@gooddata/sdk-ui-geo";
+import { idRef, IFilter, newAttribute, newMeasure, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+
+const type = "area";
+const layers: IGeoLayer[] = [
+    {
+        id: "primary",
+        type: "area",
+        color: newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.alias("Revenue").localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+        segmentBy: newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id")),
+        area: newAttribute(idRef("state_id.statecode", "displayForm"), a => a.localId("a_state_id.statecode"))
+    },
+    {
+        id: "pushpin-layer",
+        type: "pushpin",
+        tooltipText: newAttribute(idRef("f_city.id.cityname", "displayForm"), a => a.localId("a_f_city.id.cityname")),
+        filters: [
+            newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
+        ],
+        latitude: newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("a_f_city.id.latitude")),
+        longitude: newAttribute(idRef("f_city.id.longitude", "displayForm"), a => a.localId("a_f_city.id.longitude")),
+        size: newMeasure(idRef("f_population", "fact"), m => m.alias("Population").localId("m_f_population_sum").aggregation("sum"))
+    }
+];
+const filters: IFilter[] = [
+    newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
+];
+const config: IGeoAreaChartConfig = {
+    legend: {position: "right"},
+    mapStyle: {
+        glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
+        layers: [
+            {
+                id: "background",
+                paint: {"background-color": "#ffffff"},
+                type: "background"
+            }
+        ],
+        name: "offline-minimal",
+        sources: {},
+        version: 8
+    },
+    viewport: {area: "continent_na"},
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoChart
+                type={type}
+                layers={layers}
+                filters={filters}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoChart - area primary with two pushpin overlays 1`] = `
+"import React from "react";
+import { GeoChart, IGeoAreaChartConfig, IGeoLayer } from "@gooddata/sdk-ui-geo";
+import { idRef, IFilter, newAttribute, newMeasure, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+
+const type = "area";
+const layers: IGeoLayer[] = [
+    {
+        id: "primary",
+        type: "area",
+        color: newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.alias("Revenue").localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+        segmentBy: newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id")),
+        area: newAttribute(idRef("state_id.statecode", "displayForm"), a => a.localId("a_state_id.statecode"))
+    },
+    {
+        id: "pushpin-layer",
+        type: "pushpin",
+        tooltipText: newAttribute(idRef("f_city.id.cityname", "displayForm"), a => a.localId("a_f_city.id.cityname")),
+        filters: [
+            newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
+        ],
+        latitude: newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("a_f_city.id.latitude")),
+        longitude: newAttribute(idRef("f_city.id.longitude", "displayForm"), a => a.localId("a_f_city.id.longitude")),
+        size: newMeasure(idRef("f_population", "fact"), m => m.alias("Population").localId("m_f_population_sum").aggregation("sum"))
+    },
+    {
+        id: "pushpin-layer-2",
+        type: "pushpin",
+        segmentBy: newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id")),
+        tooltipText: newAttribute(idRef("f_city.id.cityname", "displayForm"), a => a.localId("a_f_city.id.cityname")),
+        filters: [
+            newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
+        ],
+        latitude: newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("a_f_city.id.latitude")),
+        longitude: newAttribute(idRef("f_city.id.longitude", "displayForm"), a => a.localId("a_f_city.id.longitude")),
+        size: newMeasure(idRef("f_population", "fact"), m => m.alias("Population").localId("m_f_population_sum").aggregation("sum"))
+    }
+];
+const filters: IFilter[] = [
+    newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
+];
+const config: IGeoAreaChartConfig = {
+    legend: {position: "right"},
+    mapStyle: {
+        glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
+        layers: [
+            {
+                id: "background",
+                paint: {"background-color": "#ffffff"},
+                type: "background"
+            }
+        ],
+        name: "offline-minimal",
+        sources: {},
+        version: 8
+    },
+    viewport: {area: "continent_na"},
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoChart
+                type={type}
+                layers={layers}
+                filters={filters}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoChart - area with clustered pushpin overlay 1`] = `
+"import React from "react";
+import { GeoChart, IGeoAreaChartConfig, IGeoLayer } from "@gooddata/sdk-ui-geo";
+import { idRef, IFilter, newAttribute, newMeasure, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+
+const type = "area";
+const layers: IGeoLayer[] = [
+    {
+        id: "primary",
+        type: "area",
+        color: newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.alias("Revenue").localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+        segmentBy: newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id")),
+        area: newAttribute(idRef("state_id.statecode", "displayForm"), a => a.localId("a_state_id.statecode"))
+    },
+    {
+        id: "pushpin-layer-cluster",
+        type: "pushpin",
+        tooltipText: newAttribute(idRef("f_city.id.cityname", "displayForm"), a => a.localId("a_f_city.id.cityname")),
+        latitude: newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("a_f_city.id.latitude")),
+        longitude: newAttribute(idRef("f_city.id.longitude", "displayForm"), a => a.localId("a_f_city.id.longitude"))
+    }
+];
+const filters: IFilter[] = [
+    newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
+];
+const config: IGeoAreaChartConfig = {
+    legend: {position: "right"},
+    mapStyle: {
+        glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
+        layers: [
+            {
+                id: "background",
+                paint: {"background-color": "#ffffff"},
+                type: "background"
+            }
+        ],
+        name: "offline-minimal",
+        sources: {},
+        version: 8
+    },
+    points: {groupNearbyPoints: true},
+    viewport: {area: "world"},
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoChart
+                type={type}
+                layers={layers}
+                filters={filters}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoChart - area with non-clustered pushpin overlay 1`] = `
+"import React from "react";
+import { GeoChart, IGeoAreaChartConfig, IGeoLayer } from "@gooddata/sdk-ui-geo";
+import { idRef, IFilter, newAttribute, newMeasure, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+
+const type = "area";
+const layers: IGeoLayer[] = [
+    {
+        id: "primary",
+        type: "area",
+        color: newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.alias("Revenue").localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+        segmentBy: newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id")),
+        area: newAttribute(idRef("state_id.statecode", "displayForm"), a => a.localId("a_state_id.statecode"))
+    },
+    {
+        id: "pushpin-layer-cluster",
+        type: "pushpin",
+        tooltipText: newAttribute(idRef("f_city.id.cityname", "displayForm"), a => a.localId("a_f_city.id.cityname")),
+        latitude: newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("a_f_city.id.latitude")),
+        longitude: newAttribute(idRef("f_city.id.longitude", "displayForm"), a => a.localId("a_f_city.id.longitude"))
+    }
+];
+const filters: IFilter[] = [
+    newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
+];
+const config: IGeoAreaChartConfig = {
+    legend: {position: "right"},
+    mapStyle: {
+        glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
+        layers: [
+            {
+                id: "background",
+                paint: {"background-color": "#ffffff"},
+                type: "background"
+            }
+        ],
+        name: "offline-minimal",
+        sources: {},
+        version: 8
+    },
+    points: {groupNearbyPoints: false},
+    viewport: {area: "world"},
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoChart
+                type={type}
+                layers={layers}
+                filters={filters}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoChart - multi-layer area override only 1`] = `
+"import React from "react";
+import { GeoChart, IGeoAreaChartConfig, IGeoLayer } from "@gooddata/sdk-ui-geo";
+import { idRef, IFilter, newAttribute, newMeasure, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+
+const type = "area";
+const layers: IGeoLayer[] = [
+    {
+        id: "primary",
+        type: "area",
+        color: newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.alias("Revenue").localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+        segmentBy: newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id")),
+        area: newAttribute(idRef("state_id.statecode", "displayForm"), a => a.localId("a_state_id.statecode"))
+    },
+    {
+        id: "pushpin-layer",
+        type: "pushpin",
+        segmentBy: newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id")),
+        tooltipText: newAttribute(idRef("f_city.id.cityname", "displayForm"), a => a.localId("a_f_city.id.cityname")),
+        filters: [
+            newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
+        ],
+        latitude: newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("a_f_city.id.latitude")),
+        longitude: newAttribute(idRef("f_city.id.longitude", "displayForm"), a => a.localId("a_f_city.id.longitude")),
+        size: newMeasure(idRef("f_population", "fact"), m => m.alias("Population").localId("m_f_population_sum").aggregation("sum"))
+    }
+];
+const filters: IFilter[] = [
+    newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
+];
+const config: IGeoAreaChartConfig = {
+    legend: {position: "right"},
+    mapStyle: {
+        glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
+        layers: [
+            {
+                id: "background",
+                paint: {"background-color": "#ffffff"},
+                type: "background"
+            }
+        ],
+        name: "offline-minimal",
+        sources: {},
+        version: 8
+    },
+    viewport: {area: "continent_na"},
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoChart
+                type={type}
+                layers={layers}
+                filters={filters}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoChart - multi-layer both inherit chart-level colors 1`] = `
+"import React from "react";
+import { GeoChart, IGeoAreaChartConfig, IGeoLayer } from "@gooddata/sdk-ui-geo";
+import { idRef, IFilter, newAttribute, newMeasure, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+
+const type = "area";
+const layers: IGeoLayer[] = [
+    {
+        id: "primary",
+        type: "area",
+        color: newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.alias("Revenue").localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+        segmentBy: newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id")),
+        area: newAttribute(idRef("state_id.statecode", "displayForm"), a => a.localId("a_state_id.statecode"))
+    },
+    {
+        id: "pushpin-layer",
+        type: "pushpin",
+        segmentBy: newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id")),
+        tooltipText: newAttribute(idRef("f_city.id.cityname", "displayForm"), a => a.localId("a_f_city.id.cityname")),
+        filters: [
+            newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
+        ],
+        latitude: newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("a_f_city.id.latitude")),
+        longitude: newAttribute(idRef("f_city.id.longitude", "displayForm"), a => a.localId("a_f_city.id.longitude")),
+        size: newMeasure(idRef("f_population", "fact"), m => m.alias("Population").localId("m_f_population_sum").aggregation("sum"))
+    }
+];
+const filters: IFilter[] = [
+    newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
+];
+const config: IGeoAreaChartConfig = {
+    legend: {position: "right"},
+    mapStyle: {
+        glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
+        layers: [
+            {
+                id: "background",
+                paint: {"background-color": "#ffffff"},
+                type: "background"
+            }
+        ],
+        name: "offline-minimal",
+        sources: {},
+        version: 8
+    },
+    viewport: {area: "continent_na"},
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoChart
+                type={type}
+                layers={layers}
+                filters={filters}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoChart - multi-layer both layer overrides with conflicting chart fallback 1`] = `
+"import React from "react";
+import { GeoChart, getColorMappingPredicate, IGeoAreaChartConfig, IGeoLayer } from "@gooddata/sdk-ui-geo";
+import { idRef, IFilter, newAttribute, newMeasure, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+
+const type = "area";
+const layers: IGeoLayer[] = [
+    {
+        id: "primary",
+        type: "area",
+        color: newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.alias("Revenue").localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+        segmentBy: newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id")),
+        area: newAttribute(idRef("state_id.statecode", "displayForm"), a => a.localId("a_state_id.statecode"))
+    },
+    {
+        id: "pushpin-layer",
+        type: "pushpin",
+        segmentBy: newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id")),
+        tooltipText: newAttribute(idRef("f_city.id.cityname", "displayForm"), a => a.localId("a_f_city.id.cityname")),
+        config: {
+            colorPalette: [
+                {fill: {b: 193, g: 48, r: 86}, guid: "layer-01"},
+                {fill: {b: 230, g: 70, r: 120}, guid: "layer-02"},
+                {fill: {b: 235, g: 93, r: 190}, guid: "layer-03"},
+                {fill: {b: 170, g: 120, r: 255}, guid: "layer-04"},
+                {fill: {b: 120, g: 73, r: 255}, guid: "layer-05"}
+            ],
+            colorMapping: [
+                {predicate: getColorMappingPredicate("mapping-0"), color: {type: "rgb", value: {b: 20, g: 20, r: 20}}},
+                {predicate: getColorMappingPredicate("mapping-1"), color: {type: "rgb", value: {b: 0, g: 140, r: 255}}}
+            ]
+        },
+        filters: [
+            newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
+        ],
+        latitude: newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("a_f_city.id.latitude")),
+        longitude: newAttribute(idRef("f_city.id.longitude", "displayForm"), a => a.localId("a_f_city.id.longitude")),
+        size: newMeasure(idRef("f_population", "fact"), m => m.alias("Population").localId("m_f_population_sum").aggregation("sum"))
+    }
+];
+const filters: IFilter[] = [
+    newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
+];
+const config: IGeoAreaChartConfig = {
+    legend: {position: "right"},
+    mapStyle: {
+        glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
+        layers: [
+            {
+                id: "background",
+                paint: {"background-color": "#ffffff"},
+                type: "background"
+            }
+        ],
+        name: "offline-minimal",
+        sources: {},
+        version: 8
+    },
+    viewport: {area: "continent_na"},
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoChart
+                type={type}
+                layers={layers}
+                filters={filters}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoChart - multi-layer chart-level segment mapping 1`] = `
+"import React from "react";
+import { GeoChart, IGeoAreaChartConfig, IGeoLayer } from "@gooddata/sdk-ui-geo";
+import { idRef, IFilter, newAttribute, newMeasure, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+
+const type = "area";
+const layers: IGeoLayer[] = [
+    {
+        id: "primary",
+        type: "area",
+        color: newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.alias("Revenue").localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+        segmentBy: newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id")),
+        area: newAttribute(idRef("state_id.statecode", "displayForm"), a => a.localId("a_state_id.statecode"))
+    },
+    {
+        id: "pushpin-layer-2",
+        type: "pushpin",
+        segmentBy: newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id")),
+        tooltipText: newAttribute(idRef("f_city.id.cityname", "displayForm"), a => a.localId("a_f_city.id.cityname")),
+        filters: [
+            newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
+        ],
+        latitude: newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("a_f_city.id.latitude")),
+        longitude: newAttribute(idRef("f_city.id.longitude", "displayForm"), a => a.localId("a_f_city.id.longitude")),
+        size: newMeasure(idRef("f_population", "fact"), m => m.alias("Population").localId("m_f_population_sum").aggregation("sum"))
+    }
+];
+const filters: IFilter[] = [
+    newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
+];
+const config: IGeoAreaChartConfig = {
+    legend: {position: "right"},
+    mapStyle: {
+        glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
+        layers: [
+            {
+                id: "background",
+                paint: {"background-color": "#ffffff"},
+                type: "background"
+            }
+        ],
+        name: "offline-minimal",
+        sources: {},
+        version: 8
+    },
+    viewport: {area: "continent_na"},
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoChart
+                type={type}
+                layers={layers}
+                filters={filters}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoChart - multi-layer per-layer segment mapping override 1`] = `
+"import React from "react";
+import { GeoChart, getColorMappingPredicate, IGeoAreaChartConfig, IGeoLayer } from "@gooddata/sdk-ui-geo";
+import { idRef, IFilter, newAttribute, newMeasure, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+
+const type = "area";
+const layers: IGeoLayer[] = [
+    {
+        id: "primary",
+        type: "area",
+        color: newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.alias("Revenue").localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+        segmentBy: newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id")),
+        area: newAttribute(idRef("state_id.statecode", "displayForm"), a => a.localId("a_state_id.statecode"))
+    },
+    {
+        id: "pushpin-layer-override",
+        type: "pushpin",
+        segmentBy: newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id")),
+        tooltipText: newAttribute(idRef("f_city.id.cityname", "displayForm"), a => a.localId("a_f_city.id.cityname")),
+        config: {
+            colorMapping: [
+                {predicate: getColorMappingPredicate("mapping-0"), color: {type: "rgb", value: {b: 20, g: 20, r: 20}}},
+                {predicate: getColorMappingPredicate("mapping-1"), color: {type: "rgb", value: {b: 0, g: 140, r: 255}}}
+            ]
+        },
+        filters: [
+            newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
+        ],
+        latitude: newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("a_f_city.id.latitude")),
+        longitude: newAttribute(idRef("f_city.id.longitude", "displayForm"), a => a.localId("a_f_city.id.longitude")),
+        size: newMeasure(idRef("f_population", "fact"), m => m.alias("Population").localId("m_f_population_sum").aggregation("sum"))
+    }
+];
+const filters: IFilter[] = [
+    newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
+];
+const config: IGeoAreaChartConfig = {
+    legend: {position: "right"},
+    mapStyle: {
+        glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
+        layers: [
+            {
+                id: "background",
+                paint: {"background-color": "#ffffff"},
+                type: "background"
+            }
+        ],
+        name: "offline-minimal",
+        sources: {},
+        version: 8
+    },
+    viewport: {area: "continent_na"},
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoChart
+                type={type}
+                layers={layers}
+                filters={filters}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoChart - multi-layer pushpin override only 1`] = `
+"import React from "react";
+import { GeoChart, getColorMappingPredicate, IGeoAreaChartConfig, IGeoLayer } from "@gooddata/sdk-ui-geo";
+import { idRef, IFilter, newAttribute, newMeasure, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+
+const type = "area";
+const layers: IGeoLayer[] = [
+    {
+        id: "primary",
+        type: "area",
+        color: newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.alias("Revenue").localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050")),
+        segmentBy: newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id")),
+        area: newAttribute(idRef("state_id.statecode", "displayForm"), a => a.localId("a_state_id.statecode"))
+    },
+    {
+        id: "pushpin-layer",
+        type: "pushpin",
+        segmentBy: newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id")),
+        tooltipText: newAttribute(idRef("f_city.id.cityname", "displayForm"), a => a.localId("a_f_city.id.cityname")),
+        config: {
+            colorMapping: [
+                {predicate: getColorMappingPredicate("mapping-0"), color: {type: "rgb", value: {b: 20, g: 20, r: 20}}},
+                {predicate: getColorMappingPredicate("mapping-1"), color: {type: "rgb", value: {b: 0, g: 140, r: 255}}}
+            ]
+        },
+        filters: [
+            newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
+        ],
+        latitude: newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("a_f_city.id.latitude")),
+        longitude: newAttribute(idRef("f_city.id.longitude", "displayForm"), a => a.localId("a_f_city.id.longitude")),
+        size: newMeasure(idRef("f_population", "fact"), m => m.alias("Population").localId("m_f_population_sum").aggregation("sum"))
+    }
+];
+const filters: IFilter[] = [
+    newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
+];
+const config: IGeoAreaChartConfig = {
+    legend: {position: "right"},
+    mapStyle: {
+        glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
+        layers: [
+            {
+                id: "background",
+                paint: {"background-color": "#ffffff"},
+                type: "background"
+            }
+        ],
+        name: "offline-minimal",
+        sources: {},
+        version: 8
+    },
+    viewport: {area: "continent_na"},
+    separators: {decimal: ".", thousand: ","}
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoChart
+                type={type}
+                layers={layers}
+                filters={filters}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoChart - pushpin layer-level gradient palette overrides chart-level 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, IFilter, newAttribute, newMeasure, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+import { GeoPushpinChart, IGeoConfig } from "@gooddata/sdk-ui-geo";
+
+const location: IAttribute = newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("a_f_city.id.latitude"));
+const color: IAttributeOrMeasure = newMeasure(idRef("f_population", "fact"), m => m.alias("Population").localId("m_f_population_sum").aggregation("sum"));
+const filters: IFilter[] = [
+    newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
+];
+const config: IGeoConfig = {
+    legend: {position: "right"},
+    viewport: {area: "continent_na"},
+    separators: {decimal: ".", thousand: ","},
+    mapboxToken: "<fill your Mapbox token here>"
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoPushpinChart
+                location={location}
+                color={color}
+                filters={filters}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoChart - pushpin layer-level segment mapping overrides chart-level 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, IFilter, newAttribute, newMeasure, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+import { GeoPushpinChart, IGeoConfig } from "@gooddata/sdk-ui-geo";
+
+const location: IAttribute = newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("a_f_city.id.latitude"));
+const size: IAttributeOrMeasure = newMeasure(idRef("f_population", "fact"), m => m.alias("Population").localId("m_f_population_sum").aggregation("sum"));
+const segmentBy: IAttribute = newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"));
+const filters: IFilter[] = [
+    newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
+];
+const config: IGeoConfig = {
+    colorMapping: [
+        {
+            color: {type: "rgb", value: {b: 95, g: 170, r: 0}}
+        },
+        {
+            color: {type: "rgb", value: {b: 87, g: 87, r: 235}}
+        }
+    ],
+    legend: {position: "right"},
+    viewport: {area: "continent_na"},
+    separators: {decimal: ".", thousand: ","},
+    mapboxToken: "<fill your Mapbox token here>"
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoPushpinChart
+                location={location}
+                size={size}
+                segmentBy={segmentBy}
+                filters={filters}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoPushpinChart - clustered points 1`] = `
+"import React from "react";
+import { IAttribute, idRef, newAttribute } from "@gooddata/sdk-model";
+import { GeoPushpinChart, IGeoConfig } from "@gooddata/sdk-ui-geo";
+
+const location: IAttribute = newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("a_f_city.id.latitude"));
+const config: IGeoConfig = {
+    points: {groupNearbyPoints: true},
+    tooltipText: "f_city.id.cityname",
+    viewport: {area: "world"},
+    separators: {decimal: ".", thousand: ","},
+    mapboxToken: "<fill your Mapbox token here>"
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoPushpinChart
+                location={location}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoPushpinChart - latitude/longitude with color and segment 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, IFilter, ISortItem, newAttribute, newMeasure, newMeasureSort, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+import { GeoPushpinChart, IGeoConfig } from "@gooddata/sdk-ui-geo";
+
+const location: IAttribute = newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("a_f_city.id.latitude"));
+const color: IAttributeOrMeasure = newMeasure(idRef("f_population", "fact"), m => m.alias("Population").localId("m_f_population_sum").aggregation("sum"));
+const segmentBy: IAttribute = newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"));
+const filters: IFilter[] = [
+    newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
+];
+const sortBy: ISortItem[] = [newMeasureSort("m_f_population_sum", "desc")];
+const config: IGeoConfig = {
+    tooltipText: "f_city.id.cityname",
+    viewport: {area: "world"},
+    separators: {decimal: ".", thousand: ","},
+    mapboxToken: "<fill your Mapbox token here>"
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoPushpinChart
+                location={location}
+                color={color}
+                segmentBy={segmentBy}
+                filters={filters}
+                sortBy={sortBy}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoPushpinChart - latitude/longitude with color attribute 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, IFilter, newAttribute, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+import { GeoPushpinChart, IGeoConfig } from "@gooddata/sdk-ui-geo";
+
+const location: IAttribute = newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("a_f_city.id.latitude"));
+const color: IAttributeOrMeasure = newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"));
+const filters: IFilter[] = [
+    newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
+];
+const config: IGeoConfig = {
+    tooltipText: "f_city.id.cityname",
+    viewport: {area: "continent_na"},
+    separators: {decimal: ".", thousand: ","},
+    mapboxToken: "<fill your Mapbox token here>"
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoPushpinChart
+                location={location}
+                color={color}
+                filters={filters}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoPushpinChart - latitude/longitude with size and color 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { GeoPushpinChart, IGeoConfig } from "@gooddata/sdk-ui-geo";
+
+const location: IAttribute = newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("a_f_city.id.latitude"));
+const size: IAttributeOrMeasure = newMeasure(idRef("f_population", "fact"), m => m.alias("Population").localId("m_f_population_sum").aggregation("sum"));
+const color: IAttributeOrMeasure = newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.alias("Revenue").localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050"));
+const config: IGeoConfig = {
+    tooltipText: "f_city.id.cityname",
+    viewport: {area: "world"},
+    separators: {decimal: ".", thousand: ","},
+    mapboxToken: "<fill your Mapbox token here>"
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoPushpinChart
+                location={location}
+                size={size}
+                color={color}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoPushpinChart - legend category edge case with empty regions 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { GeoPushpinChart, IGeoConfig } from "@gooddata/sdk-ui-geo";
+
+const location: IAttribute = newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("a_f_city.id.latitude"));
+const size: IAttributeOrMeasure = newMeasure(idRef("f_population", "fact"), m => m.alias("Population").localId("m_f_population_sum").aggregation("sum"));
+const segmentBy: IAttribute = newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"));
+const config: IGeoConfig = {
+    legend: {position: "right"},
+    tooltipText: "f_city.id.cityname",
+    viewport: {area: "continent_na"},
+    separators: {decimal: ".", thousand: ","},
+    mapboxToken: "<fill your Mapbox token here>"
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoPushpinChart
+                location={location}
+                size={size}
+                segmentBy={segmentBy}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoPushpinChart - legend position bottom 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, IFilter, newAttribute, newMeasure, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+import { GeoPushpinChart, IGeoConfig } from "@gooddata/sdk-ui-geo";
+
+const location: IAttribute = newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("a_f_city.id.latitude"));
+const size: IAttributeOrMeasure = newMeasure(idRef("f_population", "fact"), m => m.alias("Population").localId("m_f_population_sum").aggregation("sum"));
+const segmentBy: IAttribute = newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"));
+const filters: IFilter[] = [
+    newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
+];
+const config: IGeoConfig = {
+    legend: {position: "bottom"},
+    tooltipText: "f_city.id.cityname",
+    separators: {decimal: ".", thousand: ","},
+    mapboxToken: "<fill your Mapbox token here>"
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoPushpinChart
+                location={location}
+                size={size}
+                segmentBy={segmentBy}
+                filters={filters}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoPushpinChart - legend position left 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, IFilter, newAttribute, newMeasure, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+import { GeoPushpinChart, IGeoConfig } from "@gooddata/sdk-ui-geo";
+
+const location: IAttribute = newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("a_f_city.id.latitude"));
+const size: IAttributeOrMeasure = newMeasure(idRef("f_population", "fact"), m => m.alias("Population").localId("m_f_population_sum").aggregation("sum"));
+const segmentBy: IAttribute = newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"));
+const filters: IFilter[] = [
+    newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
+];
+const config: IGeoConfig = {
+    legend: {position: "left"},
+    tooltipText: "f_city.id.cityname",
+    separators: {decimal: ".", thousand: ","},
+    mapboxToken: "<fill your Mapbox token here>"
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoPushpinChart
+                location={location}
+                size={size}
+                segmentBy={segmentBy}
+                filters={filters}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoPushpinChart - legend position right 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, IFilter, newAttribute, newMeasure, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+import { GeoPushpinChart, IGeoConfig } from "@gooddata/sdk-ui-geo";
+
+const location: IAttribute = newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("a_f_city.id.latitude"));
+const size: IAttributeOrMeasure = newMeasure(idRef("f_population", "fact"), m => m.alias("Population").localId("m_f_population_sum").aggregation("sum"));
+const segmentBy: IAttribute = newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"));
+const filters: IFilter[] = [
+    newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
+];
+const config: IGeoConfig = {
+    legend: {position: "right"},
+    tooltipText: "f_city.id.cityname",
+    separators: {decimal: ".", thousand: ","},
+    mapboxToken: "<fill your Mapbox token here>"
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoPushpinChart
+                location={location}
+                size={size}
+                segmentBy={segmentBy}
+                filters={filters}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoPushpinChart - legend position top 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, IFilter, newAttribute, newMeasure, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+import { GeoPushpinChart, IGeoConfig } from "@gooddata/sdk-ui-geo";
+
+const location: IAttribute = newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("a_f_city.id.latitude"));
+const size: IAttributeOrMeasure = newMeasure(idRef("f_population", "fact"), m => m.alias("Population").localId("m_f_population_sum").aggregation("sum"));
+const segmentBy: IAttribute = newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"));
+const filters: IFilter[] = [
+    newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
+];
+const config: IGeoConfig = {
+    legend: {position: "top"},
+    tooltipText: "f_city.id.cityname",
+    separators: {decimal: ".", thousand: ","},
+    mapboxToken: "<fill your Mapbox token here>"
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoPushpinChart
+                location={location}
+                size={size}
+                segmentBy={segmentBy}
+                filters={filters}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoPushpinChart - legend size color-scale and category 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, IFilter, newAttribute, newMeasure, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+import { GeoPushpinChart, IGeoConfig } from "@gooddata/sdk-ui-geo";
+
+const location: IAttribute = newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("a_f_city.id.latitude"));
+const size: IAttributeOrMeasure = newMeasure(idRef("f_population", "fact"), m => m.alias("Population").localId("m_f_population_sum").aggregation("sum"));
+const color: IAttributeOrMeasure = newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.alias("Revenue").localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050"));
+const segmentBy: IAttribute = newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"));
+const filters: IFilter[] = [
+    newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
+];
+const config: IGeoConfig = {
+    legend: {position: "right"},
+    tooltipText: "f_city.id.cityname",
+    viewport: {area: "continent_na"},
+    separators: {decimal: ".", thousand: ","},
+    mapboxToken: "<fill your Mapbox token here>"
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoPushpinChart
+                location={location}
+                size={size}
+                color={color}
+                segmentBy={segmentBy}
+                filters={filters}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoPushpinChart - legend with selection 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, IFilter, newAttribute, newMeasure, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+import { GeoPushpinChart, IGeoConfig } from "@gooddata/sdk-ui-geo";
+
+const location: IAttribute = newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("a_f_city.id.latitude"));
+const size: IAttributeOrMeasure = newMeasure(idRef("f_population", "fact"), m => m.alias("Population").localId("m_f_population_sum").aggregation("sum"));
+const segmentBy: IAttribute = newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"));
+const filters: IFilter[] = [
+    newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
+];
+const config: IGeoConfig = {
+    legend: {position: "right"},
+    selectedSegmentItems: ["West Coast", "East Coast"],
+    tooltipText: "f_city.id.cityname",
+    separators: {decimal: ".", thousand: ","},
+    mapboxToken: "<fill your Mapbox token here>"
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoPushpinChart
+                location={location}
+                size={size}
+                segmentBy={segmentBy}
+                filters={filters}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoPushpinChart - non-clustered points 1`] = `
+"import React from "react";
+import { IAttribute, idRef, newAttribute } from "@gooddata/sdk-model";
+import { GeoPushpinChart, IGeoConfig } from "@gooddata/sdk-ui-geo";
+
+const location: IAttribute = newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("a_f_city.id.latitude"));
+const config: IGeoConfig = {
+    points: {groupNearbyPoints: false},
+    tooltipText: "f_city.id.cityname",
+    viewport: {area: "world"},
+    separators: {decimal: ".", thousand: ","},
+    mapboxToken: "<fill your Mapbox token here>"
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoPushpinChart
+                location={location}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoPushpinChart - pushpin chart-level custom gradient palette 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, IFilter, newAttribute, newMeasure, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+import { GeoPushpinChart, IGeoConfig } from "@gooddata/sdk-ui-geo";
+
+const location: IAttribute = newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("a_f_city.id.latitude"));
+const color: IAttributeOrMeasure = newMeasure(idRef("f_population", "fact"), m => m.alias("Population").localId("m_f_population_sum").aggregation("sum"));
+const filters: IFilter[] = [
+    newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
+];
+const config: IGeoConfig = {
+    tooltipText: "f_city.id.cityname",
+    viewport: {area: "continent_na"},
+    separators: {decimal: ".", thousand: ","},
+    mapboxToken: "<fill your Mapbox token here>"
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoPushpinChart
+                location={location}
+                color={color}
+                filters={filters}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoPushpinChart - pushpin chart-level custom segment mapping 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, IFilter, newAttribute, newMeasure, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+import { GeoPushpinChart, IGeoConfig } from "@gooddata/sdk-ui-geo";
+
+const location: IAttribute = newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("a_f_city.id.latitude"));
+const size: IAttributeOrMeasure = newMeasure(idRef("f_population", "fact"), m => m.alias("Population").localId("m_f_population_sum").aggregation("sum"));
+const segmentBy: IAttribute = newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"));
+const filters: IFilter[] = [
+    newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
+];
+const config: IGeoConfig = {
+    colorMapping: [
+        {
+            color: {type: "rgb", value: {b: 95, g: 170, r: 0}}
+        },
+        {
+            color: {type: "rgb", value: {b: 87, g: 87, r: 235}}
+        }
+    ],
+    tooltipText: "f_city.id.cityname",
+    viewport: {area: "continent_na"},
+    separators: {decimal: ".", thousand: ","},
+    mapboxToken: "<fill your Mapbox token here>"
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoPushpinChart
+                location={location}
+                size={size}
+                segmentBy={segmentBy}
+                filters={filters}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoPushpinChart - pushpin size color gradient and segment 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, IFilter, newAttribute, newMeasure, newPositiveAttributeFilter } from "@gooddata/sdk-model";
+import { GeoPushpinChart, IGeoConfig } from "@gooddata/sdk-ui-geo";
+
+const location: IAttribute = newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("a_f_city.id.latitude"));
+const size: IAttributeOrMeasure = newMeasure(idRef("f_population", "fact"), m => m.alias("Population").localId("m_f_population_sum").aggregation("sum"));
+const color: IAttributeOrMeasure = newMeasure(idRef("87a053b0-3947-49f3-b0c5-de53fd01f050", "measure"), m => m.alias("Revenue").localId("m_87a053b0_3947_49f3_b0c5_de53fd01f050"));
+const segmentBy: IAttribute = newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"));
+const filters: IFilter[] = [
+    newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
+];
+const config: IGeoConfig = {
+    colorMapping: [
+        {
+            color: {type: "rgb", value: {b: 95, g: 170, r: 0}}
+        },
+        {
+            color: {type: "rgb", value: {b: 87, g: 87, r: 235}}
+        }
+    ],
+    tooltipText: "f_city.id.cityname",
+    viewport: {area: "continent_na"},
+    separators: {decimal: ".", thousand: ","},
+    mapboxToken: "<fill your Mapbox token here>"
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoPushpinChart
+                location={location}
+                size={size}
+                color={color}
+                segmentBy={segmentBy}
+                filters={filters}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoPushpinChart - viewport europe 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { GeoPushpinChart, IGeoConfig } from "@gooddata/sdk-ui-geo";
+
+const location: IAttribute = newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("a_f_city.id.latitude"));
+const size: IAttributeOrMeasure = newMeasure(idRef("f_population", "fact"), m => m.alias("Population").localId("m_f_population_sum").aggregation("sum"));
+const config: IGeoConfig = {
+    tooltipText: "f_city.id.cityname",
+    viewport: {area: "continent_eu"},
+    separators: {decimal: ".", thousand: ","},
+    mapboxToken: "<fill your Mapbox token here>"
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoPushpinChart
+                location={location}
+                size={size}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoPushpinChart - viewport north america with segment 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { GeoPushpinChart, IGeoConfig } from "@gooddata/sdk-ui-geo";
+
+const location: IAttribute = newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("a_f_city.id.latitude"));
+const size: IAttributeOrMeasure = newMeasure(idRef("f_population", "fact"), m => m.alias("Population").localId("m_f_population_sum").aggregation("sum"));
+const segmentBy: IAttribute = newAttribute(idRef("f_owner.region_id", "displayForm"), a => a.localId("a_f_owner.region_id"));
+const config: IGeoConfig = {
+    tooltipText: "f_city.id.cityname",
+    viewport: {area: "continent_na"},
+    separators: {decimal: ".", thousand: ","},
+    mapboxToken: "<fill your Mapbox token here>"
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoPushpinChart
+                location={location}
+                size={size}
+                segmentBy={segmentBy}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
+exports[`getEmbeddingCode functionality > should generate code for GeoPushpinChart - viewport world 1`] = `
+"import React from "react";
+import { IAttribute, IAttributeOrMeasure, idRef, newAttribute, newMeasure } from "@gooddata/sdk-model";
+import { GeoPushpinChart, IGeoConfig } from "@gooddata/sdk-ui-geo";
+
+const location: IAttribute = newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("a_f_city.id.latitude"));
+const size: IAttributeOrMeasure = newMeasure(idRef("f_population", "fact"), m => m.alias("Population").localId("m_f_population_sum").aggregation("sum"));
+const config: IGeoConfig = {
+    tooltipText: "f_city.id.cityname",
+    viewport: {area: "world"},
+    separators: {decimal: ".", thousand: ","},
+    mapboxToken: "<fill your Mapbox token here>"
+};
+const style = {height: 400};
+
+export function MyComponent() {
+    return (
+        <div style={style}>
+            <GeoPushpinChart
+                location={location}
+                size={size}
+                config={config}
+            />
+        </div>
+    );
+}
+"
+`;
+
 exports[`getEmbeddingCode functionality > should generate code for Headline - comparison with calculate as change (difference) and custom format 1`] = `
 "import React from "react";
 import { idRef, IMeasure, newMeasure } from "@gooddata/sdk-model";

@@ -189,6 +189,11 @@ export {
     type IPositiveAttributeFilterBody,
     type INegativeAttributeFilter,
     type INegativeAttributeFilterBody,
+    type IArbitraryAttributeFilter,
+    type IArbitraryAttributeFilterBody,
+    type IMatchAttributeFilter,
+    type IMatchAttributeFilterBody,
+    type MatchFilterOperator,
     type IAbsoluteDateFilter,
     type IRelativeDateFilter,
     type IMeasureValueFilter,
@@ -202,6 +207,7 @@ export {
     type IMeasureFilter,
     type IDateFilter,
     type IAttributeFilter,
+    type IAttributeFilterWithSelection,
     type ComparisonConditionOperator,
     type IComparisonCondition,
     type IComparisonConditionBody,
@@ -229,9 +235,13 @@ export {
     isSimpleMeasureFilter,
     isPositiveAttributeFilter,
     isNegativeAttributeFilter,
+    isArbitraryAttributeFilter,
+    isMatchAttributeFilter,
     isDateFilter,
     isMeasureValueFilter,
     isAttributeFilter,
+    isAttributeFilterWithSelection,
+    isNegativeFilter,
     isAttributeElementsByRef,
     isAttributeElementsByValue,
     isComparisonCondition,
@@ -240,6 +250,7 @@ export {
     isRangeCondition,
     isRangeConditionOperator,
     filterIsEmpty,
+    isAllValuesAttributeFilter,
     filterAttributeElements,
     filterMeasureRef,
     filterObjRef,
@@ -284,6 +295,8 @@ export {
     newMeasureValueFilter,
     newMeasureValueFilterWithOptions,
     newRankingFilter,
+    newArbitraryAttributeFilter,
+    newMatchAttributeFilter,
 } from "./execution/filter/factory.js";
 
 export { mergeFilters } from "./execution/filter/filterMerge.js";
@@ -916,6 +929,7 @@ export {
     type CalendarType,
     type IOpenAiConfig,
     type ILlmEndpoint,
+    type ILlmActiveProvider,
     type DashboardFiltersApplyMode,
     type EarlyAccessFeatureContext,
     type EarlyAccessFeatureStatus,
@@ -1199,6 +1213,19 @@ export type {
     LlmEndpointOpenAIPatch,
     LlmEndpointTestResults,
 } from "./llmEndpoints/index.js";
+
+export type {
+    ILlmProvider,
+    ILlmModel,
+    LlmProviderConfig,
+    IOpenAIProviderConfig,
+    IAzureFoundryProviderConfig,
+    IAwsBedrockProviderConfig,
+    LlmProviderFamily,
+    LlmProviderPatch,
+    LlmProviderTestResults,
+    LlmModelsTestResults,
+} from "./llmProviders/index.js";
 
 export {
     type ISemanticQualityReport,

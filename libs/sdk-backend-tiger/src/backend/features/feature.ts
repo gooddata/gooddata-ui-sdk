@@ -235,6 +235,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableLlmEndpointReplacement,
+            "enableLlmEndpointReplacement",
+            "BOOLEAN",
+            FeatureFlagsValues.enableLlmEndpointReplacement,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableAlertingAttributes,
             "enableAlertAttributes",
             "BOOLEAN",
@@ -445,6 +452,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableCatalogTrendingObjects,
+            "enableCatalogTrendingObjects",
+            "BOOLEAN",
+            FeatureFlagsValues.enableCatalogTrendingObjects,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableCatalogLineage,
             "enableCatalogLineage",
             "BOOLEAN",
@@ -540,6 +554,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableInPlatformNotifications",
             "BOOLEAN",
             FeatureFlagsValues.enableInPlatformNotifications,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableVisualizationFilteringByTags,
+            "enableVisualizationFilteringByTags",
+            "BOOLEAN",
+            FeatureFlagsValues.enableVisualizationFilteringByTags,
         ),
         ...loadFeature(
             features,
@@ -809,6 +830,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableGeoChartA11yImprovements,
+            "enableGeoChartA11yImprovements",
+            "BOOLEAN",
+            FeatureFlagsValues.enableGeoChartA11yImprovements,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableGeoBasemapConfig,
             "enableGeoBasemapConfig",
             "BOOLEAN",
@@ -844,6 +872,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableAIKnowledge,
+            "enableAIKnowledge",
+            "BOOLEAN",
+            FeatureFlagsValues.enableAIKnowledge,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableGenAIReasoningVisibility,
             "enableGenAIReasoningVisibility",
             "BOOLEAN",
@@ -869,13 +904,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableKDEmptyDateValuesFilter",
             "BOOLEAN",
             FeatureFlagsValues.enableKDEmptyDateValuesFilter,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnablePivotTableAutoSizeReset,
-            "enablePivotTableAutoSizeReset",
-            "BOOLEAN",
-            FeatureFlagsValues.enablePivotTableAutoSizeReset,
         ),
         ...loadFeature(
             features,

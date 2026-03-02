@@ -2,7 +2,12 @@
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
-import { DEFAULT_MAPLIBRE_OPTIONS, DEFAULT_TOOLTIP_OPTIONS } from "./mapConfig.js";
+import {
+    DEFAULT_MAPLIBRE_OPTIONS,
+    DEFAULT_TOOLTIP_OPTIONS,
+    type IMapInteractionOptions,
+    resolveMapInteractionOptions,
+} from "./mapConfig.js";
 import type {
     LngLatBoundsLike,
     LngLatLike,
@@ -24,6 +29,12 @@ export interface IMapInitResult {
     tooltip: Popup;
     // oxlint-disable-next-line @typescript-eslint/consistent-type-imports
     maplibregl: typeof import("maplibre-gl");
+}
+
+interface IMapInitializationOptions extends IMapOptions {
+    dragRotate?: IMapInteractionOptions["dragRotate"];
+    pitchWithRotate?: IMapInteractionOptions["pitchWithRotate"];
+    touchZoomRotate?: IMapInteractionOptions["touchZoomRotate"];
 }
 
 /**
@@ -48,12 +59,15 @@ export async function initializeMapLibreMap(
         zoom,
         bounds,
         interactive = true,
+        dragRotate,
+        pitchWithRotate,
+        touchZoomRotate,
         preserveDrawingBuffer = false,
         cooperativeGestures = true,
         maxZoom,
         style,
         tileset,
-    }: IMapOptions,
+    }: IMapInitializationOptions,
     locale?: IMapLibreLocale,
     backend?: IAnalyticalBackend,
 ): Promise<IMapInitResult> {
@@ -64,11 +78,18 @@ export async function initializeMapLibreMap(
         throw new Error("Map style is required. Provide either a style option or a backend instance.");
     }
 
+    const interactionOptions = resolveMapInteractionOptions({
+        interactive,
+        dragRotate,
+        pitchWithRotate,
+        touchZoomRotate,
+    });
+
     const mapOptions: MapOptions = {
         ...DEFAULT_MAPLIBRE_OPTIONS,
+        ...interactionOptions,
         style: styleSpecification,
         container,
-        interactive,
         cooperativeGestures,
         preserveDrawingBuffer,
         ...(cooperativeGestures && locale ? { locale } : {}),
@@ -97,14 +118,44 @@ export async function initializeMapLibreMap(
     const tooltip = new maplibregl.Popup(DEFAULT_TOOLTIP_OPTIONS);
 
     return new Promise<IMapInitResult>((resolve, reject) => {
-        map.on("load", () => {
+        let isSettled = false;
+        const finalizeResolve = () => {
+            if (isSettled) {
+                return;
+            }
+            isSettled = true;
+            cleanup();
             resolve({ map, tooltip, maplibregl });
-        });
-
-        map.on("error", (event: IMapErrorEvent) => {
+        };
+        const finalizeReject = (event: IMapErrorEvent) => {
+            if (isSettled) {
+                return;
+            }
+            isSettled = true;
+            cleanup();
             console.error("[initializeMapLibreMap] Map error", event);
             reject(new Error(`MapLibre initialization error: ${getMaplibreErrorMessage(event)}`));
-        });
+        };
+        const tryResolveFromCurrentState = () => {
+            if (!isSettled && map.loaded() && map.isStyleLoaded()) {
+                finalizeResolve();
+            }
+        };
+        const onLoad = () => tryResolveFromCurrentState();
+        const onStyleData = () => tryResolveFromCurrentState();
+        const onError = (event: IMapErrorEvent) => {
+            finalizeReject(event);
+        };
+        const cleanup = () => {
+            map.off("load", onLoad);
+            map.off("styledata", onStyleData);
+            map.off("error", onError);
+        };
+
+        map.on("load", onLoad);
+        map.on("styledata", onStyleData);
+        map.on("error", onError);
+        tryResolveFromCurrentState();
     });
 }
 

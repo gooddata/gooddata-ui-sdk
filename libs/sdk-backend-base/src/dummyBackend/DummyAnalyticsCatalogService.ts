@@ -6,6 +6,7 @@ import type {
     IAnalyticsCatalogGenerateDescriptionResponse,
     IAnalyticsCatalogService,
     IAnalyticsCatalogTags,
+    IAnalyticsCatalogTrendingObjects,
 } from "@gooddata/sdk-backend-spi";
 
 /**
@@ -31,5 +32,9 @@ export class DummyAnalyticsCatalogService implements IAnalyticsCatalogService {
             reasoning: "",
             users: [],
         });
+    }
+
+    async getTrendingObjects(): Promise<IAnalyticsCatalogTrendingObjects> {
+        return Promise.resolve({ objects: [] });
     }
 }

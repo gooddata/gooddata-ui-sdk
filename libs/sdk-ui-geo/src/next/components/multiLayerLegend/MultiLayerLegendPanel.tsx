@@ -4,6 +4,7 @@ import {
     type ReactElement,
     memo,
     useCallback,
+    useEffect,
     useId,
     useLayoutEffect,
     useMemo,
@@ -15,8 +16,13 @@ import cx from "classnames";
 
 import type { PositionType } from "@gooddata/sdk-ui-vis-commons";
 
+import { type LegendMessageFormatter } from "./legendMessages.js";
 import { MultiLayerLegendSection } from "./MultiLayerLegendSection.js";
-import { type ILegendModel, type ILegendSection } from "../../types/legend/model.js";
+import {
+    type ILegendModel,
+    type ILegendSection,
+    isLegendColorCategoryItem,
+} from "../../types/legend/model.js";
 
 /**
  * State for tracking which sections are expanded.
@@ -173,6 +179,21 @@ export interface IMultiLayerLegendPanelProps {
      * @param uri - The URI of the clicked item
      */
     onItemClick?: (layerId: string, uri: string) => void;
+
+    /**
+     * Enables enhanced a11y semantics and live announcements for legend interactions.
+     */
+    enableGeoChartA11yImprovements?: boolean;
+
+    /**
+     * Optional formatter for accessibility messages.
+     */
+    formatMessage?: LegendMessageFormatter;
+
+    /**
+     * Optional ref callback to expose panel root DOM element.
+     */
+    setPanelElementRef?: (element: HTMLDivElement | null) => void;
 }
 
 /**
@@ -208,6 +229,9 @@ export const MultiLayerLegendPanel = memo(function MultiLayerLegendPanel({
     hiddenLayers = EMPTY_HIDDEN_LAYERS,
     onLayerVisibilityChange,
     onItemClick,
+    enableGeoChartA11yImprovements = false,
+    formatMessage,
+    setPanelElementRef,
 }: IMultiLayerLegendPanelProps): ReactElement | null {
     const panelId = useId();
 
@@ -218,9 +242,53 @@ export const MultiLayerLegendPanel = memo(function MultiLayerLegendPanel({
     // Manage expanded/collapsed state for each section
     const [expandedState, setExpandedState] = useState<ExpandedState>(() => initializeExpandedState(model));
 
+    // Live region announcement for screen readers
+    const [announcement, setAnnouncement] = useState("");
+    const announcementFrameIdRef = useRef<number | null>(null);
+
+    // Clear-then-set pattern so screen readers pick up repeated identical messages
+    const announce = useCallback((msg: string) => {
+        if (announcementFrameIdRef.current !== null) {
+            cancelAnimationFrame(announcementFrameIdRef.current);
+        }
+
+        setAnnouncement("");
+        announcementFrameIdRef.current = requestAnimationFrame(() => {
+            setAnnouncement(msg);
+            announcementFrameIdRef.current = null;
+        });
+    }, []);
+
+    useEffect(() => {
+        return () => {
+            if (announcementFrameIdRef.current !== null) {
+                cancelAnimationFrame(announcementFrameIdRef.current);
+            }
+        };
+    }, []);
+
+    const formatLegendMessage = useCallback<LegendMessageFormatter>(
+        (id, values) => {
+            return formatMessage?.(id, values) ?? "";
+        },
+        [formatMessage],
+    );
+    const layerTitleById = useMemo(() => {
+        return Object.fromEntries(
+            model.sections.map((section) => [section.layerId, section.layerTitle] as const),
+        );
+    }, [model.sections]);
+
     // Flexible height management
     const { containerRef, getSectionRef, setSectionRef, containerHeight, flexibleSections } =
         useFlexibleHeightSections(sections, expandedState);
+    const setRootPanelRef = useCallback(
+        (element: HTMLDivElement | null) => {
+            containerRef.current = element;
+            setPanelElementRef?.(element);
+        },
+        [containerRef, setPanelElementRef],
+    );
 
     const handleExpandedChange = useCallback((layerId: string, expanded: boolean) => {
         setExpandedState((prev) => ({
@@ -228,22 +296,59 @@ export const MultiLayerLegendPanel = memo(function MultiLayerLegendPanel({
             [layerId]: expanded,
         }));
     }, []);
+    const syncExpandedStateWithVisibility = useCallback((layerId: string, visible: boolean) => {
+        // Keep section expand/collapse in sync with visibility intent from the switch interaction.
+        setExpandedState((prev) => ({
+            ...prev,
+            [layerId]: visible,
+        }));
+    }, []);
+    const announceLayerVisibilityChange = useCallback(
+        (layerId: string, visible: boolean) => {
+            if (!enableGeoChartA11yImprovements) {
+                return;
+            }
+
+            const layerTitle = layerTitleById[layerId] ?? layerId;
+            const messageId = visible ? "geochart.legend.layer.shown" : "geochart.legend.layer.hidden";
+            announce(formatLegendMessage(messageId, { name: layerTitle }));
+        },
+        [announce, enableGeoChartA11yImprovements, formatLegendMessage, layerTitleById],
+    );
 
     const handleVisibilityChange = useCallback(
-        (layerId: string) => {
-            // When hiding a layer, also collapse it
-            // When showing a layer, also expand it
-            const isCurrentlyHidden = hiddenLayers.has(layerId);
-            const willBeVisible = isCurrentlyHidden;
-
-            setExpandedState((prev) => ({
-                ...prev,
-                [layerId]: willBeVisible,
-            }));
-
+        (layerId: string, visible: boolean) => {
+            announceLayerVisibilityChange(layerId, visible);
+            syncExpandedStateWithVisibility(layerId, visible);
             onLayerVisibilityChange?.(layerId);
         },
-        [hiddenLayers, onLayerVisibilityChange],
+        [announceLayerVisibilityChange, onLayerVisibilityChange, syncExpandedStateWithVisibility],
+    );
+
+    const handleItemClick = useCallback(
+        (layerId: string, uri: string) => {
+            const section = model.sections.find((s) => s.layerId === layerId);
+            if (!section) {
+                onItemClick?.(layerId, uri);
+                return;
+            }
+
+            for (const group of section.groups) {
+                for (const item of group.items) {
+                    if (isLegendColorCategoryItem(item) && item.uri === uri) {
+                        const messageId = item.isVisible
+                            ? "geochart.legend.item.hidden"
+                            : "geochart.legend.item.shown";
+                        announce(formatLegendMessage(messageId, { name: item.label }));
+                        onItemClick?.(layerId, uri);
+                        return;
+                    }
+                }
+            }
+
+            onItemClick?.(layerId, uri);
+        },
+        [model.sections, announce, onItemClick, formatLegendMessage],
     );
 
     if (!enabled || sections.length === 0) {
@@ -273,7 +378,7 @@ export const MultiLayerLegendPanel = memo(function MultiLayerLegendPanel({
 
     return (
         <div
-            ref={containerRef}
+            ref={setRootPanelRef}
             className={panelClassName}
             style={panelStyle}
             role="group"
@@ -293,9 +398,27 @@ export const MultiLayerLegendPanel = memo(function MultiLayerLegendPanel({
                     isFlexible={flexibleSections.includes(section.layerId)}
                     onExpandedChange={handleExpandedChange}
                     onVisibilityChange={handleVisibilityChange}
-                    onItemClick={onItemClick}
+                    onItemClick={
+                        enableGeoChartA11yImprovements
+                            ? onItemClick
+                                ? handleItemClick
+                                : undefined
+                            : onItemClick
+                    }
+                    enableGeoChartA11yImprovements={enableGeoChartA11yImprovements}
+                    formatMessage={formatLegendMessage}
                 />
             ))}
+            {enableGeoChartA11yImprovements ? (
+                <div
+                    aria-live="polite"
+                    aria-atomic="true"
+                    className="sr-only"
+                    data-testid="gd-geo-legend-live-region"
+                >
+                    {announcement}
+                </div>
+            ) : null}
         </div>
     );
 });

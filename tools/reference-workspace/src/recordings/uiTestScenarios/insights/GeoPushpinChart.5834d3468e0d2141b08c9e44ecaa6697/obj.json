@@ -1,0 +1,45 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_city.id.latitude", "type": "displayForm" },
+                            "localIdentifier": "a_f_city.id.latitude"
+                        }
+                    }
+                ],
+                "localIdentifier": "location"
+            }
+        ],
+        "filters": [],
+        "identifier": "GeoPushpinChart.5834d3468e0d2141b08c9e44ecaa6697",
+        "properties": {
+            "controls": {
+                "latitude": "f_city.id.latitude",
+                "longitude": "f_city.id.longitude",
+                "mapStyle": {
+                    "glyphs": "/geo-assets/glyphs/{fontstack}/{range}.pbf",
+                    "layers": [
+                        {
+                            "id": "background",
+                            "paint": { "background-color": "#ffffff" },
+                            "type": "background"
+                        }
+                    ],
+                    "name": "offline-minimal",
+                    "sources": {},
+                    "version": 8
+                },
+                "points": { "groupNearbyPoints": false },
+                "tooltipText": "f_city.id.cityname",
+                "viewport": { "area": "world" }
+            }
+        },
+        "sorts": [],
+        "title": "GeoPushpinChart - non-clustered points",
+        "uri": "GeoPushpinChart.5834d3468e0d2141b08c9e44ecaa6697",
+        "visualizationUrl": "local:pushpin"
+    }
+}

@@ -14,7 +14,7 @@ export default {
 
 export const GrandTotalsPinnedAtBottomDefault = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(21, 2).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(24, 2).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "grand totals pinned at bottom (default)",
         );
@@ -42,7 +42,7 @@ GrandTotalsPinnedAtBottomDefault.parameters = {
 
 export const GrandTotalsPinnedAtTop = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(21, 2).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(24, 2).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(([name]) => name === "grand totals pinned at top");
         if (scenarioAndDescriptions.length === 0)
             throw new Error("Failed to find scenario 'grand totals pinned at top'");
@@ -68,7 +68,7 @@ GrandTotalsPinnedAtTop.parameters = {
 
 export const GrandTotalsAtBottomNotPinned = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(21, 2).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(24, 2).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "grand totals at bottom (not pinned)",
         );
@@ -96,7 +96,7 @@ GrandTotalsAtBottomNotPinned.parameters = {
 
 export const GrandTotalsAtTopNotPinned = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(21, 2).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(24, 2).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "grand totals at top (not pinned)",
         );

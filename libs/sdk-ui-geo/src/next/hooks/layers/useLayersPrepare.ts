@@ -8,7 +8,6 @@ import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import type { IExecutionConfig } from "@gooddata/sdk-model";
 import {
     type DataViewFacade,
-    DefaultColorPalette,
     type GoodDataSdkError,
     UnexpectedSdkError,
     type UseCancelablePromiseStatus,
@@ -19,6 +18,7 @@ import { getLayerAdapter } from "../../layers/registry/adapterRegistry.js";
 import type { IGeoAdapterContext, IGeoLayerOutput } from "../../layers/registry/adapterTypes.js";
 import type { IGeoChartConfig } from "../../types/config/unified.js";
 import type { ILayerExecutionRecord } from "../../types/props/geoChart/internal.js";
+import { resolveLayerColorConfig } from "../../utils/color/resolveLayerColorConfig.js";
 import { createDataViewsFingerprint, createLayersStructureFingerprint } from "../../utils/fingerprint.js";
 
 /**
@@ -161,15 +161,15 @@ export function useLayersPrepare(
     const createAdapterContext = useCallback(
         (layerExecution: ILayerExecutionRecord): IGeoAdapterContext => {
             const layer = layerExecution.layer;
+            const layerColorConfig = resolveLayerColorConfig(layer, config);
 
             return {
                 backend,
                 workspace,
                 config,
                 execConfig,
-                // Colors are ALWAYS per-layer (layer.config) with safe defaults.
-                colorPalette: layer.config?.colorPalette ?? DefaultColorPalette,
-                colorMapping: layer.config?.colorMapping ?? [],
+                colorPalette: layerColorConfig.colorPalette,
+                colorMapping: layerColorConfig.colorMapping,
                 intl,
             };
         },

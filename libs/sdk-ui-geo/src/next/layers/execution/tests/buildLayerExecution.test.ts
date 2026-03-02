@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
@@ -51,6 +51,28 @@ describe("buildLayerExecution", () => {
         const filters = getFiltersFromExecution(execution.definition);
 
         expect(filters).toEqual([layerFilter, globalFilter]);
+    });
+
+    it("deduplicates exact duplicate global filters against layer filters", () => {
+        const sharedFilter = newPositiveAttributeFilter("attr.layer", ["layer-value"]);
+
+        const layer = createPushpinLayer({
+            latitude: latitudeAttribute,
+            longitude: longitudeAttribute,
+            filters: [sharedFilter],
+        });
+
+        const execution = buildLayerExecution(layer, {
+            backend,
+            workspace,
+            config: undefined,
+            execConfig: undefined,
+            globalFilters: [sharedFilter],
+        });
+
+        const filters = getFiltersFromExecution(execution.definition);
+
+        expect(filters).toEqual([sharedFilter]);
     });
 
     it("uses provided executionFactory so downstream decorations (e.g., fixed filters) apply", () => {

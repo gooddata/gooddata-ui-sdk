@@ -2,6 +2,7 @@
 
 import { type IInsight } from "@gooddata/sdk-model";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 
@@ -119,7 +120,7 @@ export const WithDrillOnAllRowAtributes = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 4, 0),
+        getScenariosGroupByIndexes(17, 4, 0),
     )();
 WithDrillOnAllRowAtributes.parameters = {
     kind: "with drill on all row atributes",
@@ -245,7 +246,7 @@ export const WithDrillOnAllRowAttributesAndMeasures = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 4, 1),
+        getScenariosGroupByIndexes(17, 4, 1),
     )();
 WithDrillOnAllRowAttributesAndMeasures.parameters = {
     kind: "with drill on all row attributes and measures",

@@ -22,7 +22,7 @@ import {
     filterAttributeElements,
     filterObjRef,
     isAttributeElementsByRef,
-    isAttributeFilter,
+    isAttributeFilterWithSelection,
     isUriRef,
 } from "@gooddata/sdk-model";
 
@@ -182,7 +182,7 @@ class RecordedFilterElements implements IFilterElementsQuery {
             );
         }
 
-        if (isAttributeFilter(this.filter)) {
+        if (isAttributeFilterWithSelection(this.filter)) {
             let elements = recording.elements;
             const selectedElements = filterAttributeElements(this.filter);
             if (isAttributeElementsByRef(selectedElements)) {

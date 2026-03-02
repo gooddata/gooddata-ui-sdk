@@ -14,7 +14,7 @@ export default {
 
 export const SimpleTableWithCustomAttributeColumnSize = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(21, 9).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(24, 9).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "simple table with custom attribute column size",
         );
@@ -42,7 +42,7 @@ SimpleTableWithCustomAttributeColumnSize.parameters = {
 
 export const SimpleTableWithCustomMetricColumnSize = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(21, 9).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(24, 9).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "simple table with custom metric column size",
         );
@@ -70,7 +70,7 @@ SimpleTableWithCustomMetricColumnSize.parameters = {
 
 export const SimpleTableWithAttributeAndMetricColumnSize = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(21, 9).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(24, 9).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "simple table with attribute and metric column size",
         );
@@ -98,7 +98,7 @@ SimpleTableWithAttributeAndMetricColumnSize.parameters = {
 
 export const TableWithMultipleMeasureColumnsAndWeakMeasureSize = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(21, 9).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(24, 9).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "table with multiple measure columns and weak measure size",
         );

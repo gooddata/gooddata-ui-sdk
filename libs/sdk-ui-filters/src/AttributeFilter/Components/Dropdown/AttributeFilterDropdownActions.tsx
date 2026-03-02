@@ -1,9 +1,9 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { Button } from "@gooddata/sdk-ui-kit";
+import { Button, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 /**
  * AttributeFilter dropdown actions like confirm and cancel button.
@@ -39,6 +39,13 @@ export interface IAttributeFilterDropdownActionsProps {
     isSelectionChanged?: boolean;
 
     /**
+     * Tooltip shown when Apply button is disabled.
+     *
+     * @alpha
+     */
+    applyDisabledTooltip?: string;
+
+    /**
      * If true, the Apply button is not rendered, Cancel button is renamed to Close and status bar is not rendered.
      *
      * @alpha
@@ -57,6 +64,7 @@ export function AttributeFilterDropdownActions({
     isApplyDisabled,
     onApplyButtonClick,
     onCancelButtonClick,
+    applyDisabledTooltip,
     withoutApply,
 }: IAttributeFilterDropdownActionsProps) {
     const intl = useIntl();
@@ -80,12 +88,21 @@ export function AttributeFilterDropdownActions({
                     title={withoutApply ? closeText : cancelText}
                 />
                 {!withoutApply && (
-                    <Button
-                        disabled={isApplyDisabled}
-                        className="gd-attribute-filter-apply-button__next gd-button-action gd-button-small s-apply"
-                        onClick={onApplyButtonClick}
-                        value={applyText}
-                        title={applyText}
+                    <UiTooltip
+                        content={applyDisabledTooltip}
+                        triggerBy={["hover"]}
+                        disabled={!isApplyDisabled || !applyDisabledTooltip}
+                        arrowPlacement="left"
+                        optimalPlacement
+                        anchor={
+                            <Button
+                                disabled={isApplyDisabled}
+                                className="gd-attribute-filter-apply-button__next gd-button-action gd-button-small s-apply"
+                                onClick={onApplyButtonClick}
+                                value={applyText}
+                                title={applyText}
+                            />
+                        }
                     />
                 )}
             </div>

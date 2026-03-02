@@ -99,6 +99,11 @@ export {
     ExecutionFactoryWithFixedFilters,
     ExecutionFactoryUpgradingToExecByReference,
 } from "./toolkit/execution.js";
+export {
+    collectionItemsIdentityKey,
+    normalizeCollectionItemsIdentityConfig,
+    type NormalizedCollectionItemsIdentityConfig,
+} from "./toolkit/collectionItemsIdentity.js";
 
 export {
     type IServerPagingResult,

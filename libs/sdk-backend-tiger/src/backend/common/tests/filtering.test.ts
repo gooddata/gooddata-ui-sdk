@@ -8,6 +8,7 @@ import {
     buildIsClause,
     buildIsNullClause,
     buildListClause,
+    buildSingleOrListInClause,
     escapeValue,
     formatInValues,
     formatValue,
@@ -53,6 +54,26 @@ describe("buildIsClause", () => {
 
     it("should quote and escape the value", () => {
         expect(buildIsClause("title", 'a "quote"')).toBe('title=="a \\"quote\\""');
+    });
+});
+
+describe("buildSingleOrListInClause", () => {
+    it("should return undefined for undefined values", () => {
+        expect(buildSingleOrListInClause("createdBy.id", undefined)).toBeUndefined();
+    });
+
+    it("should return undefined for empty array", () => {
+        expect(buildSingleOrListInClause("createdBy.id", [])).toBeUndefined();
+    });
+
+    it("should build an equality clause for single value", () => {
+        expect(buildSingleOrListInClause("createdBy.id", ["user-1"])).toBe('createdBy.id=="user-1"');
+    });
+
+    it("should build an in clause for multiple values", () => {
+        expect(buildSingleOrListInClause("createdBy.id", ["user-1", "user-2"])).toBe(
+            'createdBy.id=in=("user-1","user-2")',
+        );
     });
 });
 
@@ -147,6 +168,10 @@ describe("buildFilterQuery", () => {
         expect(buildFilterQuery({ search: "foo", certification: true })).toBe(
             '(id=="foo",title=containsic="foo",description=containsic="foo",tags=containsic="foo");certification==CERTIFIED',
         );
+    });
+
+    it("should build createdBy as equality for a single value", () => {
+        expect(buildFilterQuery({ createdBy: ["user-1"] })).toBe('createdBy.id=="user-1"');
     });
 });
 

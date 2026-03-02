@@ -14,7 +14,7 @@ export default {
 
 export const SingleMeasurePivotWithGroupingSortedByFirstRowAttr = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 5).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 5).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "single measure pivot with grouping sorted by first row attr",
         );
@@ -46,7 +46,7 @@ SingleMeasurePivotWithGroupingSortedByFirstRowAttr.parameters = {
 
 export const SingleMeasurePivotWithGroupingSortedBySecondRowAttr = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 5).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 5).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "single measure pivot with grouping sorted by second row attr",
         );
@@ -78,7 +78,7 @@ SingleMeasurePivotWithGroupingSortedBySecondRowAttr.parameters = {
 
 export const SingleMeasurePivotWithGroupingSortedByMeasure = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 5).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 5).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "single measure pivot with grouping sorted by measure",
         );

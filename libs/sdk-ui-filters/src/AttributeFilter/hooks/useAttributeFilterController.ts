@@ -1,62 +1,42 @@
 // (C) 2022-2026 GoodData Corporation
 
-// oxlint-disable @typescript-eslint/require-array-sort-compare
+import { useCallback, useEffect, useMemo, useState } from "react";
 
-import { type MutableRefObject, useCallback, useEffect, useRef, useState } from "react";
-
-import { debounce, difference, differenceBy, isEmpty, isEqual } from "lodash-es";
+import noop from "lodash-es/noop.js";
 import { invariant } from "ts-invariant";
 
-import { type IElementsQueryAttributeFilter } from "@gooddata/sdk-backend-spi";
 import {
-    type DashboardAttributeFilterSelectionMode,
-    type IAbsoluteDateFilter,
-    type IAttributeDisplayFormMetadataObject,
-    type IAttributeElement,
-    type IAttributeElements,
     type IAttributeFilter,
-    type IAttributeMetadataObject,
-    type IRelativeDateFilter,
     type ObjRef,
-    areObjRefsEqual,
-    filterAttributeElements,
+    filterLocalIdentifier,
     filterObjRef,
-    isAttributeElementsByRef,
-    isAttributeElementsByValue,
-    isNegativeAttributeFilter,
-    isPositiveAttributeFilter,
-    objRefToString,
+    isArbitraryAttributeFilter,
+    isMatchAttributeFilter,
+    isNegativeFilter,
 } from "@gooddata/sdk-model";
-import {
-    type GoodDataSdkError,
-    UnexpectedSdkError,
-    useBackendStrict,
-    useWorkspaceStrict,
-} from "@gooddata/sdk-ui";
+import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
-import {
-    DISPLAY_FORM_CHANGED_CORRELATION,
-    IRRELEVANT_SELECTION,
-    MAX_SELECTION_SIZE,
-    PARENT_FILTERS_CORRELATION,
-    RESET_CORRELATION,
-    SEARCH_CORRELATION,
-    SHOW_FILTERED_ELEMENTS_CORRELATION,
-} from "./constants.js";
-import { type AttributeFilterController, type AttributeFilterControllerCallbacks } from "./types.js";
-import { useAttributeFilterControllerData } from "./useAttributeFilterControllerData.js";
-import { useAttributeFilterHandler } from "./useAttributeFilterHandler.js";
-import { useAttributeFilterHandlerState } from "./useAttributeFilterHandlerState.js";
+import { type AttributeFilterController } from "./types.js";
+import { useElementsFilterController } from "./useElementsFilterController.js";
+import { useFilterDetailRequestHandler } from "./useFilterDetailRequestHandler.js";
 import { useResolveDependentDateFiltersInput } from "./useResolveDependentDateFiltersInput.js";
 import { useResolveFilterInput } from "./useResolveFilterInput.js";
 import { useResolveParentFiltersInput } from "./useResolveParentFiltersInput.js";
-import { type IMultiSelectAttributeFilterHandler } from "../../AttributeFilterHandler/types/attributeFilterHandler.js";
+import { useTextFilterController } from "./useTextFilterController.js";
+import { type AttributeFilterAvailableMode, type AttributeFilterMode } from "../filterModeTypes.js";
+import {
+    createEmptyFilterForAvailableMode,
+    createEmptyFilterForMode,
+    getAvailableTextModes,
+    getFilterModeFromFilter,
+    mapAvailableModesToInternal,
+} from "../filterModeUtils.js";
+import { createFilterFromOperator, isArbitraryOperator } from "../textFilterOperatorUtils.js";
 import {
     type IAttributeFilterCoreProps,
     type OnApplyCallbackType,
-    type OnSelectCallbackType,
+    type OnChangeCallbackType,
 } from "../types.js";
-import { isValidSingleSelectionFilter } from "../utils.js";
 
 /**
  * Properties of {@link useAttributeFilterController}
@@ -69,6 +49,9 @@ export type IUseAttributeFilterControllerProps = Omit<
     elementsOptions?: { limit: number };
     resetOnParentFilterChange?: boolean;
 };
+
+const NOOP_ON_APPLY: OnApplyCallbackType = () => {};
+const NOOP_ON_CHANGE: OnChangeCallbackType = () => {};
 
 /**
  * UseAttributeFilterController hook is responsible for initialization of AttributeFilterHandler {@link IMultiSelectAttributeFilterHandler} Core API for Attribute Filter components
@@ -98,10 +81,9 @@ export const useAttributeFilterController = (
         validateElementsBy,
         resetOnParentFilterChange = true,
         onApply,
-        onSelect,
+        onChange,
         onError,
         onInitLoadingChanged,
-
         hiddenElements,
         staticElements,
 
@@ -112,11 +94,13 @@ export const useAttributeFilterController = (
         selectionMode = "multi",
         selectFirst = false,
         enableImmediateAttributeFilterDisplayAsLabelMigration = false,
-        withoutApply,
+        withoutApply = false,
+        availableFilterModes = ["elements"],
     } = props;
 
     const backend = useBackendStrict(backendInput, "AttributeFilter");
     const workspace = useWorkspaceStrict(workspaceInput, "AttributeFilter");
+
     const supportsSettingConnectingAttributes = backend.capabilities.supportsSettingConnectingAttributes;
     const supportsKeepingDependentFiltersSelection =
         backend.capabilities.supportsKeepingDependentFiltersSelection;
@@ -124,32 +108,55 @@ export const useAttributeFilterController = (
     const supportsShowingFilteredElements = backend.capabilities.supportsShowingFilteredElements;
     const supportsSingleSelectDependentFilters = backend.capabilities.supportsSingleSelectDependentFilters;
 
-    /**
-     * This flag handles elements reload when shouldElementsReload flag is true.
-     * In case the backend does not support keeping dependent filter selection or
-     * does not support circular dependency in filter, we do not care about the flag
-     * as elements are reloaded on every limiting filter change.
-     * Ref must be used instead of internal state because the value is checked by condition in the same
-     * render cycle as in which the value is changed.
-     */
-    const shouldReloadElements = useRef<boolean>(false);
-    const setShouldReloadElements = useCallback(
-        (value: boolean) => {
-            if (!supportsKeepingDependentFiltersSelection || !supportsCircularDependencyInFilters) {
-                return;
-            }
-            shouldReloadElements.current = value;
-        },
-        [supportsCircularDependencyInFilters, supportsKeepingDependentFiltersSelection],
-    );
-    const { shouldIncludeLimitingFilters, setShouldIncludeLimitingFilters } = useShouldIncludeLimitingFilters(
-        supportsShowingFilteredElements ?? false,
-    );
-
-    const { filter, setConnectedPlaceholderValue } = useResolveFilterInput(
+    const { filter: resolvedFilter, setConnectedPlaceholderValue } = useResolveFilterInput(
         filterInput ?? workingFilter,
         connectToPlaceholder,
     );
+
+    const [filterMode, setFilterMode] = useState<AttributeFilterMode>(
+        () => getFilterModeFromFilter(resolvedFilter) ?? "elements",
+    );
+    useEffect(() => {
+        setFilterMode(getFilterModeFromFilter(resolvedFilter) ?? "elements");
+    }, [resolvedFilter]);
+
+    const isTextMode = filterMode === "text";
+
+    const originalFilterMode = getFilterModeFromFilter(resolvedFilter);
+    const filterModeChanged = originalFilterMode !== filterMode;
+
+    const resolvedDisplayFormRef = (resolvedFilter && filterObjRef(resolvedFilter)) ?? displayAsLabel;
+    invariant(
+        resolvedDisplayFormRef,
+        "AttributeFilter: filter's displayForm must be defined. Provide a filter with displayForm or displayAsLabel prop.",
+    );
+
+    const originalIsTextFilter =
+        resolvedFilter &&
+        (isArbitraryAttributeFilter(resolvedFilter) || isMatchAttributeFilter(resolvedFilter));
+    // Memoized to keep a stable reference so useInitOrReload does not re-run (and reset the
+    // committed selection) on every re-render triggered by handler.commitSelection().
+    const elementsModeFilter = useMemo(
+        (): IAttributeFilter =>
+            (!resolvedFilter || originalIsTextFilter
+                ? createEmptyFilterForMode("elements", resolvedDisplayFormRef)
+                : resolvedFilter) as IAttributeFilter,
+        [resolvedFilter, originalIsTextFilter, resolvedDisplayFormRef],
+    );
+
+    const elementsModeDisplayAsLabel =
+        displayAsLabel ?? (originalIsTextFilter ? resolvedFilter && filterObjRef(resolvedFilter) : undefined);
+
+    const effectiveOnApply = isTextMode ? NOOP_ON_APPLY : (onApply ?? NOOP_ON_APPLY);
+    const effectiveOnChange = isTextMode
+        ? connectToPlaceholder
+            ? (((filter: IAttributeFilter) => setConnectedPlaceholderValue(filter)) as OnChangeCallbackType)
+            : NOOP_ON_CHANGE
+        : (onChange ?? NOOP_ON_CHANGE);
+    const effectiveOnError = isTextMode ? undefined : onError;
+    const effectiveOnInitLoadingChanged = isTextMode ? undefined : onInitLoadingChanged;
+
+    const filterDetailRequestHandler = useFilterDetailRequestHandler(backend, workspace);
 
     const limitingAttributeFilters = useResolveParentFiltersInput(
         parentFilters,
@@ -159,957 +166,256 @@ export const useAttributeFilterController = (
 
     const limitingDateFilters = useResolveDependentDateFiltersInput(dependentDateFilters);
 
-    const handler = useAttributeFilterHandler({
+    const availableInternalFilterModes = mapAvailableModesToInternal(availableFilterModes);
+    const availableTextFilterModes = getAvailableTextModes(availableFilterModes);
+
+    const localId = resolvedFilter ? filterLocalIdentifier(resolvedFilter) : undefined;
+
+    // Elements filter controller runs first to provide handler/attribute data for text mode
+    const elementsFilterController = useElementsFilterController({
         backend,
-        filter: filter!,
         workspace,
+        filter: elementsModeFilter,
+        displayAsLabel: elementsModeDisplayAsLabel,
+        limitingAttributeFilters,
+        limitingDateFilters,
+        limitingValidationItems: validateElementsBy,
+        resetOnParentFilterChange,
+        onApply: effectiveOnApply,
+        onChange: effectiveOnChange,
+        onError: effectiveOnError,
+        onInitLoadingChanged: effectiveOnInitLoadingChanged,
         hiddenElements,
         staticElements,
-        displayAsLabel: displayAsLabel!,
-        withoutApply,
-    });
-    const attributeFilterControllerData = useAttributeFilterControllerData(
-        handler!,
-        supportsShowingFilteredElements!,
-        shouldIncludeLimitingFilters,
-    );
-
-    useOnError(handler!, { onError });
-    useOnInitLoadingChanged(handler!, { onInitLoadingChanged });
-    useInitOrReload(
-        handler!,
-        {
-            filter: filter!,
-            limitingAttributeFilters,
-            limitingDateFilters,
-            limitingValidationItems: validateElementsBy,
-            shouldIncludeLimitingFilters,
-            limit: elementsOptions?.limit,
-            onApply: onApply!,
-            onSelect: onSelect!,
-            setConnectedPlaceholderValue,
-            resetOnParentFilterChange,
-            selectionMode,
-            shouldReloadElements,
-            setShouldReloadElements,
-            displayAsLabel: displayAsLabel!,
-            withoutApply: withoutApply ?? false,
-            isSelectionInvalid: (withoutApply ?? false) && attributeFilterControllerData.isSelectionInvalid,
-        },
-        supportsKeepingDependentFiltersSelection ?? false,
-        supportsCircularDependencyInFilters ?? false,
-    );
-    const callbacks = useCallbacks(
-        handler!,
-        {
-            onApply: onApply!,
-            onSelect: onSelect!,
-            setConnectedPlaceholderValue: setConnectedPlaceholderValue,
-            selectionMode,
-            shouldReloadElements,
-            setShouldReloadElements,
-            shouldIncludeLimitingFilters,
-            setShouldIncludeLimitingFilters,
-            limitingAttributeFilters: limitingAttributeFilters ?? [],
-            limitingDateFilters: limitingDateFilters ?? [],
-            withoutApply: withoutApply ?? false,
-            isSelectionInvalid: attributeFilterControllerData.isSelectionInvalid,
-            filter,
-        },
-        supportsShowingFilteredElements ?? false,
-        supportsKeepingDependentFiltersSelection ?? false,
-        enableImmediateAttributeFilterDisplayAsLabelMigration,
-    );
-
-    useSingleSelectModeHandler(handler!, {
+        elementsOptions,
+        selectionMode,
         selectFirst,
-        onApply: callbacks.onApply,
-        onSelect: callbacks.onSelect,
-        selectionMode,
-        withoutApply: withoutApply ?? false,
+        withoutApply,
+        enableImmediateAttributeFilterDisplayAsLabelMigration,
+        supportsKeepingDependentFiltersSelection: supportsKeepingDependentFiltersSelection ?? false,
+        supportsCircularDependencyInFilters: supportsCircularDependencyInFilters ?? false,
+        supportsShowingFilteredElements: supportsShowingFilteredElements ?? false,
+        supportsSingleSelectDependentFilters: supportsSingleSelectDependentFilters ?? false,
+        setConnectedPlaceholderValue,
+        currentFilterMode: filterMode,
+        filterModeChanged,
     });
 
-    const forcedInitErrorProp = isValidSingleSelectionFilter(
+    // Text mode controller uses attribute data from elements controller (handler).
+    const textFilterController = useTextFilterController({
+        isTextMode,
+        backend,
+        workspace,
+        filterInput: resolvedFilter!,
+        onChange,
+        withoutApply: withoutApply ?? false,
         selectionMode,
-        filter,
-        limitingAttributeFilters,
-        supportsSingleSelectDependentFilters ?? false,
-    )
-        ? {}
-        : { initError: new UnexpectedSdkError() };
+        availableFilterModes,
+        filterModeChanged,
+    });
 
-    return {
-        ...attributeFilterControllerData,
-        ...callbacks,
-        ...forcedInitErrorProp,
-    };
-};
-
-//
-
-function useOnError(
-    handler: IMultiSelectAttributeFilterHandler,
-    props: { onError?: (error: GoodDataSdkError) => void },
-) {
-    const { onError } = props;
-
-    useEffect(() => {
-        function handleError(payload: { error: GoodDataSdkError }) {
-            onError?.(payload.error);
-        }
-
-        const callbackUnsubscribeFunctions = [
-            handler.onInitError(handleError),
-            handler.onLoadAttributeError(handleError),
-            handler.onLoadInitialElementsPageError(handleError),
-            handler.onLoadNextElementsPageError(handleError),
-            handler.onLoadCustomElementsError(handleError),
-        ];
-
-        return () => {
-            callbackUnsubscribeFunctions.forEach((unsubscribe) => {
-                unsubscribe();
-            });
-        };
-    }, [handler, onError]);
-}
-
-//
-
-function useOnInitLoadingChanged(
-    handler: IMultiSelectAttributeFilterHandler,
-    props: {
-        onInitLoadingChanged?: (loading: boolean, attributeMetadata?: IAttributeMetadataObject) => void;
-    },
-) {
-    const { onInitLoadingChanged } = props;
-
-    useEffect(() => {
-        const callbackUnsubscribeFunctions = [
-            handler.onInitStart(() => {
-                onInitLoadingChanged?.(true);
-            }),
-            handler.onInitCancel(() => {
-                onInitLoadingChanged?.(false);
-            }),
-            handler.onInitSuccess(() => {
-                onInitLoadingChanged?.(false, handler.getAttribute());
-            }),
-            handler.onInitError(() => {
-                onInitLoadingChanged?.(false);
-            }),
-        ];
-
-        return () => {
-            callbackUnsubscribeFunctions.forEach((unsubscribe) => {
-                unsubscribe();
-            });
-        };
-    }, [handler, onInitLoadingChanged]);
-}
-
-//
-
-const EMPTY_LIMITING_VALIDATION_ITEMS: ObjRef[] = [];
-
-const areElementsEqual = (elementsA: IAttributeElements, elementsB: IAttributeElements) => {
-    return (
-        (isAttributeElementsByRef(elementsA) &&
-            isAttributeElementsByRef(elementsB) &&
-            isEqual([...elementsA.uris].sort(), [...elementsB.uris].sort())) ||
-        (isAttributeElementsByValue(elementsA) &&
-            isAttributeElementsByValue(elementsB) &&
-            isEqual([...elementsA.values].sort(), [...elementsB.values].sort()))
+    const textResetForModeSwitch = useCallback(
+        (newFilter: IAttributeFilter) => {
+            textFilterController.resetForModeSwitch?.(newFilter);
+        },
+        [textFilterController],
     );
-};
-
-// omit local identifier and sort elements because they order may change depending on current displayAsLabel order
-const areFiltersEqual = (filterA: IAttributeFilter, filterB: IAttributeFilter) => {
-    if (!filterA || !filterB) {
-        return false;
-    }
-    const typeEqual = isPositiveAttributeFilter(filterA) === isPositiveAttributeFilter(filterB);
-    const dfsEqual = areObjRefsEqual(filterObjRef(filterA), filterObjRef(filterB));
-    const elementsA = filterAttributeElements(filterA);
-    const elementsB = filterAttributeElements(filterB);
-    const elementsEqual = areElementsEqual(elementsA, elementsB);
-
-    return typeEqual && dfsEqual && elementsEqual;
-};
-
-function useInitOrReload(
-    handler: IMultiSelectAttributeFilterHandler,
-    props: {
-        filter: IAttributeFilter;
-        limitingAttributeFilters?: IElementsQueryAttributeFilter[];
-        limitingDateFilters?: (IRelativeDateFilter | IAbsoluteDateFilter)[];
-        limitingValidationItems?: ObjRef[];
-        shouldIncludeLimitingFilters: boolean;
-        limit?: number;
-        setConnectedPlaceholderValue: (filter: IAttributeFilter) => void;
-        onApply: OnApplyCallbackType;
-        onSelect: OnSelectCallbackType;
-        resetOnParentFilterChange: boolean;
-        selectionMode: DashboardAttributeFilterSelectionMode;
-        shouldReloadElements: MutableRefObject<boolean>;
-        setShouldReloadElements: (value: boolean) => void;
-        displayAsLabel: ObjRef;
-        withoutApply: boolean;
-        isSelectionInvalid: boolean;
-    },
-    supportsKeepingDependentFiltersSelection: boolean,
-    supportsCircularDependencyInFilters: boolean,
-) {
-    const {
-        filter,
-        limitingAttributeFilters,
-        limitingDateFilters,
-        limitingValidationItems = EMPTY_LIMITING_VALIDATION_ITEMS,
-        shouldIncludeLimitingFilters,
-        limit,
-        resetOnParentFilterChange,
-        setConnectedPlaceholderValue,
-        onApply,
-        onSelect,
-        selectionMode,
-        shouldReloadElements,
-        setShouldReloadElements,
-        displayAsLabel,
-        withoutApply,
-        isSelectionInvalid,
-    } = props;
-
-    useEffect(() => {
-        if (shouldIncludeLimitingFilters && limitingAttributeFilters && limitingAttributeFilters.length > 0) {
-            handler.setLimitingAttributeFilters(limitingAttributeFilters);
-        }
-
-        if (shouldIncludeLimitingFilters && limitingDateFilters && limitingDateFilters.length > 0) {
-            handler.setLimitingDateFilters(limitingDateFilters);
-        }
-
-        if (shouldIncludeLimitingFilters && limitingValidationItems?.length > 0) {
-            handler.setLimitingValidationItems(limitingValidationItems);
-        }
-
-        if (limit) {
-            handler.setLimit(limit);
-        }
-
-        handler.init();
-
-        // Change of the parent filters is resolved in the useEffect bellow,
-        // it does not need full reinit.
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [handler]);
-
-    useEffect(() => {
-        const limitingAttributesChanged =
-            shouldIncludeLimitingFilters &&
-            !isEqual(limitingAttributeFilters, handler.getLimitingAttributeFilters());
-
-        const limitingDateFiltersChanged =
-            shouldIncludeLimitingFilters && !isEqual(limitingDateFilters, handler.getLimitingDateFilters());
-
-        const getFilterChanged = (filter: IAttributeFilter, handler: IMultiSelectAttributeFilterHandler) => {
-            return (
-                !areFiltersEqual(filter, handler.getFilter()) &&
-                !areFiltersEqual(filter, handler.getFilterToDisplay())
-            );
-        };
-
-        const filterChanged = getFilterChanged(filter, handler);
-
-        const limitingValidationItemsChanged =
-            shouldIncludeLimitingFilters &&
-            !isEqual(limitingValidationItems, handler.getLimitingValidationItems());
-
-        const props: UpdateFilterProps = {
-            filter,
-            limitingAttributeFilters,
-            limitingAttributesChanged,
-            limitingDateFilters,
-            limitingDateFiltersChanged,
-            filterChanged,
-            setConnectedPlaceholderValue,
-            onApply,
-            onSelect,
-            selectionMode,
-            setShouldReloadElements,
-            limitingValidationItems,
-            limitingValidationItemsChanged,
-            displayAsLabel,
-            withoutApply,
-            isSelectionInvalid,
-        };
-
-        const change = resetOnParentFilterChange
-            ? updateAutomaticResettingFilter(handler, props, supportsCircularDependencyInFilters)
-            : updateNonResettingFilter(handler, props, supportsKeepingDependentFiltersSelection);
-        refreshByType(
-            handler,
-            change,
-            supportsKeepingDependentFiltersSelection,
-            shouldReloadElements,
-            setShouldReloadElements,
-        );
-    }, [
-        filter,
-        limitingAttributeFilters,
-        limitingDateFilters,
-        resetOnParentFilterChange,
-        handler,
-        onApply,
-        onSelect,
-        setConnectedPlaceholderValue,
-        selectionMode,
-        supportsKeepingDependentFiltersSelection,
-        supportsCircularDependencyInFilters,
-        setShouldReloadElements,
-        limitingValidationItems,
-        displayAsLabel,
-        shouldReloadElements,
-        withoutApply,
-        shouldIncludeLimitingFilters,
-        isSelectionInvalid,
-    ]);
-
-    const isMountedRef = useRef(false);
-    useEffect(() => {
-        isMountedRef.current = true;
-        return () => {
-            isMountedRef.current = false;
-        };
-    }, []);
-
-    useEffect(() => {
-        const originalFilter = handler.getOriginalFilter();
-        const originalFilterRef = originalFilter ? filterObjRef(originalFilter) : undefined;
-        const currentDisplayAsLabel = handler.getDisplayAsLabel();
-
-        const isNotResettingToOrigin =
-            currentDisplayAsLabel && !areObjRefsEqual(originalFilterRef, currentDisplayAsLabel);
-        if (
-            handler.getInitStatus() !== "loading" && // previous effect already initializing
-            ((displayAsLabel && !currentDisplayAsLabel) ||
-                (!displayAsLabel && isNotResettingToOrigin) ||
-                (displayAsLabel &&
-                    currentDisplayAsLabel &&
-                    !areObjRefsEqual(displayAsLabel, currentDisplayAsLabel)))
-        ) {
-            const unsubscribe = handler.onLoadCustomElementsSuccess((params) => {
-                // check correlation to prevent events mismatch
-                if (params.correlation?.includes(DISPLAY_FORM_CHANGED_CORRELATION)) {
-                    unsubscribe();
-                    onApply?.(
-                        handler.getFilter(),
-                        handler.getCommittedSelection()?.isInverted,
-                        selectionMode,
-                        handler.getElementsByKey(handler.getWorkingSelection().keys),
-                        displayAsLabel,
-                        false,
-                        { isSelectionInvalid },
-                    );
-                }
-            });
-            handler.setDisplayAsLabel(displayAsLabel);
-            // TODO INE: optimize and load only selection elements + first page, not attribute itself
-            handler.init(DISPLAY_FORM_CHANGED_CORRELATION);
-            return () => {
-                if (!isMountedRef.current) {
-                    unsubscribe();
-                }
-            };
-        }
-        return undefined;
-    }, [handler, displayAsLabel, onApply, selectionMode, isSelectionInvalid]);
-}
-
-type UpdateFilterProps = {
-    filter: IAttributeFilter;
-    displayAsLabel: ObjRef;
-    limitingAttributeFilters?: IElementsQueryAttributeFilter[];
-    limitingAttributesChanged: boolean;
-    limitingDateFilters?: (IRelativeDateFilter | IAbsoluteDateFilter)[];
-    limitingDateFiltersChanged: boolean;
-    filterChanged: boolean;
-    setConnectedPlaceholderValue: (filter: IAttributeFilter) => void;
-    onApply: OnApplyCallbackType;
-    onSelect: OnSelectCallbackType;
-    selectionMode: DashboardAttributeFilterSelectionMode;
-    setShouldReloadElements: (value: boolean) => void;
-    limitingValidationItems: ObjRef[];
-    limitingValidationItemsChanged: boolean;
-    withoutApply: boolean;
-    isSelectionInvalid: boolean;
-};
-
-type UpdateFilterType = "init-parent" | "init-self" | undefined;
-
-function updateNonResettingFilter(
-    handler: IMultiSelectAttributeFilterHandler,
-    {
-        filter,
-        limitingAttributeFilters,
-        limitingAttributesChanged,
-        limitingDateFilters,
-        limitingDateFiltersChanged,
-        filterChanged,
-        setConnectedPlaceholderValue,
-        setShouldReloadElements,
-        limitingValidationItemsChanged,
-        limitingValidationItems,
-        displayAsLabel,
-        withoutApply,
-    }: UpdateFilterProps,
-    supportsKeepingDependentFiltersSelection: boolean,
-): UpdateFilterType {
-    if (
-        limitingAttributesChanged ||
-        filterChanged ||
-        limitingValidationItemsChanged ||
-        limitingDateFiltersChanged
-    ) {
-        const elements = filterAttributeElements(filter);
-        const keys = isAttributeElementsByValue(elements) ? elements.values : elements.uris;
-        const isInverted = isNegativeAttributeFilter(filter);
-        const irrelevantKeys = handler.getCommittedSelection().irrelevantKeys;
-
-        // Sometimes leftover irrelevant keys may be shown as the app does not know about irrelevant keys.
-        // In this case, we want to reset the irrelevant keys.
-        const leftoverIrrelevantKeys = difference(irrelevantKeys, keys);
-
-        const hasLimitingDateFiltersChanged =
-            handler.getLimitingDateFilters()?.length !== limitingDateFilters?.length ||
-            differenceBy(handler.getLimitingDateFilters(), limitingDateFilters, (dateFilter) =>
-                objRefToString(filterObjRef(dateFilter)),
-            ).length > 0;
-        const hasNumberOfLimitingAttributesChanged =
-            handler.getLimitingAttributeFilters()?.length !== limitingAttributeFilters?.length;
-        const shouldReinitilizeAllElements =
-            supportsKeepingDependentFiltersSelection &&
-            (hasNumberOfLimitingAttributesChanged ||
-                hasLimitingDateFiltersChanged ||
-                !isEmpty(leftoverIrrelevantKeys));
-
-        const irrelevantKeysObj = shouldReinitilizeAllElements ? { irrelevantKeys: [] } : {};
-        if (filterChanged || !supportsKeepingDependentFiltersSelection || shouldReinitilizeAllElements) {
-            const displayFormRef = filterObjRef(filter);
-            handler.setDisplayForm(displayFormRef);
-            handler.setDisplayAsLabel(displayAsLabel);
-
-            if (withoutApply) {
-                handler.setSearch("");
-            }
-            handler.changeSelection({ keys, isInverted, ...irrelevantKeysObj });
-            handler.commitSelection();
-        }
-        handler.setLimitingAttributeFilters(limitingAttributeFilters ?? []);
-        handler.setLimitingValidationItems(limitingValidationItems);
-        handler.setLimitingDateFilters(limitingDateFilters ?? []);
-
-        const nextFilter = handler.getFilter();
-        setConnectedPlaceholderValue(nextFilter);
-
-        if (shouldReinitilizeAllElements) {
-            return "init-self";
-        }
-
-        if (limitingAttributesChanged || limitingDateFiltersChanged || limitingValidationItemsChanged) {
-            setShouldReloadElements(true);
-            return "init-parent";
-        }
-
-        // If the filter changes are commited without apply, we want to avoid loading based on FF.
-        // This is experimental and will be removed after the feature is fully tested and released.
-        if (withoutApply) {
-            const needsInitialization = isEmpty(handler.getAllElements()) && filterChanged;
-
-            if (!needsInitialization) {
-                return undefined;
-            }
-        }
-
-        return "init-self";
-    }
-
-    return undefined;
-}
-
-function updateAutomaticResettingFilter(
-    handler: IMultiSelectAttributeFilterHandler,
-    {
-        filter,
-        limitingAttributeFilters,
-        limitingAttributesChanged,
-        filterChanged,
-        setConnectedPlaceholderValue,
-        onApply,
-        onSelect,
-        selectionMode,
-        displayAsLabel,
-        isSelectionInvalid,
-    }: UpdateFilterProps,
-    supportsCircularDependencyInFilters: boolean,
-): UpdateFilterType {
-    const canAutomaticallyReset =
-        limitingAttributeFilters?.length === 0 || !supportsCircularDependencyInFilters;
-    invariant(
-        canAutomaticallyReset,
-        "It is not possible to automatically reset dependent filters with current backend. Please set attribute filter to not reset on parent filter change (resetOnParentFilterChange prop).",
+    const elementsResetForModeSwitch = useCallback(
+        (newFilter: IAttributeFilter, newDisplayAsLabel?: ObjRef) => {
+            elementsFilterController.resetForModeSwitch?.(newFilter, newDisplayAsLabel);
+        },
+        [elementsFilterController],
     );
 
-    if (limitingAttributesChanged) {
-        handler.changeSelection({ keys: [], isInverted: selectionMode !== "single" });
-        handler.setLimitingAttributeFilters(limitingAttributeFilters ?? []);
-        // the next lines are to apply selection to the state of the parent component to make the
-        // new attribute filter state persistent
-        handler.commitSelection();
-
-        //if filters are controlled from outside, do not call this kind of update because is already updated by controlled app
-        const nextFilter = handler.getFilter();
-        const isInverted = handler.getCommittedSelection()?.isInverted;
-
-        setConnectedPlaceholderValue(nextFilter);
-
-        const displayAsLabel = handler.getDisplayAsLabel();
-        onSelect?.(nextFilter, isInverted, selectionMode, [], displayAsLabel, false, { isSelectionInvalid });
-        onApply?.(nextFilter, isInverted, selectionMode, [], displayAsLabel, false, { isSelectionInvalid });
-
-        return "init-parent";
-    }
-
-    if (filterChanged) {
-        // reset handler completely to match input filter
-        // label could change as a part of migration to the primary label
-        const displayFormRef = filterObjRef(filter);
-        const elements = filterAttributeElements(filter);
-        const keys = isAttributeElementsByValue(elements) ? elements.values : elements.uris;
-        const isInverted = isNegativeAttributeFilter(filter);
-
-        handler.setDisplayForm(displayFormRef);
-        handler.setDisplayAsLabel(displayAsLabel);
-        handler.changeSelection({ keys, isInverted });
-        handler.commitSelection();
-
-        return "init-self";
-    }
-
-    return undefined;
-}
-
-function refreshByType(
-    handler: IMultiSelectAttributeFilterHandler,
-    change: UpdateFilterType,
-    supportsKeepingDependentFiltersSelection: boolean,
-    shouldReloadElements: MutableRefObject<boolean>,
-    setShouldReloadElements: (value: boolean) => void,
-) {
-    if (change === "init-parent") {
-        if (supportsKeepingDependentFiltersSelection) {
-            // Reload elements when filter was changed by a parent filter change triggered by a filter view.
-            // Filter selection state could contain elements that are not loaded from server yet because
-            // filter started in limited state with elements filtered by another filter. These elements  will
-            // be used by re-execution widgets, which is correct, but will not be set to filter's button
-            // value, confusing the users.
-            if (shouldReloadElements.current) {
-                if (handler.getInitStatus() === "success") {
-                    handler.loadInitialElementsPage(PARENT_FILTERS_CORRELATION);
-                    handler.loadIrrelevantElements(IRRELEVANT_SELECTION);
-                } else {
-                    // if filter resets by its parent but it is not fully loaded yet, we need to re-init it fully again
-                    handler.init(PARENT_FILTERS_CORRELATION);
-                }
-                setShouldReloadElements(false);
-            }
-            return;
-        }
-
-        if (handler.getInitStatus() === "success") {
-            handler.initTotalCount(PARENT_FILTERS_CORRELATION);
-            handler.loadInitialElementsPage(PARENT_FILTERS_CORRELATION);
-        } else {
-            handler.init(PARENT_FILTERS_CORRELATION);
-        }
-    }
-    if (change === "init-self") {
-        handler.init();
-    }
-}
-
-//
-
-function useCallbacks(
-    handler: IMultiSelectAttributeFilterHandler,
-    props: {
-        setConnectedPlaceholderValue: (filter: IAttributeFilter) => void;
-        onApply: OnApplyCallbackType;
-        onSelect: OnSelectCallbackType;
-        selectionMode: DashboardAttributeFilterSelectionMode;
-        shouldReloadElements: MutableRefObject<boolean>;
-        setShouldReloadElements: (value: boolean) => void;
-        shouldIncludeLimitingFilters: boolean;
-        setShouldIncludeLimitingFilters: (value: boolean) => void;
-        limitingAttributeFilters: IElementsQueryAttributeFilter[];
-        limitingDateFilters: (IRelativeDateFilter | IAbsoluteDateFilter)[];
-        withoutApply: boolean;
-        isSelectionInvalid: boolean;
-        filter?: IAttributeFilter;
-    },
-    supportsShowingFilteredElements: boolean,
-    supportsKeepingDependentFiltersSelection: boolean,
-    enableImmediateAttributeFilterDisplayAsLabelMigration: boolean,
-): AttributeFilterControllerCallbacks {
-    const {
-        onApply: onApplyInputCallback,
-        onSelect: onSelectInputCallback,
-        setConnectedPlaceholderValue,
-        selectionMode,
-        shouldReloadElements,
-        setShouldReloadElements,
-        shouldIncludeLimitingFilters,
-        setShouldIncludeLimitingFilters,
-        limitingAttributeFilters,
-        limitingDateFilters,
-        withoutApply,
-        isSelectionInvalid,
-        filter,
-    } = props;
-
-    const handlerState = useAttributeFilterHandlerState(handler);
-
-    const onSelectionChange = useCallback(
+    const handleFilterModeChange = useCallback(
         (
-            onSelectionChangeInputCallback: OnApplyCallbackType | OnSelectCallbackType,
-            isResultOfMigration: boolean,
-            applyToWorkingOnly: boolean,
+            newFilter: IAttributeFilter | undefined,
+            newDisplayAsLabel: ObjRef | undefined,
+            previousMode: AttributeFilterMode,
+            nextMode: AttributeFilterMode,
         ) => {
-            const nextFilter = handler.getFilter();
-            const isInverted = handler.getWorkingSelection()?.isInverted;
-            const keys = handler.getWorkingSelection().keys;
-            // validity recalculated again as changed selection is not yet propagated to the controller data
-            const isSelectionInvalid = (!isInverted && isEmpty(keys)) || keys.length > MAX_SELECTION_SIZE;
+            if (newFilter) {
+                if (connectToPlaceholder) {
+                    setConnectedPlaceholderValue(newFilter);
+                } else {
+                    if (previousMode === nextMode) {
+                        return;
+                    }
+                    setFilterMode(nextMode);
 
-            const displayAsLabel = handler.getDisplayAsLabel();
-            const { attribute } = handlerState;
-            if (isPrimaryLabelUsed(nextFilter, attribute.data?.displayForms ?? [])) {
-                onSelectionChangeInputCallback?.(
-                    nextFilter,
-                    isInverted,
-                    selectionMode,
-                    handler.getElementsByKey(keys),
-                    displayAsLabel,
-                    // filter was migrated after first render,
-                    // enableImmediateAttributeFilterDisplayAsLabelMigration ff is enabled
-                    isResultOfMigration,
-                    {
-                        isSelectionInvalid,
-                        applyToWorkingOnly,
-                    },
-                );
-            } else {
-                const primaryDisplayForm = attribute.data?.displayForms.find((df) => df.isPrimary);
-                if (!primaryDisplayForm) {
-                    throw new Error("No primary display form found.");
+                    if (nextMode === "elements") {
+                        elementsResetForModeSwitch(newFilter, newDisplayAsLabel);
+                    } else {
+                        textResetForModeSwitch(newFilter);
+                    }
                 }
-                const primaryLabelRef = primaryDisplayForm.ref;
-                const filterUsingPrimaryLabel = replaceFilterDisplayForm(nextFilter, primaryLabelRef);
-                onSelectionChangeInputCallback?.(
-                    filterUsingPrimaryLabel,
-                    isInverted,
-                    selectionMode,
-                    handler.getElementsByKey(keys),
-                    displayAsLabel,
-                    // filter was migrated when user changed it for the first time,
-                    // enableImmediateAttributeFilterDisplayAsLabelMigration ff is disabled
-                    true,
-                    {
-                        isSelectionInvalid,
-                        applyToWorkingOnly,
-                    },
-                );
+                // onChange covers all filter changes including mode switch reset
+                const isInverted = isNegativeFilter(newFilter);
+                onChange?.(newFilter, isInverted, selectionMode, [], filterObjRef(newFilter), false, {});
             }
         },
-        [handler, handlerState, selectionMode],
+        [
+            connectToPlaceholder,
+            onChange,
+            selectionMode,
+            setConnectedPlaceholderValue,
+            elementsResetForModeSwitch,
+            textResetForModeSwitch,
+        ],
     );
 
-    const onSelect = useCallback(
-        (selectedItems: IAttributeElement[], isInverted: boolean) => {
-            const keys = selectedItems.map((item) => item.uri);
-            const irrelevantKeysObj = selectionMode === "single" ? { irrelevantKeys: [] } : {};
-            handler.changeSelection({ keys, isInverted, ...irrelevantKeysObj });
+    const onFilterModeChangeForControllers = useCallback(
+        (newMode: AttributeFilterMode) => {
+            if (!resolvedDisplayFormRef) {
+                return;
+            }
+            let nextAvailableMode: AttributeFilterAvailableMode = "elements";
 
-            if (withoutApply) {
-                handler.commitSelection();
+            if (newMode === filterMode) {
+                return;
             }
 
-            onSelectionChange(onSelectInputCallback, false, false);
-        },
-        [handler, selectionMode, onSelectionChange, onSelectInputCallback, withoutApply],
-    );
-
-    // Rule is not working with debounce
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    const onSearch = useCallback(
-        debounce((search: string) => {
-            if (handler.getSearch() !== search) {
-                handler.setSearch(search);
-                handler.loadInitialElementsPage(SEARCH_CORRELATION);
+            if (newMode === "text") {
+                if (availableTextFilterModes.includes("arbitrary")) {
+                    nextAvailableMode = "arbitrary";
+                } else {
+                    nextAvailableMode = "match";
+                }
             }
-        }, 200),
-        [handler],
-    );
 
-    const onLoadNextElementsPage = useCallback(() => {
-        handler.loadNextElementsPage();
-    }, [handler]);
+            const displayFormForNewFilter =
+                newMode === "text"
+                    ? (elementsFilterController.currentDisplayAsDisplayFormRef ??
+                      elementsFilterController.currentDisplayFormRef)
+                    : elementsFilterController.currentDisplayFormRef;
 
-    const onReset = useCallback(() => {
-        if (!withoutApply) {
-            handler.revertSelection();
-        } else if (isSelectionInvalid && withoutApply) {
-            const workingElements = filter ? filterAttributeElements(filter) : { values: [] };
-            const workingKeys = isAttributeElementsByValue(workingElements)
-                ? (workingElements.values ?? [])
-                : (workingElements.uris ?? []);
-            const isWorkingInverted = filter ? isNegativeAttributeFilter(filter) : false;
+            const displayAsDisplayFormForNewFilter =
+                newMode === "text" ? undefined : textFilterController.currentDisplayFormRef;
 
-            handler.changeSelection({ keys: workingKeys, isInverted: isWorkingInverted });
-        }
-
-        if (handler.getSearch().length > 0) {
-            handler.setSearch("");
-            handler.loadInitialElementsPage(RESET_CORRELATION);
-        }
-
-        /**
-         * Set shouldReloadELements to true when reseting as we want to reload elements in the future.
-         */
-        if (supportsShowingFilteredElements && !shouldIncludeLimitingFilters) {
-            setShouldIncludeLimitingFilters(true);
-            setShouldReloadElements(true);
-            handler.setLimitingAttributeFilters(limitingAttributeFilters);
-            handler.setLimitingDateFilters(limitingDateFilters);
-        }
-    }, [
-        handler,
-        limitingAttributeFilters,
-        limitingDateFilters,
-        setShouldIncludeLimitingFilters,
-        setShouldReloadElements,
-        shouldIncludeLimitingFilters,
-        supportsShowingFilteredElements,
-        withoutApply,
-        isSelectionInvalid,
-        filter,
-    ]);
-
-    const onApplyChanges = useCallback(
-        (isResultOfMigration: boolean, applyToWorkingOnly: boolean) => {
-            handler.commitSelection();
-            setConnectedPlaceholderValue(handler.getFilter());
-            onSelectionChange(onApplyInputCallback, isResultOfMigration, applyToWorkingOnly);
+            const newFilter = createEmptyFilterForAvailableMode(
+                nextAvailableMode,
+                displayFormForNewFilter,
+                localId,
+            );
+            handleFilterModeChange(newFilter, displayAsDisplayFormForNewFilter, filterMode, newMode);
         },
-        [handler, setConnectedPlaceholderValue, onSelectionChange, onApplyInputCallback],
+        [
+            availableTextFilterModes,
+            filterMode,
+            handleFilterModeChange,
+            localId,
+            elementsFilterController.currentDisplayAsDisplayFormRef,
+            elementsFilterController.currentDisplayFormRef,
+            textFilterController.currentDisplayFormRef,
+            resolvedDisplayFormRef,
+        ],
     );
 
-    const onApply = useCallback(
-        (applyRegardlessWithoutApplySetting: boolean = false, applyToWorkingOnly: boolean = false) => {
+    const onApplyTextFilter = useCallback(
+        (applyRegardlessWithoutApplySetting: boolean = false, _applyToWorkingOnly: boolean = false) => {
             if (withoutApply && !applyRegardlessWithoutApplySetting) {
                 return;
             }
-            onApplyChanges(false, applyToWorkingOnly);
-        },
-        [withoutApply, onApplyChanges],
-    );
-
-    const onOpen = useCallback(() => {
-        if (shouldReloadElements.current) {
-            handler.loadInitialElementsPage(RESET_CORRELATION);
-            if (!handler.isWorkingSelectionEmpty()) {
-                handler.loadIrrelevantElements(IRRELEVANT_SELECTION);
-            }
-            setShouldReloadElements(false);
-        }
-    }, [handler, shouldReloadElements, setShouldReloadElements]);
-
-    const onShowFilteredElements = useCallback(() => {
-        if (supportsShowingFilteredElements) {
-            setShouldIncludeLimitingFilters(false);
-            handler.changeSelection({ ...handler.getWorkingSelection(), irrelevantKeys: [] });
-            handler.setLimitingAttributeFilters([]);
-            handler.setLimitingValidationItems([]);
-            handler.setLimitingDateFilters([]);
-            handler.loadInitialElementsPage(SHOW_FILTERED_ELEMENTS_CORRELATION);
-        }
-    }, [handler, setShouldIncludeLimitingFilters, supportsShowingFilteredElements]);
-
-    const onClearIrrelevantSelection = useCallback(() => {
-        if (supportsKeepingDependentFiltersSelection && supportsShowingFilteredElements) {
-            const workingSelection = handler.getWorkingSelection();
-            const sanitizedWorkingSelectionKeys = difference(
-                workingSelection.keys,
-                workingSelection.irrelevantKeys ?? [],
+            const valuesOrLiteral = isArbitraryOperator(textFilterController.textFilterOperator)
+                ? (textFilterController.textFilterValues ?? [])
+                : (textFilterController.textFilterLiteral ?? "");
+            const caseSensitive = textFilterController.textFilterCaseSensitive ?? false;
+            const displayFormRef =
+                textFilterController.currentDisplayFormRef ??
+                (resolvedFilter && filterObjRef(resolvedFilter)) ??
+                resolvedDisplayFormRef;
+            const nextFilter = createFilterFromOperator(
+                textFilterController.textFilterOperator,
+                valuesOrLiteral,
+                displayFormRef,
+                localId,
+                caseSensitive,
             );
-
-            handler.changeSelection({
-                ...workingSelection,
-                keys: sanitizedWorkingSelectionKeys,
-                irrelevantKeys: [],
+            textFilterController.onCommitTextFilter?.();
+            onApply?.(nextFilter, false, selectionMode, [], displayFormRef, false, {
+                isSelectionInvalid: textFilterController.isApplyDisabled,
+                applyToWorkingOnly: _applyToWorkingOnly,
             });
-        }
-    }, [handler, supportsKeepingDependentFiltersSelection, supportsShowingFilteredElements]);
-
-    const onFilterMigrated = useCallback(() => onApplyChanges(true, false), [onApplyChanges]);
-    useReportMigratedFilter(handler, onFilterMigrated, enableImmediateAttributeFilterDisplayAsLabelMigration);
-
-    return {
-        onApply,
-        onLoadNextElementsPage,
-        onSearch,
-        onSelect,
-        onReset,
-        onOpen,
-        onShowFilteredElements,
-        onClearIrrelevantSelection,
-    };
-}
-
-//
-
-const useSingleSelectModeHandler = (
-    handler: IMultiSelectAttributeFilterHandler,
-    props: {
-        selectFirst: boolean;
-        selectionMode: DashboardAttributeFilterSelectionMode;
-        onApply: (applyRegardlessWithoutApplySetting?: boolean, applyToWorkingOnly?: boolean) => void;
-        onSelect: (selectedItems: IAttributeElement[], isInverted: boolean) => void;
-        withoutApply: boolean;
-    },
-) => {
-    const { selectFirst, selectionMode, onApply, onSelect, withoutApply } = props;
-    const committedSelectionKeys = handler.getCommittedSelection().keys;
-    const initialStatus = handler.getInitStatus();
-    const elements = handler.getAllElements();
-    const filter = handler.getFilter();
-
-    useEffect(() => {
-        if (
-            selectFirst &&
-            selectionMode === "single" &&
-            (isEmpty(committedSelectionKeys) || committedSelectionKeys.length > 1) &&
-            initialStatus === "success" &&
-            !isEmpty(elements)
-        ) {
-            const keys = [elements[0].uri];
-
-            handler.changeSelection({ keys, isInverted: false, irrelevantKeys: [] });
-            handler.commitSelection();
-            // this auto selection in single select filter is exception as it is always directly applied and not waiting for apply even in withoutApply mode
-            onApply(true, false);
-        }
-    }, [
-        selectFirst,
-        selectionMode,
-        committedSelectionKeys,
-        initialStatus,
-        elements,
-        filter,
-        handler,
-        onApply,
-        onSelect,
-        withoutApply,
-    ]);
-};
-
-const useShouldIncludeLimitingFilters = (supportsShowingFilteredElements: boolean) => {
-    const [shouldIncludeLimitingFilters, setShouldIncludeLimitingFilters] = useState(true);
-
-    const handleSetShouldIncludeLimitingFilters = useCallback(
-        (value: boolean) => {
-            if (!supportsShowingFilteredElements) {
-                return;
-            }
-
-            setShouldIncludeLimitingFilters(value);
         },
-        [supportsShowingFilteredElements],
+        [
+            localId,
+            onApply,
+            resolvedFilter,
+            resolvedDisplayFormRef,
+            selectionMode,
+            textFilterController,
+            withoutApply,
+        ],
     );
 
-    return {
-        shouldIncludeLimitingFilters,
-        setShouldIncludeLimitingFilters: handleSetShouldIncludeLimitingFilters,
-    };
-};
-function isPrimaryLabelUsed(
-    filter: IAttributeFilter,
-    displayForms: IAttributeDisplayFormMetadataObject[],
-): boolean {
-    const primaryDisplayForm = displayForms.find((df) => df.isPrimary);
-    if (!primaryDisplayForm) {
-        throw new Error("No primary display form found.");
-    }
-
-    const filterDisplayForm = filterObjRef(filter);
-    if (!filterDisplayForm) {
-        return false;
-    }
-
-    return areObjRefsEqual(filterDisplayForm, primaryDisplayForm.ref);
-}
-function replaceFilterDisplayForm(nextFilter: IAttributeFilter, primaryLabelRef: ObjRef): IAttributeFilter {
-    if (isPositiveAttributeFilter(nextFilter)) {
+    if (isTextMode) {
         return {
-            positiveAttributeFilter: {
-                ...nextFilter.positiveAttributeFilter,
-                displayForm: primaryLabelRef,
-            },
+            attribute: elementsFilterController.attribute,
+            displayForms: elementsFilterController.displayForms,
+            isInitializing: elementsFilterController.isInitializing,
+            initError: elementsFilterController.initError,
+            currentDisplayFormRef: textFilterController.currentDisplayFormRef,
+            isFiltering: false,
+            isSelectionInvalid: textFilterController.isTextFilterInvalid,
+            isApplyDisabled: textFilterController.isApplyDisabled,
+            isWorkingSelectionChanged: textFilterController.isWorkingSelectionChanged,
+            textFilterOperator: textFilterController.textFilterOperator,
+            textFilterValues: textFilterController.textFilterValues,
+            textFilterLiteral: textFilterController.textFilterLiteral,
+            textFilterLiteralEmptyError: textFilterController.textFilterLiteralEmptyError,
+            textFilterValuesEmptyError: textFilterController.textFilterValuesEmptyError,
+            textFilterValuesLimitReachedWarning: textFilterController.textFilterValuesLimitReachedWarning,
+            textFilterValuesLimitExceededError: textFilterController.textFilterValuesLimitExceededError,
+            textFilterCaseSensitive: textFilterController.textFilterCaseSensitive,
+            textFilterCommittedFilter: textFilterController.textFilterCommittedFilter,
+            onTextFilterOperatorChange: textFilterController.onTextFilterOperatorChange,
+            onTextFilterValuesChange: textFilterController.onTextFilterValuesChange,
+            onTextFilterValuesBlur: textFilterController.onTextFilterValuesBlur,
+            onTextFilterLiteralChange: textFilterController.onTextFilterLiteralChange,
+            onTextFilterLiteralBlur: textFilterController.onTextFilterLiteralBlur,
+            onToggleTextFilterCaseSensitive: textFilterController.onToggleTextFilterCaseSensitive,
+            onApply: onApplyTextFilter,
+            onReset: textFilterController.onReset ?? noop,
+            filterDetailRequestHandler,
+            setDisplayForm: textFilterController.setDisplayForm,
+            resetForModeSwitch: textFilterController.resetForModeSwitch ?? noop,
+            onFilterModeChange:
+                availableInternalFilterModes.length > 1 ? onFilterModeChangeForControllers : undefined,
+            currentFilterMode: filterMode,
+            availableInternalFilterModes,
+            availableTextFilterModes,
+            offset: 0,
+            limit: 0,
+            isLoadingInitialElementsPage: elementsFilterController.isLoadingInitialElementsPage,
+            isLoadingNextElementsPage: false,
+            nextElementsPageSize: 0,
+            // Expose loaded elements in text mode so autocomplete suggestions are available.
+            elements: elementsFilterController.elements,
+            totalElementsCount: undefined,
+            totalElementsCountWithCurrentSettings: undefined,
+            isWorkingSelectionInverted: false,
+            workingSelectionElements: [],
+            isCommittedSelectionInverted: false,
+            committedSelectionElements: [],
+            searchString: "",
+            isFilteredByParentFilters: false,
+            parentFilterAttributes: [],
+            onLoadNextElementsPage: noop,
+            onSearch: noop,
+            onSelect: noop,
+            onOpen: noop,
+            onShowFilteredElements: noop,
+            onClearIrrelevantSelection: noop,
         };
     }
 
     return {
-        negativeAttributeFilter: {
-            ...nextFilter.negativeAttributeFilter,
-            displayForm: primaryLabelRef,
-        },
+        ...elementsFilterController,
+        filterDetailRequestHandler,
+        currentFilterMode: filterMode,
+        availableInternalFilterModes,
+        availableTextFilterModes,
+        onFilterModeChange:
+            availableInternalFilterModes.length > 1 ? onFilterModeChangeForControllers : undefined,
     };
-}
-
-// The hook detects if:
-// - filter uses non-primary label
-// - filter was created before "support duplicated label values" feature was introduced
-// - filter was migrated to use displayAsLabel by "loadAttributeSaga"
-// If all of the above applies, the provided callback (onApply of the filter) is called to propagate the
-// new filter state (filter label, displayAsLabel, and updated selection) is reported to the application
-// that uses the filter.
-const useReportMigratedFilter = (
-    handler: IMultiSelectAttributeFilterHandler,
-    onFilterMigrated: (applyRegardlessWithoutApplySetting: boolean) => void,
-    enableImmediateAttributeFilterDisplayAsLabelMigration: boolean,
-) => {
-    const initialLabel = useRef(handler.getDisplayAsLabel());
-    const wasMigrationReported = useRef(false);
-    const initStatus = handler.getInitStatus();
-
-    const originalFilter = handler.getOriginalFilter();
-    const originalFilterRef = originalFilter ? filterObjRef(originalFilter) : undefined;
-    if (
-        enableImmediateAttributeFilterDisplayAsLabelMigration &&
-        !wasMigrationReported.current &&
-        initStatus === "success" &&
-        !areObjRefsEqual(initialLabel.current, handler.getDisplayAsLabel()) &&
-        !areObjRefsEqual(originalFilterRef, filterObjRef(handler.getFilter()))
-    ) {
-        wasMigrationReported.current = true;
-        onFilterMigrated(true);
-
-        console.warn(
-            "AttributeFilter: Filter label migration reported to filter's parent app. Original filter label:",
-            filterObjRef(handler.getOriginalFilter()!),
-            "new filter label:",
-            filterObjRef(handler.getFilter()),
-            "new filter displayAsLabel:",
-            handler.getDisplayAsLabel(),
-        );
-    }
 };

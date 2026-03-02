@@ -10,6 +10,8 @@ import {
     type IAttributeFilter,
     type ObjRef,
     filterObjRef,
+    isArbitraryAttributeFilter,
+    isMatchAttributeFilter,
 } from "@gooddata/sdk-model";
 import { usePrevious } from "@gooddata/sdk-ui";
 
@@ -25,7 +27,7 @@ export interface IUseAttributeFilterHandlerProps {
     workspace: string;
 
     filter: IAttributeFilter;
-    displayAsLabel: ObjRef;
+    displayAsLabel?: ObjRef;
 
     hiddenElements?: string[];
     staticElements?: IAttributeElement[];
@@ -59,8 +61,19 @@ export const useAttributeFilterHandler = (props: IUseAttributeFilterHandlerProps
     const handlerRef = useRef<IMultiSelectAttributeFilterHandler | null>(null);
 
     const createNewHandler = useCallback(() => {
+        // Don't create handler for arbitrary/match filters - they use simple controller
+        if (isArbitraryAttributeFilter(filter) || isMatchAttributeFilter(filter)) {
+            handlerRef.current = null;
+            return;
+        }
+
         handlerRef.current = newAttributeFilterHandler(
-            backend.withTelemetry("AttributeFilter", { workspace, filter, hiddenElements, staticElements }),
+            backend.withTelemetry("AttributeFilter", {
+                workspace,
+                filter,
+                hiddenElements,
+                staticElements,
+            }),
             workspace,
             filter,
             {

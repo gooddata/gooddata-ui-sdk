@@ -2223,6 +2223,7 @@ export type {
     IInsightBodyProps,
     CustomInsightBodyComponent,
 } from "./presentation/widget/insight/types.js";
+export type { ILayerTableDefinition } from "./presentation/widget/insight/insightToTable.js";
 export { DefaultDashboardInsightMenu } from "./presentation/widget/insightMenu/DefaultDashboardInsightMenu/DefaultDashboardInsightMenu.js";
 export { DefaultDashboardInsightMenuButton } from "./presentation/widget/insightMenu/DefaultDashboardInsightMenu/DefaultDashboardInsightMenuButton.js";
 export { DefaultDashboardInsightMenuTitle } from "./presentation/widget/insightMenu/DefaultDashboardInsightMenu/DefaultDashboardInsightMenuTitle.js";

@@ -8,6 +8,7 @@ import {
     type IAutomationMetadataObject,
     type IAutomationMetadataObjectDefinition,
     type IFilter,
+    isAllValuesAttributeFilter,
     isNoopAllTimeDateFilter,
 } from "@gooddata/sdk-model";
 
@@ -136,9 +137,10 @@ function sanitizeAutomation(
                 ...automation.alert,
                 execution: {
                     ...automation.alert.execution,
-                    filters: enableAutomationFilterContext
-                        ? automation.alert.execution.filters
-                        : removeAllTimeDateFiltersFromAlertFilters(automation.alert.execution.filters),
+                    filters: removeNoopFiltersFromAlertFilters(
+                        automation.alert.execution.filters,
+                        enableAutomationFilterContext,
+                    ),
                 },
             },
         };
@@ -147,6 +149,22 @@ function sanitizeAutomation(
     return automation;
 }
 
-function removeAllTimeDateFiltersFromAlertFilters(filters: IFilter[]) {
-    return filters.filter((filter) => !isNoopAllTimeDateFilter(filter));
+/**
+ * Strip noop filters that have no effect on execution and should not appear in alert email notifications.
+ * - "All values" attribute filters are always stripped.
+ * - "All time" date filters are stripped only for the legacy path (new path handles this in getAppliedWidgetFilters).
+ */
+function removeNoopFiltersFromAlertFilters(
+    filters: IFilter[],
+    enableAutomationFilterContext: boolean,
+): IFilter[] {
+    return filters.filter((filter) => {
+        if (isAllValuesAttributeFilter(filter)) {
+            return false;
+        }
+        if (!enableAutomationFilterContext && isNoopAllTimeDateFilter(filter)) {
+            return false;
+        }
+        return true;
+    });
 }

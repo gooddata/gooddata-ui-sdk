@@ -2,6 +2,7 @@
 
 import { type IInsight } from "@gooddata/sdk-model";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 
@@ -93,7 +94,7 @@ export const SimpleTableWithCustomAttributeColumnSize = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 9, 0),
+        getScenariosGroupByIndexes(17, 9, 0),
     )();
 SimpleTableWithCustomAttributeColumnSize.parameters = {
     kind: "simple table with custom attribute column size",
@@ -199,7 +200,7 @@ export const SimpleTableWithCustomMetricColumnSize = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 9, 1),
+        getScenariosGroupByIndexes(17, 9, 1),
     )();
 SimpleTableWithCustomMetricColumnSize.parameters = {
     kind: "simple table with custom metric column size",
@@ -313,7 +314,7 @@ export const SimpleTableWithAttributeAndMetricColumnSize = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 9, 2),
+        getScenariosGroupByIndexes(17, 9, 2),
     )();
 SimpleTableWithAttributeAndMetricColumnSize.parameters = {
     kind: "simple table with attribute and metric column size",
@@ -432,7 +433,7 @@ export const TableWithMultipleMeasureColumnsAndWeakMeasureSize = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 9, 3),
+        getScenariosGroupByIndexes(17, 9, 3),
     )();
 TableWithMultipleMeasureColumnsAndWeakMeasureSize.parameters = {
     kind: "table with multiple measure columns and weak measure size",

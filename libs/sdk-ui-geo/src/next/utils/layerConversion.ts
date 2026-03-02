@@ -6,8 +6,10 @@ import {
     type IBucket,
     type IColorMappingItem,
     type IColorPalette,
+    type IFilter,
     type IInsightLayerDefinition,
     type ObjRef,
+    type VisualizationProperties,
     attributeDisplayFormRef,
     attributeLocalId,
     bucketAttribute,
@@ -28,6 +30,7 @@ import {
     type IGeoLayerArea,
     type IGeoLayerConfig,
     type IGeoLayerPushpin,
+    isGeoLayerPushpin,
 } from "../types/layers/index.js";
 
 /**
@@ -301,6 +304,7 @@ function convertToPushpinLayer(insightLayer: IInsightLayerDefinition): IGeoLayer
     const size = getAttributeOrMeasureFromBucket(buckets, BucketNames.SIZE);
     const color = getAttributeOrMeasureFromBucket(buckets, BucketNames.COLOR);
     const segmentBy = getAttributeFromBucket(buckets, BucketNames.SEGMENT);
+    const tooltipText = getAttributeFromBucket(buckets, BucketNames.TOOLTIP_TEXT);
     const colorMapping = getLayerColorMappingFromControls(controls);
     const colorPalette = getLayerColorPaletteFromControls(controls);
     const layerConfig: IGeoLayerConfig | undefined = colorPalette || colorMapping ? {} : undefined;
@@ -333,6 +337,7 @@ function convertToPushpinLayer(insightLayer: IInsightLayerDefinition): IGeoLayer
         size,
         color,
         segmentBy,
+        tooltipText,
         ...(layerConfig ? { config: layerConfig } : {}),
         filters,
         sortBy: sorts,
@@ -359,6 +364,7 @@ function convertToAreaLayer(insightLayer: IInsightLayerDefinition): IGeoLayerAre
     const controls = properties?.["controls"];
     const color = getAttributeOrMeasureFromBucket(buckets, BucketNames.COLOR);
     const segmentBy = getAttributeFromBucket(buckets, BucketNames.SEGMENT);
+    const tooltipText = getAttributeFromBucket(buckets, BucketNames.TOOLTIP_TEXT);
     const colorMapping = getLayerColorMappingFromControls(controls);
     const colorPalette = getLayerColorPaletteFromControls(controls);
     const layerConfig: IGeoLayerConfig | undefined = colorPalette || colorMapping ? {} : undefined;
@@ -376,6 +382,7 @@ function convertToAreaLayer(insightLayer: IInsightLayerDefinition): IGeoLayerAre
         area,
         color,
         segmentBy,
+        tooltipText,
         ...(layerConfig ? { config: layerConfig } : {}),
         filters,
         sortBy: sorts,
@@ -421,4 +428,143 @@ export function insightLayerToGeoLayer(insightLayer: IInsightLayerDefinition): I
  */
 export function insightLayersToGeoLayers(insightLayers: IInsightLayerDefinition[]): IGeoLayer[] {
     return insightLayers.map(insightLayerToGeoLayer).filter((layer): layer is IGeoLayer => layer !== null);
+}
+
+// ────────────────────────────────────────────────────────────────────────────
+// Geo layer → Insight layer (reverse direction)
+// ────────────────────────────────────────────────────────────────────────────
+
+function createSingleItemBucket(localIdentifier: string, item?: IAttributeOrMeasure): IBucket | null {
+    if (!item) {
+        return null;
+    }
+
+    return {
+        localIdentifier,
+        items: [item],
+    };
+}
+
+function collectBuckets(...entries: Array<IBucket | null>): IBucket[] {
+    return entries.filter((b): b is IBucket => b !== null);
+}
+
+function pushpinLayerToBuckets(layer: IGeoLayerPushpin): IBucket[] {
+    return collectBuckets(
+        createSingleItemBucket(BucketNames.LATITUDE, layer.latitude),
+        createSingleItemBucket(BucketNames.LONGITUDE, layer.longitude),
+        createSingleItemBucket(BucketNames.SIZE, layer.size),
+        createSingleItemBucket(BucketNames.COLOR, layer.color),
+        createSingleItemBucket(BucketNames.SEGMENT, layer.segmentBy),
+        createSingleItemBucket(BucketNames.TOOLTIP_TEXT, layer.tooltipText),
+    );
+}
+
+function areaLayerToBuckets(layer: IGeoLayerArea): IBucket[] {
+    return collectBuckets(
+        createSingleItemBucket(BucketNames.AREA, layer.area),
+        createSingleItemBucket(BucketNames.COLOR, layer.color),
+        createSingleItemBucket(BucketNames.SEGMENT, layer.segmentBy),
+        createSingleItemBucket(BucketNames.TOOLTIP_TEXT, layer.tooltipText),
+    );
+}
+
+/**
+ * Serializes layer color mapping for insight storage.
+ *
+ * @remarks
+ * Color mappings in the component API contain predicate functions that are not serializable.
+ * This function strips predicates and keeps only the `id` + `color` pairs.
+ */
+function serializeLayerColorMapping(
+    colorMapping: IGeoLayerConfig["colorMapping"] | undefined,
+): Array<{ id: string; color: unknown }> | undefined {
+    if (!Array.isArray(colorMapping) || colorMapping.length === 0) {
+        return undefined;
+    }
+
+    const serialized: Array<{ id: string; color: unknown }> = [];
+    colorMapping.forEach((mapping, index) => {
+        if (!mapping.color) {
+            return;
+        }
+
+        const id = mapping.id ?? `mapping-${index}`;
+        serialized.push({ id, color: mapping.color });
+    });
+
+    return serialized.length > 0 ? serialized : undefined;
+}
+
+function layerConfigToInsightProperties(
+    config: IGeoLayerConfig | undefined,
+): VisualizationProperties | undefined {
+    if (!config) {
+        return undefined;
+    }
+
+    const controls: Record<string, unknown> = {};
+
+    if (config.colorPalette) {
+        controls["colorPalette"] = config.colorPalette;
+    }
+
+    const colorMapping = serializeLayerColorMapping(config.colorMapping);
+    if (colorMapping) {
+        controls["colorMapping"] = colorMapping;
+    }
+
+    if (Object.keys(controls).length === 0) {
+        return undefined;
+    }
+
+    return { controls };
+}
+
+/**
+ * Converts an IGeoLayer to an IInsightLayerDefinition.
+ *
+ * @remarks
+ * This is the reverse of {@link insightLayerToGeoLayer}. It maps domain-specific
+ * geo layer fields (latitude, longitude, area, color, etc.) into generic insight
+ * buckets and properties suitable for insight persistence.
+ *
+ * Color mapping predicates (functions) are stripped during conversion because they
+ * are not serializable. Only `id` + `color` pairs are preserved in properties.
+ *
+ * @param layer - The geo layer to convert
+ * @returns The converted insight layer definition
+ *
+ * @internal
+ */
+export function geoLayerToInsightLayer(layer: IGeoLayer): IInsightLayerDefinition {
+    const buckets = isGeoLayerPushpin(layer) ? pushpinLayerToBuckets(layer) : areaLayerToBuckets(layer);
+    const filters = (layer.filters ?? []).filter((f): f is IFilter => f != null);
+    const sorts = layer.sortBy ?? [];
+    const properties = layerConfigToInsightProperties(layer.config);
+
+    return {
+        id: layer.id,
+        type: layer.type,
+        ...(layer.name ? { name: layer.name } : {}),
+        buckets,
+        ...(filters.length > 0 ? { filters } : {}),
+        ...(sorts.length > 0 ? { sorts } : {}),
+        ...(properties ? { properties } : {}),
+    };
+}
+
+/**
+ * Converts an array of IGeoLayer to IInsightLayerDefinition array.
+ *
+ * @remarks
+ * This is the reverse of {@link insightLayersToGeoLayers}.
+ *
+ * @param layers - Array of geo layers to convert
+ * @returns Array of converted insight layer definitions
+ *
+ * @internal
+ */
+export function geoLayersToInsightLayers(layers: IGeoLayer[]): IInsightLayerDefinition[] {
+    return layers.map(geoLayerToInsightLayer);
 }

@@ -3,6 +3,7 @@
 import {
     type IAttribute,
     type IInsightDefinition,
+    type ISettings,
     bucketAttribute,
     idRef,
     insightBucket,
@@ -24,6 +25,7 @@ export interface IBuildGeoConfigParams {
     supportedControls: IVisualizationProperties;
     colorMapping: IColorMapping[] | undefined;
     environment: string;
+    featureFlags?: ISettings;
 }
 
 /**
@@ -38,8 +40,9 @@ export function buildGeoVisualizationConfig({
     supportedControls,
     colorMapping,
     environment,
+    featureFlags,
 }: IBuildGeoConfigParams): IGeoChartConfig {
-    const { config = {}, customVisualizationConfig = {} } = options;
+    const { config = {}, customVisualizationConfig = {}, a11yTitle } = options;
     const { center, legend, viewport = {} } = supportedControls;
     const { isInEditMode, isExportMode } = config;
 
@@ -85,6 +88,8 @@ export function buildGeoVisualizationConfig({
         colorPalette: config.colorPalette,
         colorMapping,
         cooperativeGestures,
+        a11yTitle,
+        enableGeoChartA11yImprovements: featureFlags?.["enableGeoChartA11yImprovements"] ?? false,
     };
 
     return geoConfig;

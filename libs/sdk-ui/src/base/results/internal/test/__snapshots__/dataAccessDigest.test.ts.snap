@@ -117,7 +117,25 @@ exports[`createDataAccessDigest > should find slices and series for: BarChart - 
 }
 `;
 
+exports[`createDataAccessDigest > should find slices and series for: BarChart - arithmetic measures 2`] = `
+{
+  "seriesCount": 4,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
 exports[`createDataAccessDigest > should find slices and series for: BarChart - font 1`] = `
+{
+  "seriesCount": 6,
+  "seriesIdx": 1,
+  "slicesCount": 2,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: BarChart - font 2`] = `
 {
   "seriesCount": 6,
   "seriesIdx": 1,
@@ -135,7 +153,25 @@ exports[`createDataAccessDigest > should find slices and series for: BarChart - 
 }
 `;
 
+exports[`createDataAccessDigest > should find slices and series for: BarChart - four measures and PoP 2`] = `
+{
+  "seriesCount": 5,
+  "seriesIdx": 0,
+  "slicesCount": 7,
+  "slicesIdx": 1,
+}
+`;
+
 exports[`createDataAccessDigest > should find slices and series for: BarChart - single measure 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 0,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: BarChart - single measure 2`] = `
 {
   "seriesCount": 1,
   "seriesIdx": 0,
@@ -153,6 +189,15 @@ exports[`createDataAccessDigest > should find slices and series for: BarChart - 
 }
 `;
 
+exports[`createDataAccessDigest > should find slices and series for: BarChart - single measure with two viewBy and stack 2`] = `
+{
+  "seriesCount": 12,
+  "seriesIdx": 1,
+  "slicesCount": 2,
+  "slicesIdx": 0,
+}
+`;
+
 exports[`createDataAccessDigest > should find slices and series for: BarChart - single measure with viewBy 1`] = `
 {
   "seriesCount": 1,
@@ -162,7 +207,25 @@ exports[`createDataAccessDigest > should find slices and series for: BarChart - 
 }
 `;
 
+exports[`createDataAccessDigest > should find slices and series for: BarChart - single measure with viewBy 2`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
 exports[`createDataAccessDigest > should find slices and series for: BarChart - single measure with viewBy and stackBy 1`] = `
+{
+  "seriesCount": 6,
+  "seriesIdx": 1,
+  "slicesCount": 2,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: BarChart - single measure with viewBy and stackBy 2`] = `
 {
   "seriesCount": 6,
   "seriesIdx": 1,
@@ -189,7 +252,25 @@ exports[`createDataAccessDigest > should find slices and series for: BarChart - 
 }
 `;
 
+exports[`createDataAccessDigest > should find slices and series for: BarChart - themed 2`] = `
+{
+  "seriesCount": 6,
+  "seriesIdx": 1,
+  "slicesCount": 2,
+  "slicesIdx": 0,
+}
+`;
+
 exports[`createDataAccessDigest > should find slices and series for: BarChart - two measures with two viewBy 1`] = `
+{
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": 12,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: BarChart - two measures with two viewBy 2`] = `
 {
   "seriesCount": 2,
   "seriesIdx": 0,
@@ -207,7 +288,25 @@ exports[`createDataAccessDigest > should find slices and series for: BarChart - 
 }
 `;
 
+exports[`createDataAccessDigest > should find slices and series for: BarChart - two measures with two viewBy, filtered to single value 2`] = `
+{
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": 1,
+  "slicesIdx": 1,
+}
+`;
+
 exports[`createDataAccessDigest > should find slices and series for: BarChart - two measures with viewBy 1`] = `
+{
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: BarChart - two measures with viewBy 2`] = `
 {
   "seriesCount": 2,
   "seriesIdx": 0,
@@ -243,7 +342,25 @@ exports[`createDataAccessDigest > should find slices and series for: BarChart - 
 }
 `;
 
+exports[`createDataAccessDigest > should find slices and series for: BarChart - viewBy date and PoP measure 2`] = `
+{
+  "seriesCount": 3,
+  "seriesIdx": 0,
+  "slicesCount": 7,
+  "slicesIdx": 1,
+}
+`;
+
 exports[`createDataAccessDigest > should find slices and series for: BarChart - viewBy with two dates 1`] = `
+{
+  "seriesCount": 3,
+  "seriesIdx": 0,
+  "slicesCount": 7,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: BarChart - viewBy with two dates 2`] = `
 {
   "seriesCount": 3,
   "seriesIdx": 0,
@@ -846,6 +963,15 @@ exports[`createDataAccessDigest > should find slices and series for: DonutChart 
 }
 `;
 
+exports[`createDataAccessDigest > should find slices and series for: DonutChart - font 2`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
 exports[`createDataAccessDigest > should find slices and series for: DonutChart - single measure 1`] = `
 {
   "seriesCount": 1,
@@ -864,7 +990,25 @@ exports[`createDataAccessDigest > should find slices and series for: DonutChart 
 }
 `;
 
+exports[`createDataAccessDigest > should find slices and series for: DonutChart - single measure with viewBy 2`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
 exports[`createDataAccessDigest > should find slices and series for: DonutChart - themed 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: DonutChart - themed 2`] = `
 {
   "seriesCount": 1,
   "seriesIdx": 0,
@@ -936,6 +1080,15 @@ exports[`createDataAccessDigest > should find slices and series for: FunnelChart
 }
 `;
 
+exports[`createDataAccessDigest > should find slices and series for: FunnelChart - font 2`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
 exports[`createDataAccessDigest > should find slices and series for: FunnelChart - single measure 1`] = `
 {
   "seriesCount": 1,
@@ -946,6 +1099,15 @@ exports[`createDataAccessDigest > should find slices and series for: FunnelChart
 `;
 
 exports[`createDataAccessDigest > should find slices and series for: FunnelChart - single measure with viewBy 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: FunnelChart - single measure with viewBy 2`] = `
 {
   "seriesCount": 1,
   "seriesIdx": 0,
@@ -981,12 +1143,930 @@ exports[`createDataAccessDigest > should find slices and series for: FunnelChart
 }
 `;
 
+exports[`createDataAccessDigest > should find slices and series for: FunnelChart - themed 2`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
 exports[`createDataAccessDigest > should find slices and series for: FunnelChart - two measures 1`] = `
 {
   "seriesCount": 2,
   "seriesIdx": 1,
   "slicesCount": 0,
   "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoAreaChart - area chart-level custom gradient palette 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 9,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoAreaChart - area chart-level custom segment mapping 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 10,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoAreaChart - area chart-level custom segment mapping 2`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 10,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoAreaChart - area legend position bottom 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 10,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoAreaChart - area legend position bottom 2`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 10,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoAreaChart - area legend position left 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 10,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoAreaChart - area legend position left 2`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 10,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoAreaChart - area legend position right 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 10,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoAreaChart - area legend position right 2`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 10,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoAreaChart - area legend position top 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 10,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoAreaChart - area legend position top 2`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 10,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoAreaChart - area legend with category and color-scale 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 10,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoAreaChart - area legend with category and color-scale 2`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 10,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoAreaChart - area legend with color-scale only 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 9,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoAreaChart - area legend with selection 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 10,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoAreaChart - area legend with selection 2`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 10,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoAreaChart - area viewport north america 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 1,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoAreaChart - area viewport world 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 1,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoAreaChart - area with color and segment 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 10,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoAreaChart - area with color and segment 2`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 10,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoAreaChart - area with color attribute 1`] = `
+{
+  "seriesCount": 0,
+  "seriesIdx": undefined,
+  "slicesCount": 2,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoAreaChart - area with color attribute categories 1`] = `
+{
+  "seriesCount": 0,
+  "seriesIdx": undefined,
+  "slicesCount": 10,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoAreaChart - area with color gradient 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 9,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoAreaChart - area with color gradient 2`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 9,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoChart - area layer-level gradient palette overrides chart-level 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 9,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoChart - area layer-level gradient palette overrides chart-level 2`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 9,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoChart - area layer-level segment mapping overrides chart-level 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 10,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoChart - area layer-level segment mapping overrides chart-level 2`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 10,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoChart - area primary with pushpin overlay 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 10,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoChart - area primary with pushpin overlay 2`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 10,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoChart - area primary with pushpin overlay 3`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 363,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoChart - area primary with two pushpin overlays 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 10,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoChart - area primary with two pushpin overlays 2`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 20,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoChart - area primary with two pushpin overlays 3`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 10,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoChart - area primary with two pushpin overlays 4`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 363,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoChart - area with clustered pushpin overlay 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 10,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoChart - area with clustered pushpin overlay 2`] = `
+{
+  "seriesCount": 0,
+  "seriesIdx": undefined,
+  "slicesCount": 363,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoChart - area with clustered pushpin overlay 3`] = `
+{
+  "seriesCount": 0,
+  "seriesIdx": undefined,
+  "slicesCount": 20,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoChart - area with clustered pushpin overlay 4`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 10,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoChart - area with non-clustered pushpin overlay 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 10,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoChart - area with non-clustered pushpin overlay 2`] = `
+{
+  "seriesCount": 0,
+  "seriesIdx": undefined,
+  "slicesCount": 363,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoChart - area with non-clustered pushpin overlay 3`] = `
+{
+  "seriesCount": 0,
+  "seriesIdx": undefined,
+  "slicesCount": 20,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoChart - area with non-clustered pushpin overlay 4`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 10,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoChart - multi-layer area override only 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 10,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoChart - multi-layer area override only 2`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 20,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoChart - multi-layer area override only 3`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 10,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoChart - multi-layer both inherit chart-level colors 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 10,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoChart - multi-layer both inherit chart-level colors 2`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 20,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoChart - multi-layer both inherit chart-level colors 3`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 10,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoChart - multi-layer both layer overrides with conflicting chart fallback 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 10,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoChart - multi-layer both layer overrides with conflicting chart fallback 2`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 20,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoChart - multi-layer both layer overrides with conflicting chart fallback 3`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 10,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoChart - multi-layer chart-level segment mapping 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 10,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoChart - multi-layer chart-level segment mapping 2`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 20,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoChart - multi-layer chart-level segment mapping 3`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 10,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoChart - multi-layer per-layer segment mapping override 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 10,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoChart - multi-layer per-layer segment mapping override 2`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 20,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoChart - multi-layer per-layer segment mapping override 3`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 10,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoChart - multi-layer pushpin override only 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 10,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoChart - multi-layer pushpin override only 2`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 20,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoChart - multi-layer pushpin override only 3`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 10,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoChart - pushpin layer-level gradient palette overrides chart-level 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 363,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoChart - pushpin layer-level gradient palette overrides chart-level 2`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 363,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoChart - pushpin layer-level segment mapping overrides chart-level 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 20,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoChart - pushpin layer-level segment mapping overrides chart-level 2`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 20,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoPushpinChart - clustered points 1`] = `
+{
+  "seriesCount": 0,
+  "seriesIdx": undefined,
+  "slicesCount": 363,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoPushpinChart - clustered points 2`] = `
+{
+  "seriesCount": 0,
+  "seriesIdx": undefined,
+  "slicesCount": 363,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoPushpinChart - latitude/longitude with color and segment 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 20,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoPushpinChart - latitude/longitude with color and segment 2`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 20,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoPushpinChart - latitude/longitude with color attribute 1`] = `
+{
+  "seriesCount": 0,
+  "seriesIdx": undefined,
+  "slicesCount": 20,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoPushpinChart - latitude/longitude with color attribute 2`] = `
+{
+  "seriesCount": 0,
+  "seriesIdx": undefined,
+  "slicesCount": 20,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoPushpinChart - latitude/longitude with size and color 1`] = `
+{
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": 363,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoPushpinChart - latitude/longitude with size and color 2`] = `
+{
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": 363,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoPushpinChart - legend category edge case with empty regions 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 22,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoPushpinChart - legend category edge case with empty regions 2`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 22,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoPushpinChart - legend position bottom 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 20,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoPushpinChart - legend position bottom 2`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 20,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoPushpinChart - legend position left 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 20,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoPushpinChart - legend position left 2`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 20,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoPushpinChart - legend position right 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 20,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoPushpinChart - legend position right 2`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 20,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoPushpinChart - legend position top 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 20,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoPushpinChart - legend position top 2`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 20,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoPushpinChart - legend size color-scale and category 1`] = `
+{
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": 20,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoPushpinChart - legend size color-scale and category 2`] = `
+{
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": 20,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoPushpinChart - legend with selection 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 20,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoPushpinChart - legend with selection 2`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 20,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoPushpinChart - non-clustered points 1`] = `
+{
+  "seriesCount": 0,
+  "seriesIdx": undefined,
+  "slicesCount": 363,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoPushpinChart - non-clustered points 2`] = `
+{
+  "seriesCount": 0,
+  "seriesIdx": undefined,
+  "slicesCount": 363,
+  "slicesIdx": 0,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoPushpinChart - pushpin chart-level custom gradient palette 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 363,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoPushpinChart - pushpin chart-level custom gradient palette 2`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 363,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoPushpinChart - pushpin chart-level custom segment mapping 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 20,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoPushpinChart - pushpin chart-level custom segment mapping 2`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 20,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoPushpinChart - pushpin size color gradient and segment 1`] = `
+{
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": 20,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoPushpinChart - pushpin size color gradient and segment 2`] = `
+{
+  "seriesCount": 2,
+  "seriesIdx": 0,
+  "slicesCount": 20,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoPushpinChart - viewport europe 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 363,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoPushpinChart - viewport europe 2`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 363,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoPushpinChart - viewport north america with segment 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 22,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoPushpinChart - viewport north america with segment 2`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 22,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoPushpinChart - viewport world 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 363,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: GeoPushpinChart - viewport world 2`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 363,
+  "slicesIdx": 1,
 }
 `;
 
@@ -1431,6 +2511,15 @@ exports[`createDataAccessDigest > should find slices and series for: PieChart - 
 }
 `;
 
+exports[`createDataAccessDigest > should find slices and series for: PieChart - font 2`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
 exports[`createDataAccessDigest > should find slices and series for: PieChart - single measure 1`] = `
 {
   "seriesCount": 1,
@@ -1449,7 +2538,25 @@ exports[`createDataAccessDigest > should find slices and series for: PieChart - 
 }
 `;
 
+exports[`createDataAccessDigest > should find slices and series for: PieChart - single measure with viewBy 2`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
 exports[`createDataAccessDigest > should find slices and series for: PieChart - themed 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: PieChart - themed 2`] = `
 {
   "seriesCount": 1,
   "seriesIdx": 0,
@@ -1539,6 +2646,15 @@ exports[`createDataAccessDigest > should find slices and series for: PyramidChar
 }
 `;
 
+exports[`createDataAccessDigest > should find slices and series for: PyramidChart - font 2`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
 exports[`createDataAccessDigest > should find slices and series for: PyramidChart - single measure 1`] = `
 {
   "seriesCount": 1,
@@ -1549,6 +2665,15 @@ exports[`createDataAccessDigest > should find slices and series for: PyramidChar
 `;
 
 exports[`createDataAccessDigest > should find slices and series for: PyramidChart - single measure with viewBy 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: PyramidChart - single measure with viewBy 2`] = `
 {
   "seriesCount": 1,
   "seriesIdx": 0,
@@ -1576,6 +2701,15 @@ exports[`createDataAccessDigest > should find slices and series for: PyramidChar
 `;
 
 exports[`createDataAccessDigest > should find slices and series for: PyramidChart - themed 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: PyramidChart - themed 2`] = `
 {
   "seriesCount": 1,
   "seriesIdx": 0,
@@ -1845,6 +2979,15 @@ exports[`createDataAccessDigest > should find slices and series for: WaterfallCh
 }
 `;
 
+exports[`createDataAccessDigest > should find slices and series for: WaterfallChart - font 2`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
 exports[`createDataAccessDigest > should find slices and series for: WaterfallChart - multi measures 1`] = `
 {
   "seriesCount": 3,
@@ -1899,7 +3042,25 @@ exports[`createDataAccessDigest > should find slices and series for: WaterfallCh
 }
 `;
 
+exports[`createDataAccessDigest > should find slices and series for: WaterfallChart - single measure with viewBy 2`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
 exports[`createDataAccessDigest > should find slices and series for: WaterfallChart - themed 1`] = `
+{
+  "seriesCount": 1,
+  "seriesIdx": 0,
+  "slicesCount": 6,
+  "slicesIdx": 1,
+}
+`;
+
+exports[`createDataAccessDigest > should find slices and series for: WaterfallChart - themed 2`] = `
 {
   "seriesCount": 1,
   "seriesIdx": 0,

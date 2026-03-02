@@ -12,14 +12,7 @@ import {
     useCancelablePromise,
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
-import {
-    type IUiListboxItem,
-    UiButton,
-    UiDropdown,
-    UiIconButton,
-    UiListbox,
-    useElementSize,
-} from "@gooddata/sdk-ui-kit";
+import { UiIconButton, UiTooltip, useElementSize } from "@gooddata/sdk-ui-kit";
 
 import { HIDDEN_ITEMS, LEAF_TYPES } from "./const.js";
 import { useLineageGraph } from "./useLineageGraph.js";
@@ -28,6 +21,7 @@ import { type ICatalogItem, type ICatalogItemRef } from "../catalogItem/types.js
 const messages = defineMessages({
     up: { id: "analyticsCatalog.lineage.direction.up" },
     down: { id: "analyticsCatalog.lineage.direction.down" },
+    both: { id: "analyticsCatalog.lineage.direction.both" },
 });
 
 type Props = {
@@ -39,7 +33,7 @@ export function Lineage({ item, onItemClick }: Props) {
     const backend = useBackendStrict();
     const workspace = useWorkspaceStrict();
     const intl = useIntl();
-    const [direction, setDirection] = useState<"up" | "down">("down");
+    const [direction, setDirection] = useState<"up" | "down" | "both">("down");
 
     const objRef = useMemo(() => ({ identifier: item.identifier, type: item.type }), [item]);
 
@@ -67,21 +61,6 @@ export function Lineage({ item, onItemClick }: Props) {
         },
     );
 
-    const items = useMemo(() => {
-        return [
-            {
-                type: "interactive",
-                id: "up",
-                stringTitle: intl.formatMessage(messages["up"]),
-            },
-            {
-                type: "interactive",
-                id: "down",
-                stringTitle: intl.formatMessage(messages["down"]),
-            },
-        ] as IUiListboxItem<unknown>[];
-    }, [intl]);
-
     const isLoading = status === "loading" || status === "pending";
     const isLoadingOrSuccess = isLoading || status === "success";
 
@@ -89,50 +68,87 @@ export function Lineage({ item, onItemClick }: Props) {
         <div className="lineage-container" ref={ref}>
             {isLoadingOrSuccess ? (
                 <>
-                    <div className="lineage-direction">
-                        <UiDropdown
-                            closeOnEscape
-                            autofocusOnOpen
-                            closeOnOutsideClick
-                            renderButton={(props) => (
-                                <UiButton
-                                    size="medium"
-                                    isDisabled={isLoading}
-                                    label={intl.formatMessage(messages[direction])}
-                                    iconAfter={props.isOpen ? "chevronUp" : "chevronDown"}
-                                    iconAfterSize={11}
-                                    onClick={props.toggleDropdown}
-                                />
-                            )}
-                            renderBody={(props) => (
-                                <UiListbox
-                                    width={200}
-                                    items={items}
-                                    ariaAttributes={{
-                                        id: props.ariaAttributes.id,
-                                    }}
-                                    selectedItemId={direction}
-                                    onSelect={(item) => {
-                                        setDirection(item.id as "up" | "down");
-                                        props.closeDropdown();
-                                    }}
-                                />
-                            )}
-                        />
-                    </div>
                     <div className="lineage-toolbar">
-                        <UiIconButton icon="minimize" onClick={reset} isDisabled={isLoading} />
-                        <UiIconButton icon="expand" onClick={expand} isDisabled={isLoading} />
-                        <div className="lineage-toolbar-spacer" />
+                        <UiTooltip
+                            arrowPlacement="bottom"
+                            triggerBy={["hover", "focus"]}
+                            anchor={
+                                <UiIconButton
+                                    size="small"
+                                    variant="tertiary"
+                                    icon="stream"
+                                    onClick={() => {
+                                        setDirection("both");
+                                    }}
+                                    isActive={direction === "both"}
+                                    isDisabled={isLoading}
+                                />
+                            }
+                            content={intl.formatMessage(messages.both)}
+                        />
+                        <UiTooltip
+                            arrowPlacement="bottom"
+                            triggerBy={["hover", "focus"]}
+                            anchor={
+                                <UiIconButton
+                                    size="small"
+                                    variant="tertiary"
+                                    icon="streamDown"
+                                    onClick={() => {
+                                        setDirection("down");
+                                    }}
+                                    isActive={direction === "down"}
+                                    isDisabled={isLoading}
+                                />
+                            }
+                            content={intl.formatMessage(messages.down)}
+                        />
+                        <UiTooltip
+                            arrowPlacement="bottom"
+                            triggerBy={["hover", "focus"]}
+                            anchor={
+                                <UiIconButton
+                                    size="small"
+                                    variant="tertiary"
+                                    icon="streamUp"
+                                    onClick={() => {
+                                        setDirection("up");
+                                    }}
+                                    isActive={direction === "up"}
+                                    isDisabled={isLoading}
+                                />
+                            }
+                            content={intl.formatMessage(messages.up)}
+                        />
+                        <div className="lineage-toolbar-divider" />
                         <UiIconButton
-                            icon="minusCircle"
+                            size="small"
+                            variant="tertiary"
+                            icon="minus"
                             onClick={zoomOut}
                             isDisabled={!zoomOutEnabled || isLoading}
                         />
                         <UiIconButton
-                            icon="plusCircle"
+                            size="small"
+                            variant="tertiary"
+                            icon="plus"
                             onClick={zoomIn}
                             isDisabled={!zoomInEnabled || isLoading}
+                        />
+                        <div className="lineage-toolbar-divider" />
+                        <UiIconButton
+                            size="small"
+                            variant="tertiary"
+                            icon="minimize"
+                            onClick={reset}
+                            isDisabled={isLoading}
+                        />
+                        <UiIconButton
+                            size="small"
+                            variant="tertiary"
+                            icon="expand"
+                            onClick={expand}
+                            isDisabled={isLoading}
                         />
                     </div>
                 </>

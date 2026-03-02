@@ -1,0 +1,338 @@
+[
+    {
+        "n2oMap": {
+            "a_f_city.id.cityname": "tooltipText_df",
+            "a_f_city.id.latitude": "a_f_city.id.latitude",
+            "a_f_city.id.longitude": "a_f_city.id.longitude",
+            "m_f_population_sum": "m_f_population_sum"
+        },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "f_city.id.latitude", "type": "displayForm" },
+                        "localIdentifier": "a_f_city.id.latitude"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "f_city.id.longitude", "type": "displayForm" },
+                        "localIdentifier": "a_f_city.id.longitude"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "f_city.id.cityname", "type": "displayForm" },
+                        "localIdentifier": "tooltipText_df"
+                    }
+                }
+            ],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "f_city.id.latitude", "type": "displayForm" },
+                                "localIdentifier": "a_f_city.id.latitude"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "latitude"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "f_city.id.longitude", "type": "displayForm" },
+                                "localIdentifier": "a_f_city.id.longitude"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "longitude"
+                },
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "alias": "Population",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "aggregation": "sum",
+                                        "item": { "identifier": "f_population", "type": "fact" }
+                                    }
+                                },
+                                "localIdentifier": "m_f_population_sum"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "color"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "f_city.id.cityname", "type": "displayForm" },
+                                "localIdentifier": "tooltipText_df"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "tooltipText"
+                }
+            ],
+            "dimensions": [
+                { "itemIdentifiers": ["measureGroup"] },
+                { "itemIdentifiers": ["a_f_city.id.latitude", "a_f_city.id.longitude", "tooltipText_df"] }
+            ],
+            "filters": [
+                {
+                    "positiveAttributeFilter": {
+                        "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                        "in": { "values": ["West Coast", "East Coast"] }
+                    }
+                }
+            ],
+            "measures": [
+                {
+                    "measure": {
+                        "alias": "Population",
+                        "definition": {
+                            "measureDefinition": {
+                                "aggregation": "sum",
+                                "item": { "identifier": "f_population", "type": "fact" }
+                            }
+                        },
+                        "localIdentifier": "m_f_population_sum"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "pushpin chart-level custom gradient palette",
+        "vis": "GeoPushpinChart"
+    },
+    {
+        "n2oMap": {
+            "a_f_city.id.cityname": "tooltipText_df",
+            "a_f_city.id.latitude": "a_f_city.id.latitude",
+            "a_f_city.id.longitude": "a_f_city.id.longitude",
+            "m_f_population_sum": "m_f_population_sum"
+        },
+        "originalExecution": {
+            "attributes": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "f_city.id.latitude", "type": "displayForm" },
+                        "localIdentifier": "a_f_city.id.latitude"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "f_city.id.longitude", "type": "displayForm" },
+                        "localIdentifier": "a_f_city.id.longitude"
+                    }
+                },
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "f_city.id.cityname", "type": "displayForm" },
+                        "localIdentifier": "tooltipText_df"
+                    }
+                }
+            ],
+            "buckets": [
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "f_city.id.latitude", "type": "displayForm" },
+                                "localIdentifier": "a_f_city.id.latitude"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "latitude"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "f_city.id.longitude", "type": "displayForm" },
+                                "localIdentifier": "a_f_city.id.longitude"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "longitude"
+                },
+                {
+                    "items": [
+                        {
+                            "measure": {
+                                "alias": "Population",
+                                "definition": {
+                                    "measureDefinition": {
+                                        "aggregation": "sum",
+                                        "item": { "identifier": "f_population", "type": "fact" }
+                                    }
+                                },
+                                "localIdentifier": "m_f_population_sum"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "color"
+                },
+                {
+                    "items": [
+                        {
+                            "attribute": {
+                                "displayForm": { "identifier": "f_city.id.cityname", "type": "displayForm" },
+                                "localIdentifier": "tooltipText_df"
+                            }
+                        }
+                    ],
+                    "localIdentifier": "tooltipText"
+                }
+            ],
+            "dimensions": [
+                { "itemIdentifiers": ["measureGroup"] },
+                { "itemIdentifiers": ["a_f_city.id.latitude", "a_f_city.id.longitude", "tooltipText_df"] }
+            ],
+            "filters": [
+                {
+                    "positiveAttributeFilter": {
+                        "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                        "in": { "values": ["West Coast", "East Coast"] }
+                    }
+                }
+            ],
+            "measures": [
+                {
+                    "measure": {
+                        "alias": "Population",
+                        "definition": {
+                            "measureDefinition": {
+                                "aggregation": "sum",
+                                "item": { "identifier": "f_population", "type": "fact" }
+                            }
+                        },
+                        "localIdentifier": "m_f_population_sum"
+                    }
+                }
+            ],
+            "postProcessing": {},
+            "sortBy": [],
+            "workspace": "reference-workspace"
+        },
+        "scenario": "pushpin layer-level gradient palette overrides chart-level",
+        "vis": "GeoChart"
+    },
+    {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_city.id.latitude", "type": "displayForm" },
+                            "localIdentifier": "a_f_city.id.latitude"
+                        }
+                    }
+                ],
+                "localIdentifier": "latitude"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_city.id.longitude", "type": "displayForm" },
+                            "localIdentifier": "a_f_city.id.longitude"
+                        }
+                    }
+                ],
+                "localIdentifier": "longitude"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "aggregation": "sum",
+                                    "item": { "identifier": "f_population", "type": "fact" }
+                                }
+                            },
+                            "localIdentifier": "m_f_population_sum"
+                        }
+                    }
+                ],
+                "localIdentifier": "size"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_city.id.cityname", "type": "displayForm" },
+                            "localIdentifier": "a_f_city.id.cityname"
+                        }
+                    }
+                ],
+                "localIdentifier": "tooltipText"
+            }
+        ],
+        "scenario": "area primary with pushpin overlay",
+        "vis": "GeoChart"
+    },
+    {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_city.id.latitude", "type": "displayForm" },
+                            "localIdentifier": "a_f_city.id.latitude"
+                        }
+                    }
+                ],
+                "localIdentifier": "latitude"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_city.id.longitude", "type": "displayForm" },
+                            "localIdentifier": "a_f_city.id.longitude"
+                        }
+                    }
+                ],
+                "localIdentifier": "longitude"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "aggregation": "sum",
+                                    "item": { "identifier": "f_population", "type": "fact" }
+                                }
+                            },
+                            "localIdentifier": "m_f_population_sum"
+                        }
+                    }
+                ],
+                "localIdentifier": "size"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_city.id.cityname", "type": "displayForm" },
+                            "localIdentifier": "a_f_city.id.cityname"
+                        }
+                    }
+                ],
+                "localIdentifier": "tooltipText"
+            }
+        ],
+        "scenario": "area primary with two pushpin overlays",
+        "vis": "GeoChart"
+    }
+]

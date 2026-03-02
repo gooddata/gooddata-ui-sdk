@@ -4,6 +4,7 @@ import {
     type DashboardAttributeFilterSelectionMode,
     type DateFilterGranularity,
     type IAttributeElement,
+    type IAttributeElements,
     type IAttributeElementsByRef,
     type IAttributeFilter,
     type IDashboardAttributeFilter,
@@ -13,7 +14,10 @@ import {
     filterAttributeElements,
     filterObjRef,
     idRef,
+    isArbitraryAttributeFilter,
+    isAttributeFilterWithSelection,
     isEmptyValuesDateFilterOption,
+    isMatchAttributeFilter,
     isNegativeAttributeFilter,
     isRelativeDateFilter,
     newNegativeAttributeFilter,
@@ -62,11 +66,32 @@ export function attributeFilterToDashboardAttributeFilter(
     const attributeElementsObj: IAttributeElementsByRef | undefined = attributeElements && {
         uris: attributeElements.map((element) => element.uri),
     };
+
+    let resolvedElements: IAttributeElements | undefined = attributeElementsObj;
+    let resolvedNegativeSelection = isInverted;
+
+    // TODO INE: add proper support for match/arbitrary filters in CQ-2015
+    if (!resolvedElements) {
+        if (isAttributeFilterWithSelection(filter)) {
+            resolvedElements = filterAttributeElements(filter);
+        } else if (isArbitraryAttributeFilter(filter)) {
+            resolvedElements = {
+                values: filter.arbitraryAttributeFilter.values,
+            };
+            resolvedNegativeSelection = filter.arbitraryAttributeFilter.negativeSelection ?? false;
+        } else if (isMatchAttributeFilter(filter)) {
+            resolvedElements = {
+                values: [filter.matchAttributeFilter.literal],
+            };
+            resolvedNegativeSelection = filter.matchAttributeFilter.negativeSelection ?? false;
+        }
+    }
+
     return {
         attributeFilter: {
-            attributeElements: attributeElementsObj ?? filterAttributeElements(filter),
+            attributeElements: resolvedElements ?? { values: [] },
             displayForm: filterObjRef(filter),
-            negativeSelection: isInverted ?? isNegativeAttributeFilter(filter),
+            negativeSelection: resolvedNegativeSelection ?? isNegativeAttributeFilter(filter),
             localIdentifier,
             title,
             selectionMode,

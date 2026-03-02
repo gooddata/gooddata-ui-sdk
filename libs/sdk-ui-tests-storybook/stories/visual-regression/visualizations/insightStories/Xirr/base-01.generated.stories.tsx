@@ -2,6 +2,7 @@
 
 import { type IInsight } from "@gooddata/sdk-model";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 
@@ -55,7 +56,7 @@ export const OnlyMeasure = () =>
                 visualizationUrl: "local:xirr",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(22, 0, 0),
+        getScenariosGroupByIndexes(25, 0, 0),
     )();
 OnlyMeasure.parameters = {
     kind: "only measure",
@@ -126,7 +127,7 @@ export const CorrectConfig = () =>
                 visualizationUrl: "local:xirr",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(22, 0, 1),
+        getScenariosGroupByIndexes(25, 0, 1),
     )();
 CorrectConfig.parameters = {
     kind: "correct config",
@@ -197,7 +198,7 @@ export const SemanticallyWrongMeasure = () =>
                 visualizationUrl: "local:xirr",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(22, 0, 2),
+        getScenariosGroupByIndexes(25, 0, 2),
     )();
 SemanticallyWrongMeasure.parameters = {
     kind: "semantically wrong measure",

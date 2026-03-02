@@ -530,5 +530,8 @@
     "automations.accessibility.search.alerts": "Поиск оповещений",
     "automations.accessibility.search.schedules": "Поиск запланированных экспортов",
     "automations.accessibility.gridLabel.alerts": "Список оповещений",
-    "automations.accessibility.gridLabel.schedules": "Список запланированных экспортов"
+    "automations.accessibility.gridLabel.schedules": "Список запланированных экспортов",
+    "filters.allTime.exceptEmptyValues.title": "За все время, кроме пустых значений",
+    "filters.emptyValues.label": "{title}, пустые значения",
+    "filters.emptyValues.title": "Пустые значения"
 }

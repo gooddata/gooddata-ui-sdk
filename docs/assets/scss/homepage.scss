@@ -221,8 +221,11 @@
         display: block;
     }
 
-    & h4#{&}__title {
+    & p#{&}__title {
         margin-top: 0;
+        font-size: 1.125em;
+        font-family: bca6d3310b5c9dae1dae416e8abc8405,helvetica,arial,sans-serif;
+        line-height: 1.2;
     }
 
     p:last-child {

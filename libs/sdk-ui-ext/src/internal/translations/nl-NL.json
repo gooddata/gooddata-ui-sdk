@@ -530,5 +530,8 @@
     "automations.accessibility.search.alerts": "Waarschuwingen zoeken",
     "automations.accessibility.search.schedules": "Geplande export zoeken",
     "automations.accessibility.gridLabel.alerts": "Lijst met waarschuwingen",
-    "automations.accessibility.gridLabel.schedules": "Lijst van geplande exporten"
+    "automations.accessibility.gridLabel.schedules": "Lijst van geplande exporten",
+    "filters.allTime.exceptEmptyValues.title": "Altijd, behalve lege waarden",
+    "filters.emptyValues.label": "{title}, lege waarden",
+    "filters.emptyValues.title": "Lege waarden"
 }

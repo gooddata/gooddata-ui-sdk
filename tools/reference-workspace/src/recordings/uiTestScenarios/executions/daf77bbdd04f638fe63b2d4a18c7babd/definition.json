@@ -1,0 +1,52 @@
+{
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": { "identifier": "f_city.id.latitude", "type": "displayForm" },
+                "localIdentifier": "a_f_city.id.latitude"
+            }
+        },
+        {
+            "attribute": {
+                "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                "localIdentifier": "a_f_owner.region_id"
+            }
+        }
+    ],
+    "buckets": [
+        {
+            "items": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "f_city.id.latitude", "type": "displayForm" },
+                        "localIdentifier": "a_f_city.id.latitude"
+                    }
+                }
+            ],
+            "localIdentifier": "location"
+        },
+        {
+            "items": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                        "localIdentifier": "a_f_owner.region_id"
+                    }
+                }
+            ],
+            "localIdentifier": "color"
+        }
+    ],
+    "dimensions": [{ "itemIdentifiers": ["a_f_city.id.latitude", "a_f_owner.region_id"] }],
+    "filters": [
+        {
+            "positiveAttributeFilter": {
+                "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                "in": { "values": ["West Coast", "East Coast"] }
+            }
+        }
+    ],
+    "measures": [],
+    "sortBy": [],
+    "workspace": "reference-workspace"
+}

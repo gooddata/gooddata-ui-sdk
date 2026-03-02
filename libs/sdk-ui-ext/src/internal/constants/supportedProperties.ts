@@ -370,6 +370,7 @@ export const GEOPUSHPIN_SUPPORTED_PROPERTIES = [
     "latitude",
     "longitude",
     "legend",
+    "mapStyle",
     "tileset",
     "points.groupNearbyPoints",
     "points.minSize",
@@ -397,6 +398,7 @@ export const GEOPUSHPIN_NEXT_SUPPORTED_PROPERTIES = GEOPUSHPIN_SUPPORTED_PROPERT
 
 export const GEOAREA_SUPPORTED_PROPERTIES = [
     "legend",
+    "mapStyle",
     "tileset",
     "viewport.area",
     "colorMapping",

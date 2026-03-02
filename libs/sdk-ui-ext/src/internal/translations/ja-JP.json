@@ -530,5 +530,8 @@
     "automations.accessibility.search.alerts": "検索アラート",
     "automations.accessibility.search.schedules": "スケジュールされたエクスポートを検索",
     "automations.accessibility.gridLabel.alerts": "アラート一覧",
-    "automations.accessibility.gridLabel.schedules": "輸出予定リスト"
+    "automations.accessibility.gridLabel.schedules": "輸出予定リスト",
+    "filters.allTime.exceptEmptyValues.title": "空の値を除く全期間",
+    "filters.emptyValues.label": "{title}、空の値",
+    "filters.emptyValues.title": "空の値"
 }

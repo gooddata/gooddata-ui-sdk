@@ -1,8 +1,10 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { type IOrganizationDescriptor, type IOrganizationDescriptorUpdate } from "@gooddata/sdk-model";
 
 import { type IOrganizationAutomationService } from "./automations/index.js";
 import { type IOrganizationLlmEndpointsService } from "./llmEndpoints/index.js";
+import { type IOrganizationLlmProvidersService } from "./llmProviders/index.js";
 import { type IOrganizationNotificationChannelService } from "./notificationChannels/index.js";
 import { type IOrganizationNotificationService } from "./notifications/index.js";
 import { type IOrganizationPermissionService } from "./permissions/index.js";
@@ -70,6 +72,11 @@ export interface IOrganization {
      * Returns service that can be used to query and manage organization LLM endpoints.
      */
     llmEndpoints(): IOrganizationLlmEndpointsService;
+
+    /**
+     * Returns service that can be used to query and manage organization LLM providers.
+     */
+    llmProviders(): IOrganizationLlmProvidersService;
 
     /**
      * Returns service that can be used to query and manage organization notifications.

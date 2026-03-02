@@ -1,6 +1,8 @@
 // (C) 2025-2026 GoodData Corporation
 
+import type { IAnalyticsCatalogTrendingObject } from "@gooddata/sdk-backend-spi";
 import {
+    type GenAIObjectType,
     type IAttributeMetadataObject,
     type IDashboard,
     type IDataSetMetadataObject,
@@ -20,6 +22,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import type { ICatalogItem, VisualizationType } from "./types.js";
+import { mapObjectType } from "../objectType/mapping.js";
 import { parseBackendDate } from "../utils/date.js";
 
 export function convertEntityToCatalogItem(
@@ -193,4 +196,29 @@ function convertCertification(certification: IObjectCertification | undefined) {
         };
     }
     return undefined;
+}
+
+export function convertTrendingObjectToCatalogItem(obj: IAnalyticsCatalogTrendingObject): ICatalogItem {
+    const type = mapObjectType(obj.type as GenAIObjectType);
+    const createdAt = obj.createdAt ? parseBackendDate(obj.createdAt) : null;
+    const updatedAtRaw = obj.modifiedAt ?? obj.createdAt;
+
+    return {
+        identifier: obj.id,
+        type,
+        title: obj.title ?? "",
+        description: "",
+        tags: obj.tags ?? [],
+        createdBy: obj.createdBy ?? "",
+        updatedBy: obj.modifiedBy ?? "",
+        createdAt,
+        updatedAt: updatedAtRaw ? parseBackendDate(updatedAtRaw) : null,
+        isLocked: false,
+        isEditable: false,
+        isHidden: obj.isHidden ?? false,
+        isHiddenFromKda: obj.isHiddenFromKda,
+        visualizationType: obj.visualizationUrl
+            ? (obj.visualizationUrl.replace("local:", "") as VisualizationType)
+            : undefined,
+    };
 }

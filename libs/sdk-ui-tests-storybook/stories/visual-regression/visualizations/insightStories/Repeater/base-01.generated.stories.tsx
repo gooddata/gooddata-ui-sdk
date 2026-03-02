@@ -2,6 +2,7 @@
 
 import { type IInsight } from "@gooddata/sdk-model";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 
@@ -61,7 +62,7 @@ export const OneAttribute = () =>
                 visualizationUrl: "local:repeater",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(17, 0, 0),
+        getScenariosGroupByIndexes(20, 0, 0),
     )();
 OneAttribute.parameters = {
     kind: "one attribute",
@@ -141,7 +142,7 @@ export const OneAttributeAndOneMeasure = () =>
                 visualizationUrl: "local:repeater",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(17, 0, 1),
+        getScenariosGroupByIndexes(20, 0, 1),
     )();
 OneAttributeAndOneMeasure.parameters = {
     kind: "one attribute and one measure",
@@ -252,7 +253,7 @@ export const OneAttributeAndOneVisualisation = () =>
                 visualizationUrl: "local:repeater",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(17, 0, 2),
+        getScenariosGroupByIndexes(20, 0, 2),
     )();
 OneAttributeAndOneVisualisation.parameters = {
     kind: "one attribute and one visualisation",

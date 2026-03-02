@@ -3,7 +3,12 @@
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, cancelled, put, select, takeLatest } from "redux-saga/effects";
 
-import { type IAttributeMetadataObject, areObjRefsEqual } from "@gooddata/sdk-model";
+import {
+    type IAttributeMetadataObject,
+    areObjRefsEqual,
+    isArbitraryAttributeFilter,
+    isMatchAttributeFilter,
+} from "@gooddata/sdk-model";
 import { type GoodDataSdkError, convertError } from "@gooddata/sdk-ui";
 
 import { loadAttributeByDisplayForm } from "./loadAttributeByDisplayForm.js";
@@ -11,6 +16,7 @@ import { type PromiseFnReturnType, getAttributeFilterContext } from "../common/s
 import {
     selectAttributeFilterDisplayAsLabel,
     selectAttributeFilterDisplayForm,
+    selectOriginalFilter,
 } from "../filter/filterSelectors.js";
 import { actions } from "../store/slice.js";
 
@@ -54,33 +60,39 @@ export function* loadAttributeSaga(
             displayFormRef,
         );
 
+        const originalFilter: ReturnType<typeof selectOriginalFilter> = yield select(selectOriginalFilter);
+        const isTextFilter =
+            originalFilter &&
+            (isArbitraryAttributeFilter(originalFilter) || isMatchAttributeFilter(originalFilter));
+
         const primaryLabel = attribute.displayForms.find((df) => df.isPrimary);
-        // validate that both DFs are not the secondary ones
-        const displayAsDisplayFormRef: ReturnType<typeof selectAttributeFilterDisplayAsLabel> = yield select(
-            selectAttributeFilterDisplayAsLabel,
-        );
-        if (
-            primaryLabel?.ref &&
-            displayAsDisplayFormRef &&
-            !areObjRefsEqual(displayFormRef, primaryLabel?.ref) &&
-            !areObjRefsEqual(displayAsDisplayFormRef, primaryLabel?.ref)
-        ) {
-            console.error(
-                "AttributeFilter: Filter's displayForm is not primary and provided displayAsLabel is not primary either -> filter will not work correctly. Please provide primary display form in filter definition.",
-            );
-        }
-        // check if AF's DF is primary or not
-        if (primaryLabel?.ref && !areObjRefsEqual(displayFormRef, primaryLabel?.ref)) {
-            console.warn(
-                "AttributeFilter: Filter's displayForm is not primary -> migrating filter to primary label",
-            );
-            yield put(
-                actions.transformFilterToPrimaryLabel({
-                    primaryLabelRef: primaryLabel?.ref,
-                    secondaryLabelRef: displayFormRef,
-                    correlation,
-                }),
-            );
+        // validate that both DFs are not the secondary ones (elements filters only; text filters support any display form)
+        if (!isTextFilter) {
+            const displayAsDisplayFormRef: ReturnType<typeof selectAttributeFilterDisplayAsLabel> =
+                yield select(selectAttributeFilterDisplayAsLabel);
+            if (
+                primaryLabel?.ref &&
+                displayAsDisplayFormRef &&
+                !areObjRefsEqual(displayFormRef, primaryLabel?.ref) &&
+                !areObjRefsEqual(displayAsDisplayFormRef, primaryLabel?.ref)
+            ) {
+                console.error(
+                    "AttributeFilter: Filter's displayForm is not primary and provided displayAsLabel is not primary either -> filter will not work correctly. Please provide primary display form in filter definition.",
+                );
+            }
+            // check if AF's DF is primary or not
+            if (primaryLabel?.ref && !areObjRefsEqual(displayFormRef, primaryLabel?.ref)) {
+                console.warn(
+                    "AttributeFilter: Filter's displayForm is not primary -> migrating filter to primary label",
+                );
+                yield put(
+                    actions.transformFilterToPrimaryLabel({
+                        primaryLabelRef: primaryLabel?.ref,
+                        secondaryLabelRef: displayFormRef,
+                        correlation,
+                    }),
+                );
+            }
         }
 
         yield put(actions.loadAttributeSuccess({ attribute, correlation }));

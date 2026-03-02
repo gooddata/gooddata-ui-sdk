@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import {
     type ElementsQueryOptionsElementsSpecification,
@@ -169,7 +169,7 @@ export interface IAttributeElementLoader {
     /**
      * Set the label used for representing the attribute filter elements visually.
      */
-    setDisplayAsLabel(displayAsLabel: ObjRef): void;
+    setDisplayAsLabel(displayAsLabel: ObjRef | undefined): void;
 
     /**
      * Get the label used for representing the attribute filter elements visually if defined.

@@ -6,6 +6,7 @@ import { join } from "path";
 import { groupBy } from "lodash-es";
 
 import { generateConstantsForCatalog } from "./catalog.js";
+import { generateConstantsForCollectionItems } from "./collectionItems.js";
 import { generateConstantsForDashboards } from "./dashboard.js";
 import { generateDataSampleConst, generateImportsForDataSamples } from "./dataSample.js";
 import { generateConstantsForDisplayForms } from "./displayForm.js";
@@ -13,6 +14,7 @@ import { generateConstantsForExecutions } from "./execution.js";
 import { generateConstantsForInsights } from "./insight.js";
 import { generateConstantsForVisClasses } from "./visClasses.js";
 import { type CatalogRecording } from "../recordings/catalog.js";
+import { type CollectionItemsRecording } from "../recordings/collectionItems.js";
 import { type IRecording, RecordingType } from "../recordings/common.js";
 import { type DashboardRecording } from "../recordings/dashboards.js";
 import { type DisplayFormRecording } from "../recordings/displayForms.js";
@@ -28,12 +30,24 @@ function recNameList(recs: IRecording[]): string {
     return recs.map((r) => r.getRecordingName()).join(",");
 }
 
+function isCollectionItemsRecording(recording: IRecording): recording is CollectionItemsRecording {
+    return recording.getRecordingType() === RecordingType.CollectionItems;
+}
+
 function generateIndexConst(input: IndexGeneratorInput): string {
     const executionsInit = `executions: {${input
         .executions()
         .map((e) => e.getRecordingName())
         .filter((value, index, array) => array.indexOf(value) === index)
         .join(",")}}`;
+
+    const collectionItems = input.collectionItems();
+    const collectionItemsInit =
+        collectionItems.length > 0
+            ? `collectionItems: { ${collectionItems
+                  .map((recording) => `"${recording.key}": ${recording.getRecordingName()}`)
+                  .join(",")} }`
+            : "";
 
     const metadataInit = `
         metadata: {
@@ -45,7 +59,9 @@ function generateIndexConst(input: IndexGeneratorInput): string {
         }
     `;
 
-    return `export const ${MainIndexConstName}: RecordingIndex = { ${executionsInit}, ${metadataInit} } as unknown as RecordingIndex;`;
+    const collectionItemsSegment = collectionItemsInit ? `, ${collectionItemsInit}` : "";
+
+    return `export const ${MainIndexConstName}: RecordingIndex = { ${executionsInit}, ${metadataInit}${collectionItemsSegment} } as unknown as RecordingIndex;`;
 }
 
 function transformToTypescript(input: IndexGeneratorInput, targetDir: string, fileName: string) {
@@ -81,7 +97,12 @@ function transformToTypescript(input: IndexGeneratorInput, targetDir: string, fi
         generateConstantsForDashboards(input.dashboards(), targetDir).forEach((l) => fileContents.push(l));
         fileContents.push("");
 
-        fileContents.push(`import {
+        generateConstantsForCollectionItems(input.collectionItems(), targetDir).forEach((l) =>
+            fileContents.push(l),
+        );
+        fileContents.push("");
+
+        fileContents.push(`import type {
     IExecutionDefinition,
     CatalogItem,
     ICatalogGroup,
@@ -93,6 +114,7 @@ function transformToTypescript(input: IndexGeneratorInput, targetDir: string, fi
     IDashboardPlugin,
     IDataSetMetadataObject,
 } from "@gooddata/sdk-model";
+import type { ICollectionItemsResult } from "@gooddata/sdk-backend-spi";
 
 type ExecutionRecording = {
     scenarios?: any[];
@@ -145,6 +167,7 @@ type RecordingIndex = {
         visClasses?: VisClassesRecording;
         dashboards?: Record<string, DashboardRecording>;
     };
+    collectionItems?: Record<string, ICollectionItemsResult>;
 };`);
 
         fileContents.push("");
@@ -159,6 +182,7 @@ type RecordingIndex = {
  */
 type IndexGeneratorInput = {
     executions: () => ExecutionRecording[];
+    collectionItems: () => CollectionItemsRecording[];
     displayForms: () => DisplayFormRecording[];
     insights: () => InsightRecording[];
     catalog: () => CatalogRecording | null;
@@ -172,6 +196,10 @@ function createGeneratorInput(recordings: IRecording[]): IndexGeneratorInput {
     return {
         executions: () => {
             return (categorized[RecordingType.Execution] as unknown as ExecutionRecording[]) || [];
+        },
+        collectionItems: () => {
+            const items = categorized[RecordingType.CollectionItems] ?? [];
+            return items.filter(isCollectionItemsRecording);
         },
         displayForms: () => {
             return (categorized[RecordingType.DisplayForms] as unknown as DisplayFormRecording[]) || [];

@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.TOKEN_GITHUB_YENKINS_ADMIN }}
-          fetch-depth: 0
+          fetch-depth: 500
           ref: master
 
       - name: Git config user
@@ -38,7 +38,7 @@ jobs:
             retry_wait_seconds: 2
             command: |
                 set -e
-                git fetch origin
+                git fetch origin "$TARGET_BRANCH" "$SOURCE_BRANCH" --depth=500
                 git reset --hard origin/$TARGET_BRANCH
 
                 # cherry-pick hugo changes

@@ -14,7 +14,7 @@ export default {
 
 export const GermanNumberFormat = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 2).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 2).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(([name]) => name === "german number format");
         if (scenarioAndDescriptions.length === 0)
             throw new Error("Failed to find scenario 'german number format'");
@@ -40,7 +40,7 @@ GermanNumberFormat.parameters = {
 
 export const NoTotalsAndMaxHeight200 = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 2).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 2).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(([name]) => name === "no totals and max height 200");
         if (scenarioAndDescriptions.length === 0)
             throw new Error("Failed to find scenario 'no totals and max height 200'");
@@ -66,7 +66,7 @@ NoTotalsAndMaxHeight200.parameters = {
 
 export const NoTotalsAndMaxHeight300 = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 2).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 2).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(([name]) => name === "no totals and max height 300");
         if (scenarioAndDescriptions.length === 0)
             throw new Error("Failed to find scenario 'no totals and max height 300'");
@@ -92,7 +92,7 @@ NoTotalsAndMaxHeight300.parameters = {
 
 export const NoTotalsAndNoGrouping = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 2).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 2).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(([name]) => name === "no totals and no grouping");
         if (scenarioAndDescriptions.length === 0)
             throw new Error("Failed to find scenario 'no totals and no grouping'");
@@ -118,7 +118,7 @@ NoTotalsAndNoGrouping.parameters = {
 
 export const MeasureFormatWithColors = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 2).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 2).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(([name]) => name === "measure format with colors");
         if (scenarioAndDescriptions.length === 0)
             throw new Error("Failed to find scenario 'measure format with colors'");
@@ -144,7 +144,7 @@ MeasureFormatWithColors.parameters = {
 
 export const TotalsAndMaxHeight200 = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 2).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 2).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(([name]) => name === "totals and max height 200");
         if (scenarioAndDescriptions.length === 0)
             throw new Error("Failed to find scenario 'totals and max height 200'");
@@ -170,7 +170,7 @@ TotalsAndMaxHeight200.parameters = {
 
 export const TotalsAndMaxHeight300 = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 2).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 2).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(([name]) => name === "totals and max height 300");
         if (scenarioAndDescriptions.length === 0)
             throw new Error("Failed to find scenario 'totals and max height 300'");
@@ -196,7 +196,7 @@ TotalsAndMaxHeight300.parameters = {
 
 export const TotalsAndMaxHeight800 = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 2).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 2).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(([name]) => name === "totals and max height 800");
         if (scenarioAndDescriptions.length === 0)
             throw new Error("Failed to find scenario 'totals and max height 800'");

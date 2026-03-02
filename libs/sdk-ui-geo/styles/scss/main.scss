@@ -4,6 +4,7 @@
 @use "sass:meta";
 @use "variables";
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+@use "@gooddata/sdk-ui-kit/styles/scss/aria.scss";
 @use "@gooddata/sdk-ui-vis-commons/styles/scss/legend";
 @use "tooltip";
 @use "charts";

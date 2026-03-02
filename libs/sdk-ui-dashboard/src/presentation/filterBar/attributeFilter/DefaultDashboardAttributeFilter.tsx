@@ -167,20 +167,34 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
     const closeText = intl.formatMessage({ id: "close" });
     const saveText = intl.formatMessage({ id: "attributesDropdown.save" });
     const applyText = intl.formatMessage({ id: "gs.list.apply" });
-    const displayValuesAsText = intl.formatMessage({ id: "attributesDropdown.displayValuesAs" });
-    const filterByText = intl.formatMessage({ id: "attributesDropdown.filterBy" });
+    const displayValuesAsText = intl.formatMessage({
+        id: "attributesDropdown.displayValuesAs",
+    });
+    const filterByText = intl.formatMessage({
+        id: "attributesDropdown.filterBy",
+    });
     const titleText = intl.formatMessage({ id: "attributesDropdown.title" });
-    const resetTitleText = intl.formatMessage({ id: "attributesDropdown.title.reset" });
-    const selectionTitleText = intl.formatMessage({ id: "attributesDropdown.selectionMode" });
-    const multiSelectionOptionText = intl.formatMessage({ id: "attributesDropdown.selectionMode.multi" });
-    const singleSelectionOptionText = intl.formatMessage({ id: "attributesDropdown.selectionMode.single" });
+    const resetTitleText = intl.formatMessage({
+        id: "attributesDropdown.title.reset",
+    });
+    const selectionTitleText = intl.formatMessage({
+        id: "attributesDropdown.selectionMode",
+    });
+    const multiSelectionOptionText = intl.formatMessage({
+        id: "attributesDropdown.selectionMode.multi",
+    });
+    const singleSelectionOptionText = intl.formatMessage({
+        id: "attributesDropdown.selectionMode.single",
+    });
     const singleSelectionDisabledTooltip = intl.formatMessage({
         id: "attributesDropdown.selectionMode.disabled.tooltip",
     });
     const parentFiltersDisabledTooltip = intl.formatMessage({
         id: "attributesDropdown.parentFilter.disabled.tooltip",
     });
-    const modeCategoryTitleText = intl.formatMessage({ id: "filter.configuration.mode.title" });
+    const modeCategoryTitleText = intl.formatMessage({
+        id: "filter.configuration.mode.title",
+    });
 
     const onCloseFilter = useCallback(() => {
         if (onClose) {
@@ -554,8 +568,11 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
                             displayAsLabel,
                             true,
                             isResultOfMigration as unknown as boolean | undefined,
-                            (additionalProps as unknown as { isSelectionInvalid?: boolean })
-                                ?.isSelectionInvalid,
+                            (
+                                additionalProps as unknown as {
+                                    isSelectionInvalid?: boolean;
+                                }
+                            )?.isSelectionInvalid,
                         );
                     }
                 }}

@@ -283,7 +283,7 @@ export function AttributeFilterDropdownButton({
             aria-controls={isOpen ? dropdownId : undefined}
             role="button"
             tabIndex={0}
-            ref={buttonRef as RefObject<HTMLDivElement>}
+            ref={buttonRef as unknown as RefObject<HTMLDivElement>}
         >
             {filterIcon ? (
                 <div className="gd-attribute-filter-dropdown-button-icon__next">{filterIcon}</div>

@@ -2,6 +2,7 @@
 
 import { type IInsight } from "@gooddata/sdk-model";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 
@@ -86,7 +87,7 @@ export const Themed = () =>
                 visualizationUrl: "local:heatmap",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(11, 8, 0),
+        getScenariosGroupByIndexes(14, 8, 0),
     )();
 Themed.parameters = {
     kind: "themed",
@@ -178,7 +179,7 @@ export const ThemedWithNullValues = () =>
                 visualizationUrl: "local:heatmap",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(11, 8, 1),
+        getScenariosGroupByIndexes(14, 8, 1),
     )();
 ThemedWithNullValues.parameters = {
     kind: "themed with null values",
@@ -270,7 +271,7 @@ export const Font = () =>
                 visualizationUrl: "local:heatmap",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(11, 8, 2),
+        getScenariosGroupByIndexes(14, 8, 2),
     )();
 Font.parameters = {
     kind: "font",

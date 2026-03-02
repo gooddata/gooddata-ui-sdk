@@ -9,6 +9,7 @@ import type {
     IAnalyticsCatalogService,
     IChatThread,
     IGenAIService,
+    IKnowledgeDocumentsService,
     IMemoryItemsService,
     ISemanticQualityService,
     ISemanticSearchQuery,
@@ -17,6 +18,7 @@ import { type ILlmEndpointBase } from "@gooddata/sdk-model";
 
 import { AnalyticsCatalogService } from "./AnalyticsCatalogService.js";
 import { ChatThreadService } from "./ChatThread.js";
+import { KnowledgeDocumentsService } from "./KnowledgeDocumentsService.js";
 import { MemoryItemsService } from "./MemoryItemsService.js";
 import { SemanticQualityService } from "./SemanticQualityService.js";
 import { SemanticSearchQuery } from "./SemanticSearchQuery.js";
@@ -55,6 +57,10 @@ export class GenAIService implements IGenAIService {
             const endpoints = result.data?.data;
             return convertResolvedLlmEndpoint(endpoints ?? []);
         });
+    }
+
+    getKnowledgeDocuments(): IKnowledgeDocumentsService {
+        return new KnowledgeDocumentsService(this.authCall, this.workspaceId);
     }
 
     getMemoryItems(): IMemoryItemsService {

@@ -1,10 +1,28 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
+import { isResultAttributeHeader } from "@gooddata/sdk-model";
 import type { IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
 import type { IAvailableLegends, IGeoLegendItem } from "../../types/common/legends.js";
 import type { IGeoCommonData } from "../../types/geoData/common.js";
+import { compareAlphabetically, compareLexicographically } from "../../utils/alphabeticalSorting.js";
 import type { IGeoLegendResult } from "../registry/adapterTypes.js";
+
+function sortLegendItemsAlphabetically(items: IGeoLegendItem[]): IGeoLegendItem[] {
+    return [...items].sort((left, right) => {
+        const nameComparison = compareAlphabetically(left.name, right.name);
+        if (nameComparison !== 0) {
+            return nameComparison;
+        }
+
+        const uriComparison = compareLexicographically(left.uri, right.uri);
+        if (uriComparison !== 0) {
+            return uriComparison;
+        }
+
+        return left.legendIndex - right.legendIndex;
+    });
+}
 
 /**
  * Options for computing legend
@@ -46,6 +64,16 @@ export function computeLegend(
     let items: IGeoLegendItem[] = [];
 
     if (geoData.segment) {
+        const assignmentIndexByUri = new Map<string, number>();
+        colorStrategy.getColorAssignment().forEach((assignment, assignmentIndex) => {
+            if (isResultAttributeHeader(assignment.headerItem)) {
+                const uri = assignment.headerItem.attributeHeaderItem.uri;
+                if (uri && !assignmentIndexByUri.has(uri)) {
+                    assignmentIndexByUri.set(uri, assignmentIndex);
+                }
+            }
+        });
+
         const uniqueSegments = new Map<string, { name: string; uri: string }>();
         geoData.segment.data.forEach((segmentValue: string, index: number) => {
             const uri = geoData.segment?.uris?.[index];
@@ -53,14 +81,18 @@ export function computeLegend(
                 uniqueSegments.set(uri, { name: segmentValue, uri });
             }
         });
-        items = Array.from(uniqueSegments.values()).map(({ name, uri }, index) => ({
-            type: layerType,
-            name,
-            uri,
-            color: colorStrategy.getColorByIndex(index),
-            legendIndex: index,
-            isVisible: true,
-        }));
+        items = Array.from(uniqueSegments.values()).map(({ name, uri }, index) => {
+            const assignmentIndex = assignmentIndexByUri.get(uri) ?? index;
+            return {
+                type: layerType,
+                name,
+                uri,
+                color: colorStrategy.getColorByIndex(assignmentIndex),
+                legendIndex: assignmentIndex,
+                isVisible: true,
+            };
+        });
+        items = sortLegendItemsAlphabetically(items);
     }
 
     const available: IAvailableLegends = {

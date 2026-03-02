@@ -107,7 +107,8 @@ function KdaAttributeFilterComponent({
     currentFilter,
     deleteAriaLabel,
     ...props
-}: IAttributeFilterButtonProps & IAttributeBarInnerProps) {
+}: IAttributeFilterButtonProps &
+    Pick<IAttributeBarInnerProps, "currentFilter" | "onDelete" | "deleteAriaLabel">) {
     return (
         <AttributeFilterButton
             {...props}

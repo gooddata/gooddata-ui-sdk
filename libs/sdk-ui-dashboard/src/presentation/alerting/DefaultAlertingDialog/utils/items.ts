@@ -102,9 +102,10 @@ export function getSupportedInsightMeasuresByInsight(
     ];
 
     const validComparisonBuckets = canManageComparison ? getSupportedBucketsForComparison(insightType) : null;
+    const validComparisonType = insightType === "headline" || validComparisonBuckets;
 
     // If insight is supported for comparison, we need to add comparators
-    if (insight && insightType && (insightType === "headline" || validComparisonBuckets)) {
+    if (insight && insightType && validComparisonType) {
         mapPreviousPeriodMeasure(primaries, simpleMetrics, true);
         mapPreviousPeriodMeasure(others, simpleMetrics, false);
         mapPoPMeasure(primaries, simpleMetrics, true);
@@ -113,7 +114,7 @@ export function getSupportedInsightMeasuresByInsight(
 
     // If insight is supported for comparison, we need to add comparators that
     // are generated from date attributes used in insight buckets
-    if (insight && insightType && validComparisonBuckets) {
+    if (insight && insightType && validComparisonType) {
         transformGranularities(
             insight,
             insightFilters(insight),
@@ -367,7 +368,7 @@ function collectAllMetricsFrom(insight: IInsight, primaryBuckets: string[], seco
 function transformGranularities(
     insight: IInsight | null | undefined,
     insightFilters: IFilter[] = [],
-    buckets: string[],
+    buckets: string[] | null | undefined,
     simpleMetrics: AlertMetric[],
     datasets: ICatalogDateDataset[],
 ) {
@@ -385,14 +386,15 @@ type ICatalogDateDatasetWithAllowedGranularity = ICatalogDateDataset & {
 function collectAllDateDatasets(
     insight: IInsight | null | undefined,
     insightFilters: IFilter[],
-    buckets: string[],
+    buckets: string[] | null | undefined,
     datasets: ICatalogDateDataset[],
 ): ICatalogDateDatasetWithAllowedGranularity[] {
-    const attributes = buckets.reduce<IAttribute[]>((acc, bucketId) => {
-        const bucket: IBucket | undefined = insight ? insightBucket(insight, bucketId) : undefined;
+    const attributes =
+        buckets?.reduce<IAttribute[]>((acc, bucketId) => {
+            const bucket: IBucket | undefined = insight ? insightBucket(insight, bucketId) : undefined;
 
-        return [...acc, ...(bucket ? bucketAttributes(bucket) : [])];
-    }, []);
+            return [...acc, ...(bucket ? bucketAttributes(bucket) : [])];
+        }, []) ?? [];
 
     const datasetsWithGranularity = insightFilters
         .map((filter) => {
@@ -539,15 +541,7 @@ function removeInvalidComparators(simpleMetrics: AlertMetric[], insightFilters: 
         return;
     }
 
-    const validDatasets = dateFilters
-        .map((filter) => {
-            // Only filters that contains this nad future dates are relevant
-            if (filter.relativeDateFilter.to >= 0) {
-                return filter.relativeDateFilter.dataSet;
-            }
-            return null;
-        })
-        .filter(Boolean);
+    const validDatasets = dateFilters.map((filter) => filter.relativeDateFilter.dataSet).filter(Boolean);
 
     // We need to remove all comparators that are not contains
     // valid datasets.

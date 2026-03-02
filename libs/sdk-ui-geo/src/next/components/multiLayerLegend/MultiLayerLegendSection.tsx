@@ -18,7 +18,9 @@ import { LayerToggleSwitch } from "./LayerToggleSwitch.js";
 import { LegendGroupColor } from "./LegendGroupColor.js";
 import { LegendGroupColorScale } from "./LegendGroupColorScale.js";
 import { LegendGroupSize } from "./LegendGroupSize.js";
+import { type LegendMessageFormatter } from "./legendMessages.js";
 import { type ILegendGroup, type ILegendSection } from "../../types/legend/model.js";
+import { prefersReducedMotion } from "../../utils/prefersReducedMotion.js";
 
 /**
  * Props for MultiLayerLegendSection component.
@@ -80,7 +82,7 @@ export interface IMultiLayerLegendSectionProps {
      * Callback when visibility toggle is clicked.
      * Toggles the layer visibility state.
      */
-    onVisibilityChange?: (layerId: string) => void;
+    onVisibilityChange?: (layerId: string, visible: boolean) => void;
 
     /**
      * Callback when a legend item is clicked.
@@ -90,6 +92,57 @@ export interface IMultiLayerLegendSectionProps {
      * @param uri - The URI of the clicked item
      */
     onItemClick?: (layerId: string, uri: string) => void;
+
+    /**
+     * Enables enhanced a11y semantics for section header and group content.
+     */
+    enableGeoChartA11yImprovements?: boolean;
+
+    /**
+     * Optional formatter for accessibility labels/messages.
+     */
+    formatMessage?: LegendMessageFormatter;
+}
+
+type SectionContentA11yProps = {
+    "aria-hidden"?: boolean;
+    "aria-disabled"?: boolean;
+};
+
+interface ISectionContentAccessibilityState {
+    isSectionContentAccessible: boolean;
+    itemClickHandler?: (uri: string) => void;
+    contentA11yProps: SectionContentA11yProps;
+}
+
+function getSectionContentAccessibilityState({
+    enableGeoChartA11yImprovements,
+    isExpanded,
+    isVisible,
+    onItemClick,
+    handleItemClick,
+}: {
+    enableGeoChartA11yImprovements: boolean;
+    isExpanded: boolean;
+    isVisible: boolean;
+    onItemClick?: IMultiLayerLegendSectionProps["onItemClick"];
+    handleItemClick: (uri: string) => void;
+}): ISectionContentAccessibilityState {
+    const isSectionContentAccessible = isExpanded && isVisible;
+    const isItemInteractionEnabled = enableGeoChartA11yImprovements ? isSectionContentAccessible : isVisible;
+    const itemClickHandler = isItemInteractionEnabled && onItemClick ? handleItemClick : undefined;
+
+    return {
+        isSectionContentAccessible,
+        itemClickHandler,
+        contentA11yProps: enableGeoChartA11yImprovements
+            ? {
+                  "aria-hidden": !isSectionContentAccessible || undefined,
+              }
+            : {
+                  "aria-disabled": !isVisible,
+              },
+    };
 }
 
 /**
@@ -98,15 +151,40 @@ export interface IMultiLayerLegendSectionProps {
 function renderGroup(
     group: ILegendGroup,
     groupIndex: number,
+    isFocusable: boolean,
+    enableGeoChartA11yImprovements: boolean,
+    formatMessage?: LegendMessageFormatter,
     onItemClick?: (uri: string) => void,
 ): ReactElement {
     switch (group.kind) {
         case "size":
-            return <LegendGroupSize key={groupIndex} group={group} />;
+            return (
+                <LegendGroupSize
+                    key={groupIndex}
+                    group={group}
+                    isFocusable={isFocusable}
+                    enableGeoChartA11yImprovements={enableGeoChartA11yImprovements}
+                />
+            );
         case "color":
-            return <LegendGroupColor key={groupIndex} group={group} onItemClick={onItemClick} />;
+            return (
+                <LegendGroupColor
+                    key={groupIndex}
+                    group={group}
+                    onItemClick={onItemClick}
+                    enableGeoChartA11yImprovements={enableGeoChartA11yImprovements}
+                />
+            );
         case "colorScale":
-            return <LegendGroupColorScale key={groupIndex} group={group} />;
+            return (
+                <LegendGroupColorScale
+                    key={groupIndex}
+                    group={group}
+                    isFocusable={isFocusable}
+                    enableGeoChartA11yImprovements={enableGeoChartA11yImprovements}
+                    formatMessage={formatMessage}
+                />
+            );
         default:
             return <></>;
     }
@@ -133,6 +211,8 @@ export const MultiLayerLegendSection = memo(function MultiLayerLegendSection({
     onExpandedChange,
     onVisibilityChange,
     onItemClick,
+    enableGeoChartA11yImprovements = false,
+    formatMessage,
 }: IMultiLayerLegendSectionProps): ReactElement {
     const displayTitle = section.layerTitle;
     const titleId = `${sectionId}-title`;
@@ -149,9 +229,15 @@ export const MultiLayerLegendSection = memo(function MultiLayerLegendSection({
         [onItemClick, section.layerId],
     );
 
-    // When the layer is hidden, disable interaction with legend items in the section content.
-    // Section stays expandable, but content should not be focusable/clickable.
-    const itemClickHandler = isVisible ? handleItemClick : undefined;
+    // Section content is operable only when expanded + visible.
+    const { isSectionContentAccessible, itemClickHandler, contentA11yProps } =
+        getSectionContentAccessibilityState({
+            enableGeoChartA11yImprovements,
+            isExpanded,
+            isVisible,
+            onItemClick,
+            handleItemClick,
+        });
 
     /**
      * Scroll is enabled only after the expand animation completes.
@@ -211,10 +297,7 @@ export const MultiLayerLegendSection = memo(function MultiLayerLegendSection({
         }
 
         // If user prefers reduced motion, transitions may be disabled -> enable scroll immediately.
-        if (
-            typeof window !== "undefined" &&
-            window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches
-        ) {
+        if (prefersReducedMotion()) {
             setIsScrollEnabled(true);
             return;
         }
@@ -233,12 +316,12 @@ export const MultiLayerLegendSection = memo(function MultiLayerLegendSection({
         onExpandedChange?.(section.layerId, !isExpanded);
     };
 
-    // LayerToggleSwitch calls onChange with the new checked value, but we use toggle pattern
-    const handleVisibilityChange = (_visible: boolean) => {
-        onVisibilityChange?.(section.layerId);
+    // LayerToggleSwitch calls onChange with the new checked value.
+    const handleVisibilityChange = (visible: boolean) => {
+        onVisibilityChange?.(section.layerId, visible);
     };
 
-    const handleKeyDown = (event: KeyboardEvent) => {
+    const handleLegacyHeaderKeyDown = (event: KeyboardEvent) => {
         if (event.key === "Enter" || event.key === " ") {
             event.preventDefault();
             handleExpandClick();
@@ -281,44 +364,86 @@ export const MultiLayerLegendSection = memo(function MultiLayerLegendSection({
             onTransitionEnd={handleSectionTransitionEnd}
             ref={setSectionRef}
         >
-            <div
-                className="gd-geo-multi-layer-legend__section-header"
-                onClick={handleExpandClick}
-                onKeyDown={handleKeyDown}
-                role="button"
-                tabIndex={0}
-                aria-expanded={isExpanded}
-                aria-controls={`${sectionId}-content`}
-            >
-                <span className="gd-geo-multi-layer-legend__section-chevron">
-                    <ChevronIcon isExpanded={isExpanded} />
-                </span>
-                <span id={titleId} className="gd-geo-multi-layer-legend__section-title" title={displayTitle}>
-                    {displayTitle}
-                </span>
-                {showToggle ? (
-                    <span
-                        className="gd-geo-multi-layer-legend__section-toggle"
-                        onClick={(e) => e.stopPropagation()}
-                        onKeyDown={(e) => e.stopPropagation()}
+            {enableGeoChartA11yImprovements ? (
+                <div className="gd-geo-multi-layer-legend__section-header">
+                    <button
+                        type="button"
+                        className="gd-geo-multi-layer-legend__section-header-btn"
+                        onClick={handleExpandClick}
+                        aria-expanded={isExpanded}
+                        aria-controls={`${sectionId}-content`}
                     >
-                        <LayerToggleSwitch
-                            id={toggleId}
-                            checked={isVisible}
-                            onChange={handleVisibilityChange}
-                            ariaLabel={`Toggle ${displayTitle} visibility`}
-                        />
+                        <span className="gd-geo-multi-layer-legend__section-chevron">
+                            <ChevronIcon isExpanded={isExpanded} />
+                        </span>
+                        <span id={titleId} className="gd-geo-multi-layer-legend__section-title">
+                            {displayTitle}
+                        </span>
+                    </button>
+                    {showToggle ? (
+                        <span className="gd-geo-multi-layer-legend__section-toggle">
+                            <LayerToggleSwitch
+                                id={toggleId}
+                                checked={isVisible}
+                                onChange={handleVisibilityChange}
+                                ariaLabel={`Toggle ${displayTitle} visibility`}
+                            />
+                        </span>
+                    ) : null}
+                </div>
+            ) : (
+                <div
+                    className="gd-geo-multi-layer-legend__section-header"
+                    onClick={handleExpandClick}
+                    onKeyDown={handleLegacyHeaderKeyDown}
+                    role="button"
+                    tabIndex={0}
+                    aria-expanded={isExpanded}
+                    aria-controls={`${sectionId}-content`}
+                >
+                    <span className="gd-geo-multi-layer-legend__section-chevron">
+                        <ChevronIcon isExpanded={isExpanded} />
                     </span>
-                ) : null}
-            </div>
+                    <span
+                        id={titleId}
+                        className="gd-geo-multi-layer-legend__section-title"
+                        title={displayTitle}
+                    >
+                        {displayTitle}
+                    </span>
+                    {showToggle ? (
+                        <span
+                            className="gd-geo-multi-layer-legend__section-toggle"
+                            onClick={(e) => e.stopPropagation()}
+                            onKeyDown={(e) => e.stopPropagation()}
+                        >
+                            <LayerToggleSwitch
+                                id={toggleId}
+                                checked={isVisible}
+                                onChange={handleVisibilityChange}
+                                ariaLabel={`Toggle ${displayTitle} visibility`}
+                            />
+                        </span>
+                    ) : null}
+                </div>
+            )}
             {/* Content wrapper for CSS Grid animation - always rendered */}
             <div className="gd-geo-multi-layer-legend__section-content-wrapper">
                 <div
                     id={`${sectionId}-content`}
                     className="gd-geo-multi-layer-legend__section-content"
-                    aria-disabled={!isVisible}
+                    {...contentA11yProps}
                 >
-                    {section.groups.map((group, index) => renderGroup(group, index, itemClickHandler))}
+                    {section.groups.map((group, index) =>
+                        renderGroup(
+                            group,
+                            index,
+                            isSectionContentAccessible,
+                            enableGeoChartA11yImprovements,
+                            formatMessage,
+                            itemClickHandler,
+                        ),
+                    )}
                 </div>
             </div>
         </div>

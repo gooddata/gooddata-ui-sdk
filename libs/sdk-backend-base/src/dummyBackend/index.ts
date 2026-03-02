@@ -75,6 +75,7 @@ import {
     type IOrganization,
     type IOrganizationAutomationService,
     type IOrganizationLlmEndpointsService,
+    type IOrganizationLlmProvidersService,
     type IOrganizationNotificationChannelService,
     type IOrganizationNotificationService,
     type IOrganizationPermissionService,
@@ -179,6 +180,7 @@ import {
     type IListedDashboard,
     type ILlmEndpointBase,
     type ILlmEndpointOpenAI,
+    type ILlmProvider,
     type IMeasure,
     type IMeasureDefinitionType,
     type IMeasureMetadataObject,
@@ -508,6 +510,9 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
                 },
                 getSemanticQuality() {
                     return new DummySemanticQualityService();
+                },
+                getKnowledgeDocuments() {
+                    throw new NotSupported("not supported");
                 },
             };
         },
@@ -985,7 +990,9 @@ class DummyOrganization implements IOrganization {
             setFormatLocale: () => Promise.resolve(),
             setSeparators: () => Promise.resolve(),
             setActiveLlmEndpoint: () => Promise.resolve(),
+            setActiveLlmProvider: () => Promise.resolve(),
             deleteActiveLlmEndpoint: () => Promise.resolve(),
+            deleteActiveLlmProvider: () => Promise.resolve(),
             setTimezone: () => Promise.resolve(),
             setDateFormat: () => Promise.resolve(),
             setWeekStart: () => Promise.resolve(),
@@ -1100,6 +1107,32 @@ class DummyOrganization implements IOrganization {
         };
     }
 
+    llmProviders(): IOrganizationLlmProvidersService {
+        const dummyProvider: ILlmProvider = {
+            id: "dummyLlmProvider",
+            name: "Dummy Llm Provider",
+            providerConfig: {
+                type: "openAI",
+                apiKey: "dummyApiKey",
+            },
+            models: [],
+        };
+
+        return {
+            getCount: () => Promise.resolve(0),
+            getAll: () => Promise.resolve([]),
+            deleteLlmProvider: () => Promise.resolve(),
+            getLlmProvider: () => Promise.resolve(dummyProvider),
+            createLlmProvider: () => Promise.resolve(dummyProvider),
+            updateLlmProvider: () => Promise.resolve(dummyProvider),
+            patchLlmProvider: () => Promise.resolve(dummyProvider),
+            testLlmProvider: () =>
+                Promise.resolve({
+                    success: true,
+                }),
+        };
+    }
+
     public notifications(): IOrganizationNotificationService {
         return {
             markNotificationAsRead: () => Promise.reject(new NotSupported("not supported")),
@@ -1171,6 +1204,10 @@ class DummyWorkspaceSettingsService implements IWorkspaceSettingsService {
     }
 
     setActiveLlmEndpoint(_endpoint: string): Promise<void> {
+        return Promise.resolve();
+    }
+
+    setActiveLlmProvider(_provider: string): Promise<void> {
         return Promise.resolve();
     }
 

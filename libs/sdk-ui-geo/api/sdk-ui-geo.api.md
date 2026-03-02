@@ -114,6 +114,8 @@ export interface IGeoAreaChartBaseProps extends IGeoSingleLayerWrapperProps {
 
 // @public
 export interface IGeoAreaChartConfig {
+    // @internal
+    a11yTitle?: string;
     // (undocumented)
     areas?: IGeoAreasConfig;
     // (undocumented)
@@ -128,6 +130,8 @@ export interface IGeoAreaChartConfig {
     cooperativeGestures?: boolean;
     // (undocumented)
     enableExecutionCancelling?: boolean;
+    // @internal
+    enableGeoChartA11yImprovements?: boolean;
     // (undocumented)
     isExportMode?: boolean;
     // (undocumented)
@@ -172,6 +176,8 @@ export interface IGeoAttributeItem extends IGeoDataItem {
 
 // @public
 export interface IGeoChartConfig {
+    // @internal
+    a11yTitle?: string;
     areas?: IGeoAreasConfig;
     center?: IGeoLngLat;
     colorMapping?: IColorMapping[];
@@ -179,6 +185,8 @@ export interface IGeoChartConfig {
     colors?: string[];
     cooperativeGestures?: boolean;
     enableExecutionCancelling?: boolean;
+    // @internal
+    enableGeoChartA11yImprovements?: boolean;
     isExportMode?: boolean;
     legend?: IGeoChartLegendConfig;
     limit?: number;
@@ -482,6 +490,8 @@ export interface IGeoPushpinChartBaseProps extends IGeoSingleLayerWrapperProps {
 
 // @public
 export interface IGeoPushpinChartConfig {
+    // @internal
+    a11yTitle?: string;
     // (undocumented)
     center?: IGeoLngLat;
     // (undocumented)
@@ -494,6 +504,8 @@ export interface IGeoPushpinChartConfig {
     cooperativeGestures?: boolean;
     // (undocumented)
     enableExecutionCancelling?: boolean;
+    // @internal
+    enableGeoChartA11yImprovements?: boolean;
     // (undocumented)
     isExportMode?: boolean;
     // (undocumented)

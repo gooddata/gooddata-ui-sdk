@@ -81,6 +81,7 @@ export type IconType =
     | "trendDown"
     | "trendUp"
     | "save"
+    | "minus"
     | "minusCircle"
     | "percent"
     | "enter"
@@ -151,4 +152,8 @@ export type IconType =
     | "fileImage"
     | "fileCsvFormatted"
     | "fileCsvRaw"
-    | "recommendation";
+    | "fileAi"
+    | "recommendation"
+    | "streamUp"
+    | "streamDown"
+    | "stream";

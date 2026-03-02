@@ -289,6 +289,7 @@
 
 .gd-attribute-filter-dropdown-button-subtitle__next {
     display: inline-flex;
+    flex-wrap: nowrap;
     overflow: hidden;
     font-weight: bold;
     text-overflow: ellipsis;
@@ -319,6 +320,7 @@
 .gd-attribute-filter-dropdown-button-selected-items__next {
     display: inline-block;
     flex: 0 1 auto;
+    min-width: 0;
     overflow: hidden;
     max-width: 120px;
     text-overflow: ellipsis;

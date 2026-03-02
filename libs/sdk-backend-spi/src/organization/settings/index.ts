@@ -80,6 +80,18 @@ export interface IOrganizationSettingsService {
     deleteActiveLlmEndpoint(): Promise<void>;
 
     /**
+     * Set active LLM provider for the organization.
+     *
+     * @param provider - id of the LLM provider to set as active for the organization.
+     */
+    setActiveLlmProvider(provider: string): Promise<void>;
+
+    /**
+     * Deletes active LLM provider for the organization.
+     */
+    deleteActiveLlmProvider(): Promise<void>;
+
+    /**
      * Sets timezone for organization.
      *
      * @param timezone - the value based on IANA time zone database naming convention.

@@ -2,6 +2,7 @@
 
 import { type IInsight } from "@gooddata/sdk-model";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 
@@ -81,7 +82,7 @@ export const LegendPosition1MeasureAnd2AttributesDefaultLegend = () =>
                 visualizationUrl: "local:sankey",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(18, 1, 0),
+        getScenariosGroupByIndexes(21, 1, 0),
     )();
 LegendPosition1MeasureAnd2AttributesDefaultLegend.parameters = {
     kind: "legend position - 1 measure and 2 attributes - default legend",
@@ -172,7 +173,7 @@ export const LegendPosition1MeasureAnd2AttributesAutoLegend = () =>
                 visualizationUrl: "local:sankey",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(18, 1, 1),
+        getScenariosGroupByIndexes(21, 1, 1),
     )();
 LegendPosition1MeasureAnd2AttributesAutoLegend.parameters = {
     kind: "legend position - 1 measure and 2 attributes - auto legend",
@@ -263,7 +264,7 @@ export const LegendPosition1MeasureAnd2AttributesLegendOnLeft = () =>
                 visualizationUrl: "local:sankey",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(18, 1, 2),
+        getScenariosGroupByIndexes(21, 1, 2),
     )();
 LegendPosition1MeasureAnd2AttributesLegendOnLeft.parameters = {
     kind: "legend position - 1 measure and 2 attributes - legend on left",
@@ -354,7 +355,7 @@ export const LegendPosition1MeasureAnd2AttributesLegendOnRight = () =>
                 visualizationUrl: "local:sankey",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(18, 1, 3),
+        getScenariosGroupByIndexes(21, 1, 3),
     )();
 LegendPosition1MeasureAnd2AttributesLegendOnRight.parameters = {
     kind: "legend position - 1 measure and 2 attributes - legend on right",
@@ -445,7 +446,7 @@ export const LegendPosition1MeasureAnd2AttributesLegendOnTop = () =>
                 visualizationUrl: "local:sankey",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(18, 1, 4),
+        getScenariosGroupByIndexes(21, 1, 4),
     )();
 LegendPosition1MeasureAnd2AttributesLegendOnTop.parameters = {
     kind: "legend position - 1 measure and 2 attributes - legend on top",
@@ -536,7 +537,7 @@ export const LegendPosition1MeasureAnd2AttributesLegendAtBottom = () =>
                 visualizationUrl: "local:sankey",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(18, 1, 5),
+        getScenariosGroupByIndexes(21, 1, 5),
     )();
 LegendPosition1MeasureAnd2AttributesLegendAtBottom.parameters = {
     kind: "legend position - 1 measure and 2 attributes - legend at bottom",
@@ -626,7 +627,7 @@ export const LegendPosition1MeasureAnd2AttributesDisabled = () =>
                 visualizationUrl: "local:sankey",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(18, 1, 6),
+        getScenariosGroupByIndexes(21, 1, 6),
     )();
 LegendPosition1MeasureAnd2AttributesDisabled.parameters = {
     kind: "legend position - 1 measure and 2 attributes - disabled",
@@ -704,7 +705,7 @@ export const LegendPosition1MeasureAnd1AttributeDefaultLegend = () =>
                 visualizationUrl: "local:sankey",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(18, 1, 7),
+        getScenariosGroupByIndexes(21, 1, 7),
     )();
 LegendPosition1MeasureAnd1AttributeDefaultLegend.parameters = {
     kind: "legend position - 1 measure and 1 attribute - default legend",
@@ -785,7 +786,7 @@ export const LegendPosition1MeasureAnd1AttributeAutoLegend = () =>
                 visualizationUrl: "local:sankey",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(18, 1, 8),
+        getScenariosGroupByIndexes(21, 1, 8),
     )();
 LegendPosition1MeasureAnd1AttributeAutoLegend.parameters = {
     kind: "legend position - 1 measure and 1 attribute - auto legend",
@@ -866,7 +867,7 @@ export const LegendPosition1MeasureAnd1AttributeLegendOnLeft = () =>
                 visualizationUrl: "local:sankey",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(18, 1, 9),
+        getScenariosGroupByIndexes(21, 1, 9),
     )();
 LegendPosition1MeasureAnd1AttributeLegendOnLeft.parameters = {
     kind: "legend position - 1 measure and 1 attribute - legend on left",
@@ -947,7 +948,7 @@ export const LegendPosition1MeasureAnd1AttributeLegendOnRight = () =>
                 visualizationUrl: "local:sankey",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(18, 1, 10),
+        getScenariosGroupByIndexes(21, 1, 10),
     )();
 LegendPosition1MeasureAnd1AttributeLegendOnRight.parameters = {
     kind: "legend position - 1 measure and 1 attribute - legend on right",
@@ -1028,7 +1029,7 @@ export const LegendPosition1MeasureAnd1AttributeLegendOnTop = () =>
                 visualizationUrl: "local:sankey",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(18, 1, 11),
+        getScenariosGroupByIndexes(21, 1, 11),
     )();
 LegendPosition1MeasureAnd1AttributeLegendOnTop.parameters = {
     kind: "legend position - 1 measure and 1 attribute - legend on top",
@@ -1109,7 +1110,7 @@ export const LegendPosition1MeasureAnd1AttributeLegendAtBottom = () =>
                 visualizationUrl: "local:sankey",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(18, 1, 12),
+        getScenariosGroupByIndexes(21, 1, 12),
     )();
 LegendPosition1MeasureAnd1AttributeLegendAtBottom.parameters = {
     kind: "legend position - 1 measure and 1 attribute - legend at bottom",
@@ -1189,7 +1190,7 @@ export const LegendPosition1MeasureAnd1AttributeDisabled = () =>
                 visualizationUrl: "local:sankey",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(18, 1, 13),
+        getScenariosGroupByIndexes(21, 1, 13),
     )();
 LegendPosition1MeasureAnd1AttributeDisabled.parameters = {
     kind: "legend position - 1 measure and 1 attribute - disabled",

@@ -8,7 +8,13 @@ import { type IHeaderPredicate } from "@gooddata/sdk-ui";
 
 import { getTooltipContentWidth } from "../../../map/style/tooltipFormatting.js";
 import { type IGeoPushpinChartConfig } from "../../../types/config/pushpinChart.js";
-import { type JsonValue, type LngLatTuple, isGeoJsonPoint, isLngLatTuple } from "../../../utils/guards.js";
+import {
+    type JsonValue,
+    type LngLatTuple,
+    isGeoJsonPoint,
+    isLngLatTuple,
+    isRecord,
+} from "../../../utils/guards.js";
 import { type IPopupFacade } from "../../common/mapFacade.js";
 import {
     type TooltipFormatConfig,
@@ -32,17 +38,50 @@ export const TOOLTIP_MAX_WIDTH = 320;
  */
 interface ITooltipColorPayload extends TooltipPayload {
     fill?: string;
+    background?: string;
+    border?: string;
 }
 
 /**
  * Type guard for ITooltipColorPayload.
  */
 function isTooltipColorPayload(value: unknown): value is ITooltipColorPayload {
-    if (value === null || typeof value !== "object") {
+    if (!isRecord(value)) {
         return false;
     }
-    const title = (value as Record<string, unknown>)["title"];
+    const title = value["title"];
     return typeof title === "string" && title.length > 0;
+}
+
+function resolveStrokeFromFeatureProperties(
+    geoProperties: GeoJSON.GeoJsonProperties | undefined,
+): string | undefined {
+    if (!isRecord(geoProperties)) {
+        return undefined;
+    }
+
+    const background = geoProperties["color_background"];
+    if (typeof background === "string") {
+        return background;
+    }
+
+    const border = geoProperties["color_border"];
+    return typeof border === "string" ? border : undefined;
+}
+
+function resolveTooltipStroke(
+    colorPayload: ITooltipColorPayload | undefined,
+    geoProperties: GeoJSON.GeoJsonProperties | undefined,
+): string {
+    const nestedStroke = colorPayload?.fill ?? colorPayload?.background ?? colorPayload?.border;
+    if (nestedStroke) {
+        return nestedStroke;
+    }
+
+    // Keep compatibility with flattened source properties used by pushpin styling.
+    const flatStroke = resolveStrokeFromFeatureProperties(geoProperties);
+
+    return flatStroke ?? DEFAULT_PUSHPIN_COLOR_VALUE;
 }
 
 function isTooltipItemValid(item: JsonValue): boolean {
@@ -198,10 +237,10 @@ export function createPushpinTooltipConfig(
                 resolveTooltipCoordinatesFromGeometry(geometry) ?? ([lngLat.lng, lngLat.lat] as LngLatTuple);
 
             const colorProps = parsedProps?.["color"];
-            const tooltipStroke =
-                isTooltipColorPayload(colorProps) && colorProps.fill
-                    ? colorProps.fill
-                    : DEFAULT_PUSHPIN_COLOR_VALUE;
+            const tooltipStroke = resolveTooltipStroke(
+                isTooltipColorPayload(colorProps) ? colorProps : undefined,
+                properties,
+            );
             const isFullScreenTooltip = isTooltipShownInFullScreen();
             const chartWidth: number = canvas.clientWidth;
             const maxTooltipContentWidth: number = getTooltipContentWidth(

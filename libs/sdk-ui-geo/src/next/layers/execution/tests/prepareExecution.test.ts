@@ -3,7 +3,13 @@
 import { describe, expect, it } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
-import { attributeDisplayFormRef, bucketAttribute, idRef, newAttribute } from "@gooddata/sdk-model";
+import {
+    attributeDisplayFormRef,
+    attributeLocalId,
+    bucketAttribute,
+    idRef,
+    newAttribute,
+} from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 
 import { areaAdapter } from "../../area/adapter.js";
@@ -75,6 +81,52 @@ describe("prepareExecution", () => {
         if (!tooltipBucketAttribute) {
             return;
         }
+        expect(attributeDisplayFormRef(tooltipBucketAttribute)).toEqual(
+            attributeDisplayFormRef(tooltipAttribute),
+        );
+    });
+
+    it("normalizes existing TOOLTIP_TEXT localId for area layers", async () => {
+        const tooltipAttribute = newAttribute(idRef("attr.tooltip"), (a) => a.localId("a_attr.tooltip"));
+        const layer = createAreaLayer({ area: areaAttribute, tooltipText: tooltipAttribute });
+        const execution = areaAdapter.buildExecution(layer, { backend, workspace });
+
+        const prepared = await areaAdapter.prepareExecution?.(layer, { backend, workspace }, execution);
+        const tooltipBucket = prepared?.definition.buckets.find(
+            (bucket) => bucket.localIdentifier === BucketNames.TOOLTIP_TEXT,
+        );
+        const tooltipBucketAttribute = tooltipBucket ? bucketAttribute(tooltipBucket) : undefined;
+
+        expect(tooltipBucketAttribute).toBeDefined();
+        if (!tooltipBucketAttribute) {
+            return;
+        }
+        expect(attributeLocalId(tooltipBucketAttribute)).toBe(TOOLTIP_TEXT_ATTRIBUTE_LOCAL_ID);
+        expect(attributeDisplayFormRef(tooltipBucketAttribute)).toEqual(
+            attributeDisplayFormRef(tooltipAttribute),
+        );
+    });
+
+    it("normalizes existing TOOLTIP_TEXT localId for pushpin layers", async () => {
+        const tooltipAttribute = newAttribute(idRef("attr.tooltip"), (a) => a.localId("a_attr.tooltip"));
+        const layer = createPushpinLayer({
+            latitude: latitudeAttribute,
+            longitude: longitudeAttribute,
+            tooltipText: tooltipAttribute,
+        });
+        const execution = pushpinAdapter.buildExecution(layer, { backend, workspace });
+
+        const prepared = await pushpinAdapter.prepareExecution?.(layer, { backend, workspace }, execution);
+        const tooltipBucket = prepared?.definition.buckets.find(
+            (bucket) => bucket.localIdentifier === BucketNames.TOOLTIP_TEXT,
+        );
+        const tooltipBucketAttribute = tooltipBucket ? bucketAttribute(tooltipBucket) : undefined;
+
+        expect(tooltipBucketAttribute).toBeDefined();
+        if (!tooltipBucketAttribute) {
+            return;
+        }
+        expect(attributeLocalId(tooltipBucketAttribute)).toBe(TOOLTIP_TEXT_ATTRIBUTE_LOCAL_ID);
         expect(attributeDisplayFormRef(tooltipBucketAttribute)).toEqual(
             attributeDisplayFormRef(tooltipAttribute),
         );

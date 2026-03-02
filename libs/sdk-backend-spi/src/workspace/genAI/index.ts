@@ -33,6 +33,11 @@ import type { IPagedResource } from "../../common/paging.js";
  */
 export interface IGenAIService {
     /**
+     * Get a knowledge documents service for listing and managing knowledge documents.
+     * @internal
+     */
+    getKnowledgeDocuments(): IKnowledgeDocumentsService;
+    /**
      * Get a semantic search query builder.
      */
     getSemanticSearchQuery(): ISemanticSearchQuery;
@@ -278,6 +283,11 @@ export interface IAnalyticsCatalogService {
      * Returns information about users who created objects in the workspace Analytics Catalog.
      */
     getCreatedBy(): Promise<IAnalyticsCatalogCreatedBy>;
+
+    /**
+     * Returns trending objects in the workspace Analytics Catalog.
+     */
+    getTrendingObjects(): Promise<IAnalyticsCatalogTrendingObjects>;
 }
 
 /**
@@ -322,6 +332,32 @@ export interface IAnalyticsCatalogTags {
 export interface IAnalyticsCatalogCreatedBy {
     reasoning: string;
     users: IUser[];
+}
+
+/**
+ * Analytics Catalog trending object.
+ * @internal
+ */
+export interface IAnalyticsCatalogTrendingObject {
+    id: string;
+    type: string;
+    title: string;
+    tags: string[];
+    createdAt?: string;
+    modifiedAt?: string;
+    createdBy?: string;
+    modifiedBy?: string;
+    isHidden?: boolean;
+    isHiddenFromKda?: boolean;
+    visualizationUrl?: string;
+}
+
+/**
+ * Analytics Catalog trending objects response.
+ * @internal
+ */
+export interface IAnalyticsCatalogTrendingObjects {
+    objects: IAnalyticsCatalogTrendingObject[];
 }
 
 /**
@@ -429,3 +465,157 @@ export interface IMemoryItemsQuery {
  * @internal
  */
 export type IMemoryItemsQueryResult = IPagedResource<IMemoryItemMetadataObject>;
+
+// ---------------------------------------------------------------------------
+// Knowledge Documents
+// ---------------------------------------------------------------------------
+
+/**
+ * Metadata for a single knowledge document stored in the knowledge base.
+ * @internal
+ */
+export interface IKnowledgeDocumentMetadata {
+    filename: string;
+    workspaceId?: string;
+    title?: string;
+    numChunks: number;
+    createdAt: string;
+    updatedAt?: string;
+    createdBy: string;
+    updatedBy: string;
+    scopes: string[];
+}
+
+/**
+ * Request payload for creating a knowledge document.
+ * @internal
+ */
+export interface ICreateKnowledgeDocumentRequest {
+    filename: string;
+    content: string;
+    pageBoundaries?: number[];
+    title?: string;
+    scopes?: string[];
+}
+
+/**
+ * Response returned when a knowledge document is created.
+ * @internal
+ */
+export interface ICreateKnowledgeDocumentResponse {
+    filename: string;
+    success: boolean;
+    message: string;
+    numChunks: number;
+}
+
+/**
+ * Request payload for upserting a knowledge document.
+ * Creates the document if it does not exist, updates it otherwise.
+ * @internal
+ */
+export interface IUpsertKnowledgeDocumentRequest {
+    filename: string;
+    content: string;
+    pageBoundaries?: number[];
+    title?: string;
+    scopes?: string[];
+}
+
+/**
+ * Response returned when a knowledge document is upserted.
+ * @internal
+ */
+export type IUpsertKnowledgeDocumentResponse = ICreateKnowledgeDocumentResponse;
+
+/**
+ * Response returned when a knowledge document is deleted.
+ * @internal
+ */
+export interface IDeleteKnowledgeDocumentResponse {
+    success: boolean;
+    message: string;
+}
+
+/**
+ * A single result chunk returned from a knowledge base semantic search.
+ * @internal
+ */
+export interface IKnowledgeSearchResult {
+    filename: string;
+    content: string;
+    score: number;
+    chunkIndex: number;
+    totalChunks: number;
+    pageNumbers: number[];
+    workspaceId?: string;
+    title?: string;
+    scopes: string[];
+}
+
+/**
+ * Statistics about a knowledge base search operation.
+ * @internal
+ */
+export interface IKnowledgeSearchStatistics {
+    totalResults: number;
+    averageSimilarityScore: number;
+}
+
+/**
+ * Response from a knowledge base semantic search.
+ * @internal
+ */
+export interface ISearchKnowledgeResponse {
+    results: IKnowledgeSearchResult[];
+    statistics: IKnowledgeSearchStatistics;
+}
+
+/**
+ * Options for a knowledge base semantic search.
+ * @internal
+ */
+export interface ISearchKnowledgeOptions {
+    limit?: number;
+    minScore?: number;
+    scopes?: string[];
+}
+
+/**
+ * Service for listing and managing knowledge documents in the workspace knowledge base.
+ * @internal
+ */
+export interface IKnowledgeDocumentsService {
+    /**
+     * List all knowledge documents accessible from the workspace.
+     * @param scopes - optional scope filter
+     */
+    list(scopes?: string[]): Promise<IKnowledgeDocumentMetadata[]>;
+
+    /**
+     * Get metadata for a single knowledge document by filename.
+     */
+    get(filename: string): Promise<IKnowledgeDocumentMetadata>;
+
+    /**
+     * Create a new knowledge document.
+     * Fails if a document with the same filename already exists.
+     */
+    create(request: ICreateKnowledgeDocumentRequest): Promise<ICreateKnowledgeDocumentResponse>;
+
+    /**
+     * Upsert a knowledge document.
+     * Creates the document if it does not exist, updates it otherwise.
+     */
+    upsert(request: IUpsertKnowledgeDocumentRequest): Promise<IUpsertKnowledgeDocumentResponse>;
+
+    /**
+     * Delete a knowledge document and all its chunks.
+     */
+    delete(filename: string): Promise<IDeleteKnowledgeDocumentResponse>;
+
+    /**
+     * Search the knowledge base using semantic similarity.
+     */
+    search(query: string, options?: ISearchKnowledgeOptions): Promise<ISearchKnowledgeResponse>;
+}

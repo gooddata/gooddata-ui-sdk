@@ -8,35 +8,26 @@ import {
     type IPreparedExecution,
 } from "@gooddata/sdk-backend-spi";
 import {
-    type IAttribute,
     type IFilter,
     type IInsightDefinition,
-    attributeLocalId,
-    bucketAttribute,
-    bucketItems,
-    insightBucket,
     insightBuckets,
     insightFilters,
     insightHasDataDefined,
     insightLayers,
+    insightSorts,
     insightTitle,
-    newAttribute,
 } from "@gooddata/sdk-model";
-import { BucketNames, GeoLocationMissingSdkError, VisualizationTypes } from "@gooddata/sdk-ui";
-import {
-    type IGeoChartConfig,
-    type IGeoLayer,
-    createPushpinLayer,
-    isGeoLayerPushpin,
-} from "@gooddata/sdk-ui-geo";
+import { GeoLocationMissingSdkError, VisualizationTypes } from "@gooddata/sdk-ui";
+import { type IGeoChartConfig, type IGeoLayer, isGeoLayerPushpin } from "@gooddata/sdk-ui-geo";
 import {
     GeoChartInternal,
+    PUSHPIN_LAYER_ID,
     buildLayerExecution,
+    insightLayerToGeoLayer,
     insightLayersToGeoLayers,
 } from "@gooddata/sdk-ui-geo/internal";
 
 import {
-    createAttributeRef,
     extractControls,
     getLatitudeAttribute,
     getLocationProperties,
@@ -45,7 +36,6 @@ import {
 import { buildGeoVisualizationConfig } from "./geoConfigBuilder.js";
 import {
     createConfiguredBuckets,
-    createSortForSegment,
     distributeMeasures,
     getLocationItems,
     sanitizeMeasures,
@@ -345,6 +335,7 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
             supportedControls,
             colorMapping,
             environment: this.environment,
+            featureFlags: this.featureFlags,
         });
     }
 
@@ -389,64 +380,32 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
         insight: IInsightDefinition,
     ): { primaryLayer: IGeoLayer; config: IGeoChartConfig; filters: IFilter[] } | undefined {
         const supportedControls = this.visualizationProperties.controls || {};
-        const fullConfig = this.buildVisualizationConfig(options, supportedControls);
         const controlsWithFallback: Record<string, unknown> = {
             ...this.getInsightControlsWithFallback(insight),
             ...supportedControls,
         };
+        const fullConfig = this.buildVisualizationConfig(options, controlsWithFallback);
         const filters = insightFilters(insight);
-        const sortBy = createSortForSegment(insight);
-        const locationBucket = insightBucket(insight, BucketNames.LOCATION);
-        const sizeBucket = insightBucket(insight, BucketNames.SIZE);
-        const colorBucket = insightBucket(insight, BucketNames.COLOR);
-        const segmentBucket = insightBucket(insight, BucketNames.SEGMENT);
+        const sortBy = insightSorts(insight);
+        const title = insightTitle(insight);
+        const controlsForPrimaryLayer = {
+            ...controlsWithFallback,
+            ...(fullConfig.colorPalette ? { colorPalette: fullConfig.colorPalette } : {}),
+        };
 
-        const latitudeFromBucket = locationBucket ? bucketAttribute(locationBucket) : undefined;
-        const size = sizeBucket ? bucketItems(sizeBucket)[0] : undefined;
-        const color = colorBucket ? bucketItems(colorBucket)[0] : undefined;
-        const segmentBy = segmentBucket ? bucketAttribute(segmentBucket) : undefined;
+        const primaryLayer = insightLayerToGeoLayer({
+            id: PUSHPIN_LAYER_ID,
+            type: "pushpin",
+            buckets: insightBuckets(insight),
+            sorts: sortBy,
+            properties: { controls: controlsForPrimaryLayer },
+            ...(title ? { name: title } : {}),
+        });
 
-        const latitudeCandidate = controlsWithFallback?.["latitude"];
-        const longitudeCandidate = controlsWithFallback?.["longitude"];
-        const latitudeId = typeof latitudeCandidate === "string" ? latitudeCandidate : undefined;
-        const longitudeId = typeof longitudeCandidate === "string" ? longitudeCandidate : undefined;
-
-        // IMPORTANT: keep localId of the original LOCATION attribute so MVF/ranking filters that reference it
-        // (via localIdRef in dimensionality) do not become dangling when LOCATION bucket is replaced by LAT/LNG.
-        const latitudeLocalId = latitudeFromBucket ? attributeLocalId(latitudeFromBucket) : "latitude_df";
-        const latitudeAttribute = this.createAttributeFromId(latitudeFromBucket, latitudeId, latitudeLocalId);
-        const longitudeAttribute = this.createAttributeFromId(
-            latitudeFromBucket,
-            longitudeId,
-            "longitude_df",
-        );
-
-        if (!latitudeAttribute || !longitudeAttribute) {
+        if (!primaryLayer || !isGeoLayerPushpin(primaryLayer)) {
             // Invalid or incomplete geo config; validation is handled in checkBeforeRender().
             return undefined;
         }
-
-        // Set primary layer name to the insight title so legend/title logic is consistent for all layers.
-        const title = insightTitle(insight);
-        const primaryLayer = createPushpinLayer({
-            ...(title ? { name: title } : {}),
-            latitude: latitudeAttribute,
-            longitude: longitudeAttribute,
-            sortBy,
-            ...(size ? { size } : {}),
-            ...(color ? { color } : {}),
-            ...(segmentBy ? { segmentBy } : {}),
-            // Colors are ALWAYS per-layer.
-            // AD's "root" color config is just the primary (root insight) layer config.
-            ...(fullConfig.colorPalette || fullConfig.colorMapping
-                ? {
-                      config: {
-                          ...(fullConfig.colorPalette ? { colorPalette: fullConfig.colorPalette } : {}),
-                          ...(fullConfig.colorMapping ? { colorMapping: fullConfig.colorMapping } : {}),
-                      },
-                  }
-                : {}),
-        });
 
         return {
             primaryLayer,
@@ -479,19 +438,6 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
                 executionFactory,
             });
         });
-    }
-
-    private createAttributeFromId(
-        baseAttribute: IAttribute | undefined,
-        attributeId: string | undefined,
-        localId: string,
-    ): IAttribute | undefined {
-        if (!baseAttribute || !attributeId) {
-            return undefined;
-        }
-
-        const ref = createAttributeRef(baseAttribute, attributeId);
-        return newAttribute(ref, (attribute) => attribute.localId(localId));
     }
 
     private shouldSkipLayer(layer: IGeoLayer): boolean {

@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import * as path from "path";
 
@@ -48,11 +48,27 @@ function generateScenariosConst(recordings: ExecutionRecording[]): string {
 
     const entriesByVis = Object.entries(groupBy(recsWithVisAndScenario, ([visName]) => visName));
 
-    const entryRows = entriesByVis
-        .map(([vis, visScenarios]) => `${vis}: ${generateScenarioForVis(visScenarios)}`)
-        .join(",");
+    const visEntries = entriesByVis.map(([vis, visScenarios]) => {
+        const visConstName = `scenarios_${createUniqueVariableName(vis, {})}`;
 
-    return `export const ${ScenariosConstName} = { ${entryRows} }`;
+        return {
+            vis,
+            visConstName,
+            visScenarios,
+        };
+    });
+
+    const visConstants = visEntries.map(
+        ({ visConstName, visScenarios }) =>
+            `const ${visConstName} = ${generateScenarioForVis(visScenarios)};`,
+    );
+
+    const entryRows = visEntries.map(({ vis, visConstName }) => `${vis}: ${visConstName}`).join(",");
+    const typeRows = visEntries.map(({ vis, visConstName }) => `${vis}: typeof ${visConstName}`).join(";");
+
+    return `${visConstants.join("\n")}
+type ${ScenariosConstName}Type = { ${typeRows} };
+export const ${ScenariosConstName}: ${ScenariosConstName}Type = { ${entryRows} };`;
 }
 
 /**

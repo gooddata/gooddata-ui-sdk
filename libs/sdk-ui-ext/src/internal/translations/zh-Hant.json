@@ -530,5 +530,8 @@
     "automations.accessibility.search.alerts": "搜尋提醒",
     "automations.accessibility.search.schedules": "搜尋排程匯出",
     "automations.accessibility.gridLabel.alerts": "警報列表",
-    "automations.accessibility.gridLabel.schedules": "排程匯出清單"
+    "automations.accessibility.gridLabel.schedules": "排程匯出清單",
+    "filters.allTime.exceptEmptyValues.title": "所有時間（不含空值）",
+    "filters.emptyValues.label": "{title}，空值",
+    "filters.emptyValues.title": "空值"
 }

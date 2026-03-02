@@ -380,28 +380,16 @@
         "crowdinContext": "Catalog item description placeholder."
     },
     "analyticsCatalog.catalogItem.description.generate": {
-        "text": "Generate description",
+        "text": "Generate description with AI",
         "crowdinContext": "Label for the icon-only button in catalog item detail header that generates an AI description."
     },
-    "analyticsCatalog.catalogItem.description.generate.dialog.title": {
-        "text": "Generate description",
-        "crowdinContext": "Title of the dialog used to generate and edit an AI-generated catalog item description."
+    "analyticsCatalog.catalogItem.description.generate.loading": {
+        "text": "Generating...",
+        "crowdinContext": "Tooltip shown on the loading spinner while AI is generating the catalog item description."
     },
-    "analyticsCatalog.catalogItem.description.generate.dialog.content": {
-        "text": "This description is AI-generated. Use the generated text as a starting point and review it before applying.",
-        "crowdinContext": "Disclaimer in the generate description dialog indicating the text was created by AI and must be reviewed by the user."
-    },
-    "analyticsCatalog.catalogItem.description.generate.dialog.accept": {
-        "text": "Accept",
-        "crowdinContext": "Primary action in the generate description dialog that applies the generated description."
-    },
-    "analyticsCatalog.catalogItem.description.generate.dialog.decline": {
-        "text": "Decline",
-        "crowdinContext": "Secondary action in the generate description dialog that closes the dialog without applying generated description."
-    },
-    "analyticsCatalog.catalogItem.description.generate.dialog.note": {
-        "text": "Note",
-        "crowdinContext": "Label shown before backend-provided note in the generate description dialog."
+    "analyticsCatalog.catalogItem.description.generate.undo": {
+        "text": "Undo",
+        "crowdinContext": "Tooltip label for the icon-only button in catalog item detail header that reverts the latest generated description."
     },
     "analyticsCatalog.catalogItem.description.generate.failed": {
         "text": "Failed to generate description. Try again later.",
@@ -595,6 +583,10 @@
         "text": "Downstream",
         "crowdinContext": "Label for the bottom lineage direction."
     },
+    "analyticsCatalog.lineage.direction.both": {
+        "text": "Both",
+        "crowdinContext": "Label for the both lineage direction."
+    },
     "metricComponent.metricType.label": {
         "text": "Metric type",
         "crowdinContext": "Analytics Catalog detail drawer: Label for the dropdown that selects whether a measure is treated as currency or left unspecified."
@@ -610,5 +602,17 @@
     "metricComponent.numberFormat.label": {
         "text": "Number format",
         "crowdinContext": "Analytics Catalog detail drawer: Heading for the number format editor that defines how metric values are rendered."
+    },
+    "analyticsCatalog.tabs.recommended": {
+        "text": "Recommended",
+        "crowdinContext": "Analytics Catalog: Tab label for the Recommended section that shows AI-recommended catalog items."
+    },
+    "analyticsCatalog.tabs.trending": {
+        "text": "Trending",
+        "crowdinContext": "Analytics Catalog: Tab label for the Trending section that shows popular and frequently used catalog items."
+    },
+    "analyticsCatalog.tabs.quality": {
+        "text": "Quality",
+        "crowdinContext": "Analytics Catalog: Tab label for the Quality section that shows quality validation results for catalog items."
     }
 }

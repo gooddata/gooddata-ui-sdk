@@ -119,6 +119,11 @@ export interface ISettings {
     llmEndpoint?: ILlmEndpoint;
 
     /**
+     * LLM provider id as default for the platform.
+     */
+    activeLlmProvider?: ILlmActiveProvider;
+
+    /**
      * Attachment size limit in bytes (null for no limit).
      */
     attachmentSizeLimit?: number | null;
@@ -295,6 +300,11 @@ export interface ISettings {
     enableAlerting?: boolean;
 
     /**
+     * Enables the replacement of LLM endpoints.
+     */
+    enableLlmEndpointReplacement?: boolean;
+
+    /**
      * Enables attributes in alerts.
      */
     enableAlertAttributes?: boolean;
@@ -361,6 +371,11 @@ export interface ISettings {
      * Enable GenAI catalog quality checker in Analytics Catalog.
      */
     enableGenAICatalogQualityChecker?: boolean;
+
+    /**
+     * Enable trending and recommended object tabs in Analytics Catalog.
+     */
+    enableCatalogTrendingObjects?: boolean;
 
     /**
      * Enable certification indicators in Analytics Catalog.
@@ -632,6 +647,12 @@ export interface ISettings {
     enableGeoArea?: boolean;
 
     /**
+     * Enables geo accessibility enhancements introduced for map canvas, legend semantics,
+     * live announcements, and alternate table view.
+     */
+    enableGeoChartA11yImprovements?: boolean;
+
+    /**
      * Enable basemap selection in geo chart configuration.
      */
     enableGeoBasemapConfig?: boolean;
@@ -650,6 +671,11 @@ export interface ISettings {
      * Enable GenAI memory feature
      */
     enableGenAIMemory?: boolean;
+
+    /**
+     * Enable AI Knowledge feature
+     */
+    enableAIKnowledge?: boolean;
 
     /**
      * Enable GenAI reasoning visibility.
@@ -675,12 +701,6 @@ export interface ISettings {
      * Registered pluggable applications
      */
     registeredPluggableApplications?: string;
-
-    /**
-     * Enable automatic reset of column sizing in pivot table when container width changes or column structure changes.
-     * This fixes issues where tables with growToFit don't expand to full width after tab switching.
-     */
-    enablePivotTableAutoSizeReset?: boolean;
 
     /**
      * This setting enables drills into URL in pivot table charts by default on all available attributes.
@@ -745,6 +765,11 @@ export interface ISettings {
      * Enable arbitrary filter in Dashboard app.
      */
     enableArbitraryFilterKD?: boolean;
+    /**
+     * Enable filtering of visualizations by tags provided via URL.
+     */
+    enableVisualizationFilteringByTags?: boolean;
+
     /**
      * Restrict access to Base UI applications.
      */
@@ -817,6 +842,20 @@ export interface ILlmEndpoint {
      * Type of the LLM endpoint.
      */
     type: "llmEndpoint";
+}
+
+/**
+ * @public
+ */
+export interface ILlmActiveProvider {
+    /**
+     * Unique identifier of the LLM endpoint.
+     */
+    id: string;
+    /**
+     * Type of the LLM endpoint.
+     */
+    type: "llmProvider";
 }
 
 /**

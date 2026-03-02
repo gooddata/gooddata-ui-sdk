@@ -2,6 +2,7 @@
 
 import { type IInsight } from "@gooddata/sdk-model";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 
@@ -97,7 +98,7 @@ export const GermanNumberFormat = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 2, 0),
+        getScenariosGroupByIndexes(17, 2, 0),
     )();
 GermanNumberFormat.parameters = {
     kind: "german number format",
@@ -201,7 +202,7 @@ export const NoTotalsAndMaxHeight200 = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 2, 1),
+        getScenariosGroupByIndexes(17, 2, 1),
     )();
 NoTotalsAndMaxHeight200.parameters = {
     kind: "no totals and max height 200",
@@ -305,7 +306,7 @@ export const NoTotalsAndMaxHeight300 = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 2, 2),
+        getScenariosGroupByIndexes(17, 2, 2),
     )();
 NoTotalsAndMaxHeight300.parameters = {
     kind: "no totals and max height 300",
@@ -409,7 +410,7 @@ export const NoTotalsAndNoGrouping = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 2, 3),
+        getScenariosGroupByIndexes(17, 2, 3),
     )();
 NoTotalsAndNoGrouping.parameters = {
     kind: "no totals and no grouping",
@@ -514,7 +515,7 @@ export const MeasureFormatWithColors = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 2, 4),
+        getScenariosGroupByIndexes(17, 2, 4),
     )();
 MeasureFormatWithColors.parameters = {
     kind: "measure format with colors",
@@ -643,7 +644,7 @@ export const TotalsAndMaxHeight200 = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 2, 5),
+        getScenariosGroupByIndexes(17, 2, 5),
     )();
 TotalsAndMaxHeight200.parameters = {
     kind: "totals and max height 200",
@@ -772,7 +773,7 @@ export const TotalsAndMaxHeight300 = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 2, 6),
+        getScenariosGroupByIndexes(17, 2, 6),
     )();
 TotalsAndMaxHeight300.parameters = {
     kind: "totals and max height 300",
@@ -883,7 +884,7 @@ export const TotalsAndMaxHeight800 = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 2, 7),
+        getScenariosGroupByIndexes(17, 2, 7),
     )();
 TotalsAndMaxHeight800.parameters = {
     kind: "totals and max height 800",

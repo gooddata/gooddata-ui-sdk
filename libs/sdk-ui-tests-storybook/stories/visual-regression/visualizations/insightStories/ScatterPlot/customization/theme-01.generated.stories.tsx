@@ -2,6 +2,7 @@
 
 import { type IInsight } from "@gooddata/sdk-model";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 
@@ -87,7 +88,7 @@ export const Themed = () =>
                 visualizationUrl: "local:scatter",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(19, 6, 0),
+        getScenariosGroupByIndexes(22, 6, 0),
     )();
 Themed.parameters = {
     kind: "themed",
@@ -180,7 +181,7 @@ export const Font = () =>
                 visualizationUrl: "local:scatter",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(19, 6, 1),
+        getScenariosGroupByIndexes(22, 6, 1),
     )();
 Font.parameters = {
     kind: "font",

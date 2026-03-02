@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type KeyboardEvent, useRef } from "react";
 
@@ -21,6 +21,7 @@ export interface IInvertableSelectAllCheckboxProps {
     isVisible: boolean;
     onApplyButtonClick?: () => void;
     isApplyDisabled?: boolean;
+    hideTotalItemsCount?: boolean;
 }
 
 /**
@@ -35,6 +36,7 @@ export function InvertableSelectAllCheckbox({
     isFiltered,
     totalItemsCount,
     isPartialSelection,
+    hideTotalItemsCount = false,
 }: IInvertableSelectAllCheckboxProps) {
     const intl = useIntl();
     const itemRef = useRef<HTMLDivElement>(null);
@@ -79,7 +81,11 @@ export function InvertableSelectAllCheckbox({
         >
             <span className={wrapperClasses}>
                 <span className="input-label-text">
-                    <span className={cx("gd-list-all-checkbox", { "gd-list-all-checkbox-checked": checked })}>
+                    <span
+                        className={cx("gd-list-all-checkbox", {
+                            "gd-list-all-checkbox-checked": checked,
+                        })}
+                    >
                         {intl.formatMessage({ id: "gs.list.all" })}
                         {isFiltered
                             ? ` ${intl.formatMessage({
@@ -87,7 +93,9 @@ export function InvertableSelectAllCheckbox({
                               })}`
                             : null}
                     </span>
-                    <span className="gd-list-actions-selection-size s-list-search-selection-size">{`(${totalItemsCount})`}</span>
+                    {hideTotalItemsCount ? null : (
+                        <span className="gd-list-actions-selection-size s-list-search-selection-size">{`(${totalItemsCount})`}</span>
+                    )}
                 </span>
             </span>
         </div>

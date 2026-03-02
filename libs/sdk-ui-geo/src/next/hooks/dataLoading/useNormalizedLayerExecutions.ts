@@ -29,7 +29,7 @@ function colorMappingFingerprint(colorMapping: IColorMapping[] | undefined): str
 
     return colorMapping
         .map((item) => {
-            const predicate = getHeaderPredicateFingerprint(item.predicate);
+            const predicate = item.id ? `key:${item.id}` : getHeaderPredicateFingerprint(item.predicate);
             const color = stringify(item.color);
             return `${predicate}:${color}`;
         })

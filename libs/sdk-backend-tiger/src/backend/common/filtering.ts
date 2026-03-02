@@ -17,7 +17,7 @@ export function buildFilterQuery(filter: IFilterBaseOptions) {
         buildListClause("id", "in", filter.id),
         buildListClause("id", "out", filter.excludeId),
         buildContainsIcClause("title", filter.title),
-        buildListClause("createdBy.id", "in", filter.createdBy),
+        buildSingleOrListInClause("createdBy.id", filter.createdBy),
         buildListClause("createdBy.id", "out", filter.excludeCreatedBy),
         buildListClause("tags", "in", filter.tags),
         buildListClause("tags", "out", filter.excludeTags),
@@ -52,6 +52,20 @@ export function buildListClause(
         return undefined;
     }
     return `${field}=${operator}=(${formatInValues(values)})`;
+}
+
+/**
+ * Builds either an equality clause (single value) or IN clause (multiple values).
+ * @internal
+ */
+export function buildSingleOrListInClause(field: string, values?: string[]): string | undefined {
+    if (!hasValues(values)) {
+        return undefined;
+    }
+    if (values.length === 1) {
+        return buildIsClause(field, values[0]);
+    }
+    return buildListClause(field, "in", values);
 }
 
 /**

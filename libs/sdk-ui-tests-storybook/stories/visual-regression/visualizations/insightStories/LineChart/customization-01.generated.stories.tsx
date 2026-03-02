@@ -2,6 +2,7 @@
 
 import { type IInsight } from "@gooddata/sdk-model";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 
@@ -86,7 +87,7 @@ export const LegendPositionAutoLegend = () =>
                 visualizationUrl: "local:line",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(12, 1, 0),
+        getScenariosGroupByIndexes(15, 1, 0),
     )();
 LegendPositionAutoLegend.parameters = {
     kind: "legend position - auto legend",
@@ -178,7 +179,7 @@ export const LegendPositionLegendOnLeft = () =>
                 visualizationUrl: "local:line",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(12, 1, 1),
+        getScenariosGroupByIndexes(15, 1, 1),
     )();
 LegendPositionLegendOnLeft.parameters = {
     kind: "legend position - legend on left",
@@ -270,7 +271,7 @@ export const LegendPositionLegendOnRight = () =>
                 visualizationUrl: "local:line",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(12, 1, 2),
+        getScenariosGroupByIndexes(15, 1, 2),
     )();
 LegendPositionLegendOnRight.parameters = {
     kind: "legend position - legend on right",
@@ -362,7 +363,7 @@ export const LegendPositionLegendOnTop = () =>
                 visualizationUrl: "local:line",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(12, 1, 3),
+        getScenariosGroupByIndexes(15, 1, 3),
     )();
 LegendPositionLegendOnTop.parameters = {
     kind: "legend position - legend on top",
@@ -454,7 +455,7 @@ export const LegendPositionLegendAtBottom = () =>
                 visualizationUrl: "local:line",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(12, 1, 4),
+        getScenariosGroupByIndexes(15, 1, 4),
     )();
 LegendPositionLegendAtBottom.parameters = {
     kind: "legend position - legend at bottom",
@@ -546,7 +547,7 @@ export const LegendPositionDisabled = () =>
                 visualizationUrl: "local:line",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(12, 1, 5),
+        getScenariosGroupByIndexes(15, 1, 5),
     )();
 LegendPositionDisabled.parameters = {
     kind: "legend position - disabled",

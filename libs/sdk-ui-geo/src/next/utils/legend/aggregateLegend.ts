@@ -1,7 +1,5 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { DefaultColorPalette } from "@gooddata/sdk-ui";
-
 import { computeAreaLegend } from "./computeAreaLegend.js";
 import { computePushpinLegend } from "./computePushpinLegend.js";
 import type { IGeoLayerData } from "../../context/GeoLayersContext.js";
@@ -9,10 +7,12 @@ import type { EnabledItemsByLayer } from "../../context/GeoLegendContext.js";
 import { getAreaColorStrategy } from "../../layers/area/coloring/colorStrategy.js";
 import { computeLegend } from "../../layers/common/computeLegend.js";
 import { getPushpinColorStrategy } from "../../layers/pushpin/coloring/colorStrategy.js";
+import type { IGeoChartConfig } from "../../types/config/unified.js";
 import type { IAreaGeoData } from "../../types/geoData/area.js";
 import type { IPushpinGeoData } from "../../types/geoData/pushpin.js";
 import { type ILegendModel, type ILegendSection } from "../../types/legend/model.js";
 import type { ILayerExecutionRecord } from "../../types/props/geoChart/internal.js";
+import { resolveLayerColorConfig } from "../color/resolveLayerColorConfig.js";
 
 /**
  * Options for aggregating legend sections.
@@ -44,6 +44,11 @@ export interface IAggregateLegendOptions {
      * legacy GeoChart behavior.
      */
     numericSymbols?: string[];
+
+    /**
+     * Chart-level configuration used for layer color fallback.
+     */
+    chartConfig?: IGeoChartConfig;
 }
 
 /**
@@ -113,8 +118,10 @@ export function aggregateLegend(
 
         const layerName = layer.name ?? layerId;
 
-        const effectivePalette = layer.config?.colorPalette ?? DefaultColorPalette;
-        const effectiveMapping = layer.config?.colorMapping ?? [];
+        const { colorPalette: effectivePalette, colorMapping: effectiveMapping } = resolveLayerColorConfig(
+            layer,
+            options?.chartConfig,
+        );
 
         const colorStrategy =
             layer.type === "pushpin"

@@ -228,4 +228,11 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     relevantValuesParentFiltersLimitsTooltip: {
         id: "attributesDropdown.relevantValues.tooltip.parentFiltersLimits",
     },
+    attributeFilterDetailsInfoButtonLabel: { id: "attributeFilter.details.infoButtonLabel" },
+    attributeFilterDetailsLabel: { id: "attributeFilter.details.label" },
+    attributeFilterDetailsElementsMore: { id: "attributeFilter.details.elementsMore" },
+    attributeFilterDetailsType: { id: "attributeFilter.details.type" },
+    attributeFilterDetailsDataset: { id: "attributeFilter.details.dataset" },
+    attributeFilterDetailsId: { id: "attributeFilter.details.id" },
+    attributeFilterDetailsTypeValue: { id: "attributeFilter.details.typeValue" },
 });

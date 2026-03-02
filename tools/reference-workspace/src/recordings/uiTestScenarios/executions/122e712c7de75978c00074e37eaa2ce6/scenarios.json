@@ -1,0 +1,68 @@
+[
+    {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_city.id.latitude", "type": "displayForm" },
+                            "localIdentifier": "a_f_city.id.latitude"
+                        }
+                    }
+                ],
+                "localIdentifier": "location"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "aggregation": "sum",
+                                    "item": { "identifier": "f_population", "type": "fact" }
+                                }
+                            },
+                            "localIdentifier": "m_f_population_sum"
+                        }
+                    }
+                ],
+                "localIdentifier": "size"
+            }
+        ],
+        "scenario": "viewport world",
+        "vis": "GeoPushpinChart"
+    },
+    {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_city.id.latitude", "type": "displayForm" },
+                            "localIdentifier": "a_f_city.id.latitude"
+                        }
+                    }
+                ],
+                "localIdentifier": "location"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "aggregation": "sum",
+                                    "item": { "identifier": "f_population", "type": "fact" }
+                                }
+                            },
+                            "localIdentifier": "m_f_population_sum"
+                        }
+                    }
+                ],
+                "localIdentifier": "size"
+            }
+        ],
+        "scenario": "viewport europe",
+        "vis": "GeoPushpinChart"
+    }
+]

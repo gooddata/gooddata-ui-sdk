@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
@@ -138,6 +138,19 @@ const changedAttributeFilterContextItem: FilterContextItem = {
     },
 };
 
+const allValuesAttributeFilterContextItem: FilterContextItem = {
+    attributeFilter: {
+        displayForm: {
+            identifier: "allValuesAttribute",
+        },
+        negativeSelection: true,
+        attributeElements: {
+            values: [],
+        },
+        localIdentifier: "allValuesAttribute",
+    },
+};
+
 const commonInsightNonAllTimeDateFilter = newRelativeDateFilter(commonDataSetRef, "GDC.time.date", 1, 2);
 const nonCommonInsightNonAllTimeDateFilter = newRelativeDateFilter(
     nonCommonDataSetRef,
@@ -199,6 +212,7 @@ const [
     nonCommonFilterWithCommonDataSetVisibleFilter,
     // attribute filters
     attributeVisibleFilter,
+    allValuesAttributeVisibleFilter,
 ] = [
     // common date filters
     allTimeCommonDateFilterContextItem,
@@ -209,6 +223,7 @@ const [
     nonCommonFilterContextItemWithCommonDataSet,
     // attribute filters
     attributeFilterContextItem,
+    allValuesAttributeFilterContextItem,
 ].map((filterContexItem): IAutomationVisibleFilter => {
     return {
         localIdentifier: dashboardFilterLocalIdentifier(filterContexItem),
@@ -340,6 +355,27 @@ describe("validateExistingAutomationFilters", () => {
                 lockedFilters: [],
                 ignoredFilters: [],
                 dashboardFilters: [allTimeCommonDateFilterContextItem, allTimeDateFilterContextItem],
+                widget,
+                insight,
+            });
+
+            expect(isValid).toBe(true);
+            expect(hiddenFilterIsMissingInSavedFilters).toBe(false);
+            expect(hiddenFilterHasDifferentValueInSavedFilter).toBe(false);
+        });
+
+        it("should be valid with hidden all-values attribute filters that are missing in saved automation filters", () => {
+            const {
+                isValid,
+                hiddenFilterIsMissingInSavedFilters,
+                hiddenFilterHasDifferentValueInSavedFilter,
+            } = validateExistingAutomationFilters({
+                savedAutomationFilters: [],
+                savedAutomationVisibleFilters: [allValuesAttributeVisibleFilter],
+                hiddenFilters: [allValuesAttributeFilterContextItem],
+                lockedFilters: [],
+                ignoredFilters: [],
+                dashboardFilters: [allValuesAttributeFilterContextItem],
                 widget,
                 insight,
             });
@@ -598,6 +634,27 @@ describe("validateExistingAutomationFilters", () => {
                 lockedFilters: [allTimeCommonDateFilterContextItem, allTimeDateFilterContextItem],
                 ignoredFilters: [],
                 dashboardFilters: [allTimeCommonDateFilterContextItem, allTimeDateFilterContextItem],
+                widget,
+                insight,
+            });
+
+            expect(isValid).toBe(true);
+            expect(lockedFilterIsMissingInSavedFilters).toBe(false);
+            expect(lockedFilterHasDifferentValueInSavedFilter).toBe(false);
+        });
+
+        it("should be valid with locked all-values attribute filters that are missing in saved automation filters", () => {
+            const {
+                isValid,
+                lockedFilterIsMissingInSavedFilters,
+                lockedFilterHasDifferentValueInSavedFilter,
+            } = validateExistingAutomationFilters({
+                savedAutomationFilters: [],
+                savedAutomationVisibleFilters: [allValuesAttributeVisibleFilter],
+                hiddenFilters: [],
+                lockedFilters: [allValuesAttributeFilterContextItem],
+                ignoredFilters: [],
+                dashboardFilters: [allValuesAttributeFilterContextItem],
                 widget,
                 insight,
             });
@@ -983,6 +1040,27 @@ describe("validateExistingAutomationFilters", () => {
             expect(isValid).toBe(false);
             expect(commonDateFilterIsMissingInSavedVisibleFilters).toBe(false);
             expect(visibleFilterIsMissingInSavedFilters).toBe(true);
+        });
+
+        it("should be valid with visible all-values attribute filter missing in saved automation filters", () => {
+            const {
+                isValid,
+                commonDateFilterIsMissingInSavedVisibleFilters,
+                visibleFilterIsMissingInSavedFilters,
+            } = validateExistingAutomationFilters({
+                savedAutomationFilters: [],
+                savedAutomationVisibleFilters: [allValuesAttributeVisibleFilter],
+                hiddenFilters: [],
+                lockedFilters: [],
+                ignoredFilters: [],
+                dashboardFilters: [allValuesAttributeFilterContextItem],
+                widget: widget,
+                insight,
+            });
+
+            expect(isValid).toBe(true);
+            expect(commonDateFilterIsMissingInSavedVisibleFilters).toBe(false);
+            expect(visibleFilterIsMissingInSavedFilters).toBe(false);
         });
 
         it("should be valid with visible all-time common date filter missing in saved automation filters", () => {

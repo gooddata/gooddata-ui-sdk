@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import type { IExistingResources, IStyleReconciliationPlan } from "./types.js";
 import { removeLayerIfExists, removeSourceIfExists } from "../../layers/common/layerOps.js";
@@ -67,6 +67,9 @@ export function reconcileStyle(
     });
 
     plan.layers.forEach(({ layer }) => {
+        if (map.getLayer(layer.id)) {
+            return;
+        }
         map.addLayer(layer);
     });
 }

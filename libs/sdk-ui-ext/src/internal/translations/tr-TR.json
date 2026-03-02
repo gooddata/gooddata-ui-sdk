@@ -530,5 +530,8 @@
     "automations.accessibility.search.alerts": "Uyarıları ara",
     "automations.accessibility.search.schedules": "Zamanlanmış dışa aktarımları ara",
     "automations.accessibility.gridLabel.alerts": "Uyarı listesi",
-    "automations.accessibility.gridLabel.schedules": "Zamanlanmış dışa aktarımlar listesi"
+    "automations.accessibility.gridLabel.schedules": "Zamanlanmış dışa aktarımlar listesi",
+    "filters.allTime.exceptEmptyValues.title": "Boş değerler hariç tüm zamanlar",
+    "filters.emptyValues.label": "{title}, boş değerler",
+    "filters.emptyValues.title": "Boş değerler"
 }

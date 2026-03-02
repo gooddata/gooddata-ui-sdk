@@ -5,6 +5,9 @@
 // baseline-browser-mapping needs to be updated to the latest version very 14 days
 const baselineBrowserMappingVersion = "2.9.19";
 
+// browserslist needs to be updated every 6 months
+const browserslistVersion = "4.28.1";
+
 /**
  * When using the PNPM package manager, you can use pnpmfile.js to workaround
  * dependencies that have mistakes in their package.json file.  (This feature is
@@ -59,11 +62,18 @@ function readPackage(packageJson, context) {
     }
 
     if (packageJson.devDependencies && packageJson.devDependencies["baseline-browser-mapping"]) {
-        context.log(
-            "Fixed up dependencies for baseline-browser-mapping",
-            packageJson.dependencies["baseline-browser-mapping"],
-        );
+        context.log("Fixed up dependencies for baseline-browser-mapping");
         packageJson.devDependencies["baseline-browser-mapping"] = baselineBrowserMappingVersion;
+    }
+
+    if (packageJson.dependencies && packageJson.dependencies["browserslist"]) {
+        context.log("Fixed up dependencies for browserslist");
+        packageJson.dependencies["browserslist"] = browserslistVersion;
+    }
+
+    if (packageJson.devDependencies && packageJson.devDependencies["browserslist"]) {
+        context.log("Fixed up dependencies for browserslist");
+        packageJson.devDependencies["browserslist"] = browserslistVersion;
     }
 
     // remove after eslint-plugin-sonarjs is updated to > 3.0.7

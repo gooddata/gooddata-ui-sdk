@@ -14,6 +14,7 @@ import { useGeoLayers } from "../../context/GeoLayersContext.js";
 import { useGeoLegend } from "../../context/GeoLegendContext.js";
 import { useMapRuntime } from "../../context/MapRuntimeContext.js";
 import { getLayerAdapter } from "../../layers/registry/adapterRegistry.js";
+import { resolveLayerColorConfig } from "../../utils/color/resolveLayerColorConfig.js";
 
 interface IUseLayerSyncParams {
     /**
@@ -57,6 +58,21 @@ export function useSyncLayersToMap({ drillablePredicates, onDrill }: IUseLayerSy
             .join("|");
     }, [layerExecutions, adapterContext]);
 
+    // Key capturing adapter-declared in-place update changes (e.g. color palette/mapping updates).
+    const mapUpdateKey = useMemo(() => {
+        return layerExecutions
+            .map(({ layerId, layer }) => {
+                const adapter = getLayerAdapter(layer);
+                const perLayerContext = {
+                    ...adapterContext,
+                    ...resolveLayerColorConfig(layer, adapterContext.config),
+                };
+                const key = adapter.getMapUpdateKey?.(layer, perLayerContext) ?? "";
+                return `${layerId}:${key}`;
+            })
+            .join("|");
+    }, [layerExecutions, adapterContext]);
+
     // Use ref for adapterContext in Effect 1 to avoid re-syncing layers when context updates
     // (filter changes are handled separately by Effect 3).
     const adapterContextRef = useRef(adapterContext);
@@ -71,7 +87,14 @@ export function useSyncLayersToMap({ drillablePredicates, onDrill }: IUseLayerSy
         adapterContextRef,
     });
 
-    useUpdateLayersOnMap({ map, isMapReady, layerExecutions, layers, adapterContextRef });
+    useUpdateLayersOnMap({
+        map,
+        isMapReady,
+        layerExecutions,
+        layers,
+        adapterContextRef,
+        mapUpdateKey,
+    });
 
     useApplyLayerVisibility({ map, isMapReady, layerExecutions, hiddenLayers });
 

@@ -2,7 +2,7 @@
 
 import { type MutableRefObject, useCallback, useEffect, useMemo, useRef } from "react";
 
-import { DefaultColorPalette, usePrevious } from "@gooddata/sdk-ui";
+import { usePrevious } from "@gooddata/sdk-ui";
 
 import type { IGeoLayerData } from "../../context/GeoLayersContext.js";
 import type { IMapFacade } from "../../layers/common/mapFacade.js";
@@ -10,6 +10,7 @@ import { getLayerAdapter } from "../../layers/registry/adapterRegistry.js";
 import type { IGeoAdapterContext } from "../../layers/registry/adapterTypes.js";
 import { buildOutputFromLayerData } from "../../layers/registry/output.js";
 import type { ILayerExecutionRecord } from "../../types/props/geoChart/internal.js";
+import { resolveLayerColorConfig } from "../../utils/color/resolveLayerColorConfig.js";
 
 function areSameOrder(a: string[], b: string[]): boolean {
     if (a.length !== b.length) {
@@ -95,8 +96,7 @@ function syncLayerToMap(
 
     const perLayerContext: IGeoAdapterContext = {
         ...adapterContext,
-        colorPalette: layer.config?.colorPalette ?? DefaultColorPalette,
-        colorMapping: layer.config?.colorMapping ?? [],
+        ...resolveLayerColorConfig(layer, adapterContext.config),
     };
 
     adapter.syncToMap(layer, map, layerOutput, layerData.dataView, perLayerContext);

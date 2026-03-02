@@ -34,6 +34,7 @@ import {
     filterObjRef,
     isAttributeElementsByRef,
     isAttributeFilter,
+    isAttributeFilterWithSelection,
     isIdentifierRef,
     isNegativeAttributeFilter,
     objRefToString,
@@ -163,12 +164,16 @@ class TigerWorkspaceElementsQuery implements IElementsQuery {
         if (attributeFilters) {
             const dependsOn = attributeFilters
                 // Do not include empty parent filters
-                .filter((filter) => !filterIsEmpty(filter.attributeFilter))
+                .filter(
+                    (filter) =>
+                        isAttributeFilterWithSelection(filter.attributeFilter) &&
+                        !filterIsEmpty(filter.attributeFilter),
+                )
                 .map((filter) => {
                     const { attributeFilter } = filter;
                     const complementFilter = isNegativeAttributeFilter(attributeFilter);
                     const label = objRefToString(filterObjRef(attributeFilter));
-                    const elements = filterAttributeElements(attributeFilter);
+                    const elements = filterAttributeElements(attributeFilter)!;
                     const values = isAttributeElementsByRef(elements) ? elements.uris : elements.values;
 
                     return {

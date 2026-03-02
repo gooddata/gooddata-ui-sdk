@@ -3,9 +3,9 @@
 import type * as joint from "@joint/core";
 import { DirectedGraph } from "@joint/layout-directed-graph";
 
-export function applyLayout(graph: joint.dia.Graph, direction: "up" | "down" = "down") {
+export function applyLayout(graph: joint.dia.Graph, direction: "up" | "down" | "both" = "down") {
     // Layout
     DirectedGraph.layout(graph, {
-        rankDir: direction === "down" ? "LR" : "RL",
+        rankDir: direction === "down" || direction === "both" ? "LR" : "RL",
     });
 }

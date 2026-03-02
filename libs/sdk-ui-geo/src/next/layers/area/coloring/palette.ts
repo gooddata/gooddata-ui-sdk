@@ -62,5 +62,6 @@ export function getAreaAreaColors(
         return mapPushpinColorsToAreas(pushpinColors);
     }
 
-    return [{ fill: DEFAULT_AREA_FILL_COLOR }];
+    const pushpinColors = getPushpinColors([], [], colorStrategy);
+    return mapPushpinColorsToAreas(pushpinColors);
 }

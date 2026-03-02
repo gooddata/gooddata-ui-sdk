@@ -2,6 +2,7 @@
 
 import { type IInsight } from "@gooddata/sdk-model";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 
@@ -85,7 +86,7 @@ export const SingleMeasurePivotWithGroupingSortedByFirstRowAttr = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 5, 0),
+        getScenariosGroupByIndexes(17, 5, 0),
     )();
 SingleMeasurePivotWithGroupingSortedByFirstRowAttr.parameters = {
     kind: "single measure pivot with grouping sorted by first row attr",
@@ -177,7 +178,7 @@ export const SingleMeasurePivotWithGroupingSortedBySecondRowAttr = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 5, 1),
+        getScenariosGroupByIndexes(17, 5, 1),
     )();
 SingleMeasurePivotWithGroupingSortedBySecondRowAttr.parameters = {
     kind: "single measure pivot with grouping sorted by second row attr",
@@ -275,7 +276,7 @@ export const SingleMeasurePivotWithGroupingSortedByMeasure = () =>
                 visualizationUrl: "local:table",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(14, 5, 2),
+        getScenariosGroupByIndexes(17, 5, 2),
     )();
 SingleMeasurePivotWithGroupingSortedByMeasure.parameters = {
     kind: "single measure pivot with grouping sorted by measure",

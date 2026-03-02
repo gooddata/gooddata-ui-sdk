@@ -1,12 +1,5 @@
 // (C) 2025-2026 GoodData Corporation
 
-import {
-    type IInsightDefinition,
-    type ISortItem,
-    bucketAttribute,
-    insightBucket,
-    newAttributeSort,
-} from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 
 import { ATTRIBUTE, METRIC } from "../../../constants/bucket.js";
@@ -239,23 +232,4 @@ export function shouldEnableClustering(buckets: IBucketOfFun[]): boolean {
 export function sanitizeMeasures(extendedReferencePoint: IExtendedReferencePoint): IExtendedReferencePoint {
     const withoutArithmetic = removeAllArithmeticMeasuresFromDerived(extendedReferencePoint);
     return removeAllDerivedMeasures(withoutArithmetic);
-}
-
-/**
- * Creates sort configuration for the geo pushpin chart.
- * Sorts by segment attribute when present (2nd attribute after location).
- *
- * @param insight - The insight definition
- * @returns Array of sort items (empty if no segment attribute)
- * @internal
- */
-export function createSortForSegment(insight: IInsightDefinition): ISortItem[] {
-    const bucket = insightBucket(insight, BucketNames.SEGMENT);
-    const segmentAttribute = bucket && bucketAttribute(bucket);
-
-    if (segmentAttribute) {
-        return [newAttributeSort(segmentAttribute, "asc")];
-    }
-
-    return [];
 }

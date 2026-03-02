@@ -10,6 +10,8 @@ import {
     type IAutomationMetadataObjectDefinition,
     type IExportDefinitionMetadataObject,
     type IExportDefinitionMetadataObjectDefinition,
+    isAllValuesAttributeFilter,
+    isAllValuesDashboardAttributeFilter,
     isExportDefinitionDashboardRequestPayload,
     isExportDefinitionVisualizationObjectRequestPayload,
     isNoopAllTimeDashboardDateFilter,
@@ -140,38 +142,52 @@ function sanitizeAutomation(
     }
 
     /**
-     * Remove all-time date filters from export definitions.
-     * They are not required for the execution and not even valid as AFM date granularity.
-     * They are added ad-hoc to be visible in the UI in useAutomationFiltersSelect hook,
-     * depending on whether they are ignored or not.
+     * Remove noop filters from export definitions before saving to backend.
+     * - "All time" date filters are not required for the execution and not even valid as AFM date granularity.
+     *   They are added ad-hoc to be visible in the UI in useAutomationFiltersSelect hook,
+     *   depending on whether they are ignored or not.
+     * - "All values" attribute filters have no effect on execution and should not appear in notifications.
      */
-    if (automation.exportDefinitions && !enableAutomationFilterContext) {
-        automation.exportDefinitions = removeAllTimeDateFiltersFromExportDefinitions(
+    if (automation.exportDefinitions) {
+        automation.exportDefinitions = removeNoopFiltersFromExportDefinitions(
             automation.exportDefinitions,
+            enableAutomationFilterContext,
         );
     }
 
     return automation;
 }
 
-function removeAllTimeDateFiltersFromExportDefinitions<
+function removeNoopFiltersFromExportDefinitions<
     T extends IExportDefinitionMetadataObject | IExportDefinitionMetadataObjectDefinition,
->(exportDefinitions: T[]): T[] {
+>(exportDefinitions: T[], enableAutomationFilterContext: boolean): T[] {
     return exportDefinitions.map((exportDefinition) => {
         if (isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload)) {
             const filters = exportDefinition.requestPayload.content.filters;
             const format = exportDefinition.requestPayload.format;
             const isTabularFormat = format === "XLSX" || format === "CSV";
-            const appliedFilters = isTabularFormat
-                ? filters?.filter((f) => !isNoopAllTimeDateFilter(f))
-                : filters?.filter((f) => !isNoopAllTimeDashboardDateFilter(f));
             return {
                 ...exportDefinition,
                 requestPayload: {
                     ...exportDefinition.requestPayload,
                     content: {
                         ...exportDefinition.requestPayload.content,
-                        filters: appliedFilters,
+                        filters: filters?.filter((filter) => {
+                            // Strip noop "All values" attribute filters (handles both IFilter and FilterContextItem formats).
+                            if (
+                                isAllValuesAttributeFilter(filter) ||
+                                isAllValuesDashboardAttributeFilter(filter)
+                            ) {
+                                return false;
+                            }
+                            // Strip noop "All time" date filters only for legacy path.
+                            if (!enableAutomationFilterContext) {
+                                return isTabularFormat
+                                    ? !isNoopAllTimeDateFilter(filter)
+                                    : !isNoopAllTimeDashboardDateFilter(filter);
+                            }
+                            return true;
+                        }),
                     },
                 },
             };
@@ -182,9 +198,17 @@ function removeAllTimeDateFiltersFromExportDefinitions<
                     ...exportDefinition.requestPayload,
                     content: {
                         ...exportDefinition.requestPayload.content,
-                        filters: exportDefinition.requestPayload.content.filters?.filter(
-                            (f) => !isNoopAllTimeDashboardDateFilter(f),
-                        ),
+                        filters: exportDefinition.requestPayload.content.filters?.filter((filter) => {
+                            // Strip noop "All values" attribute filters.
+                            if (isAllValuesDashboardAttributeFilter(filter)) {
+                                return false;
+                            }
+                            // Strip noop "All time" date filters only for legacy path.
+                            if (!enableAutomationFilterContext && isNoopAllTimeDashboardDateFilter(filter)) {
+                                return false;
+                            }
+                            return true;
+                        }),
                     },
                 },
             };

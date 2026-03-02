@@ -1543,10 +1543,6 @@
         "text": "Filters",
         "crowdinContext": "Title for filters dialog in notifications"
     },
-    "notifications.filters.dialog.dateRange": {
-        "text": "Date Range",
-        "crowdinContext": "Label for date range filter in notifications dialog"
-    },
     "notifications.panel.triggers.title": {
         "text": "for {triggeredCount}/{totalCount} items",
         "crowdinContext": "Title showing triggered count vs total count for notification items"

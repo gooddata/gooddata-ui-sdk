@@ -21,6 +21,9 @@ const commonConfiguration = {
 
         // Temp files
         "**/temp/**",
+
+        // Reference workspaces
+        "**/reference_workspace/**",
     ],
 };
 

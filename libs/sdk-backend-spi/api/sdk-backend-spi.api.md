@@ -88,6 +88,7 @@ import { IInsightDefinition } from '@gooddata/sdk-model';
 import type { IListedDashboard } from '@gooddata/sdk-model';
 import type { ILlmEndpointBase } from '@gooddata/sdk-model';
 import { ILlmEndpointOpenAI } from '@gooddata/sdk-model';
+import { ILlmProvider } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
 import { IMeasureDescriptor } from '@gooddata/sdk-model';
 import type { IMeasureMetadataObject } from '@gooddata/sdk-model';
@@ -143,6 +144,8 @@ import { IWorkspaceUser } from '@gooddata/sdk-model';
 import { IWorkspaceUserGroup } from '@gooddata/sdk-model';
 import { LlmEndpointOpenAIPatch } from '@gooddata/sdk-model';
 import { LlmEndpointTestResults } from '@gooddata/sdk-model';
+import { LlmProviderPatch } from '@gooddata/sdk-model';
+import { LlmProviderTestResults } from '@gooddata/sdk-model';
 import type { MemoryItemStrategy } from '@gooddata/sdk-model';
 import { NotificationChannelDestinationType } from '@gooddata/sdk-model';
 import { ObjectOrigin } from '@gooddata/sdk-model';
@@ -347,12 +350,45 @@ export interface IAnalyticsCatalogService {
     generateDescription(request: IAnalyticsCatalogGenerateDescriptionRequest): Promise<IAnalyticsCatalogGenerateDescriptionResponse>;
     getCreatedBy(): Promise<IAnalyticsCatalogCreatedBy>;
     getTags(): Promise<IAnalyticsCatalogTags>;
+    getTrendingObjects(): Promise<IAnalyticsCatalogTrendingObjects>;
 }
 
 // @internal
 export interface IAnalyticsCatalogTags {
     // (undocumented)
     tags: string[];
+}
+
+// @internal
+export interface IAnalyticsCatalogTrendingObject {
+    // (undocumented)
+    createdAt?: string;
+    // (undocumented)
+    createdBy?: string;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    isHidden?: boolean;
+    // (undocumented)
+    isHiddenFromKda?: boolean;
+    // (undocumented)
+    modifiedAt?: string;
+    // (undocumented)
+    modifiedBy?: string;
+    // (undocumented)
+    tags: string[];
+    // (undocumented)
+    title: string;
+    // (undocumented)
+    type: string;
+    // (undocumented)
+    visualizationUrl?: string;
+}
+
+// @internal
+export interface IAnalyticsCatalogTrendingObjects {
+    // (undocumented)
+    objects: IAnalyticsCatalogTrendingObject[];
 }
 
 // @alpha (undocumented)
@@ -629,6 +665,32 @@ export interface ICommentExpressionToken {
     value: string;
 }
 
+// @internal
+export interface ICreateKnowledgeDocumentRequest {
+    // (undocumented)
+    content: string;
+    // (undocumented)
+    filename: string;
+    // (undocumented)
+    pageBoundaries?: number[];
+    // (undocumented)
+    scopes?: string[];
+    // (undocumented)
+    title?: string;
+}
+
+// @internal
+export interface ICreateKnowledgeDocumentResponse {
+    // (undocumented)
+    filename: string;
+    // (undocumented)
+    message: string;
+    // (undocumented)
+    numChunks: number;
+    // (undocumented)
+    success: boolean;
+}
+
 // @alpha
 export interface IDashboardExportImageOptions {
     filename?: string;
@@ -851,6 +913,14 @@ export interface IDateFilterConfigsQuery {
 
 // @public
 export type IDateFilterConfigsQueryResult = IPagedResource<IDateFilterConfig>;
+
+// @internal
+export interface IDeleteKnowledgeDocumentResponse {
+    // (undocumented)
+    message: string;
+    // (undocumented)
+    success: boolean;
+}
 
 // @public
 export interface IElementsQuery extends ICancelable<IElementsQuery> {
@@ -1137,6 +1207,8 @@ export interface IGenAIService {
     // @internal
     getAnalyticsCatalog(): IAnalyticsCatalogService;
     getChatThread(): IChatThread;
+    // @internal
+    getKnowledgeDocuments(): IKnowledgeDocumentsService;
     getLlmEndpoints(): Promise<ILlmEndpointBase[]>;
     // @internal
     getMemoryItems(): IMemoryItemsService;
@@ -1260,6 +1332,68 @@ export interface IKeyDriver {
     };
     std: number;
     value: string;
+}
+
+// @internal
+export interface IKnowledgeDocumentMetadata {
+    // (undocumented)
+    createdAt: string;
+    // (undocumented)
+    createdBy: string;
+    // (undocumented)
+    filename: string;
+    // (undocumented)
+    numChunks: number;
+    // (undocumented)
+    scopes: string[];
+    // (undocumented)
+    title?: string;
+    // (undocumented)
+    updatedAt?: string;
+    // (undocumented)
+    updatedBy: string;
+    // (undocumented)
+    workspaceId?: string;
+}
+
+// @internal
+export interface IKnowledgeDocumentsService {
+    create(request: ICreateKnowledgeDocumentRequest): Promise<ICreateKnowledgeDocumentResponse>;
+    delete(filename: string): Promise<IDeleteKnowledgeDocumentResponse>;
+    get(filename: string): Promise<IKnowledgeDocumentMetadata>;
+    list(scopes?: string[]): Promise<IKnowledgeDocumentMetadata[]>;
+    search(query: string, options?: ISearchKnowledgeOptions): Promise<ISearchKnowledgeResponse>;
+    upsert(request: IUpsertKnowledgeDocumentRequest): Promise<IUpsertKnowledgeDocumentResponse>;
+}
+
+// @internal
+export interface IKnowledgeSearchResult {
+    // (undocumented)
+    chunkIndex: number;
+    // (undocumented)
+    content: string;
+    // (undocumented)
+    filename: string;
+    // (undocumented)
+    pageNumbers: number[];
+    // (undocumented)
+    scopes: string[];
+    // (undocumented)
+    score: number;
+    // (undocumented)
+    title?: string;
+    // (undocumented)
+    totalChunks: number;
+    // (undocumented)
+    workspaceId?: string;
+}
+
+// @internal
+export interface IKnowledgeSearchStatistics {
+    // (undocumented)
+    averageSimilarityScore: number;
+    // (undocumented)
+    totalResults: number;
 }
 
 // @public
@@ -1388,6 +1522,7 @@ export interface IOrganization {
     automations(): IOrganizationAutomationService;
     getDescriptor(includeAdditionalDetails?: boolean): Promise<IOrganizationDescriptor>;
     llmEndpoints(): IOrganizationLlmEndpointsService;
+    llmProviders(): IOrganizationLlmProvidersService;
     notificationChannels(): IOrganizationNotificationChannelService;
     notifications(): IOrganizationNotificationService;
     readonly organizationId: string;
@@ -1459,6 +1594,18 @@ export interface IOrganizationLlmEndpointsService {
     updateLlmEndpoint(endpoint: ILlmEndpointOpenAI, token?: string): Promise<ILlmEndpointOpenAI>;
 }
 
+// @alpha
+export interface IOrganizationLlmProvidersService {
+    createLlmProvider(provider: ILlmProvider): Promise<ILlmProvider>;
+    deleteLlmProvider(id: string): Promise<void>;
+    getAll(): Promise<ILlmProvider[]>;
+    getCount(): Promise<number>;
+    getLlmProvider(id: string): Promise<ILlmProvider | undefined>;
+    patchLlmProvider(provider: LlmProviderPatch): Promise<ILlmProvider>;
+    testLlmProvider(provider: Partial<LlmProviderPatch>): Promise<LlmProviderTestResults>;
+    updateLlmProvider(provider: ILlmProvider): Promise<ILlmProvider>;
+}
+
 // @beta
 export interface IOrganizationNotificationChannelService {
     // (undocumented)
@@ -1503,11 +1650,13 @@ export interface IOrganizations {
 // @public
 export interface IOrganizationSettingsService {
     deleteActiveLlmEndpoint(): Promise<void>;
+    deleteActiveLlmProvider(): Promise<void>;
     deleteColorPalette(): Promise<void>;
     deleteTheme(): Promise<void>;
     getSettings(): Promise<ISettings>;
     setActiveCalendars(calendars: IActiveCalendars): Promise<void>;
     setActiveLlmEndpoint(endpoint: string): Promise<void>;
+    setActiveLlmProvider(provider: string): Promise<void>;
     setAlertDefault(value: IAlertDefault): Promise<void>;
     setAttachmentSizeLimit(size: number): Promise<void>;
     setColorPalette(colorPaletteId: string): Promise<void>;
@@ -1695,7 +1844,7 @@ export interface IRawExportCustomOverrides {
 // @alpha (undocumented)
 export interface IReferencesOption {
     // (undocumented)
-    direction: "up" | "down";
+    direction: "up" | "down" | "both";
 }
 
 // @alpha (undocumented)
@@ -1737,6 +1886,24 @@ export const isDashboardLayoutEmpty: (layout: IDashboardLayout<any>) => boolean;
 
 // @public
 export function isDataTooLargeError(obj: unknown): obj is DataTooLargeError;
+
+// @internal
+export interface ISearchKnowledgeOptions {
+    // (undocumented)
+    limit?: number;
+    // (undocumented)
+    minScore?: number;
+    // (undocumented)
+    scopes?: string[];
+}
+
+// @internal
+export interface ISearchKnowledgeResponse {
+    // (undocumented)
+    results: IKnowledgeSearchResult[];
+    // (undocumented)
+    statistics: IKnowledgeSearchStatistics;
+}
 
 // @public
 export interface ISecuritySettingsService {
@@ -1805,6 +1972,23 @@ export interface ITextExpressionToken {
     type: "text" | "quoted_text" | "number";
     value: string;
 }
+
+// @internal
+export interface IUpsertKnowledgeDocumentRequest {
+    // (undocumented)
+    content: string;
+    // (undocumented)
+    filename: string;
+    // (undocumented)
+    pageBoundaries?: number[];
+    // (undocumented)
+    scopes?: string[];
+    // (undocumented)
+    title?: string;
+}
+
+// @internal
+export type IUpsertKnowledgeDocumentResponse = ICreateKnowledgeDocumentResponse;
 
 // @public
 export interface IUserService {
@@ -2164,6 +2348,7 @@ export interface IWorkspaceSettingsService {
     getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings>;
     setActiveCalendars(calendars: IActiveCalendars): Promise<void>;
     setActiveLlmEndpoint(endpoint: string): Promise<void>;
+    setActiveLlmProvider(provider: string): Promise<void>;
     setAlertDefault(value: IAlertDefault): Promise<void>;
     setColorPalette(colorPaletteId: string): Promise<void>;
     // @alpha

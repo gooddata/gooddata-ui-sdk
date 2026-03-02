@@ -762,7 +762,7 @@
     "kdaDialog.dialog.keyDrives.button.trendUp": "Aumentar",
     "kdaDialog.dialog.keyDrives.button.trendDown": "Reducir",
     "kdaDialog.dialog.keyDrives.button.trendAll": "Todo",
-    "kdaDialog.dialog.keyDrives.drivers": "{count} controlador{count, plural, one {} other {es}}",
+    "kdaDialog.dialog.keyDrives.drivers": "{count} {count, plural, one {controlador} other {controladores}}",
     "kdaDialog.dialog.keyDrives.overview.summary.home": "Descripción general",
     "kdaDialog.dialog.keyDrives.overview.summary.home.tooltip": "Ir al resumen del análisis",
     "kdaDialog.dialog.keyDrives.overview.summary.breadcrumb.label": "Navegación del análisis de controladores clave",

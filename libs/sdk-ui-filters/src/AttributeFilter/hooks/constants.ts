@@ -36,3 +36,12 @@ export const DISPLAY_FORM_CHANGED_CORRELATION: Correlation = "displayFormChanged
  * @internal
  */
 export const MAX_SELECTION_SIZE = 500;
+
+/**
+ * @internal
+ * Backend max page size for fetching attribute elements.
+ * FE will never get total count higher than this value.
+ * If the total items count is equal to the BE page size,
+ * the selection size will not be displayed.
+ */
+export const BACKEND_PAGE_SIZE = 10000;

@@ -197,7 +197,6 @@ export function CatalogDetailContent({
     }, [intl, isCertificationVisible, isQualityVisible, isLineageVisible, issueCount]);
 
     const [selectedTabId, setSelectedTabId] = useSelectedTabId(tabs);
-
     return (
         <div className="gd-analytics-catalog-detail">
             <CatalogDetailStatus status={status} error={error}>

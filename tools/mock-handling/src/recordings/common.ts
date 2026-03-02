@@ -22,6 +22,7 @@ export enum RecordingType {
     Dashboards = "dashboards",
     Catalog = "catalog",
     VisClasses = "visClasses",
+    CollectionItems = "collectionItems",
 }
 
 /**

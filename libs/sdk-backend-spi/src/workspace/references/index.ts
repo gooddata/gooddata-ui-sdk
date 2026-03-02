@@ -6,7 +6,7 @@ import { type ObjRef } from "@gooddata/sdk-model";
  * @alpha
  */
 export interface IReferencesOption {
-    direction: "up" | "down";
+    direction: "up" | "down" | "both";
 }
 
 /**

@@ -10,6 +10,7 @@ import { type CalendarTabType } from "../utils/presetFilterUtils.js";
 interface ICalendarTypeTabsProps {
     selectedTab: CalendarTabType;
     onTabSelect: (tab: CalendarTabType) => void;
+    isMobile?: boolean;
     tabIds?: {
         standard: string;
         fiscal: string;
@@ -21,13 +22,19 @@ interface ICalendarTypeTabsProps {
  * Tabs component for switching between Standard and Fiscal calendar presets.
  * @internal
  */
-export function CalendarTypeTabs({ selectedTab, onTabSelect, tabIds, panelId }: ICalendarTypeTabsProps) {
+export function CalendarTypeTabs({
+    selectedTab,
+    onTabSelect,
+    isMobile = false,
+    tabIds,
+    panelId,
+}: ICalendarTypeTabsProps) {
     const intl = useIntl();
 
     return (
         <div className="gd-date-preset-tabs s-date-preset-tabs" id={DATE_FILTER_ACTIVE_CALENDAR_TAB_ID}>
             <UiTabs
-                size="small"
+                size={isMobile ? "large" : "small"}
                 tabs={[
                     {
                         id: "standard" as const,

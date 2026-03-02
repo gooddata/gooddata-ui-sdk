@@ -1,0 +1,60 @@
+{
+    "insight": {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "country.country_code", "type": "displayForm" },
+                            "localIdentifier": "geo.area"
+                        }
+                    }
+                ],
+                "localIdentifier": "area"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                            "localIdentifier": "a_f_owner.region_id"
+                        }
+                    }
+                ],
+                "localIdentifier": "color"
+            }
+        ],
+        "filters": [
+            {
+                "positiveAttributeFilter": {
+                    "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                    "in": { "values": ["West Coast", "East Coast"] }
+                }
+            }
+        ],
+        "identifier": "GeoAreaChart.01c882b5e1bcce4a67b78ca3b1d404c1",
+        "properties": {
+            "controls": {
+                "areas": { "borderColor": "#000000", "borderWidth": 2, "fillOpacity": 0.9 },
+                "mapStyle": {
+                    "glyphs": "/geo-assets/glyphs/{fontstack}/{range}.pbf",
+                    "layers": [
+                        {
+                            "id": "background",
+                            "paint": { "background-color": "#ffffff" },
+                            "type": "background"
+                        }
+                    ],
+                    "name": "offline-minimal",
+                    "sources": {},
+                    "version": 8
+                },
+                "viewport": { "area": "continent_na" }
+            }
+        },
+        "sorts": [],
+        "title": "GeoAreaChart - area with color attribute",
+        "uri": "GeoAreaChart.01c882b5e1bcce4a67b78ca3b1d404c1",
+        "visualizationUrl": "local:choropleth"
+    }
+}

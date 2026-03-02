@@ -2,6 +2,7 @@
 
 import { type IInsight } from "@gooddata/sdk-model";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 
@@ -87,7 +88,7 @@ export const DataLabelsDefault = () =>
                 visualizationUrl: "local:scatter",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(19, 1, 0),
+        getScenariosGroupByIndexes(22, 1, 0),
     )();
 DataLabelsDefault.parameters = {
     kind: "data labels - default",
@@ -184,7 +185,7 @@ export const DataLabelsAutoVisibility = () =>
                 visualizationUrl: "local:scatter",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(19, 1, 1),
+        getScenariosGroupByIndexes(22, 1, 1),
     )();
 DataLabelsAutoVisibility.parameters = {
     kind: "data labels - auto visibility",
@@ -281,7 +282,7 @@ export const DataLabelsForcedVisible = () =>
                 visualizationUrl: "local:scatter",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(19, 1, 2),
+        getScenariosGroupByIndexes(22, 1, 2),
     )();
 DataLabelsForcedVisible.parameters = {
     kind: "data labels - forced visible",
@@ -378,7 +379,7 @@ export const DataLabelsForcedVisibleAndGermanSeparators = () =>
                 visualizationUrl: "local:scatter",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(19, 1, 3),
+        getScenariosGroupByIndexes(22, 1, 3),
     )();
 DataLabelsForcedVisibleAndGermanSeparators.parameters = {
     kind: "data labels - forced visible and german separators",
@@ -475,7 +476,7 @@ export const DataLabelsForcedHidden = () =>
                 visualizationUrl: "local:scatter",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(19, 1, 4),
+        getScenariosGroupByIndexes(22, 1, 4),
     )();
 DataLabelsForcedHidden.parameters = {
     kind: "data labels - forced hidden",

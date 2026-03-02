@@ -9,9 +9,8 @@ import { usePrevious } from "@gooddata/sdk-ui";
 import { useAgGridApi } from "../../context/AgGridApiContext.js";
 import { useColumnDefs } from "../../context/ColumnDefsContext.js";
 import { usePivotTableProps } from "../../context/PivotTablePropsContext.js";
-import { createColumnWidthItemForColumnDefinition } from "../../features/resizing/createColumnWidthItemForColumnDefinition.js";
+import { getColumnWidthItemForColumnDefinition } from "../../features/resizing/getColumnWidthItemForColumnDefinition.js";
 import { getColumnWidthItemValue } from "../../features/resizing/getColumnWidthItemValue.js";
-import { isColumnWidthItemMatch } from "../../features/resizing/isColumnWidthItemMatch.js";
 import { type AgGridColumnDef, type AgGridOnColumnResized } from "../../types/agGrid.js";
 import { useGetAgGridColumns } from "../columns/useGetAgGridColumns.js";
 import { useUpdateAgGridColumnDefs } from "../columns/useUpdateAgGridColumnDefs.js";
@@ -66,12 +65,9 @@ export function useSyncColumnWidths() {
                 const colId = colDef.colId!;
                 const initialWidth = initialWidthByColId.current[colId];
                 const initialFlex = initialFlexByColId.current[colId];
-                const widthItem = createColumnWidthItemForColumnDefinition(
+                const existingWidthItem = getColumnWidthItemForColumnDefinition(
                     colDef.context.columnDefinition,
-                    initialWidth,
-                );
-                const existingWidthItem = columnWidths.find((existingWidthItem) =>
-                    isColumnWidthItemMatch(widthItem, existingWidthItem),
+                    columnWidths,
                 );
                 const currentColumnWidth = existingWidthItem
                     ? getColumnWidthItemValue(existingWidthItem)

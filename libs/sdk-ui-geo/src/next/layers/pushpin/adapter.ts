@@ -28,7 +28,7 @@ import { getHeaderPredicateFingerprint } from "../../utils/predicateFingerprint.
 import { computeLegend } from "../common/computeLegend.js";
 import { getGeoChartDimensions } from "../common/dimensions.js";
 import { canSetGeoJsonSourceData, trySetGeoJsonSourceData } from "../common/layerOps.js";
-import { createLayerInsight, sanitizeGlobalFilters } from "../execution/layerInsightFactory.js";
+import { createLayerInsight, sanitizeDeduplicatedGlobalFilters } from "../execution/layerInsightFactory.js";
 import { prepareExecutionWithTooltipText } from "../execution/prepareTooltipExecution.js";
 import type { IGeoAdapterContext, IGeoLayerAdapter, IPushpinLayerOutput } from "../registry/adapterTypes.js";
 
@@ -40,6 +40,68 @@ function getValidLocations(locations: Array<IGeoLngLat | null | undefined>): IGe
             Number.isFinite(coords.lat) &&
             Number.isFinite(coords.lng),
     );
+}
+
+export function filterPushpinGeoDataToRenderablePoints(geoData: IPushpinGeoData): IPushpinGeoData {
+    const locations = geoData.location?.data;
+    if (!locations || locations.length === 0) {
+        return geoData;
+    }
+
+    const validIndices: number[] = [];
+    locations.forEach((coords, index) => {
+        if (coords && Number.isFinite(coords.lat) && Number.isFinite(coords.lng)) {
+            validIndices.push(index);
+        }
+    });
+
+    if (validIndices.length === locations.length) {
+        return geoData;
+    }
+
+    // Pick elements at valid-location indices. Do NOT filter out undefined values here —
+    // all parallel arrays must stay aligned (same length & same positional meaning).
+    const pickByValidIndex = <T>(data: T[] | undefined): T[] | undefined => {
+        if (!data) {
+            return undefined;
+        }
+        return validIndices.map((index) => data[index]);
+    };
+
+    return {
+        ...geoData,
+        location: geoData.location
+            ? {
+                  ...geoData.location,
+                  data: pickByValidIndex(geoData.location.data) as IGeoLngLat[],
+              }
+            : undefined,
+        size: geoData.size
+            ? {
+                  ...geoData.size,
+                  data: pickByValidIndex(geoData.size.data) as number[],
+              }
+            : undefined,
+        color: geoData.color
+            ? {
+                  ...geoData.color,
+                  data: pickByValidIndex(geoData.color.data) as number[],
+              }
+            : undefined,
+        segment: geoData.segment
+            ? {
+                  ...geoData.segment,
+                  data: pickByValidIndex(geoData.segment.data) as string[],
+                  uris: pickByValidIndex(geoData.segment.uris) as string[],
+              }
+            : undefined,
+        tooltipText: geoData.tooltipText
+            ? {
+                  ...geoData.tooltipText,
+                  data: pickByValidIndex(geoData.tooltipText.data) as string[],
+              }
+            : undefined,
+    };
 }
 
 function computeInitialViewport(geoData: IPushpinGeoData): Partial<IMapViewport> | null {
@@ -142,7 +204,7 @@ function createExecution(layer: IGeoLayerPushpin, context: IGeoAdapterContext): 
         sortBy,
     });
     const factory = executionFactory ?? backend.workspace(workspace).execution();
-    const mergedGlobalFilters = sanitizeGlobalFilters(globalFilters);
+    const mergedGlobalFilters = sanitizeDeduplicatedGlobalFilters(filters, globalFilters);
     let execution = factory
         .forInsight(layerInsight, mergedGlobalFilters)
         .withDimensions(getGeoChartDimensions);
@@ -174,7 +236,8 @@ export const pushpinAdapter: IGeoLayerAdapter<IGeoLayerPushpin, IPushpinLayerOut
             throw new Error("prepareLayer requires intl in adapter context");
         }
         const { emptyHeaderString, nullHeaderString } = getGeoHeaderStrings(context.intl);
-        const geoData = transformPushpinData(dataView, emptyHeaderString, nullHeaderString);
+        const rawGeoData = transformPushpinData(dataView, emptyHeaderString, nullHeaderString);
+        const geoData = filterPushpinGeoDataToRenderablePoints(rawGeoData);
 
         if (!geoData?.location) {
             return null;

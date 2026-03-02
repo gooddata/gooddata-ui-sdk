@@ -3,7 +3,12 @@
 import { isEmpty, isEqual } from "lodash-es";
 import { invariant } from "ts-invariant";
 
-import { AbstractExecutionFactory, Denormalizer, type NormalizationState } from "@gooddata/sdk-backend-base";
+import {
+    AbstractExecutionFactory,
+    Denormalizer,
+    type NormalizationState,
+    collectionItemsIdentityKey,
+} from "@gooddata/sdk-backend-base";
 import {
     type ExplainType,
     type IAnomalyDetectionResult,
@@ -26,6 +31,7 @@ import {
     type IOutliersResult,
     type IOutliersView,
     type IPreparedExecution,
+    type IPreparedExecutionOptions,
     NoDataError,
     NotSupported,
 } from "@gooddata/sdk-backend-spi";
@@ -108,8 +114,8 @@ export class RecordedExecutionFactory extends AbstractExecutionFactory {
         super(workspace);
     }
 
-    public forDefinition(def: IExecutionDefinition): IPreparedExecution {
-        return recordedPreparedExecution(def, this, this.resultRefType, this.recordings);
+    public forDefinition(def: IExecutionDefinition, options?: IPreparedExecutionOptions): IPreparedExecution {
+        return recordedPreparedExecution(def, this, this.resultRefType, this.recordings, options);
     }
 }
 
@@ -124,34 +130,54 @@ function recordedPreparedExecution(
     executionFactory: IExecutionFactory,
     resultRefType: RecordedRefType,
     recordings: RecordingIndex = {},
+    options?: IPreparedExecutionOptions,
 ): IPreparedExecution {
     const fp = defFingerprint(definition);
+    const context = options?.context;
+    const signal = options?.signal;
 
     return {
         definition,
+        context,
+        signal,
         withDimensions(...dim: Array<IDimension | DimensionGenerator>): IPreparedExecution {
-            return executionFactory.forDefinition(defWithDimensions(definition, ...dim));
+            return executionFactory.forDefinition(defWithDimensions(definition, ...dim), { context, signal });
         },
         withSorting(...items: ISortItem[]): IPreparedExecution {
-            return executionFactory.forDefinition(defWithSorting(definition, items));
+            return executionFactory.forDefinition(defWithSorting(definition, items), { context, signal });
         },
         withBuckets(...buckets: IBucket[]) {
-            return executionFactory.forDefinition(defWithBuckets(definition, ...buckets));
+            return executionFactory.forDefinition(defWithBuckets(definition, ...buckets), {
+                context,
+                signal,
+            });
         },
         withDateFormat(dateFormat: string): IPreparedExecution {
-            return executionFactory.forDefinition(defWithDateFormat(definition, dateFormat));
+            return executionFactory.forDefinition(defWithDateFormat(definition, dateFormat), {
+                context,
+                signal,
+            });
         },
         withExecConfig(config: IExecutionConfig): IPreparedExecution {
             if (!isEmpty(config?.dataSamplingPercentage)) {
                 console.warn("Backend does not support data sampling, result will be not affected");
             }
-            return executionFactory.forDefinition(definition);
+            return executionFactory.forDefinition(definition, {
+                context,
+                signal,
+            });
         },
-        withSignal(_signal: AbortSignal): IPreparedExecution {
-            return recordedPreparedExecution(definition, executionFactory, resultRefType, recordings);
+        withSignal(nextSignal: AbortSignal): IPreparedExecution {
+            return recordedPreparedExecution(definition, executionFactory, resultRefType, recordings, {
+                context,
+                signal: nextSignal,
+            });
         },
-        withContext(_context: IExecutionContext): IPreparedExecution {
-            throw new NotSupported("Execution context is not supported by the recorded backend.");
+        withContext(nextContext: IExecutionContext): IPreparedExecution {
+            return recordedPreparedExecution(definition, executionFactory, resultRefType, recordings, {
+                context: nextContext,
+                signal,
+            });
         },
         execute(): Promise<IExecutionResult> {
             return new Promise((resolve, reject) => {
@@ -166,7 +192,15 @@ function recordedPreparedExecution(
                         };
                     }
                     resolve(
-                        new RecordedExecutionResult(definition, executionFactory, resultRefType, recording),
+                        new RecordedExecutionResult(
+                            definition,
+                            context,
+                            signal,
+                            executionFactory,
+                            resultRefType,
+                            recording,
+                            recordings,
+                        ),
                     );
                 } else {
                     reject(new NoDataError("recording was not found"));
@@ -264,9 +298,12 @@ class RecordedExecutionResult implements IExecutionResult {
 
     constructor(
         public readonly definition: IExecutionDefinition,
+        public readonly context: IExecutionContext | undefined,
+        public readonly signal: AbortSignal | undefined,
         private readonly executionFactory: IExecutionFactory,
         readonly resultRefType: RecordedRefType,
         private readonly recording: ExecutionRecording,
+        private readonly recordings: RecordingIndex,
         private readonly denormalizer?: Denormalizer,
     ) {
         const dimensions = enrichDescriptorsWithRefs(
@@ -289,7 +326,16 @@ class RecordedExecutionResult implements IExecutionResult {
             return Promise.reject(new NoDataError("there is no execution recording that contains all data"));
         }
 
-        return Promise.resolve(new RecordedDataView(this, this.definition, allData, this.denormalizer));
+        return Promise.resolve(
+            new RecordedDataView(
+                this,
+                this.definition,
+                this.context,
+                allData,
+                this.recordings,
+                this.denormalizer,
+            ),
+        );
     };
 
     public readWindow = (offset: number[], size: number[]): Promise<IDataView> => {
@@ -300,7 +346,16 @@ class RecordedExecutionResult implements IExecutionResult {
             return Promise.reject(new NoDataError("there is no execution recording for requested window"));
         }
 
-        return Promise.resolve(new RecordedDataView(this, this.definition, windowData, this.denormalizer));
+        return Promise.resolve(
+            new RecordedDataView(
+                this,
+                this.definition,
+                this.context,
+                windowData,
+                this.recordings,
+                this.denormalizer,
+            ),
+        );
     };
 
     public readForecastAll(): Promise<IForecastResult> {
@@ -320,7 +375,10 @@ class RecordedExecutionResult implements IExecutionResult {
     }
 
     public transform = (): IPreparedExecution => {
-        return this.executionFactory.forDefinition(this.definition);
+        return this.executionFactory.forDefinition(this.definition, {
+            context: this.context,
+            signal: this.signal,
+        });
     };
 
     public equals = (other: IExecutionResult): boolean => {
@@ -337,6 +395,7 @@ class RecordedExecutionResult implements IExecutionResult {
 }
 
 class RecordedDataView implements IDataView {
+    public readonly context?: IExecutionContext;
     public readonly data: DataValue[][] | DataValue[];
     public readonly headerItems: IResultHeader[][][];
     public readonly count: number[];
@@ -351,7 +410,9 @@ class RecordedDataView implements IDataView {
     constructor(
         public readonly result: IExecutionResult,
         public readonly definition: IExecutionDefinition,
+        context: IExecutionContext | undefined,
         private readonly recordedDataView: any,
+        private readonly recordings: RecordingIndex,
         private readonly denormalizer?: Denormalizer,
         public readonly forecastConfig?: IForecastConfig,
         public readonly forecastResult?: IForecastResult,
@@ -360,6 +421,7 @@ class RecordedDataView implements IDataView {
         public readonly clusteringConfig?: IClusteringConfig,
         public readonly clusteringResult?: IClusteringResult,
     ) {
+        this.context = context;
         this.data = recordedDataView.data;
         this.headerItems = denormalizer
             ? denormalizer.denormalizeHeaders(recordedDataView.headerItems)
@@ -372,9 +434,9 @@ class RecordedDataView implements IDataView {
         this.totalCount = recordedDataView.totalCount;
         this.metadata = recordedDataView.metadata;
 
-        this._fp = `${defFingerprint(this.definition)}/dataView/${this.offset.join(",")}_${this.count.join(
-            ",",
-        )}`;
+        this._fp = `${defFingerprint(
+            this.definition,
+        )}/dataView/${this.offset.join(",")}_${this.count.join(",")}`;
     }
 
     public equals = (other: IDataView): boolean => {
@@ -389,7 +451,9 @@ class RecordedDataView implements IDataView {
         return new RecordedDataView(
             this.result,
             this.definition,
+            this.context,
             this.recordedDataView,
+            this.recordings,
             this.denormalizer,
             config,
             result,
@@ -426,7 +490,9 @@ class RecordedDataView implements IDataView {
         return new RecordedDataView(
             this.result,
             this.definition,
+            this.context,
             this.recordedDataView,
+            this.recordings,
             this.denormalizer,
             this.forecastConfig,
             this.forecastResult,
@@ -449,7 +515,9 @@ class RecordedDataView implements IDataView {
         return new RecordedDataView(
             this.result,
             this.definition,
+            this.context,
             this.recordedDataView,
+            this.recordings,
             this.denormalizer,
             this.forecastConfig,
             this.forecastResult,
@@ -460,8 +528,15 @@ class RecordedDataView implements IDataView {
         );
     }
 
-    public readCollectionItems(_config: ICollectionItemsConfig): Promise<ICollectionItemsResult> {
-        throw new NotSupported("readCollectionItems is not supported by the recorded backend.");
+    public readCollectionItems(config: ICollectionItemsConfig): Promise<ICollectionItemsResult> {
+        const key = collectionItemsIdentityKey(config);
+        const result = this.recordings.collectionItems?.[key];
+
+        if (!result) {
+            return Promise.reject(new NoDataError(`collection items recording was not found (key: ${key})`));
+        }
+
+        return Promise.resolve(result);
     }
 }
 
@@ -562,12 +637,20 @@ function denormalizedDataView(
     const adHocIndex: RecordingIndex = adHocExecIndex(recordingKey, execution);
 
     const factory = new RecordedExecutionFactory(adHocIndex, "testWorkspace", resultRefType);
-    const result = new RecordedExecutionResult(definition, factory, resultRefType, execution);
+    const result = new RecordedExecutionResult(
+        definition,
+        undefined,
+        undefined,
+        factory,
+        resultRefType,
+        execution,
+        adHocIndex,
+    );
     const data = execution[dataViewId];
 
     invariant(data, `data for view ${dataViewId} could not be found in the recording`);
 
-    return new RecordedDataView(result, definition, data);
+    return new RecordedDataView(result, definition, undefined, data, adHocIndex);
 }
 
 /**
@@ -595,16 +678,26 @@ function normalizedDataView(
     const factory = new RecordedExecutionFactory(adHocIndex, "testWorkspace", resultRefType);
     const result = new RecordedExecutionResult(
         normalizationState.original,
+        undefined,
+        undefined,
         factory,
         resultRefType,
         execution,
+        adHocIndex,
         denormalizer,
     );
     const data = execution[dataViewId];
 
     invariant(data, `data for view ${dataViewId} could not be found in the recording`);
 
-    return new RecordedDataView(result, normalizationState.original, data, denormalizer);
+    return new RecordedDataView(
+        result,
+        normalizationState.original,
+        undefined,
+        data,
+        adHocIndex,
+        denormalizer,
+    );
 }
 
 /**
@@ -654,7 +747,10 @@ function expandRecordingToDataViews(recording: ExecutionRecording): NamedDataVie
 
     return recording.scenarios.map((s, scenarioIndex) => {
         const name = `${s.vis} - ${s.scenario}`;
-        const dataView = recordedDataView({ scenarioIndex, execution: recording });
+        const dataView = recordedDataView({
+            scenarioIndex,
+            execution: recording,
+        });
 
         return {
             name,

@@ -4,6 +4,7 @@
 
 import { chartScenarios } from "./scenarios/charts/index.js";
 import { executeScenarios } from "./scenarios/execute/base.js";
+import { geoChartScenarios } from "./scenarios/geoChart/index.js";
 import { pivotScenarios } from "./scenarios/pivotTable/index.js";
 import { pivotTableNextScenarios } from "./scenarios/pivotTableNext/index.js";
 
@@ -42,6 +43,7 @@ export const MapboxToken = process.env[MapboxTokenEnvVariable] ?? "this-is-not-r
 
 export const allScenarios = [
     ...chartScenarios,
+    ...geoChartScenarios,
     ...pivotScenarios,
     ...pivotTableNextScenarios,
     executeScenarios,

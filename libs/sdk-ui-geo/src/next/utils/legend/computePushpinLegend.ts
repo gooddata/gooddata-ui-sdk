@@ -166,6 +166,7 @@ export function computePushpinLegend(params: IComputePushpinLegendParams): ILege
     } = params;
 
     const groups: ILegendGroup[] = [];
+    const hasCategoryLegend = availableLegends.hasCategoryLegend && legendItems.length > 0;
 
     // Add size legend group if available
     if (availableLegends.hasSizeLegend) {
@@ -179,9 +180,11 @@ export function computePushpinLegend(params: IComputePushpinLegendParams): ILege
         }
     }
 
-    // Add numeric color scale group if available (Metric - Color, color measure without segment)
+    // Add numeric color scale group if available.
+    // Segment/category legend has precedence over gradient, so we only render the
+    // color scale when no category legend is present.
     // Order: Size -> Metric-Color -> Segment By
-    if (availableLegends.hasColorLegend && geoData.color) {
+    if (availableLegends.hasColorLegend && geoData.color && !hasCategoryLegend) {
         const colorScale = computeColorScale(
             geoData.color.data,
             geoData.color.format,
@@ -198,7 +201,7 @@ export function computePushpinLegend(params: IComputePushpinLegendParams): ILege
     }
 
     // Add category legend group if available (Segment By)
-    if (availableLegends.hasCategoryLegend && legendItems.length > 0) {
+    if (hasCategoryLegend) {
         const colorCategories = convertToColorCategories(legendItems);
         groups.push({
             kind: "color",

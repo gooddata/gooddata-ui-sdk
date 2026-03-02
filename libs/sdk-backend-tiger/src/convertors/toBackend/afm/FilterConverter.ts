@@ -7,6 +7,7 @@ import {
     type AllTimeDateFilterAllTimeDateFilterEmptyValueHandlingEnum,
     type AttributeFilter,
     type FilterDefinition,
+    type MatchAttributeFilter,
     type MeasureValueFilter,
     type NegativeAttributeFilter,
     type PositiveAttributeFilter,
@@ -18,22 +19,27 @@ import {
 import {
     type EmptyValues,
     type IAbsoluteDateFilter,
+    type IArbitraryAttributeFilter,
     type IAttributeElements,
     type IAttributeFilter,
     type IFilter,
+    type IMatchAttributeFilter,
     type IMeasureValueFilter,
     type INegativeAttributeFilter,
     type IPositiveAttributeFilter,
     type IRankingFilter,
     type IRelativeDateFilter,
+    type MatchFilterOperator,
     filterIsEmpty,
     isAbsoluteDateFilter,
     isAllTimeDateFilter,
+    isArbitraryAttributeFilter,
     isAttributeElementsByValue,
     isAttributeFilter,
     isComparisonCondition,
     isFilter,
     isLowerBound,
+    isMatchAttributeFilter,
     isMeasureValueFilter,
     isNegativeAttributeFilter,
     isObjRef,
@@ -151,6 +157,60 @@ function convertNegativeFilter(
     };
 }
 
+const MATCH_OPERATOR_TO_TIGER: Record<MatchFilterOperator, "STARTS_WITH" | "ENDS_WITH" | "CONTAINS"> = {
+    startsWith: "STARTS_WITH",
+    endsWith: "ENDS_WITH",
+    contains: "CONTAINS",
+};
+
+function convertMatchFilter(
+    filter: IMatchAttributeFilter,
+    applyOnResultProp: ApplyOnResultProp,
+): MatchAttributeFilter {
+    const { label, literal, operator, caseSensitive, negativeSelection, localIdentifier } =
+        filter.matchAttributeFilter;
+
+    return {
+        matchAttributeFilter: {
+            label: toLabelQualifier(label),
+            literal,
+            matchType: MATCH_OPERATOR_TO_TIGER[operator],
+            ...(caseSensitive ? { caseSensitive } : {}),
+            ...(negativeSelection ? { negate: true } : {}),
+            ...(localIdentifier ? { localIdentifier } : {}),
+            ...applyOnResultProp,
+        },
+    };
+}
+
+function convertArbitraryFilter(
+    filter: IArbitraryAttributeFilter,
+    applyOnResultProp: ApplyOnResultProp,
+): PositiveAttributeFilter | NegativeAttributeFilter {
+    const { label: labelRef, values, negativeSelection, localIdentifier } = filter.arbitraryAttributeFilter;
+    const label = toLabelQualifier(labelRef);
+
+    if (negativeSelection) {
+        return {
+            negativeAttributeFilter: {
+                label,
+                notIn: { values },
+                ...(localIdentifier ? { localIdentifier } : {}),
+                ...applyOnResultProp,
+            },
+        };
+    }
+
+    return {
+        positiveAttributeFilter: {
+            label,
+            in: { values },
+            ...(localIdentifier ? { localIdentifier } : {}),
+            ...applyOnResultProp,
+        },
+    };
+}
+
 function convertAttributeFilter(
     filter: IAttributeFilter,
     applyOnResultProp: ApplyOnResultProp,
@@ -159,9 +219,20 @@ function convertAttributeFilter(
     if (isNegativeAttributeFilter(filter) && filterIsEmpty(filter) && !keepEmptyAttributeFilters) {
         return null;
     }
+    if (isArbitraryAttributeFilter(filter) && filter.arbitraryAttributeFilter.values.length === 0) {
+        return null;
+    }
 
     if (isPositiveAttributeFilter(filter)) {
         return convertPositiveFilter(filter, applyOnResultProp);
+    }
+
+    if (isMatchAttributeFilter(filter)) {
+        return convertMatchFilter(filter, applyOnResultProp);
+    }
+
+    if (isArbitraryAttributeFilter(filter)) {
+        return convertArbitraryFilter(filter, applyOnResultProp);
     }
 
     return convertNegativeFilter(filter, applyOnResultProp);
@@ -275,7 +346,9 @@ function convertMeasureValueFilter(
     const localIdentifier = measureValueFilter.localIdentifier;
     const dimensionalityProp =
         (measureValueFilter.dimensionality?.length ?? 0) > 0
-            ? { dimensionality: measureValueFilter.dimensionality?.map(toAfmIdentifier) }
+            ? {
+                  dimensionality: measureValueFilter.dimensionality?.map(toAfmIdentifier),
+              }
             : {};
 
     if (conditions && conditions.length > 1) {

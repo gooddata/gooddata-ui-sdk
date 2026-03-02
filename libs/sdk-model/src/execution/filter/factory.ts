@@ -7,14 +7,17 @@ import {
     type ComparisonConditionOperator,
     type EmptyValues,
     type IAbsoluteDateFilter,
+    type IArbitraryAttributeFilter,
     type IAttributeElements,
     type ILowerBoundedFilter,
+    type IMatchAttributeFilter,
     type IMeasureValueFilter,
     type INegativeAttributeFilter,
     type IPositiveAttributeFilter,
     type IRankingFilter,
     type IRelativeDateFilter,
     type IUpperBoundedFilter,
+    type MatchFilterOperator,
     type MeasureValueFilterCondition,
     type RangeConditionOperator,
     type RankingFilterOperator,
@@ -118,6 +121,80 @@ export function newNegativeAttributeFilter(
             ...(localIdentifier ? { localIdentifier } : {}),
             displayForm: objRef,
             notIn: notInObject,
+        },
+    };
+}
+
+/**
+ * Creates a new arbitrary attribute filter.
+ *
+ * @remarks
+ * Arbitrary filters allow specifying custom string values that don't need to exist as actual attribute elements.
+ * Useful for custom/external data integration scenarios.
+ *
+ * @param attributeOrRef - either instance of attribute to create filter for or ref or identifier of attribute's display form
+ * @param values - arbitrary string values to filter by; can be empty array
+ * @param negativeSelection - whether this is a negative filter (NOT IN); defaults to false
+ * @param localIdentifier - optional local identifier for the filter
+ * @alpha
+ */
+export function newArbitraryAttributeFilter(
+    attributeOrRef: IAttribute | ObjRef | Identifier,
+    values: string[],
+    negativeSelection: boolean = false,
+    localIdentifier?: string,
+): IArbitraryAttributeFilter {
+    const objRef = isObjRef(attributeOrRef)
+        ? attributeOrRef
+        : typeof attributeOrRef === "string"
+          ? idRef(attributeOrRef)
+          : attributeDisplayFormRef(attributeOrRef);
+
+    return {
+        arbitraryAttributeFilter: {
+            ...(localIdentifier ? { localIdentifier } : {}),
+            label: objRef,
+            values,
+            ...(negativeSelection ? { negativeSelection: true } : {}),
+        },
+    };
+}
+
+/**
+ * Creates a new match attribute filter.
+ *
+ * @remarks
+ * Match filters provide literal-based matching with various operators.
+ * The literal cannot be empty for a valid filter.
+ *
+ * @param attributeOrRef - either instance of attribute to create filter for or ref or identifier of attribute's display form
+ * @param operator - match operator (contains, startsWith, endsWith)
+ * @param literal - literal string to match (should not be empty for valid filter)
+ * @param options - optional configuration for case sensitivity and negation
+ * @param localIdentifier - optional local identifier for the filter
+ * @alpha
+ */
+export function newMatchAttributeFilter(
+    attributeOrRef: IAttribute | ObjRef | Identifier,
+    operator: MatchFilterOperator,
+    literal: string,
+    options?: { caseSensitive?: boolean; negativeSelection?: boolean },
+    localIdentifier?: string,
+): IMatchAttributeFilter {
+    const objRef = isObjRef(attributeOrRef)
+        ? attributeOrRef
+        : typeof attributeOrRef === "string"
+          ? idRef(attributeOrRef)
+          : attributeDisplayFormRef(attributeOrRef);
+
+    return {
+        matchAttributeFilter: {
+            ...(localIdentifier ? { localIdentifier } : {}),
+            label: objRef,
+            operator,
+            literal,
+            caseSensitive: options?.caseSensitive ?? false,
+            negativeSelection: options?.negativeSelection ?? false,
         },
     };
 }

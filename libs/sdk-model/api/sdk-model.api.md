@@ -529,7 +529,7 @@ export function exportDefinitionUpdated(exportDefinition: IExportDefinitionMetad
 export const factoryNotationFor: (data: any, additionalConversion?: ((data: any) => string | undefined) | undefined) => string;
 
 // @public
-export function filterAttributeElements(filter: IPositiveAttributeFilter | INegativeAttributeFilter): IAttributeElements;
+export function filterAttributeElements(filter: IAttributeFilterWithSelection): IAttributeElements;
 
 // @public
 export function filterAttributeElements(filter: IFilter): IAttributeElements | undefined;
@@ -547,7 +547,7 @@ export function filterLocalIdentifier(filter: IFilter): string | undefined;
 export function filterMeasureRef(filter: IFilter): ObjRefInScope | undefined;
 
 // @public
-export function filterObjRef(filter: IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter): ObjRef;
+export function filterObjRef(filter: IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter | IArbitraryAttributeFilter | IMatchAttributeFilter): ObjRef;
 
 // @public
 export function filterObjRef(filter: IFilter): ObjRef | undefined;
@@ -810,6 +810,19 @@ export interface IAnalyticalWidget extends IBaseWidget, IWidgetDescription, IFil
 }
 
 // @public
+export interface IArbitraryAttributeFilter {
+    // (undocumented)
+    arbitraryAttributeFilter: IArbitraryAttributeFilterBody;
+}
+
+// @public
+export interface IArbitraryAttributeFilterBody extends IIdentifiableFilter {
+    label: ObjRef;
+    negativeSelection?: boolean;
+    values: string[];
+}
+
+// @public
 export interface IArithmeticMeasureDefinition {
     // (undocumented)
     arithmeticMeasure: {
@@ -917,7 +930,7 @@ export interface IAttributeElementsByValue {
 }
 
 // @public
-export type IAttributeFilter = IPositiveAttributeFilter | INegativeAttributeFilter;
+export type IAttributeFilter = IAttributeFilterWithSelection | IArbitraryAttributeFilter | IMatchAttributeFilter;
 
 // @public
 export type IAttributeFilterConfig = {
@@ -928,6 +941,9 @@ export type IAttributeFilterConfig = {
 export type IAttributeFilterConfigs = {
     [filterLocalIdentifier: string]: IAttributeFilterConfig;
 };
+
+// @public
+export type IAttributeFilterWithSelection = IPositiveAttributeFilter | INegativeAttributeFilter;
 
 // @public
 export interface IAttributeHeaderFormOf {
@@ -1216,6 +1232,30 @@ export interface IAvailableUserGroupAccessGrantee {
     name: string;
     ref: ObjRef;
     type: "group";
+}
+
+// @alpha (undocumented)
+export interface IAwsBedrockProviderConfig {
+    // (undocumented)
+    accessKey?: string;
+    // (undocumented)
+    region: string;
+    // (undocumented)
+    secretKey?: string;
+    // (undocumented)
+    sessionToken?: string;
+    // (undocumented)
+    type: "awsBedrock";
+}
+
+// @alpha (undocumented)
+export interface IAzureFoundryProviderConfig {
+    // (undocumented)
+    apiKey?: string;
+    // (undocumented)
+    endpoint: string;
+    // (undocumented)
+    type: "azureFoundry";
 }
 
 // @public
@@ -2189,7 +2229,7 @@ export interface IFactMetadataObject extends IMetadataObject {
 }
 
 // @public
-export type IFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter | IMeasureValueFilter | IRankingFilter;
+export type IFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter | IMeasureValueFilter | IRankingFilter | IArbitraryAttributeFilter | IMatchAttributeFilter;
 
 // @public
 export interface IFilterableWidget {
@@ -2622,6 +2662,12 @@ export interface IListedDashboard extends Readonly<Required<IAuditableDates>>, R
 }
 
 // @public (undocumented)
+export interface ILlmActiveProvider {
+    id: string;
+    type: "llmProvider";
+}
+
+// @public (undocumented)
 export interface ILlmEndpoint {
     id: string;
     type: "llmEndpoint";
@@ -2640,6 +2686,28 @@ export interface ILlmEndpointOpenAI extends ILlmEndpointBase {
     provider: "OPENAI" | "AZURE_OPENAI";
 }
 
+// @alpha (undocumented)
+export interface ILlmModel {
+    // (undocumented)
+    family: LlmProviderFamily;
+    // (undocumented)
+    id: string;
+}
+
+// @alpha (undocumented)
+export interface ILlmProvider {
+    // (undocumented)
+    description?: string | null;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    models: ILlmModel[] | null;
+    // (undocumented)
+    name: string | null;
+    // (undocumented)
+    providerConfig: LlmProviderConfig;
+}
+
 // @public
 export type ILocatorItem = IAttributeLocatorItem | IMeasureLocatorItem | ITotalLocatorItem;
 
@@ -2653,6 +2721,21 @@ export interface ILowerBoundedFilter {
 
 // @beta
 export type ImageUri = string;
+
+// @public
+export interface IMatchAttributeFilter {
+    // (undocumented)
+    matchAttributeFilter: IMatchAttributeFilterBody;
+}
+
+// @public
+export interface IMatchAttributeFilterBody extends IIdentifiableFilter {
+    caseSensitive?: boolean;
+    label: ObjRef;
+    literal: string;
+    negativeSelection?: boolean;
+    operator: MatchFilterOperator;
+}
 
 // @beta
 export interface IMdObject extends IMdObjectBase, IMdObjectIdentity {
@@ -3190,6 +3273,18 @@ export interface IOpenAiConfig {
     token: string;
 }
 
+// @alpha (undocumented)
+export interface IOpenAIProviderConfig {
+    // (undocumented)
+    apiKey?: string;
+    // (undocumented)
+    baseUrl?: string;
+    // (undocumented)
+    organization?: string;
+    // (undocumented)
+    type: "openAI";
+}
+
 // @public
 export interface IOptionsAllCondition {
     // (undocumented)
@@ -3622,8 +3717,14 @@ export function isAllTimeDateFilterWithEmptyValueHandling(obj: unknown): obj is 
     };
 };
 
+// @internal
+export function isAllValuesAttributeFilter(filter: unknown): filter is INegativeAttributeFilter;
+
 // @alpha
 export function isAllValuesDashboardAttributeFilter(obj: unknown): boolean;
+
+// @alpha
+export function isArbitraryAttributeFilter(obj: unknown): obj is IArbitraryAttributeFilter;
 
 // @public
 export function isArithmeticMeasure(obj: unknown): obj is IMeasure<IArithmeticMeasureDefinition>;
@@ -3654,6 +3755,9 @@ export function isAttributeElementsByValue(obj: unknown): obj is IAttributeEleme
 
 // @public
 export function isAttributeFilter(obj: unknown): obj is IAttributeFilter;
+
+// @public
+export function isAttributeFilterWithSelection(obj: unknown): obj is IAttributeFilterWithSelection;
 
 // @public
 export function isAttributeHierarchyMetadataObject(obj: unknown): obj is IAttributeHierarchyMetadataObject;
@@ -3964,6 +4068,7 @@ export interface ISettings {
     // (undocumented)
     [key: string]: number | boolean | string | object | undefined | null;
     activeCalendars?: IActiveCalendars;
+    activeLlmProvider?: ILlmActiveProvider;
     ADCatalogGroupsExpanded?: boolean;
     aiChatSearchLimit?: number;
     aiRateLimit?: number;
@@ -3983,6 +4088,7 @@ export interface ISettings {
     enableAccessibleChartTooltip?: boolean;
     // @deprecated
     enableAIFunctions?: boolean;
+    enableAIKnowledge?: boolean;
     enableAiOnData?: boolean;
     enableAlertAttributes?: boolean;
     enableAlerting?: boolean;
@@ -3999,6 +4105,7 @@ export interface ISettings {
     enableAutomationEvaluationMode?: boolean;
     enableAutomationFilterContext?: boolean;
     enableAutomationManagement?: boolean;
+    enableCatalogTrendingObjects?: boolean;
     enableCertification?: boolean;
     enableChangeAnalysis?: boolean;
     enableComparisonInAlerting?: boolean;
@@ -4040,6 +4147,7 @@ export interface ISettings {
     enableGenAIReasoningVisibility?: boolean;
     enableGeoArea?: boolean;
     enableGeoBasemapConfig?: boolean;
+    enableGeoChartA11yImprovements?: boolean;
     enableHeadlineExport?: boolean;
     enableHighchartsAccessibility?: boolean;
     enableIgnoreCrossFiltering?: boolean;
@@ -4054,6 +4162,7 @@ export interface ISettings {
     enableKDRichText?: boolean;
     enableKDVisualizationSwitcher?: boolean;
     enableLineChartTrendThreshold?: boolean;
+    enableLlmEndpointReplacement?: boolean;
     // (undocumented)
     enableMariaDbDataSource?: boolean;
     enableMatchFilterAD?: boolean;
@@ -4078,7 +4187,6 @@ export interface ISettings {
     // (undocumented)
     enableOracleDataSource?: boolean;
     enableOrchestratedTabularExports?: boolean;
-    enablePivotTableAutoSizeReset?: boolean;
     enablePivotTableIncreaseBucketSize?: boolean;
     enablePivotTablePagination?: boolean;
     enablePreAggregationDatasets?: boolean;
@@ -4107,6 +4215,7 @@ export interface ISettings {
     enableStarrocksDataSource?: boolean;
     enableToDateFilters?: boolean;
     enableUserManagement?: boolean;
+    enableVisualizationFilteringByTags?: boolean;
     enableVisualizationFineTuning?: boolean;
     enableWaterfallChart?: boolean;
     enableWidgetExportPdf?: boolean;
@@ -4232,6 +4341,9 @@ export function isLocalIdRef(obj: unknown): obj is LocalIdRef;
 // @public
 export function isLowerBound(obj: unknown): obj is ILowerBoundedFilter;
 
+// @alpha
+export function isMatchAttributeFilter(obj: unknown): obj is IMatchAttributeFilter;
+
 // @beta
 export function isMdObject(obj: unknown): obj is IMdObject;
 
@@ -4295,6 +4407,9 @@ export function isNegativeAttributeFilter(obj: unknown): obj is INegativeAttribu
 
 // @alpha
 export function isNegativeDashboardAttributeFilter(filter: IDashboardAttributeFilter): boolean;
+
+// @public
+export function isNegativeFilter(filter: IAttributeFilter): boolean;
 
 // @alpha
 export function isNoopAllTimeDashboardDateFilter(obj: unknown): boolean;
@@ -5222,6 +5337,29 @@ export type LlmEndpointTestResults = {
     message?: string;
 };
 
+// @alpha
+export type LlmModelsTestResults = {
+    id: string;
+    success: boolean;
+    message?: string;
+};
+
+// @alpha (undocumented)
+export type LlmProviderConfig = IOpenAIProviderConfig | IAzureFoundryProviderConfig | IAwsBedrockProviderConfig;
+
+// @alpha (undocumented)
+export type LlmProviderFamily = "OPENAI" | "ANTHROPIC" | "META" | "MISTRAL" | "AMAZON" | "GOOGLE" | "COHERE";
+
+// @alpha (undocumented)
+export type LlmProviderPatch = Partial<ILlmProvider> & Pick<ILlmProvider, "id">;
+
+// @alpha
+export type LlmProviderTestResults = {
+    success: boolean;
+    message?: string;
+    models?: LlmModelsTestResults[];
+};
+
 // @public
 export type LocalIdRef = {
     localIdentifier: Identifier;
@@ -5229,6 +5367,9 @@ export type LocalIdRef = {
 
 // @public
 export function localIdRef(localIdentifier: Identifier): LocalIdRef;
+
+// @public
+export type MatchFilterOperator = "contains" | "startsWith" | "endsWith";
 
 // @public
 export type MeasureAggregation = "sum" | "count" | "approximate_count" | "avg" | "min" | "max" | "median" | "runsum";
@@ -5425,6 +5566,9 @@ export function newAllTimeDashboardDateFilter(dataSet?: ObjRef, localIdentifier?
 // @public
 export function newAllTimeFilter(dateDataSet: ObjRef | Identifier, localIdentifier?: string, emptyValueHandling?: EmptyValues): IRelativeDateFilter;
 
+// @alpha
+export function newArbitraryAttributeFilter(attributeOrRef: IAttribute | ObjRef | Identifier, values: string[], negativeSelection?: boolean, localIdentifier?: string): IArbitraryAttributeFilter;
+
 // @public
 export function newArithmeticMeasure(measuresOrIds: ReadonlyArray<MeasureOrLocalId>, operator: ArithmeticMeasureOperator, modifications?: MeasureModifications<ArithmeticMeasureBuilder>): IMeasure<IArithmeticMeasureDefinition>;
 
@@ -5463,6 +5607,12 @@ export function newInlineMeasure(maql: string): IMeasure<IInlineMeasureDefinitio
 
 // @internal
 export function newInsightDefinition(visualizationUrl: string, modifications?: InsightModifications): IInsightDefinition;
+
+// @alpha
+export function newMatchAttributeFilter(attributeOrRef: IAttribute | ObjRef | Identifier, operator: MatchFilterOperator, literal: string, options?: {
+    caseSensitive?: boolean;
+    negativeSelection?: boolean;
+}, localIdentifier?: string): IMatchAttributeFilter;
 
 // @public
 export function newMeasure(measure: ObjRef | Identifier, modifications?: MeasureModifications<MeasureBuilder>): IMeasure<IMeasureDefinition>;
@@ -5638,7 +5788,7 @@ export const SemanticQualityIssueCodeValues: {
 };
 
 // @internal
-export type SemanticQualityIssuesCalculationStatus = "RUNNING" | "COMPLETED" | "FAILED" | "NOT_FOUND" | "SYNCING" | "DISABLED";
+export type SemanticQualityIssuesCalculationStatus = "RUNNING" | "COMPLETED" | "FAILED" | "NOT_FOUND" | "SYNCING" | "CANCELLED" | "DISABLED";
 
 // @internal
 export type SemanticQualityIssueSeverity = "WARNING" | "INFO";

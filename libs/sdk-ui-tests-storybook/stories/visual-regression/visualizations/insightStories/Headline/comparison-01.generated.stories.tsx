@@ -2,6 +2,7 @@
 
 import { type IInsight } from "@gooddata/sdk-model";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 
@@ -77,7 +78,7 @@ export const ComparisonWithDefaultConfig = () =>
                 visualizationUrl: "local:headline",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(10, 1, 0),
+        getScenariosGroupByIndexes(13, 1, 0),
     )();
 ComparisonWithDefaultConfig.parameters = {
     kind: "comparison with default config",
@@ -164,7 +165,7 @@ export const ComparisonWithDefaultConfigWithSecondaryMeasureIsPop = () =>
                 visualizationUrl: "local:headline",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(10, 1, 1),
+        getScenariosGroupByIndexes(13, 1, 1),
     )();
 ComparisonWithDefaultConfigWithSecondaryMeasureIsPop.parameters = {
     kind: "comparison with default config with secondary measure is PoP",
@@ -249,7 +250,7 @@ export const ComparisonWithCalculateAsDifferentAndDefaultFormat = () =>
                 visualizationUrl: "local:headline",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(10, 1, 2),
+        getScenariosGroupByIndexes(13, 1, 2),
     )();
 ComparisonWithCalculateAsDifferentAndDefaultFormat.parameters = {
     kind: "comparison with calculate as different and default format",
@@ -334,7 +335,7 @@ export const ComparisonWithCalculateAsChangeDifferenceAndDefaultSubFormat = () =
                 visualizationUrl: "local:headline",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(10, 1, 3),
+        getScenariosGroupByIndexes(13, 1, 3),
     )();
 ComparisonWithCalculateAsChangeDifferenceAndDefaultSubFormat.parameters = {
     kind: "comparison with calculate as change (difference) and default sub format",
@@ -424,7 +425,7 @@ export const ComparisonWithCalculateAsChangeDifferenceAndCustomFormat = () =>
                 visualizationUrl: "local:headline",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(10, 1, 4),
+        getScenariosGroupByIndexes(13, 1, 4),
     )();
 ComparisonWithCalculateAsChangeDifferenceAndCustomFormat.parameters = {
     kind: "comparison with calculate as change (difference) and custom format",
@@ -509,7 +510,7 @@ export const ComparisonWithDecimal1Format = () =>
                 visualizationUrl: "local:headline",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(10, 1, 5),
+        getScenariosGroupByIndexes(13, 1, 5),
     )();
 ComparisonWithDecimal1Format.parameters = {
     kind: "comparison with decimal-1 format",
@@ -594,7 +595,7 @@ export const ComparisonWithCustomFormat = () =>
                 visualizationUrl: "local:headline",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(10, 1, 6),
+        getScenariosGroupByIndexes(13, 1, 6),
     )();
 ComparisonWithCustomFormat.parameters = {
     kind: "comparison with custom format",
@@ -680,7 +681,7 @@ export const ComparisonWithPositiveArrow = () =>
                 visualizationUrl: "local:headline",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(10, 1, 7),
+        getScenariosGroupByIndexes(13, 1, 7),
     )();
 ComparisonWithPositiveArrow.parameters = {
     kind: "comparison with positive arrow",
@@ -784,7 +785,7 @@ export const ComparisonWithPositiveArrowAndColor = () =>
                 visualizationUrl: "local:headline",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(10, 1, 8),
+        getScenariosGroupByIndexes(13, 1, 8),
     )();
 ComparisonWithPositiveArrowAndColor.parameters = {
     kind: "comparison with positive arrow and color",
@@ -889,7 +890,7 @@ export const ComparisonWithNegativeArrow = () =>
                 visualizationUrl: "local:headline",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(10, 1, 9),
+        getScenariosGroupByIndexes(13, 1, 9),
     )();
 ComparisonWithNegativeArrow.parameters = {
     kind: "comparison with negative arrow",
@@ -993,7 +994,7 @@ export const ComparisonWithNegativeArrowAndColor = () =>
                 visualizationUrl: "local:headline",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(10, 1, 10),
+        getScenariosGroupByIndexes(13, 1, 10),
     )();
 ComparisonWithNegativeArrowAndColor.parameters = {
     kind: "comparison with negative arrow and color",
@@ -1099,7 +1100,7 @@ export const ComparisonWithEqualsArrow = () =>
                 visualizationUrl: "local:headline",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(10, 1, 11),
+        getScenariosGroupByIndexes(13, 1, 11),
     )();
 ComparisonWithEqualsArrow.parameters = {
     kind: "comparison with equals arrow",
@@ -1204,7 +1205,7 @@ export const ComparisonWithEqualsArrowAndColor = () =>
                 visualizationUrl: "local:headline",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(10, 1, 12),
+        getScenariosGroupByIndexes(13, 1, 12),
     )();
 ComparisonWithEqualsArrowAndColor.parameters = {
     kind: "comparison with equals arrow and color",
@@ -1311,7 +1312,7 @@ export const ComparisonWithCustomLabel = () =>
                 visualizationUrl: "local:headline",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(10, 1, 13),
+        getScenariosGroupByIndexes(13, 1, 13),
     )();
 ComparisonWithCustomLabel.parameters = {
     kind: "comparison with custom label",
@@ -1398,7 +1399,7 @@ export const ComparisonWithPositionOnTop = () =>
                 visualizationUrl: "local:headline",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(10, 1, 14),
+        getScenariosGroupByIndexes(13, 1, 14),
     )();
 ComparisonWithPositionOnTop.parameters = {
     kind: "comparison with position on top",
@@ -1485,7 +1486,7 @@ export const ComparisonWithPositionOnRight = () =>
                 visualizationUrl: "local:headline",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(10, 1, 15),
+        getScenariosGroupByIndexes(13, 1, 15),
     )();
 ComparisonWithPositionOnRight.parameters = {
     kind: "comparison with position on right",

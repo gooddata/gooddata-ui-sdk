@@ -14,7 +14,7 @@ export default {
 
 export const PaginationWith5RowsPerPage = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(21, 3).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(24, 3).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "pagination with 5 rows per page",
         );
@@ -42,7 +42,7 @@ PaginationWith5RowsPerPage.parameters = {
 
 export const PaginationWith5RowsPerPageAndTotals = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(21, 3).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(24, 3).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "pagination with 5 rows per page and totals",
         );

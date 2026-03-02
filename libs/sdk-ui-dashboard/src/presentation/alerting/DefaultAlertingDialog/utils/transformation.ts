@@ -70,7 +70,7 @@ export function transformAlertByMetric(
             c.comparator === AlertMetricComparatorType.SamePeriodPreviousYear,
     );
 
-    if (alert.alert?.condition.type === "anomalyDetection" && periodMeasure) {
+    if (alert.alert?.condition.type === "anomalyDetection" && periodMeasure?.dataset) {
         const cond = transformToAnomalyDetectionCondition(alert.alert.condition, periodMeasure);
         const condition = {
             ...cond,
@@ -821,11 +821,38 @@ function collectAllRelatedMeasuresFromFilters(metrics: AlertMetric[], filters: I
     }, []);
 }
 
+/**
+ * Alerts execute with `execution.attributes: []` and `execution.measures` containing only the selected alert measure(s).
+ *
+ * Widget filters (MVF / ranking) reference measures by localId (`localIdRef("...")`). In time-comparison scenarios,
+ * those filters may target *comparator* measures (e.g. PoP comparator localId often looks like `${masterLocalId}_pop`).
+ *
+ * If we don't resolve these localIds to actual measure objects and include them in `execution.auxMeasures`,
+ * the resulting alert execution can end up referencing a measure localId that is not present in the execution.
+ */
+function findMeasureByLocalIdentifier(metrics: AlertMetric[], localIdentifier: string): IMeasure | undefined {
+    const direct = metrics.find((m) => m.measure.measure.localIdentifier === localIdentifier);
+    if (direct) {
+        return direct.measure;
+    }
+
+    for (const metric of metrics) {
+        const comparator = metric.comparators.find(
+            (c) => c.measure.measure.localIdentifier === localIdentifier,
+        );
+        if (comparator) {
+            return comparator.measure;
+        }
+    }
+
+    return undefined;
+}
+
 function collectMeasure(metrics: AlertMetric[], measure: ObjRefInScope, acc: IMeasure[]) {
     if (isLocalIdRef(measure)) {
-        const related = metrics.find((m) => m.measure.measure.localIdentifier === measure.localIdentifier);
+        const related = findMeasureByLocalIdentifier(metrics, measure.localIdentifier);
         if (related) {
-            acc.push(related.measure);
+            acc.push(related);
         }
     }
 }

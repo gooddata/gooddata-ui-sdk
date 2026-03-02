@@ -2,43 +2,69 @@
 
 import { type ReactNode, createContext, useContext, useMemo, useState } from "react";
 
-type IPivotTableSizingContext = {
+type IPivotTableSizingStateContext = {
     containerWidth: number;
-    setContainerWidth: (width: number) => void;
-    autoSizeInitialized: boolean;
-    setAutoSizeInitialized: (value: boolean) => void;
 };
 
-const PivotTableSizingContext = createContext<IPivotTableSizingContext | undefined>(undefined);
+type IPivotTableSizingActionsContext = {
+    setContainerWidth: (width: number) => void;
+};
+
+// Keep state and actions in separate contexts so components that only dispatch
+// (e.g. setContainerWidth) do not re-render on every sizing state change.
+const PivotTableSizingStateContext = createContext<IPivotTableSizingStateContext | undefined>(undefined);
+const PivotTableSizingActionsContext = createContext<IPivotTableSizingActionsContext | undefined>(undefined);
 
 /**
  * @internal
  */
 export function PivotTableSizingProvider({ children }: { children: ReactNode }) {
     const [containerWidth, setContainerWidth] = useState(0);
-    const [autoSizeInitialized, setAutoSizeInitialized] = useState(false);
 
-    const value = useMemo<IPivotTableSizingContext>(
+    const stateValue = useMemo<IPivotTableSizingStateContext>(
         () => ({
             containerWidth,
-            setContainerWidth,
-            autoSizeInitialized,
-            setAutoSizeInitialized,
         }),
-        [containerWidth, autoSizeInitialized],
+        [containerWidth],
     );
 
-    return <PivotTableSizingContext.Provider value={value}>{children}</PivotTableSizingContext.Provider>;
+    const actionsValue = useMemo<IPivotTableSizingActionsContext>(
+        () => ({
+            setContainerWidth,
+        }),
+        [setContainerWidth],
+    );
+
+    return (
+        <PivotTableSizingActionsContext.Provider value={actionsValue}>
+            <PivotTableSizingStateContext.Provider value={stateValue}>
+                {children}
+            </PivotTableSizingStateContext.Provider>
+        </PivotTableSizingActionsContext.Provider>
+    );
 }
 
 /**
  * @internal
  */
-export function usePivotTableSizing(): IPivotTableSizingContext {
-    const context = useContext(PivotTableSizingContext);
+export function usePivotTableSizing(): IPivotTableSizingStateContext {
+    const context = useContext(PivotTableSizingStateContext);
 
     if (context === undefined) {
         throw new Error("usePivotTableSizing must be used within a PivotTableSizingProvider");
+    }
+
+    return context;
+}
+
+/**
+ * @internal
+ */
+export function usePivotTableSizingActions(): IPivotTableSizingActionsContext {
+    const context = useContext(PivotTableSizingActionsContext);
+
+    if (context === undefined) {
+        throw new Error("usePivotTableSizingActions must be used within a PivotTableSizingProvider");
     }
 
     return context;

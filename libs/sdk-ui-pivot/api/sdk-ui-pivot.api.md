@@ -546,7 +546,6 @@ export type PivotTableNextExecutionCancellingConfig = {
 
 // @public
 export type PivotTableNextExperimentalConfig = {
-    enablePivotTableAutoSizeReset?: boolean;
     enablePivotTablePagination?: boolean;
 };
 

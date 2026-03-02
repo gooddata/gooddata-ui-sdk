@@ -1,0 +1,1085 @@
+[
+    {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                            "localIdentifier": "a_state_id.statecode"
+                        }
+                    }
+                ],
+                "localIdentifier": "area"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                        "type": "measure"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                        }
+                    }
+                ],
+                "localIdentifier": "color"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                            "localIdentifier": "a_f_owner.region_id"
+                        }
+                    }
+                ],
+                "localIdentifier": "segment"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                            "localIdentifier": "a_state_id.statecode_1"
+                        }
+                    }
+                ],
+                "localIdentifier": "tooltipText"
+            }
+        ],
+        "scenario": "area with color and segment",
+        "vis": "GeoAreaChart"
+    },
+    {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                            "localIdentifier": "a_state_id.statecode"
+                        }
+                    }
+                ],
+                "localIdentifier": "area"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                        "type": "measure"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                        }
+                    }
+                ],
+                "localIdentifier": "color"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                            "localIdentifier": "a_f_owner.region_id"
+                        }
+                    }
+                ],
+                "localIdentifier": "segment"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                            "localIdentifier": "a_state_id.statecode_1"
+                        }
+                    }
+                ],
+                "localIdentifier": "tooltipText"
+            }
+        ],
+        "scenario": "area chart-level custom segment mapping",
+        "vis": "GeoAreaChart"
+    },
+    {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                            "localIdentifier": "a_state_id.statecode"
+                        }
+                    }
+                ],
+                "localIdentifier": "area"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                        "type": "measure"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                        }
+                    }
+                ],
+                "localIdentifier": "color"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                            "localIdentifier": "a_f_owner.region_id"
+                        }
+                    }
+                ],
+                "localIdentifier": "segment"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                            "localIdentifier": "a_state_id.statecode_1"
+                        }
+                    }
+                ],
+                "localIdentifier": "tooltipText"
+            }
+        ],
+        "scenario": "area layer-level segment mapping overrides chart-level",
+        "vis": "GeoChart"
+    },
+    {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                            "localIdentifier": "a_state_id.statecode"
+                        }
+                    }
+                ],
+                "localIdentifier": "area"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                        "type": "measure"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                        }
+                    }
+                ],
+                "localIdentifier": "color"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                            "localIdentifier": "a_f_owner.region_id"
+                        }
+                    }
+                ],
+                "localIdentifier": "segment"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                            "localIdentifier": "a_state_id.statecode_1"
+                        }
+                    }
+                ],
+                "localIdentifier": "tooltipText"
+            }
+        ],
+        "scenario": "multi-layer both inherit chart-level colors",
+        "vis": "GeoChart"
+    },
+    {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                            "localIdentifier": "a_state_id.statecode"
+                        }
+                    }
+                ],
+                "localIdentifier": "area"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                        "type": "measure"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                        }
+                    }
+                ],
+                "localIdentifier": "color"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                            "localIdentifier": "a_f_owner.region_id"
+                        }
+                    }
+                ],
+                "localIdentifier": "segment"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                            "localIdentifier": "a_state_id.statecode_1"
+                        }
+                    }
+                ],
+                "localIdentifier": "tooltipText"
+            }
+        ],
+        "scenario": "multi-layer pushpin override only",
+        "vis": "GeoChart"
+    },
+    {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                            "localIdentifier": "a_state_id.statecode"
+                        }
+                    }
+                ],
+                "localIdentifier": "area"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                        "type": "measure"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                        }
+                    }
+                ],
+                "localIdentifier": "color"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                            "localIdentifier": "a_f_owner.region_id"
+                        }
+                    }
+                ],
+                "localIdentifier": "segment"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                            "localIdentifier": "a_state_id.statecode_1"
+                        }
+                    }
+                ],
+                "localIdentifier": "tooltipText"
+            }
+        ],
+        "scenario": "multi-layer area override only",
+        "vis": "GeoChart"
+    },
+    {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                            "localIdentifier": "a_state_id.statecode"
+                        }
+                    }
+                ],
+                "localIdentifier": "area"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                        "type": "measure"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                        }
+                    }
+                ],
+                "localIdentifier": "color"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                            "localIdentifier": "a_f_owner.region_id"
+                        }
+                    }
+                ],
+                "localIdentifier": "segment"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                            "localIdentifier": "a_state_id.statecode_1"
+                        }
+                    }
+                ],
+                "localIdentifier": "tooltipText"
+            }
+        ],
+        "scenario": "multi-layer both layer overrides with conflicting chart fallback",
+        "vis": "GeoChart"
+    },
+    {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                            "localIdentifier": "a_state_id.statecode"
+                        }
+                    }
+                ],
+                "localIdentifier": "area"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                        "type": "measure"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                        }
+                    }
+                ],
+                "localIdentifier": "color"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                            "localIdentifier": "a_f_owner.region_id"
+                        }
+                    }
+                ],
+                "localIdentifier": "segment"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                            "localIdentifier": "a_state_id.statecode_1"
+                        }
+                    }
+                ],
+                "localIdentifier": "tooltipText"
+            }
+        ],
+        "scenario": "area legend position top",
+        "vis": "GeoAreaChart"
+    },
+    {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                            "localIdentifier": "a_state_id.statecode"
+                        }
+                    }
+                ],
+                "localIdentifier": "area"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                        "type": "measure"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                        }
+                    }
+                ],
+                "localIdentifier": "color"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                            "localIdentifier": "a_f_owner.region_id"
+                        }
+                    }
+                ],
+                "localIdentifier": "segment"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                            "localIdentifier": "a_state_id.statecode_1"
+                        }
+                    }
+                ],
+                "localIdentifier": "tooltipText"
+            }
+        ],
+        "scenario": "area legend position right",
+        "vis": "GeoAreaChart"
+    },
+    {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                            "localIdentifier": "a_state_id.statecode"
+                        }
+                    }
+                ],
+                "localIdentifier": "area"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                        "type": "measure"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                        }
+                    }
+                ],
+                "localIdentifier": "color"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                            "localIdentifier": "a_f_owner.region_id"
+                        }
+                    }
+                ],
+                "localIdentifier": "segment"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                            "localIdentifier": "a_state_id.statecode_1"
+                        }
+                    }
+                ],
+                "localIdentifier": "tooltipText"
+            }
+        ],
+        "scenario": "area legend position bottom",
+        "vis": "GeoAreaChart"
+    },
+    {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                            "localIdentifier": "a_state_id.statecode"
+                        }
+                    }
+                ],
+                "localIdentifier": "area"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                        "type": "measure"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                        }
+                    }
+                ],
+                "localIdentifier": "color"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                            "localIdentifier": "a_f_owner.region_id"
+                        }
+                    }
+                ],
+                "localIdentifier": "segment"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                            "localIdentifier": "a_state_id.statecode_1"
+                        }
+                    }
+                ],
+                "localIdentifier": "tooltipText"
+            }
+        ],
+        "scenario": "area legend position left",
+        "vis": "GeoAreaChart"
+    },
+    {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                            "localIdentifier": "a_state_id.statecode"
+                        }
+                    }
+                ],
+                "localIdentifier": "area"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                        "type": "measure"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                        }
+                    }
+                ],
+                "localIdentifier": "color"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                            "localIdentifier": "a_f_owner.region_id"
+                        }
+                    }
+                ],
+                "localIdentifier": "segment"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                            "localIdentifier": "a_state_id.statecode_1"
+                        }
+                    }
+                ],
+                "localIdentifier": "tooltipText"
+            }
+        ],
+        "scenario": "area legend with selection",
+        "vis": "GeoAreaChart"
+    },
+    {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                            "localIdentifier": "a_state_id.statecode"
+                        }
+                    }
+                ],
+                "localIdentifier": "area"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                        "type": "measure"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                        }
+                    }
+                ],
+                "localIdentifier": "color"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                            "localIdentifier": "a_f_owner.region_id"
+                        }
+                    }
+                ],
+                "localIdentifier": "segment"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                            "localIdentifier": "a_state_id.statecode_1"
+                        }
+                    }
+                ],
+                "localIdentifier": "tooltipText"
+            }
+        ],
+        "scenario": "area legend with category and color-scale",
+        "vis": "GeoAreaChart"
+    },
+    {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                            "localIdentifier": "a_state_id.statecode"
+                        }
+                    }
+                ],
+                "localIdentifier": "area"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                        "type": "measure"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                        }
+                    }
+                ],
+                "localIdentifier": "color"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                            "localIdentifier": "a_f_owner.region_id"
+                        }
+                    }
+                ],
+                "localIdentifier": "segment"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                            "localIdentifier": "a_state_id.statecode_1"
+                        }
+                    }
+                ],
+                "localIdentifier": "tooltipText"
+            }
+        ],
+        "scenario": "area primary with pushpin overlay",
+        "vis": "GeoChart"
+    },
+    {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                            "localIdentifier": "a_state_id.statecode"
+                        }
+                    }
+                ],
+                "localIdentifier": "area"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                        "type": "measure"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                        }
+                    }
+                ],
+                "localIdentifier": "color"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                            "localIdentifier": "a_f_owner.region_id"
+                        }
+                    }
+                ],
+                "localIdentifier": "segment"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                            "localIdentifier": "a_state_id.statecode_1"
+                        }
+                    }
+                ],
+                "localIdentifier": "tooltipText"
+            }
+        ],
+        "scenario": "area primary with two pushpin overlays",
+        "vis": "GeoChart"
+    },
+    {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                            "localIdentifier": "a_state_id.statecode"
+                        }
+                    }
+                ],
+                "localIdentifier": "area"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                        "type": "measure"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                        }
+                    }
+                ],
+                "localIdentifier": "color"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                            "localIdentifier": "a_f_owner.region_id"
+                        }
+                    }
+                ],
+                "localIdentifier": "segment"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                            "localIdentifier": "a_state_id.statecode_1"
+                        }
+                    }
+                ],
+                "localIdentifier": "tooltipText"
+            }
+        ],
+        "scenario": "multi-layer chart-level segment mapping",
+        "vis": "GeoChart"
+    },
+    {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                            "localIdentifier": "a_state_id.statecode"
+                        }
+                    }
+                ],
+                "localIdentifier": "area"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                        "type": "measure"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                        }
+                    }
+                ],
+                "localIdentifier": "color"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                            "localIdentifier": "a_f_owner.region_id"
+                        }
+                    }
+                ],
+                "localIdentifier": "segment"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                            "localIdentifier": "a_state_id.statecode_1"
+                        }
+                    }
+                ],
+                "localIdentifier": "tooltipText"
+            }
+        ],
+        "scenario": "multi-layer per-layer segment mapping override",
+        "vis": "GeoChart"
+    },
+    {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                            "localIdentifier": "a_state_id.statecode"
+                        }
+                    }
+                ],
+                "localIdentifier": "area"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                        "type": "measure"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                        }
+                    }
+                ],
+                "localIdentifier": "color"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                            "localIdentifier": "a_f_owner.region_id"
+                        }
+                    }
+                ],
+                "localIdentifier": "segment"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                            "localIdentifier": "a_state_id.statecode_1"
+                        }
+                    }
+                ],
+                "localIdentifier": "tooltipText"
+            }
+        ],
+        "scenario": "area with clustered pushpin overlay",
+        "vis": "GeoChart"
+    },
+    {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                            "localIdentifier": "a_state_id.statecode"
+                        }
+                    }
+                ],
+                "localIdentifier": "area"
+            },
+            {
+                "items": [
+                    {
+                        "measure": {
+                            "definition": {
+                                "measureDefinition": {
+                                    "item": {
+                                        "identifier": "87a053b0-3947-49f3-b0c5-de53fd01f050",
+                                        "type": "measure"
+                                    }
+                                }
+                            },
+                            "localIdentifier": "m_87a053b0_3947_49f3_b0c5_de53fd01f050"
+                        }
+                    }
+                ],
+                "localIdentifier": "color"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                            "localIdentifier": "a_f_owner.region_id"
+                        }
+                    }
+                ],
+                "localIdentifier": "segment"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                            "localIdentifier": "a_state_id.statecode_1"
+                        }
+                    }
+                ],
+                "localIdentifier": "tooltipText"
+            }
+        ],
+        "scenario": "area with non-clustered pushpin overlay",
+        "vis": "GeoChart"
+    }
+]

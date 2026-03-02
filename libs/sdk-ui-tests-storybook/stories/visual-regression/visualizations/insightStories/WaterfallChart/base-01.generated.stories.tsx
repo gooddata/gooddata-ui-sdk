@@ -2,6 +2,7 @@
 
 import { type IInsight } from "@gooddata/sdk-model";
 import "@gooddata/sdk-ui-pivot/styles/css/main.css";
+import "@gooddata/sdk-ui-geo/styles/css/main.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/config_panel.css";
 import "@gooddata/sdk-ui-ext/styles/internal/css/dropdown_icons.css";
 
@@ -55,7 +56,7 @@ export const SingleMeasure = () =>
                 visualizationUrl: "local:waterfall",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(21, 0, 0),
+        getScenariosGroupByIndexes(24, 0, 0),
     )();
 SingleMeasure.parameters = {
     kind: "single measure",
@@ -126,7 +127,7 @@ export const SingleMeasureWithViewby = () =>
                 visualizationUrl: "local:waterfall",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(21, 0, 1),
+        getScenariosGroupByIndexes(24, 0, 1),
     )();
 SingleMeasureWithViewby.parameters = {
     kind: "single measure with viewBy",
@@ -222,7 +223,7 @@ export const MultiMeasures = () =>
                 visualizationUrl: "local:waterfall",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(21, 0, 2),
+        getScenariosGroupByIndexes(24, 0, 2),
     )();
 MultiMeasures.parameters = {
     kind: "multi measures",
@@ -322,7 +323,7 @@ export const MultiMeasuresWithATotalMeasure = () =>
                 visualizationUrl: "local:waterfall",
             },
         } as unknown as IInsight,
-        getScenariosGroupByIndexes(21, 0, 3),
+        getScenariosGroupByIndexes(24, 0, 3),
     )();
 MultiMeasuresWithATotalMeasure.parameters = {
     kind: "multi measures with a total measure",

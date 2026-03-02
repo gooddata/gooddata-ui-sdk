@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type KeyboardEventHandler, useCallback, useRef } from "react";
 
@@ -9,6 +9,7 @@ import { Dropdown, isArrowKey, useMediaQuery } from "@gooddata/sdk-ui-kit";
 import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilterComponentsContext.js";
 import { useAttributeFilterContext } from "../../Context/AttributeFilterContext.js";
 import { useResolveAttributeFilterSubtitle } from "../../hooks/useResolveAttributeFilterSubtitle.js";
+import { createFilterFromOperator, isArbitraryOperator } from "../../textFilterOperatorUtils.js";
 import { AttributeFilterButtonErrorTooltip } from "../DropdownButton/AttributeFilterButtonErrorTooltip.js";
 
 const ALIGN_POINTS = [
@@ -45,6 +46,13 @@ export function AttributeFilterDropdown() {
         fullscreenOnMobile,
         isCommittedSelectionInverted,
         isWorkingSelectionInverted,
+        currentFilterMode,
+        textFilterOperator,
+        textFilterValues,
+        textFilterLiteral,
+        textFilterCaseSensitive,
+        textFilterCommittedFilter,
+        currentDisplayFormRef,
         selectionMode,
         disabled,
         customIcon,
@@ -61,10 +69,29 @@ export function AttributeFilterDropdown() {
         !isSelectionInvalid || !withoutApply,
     );
     const selectionElements = withoutApply ? workingSelectionElements : committedSelectionElements;
-    const subtitle = useResolveAttributeFilterSubtitle(isSelectionInverted, selectionElements);
+    const operator = textFilterOperator ?? "is";
+    const subtitleFilter =
+        currentFilterMode === "text"
+            ? withoutApply && currentDisplayFormRef
+                ? createFilterFromOperator(
+                      operator,
+                      isArbitraryOperator(operator) ? (textFilterValues ?? []) : (textFilterLiteral ?? ""),
+                      currentDisplayFormRef,
+                      undefined,
+                      textFilterCaseSensitive ?? false,
+                  )
+                : textFilterCommittedFilter
+            : undefined;
+    const subtitle = useResolveAttributeFilterSubtitle(
+        isSelectionInverted,
+        selectionElements,
+        subtitleFilter,
+    );
 
     const isMultiselect = selectionMode !== "single";
-    const showSelectionCount = isMultiselect && selectionElements.length !== 0;
+    const textSelectionCount = isArbitraryOperator(operator) ? (textFilterValues?.length ?? 0) : 0;
+    const selectionCount = currentFilterMode === "text" ? textSelectionCount : selectionElements.length;
+    const showSelectionCount = isMultiselect && selectionCount !== 0;
     const handleKeyDown = useCallback<KeyboardEventHandler<HTMLDivElement>>((e) => {
         //stop arrow keys from leaking to filter bar
         if (isArrowKey(e)) {
@@ -100,7 +127,7 @@ export function AttributeFilterDropdown() {
                                     isLoaded={!isInitializing}
                                     isLoading={isInitializing}
                                     isOpen={isOpen}
-                                    selectedItemsCount={selectionElements.length}
+                                    selectedItemsCount={selectionCount}
                                     showSelectionCount={showSelectionCount}
                                     disabled={disabled}
                                     customIcon={customIcon}

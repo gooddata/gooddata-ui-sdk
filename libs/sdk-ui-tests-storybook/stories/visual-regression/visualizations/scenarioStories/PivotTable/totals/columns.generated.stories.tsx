@@ -14,7 +14,7 @@ export default {
 
 export const SingleMeasureAndSingleColumnGrandTotal = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 11).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 11).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "single measure and single column grand total",
         );
@@ -42,7 +42,7 @@ SingleMeasureAndSingleColumnGrandTotal.parameters = {
 
 export const SingleMeasureAndMultipleColumnGrandTotals = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 11).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 11).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "single measure and multiple column grand totals",
         );
@@ -70,7 +70,7 @@ SingleMeasureAndMultipleColumnGrandTotals.parameters = {
 
 export const TwoMeasuresAndSingleColumnGrandTotalForOne = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 11).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 11).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "two measures and single column grand total for one",
         );
@@ -98,7 +98,7 @@ TwoMeasuresAndSingleColumnGrandTotalForOne.parameters = {
 
 export const TwoMeasuresAndSingleColumnGrandTotalForEach = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 11).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 11).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "two measures and single column grand total for each",
         );
@@ -126,7 +126,7 @@ TwoMeasuresAndSingleColumnGrandTotalForEach.parameters = {
 
 export const TwoMeasuresAndMultipleColumnGrandTotalsForEach = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 11).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 11).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "two measures and multiple column grand totals for each",
         );
@@ -158,7 +158,7 @@ TwoMeasuresAndMultipleColumnGrandTotalsForEach.parameters = {
 
 export const TwoMeasuresAndOneColumnSubtotal = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 11).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 11).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "two measures and one column subtotal",
         );
@@ -186,7 +186,7 @@ TwoMeasuresAndOneColumnSubtotal.parameters = {
 
 export const TwoMeasuresAndMultipleColumnSubtotals = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 11).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 11).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "two measures and multiple column subtotals",
         );
@@ -214,7 +214,7 @@ TwoMeasuresAndMultipleColumnSubtotals.parameters = {
 
 export const TwoMeasuresAndColumnGrandTotalsAndMultipleSubtotals = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 11).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 11).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "two measures and column grand totals and multiple subtotals",
         );
@@ -246,7 +246,7 @@ TwoMeasuresAndColumnGrandTotalsAndMultipleSubtotals.parameters = {
 
 export const TwoMeasuresAndColumnSingleGrandTotalSortedBySecondAttribute = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 11).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 11).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) => name === "two measures and column single grand total sorted by second attribute",
         );
@@ -278,7 +278,7 @@ TwoMeasuresAndColumnSingleGrandTotalSortedBySecondAttribute.parameters = {
 
 export const TwoMeasuresAndSingleColumnGrandTotalAndSingleSubtotalSortedBySecondAttribute = () =>
     (() => {
-        const scenarios = getScenariosGroupByIndexes(20, 11).asScenarioDescAndScenario();
+        const scenarios = getScenariosGroupByIndexes(23, 11).asScenarioDescAndScenario();
         const scenarioAndDescriptions = scenarios.filter(
             ([name]) =>
                 name ===

@@ -1,0 +1,80 @@
+[
+    {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_city.id.latitude", "type": "displayForm" },
+                            "localIdentifier": "a_f_city.id.latitude"
+                        }
+                    }
+                ],
+                "localIdentifier": "latitude"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_city.id.longitude", "type": "displayForm" },
+                            "localIdentifier": "a_f_city.id.longitude"
+                        }
+                    }
+                ],
+                "localIdentifier": "longitude"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_city.id.cityname", "type": "displayForm" },
+                            "localIdentifier": "a_f_city.id.cityname"
+                        }
+                    }
+                ],
+                "localIdentifier": "tooltipText"
+            }
+        ],
+        "scenario": "area with clustered pushpin overlay",
+        "vis": "GeoChart"
+    },
+    {
+        "buckets": [
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_city.id.latitude", "type": "displayForm" },
+                            "localIdentifier": "a_f_city.id.latitude"
+                        }
+                    }
+                ],
+                "localIdentifier": "latitude"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_city.id.longitude", "type": "displayForm" },
+                            "localIdentifier": "a_f_city.id.longitude"
+                        }
+                    }
+                ],
+                "localIdentifier": "longitude"
+            },
+            {
+                "items": [
+                    {
+                        "attribute": {
+                            "displayForm": { "identifier": "f_city.id.cityname", "type": "displayForm" },
+                            "localIdentifier": "a_f_city.id.cityname"
+                        }
+                    }
+                ],
+                "localIdentifier": "tooltipText"
+            }
+        ],
+        "scenario": "area with non-clustered pushpin overlay",
+        "vis": "GeoChart"
+    }
+]

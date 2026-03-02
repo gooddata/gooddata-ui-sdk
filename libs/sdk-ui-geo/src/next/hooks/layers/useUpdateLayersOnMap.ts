@@ -2,14 +2,13 @@
 
 import { type MutableRefObject, useEffect, useRef } from "react";
 
-import { DefaultColorPalette } from "@gooddata/sdk-ui";
-
 import type { IGeoLayerData } from "../../context/GeoLayersContext.js";
 import type { IMapFacade } from "../../layers/common/mapFacade.js";
 import { getLayerAdapter } from "../../layers/registry/adapterRegistry.js";
 import type { IGeoAdapterContext } from "../../layers/registry/adapterTypes.js";
 import { buildOutputFromLayerData } from "../../layers/registry/output.js";
 import type { ILayerExecutionRecord } from "../../types/props/geoChart/internal.js";
+import { resolveLayerColorConfig } from "../../utils/color/resolveLayerColorConfig.js";
 
 /**
  * Updates layers on the map (in-place) when the adapter-declared update key changes.
@@ -26,12 +25,14 @@ export function useUpdateLayersOnMap({
     layerExecutions,
     layers,
     adapterContextRef,
+    mapUpdateKey,
 }: {
     map: IMapFacade | null;
     isMapReady: boolean;
     layerExecutions: ILayerExecutionRecord[];
     layers: Map<string, IGeoLayerData>;
     adapterContextRef: MutableRefObject<IGeoAdapterContext>;
+    mapUpdateKey: string;
 }): void {
     const prevLayerUpdateKeyRef = useRef<Map<string, string>>(new Map());
 
@@ -62,8 +63,7 @@ export function useUpdateLayersOnMap({
 
             const perLayerContext: IGeoAdapterContext = {
                 ...adapterContextRef.current,
-                colorPalette: layer.config?.colorPalette ?? DefaultColorPalette,
-                colorMapping: layer.config?.colorMapping ?? [],
+                ...resolveLayerColorConfig(layer, adapterContextRef.current.config),
             };
 
             const nextUpdateKey = adapter.getMapUpdateKey?.(layer, perLayerContext) ?? "";
@@ -85,5 +85,5 @@ export function useUpdateLayersOnMap({
             adapter.updateOnMap?.(layer, map, layerOutput, layerData.dataView, perLayerContext);
             prevLayerUpdateKeyRef.current.set(layerId, nextUpdateKey);
         }
-    }, [map, isMapReady, layerExecutions, layers, adapterContextRef]);
+    }, [map, isMapReady, layerExecutions, layers, adapterContextRef, mapUpdateKey]);
 }

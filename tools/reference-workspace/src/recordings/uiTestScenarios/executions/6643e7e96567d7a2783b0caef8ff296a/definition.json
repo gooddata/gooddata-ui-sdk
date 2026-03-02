@@ -1,0 +1,71 @@
+{
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                "localIdentifier": "a_state_id.statecode"
+            }
+        },
+        {
+            "attribute": {
+                "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                "localIdentifier": "a_f_owner.region_id"
+            }
+        },
+        {
+            "attribute": {
+                "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                "localIdentifier": "a_state_id.statecode_1"
+            }
+        }
+    ],
+    "buckets": [
+        {
+            "items": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                        "localIdentifier": "a_state_id.statecode"
+                    }
+                }
+            ],
+            "localIdentifier": "area"
+        },
+        {
+            "items": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                        "localIdentifier": "a_f_owner.region_id"
+                    }
+                }
+            ],
+            "localIdentifier": "color"
+        },
+        {
+            "items": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "state_id.statecode", "type": "displayForm" },
+                        "localIdentifier": "a_state_id.statecode_1"
+                    }
+                }
+            ],
+            "localIdentifier": "tooltipText"
+        }
+    ],
+    "dimensions": [
+        { "itemIdentifiers": ["a_state_id.statecode", "a_f_owner.region_id", "a_state_id.statecode_1"] }
+    ],
+    "filters": [
+        {
+            "positiveAttributeFilter": {
+                "displayForm": { "identifier": "f_owner.region_id", "type": "displayForm" },
+                "in": { "values": ["West Coast", "East Coast"] }
+            }
+        }
+    ],
+    "measures": [],
+    "sortBy": [],
+    "workspace": "reference-workspace"
+}

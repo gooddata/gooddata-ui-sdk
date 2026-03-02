@@ -23,7 +23,7 @@ export interface IPaperInteractionCallback {
 export interface ILineageGraphOptions extends IPaperInteractionCallback {
     typesToFilter?: ObjectType[];
     leafTypesToFilter?: ObjectType[];
-    direction?: "up" | "down";
+    direction?: "up" | "down" | "both";
 }
 
 export function useLineageGraph(

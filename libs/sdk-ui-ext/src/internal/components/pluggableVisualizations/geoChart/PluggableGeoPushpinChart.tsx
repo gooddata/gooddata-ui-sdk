@@ -443,13 +443,6 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
     }
 
     private getLocationProperties(locationItem: IBucketItem) {
-        const { dfRef } = locationItem;
-        // for tooltip, prefer standard text display form (whose type is `undefined`) over geo or hyperlink display forms
-        const textDfs = locationItem.displayForms?.filter((displayForm) => !displayForm.type) ?? [];
-        const defaultOrFirstTextDf = textDfs.find((displayForm) => !!displayForm.isDefault) || textDfs[0];
-        const tooltipDfRef = defaultOrFirstTextDf?.ref || dfRef;
-        const tooltipText = isUriRef(tooltipDfRef) ? tooltipDfRef.uri : tooltipDfRef.identifier;
-
         if (this.backendCapabilities.supportsSeparateLatitudeLongitudeLabels) {
             const latitudeDfRef = locationItem.displayForms?.find(
                 (displayForm) => (displayForm.type as AttributeDisplayFormType) === "GDC.geo.pin_latitude",
@@ -460,14 +453,11 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
             const latitude = isUriRef(latitudeDfRef) ? latitudeDfRef?.uri : latitudeDfRef?.identifier;
             const longitude = isUriRef(longitudeDfRef) ? longitudeDfRef?.uri : longitudeDfRef?.identifier;
             return {
-                tooltipText,
                 latitude,
                 longitude,
             };
         }
-        return {
-            tooltipText,
-        };
+        return {};
     }
 
     private prepareBuckets(insight: IInsightDefinition) {
@@ -476,34 +466,6 @@ export class PluggableGeoPushpinChart extends PluggableBaseChart {
         // we need to shallow copy the buckets so that we can add more without mutating the original array
         const buckets = [...insightBuckets(insight)];
 
-        if (supportedControls?.["tooltipText"]) {
-            /*
-             * The display form to use for tooltip text is provided in properties :( This is unfortunate; the chart
-             * props could very well contain an extra prop for the tooltip bucket.
-             *
-             * Current guess is that this is because AD creates insight buckets; in order to create the tooltip
-             * bucket, AD would have to actually show the tooltip bucket in the UI - which is not desired. Thus the
-             * displayForm to add as bucket is passed in visualization properties.
-             *
-             * This workaround is highly unfortunate for two reasons:
-             *
-             * 1.  It leaks all the way to the API of geo chart: bucket geo does not have the tooltip bucket. Instead
-             *     it duplicates then here logic in chart transform
-             *
-             * 2.  The executeVisualization endpoint is useless for GeoChart; cannot be used to render geo chart because
-             *     the buckets stored in vis object are not complete. execVisualization takes buckets as is.
-             */
-            const tooltipText: string = supportedControls?.["tooltipText"];
-            const bucket = this.createVirtualBucketFromLocationAttribute(
-                insight,
-                BucketNames.TOOLTIP_TEXT,
-                tooltipText,
-                "tooltipText_df",
-            );
-            if (bucket) {
-                buckets.push(bucket);
-            }
-        }
         if (!this.backendCapabilities.supportsSeparateLatitudeLongitudeLabels) {
             return buckets;
         }

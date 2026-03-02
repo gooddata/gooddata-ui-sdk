@@ -111,37 +111,38 @@ export function CatalogDetailHeader({
                     </div>
                     {canEdit ? (
                         <div className="gd-analytics-catalog-detail__card__header__row">
-                            <div className="gd-analytics-catalog-detail__card__header__row__subtitle gd-analytics-catalog-detail__card__header__row__subtitle--with-action">
-                                <span className="gd-analytics-catalog-detail__card__header__row__subtitle-label">
-                                    <FormattedMessage id="analyticsCatalog.catalogItem.description" />
-                                </span>
+                            <div className="gd-analytics-catalog-detail__card__header__row__subtitle">
+                                <FormattedMessage id="analyticsCatalog.catalogItem.description" />
+                            </div>
+                            <div className="gd-analytics-catalog-detail__card__header__row__content">
                                 {canGenerateDescription ? (
                                     <CatalogDetailGenerateDescription
+                                        key={item.identifier}
+                                        ref={descriptionRef}
                                         item={item}
                                         onApplyDescription={updateItemDescription}
                                     />
-                                ) : null}
-                            </div>
-                            <div className="gd-analytics-catalog-detail__card__header__row__content">
-                                <EditableLabel
-                                    ref={descriptionRef}
-                                    maxRows={9999}
-                                    ariaLabel={intl.formatMessage({
-                                        id: "analyticsCatalog.catalogItem.description",
-                                    })}
-                                    placeholder={intl.formatMessage({
-                                        id: "analyticsCatalog.catalogItem.description.add",
-                                    })}
-                                    isEditableLabelWidthBasedOnText
-                                    onSubmit={updateItemDescription}
-                                    value={item.description}
-                                >
-                                    {item.description ||
-                                        intl.formatMessage({
+                                ) : (
+                                    <EditableLabel
+                                        ref={descriptionRef}
+                                        maxRows={9999}
+                                        ariaLabel={intl.formatMessage({
+                                            id: "analyticsCatalog.catalogItem.description",
+                                        })}
+                                        placeholder={intl.formatMessage({
                                             id: "analyticsCatalog.catalogItem.description.add",
                                         })}
-                                    <i className="gd-icon-pencil" />
-                                </EditableLabel>
+                                        isEditableLabelWidthBasedOnText
+                                        onSubmit={updateItemDescription}
+                                        value={item.description}
+                                    >
+                                        {item.description ||
+                                            intl.formatMessage({
+                                                id: "analyticsCatalog.catalogItem.description.add",
+                                            })}
+                                        <i className="gd-icon-pencil" />
+                                    </EditableLabel>
+                                )}
                             </div>
                         </div>
                     ) : (

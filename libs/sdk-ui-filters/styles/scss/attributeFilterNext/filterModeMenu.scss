@@ -1,0 +1,122 @@
+// (C) 2007-2026 GoodData Corporation
+@use "@gooddata/sdk-ui-kit/styles/scss/variables";
+
+.gd-filter-mode-menu {
+    &__button {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 32px;
+        height: 32px;
+    }
+
+    &__button--icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        padding: 0;
+
+        .gd-ui-kit-icon-button {
+            width: 32px;
+            height: 32px;
+            min-width: 32px;
+            border-radius: var(--gd-button-borderRadius, 3px);
+        }
+
+        // Hover state per design (Gray 200 / complementary-2)
+        &:hover .gd-ui-kit-icon-button {
+            background-color: var(--gd-palette-complementary-2, #ebeff4);
+        }
+
+        // Active state when menu is open or button is pressed (complementary-3)
+        &.is-active .gd-ui-kit-icon-button,
+        &:active .gd-ui-kit-icon-button {
+            background-color: var(--gd-palette-complementary-3, #dde4eb);
+        }
+    }
+
+    &__dropdown {
+        width: var(--tooltipWidth-x, 160px);
+        max-height: 400px;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        box-shadow: 0 2px 20px 0 rgba(20, 56, 93, 0.2);
+        border-radius: var(--gd-button-borderRadius, 3px);
+        padding: 6px 0;
+    }
+
+    &__section {
+        display: flex;
+        align-items: center;
+        padding: 10px 10px 0;
+    }
+
+    &__section-label {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        color: var(--gd-palette-complementary-6, #94a1ad);
+        font-size: 10px;
+        line-height: 16px;
+        text-transform: uppercase;
+        font-family: variables.$gd-font-primary;
+    }
+
+    &__section-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 20px;
+        height: 20px;
+        padding: 5px;
+    }
+
+    &__item.gd-list-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding: 5px 5px 5px 10px;
+        border: none;
+        background: none;
+        font-size: 12px;
+        line-height: 18px;
+        color: var(--gd-palette-complementary-8, #464e56);
+        text-align: left;
+        cursor: pointer;
+        font-family: variables.$gd-font-primary;
+
+        // Title/text on the left, check icon on the right
+        > *:not(.gd-filter-mode-menu__item-check) {
+            flex: 1 1 auto;
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        &:hover {
+            background-color: var(--gd-palette-complementary-1, #f5f8fa);
+        }
+
+        &.is-selected {
+            background-color: transparent;
+            font-weight: 600;
+            color: var(--gd-palette-primary-base, variables.$gd-color-highlight);
+        }
+        .gd-filter-mode-menu__item-check {
+            flex: 0 0 auto;
+            margin-left: auto;
+            margin-right: 5px;
+            color: var(--gd-palette-primary-base, variables.$gd-color-highlight);
+            aspect-ratio: 1 / 1;
+        }
+    }
+
+    &__divider {
+        height: 1px;
+        margin: 4px 0;
+        background-color: var(--gd-palette-complementary-3, #dde4eb);
+    }
+}

@@ -7,6 +7,7 @@ import { applyViewport } from "../../map/viewport/viewportCalculation.js";
 import { computeViewportFromConfig, getViewportConfigKey } from "../../map/viewport/viewportResolution.js";
 import type { IGeoChartConfig } from "../../types/config/unified.js";
 import type { IMapViewport } from "../../types/map/provider.js";
+import { prefersReducedMotion } from "../../utils/prefersReducedMotion.js";
 
 /**
  * Applies configured viewport whenever the viewport-related config changes.
@@ -54,6 +55,6 @@ export function useApplyViewportOnConfigChange(
         if (!viewportToApply) {
             return;
         }
-        applyViewport(map, viewportToApply, true);
+        applyViewport(map, viewportToApply, !prefersReducedMotion());
     }, [map, isMapReady, configKey, config, dataViewport]);
 }

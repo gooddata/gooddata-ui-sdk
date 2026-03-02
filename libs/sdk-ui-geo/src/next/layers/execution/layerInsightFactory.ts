@@ -1,4 +1,6 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
+
+import { isEqual } from "lodash-es";
 
 import {
     type IBucket,
@@ -49,4 +51,26 @@ export function sanitizeLayerFilters(filters?: INullableFilter[]): IFilter[] {
  */
 export function sanitizeGlobalFilters(filters?: INullableFilter[]): INullableFilter[] {
     return (filters ?? []).filter((filter): filter is INullableFilter => Boolean(filter));
+}
+
+/**
+ * Removes global filters that are exact duplicates of layer filters.
+ *
+ * @remarks
+ * Layer filters are part of the synthetic layer insight; global filters are passed separately
+ * to `forInsight(...)`. Exact duplicates in both arrays would otherwise be concatenated by
+ * generic filter merge logic and cause avoidable execution fingerprint drift.
+ *
+ * @internal
+ */
+export function sanitizeDeduplicatedGlobalFilters(
+    layerFilters?: INullableFilter[],
+    globalFilters?: INullableFilter[],
+): INullableFilter[] {
+    const sanitizedLayerFilters = sanitizeLayerFilters(layerFilters);
+    const sanitizedGlobalFilters = sanitizeGlobalFilters(globalFilters);
+
+    return sanitizedGlobalFilters.filter(
+        (globalFilter) => !sanitizedLayerFilters.some((layerFilter) => isEqual(layerFilter, globalFilter)),
+    );
 }

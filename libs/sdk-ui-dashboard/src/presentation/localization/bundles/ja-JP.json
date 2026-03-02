@@ -762,7 +762,7 @@
     "kdaDialog.dialog.keyDrives.button.trendUp": "増加",
     "kdaDialog.dialog.keyDrives.button.trendDown": "減少",
     "kdaDialog.dialog.keyDrives.button.trendAll": "すべて",
-    "kdaDialog.dialog.keyDrives.drivers": "{count} 件のドライバー",
+    "kdaDialog.dialog.keyDrives.drivers": "{count} {count, plural, other {ドライバー}}",
     "kdaDialog.dialog.keyDrives.overview.summary.home": "まとめ",
     "kdaDialog.dialog.keyDrives.overview.summary.home.tooltip": "分析概要に移動",
     "kdaDialog.dialog.keyDrives.overview.summary.breadcrumb.label": "主要ドライバー分析のナビゲーション",

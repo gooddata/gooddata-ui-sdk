@@ -4,7 +4,7 @@ import { useCallback, useRef, useState } from "react";
 
 import { debounce, isEmpty } from "lodash-es";
 
-import { type IAnalyticalBackend, type IInsightsQueryOptions } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend, type IFilterBaseOptions } from "@gooddata/sdk-backend-spi";
 import { type IInsight } from "@gooddata/sdk-model";
 import { type ITab } from "@gooddata/sdk-ui-kit";
 
@@ -28,6 +28,8 @@ export interface IUsePagedDropdownConfig {
     workspaceId: string;
     author: string | undefined;
     tabsIds: ITabsIds;
+    tags?: string[];
+    excludeTags?: string[];
 }
 
 /**
@@ -60,12 +62,16 @@ export interface IUsePagedDropdownResult {
     resetItems: () => void;
 }
 
+const DEFAULT_INSIGHT_SORT = ["modifiedAt,createdAt,title,desc"];
+
 /**
  * Hook to fetch insights paged list
  * @param backend - analytical backend
  * @param workspaceId - workspace id
  * @param author - author
  * @param tabsIds - tabs ids
+ * @param tags - fetch only the insights with these tags
+ * @param excludeTags - omit insights with these tags during fetch
  * @returns useInsightPagedList result
  *
  * @internal
@@ -75,6 +81,8 @@ export function useInsightPagedList({
     workspaceId,
     author,
     tabsIds,
+    tags,
+    excludeTags,
 }: IUsePagedDropdownConfig): IUsePagedDropdownResult {
     const [items, setItems] = useState<IInsight[]>([]);
     const [totalItemsCount, setTotalItemsCount] = useState<number | undefined>(undefined);
@@ -118,15 +126,33 @@ export function useInsightPagedList({
             }
 
             try {
-                const options: IInsightsQueryOptions = {
-                    limit: ITEMS_PER_PAGE,
-                    offset: page * ITEMS_PER_PAGE,
-                    title: searchValue || undefined,
-                    author: tabId === tabsIds.my && isEmpty(searchValue) ? author : undefined,
-                    orderBy: "updated",
+                const query = backend
+                    .workspace(workspaceId)
+                    .insights()
+                    .getInsightsQuery()
+                    .withSize(ITEMS_PER_PAGE)
+                    .withPage(page)
+                    .withSorting(DEFAULT_INSIGHT_SORT);
+
+                const searchedTitle = searchValue || undefined;
+                const searchedAuthor = tabId === tabsIds.my && isEmpty(searchValue) ? author : undefined;
+
+                if (searchedAuthor) {
+                    query.withInclude(["createdBy", "modifiedBy"]);
+                }
+
+                const filter: IFilterBaseOptions = {
+                    ...((tags?.length ?? 0) > 0 ? { tags } : {}),
+                    ...((excludeTags?.length ?? 0) > 0 ? { excludeTags } : {}),
+                    ...(searchedTitle ? { title: searchedTitle } : {}),
+                    ...(searchedAuthor ? { createdBy: [searchedAuthor] } : {}),
                 };
 
-                const result = await backend.workspace(workspaceId).insights().getInsights(options);
+                if (Object.keys(filter).length > 0) {
+                    query.withFilter(filter);
+                }
+
+                const result = await query.query();
 
                 // Check if THIS request was aborted (using captured signal, not current ref)
                 if (currentSignal.aborted) {
@@ -149,11 +175,24 @@ export function useInsightPagedList({
                     if (tabId === tabsIds.my && result.totalCount === 0) {
                         setSelectedTabId(tabsIds.all);
                         // Fetch all insights immediately
-                        const allResult = await backend.workspace(workspaceId).insights().getInsights({
-                            limit: ITEMS_PER_PAGE,
-                            offset: 0,
-                            orderBy: "updated",
-                        });
+                        const allQuery = backend
+                            .workspace(workspaceId)
+                            .insights()
+                            .getInsightsQuery()
+                            .withSize(ITEMS_PER_PAGE)
+                            .withPage(0)
+                            .withSorting(DEFAULT_INSIGHT_SORT);
+
+                        const allFilter: IFilterBaseOptions = {
+                            ...((tags?.length ?? 0) > 0 ? { tags } : {}),
+                            ...((excludeTags?.length ?? 0) > 0 ? { excludeTags } : {}),
+                        };
+
+                        if (Object.keys(allFilter).length > 0) {
+                            allQuery.withFilter(allFilter);
+                        }
+
+                        const allResult = await allQuery.query();
 
                         if (!currentSignal.aborted) {
                             setItems(allResult.items);
@@ -175,7 +214,7 @@ export function useInsightPagedList({
                 }
             }
         },
-        [backend, workspaceId, author, tabsIds],
+        [backend, workspaceId, author, tabsIds, tags, excludeTags],
     );
 
     const loadNextPage = useCallback(() => {

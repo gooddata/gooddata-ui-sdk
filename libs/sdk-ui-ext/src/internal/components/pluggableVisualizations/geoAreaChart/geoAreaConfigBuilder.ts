@@ -1,5 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
+import { type ISettings } from "@gooddata/sdk-model";
 import { type IGeoAreaChartConfig } from "@gooddata/sdk-ui-geo";
 import { type IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 
@@ -10,6 +11,7 @@ interface IBuildAreaVisualizationConfigParams {
     supportedControls: IVisualizationProperties;
     colorMapping: IColorMapping[] | undefined;
     environment: string;
+    featureFlags?: ISettings;
 }
 
 interface IGeoAreaControls {
@@ -33,8 +35,9 @@ export function buildAreaVisualizationConfig({
     supportedControls,
     colorMapping,
     environment: _environment,
+    featureFlags,
 }: IBuildAreaVisualizationConfigParams): IGeoAreaChartConfig {
-    const { config = {} } = options;
+    const { config = {}, a11yTitle } = options;
     const { colorPalette, separators, maxZoomLevel: configMaxZoomLevel, isInEditMode, isExportMode } = config;
     const controls = (supportedControls.controls ?? supportedControls ?? {}) as IGeoAreaControls;
     const { legend = {}, viewport = {}, mapStyle, maxZoomLevel: controlsMaxZoomLevel, tileset } = controls;
@@ -51,7 +54,7 @@ export function buildAreaVisualizationConfig({
         },
     };
 
-    return {
+    const areaConfig = {
         isExportMode,
         separators,
         colorPalette,
@@ -64,5 +67,9 @@ export function buildAreaVisualizationConfig({
         mapStyle,
         tileset,
         maxZoomLevel,
+        a11yTitle,
+        enableGeoChartA11yImprovements: featureFlags?.["enableGeoChartA11yImprovements"] ?? false,
     };
+
+    return areaConfig;
 }

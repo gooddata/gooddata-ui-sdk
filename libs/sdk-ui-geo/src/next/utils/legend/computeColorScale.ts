@@ -11,6 +11,10 @@ import { type ILegendColorScaleItem } from "../../types/legend/model.js";
  */
 const DEFAULT_NUMERIC_SYMBOLS = ["k", "M", "G", "T", "P", "E"];
 
+export interface IComputeColorScaleOptions {
+    allowFlatScale?: boolean;
+}
+
 /**
  * Computes color scale item from measure data.
  *
@@ -30,6 +34,7 @@ export function computeColorScale(
     format: string,
     numericSymbols?: string[],
     baseColor?: string,
+    options?: IComputeColorScaleOptions,
 ): ILegendColorScaleItem | null {
     const validData = colorData.filter(Number.isFinite);
     if (validData.length === 0) {
@@ -38,9 +43,10 @@ export function computeColorScale(
 
     const min = Math.min(...validData);
     const max = Math.max(...validData);
+    const allowFlatScale = options?.allowFlatScale ?? false;
 
     // If all values are the same, don't show a scale
-    if (min === max) {
+    if (min === max && !allowFlatScale) {
         return null;
     }
 

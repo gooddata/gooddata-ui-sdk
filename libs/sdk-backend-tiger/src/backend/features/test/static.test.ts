@@ -33,6 +33,7 @@ describe("static features", () => {
                 [TigerFeaturesNames.EnableMetricSqlAndDataExplain]: "ENABLED",
                 [TigerFeaturesNames.EnableSqlDatasets]: "TRUE",
                 [TigerFeaturesNames.EnableCompositeGrain]: "TRUE",
+                [TigerFeaturesNames.EnableGeoChartA11yImprovements]: "TRUE",
             }),
         );
         expect(results).toEqual({
@@ -40,6 +41,7 @@ describe("static features", () => {
             enableMetricSqlAndDataExplain: true,
             enableSqlDatasets: true,
             enableCompositeGrain: true,
+            enableGeoChartA11yImprovements: true,
         });
     });
 
@@ -51,6 +53,7 @@ describe("static features", () => {
                     [TigerFeaturesNames.EnableMetricSqlAndDataExplain]: "ENABLED",
                     [TigerFeaturesNames.EnableSqlDatasets]: "TRUE",
                     [TigerFeaturesNames.EnableCompositeGrain]: "TRUE",
+                    [TigerFeaturesNames.EnableGeoChartA11yImprovements]: "TRUE",
                 },
                 ["beta"],
             ),
@@ -60,6 +63,7 @@ describe("static features", () => {
             enableMetricSqlAndDataExplain: true,
             enableSqlDatasets: true,
             enableCompositeGrain: true,
+            enableGeoChartA11yImprovements: true,
         });
     });
 });

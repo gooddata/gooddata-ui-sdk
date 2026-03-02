@@ -1,0 +1,54 @@
+{
+    "count": [20],
+    "data": [],
+    "headerItems": [
+        [
+            [
+                { "attributeHeaderItem": { "name": "34.4285", "uri": "1840021829" } },
+                { "attributeHeaderItem": { "name": "36.6883", "uri": "1840021632" } },
+                { "attributeHeaderItem": { "name": "36.9789", "uri": "1840021579" } },
+                { "attributeHeaderItem": { "name": "37.3012", "uri": "1840021570" } },
+                { "attributeHeaderItem": { "name": "37.7558", "uri": "1840021543" } },
+                { "attributeHeaderItem": { "name": "38.4458", "uri": "1840021488" } },
+                { "attributeHeaderItem": { "name": "38.5677", "uri": "1840021491" } },
+                { "attributeHeaderItem": { "name": "40.0077", "uri": "1840000673" } },
+                { "attributeHeaderItem": { "name": "40.6943", "uri": "1840034016" } },
+                { "attributeHeaderItem": { "name": "41.1918", "uri": "1840004836" } },
+                { "attributeHeaderItem": { "name": "41.695", "uri": "1840000500" } },
+                { "attributeHeaderItem": { "name": "41.7661", "uri": "1840004773" } },
+                { "attributeHeaderItem": { "name": "41.823", "uri": "1840003289" } },
+                { "attributeHeaderItem": { "name": "42.3188", "uri": "1840000455" } },
+                { "attributeHeaderItem": { "name": "42.7491", "uri": "1840002984" } },
+                { "attributeHeaderItem": { "name": "44.0564", "uri": "1840020007" } },
+                { "attributeHeaderItem": { "name": "44.9233", "uri": "1840021224" } },
+                { "attributeHeaderItem": { "name": "45.5371", "uri": "1840019941" } },
+                { "attributeHeaderItem": { "name": "45.6366", "uri": "1840021189" } },
+                { "attributeHeaderItem": { "name": "47.6211", "uri": "1840021117" } }
+            ],
+            [
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "attributeHeaderItem": { "name": "East Coast", "uri": "East Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } },
+                { "attributeHeaderItem": { "name": "West Coast", "uri": "West Coast" } }
+            ]
+        ]
+    ],
+    "offset": [0],
+    "totalCount": [20]
+}

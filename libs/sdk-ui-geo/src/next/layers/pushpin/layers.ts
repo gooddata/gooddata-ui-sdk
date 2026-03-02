@@ -66,7 +66,11 @@ const DEFAULT_CLUSTER_POINT_SIZES: ExpressionSpecification = [
  */
 export const UNCLUSTER_FILTER: ExpressionSpecification = ["!", ["has", "point_count"]];
 
-const UNCLUSTER_COLOR: ExpressionSpecification = ["get", "background", ["get", "color"]];
+const UNCLUSTER_COLOR: ExpressionSpecification = [
+    "coalesce",
+    ["get", "color_background"],
+    "rgba(20,178,226,0.7)",
+];
 
 /**
  * Helper function to calculate point size in geometric progression

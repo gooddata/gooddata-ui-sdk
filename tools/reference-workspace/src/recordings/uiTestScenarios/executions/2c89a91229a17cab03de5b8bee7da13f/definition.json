@@ -1,0 +1,28 @@
+{
+    "attributes": [
+        {
+            "attribute": {
+                "displayForm": { "identifier": "f_city.id.latitude", "type": "displayForm" },
+                "localIdentifier": "a_f_city.id.latitude"
+            }
+        }
+    ],
+    "buckets": [
+        {
+            "items": [
+                {
+                    "attribute": {
+                        "displayForm": { "identifier": "f_city.id.latitude", "type": "displayForm" },
+                        "localIdentifier": "a_f_city.id.latitude"
+                    }
+                }
+            ],
+            "localIdentifier": "location"
+        }
+    ],
+    "dimensions": [{ "itemIdentifiers": ["a_f_city.id.latitude"] }],
+    "filters": [],
+    "measures": [],
+    "sortBy": [],
+    "workspace": "reference-workspace"
+}

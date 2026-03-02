@@ -2,6 +2,39 @@
 
 /* oxlint-disable no-barrel-files/no-barrel-files */
 
+import type { AxiosInstance, AxiosPromise, AxiosRequestConfig } from "axios";
+
+import {
+    type ActionsApiAiChatHistoryRequest,
+    type ActionsApiAiChatRequest,
+    type ActionsApiAiChatStreamRequest,
+    type ActionsApiAiSearchRequest,
+    type ActionsApiCreatedByRequest,
+    type ActionsApiGetQualityIssuesRequest,
+    type ActionsApiMemoryCreatedByUsersRequest,
+    type ActionsApiTagsRequest,
+    type ActionsApiTestLlmProviderByIdRequest,
+    type ActionsApiTestLlmProviderRequest,
+    type ActionsApiTriggerQualityIssuesCalculationRequest,
+    type ActionsApiValidateLLMEndpointByIdRequest,
+    type ActionsApiValidateLLMEndpointRequest,
+    ActionsApi_AiChat,
+    ActionsApi_AiChatHistory,
+    ActionsApi_AiChatStream,
+    ActionsApi_AiSearch,
+    ActionsApi_CreatedBy,
+    ActionsApi_GetQualityIssues,
+    ActionsApi_GetQualityIssuesCalculationStatus,
+    ActionsApi_MemoryCreatedByUsers,
+    ActionsApi_Tags,
+    ActionsApi_TestLlmProvider,
+    ActionsApi_TestLlmProviderById,
+    ActionsApi_TriggerQualityIssuesCalculation,
+    ActionsApi_ValidateLLMEndpoint,
+    ActionsApi_ValidateLLMEndpointById,
+    type TrendingObjectsResult,
+} from "../../generated/afm-rest-api/index.js";
+
 // GenAI API - Export GenAI-related ActionsApi functions with GenAiApi_ prefix
 export {
     ActionsApi_AiSearch as GenAiApi_AiSearch,
@@ -27,4 +60,28 @@ export {
     type ActionsApiCreatedByRequest as GenAiApiCreatedByRequest,
     ActionsApi_MemoryCreatedByUsers as GenAiApi_MemoryCreatedByUsers,
     type ActionsApiMemoryCreatedByUsersRequest as GenAiApiMemoryCreatedByUsersRequest,
-} from "../../generated/afm-rest-api/index.js";
+    ActionsApi_TestLlmProvider as GenAiApi_TestLlmProvider,
+    type ActionsApiTestLlmProviderRequest as GenAiApiTestLlmProviderRequest,
+    ActionsApi_TestLlmProviderById as GenAiApi_TestLlmProviderById,
+    type ActionsApiTestLlmProviderByIdRequest as GenAiApiTestLlmProviderByIdRequest,
+};
+
+export type GenAiApiTrendingObjectsRequest = {
+    readonly workspaceId: string;
+};
+
+export async function GenAiApi_TrendingObjects(
+    axios: AxiosInstance,
+    basePath: string,
+    requestParameters: GenAiApiTrendingObjectsRequest,
+    options: AxiosRequestConfig = {},
+): Promise<AxiosPromise<TrendingObjectsResult>> {
+    const workspaceId = encodeURIComponent(String(requestParameters.workspaceId));
+    const url = `${basePath}/api/v1/actions/workspaces/${workspaceId}/ai/analyticsCatalog/trendingObjects`;
+
+    return axios.request<TrendingObjectsResult>({
+        ...options,
+        method: "GET",
+        url,
+    });
+}
