@@ -15,6 +15,7 @@ import type {
     MapOptions,
     Popup,
 } from "../../layers/common/mapFacade.js";
+import { type IGeoChartViewportNavigation } from "../../types/config/viewport.js";
 import { type IMapOptions } from "../../types/map/provider.js";
 import { type IMapLibreLocale } from "../../utils/mapLocale.js";
 import { fetchMapStyle } from "../style/styleEndpoint.js";
@@ -62,6 +63,8 @@ export async function initializeMapLibreMap(
         dragRotate,
         pitchWithRotate,
         touchZoomRotate,
+        navigation,
+        enableGeoChartsViewportConfig = false,
         preserveDrawingBuffer = false,
         cooperativeGestures = true,
         maxZoom,
@@ -90,6 +93,7 @@ export async function initializeMapLibreMap(
         ...interactionOptions,
         style: styleSpecification,
         container,
+        ...getNavigationOptions(navigation, interactionOptions),
         cooperativeGestures,
         preserveDrawingBuffer,
         ...(cooperativeGestures && locale ? { locale } : {}),
@@ -110,11 +114,22 @@ export async function initializeMapLibreMap(
     } else if (center) {
         const mapCenter: LngLatLike = [center.lng, center.lat];
         mapOptions.center = mapCenter;
-    } else if (zoom) {
+        if (enableGeoChartsViewportConfig && typeof zoom === "number") {
+            mapOptions.zoom = zoom;
+        }
+    } else if (typeof zoom === "number") {
         mapOptions.zoom = zoom;
     }
 
     const map = new maplibregl.Map(mapOptions);
+    if (
+        navigation !== undefined &&
+        interactionOptions.interactive &&
+        (navigation?.zoom ?? true) &&
+        mapOptions.touchZoomRotate !== false
+    ) {
+        map.touchZoomRotate.disableRotation();
+    }
     const tooltip = new maplibregl.Popup(DEFAULT_TOOLTIP_OPTIONS);
 
     return new Promise<IMapInitResult>((resolve, reject) => {
@@ -166,6 +181,41 @@ interface IMapErrorEvent {
     error?: {
         message?: string;
     };
+}
+
+function getNavigationOptions(
+    navigation: IGeoChartViewportNavigation | undefined,
+    interactionOptions: IMapInteractionOptions,
+): Partial<MapOptions> {
+    if (!interactionOptions.interactive) {
+        return {};
+    }
+
+    const isPanEnabled = navigation?.pan ?? true;
+    const isZoomEnabled = navigation?.zoom ?? true;
+    const navigationOptions: Partial<MapOptions> = {};
+
+    // Keep native MapLibre defaults when enabled; override only disabled capabilities.
+    if (!isPanEnabled) {
+        navigationOptions.dragPan = false;
+    }
+
+    if (!isZoomEnabled) {
+        navigationOptions.scrollZoom = false;
+        navigationOptions.doubleClickZoom = false;
+        navigationOptions.boxZoom = false;
+        navigationOptions.touchZoomRotate = false;
+    } else if (interactionOptions.touchZoomRotate !== false) {
+        // Preserve explicit touch override when provided (defaults remain untouched otherwise).
+        navigationOptions.touchZoomRotate = interactionOptions.touchZoomRotate;
+    }
+
+    // Keyboard controls include both pan and zoom, so disable them when either is turned off.
+    if (!isPanEnabled || !isZoomEnabled) {
+        navigationOptions.keyboard = false;
+    }
+
+    return navigationOptions;
 }
 
 function getMaplibreErrorMessage(event: IMapErrorEvent): string {

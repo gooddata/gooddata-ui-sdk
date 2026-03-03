@@ -837,6 +837,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableGeoChartsViewportConfig,
+            "enableGeoChartsViewportConfig",
+            "BOOLEAN",
+            FeatureFlagsValues.enableGeoChartsViewportConfig,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableGeoBasemapConfig,
             "enableGeoBasemapConfig",
             "BOOLEAN",

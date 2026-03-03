@@ -41,6 +41,7 @@ import {
     sanitizeMeasures,
 } from "./geoPushpinBucketHelper.js";
 import { BUCKETS } from "../../../constants/bucket.js";
+import { isGeoChartsViewportConfigEnabled } from "../../../constants/featureFlags.js";
 import { GEOPUSHPIN_NEXT_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 import { GEO_PUSHPIN_CHART_UICONFIG } from "../../../constants/uiConfig.js";
 import {
@@ -60,6 +61,7 @@ import { removeSort } from "../../../utils/sort.js";
 import { setGeoPushpinUiConfig } from "../../../utils/uiConfigHelpers/geoPushpinChartUiConfigHelper.js";
 import { GeoPushpinConfigurationPanel } from "../../configurationPanels/GeoPushpinConfigurationPanel.js";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
+import { LiveMapViewTracker } from "../geoCommon/liveMapViewTracking.js";
 
 type GeoChartNextExecutionProps = Parameters<typeof GeoChartInternal>[0];
 
@@ -80,6 +82,7 @@ const NUMBER_MEASURES_IN_BUCKETS_LIMIT = 2;
 export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
     private backend: IAnalyticalBackend;
     private workspace: string;
+    private liveMapView = new LiveMapViewTracker();
 
     constructor(props: IVisConstruct) {
         super(props);
@@ -293,6 +296,8 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
 
     protected override renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): void {
         const configPanelElement = this.getConfigPanelElement();
+        const isViewportConfigEnabled = isGeoChartsViewportConfigEnabled(this.featureFlags);
+        this.liveMapView.resetIfInsightChanged(insight);
 
         if (configPanelElement) {
             this.renderFun(
@@ -310,6 +315,7 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
                     featureFlags={this.featureFlags}
                     permissions={this.permissions}
                     configurationPanelRenderers={options.custom?.configurationPanelRenderers}
+                    getCurrentMapView={isViewportConfigEnabled ? this.getCurrentMapView : undefined}
                 />,
                 configPanelElement,
             );
@@ -350,6 +356,8 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
         if (!ctx) {
             return;
         }
+        this.liveMapView.resetIfInsightChanged(insight);
+        const isViewportConfigEnabled = isGeoChartsViewportConfigEnabled(this.featureFlags);
         const { config: configWithResolvedTooltip } = ctx;
         const primaryExecution = this.getExecution(options, insight, executionFactory);
         const additionalLayerExecutions = this.getExecutions(options, insight, executionFactory) ?? [];
@@ -370,6 +378,8 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
             onExportReady: this.onExportReady,
             onLoadingChanged: this.onLoadingChanged,
             onDrill: this.onDrill,
+            onCenterPositionChanged: isViewportConfigEnabled ? this.handleCenterPositionChanged : undefined,
+            onZoomChanged: isViewportConfigEnabled ? this.handleZoomChanged : undefined,
         };
 
         this.renderFun(<GeoChartInternal {...geoChartProps} />, this.getElement());
@@ -458,4 +468,8 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
             ...insightControls,
         };
     }
+
+    private handleCenterPositionChanged = this.liveMapView.handleCenterPositionChanged;
+    private handleZoomChanged = this.liveMapView.handleZoomChanged;
+    private getCurrentMapView = () => this.liveMapView.getCurrentMapView(this.visualizationProperties);
 }

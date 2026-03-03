@@ -24,3 +24,4 @@ export {
     geoLayerToInsightLayer,
     geoLayersToInsightLayers,
 } from "../next/utils/layerConversion.js";
+export { isConcreteViewportPreset } from "../next/types/config/viewport.js";

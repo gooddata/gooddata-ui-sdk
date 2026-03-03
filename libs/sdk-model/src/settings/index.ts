@@ -653,6 +653,11 @@ export interface ISettings {
     enableGeoChartA11yImprovements?: boolean;
 
     /**
+     * Enables viewport configuration for geo charts (custom viewport + pan/zoom navigation controls).
+     */
+    enableGeoChartsViewportConfig?: boolean;
+
+    /**
      * Enable basemap selection in geo chart configuration.
      */
     enableGeoBasemapConfig?: boolean;

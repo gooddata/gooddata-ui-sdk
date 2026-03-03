@@ -116,6 +116,8 @@ export interface IGeoAreaChartBaseProps extends IGeoSingleLayerWrapperProps {
 export interface IGeoAreaChartConfig {
     // @internal
     a11yTitle?: string;
+    // @internal
+    applyViewportNavigation?: boolean;
     // (undocumented)
     areas?: IGeoAreasConfig;
     // (undocumented)
@@ -132,6 +134,8 @@ export interface IGeoAreaChartConfig {
     enableExecutionCancelling?: boolean;
     // @internal
     enableGeoChartA11yImprovements?: boolean;
+    // @internal
+    enableGeoChartsViewportConfig?: boolean;
     // (undocumented)
     isExportMode?: boolean;
     // (undocumented)
@@ -178,6 +182,8 @@ export interface IGeoAttributeItem extends IGeoDataItem {
 export interface IGeoChartConfig {
     // @internal
     a11yTitle?: string;
+    // @internal
+    applyViewportNavigation?: boolean;
     areas?: IGeoAreasConfig;
     center?: IGeoLngLat;
     colorMapping?: IColorMapping[];
@@ -187,6 +193,8 @@ export interface IGeoChartConfig {
     enableExecutionCancelling?: boolean;
     // @internal
     enableGeoChartA11yImprovements?: boolean;
+    // @internal
+    enableGeoChartsViewportConfig?: boolean;
     isExportMode?: boolean;
     legend?: IGeoChartLegendConfig;
     limit?: number;
@@ -305,10 +313,17 @@ export interface IGeoChartRendererProps extends WrappedComponentProps {
 export interface IGeoChartViewport {
     area?: IGeoChartViewportArea;
     frozen?: boolean;
+    navigation?: IGeoChartViewportNavigation;
 }
 
 // @public
-export type IGeoChartViewportArea = "auto" | "continent_af" | "continent_as" | "continent_au" | "continent_eu" | "continent_na" | "continent_sa" | "world";
+export type IGeoChartViewportArea = "auto" | "custom" | "continent_af" | "continent_as" | "continent_au" | "continent_eu" | "continent_na" | "continent_sa" | "world";
+
+// @public
+export interface IGeoChartViewportNavigation {
+    pan?: boolean;
+    zoom?: boolean;
+}
 
 // @public
 export interface IGeoCommonExecutionProps extends IVisualizationProps, IVisualizationCallbacks {
@@ -492,6 +507,8 @@ export interface IGeoPushpinChartBaseProps extends IGeoSingleLayerWrapperProps {
 export interface IGeoPushpinChartConfig {
     // @internal
     a11yTitle?: string;
+    // @internal
+    applyViewportNavigation?: boolean;
     // (undocumented)
     center?: IGeoLngLat;
     // (undocumented)
@@ -506,6 +523,8 @@ export interface IGeoPushpinChartConfig {
     enableExecutionCancelling?: boolean;
     // @internal
     enableGeoChartA11yImprovements?: boolean;
+    // @internal
+    enableGeoChartsViewportConfig?: boolean;
     // (undocumented)
     isExportMode?: boolean;
     // (undocumented)

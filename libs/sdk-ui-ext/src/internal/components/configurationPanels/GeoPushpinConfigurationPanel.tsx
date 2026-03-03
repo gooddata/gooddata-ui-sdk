@@ -15,7 +15,10 @@ import { BucketNames } from "@gooddata/sdk-ui";
 import type { GeoTileset } from "@gooddata/sdk-ui-geo";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
-import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";
+import {
+    ConfigurationPanelContent,
+    type IConfigurationPanelContentProps,
+} from "./ConfigurationPanelContent.js";
 import { messages } from "../../../locales.js";
 import {
     BUBBLE_ARROW_OFFSET_X,
@@ -23,15 +26,21 @@ import {
     HIDE_DELAY_DEFAULT,
     SHOW_DELAY_DEFAULT,
 } from "../../constants/bubble.js";
+import { isGeoBasemapConfigEnabled, isGeoChartsViewportConfigEnabled } from "../../constants/featureFlags.js";
+import { BasemapDropdownControl } from "../configurationControls/BasemapDropdownControl.js";
 import { CheckboxControl } from "../configurationControls/CheckboxControl.js";
 import { ColorsSection } from "../configurationControls/colors/ColorsSection.js";
 import { ConfigSection } from "../configurationControls/ConfigSection.js";
-import { DropdownControl } from "../configurationControls/DropdownControl.js";
+import { type ICurrentMapView } from "../configurationControls/GeoViewportControl.js";
 import { LegendSection } from "../configurationControls/legend/LegendSection.js";
 import { PushpinSizeControl } from "../configurationControls/PushpinSizeControl.js";
 import { PushpinViewportControl } from "../configurationControls/PushpinViewportControl.js";
 
-export class GeoPushpinConfigurationPanel extends ConfigurationPanelContent {
+interface IGeoPushpinConfigurationPanelProps extends IConfigurationPanelContentProps {
+    getCurrentMapView?: () => ICurrentMapView;
+}
+
+export class GeoPushpinConfigurationPanel extends ConfigurationPanelContent<IGeoPushpinConfigurationPanelProps> {
     protected getControlProperties(): { groupNearbyPoints: boolean; tileset: GeoTileset } {
         const groupNearbyPoints = this.props.properties?.controls?.["points"]?.groupNearbyPoints ?? true;
         const tileset = (this.props.properties?.controls?.["tileset"] as GeoTileset | undefined) ?? "default";
@@ -62,7 +71,8 @@ export class GeoPushpinConfigurationPanel extends ConfigurationPanelContent {
         const { properties, propertiesMeta, pushData, featureFlags } = this.props;
         const { tileset } = this.getControlProperties();
         const isControlDisabled = this.isControlDisabled();
-        const isBasemapConfigEnabled = !!featureFlags?.["enableGeoBasemapConfig"];
+        const isBasemapConfigEnabled = isGeoBasemapConfigEnabled(featureFlags);
+        const isViewportConfigEnabled = isGeoChartsViewportConfigEnabled(featureFlags);
         return (
             <ConfigSection
                 id="map_section"
@@ -75,22 +85,21 @@ export class GeoPushpinConfigurationPanel extends ConfigurationPanelContent {
                     properties={properties}
                     disabled={isControlDisabled}
                     pushData={pushData}
+                    getCurrentMapView={isViewportConfigEnabled ? this.props.getCurrentMapView : undefined}
+                    beforeNavigationContent={
+                        isBasemapConfigEnabled ? (
+                            <BasemapDropdownControl
+                                valuePath="tileset"
+                                labelText={messages["basemapTitle"].id}
+                                properties={properties}
+                                value={tileset}
+                                disabled={isControlDisabled}
+                                showDisabledMessage={isControlDisabled}
+                                pushData={pushData}
+                            />
+                        ) : null
+                    }
                 />
-                {isBasemapConfigEnabled ? (
-                    <DropdownControl
-                        valuePath="tileset"
-                        labelText={messages["basemapTitle"].id}
-                        properties={properties}
-                        value={tileset}
-                        items={[
-                            { title: "Default", value: "default" },
-                            { title: "Satellite", value: "satellite" },
-                        ]}
-                        disabled={isControlDisabled}
-                        showDisabledMessage={isControlDisabled}
-                        pushData={pushData}
-                    />
-                ) : null}
             </ConfigSection>
         );
     }

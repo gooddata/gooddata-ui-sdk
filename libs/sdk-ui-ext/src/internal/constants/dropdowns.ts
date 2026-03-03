@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { CalculateAs, ComparisonPositionValues } from "@gooddata/sdk-ui-charts";
 
@@ -16,8 +16,17 @@ export const pushpinSizeDropdownItems: IDropdownItem[] = [
 ];
 
 export const pushpinViewportDropdownItems: IDropdownItem[] = [
-    { title: messages["areaAutoDefault"].id, value: "auto" },
+    {
+        title: messages["areaAutoDefault"].id,
+        value: "auto",
+        info: messages["areaAutoDefaultInfo"].id,
+    },
     { title: messages["areaWorld"].id, value: "world" },
+    {
+        title: messages["areaCustom"].id,
+        value: "custom",
+        info: messages["areaCustomInfo"].id,
+    },
     { type: "header", title: "properties.viewport.area.continents" },
     { title: messages["areaContinent_af"].id, value: "continent_af" },
     { title: messages["areaContinent_na"].id, value: "continent_na" },
@@ -25,6 +34,11 @@ export const pushpinViewportDropdownItems: IDropdownItem[] = [
     { title: messages["areaContinent_as"].id, value: "continent_as" },
     { title: messages["areaContinent_au"].id, value: "continent_au" },
     { title: messages["areaContinent_eu"].id, value: "continent_eu" },
+];
+
+export const basemapDropdownItems: IDropdownItem[] = [
+    { title: messages["basemapDefault"].id, value: "default" },
+    { title: messages["basemapSatellite"].id, value: "satellite" },
 ];
 
 export const rotationDropdownItems: IDropdownItem[] = [

@@ -76,6 +76,7 @@ export type { IGeoCommonExecutionProps, IGeoSingleLayerWrapperProps } from "./ne
 export type { IGeoChartLegendConfig } from "./next/types/config/legend.js";
 export {
     isValidViewportArea,
+    type IGeoChartViewportNavigation,
     type IGeoChartViewport,
     type IGeoChartViewportArea,
 } from "./next/types/config/viewport.js";

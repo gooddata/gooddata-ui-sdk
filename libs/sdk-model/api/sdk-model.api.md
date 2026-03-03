@@ -4148,6 +4148,7 @@ export interface ISettings {
     enableGeoArea?: boolean;
     enableGeoBasemapConfig?: boolean;
     enableGeoChartA11yImprovements?: boolean;
+    enableGeoChartsViewportConfig?: boolean;
     enableHeadlineExport?: boolean;
     enableHighchartsAccessibility?: boolean;
     enableIgnoreCrossFiltering?: boolean;

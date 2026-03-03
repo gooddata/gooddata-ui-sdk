@@ -5,11 +5,11 @@ import { type IGeoLngLat } from "../../types/common/coordinates.js";
 import type { IGeoChartViewportArea } from "../../types/config/viewport.js";
 
 /**
- * Viewport preset keys (everything except the special "auto" value).
+ * Viewport preset keys (everything except the special "auto" and "custom" values).
  *
  * @internal
  */
-type ViewportPresetKey = Exclude<IGeoChartViewportArea, "auto">;
+type ViewportPresetKey = Exclude<IGeoChartViewportArea, "auto" | "custom">;
 
 /**
  * Bounds format used by our preset table.

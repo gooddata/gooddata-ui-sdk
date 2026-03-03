@@ -37,6 +37,7 @@ import {
 } from "./geoAreaBucketHelper.js";
 import { buildAreaVisualizationConfig } from "./geoAreaConfigBuilder.js";
 import { BUCKETS } from "../../../constants/bucket.js";
+import { isGeoChartsViewportConfigEnabled } from "../../../constants/featureFlags.js";
 import { GEOAREA_SUPPORTED_PROPERTIES } from "../../../constants/supportedProperties.js";
 import { GEO_AREA_CHART_UICONFIG } from "../../../constants/uiConfig.js";
 import {
@@ -56,6 +57,7 @@ import { removeSort } from "../../../utils/sort.js";
 import { setGeoAreaUiConfig } from "../../../utils/uiConfigHelpers/geoAreaChartUiConfigHelper.js";
 import { GeoAreaConfigurationPanel } from "../../configurationPanels/GeoAreaConfigurationPanel.js";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
+import { LiveMapViewTracker } from "../geoCommon/liveMapViewTracking.js";
 
 type GeoChartNextExecutionProps = Parameters<typeof GeoChartInternal>[0];
 
@@ -74,6 +76,7 @@ const NUMBER_MEASURES_IN_BUCKETS_LIMIT = 1;
 export class PluggableGeoAreaChart extends PluggableBaseChart {
     private backend: IAnalyticalBackend;
     private workspace: string;
+    private liveMapView = new LiveMapViewTracker();
 
     constructor(props: IVisConstruct) {
         super(props);
@@ -229,6 +232,8 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
 
     protected override renderConfigurationPanel(insight: IInsightDefinition, options: IVisProps): void {
         const configPanelElement = this.getConfigPanelElement();
+        const isViewportConfigEnabled = isGeoChartsViewportConfigEnabled(this.featureFlags);
+        this.liveMapView.resetIfInsightChanged(insight);
 
         if (configPanelElement) {
             this.renderFun(
@@ -246,6 +251,7 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
                     featureFlags={this.featureFlags}
                     permissions={this.permissions}
                     configurationPanelRenderers={options.custom?.configurationPanelRenderers}
+                    getCurrentMapView={isViewportConfigEnabled ? this.getCurrentMapView : undefined}
                 />,
                 configPanelElement,
             );
@@ -281,6 +287,8 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
         if (!ctx) {
             return;
         }
+        this.liveMapView.resetIfInsightChanged(insight);
+        const isViewportConfigEnabled = isGeoChartsViewportConfigEnabled(this.featureFlags);
         const { config } = ctx;
         const primaryExecution = this.getExecution(options, insight, executionFactory);
         const additionalLayerExecutions = this.getExecutions(options, insight, executionFactory) ?? [];
@@ -302,6 +310,8 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
             onExportReady: this.onExportReady,
             onLoadingChanged: this.onLoadingChanged,
             onDrill: this.onDrill,
+            onCenterPositionChanged: isViewportConfigEnabled ? this.handleCenterPositionChanged : undefined,
+            onZoomChanged: isViewportConfigEnabled ? this.handleZoomChanged : undefined,
         };
 
         this.renderFun(<GeoChartInternal {...geoChartProps} />, this.getElement());
@@ -376,4 +386,8 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
         // Skip layers when latitude or longitude is missing
         return !layer.latitude || !layer.longitude;
     }
+
+    private handleCenterPositionChanged = this.liveMapView.handleCenterPositionChanged;
+    private handleZoomChanged = this.liveMapView.handleZoomChanged;
+    private getCurrentMapView = () => this.liveMapView.getCurrentMapView(this.visualizationProperties);
 }

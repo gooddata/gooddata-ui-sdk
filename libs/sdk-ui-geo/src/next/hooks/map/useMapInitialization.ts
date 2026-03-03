@@ -49,6 +49,39 @@ export interface IUseMapInitializationResult {
     error: Error | null;
 }
 
+interface INavigationConfig {
+    applyViewportNavigation: boolean;
+    pan: boolean;
+    zoom: boolean;
+}
+
+const ZOOM_IN_KEYS = new Set(["=", "+", "Add"]);
+const ZOOM_OUT_KEYS = new Set(["-", "_", "Subtract"]);
+const PAN_KEYS = new Set(["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"]);
+
+function isKeyboardZoomKey(event: KeyboardEvent): boolean {
+    return ZOOM_IN_KEYS.has(event.key) || ZOOM_OUT_KEYS.has(event.key);
+}
+
+function isKeyboardPanKey(event: KeyboardEvent): boolean {
+    // Shift + arrows is used by MapLibre for rotation/pitch, not pan.
+    return !event.shiftKey && PAN_KEYS.has(event.key);
+}
+
+function resolveInitialNavigationConfig(
+    applyViewportNavigation: boolean | undefined,
+    pan: boolean | undefined,
+    zoom: boolean | undefined,
+): INavigationConfig {
+    const shouldApplyViewportNavigation = applyViewportNavigation ?? true;
+
+    return {
+        applyViewportNavigation: shouldApplyViewportNavigation,
+        pan: shouldApplyViewportNavigation ? (pan ?? true) : true,
+        zoom: shouldApplyViewportNavigation ? (zoom ?? true) : true,
+    };
+}
+
 /**
  * Cleanup map resources
  *
@@ -119,6 +152,131 @@ function normalizeMapCanvasA11yDom(
     disableNonLegendTabStops(container, canvas, legend);
 }
 
+interface IMapA11ySetupParams {
+    container: HTMLDivElement;
+    map: Map;
+    mapInstanceRef: RefObject<Map | null>;
+    legendPanelRef?: RefObject<HTMLDivElement | null>;
+    mapCanvasTitle?: string;
+    mapInstructionsId?: string;
+    intl: ReturnType<typeof useIntl>;
+    isKeyboardInteractionEnabled: boolean;
+    isKeyboardRotationEnabled: boolean;
+    isKeyboardPanEnabled: boolean;
+    isKeyboardZoomEnabled: boolean;
+    isMountedRef: { current: boolean };
+}
+
+interface IMapA11ySetupResult {
+    handleFocus: (() => void) | null;
+    handleBlur: (() => void) | null;
+    handleKeyDown: ((event: KeyboardEvent) => void) | null;
+    observer: MutationObserver | null;
+    setObserverActive: (active: boolean) => void;
+}
+
+function setupMapA11y(params: IMapA11ySetupParams): IMapA11ySetupResult {
+    const {
+        container,
+        map,
+        mapInstanceRef,
+        legendPanelRef,
+        mapCanvasTitle,
+        mapInstructionsId,
+        intl,
+        isKeyboardInteractionEnabled,
+        isKeyboardRotationEnabled,
+        isKeyboardPanEnabled,
+        isKeyboardZoomEnabled,
+        isMountedRef,
+    } = params;
+
+    const canvas = map.getCanvas();
+    canvas.tabIndex = 0;
+    const label = mapCanvasTitle
+        ? intl.formatMessage({ id: "geochart.map.canvas.label" }, { title: mapCanvasTitle })
+        : intl.formatMessage({ id: "geochart.map.canvas.label.fallback" });
+    canvas.setAttribute("aria-label", label);
+    if (mapInstructionsId) {
+        canvas.setAttribute("aria-describedby", mapInstructionsId);
+    }
+
+    normalizeMapCanvasA11yDom(container, map, legendPanelRef?.current ?? null);
+
+    let isDomA11yObserverActive = false;
+    let observer: MutationObserver | null = null;
+    if (typeof MutationObserver !== "undefined") {
+        observer = new MutationObserver(() => {
+            if (!isMountedRef.current || !isDomA11yObserverActive || mapInstanceRef.current !== map) {
+                return;
+            }
+            normalizeMapCanvasA11yDom(container, map, legendPanelRef?.current ?? null);
+        });
+        isDomA11yObserverActive = true;
+        observer.observe(container, { childList: true, subtree: true });
+    }
+
+    map.keyboard.disable();
+
+    const handleFocus = () => {
+        if (isKeyboardInteractionEnabled) {
+            map.keyboard.enable();
+            if (!isKeyboardRotationEnabled) {
+                map.keyboard.disableRotation();
+            }
+        }
+    };
+    const handleBlur = () => {
+        map.keyboard.disable();
+    };
+    const handleKeyDown = (event: KeyboardEvent) => {
+        if (event.altKey || event.ctrlKey || event.metaKey) {
+            return;
+        }
+
+        const shouldBlockPan = !isKeyboardPanEnabled && isKeyboardPanKey(event);
+        const shouldBlockZoom = !isKeyboardZoomEnabled && isKeyboardZoomKey(event);
+        if (!shouldBlockPan && !shouldBlockZoom) {
+            return;
+        }
+
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+    };
+
+    canvas.addEventListener("focus", handleFocus);
+    canvas.addEventListener("blur", handleBlur);
+    canvas.addEventListener("keydown", handleKeyDown, true);
+
+    return {
+        handleFocus,
+        handleBlur,
+        handleKeyDown,
+        observer,
+        setObserverActive: (active: boolean) => {
+            isDomA11yObserverActive = active;
+        },
+    };
+}
+
+function cleanupMapA11y(canvas: HTMLCanvasElement | undefined, a11ySetup: IMapA11ySetupResult | null): void {
+    if (canvas && a11ySetup) {
+        if (a11ySetup.handleFocus) {
+            canvas.removeEventListener("focus", a11ySetup.handleFocus);
+        }
+        if (a11ySetup.handleBlur) {
+            canvas.removeEventListener("blur", a11ySetup.handleBlur);
+        }
+        if (a11ySetup.handleKeyDown) {
+            canvas.removeEventListener("keydown", a11ySetup.handleKeyDown, true);
+        }
+    }
+    a11ySetup?.setObserverActive(false);
+    a11ySetup?.observer?.takeRecords();
+    a11ySetup?.observer?.disconnect();
+}
+
 /**
  * Initialize map instance
  *
@@ -162,6 +320,11 @@ export function useMapInitialization(
     const [tooltip, setTooltip] = useState<IPopupFacade | null>(null);
     const [isMapReady, setIsMapReady] = useState(false);
     const [error, setError] = useState<Error | null>(null);
+    const isViewportConfigEnabled = config?.enableGeoChartsViewportConfig ?? false;
+    const applyViewportNavigation = config?.applyViewportNavigation;
+    const shouldApplyViewportNavigation = applyViewportNavigation ?? true;
+    const panNavigation = shouldApplyViewportNavigation ? config?.viewport?.navigation?.pan : undefined;
+    const zoomNavigation = shouldApplyViewportNavigation ? config?.viewport?.navigation?.zoom : undefined;
 
     const mapInstanceRef = useRef<Map | null>(null);
     const tooltipInstanceRef = useRef<Popup | null>(null);
@@ -171,6 +334,10 @@ export function useMapInitialization(
         zoom: initialViewport?.zoom ?? config?.zoom,
         bounds: initialViewport?.bounds,
     });
+    const navigationConfig = useMemo(
+        () => resolveInitialNavigationConfig(applyViewportNavigation, panNavigation, zoomNavigation),
+        [applyViewportNavigation, panNavigation, zoomNavigation],
+    );
 
     useEffect(() => {
         if (!mapInstanceRef.current) {
@@ -197,9 +364,19 @@ export function useMapInitialization(
     const tileset: GeoTileset = config?.tileset ?? "default";
     const isGeoChartA11yImprovementsEnabled = config?.enableGeoChartA11yImprovements ?? false;
     const { isKeyboardInteractionEnabled, isKeyboardRotationEnabled } = useMemo(
-        () => getMapCanvasRuntimeCapabilities(config, interactionOptions),
-        [config, interactionOptions],
+        () =>
+            getMapCanvasRuntimeCapabilities(
+                {
+                    viewport: {
+                        frozen: isViewportFrozen,
+                    },
+                },
+                interactionOptions,
+            ),
+        [isViewportFrozen, interactionOptions],
     );
+    const isKeyboardPanEnabled = !navigationConfig.applyViewportNavigation || navigationConfig.pan;
+    const isKeyboardZoomEnabled = !navigationConfig.applyViewportNavigation || navigationConfig.zoom;
 
     useEffect(() => {
         const container = containerRef.current;
@@ -207,11 +384,8 @@ export function useMapInitialization(
             return;
         }
 
-        let isMounted = true;
-        let handleFocus: (() => void) | null = null;
-        let handleBlur: (() => void) | null = null;
-        let domA11yObserver: MutationObserver | null = null;
-        let isDomA11yObserverActive = false;
+        const isMountedRef = { current: true };
+        let a11ySetup: IMapA11ySetupResult | null = null;
 
         initializeMapLibreMap(
             {
@@ -221,6 +395,13 @@ export function useMapInitialization(
                 zoom: initialViewportRef.current.zoom,
                 cooperativeGestures,
                 interactive: interactionOptions.interactive,
+                enableGeoChartsViewportConfig: isViewportConfigEnabled,
+                navigation: navigationConfig.applyViewportNavigation
+                    ? {
+                          pan: navigationConfig.pan,
+                          zoom: navigationConfig.zoom,
+                      }
+                    : undefined,
                 preserveDrawingBuffer: isExportMode,
                 maxZoom,
                 style: config?.mapStyle,
@@ -230,59 +411,25 @@ export function useMapInitialization(
             backend,
         )
             .then((result) => {
-                if (isMounted) {
+                if (isMountedRef.current) {
                     mapInstanceRef.current = result.map;
                     tooltipInstanceRef.current = result.tooltip;
 
                     if (isGeoChartA11yImprovementsEnabled) {
-                        const canvas = result.map.getCanvas();
-                        canvas.tabIndex = 0;
-                        const label = mapCanvasTitle
-                            ? intl.formatMessage(
-                                  { id: "geochart.map.canvas.label" },
-                                  { title: mapCanvasTitle },
-                              )
-                            : intl.formatMessage({ id: "geochart.map.canvas.label.fallback" });
-                        canvas.setAttribute("aria-label", label);
-                        if (mapInstructionsId) {
-                            canvas.setAttribute("aria-describedby", mapInstructionsId);
-                        }
-
-                        normalizeMapCanvasA11yDom(container, result.map, legendPanelRef?.current ?? null);
-                        if (typeof MutationObserver !== "undefined") {
-                            domA11yObserver = new MutationObserver(() => {
-                                if (
-                                    !isMounted ||
-                                    !isDomA11yObserverActive ||
-                                    mapInstanceRef.current !== result.map
-                                ) {
-                                    return;
-                                }
-                                normalizeMapCanvasA11yDom(
-                                    container,
-                                    result.map,
-                                    legendPanelRef?.current ?? null,
-                                );
-                            });
-                            isDomA11yObserverActive = true;
-                            domA11yObserver.observe(container, { childList: true, subtree: true });
-                        }
-
-                        result.map.keyboard.disable();
-
-                        handleFocus = () => {
-                            if (isKeyboardInteractionEnabled) {
-                                result.map.keyboard.enable();
-                                if (!isKeyboardRotationEnabled) {
-                                    result.map.keyboard.disableRotation();
-                                }
-                            }
-                        };
-                        handleBlur = () => {
-                            result.map.keyboard.disable();
-                        };
-                        canvas.addEventListener("focus", handleFocus);
-                        canvas.addEventListener("blur", handleBlur);
+                        a11ySetup = setupMapA11y({
+                            container,
+                            map: result.map,
+                            mapInstanceRef,
+                            legendPanelRef,
+                            mapCanvasTitle,
+                            mapInstructionsId,
+                            intl,
+                            isKeyboardInteractionEnabled,
+                            isKeyboardRotationEnabled,
+                            isKeyboardPanEnabled,
+                            isKeyboardZoomEnabled,
+                            isMountedRef,
+                        });
                     }
 
                     setMap(createMapFacade(result.map));
@@ -293,32 +440,18 @@ export function useMapInitialization(
                 }
             })
             .catch((err) => {
-                if (isMounted) {
+                if (isMountedRef.current) {
                     console.error("[useMapInitialization] Failed to initialize map:", err);
                     setError(err);
                 }
             });
 
         return () => {
-            isMounted = false;
+            isMountedRef.current = false;
             setIsMapReady(false);
 
-            // Clean up a11y focus/blur listeners
-            const canvas = mapInstanceRef.current?.getCanvas();
-            if (canvas) {
-                if (handleFocus) {
-                    canvas.removeEventListener("focus", handleFocus);
-                }
-                if (handleBlur) {
-                    canvas.removeEventListener("blur", handleBlur);
-                }
-            }
-            isDomA11yObserverActive = false;
-            domA11yObserver?.takeRecords();
-            domA11yObserver?.disconnect();
-            domA11yObserver = null;
+            cleanupMapA11y(mapInstanceRef.current?.getCanvas(), a11ySetup);
 
-            // Clean up resources
             cleanupMapResources(mapInstanceRef.current, tooltipInstanceRef.current);
             mapInstanceRef.current = null;
             tooltipInstanceRef.current = null;
@@ -328,9 +461,13 @@ export function useMapInitialization(
         config?.mapStyle,
         cooperativeGestures,
         interactionOptions,
+        isViewportConfigEnabled,
+        navigationConfig,
         isExportMode,
         isGeoChartA11yImprovementsEnabled,
         isKeyboardInteractionEnabled,
+        isKeyboardPanEnabled,
+        isKeyboardZoomEnabled,
         isKeyboardRotationEnabled,
         locale,
         backend,
