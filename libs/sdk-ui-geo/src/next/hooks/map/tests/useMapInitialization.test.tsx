@@ -49,6 +49,8 @@ const messages: Record<string, string> = {
     "geochart.map.canvas.label.fallback": "GeoChart map canvas",
     "geochart.map.canvas.instructions.panZoom":
         "Map canvas. Use arrow keys to pan. Use plus and minus to zoom. Press Tab to move to the next control.",
+    "geochart.map.canvas.instructions.zoomOnly":
+        "Map canvas. Use plus and minus to zoom. Press Tab to move to the next control.",
     "geochart.map.canvas.static": "Map is static. Keyboard navigation is disabled.",
 };
 
@@ -321,6 +323,138 @@ describe("useMapInitialization a11y", () => {
 
         expect(keyboardMock.enable).toHaveBeenCalledTimes(1);
         expect(keyboardMock.disableRotation).toHaveBeenCalledTimes(1);
+    });
+
+    it("blocks arrow-key pan when viewport navigation disables pan", async () => {
+        const noPanNavigationConfig: IGeoChartConfig = {
+            enableGeoChartA11yImprovements: true,
+            enableGeoChartsViewportConfig: true,
+            applyViewportNavigation: true,
+            viewport: {
+                navigation: {
+                    pan: false,
+                    zoom: true,
+                },
+            },
+        };
+
+        renderHook(
+            () =>
+                useMapInitialization(containerRef, noPanNavigationConfig, null, undefined, "instructions-id"),
+            {
+                wrapper,
+            },
+        );
+
+        await waitFor(() => {
+            expect(mapMock.canvas.tabIndex).toBe(0);
+        });
+
+        keyboardMock.enable.mockClear();
+        act(() => {
+            mapMock.canvas.dispatchEvent(new FocusEvent("focus"));
+        });
+        expect(keyboardMock.enable).toHaveBeenCalledTimes(1);
+
+        const arrowLeftEvent = new KeyboardEvent("keydown", { key: "ArrowLeft", cancelable: true });
+        const dispatchResult = mapMock.canvas.dispatchEvent(arrowLeftEvent);
+
+        expect(dispatchResult).toBe(false);
+        expect(arrowLeftEvent.defaultPrevented).toBe(true);
+    });
+
+    it("blocks plus/minus zoom keys when viewport navigation disables zoom", async () => {
+        const noZoomNavigationConfig: IGeoChartConfig = {
+            enableGeoChartA11yImprovements: true,
+            enableGeoChartsViewportConfig: true,
+            applyViewportNavigation: true,
+            viewport: {
+                navigation: {
+                    pan: true,
+                    zoom: false,
+                },
+            },
+        };
+
+        renderHook(
+            () =>
+                useMapInitialization(
+                    containerRef,
+                    noZoomNavigationConfig,
+                    null,
+                    undefined,
+                    "instructions-id",
+                ),
+            {
+                wrapper,
+            },
+        );
+
+        await waitFor(() => {
+            expect(mapMock.canvas.tabIndex).toBe(0);
+        });
+
+        keyboardMock.enable.mockClear();
+        act(() => {
+            mapMock.canvas.dispatchEvent(new FocusEvent("focus"));
+        });
+        expect(keyboardMock.enable).toHaveBeenCalledTimes(1);
+
+        const plusEvent = new KeyboardEvent("keydown", { key: "+", cancelable: true });
+        const dispatchResult = mapMock.canvas.dispatchEvent(plusEvent);
+
+        expect(dispatchResult).toBe(false);
+        expect(plusEvent.defaultPrevented).toBe(true);
+    });
+
+    it("re-initializes map with updated navigation settings after config rerender", async () => {
+        const noPanNavigationConfig: IGeoChartConfig = {
+            enableGeoChartA11yImprovements: true,
+            enableGeoChartsViewportConfig: true,
+            applyViewportNavigation: true,
+            viewport: {
+                navigation: {
+                    pan: false,
+                    zoom: true,
+                },
+            },
+        };
+        const panEnabledNavigationConfig: IGeoChartConfig = {
+            ...noPanNavigationConfig,
+            viewport: {
+                navigation: {
+                    pan: true,
+                    zoom: true,
+                },
+            },
+        };
+
+        const { rerender } = renderHook(
+            ({ config }: { config: IGeoChartConfig }) =>
+                useMapInitialization(containerRef, config, null, undefined, "instructions-id"),
+            {
+                wrapper,
+                initialProps: { config: noPanNavigationConfig },
+            },
+        );
+
+        await waitFor(() => {
+            expect(initMock).toHaveBeenCalledTimes(1);
+        });
+        expect(initMock.mock.calls[0][0].navigation).toEqual({
+            pan: false,
+            zoom: true,
+        });
+
+        rerender({ config: panEnabledNavigationConfig });
+
+        await waitFor(() => {
+            expect(initMock).toHaveBeenCalledTimes(2);
+        });
+        expect(initMock.mock.calls[1][0].navigation).toEqual({
+            pan: true,
+            zoom: true,
+        });
     });
 
     it("disables keyboard on canvas blur", async () => {

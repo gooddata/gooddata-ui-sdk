@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
@@ -60,6 +60,87 @@ describe("PushpinViewportControl", () => {
                 },
             });
             expect(screen.getByText(expectedText)).toBeInTheDocument();
+        });
+
+        it("should render custom viewport item when current map view is provided", () => {
+            createComponent({
+                getCurrentMapView: () => ({
+                    center: { lat: 50.1, lng: 14.4 },
+                    zoom: 3,
+                }),
+                properties: {
+                    controls: {
+                        viewport: {
+                            area: "custom",
+                        },
+                    },
+                },
+            });
+
+            expect(screen.getByRole("combobox")).toHaveTextContent("Custom");
+        });
+
+        it("should keep auto viewport selected when navigation is set without area", () => {
+            createComponent({
+                properties: {
+                    controls: {
+                        viewport: {
+                            navigation: {
+                                pan: false,
+                            },
+                        },
+                    },
+                },
+            });
+
+            expect(screen.getByText("Include all data")).toBeInTheDocument();
+        });
+
+        it("should not render navigation toggles without current map view", () => {
+            createComponent();
+
+            expect(screen.queryByText("Navigation")).not.toBeInTheDocument();
+            expect(
+                screen.queryByRole("checkbox", { name: "viewport.navigation.pan" }),
+            ).not.toBeInTheDocument();
+            expect(
+                screen.queryByRole("checkbox", { name: "viewport.navigation.zoom" }),
+            ).not.toBeInTheDocument();
+        });
+
+        it("should render navigation toggles with default enabled values", () => {
+            createComponent({
+                getCurrentMapView: () => ({
+                    center: { lat: 50.1, lng: 14.4 },
+                    zoom: 3,
+                }),
+            });
+
+            expect(screen.getByRole("checkbox", { name: "viewport.navigation.pan" })).toBeChecked();
+            expect(screen.getByRole("checkbox", { name: "viewport.navigation.zoom" })).toBeChecked();
+        });
+
+        it("should render navigation toggles from viewport.navigation properties", () => {
+            createComponent({
+                getCurrentMapView: () => ({
+                    center: { lat: 50.1, lng: 14.4 },
+                    zoom: 3,
+                }),
+                properties: {
+                    controls: {
+                        viewport: {
+                            area: "auto",
+                            navigation: {
+                                pan: false,
+                                zoom: false,
+                            },
+                        },
+                    },
+                },
+            });
+
+            expect(screen.getByRole("checkbox", { name: "viewport.navigation.pan" })).not.toBeChecked();
+            expect(screen.getByRole("checkbox", { name: "viewport.navigation.zoom" })).not.toBeChecked();
         });
     });
 });

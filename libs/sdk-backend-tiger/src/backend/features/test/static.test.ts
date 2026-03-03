@@ -34,6 +34,8 @@ describe("static features", () => {
                 [TigerFeaturesNames.EnableSqlDatasets]: "TRUE",
                 [TigerFeaturesNames.EnableCompositeGrain]: "TRUE",
                 [TigerFeaturesNames.EnableGeoChartA11yImprovements]: "TRUE",
+                [TigerFeaturesNames.EnableGeoChartsViewportConfig]: "TRUE",
+                [TigerFeaturesNames.EnableGeoBasemapConfig]: "TRUE",
             }),
         );
         expect(results).toEqual({
@@ -42,6 +44,8 @@ describe("static features", () => {
             enableSqlDatasets: true,
             enableCompositeGrain: true,
             enableGeoChartA11yImprovements: true,
+            enableGeoChartsViewportConfig: true,
+            enableGeoBasemapConfig: true,
         });
     });
 
@@ -54,6 +58,8 @@ describe("static features", () => {
                     [TigerFeaturesNames.EnableSqlDatasets]: "TRUE",
                     [TigerFeaturesNames.EnableCompositeGrain]: "TRUE",
                     [TigerFeaturesNames.EnableGeoChartA11yImprovements]: "TRUE",
+                    [TigerFeaturesNames.EnableGeoChartsViewportConfig]: "TRUE",
+                    [TigerFeaturesNames.EnableGeoBasemapConfig]: "TRUE",
                 },
                 ["beta"],
             ),
@@ -64,6 +70,8 @@ describe("static features", () => {
             enableSqlDatasets: true,
             enableCompositeGrain: true,
             enableGeoChartA11yImprovements: true,
+            enableGeoChartsViewportConfig: true,
+            enableGeoBasemapConfig: true,
         });
     });
 });

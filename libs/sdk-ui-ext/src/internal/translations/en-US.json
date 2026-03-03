@@ -923,13 +923,33 @@
         "text": "Basemap",
         "crowdinContext": "Geo pushpin configuration: Label for selecting the basemap tileset."
     },
+    "properties.map.basemap.default": {
+        "text": "Default",
+        "crowdinContext": "Basemap tileset option: Default map style"
+    },
+    "properties.map.basemap.satellite": {
+        "text": "Satellite",
+        "crowdinContext": "Basemap tileset option: Satellite imagery"
+    },
     "properties.viewport.area.title": {
         "text": "Default viewport",
         "crowdinContext": "Default viewport configuration"
     },
     "properties.viewport.area.auto_default": {
         "text": "Include all data",
-        "crowdinContext": "All data will be visibled on the map"
+        "crowdinContext": "All data will be visible on the map"
+    },
+    "properties.viewport.area.auto_default.info": {
+        "text": "Fits the map to show all data.",
+        "crowdinContext": "Tooltip text for the 'Include all data' default viewport option"
+    },
+    "properties.viewport.area.custom": {
+        "text": "Custom",
+        "crowdinContext": "Viewport area option that saves current map zoom and center"
+    },
+    "properties.viewport.area.custom.info": {
+        "text": "Saves the current zoom and position as the default viewport.",
+        "crowdinContext": "Tooltip text for the custom viewport option"
     },
     "properties.viewport.area.continents": {
         "text": "continents",
@@ -962,6 +982,18 @@
     "properties.viewport.area.world": {
         "text": "World",
         "crowdinContext": "Viewport area option for global world map view"
+    },
+    "properties.viewport.navigation.title": {
+        "text": "Navigation",
+        "crowdinContext": "Section title for geo viewport navigation interaction controls"
+    },
+    "properties.viewport.navigation.pan": {
+        "text": "Pan",
+        "crowdinContext": "Toggle label for enabling/disabling map panning"
+    },
+    "properties.viewport.navigation.zoom": {
+        "text": "Zoom",
+        "crowdinContext": "Toggle label for enabling/disabling map zooming"
     },
     "gs.color-dropdown.custom-color": {
         "text": "Custom color",

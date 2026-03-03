@@ -35,7 +35,7 @@ describe("PluggableGeoAreaChart", () => {
     const backend = dummyBackend();
     const executionFactory = backend.workspace(PROJECT_ID).execution();
 
-    function createComponent(onError = vi.fn()) {
+    function createComponent(onError = vi.fn(), featureFlags?: IVisConstruct["featureFlags"]) {
         const props: IVisConstruct = {
             projectId: PROJECT_ID,
             element: () => mockElement,
@@ -46,6 +46,7 @@ describe("PluggableGeoAreaChart", () => {
                 onError,
             },
             backend,
+            featureFlags,
             visualizationProperties: {},
             renderFun: mockRenderFun,
             messages,
@@ -91,6 +92,111 @@ describe("PluggableGeoAreaChart", () => {
         expect(props.type).toBe("area");
         expect(props.execution?.context?.id).toBe(AREA_LAYER_ID);
         expect(props.executions).toEqual([]);
+    });
+
+    it("should preserve live viewport on rerender when viewport config is enabled", () => {
+        const { visualization } = createComponent(vi.fn(), {
+            enableGeoChartsViewportConfig: true,
+        });
+        const insightWithSavedViewport = newInsightDefinition(visualizationUrl, (builder) =>
+            builder
+                .title("area with saved viewport")
+                .buckets([
+                    newBucket(
+                        BucketNames.AREA,
+                        newAttribute("attr.country", (attribute) => attribute.localId("area")),
+                    ),
+                    newBucket(
+                        BucketNames.COLOR,
+                        newMeasure("m1", (m) => m.localId("m_color")),
+                    ),
+                ])
+                .properties({
+                    controls: {
+                        center: { lat: 40.71, lng: -74.0 },
+                        zoom: 3,
+                    },
+                }),
+        );
+
+        visualization.update({ messages }, insightWithSavedViewport, {}, executionFactory);
+
+        const firstChartCall = [...mockRenderFun.mock.calls]
+            .reverse()
+            .find(([node]) => (node as ReactElement)?.type === GeoChartInternal);
+        expect(firstChartCall).toBeDefined();
+        if (!firstChartCall) {
+            throw new Error("Missing GeoChartInternal render call.");
+        }
+
+        const firstChartProps = (firstChartCall[0] as ReactElement).props as {
+            onCenterPositionChanged?: (center: { lat: number; lng: number }) => void;
+            onZoomChanged?: (zoom: number) => void;
+        };
+        const liveCenter = { lat: 52.52, lng: 13.4 };
+        const liveZoom = 6;
+
+        firstChartProps.onCenterPositionChanged?.(liveCenter);
+        firstChartProps.onZoomChanged?.(liveZoom);
+
+        const insightWithUnrelatedControlChange = newInsightDefinition(visualizationUrl, (builder) =>
+            builder
+                .title("area with saved viewport")
+                .buckets([
+                    newBucket(
+                        BucketNames.AREA,
+                        newAttribute("attr.country", (attribute) => attribute.localId("area")),
+                    ),
+                    newBucket(
+                        BucketNames.COLOR,
+                        newMeasure("m1", (m) => m.localId("m_color")),
+                    ),
+                ])
+                .properties({
+                    controls: {
+                        center: { lat: 40.71, lng: -74.0 },
+                        zoom: 3,
+                        legend: {
+                            enabled: false,
+                        },
+                    },
+                }),
+        );
+
+        visualization.update(
+            {
+                messages,
+                config: {
+                    separators: {
+                        thousand: ",",
+                        decimal: ".",
+                    },
+                },
+            },
+            insightWithUnrelatedControlChange,
+            {},
+            executionFactory,
+        );
+
+        const configPanelCall = [...mockRenderFun.mock.calls].reverse().find(([node]) => {
+            const props = (node as ReactElement).props as {
+                getCurrentMapView?: () => { center?: { lat: number; lng: number }; zoom?: number };
+            };
+            return typeof props.getCurrentMapView === "function";
+        });
+        expect(configPanelCall).toBeDefined();
+        if (!configPanelCall) {
+            throw new Error("Missing configuration panel render call.");
+        }
+
+        const configPanelProps = (configPanelCall[0] as ReactElement).props as {
+            getCurrentMapView?: () => { center?: { lat: number; lng: number }; zoom?: number };
+        };
+
+        expect(configPanelProps.getCurrentMapView?.()).toEqual({
+            center: liveCenter,
+            zoom: liveZoom,
+        });
     });
 
     it("should surface GeoAreaMissingSdkError when AREA bucket is missing", () => {

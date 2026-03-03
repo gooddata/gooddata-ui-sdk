@@ -4,6 +4,7 @@ import type { GeoTileset } from "./tileset.js";
 import type { StyleSpecification } from "../../layers/common/mapFacade.js";
 import { type IGeoLngLat, type IGeoLngLatBounds } from "../common/coordinates.js";
 import { type IGeoPushpinChartConfig } from "../config/pushpinChart.js";
+import { type IGeoChartViewportNavigation } from "../config/viewport.js";
 
 /**
  * Configuration options for map initialization
@@ -30,6 +31,16 @@ export interface IMapOptions {
      * Initial bounds to fit the map to
      */
     bounds?: IGeoLngLatBounds;
+
+    /**
+     * Navigation interaction settings for pan and zoom.
+     */
+    navigation?: IGeoChartViewportNavigation;
+
+    /**
+     * Enables advanced geo viewport configuration behavior.
+     */
+    enableGeoChartsViewportConfig?: boolean;
 
     /**
      * Maximum zoom level allowed on the map (0-22).

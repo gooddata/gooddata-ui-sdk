@@ -187,6 +187,10 @@
         "text": "Map canvas. Use arrow keys to pan. Press Tab to move to the next control.",
         "crowdinContext": "Screen reader instructions for geo chart map keyboard usage when only pan shortcut is enabled."
     },
+    "geochart.map.canvas.instructions.zoomOnly": {
+        "text": "Map canvas. Use plus and minus to zoom. Press Tab to move to the next control.",
+        "crowdinContext": "Screen reader instructions for geo chart map keyboard usage when only zoom shortcut is enabled."
+    },
     "geochart.map.canvas.static": {
         "text": "Map is static. Keyboard navigation is disabled.",
         "crowdinContext": "Screen reader message when geo chart viewport is frozen and keyboard interactions are disabled."

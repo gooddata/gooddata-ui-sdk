@@ -25,6 +25,23 @@ describe("geoConfigFromInsight", () => {
 
         expect(config.mapStyle).toBe("gd://custom-style");
     });
+
+    it("keeps zoom configuration", () => {
+        const areaAttribute = newAttribute(idRef("label.area", "displayForm"), (attribute) =>
+            attribute.localId("area_df"),
+        );
+        const insight = newInsightDefinition("local:geoArea", (builder) =>
+            builder.buckets([newBucket(BucketNames.AREA, areaAttribute)]).properties({
+                controls: {
+                    zoom: 4,
+                },
+            }),
+        );
+
+        const config = geoConfigFromInsight(insight);
+
+        expect(config.zoom).toBe(4);
+    });
 });
 
 describe("geoInsightConversion", () => {

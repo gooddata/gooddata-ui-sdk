@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 @use "sass:color";
 @use "variables.scss";
 @use "@gooddata/sdk-ui-kit/styles/scss/colorPicker";
@@ -162,6 +162,56 @@ $color-picker-spacing: 5px;
 .gd-interactions-section.adi-bucket-configuration {
     padding-top: 16px;
     padding-bottom: 16px;
+}
+
+.gd-geo-viewport-control__navigation {
+    margin-top: 10px;
+}
+
+.gd-geo-viewport-control__navigation-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 2px;
+
+    .input-label-text {
+        margin: 0;
+        color: var(--gd-palette-complementary-6);
+        font-size: 11px;
+        line-height: 15px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+}
+
+.gd-geo-viewport-control__navigation-line {
+    flex: 1 1 auto;
+    border-top: 1px solid var(--gd-palette-complementary-3);
+}
+
+.gd-geo-viewport-control__navigation-options {
+    position: relative;
+    margin: 0 0 6px 6px;
+    padding-left: 14px;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 5px;
+        bottom: 5px;
+        left: 0;
+        border-left: 2px dashed var(--gd-palette-complementary-3);
+    }
+
+    .gd-bubble-trigger {
+        display: block;
+        padding: 3px 0;
+    }
+
+    .input-checkbox-label {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
 }
 
 .gd-interactions-section__control-with-tooltip {

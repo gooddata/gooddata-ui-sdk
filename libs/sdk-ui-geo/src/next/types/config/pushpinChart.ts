@@ -86,6 +86,20 @@ export interface IGeoPushpinChartConfig {
      */
     enableGeoChartA11yImprovements?: boolean;
 
+    /**
+     * Enables advanced geo viewport configuration.
+     *
+     * @internal
+     */
+    enableGeoChartsViewportConfig?: boolean;
+
+    /**
+     * Applies viewport navigation limits (pan/zoom locks) at runtime.
+     *
+     * @internal
+     */
+    applyViewportNavigation?: boolean;
+
     cooperativeGestures?: boolean;
     enableExecutionCancelling?: boolean;
     respectLegendPosition?: boolean;

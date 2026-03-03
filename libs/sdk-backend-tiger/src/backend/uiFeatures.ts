@@ -127,6 +127,7 @@ export enum TigerFeaturesNames {
     EnableNewGeoPushpin = "enableNewGeoPushpin",
     EnableGeoArea = "enableGeoArea",
     EnableGeoChartA11yImprovements = "enableGeoChartA11yImprovements",
+    EnableGeoChartsViewportConfig = "enableGeoChartsViewportConfig",
     EnableGeoBasemapConfig = "enableGeoBasemapConfig",
     EnableAutomationManagement = "enableAutomationManagement",
     EnableNewPdfTabularExport = "enableNewPdfTabularExport",
@@ -270,6 +271,7 @@ export type ITigerFeatureFlags = {
     enableNewGeoPushpin: (typeof FeatureFlagsValues)["enableNewGeoPushpin"][number];
     enableGeoArea: (typeof FeatureFlagsValues)["enableGeoArea"][number];
     enableGeoChartA11yImprovements: (typeof FeatureFlagsValues)["enableGeoChartA11yImprovements"][number];
+    enableGeoChartsViewportConfig: (typeof FeatureFlagsValues)["enableGeoChartsViewportConfig"][number];
     enableGeoBasemapConfig: (typeof FeatureFlagsValues)["enableGeoBasemapConfig"][number];
     enableAutomationManagement: (typeof FeatureFlagsValues)["enableAutomationManagement"][number];
     enableNewPdfTabularExport: (typeof FeatureFlagsValues)["enableNewPdfTabularExport"][number];
@@ -413,6 +415,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableNewGeoPushpin: true,
     enableGeoArea: true,
     enableGeoChartA11yImprovements: false,
+    enableGeoChartsViewportConfig: false,
     enableGeoBasemapConfig: false,
     enableAutomationManagement: true,
     enableNewPdfTabularExport: true,
@@ -557,6 +560,7 @@ export const FeatureFlagsValues = {
     enableNewGeoPushpin: [true, false] as const,
     enableGeoArea: [true, false] as const,
     enableGeoChartA11yImprovements: [true, false] as const,
+    enableGeoChartsViewportConfig: [true, false] as const,
     enableGeoBasemapConfig: [true, false] as const,
     enableAutomationManagement: [true, false] as const,
     enableNewPdfTabularExport: [true, false] as const,

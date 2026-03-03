@@ -42,7 +42,7 @@ describe("PluggableGeoPushpinChartNext", () => {
     const backend = dummyBackend();
     const executionFactory = backend.workspace(PROJECT_ID).execution();
 
-    function createComponent(onError = vi.fn()) {
+    function createComponent(onError = vi.fn(), featureFlags?: IVisConstruct["featureFlags"]) {
         const props: IVisConstruct = {
             projectId: PROJECT_ID,
             element: () => mockElement,
@@ -53,6 +53,7 @@ describe("PluggableGeoPushpinChartNext", () => {
                 onError,
             },
             backend,
+            featureFlags,
             visualizationProperties: {
                 controls: {
                     latitude: "latitude_df",
@@ -265,6 +266,115 @@ describe("PluggableGeoPushpinChartNext", () => {
         expect(props.execution).toBeDefined();
         expect(props.executions).toEqual([]);
         expect(props.execution?.context?.id).toBe(PUSHPIN_LAYER_ID);
+    });
+
+    it("should preserve live viewport on rerender when viewport config is enabled", () => {
+        const { visualization } = createComponent(vi.fn(), {
+            enableGeoChartsViewportConfig: true,
+        });
+        const insightWithSavedViewport = newInsightDefinition(visualizationUrl, (builder) =>
+            builder
+                .title("with saved viewport")
+                .buckets([
+                    newBucket(
+                        BucketNames.LOCATION,
+                        newAttribute("attr.region", (attribute) => attribute.localId("a1")),
+                    ),
+                    newBucket(
+                        BucketNames.SIZE,
+                        newMeasure("m1", (m) => m.localId("m_size")),
+                    ),
+                ])
+                .properties({
+                    controls: {
+                        latitude: "latitude_df",
+                        longitude: "longitude_df",
+                        center: { lat: 48.1, lng: 17.1 },
+                        zoom: 4,
+                    },
+                }),
+        );
+
+        visualization.update({ messages }, insightWithSavedViewport, {}, executionFactory);
+
+        const firstChartCall = [...mockRenderFun.mock.calls]
+            .reverse()
+            .find(([node]) => (node as ReactElement)?.type === GeoChartInternal);
+        expect(firstChartCall).toBeDefined();
+        if (!firstChartCall) {
+            throw new Error("Missing GeoChartInternal render call.");
+        }
+
+        const firstChartProps = (firstChartCall[0] as ReactElement).props as {
+            onCenterPositionChanged?: (center: { lat: number; lng: number }) => void;
+            onZoomChanged?: (zoom: number) => void;
+        };
+        const liveCenter = { lat: 50.09, lng: 14.42 };
+        const liveZoom = 7;
+
+        firstChartProps.onCenterPositionChanged?.(liveCenter);
+        firstChartProps.onZoomChanged?.(liveZoom);
+
+        const insightWithUnrelatedControlChange = newInsightDefinition(visualizationUrl, (builder) =>
+            builder
+                .title("with saved viewport")
+                .buckets([
+                    newBucket(
+                        BucketNames.LOCATION,
+                        newAttribute("attr.region", (attribute) => attribute.localId("a1")),
+                    ),
+                    newBucket(
+                        BucketNames.SIZE,
+                        newMeasure("m1", (m) => m.localId("m_size")),
+                    ),
+                ])
+                .properties({
+                    controls: {
+                        latitude: "latitude_df",
+                        longitude: "longitude_df",
+                        center: { lat: 48.1, lng: 17.1 },
+                        zoom: 4,
+                        legend: {
+                            enabled: false,
+                        },
+                    },
+                }),
+        );
+
+        visualization.update(
+            {
+                messages,
+                config: {
+                    separators: {
+                        thousand: ",",
+                        decimal: ".",
+                    },
+                },
+            },
+            insightWithUnrelatedControlChange,
+            {},
+            executionFactory,
+        );
+
+        const configPanelCall = [...mockRenderFun.mock.calls].reverse().find(([node]) => {
+            const props = (node as ReactElement).props as {
+                getCurrentMapView?: () => { center?: { lat: number; lng: number }; zoom?: number };
+            };
+            return typeof props.getCurrentMapView === "function";
+        });
+        expect(configPanelCall).toBeDefined();
+        if (!configPanelCall) {
+            throw new Error("Missing configuration panel render call.");
+        }
+
+        const configPanelProps = (configPanelCall[0] as ReactElement).props as {
+            getCurrentMapView?: () => { center?: { lat: number; lng: number }; zoom?: number };
+        };
+
+        expect(configPanelProps.getCurrentMapView?.()).toEqual({
+            center: liveCenter,
+            zoom: liveZoom,
+        });
     });
 
     it("should keep empty sort list when insight has no explicit sorts", () => {

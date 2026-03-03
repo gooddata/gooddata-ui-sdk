@@ -52,6 +52,17 @@ describe("mapCanvasAccessibility", () => {
         ).toBe("geochart.map.canvas.instructions.panOnly");
     });
 
+    it("returns zoom-only instruction when only zoom is enabled", () => {
+        expect(
+            getMapCanvasInstructionMessageId({
+                isStatic: false,
+                canPan: false,
+                canZoom: true,
+                canRotatePitch: false,
+            }),
+        ).toBe("geochart.map.canvas.instructions.zoomOnly");
+    });
+
     it("derives static map capabilities for frozen viewport", () => {
         expect(getMapCanvasRuntimeCapabilities({ viewport: { frozen: true } })).toEqual({
             isStatic: true,
@@ -92,6 +103,50 @@ describe("mapCanvasAccessibility", () => {
             canRotatePitch: true,
             isKeyboardInteractionEnabled: true,
             isKeyboardRotationEnabled: true,
+        });
+    });
+
+    it("respects viewport navigation pan toggle", () => {
+        expect(
+            getMapCanvasRuntimeCapabilities({
+                applyViewportNavigation: true,
+                viewport: {
+                    frozen: false,
+                    navigation: {
+                        pan: false,
+                        zoom: true,
+                    },
+                },
+            }),
+        ).toEqual({
+            isStatic: false,
+            canPan: false,
+            canZoom: true,
+            canRotatePitch: false,
+            isKeyboardInteractionEnabled: true,
+            isKeyboardRotationEnabled: false,
+        });
+    });
+
+    it("ignores viewport navigation toggles when applying viewport navigation is disabled", () => {
+        expect(
+            getMapCanvasRuntimeCapabilities({
+                applyViewportNavigation: false,
+                viewport: {
+                    frozen: false,
+                    navigation: {
+                        pan: false,
+                        zoom: false,
+                    },
+                },
+            }),
+        ).toEqual({
+            isStatic: false,
+            canPan: true,
+            canZoom: true,
+            canRotatePitch: false,
+            isKeyboardInteractionEnabled: true,
+            isKeyboardRotationEnabled: false,
         });
     });
 });

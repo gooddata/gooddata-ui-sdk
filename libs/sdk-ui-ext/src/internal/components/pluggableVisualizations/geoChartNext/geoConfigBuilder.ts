@@ -13,8 +13,10 @@ import {
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { type IGeoChartConfig } from "@gooddata/sdk-ui-geo";
+import { isConcreteViewportPreset } from "@gooddata/sdk-ui-geo/internal";
 import { type IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 
+import { isGeoChartsViewportConfigEnabled } from "../../../constants/featureFlags.js";
 import { ANALYTICAL_ENVIRONMENT, DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
 import { type IVisProps, type IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { type IEmbeddingCodeContext } from "../../../interfaces/VisualizationDescriptor.js";
@@ -43,11 +45,27 @@ export function buildGeoVisualizationConfig({
     featureFlags,
 }: IBuildGeoConfigParams): IGeoChartConfig {
     const { config = {}, customVisualizationConfig = {}, a11yTitle } = options;
-    const { center, legend, viewport = {} } = supportedControls;
+    const { center, zoom, legend, viewport = {}, ...restSupportedControls } = supportedControls;
     const { isInEditMode, isExportMode } = config;
+    const isViewportConfigEnabled = isGeoChartsViewportConfigEnabled(featureFlags);
+    const isPresetViewportAreaSelected = isConcreteViewportPreset(viewport.area);
+    const sanitizedViewport = isViewportConfigEnabled
+        ? viewport
+        : {
+              ...viewport,
+              area: viewport.area === "custom" ? "auto" : viewport.area,
+              navigation: undefined,
+          };
 
-    // Build center configuration if provided
-    const centerProp = center ? { center } : {};
+    // Preserve legacy center/zoom behavior when feature flag is off.
+    // With viewport config enabled, center/zoom represent "custom" viewport and must not override presets.
+    const shouldUseCenterAndZoom = !isViewportConfigEnabled || !isPresetViewportAreaSelected;
+    const centerAndZoomProp = shouldUseCenterAndZoom
+        ? {
+              ...(center ? { center } : {}),
+              ...(typeof zoom === "number" ? { zoom } : {}),
+          }
+        : {};
 
     // Build legend configuration
     let legendProp = legend ? { legend } : {};
@@ -64,7 +82,7 @@ export function buildGeoVisualizationConfig({
     // Build viewport configuration with frozen state during edit/export
     const viewportProp = {
         viewport: {
-            ...viewport,
+            ...sanitizedViewport,
             frozen: isInEditMode || isExportMode,
         },
     };
@@ -75,12 +93,18 @@ export function buildGeoVisualizationConfig({
         customVisualizationConfig?.cooperativeGestures === undefined
             ? isKDInViewMode
             : customVisualizationConfig.cooperativeGestures;
+    const applyViewportNavigation =
+        environment === DASHBOARDS_ENVIRONMENT
+            ? true
+            : environment === ANALYTICAL_ENVIRONMENT
+              ? false
+              : undefined;
 
     // Merge all configuration
     const geoConfig: IGeoChartConfig = {
-        ...supportedControls,
+        ...restSupportedControls,
         ...config,
-        ...centerProp,
+        ...centerAndZoomProp,
         ...legendProp,
         ...viewportProp,
         ...customVisualizationConfig,
@@ -90,6 +114,8 @@ export function buildGeoVisualizationConfig({
         cooperativeGestures,
         a11yTitle,
         enableGeoChartA11yImprovements: featureFlags?.["enableGeoChartA11yImprovements"] ?? false,
+        enableGeoChartsViewportConfig: isViewportConfigEnabled,
+        applyViewportNavigation,
     };
 
     return geoConfig;
@@ -97,6 +123,7 @@ export function buildGeoVisualizationConfig({
 
 const supportedGeoConfigProperties = new Set<keyof IGeoChartConfig>([
     "center",
+    "zoom",
     "cooperativeGestures",
     "legend",
     "limit",
@@ -106,7 +133,6 @@ const supportedGeoConfigProperties = new Set<keyof IGeoChartConfig>([
     "separators",
     "viewport",
     "points",
-    "showLabels",
     "showLabels",
 ]);
 
@@ -124,7 +150,8 @@ export function geoConfigFromInsight(
     return Object.fromEntries(
         Object.entries(withValuesFromContext).filter(
             ([key, value]) =>
-                supportedGeoConfigProperties.has(key as any) && !(value === null || value === undefined),
+                supportedGeoConfigProperties.has(key as keyof IGeoChartConfig) &&
+                !(value === null || value === undefined),
         ),
     ) as unknown as IGeoChartConfig;
 }

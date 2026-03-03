@@ -27,10 +27,14 @@ export interface IMapCanvasRuntimeCapabilities extends IMapCanvasInstructionCapa
  * @internal
  */
 export function getMapCanvasRuntimeCapabilities(
-    config?: Pick<IGeoChartConfig, "viewport">,
+    config?: Pick<IGeoChartConfig, "viewport" | "applyViewportNavigation">,
     interactionOverrides?: Partial<IMapInteractionOptions>,
 ): IMapCanvasRuntimeCapabilities {
     const isStatic = Boolean(config?.viewport?.frozen);
+    const shouldApplyViewportNavigation = config?.applyViewportNavigation !== false;
+    const canPanByNavigation = !shouldApplyViewportNavigation || (config?.viewport?.navigation?.pan ?? true);
+    const canZoomByNavigation =
+        !shouldApplyViewportNavigation || (config?.viewport?.navigation?.zoom ?? true);
     const interactionOptions = resolveMapInteractionOptions({
         interactive: !isStatic,
         ...interactionOverrides,
@@ -40,8 +44,8 @@ export function getMapCanvasRuntimeCapabilities(
 
     return {
         isStatic,
-        canPan: isKeyboardInteractionEnabled,
-        canZoom: isKeyboardInteractionEnabled,
+        canPan: isKeyboardInteractionEnabled && canPanByNavigation,
+        canZoom: isKeyboardInteractionEnabled && canZoomByNavigation,
         canRotatePitch: isKeyboardRotationEnabled,
         isKeyboardInteractionEnabled,
         isKeyboardRotationEnabled,
@@ -55,7 +59,8 @@ export type MapCanvasInstructionMessageId =
     | "geochart.map.canvas.static"
     | "geochart.map.canvas.instructions.panZoomRotatePitch"
     | "geochart.map.canvas.instructions.panZoom"
-    | "geochart.map.canvas.instructions.panOnly";
+    | "geochart.map.canvas.instructions.panOnly"
+    | "geochart.map.canvas.instructions.zoomOnly";
 
 export const mapCanvasInstructionMessagesById: Record<MapCanvasInstructionMessageId, MessageDescriptor> =
     defineMessages({
@@ -70,6 +75,9 @@ export const mapCanvasInstructionMessagesById: Record<MapCanvasInstructionMessag
         },
         "geochart.map.canvas.instructions.panOnly": {
             id: "geochart.map.canvas.instructions.panOnly",
+        },
+        "geochart.map.canvas.instructions.zoomOnly": {
+            id: "geochart.map.canvas.instructions.zoomOnly",
         },
     });
 
@@ -98,6 +106,10 @@ export function getMapCanvasInstructionMessageId({
 
     if (canPan) {
         return "geochart.map.canvas.instructions.panOnly";
+    }
+
+    if (canZoom) {
+        return "geochart.map.canvas.instructions.zoomOnly";
     }
 
     return "geochart.map.canvas.static";

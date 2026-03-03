@@ -125,6 +125,20 @@ export interface IGeoChartConfig {
     enableGeoChartA11yImprovements?: boolean;
 
     /**
+     * Enables advanced geo viewport configuration.
+     *
+     * @internal
+     */
+    enableGeoChartsViewportConfig?: boolean;
+
+    /**
+     * Applies viewport navigation limits (pan/zoom locks) at runtime.
+     *
+     * @internal
+     */
+    applyViewportNavigation?: boolean;
+
+    /**
      * Requires Ctrl/Cmd + scroll to zoom (helps inside scroll containers).
      */
     cooperativeGestures?: boolean;

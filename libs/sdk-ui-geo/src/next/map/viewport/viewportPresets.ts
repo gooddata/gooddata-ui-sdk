@@ -3,7 +3,7 @@
 import type { LngLatBoundsLike } from "../../layers/common/mapFacade.js";
 import { type IGeoLngLat, type IGeoLngLatBounds } from "../../types/common/coordinates.js";
 import { type IGeoPushpinChartConfig } from "../../types/config/pushpinChart.js";
-import { type IGeoChartViewport } from "../../types/config/viewport.js";
+import { type IGeoChartViewport, isConcreteViewportPreset } from "../../types/config/viewport.js";
 import { DEFAULT_CENTER, DEFAULT_WORLD_BOUNDS, DEFAULT_ZOOM, VIEWPORTS } from "../runtime/mapConfig.js";
 
 /**
@@ -32,7 +32,7 @@ export function getViewportOptions(data: IGeoLngLat[], config: IGeoPushpinChartC
     const { area }: IGeoChartViewport = config?.viewport ?? {};
 
     if (!center) {
-        if (area && area !== "auto") {
+        if (isConcreteViewportPreset(area)) {
             const [southWest, northEast] = VIEWPORTS[area];
             const bounds: LngLatBoundsLike = [southWest, northEast];
             return { bounds };

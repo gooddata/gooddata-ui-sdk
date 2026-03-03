@@ -8,6 +8,8 @@ export interface IPushpinViewportControl {
     disabled: boolean;
     properties: IGeoViewportControl["properties"];
     pushData: IGeoViewportControl["pushData"];
+    getCurrentMapView?: IGeoViewportControl["getCurrentMapView"];
+    beforeNavigationContent?: IGeoViewportControl["beforeNavigationContent"];
 }
 
 /**

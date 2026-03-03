@@ -31,7 +31,28 @@ export function useApplyViewportOnConfigChange(
     config: IGeoChartConfig | undefined,
     dataViewport: Partial<IMapViewport> | null,
 ): void {
-    const configKey = useMemo(() => getViewportConfigKey(config), [config]);
+    const hasConfig = config !== undefined;
+    const center = config?.center;
+    const zoom = config?.zoom;
+    const applyViewportNavigation = config?.applyViewportNavigation;
+    const area = config?.viewport?.area;
+
+    const viewportConfig = useMemo<IGeoChartConfig | undefined>(() => {
+        if (!hasConfig) {
+            return undefined;
+        }
+
+        return {
+            center,
+            zoom,
+            applyViewportNavigation,
+            viewport: {
+                area,
+            },
+        };
+    }, [hasConfig, center, zoom, applyViewportNavigation, area]);
+
+    const configKey = useMemo(() => getViewportConfigKey(viewportConfig), [viewportConfig]);
     const previousConfigKeyRef = useRef<string | null>(null);
 
     useEffect(() => {
@@ -51,10 +72,10 @@ export function useApplyViewportOnConfigChange(
             return;
         }
 
-        const viewportToApply = computeViewportFromConfig(config, dataViewport);
+        const viewportToApply = computeViewportFromConfig(viewportConfig, dataViewport);
         if (!viewportToApply) {
             return;
         }
         applyViewport(map, viewportToApply, !prefersReducedMotion());
-    }, [map, isMapReady, configKey, config, dataViewport]);
+    }, [map, isMapReady, configKey, viewportConfig, dataViewport]);
 }

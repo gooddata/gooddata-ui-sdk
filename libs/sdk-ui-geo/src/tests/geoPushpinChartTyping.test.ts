@@ -32,11 +32,9 @@ export type _hasMapboxToken = Assert<IsAssignable<"mapboxToken", keyof IGeoConfi
 export type _mapboxTokenIsOptional = Assert<IsOptional<IGeoConfig, "mapboxToken">>;
 
 // New MapLibre config types must remain backward compatible with the legacy config shape.
+// Compatibility here is one-way: legacy config must be accepted by the new config.
 export type _legacyConfigAssignableToNewPushpinConfig = Assert<
     IsAssignable<IGeoConfig, IGeoPushpinChartConfig>
->;
-export type _newPushpinConfigAssignableToLegacyConfig = Assert<
-    IsAssignable<IGeoPushpinChartConfig, IGeoConfig>
 >;
 export type _newPushpinConfigHasMapboxToken = Assert<
     IsAssignable<"mapboxToken", keyof IGeoPushpinChartConfig>

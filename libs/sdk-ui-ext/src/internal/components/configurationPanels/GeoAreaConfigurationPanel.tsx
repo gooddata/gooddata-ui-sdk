@@ -6,12 +6,20 @@ import { type IInsightDefinition, bucketIsEmpty, insightBucket } from "@gooddata
 import { BucketNames } from "@gooddata/sdk-ui";
 import type { GeoTileset } from "@gooddata/sdk-ui-geo";
 
-import { ConfigurationPanelContent } from "./ConfigurationPanelContent.js";
+import {
+    ConfigurationPanelContent,
+    type IConfigurationPanelContentProps,
+} from "./ConfigurationPanelContent.js";
 import { messages } from "../../../locales.js";
+import { isGeoBasemapConfigEnabled, isGeoChartsViewportConfigEnabled } from "../../constants/featureFlags.js";
+import { BasemapDropdownControl } from "../configurationControls/BasemapDropdownControl.js";
 import { ColorsSection } from "../configurationControls/colors/ColorsSection.js";
 import { ConfigSection } from "../configurationControls/ConfigSection.js";
-import { DropdownControl } from "../configurationControls/DropdownControl.js";
-import { GeoViewportControl } from "../configurationControls/GeoViewportControl.js";
+import { GeoViewportControl, type ICurrentMapView } from "../configurationControls/GeoViewportControl.js";
+
+interface IGeoAreaConfigurationPanelProps extends IConfigurationPanelContentProps {
+    getCurrentMapView?: () => ICurrentMapView;
+}
 
 /**
  * Configuration panel for GeoAreaChart
@@ -25,7 +33,7 @@ import { GeoViewportControl } from "../configurationControls/GeoViewportControl.
  *
  * @internal
  */
-export class GeoAreaConfigurationPanel extends ConfigurationPanelContent {
+export class GeoAreaConfigurationPanel extends ConfigurationPanelContent<IGeoAreaConfigurationPanelProps> {
     protected getControlProperties(): { tileset: GeoTileset } {
         const tileset = (this.props.properties?.controls?.["tileset"] as GeoTileset | undefined) ?? "default";
         return {
@@ -36,7 +44,8 @@ export class GeoAreaConfigurationPanel extends ConfigurationPanelContent {
     protected renderViewportSection(): ReactElement {
         const { properties, propertiesMeta, pushData, featureFlags } = this.props;
         const { tileset } = this.getControlProperties();
-        const isBasemapConfigEnabled = !!featureFlags?.["enableGeoBasemapConfig"];
+        const isBasemapConfigEnabled = isGeoBasemapConfigEnabled(featureFlags);
+        const isViewportConfigEnabled = isGeoChartsViewportConfigEnabled(featureFlags);
         return (
             <ConfigSection
                 id="map_section"
@@ -49,22 +58,21 @@ export class GeoAreaConfigurationPanel extends ConfigurationPanelContent {
                     properties={properties}
                     disabled={this.isControlDisabled()}
                     pushData={pushData}
+                    getCurrentMapView={isViewportConfigEnabled ? this.props.getCurrentMapView : undefined}
+                    beforeNavigationContent={
+                        isBasemapConfigEnabled ? (
+                            <BasemapDropdownControl
+                                valuePath="tileset"
+                                labelText={messages["basemapTitle"].id}
+                                properties={properties}
+                                value={tileset}
+                                disabled={this.isControlDisabled()}
+                                showDisabledMessage={this.isControlDisabled()}
+                                pushData={pushData}
+                            />
+                        ) : null
+                    }
                 />
-                {isBasemapConfigEnabled ? (
-                    <DropdownControl
-                        valuePath="tileset"
-                        labelText={messages["basemapTitle"].id}
-                        properties={properties}
-                        value={tileset}
-                        items={[
-                            { title: "Default", value: "default" },
-                            { title: "Satellite", value: "satellite" },
-                        ]}
-                        disabled={this.isControlDisabled()}
-                        showDisabledMessage={this.isControlDisabled()}
-                        pushData={pushData}
-                    />
-                ) : null}
             </ConfigSection>
         );
     }
