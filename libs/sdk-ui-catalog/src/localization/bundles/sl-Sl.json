@@ -94,12 +94,9 @@
     "analyticsCatalog.catalogItem.title.add": "Dodaj naslov…",
     "analyticsCatalog.catalogItem.description": "Opis",
     "analyticsCatalog.catalogItem.description.add": "Dodaj opis…",
-    "analyticsCatalog.catalogItem.description.generate": "Ustvari opis",
-    "analyticsCatalog.catalogItem.description.generate.dialog.title": "Ustvari opis",
-    "analyticsCatalog.catalogItem.description.generate.dialog.content": "Ta opis je ustvarila UI. Uporabite ustvarjeno besedilo kot izhodišče in ga pred uporabo preglejte.",
-    "analyticsCatalog.catalogItem.description.generate.dialog.accept": "Sprejmi",
-    "analyticsCatalog.catalogItem.description.generate.dialog.decline": "Zavrni",
-    "analyticsCatalog.catalogItem.description.generate.dialog.note": "Opomba",
+    "analyticsCatalog.catalogItem.description.generate": "Ustvari opis z AI",
+    "analyticsCatalog.catalogItem.description.generate.loading": "Ustvarjanje...",
+    "analyticsCatalog.catalogItem.description.generate.undo": "Razveljavi",
     "analyticsCatalog.catalogItem.description.generate.failed": "Opisa ni bilo mogoče ustvariti. Poskusite znova kasneje.",
     "analyticsCatalog.catalogItem.update.failed": "Neuspešen posodobitev kataloškega izdelka. Poskusite znova kasneje.",
     "analyticsCatalog.catalogItem.id": "Id",
@@ -152,5 +149,8 @@
     "metricComponent.metricType.label": "Vrsta metrike",
     "metricComponent.metricType.unspecified": "Nedoločeno",
     "metricComponent.metricType.currency": "Valuta",
-    "metricComponent.numberFormat.label": "Format števil"
+    "metricComponent.numberFormat.label": "Format števil",
+    "analyticsCatalog.tabs.recommended": "Priporočeno",
+    "analyticsCatalog.tabs.trending": "Trendi",
+    "analyticsCatalog.tabs.quality": "Kakovost"
 }

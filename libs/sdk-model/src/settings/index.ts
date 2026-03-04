@@ -785,6 +785,16 @@ export interface ISettings {
      */
     enableKDEmptyDateValuesFilter?: boolean;
 
+    /**
+     * Enable filter control in drilling configuration.
+     */
+    enableFilterControlInDrillingConfiguration?: boolean;
+
+    /**
+     * Enable shell application.
+     */
+    enableShellApplication?: boolean;
+
     [key: string]: number | boolean | string | object | undefined | null;
 }
 

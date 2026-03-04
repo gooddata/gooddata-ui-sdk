@@ -63,6 +63,7 @@ import {
     isDrillToAttributeUrlConfig,
     isDrillToUrlConfig,
 } from "../../../../drill/types.js";
+import { useDrillFiltersSubview } from "../DrillFilters/useDrillFiltersSubview.js";
 
 const messages = defineMessages({
     added: { id: "messages.drill.InteractionConfiguredSuccess" },
@@ -208,6 +209,11 @@ export const useInsightDrillConfigPanel = (props: IUseDrillConfigPanelProps) => 
             enableImplicitDrillToUrl,
         );
     }, [drillItems, globalDrillDownItems, drillToUrlItems, incompleteItems, enableImplicitDrillToUrl]);
+    const { activeDrillItemLocalId } = useDrillFiltersSubview();
+    const selectedDrillItem = useMemo(
+        () => mergedItems.find((item) => item.localIdentifier === activeDrillItemLocalId),
+        [activeDrillItemLocalId, mergedItems],
+    );
 
     const originSelectorItems = useMemo(
         () =>
@@ -291,6 +297,37 @@ export const useInsightDrillConfigPanel = (props: IUseDrillConfigPanelProps) => 
         ],
     );
 
+    const onUpdateDrillItem = useCallback(
+        (
+            drill: InsightDrillDefinition | IDrillDownAttributeHierarchyDefinition,
+            changedItem: IDrillConfigItem,
+        ) => {
+            if (!isDrillDownToAttributeHierarchyDefinition(drill)) {
+                dispatch(modifyDrillsForInsightWidget(widgetRef, [drill]));
+                return;
+            }
+
+            const attributeDescriptor = changedItem.attributes.find(
+                (attr) => attr.attributeHeader.localIdentifier === changedItem.originLocalIdentifier,
+            );
+
+            if (!attributeDescriptor || !isDrillDownToAttributeHierarchyConfig(changedItem)) {
+                return;
+            }
+
+            dispatch(
+                modifyDrillDownForInsightWidget(
+                    widgetRef,
+                    attributeDescriptor.attributeHeader.formOf.ref,
+                    changedItem.attributeHierarchyRef,
+                    [],
+                    changedItem.drillIntersectionIgnoredAttributes ?? [],
+                ),
+            );
+        },
+        [dispatch, widgetRef],
+    );
+
     const onDeleteItem = useCallback(
         (item: IDrillConfigItem) => {
             if (item.complete) {
@@ -321,12 +358,14 @@ export const useInsightDrillConfigPanel = (props: IUseDrillConfigPanelProps) => 
         widget,
         insight,
         drillConfigItems: mergedItems,
+        selectedDrillItem,
         originSelectorItems,
         isOriginSelectorVisible: !!configItems?.availableDrillTargets,
         isLoaded: !!configItems,
         onChangeItem,
         onOriginSelect,
         onSetupItem,
+        onUpdateDrillItem,
         onDeleteItem,
     };
 };

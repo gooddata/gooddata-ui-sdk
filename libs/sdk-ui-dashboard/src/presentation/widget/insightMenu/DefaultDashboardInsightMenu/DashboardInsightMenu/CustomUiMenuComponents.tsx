@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type MouseEvent, type ReactElement, type ReactNode, useCallback } from "react";
 
@@ -86,13 +86,19 @@ export function CustomUiMenuContentComponent({ item }: IUiMenuContentProps<IMenu
     const selector = createSelector((ctx) => ({
         onClose: ctx.onClose,
         setShownCustomContentItemId: ctx.setShownCustomContentItemId,
+        popShownSubview: ctx.popShownSubview,
+        shownSubview: ctx.shownSubview,
     }));
 
-    const { onClose, setShownCustomContentItemId } = useContextStore(selector);
+    const { onClose, setShownCustomContentItemId, popShownSubview, shownSubview } = useContextStore(selector);
 
     const handleBack = useCallback(() => {
+        if (shownSubview?.length > 0) {
+            popShownSubview();
+            return;
+        }
         setShownCustomContentItemId(undefined);
-    }, [setShownCustomContentItemId]);
+    }, [setShownCustomContentItemId, popShownSubview, shownSubview]);
 
     if (item.showComponentOnly === true) {
         return <DefaultUiMenuContent item={item} />;
@@ -102,9 +108,17 @@ export function CustomUiMenuContentComponent({ item }: IUiMenuContentProps<IMenu
         ...item,
         showComponentOnly: true,
     };
+    const activeSubview = shownSubview.at(-1);
+    const title = activeSubview?.title ?? item.stringTitle;
+    const tooltipText = activeSubview?.tooltipText;
 
     return (
-        <DashboardInsightSubmenuContainer title={item.stringTitle} onClose={onClose!} onBack={handleBack}>
+        <DashboardInsightSubmenuContainer
+            title={title}
+            tooltipText={tooltipText}
+            onClose={onClose!}
+            onBack={handleBack}
+        >
             <DefaultUiMenuContent item={itemWithoutDefaultHeader} />
         </DashboardInsightSubmenuContainer>
     );

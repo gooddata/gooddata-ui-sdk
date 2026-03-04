@@ -218,6 +218,10 @@ export function* resolveDashboardConfig(
         // Prefer explicit config tokens, otherwise fall back to tokens available in backend settings
         mapboxToken: config.mapboxToken ?? (settings.settings?.["mapboxToken"] as string | undefined),
         agGridToken: config.agGridToken ?? (settings.settings?.["agGridToken"] as string | undefined),
+        maxZoomLevel:
+            config.maxZoomLevel === undefined
+                ? (settings.settings?.maxZoomLevel as number | null | undefined)
+                : config.maxZoomLevel,
     };
 }
 

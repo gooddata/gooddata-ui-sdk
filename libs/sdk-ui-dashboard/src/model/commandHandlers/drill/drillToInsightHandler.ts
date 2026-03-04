@@ -3,16 +3,14 @@
 import { type SagaIterator } from "redux-saga";
 import { put, select } from "redux-saga/effects";
 
-import { addIntersectionFiltersToInsight } from "@gooddata/sdk-ui-ext";
-
-import { removeIgnoredValuesFromDrillIntersection } from "./common/intersectionUtils.js";
+import { addDrillFiltersToInsight } from "./drillToInsightUtils.js";
 import { type IDrillToInsight } from "../../commands/drill.js";
 import {
     type IDashboardDrillToInsightResolved,
     drillToInsightRequested,
     drillToInsightResolved,
 } from "../../events/drill.js";
-import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
+import { selectInsightByRef, selectInsightByWidgetRef } from "../../store/insights/insightsSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 
 export function* drillToInsightHandler(
@@ -23,22 +21,20 @@ export function* drillToInsightHandler(
     const insight = yield select(selectInsightByRef(drillDefinition.target));
     yield put(drillToInsightRequested(ctx, insight, drillDefinition, drillEvent, cmd.correlationId));
 
-    const filteredIntersection = cmd.payload.drillDefinition.drillIntersectionIgnoredAttributes
-        ? removeIgnoredValuesFromDrillIntersection(
-              cmd.payload.drillEvent.drillContext.intersection ?? [],
-              cmd.payload.drillDefinition.drillIntersectionIgnoredAttributes ?? [],
-          )
-        : cmd.payload.drillEvent.drillContext.intersection!;
-
-    const insightWithDrillsApplied = addIntersectionFiltersToInsight(
+    const sourceInsight = drillEvent.widgetRef
+        ? yield select(selectInsightByWidgetRef(drillEvent.widgetRef))
+        : null;
+    const insightWithFiltersApplied = addDrillFiltersToInsight(
         insight,
-        filteredIntersection,
+        sourceInsight,
+        drillDefinition,
+        drillEvent,
         ctx.backend.capabilities.supportsElementUris ?? true,
     );
 
     return drillToInsightResolved(
         ctx,
-        insightWithDrillsApplied,
+        insightWithFiltersApplied,
         cmd.payload.drillDefinition,
         cmd.payload.drillEvent,
         cmd.correlationId,

@@ -107,6 +107,8 @@ $gd-configuration-bubble-margin: 15px;
 $gd-configuration-right-scrollbar-spacer: $scrollbar-width;
 $gd-configuration-panel-inner-width: $gd-configuration-bubble-width - $gd-configuration-bubble-borders-width -
     (2 * $gd-configuration-bubble-margin) - $gd-configuration-right-scrollbar-spacer;
+$gd-interactions-label-max-width: 185px;
+$gd-interactions-tooltip-max-width: 280px;
 
 $gd-dashboards-content-widget-title-color: var(
     --gd-dashboards-content-widget-title-color,

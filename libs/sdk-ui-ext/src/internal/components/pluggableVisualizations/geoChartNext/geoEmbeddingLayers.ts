@@ -3,11 +3,17 @@
 import {
     type IFilter,
     type IInsightDefinition,
+    attributeDisplayFormRef,
+    attributeLocalId,
     insightBuckets,
     insightFilters,
     insightLayers,
     insightProperties,
     insightSorts,
+    isLocalIdRef,
+    isMeasureValueFilter,
+    isRankingFilter,
+    newAttribute,
 } from "@gooddata/sdk-model";
 import { type IGeoLayer, type IGeoLayerArea, type IGeoLayerPushpin } from "@gooddata/sdk-ui-geo";
 import { insightLayerToGeoLayer } from "@gooddata/sdk-ui-geo/internal";
@@ -99,12 +105,62 @@ function sanitizeLayerForEmbedding(layer: IGeoLayer): IGeoLayer {
         return areaLayer;
     }
 
+    const { latitude, longitude } = sanitizePushpinCoordinatesForEmbedding(layer);
     const pushpinLayer: IGeoLayerPushpin = {
         ...base,
         type: "pushpin",
-        latitude: layer.latitude,
-        longitude: layer.longitude,
+        latitude,
+        longitude,
         ...(layer.size ? { size: layer.size } : {}),
     };
     return pushpinLayer;
+}
+
+function sanitizePushpinCoordinatesForEmbedding(layer: IGeoLayerPushpin): {
+    latitude: IGeoLayerPushpin["latitude"];
+    longitude: IGeoLayerPushpin["longitude"];
+} {
+    const latitudeLocalId = attributeLocalId(layer.latitude);
+    const longitudeLocalId = attributeLocalId(layer.longitude);
+    const layerFilters = layer.filters?.filter((filter): filter is IFilter => Boolean(filter));
+
+    const shouldPreserveLatitudeLocalId = isLocalIdReferencedInLayerFilters(layerFilters, latitudeLocalId);
+    const shouldPreserveLongitudeLocalId = isLocalIdReferencedInLayerFilters(layerFilters, longitudeLocalId);
+
+    const latitude = shouldPreserveLatitudeLocalId
+        ? layer.latitude
+        : newAttribute(attributeDisplayFormRef(layer.latitude), (builder) => builder.localId("latitude_df"));
+    const longitude = shouldPreserveLongitudeLocalId
+        ? layer.longitude
+        : newAttribute(attributeDisplayFormRef(layer.longitude), (builder) =>
+              builder.localId("longitude_df"),
+          );
+
+    return { latitude, longitude };
+}
+
+function isLocalIdReferencedInLayerFilters(filters: IFilter[] | undefined, localId: string): boolean {
+    if (!filters?.length) {
+        return false;
+    }
+
+    return filters.some((filter) => {
+        if (isMeasureValueFilter(filter)) {
+            return (
+                filter.measureValueFilter.dimensionality?.some(
+                    (ref) => isLocalIdRef(ref) && ref.localIdentifier === localId,
+                ) ?? false
+            );
+        }
+
+        if (isRankingFilter(filter)) {
+            return (
+                filter.rankingFilter.attributes?.some(
+                    (ref) => isLocalIdRef(ref) && ref.localIdentifier === localId,
+                ) ?? false
+            );
+        }
+
+        return false;
+    });
 }

@@ -7,6 +7,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { EditableLabel, UiCard, UiCopyButton } from "@gooddata/sdk-ui-kit";
 
 import { CatalogDetailGenerateDescription } from "./CatalogDetailGenerateDescription.js";
+import { CatalogDetailGenerateTitle } from "./CatalogDetailGenerateTitle.js";
 import { CatalogItemLockMemo } from "../catalogItem/CatalogItemLock.js";
 import { type ICatalogItem } from "../catalogItem/types.js";
 import { CertificationIconMemo } from "../certification/CertificationIcon.js";
@@ -41,7 +42,7 @@ export function CatalogDetailHeader({
 
     const type = item.type ?? "analyticalDashboard";
     const visualizationType = item.visualizationType;
-    const canGenerateDescription = canEdit && item.type !== "dataSet" && isDescriptionGenerationEnabled;
+    const canGenerateText = canEdit && item.type !== "dataSet" && isDescriptionGenerationEnabled;
 
     const titleRef = useRef<HTMLDivElement>(null);
     const descriptionRef = useRef<HTMLDivElement>(null);
@@ -80,25 +81,34 @@ export function CatalogDetailHeader({
                         {item?.isLocked ? <CatalogItemLockMemo intl={intl} /> : null}
                         <div className="gd-analytics-catalog-detail__card__header__title__name">
                             {canEdit ? (
-                                <EditableLabel
-                                    ref={titleRef}
-                                    isEditableLabelWidthBasedOnText
-                                    ariaLabel={intl.formatMessage({
-                                        id: "analyticsCatalog.column.title.label",
-                                    })}
-                                    placeholder={intl.formatMessage({
-                                        id: "analyticsCatalog.catalogItem.title.add",
-                                    })}
-                                    onSubmit={updateItemTitle}
-                                    value={item.title}
-                                    maxRows={9999}
-                                >
-                                    {item.title ||
-                                        intl.formatMessage({
+                                canGenerateText ? (
+                                    <CatalogDetailGenerateTitle
+                                        key={item.identifier}
+                                        ref={titleRef}
+                                        item={item}
+                                        onApplyTitle={updateItemTitle}
+                                    />
+                                ) : (
+                                    <EditableLabel
+                                        ref={titleRef}
+                                        isEditableLabelWidthBasedOnText
+                                        ariaLabel={intl.formatMessage({
+                                            id: "analyticsCatalog.column.title.label",
+                                        })}
+                                        placeholder={intl.formatMessage({
                                             id: "analyticsCatalog.catalogItem.title.add",
                                         })}
-                                    <i className="gd-icon-pencil" />
-                                </EditableLabel>
+                                        onSubmit={updateItemTitle}
+                                        value={item.title}
+                                        maxRows={9999}
+                                    >
+                                        {item.title ||
+                                            intl.formatMessage({
+                                                id: "analyticsCatalog.catalogItem.title.add",
+                                            })}
+                                        <i className="gd-icon-pencil" />
+                                    </EditableLabel>
+                                )
                             ) : (
                                 <>{item.title}</>
                             )}
@@ -115,7 +125,7 @@ export function CatalogDetailHeader({
                                 <FormattedMessage id="analyticsCatalog.catalogItem.description" />
                             </div>
                             <div className="gd-analytics-catalog-detail__card__header__row__content">
-                                {canGenerateDescription ? (
+                                {canGenerateText ? (
                                     <CatalogDetailGenerateDescription
                                         key={item.identifier}
                                         ref={descriptionRef}

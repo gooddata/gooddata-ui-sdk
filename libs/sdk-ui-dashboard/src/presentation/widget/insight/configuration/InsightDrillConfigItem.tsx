@@ -17,8 +17,10 @@ import {
     isAttributeDescriptor,
 } from "@gooddata/sdk-model";
 import { messages } from "@gooddata/sdk-ui";
+import { UiButton } from "@gooddata/sdk-ui-kit";
 import { simplifyText } from "@gooddata/util";
 
+import { useDrillFiltersSubview } from "./DrillFilters/useDrillFiltersSubview.js";
 import { DrillIntersectionIgnoredAttributes } from "./DrillIntersectionIgnoredAttributes.js";
 import { DrillOriginItem } from "./DrillOriginItem.js";
 import { DrillTargets } from "./DrillTargets/DrillTargets.js";
@@ -26,6 +28,7 @@ import { DrillTargetType } from "./DrillTargetType/DrillTargetType.js";
 import { type IDrillTargetType } from "./useDrillTargetTypeItems.js";
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import { selectCatalogDateDatasets } from "../../../../model/store/catalog/catalogSelectors.js";
+import { selectEnableFilterControlInDrillingConfiguration } from "../../../../model/store/config/configSelectors.js";
 import { selectDrillTargetsByWidgetRef } from "../../../../model/store/drillTargets/drillTargetsSelectors.js";
 import { selectWidgetDrills } from "../../../../model/store/tabs/layout/layoutSelectors.js";
 import {
@@ -74,6 +77,10 @@ export function DrillConfigItem({
     onDelete,
 }: IDrillConfigItemProps) {
     const intl = useIntl();
+    const isDrillFiltersConfigEnabled = useDashboardSelector(
+        selectEnableFilterControlInDrillingConfiguration,
+    );
+    const { openDrillFilters } = useDrillFiltersSubview();
     const onDeleteClick = () => {
         onDelete(item);
     };
@@ -83,7 +90,6 @@ export function DrillConfigItem({
             drillTargetType: target,
         });
     };
-
     const classNames = cx("s-drill-config-item", `s-drill-config-item-${simplifyText(item.title)}`, {
         "s-drill-config-item-incomplete": !item.complete,
     });
@@ -179,11 +185,24 @@ export function DrillConfigItem({
                     <DrillTargets item={item} onSetup={onSetup} onDeleteInteraction={onDeleteClick} />
 
                     {showDrillIntersectionIgnoredAttributes ? (
-                        <DrillIntersectionIgnoredAttributes
-                            drillTargetType={item.drillTargetType}
-                            item={item}
-                            onChange={onDrillIntersectionIgnoredAttributesChange}
-                        />
+                        isDrillFiltersConfigEnabled ? (
+                            <div className="gd-drill-filter-config-link">
+                                <UiButton
+                                    variant="tertiary"
+                                    size="small"
+                                    label={intl.formatMessage({
+                                        id: "configurationPanel.drillConfig.filterSelection.button",
+                                    })}
+                                    onClick={() => openDrillFilters(item.localIdentifier)}
+                                />
+                            </div>
+                        ) : (
+                            <DrillIntersectionIgnoredAttributes
+                                drillTargetType={item.drillTargetType}
+                                item={item}
+                                onChange={onDrillIntersectionIgnoredAttributesChange}
+                            />
+                        )
                     ) : null}
                     {!!item.warning && (
                         <div className="drill-config-target-warning s-drill-config-target-warning">

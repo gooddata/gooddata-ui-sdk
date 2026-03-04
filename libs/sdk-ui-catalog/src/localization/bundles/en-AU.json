@@ -94,12 +94,9 @@
     "analyticsCatalog.catalogItem.title.add": "Add title…",
     "analyticsCatalog.catalogItem.description": "Description",
     "analyticsCatalog.catalogItem.description.add": "Add description…",
-    "analyticsCatalog.catalogItem.description.generate": "Generate description",
-    "analyticsCatalog.catalogItem.description.generate.dialog.title": "Generate description",
-    "analyticsCatalog.catalogItem.description.generate.dialog.content": "This description is AI-generated. Use the generated text as a starting point and review it before applying.",
-    "analyticsCatalog.catalogItem.description.generate.dialog.accept": "Accept",
-    "analyticsCatalog.catalogItem.description.generate.dialog.decline": "Decline",
-    "analyticsCatalog.catalogItem.description.generate.dialog.note": "Note",
+    "analyticsCatalog.catalogItem.description.generate": "Generate description with AI",
+    "analyticsCatalog.catalogItem.description.generate.loading": "Generating...",
+    "analyticsCatalog.catalogItem.description.generate.undo": "Undo",
     "analyticsCatalog.catalogItem.description.generate.failed": "Failed to generate description. Try again later.",
     "analyticsCatalog.catalogItem.update.failed": "Failed to update catalogue item. Try again later.",
     "analyticsCatalog.catalogItem.id": "ID",
@@ -152,5 +149,8 @@
     "metricComponent.metricType.label": "Metric type",
     "metricComponent.metricType.unspecified": "Unspecified",
     "metricComponent.metricType.currency": "Currency",
-    "metricComponent.numberFormat.label": "Number format"
+    "metricComponent.numberFormat.label": "Number format",
+    "analyticsCatalog.tabs.recommended": "Recommended",
+    "analyticsCatalog.tabs.trending": "Trending",
+    "analyticsCatalog.tabs.quality": "Quality"
 }

@@ -24,6 +24,7 @@ import {
 
 import { useDrillDialogInsightDrills } from "./useDrillDialogInsightDrills.js";
 import { useDrillDialogSyncInsightProperties } from "./useDrillDialogSyncInsightProperties.js";
+import { useExcludedDrillDefinitionFilters } from "./useExcludedDrillDefinitionFilters.js";
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
 import { useWidgetFilters } from "../../../../../model/react/useWidgetFilters.js";
 import { selectCatalogAttributes } from "../../../../../model/store/catalog/catalogSelectors.js";
@@ -115,10 +116,12 @@ export function DrillDialogInsight({
 
     // Filtering
     const {
-        result: filtersForInsight,
+        result: availableFiltersForInsight,
         status: filtersStatus,
         error: filtersError,
     } = useWidgetFilters(widget, insight);
+
+    const filtersForInsight = useExcludedDrillDefinitionFilters(availableFiltersForInsight, drillStep);
 
     const insightWithAddedFilters = useMemo(
         () => insightSetFilters(insight, filtersForInsight),

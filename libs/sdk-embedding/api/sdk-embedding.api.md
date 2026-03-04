@@ -216,7 +216,7 @@ export type AllTimeType = "allTime";
 export type ArithmeticMeasureOperator = "sum" | "difference" | "multiplication" | "ratio" | "change";
 
 // @public (undocumented)
-export type AttributeFilterItem = IPositiveAttributeFilter | INegativeAttributeFilter;
+export type AttributeFilterItem = IPositiveAttributeFilter | INegativeAttributeFilter | IArbitraryAttributeFilterItem | IMatchAttributeFilterItem;
 
 // @public (undocumented)
 export type AttributeFilterItemSelectionMode = "single" | "multi";
@@ -419,6 +419,16 @@ export interface IAdSetApiTokenBody {
     secondsBeforeTokenExpirationToEmitReminder?: number;
     token: string;
     type?: "gooddata" | "jwt";
+}
+
+// @public (undocumented)
+export interface IArbitraryAttributeFilterItem extends IAttributeFilterConfig {
+    // (undocumented)
+    arbitraryAttributeFilter: {
+        displayForm: IObjIdentifierQualifier;
+        values: string[];
+        negativeSelection?: boolean;
+    };
 }
 
 // @public
@@ -778,6 +788,18 @@ export interface ILocalIdentifierQualifier {
 }
 
 // @public (undocumented)
+export interface IMatchAttributeFilterItem extends IAttributeFilterConfig {
+    // (undocumented)
+    matchAttributeFilter: {
+        displayForm: IObjIdentifierQualifier;
+        operator: "contains" | "startsWith" | "endsWith";
+        literal: string;
+        caseSensitive?: boolean;
+        negativeSelection?: boolean;
+    };
+}
+
+// @public (undocumented)
 export interface IMeasureContent {
     // (undocumented)
     alias?: string;
@@ -1019,6 +1041,9 @@ export function isAdUndoCommandData(obj: unknown): obj is AdUndoCommandData;
 export function isAdUndoFinishedData(obj: unknown): obj is AdUndoFinishedData;
 
 // @public (undocumented)
+export function isArbitraryAttributeFilterItem(filter: unknown): filter is IArbitraryAttributeFilterItem;
+
+// @public (undocumented)
 export function isAttributeFilter(filter: unknown): filter is AttributeFilterItem;
 
 // @beta
@@ -1101,6 +1126,9 @@ export function isKdUriInsight(obj: unknown): obj is IKdUriInsightRef;
 
 // @public (undocumented)
 export function isLocalIdentifierQualifier(qualifier: unknown): qualifier is ILocalIdentifierQualifier;
+
+// @public (undocumented)
+export function isMatchAttributeFilterItem(filter: unknown): filter is IMatchAttributeFilterItem;
 
 // @public (undocumented)
 export function isNegativeAttributeFilter(filter: unknown): filter is INegativeAttributeFilter;

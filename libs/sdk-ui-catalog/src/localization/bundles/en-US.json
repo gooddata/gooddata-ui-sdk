@@ -371,6 +371,22 @@
         "text": "Add title…",
         "crowdinContext": "Catalog item title placeholder."
     },
+    "analyticsCatalog.catalogItem.title.generate": {
+        "text": "Generate title with AI",
+        "crowdinContext": "Label for the icon-only button in catalog item detail header that generates an AI title."
+    },
+    "analyticsCatalog.catalogItem.title.generate.loading": {
+        "text": "Generating...",
+        "crowdinContext": "Tooltip shown on the loading spinner while AI is generating the catalog item title."
+    },
+    "analyticsCatalog.catalogItem.title.generate.undo": {
+        "text": "Undo",
+        "crowdinContext": "Tooltip label for the icon-only button in catalog item detail header that reverts the latest generated title."
+    },
+    "analyticsCatalog.catalogItem.title.generate.failed": {
+        "text": "Failed to generate title. Try again later.",
+        "crowdinContext": "Toast message shown when generating a catalog item title fails."
+    },
     "analyticsCatalog.catalogItem.description": {
         "text": "Description",
         "crowdinContext": "Catalog item description label."

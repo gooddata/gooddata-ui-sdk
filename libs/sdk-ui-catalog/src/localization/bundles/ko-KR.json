@@ -94,12 +94,9 @@
     "analyticsCatalog.catalogItem.title.add": "제목 추가…",
     "analyticsCatalog.catalogItem.description": "설명",
     "analyticsCatalog.catalogItem.description.add": "설명을 추가하세요…",
-    "analyticsCatalog.catalogItem.description.generate": "설명 생성",
-    "analyticsCatalog.catalogItem.description.generate.dialog.title": "설명 생성",
-    "analyticsCatalog.catalogItem.description.generate.dialog.content": "이 설명은 AI가 생성했습니다. 생성된 텍스트를 시작점으로 사용하고 적용하기 전에 검토하세요.",
-    "analyticsCatalog.catalogItem.description.generate.dialog.accept": "수락",
-    "analyticsCatalog.catalogItem.description.generate.dialog.decline": "거부",
-    "analyticsCatalog.catalogItem.description.generate.dialog.note": "참고",
+    "analyticsCatalog.catalogItem.description.generate": "AI로 설명 생성",
+    "analyticsCatalog.catalogItem.description.generate.loading": "생성 중...",
+    "analyticsCatalog.catalogItem.description.generate.undo": "실행 취소",
     "analyticsCatalog.catalogItem.description.generate.failed": "설명 생성에 실패했습니다. 나중에 다시 시도하세요.",
     "analyticsCatalog.catalogItem.update.failed": "カ탈로그 항목을 업데이트하지 못했습니다. 나중에 다시 시도하세요.",
     "analyticsCatalog.catalogItem.id": "ID",
@@ -152,5 +149,8 @@
     "metricComponent.metricType.label": "메트릭 유형",
     "metricComponent.metricType.unspecified": "미지정",
     "metricComponent.metricType.currency": "통화",
-    "metricComponent.numberFormat.label": "숫자 형식"
+    "metricComponent.numberFormat.label": "숫자 형식",
+    "analyticsCatalog.tabs.recommended": "추천됨",
+    "analyticsCatalog.tabs.trending": "인기",
+    "analyticsCatalog.tabs.quality": "품질"
 }

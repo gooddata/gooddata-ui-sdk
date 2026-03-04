@@ -23,6 +23,7 @@
     "filterBar.showLess": "Näytä vähemmän",
     "filterBar.unappliedFiltersNotification": "<link>Käytä suodattimia</link> nähdäksesi päivitetyt tiedot.",
     "filterBar.invalidFilterSelection": "Ota muutokset käyttöön valitsemalla kelvolliset arvot näille suodattimille: {names}",
+    "geochart.alternateView.tablist.label": "Kerros­taulukot",
     "filterBar.executionTimestampNotificationMessage": "<bold>Huomaa.</bold> Tarkastelet ajantasaisia tietoja, mutta minkä tahansa suhteellisen päivämäärän osalta ohjauspaneeli käsittelee tietoja {date} \"tänään\".",
     "filterBar.executionTimestampNotificationAction": "<link>Palauta tähän päivään</link>",
     "options.menu.export": "Vie",

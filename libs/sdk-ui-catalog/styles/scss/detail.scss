@@ -78,6 +78,7 @@ $content-font-size: 14px;
                     overflow: hidden;
                     text-overflow: ellipsis;
                     display: flex;
+                    align-items: flex-start;
                 }
 
                 &__name .gd-editable-label-inner {
@@ -94,6 +95,11 @@ $content-font-size: 14px;
                     color: kit-variables.$gd-color-link;
                     font-size: 17px;
                     line-height: 17px;
+                }
+
+                &__name .gd-ui-kit-inline-text-generator__action {
+                    // Align with the last line of text.
+                    bottom: 4px;
                 }
 
                 &__certified {

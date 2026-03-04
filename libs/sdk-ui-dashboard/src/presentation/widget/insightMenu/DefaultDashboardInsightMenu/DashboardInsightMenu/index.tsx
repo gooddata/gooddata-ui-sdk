@@ -1,6 +1,14 @@
 // (C) 2021-2026 GoodData Corporation
 
-import { type Dispatch, type MouseEvent, type SetStateAction, useMemo, useState } from "react";
+import {
+    type Dispatch,
+    type MouseEvent,
+    type ReactNode,
+    type SetStateAction,
+    useMemo,
+    useRef,
+    useState,
+} from "react";
 
 import { type IInsightWidget, objRefToString, widgetRef } from "@gooddata/sdk-model";
 import {
@@ -33,18 +41,55 @@ import {
     isIInsightMenuSubmenu,
 } from "../../types.js";
 
-function getWrappedSubmenuComponent(item: IInsightMenuSubmenu, widget: IInsightWidget) {
-    function WrappedSubmenuComponent({ onBack, onClose }: { onBack: () => void; onClose: () => void }) {
-        const SubmenuComponent = item.SubmenuComponent!;
-        return <SubmenuComponent widget={widget} onClose={onClose} onGoBack={onBack} />;
+type IWrappedSubmenuComponent = ({
+    onBack,
+    onClose,
+}: {
+    onBack: () => void;
+    onClose: () => void;
+}) => ReactNode;
+
+type IInsightWidgetRef = { current: IInsightWidget };
+
+function getWrappedSubmenuComponent(
+    item: IInsightMenuSubmenu,
+    latestWidgetRef: IInsightWidgetRef,
+    submenuComponentCache: Map<
+        string,
+        {
+            SubmenuComponent: IInsightMenuSubmenu["SubmenuComponent"];
+            WrappedComponent: IWrappedSubmenuComponent;
+        }
+    >,
+): IWrappedSubmenuComponent {
+    const cachedSubmenu = submenuComponentCache.get(item.itemId);
+    if (cachedSubmenu && cachedSubmenu.SubmenuComponent === item.SubmenuComponent) {
+        return cachedSubmenu.WrappedComponent;
     }
+
+    const SubmenuComponent = item.SubmenuComponent as NonNullable<IInsightMenuSubmenu["SubmenuComponent"]>;
+    function WrappedSubmenuComponent({ onBack, onClose }: { onBack: () => void; onClose: () => void }) {
+        return <SubmenuComponent widget={latestWidgetRef.current} onClose={onClose} onGoBack={onBack} />;
+    }
+
+    submenuComponentCache.set(item.itemId, {
+        SubmenuComponent: item.SubmenuComponent,
+        WrappedComponent: WrappedSubmenuComponent,
+    });
 
     return WrappedSubmenuComponent;
 }
 
 const convertToUiMenuItems = (
     items: IInsightMenuItem[],
-    widget: IDashboardInsightMenuProps["widget"],
+    latestWidgetRef: IInsightWidgetRef,
+    submenuComponentCache: Map<
+        string,
+        {
+            SubmenuComponent: IInsightMenuSubmenu["SubmenuComponent"];
+            WrappedComponent: IWrappedSubmenuComponent;
+        }
+    >,
 ): Array<IUiMenuItem<IMenuItemData>> => {
     return items.map((item): IUiMenuItem<IMenuItemData> => {
         if (item.type === "separator") {
@@ -57,7 +102,9 @@ const convertToUiMenuItems = (
                 id: item.itemId,
                 data: null,
                 stringTitle: item.itemName,
-                subItems: item.items ? convertToUiMenuItems(item.items, widget) : [],
+                subItems: item.items
+                    ? convertToUiMenuItems(item.items, latestWidgetRef, submenuComponentCache)
+                    : [],
             };
         }
         const baseFocusableItem = {
@@ -77,7 +124,7 @@ const convertToUiMenuItems = (
                 return {
                     ...baseFocusableItem,
                     type: "interactive" as const,
-                    subItems: convertToUiMenuItems(item.items, widget),
+                    subItems: convertToUiMenuItems(item.items, latestWidgetRef, submenuComponentCache),
                     data: {
                         ...baseFocusableItem.data,
                         subMenu: true,
@@ -88,7 +135,7 @@ const convertToUiMenuItems = (
                 return {
                     ...baseFocusableItem,
                     type: "content" as const,
-                    Component: getWrappedSubmenuComponent(item, widget),
+                    Component: getWrappedSubmenuComponent(item, latestWidgetRef, submenuComponentCache),
                     showComponentOnly: item.renderSubmenuComponentOnly,
                     data: {
                         ...baseFocusableItem.data,
@@ -116,9 +163,24 @@ export function DashboardInsightMenuBody({
     setSubmenu?: Dispatch<SetStateAction<IInsightMenuSubmenu | null>>;
     renderMode: RenderMode;
 }) {
-    const uiMenuItems = useMemo(() => convertToUiMenuItems(items, widget), [items, widget]);
-
     const widgetRefAsString = objRefToString(widgetRef(widget));
+    const latestWidgetRef = useRef(widget);
+    latestWidgetRef.current = widget;
+    // Cache submenu components to prevent remounting caused by component identity change.
+    const submenuComponentCache = useRef<
+        Map<
+            string,
+            {
+                SubmenuComponent: IInsightMenuSubmenu["SubmenuComponent"];
+                WrappedComponent: IWrappedSubmenuComponent;
+            }
+        >
+    >(new Map());
+
+    const uiMenuItems = useMemo(
+        () => convertToUiMenuItems(items, latestWidgetRef, submenuComponentCache.current),
+        [items],
+    );
 
     const handleSelect = (item: IUiMenuItem<IMenuItemData>) => {
         if (item.type === "interactive" && item.data?.onClick) {

@@ -4,16 +4,19 @@ import { type MouseEvent } from "react";
 
 import cx from "classnames";
 
+import { QuestionMark } from "../../Icon/icons/QuestionMark.js";
 import { ShortenedText } from "../../ShortenedText/ShortenedText.js";
 import { Typography } from "../../Typography/Typography.js";
 import { type SizeLarge, type SizeMedium } from "../@types/size.js";
 import { UiIconButton } from "../UiIconButton/UiIconButton.js";
+import { UiTooltip } from "../UiTooltip/UiTooltip.js";
 
 /**
  * @internal
  */
 export interface IUiSubmenuHeaderProps {
     title?: string;
+    tooltipText?: string;
     onBack?: (e: MouseEvent<HTMLButtonElement>) => void;
     onClose?: (e: MouseEvent<HTMLButtonElement>) => void;
     backAriaLabel?: string;
@@ -32,6 +35,7 @@ export interface IUiSubmenuHeaderProps {
  */
 export function UiSubmenuHeader({
     title = "",
+    tooltipText,
     onBack,
     onClose,
     backAriaLabel,
@@ -85,6 +89,28 @@ export function UiSubmenuHeader({
                         {title}
                     </Typography>
                 )}
+                {tooltipText ? (
+                    <UiTooltip
+                        triggerBy={["hover", "focus"]}
+                        arrowPlacement="left"
+                        optimalPlacement
+                        content={
+                            <div className="gd-ui-kit-submenu-header__title-tooltip-content">
+                                {tooltipText}
+                            </div>
+                        }
+                        anchor={
+                            <QuestionMark
+                                className="gd-ui-kit-submenu-header__title-tooltip-icon"
+                                width={14}
+                                height={14}
+                                color="var(--gd-palette-complementary-6)"
+                            />
+                        }
+                        offset={10}
+                        anchorWrapperStyles={{ lineHeight: 0, width: "fit-content" }}
+                    />
+                ) : null}
             </div>
 
             {onClose ? (

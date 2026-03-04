@@ -94,12 +94,9 @@
     "analyticsCatalog.catalogItem.title.add": "Başlık ekleyin…",
     "analyticsCatalog.catalogItem.description": "Açıklama",
     "analyticsCatalog.catalogItem.description.add": "Açıklama ekle…",
-    "analyticsCatalog.catalogItem.description.generate": "Açıklama oluştur",
-    "analyticsCatalog.catalogItem.description.generate.dialog.title": "Açıklama oluştur",
-    "analyticsCatalog.catalogItem.description.generate.dialog.content": "Bu açıklama yapay zeka tarafından oluşturulmuştur. Oluşturulan metni bir başlangıç noktası olarak kullanın ve uygulamadan önce gözden geçirin.",
-    "analyticsCatalog.catalogItem.description.generate.dialog.accept": "Kabul et",
-    "analyticsCatalog.catalogItem.description.generate.dialog.decline": "Reddet",
-    "analyticsCatalog.catalogItem.description.generate.dialog.note": "Not",
+    "analyticsCatalog.catalogItem.description.generate": "Yapay zeka ile açıklama oluştur",
+    "analyticsCatalog.catalogItem.description.generate.loading": "Oluşturuluyor...",
+    "analyticsCatalog.catalogItem.description.generate.undo": "Geri Al",
     "analyticsCatalog.catalogItem.description.generate.failed": "Açıklama oluşturulamadı. Daha sonra tekrar deneyin.",
     "analyticsCatalog.catalogItem.update.failed": "Katalog öğesi güncellenemedi. Daha sonra tekrar deneyin.",
     "analyticsCatalog.catalogItem.id": "Id",
@@ -152,5 +149,8 @@
     "metricComponent.metricType.label": "Metrik türü",
     "metricComponent.metricType.unspecified": "Belirtilmemiş",
     "metricComponent.metricType.currency": "Para Birimi",
-    "metricComponent.numberFormat.label": "Sayı formatı"
+    "metricComponent.numberFormat.label": "Sayı formatı",
+    "analyticsCatalog.tabs.recommended": "Önerilen",
+    "analyticsCatalog.tabs.trending": "Trendler",
+    "analyticsCatalog.tabs.quality": "Kalite"
 }

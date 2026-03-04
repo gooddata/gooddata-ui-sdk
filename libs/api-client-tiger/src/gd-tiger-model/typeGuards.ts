@@ -225,10 +225,5 @@ function isDashboardAttributeFilter(obj: unknown): obj is DashboardAttributeFilt
 
 function isDashboardDateFilter(obj: unknown): obj is DashboardDateFilter {
     const dateFilter = (obj as DashboardDateFilter).dateFilter;
-    return (
-        !!dateFilter &&
-        (isAfmObjectIdentifier(dateFilter.dataSet) ||
-            isAfmObjectIdentifier(dateFilter.attribute) ||
-            dateFilter.boundedFilter !== undefined)
-    );
+    return !!dateFilter;
 }

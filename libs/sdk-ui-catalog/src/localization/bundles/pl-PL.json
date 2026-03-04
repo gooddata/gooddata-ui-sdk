@@ -94,12 +94,9 @@
     "analyticsCatalog.catalogItem.title.add": "Dodaj tytuł…",
     "analyticsCatalog.catalogItem.description": "Opis",
     "analyticsCatalog.catalogItem.description.add": "Dodaj opis…",
-    "analyticsCatalog.catalogItem.description.generate": "Generuj opis",
-    "analyticsCatalog.catalogItem.description.generate.dialog.title": "Generuj opis",
-    "analyticsCatalog.catalogItem.description.generate.dialog.content": "Ten opis został wygenerowany przez AI. Użyj wygenerowanego tekstu jako punktu wyjścia i przejrzyj go przed zastosowaniem.",
-    "analyticsCatalog.catalogItem.description.generate.dialog.accept": "Akceptuj",
-    "analyticsCatalog.catalogItem.description.generate.dialog.decline": "Odrzuć",
-    "analyticsCatalog.catalogItem.description.generate.dialog.note": "Notatka",
+    "analyticsCatalog.catalogItem.description.generate": "Generuj opis za pomocą AI",
+    "analyticsCatalog.catalogItem.description.generate.loading": "Generowanie...",
+    "analyticsCatalog.catalogItem.description.generate.undo": "Cofnij",
     "analyticsCatalog.catalogItem.description.generate.failed": "Nie udało się wygenerować opisu. Spróbuj ponownie później.",
     "analyticsCatalog.catalogItem.update.failed": "Nie udało się zaktualizować elementu katalogu. Spróbuj ponownie później.",
     "analyticsCatalog.catalogItem.id": "Id",
@@ -152,5 +149,8 @@
     "metricComponent.metricType.label": "Typ metryki",
     "metricComponent.metricType.unspecified": "Nieokreślony",
     "metricComponent.metricType.currency": "Waluta",
-    "metricComponent.numberFormat.label": "Format liczbowy"
+    "metricComponent.numberFormat.label": "Format liczbowy",
+    "analyticsCatalog.tabs.recommended": "Zalecane",
+    "analyticsCatalog.tabs.trending": "Popularne",
+    "analyticsCatalog.tabs.quality": "Jakość"
 }

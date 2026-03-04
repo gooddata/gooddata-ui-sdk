@@ -320,4 +320,14 @@
             background-color: var(--gd-palette-complementary-2, #ebeff4);
         }
     }
+
+    &__autocomplete-loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 5px 10px;
+        min-height: 28px;
+        cursor: default;
+        pointer-events: none;
+    }
 }

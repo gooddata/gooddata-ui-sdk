@@ -23,6 +23,7 @@
     "filterBar.showLess": "Mostrar menos",
     "filterBar.unappliedFiltersNotification": "<link>Aplicar filtros</link> para ver los datos actualizados.",
     "filterBar.invalidFilterSelection": "Para aplicar los cambios, seleccione valores válidos para estos filtros: {names}",
+    "geochart.alternateView.tablist.label": "Tablas de capas",
     "filterBar.executionTimestampNotificationMessage": "<bold>Nota.</bold> Está visualizando información actualizada, pero para cualquier filtro de fecha relativa, el panel considera {date} como \"hoy\".",
     "filterBar.executionTimestampNotificationAction": "<link>Restablecer al día de hoy</link>",
     "options.menu.export": "Exportar",

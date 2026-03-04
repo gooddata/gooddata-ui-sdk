@@ -385,7 +385,6 @@
     "notifications.panel.downloadFilesHint": "Скачать экспортированные файлы",
     "notifications.filters.buttonLabel": "{count, plural, one {# фильтр} few {# фильтра} many {# фильтров} other {# фильтра}}",
     "notifications.filters.dialog.title": "Фильтры",
-    "notifications.filters.dialog.dateRange": "Диапазон дат",
     "notifications.panel.triggers.title": "для {triggeredCount}/{totalCount} элементов",
     "notifications.panel.triggers.dialog.newValue": "Новое значение",
     "notifications.panel.triggers.dialog.truncatedValues": "…и еще {count}",

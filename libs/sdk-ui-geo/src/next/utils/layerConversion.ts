@@ -297,7 +297,14 @@ function convertToPushpinLayer(insightLayer: IInsightLayerDefinition): IGeoLayer
         // Keep localId of the original LOCATION attribute so MVF/ranking filters that reference it
         // (via localIdRef in dimensionality) do not become dangling when LOCATION is resolved to LAT/LNG.
         const latitudeLocalId = location ? attributeLocalId(location) : "latitude_df";
-        latitude = createAttributeFromDisplayFormId(controls.latitude, latitudeLocalId);
+        const latitudeFromLocation =
+            location && controls.latitude === attributeLocalId(location)
+                ? newAttribute(attributeDisplayFormRef(location), (builder) =>
+                      builder.localId(latitudeLocalId),
+                  )
+                : undefined;
+        latitude =
+            latitudeFromLocation ?? createAttributeFromDisplayFormId(controls.latitude, latitudeLocalId);
         longitude = createAttributeFromDisplayFormId(controls.longitude, "longitude_df");
     }
 

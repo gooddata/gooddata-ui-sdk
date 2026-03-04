@@ -1273,6 +1273,7 @@ export {
     selectEnableFiscalCalendars,
     selectActiveCalendars,
     selectEnableDashboardFilterGroups,
+    selectEnableFilterControlInDrillingConfiguration,
 } from "./model/store/config/configSelectors.js";
 export type { IEntitlementsState } from "./model/store/entitlements/entitlementsState.js";
 export {

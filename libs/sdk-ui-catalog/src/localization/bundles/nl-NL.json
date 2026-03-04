@@ -94,12 +94,9 @@
     "analyticsCatalog.catalogItem.title.add": "Titel toevoegen…",
     "analyticsCatalog.catalogItem.description": "Beschrijving",
     "analyticsCatalog.catalogItem.description.add": "Beschrijving toevoegen…",
-    "analyticsCatalog.catalogItem.description.generate": "Beschrijving genereren",
-    "analyticsCatalog.catalogItem.description.generate.dialog.title": "Beschrijving genereren",
-    "analyticsCatalog.catalogItem.description.generate.dialog.content": "Deze beschrijving is door AI gegenereerd. Gebruik de gegenereerde tekst als uitgangspunt en controleer deze voordat u deze toepast.",
-    "analyticsCatalog.catalogItem.description.generate.dialog.accept": "Accepteren",
-    "analyticsCatalog.catalogItem.description.generate.dialog.decline": "Weigeren",
-    "analyticsCatalog.catalogItem.description.generate.dialog.note": "Opmerking",
+    "analyticsCatalog.catalogItem.description.generate": "Beschrijving genereren met AI",
+    "analyticsCatalog.catalogItem.description.generate.loading": "Genereren...",
+    "analyticsCatalog.catalogItem.description.generate.undo": "Ongedaan maken",
     "analyticsCatalog.catalogItem.description.generate.failed": "Kan beschrijving niet genereren. Probeer het later opnieuw.",
     "analyticsCatalog.catalogItem.update.failed": "Catalogusitem kon niet worden bijgewerkt. Probeer het later opnieuw.",
     "analyticsCatalog.catalogItem.id": "Id",
@@ -152,5 +149,8 @@
     "metricComponent.metricType.label": "Metriektype",
     "metricComponent.metricType.unspecified": "Niet gespecificeerd",
     "metricComponent.metricType.currency": "Munteenheid",
-    "metricComponent.numberFormat.label": "Nummeropmaak"
+    "metricComponent.numberFormat.label": "Nummeropmaak",
+    "analyticsCatalog.tabs.recommended": "Aanbevolen",
+    "analyticsCatalog.tabs.trending": "Trending",
+    "analyticsCatalog.tabs.quality": "Kwaliteit"
 }

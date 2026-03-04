@@ -385,7 +385,6 @@
     "notifications.panel.downloadFilesHint": "Prenos izvoznih datotek",
     "notifications.filters.buttonLabel": "{count, plural, one {# filter} other {# filtri}}",
     "notifications.filters.dialog.title": "Filtri",
-    "notifications.filters.dialog.dateRange": "Obdobje",
     "notifications.panel.triggers.title": "za {triggeredCount}/{totalCount} elementov",
     "notifications.panel.triggers.dialog.newValue": "Nova vrednost",
     "notifications.panel.triggers.dialog.truncatedValues": "…in še {count} drugih",

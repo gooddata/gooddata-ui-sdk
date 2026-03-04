@@ -94,12 +94,9 @@
     "analyticsCatalog.catalogItem.title.add": "新增標題…",
     "analyticsCatalog.catalogItem.description": "描述",
     "analyticsCatalog.catalogItem.description.add": "新增描述...",
-    "analyticsCatalog.catalogItem.description.generate": "產生說明",
-    "analyticsCatalog.catalogItem.description.generate.dialog.title": "產生說明",
-    "analyticsCatalog.catalogItem.description.generate.dialog.content": "此說明由 AI 產生。請將產生的文字作為起點，並在套用前進行審閱。",
-    "analyticsCatalog.catalogItem.description.generate.dialog.accept": "接受",
-    "analyticsCatalog.catalogItem.description.generate.dialog.decline": "拒絕",
-    "analyticsCatalog.catalogItem.description.generate.dialog.note": "註記",
+    "analyticsCatalog.catalogItem.description.generate": "使用 AI 產生說明",
+    "analyticsCatalog.catalogItem.description.generate.loading": "產生中...",
+    "analyticsCatalog.catalogItem.description.generate.undo": "撤銷",
     "analyticsCatalog.catalogItem.description.generate.failed": "無法產生說明。稍後再試。",
     "analyticsCatalog.catalogItem.update.failed": "更新目錄項目失敗。請稍後再試。",
     "analyticsCatalog.catalogItem.id": "ID",
@@ -152,5 +149,8 @@
     "metricComponent.metricType.label": "指標類型",
     "metricComponent.metricType.unspecified": "未指定",
     "metricComponent.metricType.currency": "貨幣",
-    "metricComponent.numberFormat.label": "數字格式"
+    "metricComponent.numberFormat.label": "數字格式",
+    "analyticsCatalog.tabs.recommended": "受到推崇的",
+    "analyticsCatalog.tabs.trending": "趨勢",
+    "analyticsCatalog.tabs.quality": "品質"
 }

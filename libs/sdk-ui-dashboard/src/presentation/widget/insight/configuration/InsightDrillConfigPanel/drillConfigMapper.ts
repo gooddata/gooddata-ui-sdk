@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { defineMessage } from "react-intl";
 
@@ -101,6 +101,9 @@ const createInsightConfig = (
         complete: true,
         widgetRef: widgetRef,
         drillIntersectionIgnoredAttributes: drillData.drillIntersectionIgnoredAttributes,
+        includedSourceInsightFiltersObjRefs: drillData.includedSourceInsightFiltersObjRefs,
+        ignoredDashboardFilters: drillData.ignoredDashboardFilters,
+        includedSourceMeasureFiltersObjRefs: drillData.includedSourceMeasureFiltersObjRefs,
     };
 };
 

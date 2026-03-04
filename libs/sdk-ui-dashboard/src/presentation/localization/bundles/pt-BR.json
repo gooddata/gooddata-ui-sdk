@@ -23,6 +23,7 @@
     "filterBar.showLess": "Exibir menos",
     "filterBar.unappliedFiltersNotification": "<link>Aplique filtros</link> para ver os dados atualizados.",
     "filterBar.invalidFilterSelection": "Para aplicar alterações, selecione valores válidos para estes filtros: {names}",
+    "geochart.alternateView.tablist.label": "Tabelas de camadas",
     "filterBar.executionTimestampNotificationMessage": "<bold>Observação.</bold> Você está exibindo dados atualizados, mas para qualquer filtro de data relativa, o painel considera {date} como \"hoje.\"",
     "filterBar.executionTimestampNotificationAction": "<link>Redefinir para hoje</link>",
     "options.menu.export": "Exportar",

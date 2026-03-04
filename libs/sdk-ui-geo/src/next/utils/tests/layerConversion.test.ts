@@ -78,6 +78,26 @@ describe("layerConversion", () => {
         );
     });
 
+    it("should resolve latitude display form from LOCATION when controls use LOCATION localId", () => {
+        const locationAttr = createLocationAttribute("nm_latitude", "a_nm_latitude");
+        const layerDef = createPushpinLayer([newBucket(BucketNames.LOCATION, locationAttr)], {
+            controls: {
+                latitude: "a_nm_latitude",
+                longitude: "nm_longitude",
+            },
+        });
+
+        const result = insightLayerToGeoLayer(layerDef);
+
+        if (result?.type !== "pushpin") {
+            throw new Error("Expected pushpin layer");
+        }
+
+        expect(attributeDisplayFormRef(result.latitude)).toEqual(idRef("nm_latitude", "displayForm"));
+        expect(attributeLocalId(result.latitude)).toBe("a_nm_latitude");
+        expect(attributeDisplayFormRef(result.longitude)).toEqual(idRef("nm_longitude", "displayForm"));
+    });
+
     it("should convert colorMapping items from layer controls", () => {
         const latitudeAttr = createAttribute("latitude_attr");
         const longitudeAttr = createAttribute("longitude_attr");

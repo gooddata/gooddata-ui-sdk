@@ -190,6 +190,9 @@ export type AnalyticalBackendFactory = (config?: IAnalyticalBackendConfig, implC
 // @internal
 export type AnalyticsCatalogGenerateDescriptionObjectType = Extract<ObjectType, "insight" | "analyticalDashboard" | "measure" | "fact" | "attribute">;
 
+// @internal
+export type AnalyticsCatalogGenerateTitleObjectType = AnalyticsCatalogGenerateDescriptionObjectType;
+
 // @public
 export type AuthenticationFlow = {
     loginUrl: string;
@@ -346,8 +349,25 @@ export interface IAnalyticsCatalogGenerateDescriptionResponse {
 }
 
 // @internal
+export interface IAnalyticsCatalogGenerateTitleRequest {
+    // (undocumented)
+    objectId: string;
+    // (undocumented)
+    objectType: AnalyticsCatalogGenerateTitleObjectType;
+}
+
+// @internal
+export interface IAnalyticsCatalogGenerateTitleResponse {
+    // (undocumented)
+    note?: string;
+    // (undocumented)
+    title?: string;
+}
+
+// @internal
 export interface IAnalyticsCatalogService {
     generateDescription(request: IAnalyticsCatalogGenerateDescriptionRequest): Promise<IAnalyticsCatalogGenerateDescriptionResponse>;
+    generateTitle(request: IAnalyticsCatalogGenerateTitleRequest): Promise<IAnalyticsCatalogGenerateTitleResponse>;
     getCreatedBy(): Promise<IAnalyticsCatalogCreatedBy>;
     getTags(): Promise<IAnalyticsCatalogTags>;
     getTrendingObjects(): Promise<IAnalyticsCatalogTrendingObjects>;

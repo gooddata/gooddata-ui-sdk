@@ -1,0 +1,15 @@
+{
+    "properties.total.name": "Tên",
+    "properties.advanced.chartConfigOverride.button.cancel": "Hủy",
+    "properties.comparison.valueSubSection.title": "Giá trị",
+    "properties.comparison.labelName.title": "Tên",
+    "notifications.filters.dialog.title": "Bộ lọc",
+    "notifications.panel.triggers.dialog.truncatedValues": "…và {count} nữa",
+    "close": "Đóng",
+    "automations.filter.createdBy.label": "Được tạo bởi",
+    "automations.column.id": "ID",
+    "automations.column.name": "Tên",
+    "automations.column.createdBy": "Được tạo bởi",
+    "automations.column.createdAt": "Được tạo lúc",
+    "automations.confirmDialog.button.cancel": "Hủy"
+}

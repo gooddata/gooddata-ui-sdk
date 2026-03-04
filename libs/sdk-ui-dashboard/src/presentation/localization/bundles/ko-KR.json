@@ -23,6 +23,7 @@
     "filterBar.showLess": "간단히 보기",
     "filterBar.unappliedFiltersNotification": "<link>필터 적용</link>하여 업데이트된 데이터를 확인하세요.",
     "filterBar.invalidFilterSelection": "변경 사항을 적용하려면, 이 필터에 대해 유효한 값을 선택하십시오: {names}",
+    "geochart.alternateView.tablist.label": "레이어 테이블",
     "filterBar.executionTimestampNotificationMessage": "<bold>참고.</bold> 현재 최신 데이터를 보고 있지만, 상대 날짜 필터가 있는 경우 대시보드는 {date}를 \"오늘\"로 간주합니다.",
     "filterBar.executionTimestampNotificationAction": "<link>오늘로 재설정</link>",
     "options.menu.export": "내보내기",

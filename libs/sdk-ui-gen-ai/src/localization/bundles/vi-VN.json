@@ -1,0 +1,9 @@
+{
+    "gd.gen-ai.feedback.popup.cancel": "Hủy",
+    "gd.gen-ai.button.save": "Lưu",
+    "gd.gen-ai.button.cancel": "Hủy",
+    "gd.gen-ai.save-dialog.label": "Tên",
+    "gd.gen-ai.autocomplete.type": "Loại",
+    "gd.gen-ai.autocomplete.dataset": "Tập dữ liệu",
+    "gd.gen-ai.autocomplete.id": "Id"
+}

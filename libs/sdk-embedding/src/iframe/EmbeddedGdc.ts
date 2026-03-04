@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
 
@@ -11,6 +11,7 @@ import {
 
 import {
     type ILocalIdentifierQualifier,
+    type IObjIdentifierQualifier,
     type ObjQualifier,
     type RankingFilterOperator,
 } from "./legacyTypes.js";
@@ -111,6 +112,30 @@ export interface IRelativeDateFilter {
 /**
  * @public
  */
+export interface IArbitraryAttributeFilterItem extends IAttributeFilterConfig {
+    arbitraryAttributeFilter: {
+        displayForm: IObjIdentifierQualifier;
+        values: string[];
+        negativeSelection?: boolean;
+    };
+}
+
+/**
+ * @public
+ */
+export interface IMatchAttributeFilterItem extends IAttributeFilterConfig {
+    matchAttributeFilter: {
+        displayForm: IObjIdentifierQualifier;
+        operator: "contains" | "startsWith" | "endsWith";
+        literal: string;
+        caseSensitive?: boolean;
+        negativeSelection?: boolean;
+    };
+}
+
+/**
+ * @public
+ */
 export interface IRankingFilter {
     rankingFilter: {
         measure: ILocalIdentifierQualifier;
@@ -123,7 +148,11 @@ export interface IRankingFilter {
 /**
  * @public
  */
-export type AttributeFilterItem = IPositiveAttributeFilter | INegativeAttributeFilter;
+export type AttributeFilterItem =
+    | IPositiveAttributeFilter
+    | INegativeAttributeFilter
+    | IArbitraryAttributeFilterItem
+    | IMatchAttributeFilterItem;
 
 /**
  * @public
@@ -191,7 +220,13 @@ export function isAbsoluteDateFilter(filter: unknown): filter is IAbsoluteDateFi
  * @public
  */
 export function isAttributeFilter(filter: unknown): filter is AttributeFilterItem {
-    return !isEmpty(filter) && (isPositiveAttributeFilter(filter) || isNegativeAttributeFilter(filter));
+    return (
+        !isEmpty(filter) &&
+        (isPositiveAttributeFilter(filter) ||
+            isNegativeAttributeFilter(filter) ||
+            isArbitraryAttributeFilterItem(filter) ||
+            isMatchAttributeFilterItem(filter))
+    );
 }
 
 /**
@@ -213,6 +248,22 @@ export function isNegativeAttributeFilter(filter: unknown): filter is INegativeA
  */
 export function isRankingFilter(filter: unknown): filter is IRankingFilter {
     return !isEmpty(filter) && (filter as IRankingFilter).rankingFilter !== undefined;
+}
+
+/**
+ * @public
+ */
+export function isArbitraryAttributeFilterItem(filter: unknown): filter is IArbitraryAttributeFilterItem {
+    return (
+        !isEmpty(filter) && (filter as IArbitraryAttributeFilterItem).arbitraryAttributeFilter !== undefined
+    );
+}
+
+/**
+ * @public
+ */
+export function isMatchAttributeFilterItem(filter: unknown): filter is IMatchAttributeFilterItem {
+    return !isEmpty(filter) && (filter as IMatchAttributeFilterItem).matchAttributeFilter !== undefined;
 }
 
 /**

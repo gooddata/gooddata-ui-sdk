@@ -23,6 +23,7 @@
     "filterBar.showLess": "Prikaži manj",
     "filterBar.unappliedFiltersNotification": "<link>Uporabi filtre</link> za ogled posodobljenih podatkov.",
     "filterBar.invalidFilterSelection": "Za uveljavitev sprememb izberite veljavne vrednosti za te filtre: {names}",
+    "geochart.alternateView.tablist.label": "Tabele plasti",
     "filterBar.executionTimestampNotificationMessage": "<bold>Opomba.</bold> Ogledate si posodobljene podatke, vendar nadzorna plošča za relativne datume obravnava {date} kot »danes.«",
     "filterBar.executionTimestampNotificationAction": "<link>Ponastavi na danes</link>",
     "options.menu.export": "Izvozi",

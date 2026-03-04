@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { uniqBy } from "lodash-es";
 
@@ -13,7 +13,7 @@ import {
 } from "@gooddata/sdk-model";
 import { type DataViewFacade, type IColorAssignment } from "@gooddata/sdk-ui";
 
-import { getColorByGuid, getColorFromMapping, getRgbStringFromRGB } from "./color.js";
+import { getColorByGuid, getColorFromMapping, getRgbStringFromRGB, guidEquals } from "./color.js";
 import { type IColorMapping } from "./types.js";
 
 /**
@@ -139,7 +139,7 @@ export function isValidMappedColor(
  */
 function isColorItemInPalette(colorItem: IColor, colorPalette: IColorPalette) {
     return colorPalette.some((paletteItem: IColorPaletteItem) => {
-        return colorItem.type === "guid" && colorItem.value === paletteItem.guid;
+        return colorItem.type === "guid" && guidEquals(String(colorItem.value), paletteItem.guid);
     });
 }
 

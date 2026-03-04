@@ -42,6 +42,7 @@ import {
     type IUiMenuItem,
     type IUiMenuItemData,
     type IUiMenuProps,
+    type IUiMenuSubview,
 } from "./types.js";
 import { isElementTextInput } from "../../utils/domUtilities.js";
 import { makeMenuKeyboardNavigation } from "../@utils/keyboardNavigation.js";
@@ -107,6 +108,17 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
     }, [items, focusedId, isItemFocusable]);
 
     const [shownCustomContentItemId, setShownCustomContentItemId] = useState<string | undefined>(undefined);
+    const [shownSubview, setShownSubview] = useState<IUiMenuSubview[]>([]);
+    const pushShownSubview = useCallback((subview: IUiMenuSubview) => {
+        setShownSubview((previous) => [...previous, subview]);
+    }, []);
+    const popShownSubview = useCallback(() => {
+        setShownSubview((previous) => previous.slice(0, -1));
+    }, []);
+
+    useEffect(() => {
+        setShownSubview((previous) => (previous.length > 0 ? [] : previous));
+    }, [shownCustomContentItemId]);
 
     const setFocusedId = useCallback<typeof setFocusedId_internal>(
         (...args) => {
@@ -213,6 +225,9 @@ export function useUiMenuContextValue<T extends IUiMenuItemData = object, M = ob
         focusedItem,
         setShownCustomContentItemId,
         shownCustomContentItemId,
+        pushShownSubview,
+        popShownSubview,
+        shownSubview,
         onClose,
         items,
         size,

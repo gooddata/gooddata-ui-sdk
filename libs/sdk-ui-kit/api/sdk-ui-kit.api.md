@@ -6607,6 +6607,10 @@ export interface IUiMenuContext<T extends IUiMenuItemData = object, M = object> 
     // (undocumented)
     onSelect: (item: IUiMenuFocusableItem<T> | undefined, event: MouseEvent_2 | KeyboardEvent_2) => void;
     // (undocumented)
+    popShownSubview: () => void;
+    // (undocumented)
+    pushShownSubview: (subview: IUiMenuSubview) => void;
+    // (undocumented)
     scrollToView: (element: HTMLElement | null) => void;
     // (undocumented)
     setControlType: Dispatch<SetStateAction<IUiMenuControlType>>;
@@ -6616,6 +6620,8 @@ export interface IUiMenuContext<T extends IUiMenuItemData = object, M = object> 
     setShownCustomContentItemId: Dispatch<SetStateAction<string | undefined>>;
     // (undocumented)
     shownCustomContentItemId?: string;
+    // (undocumented)
+    shownSubview: IUiMenuSubview[];
     // (undocumented)
     size: SizeSmall | SizeMedium;
 }
@@ -6757,6 +6763,18 @@ export type IUiMenuStaticItem<T extends IUiMenuItemData = object> = {
 export interface IUiMenuStaticItemProps<T extends IUiMenuItemData = object> {
     // (undocumented)
     item: IUiMenuStaticItem<T>;
+}
+
+// @internal (undocumented)
+export interface IUiMenuSubview {
+    // (undocumented)
+    path: string;
+    // (undocumented)
+    payload?: Record<string, unknown>;
+    // (undocumented)
+    title: string;
+    // (undocumented)
+    tooltipText?: string;
 }
 
 // @internal (undocumented)
@@ -6971,6 +6989,8 @@ export interface IUiSubmenuHeaderProps {
     title?: string;
     // (undocumented)
     titleId?: string;
+    // (undocumented)
+    tooltipText?: string;
     // (undocumented)
     useShortenedTitle?: boolean;
 }
@@ -8332,7 +8352,7 @@ export type UiStaticTreeView<Level> = UiTreeViewTree<Level>;
 export function UiStaticTreeview<Level>(props: IUiStaticTreeViewProps<Level>): JSX.Element;
 
 // @internal
-export function UiSubmenuHeader({ title, onBack, onClose, backAriaLabel, closeAriaLabel, useShortenedTitle, textColor, backgroundColor, height, titleId }: IUiSubmenuHeaderProps): JSX.Element;
+export function UiSubmenuHeader({ title, tooltipText, onBack, onClose, backAriaLabel, closeAriaLabel, useShortenedTitle, textColor, backgroundColor, height, titleId }: IUiSubmenuHeaderProps): JSX.Element;
 
 // @internal (undocumented)
 export function UiTabOutHandler({ onTabOut, children }: {

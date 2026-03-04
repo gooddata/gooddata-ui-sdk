@@ -484,6 +484,7 @@ exports[`initialize dashboard handler > for any dashboard > should resolve confi
   "isWhiteLabeled": false,
   "locale": "en-US",
   "mapboxToken": undefined,
+  "maxZoomLevel": undefined,
   "menuButtonItemsVisibility": {},
   "objectAvailability": {},
   "separators": {

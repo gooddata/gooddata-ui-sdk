@@ -1,6 +1,11 @@
 // (C) 2025 GoodData Corporation
 @use "@gooddata/sdk-ui-kit/styles/scss/variables" as variables;
 
+.gd-filter-group {
+    display: flex;
+    align-items: center;
+}
+
 .dropdown-body .gd-list.gd-filter-group-body,
 .gd-mobile-dropdown-content .gd-list.gd-filter-group-body {
     display: flex;

@@ -5,12 +5,20 @@ import { isEqual } from "lodash-es";
 import {
     type IAttributeDescriptor,
     type IDrillDownIntersectionIgnoredAttributes,
+    type IDrillToInsight,
+    type IFilter,
+    type IMeasure,
     type InsightDrillDefinition,
     type ObjRef,
     type ObjRefInScope,
+    type SourceInsightFilterObjRef,
     areObjRefsEqual,
     drillDownReferenceHierarchyRef,
+    filterMeasureRef,
+    filterObjRef,
+    isAttributeFilter,
     isCrossFiltering,
+    isDateFilter,
     isDrillFromAttribute,
     isDrillFromMeasure,
     isDrillToLegacyDashboard,
@@ -18,6 +26,10 @@ import {
     isKeyDriveAnalysis,
     isLocalIdRef,
     isMeasureDescriptor,
+    isMeasureValueFilter,
+    isRankingFilter,
+    measureFilters,
+    measureLocalId,
 } from "@gooddata/sdk-model";
 import {
     type IAvailableDrillTargets,
@@ -113,6 +125,38 @@ export function getLocalIdentifierOrDie(ref: ObjRefInScope): string {
     throw new Error("Invalid ObjRef invariant expecting LocalIdRef");
 }
 
+/**
+ * Returns source measure filters for a drill origin measure.
+ *
+ * @internal
+ */
+export function getSourceMeasureFiltersForDrillDefinition(
+    drillDefinition: IDrillToInsight,
+    sourceInsightMeasures: IMeasure[],
+): IFilter[] {
+    const { origin } = drillDefinition;
+
+    if (!isDrillFromMeasure(origin)) {
+        return [];
+    }
+
+    if (!isLocalIdRef(origin.measure)) {
+        return [];
+    }
+
+    const sourceMeasureLocalIdentifier = origin.measure.localIdentifier;
+    const sourceMeasure = sourceInsightMeasures.find(
+        (measure) => measureLocalId(measure) === sourceMeasureLocalIdentifier,
+    );
+    if (!sourceMeasure) {
+        return [];
+    }
+
+    return (measureFilters(sourceMeasure) ?? []).filter(
+        (filter) => isAttributeFilter(filter) || isDateFilter(filter),
+    );
+}
+
 export function isDrillConfigured(
     drill: DashboardDrillDefinition,
     configuredDrills: DashboardDrillDefinition[],
@@ -172,4 +216,96 @@ export function isDrillDownIntersectionIgnoredAttributesForHierarchy(
     return isDateDrillDown && isDateDrillDownReference
         ? true
         : areObjRefsEqual(hierarchyRef, targetHierarchyRef);
+}
+
+/**
+ * Compares persisted drill filter reference with actual insight filter.
+ *
+ * @internal
+ */
+export function isMatchingSourceInsightFilter(
+    filter: IFilter,
+    sourceFilterObjRef: SourceInsightFilterObjRef,
+): boolean {
+    const currentSourceFilterObjRef = sourceInsightFilterObjRef(filter);
+    if (!currentSourceFilterObjRef) {
+        return false;
+    }
+
+    return isSourceInsightFilterObjRefEqual(currentSourceFilterObjRef, sourceFilterObjRef);
+}
+
+/**
+ * Compares two persisted source insight filter references.
+ *
+ * @internal
+ */
+export function isSourceInsightFilterObjRefEqual(
+    left: SourceInsightFilterObjRef,
+    right: SourceInsightFilterObjRef,
+): boolean {
+    return (
+        left.type === right.type &&
+        areObjRefsEqual(sourceInsightFilterObjRefValue(left), sourceInsightFilterObjRefValue(right))
+    );
+}
+
+export function sourceInsightFilterObjRef(filter: IFilter): SourceInsightFilterObjRef | undefined {
+    if (isAttributeFilter(filter)) {
+        const displayFormRef = filterObjRef(filter);
+        return displayFormRef
+            ? {
+                  type: "attributeFilter",
+                  label: displayFormRef,
+              }
+            : undefined;
+    }
+
+    if (isDateFilter(filter)) {
+        const dataSetRef = filterObjRef(filter);
+        return dataSetRef
+            ? {
+                  type: "dateFilter",
+                  dataSet: dataSetRef,
+              }
+            : undefined;
+    }
+
+    if (isMeasureValueFilter(filter)) {
+        const measureRef = filterMeasureRef(filter);
+        return measureRef
+            ? {
+                  type: "measureValueFilter",
+                  measure: measureRef,
+              }
+            : undefined;
+    }
+
+    if (isRankingFilter(filter)) {
+        const measureRef = filterMeasureRef(filter);
+        return measureRef
+            ? {
+                  type: "rankingFilter",
+                  measure: measureRef,
+              }
+            : undefined;
+    }
+
+    return undefined;
+}
+
+export function sourceInsightFilterObjRefValue(sourceFilterObjRef: SourceInsightFilterObjRef) {
+    if (sourceFilterObjRef.type === "attributeFilter") {
+        return sourceFilterObjRef.label;
+    }
+
+    if (sourceFilterObjRef.type === "dateFilter") {
+        return sourceFilterObjRef.dataSet;
+    }
+
+    if (sourceFilterObjRef.type === "measureValueFilter" || sourceFilterObjRef.type === "rankingFilter") {
+        return sourceFilterObjRef.measure;
+    }
+
+    throw new Error("Invalid SourceInsightFilterObjRef");
 }

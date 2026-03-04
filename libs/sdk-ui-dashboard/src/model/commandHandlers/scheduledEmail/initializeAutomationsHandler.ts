@@ -37,7 +37,10 @@ import { loadDashboardUserAutomations, loadWorkspaceAutomationsCount } from "./l
 import { loadNotificationChannels } from "./loadNotificationChannels.js";
 import { dashboardFilterToFilterContextItem } from "../../../_staging/dashboard/dashboardFilterContext.js";
 import { type IDashboardFilter, isDashboardFilter } from "../../../types.js";
-import { changeFilterContextSelection } from "../../commands/filters.js";
+import {
+    changeFilterContextSelection,
+    changeFilterContextSelectionByParams,
+} from "../../commands/filters.js";
 import { type IInitializeAutomations } from "../../commands/scheduledEmail.js";
 import { switchDashboardTab } from "../../commands/tabs.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
@@ -60,7 +63,10 @@ import { selectInsightByWidgetRef } from "../../store/insights/insightsSelectors
 import { selectDashboardId } from "../../store/meta/metaSelectors.js";
 import { notificationChannelsActions } from "../../store/notificationChannels/index.js";
 import { selectCanManageWorkspace } from "../../store/permissions/permissionsSelectors.js";
-import { selectFilterContextFilters } from "../../store/tabs/filterContext/filterContextSelectors.js";
+import {
+    selectFilterContextFilters,
+    selectFiltersForTab,
+} from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { selectWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
 import { selectActiveTabLocalIdentifier } from "../../store/tabs/tabsSelectors.js";
 import { uiActions } from "../../store/ui/index.js";
@@ -199,25 +205,76 @@ export function* initializeAutomationsHandler(
             }
 
             // Set filters to the dashboard based on export definition filters
-            if (targetExportDefinition && targetExportDefinitionFilters) {
-                const filtersToSet =
-                    targetExportDefinitionFilters?.filter((filter) => {
-                        if (targetExportVisibleFilters) {
-                            return targetExportVisibleFilters.some(
-                                (f) => f.localIdentifier === dashboardFilterLocalIdentifier(filter),
-                            );
+            if (targetExportDefinition) {
+                const exportContent = targetExportDefinition.requestPayload;
+
+                if (
+                    isExportDefinitionDashboardRequestPayload(exportContent) &&
+                    exportContent.content.filtersByTab
+                ) {
+                    // Multi-tab path: apply each tab's filters with explicit tabLocalIdentifier
+                    const filtersByTab: Record<string, FilterContextItem[]> =
+                        exportContent.content.filtersByTab;
+                    for (const [tabId, tabFilters] of Object.entries(filtersByTab)) {
+                        const tabCurrentFilters: FilterContextItem[] = yield select(
+                            selectFiltersForTab(tabId),
+                        );
+                        const tabCommonDateFilter = tabCurrentFilters.find(isDashboardCommonDateFilter);
+                        const tabCommonDateFilterLocalId =
+                            tabCommonDateFilter?.dateFilter.localIdentifier ??
+                            generateDateFilterLocalIdentifier(0);
+
+                        const tabVisibleFilters = extractVisibleFiltersForTab(targetAutomation, tabId);
+
+                        const compactedTabFilters = compact(tabFilters);
+                        const filtersToSet = compactedTabFilters.filter((filter) => {
+                            if (tabVisibleFilters) {
+                                return tabVisibleFilters.some(
+                                    (f) => f.localIdentifier === dashboardFilterLocalIdentifier(filter),
+                                );
+                            }
+                            return true;
+                        });
+
+                        const sanitizedFilters = sanitizeDateFilters(
+                            filtersToSet,
+                            tabCommonDateFilterLocalId,
+                        );
+
+                        // Empty tab filters = reset all filters (set them to all).
+                        // Empty sanitized filters = keep filters as they are.
+                        // Non-empty sanitized filters = set them.
+                        if (compactedTabFilters.length === 0 || sanitizedFilters.length > 0) {
+                            const cmd = changeFilterContextSelectionByParams({
+                                filters: sanitizedFilters,
+                                resetOthers: true,
+                                correlationId: automationId,
+                                tabLocalIdentifier: tabId,
+                            });
+                            yield call(changeFilterContextSelectionHandler, ctx, cmd);
                         }
-                        return true;
-                    }) ?? [];
+                    }
+                } else if (targetExportDefinitionFilters) {
+                    // Flat filters path: backward compatibility for non-tab export definitions
+                    const filtersToSet =
+                        targetExportDefinitionFilters?.filter((filter) => {
+                            if (targetExportVisibleFilters) {
+                                return targetExportVisibleFilters.some(
+                                    (f) => f.localIdentifier === dashboardFilterLocalIdentifier(filter),
+                                );
+                            }
+                            return true;
+                        }) ?? [];
 
-                const sanitizedFiltersToSet = sanitizeDateFilters(filtersToSet, commonDateFilterLocalId);
+                    const sanitizedFiltersToSet = sanitizeDateFilters(filtersToSet, commonDateFilterLocalId);
 
-                // Empty schedule execution filters = reset all filters (set them to all).
-                // Empty sanitized filters = keep filters as they are, do not reset them (all schedule execution filters are ignored).
-                // Non-empty sanitized filters = set them (some schedule export definition filters are originating from the dashboard).
-                if (targetExportDefinitionFilters.length === 0 || sanitizedFiltersToSet.length > 0) {
-                    const cmd = changeFilterContextSelection(sanitizedFiltersToSet, true, automationId);
-                    yield call(changeFilterContextSelectionHandler, ctx, cmd);
+                    // Empty schedule execution filters = reset all filters (set them to all).
+                    // Empty sanitized filters = keep filters as they are, do not reset them (all schedule execution filters are ignored).
+                    // Non-empty sanitized filters = set them (some schedule export definition filters are originating from the dashboard).
+                    if (targetExportDefinitionFilters.length === 0 || sanitizedFiltersToSet.length > 0) {
+                        const cmd = changeFilterContextSelection(sanitizedFiltersToSet, true, automationId);
+                        yield call(changeFilterContextSelectionHandler, ctx, cmd);
+                    }
                 }
             }
 

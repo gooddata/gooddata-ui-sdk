@@ -94,12 +94,9 @@
     "analyticsCatalog.catalogItem.title.add": "添加标题…",
     "analyticsCatalog.catalogItem.description": "描述",
     "analyticsCatalog.catalogItem.description.add": "添加说明…",
-    "analyticsCatalog.catalogItem.description.generate": "生成说明",
-    "analyticsCatalog.catalogItem.description.generate.dialog.title": "生成说明",
-    "analyticsCatalog.catalogItem.description.generate.dialog.content": "此说明由 AI 生成。请将生成的文本作为起点，并在应用前进行审阅。",
-    "analyticsCatalog.catalogItem.description.generate.dialog.accept": "接受",
-    "analyticsCatalog.catalogItem.description.generate.dialog.decline": "拒绝",
-    "analyticsCatalog.catalogItem.description.generate.dialog.note": "注",
+    "analyticsCatalog.catalogItem.description.generate": "使用 AI 生成描述",
+    "analyticsCatalog.catalogItem.description.generate.loading": "正在生成...",
+    "analyticsCatalog.catalogItem.description.generate.undo": "撤消",
     "analyticsCatalog.catalogItem.description.generate.failed": "无法生成说明。请稍后重试。",
     "analyticsCatalog.catalogItem.update.failed": "更新目录项失败。请稍后重试。",
     "analyticsCatalog.catalogItem.id": "ID",
@@ -152,5 +149,8 @@
     "metricComponent.metricType.label": "指标类型",
     "metricComponent.metricType.unspecified": "未指定",
     "metricComponent.metricType.currency": "货币",
-    "metricComponent.numberFormat.label": "数字格式"
+    "metricComponent.numberFormat.label": "数字格式",
+    "analyticsCatalog.tabs.recommended": "已推荐",
+    "analyticsCatalog.tabs.trending": "热门趋势",
+    "analyticsCatalog.tabs.quality": "质量"
 }

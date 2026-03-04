@@ -385,7 +385,6 @@
     "notifications.panel.downloadFilesHint": "내보낸 파일 다운로드",
     "notifications.filters.buttonLabel": "{count, plural, one {# 필터} other {# 필터(들)}}",
     "notifications.filters.dialog.title": "필터(들)",
-    "notifications.filters.dialog.dateRange": "날짜 범위",
     "notifications.panel.triggers.title": "{triggeredCount}/{totalCount} 항목의 경우",
     "notifications.panel.triggers.dialog.newValue": "새 값",
     "notifications.panel.triggers.dialog.truncatedValues": "…및 {count} 더보기",

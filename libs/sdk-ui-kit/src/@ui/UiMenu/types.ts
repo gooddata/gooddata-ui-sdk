@@ -153,6 +153,16 @@ export interface IUiMenuContentProps<T extends IUiMenuItemData = object> {
 /**
  * @internal
  */
+export interface IUiMenuSubview {
+    title: string;
+    path: string;
+    tooltipText?: string;
+    payload?: Record<string, unknown>;
+}
+
+/**
+ * @internal
+ */
 export type IUiMenuControlType = "keyboard" | "mouse" | "unknown";
 
 /**
@@ -180,7 +190,10 @@ export interface IUiMenuContext<
     size: SizeSmall | SizeMedium;
     focusedItem: IUiMenuFocusableItem<T> | undefined;
     shownCustomContentItemId?: string;
+    shownSubview: IUiMenuSubview[];
     setShownCustomContentItemId: Dispatch<SetStateAction<string | undefined>>;
+    pushShownSubview: (subview: IUiMenuSubview) => void;
+    popShownSubview: () => void;
     onSelect: (item: IUiMenuFocusableItem<T> | undefined, event: MouseEvent | KeyboardEvent) => void;
     onClose?: () => void;
     setFocusedId: Dispatch<SetStateAction<string | undefined>>;

@@ -23,6 +23,7 @@
     "filterBar.showLess": "Minder tonen",
     "filterBar.unappliedFiltersNotification": "<link>Pas filters toe op</link> om bijgewerkte gegevens te zien.",
     "filterBar.invalidFilterSelection": "Selecteer geldige waarden voor deze filters {names} om wijzigingen toe te passen: ",
+    "geochart.alternateView.tablist.label": "Laagtabel",
     "filterBar.executionTimestampNotificationMessage": "<bold>Opmerking.</bold> Je bekijkt actuele gegevens, maar voor alle relatieve datumfilters behandelt het dashboard {date} als \"vandaag\".",
     "filterBar.executionTimestampNotificationAction": "<link>Terugzetten naar vandaag</link>",
     "options.menu.export": "Exporteren",

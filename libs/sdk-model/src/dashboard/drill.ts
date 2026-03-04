@@ -1,4 +1,4 @@
-// (C) 2020-2025 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 import { isEmpty } from "lodash-es";
 
@@ -258,6 +258,61 @@ export interface IDrillToDashboard extends IDrill {
 }
 
 /**
+ * Source insight attribute filter reference.
+ * @public
+ */
+export interface ISourceInsightAttributeFilterRef {
+    type: "attributeFilter";
+    label: ObjRefInScope;
+}
+
+/**
+ * Source insight date filter reference.
+ * @public
+ */
+export interface ISourceInsightDateFilterRef {
+    type: "dateFilter";
+    dataSet: ObjRefInScope;
+}
+
+/**
+ * Source insight measure value filter reference.
+ * @public
+ */
+export interface ISourceInsightMeasureValueFilterRef {
+    type: "measureValueFilter";
+    measure: ObjRefInScope;
+}
+
+/**
+ * Source insight ranking filter reference.
+ * @public
+ */
+export interface ISourceInsightRankingFilterRef {
+    type: "rankingFilter";
+    measure: ObjRefInScope;
+}
+
+/**
+ * Source insight filter reference.
+ * @public
+ */
+export type SourceInsightFilterObjRef =
+    | ISourceInsightAttributeFilterRef
+    | ISourceInsightDateFilterRef
+    | ISourceInsightMeasureValueFilterRef
+    | ISourceInsightRankingFilterRef;
+
+/**
+ * Source measure-level filter reference.
+ * @public
+ */
+export type SourceMeasureFilterObjRef = Extract<
+    SourceInsightFilterObjRef,
+    ISourceInsightAttributeFilterRef | ISourceInsightDateFilterRef
+>;
+
+/**
  * Type-guard testing whether the provided object is an instance of {@link IDrillToDashboard}.
  * @alpha
  */
@@ -284,6 +339,21 @@ export interface IDrillToInsight extends IDrill {
      * Target insight ref
      */
     target: ObjRef;
+
+    /**
+     * Dashboard-level filters that should be excluded (opt-out).
+     */
+    ignoredDashboardFilters?: string[];
+
+    /**
+     * Source insight filters that are explicitly included (opt-in).
+     */
+    includedSourceInsightFiltersObjRefs?: SourceInsightFilterObjRef[];
+
+    /**
+     * Source measure-level filters that are explicitly included (opt-in).
+     */
+    includedSourceMeasureFiltersObjRefs?: SourceMeasureFilterObjRef[];
 }
 
 /**
