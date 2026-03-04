@@ -878,6 +878,7 @@ export type DashboardConfig = {
     objectAvailability?: ObjectAvailabilityConfig;
     mapboxToken?: string;
     agGridToken?: string;
+    maxZoomLevel?: number | null;
     isReadOnly?: boolean;
     isEmbedded?: boolean;
     isExport?: boolean;
@@ -9422,7 +9423,7 @@ export type ResolveAsyncRenderPayload = {
 };
 
 // @public
-export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "agGridToken" | "exportId" | "exportType" | "focusObject" | "slideConfig" | "references" | "entitlements" | "initialContent" | "executionTimestamp" | "overrideDefaultFilters" | "overrideTitle" | "hideWidgetTitles" | "workspaceDescriptor" | "evaluationFrequency" | "externalRecipient" | "openAutomationOnLoad" | "hideAddTabButton"> & DashboardConfig;
+export type ResolvedDashboardConfig = Omit<Required<DashboardConfig>, "mapboxToken" | "agGridToken" | "maxZoomLevel" | "exportId" | "exportType" | "focusObject" | "slideConfig" | "references" | "entitlements" | "initialContent" | "executionTimestamp" | "overrideDefaultFilters" | "overrideTitle" | "hideWidgetTitles" | "workspaceDescriptor" | "evaluationFrequency" | "externalRecipient" | "openAutomationOnLoad" | "hideAddTabButton"> & DashboardConfig;
 
 // @alpha (undocumented)
 export type ResolvedDateFilterValues = IResolvedDateFilterValue[];
@@ -10138,6 +10139,9 @@ export const selectEnableExportToPdfTabular: DashboardSelector<boolean>;
 
 // @internal
 export const selectEnableExternalRecipients: DashboardSelector<boolean>;
+
+// @internal
+export const selectEnableFilterControlInDrillingConfiguration: DashboardSelector<boolean>;
 
 // @public
 export const selectEnableFilterValuesResolutionInDrillEvents: DashboardSelector<boolean>;

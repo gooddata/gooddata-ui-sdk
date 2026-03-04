@@ -956,6 +956,7 @@ export {
 export type {
     IUiMenuProps,
     IUiMenuContext,
+    IUiMenuSubview,
     IUiMenuItem,
     IUiMenuFocusableItem,
     IUiMenuStaticItem,

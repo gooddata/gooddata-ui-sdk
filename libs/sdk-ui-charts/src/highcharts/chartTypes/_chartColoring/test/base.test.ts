@@ -1,4 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import { describe, expect, it } from "vitest";
 
 import { type IColor, type IColorPalette } from "@gooddata/sdk-model";
@@ -45,5 +46,33 @@ describe("isValidMappedColor", () => {
         };
 
         expect(isValidMappedColor(colorItem, colorPalette)).toBeTruthy();
+    });
+
+    it("should match zero-padded GUID with unpadded palette GUID", () => {
+        const unpadded: IColorPalette = [{ guid: "1", fill: { r: 195, g: 49, b: 73 } }];
+        const colorItem: IColor = { type: "guid", value: "01" };
+
+        expect(isValidMappedColor(colorItem, unpadded)).toBeTruthy();
+    });
+
+    it("should match unpadded GUID with zero-padded palette GUID", () => {
+        const colorItem: IColor = { type: "guid", value: "1" };
+
+        expect(isValidMappedColor(colorItem, colorPalette)).toBeTruthy();
+    });
+
+    it("should not match different numeric GUIDs even with padding", () => {
+        const colorItem: IColor = { type: "guid", value: "02" };
+
+        expect(isValidMappedColor(colorItem, colorPalette)).toBeFalsy();
+    });
+
+    it("should not match different large numeric GUIDs", () => {
+        const largeGuidPalette: IColorPalette = [
+            { guid: "9007199254740992", fill: { r: 195, g: 49, b: 73 } },
+        ];
+        const colorItem: IColor = { type: "guid", value: "9007199254740993" };
+
+        expect(isValidMappedColor(colorItem, largeGuidPalette)).toBeFalsy();
     });
 });

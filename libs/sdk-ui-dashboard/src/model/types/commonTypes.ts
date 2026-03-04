@@ -175,6 +175,15 @@ export type DashboardConfig = {
     agGridToken?: string;
 
     /**
+     * Maximum zoom level for GeoChart map.
+     *
+     * @remarks
+     * When set, the map will not allow zooming in beyond this level.
+     * Use `null` to explicitly clear the zoom limit.
+     */
+    maxZoomLevel?: number | null;
+
+    /**
      * Sets dashboard to the read-only mode.
      *
      * @remarks
@@ -469,6 +478,7 @@ export interface IDashboardFocusObject {
  *
  * -  `mapboxToken` - has to be provided by the context
  * -  `agGridToken` - has to be provided by the context
+ * -  `maxZoomLevel` - can be undefined if neither explicit config nor backend settings provide it
  * -  `exportId` - optional, used for fetching filters during export mode
  * -  `isReadOnly` - is purely choice of context in which the dashboard is used
  *
@@ -478,6 +488,7 @@ export type ResolvedDashboardConfig = Omit<
     Required<DashboardConfig>,
     | "mapboxToken"
     | "agGridToken"
+    | "maxZoomLevel"
     | "exportId"
     | "exportType"
     | "focusObject"

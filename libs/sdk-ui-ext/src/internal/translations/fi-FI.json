@@ -385,7 +385,6 @@
     "notifications.panel.downloadFilesHint": "Lataa viedyt tiedostot",
     "notifications.filters.buttonLabel": "{count, plural, one {# filter} other {# suodattimet}}",
     "notifications.filters.dialog.title": "Suodattimet",
-    "notifications.filters.dialog.dateRange": "Ajanjakso",
     "notifications.panel.triggers.title": "kohteelle {triggeredCount}/{totalCount} items",
     "notifications.panel.triggers.dialog.newValue": "Uusi arvo",
     "notifications.panel.triggers.dialog.truncatedValues": "…ja {count} lisää",

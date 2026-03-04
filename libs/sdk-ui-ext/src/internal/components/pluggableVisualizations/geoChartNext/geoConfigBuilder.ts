@@ -193,7 +193,8 @@ function getLocationAttributeFromInsight(
         const properties = insightProperties(insight);
         const controls = properties?.["controls"] ?? {};
         const identifier = controls[bucketName];
-        return newAttribute(idRef(identifier, "displayForm"), (a) => a.localId(`a_${identifier}`));
+        const localId = bucketName === BucketNames.LATITUDE ? "latitude_df" : "longitude_df";
+        return newAttribute(idRef(identifier, "displayForm"), (a) => a.localId(localId));
     }
 
     return undefined;

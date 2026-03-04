@@ -385,7 +385,6 @@
     "notifications.panel.downloadFilesHint": "下载导出的文件",
     "notifications.filters.buttonLabel": "{count, plural, one {＃ 筛选} other {# 过滤器}}",
     "notifications.filters.dialog.title": "筛选器",
-    "notifications.filters.dialog.dateRange": "日期范围",
     "notifications.panel.triggers.title": "针对{triggeredCount}/{totalCount}项",
     "notifications.panel.triggers.dialog.newValue": "新数值",
     "notifications.panel.triggers.dialog.truncatedValues": "…和另外 {count} 个",

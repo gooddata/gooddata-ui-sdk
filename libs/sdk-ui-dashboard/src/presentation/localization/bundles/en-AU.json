@@ -23,6 +23,7 @@
     "filterBar.showLess": "Show less",
     "filterBar.unappliedFiltersNotification": "<link>Apply filters</link> to see updated data.",
     "filterBar.invalidFilterSelection": "To apply changes, select valid values for these filters: {names}",
+    "geochart.alternateView.tablist.label": "Layer tables",
     "filterBar.executionTimestampNotificationMessage": "<bold>Note.</bold> You're viewing up-to-date data, but for any relative date filters the dashboard treats {date} as “today.”",
     "filterBar.executionTimestampNotificationAction": "<link>Reset to today</link>",
     "options.menu.export": "Export",

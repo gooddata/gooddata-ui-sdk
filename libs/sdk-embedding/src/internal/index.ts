@@ -9,8 +9,10 @@ export { messagingUtils, validators };
 export {
     filterConverters,
     type IExternalFiltersObject,
+    type ITransformedArbitraryAttributeFilter,
     type ITransformedAttributeFilterItem,
     type ITransformedDateFilterItem,
     type ITransformedFilterItem,
+    type ITransformedMatchAttributeFilter,
     type ITransformedRankingFilter,
 } from "./filterConverters.js";

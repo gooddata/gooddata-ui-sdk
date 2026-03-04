@@ -23,6 +23,7 @@
     "filterBar.showLess": "表示を減らす",
     "filterBar.unappliedFiltersNotification": "<link>フィルターを適用</link>して、更新されたデータを表示します。",
     "filterBar.invalidFilterSelection": "変更を適用するには、これらのフィルタの有効な値を選択します：{names}",
+    "geochart.alternateView.tablist.label": "レイヤー テーブル",
     "filterBar.executionTimestampNotificationMessage": "<bold>注意</bold> 最新のデータが表示されていますが、ダッシュボードが扱う相対的な日付フィルターでは{date}を「今日」として扱います。",
     "filterBar.executionTimestampNotificationAction": "<link>今日にリセット</link>",
     "options.menu.export": "エクスポート",

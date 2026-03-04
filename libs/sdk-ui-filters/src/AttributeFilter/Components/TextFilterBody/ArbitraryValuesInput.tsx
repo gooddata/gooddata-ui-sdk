@@ -14,7 +14,7 @@ import {
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { Input, UiTag, isArrowDownKey, isEnterKey, isEscapeKey } from "@gooddata/sdk-ui-kit";
+import { Input, LoadingSpinner, UiTag, isArrowDownKey, isEnterKey, isEscapeKey } from "@gooddata/sdk-ui-kit";
 
 import { parseArbitraryValues } from "../../parseArbitraryValues.js";
 
@@ -76,8 +76,19 @@ export interface IArbitraryValuesInputProps {
      * Already-selected values are excluded from the suggestions.
      */
     autocompleteOptions?: string[];
-}
 
+    /**
+     * Optional callback to trigger a search for autocomplete suggestions.
+     * When provided, this will be called as the user types to fetch matching elements
+     * from the backend.
+     */
+    onAutocompleteSearch?: (searchString: string) => void;
+
+    /**
+     * Whether autocomplete is currently loading results from the backend.
+     */
+    isAutocompleteLoading?: boolean;
+}
 /**
  * Wraps the first occurrence of `query` inside `text` in a `<strong>` tag for visual highlighting.
  * The match is case-insensitive; original casing of the text is preserved.
@@ -119,7 +130,10 @@ export function ArbitraryValuesInput(props: IArbitraryValuesInputProps) {
         hasValuesLimitExceededError,
         emptyValueDisplay,
         autocompleteOptions,
+        onAutocompleteSearch,
+        isAutocompleteLoading,
     } = props;
+
     const intl = useIntl();
     const [inputValue, setInputValue] = useState("");
     const [activeAutocompleteIndex, setActiveAutocompleteIndex] = useState<number | null>(null);
@@ -134,6 +148,10 @@ export function ArbitraryValuesInput(props: IArbitraryValuesInputProps) {
         return autocompleteOptions.filter((opt) => opt.toLowerCase().includes(q) && !values.includes(opt));
     }, [autocompleteOptions, inputValue, values, autocompletesDismissed]);
 
+    const shouldShowAutocompleteDropdown =
+        inputValue.trim() &&
+        !autocompletesDismissed &&
+        (filteredSuggestions.length > 0 || isAutocompleteLoading);
     const isAutocompleteOpen = filteredSuggestions.length > 0;
 
     // Reset active index and dismissed flag whenever the input text changes.
@@ -141,6 +159,13 @@ export function ArbitraryValuesInput(props: IArbitraryValuesInputProps) {
         setActiveAutocompleteIndex(null);
         setAutocompleteDismissed(false);
     }, [inputValue]);
+
+    // Trigger search when user types (lazy load elements for autocomplete)
+    useEffect(() => {
+        if (inputValue.trim() && onAutocompleteSearch) {
+            onAutocompleteSearch(inputValue);
+        }
+    }, [inputValue, onAutocompleteSearch]);
 
     const mergeParsedValues = useCallback(
         (parsed: string[]) => {
@@ -322,7 +347,7 @@ export function ArbitraryValuesInput(props: IArbitraryValuesInputProps) {
                     </div>
                 )}
             </div>
-            {isAutocompleteOpen ? (
+            {shouldShowAutocompleteDropdown ? (
                 <ul
                     className="gd-chips-input__autocomplete s-chips-input-autocomplete"
                     role="listbox"
@@ -330,23 +355,29 @@ export function ArbitraryValuesInput(props: IArbitraryValuesInputProps) {
                         id: "attributeFilter.text.autocomplete.listLabel",
                     })}
                 >
-                    {filteredSuggestions.map((suggestion, index) => (
-                        <li
-                            key={suggestion}
-                            id={`gd-chips-autocomplete-item-${index}`}
-                            className={cx("gd-chips-input__autocomplete-item", {
-                                "gd-chips-input__autocomplete-item--active":
-                                    index === activeAutocompleteIndex,
-                            })}
-                            role="option"
-                            aria-selected={index === activeAutocompleteIndex}
-                            // Prevent the input from blurring when clicking a suggestion.
-                            onMouseDown={(e) => e.preventDefault()}
-                            onClick={() => handleSelectSuggestion(suggestion)}
-                        >
-                            {highlightMatch(suggestion, inputValue)}
+                    {isAutocompleteLoading ? (
+                        <li className="gd-chips-input__autocomplete-loading s-chips-input-autocomplete-loading">
+                            <LoadingSpinner className="small" />
                         </li>
-                    ))}
+                    ) : (
+                        filteredSuggestions.map((suggestion, index) => (
+                            <li
+                                key={suggestion}
+                                id={`gd-chips-autocomplete-item-${index}`}
+                                className={cx("gd-chips-input__autocomplete-item", {
+                                    "gd-chips-input__autocomplete-item--active":
+                                        index === activeAutocompleteIndex,
+                                })}
+                                role="option"
+                                aria-selected={index === activeAutocompleteIndex}
+                                // Prevent the input from blurring when clicking a suggestion.
+                                onMouseDown={(e) => e.preventDefault()}
+                                onClick={() => handleSelectSuggestion(suggestion)}
+                            >
+                                {highlightMatch(suggestion, inputValue)}
+                            </li>
+                        ))
+                    )}
                 </ul>
             ) : null}
         </div>

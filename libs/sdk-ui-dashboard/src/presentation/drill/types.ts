@@ -10,6 +10,8 @@ import {
     type IKeyDriveAnalysis as IKeyDriveAnalysisModel,
     type IListedDashboard as IListedDashboardModel,
     type ObjRef,
+    type SourceInsightFilterObjRef,
+    type SourceMeasureFilterObjRef,
     isDrillToAttributeUrl,
     isDrillToCustomUrl,
 } from "@gooddata/sdk-model";
@@ -234,7 +236,15 @@ export interface IDrillToInsightConfigTarget {
     insightRef?: ObjRef;
 }
 
-export type IDrillToInsightConfig = IDrillConfigItemBase & IDrillToInsightConfigTarget;
+export interface IDrillFiltersConfigExtended {
+    ignoredDashboardFilters?: string[];
+    includedSourceInsightFiltersObjRefs?: SourceInsightFilterObjRef[];
+    includedSourceMeasureFiltersObjRefs?: SourceMeasureFilterObjRef[];
+}
+
+export type IDrillToInsightConfig = IDrillConfigItemBase &
+    IDrillToInsightConfigTarget &
+    IDrillFiltersConfigExtended;
 
 export function isDrillToInsightConfig(item: unknown): item is IDrillToInsightConfig {
     return !isEmpty(item) && (item as IDrillToInsightConfig).insightRef !== undefined;

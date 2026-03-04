@@ -112,6 +112,18 @@ export interface ITextFilterBodyProps {
      * Populated from the loaded attribute elements so the user can pick known values.
      */
     autocompleteOptions?: string[];
+
+    /**
+     * Optional callback to trigger a search for autocomplete suggestions.
+     * When provided, this will be called as the user types to fetch matching elements
+     * from the backend.
+     */
+    onAutocompleteSearch?: (searchString: string) => void;
+
+    /**
+     * Whether autocomplete is currently loading results from the backend.
+     */
+    isAutocompleteLoading?: boolean;
 }
 
 /**
@@ -139,6 +151,8 @@ export function TextFilterBody(props: ITextFilterBodyProps) {
         disabled,
         availableTextModes,
         autocompleteOptions,
+        onAutocompleteSearch,
+        isAutocompleteLoading,
     } = props;
 
     const isArbitraryOperator = operator === "is" || operator === "isNot";
@@ -190,6 +204,8 @@ export function TextFilterBody(props: ITextFilterBodyProps) {
                         disabled={disabled}
                         emptyValueDisplay={`(${intl.formatMessage({ id: "empty_value" })})`}
                         autocompleteOptions={autocompleteOptions}
+                        onAutocompleteSearch={onAutocompleteSearch}
+                        isAutocompleteLoading={isAutocompleteLoading}
                     />
                 ) : (
                     <Input

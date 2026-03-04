@@ -36220,8 +36220,8 @@ const layers: IGeoLayer[] = [
         filters: [
             newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
         ],
-        latitude: newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("a_f_city.id.latitude")),
-        longitude: newAttribute(idRef("f_city.id.longitude", "displayForm"), a => a.localId("a_f_city.id.longitude")),
+        latitude: newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("latitude_df")),
+        longitude: newAttribute(idRef("f_city.id.longitude", "displayForm"), a => a.localId("longitude_df")),
         size: newMeasure(idRef("f_population", "fact"), m => m.alias("Population").localId("m_f_population_sum").aggregation("sum"))
     }
 ];
@@ -36284,8 +36284,8 @@ const layers: IGeoLayer[] = [
         filters: [
             newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
         ],
-        latitude: newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("a_f_city.id.latitude")),
-        longitude: newAttribute(idRef("f_city.id.longitude", "displayForm"), a => a.localId("a_f_city.id.longitude")),
+        latitude: newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("latitude_df")),
+        longitude: newAttribute(idRef("f_city.id.longitude", "displayForm"), a => a.localId("longitude_df")),
         size: newMeasure(idRef("f_population", "fact"), m => m.alias("Population").localId("m_f_population_sum").aggregation("sum"))
     },
     {
@@ -36296,8 +36296,8 @@ const layers: IGeoLayer[] = [
         filters: [
             newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
         ],
-        latitude: newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("a_f_city.id.latitude")),
-        longitude: newAttribute(idRef("f_city.id.longitude", "displayForm"), a => a.localId("a_f_city.id.longitude")),
+        latitude: newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("latitude_df")),
+        longitude: newAttribute(idRef("f_city.id.longitude", "displayForm"), a => a.localId("longitude_df")),
         size: newMeasure(idRef("f_population", "fact"), m => m.alias("Population").localId("m_f_population_sum").aggregation("sum"))
     }
 ];
@@ -36357,8 +36357,8 @@ const layers: IGeoLayer[] = [
         id: "pushpin-layer-cluster",
         type: "pushpin",
         tooltipText: newAttribute(idRef("f_city.id.cityname", "displayForm"), a => a.localId("a_f_city.id.cityname")),
-        latitude: newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("a_f_city.id.latitude")),
-        longitude: newAttribute(idRef("f_city.id.longitude", "displayForm"), a => a.localId("a_f_city.id.longitude"))
+        latitude: newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("latitude_df")),
+        longitude: newAttribute(idRef("f_city.id.longitude", "displayForm"), a => a.localId("longitude_df"))
     }
 ];
 const filters: IFilter[] = [
@@ -36418,8 +36418,8 @@ const layers: IGeoLayer[] = [
         id: "pushpin-layer-cluster",
         type: "pushpin",
         tooltipText: newAttribute(idRef("f_city.id.cityname", "displayForm"), a => a.localId("a_f_city.id.cityname")),
-        latitude: newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("a_f_city.id.latitude")),
-        longitude: newAttribute(idRef("f_city.id.longitude", "displayForm"), a => a.localId("a_f_city.id.longitude"))
+        latitude: newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("latitude_df")),
+        longitude: newAttribute(idRef("f_city.id.longitude", "displayForm"), a => a.localId("longitude_df"))
     }
 ];
 const filters: IFilter[] = [
@@ -36483,8 +36483,8 @@ const layers: IGeoLayer[] = [
         filters: [
             newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
         ],
-        latitude: newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("a_f_city.id.latitude")),
-        longitude: newAttribute(idRef("f_city.id.longitude", "displayForm"), a => a.localId("a_f_city.id.longitude")),
+        latitude: newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("latitude_df")),
+        longitude: newAttribute(idRef("f_city.id.longitude", "displayForm"), a => a.localId("longitude_df")),
         size: newMeasure(idRef("f_population", "fact"), m => m.alias("Population").localId("m_f_population_sum").aggregation("sum"))
     }
 ];
@@ -36548,8 +36548,8 @@ const layers: IGeoLayer[] = [
         filters: [
             newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
         ],
-        latitude: newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("a_f_city.id.latitude")),
-        longitude: newAttribute(idRef("f_city.id.longitude", "displayForm"), a => a.localId("a_f_city.id.longitude")),
+        latitude: newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("latitude_df")),
+        longitude: newAttribute(idRef("f_city.id.longitude", "displayForm"), a => a.localId("longitude_df")),
         size: newMeasure(idRef("f_population", "fact"), m => m.alias("Population").localId("m_f_population_sum").aggregation("sum"))
     }
 ];
@@ -36626,8 +36626,8 @@ const layers: IGeoLayer[] = [
         filters: [
             newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
         ],
-        latitude: newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("a_f_city.id.latitude")),
-        longitude: newAttribute(idRef("f_city.id.longitude", "displayForm"), a => a.localId("a_f_city.id.longitude")),
+        latitude: newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("latitude_df")),
+        longitude: newAttribute(idRef("f_city.id.longitude", "displayForm"), a => a.localId("longitude_df")),
         size: newMeasure(idRef("f_population", "fact"), m => m.alias("Population").localId("m_f_population_sum").aggregation("sum"))
     }
 ];
@@ -36691,8 +36691,8 @@ const layers: IGeoLayer[] = [
         filters: [
             newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
         ],
-        latitude: newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("a_f_city.id.latitude")),
-        longitude: newAttribute(idRef("f_city.id.longitude", "displayForm"), a => a.localId("a_f_city.id.longitude")),
+        latitude: newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("latitude_df")),
+        longitude: newAttribute(idRef("f_city.id.longitude", "displayForm"), a => a.localId("longitude_df")),
         size: newMeasure(idRef("f_population", "fact"), m => m.alias("Population").localId("m_f_population_sum").aggregation("sum"))
     }
 ];
@@ -36762,8 +36762,8 @@ const layers: IGeoLayer[] = [
         filters: [
             newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
         ],
-        latitude: newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("a_f_city.id.latitude")),
-        longitude: newAttribute(idRef("f_city.id.longitude", "displayForm"), a => a.localId("a_f_city.id.longitude")),
+        latitude: newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("latitude_df")),
+        longitude: newAttribute(idRef("f_city.id.longitude", "displayForm"), a => a.localId("longitude_df")),
         size: newMeasure(idRef("f_population", "fact"), m => m.alias("Population").localId("m_f_population_sum").aggregation("sum"))
     }
 ];
@@ -36833,8 +36833,8 @@ const layers: IGeoLayer[] = [
         filters: [
             newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
         ],
-        latitude: newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("a_f_city.id.latitude")),
-        longitude: newAttribute(idRef("f_city.id.longitude", "displayForm"), a => a.localId("a_f_city.id.longitude")),
+        latitude: newAttribute(idRef("f_city.id.latitude", "displayForm"), a => a.localId("latitude_df")),
+        longitude: newAttribute(idRef("f_city.id.longitude", "displayForm"), a => a.localId("longitude_df")),
         size: newMeasure(idRef("f_population", "fact"), m => m.alias("Population").localId("m_f_population_sum").aggregation("sum"))
     }
 ];

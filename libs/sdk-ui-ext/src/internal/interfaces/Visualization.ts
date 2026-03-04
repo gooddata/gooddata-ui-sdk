@@ -10,11 +10,13 @@ import {
     type IPreparedExecution,
 } from "@gooddata/sdk-backend-spi";
 import {
+    type IArbitraryAttributeFilterBody,
     type IColorPalette,
     type IExecutionConfig,
     type IInsight,
     type IInsightDefinition,
     type ILowerBoundedFilter,
+    type IMatchAttributeFilterBody,
     type ISeparators,
     type ISettings,
     type ISortItem,
@@ -174,6 +176,28 @@ export interface IBucketFilterInterval {
     name: string;
 }
 
+/**
+ * Stripped-down arbitrary filter data for referencePoint round-trips.
+ * Derived from IArbitraryAttributeFilterBody, omitting label and localIdentifier
+ * (those live on the parent IFiltersBucketItem / IAttributeFilter).
+ */
+export type IArbitraryFilterData = Omit<IArbitraryAttributeFilterBody, "label" | "localIdentifier"> & {
+    mode: "arbitrary";
+};
+
+/**
+ * Stripped-down match filter data for referencePoint round-trips.
+ * Derived from IMatchAttributeFilterBody, omitting label and localIdentifier.
+ */
+export type IMatchFilterData = Omit<IMatchAttributeFilterBody, "label" | "localIdentifier"> & {
+    mode: "match";
+};
+
+/**
+ * Discriminated union carrying mode-specific data for text-mode attribute filters.
+ */
+export type TextModeFilterData = IArbitraryFilterData | IMatchFilterData;
+
 export interface IAttributeFilter {
     attribute: string;
     isInverted: boolean;
@@ -183,6 +207,11 @@ export interface IAttributeFilter {
         title: string;
         uri: string;
     }>;
+    /**
+     * When present, indicates the filter is a text-mode filter (arbitrary or match).
+     * Carries only mode-specific data; displayForm and localIdentifier come from the parent.
+     */
+    textModeFilter?: TextModeFilterData;
 }
 
 export const DATE_DATASET_ATTRIBUTE = "attr.datedataset";

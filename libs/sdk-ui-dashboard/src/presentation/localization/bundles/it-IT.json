@@ -23,6 +23,7 @@
     "filterBar.showLess": "Mostra di meno",
     "filterBar.unappliedFiltersNotification": "<link>Applicare i filtri</link> per visualizzare i dati aggiornati.",
     "filterBar.invalidFilterSelection": "Per applicare le modifiche, selezionare i valori validi per questi filtri{names}: ",
+    "geochart.alternateView.tablist.label": "Tabelle dei livelli",
     "filterBar.executionTimestampNotificationMessage": "<bold>Nota.</bold> Si stanno visualizzando dati aggiornati, ma per qualsiasi filtro di data relativa, il dashboard li considera {date} come \"ad oggi\".",
     "filterBar.executionTimestampNotificationAction": "<link>Reimpostare a oggi</link>",
     "options.menu.export": "Esporta",

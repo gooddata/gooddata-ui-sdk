@@ -63,6 +63,8 @@ export {
 export {
     ActionsApi_ResolveLlmEndpoints,
     ActionsApi_GenerateDescription,
+    ActionsApi_GenerateTitle,
     type ActionsApiGenerateDescriptionRequest,
+    type ActionsApiGenerateTitleRequest,
     type ActionsApiResolveLlmEndpointsRequest,
 } from "../../generated/afm-rest-api/index.js";

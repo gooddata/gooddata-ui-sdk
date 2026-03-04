@@ -233,10 +233,37 @@ export function getColorFromMapping(
 }
 
 /**
+ * Compares two GUID strings, normalizing purely-numeric GUIDs so that
+ * zero-padded values match their unpadded counterparts (e.g. "05" matches "5").
+ *
+ * IDE (YAML) deployments may store palette GUIDs with zero-padding while the
+ * runtime palette uses unpadded indices.  Without this normalization the
+ * strict-equality check fails for IDs below 10 and `isValidMappedColor`
+ * rejects the stored color, causing the configuration to be reset.
+ *
+ * @internal
+ */
+export function guidEquals(a: string, b: string): boolean {
+    if (a === b) {
+        return true;
+    }
+    // Only normalize when both values are purely numeric strings.
+    if (/^\d+$/.test(a) && /^\d+$/.test(b)) {
+        return stripNumericGuidPadding(a) === stripNumericGuidPadding(b);
+    }
+    return false;
+}
+
+function stripNumericGuidPadding(value: string): string {
+    const withoutPadding = value.replace(/^0+/, "");
+    return withoutPadding === "" ? "0" : withoutPadding;
+}
+
+/**
  * @internal
  */
 export function getColorByGuid(colorPalette: IColorPalette, guid: string, index: number): IRgbColorValue {
-    const inPalette = colorPalette.find((item: any) => item.guid === guid);
+    const inPalette = colorPalette.find((item: IColorPaletteItem) => guidEquals(item.guid, guid));
 
     return inPalette ? inPalette.fill : colorPalette[index % colorPalette.length].fill;
 }

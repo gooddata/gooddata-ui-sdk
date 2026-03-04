@@ -275,6 +275,13 @@ export interface IAnalyticsCatalogService {
     ): Promise<IAnalyticsCatalogGenerateDescriptionResponse>;
 
     /**
+     * Generates AI title for an Analytics Catalog object.
+     */
+    generateTitle(
+        request: IAnalyticsCatalogGenerateTitleRequest,
+    ): Promise<IAnalyticsCatalogGenerateTitleResponse>;
+
+    /**
      * Returns list of available tags in the workspace Analytics Catalog.
      */
     getTags(): Promise<IAnalyticsCatalogTags>;
@@ -300,6 +307,12 @@ export type AnalyticsCatalogGenerateDescriptionObjectType = Extract<
 >;
 
 /**
+ * Supported object types for AI-generated Analytics Catalog title.
+ * @internal
+ */
+export type AnalyticsCatalogGenerateTitleObjectType = AnalyticsCatalogGenerateDescriptionObjectType;
+
+/**
  * Request payload for AI-generated Analytics Catalog description.
  * @internal
  */
@@ -314,6 +327,24 @@ export interface IAnalyticsCatalogGenerateDescriptionRequest {
  */
 export interface IAnalyticsCatalogGenerateDescriptionResponse {
     description?: string;
+    note?: string;
+}
+
+/**
+ * Request payload for AI-generated Analytics Catalog title.
+ * @internal
+ */
+export interface IAnalyticsCatalogGenerateTitleRequest {
+    objectType: AnalyticsCatalogGenerateTitleObjectType;
+    objectId: string;
+}
+
+/**
+ * Response payload for AI-generated Analytics Catalog title.
+ * @internal
+ */
+export interface IAnalyticsCatalogGenerateTitleResponse {
+    title?: string;
     note?: string;
 }
 

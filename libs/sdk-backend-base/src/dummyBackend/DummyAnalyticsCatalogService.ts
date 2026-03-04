@@ -4,6 +4,8 @@ import type {
     IAnalyticsCatalogCreatedBy,
     IAnalyticsCatalogGenerateDescriptionRequest,
     IAnalyticsCatalogGenerateDescriptionResponse,
+    IAnalyticsCatalogGenerateTitleRequest,
+    IAnalyticsCatalogGenerateTitleResponse,
     IAnalyticsCatalogService,
     IAnalyticsCatalogTags,
     IAnalyticsCatalogTrendingObjects,
@@ -19,6 +21,15 @@ export class DummyAnalyticsCatalogService implements IAnalyticsCatalogService {
     ): Promise<IAnalyticsCatalogGenerateDescriptionResponse> {
         return Promise.resolve({
             description: "",
+            note: "",
+        });
+    }
+
+    async generateTitle(
+        _request: IAnalyticsCatalogGenerateTitleRequest,
+    ): Promise<IAnalyticsCatalogGenerateTitleResponse> {
+        return Promise.resolve({
+            title: "",
             note: "",
         });
     }

@@ -147,6 +147,18 @@ export const selectAgGridToken: DashboardSelector<string | undefined> = createSe
 );
 
 /**
+ * Returns max zoom level for GeoChart map.
+ *
+ * @internal
+ */
+export const selectMaxZoomLevel: DashboardSelector<number | null | undefined> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.maxZoomLevel;
+    },
+);
+
+/**
  * Returns week start day
  *
  * @internal
@@ -1088,5 +1100,17 @@ export const selectEnableVisualizationFilteringByTags: DashboardSelector<boolean
     selectConfig,
     (state) => {
         return state.settings?.enableVisualizationFilteringByTags ?? false;
+    },
+);
+
+/**
+ * Returns whether filter control in drilling configuration is enabled.
+ *
+ * @internal
+ */
+export const selectEnableFilterControlInDrillingConfiguration: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableFilterControlInDrillingConfiguration ?? false;
     },
 );

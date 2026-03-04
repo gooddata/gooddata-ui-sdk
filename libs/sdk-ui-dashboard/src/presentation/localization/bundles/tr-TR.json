@@ -23,6 +23,7 @@
     "filterBar.showLess": "Daha az göster",
     "filterBar.unappliedFiltersNotification": "<link>Filtreleri uygula</link> güncellenmiş verileri görmek için.",
     "filterBar.invalidFilterSelection": "Değişiklikleri uygulamak için bu filtreler için geçerli değerleri seçin: {names}",
+    "geochart.alternateView.tablist.label": "Katman tabloları",
     "filterBar.executionTimestampNotificationMessage": "<bold>Not.</bold> Güncel verileri görüntülüyorsunuz, ancak herhangi bir göreceli tarih filtresi için pano {date} tarihini \"bugün\" olarak kabul eder.",
     "filterBar.executionTimestampNotificationAction": "<link>Bugüne sıfırla</link>",
     "options.menu.export": "Dışa aktar",

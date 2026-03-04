@@ -526,7 +526,9 @@ export type IMeasureFilter =
     | IAbsoluteDateFilter
     | IRelativeDateFilter
     | IPositiveAttributeFilter
-    | INegativeAttributeFilter;
+    | INegativeAttributeFilter
+    | IArbitraryAttributeFilter
+    | IMatchAttributeFilter;
 
 //
 // Type guards

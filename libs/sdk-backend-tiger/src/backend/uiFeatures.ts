@@ -151,6 +151,8 @@ export enum TigerFeaturesNames {
     EnableArbitraryFilterAD = "enableArbitraryFilterAD",
     EnableMatchFilterKD = "enableMatchFilterKD",
     EnableArbitraryFilterKD = "enableArbitraryFilterKD",
+    EnableFilterControlInDrillingConfiguration = "enableFilterControlInDrillingConfiguration",
+    EnableShellApplication = "enableShellApplication",
 }
 
 export type ITigerFeatureFlags = {
@@ -295,6 +297,8 @@ export type ITigerFeatureFlags = {
     enableArbitraryFilterAD: (typeof FeatureFlagsValues)["enableArbitraryFilterAD"][number];
     enableMatchFilterKD: (typeof FeatureFlagsValues)["enableMatchFilterKD"][number];
     enableArbitraryFilterKD: (typeof FeatureFlagsValues)["enableArbitraryFilterKD"][number];
+    enableFilterControlInDrillingConfiguration: (typeof FeatureFlagsValues)["enableFilterControlInDrillingConfiguration"][number];
+    enableShellApplication: (typeof FeatureFlagsValues)["enableShellApplication"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -439,6 +443,8 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableArbitraryFilterAD: false,
     enableMatchFilterKD: false,
     enableArbitraryFilterKD: false,
+    enableFilterControlInDrillingConfiguration: false,
+    enableShellApplication: false,
 };
 
 export const FeatureFlagsValues = {
@@ -584,4 +590,6 @@ export const FeatureFlagsValues = {
     enableArbitraryFilterAD: [true, false] as const,
     enableMatchFilterKD: [true, false] as const,
     enableArbitraryFilterKD: [true, false] as const,
+    enableFilterControlInDrillingConfiguration: [true, false] as const,
+    enableShellApplication: [true, false] as const,
 };

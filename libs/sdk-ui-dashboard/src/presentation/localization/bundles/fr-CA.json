@@ -23,6 +23,7 @@
     "filterBar.showLess": "Montrer moins",
     "filterBar.unappliedFiltersNotification": "<link>Appliquez les filtres</link> pour voir les données mises à jour.",
     "filterBar.invalidFilterSelection": "Pour appliquer les modifications, sélectionnez des valeurs valides pour ces filtres: {names}",
+    "geochart.alternateView.tablist.label": "Tableaux de couches",
     "filterBar.executionTimestampNotificationMessage": "<bold>Remarque.</bold> Vous consultez des données à jour, mais pour tout filtre de date relative, le tableau de bord traite {date} comme « aujourd’hui ».",
     "filterBar.executionTimestampNotificationAction": "<link>Réinitialiser à aujourd’hui</link>",
     "options.menu.export": "Exporter",

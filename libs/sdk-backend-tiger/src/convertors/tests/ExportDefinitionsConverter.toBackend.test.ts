@@ -92,6 +92,32 @@ describe("ExportDefinitionsConverter toBackend", () => {
         });
     });
 
+    it("preserves common date filter without dataSet in dashboard override", () => {
+        const commonDateFilter: FilterContextItem = {
+            dateFilter: {
+                type: "relative",
+                granularity: "GDC.time.date",
+                from: -29,
+                to: 0,
+            },
+        };
+
+        const request: IExportDefinitionVisualizationObjectRequestPayload = {
+            type: "visualizationObject",
+            fileName: "xlsx-export",
+            format: "XLSX",
+            content: {
+                visualizationObject: "visId",
+                widget: "widgetId",
+                dashboard: "dashboardId",
+                filters: [commonDateFilter],
+            },
+        };
+
+        const result = convertVisualizationToDashboardTabularExportRequest(request);
+        expect(result.dashboardFiltersOverride).toHaveLength(1);
+    });
+
     it("keeps dashboard override empty for non-FilterContextItem filters", () => {
         const request: IExportDefinitionVisualizationObjectRequestPayload = {
             type: "visualizationObject",

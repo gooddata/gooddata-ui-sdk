@@ -441,6 +441,10 @@
     }
 }
 
+.gd-drill-filter-config-link {
+    padding-top: 5px;
+}
+
 .gd-drill-config-panel-target,
 .drill-config-target {
     .gd-icon-drill-to-dashboard::before,
@@ -893,4 +897,36 @@ $gd-gd-drill-to-url-body-width: 230px;
     &:not(&.gd-is-open, &:active, &:focus) {
         background: transparent;
     }
+}
+
+.gd-drill-filters-config-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+}
+
+.gd-drill-filters-config-section-header {
+    padding: 5px 0;
+}
+
+.gd-drill-filters-config-section-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 20px;
+
+    .input-checkbox-label .input-label-text {
+        display: block;
+        font-size: 12px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: fit-content;
+        max-width: variables.$gd-interactions-label-max-width;
+    }
+}
+
+.gd-drill-filters-config-section-tooltip {
+    max-width: variables.$gd-interactions-tooltip-max-width;
 }

@@ -385,7 +385,6 @@
     "notifications.panel.downloadFilesHint": "Dışa aktarılmış dosyaları indir",
     "notifications.filters.buttonLabel": "{count, plural, one {# filtre} other {# filtreler}}",
     "notifications.filters.dialog.title": "Filtreler",
-    "notifications.filters.dialog.dateRange": "Tarih aralığı",
     "notifications.panel.triggers.title": "{triggeredCount}/{totalCount} öğeler için",
     "notifications.panel.triggers.dialog.newValue": "Yeni değer",
     "notifications.panel.triggers.dialog.truncatedValues": "…ve {count} daha fazla",

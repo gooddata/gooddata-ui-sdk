@@ -74,10 +74,11 @@ export function getTextFilterStateParts(
 
     const operatorText = isArbitrary ? arbitraryFilterText : getMatchFilterText(operator, intl);
 
+    const emptyValuePlaceholder = `(${intl.formatMessage({ id: "empty_value" })})`;
     const rawValueText = isArbitrary
         ? values
               .map((value) => value.trim())
-              .filter(Boolean)
+              .map((value) => value || emptyValuePlaceholder)
               .join(", ")
         : literal.trim();
 

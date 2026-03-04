@@ -94,12 +94,9 @@
     "analyticsCatalog.catalogItem.title.add": "Lisää otsikko…",
     "analyticsCatalog.catalogItem.description": "Kuvaus",
     "analyticsCatalog.catalogItem.description.add": "Lisää kuvaus...",
-    "analyticsCatalog.catalogItem.description.generate": "Luo kuvaus",
-    "analyticsCatalog.catalogItem.description.generate.dialog.title": "Luo kuvaus",
-    "analyticsCatalog.catalogItem.description.generate.dialog.content": "Tämä kuvaus on luotu tekoälyllä. Käytä luotua tekstiä lähtökohtana ja tarkista se ennen käyttöönottoa.",
-    "analyticsCatalog.catalogItem.description.generate.dialog.accept": "Hyväksy",
-    "analyticsCatalog.catalogItem.description.generate.dialog.decline": "Hylkää",
-    "analyticsCatalog.catalogItem.description.generate.dialog.note": "Huomio",
+    "analyticsCatalog.catalogItem.description.generate": "Luo kuvaus tekoälyn avulla",
+    "analyticsCatalog.catalogItem.description.generate.loading": "Luodaan...",
+    "analyticsCatalog.catalogItem.description.generate.undo": "Kumoa",
     "analyticsCatalog.catalogItem.description.generate.failed": "Kuvauksen luominen epäonnistui. Yritä myöhemmin uudelleen.",
     "analyticsCatalog.catalogItem.update.failed": "Katalogikohteen päivittäminen epäonnistui. Yritä myöhemmin uudelleen.",
     "analyticsCatalog.catalogItem.id": "Tunnus",
@@ -152,5 +149,8 @@
     "metricComponent.metricType.label": "Metrikkatyyppi",
     "metricComponent.metricType.unspecified": "Ei määritetty",
     "metricComponent.metricType.currency": "Valuutta",
-    "metricComponent.numberFormat.label": "Numeromuoto"
+    "metricComponent.numberFormat.label": "Numeromuoto",
+    "analyticsCatalog.tabs.recommended": "Suositeltu",
+    "analyticsCatalog.tabs.trending": "Nousussa",
+    "analyticsCatalog.tabs.quality": "Laatu"
 }

@@ -94,12 +94,9 @@
     "analyticsCatalog.catalogItem.title.add": "タイトルを追加…",
     "analyticsCatalog.catalogItem.description": "説明",
     "analyticsCatalog.catalogItem.description.add": "説明を追加する…",
-    "analyticsCatalog.catalogItem.description.generate": "説明を生成",
-    "analyticsCatalog.catalogItem.description.generate.dialog.title": "説明を生成",
-    "analyticsCatalog.catalogItem.description.generate.dialog.content": "この説明はAIによって生成されています。生成されたテキストを出発点として使用し、適用する前に確認してください。",
-    "analyticsCatalog.catalogItem.description.generate.dialog.accept": "承諾",
-    "analyticsCatalog.catalogItem.description.generate.dialog.decline": "拒否",
-    "analyticsCatalog.catalogItem.description.generate.dialog.note": "備考",
+    "analyticsCatalog.catalogItem.description.generate": "AI で説明を生成",
+    "analyticsCatalog.catalogItem.description.generate.loading": "生成中...",
+    "analyticsCatalog.catalogItem.description.generate.undo": "元に戻す",
     "analyticsCatalog.catalogItem.description.generate.failed": "説明の生成に失敗しました。後で再試行してください。",
     "analyticsCatalog.catalogItem.update.failed": "カタログ項目の更新に失敗しました。後で再試行してください。",
     "analyticsCatalog.catalogItem.id": "ID",
@@ -152,5 +149,8 @@
     "metricComponent.metricType.label": "メトリックタイプ",
     "metricComponent.metricType.unspecified": "未指定",
     "metricComponent.metricType.currency": "通貨",
-    "metricComponent.numberFormat.label": "数値形式"
+    "metricComponent.numberFormat.label": "数値形式",
+    "analyticsCatalog.tabs.recommended": "お勧め",
+    "analyticsCatalog.tabs.trending": "トレンド",
+    "analyticsCatalog.tabs.quality": "品質"
 }

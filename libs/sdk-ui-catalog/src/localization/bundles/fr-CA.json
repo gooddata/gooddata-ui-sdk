@@ -94,12 +94,9 @@
     "analyticsCatalog.catalogItem.title.add": "Ajouter un titre…",
     "analyticsCatalog.catalogItem.description": "Description",
     "analyticsCatalog.catalogItem.description.add": "Ajouter une description…",
-    "analyticsCatalog.catalogItem.description.generate": "Générer une description",
-    "analyticsCatalog.catalogItem.description.generate.dialog.title": "Générer une description",
-    "analyticsCatalog.catalogItem.description.generate.dialog.content": "Cette description est générée par l’IA. Utilisez le texte généré comme point de départ et vérifiez-le avant de l’appliquer.",
-    "analyticsCatalog.catalogItem.description.generate.dialog.accept": "Accepter",
-    "analyticsCatalog.catalogItem.description.generate.dialog.decline": "Refuser",
-    "analyticsCatalog.catalogItem.description.generate.dialog.note": "Remarque",
+    "analyticsCatalog.catalogItem.description.generate": "Générer une description avec l’IA",
+    "analyticsCatalog.catalogItem.description.generate.loading": "Génération...",
+    "analyticsCatalog.catalogItem.description.generate.undo": "Annuler",
     "analyticsCatalog.catalogItem.description.generate.failed": "Échec de la génération de la description. Réessayez plus tard.",
     "analyticsCatalog.catalogItem.update.failed": "Échec de la mise à jour de l’élément de catalogue. Réessayez plus tard.",
     "analyticsCatalog.catalogItem.id": "Id",
@@ -152,5 +149,8 @@
     "metricComponent.metricType.label": "Type de métrique",
     "metricComponent.metricType.unspecified": "Non précisé",
     "metricComponent.metricType.currency": "Devise",
-    "metricComponent.numberFormat.label": "Format numérique"
+    "metricComponent.numberFormat.label": "Format numérique",
+    "analyticsCatalog.tabs.recommended": "Recommandé",
+    "analyticsCatalog.tabs.trending": "Tendances",
+    "analyticsCatalog.tabs.quality": "Qualité"
 }

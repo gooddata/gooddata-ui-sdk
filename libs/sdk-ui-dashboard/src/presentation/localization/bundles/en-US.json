@@ -1739,6 +1739,46 @@
         "text": "None",
         "crowdinContext": "Option to not pass any attributes as filters during drill"
     },
+    "configurationPanel.drillConfig.filterSelection.button": {
+        "text": "Filter selection",
+        "crowdinContext": "Button label in drill interaction configuration that opens the filter selection subview"
+    },
+    "configurationPanel.drillConfig.filterSelection.subview.title": {
+        "text": "Filters",
+        "crowdinContext": "Title of the drill interaction filter selection subview"
+    },
+    "configurationPanel.drillConfig.filterSelection.subview.tooltip": {
+        "text": "Selected filters are passed to the drill destination.",
+        "crowdinContext": "Tooltip in the drill interaction filter selection subview header explaining what filter selection controls."
+    },
+    "configurationPanel.drillConfig.filterSelection.section.drilledDataPoint": {
+        "text": "Drilled data point",
+        "crowdinContext": "Section header for filters coming from the clicked data point in drill filter selection"
+    },
+    "configurationPanel.drillConfig.filterSelection.section.visualization": {
+        "text": "Visualization",
+        "crowdinContext": "Section header for filters originating from the source visualization in drill filter selection"
+    },
+    "configurationPanel.drillConfig.filterSelection.section.dashboard": {
+        "text": "Dashboard",
+        "crowdinContext": "Section header for dashboard-level filters in drill filter selection"
+    },
+    "configurationPanel.drillConfig.filterSelection.section.metric": {
+        "text": "Metric",
+        "crowdinContext": "Section header for metric-level filters in drill filter selection"
+    },
+    "configurationPanel.drillConfig.filterSelection.rankingFilter.tooltip": {
+        "text": "Top/bottom filters can't be passed to the drill destination.",
+        "crowdinContext": "Tooltip shown for disabled ranking filters that cannot be forwarded to the drill destination"
+    },
+    "rankingFilter.preview.top_without_attribute_plain": {
+        "text": "Top {value} of {measure}",
+        "crowdinContext": "Plain-text ranking filter preview for drill filter selection. Shows top N rows by metric without rich formatting."
+    },
+    "rankingFilter.preview.bottom_without_attribute_plain": {
+        "text": "Bottom {value} of {measure}",
+        "crowdinContext": "Plain-text ranking filter preview for drill filter selection. Shows bottom N rows by metric without rich formatting."
+    },
     "configurationPanel.visualprops.sectionTitle": {
         "text": "Title",
         "crowdinContext": "Section header for widget title configuration"

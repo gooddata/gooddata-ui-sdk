@@ -63,9 +63,7 @@ describe("typeGuards", () => {
     it("recognizes dashboard filters", () => {
         expect(isTigerFilterContextItem(attributeDashboardFilter)).toBe(true);
         expect(isTigerFilterContextItem(dateDashboardFilter)).toBe(true);
-        expect(isTigerFilterContextItem({ dateFilter: { from: "2020-01-01", to: "2020-12-31" } })).toBe(
-            false,
-        );
+        expect(isTigerFilterContextItem({ dateFilter: { from: "2020-01-01", to: "2020-12-31" } })).toBe(true);
     });
 
     it("recognizes dashboard filter arrays and rejects mixed arrays", () => {

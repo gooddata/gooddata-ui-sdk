@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { type CSSProperties, type ReactNode } from "react";
 
@@ -9,6 +9,7 @@ import { UiSubmenuHeader } from "@gooddata/sdk-ui-kit";
 interface IDashboardInsightSubmenuContainerProps {
     children: ReactNode;
     title: string;
+    tooltipText?: string;
     onClose: () => void;
     onBack?: () => void;
 }
@@ -23,6 +24,7 @@ export function DashboardInsightSubmenuContainer(props: IDashboardInsightSubmenu
         <div className="configuration-panel">
             <UiSubmenuHeader
                 title={props.title}
+                tooltipText={props.tooltipText}
                 onBack={props.onBack}
                 onClose={props.onClose}
                 closeAriaLabel={closeLabel}

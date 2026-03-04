@@ -5,13 +5,19 @@ import { isEmpty } from "lodash-es";
 import { type ILowerBoundedFilter, type IUpperBoundedFilter, type ObjRef, idRef } from "@gooddata/sdk-model";
 
 import {
-    type AttributeFilterItem,
     type DateFilterItem,
     type FilterItem,
+    type IArbitraryAttributeFilterItem,
+    type IMatchAttributeFilterItem,
+    type INegativeAttributeFilter,
+    type IPositiveAttributeFilter,
     type IRankingFilter,
     isAbsoluteDateFilter,
+    isArbitraryAttributeFilterItem,
     isAttributeFilter,
     isDateFilter,
+    isMatchAttributeFilterItem,
+    isNegativeAttributeFilter,
     isPositiveAttributeFilter,
     isRankingFilter,
     isRemoveAttributeFilter,
@@ -29,10 +35,26 @@ import {
 
 const EXTERNAL_DATE_FILTER_FORMAT = "YYYY-MM-DD";
 
+export interface ITransformedArbitraryAttributeFilter {
+    dfIdentifier: string;
+    values: string[];
+    negativeSelection?: boolean;
+}
+
+export interface ITransformedMatchAttributeFilter {
+    dfIdentifier: string;
+    operator: "contains" | "startsWith" | "endsWith";
+    literal: string;
+    caseSensitive?: boolean;
+    negativeSelection?: boolean;
+}
+
 export interface IExternalFiltersObject {
     attributeFilters: ITransformedAttributeFilterItem[];
     dateFilters: ITransformedDateFilterItem[];
     rankingFilter?: ITransformedRankingFilter;
+    arbitraryAttributeFilters?: ITransformedArbitraryAttributeFilter[];
+    matchAttributeFilters?: ITransformedMatchAttributeFilter[];
 }
 
 export interface ITransformedRankingFilter {
@@ -128,7 +150,7 @@ function isValidAttributeFilterFormat(filterItem: unknown): boolean {
             Array.isArray(attributeElements) &&
             validElementsForSelectionMode
         );
-    } else {
+    } else if (isNegativeAttributeFilter(filterItem)) {
         const {
             negativeAttributeFilter: { displayForm, notIn: attributeElements, selectionMode = "multi" },
         } = filterItem;
@@ -142,7 +164,12 @@ function isValidAttributeFilterFormat(filterItem: unknown): boolean {
             Array.isArray(attributeElements) &&
             validSelectionMode
         );
+    } else if (isArbitraryAttributeFilterItem(filterItem)) {
+        return isValidArbitraryAttributeFilterFormat(filterItem);
+    } else if (isMatchAttributeFilterItem(filterItem)) {
+        return isValidMatchAttributeFilterFormat(filterItem);
     }
+    return false;
 }
 
 function isValidRankingFilterOperator(operator: unknown): boolean {
@@ -171,6 +198,31 @@ function isValidRankingFilterFormat(rankingFilterItem: IRankingFilter): boolean 
         isValidRankingFilterAttributes(attributes) &&
         isValidRankingFilterOperator(operator) &&
         isValidRankingFilterValue(value)
+    );
+}
+
+const VALID_MATCH_OPERATORS = ["contains", "startsWith", "endsWith"];
+
+function isValidArbitraryAttributeFilterFormat(filterItem: IArbitraryAttributeFilterItem): boolean {
+    const {
+        arbitraryAttributeFilter: { displayForm, values, negativeSelection },
+    } = filterItem;
+    return (
+        typeof displayForm?.identifier === "string" &&
+        Array.isArray(values) &&
+        values.every((v) => typeof v === "string") &&
+        (negativeSelection === undefined || typeof negativeSelection === "boolean")
+    );
+}
+
+function isValidMatchAttributeFilterFormat(filterItem: IMatchAttributeFilterItem): boolean {
+    const {
+        matchAttributeFilter: { displayForm, operator, literal },
+    } = filterItem;
+    return (
+        typeof displayForm?.identifier === "string" &&
+        typeof literal === "string" &&
+        VALID_MATCH_OPERATORS.includes(operator)
     );
 }
 
@@ -269,8 +321,8 @@ function transformDateFilterItem(dateFilterItem: DateFilterItem): ITransformedDa
     }
 }
 
-function transformAttributeFilterItem(
-    attributeFilterItem: AttributeFilterItem,
+function transformPositiveNegativeAttributeFilterItem(
+    attributeFilterItem: IPositiveAttributeFilter | INegativeAttributeFilter,
 ): ITransformedAttributeFilterItem {
     if (isPositiveAttributeFilter(attributeFilterItem)) {
         const {
@@ -285,32 +337,66 @@ function transformAttributeFilterItem(
             dfIdentifier,
             dfUri,
             ...(displayAsLabelIdentifier
-                ? { displayAsLabel: idRef(displayAsLabelIdentifier, "displayForm") }
-                : {}),
-        };
-    } else {
-        const {
-            negativeAttributeFilter: { notIn: attributeElements, displayForm },
-            displayAsLabel,
-        } = attributeFilterItem;
-        const { uri: dfUri, identifier: dfIdentifier } = getObjectUriIdentifier(displayForm);
-        const { identifier: displayAsLabelIdentifier } = getObjectUriIdentifier(displayAsLabel);
-        return {
-            negativeSelection: true,
-            attributeElements,
-            dfIdentifier,
-            dfUri,
-            ...(displayAsLabelIdentifier
-                ? { displayAsLabel: idRef(displayAsLabelIdentifier, "displayForm") }
+                ? {
+                      displayAsLabel: idRef(displayAsLabelIdentifier, "displayForm"),
+                  }
                 : {}),
         };
     }
+
+    const {
+        negativeAttributeFilter: { notIn: attributeElements, displayForm },
+        displayAsLabel,
+    } = attributeFilterItem;
+    const { uri: dfUri, identifier: dfIdentifier } = getObjectUriIdentifier(displayForm);
+    const { identifier: displayAsLabelIdentifier } = getObjectUriIdentifier(displayAsLabel);
+    return {
+        negativeSelection: true,
+        attributeElements,
+        dfIdentifier,
+        dfUri,
+        ...(displayAsLabelIdentifier
+            ? {
+                  displayAsLabel: idRef(displayAsLabelIdentifier, "displayForm"),
+              }
+            : {}),
+    };
+}
+
+function transformArbitraryAttributeFilterItem(
+    filterItem: IArbitraryAttributeFilterItem,
+): ITransformedArbitraryAttributeFilter {
+    const {
+        arbitraryAttributeFilter: { displayForm, values, negativeSelection },
+    } = filterItem;
+    return {
+        dfIdentifier: displayForm.identifier,
+        values,
+        ...(negativeSelection === undefined ? {} : { negativeSelection }),
+    };
+}
+
+function transformMatchAttributeFilterItem(
+    filterItem: IMatchAttributeFilterItem,
+): ITransformedMatchAttributeFilter {
+    const {
+        matchAttributeFilter: { displayForm, operator, literal, caseSensitive, negativeSelection },
+    } = filterItem;
+    return {
+        dfIdentifier: displayForm.identifier,
+        operator,
+        literal,
+        ...(caseSensitive === undefined ? {} : { caseSensitive }),
+        ...(negativeSelection === undefined ? {} : { negativeSelection }),
+    };
 }
 
 function transformRankingFilterItem(rankingFilterItem: IRankingFilter): ITransformedRankingFilter {
     const { measure, attributes, value, operator } = rankingFilterItem.rankingFilter;
     const attributesProp = attributes
-        ? { attributeLocalIdentifiers: attributes.map((attribute) => attribute.localIdentifier) }
+        ? {
+              attributeLocalIdentifiers: attributes.map((attribute) => attribute.localIdentifier),
+          }
         : {};
 
     return {
@@ -336,8 +422,22 @@ export function transformFilterContext(filters: FilterItem[]): IExternalFiltersO
                 const dateFilter = transformDateFilterItem(filterItem);
                 externalFilters.dateFilters.push(dateFilter);
             } else if (isAttributeFilter(filterItem)) {
-                const attributeFilter = transformAttributeFilterItem(filterItem);
-                externalFilters.attributeFilters.push(attributeFilter);
+                if (isArbitraryAttributeFilterItem(filterItem)) {
+                    const arbitraryFilter = transformArbitraryAttributeFilterItem(filterItem);
+                    if (!externalFilters.arbitraryAttributeFilters) {
+                        externalFilters.arbitraryAttributeFilters = [];
+                    }
+                    externalFilters.arbitraryAttributeFilters.push(arbitraryFilter);
+                } else if (isMatchAttributeFilterItem(filterItem)) {
+                    const matchFilter = transformMatchAttributeFilterItem(filterItem);
+                    if (!externalFilters.matchAttributeFilters) {
+                        externalFilters.matchAttributeFilters = [];
+                    }
+                    externalFilters.matchAttributeFilters.push(matchFilter);
+                } else {
+                    const attributeFilter = transformPositiveNegativeAttributeFilterItem(filterItem);
+                    externalFilters.attributeFilters.push(attributeFilter);
+                }
             } else if (isRankingFilter(filterItem)) {
                 const rankingFilter = transformRankingFilterItem(filterItem);
                 externalFilters.rankingFilter = rankingFilter;

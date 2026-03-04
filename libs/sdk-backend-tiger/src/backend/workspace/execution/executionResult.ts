@@ -25,6 +25,7 @@ import {
     SmartFunctionsApi_OutlierDetection,
     SmartFunctionsApi_OutlierDetectionResult,
 } from "@gooddata/api-client-tiger/endpoints/smartFunctions";
+import { mergeBbox } from "@gooddata/sdk-backend-base";
 import {
     type IAnomalyDetectionConfig,
     type IAnomalyDetectionResult,
@@ -78,6 +79,9 @@ import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
 import { handleExportResultPolling } from "../../../utils/exportPolling.js";
 
 const TIGER_PAGE_SIZE_LIMIT = 1000;
+const GEO_COLLECTION_ITEMS_MAX_VALUES_PER_REQUEST = 100;
+const GEO_COLLECTION_ITEMS_MAX_LIMIT = 100;
+const GEO_COLLECTION_ITEMS_MAX_PARALLEL_REQUESTS = 6;
 
 const TABULAR_EXPORT_FORMATS: TabularExportRequestFormatEnum[] = ["CSV", "XLSX", "HTML", "PDF"];
 
@@ -98,6 +102,29 @@ function sanitizeSize(size: number[]): number[] {
         }
         return sizeInDim;
     });
+}
+
+function sanitizeGeoCollectionItemsLimit(limit: number | undefined): number | undefined {
+    if (limit === undefined) {
+        return undefined;
+    }
+
+    return Math.min(limit, GEO_COLLECTION_ITEMS_MAX_LIMIT);
+}
+
+function normalizeGeoCollectionValues(values: string[] | undefined): string[] | undefined {
+    const normalizedValues = values?.filter((value): value is string => Boolean(value));
+    return normalizedValues?.length ? normalizedValues : undefined;
+}
+
+function chunkArray<T>(items: T[], chunkSize: number): T[][] {
+    const chunks: T[][] = [];
+
+    for (let i = 0; i < items.length; i += chunkSize) {
+        chunks.push(items.slice(i, i + chunkSize));
+    }
+
+    return chunks;
 }
 
 export class TigerExecutionResult implements IExecutionResult {
@@ -625,6 +652,60 @@ class TigerDataView implements IDataView {
     }
 
     public async readCollectionItems(config: ICollectionItemsConfig): Promise<ICollectionItemsResult> {
+        const requestedLimit = config.limit;
+        const normalizedValues = normalizeGeoCollectionValues(config.values);
+        const sanitizedLimit = sanitizeGeoCollectionItemsLimit(config.limit);
+        const splitRequestLimit = sanitizedLimit ?? GEO_COLLECTION_ITEMS_MAX_LIMIT;
+
+        if (!normalizedValues || normalizedValues.length <= GEO_COLLECTION_ITEMS_MAX_VALUES_PER_REQUEST) {
+            return this.requestCollectionItems({
+                ...config,
+                values: normalizedValues,
+                limit: sanitizedLimit,
+            });
+        }
+
+        const valueChunks = chunkArray(normalizedValues, GEO_COLLECTION_ITEMS_MAX_VALUES_PER_REQUEST);
+        const chunkedResults: ICollectionItemsResult[] = [];
+
+        for (
+            let chunkIndex = 0;
+            chunkIndex < valueChunks.length;
+            chunkIndex += GEO_COLLECTION_ITEMS_MAX_PARALLEL_REQUESTS
+        ) {
+            const chunkBatch = valueChunks.slice(
+                chunkIndex,
+                chunkIndex + GEO_COLLECTION_ITEMS_MAX_PARALLEL_REQUESTS,
+            );
+            const batchResults = await Promise.all(
+                chunkBatch.map((chunkValues) =>
+                    this.requestCollectionItems({
+                        ...config,
+                        values: chunkValues,
+                        limit: splitRequestLimit,
+                    }),
+                ),
+            );
+
+            chunkedResults.push(...batchResults);
+        }
+
+        const mergedBbox = chunkedResults.reduce<number[] | undefined>(
+            (acc, result) => mergeBbox(acc, result.bbox),
+            undefined,
+        );
+        const mergedFeatures = chunkedResults.flatMap((result) => result.features ?? []);
+        const features =
+            requestedLimit === undefined ? mergedFeatures : mergedFeatures.slice(0, requestedLimit);
+
+        return {
+            type: chunkedResults.find((result) => result.type)?.type ?? "FeatureCollection",
+            features,
+            bbox: mergedBbox,
+        };
+    }
+
+    private async requestCollectionItems(config: ICollectionItemsConfig): Promise<ICollectionItemsResult> {
         const requestParams = {
             collectionId: config.collectionId,
             limit: config.limit,
@@ -638,12 +719,15 @@ class TigerDataView implements IDataView {
             },
         };
 
-        // Use different endpoint based on collection kind
-        const apiCall =
-            config.kind === "CUSTOM" ? ResultApi_GetCustomCollectionItems : ResultApi_GetCollectionItems;
-
         const response = await this._authCall((client) =>
-            apiCall(client.axios, client.basePath, requestParams, requestOptions),
+            config.kind === "CUSTOM"
+                ? ResultApi_GetCustomCollectionItems(
+                      client.axios,
+                      client.basePath,
+                      requestParams,
+                      requestOptions,
+                  )
+                : ResultApi_GetCollectionItems(client.axios, client.basePath, requestParams, requestOptions),
         );
 
         const { data } = response;

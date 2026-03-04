@@ -23,6 +23,7 @@
     "filterBar.showLess": "显示更少",
     "filterBar.unappliedFiltersNotification": "<link>应用过滤器</link> 查看更新的数据。",
     "filterBar.invalidFilterSelection": "要应用更改，请为这些过滤器选择有效值： {names}",
+    "geochart.alternateView.tablist.label": "图层表格",
     "filterBar.executionTimestampNotificationMessage": "<bold>笔记。</bold> 您正在查看最新数据，但对于任何相对日期过滤器，仪表板都会处理{date} 写为“今天。”",
     "filterBar.executionTimestampNotificationAction": "<link>重置为今天</link>",
     "options.menu.export": "导出为",

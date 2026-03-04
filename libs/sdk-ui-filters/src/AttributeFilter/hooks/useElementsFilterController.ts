@@ -470,10 +470,10 @@ function useInitOrReload(
             handler.setLimit(limit);
         }
 
-        // Always load elements regardless of text/elements mode so that autocomplete suggestions
-        // are available in text mode. Elements loading is cheap (paginated) and the data is
-        // needed both for the elements selector UI and for autocomplete in text mode.
-        handler.init();
+        // Load elements on init. In text mode, elements are loaded lazily when the user types
+        // (via onAutocompleteSearch), but we still need to init the handler for metadata.
+        // Skip element loading in text mode to improve performance.
+        handler.init(undefined, isTextMode);
 
         // Change of the parent filters is resolved in the useEffect below, it does not need full reinit.
         // eslint-disable-next-line react-hooks/exhaustive-deps

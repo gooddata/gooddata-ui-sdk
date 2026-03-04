@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { FormattedMessage } from "react-intl";
 
@@ -6,6 +6,7 @@ import { type ObjRef } from "@gooddata/sdk-model";
 import { Typography } from "@gooddata/sdk-ui-kit";
 
 import { useInsightDrillConfigPanel } from "./useInsightDrillConfigPanel.js";
+import { DrillFiltersConfig } from "../DrillFilters/DrillFiltersConfig.js";
 import { DrillOriginSelector } from "../DrillOriginSelector/DrillOriginSelector.js";
 import { InsightDrillConfigList } from "../InsightDrillConfigList.js";
 import { ZoomInsightConfiguration } from "../ZoomInsightConfiguration.js";
@@ -25,14 +26,20 @@ export function InsightDrillConfigPanel({ widgetRef }: IDrillConfigPanelProps) {
         widget,
         insight,
         drillConfigItems,
+        selectedDrillItem,
         originSelectorItems,
         isOriginSelectorVisible,
         isLoaded,
         onChangeItem,
         onOriginSelect,
         onSetupItem,
+        onUpdateDrillItem,
         onDeleteItem,
     } = useInsightDrillConfigPanel({ widgetRef });
+
+    if (selectedDrillItem) {
+        return <DrillFiltersConfig item={selectedDrillItem} onUpdateDrillItem={onUpdateDrillItem} />;
+    }
 
     return (
         <>

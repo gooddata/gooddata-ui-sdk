@@ -94,12 +94,9 @@
     "analyticsCatalog.catalogItem.title.add": "Добавьте заголовок…",
     "analyticsCatalog.catalogItem.description": "Описание",
     "analyticsCatalog.catalogItem.description.add": "Добавить описание…",
-    "analyticsCatalog.catalogItem.description.generate": "Сгенерировать описание",
-    "analyticsCatalog.catalogItem.description.generate.dialog.title": "Сгенерировать описание",
-    "analyticsCatalog.catalogItem.description.generate.dialog.content": "Это описание сгенерировано ИИ. Используйте сгенерированный текст как отправную точку и проверьте его перед применением.",
-    "analyticsCatalog.catalogItem.description.generate.dialog.accept": "Принять",
-    "analyticsCatalog.catalogItem.description.generate.dialog.decline": "Отклонить",
-    "analyticsCatalog.catalogItem.description.generate.dialog.note": "Примечание",
+    "analyticsCatalog.catalogItem.description.generate": "Сгенерировать описание с помощью ИИ",
+    "analyticsCatalog.catalogItem.description.generate.loading": "Генерация...",
+    "analyticsCatalog.catalogItem.description.generate.undo": "Отменить",
     "analyticsCatalog.catalogItem.description.generate.failed": "Не удалось сгенерировать описание. Повторите попытку позже.",
     "analyticsCatalog.catalogItem.update.failed": "Не удалось обновить объект каталога. Попробуйте позже.",
     "analyticsCatalog.catalogItem.id": "ID",
@@ -152,5 +149,8 @@
     "metricComponent.metricType.label": "Тип метрики",
     "metricComponent.metricType.unspecified": "Не задано",
     "metricComponent.metricType.currency": "Со знаком валюты",
-    "metricComponent.numberFormat.label": "Формат чисел"
+    "metricComponent.numberFormat.label": "Формат чисел",
+    "analyticsCatalog.tabs.recommended": "Рекомендуемые",
+    "analyticsCatalog.tabs.trending": "Популярное",
+    "analyticsCatalog.tabs.quality": "Качество"
 }

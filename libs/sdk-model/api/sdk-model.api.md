@@ -2040,6 +2040,9 @@ export interface IDrillToDashboard extends IDrill {
 
 // @public
 export interface IDrillToInsight extends IDrill {
+    ignoredDashboardFilters?: string[];
+    includedSourceInsightFiltersObjRefs?: SourceInsightFilterObjRef[];
+    includedSourceMeasureFiltersObjRefs?: SourceMeasureFilterObjRef[];
     target: ObjRef;
     transition: "pop-up";
     type: "drillToInsight";
@@ -2836,7 +2839,7 @@ export interface IMeasureDescriptorObject {
 }
 
 // @public
-export type IMeasureFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter;
+export type IMeasureFilter = IAbsoluteDateFilter | IRelativeDateFilter | IPositiveAttributeFilter | INegativeAttributeFilter | IArbitraryAttributeFilter | IMatchAttributeFilter;
 
 // @public
 export interface IMeasureGroupDescriptor {
@@ -4139,6 +4142,7 @@ export interface ISettings {
     enableExportToDocumentStorage?: boolean;
     enableExternalRecipients?: boolean;
     enableFilterAccessibility?: boolean;
+    enableFilterControlInDrillingConfiguration?: boolean;
     enableFiscalCalendars?: boolean;
     enableGenAICatalogQualityChecker?: boolean;
     enableGenAIChat?: boolean;
@@ -4203,6 +4207,7 @@ export interface ISettings {
     enableSeamlessIdpSwitch?: boolean;
     enableSemanticSearch?: boolean;
     enableSemanticSearchRollout?: boolean;
+    enableShellApplication?: boolean;
     // (undocumented)
     enableSingleStoreDataSource?: boolean;
     enableSlidesExport?: boolean;
@@ -4437,6 +4442,38 @@ export interface ISortDirection {
 
 // @public
 export type ISortItem = IAttributeSortItem | IMeasureSortItem;
+
+// @public
+export interface ISourceInsightAttributeFilterRef {
+    // (undocumented)
+    label: ObjRefInScope;
+    // (undocumented)
+    type: "attributeFilter";
+}
+
+// @public
+export interface ISourceInsightDateFilterRef {
+    // (undocumented)
+    dataSet: ObjRefInScope;
+    // (undocumented)
+    type: "dateFilter";
+}
+
+// @public
+export interface ISourceInsightMeasureValueFilterRef {
+    // (undocumented)
+    measure: ObjRefInScope;
+    // (undocumented)
+    type: "measureValueFilter";
+}
+
+// @public
+export interface ISourceInsightRankingFilterRef {
+    // (undocumented)
+    measure: ObjRefInScope;
+    // (undocumented)
+    type: "rankingFilter";
+}
 
 // @public
 export function isPoPMeasure(obj: unknown): obj is IMeasure<IPoPMeasureDefinition>;
@@ -5827,6 +5864,12 @@ export function sortEntityIds(sort: ISortItem): SortEntityIds;
 
 // @public
 export function sortMeasureLocators(sort: IMeasureSortItem): ILocatorItem[];
+
+// @public
+export type SourceInsightFilterObjRef = ISourceInsightAttributeFilterRef | ISourceInsightDateFilterRef | ISourceInsightMeasureValueFilterRef | ISourceInsightRankingFilterRef;
+
+// @public
+export type SourceMeasureFilterObjRef = Extract<SourceInsightFilterObjRef, ISourceInsightAttributeFilterRef | ISourceInsightDateFilterRef>;
 
 // @beta
 export type ThemeColor = string;

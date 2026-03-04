@@ -23,6 +23,7 @@
     "filterBar.showLess": "Pokaż mniej",
     "filterBar.unappliedFiltersNotification": "<link>Zastosuj filtry</link>, aby zobaczyć zaktualizowane dane.",
     "filterBar.invalidFilterSelection": "Aby zastosować zmiany, wybierz prawidłowe wartości dla tych filtrów: {names}",
+    "geochart.alternateView.tablist.label": "Tabele warstw",
     "filterBar.executionTimestampNotificationMessage": "<bold>Uwaga.</bold> Przeglądasz aktualne dane, ale dla wszelkich filtrów dat względnych pulpit nawigacyjny traktuje {date} jako „dzisiaj”.",
     "filterBar.executionTimestampNotificationAction": "<link>Zresetuj do dzisiaj</link>",
     "options.menu.export": "Eksportuj",

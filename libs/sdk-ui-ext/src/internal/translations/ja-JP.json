@@ -385,7 +385,6 @@
     "notifications.panel.downloadFilesHint": "エクスポートしたファイルをダウンロードする",
     "notifications.filters.buttonLabel": "{count, plural, one {# フィルター} other {# フィルター}}",
     "notifications.filters.dialog.title": "フィルター",
-    "notifications.filters.dialog.dateRange": "日付範囲",
     "notifications.panel.triggers.title": "{triggeredCount}/{totalCount} 件のアイテム用",
     "notifications.panel.triggers.dialog.newValue": "新しい価値",
     "notifications.panel.triggers.dialog.truncatedValues": "…及び{count}その他",

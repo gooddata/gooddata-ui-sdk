@@ -424,6 +424,8 @@ export interface IArbitraryValuesInputProps {
     hasEmptyError?: boolean;
     hasValuesLimitExceededError?: boolean;
     hasValuesLimitReachedWarning?: boolean;
+    isAutocompleteLoading?: boolean;
+    onAutocompleteSearch?: (searchString: string) => void;
     onBlur?: FocusEventHandler<HTMLInputElement>;
     onValuesChange?: (values: string[]) => void;
     placeholder?: string;
@@ -1394,7 +1396,9 @@ export interface ITextFilterBodyProps {
     hasValuesEmptyError?: boolean;
     hasValuesLimitExceededError?: boolean;
     hasValuesLimitReachedWarning?: boolean;
+    isAutocompleteLoading?: boolean;
     literal: string;
+    onAutocompleteSearch?: (searchString: string) => void;
     onLiteralBlur?: () => void;
     onLiteralChange?: (literal: string) => void;
     onOperatorChange?: (operator: TextFilterOperator) => void;

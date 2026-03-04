@@ -1003,6 +1003,20 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "BOOLEAN",
             FeatureFlagsValues.enableArbitraryFilterKD,
         ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableFilterControlInDrillingConfiguration,
+            "enableFilterControlInDrillingConfiguration",
+            "BOOLEAN",
+            FeatureFlagsValues.enableFilterControlInDrillingConfiguration,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableShellApplication,
+            "enableShellApplication",
+            "BOOLEAN",
+            FeatureFlagsValues.enableShellApplication,
+        ),
     };
 }
 

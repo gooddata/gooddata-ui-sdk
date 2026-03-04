@@ -4,13 +4,18 @@ import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, select } from "redux-saga/effects";
 
 import {
+    type FilterContextItem,
     type IAttribute,
     type IDashboardTab,
+    type IFilter,
     type IListedDashboard,
+    type IMeasure,
     type InsightDrillDefinition,
     type ObjRef,
     bucketsAttributes,
     insightBuckets,
+    insightFilters,
+    insightMeasures,
 } from "@gooddata/sdk-model";
 
 import {
@@ -24,11 +29,13 @@ import { type ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
 import { type IDashboardCommand } from "../../../commands/base.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import { selectAccessibleDashboardsMap } from "../../../store/accessibleDashboards/accessibleDashboardsSelectors.js";
+import { selectEnableFilterControlInDrillingConfiguration } from "../../../store/config/configSelectors.js";
 import { selectDrillTargetsByWidgetRef } from "../../../store/drillTargets/drillTargetsSelectors.js";
 import { type IDrillTargets } from "../../../store/drillTargets/drillTargetsTypes.js";
 import { selectInaccessibleDashboardsMap } from "../../../store/inaccessibleDashboards/inaccessibleDashboardsSelectors.js";
 import { selectInsightByWidgetRef } from "../../../store/insights/insightsSelectors.js";
 import { selectDashboardRef } from "../../../store/meta/metaSelectors.js";
+import { selectFilterContextDraggableFilters } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { selectTabs } from "../../../store/tabs/tabsSelectors.js";
 import { type DashboardContext } from "../../../types/commonTypes.js";
 import { type IInaccessibleDashboard } from "../../../types/inaccessibleDashboardTypes.js";
@@ -66,6 +73,10 @@ export function validateDrillDefinition(
     // validate drill
     const validationContext: IInsightDrillDefinitionValidationData = {
         widgetInsightAttributes: validationData.widgetInsightAttributes,
+        sourceInsightFilters: validationData.sourceInsightFilters,
+        sourceInsightMeasures: validationData.sourceInsightMeasures,
+        dashboardFilters: validationData.dashboardFilters,
+        enableFilterControlInDrillingConfiguration: validationData.enableFilterControlInDrillingConfiguration,
         dashboardsMap: validationData.accessibleDashboardMap,
         insightsMap: validationData.resolvedInsights.resolved,
         displayFormsMap: validationData.resolvedDisplayForms.resolved,
@@ -87,6 +98,10 @@ export function validateDrillDefinition(
 
 export interface IDrillDefinitionValidationData {
     widgetInsightAttributes: IAttribute[];
+    sourceInsightFilters: IFilter[];
+    sourceInsightMeasures: IMeasure[];
+    dashboardFilters: FilterContextItem[];
+    enableFilterControlInDrillingConfiguration: boolean;
     drillTargets: IDrillTargets | undefined;
     resolvedInsights: IInsightResolutionResult;
     resolvedDisplayForms: DisplayFormResolutionResult;
@@ -105,6 +120,14 @@ export function* getValidationData(
         selectInsightByWidgetRef(widgetRef),
     );
     const widgetInsightAttributes = widgetInsight ? bucketsAttributes(insightBuckets(widgetInsight)) : [];
+    const sourceInsightFilters = widgetInsight ? insightFilters(widgetInsight) : [];
+    const sourceInsightMeasures = widgetInsight ? insightMeasures(widgetInsight) : [];
+    const dashboardFilters: ReturnType<typeof selectFilterContextDraggableFilters> = yield select(
+        selectFilterContextDraggableFilters,
+    );
+    const enableFilterControlInDrillingConfiguration: ReturnType<
+        typeof selectEnableFilterControlInDrillingConfiguration
+    > = yield select(selectEnableFilterControlInDrillingConfiguration);
 
     const selectDrillTargetsByWidgetRefSelector = selectDrillTargetsByWidgetRef(widgetRef);
     const drillTargets: ReturnType<typeof selectDrillTargetsByWidgetRefSelector> = yield select(
@@ -142,6 +165,10 @@ export function* getValidationData(
 
     return {
         widgetInsightAttributes,
+        sourceInsightFilters,
+        sourceInsightMeasures,
+        dashboardFilters,
+        enableFilterControlInDrillingConfiguration,
         drillTargets,
         accessibleDashboardMap,
         resolvedInsights,

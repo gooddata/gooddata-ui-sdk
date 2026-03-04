@@ -2,7 +2,9 @@
 
 import {
     type ActionsApiGenerateDescriptionRequest,
+    type ActionsApiGenerateTitleRequest,
     ActionsApi_GenerateDescription,
+    ActionsApi_GenerateTitle,
 } from "@gooddata/api-client-tiger/endpoints/actions";
 import {
     GenAiApi_CreatedBy,
@@ -13,6 +15,8 @@ import type {
     IAnalyticsCatalogCreatedBy,
     IAnalyticsCatalogGenerateDescriptionRequest,
     IAnalyticsCatalogGenerateDescriptionResponse,
+    IAnalyticsCatalogGenerateTitleRequest,
+    IAnalyticsCatalogGenerateTitleResponse,
     IAnalyticsCatalogService,
     IAnalyticsCatalogTags,
     IAnalyticsCatalogTrendingObjects,
@@ -38,7 +42,7 @@ export class AnalyticsCatalogService implements IAnalyticsCatalogService {
             ActionsApi_GenerateDescription(client.axios, client.basePath, {
                 workspaceId: this.workspaceId,
                 generateDescriptionRequest: {
-                    objectType: toGenerateDescriptionRequestObjectType(request.objectType),
+                    objectType: toGenerateRequestObjectType(request.objectType),
                     objectId: request.objectId,
                 },
             }),
@@ -46,6 +50,25 @@ export class AnalyticsCatalogService implements IAnalyticsCatalogService {
 
         return {
             description: response.data.description,
+            note: response.data.note,
+        };
+    }
+
+    async generateTitle(
+        request: IAnalyticsCatalogGenerateTitleRequest,
+    ): Promise<IAnalyticsCatalogGenerateTitleResponse> {
+        const response = await this.authCall((client) =>
+            ActionsApi_GenerateTitle(client.axios, client.basePath, {
+                workspaceId: this.workspaceId,
+                generateTitleRequest: {
+                    objectType: toGenerateRequestObjectType(request.objectType),
+                    objectId: request.objectId,
+                },
+            }),
+        );
+
+        return {
+            title: response.data.title,
             note: response.data.note,
         };
     }
@@ -91,9 +114,13 @@ export class AnalyticsCatalogService implements IAnalyticsCatalogService {
     }
 }
 
-function toGenerateDescriptionRequestObjectType(
-    objectType: IAnalyticsCatalogGenerateDescriptionRequest["objectType"],
-): ActionsApiGenerateDescriptionRequest["generateDescriptionRequest"]["objectType"] {
+function toGenerateRequestObjectType(
+    objectType:
+        | IAnalyticsCatalogGenerateDescriptionRequest["objectType"]
+        | IAnalyticsCatalogGenerateTitleRequest["objectType"],
+):
+    | ActionsApiGenerateDescriptionRequest["generateDescriptionRequest"]["objectType"]
+    | ActionsApiGenerateTitleRequest["generateTitleRequest"]["objectType"] {
     switch (
         objectType //TODO: This should be fixed on the backend to prevent mismatch with other gen-ai endpoints.
     ) {

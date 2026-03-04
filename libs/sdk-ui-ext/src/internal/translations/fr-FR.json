@@ -385,7 +385,6 @@
     "notifications.panel.downloadFilesHint": "Télécharger les fichiers exportés",
     "notifications.filters.buttonLabel": "{count, plural, one {# filtre} other {# filtres}}",
     "notifications.filters.dialog.title": "Filtres",
-    "notifications.filters.dialog.dateRange": "Plage de dates",
     "notifications.panel.triggers.title": "pour {triggeredCount}/{totalCount} éléments",
     "notifications.panel.triggers.dialog.newValue": "Nouvelle valeur",
     "notifications.panel.triggers.dialog.truncatedValues": "…et {count} de plus",

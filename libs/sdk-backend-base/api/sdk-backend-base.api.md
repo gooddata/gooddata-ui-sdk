@@ -1082,6 +1082,9 @@ export class MeasureMetadataObjectBuilder<T extends IMeasureMetadataObject = IMe
     updatedBy(updatedBy?: IUser): this;
 }
 
+// @internal
+export function mergeBbox(a?: number[], b?: number[]): number[] | undefined;
+
 // @beta
 export class MetadataObjectBuilder<T extends IMetadataObject = IMetadataObject> extends Builder<T> implements IMetadataObjectBuilder {
     // (undocumented)

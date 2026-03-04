@@ -168,6 +168,16 @@ export function AttributeFilterDropdownBody({
         [elements],
     );
 
+    // Handler for autocomplete search - reuses the existing onSearch infrastructure
+    const handleAutocompleteSearch = useCallback(
+        (searchString: string) => {
+            if (onSearch) {
+                onSearch(searchString);
+            }
+        },
+        [onSearch],
+    );
+
     // Render filter body based on mode
     const renderFilterBody = () => {
         if (currentFilterMode === "text") {
@@ -191,6 +201,8 @@ export function AttributeFilterDropdownBody({
                     disabled={disabled}
                     availableTextModes={availableTextFilterModes}
                     autocompleteOptions={autocompleteOptions}
+                    onAutocompleteSearch={handleAutocompleteSearch}
+                    isAutocompleteLoading={isLoadingInitialElementsPage || isLoadingNextElementsPage}
                 />
             );
         }

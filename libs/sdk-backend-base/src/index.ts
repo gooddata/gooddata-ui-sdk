@@ -104,6 +104,7 @@ export {
     normalizeCollectionItemsIdentityConfig,
     type NormalizedCollectionItemsIdentityConfig,
 } from "./toolkit/collectionItemsIdentity.js";
+export { mergeBbox } from "./toolkit/geoItems.js";
 
 export {
     type IServerPagingResult,
