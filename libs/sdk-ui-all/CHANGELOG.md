@@ -1,6 +1,45 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 19 Feb 2026 10:02:57 GMT and should not be manually modified.
+This log was last generated on Thu, 05 Mar 2026 08:43:40 GMT and should not be manually modified.
+
+## 11.24.0
+
+Thu, 05 Mar 2026 08:43:40 GMT
+
+### Updates
+
+- sdk-ui-kit: Add FileUpload suite of components and utilities
+- sdk-ui-dashboard: Fix race condition in dashboard title when saving.
+- sdk-ui-dashboard: Apply schedule filters to all dashboard tabs.
+- sdk-ui-pivot: Fix initial column width sync.
+- sdk-ui-dashboard: Hidden attribute filters set to 'All values' are no longer shown in alert and schedule email notifications.
+- sdk-model: Add `isAllValuesAttributeFilter` utility.
+- sdk-ui-catalog: Add certification icon to analytics catalog table column.
+- sdk-ui-catalog: Add certification tab to catalog detail.
+- sdk-ui-kit: Add new certification icon.
+- sdk-backend-tiger: Implementation of API related to LLM provider management.
+- sdk-ui-catalog: lineage view implementation
+- sdk-ui-all: Implement anomaly detection in gen ai chat
+- sdk-ui-gen-ai: support clustering and SCATTER chart in gen ai
+- sdk-ui-catalog: add certifiedBy field to certification details in catalog items
+- sdk-ui-catalog: update design of lineage
+- sdk-ui-dashboard: repair of crash when selectiong anomaly detection in alerts
+- Added what-if analysis in AI Assistant UI
+- Added support for metrics definitions override in visualizations
+- sdk-ui-dashboard: Use global IDs when converting MVF dimensionality for alerts
+- sdk-ui-all: Introduce new modes of attribute filter component.
+- sdk-embedding: Support text filters in embedding.
+- sdk-ui-all: Allow to hide total count in list.
+- sdk-ui-filters: Improve date filter UI on mobile.
+- sdk-ui-dashboard: Fix measures in alert definition.
+- sdk-ui-catalog: Adding inlineTextGenerator
+- sdk-ui-filters: Introduce All condition to new text filters.
+- Fix filter group vertical alignment
+- sdk-ui-ext: allow filtering of insights by include/exclude tags, same as catalog items
+- sdk-ui-dashboards: Added new filter select subview in dashboard drill to insight configuration, allowing user to select filters transfered to the target visualization.
+- analytics-catalog: add title generation to the object detail
+- Added tredning and recommended objects to analytics catalog
+- Fix crashing trending tab in analytics catalog
 
 ## 11.22.0
 
