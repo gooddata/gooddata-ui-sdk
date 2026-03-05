@@ -143,6 +143,10 @@
         background-color: variables.$gd-color-white;
         text-align: left;
 
+        span::first-letter {
+            text-transform: capitalize;
+        }
+
         &:focus {
             outline: none;
             border-color: var(--gd-palette-primary-base, variables.$gd-color-highlight);
@@ -164,13 +168,44 @@
     }
 
     &__menu {
-        width: 100%;
-        min-width: 220px;
+        min-width: 188px;
         background: variables.$gd-color-white;
     }
 
     &__item {
         font-size: 12px;
+        line-height: 18px;
+        padding: 5px 5px 5px 10px;
+        min-height: 28px;
+
+        span::first-letter {
+            text-transform: capitalize;
+        }
+
+        &:first-child {
+            margin-top: 5px;
+        }
+
+        &.is-selected {
+            font-weight: 700;
+            color: var(--gd-palette-primary-base, variables.$gd-color-highlight);
+        }
+    }
+
+    &__divider {
+        height: 10px;
+        padding: 0 10px;
+        position: relative;
+
+        &::after {
+            content: "";
+            position: absolute;
+            left: 10px;
+            right: 10px;
+            top: 45%;
+            height: 1px;
+            background-color: var(--gd-palette-complementary-3, #dde4eb);
+        }
     }
 }
 

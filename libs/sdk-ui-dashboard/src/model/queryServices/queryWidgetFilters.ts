@@ -273,7 +273,7 @@ function resolveDateFilters(
         });
 }
 
-function* queryWithInsight(
+export function* queryWithInsight(
     ctx: DashboardContext,
     widget: FilterableDashboardWidget,
     insight: IInsightDefinition,

@@ -275,7 +275,7 @@ export const convertToDashboardTabularExportRequest = (
         isExportDefinitionDashboardRequestPayload(exportRequest) &&
         dashboard != null
     ) {
-        const { mergeHeaders, orientation, exportInfo } = exportRequest.settings ?? {};
+        const { mergeHeaders, exportInfo } = exportRequest.settings ?? {};
 
         // Convert filtersByTab to API format (dashboardTabsFiltersOverrides)
         const dashboardTabsFiltersOverrides = filtersByTab
@@ -294,7 +294,6 @@ export const convertToDashboardTabularExportRequest = (
             dashboardId: dashboard,
             settings: {
                 ...(mergeHeaders ? { mergeHeaders } : {}),
-                ...(orientation ? { pdfPageSize: orientation } : {}),
                 ...(exportInfo ? { exportInfo } : {}),
             },
             dashboardFiltersOverride: filters ? convertSdkFiltersToTiger(filters) : undefined,

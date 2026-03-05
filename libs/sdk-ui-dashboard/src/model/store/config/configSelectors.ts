@@ -1087,7 +1087,7 @@ export const selectEnableDashboardFilterGroups: DashboardSelector<boolean> = cre
 export const selectEnableKDEmptyDateValuesFilter: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return state.settings?.enableKDEmptyDateValuesFilter ?? false;
+        return state.settings?.enableKDEmptyDateValuesFilter ?? true;
     },
 );
 
@@ -1111,6 +1111,6 @@ export const selectEnableVisualizationFilteringByTags: DashboardSelector<boolean
 export const selectEnableFilterControlInDrillingConfiguration: DashboardSelector<boolean> = createSelector(
     selectConfig,
     (state) => {
-        return state.settings?.enableFilterControlInDrillingConfiguration ?? false;
+        return state.settings?.enableFilterControlInDrillingConfiguration ?? true;
     },
 );

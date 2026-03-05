@@ -1104,6 +1104,7 @@ export function useElementsFilterController(props: IElementsFilterControllerProp
             if (newDisplayAsLabel) {
                 handler.setDisplayAsLabel(newDisplayAsLabel);
             }
+            handler.setSearch("");
             handler.changeSelection({ keys: [], isInverted: true });
             withoutApply && handler.commitSelection();
         },

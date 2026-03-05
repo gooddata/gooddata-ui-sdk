@@ -1,7 +1,8 @@
 // (C) 2020-2026 GoodData Corporation
 
 import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { userEvent } from "@testing-library/user-event";
+import { describe, expect, it, vi } from "vitest";
 
 import { InternalIntlWrapper } from "../../../utils/internalIntlProvider.js";
 import { type IPushpinViewportControl, PushpinViewportControl } from "../PushpinViewportControl.js";
@@ -80,6 +81,20 @@ describe("PushpinViewportControl", () => {
             expect(screen.getByRole("combobox")).toHaveTextContent("Custom");
         });
 
+        it("should keep custom area selection when map snapshot is not available", async () => {
+            const pushData = vi.fn();
+            createComponent({
+                pushData,
+                getCurrentMapView: () => ({}),
+            });
+
+            await userEvent.click(screen.getByRole("combobox"));
+            await userEvent.click(screen.getByText("Custom"));
+
+            expect(pushData).toHaveBeenCalledOnce();
+            expect(pushData.mock.calls[0]?.[0]?.properties?.controls?.viewport?.area).toBe("custom");
+        });
+
         it("should keep auto viewport selected when navigation is set without area", () => {
             createComponent({
                 properties: {
@@ -118,6 +133,31 @@ describe("PushpinViewportControl", () => {
 
             expect(screen.getByRole("checkbox", { name: "viewport.navigation.pan" })).toBeChecked();
             expect(screen.getByRole("checkbox", { name: "viewport.navigation.zoom" })).toBeChecked();
+        });
+
+        it("should show navigation tooltip text when hovering over the question mark", async () => {
+            const { container } = createComponent({
+                getCurrentMapView: () => ({
+                    center: { lat: 50.1, lng: 14.4 },
+                    zoom: 3,
+                }),
+            });
+            const tooltipTrigger = container.querySelector(
+                ".gd-interactions-section__question-mark.gd-icon-circle-question",
+            );
+
+            expect(tooltipTrigger).toBeInTheDocument();
+            if (!tooltipTrigger) {
+                throw new Error("Missing navigation tooltip trigger.");
+            }
+
+            await userEvent.hover(tooltipTrigger);
+
+            expect(
+                await screen.findByText(
+                    "These settings apply only when the visualization is viewed on a dashboard or in an embedded context.",
+                ),
+            ).toBeInTheDocument();
         });
 
         it("should render navigation toggles from viewport.navigation properties", () => {

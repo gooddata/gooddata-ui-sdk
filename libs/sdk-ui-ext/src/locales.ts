@@ -181,6 +181,7 @@ export const messages: Record<string, MessageDescriptor> = defineMessages({
     basemapSatellite: { id: "properties.map.basemap.satellite" },
     viewportAreaTitle: { id: "properties.viewport.area.title" },
     viewportNavigationTitle: { id: "properties.viewport.navigation.title" },
+    viewportNavigationTooltip: { id: "properties.viewport.navigation.tooltip" },
     viewportNavigationPan: { id: "properties.viewport.navigation.pan" },
     viewportNavigationZoom: { id: "properties.viewport.navigation.zoom" },
     autoPlaceholder: { id: "properties.auto_placeholder" },

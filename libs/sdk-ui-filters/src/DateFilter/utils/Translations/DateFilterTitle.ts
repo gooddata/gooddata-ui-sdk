@@ -7,6 +7,7 @@ import moment from "moment";
 import {
     type DateFilterGranularity,
     type IAbsoluteDateFilterPreset,
+    type ILocale,
     type ILowerBoundedFilter,
     type IRelativeDateFilterPreset,
     type IUpperBoundedFilter,
@@ -18,7 +19,7 @@ import {
     isRelativeDateFilterPreset,
     isUpperBound,
 } from "@gooddata/sdk-model";
-import { type ILocale, type ITranslations, getIntl } from "@gooddata/sdk-ui";
+import { type ITranslations, getIntl } from "@gooddata/sdk-ui";
 
 import { type IDateAndMessageTranslator, type IMessageTranslator } from "./Translators.js";
 import { messages } from "../../../locales.js";

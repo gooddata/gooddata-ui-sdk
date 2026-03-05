@@ -121,8 +121,8 @@ export function createEmptyFilterForMode(
     localIdentifier?: string,
 ): IAttributeFilter {
     if (mode === "text") {
-        // Default to "is" operator (arbitrary positive)
-        return newArbitraryAttributeFilter(displayForm, [], false, localIdentifier);
+        // Default to "all" operator (arbitrary negative with empty values = All)
+        return newArbitraryAttributeFilter(displayForm, [], true, localIdentifier);
     }
 
     // elements mode - create negative filter with empty selection (All)

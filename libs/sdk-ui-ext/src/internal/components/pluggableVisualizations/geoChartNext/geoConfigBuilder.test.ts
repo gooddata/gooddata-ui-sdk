@@ -5,8 +5,14 @@ import { describe, expect, it } from "vitest";
 import { idRef, newAttribute, newBucket, newInsightDefinition } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 
-import { geoConfigFromInsight, geoInsightConversion } from "./geoConfigBuilder.js";
+import {
+    buildGeoVisualizationConfig,
+    geoConfigFromInsight,
+    geoInsightConversion,
+} from "./geoConfigBuilder.js";
+import { ANALYTICAL_ENVIRONMENT, DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
 import { type IEmbeddingCodeContext } from "../../../interfaces/VisualizationDescriptor.js";
+import { buildAreaVisualizationConfig } from "../geoAreaChart/geoAreaConfigBuilder.js";
 
 describe("geoConfigFromInsight", () => {
     it("keeps mapStyle configuration", () => {
@@ -110,5 +116,93 @@ describe("geoInsightConversion", () => {
 
         expect(attribute?.attribute?.localIdentifier).toBe("longitude_df");
         expect(attribute?.attribute?.displayForm).toEqual(idRef("nm_longitude", "displayForm"));
+    });
+});
+
+describe("buildGeoVisualizationConfig", () => {
+    const options = {
+        messages: {},
+    };
+
+    it("applies viewport navigation in dashboards, leaves embedded unset, and disables in AD", () => {
+        const dashboardWidgetConfig = buildGeoVisualizationConfig({
+            options: {
+                ...options,
+                config: {
+                    isInEditMode: false,
+                },
+            },
+            supportedControls: {},
+            colorMapping: undefined,
+            environment: DASHBOARDS_ENVIRONMENT,
+        });
+        const embeddedConfig = buildGeoVisualizationConfig({
+            options: {
+                ...options,
+                config: {},
+            },
+            supportedControls: {},
+            colorMapping: undefined,
+            environment: "",
+        });
+        const adConfig = buildGeoVisualizationConfig({
+            options: {
+                ...options,
+                config: {
+                    isInEditMode: true,
+                },
+            },
+            supportedControls: {},
+            colorMapping: undefined,
+            environment: ANALYTICAL_ENVIRONMENT,
+        });
+
+        expect(dashboardWidgetConfig.applyViewportNavigation).toBe(true);
+        expect(embeddedConfig.applyViewportNavigation).toBeUndefined();
+        expect(adConfig.applyViewportNavigation).toBe(false);
+    });
+});
+
+describe("buildAreaVisualizationConfig", () => {
+    const options = {
+        messages: {},
+    };
+
+    it("applies viewport navigation in dashboards, leaves embedded unset, and disables in AD", () => {
+        const dashboardWidgetConfig = buildAreaVisualizationConfig({
+            options: {
+                ...options,
+                config: {
+                    isInEditMode: false,
+                },
+            },
+            supportedControls: {},
+            colorMapping: undefined,
+            environment: DASHBOARDS_ENVIRONMENT,
+        });
+        const embeddedConfig = buildAreaVisualizationConfig({
+            options: {
+                ...options,
+                config: {},
+            },
+            supportedControls: {},
+            colorMapping: undefined,
+            environment: "",
+        });
+        const adConfig = buildAreaVisualizationConfig({
+            options: {
+                ...options,
+                config: {
+                    isInEditMode: true,
+                },
+            },
+            supportedControls: {},
+            colorMapping: undefined,
+            environment: ANALYTICAL_ENVIRONMENT,
+        });
+
+        expect(dashboardWidgetConfig.applyViewportNavigation).toBe(true);
+        expect(embeddedConfig.applyViewportNavigation).toBeUndefined();
+        expect(adConfig.applyViewportNavigation).toBe(false);
     });
 });

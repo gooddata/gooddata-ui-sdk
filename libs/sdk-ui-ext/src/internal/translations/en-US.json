@@ -987,6 +987,10 @@
         "text": "Navigation",
         "crowdinContext": "Section title for geo viewport navigation interaction controls"
     },
+    "properties.viewport.navigation.tooltip": {
+        "text": "These settings apply only when the visualization is viewed on a dashboard or in an embedded context.",
+        "crowdinContext": "Tooltip next to geo viewport navigation section title explaining the scope of Pan and Zoom settings"
+    },
     "properties.viewport.navigation.pan": {
         "text": "Pan",
         "crowdinContext": "Toggle label for enabling/disabling map panning"

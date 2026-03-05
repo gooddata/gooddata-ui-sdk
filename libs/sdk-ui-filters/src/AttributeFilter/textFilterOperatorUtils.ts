@@ -17,6 +17,7 @@ import {
  * @alpha
  */
 export type TextFilterOperator =
+    | "all" // All values (no filtering)
     | "is" // Arbitrary positive
     | "contains" // Like contains positive
     | "startsWith" // Like startsWith positive
@@ -29,6 +30,15 @@ export type TextFilterOperator =
  * @alpha
  */
 export type TextFilterNegativeOperator = "isNot" | "doesNotContain" | "doesNotStartWith" | "doesNotEndWith";
+
+/**
+ * Determines if operator is the "all" operator (no filtering).
+ *
+ * @alpha
+ */
+export function isAllOperator(operator: TextFilterOperator): boolean {
+    return operator === "all";
+}
 
 /**
  * Determines if operator uses arbitrary filter (chips/pills input).
@@ -45,16 +55,7 @@ export function isArbitraryOperator(operator: TextFilterOperator): boolean {
  * @alpha
  */
 export function isMatchOperator(operator: TextFilterOperator): boolean {
-    return !isArbitraryOperator(operator);
-}
-
-export function isNegativeOperator(operator: TextFilterOperator): boolean {
-    return (
-        operator === "isNot" ||
-        operator === "doesNotContain" ||
-        operator === "doesNotStartWith" ||
-        operator === "doesNotEndWith"
-    );
+    return !isArbitraryOperator(operator) && !isAllOperator(operator);
 }
 
 /**
@@ -64,11 +65,15 @@ export function isNegativeOperator(operator: TextFilterOperator): boolean {
  */
 export function getOperatorFromFilter(filter: IAttributeFilter | undefined): TextFilterOperator {
     if (!filter) {
-        return "is";
+        return "all";
     }
 
     if (isArbitraryAttributeFilter(filter)) {
-        return (filter.arbitraryAttributeFilter.negativeSelection ?? false) ? "isNot" : "is";
+        const { values, negativeSelection } = filter.arbitraryAttributeFilter;
+        if (values.length === 0 && negativeSelection) {
+            return "all";
+        }
+        return negativeSelection ? "isNot" : "is";
     }
 
     if (isMatchAttributeFilter(filter)) {
@@ -89,7 +94,7 @@ export function getOperatorFromFilter(filter: IAttributeFilter | undefined): Tex
         }
     }
 
-    return "is";
+    return "all";
 }
 
 /**
@@ -126,11 +131,15 @@ export function operatorToMatchOperator(operator: TextFilterOperator): {
  */
 export function createFilterFromOperator(
     operator: TextFilterOperator,
-    valuesOrLiteral: string[] | string,
+    valuesOrLiteral: Array<string | null> | string,
     displayForm: ObjRef,
     localIdentifier?: string,
     caseSensitive: boolean = false,
 ): IAttributeFilter {
+    if (isAllOperator(operator)) {
+        return newArbitraryAttributeFilter(displayForm, [], true, localIdentifier);
+    }
+
     if (isArbitraryOperator(operator)) {
         const values = Array.isArray(valuesOrLiteral) ? valuesOrLiteral : [valuesOrLiteral];
         const negativeSelection = operator === "isNot";
@@ -155,7 +164,7 @@ export function createFilterFromOperator(
  *
  * @alpha
  */
-export function getValuesFromFilter(filter: IAttributeFilter | undefined): string[] | string {
+export function getValuesFromFilter(filter: IAttributeFilter | undefined): Array<string | null> | string {
     if (!filter) {
         return [];
     }
@@ -181,11 +190,23 @@ export function getValuesFromFilter(filter: IAttributeFilter | undefined): strin
 export function resolveValuesOnTextOperatorChange(
     newOperator: TextFilterOperator,
     oldOperator: TextFilterOperator,
-    oldValues: string[],
+    oldValues: Array<string | null>,
     oldLiteral: string,
-): { values: string[]; literal: string } {
+): { values: Array<string | null>; literal: string } {
+    const wasAll = isAllOperator(oldOperator);
+    const isAll = isAllOperator(newOperator);
     const wasArbitrary = isArbitraryOperator(oldOperator);
     const isArbitrary = isArbitraryOperator(newOperator);
+
+    // Switching to "all" always resets
+    if (isAll) {
+        return { values: [], literal: "" };
+    }
+
+    // Switching from "all" to arbitrary or match resets
+    if (wasAll) {
+        return { values: [], literal: "" };
+    }
 
     // Same group: arbitrary (is/isNot) - keep selected values
     if (wasArbitrary && isArbitrary) {

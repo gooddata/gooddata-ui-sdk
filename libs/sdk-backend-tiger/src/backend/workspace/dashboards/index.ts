@@ -424,13 +424,7 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
             return this.createDashboard(updatedDashboard);
         }
 
-        // Process root-level filter context for backward compatibility
-        const filterContext = await this.processFilterContextUpdate(
-            originalDashboard.filterContext,
-            updatedDashboard.filterContext,
-        );
-
-        // Process filter contexts for each tab if tabs are present
+        // Process filter contexts for each tab first (if tabs are present)
         let updatedDashboardWithTabFilterContexts = updatedDashboard;
         if (updatedDashboard.tabs && updatedDashboard.tabs.length > 0) {
             const tabsWithProcessedFilterContexts = await Promise.all(
@@ -439,7 +433,6 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                         (t) => t.localIdentifier === updatedTab.localIdentifier,
                     );
 
-                    // Process the tab's filter context
                     const tabFilterContext = await this.processFilterContextUpdate(
                         originalTab?.filterContext,
                         updatedTab.filterContext,
@@ -457,6 +450,17 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
                 tabs: tabsWithProcessedFilterContexts,
             };
         }
+
+        // For the root-level filter context (backward compatibility):
+        // If tabs exist and the first tab has a filter context, reuse it to avoid creating a duplicate.
+        // Otherwise, process the root filter context independently.
+        const rootFilterContextFromTabs = updatedDashboardWithTabFilterContexts.tabs?.[0]?.filterContext;
+        const filterContext =
+            rootFilterContextFromTabs ??
+            (await this.processFilterContextUpdate(
+                originalDashboard.filterContext,
+                updatedDashboard.filterContext,
+            ));
 
         const objectId = objRefToIdentifier(originalDashboard.ref, this.authCall);
         const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspace);

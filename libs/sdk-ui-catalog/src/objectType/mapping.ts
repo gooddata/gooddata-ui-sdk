@@ -39,5 +39,8 @@ export function mapObjectType(type: GenAIObjectType): ObjectType {
     if (type === "dataset" || type === "date") {
         return "dataSet";
     }
+    if (type === "label") {
+        return "attribute";
+    }
     return type as ObjectType;
 }

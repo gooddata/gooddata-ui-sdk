@@ -26,6 +26,10 @@ export interface IGeoAttributeItem extends IGeoDataItem {
      * Array of string values for the attribute
      */
     data: string[];
+    /**
+     * Optional attribute element URIs.
+     */
+    uris?: string[];
 }
 
 /**

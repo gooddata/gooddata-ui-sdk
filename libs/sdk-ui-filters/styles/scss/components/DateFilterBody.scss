@@ -279,6 +279,11 @@ $gd-date-filter-mobile-sticky-z-index: 1;
         overflow: visible; // This makes sure date-picker and relative-form select is not clipped
     }
 
+    .gd-extended-date-filter-body-scrollable,
+    .gd-extended-date-filter-body-scrollable-small-screen {
+        padding-bottom: 10px;
+    }
+
     .gd-date-filter-form-wrapper-desktop.gd-date-filter-form-wrapper {
         margin: 0;
         border-left: none;

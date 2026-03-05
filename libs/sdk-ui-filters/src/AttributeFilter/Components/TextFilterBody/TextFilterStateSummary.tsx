@@ -21,7 +21,7 @@ export interface ITextFilterStateSummaryProps {
     /**
      * Current values for arbitrary operators.
      */
-    values: string[];
+    values: Array<string | null>;
 
     /**
      * Current literal for match operators.
@@ -71,6 +71,7 @@ export function TextFilterStateSummary(props: ITextFilterStateSummaryProps) {
     return (
         <div className="gd-text-filter-state-summary s-text-filter-state-summary">
             <div className="gd-text-filter-state-summary__divider" />
+
             <div className="gd-text-filter-state-summary__text">
                 <div ref={contentRef} className="gd-text-filter-state-summary__content">
                     <FormattedMessage

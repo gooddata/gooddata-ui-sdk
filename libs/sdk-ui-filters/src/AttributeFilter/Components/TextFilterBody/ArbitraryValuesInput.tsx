@@ -8,6 +8,7 @@ import {
     useCallback,
     useEffect,
     useMemo,
+    useRef,
     useState,
 } from "react";
 
@@ -27,12 +28,12 @@ export interface IArbitraryValuesInputProps {
     /**
      * Current values
      */
-    values: string[];
+    values: Array<string | null>;
 
     /**
      * Callback when values change
      */
-    onValuesChange?: (values: string[]) => void;
+    onValuesChange?: (values: Array<string | null>) => void;
 
     /**
      * Placeholder text
@@ -139,13 +140,18 @@ export function ArbitraryValuesInput(props: IArbitraryValuesInputProps) {
     const [activeAutocompleteIndex, setActiveAutocompleteIndex] = useState<number | null>(null);
     // Tracks whether the user pressed Escape to dismiss the dropdown for the current input text.
     const [autocompletesDismissed, setAutocompleteDismissed] = useState(false);
+    const chipsContainerRef = useRef<HTMLDivElement>(null);
+    const prevValuesLengthRef = useRef<number>(values.length);
 
     const filteredSuggestions = useMemo(() => {
         if (!autocompleteOptions?.length || !inputValue.trim() || autocompletesDismissed) {
             return [];
         }
         const q = inputValue.toLowerCase();
-        return autocompleteOptions.filter((opt) => opt.toLowerCase().includes(q) && !values.includes(opt));
+        const stringValues = values.filter((v): v is string => v !== null);
+        return autocompleteOptions.filter(
+            (opt) => opt.toLowerCase().includes(q) && !stringValues.includes(opt),
+        );
     }, [autocompleteOptions, inputValue, values, autocompletesDismissed]);
 
     const shouldShowAutocompleteDropdown =
@@ -167,11 +173,21 @@ export function ArbitraryValuesInput(props: IArbitraryValuesInputProps) {
         }
     }, [inputValue, onAutocompleteSearch]);
 
+    // Auto-scroll to the latest added value only when values are added, not removed
+    useEffect(() => {
+        if (chipsContainerRef.current && values.length > prevValuesLengthRef.current) {
+            const container = chipsContainerRef.current;
+            container.scrollTop = container.scrollHeight;
+        }
+        prevValuesLengthRef.current = values.length;
+    }, [values]);
+
     const mergeParsedValues = useCallback(
-        (parsed: string[]) => {
-            const combined = [...values];
+        (parsed: Array<string | null>) => {
+            const combined: Array<string | null> = [...values];
             for (const v of parsed) {
-                if (!combined.includes(v)) {
+                const alreadyExists = combined.includes(v);
+                if (!alreadyExists) {
                     combined.push(v);
                 }
             }
@@ -279,7 +295,15 @@ export function ArbitraryValuesInput(props: IArbitraryValuesInputProps) {
     );
 
     const getDisplayLabel = useCallback(
-        (value: string) => (value === "" ? emptyValueDisplay : value),
+        (value: string | null) => {
+            if (value === null) {
+                return emptyValueDisplay;
+            }
+            if (value === "") {
+                return '""';
+            }
+            return value;
+        },
         [emptyValueDisplay],
     );
 
@@ -311,11 +335,15 @@ export function ArbitraryValuesInput(props: IArbitraryValuesInputProps) {
             >
                 {hasValues ? (
                     <>
-                        <div className="gd-chips-input__chips-frame" onPaste={handlePaste}>
+                        <div
+                            className="gd-chips-input__chips-frame"
+                            onPaste={handlePaste}
+                            ref={chipsContainerRef}
+                        >
                             <div className="gd-chips-input__chips">
                                 {values.map((value, index) => (
                                     <UiTag
-                                        key={`${value}-${index}`}
+                                        key={`${value ?? "__null__"}-${index}`}
                                         label={getDisplayLabel(value)}
                                         isDeletable
                                         isDisabled={disabled}

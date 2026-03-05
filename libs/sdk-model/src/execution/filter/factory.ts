@@ -133,14 +133,14 @@ export function newNegativeAttributeFilter(
  * Useful for custom/external data integration scenarios.
  *
  * @param attributeOrRef - either instance of attribute to create filter for or ref or identifier of attribute's display form
- * @param values - arbitrary string values to filter by; can be empty array
+ * @param values - arbitrary values to filter by; can be empty array; use null for empty/missing values
  * @param negativeSelection - whether this is a negative filter (NOT IN); defaults to false
  * @param localIdentifier - optional local identifier for the filter
  * @alpha
  */
 export function newArbitraryAttributeFilter(
     attributeOrRef: IAttribute | ObjRef | Identifier,
-    values: string[],
+    values: Array<string | null>,
     negativeSelection: boolean = false,
     localIdentifier?: string,
 ): IArbitraryAttributeFilter {

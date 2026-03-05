@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { BucketNames, OverTimeComparisonTypes, VisualizationTypes } from "@gooddata/sdk-ui";
 
@@ -767,7 +767,7 @@ export const GEO_PUSHPIN_CHART_UICONFIG: IUiConfig = {
     ...defaultRootUiConfigProperties,
     ...enabledNoMetricConfig,
     recommendations: {
-        supportsFilteringRecommendation: false,
+        supportsFilteringRecommendation: true,
     },
 };
 
@@ -795,7 +795,7 @@ export const GEO_AREA_CHART_UICONFIG: IUiConfig = {
     ...defaultRootUiConfigProperties,
     ...enabledNoMetricConfig,
     recommendations: {
-        supportsFilteringRecommendation: false,
+        supportsFilteringRecommendation: true,
     },
 };
 

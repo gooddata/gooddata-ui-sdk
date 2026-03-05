@@ -237,7 +237,7 @@ export interface ISettings {
      * Enable multiple conditions in measure value filters (MVF).
      *
      * @remarks
-     * Defaults to false when not provided by the backend.
+     * Defaults to true when not provided by the backend.
      */
     enableMultipleMvfConditions?: boolean;
 
@@ -658,6 +658,11 @@ export interface ISettings {
     enableGeoChartsViewportConfig?: boolean;
 
     /**
+     * Enables analytical designer recommendation for geo charts when locations contain conflicting segment values.
+     */
+    enableGeoSegmentConflictRecommendation?: boolean;
+
+    /**
      * Enable basemap selection in geo chart configuration.
      */
     enableGeoBasemapConfig?: boolean;
@@ -794,6 +799,11 @@ export interface ISettings {
      * Enable shell application.
      */
     enableShellApplication?: boolean;
+
+    /**
+     * Enable NULL-aware joins used for FULL OUTER JOIN conditions.
+     */
+    enableNullJoins?: boolean;
 
     [key: string]: number | boolean | string | object | undefined | null;
 }

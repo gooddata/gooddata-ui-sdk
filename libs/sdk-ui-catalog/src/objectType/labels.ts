@@ -46,5 +46,9 @@ export function getObjectTypeLabel(
     if (type === "insight" && visualizationType && visualizationType in visualizationTypeMessages) {
         return intl.formatMessage(visualizationTypeMessages[visualizationType]);
     }
-    return intl.formatMessage(objectTypeMessages[type]);
+    const message = objectTypeMessages[type];
+    if (!message) {
+        return type;
+    }
+    return intl.formatMessage(message);
 }

@@ -8,6 +8,7 @@ import {
     type ObjRef,
     filterLocalIdentifier,
     filterObjRef,
+    isArbitraryAttributeFilter,
     isMatchAttributeFilter,
 } from "@gooddata/sdk-model";
 import { type GoodDataSdkError, useDebounce } from "@gooddata/sdk-ui";
@@ -20,8 +21,8 @@ import {
     createFilterFromOperator,
     getOperatorFromFilter,
     getValuesFromFilter,
+    isAllOperator,
     isArbitraryOperator,
-    isNegativeOperator,
     resolveValuesOnTextOperatorChange,
 } from "../textFilterOperatorUtils.js";
 import { type OnApplyCallbackType, type OnChangeCallbackType } from "../types.js";
@@ -50,6 +51,9 @@ const isOperatorAllowed = (
     nextOperator: TextFilterOperator,
     availableTextModes: AttributeFilterTextMode[],
 ): boolean => {
+    if (isAllOperator(nextOperator)) {
+        return true;
+    }
     if (isArbitraryOperator(nextOperator)) {
         return availableTextModes.includes("arbitrary");
     }
@@ -74,7 +78,7 @@ export interface ITextFilterInnerController {
     isApplyDisabled: boolean;
     isWorkingSelectionChanged: boolean;
     textFilterOperator: TextFilterOperator;
-    textFilterValues?: string[];
+    textFilterValues?: Array<string | null>;
     textFilterLiteral?: string;
     textFilterLiteralEmptyError?: boolean;
     textFilterValuesEmptyError?: boolean;
@@ -83,7 +87,7 @@ export interface ITextFilterInnerController {
     textFilterCaseSensitive?: boolean;
     textFilterCommittedFilter?: IAttributeFilter;
     onTextFilterOperatorChange?: (operator: TextFilterOperator) => void;
-    onTextFilterValuesChange?: (values: string[]) => void;
+    onTextFilterValuesChange?: (values: Array<string | null>) => void;
     onTextFilterValuesBlur?: () => void;
     onTextFilterLiteralChange?: (literal: string) => void;
     onTextFilterLiteralBlur?: () => void;
@@ -103,8 +107,10 @@ export function useTextFilterInnerController(
 ): ITextFilterInnerController {
     const { filter, onChange, availableTextModes = DEFAULT_TEXT_MODES, filterModeChanged = false } = props;
 
-    const [operator, setOperator] = useState<TextFilterOperator>(() => getOperatorFromFilter(filter) ?? "is");
-    const [values, setValues] = useState<string[]>(() => {
+    const [operator, setOperator] = useState<TextFilterOperator>(
+        () => getOperatorFromFilter(filter) ?? "all",
+    );
+    const [values, setValues] = useState<Array<string | null>>(() => {
         const filterValues = getValuesFromFilter(filter);
         return Array.isArray(filterValues) ? filterValues : [];
     });
@@ -122,13 +128,13 @@ export function useTextFilterInnerController(
     const [isValuesTouched, setIsValuesTouched] = useState(false);
     const [hasValuesLimitExceeded, setHasValuesLimitExceeded] = useState(false);
     const [isEmptyAfterDisplayFormReset, setIsEmptyAfterDisplayFormReset] = useState(false);
+    const [isEmptyAfterOperatorChange, setIsEmptyAfterOperatorChange] = useState(false);
 
     const localIdentifier = filterLocalIdentifier(filter);
 
     const emitSelect = useCallback(
         (nextFilter: IAttributeFilter) => {
-            const operator = getOperatorFromFilter(nextFilter);
-            const isNegative = isNegativeOperator(operator);
+            const isNegative = getNegativeSelection(nextFilter);
             onChange?.(nextFilter, isNegative);
         },
         [onChange],
@@ -153,6 +159,7 @@ export function useTextFilterInnerController(
             if (updateCommitted) {
                 setCommittedFilter(nextFilter);
                 setIsEmptyAfterDisplayFormReset(false);
+                setIsEmptyAfterOperatorChange(false);
             }
             setIsLiteralTouched(false);
             setIsValuesTouched(false);
@@ -176,16 +183,23 @@ export function useTextFilterInnerController(
             setIsLiteralTouched(false);
             setIsValuesTouched(false);
             setIsEmptyAfterDisplayFormReset(false);
+            setIsEmptyAfterOperatorChange(true);
             const newFilter = createFilterFromOperator(
                 newOperator,
-                isArbitraryOperator(newOperator) ? next.values : next.literal,
+                getFilterValues(newOperator, next.values, next.literal),
                 displayForm,
                 localIdentifier,
                 caseSensitive,
             );
             // When crossing groups (arbitrary ↔ match), reset committed filter so the filter
             // is fully reset — Apply stays disabled until user enters new values.
-            if (isArbitraryOperator(newOperator) !== isArbitraryOperator(operator)) {
+            // Exception: "All" operator should NOT auto-commit - user must click Apply.
+            // Also, when switching FROM "All", don't auto-commit.
+            if (
+                !isAllOperator(newOperator) &&
+                !isAllOperator(operator) &&
+                isArbitraryOperator(newOperator) !== isArbitraryOperator(operator)
+            ) {
                 setCommittedFilter(newFilter);
             }
             emitSelect(newFilter);
@@ -203,13 +217,15 @@ export function useTextFilterInnerController(
     );
 
     const onValuesChange = useCallback(
-        (newValues: string[]) => {
+        (newValues: Array<string | null>) => {
             const exceedsLimit = newValues.length > MAX_SELECTION_SIZE;
             const cappedValues = exceedsLimit ? newValues.slice(0, MAX_SELECTION_SIZE) : newValues;
             setHasValuesLimitExceeded(exceedsLimit);
             setValues(cappedValues);
+            setIsValuesTouched(false);
             if (cappedValues.length > 0) {
                 setIsEmptyAfterDisplayFormReset(false);
+                setIsEmptyAfterOperatorChange(false);
             }
             const newFilter = createFilterFromOperator(
                 operator,
@@ -245,6 +261,7 @@ export function useTextFilterInnerController(
             setIsLiteralTouched(false);
             if (newLiteral.trim() !== "") {
                 setIsEmptyAfterDisplayFormReset(false);
+                setIsEmptyAfterOperatorChange(false);
             }
             debouncedEmitLiteralFilter(newLiteral);
         },
@@ -280,12 +297,13 @@ export function useTextFilterInnerController(
     const onCommitTextFilter = useCallback(() => {
         const nextFilter = createFilterFromOperator(
             operator,
-            isArbitraryOperator(operator) ? values : literal,
+            getFilterValues(operator, values, literal),
             displayForm,
             localIdentifier,
             caseSensitive,
         );
         setCommittedFilter(nextFilter);
+        setIsEmptyAfterOperatorChange(false);
         setIsLiteralTouched(false);
         setIsValuesTouched(false);
         setIsEmptyAfterDisplayFormReset(false);
@@ -295,7 +313,7 @@ export function useTextFilterInnerController(
         (newDisplayFormRef: ObjRef) => {
             const emptyFilter = createFilterFromOperator(
                 operator,
-                isArbitraryOperator(operator) ? [] : "",
+                getFilterValues(operator, [], ""),
                 newDisplayFormRef,
                 localIdentifier,
                 caseSensitive,
@@ -310,16 +328,27 @@ export function useTextFilterInnerController(
 
     // Validation
     const isArbitraryInputEmpty = isArbitraryOperator(operator) && values.length === 0;
-    const isMatchInputEmpty = !isArbitraryOperator(operator) && literal.trim() === "";
-    // Apply disabled when empty AND (user touched input OR we just reset for display form change).
-    // Input error state only when user touched - isEmptyAfterDisplayFormReset does NOT trigger it.
+    const isMatchInputEmpty =
+        !isArbitraryOperator(operator) && !isAllOperator(operator) && literal.trim() === "";
+
+    const hasUserInteractedOrReset =
+        isEmptyAfterDisplayFormReset || isEmptyAfterOperatorChange || filterModeChanged;
+
+    const isArbitraryFilterInvalid = (isValuesTouched || hasUserInteractedOrReset) && isArbitraryInputEmpty;
+
+    const isMatchFilterInvalid = (isLiteralTouched || hasUserInteractedOrReset) && isMatchInputEmpty;
+
+    // Input error state only when user touched - isEmptyAfterDisplayFormReset/isEmptyAfterOperatorChange do NOT trigger it.
+    // "All" operator is always valid (no input required)
     const isTextFilterInvalid =
-        ((isValuesTouched || isEmptyAfterDisplayFormReset || filterModeChanged) && isArbitraryInputEmpty) ||
-        ((isLiteralTouched || isEmptyAfterDisplayFormReset || filterModeChanged) && isMatchInputEmpty);
+        !isAllOperator(operator) && (isArbitraryFilterInvalid || isMatchFilterInvalid);
+    // Apply disabled always when literal/values are empty.
     const isApplyDisabled =
         hasValuesLimitExceeded ||
-        isTextFilterInvalid ||
-        !hasDraftChanged(operator, values, literal, caseSensitive ?? false, committedFilter);
+        isArbitraryInputEmpty ||
+        isMatchInputEmpty ||
+        (!hasDraftChanged(operator, values, literal, caseSensitive ?? false, committedFilter) &&
+            !filterModeChanged);
 
     return {
         currentDisplayFormRef: displayForm,
@@ -353,7 +382,7 @@ export function useTextFilterInnerController(
 
 function hasDraftChanged(
     operator: TextFilterOperator,
-    values: string[],
+    values: Array<string | null>,
     literal: string,
     caseSensitive: boolean,
     committedFilter: IAttributeFilter,
@@ -368,6 +397,10 @@ function hasDraftChanged(
         return true;
     }
 
+    if (isAllOperator(operator)) {
+        return false;
+    }
+
     if (isArbitraryOperator(operator)) {
         const committedValues = Array.isArray(committedValue) ? committedValue : [];
         if (values.length !== committedValues.length) {
@@ -377,5 +410,29 @@ function hasDraftChanged(
     }
 
     const committedLiteral = typeof committedValue === "string" ? committedValue : "";
-    return literal !== committedLiteral || caseSensitive !== committedCaseSensitive;
+    return literal.trim() !== committedLiteral.trim() || caseSensitive !== committedCaseSensitive;
 }
+
+function getFilterValues(
+    operator: TextFilterOperator,
+    values: Array<string | null>,
+    literal: string,
+): Array<string | null> | string {
+    if (isAllOperator(operator)) {
+        return [];
+    }
+    if (isArbitraryOperator(operator)) {
+        return values;
+    }
+    return literal.trim();
+}
+
+const getNegativeSelection = (filter: IAttributeFilter): boolean => {
+    if (isArbitraryAttributeFilter(filter)) {
+        return filter.arbitraryAttributeFilter.negativeSelection ?? false;
+    }
+    if (isMatchAttributeFilter(filter)) {
+        return filter.matchAttributeFilter.negativeSelection ?? false;
+    }
+    return false;
+};

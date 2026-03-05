@@ -1583,6 +1583,10 @@
         "text": "This filter is locked",
         "crowdinContext": "Tooltip explaining that the current filter is locked and cannot be interactive."
     },
+    "attributeFilter.operator.all": {
+        "text": "All",
+        "crowdinContext": "Text filter operator label that shows all values without any filtering applied."
+    },
     "attributeFilter.operator.is": {
         "text": "is",
         "crowdinContext": "Text filter operator label for arbitrary positive selection."

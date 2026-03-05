@@ -39,12 +39,24 @@ describe("parseArbitraryValues", () => {
         ]);
     });
 
-    it("should convert empty value display to empty string", () => {
+    it("should convert empty value display to null", () => {
         expect(parseArbitraryValues("Berlin, (empty value), Prague", EMPTY_VALUE)).toEqual([
             "Berlin",
-            "",
+            null,
             "Prague",
         ]);
+    });
+
+    it("should convert explicit empty quotes to empty string", () => {
+        expect(parseArbitraryValues('Berlin, "", Prague', EMPTY_VALUE)).toEqual(["Berlin", "", "Prague"]);
+    });
+
+    it("should handle standalone explicit empty quotes", () => {
+        expect(parseArbitraryValues('""', EMPTY_VALUE)).toEqual([""]);
+    });
+
+    it("should handle empty quotes at end of input", () => {
+        expect(parseArbitraryValues('Berlin, ""', EMPTY_VALUE)).toEqual(["Berlin", ""]);
     });
 
     it("should trim whitespace", () => {

@@ -2,7 +2,7 @@
 
 import { type IntlShape, defineMessages } from "react-intl";
 
-import { type TextFilterOperator } from "./textFilterOperatorUtils.js";
+import { type TextFilterOperator, isAllOperator } from "./textFilterOperatorUtils.js";
 
 const matchOperatorMessages = defineMessages({
     contains: { id: "attributeFilter.operator.contains" },
@@ -14,6 +14,7 @@ const matchOperatorMessages = defineMessages({
 });
 
 const arbitraryOperatorMessages = defineMessages({
+    all: { id: "attributeFilter.operator.all" },
     is: { id: "attributeFilter.operator.is" },
     isNot: { id: "attributeFilter.operator.isNot" },
 });
@@ -63,10 +64,17 @@ function getMatchFilterText(operator: TextFilterOperator, intl: IntlShape): stri
  */
 export function getTextFilterStateParts(
     operator: TextFilterOperator,
-    values: string[],
+    values: Array<string | null>,
     literal: string,
     intl: IntlShape,
 ): ITextFilterStateParts {
+    if (isAllOperator(operator)) {
+        return {
+            operator: intl.formatMessage(arbitraryOperatorMessages.all),
+            value: "",
+        };
+    }
+
     const isArbitrary = operator === "is" || operator === "isNot";
     const arbitraryFilterText = intl.formatMessage(
         operator === "is" ? arbitraryOperatorMessages.is : arbitraryOperatorMessages.isNot,
@@ -77,8 +85,15 @@ export function getTextFilterStateParts(
     const emptyValuePlaceholder = `(${intl.formatMessage({ id: "empty_value" })})`;
     const rawValueText = isArbitrary
         ? values
-              .map((value) => value.trim())
-              .map((value) => value || emptyValuePlaceholder)
+              .map((value) => {
+                  if (value === null) {
+                      return emptyValuePlaceholder;
+                  }
+                  if (value === "") {
+                      return '""';
+                  }
+                  return value.trim();
+              })
               .join(", ")
         : literal.trim();
 
@@ -97,7 +112,7 @@ export function getTextFilterStateParts(
  */
 export function getTextFilterStateText(
     operator: TextFilterOperator,
-    values: string[],
+    values: Array<string | null>,
     literal: string,
     intl: IntlShape,
 ): string {

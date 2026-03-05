@@ -28,6 +28,7 @@ export {
 } from "./base/metadata.js";
 export type { ComparatorDirection, IComparator } from "./base/comparators.js";
 export { assertNever } from "./base/typeUtils.js";
+export { type ILocale, DefaultLocale, isLocale, LOCALES } from "./base/localization.js";
 
 export {
     type IAttribute,
