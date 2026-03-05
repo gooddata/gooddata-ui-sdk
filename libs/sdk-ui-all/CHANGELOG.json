@@ -2,6 +2,111 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.24.0",
+            "tag": "@gooddata/sdk-ui-all_v11.24.0",
+            "date": "Thu, 05 Mar 2026 08:43:40 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "sdk-ui-kit: Add FileUpload suite of components and utilities"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Fix race condition in dashboard title when saving."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Apply schedule filters to all dashboard tabs."
+                    },
+                    {
+                        "comment": "sdk-ui-pivot: Fix initial column width sync."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Hidden attribute filters set to 'All values' are no longer shown in alert and schedule email notifications."
+                    },
+                    {
+                        "comment": "sdk-model: Add `isAllValuesAttributeFilter` utility."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Add certification icon to analytics catalog table column."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Add certification tab to catalog detail."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Add new certification icon."
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: Implementation of API related to LLM provider management."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: lineage view implementation"
+                    },
+                    {
+                        "comment": "sdk-ui-all: Implement anomaly detection in gen ai chat"
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: support clustering and SCATTER chart in gen ai"
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: add certifiedBy field to certification details in catalog items"
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: update design of lineage"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: repair of crash when selectiong anomaly detection in alerts "
+                    },
+                    {
+                        "comment": "Added what-if analysis in AI Assistant UI"
+                    },
+                    {
+                        "comment": "Added support for metrics definitions override in visualizations"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Use global IDs when converting MVF dimensionality for alerts"
+                    },
+                    {
+                        "comment": "sdk-ui-all: Introduce new modes of attribute filter component."
+                    },
+                    {
+                        "comment": "sdk-embedding: Support text filters in embedding."
+                    },
+                    {
+                        "comment": "sdk-ui-all: Allow to hide total count in list."
+                    },
+                    {
+                        "comment": "sdk-ui-filters: Improve date filter UI on mobile."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Fix measures in alert definition."
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Adding inlineTextGenerator"
+                    },
+                    {
+                        "comment": "sdk-ui-filters: Introduce All condition to new text filters."
+                    },
+                    {
+                        "comment": "Fix filter group vertical alignment"
+                    },
+                    {
+                        "comment": "sdk-ui-ext: allow filtering of insights by include/exclude tags, same as catalog items"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboards: Added new filter select subview in dashboard drill to insight configuration, allowing user to select filters transfered to the target visualization."
+                    },
+                    {
+                        "comment": "analytics-catalog: add title generation to the object detail"
+                    },
+                    {
+                        "comment": "Added tredning and recommended objects to analytics catalog"
+                    },
+                    {
+                        "comment": "Fix crashing trending tab in analytics catalog"
+                    }
+                ]
+            }
+        },
+        {
             "version": "11.22.0",
             "tag": "@gooddata/sdk-ui-all_v11.22.0",
             "date": "Thu, 19 Feb 2026 10:02:57 GMT",
