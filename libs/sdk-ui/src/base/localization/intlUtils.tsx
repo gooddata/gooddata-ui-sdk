@@ -161,7 +161,7 @@ export function Intl({
 }
 
 /**
- * Resolves parameter into {@link ILocale} or {@link DefaultLocale}.
+ * Resolves parameter into a supported locale or the default locale.
  *
  * @param locale - value of the locale to check for support
  *

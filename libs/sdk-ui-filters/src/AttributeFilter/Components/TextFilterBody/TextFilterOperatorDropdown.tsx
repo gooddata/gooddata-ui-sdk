@@ -4,7 +4,7 @@ import { useCallback } from "react";
 
 import { defineMessages, useIntl } from "react-intl";
 
-import { Dropdown, DropdownList, type IAlignPoint, SingleSelectListItem } from "@gooddata/sdk-ui-kit";
+import { Dropdown, type IAlignPoint, SingleSelectListItem } from "@gooddata/sdk-ui-kit";
 
 import { type AttributeFilterTextMode } from "../../filterModeTypes.js";
 import { type TextFilterOperator } from "../../textFilterOperatorUtils.js";
@@ -37,6 +37,7 @@ export interface ITextFilterOperatorDropdownProps {
 }
 
 const operatorMessages = defineMessages({
+    all: { id: "attributeFilter.operator.all" },
     is: { id: "attributeFilter.operator.is" },
     isNot: { id: "attributeFilter.operator.isNot" },
     contains: { id: "attributeFilter.operator.contains" },
@@ -57,10 +58,14 @@ export function TextFilterOperatorDropdown(props: ITextFilterOperatorDropdownPro
     const { operator, onOperatorChange, disabled, availableTextModes = ["arbitrary", "match"] } = props;
     const intl = useIntl();
 
-    const allOperators: Array<{
+    type OperatorItem = {
         value: TextFilterOperator;
         message: (typeof operatorMessages)[keyof typeof operatorMessages];
-    }> = [
+    };
+    type MenuItem = OperatorItem | { type: "divider" };
+
+    const allOperators: OperatorItem[] = [
+        { value: "all", message: operatorMessages.all },
         { value: "is", message: operatorMessages.is },
         { value: "isNot", message: operatorMessages.isNot },
         { value: "contains", message: operatorMessages.contains },
@@ -71,12 +76,31 @@ export function TextFilterOperatorDropdown(props: ITextFilterOperatorDropdownPro
         { value: "doesNotEndWith", message: operatorMessages.doesNotEndWith },
     ];
     const filteredOperators = allOperators.filter((item) => {
+        if (item.value === "all") {
+            return true;
+        }
         if (item.value === "is" || item.value === "isNot") {
             return availableTextModes.includes("arbitrary");
         }
         return availableTextModes.includes("match");
     });
     const operators = filteredOperators.length > 0 ? filteredOperators : allOperators;
+
+    const menuItems: MenuItem[] = [];
+    operators.forEach((op, index) => {
+        menuItems.push(op);
+        if (
+            op.value === "all" ||
+            op.value === "isNot" ||
+            op.value === "doesNotContain" ||
+            op.value === "doesNotStartWith" ||
+            op.value === "doesNotEndWith"
+        ) {
+            if (index < operators.length - 1) {
+                menuItems.push({ type: "divider" });
+            }
+        }
+    });
 
     const handleOperatorSelect = useCallback(
         (selectedOperator: TextFilterOperator) => {
@@ -113,23 +137,32 @@ export function TextFilterOperatorDropdown(props: ITextFilterOperatorDropdownPro
                     </button>
                 )}
                 renderBody={({ closeDropdown }) => (
-                    <DropdownList
-                        className="gd-text-filter-operator-dropdown__menu"
-                        items={operators}
-                        itemHeight={28}
-                        renderItem={({ item }) => (
-                            <SingleSelectListItem
-                                className="gd-text-filter-operator-dropdown__item"
-                                title={intl.formatMessage(item.message)}
-                                isSelected={item.value === operator}
-                                elementType="button"
-                                onClick={() => {
-                                    handleOperatorSelect(item.value);
-                                    closeDropdown();
-                                }}
-                            />
-                        )}
-                    />
+                    <div className="gd-text-filter-operator-dropdown__menu">
+                        {menuItems.map((item, index) => {
+                            if ("type" in item && item.type === "divider") {
+                                return (
+                                    <div
+                                        key={`divider-${index}`}
+                                        className="gd-text-filter-operator-dropdown__divider"
+                                    />
+                                );
+                            }
+                            const operatorItem = item as OperatorItem;
+                            return (
+                                <SingleSelectListItem
+                                    key={operatorItem.value}
+                                    className="gd-text-filter-operator-dropdown__item"
+                                    title={intl.formatMessage(operatorItem.message)}
+                                    isSelected={operatorItem.value === operator}
+                                    elementType="button"
+                                    onClick={() => {
+                                        handleOperatorSelect(operatorItem.value);
+                                        closeDropdown();
+                                    }}
+                                />
+                            );
+                        })}
+                    </div>
                 )}
             />
         </div>

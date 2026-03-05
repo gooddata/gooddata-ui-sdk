@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { FormattedMessage } from "react-intl";
 
@@ -20,7 +20,10 @@ export function InvertableSelectLimitWarning({
     selectedItemsCount,
 }: IInvertableSelectLimitWarningProps) {
     return (
-        <Message type="warning" className="gd-invertable-list-limitExceeded">
+        <Message
+            type={selectedItemsCount > limit ? "error" : "warning"}
+            className="gd-invertable-list-limitExceeded"
+        >
             {selectedItemsCount === limit && (
                 <FormattedMessage id="gs.list.limitReached" values={{ limit }} />
             )}

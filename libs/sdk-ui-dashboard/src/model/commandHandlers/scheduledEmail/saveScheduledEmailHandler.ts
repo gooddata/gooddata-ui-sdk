@@ -8,15 +8,22 @@ import {
     type IAutomationMetadataObject,
     type IExecutionDefinition,
     type IExportDefinitionVisualizationObjectRequestPayload,
+    type IFilter,
+    defWithDimensions,
+    defaultDimensionsGenerator,
     idRef,
     insightRef,
+    insightSetFilters,
     isObjRef,
+    isWidget,
+    newDefForInsight,
 } from "@gooddata/sdk-model";
 import { fillMissingTitles, resolveMessages } from "@gooddata/sdk-ui";
 
 import { prepareCsvRawExecutionDefinition } from "./csvRawExecutionDefinition.js";
 import { type ISaveScheduledEmail } from "../../commands/scheduledEmail.js";
 import { type IDashboardScheduledEmailSaved, scheduledEmailSaved } from "../../events/scheduledEmail.js";
+import { queryWithInsight } from "../../queryServices/queryWidgetFilters.js";
 import { selectLocale } from "../../store/config/configSelectors.js";
 import { selectExecutionResultByRef } from "../../store/executionResults/executionResultsSelectors.js";
 import { selectAutomationCommonDateFilterId } from "../../store/filtering/dashboardFilterSelectors.js";
@@ -59,7 +66,7 @@ export function* saveScheduledEmailHandler(
         selectExecutionResultByRef(ref),
     );
 
-    const preparedExecutionDefinition = executionEnvelope?.executionResult?.definition;
+    let preparedExecutionDefinition = executionEnvelope?.executionResult?.definition;
 
     const widget: ReturnType<ReturnType<typeof selectWidgetByRef>> = yield select(selectWidgetByRef(ref));
     const commonDateFilterId: ReturnType<typeof selectAutomationCommonDateFilterId> = yield select(
@@ -80,6 +87,17 @@ export function* saveScheduledEmailHandler(
     const overrides: ReturnType<ReturnType<typeof selectRawExportOverridesForInsight>> = filledInsight
         ? yield select(selectRawExportOverridesForInsight(filledInsight))
         : undefined;
+
+    // Build execution definition from insight when execution result is unavailable
+    // (e.g., when widget shows "no data"). Uses the same filter resolution as widget rendering.
+    if (!preparedExecutionDefinition && csvRawRequest && widgetId && lookupInsight && isWidget(widget)) {
+        const resolvedFilters: IFilter[] = yield call(queryWithInsight, ctx, widget, lookupInsight);
+        const insightWithResolvedFilters = insightSetFilters(lookupInsight, resolvedFilters);
+        preparedExecutionDefinition = defWithDimensions(
+            newDefForInsight(ctx.workspace, insightWithResolvedFilters),
+            defaultDimensionsGenerator,
+        );
+    }
 
     if (csvRawRequest && widgetId) {
         if (!preparedExecutionDefinition) {

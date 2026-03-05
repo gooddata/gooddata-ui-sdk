@@ -30,7 +30,7 @@ import { IDataSetMetadataObject } from '@gooddata/sdk-model';
 import { IDateFilter } from '@gooddata/sdk-model';
 import { IElementsQueryAttributeFilter } from '@gooddata/sdk-backend-spi';
 import { IEmptyValuesDateFilterOption } from '@gooddata/sdk-model';
-import { ILocale } from '@gooddata/sdk-ui';
+import { ILocale } from '@gooddata/sdk-model';
 import { ILowerBoundedFilter } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
 import { IMeasureValueFilter } from '@gooddata/sdk-model';
@@ -224,7 +224,7 @@ export function createEmptyFilterForAvailableMode(mode: AttributeFilterAvailable
 export function createEmptyFilterForMode(mode: AttributeFilterMode, displayForm: ObjRef, localIdentifier?: string): IAttributeFilter;
 
 // @alpha
-export function createFilterFromOperator(operator: TextFilterOperator, valuesOrLiteral: string[] | string, displayForm: ObjRef, localIdentifier?: string, caseSensitive?: boolean): IAttributeFilter;
+export function createFilterFromOperator(operator: TextFilterOperator, valuesOrLiteral: Array<string | null> | string, displayForm: ObjRef, localIdentifier?: string, caseSensitive?: boolean): IAttributeFilter;
 
 // @public
 export class DateFilter extends PureComponent<IDateFilterProps, IDateFilterState> {
@@ -405,7 +405,7 @@ export function getOperatorFromFilter(filter: IAttributeFilter | undefined): Tex
 export function getTabForPreset(preset: DateFilterOption): CalendarTabType;
 
 // @alpha
-export function getValuesFromFilter(filter: IAttributeFilter | undefined): string[] | string;
+export function getValuesFromFilter(filter: IAttributeFilter | undefined): Array<string | null> | string;
 
 // @beta
 export type GranularityIntlKey = "day" | "minute" | "hour" | "week" | "month" | "quarter" | "year" | "period";
@@ -427,9 +427,9 @@ export interface IArbitraryValuesInputProps {
     isAutocompleteLoading?: boolean;
     onAutocompleteSearch?: (searchString: string) => void;
     onBlur?: FocusEventHandler<HTMLInputElement>;
-    onValuesChange?: (values: string[]) => void;
+    onValuesChange?: (values: Array<string | null>) => void;
     placeholder?: string;
-    values: string[];
+    values: Array<string | null>;
 }
 
 // @internal (undocumented)
@@ -1404,9 +1404,9 @@ export interface ITextFilterBodyProps {
     onOperatorChange?: (operator: TextFilterOperator) => void;
     onToggleCaseSensitive?: () => void;
     onValuesBlur?: () => void;
-    onValuesChange?: (values: string[]) => void;
+    onValuesChange?: (values: Array<string | null>) => void;
     operator: TextFilterOperator;
-    values: string[];
+    values: Array<string | null>;
 }
 
 // @alpha
@@ -1421,7 +1421,7 @@ export interface ITextFilterOperatorDropdownProps {
 export interface ITextFilterStateSummaryProps {
     literal: string;
     operator: TextFilterOperator;
-    values: string[];
+    values: Array<string | null>;
 }
 
 // @public
@@ -1658,7 +1658,7 @@ export function TextFilterBody(props: ITextFilterBodyProps): JSX.Element;
 // @public
 export type TextFilterControllerCallbacks = {
     onTextFilterOperatorChange?: (operator: TextFilterOperator) => void;
-    onTextFilterValuesChange?: (values: string[]) => void;
+    onTextFilterValuesChange?: (values: Array<string | null>) => void;
     onTextFilterLiteralChange?: (literal: string) => void;
     onTextFilterLiteralBlur?: () => void;
     onTextFilterValuesBlur?: () => void;
@@ -1669,7 +1669,7 @@ export type TextFilterControllerCallbacks = {
 // @public
 export type TextFilterControllerData = {
     textFilterOperator: TextFilterOperator;
-    textFilterValues?: string[];
+    textFilterValues?: Array<string | null>;
     textFilterLiteral?: string;
     textFilterLiteralEmptyError?: boolean;
     textFilterValuesEmptyError?: boolean;
@@ -1683,7 +1683,7 @@ export type TextFilterControllerData = {
 export type TextFilterNegativeOperator = "isNot" | "doesNotContain" | "doesNotStartWith" | "doesNotEndWith";
 
 // @alpha
-export type TextFilterOperator = "is" | "contains" | "startsWith" | "endsWith" | TextFilterNegativeOperator;
+export type TextFilterOperator = "all" | "is" | "contains" | "startsWith" | "endsWith" | TextFilterNegativeOperator;
 
 // @alpha
 export function TextFilterOperatorDropdown(props: ITextFilterOperatorDropdownProps): JSX.Element;

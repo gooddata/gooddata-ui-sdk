@@ -350,7 +350,7 @@ function processTooltipTextBucket(ctx: IBucketProcessingContext): IGeoAttributeI
         return undefined;
     }
 
-    const data = getAttributeData(
+    const { data, uris } = getSegmentDataAndUris(
         attributeHeaderItems,
         tooltipTextIndex,
         emptyHeaderString,
@@ -360,6 +360,7 @@ function processTooltipTextBucket(ctx: IBucketProcessingContext): IGeoAttributeI
         index: tooltipTextBucket.index,
         name: tooltipTextBucket.name,
         data,
+        uris,
     };
 }
 

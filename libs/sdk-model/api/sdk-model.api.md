@@ -421,6 +421,9 @@ export type DateString = string;
 export function defaultDimensionsGenerator(definition: IExecutionDefinition): IDimension[];
 
 // @public
+export const DefaultLocale: ILocale;
+
+// @public
 export function defFingerprint(def: IExecutionDefinition): string;
 
 // @internal
@@ -819,7 +822,7 @@ export interface IArbitraryAttributeFilter {
 export interface IArbitraryAttributeFilterBody extends IIdentifiableFilter {
     label: ObjRef;
     negativeSelection?: boolean;
-    values: string[];
+    values: Array<string | null>;
 }
 
 // @public
@@ -2712,6 +2715,9 @@ export interface ILlmProvider {
 }
 
 // @public
+export type ILocale = "en-US" | "en-US-x-24h" | "de-DE" | "es-ES" | "fr-FR" | "ja-JP" | "nl-NL" | "pt-BR" | "pt-PT" | "zh-Hans" | "ru-RU" | "it-IT" | "es-419" | "fr-CA" | "en-GB" | "en-AU" | "fi-FI" | "zh-Hant" | "zh-HK" | "tr-TR" | "pl-PL" | "ko-KR" | "sl-SI";
+
+// @public
 export type ILocatorItem = IAttributeLocatorItem | IMeasureLocatorItem | ITotalLocatorItem;
 
 // @public
@@ -4153,6 +4159,7 @@ export interface ISettings {
     enableGeoBasemapConfig?: boolean;
     enableGeoChartA11yImprovements?: boolean;
     enableGeoChartsViewportConfig?: boolean;
+    enableGeoSegmentConflictRecommendation?: boolean;
     enableHeadlineExport?: boolean;
     enableHighchartsAccessibility?: boolean;
     enableIgnoreCrossFiltering?: boolean;
@@ -4188,6 +4195,7 @@ export interface ISettings {
     enableNewScheduledExport?: boolean;
     enableNewUserCreationFlow?: boolean;
     enableNotificationChannelIdentifiers?: boolean;
+    enableNullJoins?: boolean;
     enableNumberSeparators?: boolean;
     // (undocumented)
     enableOracleDataSource?: boolean;
@@ -4340,6 +4348,9 @@ export function isKpiWithoutComparison(obj: unknown): obj is IKpiWithoutComparis
 
 // @alpha
 export function isListedDashboard(obj: unknown): obj is IListedDashboard;
+
+// @public
+export const isLocale: (locale: unknown) => locale is ILocale;
 
 // @public
 export function isLocalIdRef(obj: unknown): obj is LocalIdRef;
@@ -5398,6 +5409,9 @@ export type LlmProviderTestResults = {
     models?: LlmModelsTestResults[];
 };
 
+// @internal
+export const LOCALES: string[];
+
 // @public
 export type LocalIdRef = {
     localIdentifier: Identifier;
@@ -5605,7 +5619,7 @@ export function newAllTimeDashboardDateFilter(dataSet?: ObjRef, localIdentifier?
 export function newAllTimeFilter(dateDataSet: ObjRef | Identifier, localIdentifier?: string, emptyValueHandling?: EmptyValues): IRelativeDateFilter;
 
 // @alpha
-export function newArbitraryAttributeFilter(attributeOrRef: IAttribute | ObjRef | Identifier, values: string[], negativeSelection?: boolean, localIdentifier?: string): IArbitraryAttributeFilter;
+export function newArbitraryAttributeFilter(attributeOrRef: IAttribute | ObjRef | Identifier, values: Array<string | null>, negativeSelection?: boolean, localIdentifier?: string): IArbitraryAttributeFilter;
 
 // @public
 export function newArithmeticMeasure(measuresOrIds: ReadonlyArray<MeasureOrLocalId>, operator: ArithmeticMeasureOperator, modifications?: MeasureModifications<ArithmeticMeasureBuilder>): IMeasure<IArithmeticMeasureDefinition>;

@@ -50,7 +50,7 @@ export class DateFilter {
     }
 
     selectRelativePreset(preset: RelativePreset) {
-        this.getOption(`.s-relative-preset-${preset}`).click();
+        this.getOption(`.s-relative-preset-${preset}`).scrollIntoView().click();
         return this;
     }
 

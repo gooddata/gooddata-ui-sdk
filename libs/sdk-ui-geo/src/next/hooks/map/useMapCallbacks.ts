@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useEffect } from "react";
 
@@ -35,7 +35,7 @@ export function useMapCallbacks(
             return;
         }
 
-        const handleMoveEnd = () => {
+        const emitViewportSnapshot = () => {
             if (onCenterPositionChanged) {
                 const center = map.getCenter();
                 onCenterPositionChanged({
@@ -43,20 +43,17 @@ export function useMapCallbacks(
                     lng: center.lng,
                 });
             }
-        };
 
-        const handleZoomEnd = () => {
             if (onZoomChanged) {
                 onZoomChanged(map.getZoom());
             }
         };
 
-        map.on("moveend", handleMoveEnd);
-        map.on("zoomend", handleZoomEnd);
+        emitViewportSnapshot();
+        map.on("moveend", emitViewportSnapshot);
 
         return () => {
-            map.off("moveend", handleMoveEnd);
-            map.off("zoomend", handleZoomEnd);
+            map.off("moveend", emitViewportSnapshot);
         };
     }, [map, onCenterPositionChanged, onZoomChanged]);
 }

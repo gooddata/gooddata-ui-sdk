@@ -10,6 +10,7 @@ import { ComponentClass } from 'react';
 import { ComponentType } from 'react';
 import { DataValue } from '@gooddata/sdk-model';
 import { DebouncedFunc } from 'lodash-es';
+import { DefaultLocale } from '@gooddata/sdk-model';
 import { DependencyList } from 'react';
 import { Dispatch } from 'react';
 import { FC } from 'react';
@@ -41,6 +42,7 @@ import { IExportResult } from '@gooddata/sdk-backend-spi';
 import { IFilter } from '@gooddata/sdk-model';
 import { IForecastConfig } from '@gooddata/sdk-backend-spi';
 import { IInsightDefinition } from '@gooddata/sdk-model';
+import { ILocale } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
 import { IMeasureDefinitionType } from '@gooddata/sdk-model';
 import { IMeasureDescriptor } from '@gooddata/sdk-model';
@@ -64,10 +66,12 @@ import { IResultMeasureHeader } from '@gooddata/sdk-model';
 import { IResultTotalHeader } from '@gooddata/sdk-model';
 import { IResultWarning } from '@gooddata/sdk-model';
 import { ISeparators } from '@gooddata/sdk-model';
+import { isLocale } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
 import { ITotal } from '@gooddata/sdk-model';
 import { ITotalDescriptor } from '@gooddata/sdk-model';
 import { JSX } from 'react/jsx-runtime';
+import { LOCALES } from '@gooddata/sdk-model';
 import { MessageDescriptor } from 'react-intl';
 import { MutableRefObject } from 'react';
 import { NamedExoticComponent } from 'react';
@@ -426,8 +430,7 @@ export const DefaultDataAccessConfig: DataAccessConfig;
 // @public
 export function defaultErrorHandler(error: unknown): void;
 
-// @public
-export const DefaultLocale: ILocale;
+export { DefaultLocale }
 
 // @internal
 export class DerivedMeasureTitleSuffixFactory {
@@ -1306,8 +1309,7 @@ export interface ILoadingState {
     isLoading: boolean;
 }
 
-// @public
-export type ILocale = "en-US" | "en-US-x-24h" | "de-DE" | "es-ES" | "fr-FR" | "ja-JP" | "nl-NL" | "pt-BR" | "pt-PT" | "zh-Hans" | "ru-RU" | "it-IT" | "es-419" | "fr-CA" | "en-GB" | "en-AU" | "fi-FI" | "zh-Hant" | "zh-HK" | "tr-TR" | "pl-PL" | "ko-KR" | "sl-SI";
+export { ILocale }
 
 // @public (undocumented)
 export type IMappingHeader = IAttributeDescriptor | IResultAttributeHeader | IMeasureDescriptor | ITotalDescriptor | IColorDescriptor;
@@ -1556,8 +1558,7 @@ export function isGrandTotalRowDefinition(row: ITableRowDefinition): row is ITab
 // @public
 export function isHeaderPredicate(obj: unknown): obj is IHeaderPredicate;
 
-// @public
-export const isLocale: (locale: unknown) => locale is ILocale;
+export { isLocale }
 
 // @alpha
 export function isMeasureGroupHeaderColumnDefinition(columnDefinition: unknown): columnDefinition is ITableMeasureGroupHeaderColumnDefinition;
@@ -2150,8 +2151,7 @@ export const Kpi: ComponentType<IKpiProps>;
 // @public
 export function LoadingComponent({ className, color, speed, inline, height, width, imageHeight, imageWidth }: ILoadingProps): JSX.Element;
 
-// @internal
-export const LOCALES: string[];
+export { LOCALES }
 
 // @public
 export function localIdentifierMatch(localIdOrMeasure: string | IMeasure): IHeaderPredicate;

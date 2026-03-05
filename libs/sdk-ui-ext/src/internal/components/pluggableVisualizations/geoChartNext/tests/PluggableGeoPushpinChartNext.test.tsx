@@ -42,14 +42,18 @@ describe("PluggableGeoPushpinChartNext", () => {
     const backend = dummyBackend();
     const executionFactory = backend.workspace(PROJECT_ID).execution();
 
-    function createComponent(onError = vi.fn(), featureFlags?: IVisConstruct["featureFlags"]) {
+    function createComponent(
+        onError = vi.fn(),
+        featureFlags?: IVisConstruct["featureFlags"],
+        pushData = vi.fn(),
+    ) {
         const props: IVisConstruct = {
             projectId: PROJECT_ID,
             element: () => mockElement,
             configPanelElement: () => mockConfigElement,
             callbacks: {
                 afterRender: () => {},
-                pushData: () => {},
+                pushData,
                 onError,
             },
             backend,
@@ -64,7 +68,7 @@ describe("PluggableGeoPushpinChartNext", () => {
             messages,
         } as unknown as IVisConstruct;
 
-        return { visualization: new PluggableGeoPushpinChartNext(props), onError };
+        return { visualization: new PluggableGeoPushpinChartNext(props), onError, pushData };
     }
 
     afterEach(() => {
@@ -375,6 +379,139 @@ describe("PluggableGeoPushpinChartNext", () => {
             center: liveCenter,
             zoom: liveZoom,
         });
+    });
+
+    it("should push updated custom viewport when map position changes", () => {
+        const pushData = vi.fn();
+        const { visualization } = createComponent(
+            vi.fn(),
+            {
+                enableGeoChartsViewportConfig: true,
+            },
+            pushData,
+        );
+        const insightWithCustomViewport = newInsightDefinition(visualizationUrl, (builder) =>
+            builder
+                .title("with custom viewport")
+                .buckets([
+                    newBucket(
+                        BucketNames.LOCATION,
+                        newAttribute("attr.region", (attribute) => attribute.localId("a1")),
+                    ),
+                    newBucket(
+                        BucketNames.SIZE,
+                        newMeasure("m1", (m) => m.localId("m_size")),
+                    ),
+                ])
+                .properties({
+                    controls: {
+                        latitude: "latitude_df",
+                        longitude: "longitude_df",
+                        viewport: {
+                            area: "custom",
+                        },
+                        center: { lat: 48.1, lng: 17.1 },
+                        zoom: 4,
+                    },
+                }),
+        );
+
+        visualization.update({ messages }, insightWithCustomViewport, {}, executionFactory);
+
+        pushData.mockClear();
+
+        const chartCall = [...mockRenderFun.mock.calls]
+            .reverse()
+            .find(([node]) => (node as ReactElement)?.type === GeoChartInternal);
+        expect(chartCall).toBeDefined();
+        if (!chartCall) {
+            throw new Error("Missing GeoChartInternal render call.");
+        }
+
+        const chartProps = (chartCall[0] as ReactElement).props as {
+            onCenterPositionChanged?: (center: { lat: number; lng: number }) => void;
+            onZoomChanged?: (zoom: number) => void;
+        };
+        const liveCenter = { lat: 50.09, lng: 14.42 };
+        const liveZoom = 7;
+
+        chartProps.onCenterPositionChanged?.(liveCenter);
+        chartProps.onZoomChanged?.(liveZoom);
+
+        expect(pushData).toHaveBeenCalled();
+        expect(pushData.mock.calls.at(-1)?.[0]).toMatchObject({
+            properties: {
+                controls: {
+                    latitude: "latitude_df",
+                    longitude: "longitude_df",
+                    viewport: {
+                        area: "custom",
+                    },
+                    center: liveCenter,
+                    zoom: liveZoom,
+                },
+            },
+        });
+    });
+
+    it("should not push custom viewport when center and zoom remain unchanged", () => {
+        const pushData = vi.fn();
+        const { visualization } = createComponent(
+            vi.fn(),
+            {
+                enableGeoChartsViewportConfig: true,
+            },
+            pushData,
+        );
+        const savedCenter = { lat: 48.1, lng: 17.1 };
+        const savedZoom = 4;
+        const insightWithCustomViewport = newInsightDefinition(visualizationUrl, (builder) =>
+            builder
+                .title("with custom viewport")
+                .buckets([
+                    newBucket(
+                        BucketNames.LOCATION,
+                        newAttribute("attr.region", (attribute) => attribute.localId("a1")),
+                    ),
+                    newBucket(
+                        BucketNames.SIZE,
+                        newMeasure("m1", (m) => m.localId("m_size")),
+                    ),
+                ])
+                .properties({
+                    controls: {
+                        latitude: "latitude_df",
+                        longitude: "longitude_df",
+                        viewport: {
+                            area: "custom",
+                        },
+                        center: savedCenter,
+                        zoom: savedZoom,
+                    },
+                }),
+        );
+
+        visualization.update({ messages }, insightWithCustomViewport, {}, executionFactory);
+
+        pushData.mockClear();
+
+        const chartCall = [...mockRenderFun.mock.calls]
+            .reverse()
+            .find(([node]) => (node as ReactElement)?.type === GeoChartInternal);
+        expect(chartCall).toBeDefined();
+        if (!chartCall) {
+            throw new Error("Missing GeoChartInternal render call.");
+        }
+
+        const chartProps = (chartCall[0] as ReactElement).props as {
+            onCenterPositionChanged?: (center: { lat: number; lng: number }) => void;
+            onZoomChanged?: (zoom: number) => void;
+        };
+
+        chartProps.onCenterPositionChanged?.(savedCenter);
+        chartProps.onZoomChanged?.(savedZoom);
+
+        expect(pushData).not.toHaveBeenCalled();
     });
 
     it("should keep empty sort list when insight has no explicit sorts", () => {

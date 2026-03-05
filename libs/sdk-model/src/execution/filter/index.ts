@@ -143,10 +143,11 @@ export interface IArbitraryAttributeFilterBody extends IIdentifiableFilter {
     label: ObjRef;
 
     /**
-     * Arbitrary string values to filter by.
+     * Arbitrary values to filter by.
      * These values don't need to exist as actual attribute elements.
+     * Use null to represent an empty/missing value.
      */
-    values: string[];
+    values: Array<string | null>;
 
     /**
      * Whether this is a negative filter (NOT IN).

@@ -20,6 +20,40 @@ export interface ILiveMapView {
     zoom?: number;
 }
 
+export interface ICustomViewportUpdate {
+    center: IGeoLngLat;
+    zoom: number;
+}
+
+export function getCustomViewportUpdate(
+    visualizationProperties: IVisualizationProperties,
+    currentMapView: ILiveMapView,
+): ICustomViewportUpdate | undefined {
+    const controls = visualizationProperties?.controls;
+    if (controls?.["viewport"]?.area !== "custom") {
+        return undefined;
+    }
+
+    const { center, zoom } = currentMapView;
+    if (!center || typeof zoom !== "number") {
+        return undefined;
+    }
+
+    const persistedCenter = controls?.["center"];
+    const persistedZoom = controls?.["zoom"];
+    const isCenterChanged = persistedCenter?.lat !== center.lat || persistedCenter?.lng !== center.lng;
+    const isZoomChanged = persistedZoom !== zoom;
+
+    if (!isCenterChanged && !isZoomChanged) {
+        return undefined;
+    }
+
+    return {
+        center,
+        zoom,
+    };
+}
+
 /**
  * Mixin-like helper that tracks the live map center/zoom reported via callbacks
  * and exposes a `getCurrentMapView()` function suitable for the config panel.

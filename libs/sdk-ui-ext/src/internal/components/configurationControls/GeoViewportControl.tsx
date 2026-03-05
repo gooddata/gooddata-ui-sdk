@@ -7,6 +7,7 @@ import { useIntl } from "react-intl";
 
 import { type IPushData } from "@gooddata/sdk-ui";
 import { type IGeoChartViewport, type IGeoLngLat } from "@gooddata/sdk-ui-geo";
+import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
 import { CheckboxControl } from "./CheckboxControl.js";
 import { DropdownControl } from "./DropdownControl.js";
@@ -36,6 +37,8 @@ function getViewportProperty(props: IGeoViewportControl): IGeoChartViewport {
         area: viewport?.area ?? "auto",
     };
 }
+
+const TOOLTIP_ALIGN_POINTS = [{ align: "cr cl", offset: { x: 5, y: 0 } }];
 
 /**
  * Generic viewport control for geo charts (pushpin and area).
@@ -73,11 +76,7 @@ export function GeoViewportControl(props: IGeoViewportControl): ReactElement {
                 const hasValidSnapshot =
                     Boolean(currentMapView?.center) && typeof currentMapView?.zoom === "number";
 
-                if (!hasValidSnapshot) {
-                    set(nextProperties, "controls.viewport.area", "auto");
-                    set(nextProperties, "controls.center", undefined);
-                    set(nextProperties, "controls.zoom", undefined);
-                } else if (currentMapView?.center) {
+                if (hasValidSnapshot && currentMapView?.center) {
                     set(nextProperties, "controls.center", currentMapView.center);
                     set(nextProperties, "controls.zoom", currentMapView.zoom);
                 }
@@ -126,6 +125,12 @@ export function GeoViewportControl(props: IGeoViewportControl): ReactElement {
                         <span className="input-label-text">
                             {intl.formatMessage({ id: messages["viewportNavigationTitle"].id })}
                         </span>
+                        <BubbleHoverTrigger showDelay={0} hideDelay={0}>
+                            <span className="gd-interactions-section__question-mark gd-icon-circle-question" />
+                            <Bubble alignPoints={TOOLTIP_ALIGN_POINTS}>
+                                {intl.formatMessage({ id: messages["viewportNavigationTooltip"].id })}
+                            </Bubble>
+                        </BubbleHoverTrigger>
                         <span className="gd-geo-viewport-control__navigation-line" />
                     </div>
                     <div className="gd-geo-viewport-control__navigation-options">

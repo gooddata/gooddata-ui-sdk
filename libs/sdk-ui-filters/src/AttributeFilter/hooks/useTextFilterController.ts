@@ -23,7 +23,12 @@ import { useTextFilterInnerController } from "./useTextFilterInnerController.js"
 import { type AsyncOperationStatus } from "../../AttributeFilterHandler/types/common.js";
 import { type AttributeFilterAvailableMode } from "../filterModeTypes.js";
 import { createEmptyFilterForMode, getAvailableTextModes } from "../filterModeUtils.js";
-import { createFilterFromOperator, isArbitraryOperator } from "../textFilterOperatorUtils.js";
+import {
+    type TextFilterOperator,
+    createFilterFromOperator,
+    isAllOperator,
+    isArbitraryOperator,
+} from "../textFilterOperatorUtils.js";
 import { type OnChangeCallbackType } from "../types.js";
 
 /**
@@ -154,8 +159,8 @@ export function useTextFilterController(props: ITextFilterControllerProps): Text
                 return;
             }
             setEffectiveDisplayFormRef(newDisplayFormRef);
-            const operator = textFilterOperator ?? "is";
-            const valuesOrLiteral = isArbitraryOperator(operator) ? [] : "";
+            const operator = textFilterOperator ?? "all";
+            const valuesOrLiteral = getValuesOrLiteral(operator);
             const caseSensitive = textFilterCaseSensitive ?? false;
             const nextFilter = createFilterFromOperator(
                 operator,
@@ -164,8 +169,11 @@ export function useTextFilterController(props: ITextFilterControllerProps): Text
                 localId,
                 caseSensitive,
             );
+            const isInverted = isArbitraryAttributeFilter(nextFilter)
+                ? (nextFilter.arbitraryAttributeFilter.negativeSelection ?? false)
+                : false;
             onResetForDisplayFormChange?.(newDisplayFormRef);
-            onChange?.(nextFilter, false, selectionMode, [], newDisplayFormRef, false, {
+            onChange?.(nextFilter, isInverted, selectionMode, [], newDisplayFormRef, false, {
                 isSelectionInvalid: isApplyDisabled,
             });
         },
@@ -219,4 +227,14 @@ export function useTextFilterController(props: ITextFilterControllerProps): Text
         resetForModeSwitch,
         setDisplayForm,
     };
+}
+
+function getValuesOrLiteral(operator: TextFilterOperator): string[] | string {
+    if (isAllOperator(operator)) {
+        return [];
+    }
+    if (isArbitraryOperator(operator)) {
+        return [];
+    }
+    return "";
 }

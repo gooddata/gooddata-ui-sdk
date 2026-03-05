@@ -844,6 +844,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableGeoSegmentConflictRecommendation,
+            "enableGeoSegmentConflictRecommendation",
+            "BOOLEAN",
+            FeatureFlagsValues.enableGeoSegmentConflictRecommendation,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableGeoBasemapConfig,
             "enableGeoBasemapConfig",
             "BOOLEAN",
@@ -1016,6 +1023,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableShellApplication",
             "BOOLEAN",
             FeatureFlagsValues.enableShellApplication,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableNullJoins,
+            "enableNullJoins",
+            "BOOLEAN",
+            FeatureFlagsValues.enableNullJoins,
         ),
     };
 }

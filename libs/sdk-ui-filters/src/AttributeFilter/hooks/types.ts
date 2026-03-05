@@ -206,10 +206,11 @@ export type TextFilterControllerData = {
 
     /**
      * Text filter mode - values for "is/is not" operators (chips).
+     * Values can be null to represent empty/missing values.
      *
      * @alpha
      */
-    textFilterValues?: string[];
+    textFilterValues?: Array<string | null>;
 
     /**
      * Text filter mode - literal for like operators.
@@ -383,7 +384,7 @@ export type TextFilterControllerCallbacks = {
      *
      * @alpha
      */
-    onTextFilterValuesChange?: (values: string[]) => void;
+    onTextFilterValuesChange?: (values: Array<string | null>) => void;
 
     /**
      * Text mode - change literal (for like operators).
@@ -490,7 +491,7 @@ export type TextFilterController = TextFilterControllerCallbacks & {
     isTextFilterInvalid: boolean;
     isWorkingSelectionChanged?: boolean;
     textFilterOperator: TextFilterOperator;
-    textFilterValues?: string[];
+    textFilterValues?: Array<string | null>;
     textFilterLiteral?: string;
     textFilterLiteralEmptyError?: boolean;
     textFilterValuesEmptyError?: boolean;

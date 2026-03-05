@@ -17,7 +17,12 @@ import {
     insightTitle,
 } from "@gooddata/sdk-model";
 import { GeoAreaMissingSdkError, VisualizationTypes } from "@gooddata/sdk-ui";
-import { type IGeoAreaChartConfig, type IGeoLayer, isGeoLayerPushpin } from "@gooddata/sdk-ui-geo";
+import {
+    type IGeoAreaChartConfig,
+    type IGeoLayer,
+    type IGeoLngLat,
+    isGeoLayerPushpin,
+} from "@gooddata/sdk-ui-geo";
 import {
     AREA_LAYER_ID,
     GeoChartInternal,
@@ -57,7 +62,7 @@ import { removeSort } from "../../../utils/sort.js";
 import { setGeoAreaUiConfig } from "../../../utils/uiConfigHelpers/geoAreaChartUiConfigHelper.js";
 import { GeoAreaConfigurationPanel } from "../../configurationPanels/GeoAreaConfigurationPanel.js";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
-import { LiveMapViewTracker } from "../geoCommon/liveMapViewTracking.js";
+import { LiveMapViewTracker, getCustomViewportUpdate } from "../geoCommon/liveMapViewTracking.js";
 
 type GeoChartNextExecutionProps = Parameters<typeof GeoChartInternal>[0];
 
@@ -387,7 +392,31 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
         return !layer.latitude || !layer.longitude;
     }
 
-    private handleCenterPositionChanged = this.liveMapView.handleCenterPositionChanged;
-    private handleZoomChanged = this.liveMapView.handleZoomChanged;
+    private handleCenterPositionChanged = (center: IGeoLngLat): void => {
+        this.liveMapView.handleCenterPositionChanged(center);
+    };
+    private handleZoomChanged = (zoom: number): void => {
+        this.liveMapView.handleZoomChanged(zoom);
+        this.pushCurrentCustomViewport();
+    };
     private getCurrentMapView = () => this.liveMapView.getCurrentMapView(this.visualizationProperties);
+
+    private pushCurrentCustomViewport(): void {
+        const currentMapView = this.liveMapView.getCurrentMapView(this.visualizationProperties);
+        const customViewportUpdate = getCustomViewportUpdate(this.visualizationProperties, currentMapView);
+        if (!customViewportUpdate) {
+            return;
+        }
+        const existingControls = this.visualizationProperties?.controls ?? {};
+
+        this.handlePushData({
+            properties: {
+                controls: {
+                    ...existingControls,
+                    center: customViewportUpdate.center,
+                    zoom: customViewportUpdate.zoom,
+                },
+            },
+        });
+    }
 }

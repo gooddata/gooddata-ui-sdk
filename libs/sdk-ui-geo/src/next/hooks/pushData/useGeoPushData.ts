@@ -12,6 +12,7 @@ import {
 } from "@gooddata/sdk-ui";
 import { type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
+import { hasGeoSegmentConflict } from "./geoSegmentConflict.js";
 import { useGeoLayers } from "../../context/GeoLayersContext.js";
 import { useInitialExecution } from "../../context/InitialExecutionContext.js";
 import { normalizeAttributeDescriptorLocalIdentifier } from "../../layers/common/drillUtils.js";
@@ -150,6 +151,10 @@ export function useGeoPushData<TProps extends IPushDataProps, TLegendContext ext
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [fingerprintsKey, initialDataView, geoLayerType]);
 
+    const isGeoSegmentConflictRecommended = useMemo(() => {
+        return hasGeoSegmentConflict(layers);
+    }, [layers]);
+
     useEffect(() => {
         if (!pushData || !colorStrategy) {
             return;
@@ -160,6 +165,7 @@ export function useGeoPushData<TProps extends IPushDataProps, TLegendContext ext
             availableDrillTargets,
             propertiesMeta: {
                 legend_enabled: isLegendVisible,
+                isGeoSegmentConflictRecommended,
             },
             colors: {
                 colorAssignments,
@@ -173,6 +179,7 @@ export function useGeoPushData<TProps extends IPushDataProps, TLegendContext ext
         colorPalette,
         initialDataView,
         isLegendVisible,
+        isGeoSegmentConflictRecommended,
         availableDrillTargets,
     ]);
 }

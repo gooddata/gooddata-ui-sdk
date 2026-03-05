@@ -35,14 +35,18 @@ describe("PluggableGeoAreaChart", () => {
     const backend = dummyBackend();
     const executionFactory = backend.workspace(PROJECT_ID).execution();
 
-    function createComponent(onError = vi.fn(), featureFlags?: IVisConstruct["featureFlags"]) {
+    function createComponent(
+        onError = vi.fn(),
+        featureFlags?: IVisConstruct["featureFlags"],
+        pushData = vi.fn(),
+    ) {
         const props: IVisConstruct = {
             projectId: PROJECT_ID,
             element: () => mockElement,
             configPanelElement: () => mockConfigElement,
             callbacks: {
                 afterRender: () => {},
-                pushData: () => {},
+                pushData,
                 onError,
             },
             backend,
@@ -52,7 +56,7 @@ describe("PluggableGeoAreaChart", () => {
             messages,
         } as unknown as IVisConstruct;
 
-        return { visualization: new PluggableGeoAreaChart(props), onError };
+        return { visualization: new PluggableGeoAreaChart(props), onError, pushData };
     }
 
     afterEach(() => {
@@ -197,6 +201,133 @@ describe("PluggableGeoAreaChart", () => {
             center: liveCenter,
             zoom: liveZoom,
         });
+    });
+
+    it("should push updated custom viewport when map position changes", () => {
+        const pushData = vi.fn();
+        const { visualization } = createComponent(
+            vi.fn(),
+            {
+                enableGeoChartsViewportConfig: true,
+            },
+            pushData,
+        );
+        const insightWithCustomViewport = newInsightDefinition(visualizationUrl, (builder) =>
+            builder
+                .title("area with custom viewport")
+                .buckets([
+                    newBucket(
+                        BucketNames.AREA,
+                        newAttribute("attr.country", (attribute) => attribute.localId("area")),
+                    ),
+                    newBucket(
+                        BucketNames.COLOR,
+                        newMeasure("m1", (m) => m.localId("m_color")),
+                    ),
+                ])
+                .properties({
+                    controls: {
+                        viewport: {
+                            area: "custom",
+                        },
+                        center: { lat: 40.71, lng: -74.0 },
+                        zoom: 3,
+                    },
+                }),
+        );
+
+        visualization.update({ messages }, insightWithCustomViewport, {}, executionFactory);
+
+        pushData.mockClear();
+
+        const chartCall = [...mockRenderFun.mock.calls]
+            .reverse()
+            .find(([node]) => (node as ReactElement)?.type === GeoChartInternal);
+        expect(chartCall).toBeDefined();
+        if (!chartCall) {
+            throw new Error("Missing GeoChartInternal render call.");
+        }
+
+        const chartProps = (chartCall[0] as ReactElement).props as {
+            onCenterPositionChanged?: (center: { lat: number; lng: number }) => void;
+            onZoomChanged?: (zoom: number) => void;
+        };
+        const liveCenter = { lat: 52.52, lng: 13.4 };
+        const liveZoom = 6;
+
+        chartProps.onCenterPositionChanged?.(liveCenter);
+        chartProps.onZoomChanged?.(liveZoom);
+
+        expect(pushData).toHaveBeenCalled();
+        expect(pushData.mock.calls.at(-1)?.[0]).toMatchObject({
+            properties: {
+                controls: {
+                    viewport: {
+                        area: "custom",
+                    },
+                    center: liveCenter,
+                    zoom: liveZoom,
+                },
+            },
+        });
+    });
+
+    it("should not push custom viewport when center and zoom remain unchanged", () => {
+        const pushData = vi.fn();
+        const { visualization } = createComponent(
+            vi.fn(),
+            {
+                enableGeoChartsViewportConfig: true,
+            },
+            pushData,
+        );
+        const savedCenter = { lat: 40.71, lng: -74.0 };
+        const savedZoom = 3;
+        const insightWithCustomViewport = newInsightDefinition(visualizationUrl, (builder) =>
+            builder
+                .title("area with custom viewport")
+                .buckets([
+                    newBucket(
+                        BucketNames.AREA,
+                        newAttribute("attr.country", (attribute) => attribute.localId("area")),
+                    ),
+                    newBucket(
+                        BucketNames.COLOR,
+                        newMeasure("m1", (m) => m.localId("m_color")),
+                    ),
+                ])
+                .properties({
+                    controls: {
+                        viewport: {
+                            area: "custom",
+                        },
+                        center: savedCenter,
+                        zoom: savedZoom,
+                    },
+                }),
+        );
+
+        visualization.update({ messages }, insightWithCustomViewport, {}, executionFactory);
+
+        pushData.mockClear();
+
+        const chartCall = [...mockRenderFun.mock.calls]
+            .reverse()
+            .find(([node]) => (node as ReactElement)?.type === GeoChartInternal);
+        expect(chartCall).toBeDefined();
+        if (!chartCall) {
+            throw new Error("Missing GeoChartInternal render call.");
+        }
+
+        const chartProps = (chartCall[0] as ReactElement).props as {
+            onCenterPositionChanged?: (center: { lat: number; lng: number }) => void;
+            onZoomChanged?: (zoom: number) => void;
+        };
+
+        chartProps.onCenterPositionChanged?.(savedCenter);
+        chartProps.onZoomChanged?.(savedZoom);
+
+        expect(pushData).not.toHaveBeenCalled();
     });
 
     it("should surface GeoAreaMissingSdkError when AREA bucket is missing", () => {

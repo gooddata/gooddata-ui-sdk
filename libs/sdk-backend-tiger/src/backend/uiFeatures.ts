@@ -128,6 +128,7 @@ export enum TigerFeaturesNames {
     EnableGeoArea = "enableGeoArea",
     EnableGeoChartA11yImprovements = "enableGeoChartA11yImprovements",
     EnableGeoChartsViewportConfig = "enableGeoChartsViewportConfig",
+    EnableGeoSegmentConflictRecommendation = "enableGeoSegmentConflictRecommendation",
     EnableGeoBasemapConfig = "enableGeoBasemapConfig",
     EnableAutomationManagement = "enableAutomationManagement",
     EnableNewPdfTabularExport = "enableNewPdfTabularExport",
@@ -153,6 +154,7 @@ export enum TigerFeaturesNames {
     EnableArbitraryFilterKD = "enableArbitraryFilterKD",
     EnableFilterControlInDrillingConfiguration = "enableFilterControlInDrillingConfiguration",
     EnableShellApplication = "enableShellApplication",
+    EnableNullJoins = "enableNullJoins",
 }
 
 export type ITigerFeatureFlags = {
@@ -274,6 +276,7 @@ export type ITigerFeatureFlags = {
     enableGeoArea: (typeof FeatureFlagsValues)["enableGeoArea"][number];
     enableGeoChartA11yImprovements: (typeof FeatureFlagsValues)["enableGeoChartA11yImprovements"][number];
     enableGeoChartsViewportConfig: (typeof FeatureFlagsValues)["enableGeoChartsViewportConfig"][number];
+    enableGeoSegmentConflictRecommendation: (typeof FeatureFlagsValues)["enableGeoSegmentConflictRecommendation"][number];
     enableGeoBasemapConfig: (typeof FeatureFlagsValues)["enableGeoBasemapConfig"][number];
     enableAutomationManagement: (typeof FeatureFlagsValues)["enableAutomationManagement"][number];
     enableNewPdfTabularExport: (typeof FeatureFlagsValues)["enableNewPdfTabularExport"][number];
@@ -299,6 +302,7 @@ export type ITigerFeatureFlags = {
     enableArbitraryFilterKD: (typeof FeatureFlagsValues)["enableArbitraryFilterKD"][number];
     enableFilterControlInDrillingConfiguration: (typeof FeatureFlagsValues)["enableFilterControlInDrillingConfiguration"][number];
     enableShellApplication: (typeof FeatureFlagsValues)["enableShellApplication"][number];
+    enableNullJoins: (typeof FeatureFlagsValues)["enableNullJoins"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -322,7 +326,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableKDCrossFiltering: true,
     enableChangeAnalysis: false,
     enableMultipleDateFilters: true,
-    enableMultipleMvfConditions: false,
+    enableMultipleMvfConditions: true,
     enableRankingWithMvf: false,
     enableKDRichText: true,
     enableMySqlDataSource: false,
@@ -420,6 +424,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableGeoArea: true,
     enableGeoChartA11yImprovements: false,
     enableGeoChartsViewportConfig: false,
+    enableGeoSegmentConflictRecommendation: false,
     enableGeoBasemapConfig: false,
     enableAutomationManagement: true,
     enableNewPdfTabularExport: true,
@@ -429,7 +434,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableGenAIReasoningVisibility: false,
     aiChatSearchLimit: undefined,
     enableEmptyDateValuesFilter: true,
-    enableKDEmptyDateValuesFilter: false,
+    enableKDEmptyDateValuesFilter: true,
     enableRichTextWidgetFilterConfiguration: false,
     enableDashboardSectionHeadersDateDataSet: false,
     enableAnomalyDetectionAlert: false,
@@ -443,8 +448,9 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableArbitraryFilterAD: false,
     enableMatchFilterKD: false,
     enableArbitraryFilterKD: false,
-    enableFilterControlInDrillingConfiguration: false,
+    enableFilterControlInDrillingConfiguration: true,
     enableShellApplication: false,
+    enableNullJoins: false,
 };
 
 export const FeatureFlagsValues = {
@@ -567,6 +573,7 @@ export const FeatureFlagsValues = {
     enableGeoArea: [true, false] as const,
     enableGeoChartA11yImprovements: [true, false] as const,
     enableGeoChartsViewportConfig: [true, false] as const,
+    enableGeoSegmentConflictRecommendation: [true, false] as const,
     enableGeoBasemapConfig: [true, false] as const,
     enableAutomationManagement: [true, false] as const,
     enableNewPdfTabularExport: [true, false] as const,
@@ -592,4 +599,5 @@ export const FeatureFlagsValues = {
     enableArbitraryFilterKD: [true, false] as const,
     enableFilterControlInDrillingConfiguration: [true, false] as const,
     enableShellApplication: [true, false] as const,
+    enableNullJoins: [true, false] as const,
 };

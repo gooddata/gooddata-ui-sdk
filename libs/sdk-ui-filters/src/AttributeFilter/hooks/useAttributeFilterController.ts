@@ -318,7 +318,7 @@ export const useAttributeFilterController = (
             }
             const valuesOrLiteral = isArbitraryOperator(textFilterController.textFilterOperator)
                 ? (textFilterController.textFilterValues ?? [])
-                : (textFilterController.textFilterLiteral ?? "");
+                : (textFilterController.textFilterLiteral ?? "").trim();
             const caseSensitive = textFilterController.textFilterCaseSensitive ?? false;
             const displayFormRef =
                 textFilterController.currentDisplayFormRef ??

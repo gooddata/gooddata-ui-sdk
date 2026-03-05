@@ -9,6 +9,28 @@ import type { IGeoChartConfig } from "../../types/config/unified.js";
 import type { IMapViewport } from "../../types/map/provider.js";
 import { prefersReducedMotion } from "../../utils/prefersReducedMotion.js";
 
+const CENTER_EPSILON = 0.000001;
+const ZOOM_EPSILON = 0.0001;
+
+function isClose(a: number, b: number, epsilon: number): boolean {
+    return Math.abs(a - b) <= epsilon;
+}
+
+function isCenterAndZoomAlreadyApplied(map: IMapFacade, viewport: Partial<IMapViewport>): boolean {
+    if (!viewport.center || viewport.zoom === undefined) {
+        return false;
+    }
+
+    const mapCenter = map.getCenter();
+    const mapZoom = map.getZoom();
+
+    return (
+        isClose(mapCenter.lat, viewport.center.lat, CENTER_EPSILON) &&
+        isClose(mapCenter.lng, viewport.center.lng, CENTER_EPSILON) &&
+        isClose(mapZoom, viewport.zoom, ZOOM_EPSILON)
+    );
+}
+
 /**
  * Applies configured viewport whenever the viewport-related config changes.
  *
@@ -60,6 +82,12 @@ export function useApplyViewportOnConfigChange(
             return;
         }
 
+        // This hook is intended for AD viewport controls.
+        // Interactive runtimes (dashboards/embedded) already move the map directly.
+        if (applyViewportNavigation !== false) {
+            return;
+        }
+
         const previousKey = previousConfigKeyRef.current;
         previousConfigKeyRef.current = configKey;
 
@@ -76,6 +104,13 @@ export function useApplyViewportOnConfigChange(
         if (!viewportToApply) {
             return;
         }
+
+        // Custom viewport persistence updates center/zoom from live map state.
+        // Re-applying an already-current camera with flyTo causes redundant animation.
+        if (isCenterAndZoomAlreadyApplied(map, viewportToApply)) {
+            return;
+        }
+
         applyViewport(map, viewportToApply, !prefersReducedMotion());
-    }, [map, isMapReady, configKey, viewportConfig, dataViewport]);
+    }, [map, isMapReady, applyViewportNavigation, configKey, viewportConfig, dataViewport]);
 }

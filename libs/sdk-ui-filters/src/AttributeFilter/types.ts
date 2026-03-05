@@ -9,12 +9,12 @@ import {
     type IAttributeFilter,
     type IAttributeMetadataObject,
     type IDashboardDateFilter,
+    type ILocale,
     type ObjRef,
 } from "@gooddata/sdk-model";
 import {
     type AttributeFiltersOrPlaceholders,
     type GoodDataSdkError,
-    type ILocale,
     type IPlaceholder,
 } from "@gooddata/sdk-ui";
 import { type IAlignPoint, type OverlayPositionType } from "@gooddata/sdk-ui-kit";

@@ -240,10 +240,7 @@ export function getValidDateFilterConfig(
 
     validConfig = conditionallyStripToDateFilters(validConfig, settings.enableToDateFilters ?? true);
     validConfig = conditionallyHandleFiscalFilters(validConfig, settings.enableFiscalCalendars ?? true);
-    validConfig = conditionallyHandleEmptyValues(
-        validConfig,
-        settings.enableKDEmptyDateValuesFilter ?? false,
-    );
+    validConfig = conditionallyHandleEmptyValues(validConfig, settings.enableKDEmptyDateValuesFilter ?? true);
 
     return [validConfig, configValidation];
 }
