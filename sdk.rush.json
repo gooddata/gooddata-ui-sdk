@@ -381,6 +381,20 @@
             "shouldPublish": true
         },
         {
+            "packageName": "@gooddata/sdk-pluggable-application-model",
+            "projectFolder": "libs/sdk-pluggable-application-model",
+            "reviewCategory": "production",
+            "versionPolicyName": "sdk",
+            "shouldPublish": true
+        },
+        {
+            "packageName": "@gooddata/sdk-ui-pluggable-application",
+            "projectFolder": "libs/sdk-ui-pluggable-application",
+            "reviewCategory": "production",
+            "versionPolicyName": "sdk",
+            "shouldPublish": true
+        },
+        {
             "packageName": "@gooddata/sdk-ui-tests-e2e",
             "projectFolder": "libs/sdk-ui-tests-e2e",
             "reviewCategory": "production",

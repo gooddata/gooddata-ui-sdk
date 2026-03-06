@@ -6,7 +6,7 @@ import { type ContentRect } from "react-measure";
 
 import { type LegendMessageFormatter } from "./legendMessages.js";
 import { MultiLayerLegendPanel } from "./MultiLayerLegendPanel.js";
-import type { IGeoLayerData } from "../../context/GeoLayersContext.js";
+import { type IGeoLayerData } from "../../context/GeoLayersContext.js";
 import { useGeoLegend } from "../../context/GeoLegendContext.js";
 import { useLegendConfig } from "../../hooks/legend/useLegendConfig.js";
 import { useLegendDetails } from "../../hooks/legend/useLegendDetails.js";
@@ -60,6 +60,9 @@ export function GeoChartLegendOverlay({
         chartContainerRect ?? undefined,
     );
     const position = legendDetails?.position ?? legendConfig.position;
+    const hasExplicitLegendEnabled = config?.legend?.enabled !== undefined;
+    const isSingleAttributeOnlySection =
+        model.sections.length === 1 && Boolean(model.sections[0]?.isAttributeOnlySection);
 
     const handleLegendItemClick = useCallback(
         (layerId: string, uri: string) => {
@@ -77,7 +80,13 @@ export function GeoChartLegendOverlay({
         [toggleLayerVisibility],
     );
 
-    const enabled = useMemo(() => legendConfig.enabled, [legendConfig.enabled]);
+    const enabled = useMemo(
+        () =>
+            hasExplicitLegendEnabled
+                ? legendConfig.enabled
+                : !isSingleAttributeOnlySection && legendConfig.enabled,
+        [hasExplicitLegendEnabled, legendConfig.enabled, isSingleAttributeOnlySection],
+    );
     const enableGeoChartA11yImprovements = config?.enableGeoChartA11yImprovements ?? false;
 
     // Don't render until container is measured (needed for height calculations)

@@ -1,0 +1,10 @@
+{
+    "extends": "../tsconfig.base.json",
+    "exclude": ["**/*.test.ts", "**/*.fixtures.ts"],
+    "include": ["src/**/*"],
+    "compilerOptions": {
+        "noCheck": true,
+        "rootDir": "./src",
+        "outDir": "./esm"
+    }
+}

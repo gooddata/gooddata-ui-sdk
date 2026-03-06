@@ -6,21 +6,36 @@ import { type IColorPalette } from "@gooddata/sdk-model";
 import { type IColorMapping, type IColorStrategy } from "@gooddata/sdk-ui-vis-commons";
 
 import { useGeoChartProps } from "../context/GeoChartContext.js";
-import { useGeoLayers } from "../context/GeoLayersContext.js";
+import { type IGeoLayerData, useGeoLayers } from "../context/GeoLayersContext.js";
 import { useGeoPushData } from "../hooks/pushData/useGeoPushData.js";
 import { getAreaColorStrategy } from "../layers/area/coloring/colorStrategy.js";
 import { getPushpinColorStrategy } from "../layers/pushpin/coloring/colorStrategy.js";
 import { type IAvailableLegends } from "../types/common/legends.js";
 import { type GeoLayerType } from "../types/layers/index.js";
 import { resolveLayerColorConfig } from "../utils/color/resolveLayerColorConfig.js";
+import { isAttributeOnlyGeoData } from "../utils/legend/legendUtils.js";
 import { getHeaderPredicateFingerprint } from "../utils/predicateFingerprint.js";
 
-type PushDataSyncProps = {
+interface IPushDataSyncProps {
     availableLegends?: IAvailableLegends;
     geoLayerType: GeoLayerType;
-};
+}
 
 const EMPTY_COLOR_MAPPING: IColorMapping[] = [];
+
+function detectAttributeOnlyLegend(layers: Map<string, IGeoLayerData>): boolean {
+    for (const layerData of layers.values()) {
+        if (!layerData.geoData) {
+            continue;
+        }
+
+        if (isAttributeOnlyGeoData(layerData.geoData, layerData.layerType)) {
+            return true;
+        }
+    }
+
+    return false;
+}
 
 function stringify(value: unknown): string {
     try {
@@ -43,9 +58,9 @@ function colorMappingKey(colorMapping: readonly IColorMapping[]): string {
         .join("|");
 }
 
-export function PushDataSync({ availableLegends, geoLayerType }: PushDataSyncProps): ReactElement | null {
+export function PushDataSync({ availableLegends, geoLayerType }: IPushDataSyncProps): ReactElement | null {
     const { config } = useGeoChartProps();
-    const { primaryLayer, layerExecutions } = useGeoLayers();
+    const { primaryLayer, layerExecutions, layers } = useGeoLayers();
     const primaryLayerDefinition = layerExecutions[0]?.layer;
     const resolvedColorConfig = resolveLayerColorConfig(primaryLayerDefinition, config);
     const colorPalette = resolvedColorConfig.colorPalette;
@@ -99,6 +114,7 @@ export function PushDataSync({ availableLegends, geoLayerType }: PushDataSyncPro
         stableColorPalette,
         stableColorMapping,
     ]);
+    const hasAttributeOnlyLegend = detectAttributeOnlyLegend(layers);
 
     useGeoPushData(colorStrategy, stableColorPalette, {
         useProps: useGeoChartProps,
@@ -107,6 +123,7 @@ export function PushDataSync({ availableLegends, geoLayerType }: PushDataSyncPro
                 hasCategoryLegend: false,
                 hasColorLegend: false,
             },
+            hasAttributeOnlyLegend,
         }),
         geoLayerType,
     });

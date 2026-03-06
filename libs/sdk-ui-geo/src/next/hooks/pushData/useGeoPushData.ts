@@ -22,6 +22,7 @@ import { compareAlphabetically } from "../../utils/alphabeticalSorting.js";
 
 interface ILegendContext {
     availableLegends: IAvailableLegends;
+    hasAttributeOnlyLegend?: boolean;
 }
 
 /**
@@ -36,7 +37,6 @@ interface IPushDataProps {
 interface IUseGeoPushDataConfig<TProps extends IPushDataProps, TLegendContext extends ILegendContext> {
     useProps: () => TProps;
     useLegendContext: () => TLegendContext;
-    getLegendVisibility?: (availableLegends: IAvailableLegends) => boolean;
     geoLayerType: GeoLayerType;
 }
 
@@ -100,21 +100,15 @@ function enhanceDrillTargetsWithGeoDisplayForm(
 export function useGeoPushData<TProps extends IPushDataProps, TLegendContext extends ILegendContext>(
     colorStrategy: IColorStrategy | null,
     colorPalette: IColorPalette,
-    {
-        useProps,
-        useLegendContext,
-        getLegendVisibility,
-        geoLayerType,
-    }: IUseGeoPushDataConfig<TProps, TLegendContext>,
+    { useProps, useLegendContext, geoLayerType }: IUseGeoPushDataConfig<TProps, TLegendContext>,
 ): void {
     const props = useProps();
-    const { availableLegends } = useLegendContext();
+    const { availableLegends, hasAttributeOnlyLegend = false } = useLegendContext();
     const { initialDataView } = useInitialExecution();
     const { layers } = useGeoLayers();
     const { pushData } = props;
-    const legendVisibilitySelector = getLegendVisibility ?? defaultLegendVisibility;
 
-    const isLegendVisible = legendVisibilitySelector(availableLegends);
+    const isLegendVisible = defaultLegendVisibility(availableLegends) || hasAttributeOnlyLegend;
     const colorAssignments = useMemo(
         () => (colorStrategy ? sortColorAssignmentsAlphabetically(colorStrategy.getColorAssignment()) : []),
         [colorStrategy],

@@ -26,9 +26,9 @@ export default [
         },
     },
     {
-        files: ["src/next/layers/common/mapFacade.ts", "src/next/layers/mapRendering/mapInitialization.ts"],
+        files: ["src/next/layers/common/mapFacade.ts", "src/next/map/runtime/mapInitialization.ts"],
         rules: {
-            "no-restricted-imports": "warn",
+            "no-restricted-imports": "off",
         },
     },
 ];

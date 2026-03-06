@@ -27,9 +27,15 @@ import { selectSettings } from "../../store/config/configSelectors.js";
 import { insightsActions } from "../../store/insights/index.js";
 import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
 import { tabsActions } from "../../store/tabs/index.js";
-import { selectWidgets, selectWidgetsMap } from "../../store/tabs/layout/layoutSelectors.js";
+import {
+    selectWidgetByRef,
+    selectWidgets,
+    selectWidgetsMap,
+} from "../../store/tabs/layout/layoutSelectors.js";
 import { uiActions } from "../../store/ui/index.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
+import { shouldRevalidateDrillsAfterInsightChange } from "../common/drillRevalidationUtils.js";
+import { validateDrills } from "../common/validateDrills.js";
 
 export function* changeInsightWidgetInsightHandler(
     ctx: DashboardContext,
@@ -115,6 +121,11 @@ export function* changeInsightWidgetInsightHandler(
             }),
         ]),
     );
+
+    if (shouldRevalidateDrillsAfterInsightChange(originalInsight, insight)) {
+        const updatedWidget = yield select(selectWidgetByRef(insightWidget.ref));
+        yield call(validateDrills, ctx, cmd, [updatedWidget]);
+    }
 
     // Resize Vis. Switcher
     if (visSwitcherRef) {

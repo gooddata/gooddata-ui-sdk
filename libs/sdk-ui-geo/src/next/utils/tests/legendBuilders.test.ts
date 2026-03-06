@@ -122,4 +122,172 @@ describe("legend builders precedence", () => {
 
         expect(section?.groups.map((group) => group.kind)).toEqual(["colorScale"]);
     });
+
+    it("renders pushpin attribute-only fallback legend as non-interactive color group", () => {
+        const section = computePushpinLegend({
+            layerId: "pushpin",
+            layerName: "Pushpin layer",
+            geoData: {
+                location: {
+                    name: "Location",
+                    index: 0,
+                    data: [],
+                },
+            },
+            legendItems: [],
+            availableLegends: createAvailableLegends({
+                hasCategoryLegend: false,
+                hasColorLegend: false,
+                hasSizeLegend: false,
+            }),
+            colorScaleBaseColor: "#14b2e2",
+        });
+
+        expect(section).not.toBeNull();
+        expect(section?.isAttributeOnlySection).toBe(true);
+        expect(section?.groups).toEqual([
+            {
+                kind: "color",
+                title: "",
+                items: [
+                    {
+                        type: "colorCategory",
+                        label: "Location",
+                        color: "#14b2e2",
+                        uri: "__attribute_only__:pushpin",
+                        isVisible: true,
+                    },
+                ],
+                isInteractive: false,
+            },
+        ]);
+    });
+
+    it("uses fallback color when colorScaleBaseColor is not provided for pushpin attribute-only legend", () => {
+        const section = computePushpinLegend({
+            layerId: "pushpin",
+            layerName: "Pushpin layer",
+            geoData: {
+                location: {
+                    name: "Location",
+                    index: 0,
+                    data: [],
+                },
+            },
+            legendItems: [],
+            availableLegends: createAvailableLegends({
+                hasCategoryLegend: false,
+                hasColorLegend: false,
+                hasSizeLegend: false,
+            }),
+        });
+
+        expect(section).not.toBeNull();
+        expect(section?.groups[0]?.items[0]).toMatchObject({
+            color: "#ccc",
+        });
+    });
+
+    it("does not render pushpin attribute-only fallback when segment is present", () => {
+        const section = computePushpinLegend({
+            layerId: "pushpin",
+            layerName: "Pushpin layer",
+            geoData: {
+                location: {
+                    name: "Location",
+                    index: 0,
+                    data: [],
+                },
+                segment: {
+                    name: "Country",
+                    index: 1,
+                    data: ["Czech"],
+                    uris: ["/gdc/md/obj/1/elements?id=cz"],
+                },
+            },
+            legendItems,
+            availableLegends: createAvailableLegends({
+                hasCategoryLegend: true,
+                hasColorLegend: false,
+                hasSizeLegend: false,
+            }),
+        });
+
+        expect(section).not.toBeNull();
+        // Should have a regular color group, not attribute-only
+        expect(section?.isAttributeOnlySection).toBe(false);
+        expect(section?.groups[0]?.isInteractive).toBeUndefined();
+    });
+
+    it("does not render area attribute-only fallback when segment is present", () => {
+        const section = computeAreaLegend({
+            layerId: "area",
+            layerName: "Area layer",
+            geoData: {
+                area: {
+                    name: "Area",
+                    index: 0,
+                    data: [],
+                    uris: [],
+                },
+                segment: {
+                    name: "Country",
+                    index: 1,
+                    data: ["Czech"],
+                    uris: ["/gdc/md/obj/1/elements?id=cz"],
+                },
+            },
+            legendItems,
+            availableLegends: createAvailableLegends({
+                hasCategoryLegend: true,
+                hasColorLegend: false,
+            }),
+        });
+
+        expect(section).not.toBeNull();
+        // Should have a regular color group, not attribute-only
+        expect(section?.isAttributeOnlySection).toBe(false);
+        expect(section?.groups[0]?.isInteractive).toBeUndefined();
+    });
+
+    it("renders area attribute-only fallback legend as non-interactive color group", () => {
+        const section = computeAreaLegend({
+            layerId: "area",
+            layerName: "Area layer",
+            geoData: {
+                area: {
+                    name: "Area",
+                    index: 0,
+                    data: [],
+                    uris: [],
+                },
+            },
+            legendItems: [],
+            availableLegends: createAvailableLegends({
+                hasCategoryLegend: false,
+                hasColorLegend: false,
+                hasSizeLegend: false,
+            }),
+            colorScaleBaseColor: "#14b2e2",
+        });
+
+        expect(section).not.toBeNull();
+        expect(section?.isAttributeOnlySection).toBe(true);
+        expect(section?.groups).toEqual([
+            {
+                kind: "color",
+                title: "",
+                items: [
+                    {
+                        type: "colorCategory",
+                        label: "Area",
+                        color: "#14b2e2",
+                        uri: "__attribute_only__:area",
+                        isVisible: true,
+                    },
+                ],
+                isInteractive: false,
+            },
+        ]);
+    });
 });

@@ -355,7 +355,7 @@ export const MultiLayerLegendPanel = memo(function MultiLayerLegendPanel({
         return null;
     }
 
-    // For single-layer legends, hide the layer visibility toggle
+    // For single-layer legends, hide the layer visibility toggle unless section requests it.
     const isSingleLayer = sections.length === 1;
 
     // Map position to overlay corner
@@ -394,7 +394,7 @@ export const MultiLayerLegendPanel = memo(function MultiLayerLegendPanel({
                     sectionId={`${panelId}-section-${index}`}
                     isExpanded={expandedState[section.layerId] ?? true}
                     isVisible={!hiddenLayers.has(section.layerId)}
-                    showToggle={!isSingleLayer}
+                    showToggle={!isSingleLayer || Boolean(section.isAttributeOnlySection)}
                     isFlexible={flexibleSections.includes(section.layerId)}
                     onExpandedChange={handleExpandedChange}
                     onVisibilityChange={handleVisibilityChange}

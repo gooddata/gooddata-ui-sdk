@@ -154,6 +154,15 @@ export interface ILegendGroup {
      * Items in this group.
      */
     items: ILegendItem[];
+
+    /**
+     * Whether items in this group support interactions (click-to-toggle).
+     *
+     * @remarks
+     * When not specified, interactivity is determined by the presence of
+     * an `onItemClick` handler in the rendering component.
+     */
+    isInteractive?: boolean;
 }
 
 /**
@@ -199,6 +208,17 @@ export interface ILegendSection {
      * Defaults to true if not specified.
      */
     isExpanded?: boolean;
+
+    /**
+     * Whether this section represents an attribute-only layer.
+     *
+     * @remarks
+     * When true, the legend panel shows a visibility toggle even for
+     * single-section legends, and the overlay auto-hides the legend
+     * unless `config.legend.enabled` is explicitly set.
+     * Defaults to false.
+     */
+    isAttributeOnlySection?: boolean;
 }
 
 /**
