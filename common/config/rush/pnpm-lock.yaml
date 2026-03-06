@@ -2810,6 +2810,91 @@ importers:
         specifier: 4.0.8
         version: 4.0.8
 
+  ../../libs/sdk-pluggable-application-model:
+    dependencies:
+      '@gooddata/sdk-backend-spi':
+        specifier: workspace:*
+        version: link:../sdk-backend-spi
+      '@gooddata/sdk-model':
+        specifier: workspace:*
+        version: link:../sdk-model
+      ts-invariant:
+        specifier: 0.10.3
+        version: 0.10.3
+      tslib:
+        specifier: 2.8.1
+        version: 2.8.1
+    devDependencies:
+      '@gooddata/eslint-config':
+        specifier: workspace:*
+        version: link:../../tools/eslint-config
+      '@gooddata/oxlint-config':
+        specifier: workspace:*
+        version: link:../../tools/oxlint-config
+      '@microsoft/api-documenter':
+        specifier: ^7.17.0
+        version: 7.26.34(@types/node@22.13.0)
+      '@microsoft/api-extractor':
+        specifier: ^7.55.2
+        version: 7.55.2(@types/node@22.13.0)
+      '@types/node':
+        specifier: 22.13.0
+        version: 22.13.0
+      '@typescript-eslint/eslint-plugin':
+        specifier: 8.52.0
+        version: 8.52.0(@typescript-eslint/parser@8.52.0)(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript-eslint/parser':
+        specifier: 8.52.0
+        version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
+      dependency-cruiser:
+        specifier: ^14.1.2
+        version: 14.1.2
+      eslint:
+        specifier: ^9.39.2
+        version: 9.39.2(jiti@2.6.1)
+      eslint-import-resolver-typescript:
+        specifier: 4.4.4
+        version: 4.4.4(eslint-plugin-import-x@4.16.1)(eslint@9.39.2)
+      eslint-plugin-headers:
+        specifier: 1.3.3
+        version: 1.3.3(eslint@9.39.2)
+      eslint-plugin-import-esm:
+        specifier: 1.2.1
+        version: 1.2.1(eslint@9.39.2)
+      eslint-plugin-import-x:
+        specifier: 4.16.1
+        version: 4.16.1(eslint@9.39.2)
+      eslint-plugin-jsdoc:
+        specifier: 62.1.0
+        version: 62.1.0(eslint@9.39.2)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@9.39.2)(typescript@5.9.3)
+      eslint-plugin-sonarjs:
+        specifier: 3.0.6
+        version: 3.0.6(eslint@9.39.2)
+      npm-run-all:
+        specifier: ^4.1.5
+        version: 4.1.5
+      oxfmt:
+        specifier: 0.27.0
+        version: 0.27.0
+      oxlint:
+        specifier: ^1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
+      typescript:
+        specifier: 5.9.3
+        version: 5.9.3
+      vitest:
+        specifier: 4.0.8
+        version: 4.0.8(@types/node@22.13.0)(happy-dom@18.0.1)
+
   ../../libs/sdk-ui:
     dependencies:
       '@gooddata/number-formatter':
@@ -5288,6 +5373,112 @@ importers:
         specifier: 0.1.1
         version: 0.1.1(vitest@4.0.8)
 
+  ../../libs/sdk-ui-pluggable-application:
+    dependencies:
+      '@gooddata/sdk-pluggable-application-model':
+        specifier: workspace:*
+        version: link:../sdk-pluggable-application-model
+      ts-invariant:
+        specifier: 0.10.3
+        version: 0.10.3
+      tslib:
+        specifier: 2.8.1
+        version: 2.8.1
+    devDependencies:
+      '@gooddata/eslint-config':
+        specifier: workspace:*
+        version: link:../../tools/eslint-config
+      '@gooddata/oxlint-config':
+        specifier: workspace:*
+        version: link:../../tools/oxlint-config
+      '@microsoft/api-documenter':
+        specifier: ^7.17.0
+        version: 7.26.34(@types/node@22.13.0)
+      '@microsoft/api-extractor':
+        specifier: ^7.55.2
+        version: 7.55.2(@types/node@22.13.0)
+      '@types/node':
+        specifier: 22.13.0
+        version: 22.13.0
+      '@types/react':
+        specifier: 19.1.11
+        version: 19.1.11
+      '@types/react-dom':
+        specifier: 19.1.7
+        version: 19.1.7(@types/react@19.1.11)
+      '@typescript-eslint/eslint-plugin':
+        specifier: 8.52.0
+        version: 8.52.0(@typescript-eslint/parser@8.52.0)(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript-eslint/parser':
+        specifier: 8.52.0
+        version: 8.52.0(eslint@9.39.2)(typescript@5.9.3)
+      '@typescript/native-preview':
+        specifier: 7.0.0-dev.20260202.1
+        version: 7.0.0-dev.20260202.1
+      dependency-cruiser:
+        specifier: ^14.1.2
+        version: 14.1.2
+      eslint:
+        specifier: ^9.39.2
+        version: 9.39.2(jiti@2.6.1)
+      eslint-import-resolver-typescript:
+        specifier: 4.4.4
+        version: 4.4.4(eslint-plugin-import-x@4.16.1)(eslint@9.39.2)
+      eslint-plugin-headers:
+        specifier: 1.3.3
+        version: 1.3.3(eslint@9.39.2)
+      eslint-plugin-import-esm:
+        specifier: 1.2.1
+        version: 1.2.1(eslint@9.39.2)
+      eslint-plugin-import-x:
+        specifier: 4.16.1
+        version: 4.16.1(eslint@9.39.2)
+      eslint-plugin-jsdoc:
+        specifier: 62.1.0
+        version: 62.1.0(eslint@9.39.2)
+      eslint-plugin-no-barrel-files:
+        specifier: 1.2.2
+        version: 1.2.2(eslint@9.39.2)(typescript@5.9.3)
+      eslint-plugin-no-only-tests:
+        specifier: 3.3.0
+        version: 3.3.0
+      eslint-plugin-react:
+        specifier: 7.37.5
+        version: 7.37.5(eslint@9.39.2)
+      eslint-plugin-react-hooks:
+        specifier: 5.2.0
+        version: 5.2.0(eslint@9.39.2)
+      eslint-plugin-sonarjs:
+        specifier: 3.0.6
+        version: 3.0.6(eslint@9.39.2)
+      happy-dom:
+        specifier: 18.0.1
+        version: 18.0.1
+      npm-run-all:
+        specifier: ^4.1.5
+        version: 4.1.5
+      oxfmt:
+        specifier: 0.27.0
+        version: 0.27.0
+      oxlint:
+        specifier: ^1.43.0
+        version: 1.43.0(oxlint-tsgolint@0.11.4)
+      oxlint-tsgolint:
+        specifier: 0.11.4
+        version: 0.11.4
+      react:
+        specifier: 19.1.1
+        version: 19.1.1
+      react-dom:
+        specifier: 19.1.1
+        version: 19.1.1(react@19.1.1)
+      typescript:
+        specifier: 5.9.3
+        version: 5.9.3
+      vitest:
+        specifier: 4.0.8
+        version: 4.0.8(@types/node@22.13.0)(happy-dom@18.0.1)
+
   ../../libs/sdk-ui-semantic-search:
     dependencies:
       '@gooddata/sdk-backend-spi':
@@ -5628,8 +5819,8 @@ importers:
         specifier: 0.11.4
         version: 0.11.4
       pdf-parse:
-        specifier: ^1.1.1
-        version: 1.1.1
+        specifier: 1.1.4
+        version: 1.1.4
       raf:
         specifier: 3.4.1
         version: 3.4.1
@@ -19663,11 +19854,10 @@ packages:
       ieee754: 1.2.1
       resolve-protobuf-schema: 2.1.0
 
-  /pdf-parse@1.1.1:
-    resolution: {integrity: sha512-v6ZJ/efsBpGrGGknjtq9J/oC8tZWq0KWL5vQrk2GlzLEQPUDB1ex+13Rmidl1neNN358Jn9EHZw5y07FFtaC7A==}
+  /pdf-parse@1.1.4:
+    resolution: {integrity: sha512-XRIRcLgk6ZnUbsHsYXExMw+krrPE81hJ6FQPLdBNhhBefqIQKXu/WeTgNBGSwPrfU0v+UCEwn7AoAUOsVKHFvQ==}
     engines: {node: '>=6.8.1'}
     dependencies:
-      debug: 3.2.7
       node-ensure: 0.0.0
     dev: true
 

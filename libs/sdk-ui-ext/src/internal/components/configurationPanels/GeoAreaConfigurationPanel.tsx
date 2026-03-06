@@ -10,12 +10,14 @@ import {
     ConfigurationPanelContent,
     type IConfigurationPanelContentProps,
 } from "./ConfigurationPanelContent.js";
+import { hasColorMeasure, hasSegmentAttribute } from "./geoInsightBucketUtils.js";
 import { messages } from "../../../locales.js";
 import { isGeoBasemapConfigEnabled, isGeoChartsViewportConfigEnabled } from "../../constants/featureFlags.js";
 import { BasemapDropdownControl } from "../configurationControls/BasemapDropdownControl.js";
 import { ColorsSection } from "../configurationControls/colors/ColorsSection.js";
 import { ConfigSection } from "../configurationControls/ConfigSection.js";
 import { GeoViewportControl, type ICurrentMapView } from "../configurationControls/GeoViewportControl.js";
+import { LegendSection } from "../configurationControls/legend/LegendSection.js";
 
 interface IGeoAreaConfigurationPanelProps extends IConfigurationPanelContentProps {
     getCurrentMapView?: () => ICurrentMapView;
@@ -39,6 +41,23 @@ export class GeoAreaConfigurationPanel extends ConfigurationPanelContent<IGeoAre
         return {
             tileset,
         };
+    }
+
+    protected override renderLegendSection(): ReactNode {
+        const { insight, properties, propertiesMeta, pushData } = this.props;
+        const controlsDisabled = this.isControlDisabled();
+        const isAttributeOnlyLegend =
+            hasAreaAttribute(insight) && !hasSegmentAttribute(insight) && !hasColorMeasure(insight);
+
+        return (
+            <LegendSection
+                properties={properties}
+                propertiesMeta={propertiesMeta}
+                controlsDisabled={controlsDisabled}
+                defaultLegendEnabled={!isAttributeOnlyLegend}
+                pushData={pushData}
+            />
+        );
     }
 
     protected renderViewportSection(): ReactElement {
@@ -80,16 +99,9 @@ export class GeoAreaConfigurationPanel extends ConfigurationPanelContent<IGeoAre
     protected renderConfigurationPanel(): ReactNode {
         return (
             <div>
-                {/* Legend Configuration */}
                 {this.renderLegendSection()}
-
-                {/* Color Configuration */}
                 {this.renderColorSection()}
-
-                {/* Viewport Configuration */}
                 {this.renderViewportSection()}
-
-                {/* Canvas Configuration */}
                 {this.renderInteractionsSection()}
             </div>
         );
@@ -107,7 +119,7 @@ export class GeoAreaConfigurationPanel extends ConfigurationPanelContent<IGeoAre
                 colors={colors}
                 controlsDisabled={controlsDisabled}
                 pushData={pushData}
-                hasMeasures // color configuration is category-driven
+                hasMeasures // hasMeasures is true because color config is attribute-based
                 isLoading={isLoading}
                 supportsChartFill={false}
             />
@@ -120,7 +132,7 @@ export class GeoAreaConfigurationPanel extends ConfigurationPanelContent<IGeoAre
     }
 }
 
-function hasAreaAttribute(insight?: IInsightDefinition): boolean {
+function hasAreaAttribute(insight: IInsightDefinition | undefined): boolean {
     if (!insight) {
         return false;
     }

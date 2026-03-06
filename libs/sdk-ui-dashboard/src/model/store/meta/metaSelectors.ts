@@ -46,7 +46,11 @@ import {
     selectFilterContextDefinitionsByTab,
     selectFilterContextIdentity,
 } from "../tabs/filterContext/filterContextSelectors.js";
-import { selectBasicLayout, selectBasicLayoutByTab } from "../tabs/layout/layoutSelectors.js";
+import {
+    filterOutCustomWidgets,
+    selectBasicLayout,
+    selectBasicLayoutByTab,
+} from "../tabs/layout/layoutSelectors.js";
 import { selectActiveTabLocalIdentifier, selectTabs } from "../tabs/tabsSelectors.js";
 import { DEFAULT_TAB_ID, type ITabState } from "../tabs/tabsState.js";
 import { type DashboardSelector, type DashboardState } from "../types.js";
@@ -1139,7 +1143,29 @@ export const selectDashboardWorkingDefinition: DashboardSelector<IDashboardDefin
                 },
                 layout,
                 dateFilterConfig,
-                ...(tabs ? { tabs: tabs as any } : {}),
+                ...(tabs
+                    ? {
+                          tabs: tabs.map(
+                              (tab): IDashboardTab<IDashboardWidget> => ({
+                                  localIdentifier: tab.localIdentifier,
+                                  title: tab.title ?? "",
+                                  layout: tab.layout?.layout
+                                      ? filterOutCustomWidgets(tab.layout.layout)
+                                      : undefined,
+                                  filterContext: tab.filterContext?.filterContextDefinition
+                                      ? ({
+                                            ...(tab.filterContext.filterContextIdentity ?? {}),
+                                            ...tab.filterContext.filterContextDefinition,
+                                        } as IFilterContext)
+                                      : undefined,
+                                  dateFilterConfig: tab.dateFilterConfig?.dateFilterConfig,
+                                  dateFilterConfigs: tab.dateFilterConfigs?.dateFilterConfigs,
+                                  attributeFilterConfigs: tab.attributeFilterConfigs?.attributeFilterConfigs,
+                                  filterGroupsConfig: tab.filterGroupsConfig,
+                              }),
+                          ),
+                      }
+                    : {}),
                 ...pluginsProp,
             };
         },

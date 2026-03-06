@@ -18,12 +18,7 @@ import {
     insightTitle,
 } from "@gooddata/sdk-model";
 import { GeoLocationMissingSdkError, VisualizationTypes } from "@gooddata/sdk-ui";
-import {
-    type IGeoChartConfig,
-    type IGeoLayer,
-    type IGeoLngLat,
-    isGeoLayerPushpin,
-} from "@gooddata/sdk-ui-geo";
+import { type IGeoChartConfig, type IGeoLayer, isGeoLayerPushpin } from "@gooddata/sdk-ui-geo";
 import {
     GeoChartInternal,
     PUSHPIN_LAYER_ID,
@@ -66,7 +61,7 @@ import { removeSort } from "../../../utils/sort.js";
 import { setGeoPushpinUiConfig } from "../../../utils/uiConfigHelpers/geoPushpinChartUiConfigHelper.js";
 import { GeoPushpinConfigurationPanel } from "../../configurationPanels/GeoPushpinConfigurationPanel.js";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
-import { LiveMapViewTracker, getCustomViewportUpdate } from "../geoCommon/liveMapViewTracking.js";
+import { LiveMapViewTracker, createSyncedViewportHandlers } from "../geoCommon/liveMapViewTracking.js";
 
 type GeoChartNextExecutionProps = Parameters<typeof GeoChartInternal>[0];
 
@@ -474,31 +469,16 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
         };
     }
 
-    private handleCenterPositionChanged = (center: IGeoLngLat): void => {
-        this.liveMapView.handleCenterPositionChanged(center);
-    };
-    private handleZoomChanged = (zoom: number): void => {
-        this.liveMapView.handleZoomChanged(zoom);
-        this.pushCurrentCustomViewport();
-    };
+    private syncedHandlers = createSyncedViewportHandlers(this.liveMapView, {
+        getEnvironment: () => this.environment,
+        getVisualizationProperties: () => this.visualizationProperties,
+        setVisualizationProperties: (props) => {
+            this.visualizationProperties = props;
+        },
+        pushData: (data) => this.pushData(data),
+    });
+
+    private handleCenterPositionChanged = this.syncedHandlers.handleCenterPositionChanged;
+    private handleZoomChanged = this.syncedHandlers.handleZoomChanged;
     private getCurrentMapView = () => this.liveMapView.getCurrentMapView(this.visualizationProperties);
-
-    private pushCurrentCustomViewport(): void {
-        const currentMapView = this.liveMapView.getCurrentMapView(this.visualizationProperties);
-        const customViewportUpdate = getCustomViewportUpdate(this.visualizationProperties, currentMapView);
-        if (!customViewportUpdate) {
-            return;
-        }
-        const existingControls = this.visualizationProperties?.controls ?? {};
-
-        this.handlePushData({
-            properties: {
-                controls: {
-                    ...existingControls,
-                    center: customViewportUpdate.center,
-                    zoom: customViewportUpdate.zoom,
-                },
-            },
-        });
-    }
 }

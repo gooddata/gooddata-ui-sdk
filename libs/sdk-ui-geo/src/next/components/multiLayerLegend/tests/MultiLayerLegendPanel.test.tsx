@@ -174,9 +174,122 @@ describe("MultiLayerLegendPanel", () => {
         );
 
         const item = getByTestId("gd-geo-legend-color-item-u1");
-        expect(item).toHaveAttribute("role", "option");
+        // When the layer is hidden, the section strips onItemClick so the list
+        // downgrades from listbox/option to list/listitem semantics.
+        expect(item).toHaveAttribute("role", "listitem");
         expect(item).not.toHaveAttribute("aria-selected");
         expect(item).not.toHaveAttribute("tabindex");
+    });
+
+    it("shows layer toggle for a single section when explicitly requested", () => {
+        const singleSectionModel: ILegendModel = {
+            title: "Legend",
+            sections: [
+                {
+                    layerId: "layer-1",
+                    layerTitle: "Layer 1",
+                    layerKind: "pushpin",
+                    isAttributeOnlySection: true,
+                    groups: [],
+                },
+            ],
+        };
+
+        const { getByRole } = render(<A11yEnabledLegendPanel model={singleSectionModel} />, {
+            wrapper: IntlWrapper,
+        });
+
+        expect(getByRole("switch", { name: "Toggle Layer 1 visibility" })).toBeInTheDocument();
+    });
+
+    it("keeps attribute-only color group non-interactive even when onItemClick is provided", () => {
+        const modelWithNonInteractiveGroup: ILegendModel = {
+            title: "Legend",
+            sections: [
+                {
+                    layerId: "layer-1",
+                    layerTitle: "Layer 1",
+                    layerKind: "area",
+                    groups: [
+                        {
+                            kind: "color",
+                            title: "",
+                            isInteractive: false,
+                            items: [
+                                {
+                                    type: "colorCategory",
+                                    label: "Location",
+                                    color: "#14b2e2",
+                                    uri: "__attribute_only__:layer-1",
+                                    isVisible: true,
+                                },
+                            ],
+                        },
+                    ],
+                },
+            ],
+        };
+
+        const onItemClick = vi.fn();
+        const { container, getByTestId } = render(
+            <A11yEnabledLegendPanel model={modelWithNonInteractiveGroup} onItemClick={onItemClick} />,
+            { wrapper: IntlWrapper },
+        );
+
+        const colorList = getColorList(container);
+        expect(colorList).toHaveAttribute("role", "list");
+        expect(colorList).not.toHaveAttribute("tabindex");
+
+        const item = getByTestId("gd-geo-legend-color-item-__attribute_only__:layer-1");
+        expect(item).toHaveAttribute("role", "listitem");
+
+        fireEvent.click(item);
+        expect(onItemClick).not.toHaveBeenCalled();
+    });
+
+    describe("attribute-only section auto-hide (mirrors GeoChartLegendOverlay logic)", () => {
+        const attributeOnlyModel: ILegendModel = {
+            title: "Legend",
+            sections: [
+                {
+                    layerId: "layer-1",
+                    layerTitle: "Layer 1",
+                    layerKind: "area",
+                    isAttributeOnlySection: true,
+                    groups: [
+                        {
+                            kind: "color",
+                            title: "",
+                            isInteractive: false,
+                            items: [
+                                {
+                                    type: "colorCategory",
+                                    label: "Area",
+                                    color: "#14b2e2",
+                                    uri: "__attribute_only__:layer-1",
+                                    isVisible: true,
+                                },
+                            ],
+                        },
+                    ],
+                },
+            ],
+        };
+
+        it("does not render when enabled=false (attribute-only auto-hidden by overlay)", () => {
+            const { queryByTestId } = render(
+                <A11yEnabledLegendPanel enabled={false} model={attributeOnlyModel} />,
+                { wrapper: IntlWrapper },
+            );
+            expect(queryByTestId("gd-geo-multi-layer-legend")).toBeNull();
+        });
+
+        it("renders when enabled=true (explicit legend.enabled overrides auto-hide)", () => {
+            const { queryByTestId } = render(<A11yEnabledLegendPanel enabled model={attributeOnlyModel} />, {
+                wrapper: IntlWrapper,
+            });
+            expect(queryByTestId("gd-geo-multi-layer-legend")).not.toBeNull();
+        });
     });
 
     it("renders without IntlProvider when a11y improvements are disabled", () => {

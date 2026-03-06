@@ -125,7 +125,7 @@
         "oxfmt": "0.27.0",
         "oxlint": "^1.43.0",
         "oxlint-tsgolint": "0.11.4",
-        "pdf-parse": "^1.1.1",
+        "pdf-parse": "1.1.4",
         "raf": "3.4.1",
         "react": "19.1.1",
         "react-dom": "19.1.1",

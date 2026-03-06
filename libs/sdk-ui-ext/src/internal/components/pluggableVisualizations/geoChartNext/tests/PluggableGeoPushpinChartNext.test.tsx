@@ -27,6 +27,11 @@ import {
     twoMeasuresWithShowInPercentOnSecondaryAxisReferencePoint,
 } from "../../../../tests/mocks/referencePointMocks.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../../utils/translations.js";
+import {
+    type ICreateComponentOverrides,
+    fireAndExpectNoViewportSync,
+    fireAndExpectViewportSync,
+} from "../../geoCommon/tests/viewportSync.test.helpers.js";
 import { PluggableGeoPushpinChartNext } from "../PluggableGeoPushpinChartNext.js";
 
 const PROJECT_ID = "PROJECTID";
@@ -45,8 +50,9 @@ describe("PluggableGeoPushpinChartNext", () => {
     function createComponent(
         onError = vi.fn(),
         featureFlags?: IVisConstruct["featureFlags"],
-        pushData = vi.fn(),
+        overrides?: ICreateComponentOverrides,
     ) {
+        const pushData = vi.fn();
         const props: IVisConstruct = {
             projectId: PROJECT_ID,
             element: () => mockElement,
@@ -58,7 +64,8 @@ describe("PluggableGeoPushpinChartNext", () => {
             },
             backend,
             featureFlags,
-            visualizationProperties: {
+            environment: overrides?.environment,
+            visualizationProperties: overrides?.visualizationProperties ?? {
                 controls: {
                     latitude: "latitude_df",
                     longitude: "longitude_df",
@@ -381,139 +388,71 @@ describe("PluggableGeoPushpinChartNext", () => {
         });
     });
 
-    it("should push updated custom viewport when map position changes", () => {
-        const pushData = vi.fn();
-        const { visualization } = createComponent(
-            vi.fn(),
-            {
-                enableGeoChartsViewportConfig: true,
-            },
-            pushData,
-        );
-        const insightWithCustomViewport = newInsightDefinition(visualizationUrl, (builder) =>
-            builder
-                .title("with custom viewport")
-                .buckets([
-                    newBucket(
-                        BucketNames.LOCATION,
-                        newAttribute("attr.region", (attribute) => attribute.localId("a1")),
-                    ),
-                    newBucket(
-                        BucketNames.SIZE,
-                        newMeasure("m1", (m) => m.localId("m_size")),
-                    ),
-                ])
-                .properties({
-                    controls: {
-                        latitude: "latitude_df",
-                        longitude: "longitude_df",
-                        viewport: {
-                            area: "custom",
+    describe("viewport sync", () => {
+        const pushpinBuckets = [
+            newBucket(
+                BucketNames.LOCATION,
+                newAttribute("attr.region", (attribute) => attribute.localId("a1")),
+            ),
+            newBucket(
+                BucketNames.SIZE,
+                newMeasure("m1", (m) => m.localId("m_size")),
+            ),
+        ];
+
+        function setupViewportTest(viewportArea: string, environment: "analyticalDesigner" | "dashboards") {
+            const { visualization, pushData } = createComponent(
+                vi.fn(),
+                { enableGeoChartsViewportConfig: true },
+                {
+                    environment,
+                    visualizationProperties: {
+                        controls: {
+                            latitude: "latitude_df",
+                            longitude: "longitude_df",
+                            viewport: { area: viewportArea },
+                            center: { lat: 48.1, lng: 17.1 },
+                            zoom: 4,
                         },
-                        center: { lat: 48.1, lng: 17.1 },
-                        zoom: 4,
                     },
-                }),
-        );
+                },
+            );
 
-        visualization.update({ messages }, insightWithCustomViewport, {}, executionFactory);
+            const insight: IInsightDefinition = newInsightDefinition(visualizationUrl, (builder) =>
+                builder
+                    .title("viewport test")
+                    .buckets(pushpinBuckets)
+                    .properties({
+                        controls: {
+                            latitude: "latitude_df",
+                            longitude: "longitude_df",
+                            viewport: { area: viewportArea },
+                            center: { lat: 48.1, lng: 17.1 },
+                            zoom: 4,
+                        },
+                    }),
+            );
 
-        pushData.mockClear();
+            visualization.update({ messages, config: { isInEditMode: true } }, insight, {}, executionFactory);
 
-        const chartCall = [...mockRenderFun.mock.calls]
-            .reverse()
-            .find(([node]) => (node as ReactElement)?.type === GeoChartInternal);
-        expect(chartCall).toBeDefined();
-        if (!chartCall) {
-            throw new Error("Missing GeoChartInternal render call.");
+            return { pushData };
         }
 
-        const chartProps = (chartCall[0] as ReactElement).props as {
-            onCenterPositionChanged?: (center: { lat: number; lng: number }) => void;
-            onZoomChanged?: (zoom: number) => void;
-        };
-        const liveCenter = { lat: 50.09, lng: 14.42 };
-        const liveZoom = 7;
+        it("should sync custom viewport center and zoom from map callbacks in AD", async () => {
+            const { pushData } = setupViewportTest("custom", "analyticalDesigner");
+            await fireAndExpectViewportSync(mockRenderFun, pushData, { lat: 50.09, lng: 14.42 }, 7);
+        });
 
-        chartProps.onCenterPositionChanged?.(liveCenter);
-        chartProps.onZoomChanged?.(liveZoom);
+        it("should not sync center and zoom when viewport area is a preset", async () => {
+            const { pushData } = setupViewportTest("continent_eu", "analyticalDesigner");
+            await fireAndExpectNoViewportSync(mockRenderFun, pushData, { lat: 50.09, lng: 14.42 }, 7);
+        });
 
-        expect(pushData).toHaveBeenCalled();
-        expect(pushData.mock.calls.at(-1)?.[0]).toMatchObject({
-            properties: {
-                controls: {
-                    latitude: "latitude_df",
-                    longitude: "longitude_df",
-                    viewport: {
-                        area: "custom",
-                    },
-                    center: liveCenter,
-                    zoom: liveZoom,
-                },
-            },
+        it("should not sync viewport when environment is not AD", async () => {
+            const { pushData } = setupViewportTest("custom", "dashboards");
+            await fireAndExpectNoViewportSync(mockRenderFun, pushData, { lat: 50.09, lng: 14.42 }, 7);
         });
     });
-
-    it("should not push custom viewport when center and zoom remain unchanged", () => {
-        const pushData = vi.fn();
-        const { visualization } = createComponent(
-            vi.fn(),
-            {
-                enableGeoChartsViewportConfig: true,
-            },
-            pushData,
-        );
-        const savedCenter = { lat: 48.1, lng: 17.1 };
-        const savedZoom = 4;
-        const insightWithCustomViewport = newInsightDefinition(visualizationUrl, (builder) =>
-            builder
-                .title("with custom viewport")
-                .buckets([
-                    newBucket(
-                        BucketNames.LOCATION,
-                        newAttribute("attr.region", (attribute) => attribute.localId("a1")),
-                    ),
-                    newBucket(
-                        BucketNames.SIZE,
-                        newMeasure("m1", (m) => m.localId("m_size")),
-                    ),
-                ])
-                .properties({
-                    controls: {
-                        latitude: "latitude_df",
-                        longitude: "longitude_df",
-                        viewport: {
-                            area: "custom",
-                        },
-                        center: savedCenter,
-                        zoom: savedZoom,
-                    },
-                }),
-        );
-
-        visualization.update({ messages }, insightWithCustomViewport, {}, executionFactory);
-
-        pushData.mockClear();
-
-        const chartCall = [...mockRenderFun.mock.calls]
-            .reverse()
-            .find(([node]) => (node as ReactElement)?.type === GeoChartInternal);
-        expect(chartCall).toBeDefined();
-        if (!chartCall) {
-            throw new Error("Missing GeoChartInternal render call.");
-        }
-
-        const chartProps = (chartCall[0] as ReactElement).props as {
-            onCenterPositionChanged?: (center: { lat: number; lng: number }) => void;
-            onZoomChanged?: (zoom: number) => void;
-        };
-
-        chartProps.onCenterPositionChanged?.(savedCenter);
-        chartProps.onZoomChanged?.(savedZoom);
-
-        expect(pushData).not.toHaveBeenCalled();
-    });
-
     it("should keep empty sort list when insight has no explicit sorts", () => {
         const { visualization } = createComponent();
 

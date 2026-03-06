@@ -191,6 +191,10 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
+      "name": "@gooddata/sdk-pluggable-application-model",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@gooddata/sdk-ui",
       "allowedCategories": [ "examples", "production", "tools" ]
     },

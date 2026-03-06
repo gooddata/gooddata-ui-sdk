@@ -73,7 +73,7 @@ function EnhancedColorCategoryItem({
         <div
             id={id}
             className={itemClassName}
-            role="option"
+            role={isInteractive ? "option" : "listitem"}
             aria-selected={isInteractive ? item.isVisible : undefined}
             aria-label={item.label}
             onClick={isInteractive ? onClick : undefined}
@@ -143,6 +143,10 @@ function makeItemId(prefix: string, index: number): string {
     return `${prefix}-item-${index}`;
 }
 
+function resolveGroupInteractivity(group: ILegendGroup, onItemClick?: (uri: string) => void): boolean {
+    return group.isInteractive ?? Boolean(onItemClick);
+}
+
 /**
  * Legend group displaying categorical color items.
  *
@@ -158,6 +162,8 @@ function LegacyLegendGroupColor({
     onItemClick,
 }: Pick<ILegendGroupColorProps, "group" | "onItemClick">): ReactElement {
     const colorItems = group.items.filter(isLegendColorCategoryItem);
+    const isInteractive = resolveGroupInteractivity(group, onItemClick);
+    const onItemClickHandler = isInteractive ? onItemClick : undefined;
     return (
         <div className="gd-geo-multi-layer-legend__group gd-geo-multi-layer-legend__group--color">
             {group.title ? (
@@ -167,7 +173,7 @@ function LegacyLegendGroupColor({
             ) : null}
             <div className="gd-geo-multi-layer-legend__color-list">
                 {colorItems.map((item) => (
-                    <LegacyColorCategoryItem key={item.uri} item={item} onClick={onItemClick} />
+                    <LegacyColorCategoryItem key={item.uri} item={item} onClick={onItemClickHandler} />
                 ))}
             </div>
         </div>
@@ -179,7 +185,8 @@ function EnhancedLegendGroupColor({
     onItemClick,
 }: Pick<ILegendGroupColorProps, "group" | "onItemClick">): ReactElement {
     const colorItems = group.items.filter(isLegendColorCategoryItem);
-    const isInteractive = Boolean(onItemClick);
+    const isInteractive = resolveGroupInteractivity(group, onItemClick);
+    const onItemClickHandler = isInteractive ? onItemClick : undefined;
     const titleId = useId();
     const idPrefix = useIdPrefixed("geo-color-list");
     const [activeIndex, setActiveIndex] = useState(0);
@@ -187,7 +194,7 @@ function EnhancedLegendGroupColor({
 
     const depsRef = useAutoupdateRef({
         activeIndex,
-        onItemClick,
+        onItemClickHandler,
         colorItems,
     });
 
@@ -231,10 +238,10 @@ function EnhancedLegendGroupColor({
                     setActiveIndex(depsRef.current.colorItems.length - 1);
                 },
                 onSelect: () => {
-                    const { onItemClick, colorItems, activeIndex } = depsRef.current;
+                    const { onItemClickHandler, colorItems, activeIndex } = depsRef.current;
                     const activeItem = colorItems[activeIndex];
                     if (activeItem) {
-                        onItemClick?.(activeItem.uri);
+                        onItemClickHandler?.(activeItem.uri);
                     }
                 },
             }),
@@ -280,7 +287,7 @@ function EnhancedLegendGroupColor({
                         id={makeItemId(idPrefix, index)}
                         isActive={isInteractive ? index === clampedIndex : false}
                         isInteractive={isInteractive}
-                        onClick={() => onItemClick?.(item.uri)}
+                        onClick={() => onItemClickHandler?.(item.uri)}
                     />
                 ))}
             </div>

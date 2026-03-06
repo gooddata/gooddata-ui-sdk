@@ -3,10 +3,15 @@
 import { formatLegendLabel } from "@gooddata/sdk-ui-vis-commons";
 
 import { computeColorScale } from "./computeColorScale.js";
+import {
+    ATTRIBUTE_ONLY_URI_PREFIX,
+    FALLBACK_LEGEND_COLOR,
+    convertToColorCategories,
+    isAttributeOnlyPushpinData,
+} from "./legendUtils.js";
 import type { IAvailableLegends, IGeoLegendItem } from "../../types/common/legends.js";
 import type { IPushpinGeoData } from "../../types/geoData/pushpin.js";
 import {
-    type ILegendColorCategoryItem,
     type ILegendGroup,
     type ILegendSection,
     type ILegendSizeAnchorItem,
@@ -108,24 +113,6 @@ export function computeSizeAnchors(
 }
 
 /**
- * Converts existing legend items to color category items.
- *
- * @param legendItems - Base legend items from layer output
- * @returns Array of color category items
- *
- * @internal
- */
-export function convertToColorCategories(legendItems: IGeoLegendItem[]): ILegendColorCategoryItem[] {
-    return legendItems.map((item) => ({
-        type: "colorCategory" as const,
-        label: item.name,
-        color: item.color ?? "#ccc", // Fallback color for undefined
-        uri: item.uri,
-        isVisible: item.isVisible,
-    }));
-}
-
-/**
  * Input parameters for computing pushpin legend section.
  *
  * @internal
@@ -147,7 +134,8 @@ export interface IComputePushpinLegendParams {
  * Creates a legend section with size and/or color groups based on
  * available data. Size groups show min/mid/max anchors, color groups
  * show categorical items with swatches.
- * Returns null when there are no legend groups to display (e.g., location-only charts).
+ * Attribute-only layers render a non-interactive color group with the configured layer color.
+ * Returns null when there are no legend groups to display.
  *
  * @param params - Parameters for computation
  * @returns Legend section for the pushpin layer, or null if no legend data
@@ -210,7 +198,28 @@ export function computePushpinLegend(params: IComputePushpinLegendParams): ILege
         });
     }
 
-    // Return null when there are no legend groups (e.g., location-only charts)
+    // Attribute-only fallback is mutually exclusive with category/color/size groups above:
+    // isAttributeOnlyPushpinData requires !segment && !color && !size, which prevents those branches.
+    const hasAttributeOnlyLegend = isAttributeOnlyPushpinData(geoData);
+    if (hasAttributeOnlyLegend) {
+        const attributeName = geoData.location?.name ?? "Location";
+        groups.push({
+            kind: "color",
+            title: "",
+            items: [
+                {
+                    type: "colorCategory",
+                    label: attributeName,
+                    color: colorScaleBaseColor ?? FALLBACK_LEGEND_COLOR,
+                    uri: `${ATTRIBUTE_ONLY_URI_PREFIX}:${layerId}`,
+                    isVisible: true,
+                },
+            ],
+            isInteractive: false,
+        });
+    }
+
+    // Return null when there are no legend groups
     if (groups.length === 0) {
         return null;
     }
@@ -220,5 +229,6 @@ export function computePushpinLegend(params: IComputePushpinLegendParams): ILege
         layerTitle: layerName,
         layerKind: "pushpin",
         groups,
+        isAttributeOnlySection: hasAttributeOnlyLegend,
     };
 }

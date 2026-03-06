@@ -19,6 +19,7 @@ import {
     ConfigurationPanelContent,
     type IConfigurationPanelContentProps,
 } from "./ConfigurationPanelContent.js";
+import { hasColorMeasure, hasSegmentAttribute } from "./geoInsightBucketUtils.js";
 import { messages } from "../../../locales.js";
 import {
     BUBBLE_ARROW_OFFSET_X,
@@ -52,16 +53,19 @@ export class GeoPushpinConfigurationPanel extends ConfigurationPanelContent<IGeo
 
     protected override renderLegendSection(): ReactNode {
         const { insight, properties, propertiesMeta, pushData } = this.props;
-
-        const isLegendVisible =
-            hasSegmentAttribute(insight) || hasColorMeasure(insight) || hasSizeMeasure(insight);
-        const controlsDisabled = this.isControlDisabled() || !isLegendVisible;
+        const isAttributeOnlyLegend =
+            hasLocationAttribute(insight) &&
+            !hasSegmentAttribute(insight) &&
+            !hasColorMeasure(insight) &&
+            !hasSizeMeasure(insight);
+        const controlsDisabled = this.isControlDisabled();
 
         return (
             <LegendSection
                 properties={properties}
                 propertiesMeta={propertiesMeta}
                 controlsDisabled={controlsDisabled}
+                defaultLegendEnabled={!isAttributeOnlyLegend}
                 pushData={pushData}
             />
         );
@@ -190,15 +194,6 @@ export class GeoPushpinConfigurationPanel extends ConfigurationPanelContent<IGeo
     }
 }
 
-function hasColorMeasure(insight: IInsightDefinition | undefined): boolean {
-    if (!insight) {
-        return false;
-    }
-    const bucket = insightBucket(insight, BucketNames.COLOR);
-
-    return bucket !== undefined && !bucketIsEmpty(bucket);
-}
-
 function hasSizeMeasure(insight: IInsightDefinition | undefined): boolean {
     if (!insight) {
         return false;
@@ -213,15 +208,6 @@ function hasLocationAttribute(insight: IInsightDefinition | undefined): boolean 
         return false;
     }
     const bucket = insightBucket(insight, BucketNames.LOCATION);
-
-    return bucket !== undefined && !bucketIsEmpty(bucket);
-}
-
-function hasSegmentAttribute(insight: IInsightDefinition | undefined): boolean {
-    if (!insight) {
-        return false;
-    }
-    const bucket = insightBucket(insight, BucketNames.SEGMENT);
 
     return bucket !== undefined && !bucketIsEmpty(bucket);
 }
