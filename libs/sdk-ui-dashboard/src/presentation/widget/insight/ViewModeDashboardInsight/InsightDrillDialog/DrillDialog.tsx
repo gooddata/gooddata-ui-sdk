@@ -5,6 +5,7 @@ import { type ReactNode, useCallback, useState } from "react";
 import cx from "classnames";
 import { FormattedMessage, defineMessages, useIntl } from "react-intl";
 
+import type { IInsight, IInsightWidget } from "@gooddata/sdk-model";
 import {
     Bubble,
     BubbleHoverTrigger,
@@ -19,7 +20,7 @@ import {
     useId,
 } from "@gooddata/sdk-ui-kit";
 
-import { DrillDialogExportDropdown } from "./DrillDialogExportDropdown.js";
+import { DrillDialogExportDropdownResolver } from "./DrillDialogExportDropdownResolver.js";
 import { getTitleWithBreadcrumbs } from "./getTitleWithBreadcrumbs.js";
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
 import {
@@ -32,6 +33,9 @@ export interface IDrillDialogProps extends Pick<
     IDialogBaseProps,
     "initialFocus" | "returnFocusTo" | "focusCheckFn" | "accessibilityConfig" | "autofocusOnOpen"
 > {
+    insight: IInsight;
+    widget: IInsightWidget;
+
     insightTitle: string;
     breadcrumbs: string[];
     onCloseDialog: () => void;
@@ -71,6 +75,9 @@ const messages = defineMessages({
 });
 
 export function DrillDialog({
+    insight,
+    widget,
+
     insightTitle,
     breadcrumbs,
     onCloseDialog,
@@ -189,7 +196,9 @@ export function DrillDialog({
                             />
                         ) : null}
                         {canExport ? (
-                            <DrillDialogExportDropdown
+                            <DrillDialogExportDropdownResolver
+                                insight={insight}
+                                widget={widget}
                                 exportAvailable={exportAvailable}
                                 exportXLSXEnabled={exportXLSXEnabled}
                                 exportCSVEnabled={exportCSVEnabled}

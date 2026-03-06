@@ -39,6 +39,33 @@ describe("parseArbitraryValues", () => {
         ]);
     });
 
+    it("should support escaped quote inside quotes", () => {
+        expect(parseArbitraryValues('Berlin, "say \\"hello\\"", Prague', EMPTY_VALUE)).toEqual([
+            "Berlin",
+            'say "hello"',
+            "Prague",
+        ]);
+    });
+
+    it("should support escaped backslash inside quotes", () => {
+        expect(parseArbitraryValues('"path\\\\dir", Prague', EMPTY_VALUE)).toEqual(["path\\dir", "Prague"]);
+    });
+
+    it("should keep backslash before non-special characters inside quotes", () => {
+        expect(parseArbitraryValues('"hello\\nworld"', EMPTY_VALUE)).toEqual(["hello\\nworld"]);
+    });
+
+    it("should support escaped quote outside quotes", () => {
+        expect(parseArbitraryValues('say \\"hello\\", Prague', EMPTY_VALUE)).toEqual([
+            'say "hello"',
+            "Prague",
+        ]);
+    });
+
+    it("should support escaped backslash outside quotes", () => {
+        expect(parseArbitraryValues("path\\\\dir, Prague", EMPTY_VALUE)).toEqual(["path\\dir", "Prague"]);
+    });
+
     it("should convert empty value display to null", () => {
         expect(parseArbitraryValues("Berlin, (empty value), Prague", EMPTY_VALUE)).toEqual([
             "Berlin",

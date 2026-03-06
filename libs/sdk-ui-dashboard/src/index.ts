@@ -1897,6 +1897,8 @@ export type {
     CustomDashboardContentComponent,
     OptionalFilterGroupComponentProvider,
     FilterGroupComponentProvider,
+    DrillDialogExportDropdownComponentProvider,
+    OptionalDrillDialogExportDropdownComponentProvider,
 } from "./presentation/dashboardContexts/types.js";
 export { DefaultDashboardFilterGroup } from "./presentation/filterBar/filterBar/DefaultDashboardFilterGroup.js";
 export type {
@@ -2489,3 +2491,8 @@ export type {
     DeepReadonlyObject,
 } from "./kdaDialog/types.js";
 export { formatKeyDriverAnalysisDateRange } from "./kdaDialog/utils.js";
+export type {
+    IDrillDialogExportDropdownProps,
+    CustomDrillDialogExportDropdownComponent,
+} from "./presentation/widget/insight/ViewModeDashboardInsight/InsightDrillDialog/drillDialogExportDropdownTypes.js";
+export { DefaultDrillDialogExportDropdown } from "./presentation/widget/insight/ViewModeDashboardInsight/InsightDrillDialog/DefaultDrillDialogExportDropdown.js";

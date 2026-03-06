@@ -138,10 +138,13 @@ export type {
     IUpsertKnowledgeDocumentRequest,
     IUpsertKnowledgeDocumentResponse,
     IDeleteKnowledgeDocumentResponse,
+    IPatchKnowledgeDocumentRequest,
     IKnowledgeSearchResult,
     IKnowledgeSearchStatistics,
     ISearchKnowledgeResponse,
     ISearchKnowledgeOptions,
+    IListKnowledgeDocumentsOptions,
+    IKnowledgeDocumentsPage,
 } from "./workspace/genAI/index.js";
 
 export type {

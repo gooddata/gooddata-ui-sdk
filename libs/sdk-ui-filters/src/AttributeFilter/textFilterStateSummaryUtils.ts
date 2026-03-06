@@ -6,17 +6,17 @@ import { type TextFilterOperator, isAllOperator } from "./textFilterOperatorUtil
 
 const matchOperatorMessages = defineMessages({
     contains: { id: "attributeFilter.operator.contains" },
-    doesNotContain: { id: "attributeFilter.operator.doesNotContain" },
+    doesNotContain: { id: "attributeFilter.operator.summary.doesNotContain" },
     startsWith: { id: "attributeFilter.operator.startsWith" },
-    doesNotStartWith: { id: "attributeFilter.operator.doesNotStartWith" },
+    doesNotStartWith: { id: "attributeFilter.operator.summary.doesNotStartWith" },
     endsWith: { id: "attributeFilter.operator.endsWith" },
-    doesNotEndWith: { id: "attributeFilter.operator.doesNotEndWith" },
+    doesNotEndWith: { id: "attributeFilter.operator.summary.doesNotEndWith" },
 });
 
 const arbitraryOperatorMessages = defineMessages({
     all: { id: "attributeFilter.operator.all" },
     is: { id: "attributeFilter.operator.is" },
-    isNot: { id: "attributeFilter.operator.isNot" },
+    isNot: { id: "attributeFilter.operator.summary.isNot" },
 });
 
 const textSummaryMessages = defineMessages({

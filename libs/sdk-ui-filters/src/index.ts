@@ -251,6 +251,11 @@ export {
     createFilterFromOperator,
     getValuesFromFilter,
 } from "./AttributeFilter/textFilterOperatorUtils.js";
+export {
+    type ITextFilterStateParts,
+    getTextFilterStateParts,
+    getTextFilterStateText,
+} from "./AttributeFilter/textFilterStateSummaryUtils.js";
 
 // AttributeFilter Components - DropdownButton
 export {

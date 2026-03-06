@@ -36,6 +36,7 @@ export function UiMenu<T extends IUiMenuItemData = object, M extends object = ob
     const {
         size = "medium",
         dataTestId,
+        minWidth,
         maxWidth,
         maxHeight,
         ariaAttributes,
@@ -102,7 +103,7 @@ export function UiMenu<T extends IUiMenuItemData = object, M extends object = ob
         <UiMenuContextStore value={contextStoreValue}>
             <div
                 className={cx(b({ controlType, size }))}
-                style={{ maxWidth, maxHeight: maxHeightValue }}
+                style={{ minWidth, maxWidth, maxHeight: maxHeightValue }}
                 onKeyDownCapture={() => setControlType("keyboard")}
                 onMouseMoveCapture={() => setControlType("mouse")}
                 data-testid={menuDataTestId}

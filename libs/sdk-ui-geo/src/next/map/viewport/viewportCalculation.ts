@@ -5,6 +5,7 @@ import type { IMapFacade, LngLatBoundsLike, LngLatLike } from "../../layers/comm
 import { type IGeoLngLat } from "../../types/common/coordinates.js";
 import { type IMapViewport, type IPushpinMapConfig } from "../../types/map/provider.js";
 import { isLngLatTupleBounds } from "../../utils/guards.js";
+import { normalizeBoundsForShortestPath } from "../runtime/bounds.js";
 import { DEFAULT_BOUNDS_PADDING } from "../runtime/mapConfig.js";
 
 /**
@@ -79,9 +80,7 @@ export function applyViewport(
     animate: boolean = true,
 ): void {
     if (viewport.bounds) {
-        const southWest: [number, number] = [viewport.bounds.southWest.lng, viewport.bounds.southWest.lat];
-        const northEast: [number, number] = [viewport.bounds.northEast.lng, viewport.bounds.northEast.lat];
-        const bounds: LngLatBoundsLike = [southWest, northEast];
+        const bounds: LngLatBoundsLike = normalizeBoundsForShortestPath(viewport.bounds);
 
         const camera = map.cameraForBounds(bounds, { padding: DEFAULT_BOUNDS_PADDING });
 

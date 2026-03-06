@@ -263,6 +263,6 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
 
     private getEnableNewScheduledExport = async (): Promise<boolean> => {
         const userSettings = await getSettingsForCurrentUser(this.authCall, this.workspaceId);
-        return userSettings.enableNewScheduledExport ?? false;
+        return userSettings.enableNewScheduledExport ?? true;
     };
 }

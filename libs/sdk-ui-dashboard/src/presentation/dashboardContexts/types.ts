@@ -38,6 +38,7 @@ import {
     type CustomDashboardInsightComponent,
     type CustomInsightBodyComponent,
 } from "../widget/insight/types.js";
+import { type CustomDrillDialogExportDropdownComponent } from "../widget/insight/ViewModeDashboardInsight/InsightDrillDialog/drillDialogExportDropdownTypes.js";
 import {
     type CustomDashboardInsightMenuButtonComponent,
     type CustomDashboardInsightMenuComponent,
@@ -187,6 +188,20 @@ export type ShowAsTableButtonComponentProvider = (widget: IInsightWidget) => Cus
  * @alpha
  */
 export type OptionalShowAsTableButtonComponentProvider = OptionalProvider<ShowAsTableButtonComponentProvider>;
+
+/**
+ * @alpha
+ */
+export type DrillDialogExportDropdownComponentProvider = (
+    insight: IInsight,
+    widget: IInsightWidget,
+) => CustomDrillDialogExportDropdownComponent;
+
+/**
+ * @alpha
+ */
+export type OptionalDrillDialogExportDropdownComponentProvider =
+    OptionalProvider<DrillDialogExportDropdownComponentProvider>;
 
 /**
  * @internal

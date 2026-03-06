@@ -42,7 +42,8 @@ const selectIsWidgetHighlighted = (widget: IWidget) =>
                     (ed) =>
                         isExportDefinitionVisualizationObjectRequestPayload(ed.requestPayload) &&
                         isInsightWidget(widget) &&
-                        ed.requestPayload.content.visualizationObject === objRefToString(widget.insight),
+                        (ed.requestPayload.content.visualizationObject === objRefToString(widget.insight) ||
+                            ed.requestPayload.content.widget === widget.identifier),
                 );
             const isAutomationVisualizationSwitcher =
                 isVisualizationSwitcherWidget(widget) &&

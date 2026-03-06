@@ -130,6 +130,18 @@ const ScenarioConfig = [
     },
     {
         /*
+         * Pluggable geo stories render multiple variants in a single report (AD-like, KD full, KD half).
+         * Give MapLibre/SwiftShader extra settle time after readySelector to reduce flaky captures.
+         */
+        idRegex: /(04).*Geo(Area|Pushpin)?Chart.*/g,
+        config: {
+            delay: {
+                postReady: 500,
+            },
+        },
+    },
+    {
+        /*
          * Use Chromium with SwiftShader for all GeoChart variants
          */
         idRegex: /.*Geo(Area|Pushpin)?Chart.*/g,

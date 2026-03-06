@@ -1,0 +1,19 @@
+{
+    "semantic-search.error.title": "Layanan penelusuran kami sementara tidak tersedia.",
+    "semantic-search.error.text": "Kami sedang bekerja untuk menyelesaikan masalah ini.",
+    "semantic-search.no-results": "Tidak ada hasil yang ditemukan untuk “{query}”.",
+    "semantic-search.results.count": "{count, plural, other {# hasil}}",
+    "semantic-search.label": "Telusuri dasbor atau visualisasi",
+    "semantic-search.placeholder": "Telusuri dasbor atau visualisasi…",
+    "semantic-search.id": "ID",
+    "semantic-search.tags": "Tag",
+    "semantic-search.match": "{score}% cocok",
+    "semantic-search.previous-search": "Penelusuran sebelumnya: {query}",
+    "semantic-search.tree": "Pohon penelusuran semantik",
+    "semantic-search.tree.history": "Riwayat pohon penelusuran semantik",
+    "semantic-search.edit": "Edit",
+    "semantic-search.date.at": "pada",
+    "semantic-search.ask.ai.assistant": "Tanyakan kepada Asisten AI",
+    "gs.date.today": "Hari ini",
+    "gs.date.yesterday": "Kemarin"
+}

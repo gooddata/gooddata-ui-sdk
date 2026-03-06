@@ -59,12 +59,28 @@ export {
     type ActionsApiWorkspaceResolveSettingsRequest,
 } from "../../generated/metadata-json-api/index.js";
 
-// Execution Result API
+// Execution Result API and Knowledge Documents API
 export {
+    // Execution Result
     ActionsApi_ResolveLlmEndpoints,
-    ActionsApi_GenerateDescription,
-    ActionsApi_GenerateTitle,
-    type ActionsApiGenerateDescriptionRequest,
-    type ActionsApiGenerateTitleRequest,
     type ActionsApiResolveLlmEndpointsRequest,
+    ActionsApi_GenerateDescription,
+    type ActionsApiGenerateDescriptionRequest,
+    ActionsApi_GenerateTitle,
+    type ActionsApiGenerateTitleRequest,
+    // Knowledge Documents
+    ActionsApi_CreateDocument,
+    type ActionsApiCreateDocumentRequest,
+    ActionsApi_DeleteDocument,
+    type ActionsApiDeleteDocumentRequest,
+    ActionsApi_GetDocument,
+    type ActionsApiGetDocumentRequest,
+    ActionsApi_ListDocuments,
+    type ActionsApiListDocumentsRequest,
+    ActionsApi_PatchDocument,
+    type ActionsApiPatchDocumentRequest,
+    ActionsApi_SearchKnowledge,
+    type ActionsApiSearchKnowledgeRequest,
+    ActionsApi_UpsertDocument,
+    type ActionsApiUpsertDocumentRequest,
 } from "../../generated/afm-rest-api/index.js";

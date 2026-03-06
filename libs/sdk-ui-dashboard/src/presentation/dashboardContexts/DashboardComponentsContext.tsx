@@ -14,6 +14,7 @@ import {
     type AttributeFilterComponentProvider,
     type DashboardContentComponentProvider,
     type DateFilterComponentProvider,
+    type DrillDialogExportDropdownComponentProvider,
     type FilterGroupComponentProvider,
     type InsightBodyComponentProvider,
     type InsightComponentProvider,
@@ -105,6 +106,7 @@ interface IDashboardComponentsContext {
     DashboardContentComponentProvider: DashboardContentComponentProvider;
     DashboardSettingsDialogComponent: CustomDashboardSettingsDialogComponent;
     ShowAsTableButtonComponentProvider: ShowAsTableButtonComponentProvider;
+    DrillDialogExportDropdownComponentProvider: DrillDialogExportDropdownComponentProvider;
 }
 
 const ThrowMissingComponentError = (componentName: string) => () => {
@@ -167,6 +169,9 @@ const DashboardComponentsContext = createContext<IDashboardComponentsContext>({
     SettingButtonComponent: ThrowMissingComponentError("SettingButtonComponent"),
     DashboardSettingsDialogComponent: ThrowMissingComponentError("DashboardSettingsDialogComponent"),
     ShowAsTableButtonComponentProvider: ThrowMissingComponentError("ShowAsTableButtonComponentProvider"),
+    DrillDialogExportDropdownComponentProvider: ThrowMissingComponentError(
+        "DrillDialogExportDropdownComponentProvider",
+    ),
 });
 DashboardComponentsContext.displayName = "DashboardComponentsContext";
 

@@ -19,6 +19,7 @@ import {
     UiTooltip,
 } from "@gooddata/sdk-ui-kit";
 
+import type { IDrillDialogExportDropdownProps } from "./drillDialogExportDropdownTypes.js";
 import {
     type IMenuInteractiveItem,
     type IMenuItem,
@@ -41,22 +42,6 @@ function InteractiveItemWithIcon({ item, isFocused }: IUiMenuInteractiveItemProp
             </ShortenedText>
         </div>
     );
-}
-
-export interface IDrillDialogShareDropdownProps {
-    exportAvailable: boolean;
-    exportXLSXEnabled: boolean;
-    exportCSVEnabled: boolean;
-    exportCSVRawEnabled: boolean;
-    exportPDFEnabled: boolean;
-    exportPDFVisible: boolean;
-    onExportXLSX: () => void;
-    onExportCSV: () => void;
-    onExportCSVRaw: () => void;
-    onExportPDF: () => void;
-    isLoading: boolean;
-    isExporting: boolean;
-    isExportRawVisible: boolean;
 }
 
 const dropdownAlignPoints: IAlignPoint[] = [
@@ -83,7 +68,7 @@ export function DrillDialogExportDropdown({
     onExportPDF,
     isExporting,
     isExportRawVisible,
-}: IDrillDialogShareDropdownProps) {
+}: IDrillDialogExportDropdownProps) {
     const hasXLSXExport = exportXLSXEnabled;
     const hasCSVExport = exportCSVEnabled;
     const hasPDFExport = exportPDFEnabled && exportPDFVisible;

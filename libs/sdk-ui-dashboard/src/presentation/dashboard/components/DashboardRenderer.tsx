@@ -129,6 +129,7 @@ export function DashboardRenderer(props: IDashboardProps) {
         visualizationSwitcherToolbarComponentProvider,
         dashboardLayoutWidgetComponentSet,
         showAsTableButtonComponentProvider,
+        drillDialogExportDropdownProvider,
     } = useDashboard(props);
 
     const components = resolveComponentsWithDefaults(props);
@@ -221,6 +222,9 @@ export function DashboardRenderer(props: IDashboardProps) {
                                         }
                                         ShowAsTableButtonComponentProvider={
                                             showAsTableButtonComponentProvider
+                                        }
+                                        DrillDialogExportDropdownComponentProvider={
+                                            drillDialogExportDropdownProvider
                                         }
                                     >
                                         <DashboardConfigProvider menuButtonConfig={props.menuButtonConfig}>

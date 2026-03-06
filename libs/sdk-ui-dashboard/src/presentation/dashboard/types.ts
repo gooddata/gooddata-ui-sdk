@@ -27,6 +27,7 @@ import {
     type OptionalDashboardContentComponentProvider,
     type OptionalDashboardLayoutComponentProvider,
     type OptionalDateFilterComponentProvider,
+    type OptionalDrillDialogExportDropdownComponentProvider,
     type OptionalFilterGroupComponentProvider,
     type OptionalInsightBodyComponentProvider,
     type OptionalInsightComponentProvider,
@@ -495,6 +496,16 @@ export interface IDashboardCustomComponentProps {
      * @alpha
      */
     ShowAsTableButtonComponentProvider?: OptionalShowAsTableButtonComponentProvider;
+
+    /**
+     * Specify the component rendered as drill dialog export dropdown.
+     *
+     * @remarks
+     * If not provided, the default implementation {@link DefaultDrillDialogExportDropdown} will be used.
+     *
+     * @alpha
+     */
+    DrillDialogExportDropdownComponentProvider?: OptionalDrillDialogExportDropdownComponentProvider;
 }
 
 /**

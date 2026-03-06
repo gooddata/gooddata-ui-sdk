@@ -8,14 +8,14 @@ import type { IGeoChartConfig } from "../../types/config/unified.js";
 import type { IMapViewport } from "../../types/map/provider.js";
 
 /**
- * Applies the data-derived initial viewport once, when it becomes available.
+ * Applies late data-derived viewport once, after map readiness.
  *
  * @remarks
- * Map initialization captures the initial viewport only at creation time. In Storybook/offline runs the viewport is
- * often derived from async boundary loading (collection-items), so it may arrive after the map instance already exists.
+ * Map initialization captures viewport only at creation time. In some flows (for example async boundary loading),
+ * data-derived bounds can arrive after the map instance already exists.
  *
- * This hook applies that viewport exactly once per map instance, but only when the viewport is not explicitly
- * configured via `config.center` or a preset `config.viewport.area` (other than `"auto"`).
+ * Explicit viewports (`config.center` or non-`auto` area) are handled at map initialization time.
+ * This hook only handles `auto` mode when real data bounds become available later.
  *
  * @internal
  */
@@ -44,7 +44,7 @@ export function useApplyInitialViewport(
             return;
         }
 
-        if (!initialViewport) {
+        if (!initialViewport?.bounds) {
             return;
         }
 

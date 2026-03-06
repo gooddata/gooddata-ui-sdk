@@ -227,6 +227,7 @@ export interface IUiMenuProps<T extends IUiMenuItemData = object, M = object> ex
 
     itemDataTestId?: ((item: IUiMenuItem<T>) => string | undefined) | string;
 
+    minWidth?: number;
     maxWidth?: number;
     maxHeight?: ((context: IUiMenuContext<T>) => number | undefined) | number;
 

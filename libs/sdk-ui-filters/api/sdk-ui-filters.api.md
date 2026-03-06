@@ -405,6 +405,12 @@ export function getOperatorFromFilter(filter: IAttributeFilter | undefined): Tex
 export function getTabForPreset(preset: DateFilterOption): CalendarTabType;
 
 // @alpha
+export function getTextFilterStateParts(operator: TextFilterOperator, values: Array<string | null>, literal: string, intl: IntlShape): ITextFilterStateParts;
+
+// @alpha
+export function getTextFilterStateText(operator: TextFilterOperator, values: Array<string | null>, literal: string, intl: IntlShape): string;
+
+// @alpha
 export function getValuesFromFilter(filter: IAttributeFilter | undefined): Array<string | null> | string;
 
 // @beta
@@ -1415,6 +1421,14 @@ export interface ITextFilterOperatorDropdownProps {
     disabled?: boolean;
     onOperatorChange?: (operator: TextFilterOperator) => void;
     operator: TextFilterOperator;
+}
+
+// @alpha
+export interface ITextFilterStateParts {
+    // (undocumented)
+    operator: string;
+    // (undocumented)
+    value: string;
 }
 
 // @alpha

@@ -114,8 +114,8 @@ export const DEFAULT_MAPLIBRE_OPTIONS: Partial<MapOptions> = {
     maxZoom: 8,
     // If false, the map's pitch (tilt) control with "drag to rotate" interaction will be disabled.
     pitchWithRotate: false,
-    // Allow world copies so fitBounds can properly center on data near world edges
-    renderWorldCopies: true,
+    // Disable duplicate world copies in the new geo runtime.
+    renderWorldCopies: false,
     // If false, the "pinch to rotate and zoom" interaction is disabled
     touchZoomRotate: false,
 };

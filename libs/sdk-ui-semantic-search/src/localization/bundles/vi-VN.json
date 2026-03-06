@@ -1,4 +1,19 @@
 {
+    "semantic-search.error.title": "Dịch vụ tìm kiếm của chúng tôi hiện tạm thời không hoạt động.",
+    "semantic-search.error.text": "Chúng tôi đang làm việc để giải quyết sự cố.",
+    "semantic-search.no-results": "Không tìm thấy kết quả cho “{query}”.",
+    "semantic-search.results.count": "{count, plural, other {# kết quả}}",
+    "semantic-search.label": "Tìm kiếm bảng điều khiển hoặc trực quan hóa",
+    "semantic-search.placeholder": "Tìm kiếm bảng điều khiển hoặc trực quan hóa…",
     "semantic-search.id": "ID",
-    "semantic-search.tags": "Thẻ"
+    "semantic-search.tags": "Thẻ",
+    "semantic-search.match": "Khớp {score}%",
+    "semantic-search.previous-search": "Tìm kiếm trước đó: {query}",
+    "semantic-search.tree": "Cây tìm kiếm ngữ nghĩa",
+    "semantic-search.tree.history": "Lịch sử cây tìm kiếm ngữ nghĩa",
+    "semantic-search.edit": "Chỉnh sửa",
+    "semantic-search.date.at": "lúc",
+    "semantic-search.ask.ai.assistant": "Hỏi Trợ lý AI",
+    "gs.date.today": "Hôm nay",
+    "gs.date.yesterday": "Hôm qua"
 }
