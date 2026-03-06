@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef } from "react";
 
 import type { IMapFacade } from "../../layers/common/mapFacade.js";
+import { resolveResponsiveViewport } from "../../map/viewport/responsiveViewport.js";
 import { applyViewport } from "../../map/viewport/viewportCalculation.js";
 import { computeViewportFromConfig, getViewportConfigKey } from "../../map/viewport/viewportResolution.js";
 import type { IGeoChartConfig } from "../../types/config/unified.js";
@@ -54,6 +55,7 @@ export function useApplyViewportOnConfigChange(
     dataViewport: Partial<IMapViewport> | null,
 ): void {
     const hasConfig = config !== undefined;
+    const enableGeoChartsViewportConfig = config?.enableGeoChartsViewportConfig;
     const center = config?.center;
     const zoom = config?.zoom;
     const applyViewportNavigation = config?.applyViewportNavigation;
@@ -65,6 +67,7 @@ export function useApplyViewportOnConfigChange(
         }
 
         return {
+            enableGeoChartsViewportConfig,
             center,
             zoom,
             applyViewportNavigation,
@@ -72,7 +75,7 @@ export function useApplyViewportOnConfigChange(
                 area,
             },
         };
-    }, [hasConfig, center, zoom, applyViewportNavigation, area]);
+    }, [hasConfig, enableGeoChartsViewportConfig, center, zoom, applyViewportNavigation, area]);
 
     const configKey = useMemo(() => getViewportConfigKey(viewportConfig), [viewportConfig]);
     const previousConfigKeyRef = useRef<string | null>(null);
@@ -104,13 +107,19 @@ export function useApplyViewportOnConfigChange(
         if (!viewportToApply) {
             return;
         }
+        const responsiveViewportToApply = resolveResponsiveViewport(
+            map,
+            viewportToApply,
+            dataViewport,
+            viewportConfig,
+        );
 
         // Custom viewport persistence updates center/zoom from live map state.
         // Re-applying an already-current camera with flyTo causes redundant animation.
-        if (isCenterAndZoomAlreadyApplied(map, viewportToApply)) {
+        if (isCenterAndZoomAlreadyApplied(map, responsiveViewportToApply)) {
             return;
         }
 
-        applyViewport(map, viewportToApply, !prefersReducedMotion());
+        applyViewport(map, responsiveViewportToApply, !prefersReducedMotion());
     }, [map, isMapReady, applyViewportNavigation, configKey, viewportConfig, dataViewport]);
 }

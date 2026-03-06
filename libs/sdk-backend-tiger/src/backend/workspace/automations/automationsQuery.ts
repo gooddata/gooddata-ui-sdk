@@ -130,7 +130,7 @@ export class AutomationsQuery implements IAutomationsQuery {
                     this.requestParameters.workspaceId,
                 );
                 const enableAutomationFilterContext = userSettings.enableAutomationFilterContext ?? true;
-                const enableNewScheduledExport = userSettings.enableNewScheduledExport ?? false;
+                const enableNewScheduledExport = userSettings.enableNewScheduledExport ?? true;
 
                 const items = await this.authCall((client) =>
                     EntitiesApi_GetAllEntitiesAutomations(client.axios, client.basePath, {

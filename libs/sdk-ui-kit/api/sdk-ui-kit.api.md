@@ -6735,6 +6735,8 @@ export interface IUiMenuProps<T extends IUiMenuItemData = object, M = object> ex
     // (undocumented)
     menuCtxData?: M;
     // (undocumented)
+    minWidth?: number;
+    // (undocumented)
     onClose?: () => void;
     // (undocumented)
     onLevelChange?: (level: number, item?: IUiMenuContentItem<T> | IUiMenuInteractiveItem<T>) => void;

@@ -3,7 +3,7 @@
 import { FormattedMessage } from "react-intl";
 
 import { type IAttributeDisplayFormMetadataObject, type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
-import { Dropdown, type IAlignPoint } from "@gooddata/sdk-ui-kit";
+import { Dropdown, type IAlignPoint, UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
 import { FilterModeMenuButton } from "./FilterModeMenuButton.js";
 import { FilterModeMenuItem } from "./FilterModeMenuItem.js";
@@ -107,8 +107,7 @@ export function FilterModeMenu(props: IFilterModeMenuProps) {
                                         <span className="gd-filter-mode-menu__section-text">
                                             <FormattedMessage id="attributeFilter.mode.selection" />
                                         </span>
-                                        {/* TODO: NEN CQ-2014 follow-up - add tooltip once final texts are ready */}
-                                        {/* <UiTooltip
+                                        <UiTooltip
                                             anchor={
                                                 <span
                                                     className="gd-filter-mode-menu__section-icon"
@@ -119,7 +118,7 @@ export function FilterModeMenu(props: IFilterModeMenuProps) {
                                                         size="xsmall"
                                                         variant="tertiary"
                                                         iconColor="complementary-7"
-                                                        dataTestId="attribute-filter-details-trigger"
+                                                        dataTestId="attribute-filter-mode-selection-trigger"
                                                     />
                                                 </span>
                                             }
@@ -128,7 +127,7 @@ export function FilterModeMenu(props: IFilterModeMenuProps) {
                                             }
                                             triggerBy={["hover", "focus"]}
                                             arrowPlacement="left"
-                                        /> */}
+                                        />
                                     </div>
                                 </div>
                                 {visibleOptions.map((mode) => {
@@ -155,8 +154,7 @@ export function FilterModeMenu(props: IFilterModeMenuProps) {
                                         <span className="gd-filter-mode-menu__section-text">
                                             <FormattedMessage id="attributeFilter.mode.valuesAs" />
                                         </span>
-                                        {/* TODO: NEN CQ-2014 follow-up - add tooltip once final texts are ready */}
-                                        {/* <UiTooltip
+                                        <UiTooltip
                                             anchor={
                                                 <span
                                                     className="gd-filter-mode-menu__section-icon"
@@ -167,7 +165,7 @@ export function FilterModeMenu(props: IFilterModeMenuProps) {
                                                         size="xsmall"
                                                         variant="tertiary"
                                                         iconColor="complementary-7"
-                                                        dataTestId="attribute-filter-details-trigger"
+                                                        dataTestId="attribute-filter-mode-values-as-trigger"
                                                     />
                                                 </span>
                                             }
@@ -176,7 +174,7 @@ export function FilterModeMenu(props: IFilterModeMenuProps) {
                                             }
                                             triggerBy={["hover", "focus"]}
                                             arrowPlacement="left"
-                                        /> */}
+                                        />
                                     </div>
                                 </div>
                                 {labels.map((label) => {

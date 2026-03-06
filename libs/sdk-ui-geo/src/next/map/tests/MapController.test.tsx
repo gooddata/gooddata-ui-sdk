@@ -167,7 +167,7 @@ describe("MapController", () => {
             undefined,
             undefined,
         );
-        expect(resizeMock).toHaveBeenCalledWith(mapFacadeStub, true, null, null);
+        expect(resizeMock).toHaveBeenCalledWith(mapFacadeStub, true, null, null, null, config);
         expect(applyViewportOnConfigChangeMock).toHaveBeenCalledWith(mapFacadeStub, true, config, null);
         expect(callbacksMock).toHaveBeenCalledWith(mapFacadeStub, {
             onCenterPositionChanged,

@@ -1357,13 +1357,15 @@ export interface IKeyDriver {
 // @internal
 export interface IKnowledgeDocumentMetadata {
     // (undocumented)
-    createdAt: string;
+    createdAt?: string;
     // (undocumented)
-    createdBy: string;
+    createdBy?: string;
     // (undocumented)
     filename: string;
     // (undocumented)
-    numChunks: number;
+    isDisabled?: boolean;
+    // (undocumented)
+    numChunks?: number;
     // (undocumented)
     scopes: string[];
     // (undocumented)
@@ -1371,9 +1373,19 @@ export interface IKnowledgeDocumentMetadata {
     // (undocumented)
     updatedAt?: string;
     // (undocumented)
-    updatedBy: string;
+    updatedBy?: string;
     // (undocumented)
     workspaceId?: string;
+}
+
+// @internal
+export interface IKnowledgeDocumentsPage {
+    // (undocumented)
+    documents: IKnowledgeDocumentMetadata[];
+    // (undocumented)
+    nextPageToken?: string | null;
+    // (undocumented)
+    totalCount?: number;
 }
 
 // @internal
@@ -1381,7 +1393,8 @@ export interface IKnowledgeDocumentsService {
     create(request: ICreateKnowledgeDocumentRequest): Promise<ICreateKnowledgeDocumentResponse>;
     delete(filename: string): Promise<IDeleteKnowledgeDocumentResponse>;
     get(filename: string): Promise<IKnowledgeDocumentMetadata>;
-    list(scopes?: string[]): Promise<IKnowledgeDocumentMetadata[]>;
+    list(options?: IListKnowledgeDocumentsOptions): Promise<IKnowledgeDocumentsPage>;
+    patch(filename: string, request: IPatchKnowledgeDocumentRequest): Promise<IKnowledgeDocumentMetadata>;
     search(query: string, options?: ISearchKnowledgeOptions): Promise<ISearchKnowledgeResponse>;
     upsert(request: IUpsertKnowledgeDocumentRequest): Promise<IUpsertKnowledgeDocumentResponse>;
 }
@@ -1414,6 +1427,18 @@ export interface IKnowledgeSearchStatistics {
     averageSimilarityScore: number;
     // (undocumented)
     totalResults: number;
+}
+
+// @internal
+export interface IListKnowledgeDocumentsOptions {
+    // (undocumented)
+    pageSize?: number;
+    // (undocumented)
+    pageToken?: string;
+    query?: string;
+    // (undocumented)
+    scopes?: string[];
+    state?: "enabled" | "disabled";
 }
 
 // @public
@@ -1816,6 +1841,16 @@ export interface IPagedResource<TItem> {
     readonly offset: number;
     // (undocumented)
     readonly totalCount: number;
+}
+
+// @internal
+export interface IPatchKnowledgeDocumentRequest {
+    // (undocumented)
+    isDisabled?: boolean;
+    // (undocumented)
+    scopes?: string[];
+    // (undocumented)
+    title?: string;
 }
 
 // @alpha

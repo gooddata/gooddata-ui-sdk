@@ -20,6 +20,7 @@ import {
     type DashboardContentComponentProvider,
     type DashboardLayoutComponentProvider,
     type DateFilterComponentProvider,
+    type DrillDialogExportDropdownComponentProvider,
     type FilterGroupComponentProvider,
     type InsightBodyComponentProvider,
     type InsightComponentProvider,
@@ -44,6 +45,7 @@ import { DefaultDashboardLayoutComponentSetFactory } from "../../widget/dashboar
 import { DefaultDashboardInsight } from "../../widget/insight/DefaultDashboardInsight.js";
 import { DefaultDashboardInsightComponentSetFactory } from "../../widget/insight/DefaultDashboardInsightComponentSetFactory.js";
 import { DefaultInsightBody } from "../../widget/insight/DefaultInsightBody/DefaultInsightBody.js";
+import { DefaultDrillDialogExportDropdown } from "../../widget/insight/ViewModeDashboardInsight/InsightDrillDialog/DefaultDrillDialogExportDropdown.js";
 import { DefaultDashboardInsightMenu } from "../../widget/insightMenu/DefaultDashboardInsightMenu/DefaultDashboardInsightMenu.js";
 import { DefaultDashboardInsightMenuButton } from "../../widget/insightMenu/DefaultDashboardInsightMenu/DefaultDashboardInsightMenuButton.js";
 import { DefaultDashboardInsightMenuTitle } from "../../widget/insightMenu/DefaultDashboardInsightMenu/DefaultDashboardInsightMenuTitle.js";
@@ -87,6 +89,7 @@ interface IUseDashboardResult {
     dashboardLayoutProvider: DashboardLayoutComponentProvider;
     dashboardLayoutWidgetComponentSet: DashboardLayoutWidgetComponentSet;
     showAsTableButtonComponentProvider: ShowAsTableButtonComponentProvider;
+    drillDialogExportDropdownProvider: DrillDialogExportDropdownComponentProvider;
 }
 
 export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
@@ -110,6 +113,7 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         VisualizationSwitcherToolbarComponentProvider,
         DashboardLayoutComponentProvider,
         ShowAsTableButtonComponentProvider,
+        DrillDialogExportDropdownComponentProvider,
     } = props;
 
     const backend = useBackendStrict(props.backend);
@@ -286,6 +290,16 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         [ShowAsTableButtonComponentProvider],
     );
 
+    const drillDialogExportDropdownProvider = useCallback<DrillDialogExportDropdownComponentProvider>(
+        (insight, widget) => {
+            return (
+                DrillDialogExportDropdownComponentProvider?.(insight, widget) ??
+                DefaultDrillDialogExportDropdown
+            );
+        },
+        [DrillDialogExportDropdownComponentProvider],
+    );
+
     const isThemeLoading = useThemeIsLoading();
     const hasThemeProvider = isThemeLoading !== undefined;
 
@@ -317,5 +331,6 @@ export const useDashboard = (props: IDashboardProps): IUseDashboardResult => {
         dashboardLayoutProvider,
         dashboardLayoutWidgetComponentSet,
         showAsTableButtonComponentProvider,
+        drillDialogExportDropdownProvider,
     };
 };

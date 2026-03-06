@@ -36,6 +36,9 @@ import {
     type IDrillConfigItem,
     type IDrillDownAttributeHierarchyConfig,
     type IDrillDownAttributeHierarchyDefinition,
+    isDrillDownToAttributeHierarchyConfig,
+    isDrillToDashboardConfig,
+    isDrillToInsightConfig,
 } from "../../../drill/types.js";
 
 export interface IDrillConfigItemProps {
@@ -115,6 +118,17 @@ export function DrillConfigItem({
         DRILL_TARGET_TYPE.DRILL_DOWN,
     ]).some((drillTarget) => drillTarget === item?.drillTargetType);
 
+    const showDrillConfigButton =
+        (item.drillTargetType === DRILL_TARGET_TYPE.DRILL_DOWN &&
+            isDrillDownToAttributeHierarchyConfig(item) &&
+            !!item.attributeHierarchyRef) ||
+        (item.drillTargetType === DRILL_TARGET_TYPE.DRILL_TO_INSIGHT &&
+            isDrillToInsightConfig(item) &&
+            !!item.insightRef) ||
+        (item.drillTargetType === DRILL_TARGET_TYPE.DRILL_TO_DASHBOARD &&
+            isDrillToDashboardConfig(item) &&
+            !!item.dashboard);
+
     const showDrillIntersectionIgnoredAttributes = isAllowedDrillTypeForDrillIntersectionIgnoredAttributes;
 
     const onDrillIntersectionIgnoredAttributesChange = (ignoredAttributeLocalIds: string[]) => {
@@ -184,8 +198,8 @@ export function DrillConfigItem({
 
                     <DrillTargets item={item} onSetup={onSetup} onDeleteInteraction={onDeleteClick} />
 
-                    {showDrillIntersectionIgnoredAttributes ? (
-                        isDrillFiltersConfigEnabled ? (
+                    {isDrillFiltersConfigEnabled ? (
+                        showDrillConfigButton ? (
                             <div className="gd-drill-filter-config-link">
                                 <UiButton
                                     variant="tertiary"
@@ -196,13 +210,13 @@ export function DrillConfigItem({
                                     onClick={() => openDrillFilters(item.localIdentifier)}
                                 />
                             </div>
-                        ) : (
-                            <DrillIntersectionIgnoredAttributes
-                                drillTargetType={item.drillTargetType}
-                                item={item}
-                                onChange={onDrillIntersectionIgnoredAttributesChange}
-                            />
-                        )
+                        ) : null
+                    ) : showDrillIntersectionIgnoredAttributes ? (
+                        <DrillIntersectionIgnoredAttributes
+                            drillTargetType={item.drillTargetType}
+                            item={item}
+                            onChange={onDrillIntersectionIgnoredAttributesChange}
+                        />
                     ) : null}
                     {!!item.warning && (
                         <div className="drill-config-target-warning s-drill-config-target-warning">

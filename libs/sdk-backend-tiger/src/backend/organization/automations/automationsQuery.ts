@@ -159,7 +159,7 @@ export class OrganizationAutomationsQuery implements IOrganizationAutomationsQue
 
                 // Note: Organization-level automations always include user data
                 const enableAutomationFilterContext = true;
-                const enableNewScheduledExport = false;
+                const enableNewScheduledExport = true;
 
                 const requestParams: AutomationOrganizationViewControllerApiGetAllAutomationsWorkspaceAutomationsRequest =
                     {

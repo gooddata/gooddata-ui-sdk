@@ -2,6 +2,7 @@
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
+import { normalizeBoundsForShortestPath } from "./bounds.js";
 import {
     DEFAULT_MAPLIBRE_OPTIONS,
     DEFAULT_TOOLTIP_OPTIONS,
@@ -106,10 +107,7 @@ export async function initializeMapLibreMap(
     }
 
     if (bounds) {
-        const lngLatBounds: LngLatBoundsLike = [
-            [bounds.southWest.lng, bounds.southWest.lat],
-            [bounds.northEast.lng, bounds.northEast.lat],
-        ];
+        const lngLatBounds: LngLatBoundsLike = normalizeBoundsForShortestPath(bounds);
         mapOptions.bounds = lngLatBounds;
     } else if (center) {
         const mapCenter: LngLatLike = [center.lng, center.lat];

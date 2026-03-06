@@ -5894,13 +5894,15 @@ export async function ActionsApiAxiosParamCreator_KeyDriverAnalysisResult(
  * @param {Array<string>} [scopes]
  * @param {number} [size]
  * @param {string} [pageToken]
+ * @param {string} [query]
+ * @param {string} [state]
  * @param {string} [metaInclude]
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function ActionsApiAxiosParamCreator_ListDocuments(
-    workspaceId: string, scopes?: Array<string>, size?: number, pageToken?: string, metaInclude?: string,
+    workspaceId: string, scopes?: Array<string>, size?: number, pageToken?: string, query?: string, state?: string, metaInclude?: string,
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -5928,6 +5930,14 @@ export async function ActionsApiAxiosParamCreator_ListDocuments(
 
     if (pageToken !== undefined) {
         localVarQueryParameter['pageToken'] = pageToken;
+    }
+
+    if (query !== undefined) {
+        localVarQueryParameter['query'] = query;
+    }
+
+    if (state !== undefined) {
+        localVarQueryParameter['state'] = state;
     }
 
     if (metaInclude !== undefined) {
@@ -7632,7 +7642,7 @@ export async function ActionsApi_ListDocuments(
     configuration?: Configuration,
 ): AxiosPromise<ListKnowledgeDocumentsResponseDto> {
     const localVarAxiosArgs = await ActionsApiAxiosParamCreator_ListDocuments(
-        requestParameters.workspaceId, requestParameters.scopes, requestParameters.size, requestParameters.pageToken, requestParameters.metaInclude,
+        requestParameters.workspaceId, requestParameters.scopes, requestParameters.size, requestParameters.pageToken, requestParameters.query, requestParameters.state, requestParameters.metaInclude,
         options || {},
         configuration,
     );
@@ -9336,6 +9346,20 @@ export interface ActionsApiListDocumentsRequest {
      * @memberof ActionsApiListDocuments
      */
     readonly pageToken?: string
+
+    /**
+     * Filter documents by title/filename substring match.
+     * @type {string}
+     * @memberof ActionsApiListDocuments
+     */
+    readonly query?: string
+
+    /**
+     * Filter documents by enabled/disabled state.
+     * @type {string}
+     * @memberof ActionsApiListDocuments
+     */
+    readonly state?: string
 
     /**
      *

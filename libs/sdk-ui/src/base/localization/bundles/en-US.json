@@ -484,12 +484,12 @@
         "crowdinContext": "Error message shown when a user exceeds the maximum allowed number of selections in a list component. The {limit} placeholder will be replaced with the actual limit number."
     },
     "gs.list.limitReached": {
-        "text": "Warning: You have reached the limit of {limit} selected values.",
-        "crowdinContext": "Informational message shown when a user reaches the maximum allowed number of selections in a list component. The {limit} placeholder will be replaced with the actual limit number."
+        "text": "Warning: Limit reached ({limit}) — remove a value to add another.",
+        "crowdinContext": "Warning shown when a user reaches the maximum allowed number of selections in a list component. The {limit} placeholder will be replaced with the actual limit number."
     },
     "gs.list.cannotSelectMoreValues": {
-        "text": "Error: Too many values — you can add up to {limit} values.",
-        "crowdinContext": "Error message shown when a user attempts to select more items than allowed in a list component. The {limit} placeholder will be replaced with the maximum allowed number of selections."
+        "text": "Error: Too many values — you can add up to {limit}.",
+        "crowdinContext": "Error message shown when a user attempts to select more items than allowed in a list component. The {limit} placeholder will be replaced with the maximum allowed number."
     },
     "gs.list.noItemsFound": {
         "text": "No items found.",
@@ -1619,9 +1619,29 @@
         "text": "does not end with",
         "crowdinContext": "Text filter operator label for like does not end with."
     },
+    "attributeFilter.operator.summary.isNot": {
+        "text": "isn't",
+        "crowdinContext": "Shortened text filter operator label for negative arbitrary selection used in filter summary."
+    },
+    "attributeFilter.operator.summary.doesNotContain": {
+        "text": "doesn't contain",
+        "crowdinContext": "Shortened text filter operator label for negative contains used in filter summary."
+    },
+    "attributeFilter.operator.summary.doesNotStartWith": {
+        "text": "doesn't start with",
+        "crowdinContext": "Shortened text filter operator label for negative starts with used in filter summary."
+    },
+    "attributeFilter.operator.summary.doesNotEndWith": {
+        "text": "doesn't end with",
+        "crowdinContext": "Shortened text filter operator label for negative ends with used in filter summary."
+    },
     "attributeFilter.mode.selection": {
         "text": "Selection",
         "crowdinContext": "Section title for choosing attribute filter mode."
+    },
+    "attributeFilter.mode.selection.tooltip": {
+        "text": "List shows all values for checkbox selection. Text finds values that match what you type.",
+        "crowdinContext": "Tooltip explaining the difference between list and text attribute filter modes."
     },
     "attributeFilter.mode.list": {
         "text": "List",
@@ -1634,6 +1654,10 @@
     "attributeFilter.mode.valuesAs": {
         "text": "Values as",
         "crowdinContext": "Section title for choosing which display form to use for filter values."
+    },
+    "attributeFilter.mode.valuesAs.tooltip": {
+        "text": "Choose which label is used for value lists and typed-text matching.",
+        "crowdinContext": "Tooltip explaining the values as display form selection in attribute filter."
     },
     "attributeFilter.text.caseSensitive": {
         "text": "Case sensitive",
@@ -1664,12 +1688,12 @@
         "crowdinContext": "Tooltip shown on the Apply button in attribute filter when there are no staged changes."
     },
     "attributeFilter.text.validation.valuesLimitReached": {
-        "text": "Warning: You have reached the maximum of {maxValues} values.",
-        "crowdinContext": "Warning shown below the Values input in text attribute filter when the user has reached the value limit. Example output: 'Warning: You have reached the maximum of 500 values.' {maxValues} is the maximum allowed count (e.g. 500)."
+        "text": "Warning: Limit reached ({maxValues}) — remove a value to add another.",
+        "crowdinContext": "Warning shown below the Values input in text attribute filter when the user has reached the value limit. Example output: 'Warning: Limit reached (500) — remove a value to add another.' {maxValues} is the maximum allowed count (e.g. 500)."
     },
     "attributeFilter.text.validation.valuesLimitExceeded": {
-        "text": "Error: Too many values — you can add up to {maxValues} values.",
-        "crowdinContext": "Error message shown below the Values input in text attribute filter when the user exceeds the value limit. Example output: 'Error: You cannot have more than 500 values.' {maxValues} is the maximum allowed count (e.g. 500)."
+        "text": "Error: Too many values — you can add up to {maxValues}.",
+        "crowdinContext": "Error message shown below the Values input in text attribute filter when the user exceeds the value limit. Example output: 'Error: Too many values — you can add up to 500.' {maxValues} is the maximum allowed count (e.g. 500)."
     },
     "attributeFilter.text.validation.valueCannotBeEmpty": {
         "text": "Error: Value cannot be empty.",
@@ -1696,7 +1720,7 @@
         "crowdinContext": "Label for values input in text attribute filter."
     },
     "attributeFilter.text.values.tooltip": {
-        "text": "Separate values with commas or newlines.\nUse double quotes if what you are adding has commas.\nTo filter empty and null values use {emptyValue}.\nYou can add up to {maxValues} values.",
+        "text": "Separate values with commas or new lines. Use double quotes for values that contain commas.\nUse {emptyValue} for empty/null.\nMax {maxValues} values.",
         "crowdinContext": "Help tooltip for the Values input in text attribute filter, explaining how to enter multiple values, handle commas, filter empty/null values, and the value limit. {emptyValue} is the localized representation of (empty value), e.g. '(empty value)' in English. {maxValues} is the maximum allowed count (e.g. 500)."
     },
     "attributeFilter.text.values.helpIconLabel": {

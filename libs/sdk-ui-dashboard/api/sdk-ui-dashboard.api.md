@@ -747,6 +747,9 @@ export type CustomDraggableItem = {
 // @internal (undocumented)
 export type CustomDraggingComponent = ComponentType<ICustomDraggingComponentProps>;
 
+// @alpha (undocumented)
+export type CustomDrillDialogExportDropdownComponent = ComponentType<IDrillDialogExportDropdownProps>;
+
 // @beta (undocumented)
 export type CustomEditModeButtonComponent = ComponentType<IEditButtonProps>;
 
@@ -1487,6 +1490,9 @@ export function DefaultDashboardVisualizationSwitcherComponentSetFactory(visuali
 export const DefaultDashboardWidget: NamedExoticComponent<IDashboardWidgetProps>;
 
 // @internal (undocumented)
+export function DefaultDrillDialogExportDropdown(props: IDrillDialogExportDropdownProps): ReactElement;
+
+// @internal (undocumented)
 export function DefaultEditButton({ isVisible, isEnabled, onEditClick, tooltipText }: IEditButtonProps): JSX.Element | null;
 
 // @alpha (undocumented)
@@ -1682,6 +1688,9 @@ export const drillActions: {
     }, "drill/crossFilterByWidget">;
     resetCrossFiltering: ActionCreatorWithOptionalPayload<string | undefined, "drill/resetCrossFiltering">;
 };
+
+// @alpha (undocumented)
+export type DrillDialogExportDropdownComponentProvider = (insight: IInsight, widget: IInsightWidget) => CustomDrillDialogExportDropdownComponent;
 
 // @alpha
 export function drillDown(insight: IInsight, drillDefinition: IDrillDownDefinition, drillEvent: IDashboardDrillEvent, correlationId?: string): IDrillDown;
@@ -3135,6 +3144,8 @@ export interface IDashboardCustomComponentProps {
     DashboardLayoutComponentProvider?: OptionalDashboardLayoutComponentProvider;
     // @internal
     DashboardSettingsDialogComponent?: CustomDashboardSettingsDialogComponent;
+    // @alpha
+    DrillDialogExportDropdownComponentProvider?: OptionalDrillDialogExportDropdownComponentProvider;
     // @internal
     EmptyLayoutDropZoneBodyComponent?: CustomEmptyLayoutDropZoneBodyComponent;
     // @alpha
@@ -5126,6 +5137,36 @@ export interface IDrill extends IDashboardCommand {
     readonly payload: IDrillPayload;
     // (undocumented)
     readonly type: "GDC.DASH/CMD.DRILL";
+}
+
+// @alpha (undocumented)
+export interface IDrillDialogExportDropdownProps {
+    // (undocumented)
+    exportAvailable: boolean;
+    // (undocumented)
+    exportCSVEnabled: boolean;
+    // (undocumented)
+    exportCSVRawEnabled: boolean;
+    // (undocumented)
+    exportPDFEnabled: boolean;
+    // (undocumented)
+    exportPDFVisible: boolean;
+    // (undocumented)
+    exportXLSXEnabled: boolean;
+    // (undocumented)
+    isExporting: boolean;
+    // (undocumented)
+    isExportRawVisible: boolean;
+    // (undocumented)
+    isLoading: boolean;
+    // (undocumented)
+    onExportCSV: () => void;
+    // (undocumented)
+    onExportCSVRaw: () => void;
+    // (undocumented)
+    onExportPDF: () => void;
+    // (undocumented)
+    onExportXLSX: () => void;
 }
 
 // @alpha (undocumented)
@@ -9066,6 +9107,9 @@ export type OptionalDashboardLayoutComponentProvider = OptionalProvider<Dashboar
 
 // @public (undocumented)
 export type OptionalDateFilterComponentProvider = OptionalProvider<DateFilterComponentProvider>;
+
+// @alpha (undocumented)
+export type OptionalDrillDialogExportDropdownComponentProvider = OptionalProvider<DrillDialogExportDropdownComponentProvider>;
 
 // @public (undocumented)
 export type OptionalFilterBarComponentProvider = OptionalProvider<FilterBarComponentProvider>;

@@ -125,7 +125,7 @@ function MapLifecycleEffects({
 }): ReactElement | null {
     const { map, isMapReady } = useMapRuntime();
 
-    useMapResize(map, isMapReady, chartContainerRect, initialViewport);
+    useMapResize(map, isMapReady, chartContainerRect, initialViewport, dataViewport, config);
     useApplyInitialViewport(map, isMapReady, config, initialViewport);
     useApplyViewportOnConfigChange(map, isMapReady, config, dataViewport);
 

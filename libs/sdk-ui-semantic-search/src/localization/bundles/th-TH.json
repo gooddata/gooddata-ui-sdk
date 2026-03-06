@@ -1,0 +1,19 @@
+{
+    "semantic-search.error.title": "บริการค้นหาของเราหยุดให้บริการชั่วคราว",
+    "semantic-search.error.text": "เรากำลังดำเนินการเพื่อแก้ไขปัญหา",
+    "semantic-search.no-results": "ไม่พบผลลัพธ์สำหรับ “{query}”.",
+    "semantic-search.results.count": "{count, plural, other {# ผลลัพธ์}}",
+    "semantic-search.label": "ค้นหาแดชบอร์ดหรือการแสดงภาพข้อมูล",
+    "semantic-search.placeholder": "ค้นหาแดชบอร์ดหรือการแสดงภาพข้อมูล…",
+    "semantic-search.id": "ID",
+    "semantic-search.tags": "แท็ก",
+    "semantic-search.match": "ตรงกับ {score}%",
+    "semantic-search.previous-search": "การค้นหาก่อนหน้า: {query}",
+    "semantic-search.tree": "แผนผังการค้นหาเชิงความหมาย",
+    "semantic-search.tree.history": "ประวัติแผนผังการค้นหาเชิงความหมาย",
+    "semantic-search.edit": "แก้ไข",
+    "semantic-search.date.at": "เวลา",
+    "semantic-search.ask.ai.assistant": "ถามผู้ช่วย AI",
+    "gs.date.today": "วันนี้",
+    "gs.date.yesterday": "เมื่อวาน"
+}

@@ -509,12 +509,13 @@ export interface IKnowledgeDocumentMetadata {
     filename: string;
     workspaceId?: string;
     title?: string;
-    numChunks: number;
-    createdAt: string;
+    numChunks?: number;
+    createdAt?: string;
     updatedAt?: string;
-    createdBy: string;
-    updatedBy: string;
+    createdBy?: string;
+    updatedBy?: string;
     scopes: string[];
+    isDisabled?: boolean;
 }
 
 /**
@@ -569,6 +570,17 @@ export interface IDeleteKnowledgeDocumentResponse {
 }
 
 /**
+ * Request payload for patching a knowledge document.
+ * Only provided fields will be updated.
+ * @internal
+ */
+export interface IPatchKnowledgeDocumentRequest {
+    isDisabled?: boolean;
+    title?: string;
+    scopes?: string[];
+}
+
+/**
  * A single result chunk returned from a knowledge base semantic search.
  * @internal
  */
@@ -613,15 +625,42 @@ export interface ISearchKnowledgeOptions {
 }
 
 /**
+ * Options for listing knowledge documents with cursor-based pagination.
+ * @internal
+ */
+export interface IListKnowledgeDocumentsOptions {
+    pageSize?: number;
+    pageToken?: string;
+    scopes?: string[];
+    /**
+     * Filter documents by title/filename substring match.
+     */
+    query?: string;
+    /**
+     * Filter documents by their enabled/disabled state.
+     */
+    state?: "enabled" | "disabled";
+}
+
+/**
+ * A single page of knowledge documents returned by the list operation.
+ * @internal
+ */
+export interface IKnowledgeDocumentsPage {
+    documents: IKnowledgeDocumentMetadata[];
+    nextPageToken?: string | null;
+    totalCount?: number;
+}
+
+/**
  * Service for listing and managing knowledge documents in the workspace knowledge base.
  * @internal
  */
 export interface IKnowledgeDocumentsService {
     /**
-     * List all knowledge documents accessible from the workspace.
-     * @param scopes - optional scope filter
+     * List knowledge documents with optional cursor-based pagination.
      */
-    list(scopes?: string[]): Promise<IKnowledgeDocumentMetadata[]>;
+    list(options?: IListKnowledgeDocumentsOptions): Promise<IKnowledgeDocumentsPage>;
 
     /**
      * Get metadata for a single knowledge document by filename.
@@ -644,6 +683,12 @@ export interface IKnowledgeDocumentsService {
      * Delete a knowledge document and all its chunks.
      */
     delete(filename: string): Promise<IDeleteKnowledgeDocumentResponse>;
+
+    /**
+     * Patch metadata of an existing knowledge document.
+     * Only provided fields will be updated.
+     */
+    patch(filename: string, request: IPatchKnowledgeDocumentRequest): Promise<IKnowledgeDocumentMetadata>;
 
     /**
      * Search the knowledge base using semantic similarity.

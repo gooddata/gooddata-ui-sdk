@@ -207,6 +207,8 @@ export function InsightDrillDialog(props: IInsightDrillDialogProps): ReactElemen
             >
                 <IntlWrapper locale={locale}>
                     <DrillDialog
+                        insight={insight}
+                        widget={widget}
                         insightTitle={baseInsightTitle}
                         isBackButtonVisible={breadcrumbs.length > 1}
                         onBackButtonClick={onBackButtonClick}
