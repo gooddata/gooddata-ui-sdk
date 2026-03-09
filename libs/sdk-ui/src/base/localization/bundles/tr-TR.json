@@ -408,6 +408,7 @@
     "attributeFilter.mode.list": "Liste",
     "attributeFilter.mode.text": "Metin",
     "attributeFilter.mode.valuesAs": "Değerler olarak",
+    "attributeFilter.mode.valuesAs.tooltip": "Değer listeleri ve yazılan metin eşleştirmesi için hangi etiketin kullanıldığını seçin.",
     "attributeFilter.text.caseSensitive": "Büyük/küçük harfe duyarlı",
     "attributeFilter.text.condition": "Koşul",
     "attributeFilter.text.arbitrary.placeholder": "Değerleri girin ...",

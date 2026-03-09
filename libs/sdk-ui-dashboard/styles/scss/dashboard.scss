@@ -923,6 +923,12 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
             margin-right: 10px;
             font-size: 16px;
         }
+
+        &.is-submenu {
+            // Keep enough space for the :after icon
+            //stylelint-disable-next-line declaration-no-important
+            padding-right: 30px !important;
+        }
     }
 }
 
