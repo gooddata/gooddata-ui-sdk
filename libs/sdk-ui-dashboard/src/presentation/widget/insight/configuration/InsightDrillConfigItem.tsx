@@ -20,6 +20,7 @@ import { messages } from "@gooddata/sdk-ui";
 import { UiButton } from "@gooddata/sdk-ui-kit";
 import { simplifyText } from "@gooddata/util";
 
+import { useDrillFiltersCount } from "./DrillFilters/useDrillFiltersCount.js";
 import { useDrillFiltersSubview } from "./DrillFilters/useDrillFiltersSubview.js";
 import { DrillIntersectionIgnoredAttributes } from "./DrillIntersectionIgnoredAttributes.js";
 import { DrillOriginItem } from "./DrillOriginItem.js";
@@ -100,6 +101,17 @@ export function DrillConfigItem({
     const targetClassNames = cx("s-drill-config-target", "drill-config-target", {
         "drill-config-target-with-warning": !!item.warning,
     });
+
+    const selectedFiltersCount = useDrillFiltersCount(item, onSetup);
+
+    const drillFilterButtonLabel = intl.formatMessage(
+        {
+            id: "configurationPanel.drillConfig.filterSelection.button.withCount",
+        },
+        {
+            count: selectedFiltersCount,
+        },
+    );
 
     const { widgetRef } = item;
     const widgetDrills = useDashboardSelector(selectWidgetDrills(widgetRef));
@@ -204,9 +216,7 @@ export function DrillConfigItem({
                                 <UiButton
                                     variant="tertiary"
                                     size="small"
-                                    label={intl.formatMessage({
-                                        id: "configurationPanel.drillConfig.filterSelection.button",
-                                    })}
+                                    label={drillFilterButtonLabel}
                                     onClick={() => openDrillFilters(item.localIdentifier)}
                                 />
                             </div>

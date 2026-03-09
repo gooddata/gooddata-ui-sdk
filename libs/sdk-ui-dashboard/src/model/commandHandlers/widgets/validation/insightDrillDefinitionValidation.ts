@@ -35,7 +35,7 @@ import { type IDrillTargets } from "../../../store/drillTargets/drillTargetsType
 import { selectInaccessibleDashboardsMap } from "../../../store/inaccessibleDashboards/inaccessibleDashboardsSelectors.js";
 import { selectInsightByWidgetRef } from "../../../store/insights/insightsSelectors.js";
 import { selectDashboardRef } from "../../../store/meta/metaSelectors.js";
-import { selectFilterContextDraggableFilters } from "../../../store/tabs/filterContext/filterContextSelectors.js";
+import { selectFilterContextFilters } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { selectTabs } from "../../../store/tabs/tabsSelectors.js";
 import { type DashboardContext } from "../../../types/commonTypes.js";
 import { type IInaccessibleDashboard } from "../../../types/inaccessibleDashboardTypes.js";
@@ -122,9 +122,8 @@ export function* getValidationData(
     const widgetInsightAttributes = widgetInsight ? bucketsAttributes(insightBuckets(widgetInsight)) : [];
     const sourceInsightFilters = widgetInsight ? insightFilters(widgetInsight) : [];
     const sourceInsightMeasures = widgetInsight ? insightMeasures(widgetInsight) : [];
-    const dashboardFilters: ReturnType<typeof selectFilterContextDraggableFilters> = yield select(
-        selectFilterContextDraggableFilters,
-    );
+    const dashboardFilters: ReturnType<typeof selectFilterContextFilters> =
+        yield select(selectFilterContextFilters);
     const enableFilterControlInDrillingConfiguration: ReturnType<
         typeof selectEnableFilterControlInDrillingConfiguration
     > = yield select(selectEnableFilterControlInDrillingConfiguration);

@@ -1739,9 +1739,9 @@
         "text": "None",
         "crowdinContext": "Option to not pass any attributes as filters during drill"
     },
-    "configurationPanel.drillConfig.filterSelection.button": {
-        "text": "Filter selection",
-        "crowdinContext": "Button label in drill interaction configuration that opens the filter selection subview"
+    "configurationPanel.drillConfig.filterSelection.button.withCount": {
+        "text": "Using {count, plural, one {# filter} other {# filters}}",
+        "crowdinContext": "Button label in drill interaction configuration showing how many filters are currently selected. Example output: 'Using 1 filter' or 'Using 3 filters'."
     },
     "configurationPanel.drillConfig.filterSelection.subview.title": {
         "text": "Filters",

@@ -146,7 +146,7 @@ export class TigerWorkspaceAttributes implements IWorkspaceAttributesService {
                 tags: item?.attributes?.tags,
                 primary: item?.attributes?.primary,
                 deprecated: false,
-                uri: item.id,
+                uri: item.id, // this is suspicious, we should use the uri from the self link
                 type: "displayForm", // item.type is "label", set here as displayForm
                 production: true,
                 unlisted: false,

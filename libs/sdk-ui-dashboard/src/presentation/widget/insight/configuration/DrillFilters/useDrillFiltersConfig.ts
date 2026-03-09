@@ -7,6 +7,7 @@ import { type IntlShape, defineMessages, useIntl } from "react-intl";
 
 import {
     type FilterContextItem,
+    type IDashboardDateFilterConfig,
     type IDashboardDateFilterConfigItem,
     type IDrillToDashboard,
     type IDrillToInsight,
@@ -20,7 +21,7 @@ import {
     insightFilters,
     insightMeasures,
     isDashboardAttributeFilter,
-    isDashboardDateFilterWithDimension,
+    isDashboardDateFilter,
     isRankingFilter,
     measureFilters,
     measureLocalId,
@@ -42,8 +43,9 @@ import {
     selectCatalogDateDatasets,
 } from "../../../../../model/store/catalog/catalogSelectors.js";
 import { selectInsightByWidgetRef } from "../../../../../model/store/insights/insightsSelectors.js";
+import { selectDateFilterConfigOverrides } from "../../../../../model/store/tabs/dateFilterConfig/dateFilterConfigSelectors.js";
 import { selectDateFilterConfigsOverrides } from "../../../../../model/store/tabs/dateFilterConfigs/dateFilterConfigsSelectors.js";
-import { selectFilterContextDraggableFilters } from "../../../../../model/store/tabs/filterContext/filterContextSelectors.js";
+import { selectFilterContextFilters } from "../../../../../model/store/tabs/filterContext/filterContextSelectors.js";
 import { selectWidgetDrills } from "../../../../../model/store/tabs/layout/layoutSelectors.js";
 import {
     DRILL_TARGET_TYPE,
@@ -63,6 +65,9 @@ interface IUseDrillFiltersConfigParams {
 }
 
 const messages = defineMessages({
+    commonDateFilterTitle: {
+        id: "dateFilterDropdown.title",
+    },
     rankingFilterPreviewTopWithoutAttributePlain: {
         id: "rankingFilter.preview.top_without_attribute_plain",
     },
@@ -95,13 +100,17 @@ function mapDashboardFilterToOption({
     allCatalogDisplayForms,
     allCatalogDateAttributeDisplayForms,
     allDateDatasets,
+    dateFilterConfigOverride,
     allDateFilterConfigsOverrides,
+    intl,
 }: {
     dashboardFilter: FilterContextItem;
     allCatalogDisplayForms: Array<{ ref: ObjRef; title?: string }>;
     allCatalogDateAttributeDisplayForms: Array<{ ref: ObjRef; title?: string }>;
     allDateDatasets: Array<{ dataSet: { ref: ObjRef; title?: string } }>;
+    dateFilterConfigOverride: IDashboardDateFilterConfig | undefined;
     allDateFilterConfigsOverrides: IDashboardDateFilterConfigItem[];
+    intl: IntlShape;
 }): IDrillFiltersConfigOption | undefined {
     if (isDashboardAttributeFilter(dashboardFilter)) {
         const displayFormRef = dashboardFilter.attributeFilter.displayForm;
@@ -124,13 +133,26 @@ function mapDashboardFilterToOption({
         };
     }
 
-    if (isDashboardDateFilterWithDimension(dashboardFilter)) {
-        const datasetRef = dashboardFilter.dateFilter.dataSet;
+    if (isDashboardDateFilter(dashboardFilter)) {
         const localIdentifier = dashboardFilter.dateFilter.localIdentifier;
 
-        if (!localIdentifier || !datasetRef) {
+        if (!localIdentifier) {
             return undefined;
         }
+
+        const datasetRef = dashboardFilter.dateFilter.dataSet;
+
+        //common date filter
+        if (!datasetRef) {
+            return {
+                id: localIdentifier,
+                title:
+                    dateFilterConfigOverride?.filterName ??
+                    intl.formatMessage(messages.commonDateFilterTitle),
+            };
+        }
+
+        //date filter with dimension
         const customTitle = getDashboardDateFilterCustomTitle({
             datasetRef,
             allDateFilterConfigsOverrides,
@@ -282,9 +304,10 @@ export function useDrillFiltersConfig({ item, onUpdateDrillItem }: IUseDrillFilt
     const drillToInsightItem = isDrillToInsightConfig(item) ? (item as IDrillToInsightConfig) : undefined;
     const insight = useDashboardSelector(selectInsightByWidgetRef(item.widgetRef));
     const widgetDrills = useDashboardSelector(selectWidgetDrills(item.widgetRef));
-    const dashboardFilters = useDashboardSelector(selectFilterContextDraggableFilters);
+    const dashboardFilters = useDashboardSelector(selectFilterContextFilters);
     const allCatalogDisplayForms = useDashboardSelector(selectCatalogAttributeDisplayForms);
     const allDateDatasets = useDashboardSelector(selectCatalogDateDatasets);
+    const dateFilterConfigOverride = useDashboardSelector(selectDateFilterConfigOverrides);
     const allDateFilterConfigsOverrides = useDashboardSelector(selectDateFilterConfigsOverrides);
 
     const sourceInsightAttributes = useMemo(
@@ -364,7 +387,9 @@ export function useDrillFiltersConfig({ item, onUpdateDrillItem }: IUseDrillFilt
                     allCatalogDisplayForms,
                     allCatalogDateAttributeDisplayForms,
                     allDateDatasets,
+                    dateFilterConfigOverride,
                     allDateFilterConfigsOverrides,
+                    intl,
                 }),
             )
             .filter((option): option is IDrillFiltersConfigOption => !!option);
@@ -374,7 +399,9 @@ export function useDrillFiltersConfig({ item, onUpdateDrillItem }: IUseDrillFilt
         allCatalogDisplayForms,
         allCatalogDateAttributeDisplayForms,
         allDateDatasets,
+        dateFilterConfigOverride,
         allDateFilterConfigsOverrides,
+        intl,
     ]);
 
     const currentSelection = useMemo<IDrillFiltersConfigSelection>(
