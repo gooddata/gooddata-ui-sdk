@@ -108,6 +108,16 @@ export interface ISemanticSearchQuery {
     withAllowedRelationshipTypes(types: IAllowedRelationshipType[]): ISemanticSearchQuery;
 
     /**
+     * The list of tags the returned objects must have.
+     */
+    withIncludeTags(tags: string[]): ISemanticSearchQuery;
+
+    /**
+     * The list of tags the returned objects must not have.
+     */
+    withExcludeTags(tags: string[]): ISemanticSearchQuery;
+
+    /**
      * Execute the search.
      */
     query(options?: { signal?: AbortSignal }): Promise<ISemanticSearchResult>;

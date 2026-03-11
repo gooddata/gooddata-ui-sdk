@@ -83,7 +83,7 @@ export const multiLayer = scenariosFor<IGeoChartProps>("GeoChart", GeoChart)
         config: {
             mapStyle: OfflineMapStyle,
             viewport: { area: "continent_na" },
-            legend: { position: "right" },
+            legend: { position: "top-right" },
             areas: {
                 borderColor: "#000000",
                 borderWidth: 2,
@@ -96,7 +96,7 @@ export const multiLayer = scenariosFor<IGeoChartProps>("GeoChart", GeoChart)
         config: {
             mapStyle: OfflineMapStyle,
             viewport: { area: "continent_na" },
-            legend: { position: "right" },
+            legend: { position: "top-right" },
             areas: {
                 borderColor: "#000000",
                 borderWidth: 2,
@@ -109,7 +109,7 @@ export const multiLayer = scenariosFor<IGeoChartProps>("GeoChart", GeoChart)
         config: {
             mapStyle: OfflineMapStyle,
             viewport: { area: "continent_na" },
-            legend: { position: "right" },
+            legend: { position: "top-right" },
             colorMapping: chartSegmentMapping,
             areas: {
                 borderColor: "#000000",
@@ -137,7 +137,7 @@ export const multiLayer = scenariosFor<IGeoChartProps>("GeoChart", GeoChart)
         config: {
             mapStyle: OfflineMapStyle,
             viewport: { area: "continent_na" },
-            legend: { position: "right" },
+            legend: { position: "top-right" },
             colorMapping: chartSegmentMapping,
             areas: {
                 borderColor: "#000000",
@@ -155,7 +155,7 @@ export const multiLayerClusters = scenariosFor<IGeoChartProps>("GeoChart", GeoCh
         config: {
             mapStyle: OfflineMapStyle,
             viewport: { area: "world" },
-            legend: { position: "right" },
+            legend: { position: "top-right" },
             points: {
                 groupNearbyPoints: true,
             },
@@ -171,7 +171,7 @@ export const multiLayerClusters = scenariosFor<IGeoChartProps>("GeoChart", GeoCh
         config: {
             mapStyle: OfflineMapStyle,
             viewport: { area: "world" },
-            legend: { position: "right" },
+            legend: { position: "top-right" },
             points: {
                 groupNearbyPoints: false,
             },

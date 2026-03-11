@@ -1701,7 +1701,7 @@ export interface IOrganizationSettingsService {
     getSettings(): Promise<ISettings>;
     setActiveCalendars(calendars: IActiveCalendars): Promise<void>;
     setActiveLlmEndpoint(endpoint: string): Promise<void>;
-    setActiveLlmProvider(provider: string): Promise<void>;
+    setActiveLlmProvider(provider: string, defaultModelId: string): Promise<void>;
     setAlertDefault(value: IAlertDefault): Promise<void>;
     setAttachmentSizeLimit(size: number): Promise<void>;
     setColorPalette(colorPaletteId: string): Promise<void>;
@@ -1988,6 +1988,8 @@ export interface ISemanticSearchQuery {
     }): Promise<ISemanticSearchResult>;
     withAllowedRelationshipTypes(types: IAllowedRelationshipType[]): ISemanticSearchQuery;
     withDeepSearch(deepSearch: boolean): ISemanticSearchQuery;
+    withExcludeTags(tags: string[]): ISemanticSearchQuery;
+    withIncludeTags(tags: string[]): ISemanticSearchQuery;
     withLimit(limit: number): ISemanticSearchQuery;
     withObjectTypes(types: GenAIObjectType[]): ISemanticSearchQuery;
     withQuestion(question: string): ISemanticSearchQuery;
@@ -2403,7 +2405,7 @@ export interface IWorkspaceSettingsService {
     getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings>;
     setActiveCalendars(calendars: IActiveCalendars): Promise<void>;
     setActiveLlmEndpoint(endpoint: string): Promise<void>;
-    setActiveLlmProvider(provider: string): Promise<void>;
+    setActiveLlmProvider(provider: string, defaultModelId: string): Promise<void>;
     setAlertDefault(value: IAlertDefault): Promise<void>;
     setColorPalette(colorPaletteId: string): Promise<void>;
     // @alpha

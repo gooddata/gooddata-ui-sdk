@@ -974,3 +974,56 @@ $dashboard-menu-item-icon-color: var(--gd-palette-complementary-5-from-theme, #b
         display: flex;
     }
 }
+
+.gd-dash-content--density-compact {
+    .dash-item-content {
+        padding: 3px;
+    }
+
+    // override highcharts direct style
+    .highcharts-axis-title {
+        // stylelint-disable-next-line declaration-no-important
+        font-size: 12px !important;
+    }
+
+    .item-headline-outer {
+        margin-top: 0;
+        height: 20px;
+        line-height: 20px;
+    }
+
+    .visualization {
+        .item-headline-outer {
+            margin-bottom: 5px;
+        }
+    }
+
+    .item-headline-inner {
+        font-size: 12px;
+        font-weight: 800;
+    }
+
+    .gd-grid-layout {
+        .dash-item {
+            &.gd-dashboard-nested-layout-widget {
+                .gd-dashboard-nested-layout-widget {
+                    padding: 0;
+                }
+            }
+
+            &:not(.gd-dashboard-nested-layout-widget):not(.gd-first-container-row-widget):not(
+                    .drag-info-placeholder
+                ) {
+                padding: 0;
+            }
+
+            &.gd-first-container-row-widget:not(.gd-dashboard-nested-layout-widget) {
+                padding: 0;
+            }
+        }
+
+        .gd-empty-nested-layout {
+            padding: 0;
+        }
+    }
+}

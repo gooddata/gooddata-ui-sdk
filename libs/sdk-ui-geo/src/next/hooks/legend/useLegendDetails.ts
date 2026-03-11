@@ -4,34 +4,44 @@ import { useMemo } from "react";
 
 import { type ContentRect } from "react-measure";
 
-import {
-    type ILegendDetails,
-    type PositionType,
-    SupportedLegendPositions,
-    getLegendDetails,
-} from "@gooddata/sdk-ui-vis-commons";
+import { getLegendDetails } from "@gooddata/sdk-ui-vis-commons";
 
+import { type GeoLegendPosition } from "../../types/config/legend.js";
 import { type IGeoChartConfig } from "../../types/config/unified.js";
 import { type IGeoCommonData } from "../../types/geoData/common.js";
+import { normalizeGeoLegendPosition } from "../../utils/legend/geoLegendPosition.js";
+
+interface IGeoLegendDetails {
+    position: GeoLegendPosition;
+}
+
+function mapEdgeLegendPositionToGeoCorner(
+    position: "top" | "right" | "bottom" | "left" | "auto",
+): GeoLegendPosition {
+    switch (position) {
+        case "left":
+            return "top-left";
+        case "bottom":
+            return "bottom-right";
+        case "top":
+        case "right":
+        case "auto":
+        default:
+            return "top-right";
+    }
+}
 
 /**
  * Hook to extract legend details from configuration.
  *
  * @remarks
- * This hook uses the `getLegendDetails` function from vis-commons to determine:
- * - Legend position (computed based on responsive config and container size)
- * - Whether to render popup legend (`renderPopUp`) - true when width less than 610px with autoPositionWithPopup
- * - Maximum rows for popup collapsed state (`maxRows`) - 1 or 2 based on height
- * - Dialog title (`name`) - from segment attribute name
- *
- * The popup legend is triggered when:
- * - Config has `legend.responsive: "autoPositionWithPopup"`
- * - Container width less than 610px (narrow) OR position is top/bottom
+ * Explicit geo corner positions are honored directly.
+ * The shared vis-commons legend heuristics are used only for the geo `"auto"` mode.
  *
  * @param config - Geo pushpin chart configuration
  * @param geoData - Geographic data containing segment information
  * @param contentRect - Container dimensions from react-measure
- * @returns Legend details or null if cannot be determined
+ * @returns Geo legend details or null if container size is still unknown for responsive auto mode
  *
  * @internal
  */
@@ -39,26 +49,38 @@ export function useLegendDetails(
     config: IGeoChartConfig | undefined,
     geoData: IGeoCommonData | null,
     contentRect: ContentRect | undefined,
-): ILegendDetails | null {
+): IGeoLegendDetails | null {
     return useMemo(() => {
-        const rawPosition = config?.legend?.position;
-        const normalizedPosition: PositionType =
-            rawPosition && SupportedLegendPositions.includes(rawPosition) ? rawPosition : "top";
-        const effectivePosition = rawPosition ?? "auto";
+        const normalizedPosition = normalizeGeoLegendPosition(config?.legend?.position);
         const responsive = config?.legend?.responsive;
         const legendLabel = geoData?.segment?.name;
 
-        // Default respectLegendPosition to true when position is explicitly set (not "auto")
-        // This prevents autoPositionWithPopup from overriding explicit positions
-        const respectLegendPosition =
-            config?.respectLegendPosition ?? (effectivePosition === "auto" ? undefined : true);
+        if (normalizedPosition !== "auto") {
+            return {
+                position: normalizedPosition,
+            };
+        }
 
-        return getLegendDetails(
-            normalizedPosition,
-            responsive ?? false,
+        if (responsive !== "autoPositionWithPopup") {
+            return {
+                position: "top-right",
+            };
+        }
+
+        const legendDetails = getLegendDetails(
+            "top",
+            responsive,
             { contentRect, legendLabel },
-            respectLegendPosition,
+            config?.respectLegendPosition,
         );
+
+        if (!legendDetails) {
+            return null;
+        }
+
+        return {
+            position: mapEdgeLegendPositionToGeoCorner(legendDetails.position),
+        };
     }, [
         config?.legend?.position,
         config?.legend?.responsive,

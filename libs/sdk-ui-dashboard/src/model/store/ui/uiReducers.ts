@@ -22,6 +22,7 @@ import { getDashboardInsightMenuButtonId } from "../../../_staging/accessibility
 import { getDrillOriginLocalIdentifier } from "../../../_staging/drills/drillingUtils.js";
 import { type DraggableLayoutItem } from "../../../presentation/dragAndDrop/types.js";
 import {
+    type DashboardDensity,
     type DropZoneType,
     type IAlertDialogContext,
     type ILayoutItemPath,
@@ -160,6 +161,18 @@ const closeSettingsDialog: UiReducer = (state) => {
     state.settingsDialog.open = false;
 };
 
+const openDensityDialog: UiReducer = (state) => {
+    state.densityDialog.open = true;
+};
+
+const closeDensityDialog: UiReducer = (state) => {
+    state.densityDialog.open = false;
+};
+
+const setDensity: UiReducer<PayloadAction<DashboardDensity>> = (state, action) => {
+    state.density = action.payload;
+};
+
 const openShareDialog: UiReducer = (state) => {
     state.shareDialog.open = true;
 };
@@ -294,6 +307,10 @@ const resetInvalidDrillWidgetRefs: UiReducer = (state) => {
     state.drillValidationMessages.invalidDrillWidgetRefs = [];
 };
 
+const resetSanitizedDrillWidgetRefs: UiReducer = (state) => {
+    state.drillValidationMessages.sanitizedDrillWidgetRefs = [];
+};
+
 const resetAllInvalidCustomUrlDrillParameterWidgets: UiReducer = (state) => {
     state.drillValidationMessages.invalidCustomUrlDrillParameterWidgets = [];
 };
@@ -313,6 +330,18 @@ const addInvalidDrillWidgetRefs: UiReducer<PayloadAction<ObjRef[]>> = (state, ac
             )
         ) {
             state.drillValidationMessages.invalidDrillWidgetRefs.push(toAdd);
+        }
+    });
+};
+
+const addSanitizedDrillWidgetRefs: UiReducer<PayloadAction<ObjRef[]>> = (state, action) => {
+    action.payload.forEach((toAdd) => {
+        if (
+            !state.drillValidationMessages.sanitizedDrillWidgetRefs.some((existing) =>
+                areObjRefsEqual(existing, toAdd),
+            )
+        ) {
+            state.drillValidationMessages.sanitizedDrillWidgetRefs.push(toAdd);
         }
     });
 };
@@ -358,6 +387,13 @@ const resetInvalidCustomUrlDrillParameterWidget: UiReducer<PayloadAction<IInsigh
 const removeInvalidDrillWidgetRefs: UiReducer<PayloadAction<ObjRef[]>> = (state, action) => {
     state.drillValidationMessages.invalidDrillWidgetRefs =
         state.drillValidationMessages.invalidDrillWidgetRefs.filter(
+            (existing) => !action.payload.some((toRemove) => areObjRefsEqual(toRemove, existing)),
+        );
+};
+
+const removeSanitizedDrillWidgetRefs: UiReducer<PayloadAction<ObjRef[]>> = (state, action) => {
+    state.drillValidationMessages.sanitizedDrillWidgetRefs =
+        state.drillValidationMessages.sanitizedDrillWidgetRefs.filter(
             (existing) => !action.payload.some((toRemove) => areObjRefsEqual(toRemove, existing)),
         );
 };
@@ -450,6 +486,9 @@ const invalidateAutomationItems: UiReducer = (state) => {
 export const uiReducers = {
     openSettingsDialog,
     closeSettingsDialog,
+    openDensityDialog,
+    closeDensityDialog,
+    setDensity,
     openScheduleEmailDialog,
     closeScheduleEmailDialog,
     setScheduleEmailDialogDefaultAttachment,
@@ -488,11 +527,14 @@ export const uiReducers = {
     openCancelEditModeDialog,
     closeCancelEditModeDialog,
     resetInvalidDrillWidgetRefs,
+    resetSanitizedDrillWidgetRefs,
     resetAllInvalidCustomUrlDrillParameterWidgets,
     resetAllInvalidCustomUrlDrillParameterWidgetsWarnings,
     addInvalidDrillWidgetRefs,
+    addSanitizedDrillWidgetRefs,
     setInvalidCustomUrlDrillParameterWidgets,
     removeInvalidDrillWidgetRefs,
+    removeSanitizedDrillWidgetRefs,
     resetInvalidCustomUrlDrillParameterWidget,
     setDraggingWidgetSource,
     clearDraggingWidgetSource,

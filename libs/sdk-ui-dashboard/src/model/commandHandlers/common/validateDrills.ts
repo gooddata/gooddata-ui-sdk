@@ -1,5 +1,6 @@
 // (C) 2022-2026 GoodData Corporation
 
+import { isEqual } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, all, call, put } from "redux-saga/effects";
 
@@ -19,7 +20,7 @@ import { insightWidgetDrillsRemoved } from "../../events/insight.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { uiActions } from "../../store/ui/index.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
-import { existsDrillDefinitionInArray } from "../widgets/validation/insightDrillDefinitionUtils.js";
+import { wasDrillFilterConfigurationSanitized } from "../widgets/validation/insightDrillDefinitionUtils.js";
 import {
     getValidationData,
     validateDrillDefinition,
@@ -27,6 +28,8 @@ import {
 
 interface IInvalidDrillInfo {
     invalidDrills: DrillDefinition[];
+    hasSanitizedDrillFilterConfig: boolean;
+    sanitizedDrills: InsightDrillDefinition[];
     widget: IInsightWidget;
 }
 
@@ -35,45 +38,84 @@ export function* validateDrills(
     cmd: IDashboardCommand,
     widgets: (IKpiWidget | IInsightWidget | IRichTextWidget | IVisualizationSwitcherWidget)[],
 ) {
-    const possibleInvalidDrills: SagaReturnType<typeof validateInsightDrillDefinitions>[] = yield all(
+    const drillValidationResults: SagaReturnType<typeof validateInsightDrillDefinitions>[] = yield all(
         widgets
             .filter(isInsightWidget) // KPI drills should not be validated like this and never removed
             .map((widget) => call(validateInsightDrillDefinitions, ctx, cmd, widget)),
     );
 
-    const invalidDrills = possibleInvalidDrills.filter(({ invalidDrills }) => invalidDrills.length > 0);
+    const widgetsToSanitize = drillValidationResults.filter(({ sanitizedDrills, widget }) => {
+        return !isEqual(widget.drills, sanitizedDrills);
+    });
+    const widgetsWithInvalidDrills = drillValidationResults.filter(
+        ({ invalidDrills }) => invalidDrills.length > 0,
+    );
+    const widgetsWithoutInvalidDrills = drillValidationResults.filter(
+        ({ invalidDrills }) => invalidDrills.length === 0,
+    );
+    const widgetsWithSanitizedDrillFilterConfig = drillValidationResults.filter(
+        ({ hasSanitizedDrillFilterConfig }) => hasSanitizedDrillFilterConfig,
+    );
+    const widgetsWithoutSanitizedDrillFilterConfig = drillValidationResults.filter(
+        ({ hasSanitizedDrillFilterConfig }) => !hasSanitizedDrillFilterConfig,
+    );
 
-    if (invalidDrills.length === 0) {
-        yield put(uiActions.removeInvalidDrillWidgetRefs(widgets.map(widgetRef)));
-    } else {
+    if (widgetsToSanitize.length > 0) {
         yield all(
-            invalidDrills.map((drillInfo) =>
-                call(removeInsightWidgetDrills, ctx, cmd, drillInfo.widget, drillInfo.invalidDrills),
+            widgetsToSanitize.map((drillInfo) =>
+                call(applyInsightWidgetDrillsValidation, ctx, cmd, drillInfo),
             ),
         );
+    }
 
-        yield put(uiActions.addInvalidDrillWidgetRefs(invalidDrills.map((drill) => drill.widget.ref)));
+    if (widgetsWithoutInvalidDrills.length > 0) {
+        yield put(
+            uiActions.removeInvalidDrillWidgetRefs(
+                widgetsWithoutInvalidDrills.map((drill) => drill.widget.ref),
+            ),
+        );
+    }
+
+    if (widgetsWithInvalidDrills.length > 0) {
+        yield put(
+            uiActions.addInvalidDrillWidgetRefs(widgetsWithInvalidDrills.map((drill) => drill.widget.ref)),
+        );
+    }
+
+    if (widgetsWithoutSanitizedDrillFilterConfig.length > 0) {
+        yield put(
+            uiActions.removeSanitizedDrillWidgetRefs(
+                widgetsWithoutSanitizedDrillFilterConfig.map((drill) => drill.widget.ref),
+            ),
+        );
+    }
+
+    if (widgetsWithSanitizedDrillFilterConfig.length > 0) {
+        yield put(
+            uiActions.addSanitizedDrillWidgetRefs(
+                widgetsWithSanitizedDrillFilterConfig.map((drill) => drill.widget.ref),
+            ),
+        );
     }
 }
 
-function* removeInsightWidgetDrills(
+function* applyInsightWidgetDrillsValidation(
     ctx: DashboardContext,
     cmd: IDashboardCommand,
-    widget: IInsightWidget,
-    invalidDrills: DrillDefinition[],
+    validationResult: IInvalidDrillInfo,
 ) {
-    const notModifiedDrillDefinition = widget.drills.filter(
-        (drillItem) => !existsDrillDefinitionInArray(drillItem, invalidDrills as InsightDrillDefinition[]),
-    );
+    const { widget, invalidDrills, sanitizedDrills } = validationResult;
 
     yield put(
         tabsActions.replaceWidgetDrillWithoutUndo({
             ref: widgetRef(widget),
-            drillDefinitions: notModifiedDrillDefinition,
+            drillDefinitions: sanitizedDrills,
         }),
     );
 
-    yield put(insightWidgetDrillsRemoved(ctx, widgetRef(widget), invalidDrills, cmd.correlationId));
+    if (invalidDrills.length > 0) {
+        yield put(insightWidgetDrillsRemoved(ctx, widgetRef(widget), invalidDrills, cmd.correlationId));
+    }
 }
 
 function* validateInsightDrillDefinitions(
@@ -91,18 +133,27 @@ function* validateInsightDrillDefinitions(
     if (!validationData.drillTargets) {
         return {
             invalidDrills: [],
+            hasSanitizedDrillFilterConfig: false,
+            sanitizedDrills: widget.drills,
             widget,
         };
     }
 
-    const invalidDrills = widget.drills.flatMap((drillItem) => {
+    const invalidDrills: DrillDefinition[] = [];
+    let hasSanitizedDrillFilterConfig = false;
+    const sanitizedDrills = widget.drills.flatMap((drillItem) => {
         try {
-            validateDrillDefinition(drillItem, validationData, ctx, cmd);
-            return [];
+            const validatedDrillDefinition = validateDrillDefinition(drillItem, validationData, ctx, cmd);
+            hasSanitizedDrillFilterConfig =
+                hasSanitizedDrillFilterConfig ||
+                wasDrillFilterConfigurationSanitized(drillItem, validatedDrillDefinition);
+
+            return [validatedDrillDefinition];
         } catch {
-            return [drillItem];
+            invalidDrills.push(drillItem);
+            return [];
         }
     });
 
-    return { invalidDrills, widget };
+    return { invalidDrills, hasSanitizedDrillFilterConfig, sanitizedDrills, widget };
 }

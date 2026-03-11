@@ -2,9 +2,9 @@
 
 import { useMemo } from "react";
 
-import { type PositionType } from "@gooddata/sdk-ui-vis-commons";
-
+import { type GeoLegendPosition } from "../../types/config/legend.js";
 import { type IGeoChartConfig } from "../../types/config/unified.js";
+import { normalizeGeoLegendPosition } from "../../utils/legend/geoLegendPosition.js";
 
 /**
  * Legend configuration computed from geo config.
@@ -20,7 +20,7 @@ export interface ILegendConfig {
     /**
      * Legend position relative to the chart
      */
-    position: PositionType;
+    position: GeoLegendPosition;
 
     /**
      * Responsive behavior setting
@@ -46,7 +46,7 @@ export function useLegendConfig(config?: IGeoChartConfig): ILegendConfig {
 
         return {
             enabled: legendConfig?.enabled ?? true,
-            position: legendConfig?.position ?? "top",
+            position: normalizeGeoLegendPosition(legendConfig?.position),
             responsive: legendConfig?.responsive ?? false,
         };
     }, [config?.legend]);

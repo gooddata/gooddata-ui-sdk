@@ -19,7 +19,7 @@ describe("applyGeoChartConfigDefaults", () => {
         expect(config.areas?.borderColor).toBe("#FFFFFF");
         expect(config.areas?.borderWidth).toBe(1);
         expect(config.legend?.enabled).toBe(true);
-        expect(config.legend?.position).toBe("top");
+        expect(config.legend?.position).toBe("auto");
         expect(config.cooperativeGestures).toBe(true);
     });
 });

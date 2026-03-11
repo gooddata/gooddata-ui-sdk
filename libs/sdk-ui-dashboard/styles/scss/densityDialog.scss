@@ -1,0 +1,30 @@
+// (C) 2026 GoodData Corporation
+
+@use "@gooddata/sdk-ui-kit/styles/scss/variables" as kit-variables;
+
+.gd-density-dialog-description {
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.gd-density-dialog-option .input-radio-label {
+    display: flex;
+    align-items: center;
+}
+
+.gd-density-dialog-option-description {
+    color: var(--gd-palette-complementary-7);
+    margin-left: 23px;
+    font-size: 12px;
+}
+
+.gd-density-dialog-option:not(:last-child) {
+    margin-bottom: 10px;
+}
+
+.gd-density-dialog {
+    .gd-dialog-footer {
+        border-top: 1px solid kit-variables.$gd-border-color;
+        padding-top: 20px;
+    }
+}

@@ -111,15 +111,11 @@ async function fetchAreaFeatures(
     areaAttribute: IAttribute,
     metadata: IGeoCollectionMetadata,
 ): Promise<IGeoJsonFeature[]> {
-    try {
-        const result = await dataView.getCollectionItemsForAttribute(areaAttribute, {
-            collectionId: metadata.collectionId,
-            kind: metadata.kind,
-        });
-        return result?.features ?? [];
-    } catch {
-        return [];
-    }
+    const result = await dataView.getCollectionItemsForAttribute(areaAttribute, {
+        collectionId: metadata.collectionId,
+        kind: metadata.kind,
+    });
+    return result?.features ?? [];
 }
 
 export const areaAdapter: IGeoLayerAdapter<IGeoLayerArea, IAreaLayerOutput> = {

@@ -434,7 +434,7 @@
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.tooltip": "Schakel het kenmerk of de datum uit om uit te sluiten dat de waarde ervan als filter wordt doorgelaten aan de zoombestemming.",
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.all": "Alle",
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.none": "Geen",
-    "configurationPanel.drillConfig.filterSelection.button": "Filterselectie",
+    "configurationPanel.drillConfig.filterSelection.button.withCount": "Met {count, plural, one {# filter} other {# filters}}",
     "configurationPanel.drillConfig.filterSelection.subview.title": "Filters",
     "configurationPanel.drillConfig.filterSelection.subview.tooltip": "Geselecteerde filters worden doorgegeven aan de drillbestemming.",
     "configurationPanel.drillConfig.filterSelection.section.drilledDataPoint": "Geboord gegevenspunt",

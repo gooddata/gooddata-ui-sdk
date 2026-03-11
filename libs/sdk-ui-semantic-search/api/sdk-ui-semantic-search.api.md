@@ -33,6 +33,8 @@ export type SemanticSearchHookInput = {
     backend?: IAnalyticalBackend;
     workspace?: string;
     allowedRelationshipTypes?: IAllowedRelationshipType[];
+    includeTags?: string[];
+    excludeTags?: string[];
 };
 
 // @beta
@@ -57,6 +59,8 @@ export type SemanticSearchProps = {
     limit?: number;
     threshold?: number;
     placeholder?: string;
+    includeTags?: string[];
+    excludeTags?: string[];
     renderFooter?: (props: SemanticSearchProps & {
         status: "idle" | "loading" | "error" | "success";
         value: string;
@@ -66,6 +70,6 @@ export type SemanticSearchProps = {
 };
 
 // @beta
-export const useSemanticSearch: ({ searchTerm, objectTypes, deepSearch, limit, backend, workspace, allowedRelationshipTypes, }: SemanticSearchHookInput) => SemanticSearchInputResult;
+export const useSemanticSearch: ({ searchTerm, objectTypes, deepSearch, limit, backend, workspace, allowedRelationshipTypes, includeTags, excludeTags, }: SemanticSearchHookInput) => SemanticSearchInputResult;
 
 ```

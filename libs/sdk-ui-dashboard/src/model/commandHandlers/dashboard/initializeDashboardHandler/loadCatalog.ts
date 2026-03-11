@@ -22,7 +22,9 @@ export function loadCatalog(ctx: DashboardContext, cmd: InitializeDashboard): Pr
     const { backend, workspace } = ctx;
     const availability = cmd.payload.config?.objectAvailability;
 
-    const metricTypes: CatalogItemType[] = backend.capabilities.supportsKpiWidget ? ["fact", "measure"] : [];
+    const metricTypes: CatalogItemType[] = backend.capabilities.supportsKpiWidget
+        ? ["fact", "measure"]
+        : ["measure"];
     const options: IWorkspaceCatalogFactoryOptions = {
         excludeTags: (availability?.excludeObjectsWithTags ?? []).map((tag) => idRef(tag)),
         includeTags: (availability?.includeObjectsWithTags ?? []).map((tag) => idRef(tag)),

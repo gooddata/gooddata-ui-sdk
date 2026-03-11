@@ -81,6 +81,14 @@ export type SemanticSearchProps = {
      */
     placeholder?: string;
     /**
+     * The list of tags the returned objects must have.
+     */
+    includeTags?: string[];
+    /**
+     * The list of tags the returned objects must not have.
+     */
+    excludeTags?: string[];
+    /**
      * A function to render the footer of the search overlay.
      */
     renderFooter?: (
@@ -124,6 +132,8 @@ function SemanticSearchCore(props: Omit<SemanticSearchProps, "locale">) {
         className,
         placeholder,
         renderFooter,
+        includeTags,
+        excludeTags,
     } = props;
     const intl = useIntl();
     const effectiveWorkspace = useWorkspaceStrict(workspace);
@@ -153,6 +163,8 @@ function SemanticSearchCore(props: Omit<SemanticSearchProps, "locale">) {
         deepSearch,
         limit,
         allowedRelationshipTypes,
+        includeTags,
+        excludeTags,
     });
 
     const isLoading = searchStatus === "loading";

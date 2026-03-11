@@ -434,7 +434,7 @@
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.tooltip": "Desativar o atributo ou data para eliminar o seu valor de ser passado como um filtro para o destino da pesquisa.",
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.all": "Todos",
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.none": "Nenhum",
-    "configurationPanel.drillConfig.filterSelection.button": "Seleção de filtro",
+    "configurationPanel.drillConfig.filterSelection.button.withCount": "A utilizar {count, plural, one {# filtro} other {# filtros}}",
     "configurationPanel.drillConfig.filterSelection.subview.title": "Filtros",
     "configurationPanel.drillConfig.filterSelection.subview.tooltip": "Os filtros selecionados são passados para o destino de detalhamento.",
     "configurationPanel.drillConfig.filterSelection.section.drilledDataPoint": "Ponto de dados detalhado",

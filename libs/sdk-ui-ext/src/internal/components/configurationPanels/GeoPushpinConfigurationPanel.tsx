@@ -33,7 +33,7 @@ import { CheckboxControl } from "../configurationControls/CheckboxControl.js";
 import { ColorsSection } from "../configurationControls/colors/ColorsSection.js";
 import { ConfigSection } from "../configurationControls/ConfigSection.js";
 import { type ICurrentMapView } from "../configurationControls/GeoViewportControl.js";
-import { LegendSection } from "../configurationControls/legend/LegendSection.js";
+import { GeoLegendSection } from "../configurationControls/legend/GeoLegendSection.js";
 import { PushpinSizeControl } from "../configurationControls/PushpinSizeControl.js";
 import { PushpinViewportControl } from "../configurationControls/PushpinViewportControl.js";
 
@@ -58,17 +58,19 @@ export class GeoPushpinConfigurationPanel extends ConfigurationPanelContent<IGeo
             !hasSegmentAttribute(insight) &&
             !hasColorMeasure(insight) &&
             !hasSizeMeasure(insight);
-        const controlsDisabled = this.isControlDisabled();
+        const isLegendVisible =
+            hasSegmentAttribute(insight) || hasColorMeasure(insight) || hasSizeMeasure(insight);
+        const controlsDisabled = this.isControlDisabled() || !isLegendVisible;
 
-        return (
-            <LegendSection
-                properties={properties}
-                propertiesMeta={propertiesMeta}
-                controlsDisabled={controlsDisabled}
-                defaultLegendEnabled={!isAttributeOnlyLegend}
-                pushData={pushData}
-            />
-        );
+        const legendSectionProps = {
+            properties,
+            propertiesMeta,
+            controlsDisabled,
+            defaultLegendEnabled: !isAttributeOnlyLegend,
+            pushData,
+        };
+
+        return <GeoLegendSection {...legendSectionProps} />;
     }
 
     protected renderViewportSection(): ReactElement {

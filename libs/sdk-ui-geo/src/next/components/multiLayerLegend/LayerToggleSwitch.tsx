@@ -2,8 +2,6 @@
 
 import { type ReactElement, memo } from "react";
 
-import cx from "classnames";
-
 /**
  * Props for LayerToggleSwitch component.
  *
@@ -40,8 +38,8 @@ export interface ILayerToggleSwitchProps {
  * Toggle switch component for layer visibility control.
  *
  * @remarks
- * Renders a pill-shaped toggle switch matching the Figma design.
- * 30x14 pill with sliding 10x10 circle indicator.
+ * Reuses the shared checkbox toggle styling used across the repository
+ * while keeping geo-specific test ids and accessibility labels.
  *
  * @internal
  */
@@ -52,31 +50,20 @@ export const LayerToggleSwitch = memo(function LayerToggleSwitch({
     ariaLabel,
     disabled = false,
 }: ILayerToggleSwitchProps): ReactElement {
-    const handleChange = () => {
-        if (!disabled) {
-            onChange(!checked);
-        }
-    };
-
-    const toggleClassName = cx("gd-geo-legend-toggle", {
-        "gd-geo-legend-toggle--checked": checked,
-        "gd-geo-legend-toggle--disabled": disabled,
-    });
-
     return (
-        <button
-            type="button"
-            id={id}
-            className={toggleClassName}
-            role="switch"
-            aria-checked={checked}
-            aria-label={ariaLabel}
-            disabled={disabled}
-            onClick={handleChange}
-            data-testid={`gd-geo-legend-toggle-${id}`}
-        >
-            <span className="gd-geo-legend-toggle__track" />
-            <span className="gd-geo-legend-toggle__thumb" />
-        </button>
+        <label className="input-checkbox-toggle gd-geo-multi-layer-legend__toggle-switch">
+            <input
+                id={id}
+                type="checkbox"
+                role="switch"
+                aria-checked={checked}
+                aria-label={ariaLabel}
+                checked={checked}
+                disabled={disabled}
+                onChange={() => onChange(!checked)}
+                data-testid={`gd-geo-legend-toggle-${id}`}
+            />
+            <span className="input-label-text" />
+        </label>
     );
 });

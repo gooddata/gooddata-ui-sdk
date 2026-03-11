@@ -117,6 +117,10 @@ export function getTextFilterStateText(
     intl: IntlShape,
 ): string {
     const state = getTextFilterStateParts(operator, values, literal, intl);
+    // Positive "is" operator is implicit — show just the values
+    if (operator === "is") {
+        return state.value;
+    }
     return intl.formatMessage(textSummaryMessages.plain, {
         operator: state.operator,
         value: state.value,

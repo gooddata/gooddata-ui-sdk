@@ -24,6 +24,12 @@ export {
     type ActionsApiStagingUploadRequest as ResultApiStagingUploadRequest,
     OGCAPIFeaturesApi_GetCollectionItems as ResultApi_GetCollectionItems,
     type OGCAPIFeaturesApiGetCollectionItemsRequest as ResultApiGetCollectionItemsRequest,
+    ActionsApi_CustomGeoCollectionStagingUpload as ResultApi_CustomGeoCollectionStagingUpload,
+    type ActionsApiCustomGeoCollectionStagingUploadRequest as ResultApiCustomGeoCollectionStagingUploadRequest,
+    ActionsApi_ConvertGeoFile as ResultApi_ConvertGeoFile,
+    type ActionsApiConvertGeoFileRequest as ResultApiConvertGeoFileRequest,
+    ActionsApi_ImportCustomGeoCollection as ResultApi_ImportCustomGeoCollection,
+    type ActionsApiImportCustomGeoCollectionRequest as ResultApiImportCustomGeoCollectionRequest,
 } from "../../generated/result-json-api/api.js";
 
 /**

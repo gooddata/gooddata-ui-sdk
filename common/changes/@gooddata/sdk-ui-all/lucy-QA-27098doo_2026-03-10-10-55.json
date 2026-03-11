@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "Add data-testid attributes for drill filters config sections and submenu header",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "lucy.doan@gooddata.com"
+}

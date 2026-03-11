@@ -7,6 +7,8 @@ import {
     type ComparisonMeasureValueFilter,
     type CompoundMeasureValueFilter,
     type FilterDefinition,
+    type MatchAttributeFilter,
+    type MatchAttributeFilterMatchAttributeFilterMatchTypeEnum,
     type MeasureValueCondition,
     type NegativeAttributeFilter,
     type PositiveAttributeFilter,
@@ -23,6 +25,7 @@ import {
     type IFilter,
     type ILowerBoundedFilter,
     type IUpperBoundedFilter,
+    type MatchFilterOperator,
     type MeasureValueFilterCondition,
     type ObjRefInScope,
     type RangeConditionOperator,
@@ -73,6 +76,10 @@ const isCompoundMeasureValueFilter = (filter: unknown): filter is CompoundMeasur
 
 const isRankingFilter = (filter: unknown): filter is RankingFilter => {
     return (filter as RankingFilter).rankingFilter !== undefined;
+};
+
+const isMatchAttributeFilter = (filter: unknown): filter is MatchAttributeFilter => {
+    return (filter as MatchAttributeFilter).matchAttributeFilter !== undefined;
 };
 
 function toSdkEmptyValues(emptyValueHandling: unknown): EmptyValues | undefined {
@@ -313,7 +320,34 @@ export const convertFilter = (filter: FilterDefinition): IFilter => {
                 ...applyOnResultProp,
             },
         };
+        // TODO: GDP-3208 May need to also handle arbitrary filters if they are stored as part of automation.
+    } else if (isMatchAttributeFilter(filter) && isAfmObjectIdentifier(filter.matchAttributeFilter.label)) {
+        return {
+            matchAttributeFilter: {
+                label: toObjRef(filter.matchAttributeFilter.label),
+                operator: convertTigerMatchTypeToSdkOperator(filter.matchAttributeFilter.matchType),
+                literal: filter.matchAttributeFilter.literal,
+                caseSensitive: filter.matchAttributeFilter.caseSensitive,
+                negativeSelection: filter.matchAttributeFilter.negate,
+                localIdentifier: filter.matchAttributeFilter.localIdentifier,
+            },
+        };
     } else {
         throw new Error(`Unknown Tiger filter type`);
     }
 };
+
+function convertTigerMatchTypeToSdkOperator(
+    matchType: MatchAttributeFilterMatchAttributeFilterMatchTypeEnum,
+): MatchFilterOperator {
+    switch (matchType) {
+        case "STARTS_WITH":
+            return "startsWith";
+        case "ENDS_WITH":
+            return "endsWith";
+        case "CONTAINS":
+            return "contains";
+        default:
+            throw new Error(`Unsupported match type: ${matchType}`);
+    }
+}

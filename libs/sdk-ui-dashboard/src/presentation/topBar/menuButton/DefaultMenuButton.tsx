@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import {
     type KeyboardEvent,
@@ -36,6 +36,8 @@ import {
     type IMenuButtonProps,
 } from "./types.js";
 import { DEFAULT_MENU_BUTTON_ID } from "../../../_staging/accessibility/elementId.js";
+import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
+import { selectDashboardDensity } from "../../../model/store/ui/uiSelectors.js";
 
 const overlayAlignPoints: IAlignPoint[] = [{ align: "br tr" }];
 
@@ -52,6 +54,7 @@ export function DefaultMenuButton({ menuItems }: IMenuButtonProps): ReactElement
     const menuWrapperRef = useRef<HTMLDivElement>(null);
     const [parentItemId, setParentItemId] = useState<string | null>(null);
     const menuItemRefs = useRef<Map<string, HTMLElement>>(new Map());
+    const density = useDashboardSelector(selectDashboardDensity);
 
     const setMenuItemRef = useCallback(
         (itemId: string) => (element: HTMLDivElement | HTMLButtonElement | null) => {
@@ -264,6 +267,9 @@ export function DefaultMenuButton({ menuItems }: IMenuButtonProps): ReactElement
                         className={cx(
                             "gd-button-primary dash-header-options-button s-header-options-button gd-button",
                             dropdownAnchorClassName,
+                            {
+                                "gd-button-small": density === "compact",
+                            },
                         )}
                         accessibilityConfig={{
                             ariaLabel: tooltipText,

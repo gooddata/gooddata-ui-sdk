@@ -434,7 +434,7 @@
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.tooltip": "Отключите атрибут или дату, чтобы исключить её значение из передачи как фильтра в место назначения дрила.",
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.all": "Все",
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.none": "Нет",
-    "configurationPanel.drillConfig.filterSelection.button": "Выбор фильтров",
+    "configurationPanel.drillConfig.filterSelection.button.withCount": "Используется {count, plural, one {# фильтр} few {# фильтра} many {# фильтров} other {# фильтра}}",
     "configurationPanel.drillConfig.filterSelection.subview.title": "Фильтры",
     "configurationPanel.drillConfig.filterSelection.subview.tooltip": "Выбранные фильтры передаются в назначение детализации.",
     "configurationPanel.drillConfig.filterSelection.section.drilledDataPoint": "Детализированная точка данных",

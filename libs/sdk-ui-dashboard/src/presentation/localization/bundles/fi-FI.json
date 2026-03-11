@@ -434,7 +434,7 @@
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.tooltip": "Poista ominaisuus tai päivämäärä käytöstä, jotta sen arvo ei siirry suodattimena porauskohteeseen.",
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.all": "Kaikki",
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.none": "Ei mitään",
-    "configurationPanel.drillConfig.filterSelection.button": "Suodattimen valinta",
+    "configurationPanel.drillConfig.filterSelection.button.withCount": "Käytetään {count, plural, one {# suodatinta} other {# suodatinta}}",
     "configurationPanel.drillConfig.filterSelection.subview.title": "Suodattimet",
     "configurationPanel.drillConfig.filterSelection.subview.tooltip": "Valitut suodattimet välitetään porautumisen kohteeseen.",
     "configurationPanel.drillConfig.filterSelection.section.drilledDataPoint": "Porautettu datapiste",

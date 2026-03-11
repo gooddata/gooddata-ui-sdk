@@ -846,6 +846,12 @@ export interface IThemeDashboardEditPanel {
 }
 
 /**
+ * Information density of the dashboard layout.
+ * @alpha
+ */
+export type ThemeDashboardDensity = "comfortable" | "compact";
+
+/**
  * KPI dashboards specific properties
  *
  * @beta
@@ -884,6 +890,16 @@ export interface IThemeDashboard {
      * Edit panel specific properties
      */
     editPanel?: IThemeDashboardEditPanel;
+
+    /**
+     * Information density of the dashboard layout.
+     *
+     * @remarks
+     * Default density setting of dashboard layout. The value can be overwritten by the user's local density preference. When not specified "comfortable" is implied.
+     *
+     * @alpha
+     */
+    density?: ThemeDashboardDensity;
 }
 
 /**

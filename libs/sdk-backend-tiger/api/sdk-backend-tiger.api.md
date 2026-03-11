@@ -37,13 +37,13 @@ import { Invitation } from '@gooddata/api-client-tiger';
 import { ITigerClient } from '@gooddata/api-client-tiger';
 import { IUser } from '@gooddata/sdk-model';
 import { JsonApiDatasetOutList } from '@gooddata/api-client-tiger';
+import { JsonApiDatasetOutMetaOriginOriginTypeEnum } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInAttributesCacheStrategyEnum } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInAttributesTypeEnum } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInDocument } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceOutAttributesAuthenticationTypeEnum } from '@gooddata/api-client-tiger';
 import { JsonApiNotificationChannelOut } from '@gooddata/api-client-tiger';
 import { JsonApiOrganizationOutMetaPermissionsEnum } from '@gooddata/api-client-tiger';
-import { JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum } from '@gooddata/api-client-tiger';
 import { JsonApiWorkspaceDataFilterInDocument } from '@gooddata/api-client-tiger';
 import { JsonApiWorkspaceDataFilterOutDocument } from '@gooddata/api-client-tiger';
 import { JsonApiWorkspaceDataFilterSettingInDocument } from '@gooddata/api-client-tiger';
@@ -310,6 +310,16 @@ export interface IEntitlement {
 }
 
 // @internal (undocumented)
+export interface IGeoCollection {
+    // (undocumented)
+    description?: string | null;
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    name?: string | null;
+}
+
+// @internal (undocumented)
 export interface IInvitationUserResponse {
     // (undocumented)
     errorMessage?: string;
@@ -333,7 +343,7 @@ export interface IOriginInfoWithId {
     // (undocumented)
     originId: string;
     // (undocumented)
-    originType: JsonApiVisualizationObjectOutMetaOriginOriginTypeEnum;
+    originType: JsonApiDatasetOutMetaOriginOriginTypeEnum;
 }
 
 // @public
@@ -519,6 +529,17 @@ export type TigerSpecificFunctions = {
     createCSPDirective?: (requestData: ICSPDirective) => Promise<ICSPDirective>;
     updateCSPDirective?: (directiveId: string, requestData: ICSPDirective) => Promise<ICSPDirective>;
     deleteCSPDirective?: (directiveId: string) => Promise<void>;
+    getAllCustomGeoCollections?: () => Promise<IGeoCollection[]>;
+    createCustomGeoCollection?: (id: string, name: string, description: string) => Promise<void>;
+    deleteCustomGeoCollection?: (id: string) => Promise<void>;
+    updateCustomGeoCollection?: (id: string, name: string, description: string) => Promise<void>;
+    uploadCustomGeoCollectionFile?: (file: File) => Promise<{
+        location: string;
+    }>;
+    convertCustomGeoCollectionFile?: (location: string) => Promise<{
+        location: string;
+    }>;
+    importCustomGeoCollectionFile?: (collectionId: string, location: string) => Promise<void>;
     registerUploadNotification?: (dataSourceId: string) => Promise<void>;
     getWorkspaceCustomAppSettings?: (workspaceId: string, applicationName?: string) => Promise<ICustomApplicationSetting[]>;
     getWorkspaceCustomAppSetting?: (workspaceId: string, settingId: string) => Promise<ICustomApplicationSetting>;

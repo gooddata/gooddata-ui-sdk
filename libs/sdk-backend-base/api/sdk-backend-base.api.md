@@ -709,7 +709,7 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
     // (undocumented)
     setActiveLlmEndpoint(endpoint: string): Promise<void>;
     // (undocumented)
-    setActiveLlmProvider(provider: string): Promise<void>;
+    setActiveLlmProvider(provider: string, defaultModelId: string): Promise<void>;
     // (undocumented)
     setAlertDefault(value: IAlertDefault): Promise<void>;
     // (undocumented)
@@ -826,6 +826,10 @@ export class DummySemanticSearchQueryBuilder implements ISemanticSearchQuery {
     withAllowedRelationshipTypes(allowedRelationshipTypes: IAllowedRelationshipType[]): this;
     // (undocumented)
     withDeepSearch(): this;
+    // (undocumented)
+    withExcludeTags(): this;
+    // (undocumented)
+    withIncludeTags(): this;
     // (undocumented)
     withLimit(): this;
     // (undocumented)

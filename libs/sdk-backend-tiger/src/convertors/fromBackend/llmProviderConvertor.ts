@@ -2,7 +2,7 @@
 
 import {
     type JsonApiLlmProviderIn,
-    type JsonApiLlmProviderOutAttributesProviderConfig,
+    type JsonApiLlmProviderInAttributesProviderConfig,
     type JsonApiLlmProviderOutWithLinks,
     type JsonApiLlmProviderPatch,
 } from "@gooddata/api-client-tiger";
@@ -17,14 +17,17 @@ export function convertLlmProviderFromBackend(provider: JsonApiLlmProviderOutWit
     const { attributes, id } = provider;
     return {
         id,
-        name: attributes.name ?? null,
-        description: attributes.description,
-        providerConfig: convertLlmProviderConfigFromBackend(attributes.providerConfig),
+        name: attributes?.name ?? null,
+        description: attributes?.description,
+        providerConfig: convertLlmProviderConfigFromBackend(
+            attributes?.providerConfig as JsonApiLlmProviderInAttributesProviderConfig,
+        ),
         models:
-            attributes.models?.map((model): ILlmModel => {
+            attributes?.models?.map((model): ILlmModel => {
                 return {
                     id: model.id,
                     family: model.family,
+                    isDefault: model.id === attributes.defaultModelId,
                 };
             }) ?? null,
     };
@@ -37,7 +40,8 @@ export function convertLlmProviderToBackend(provider: ILlmProvider): JsonApiLlmP
         attributes: {
             name: provider.name,
             description: provider.description,
-            providerConfig: convertLlmProviderConfigToBackend(provider.providerConfig),
+            defaultModelId: provider.models?.find((model) => model.isDefault)?.id,
+            providerConfig: convertLlmProviderConfigToBackend(provider?.providerConfig),
             models:
                 provider.models?.map((model) => ({
                     id: model.id,
@@ -54,6 +58,7 @@ export function convertLlmProviderPatchToBackend(provider: LlmProviderPatch): Js
         attributes: {
             name: provider.name,
             description: provider.description,
+            defaultModelId: provider.models?.find((model) => model.isDefault)?.id,
             ...(provider.providerConfig
                 ? {
                       providerConfig: convertLlmProviderConfigToBackend(provider.providerConfig),
@@ -69,8 +74,11 @@ export function convertLlmProviderPatchToBackend(provider: LlmProviderPatch): Js
 }
 
 function convertLlmProviderConfigToBackend(
-    config: LlmProviderConfig,
-): JsonApiLlmProviderOutAttributesProviderConfig {
+    config: LlmProviderConfig | undefined | null,
+): JsonApiLlmProviderInAttributesProviderConfig | undefined {
+    if (!config) {
+        return undefined;
+    }
     switch (config.type) {
         case "openAI":
             return {
@@ -106,8 +114,11 @@ function convertLlmProviderConfigToBackend(
 }
 
 function convertLlmProviderConfigFromBackend(
-    config: JsonApiLlmProviderOutAttributesProviderConfig,
-): LlmProviderConfig {
+    config: JsonApiLlmProviderInAttributesProviderConfig | null | undefined,
+): LlmProviderConfig | undefined {
+    if (!config) {
+        return undefined;
+    }
     switch (config.type) {
         case "OPENAI":
             return {

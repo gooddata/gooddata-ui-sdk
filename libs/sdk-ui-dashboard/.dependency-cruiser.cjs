@@ -48,6 +48,7 @@ const options = {
                 "src/presentation/widgetDeleteDialog/*",
                 "src/presentation/dashboardSettingsDialog/*",
                 "src/presentation/cancelEditDialog/*",
+                "src/presentation/densityDialog/*",
                 "src/presentation/saveAs/*",
                 "src/presentation/alerting/*",
                 "src/presentation/export/*",

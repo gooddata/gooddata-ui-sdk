@@ -434,7 +434,7 @@
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.tooltip": "속성 또는 날짜를 비활성화하여 드릴 목적지로 필터로 전달되는 값을 제외합니다.",
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.all": "모두",
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.none": "없음",
-    "configurationPanel.drillConfig.filterSelection.button": "필터 선택",
+    "configurationPanel.drillConfig.filterSelection.button.withCount": "{count, plural, other {# 필터}} 사용 중",
     "configurationPanel.drillConfig.filterSelection.subview.title": "필터(들)",
     "configurationPanel.drillConfig.filterSelection.subview.tooltip": "선택한 필터가 드릴 대상에 전달됩니다.",
     "configurationPanel.drillConfig.filterSelection.section.drilledDataPoint": "드릴된 데이터 포인트",

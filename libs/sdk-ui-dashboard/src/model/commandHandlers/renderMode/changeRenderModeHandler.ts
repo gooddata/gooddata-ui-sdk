@@ -41,6 +41,7 @@ export function* changeRenderModeHandler(
             batchActions([
                 data.batch,
                 uiActions.resetInvalidDrillWidgetRefs(),
+                uiActions.resetSanitizedDrillWidgetRefs(),
                 // Clear all widgets set to show as table
                 clearShowWidgetAsTable(),
                 uiActions.resetAllInvalidCustomUrlDrillParameterWidgetsWarnings(),
@@ -52,6 +53,7 @@ export function* changeRenderModeHandler(
         yield put(
             batchActions([
                 uiActions.resetInvalidDrillWidgetRefs(),
+                uiActions.resetSanitizedDrillWidgetRefs(),
                 clearShowWidgetAsTable(),
                 uiActions.resetAllInvalidCustomUrlDrillParameterWidgetsWarnings(),
                 renderModeActions.setRenderMode(renderMode),

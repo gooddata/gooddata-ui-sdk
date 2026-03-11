@@ -261,7 +261,7 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
     /**
      * Builds geo area-specific visualization configuration.
      */
-    protected override buildVisualizationConfig(
+    private buildGeoAreaVisualizationConfig(
         options: IVisProps,
         supportedControls: IVisualizationProperties,
     ): IGeoAreaChartConfig {
@@ -322,7 +322,7 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
         insight: IInsightDefinition,
     ): { primaryLayer: IGeoLayer; config: IGeoAreaChartConfig; filters: IFilter[] } | undefined {
         const supportedControls = this.visualizationProperties.controls || {};
-        const fullConfig = this.buildVisualizationConfig(options, supportedControls);
+        const fullConfig = this.buildGeoAreaVisualizationConfig(options, supportedControls);
         const filters = insightFilters(insight);
         const sortBy = createAreaSortForSegment(insight);
         const title = insightTitle(insight);

@@ -35449,7 +35449,7 @@ const filters: IFilter[] = [
     newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
 ];
 const config: IGeoAreaChartConfig = {
-    legend: {position: "bottom"},
+    legend: {position: "bottom-right"},
     mapStyle: {
         glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
         layers: [
@@ -35502,7 +35502,7 @@ const filters: IFilter[] = [
     newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
 ];
 const config: IGeoAreaChartConfig = {
-    legend: {position: "left"},
+    legend: {position: "top-left"},
     mapStyle: {
         glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
         layers: [
@@ -35555,7 +35555,7 @@ const filters: IFilter[] = [
     newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
 ];
 const config: IGeoAreaChartConfig = {
-    legend: {position: "right"},
+    legend: {position: "top-right"},
     mapStyle: {
         glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
         layers: [
@@ -35608,7 +35608,7 @@ const filters: IFilter[] = [
     newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
 ];
 const config: IGeoAreaChartConfig = {
-    legend: {position: "top"},
+    legend: {position: "top-right"},
     mapStyle: {
         glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
         layers: [
@@ -35661,7 +35661,7 @@ const filters: IFilter[] = [
     newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
 ];
 const config: IGeoAreaChartConfig = {
-    legend: {position: "right"},
+    legend: {position: "top-right"},
     mapStyle: {
         glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
         layers: [
@@ -35710,7 +35710,7 @@ const layers: IGeoLayer[] = [
     }
 ];
 const config: IGeoAreaChartConfig = {
-    legend: {position: "bottom"},
+    legend: {position: "bottom-right"},
     mapStyle: {
         glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
         layers: [
@@ -35762,7 +35762,7 @@ const filters: IFilter[] = [
     newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
 ];
 const config: IGeoAreaChartConfig = {
-    legend: {position: "right"},
+    legend: {position: "top-right"},
     mapStyle: {
         glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
         layers: [
@@ -36113,7 +36113,7 @@ const layers: IGeoLayer[] = [
     }
 ];
 const config: IGeoAreaChartConfig = {
-    legend: {position: "right"},
+    legend: {position: "top-right"},
     mapStyle: {
         glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
         layers: [
@@ -36165,7 +36165,7 @@ const filters: IFilter[] = [
     newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
 ];
 const config: IGeoAreaChartConfig = {
-    legend: {position: "right"},
+    legend: {position: "top-right"},
     mapStyle: {
         glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
         layers: [
@@ -36229,7 +36229,7 @@ const filters: IFilter[] = [
     newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
 ];
 const config: IGeoAreaChartConfig = {
-    legend: {position: "right"},
+    legend: {position: "top-right"},
     mapStyle: {
         glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
         layers: [
@@ -36305,7 +36305,7 @@ const filters: IFilter[] = [
     newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
 ];
 const config: IGeoAreaChartConfig = {
-    legend: {position: "right"},
+    legend: {position: "top-right"},
     mapStyle: {
         glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
         layers: [
@@ -36365,7 +36365,7 @@ const filters: IFilter[] = [
     newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
 ];
 const config: IGeoAreaChartConfig = {
-    legend: {position: "right"},
+    legend: {position: "top-right"},
     mapStyle: {
         glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
         layers: [
@@ -36426,7 +36426,7 @@ const filters: IFilter[] = [
     newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
 ];
 const config: IGeoAreaChartConfig = {
-    legend: {position: "right"},
+    legend: {position: "top-right"},
     mapStyle: {
         glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
         layers: [
@@ -36492,7 +36492,7 @@ const filters: IFilter[] = [
     newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
 ];
 const config: IGeoAreaChartConfig = {
-    legend: {position: "right"},
+    legend: {position: "top-right"},
     mapStyle: {
         glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
         layers: [
@@ -36557,7 +36557,7 @@ const filters: IFilter[] = [
     newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
 ];
 const config: IGeoAreaChartConfig = {
-    legend: {position: "right"},
+    legend: {position: "top-right"},
     mapStyle: {
         glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
         layers: [
@@ -36635,7 +36635,7 @@ const filters: IFilter[] = [
     newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
 ];
 const config: IGeoAreaChartConfig = {
-    legend: {position: "right"},
+    legend: {position: "top-right"},
     mapStyle: {
         glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
         layers: [
@@ -36700,7 +36700,7 @@ const filters: IFilter[] = [
     newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
 ];
 const config: IGeoAreaChartConfig = {
-    legend: {position: "right"},
+    legend: {position: "top-right"},
     mapStyle: {
         glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
         layers: [
@@ -36771,7 +36771,7 @@ const filters: IFilter[] = [
     newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
 ];
 const config: IGeoAreaChartConfig = {
-    legend: {position: "right"},
+    legend: {position: "top-right"},
     mapStyle: {
         glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
         layers: [
@@ -36842,7 +36842,7 @@ const filters: IFilter[] = [
     newPositiveAttributeFilter(idRef("f_owner.region_id", "displayForm"), {values: ["West Coast", "East Coast"]})
 ];
 const config: IGeoAreaChartConfig = {
-    legend: {position: "right"},
+    legend: {position: "top-right"},
     mapStyle: {
         glyphs: "/geo-assets/glyphs/{fontstack}/{range}.pbf",
         layers: [

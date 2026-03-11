@@ -8,7 +8,9 @@ import { type IUploadFileItem, UploadItemStatus } from "../types.js";
  * @internal
  */
 export interface IUseUploadQueueConfig {
-    uploadFn: (file: File) => Promise<void>;
+    uploadFn: (
+        file: File,
+    ) => Promise<void | { status: typeof UploadItemStatus.Error; errorMessage?: string }>;
     onUploadSuccess?: (file: File) => void;
     onUploadError?: (file: File, error: unknown) => void;
 }
@@ -115,9 +117,14 @@ export function useUploadQueue({
 
             updateFileStatus(item.id, UploadItemStatus.Uploading);
             try {
-                await uploadFn(item.file);
-                updateFileStatus(item.id, UploadItemStatus.Success);
-                onUploadSuccess?.(item.file);
+                const result = await uploadFn(item.file);
+                updateFileStatus(item.id, result?.status ?? UploadItemStatus.Success, result?.errorMessage);
+
+                if (result?.status === UploadItemStatus.Error) {
+                    onUploadError?.(item.file, new Error(result.errorMessage));
+                } else {
+                    onUploadSuccess?.(item.file);
+                }
             } catch (error: unknown) {
                 const errorMessage = error instanceof Error ? error.message : undefined;
                 updateFileStatus(item.id, UploadItemStatus.Error, errorMessage);

@@ -434,7 +434,7 @@
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.tooltip": "属性または日付を無効にすると、その値がドリル先のフィルタとして渡されなくなります。",
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.all": "すべて",
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.none": "なし",
-    "configurationPanel.drillConfig.filterSelection.button": "フィルター選択",
+    "configurationPanel.drillConfig.filterSelection.button.withCount": "{count, plural, other {# フィルターを使用中}}",
     "configurationPanel.drillConfig.filterSelection.subview.title": "フィルター",
     "configurationPanel.drillConfig.filterSelection.subview.tooltip": "選択したフィルターはドリル先に渡されます。",
     "configurationPanel.drillConfig.filterSelection.section.drilledDataPoint": "ドリルしたデータポイント",

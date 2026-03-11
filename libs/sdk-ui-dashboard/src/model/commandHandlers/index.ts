@@ -23,6 +23,8 @@ import { renameDashboardHandler } from "./dashboard/renameDashboardHandler.js";
 import { resetDashboardHandler } from "./dashboard/resetDashboardHandler.js";
 import { saveAsDashboardHandler } from "./dashboard/saveAsDashboardHandler.js";
 import { saveDashboardHandler } from "./dashboard/saveDashboardHandler.js";
+import { changeDashboardDensityHandler } from "./density/changeDashboardDensityHandler.js";
+import { requestOpenDensityDialogHandler } from "./density/requestOpenDensityDialogHandler.js";
 import { changeDrillableItemsHandler } from "./drill/changeDrillableItemsHandler.js";
 import { crossFilteringHandler } from "./drill/crossFilteringHandler.js";
 import { drillDownHandler } from "./drill/drillDownHandler.js";
@@ -142,6 +144,8 @@ export const DefaultCommandHandlers: {
     "GDC.DASH/CMD.RENAME": renameDashboardHandler,
     "GDC.DASH/CMD.DELETE": deleteDashboardHandler,
     "GDC.DASH/CMD.CHANGE_RENDER_MODE": changeRenderModeHandler,
+    "GDC.DASH/CMD.CHANGE_DENSITY": changeDashboardDensityHandler,
+    "GDC.DASH/CMD.OPEN_DENSITY_DIALOG": requestOpenDensityDialogHandler,
     "GDC.DASH/CMD.SHARING.CHANGE": changeSharingHandler,
     "GDC.DASH/CMD.EXPORT.PDF": exportDashboardToPdfHandler,
     "GDC.DASH/CMD.EXPORT.EXCEL": exportToTabularHandler,

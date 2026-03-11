@@ -71,7 +71,7 @@ export function UiSubmenuHeader({
                 />
             ) : null}
 
-            <div className={cx("gd-ui-kit-submenu-header__title")}>
+            <div className={cx("gd-ui-kit-submenu-header__title")} data-testid="drill-filters-section">
                 {useShortenedTitle ? (
                     <ShortenedText
                         tagName={"h3"}

@@ -434,7 +434,7 @@
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.tooltip": "Wyłącz atrybut lub datę, aby wykluczyć jej wartość z przekazywania jako filtr do miejsca docelowego przewijania.",
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.all": "Wszystko",
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.none": "Brak",
-    "configurationPanel.drillConfig.filterSelection.button": "Wybór filtrów",
+    "configurationPanel.drillConfig.filterSelection.button.withCount": "Używa {count, plural, one {# filtra} few {# filtrów} many {# filtrów} other {# filtrów}}",
     "configurationPanel.drillConfig.filterSelection.subview.title": "Filtry",
     "configurationPanel.drillConfig.filterSelection.subview.tooltip": "Wybrane filtry są przekazywane do miejsca docelowego drążenia.",
     "configurationPanel.drillConfig.filterSelection.section.drilledDataPoint": "Wiercony punkt danych",

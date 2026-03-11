@@ -434,7 +434,7 @@
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.tooltip": "Disattiva l'attributo o la data per escludere che il suo valore venga passato come filtro alla destinazione.",
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.all": "Tutto",
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.none": "Nessuno",
-    "configurationPanel.drillConfig.filterSelection.button": "Selezione filtro",
+    "configurationPanel.drillConfig.filterSelection.button.withCount": "Utilizzo di {count, plural, one {# filtro} other {# filtri}}",
     "configurationPanel.drillConfig.filterSelection.subview.title": "Filtri",
     "configurationPanel.drillConfig.filterSelection.subview.tooltip": "I filtri selezionati vengono passati alla destinazione drill.",
     "configurationPanel.drillConfig.filterSelection.section.drilledDataPoint": "Punto dati drill",

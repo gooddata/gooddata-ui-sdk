@@ -5,6 +5,7 @@ import { type RefObject, useEffect, useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type GoodDataSdkError, convertError } from "@gooddata/sdk-ui";
 
 import {
     type IMapFacade,
@@ -46,7 +47,7 @@ export interface IUseMapInitializationResult {
     /**
      * Error that occurred during initialization
      */
-    error: Error | null;
+    error: GoodDataSdkError | null;
 }
 
 interface INavigationConfig {
@@ -319,7 +320,7 @@ export function useMapInitialization(
     const [map, setMap] = useState<IMapFacade | null>(null);
     const [tooltip, setTooltip] = useState<IPopupFacade | null>(null);
     const [isMapReady, setIsMapReady] = useState(false);
-    const [error, setError] = useState<Error | null>(null);
+    const [error, setError] = useState<GoodDataSdkError | null>(null);
     const isViewportConfigEnabled = config?.enableGeoChartsViewportConfig ?? false;
     const applyViewportNavigation = config?.applyViewportNavigation;
     const shouldApplyViewportNavigation = applyViewportNavigation ?? true;
@@ -386,6 +387,7 @@ export function useMapInitialization(
 
         const isMountedRef = { current: true };
         let a11ySetup: IMapA11ySetupResult | null = null;
+        setError(null);
 
         initializeMapLibreMap(
             {
@@ -442,7 +444,7 @@ export function useMapInitialization(
             .catch((err) => {
                 if (isMountedRef.current) {
                     console.error("[useMapInitialization] Failed to initialize map:", err);
-                    setError(err);
+                    setError(convertError(err));
                 }
             });
 

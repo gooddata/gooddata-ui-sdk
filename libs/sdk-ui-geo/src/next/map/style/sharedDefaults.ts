@@ -24,7 +24,7 @@ export function applySharedGeoConfigDefaults(config: IGeoChartConfig | undefined
         legend: {
             ...legend,
             enabled: legend.enabled ?? true,
-            position: legend.position ?? "top",
+            position: legend.position ?? "auto",
         },
         colorPalette: resolvedConfig.colorPalette ?? DefaultColorPalette,
         colorMapping: resolvedConfig.colorMapping ?? [],

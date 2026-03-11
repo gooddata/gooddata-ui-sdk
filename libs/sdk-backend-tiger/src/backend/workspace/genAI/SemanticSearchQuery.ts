@@ -12,6 +12,8 @@ type SemanticSearchQueryConfig = {
     question: string;
     objectTypes: GenAIObjectType[];
     allowedRelationshipTypes?: IAllowedRelationshipType[];
+    includeTags?: string[];
+    excludeTags?: string[];
 };
 
 const defaultConfig: SemanticSearchQueryConfig = {
@@ -60,6 +62,20 @@ export class SemanticSearchQuery implements ISemanticSearchQuery {
         return new SemanticSearchQuery(this.authCall, this.workspaceId, {
             ...this.config,
             allowedRelationshipTypes,
+        });
+    }
+
+    withIncludeTags(includeTags: string[]): ISemanticSearchQuery {
+        return new SemanticSearchQuery(this.authCall, this.workspaceId, {
+            ...this.config,
+            includeTags,
+        });
+    }
+
+    withExcludeTags(excludeTags: string[]): ISemanticSearchQuery {
+        return new SemanticSearchQuery(this.authCall, this.workspaceId, {
+            ...this.config,
+            excludeTags,
         });
     }
 

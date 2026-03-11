@@ -848,8 +848,8 @@ class WithWorkspaceSettingsCaching extends DecoratedWorkspaceSettingsService {
         this.invalidateCache();
     }
 
-    public override async setActiveLlmProvider(provider: string): Promise<void> {
-        await super.setActiveLlmProvider(provider);
+    public override async setActiveLlmProvider(provider: string, defaultModelId: string): Promise<void> {
+        await super.setActiveLlmProvider(provider, defaultModelId);
         this.invalidateCache();
     }
 

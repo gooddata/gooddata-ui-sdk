@@ -76,7 +76,7 @@ describe.skip("AttributeFilterButton", { tags: ["pre-merge_isolated_bear"] }, ()
             .isFilteredElementsCount(2)
             .clearSelection()
             .clickApply()
-            .subtitleHasText("All except 101 Financial > Educationly, 101 Financial > WonderKid");
+            .subtitleHasText(/(?:All except|is not) 101 Financial > Educationly, 101 Financial > WonderKid/);
     });
 
     it("search does not modify selection", () => {

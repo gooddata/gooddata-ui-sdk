@@ -11,11 +11,13 @@ import { useExportDashboardToPdf } from "./useExportDashboardToPdf.js";
 import { useExportDashboardToPdfPresentation } from "./useExportDashboardToPdfPresentation.js";
 import { useExportDashboardToPowerPointPresentation } from "./useExportDashboardToPowerPointPresentation.js";
 import { useExportToTabular } from "./useExportToTabular.js";
+import { requestOpenDensityDialog } from "../../../model/commands/density.js";
 import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { useDashboardScheduledEmails } from "../../../model/react/useDasboardScheduledEmails/useDashboardScheduledEmails.js";
 import { useDashboardAlerts } from "../../../model/react/useDashboardAlerting/useDashboardAlerts.js";
 import {
     selectEnableAutomationManagement,
+    selectEnableDashboardDensitySetting,
     selectEnableDashboardTabularExport,
     selectEnableSnapshotExport,
     selectIsReadOnly,
@@ -27,6 +29,7 @@ import {
     selectCanExportPdf,
     selectCanExportTabular,
 } from "../../../model/store/permissions/permissionsSelectors.js";
+import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
 import { selectLayoutHasAnalyticalWidgets } from "../../../model/store/tabs/layout/layoutSelectors.js";
 import {
     selectDeleteVisible,
@@ -209,6 +212,10 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
 
     const isDeleteVisible = useDashboardSelector(selectDeleteVisible);
 
+    const isDensitySettingEnabled = useDashboardSelector(selectEnableDashboardDensitySetting);
+    const isInEditMode = useDashboardSelector(selectIsInEditMode);
+    const openDensityDialog = useCallback(() => dispatch(requestOpenDensityDialog()), [dispatch]);
+
     // Do not show save as new button in menu item when it is already shown as a standalone top bar button.
     const isSaveAsVisible = useDashboardSelector(selectSaveAsVisible);
     const isSaveAsDisabled = isEmptyLayout || isNewDashboard || isReadOnly;
@@ -285,6 +292,18 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
                             : undefined,
                     onClick: defaultOnSaveAs,
                     icon: <MenuIcon type="copy" />,
+                    opensDialog: true,
+                },
+            ],
+            // density section
+            [
+                {
+                    type: "button",
+                    itemId: "density-item",
+                    itemName: intl.formatMessage({ id: "options.menu.density" }),
+                    onClick: openDensityDialog,
+                    visible: isDensitySettingEnabled && !isInEditMode,
+                    icon: <MenuIcon type="density" />,
                     opensDialog: true,
                 },
             ],
@@ -447,6 +466,8 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
         ]);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [
+        isDensitySettingEnabled,
+        openDensityDialog,
         defaultOnExportToPdf,
         defaultOnSaveAs,
         defaultOnScheduleEmailing,
@@ -478,6 +499,7 @@ export function useDefaultMenuItems(): IMenuButtonItem[] {
         defaultOnSettings,
         isSmall,
         isSnapshotPdfExportVisible,
+        isInEditMode,
         isSlideshowPdfExportVisible,
         isSlideshowPptxExportVisible,
         isXlsxExportVisible,

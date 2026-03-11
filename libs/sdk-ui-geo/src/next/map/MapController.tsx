@@ -5,7 +5,12 @@ import { type ReactElement, type RefObject, useMemo } from "react";
 import { type ContentRect } from "react-measure";
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { type IHeaderPredicate, type OnFiredDrillEvent, useBackend } from "@gooddata/sdk-ui";
+import {
+    type GoodDataSdkError,
+    type IHeaderPredicate,
+    type OnFiredDrillEvent,
+    useBackend,
+} from "@gooddata/sdk-ui";
 
 import { MapRuntimeProvider, useMapRuntime } from "../context/MapRuntimeContext.js";
 import { useGeoAdapterContext } from "../hooks/layers/useGeoAdapterContext.js";
@@ -16,6 +21,7 @@ import { useApplyViewportOnConfigChange } from "../hooks/map/useApplyViewportOnC
 import { useMapCallbacks } from "../hooks/map/useMapCallbacks.js";
 import { useMapInitialization } from "../hooks/map/useMapInitialization.js";
 import { useMapResize } from "../hooks/map/useMapResize.js";
+import { useCallbackOnChange } from "../hooks/utils/useCallbackOnChange.js";
 import { type CenterPositionChangedCallback, type ZoomChangedCallback } from "../types/common/callbacks.js";
 import { type IGeoChartConfig } from "../types/config/unified.js";
 import { type IMapViewport } from "../types/map/provider.js";
@@ -37,6 +43,7 @@ export type MapControllerProps = {
     backend?: IAnalyticalBackend;
     mapInstructionsId?: string;
     mapCanvasTitle?: string;
+    onMapError?: (error: GoodDataSdkError | null) => void;
 };
 
 /**
@@ -59,9 +66,10 @@ export function MapController({
     backend,
     mapInstructionsId,
     mapCanvasTitle,
+    onMapError,
 }: MapControllerProps): ReactElement | null {
     const resolvedBackend = useBackend(backend);
-    const { map, tooltip, isMapReady } = useMapInitialization(
+    const { map, tooltip, isMapReady, error } = useMapInitialization(
         mapContainerRef,
         config,
         initialViewport,
@@ -70,6 +78,7 @@ export function MapController({
         mapCanvasTitle,
         legendPanelRef,
     );
+    useCallbackOnChange(error, onMapError);
     const adapterContext = useGeoAdapterContext();
 
     const runtimeValue = useMemo(

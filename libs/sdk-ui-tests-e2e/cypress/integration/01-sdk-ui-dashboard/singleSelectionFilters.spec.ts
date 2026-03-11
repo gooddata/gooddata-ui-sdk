@@ -115,7 +115,7 @@ describe.skip("Single selection filters", () => {
 
             productFilter
                 .isLoaded()
-                .hasSubtitle("All except CompuSci, Educationly, Explorer")
+                .hasSubtitle(/(?:All except|is not) CompuSci, Educationly, Explorer/)
                 .open()
                 .isValueSelected("CompuSci", false)
                 .isValueSelected("Educationly", false)

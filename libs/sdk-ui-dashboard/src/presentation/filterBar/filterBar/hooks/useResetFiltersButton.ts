@@ -70,8 +70,8 @@ const normalizeDateFilterForComparison = (filter: IDashboardDateFilter): IDashbo
         dateFilter: {
             ...rest,
             ...(dataSet === undefined ? {} : { dataSet }),
-            ...(from === undefined ? {} : { from }),
-            ...(to === undefined ? {} : { to }),
+            ...(from == null ? {} : { from }),
+            ...(to == null ? {} : { to }),
         } as IDashboardDateFilter["dateFilter"],
     };
 };

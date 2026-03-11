@@ -8,6 +8,7 @@ import { type IDrillFiltersConfigOption } from "./types.js";
 
 interface IDrillFiltersConfigSectionProps {
     title: string;
+    dataTestId?: string;
     options: IDrillFiltersConfigOption[];
     selectedIds: string[];
     onSelectionChange: (nextSelectedIds: string[]) => void;
@@ -15,6 +16,7 @@ interface IDrillFiltersConfigSectionProps {
 
 export function DrillFiltersConfigSection({
     title,
+    dataTestId,
     options,
     selectedIds,
     onSelectionChange,
@@ -33,7 +35,7 @@ export function DrillFiltersConfigSection({
         onSelectionChange(getNextSelectedIds(id, checked));
 
     return (
-        <div className="gd-drill-filters-config-section">
+        <div className="gd-drill-filters-config-section" data-testid={dataTestId}>
             <DialogListHeader title={title} className="gd-drill-filters-config-section-header" />
             <div className="gd-drill-filters-config-section-items">
                 {options.map((option) => {

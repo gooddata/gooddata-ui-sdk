@@ -130,6 +130,7 @@ export enum TigerFeaturesNames {
     EnableGeoChartsViewportConfig = "enableGeoChartsViewportConfig",
     EnableGeoSegmentConflictRecommendation = "enableGeoSegmentConflictRecommendation",
     EnableGeoBasemapConfig = "enableGeoBasemapConfig",
+    EnableCustomGeoCollection = "enableCustomGeoCollection",
     EnableAutomationManagement = "enableAutomationManagement",
     EnableNewPdfTabularExport = "enableNewPdfTabularExport",
     EnableFilterAccessibility = "enableFilterAccessibility",
@@ -155,6 +156,7 @@ export enum TigerFeaturesNames {
     EnableFilterControlInDrillingConfiguration = "enableFilterControlInDrillingConfiguration",
     EnableShellApplication = "enableShellApplication",
     EnableNullJoins = "enableNullJoins",
+    EnableDashboardDensitySetting = "enableDashboardDensitySetting",
 }
 
 export type ITigerFeatureFlags = {
@@ -278,6 +280,7 @@ export type ITigerFeatureFlags = {
     enableGeoChartsViewportConfig: (typeof FeatureFlagsValues)["enableGeoChartsViewportConfig"][number];
     enableGeoSegmentConflictRecommendation: (typeof FeatureFlagsValues)["enableGeoSegmentConflictRecommendation"][number];
     enableGeoBasemapConfig: (typeof FeatureFlagsValues)["enableGeoBasemapConfig"][number];
+    enableCustomGeoCollection: (typeof FeatureFlagsValues)["enableCustomGeoCollection"][number];
     enableAutomationManagement: (typeof FeatureFlagsValues)["enableAutomationManagement"][number];
     enableNewPdfTabularExport: (typeof FeatureFlagsValues)["enableNewPdfTabularExport"][number];
     enableFilterAccessibility: (typeof FeatureFlagsValues)["enableFilterAccessibility"][number];
@@ -303,6 +306,7 @@ export type ITigerFeatureFlags = {
     enableFilterControlInDrillingConfiguration: (typeof FeatureFlagsValues)["enableFilterControlInDrillingConfiguration"][number];
     enableShellApplication: (typeof FeatureFlagsValues)["enableShellApplication"][number];
     enableNullJoins: (typeof FeatureFlagsValues)["enableNullJoins"][number];
+    enableDashboardDensitySetting: (typeof FeatureFlagsValues)["enableDashboardDensitySetting"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -426,6 +430,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableGeoChartsViewportConfig: false,
     enableGeoSegmentConflictRecommendation: false,
     enableGeoBasemapConfig: false,
+    enableCustomGeoCollection: false,
     enableAutomationManagement: true,
     enableNewPdfTabularExport: true,
     enableFilterAccessibility: true,
@@ -451,6 +456,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableFilterControlInDrillingConfiguration: true,
     enableShellApplication: false,
     enableNullJoins: false,
+    enableDashboardDensitySetting: false,
 };
 
 export const FeatureFlagsValues = {
@@ -575,6 +581,7 @@ export const FeatureFlagsValues = {
     enableGeoChartsViewportConfig: [true, false] as const,
     enableGeoSegmentConflictRecommendation: [true, false] as const,
     enableGeoBasemapConfig: [true, false] as const,
+    enableCustomGeoCollection: [true, false] as const,
     enableAutomationManagement: [true, false] as const,
     enableNewPdfTabularExport: [true, false] as const,
     enableFilterAccessibility: [false, true] as const,
@@ -600,4 +607,5 @@ export const FeatureFlagsValues = {
     enableFilterControlInDrillingConfiguration: [true, false] as const,
     enableShellApplication: [true, false] as const,
     enableNullJoins: [true, false] as const,
+    enableDashboardDensitySetting: [true, false] as const,
 };

@@ -14,10 +14,9 @@ import {
 
 import cx from "classnames";
 
-import type { PositionType } from "@gooddata/sdk-ui-vis-commons";
-
 import { type LegendMessageFormatter } from "./legendMessages.js";
 import { MultiLayerLegendSection } from "./MultiLayerLegendSection.js";
+import { type GeoLegendCornerPosition, type GeoLegendPosition } from "../../types/config/legend.js";
 import {
     type ILegendModel,
     type ILegendSection,
@@ -152,7 +151,7 @@ export interface IMultiLayerLegendPanelProps {
     /**
      * Legend position relative to the chart.
      */
-    position?: PositionType;
+    position?: GeoLegendPosition;
 
     /**
      * Optional maximum height in pixels (for scrollable legend).
@@ -224,7 +223,7 @@ const EMPTY_HIDDEN_LAYERS = new Set<string>();
 export const MultiLayerLegendPanel = memo(function MultiLayerLegendPanel({
     model,
     enabled = true,
-    position = "right",
+    position = "auto",
     maxHeightPx,
     hiddenLayers = EMPTY_HIDDEN_LAYERS,
     onLayerVisibilityChange,
@@ -358,16 +357,7 @@ export const MultiLayerLegendPanel = memo(function MultiLayerLegendPanel({
     // For single-layer legends, hide the layer visibility toggle unless section requests it.
     const isSingleLayer = sections.length === 1;
 
-    // Map position to overlay corner
-    // Multi-layer legend overlays the map, so we default to top-right to not obscure the map
-    const positionToCorner: Record<string, string> = {
-        left: "top-left",
-        right: "top-right",
-        top: "top-right", // Default to top-right for overlay legend
-        bottom: "bottom-right",
-        auto: "top-right",
-    };
-    const corner = positionToCorner[position] ?? "top-right";
+    const corner: GeoLegendCornerPosition = position === "auto" ? "top-right" : position;
 
     const panelClassName = cx("gd-geo-multi-layer-legend", `gd-geo-multi-layer-legend--${corner}`);
 

@@ -1,10 +1,11 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type ReactElement } from "react";
+import { type ReactElement, useMemo, useState } from "react";
 
 import { useIntl } from "react-intl";
 
 import {
+    type GoodDataSdkError,
     createExportErrorFunction,
     createExportFunction,
     useBackendStrict,
@@ -44,21 +45,54 @@ export function GeoChartDataLoader({
         execConfig: props.execConfig,
         intl,
     });
+    const mapInitializationInputs = useMemo(
+        () => ({
+            backend,
+            mapStyle: props.config?.mapStyle,
+            tileset: props.config?.tileset,
+        }),
+        [backend, props.config?.mapStyle, props.config?.tileset],
+    );
+    const [mapError, setMapError] = useState<GoodDataSdkError | null>(null);
+    const [previousMapInitializationInputs, setPreviousMapInitializationInputs] =
+        useState(mapInitializationInputs);
+    const isPendingOrLoading = status === "loading" || status === "pending";
+
+    // Reset stale map initialization errors before commit so loading/input changes do not flash the error UI.
+    if (previousMapInitializationInputs !== mapInitializationInputs || (mapError && isPendingOrLoading)) {
+        if (mapError) {
+            setMapError(null);
+        }
+
+        if (previousMapInitializationInputs !== mapInitializationInputs) {
+            setPreviousMapInitializationInputs(mapInitializationInputs);
+        }
+    }
+
+    const combinedError = error ?? (isPendingOrLoading ? null : mapError);
 
     const isLoading = status === "loading";
     const { onLoadingChanged, onError } = props;
 
     useCallbackOnChange(isLoading, (loading) => onLoadingChanged?.({ isLoading: loading }));
-    useCallbackOnChange(error, (err) => onError?.(err!), Boolean(error));
+    useCallbackOnChange(combinedError, (err) => onError?.(err!), Boolean(combinedError));
 
     const primaryLayerId = layerExecutions[0]?.layerId;
     const primaryDataView =
         status === "success" && primaryLayerId ? layerOutputs.get(primaryLayerId)?.dataView : undefined;
+    const primaryDataViewFingerprint = primaryDataView?.fingerprint();
+    const exportReadyState = useMemo(
+        () => ({
+            fingerprint: primaryDataViewFingerprint,
+            hasError: Boolean(combinedError),
+        }),
+        [primaryDataViewFingerprint, combinedError],
+    );
 
     useCallbackOnChange(
-        primaryDataView?.fingerprint(),
+        exportReadyState,
         () => {
-            if (!primaryDataView) {
+            if (!primaryDataView || combinedError) {
                 return;
             }
             props.onExportReady?.(createExportFunction(primaryDataView.result(), props.exportTitle));
@@ -67,13 +101,13 @@ export function GeoChartDataLoader({
     );
 
     useCallbackOnChange(
-        error,
+        combinedError,
         (err) => props.onExportReady?.(createExportErrorFunction(err!)),
-        Boolean(error) && Boolean(props.onExportReady),
+        Boolean(combinedError) && Boolean(props.onExportReady),
     );
 
-    if (status === "error" && error) {
-        return <GeoErrorComponent error={error} />;
+    if (combinedError) {
+        return <GeoErrorComponent error={combinedError} />;
     }
 
     if (status !== "success") {
@@ -82,7 +116,7 @@ export function GeoChartDataLoader({
 
     return (
         <GeoChartProviders layerExecutions={layerExecutions} layerOutputs={layerOutputs}>
-            <RenderGeoChart />
+            <RenderGeoChart onMapError={setMapError} />
         </GeoChartProviders>
     );
 }

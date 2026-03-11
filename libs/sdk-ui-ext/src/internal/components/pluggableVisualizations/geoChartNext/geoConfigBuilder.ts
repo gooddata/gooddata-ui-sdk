@@ -13,7 +13,7 @@ import {
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
 import { type IGeoChartConfig } from "@gooddata/sdk-ui-geo";
-import { isConcreteViewportPreset } from "@gooddata/sdk-ui-geo/internal";
+import { isConcreteViewportPreset, normalizeGeoLegendPosition } from "@gooddata/sdk-ui-geo/internal";
 import { type IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 
 import { isGeoChartsViewportConfigEnabled } from "../../../constants/featureFlags.js";
@@ -67,13 +67,20 @@ export function buildGeoVisualizationConfig({
           }
         : {};
 
+    const normalizedLegend = legend
+        ? {
+              ...legend,
+              position: normalizeGeoLegendPosition(legend.position),
+          }
+        : undefined;
+
     // Build legend configuration
-    let legendProp = legend ? { legend } : {};
+    let legendProp = normalizedLegend ? { legend: normalizedLegend } : {};
     if (environment === DASHBOARDS_ENVIRONMENT) {
         // In dashboards, use responsive legend with popup
         legendProp = {
             legend: {
-                ...legend,
+                ...normalizedLegend,
                 responsive: "autoPositionWithPopup",
             },
         };
@@ -142,8 +149,15 @@ export function geoConfigFromInsight(
 ): IGeoChartConfig {
     const properties = insightProperties(insight);
     const controls = properties?.["controls"] ?? {};
+    const normalizedLegend = controls.legend
+        ? {
+              ...controls.legend,
+              position: normalizeGeoLegendPosition(controls.legend.position),
+          }
+        : undefined;
     const withValuesFromContext = {
         ...controls,
+        ...(normalizedLegend ? { legend: normalizedLegend } : {}),
         ...(ctx?.settings?.separators ? { separators: ctx?.settings?.separators } : {}),
     };
 

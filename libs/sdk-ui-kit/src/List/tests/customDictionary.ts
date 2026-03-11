@@ -1,4 +1,4 @@
-// (C) 2020 GoodData Corporation
+// (C) 2020-2026 GoodData Corporation
 
 // TODO remove this adhoc translations when List components will have own dictionary and dont rely on provided Intl from top
 export const customMessages = {
@@ -9,6 +9,7 @@ export const customMessages = {
     "gs.list.searchResults": "search results",
     "gs.list.selectAll": "Select all",
     "gs.list.except": "except",
+    "gs.list.isNot": "is not",
     "gs.list.selected": "selected",
     "gs.list.limitExceeded": "Sorry, you have exceeded the limit ({limit}).",
     "gs.list.noItemsFound": "No items found.",

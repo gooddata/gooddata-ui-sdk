@@ -1241,6 +1241,16 @@
                         "pattern": "^[^\\r\\n\"]$",
                         "type": "string",
                         "description": "Set column delimiter. (CSV)"
+                    },
+                    "grandTotalsPosition": {
+                        "type": "string",
+                        "description": "Grand totals position. Takes precedence over position specified in visualization.",
+                        "enum": [
+                            "pinnedBottom",
+                            "pinnedTop",
+                            "bottom",
+                            "top"
+                        ]
                     }
                 },
                 "description": "Additional settings."
@@ -3054,9 +3064,9 @@
                             "emptyValueHandling": {
                                 "type": "string",
                                 "enum": [
-                                    "INCLUDE",
-                                    "EXCLUDE",
-                                    "ONLY"
+                                    "include",
+                                    "exclude",
+                                    "only"
                                 ]
                             },
                             "localIdentifier": {

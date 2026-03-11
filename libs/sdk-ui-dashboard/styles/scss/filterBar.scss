@@ -578,6 +578,19 @@ $attribute-filter-drag-handle-left: 10px;
     }
 }
 
+.gd-dash-content--density-compact {
+    .filter-bar-configuration {
+        align-items: center;
+        padding-right: 10px;
+    }
+
+    .gd-button-primary.gd-filter-views-button {
+        &.deprecated-margin-top {
+            margin-top: 0;
+        }
+    }
+}
+
 .gd-button-primary.gd-filter-views-button--open {
     color: kit-variables.$gd-color-text;
 

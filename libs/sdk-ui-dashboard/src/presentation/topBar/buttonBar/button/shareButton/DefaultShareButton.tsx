@@ -2,6 +2,7 @@
 
 import { type ReactElement, useCallback } from "react";
 
+import cx from "classnames";
 import { useIntl } from "react-intl";
 
 import { Button, UiTooltip } from "@gooddata/sdk-ui-kit";
@@ -14,6 +15,7 @@ import {
 } from "../../../../../model/react/DashboardStoreProvider.js";
 import { selectIsShareButtonVisible } from "../../../../../model/store/topBar/topBarSelectors.js";
 import { uiActions } from "../../../../../model/store/ui/index.js";
+import { selectDashboardDensity } from "../../../../../model/store/ui/uiSelectors.js";
 
 /**
  * @internal
@@ -36,6 +38,7 @@ export function DefaultShareButton({
     isVisible,
     onShareButtonClick,
 }: IShareButtonProps): ReactElement | null {
+    const density = useDashboardSelector(selectDashboardDensity);
     const intl = useIntl();
     const tooltipText = intl.formatMessage({ id: "share.button.tooltip" });
 
@@ -51,9 +54,12 @@ export function DefaultShareButton({
                 <Button
                     onClick={() => onShareButtonClick()}
                     value={intl.formatMessage({ id: "share.button.text" })}
-                    className={
-                        "gd-button-secondary dash-header-share-button s-header-share-button gd-button gd-icon-users"
-                    }
+                    className={cx(
+                        "gd-button-secondary dash-header-share-button s-header-share-button gd-button gd-icon-users",
+                        {
+                            "gd-button-small": density === "compact",
+                        },
+                    )}
                     accessibilityConfig={{
                         ariaLabel: tooltipText,
                         popupType: "dialog",

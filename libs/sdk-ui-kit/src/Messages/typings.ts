@@ -22,7 +22,7 @@ export interface IMessageDefinition {
     component?: ComponentType;
     showMore?: string;
     showLess?: string;
-    errorDetail?: string;
+    errorDetail?: ReactNode;
     contrast?: boolean;
     intensive?: boolean;
     values?: FormatMessageParams[1];

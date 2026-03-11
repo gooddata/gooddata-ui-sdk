@@ -606,6 +606,13 @@ export {
     switchToEditRenderMode,
 } from "./model/commands/renderMode.js";
 export {
+    type IChangeDashboardDensity,
+    type IChangeDashboardDensityPayload,
+    changeDashboardDensity,
+    type IRequestOpenDensityDialog,
+    requestOpenDensityDialog,
+} from "./model/commands/density.js";
+export {
     type IAddDrillTargets,
     type IAddDrillTargetsPayload,
     addDrillTargets,
@@ -1273,6 +1280,7 @@ export {
     selectEnableFiscalCalendars,
     selectActiveCalendars,
     selectEnableDashboardFilterGroups,
+    selectEnableDashboardDensitySetting,
     selectEnableFilterControlInDrillingConfiguration,
 } from "./model/store/config/configSelectors.js";
 export type { IEntitlementsState } from "./model/store/entitlements/entitlementsState.js";
@@ -1671,6 +1679,8 @@ export {
     selectIgnoreExecutionTimestamp,
     selectExecutionTimestamp,
     selectIsSettingsDialogOpen,
+    selectIsDensityDialogOpen,
+    selectDashboardDensity,
     selectFilterValidationIncompatibleDefaultFiltersOverride,
     selectAutomationsInvalidationId,
 } from "./model/store/ui/uiSelectors.js";
@@ -2324,6 +2334,7 @@ export type {
 } from "./presentation/shareDialog/types.js";
 export { ShareDialog } from "./presentation/shareDialog/ShareDialog.js";
 export { DefaultDashboardSettingsDialog } from "./presentation/dashboardSettingsDialog/DefaultDashboardSettingsDialog.js";
+export { DensityDialog } from "./presentation/densityDialog/DensityDialog.js";
 export type {
     CustomDashboardSettingsDialogComponent,
     IDashboardSettingsDialogProps,
@@ -2396,6 +2407,7 @@ export {
     type ISharingProperties,
     type IMenuButtonItemsVisibility,
     type RenderMode,
+    type DashboardDensity,
     type DateFilterValidationResult,
     type ILegacyDashboardTab,
     type ILegacyDashboard,

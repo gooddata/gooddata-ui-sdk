@@ -51,6 +51,14 @@
         "text": "One or more dashboard/visualization/metric/attribute has been changed or deleted causing some interactions to be removed from following widgets: <b>{listOfWidgetTitles}</b>",
         "crowdinContext": "Warning message details for invalid drill interactions using metrics with list of affected widgets"
     },
+    "messages.dashboard.sanitizedDrills.title": {
+        "text": "<b>Some interaction settings were updated</b>",
+        "crowdinContext": "Warning notification title shown in edit mode when stale drill filter settings were automatically removed from saved interactions."
+    },
+    "messages.dashboard.sanitizedDrills.body.modern": {
+        "text": "Some saved drill filter settings no longer match the current dashboard or visualization and were removed from these widgets: <b>{listOfWidgetTitles}</b>",
+        "crowdinContext": "Warning message shown when stale drill filter settings like ignored dashboard filters or included source filters were automatically removed, with a list of affected widgets."
+    },
     "messages.dashboard.invalidCustomUrlDrills.title": {
         "text": "<b>Some of the drill-into-URL interactions are not working</b>",
         "crowdinContext": "Title of the warning message shown while editing KPI dashboard with some invalid drills."
@@ -194,6 +202,38 @@
     "options.menu.unsupported.raw.error": {
         "text": "Export unavailable due to too many data points or error in the result",
         "crowdinContext": "Error message shown when visualization export fails due to data size or errors"
+    },
+    "options.menu.density": {
+        "text": "Content density",
+        "crowdinContext": "Menu option to open the content density dialog"
+    },
+    "density.dialog.title": {
+        "text": "Content density",
+        "crowdinContext": "Title of the content density dialog"
+    },
+    "density.dialog.description": {
+        "text": "Choose your preferred level of content density for this and other dashboards.",
+        "crowdinContext": "Description shown in the content density dialog"
+    },
+    "density.dialog.option.standard": {
+        "text": "Comfortable",
+        "crowdinContext": "Label for the standard/comfortable density option in the content density dialog"
+    },
+    "density.dialog.option.standard.description": {
+        "text": "Default spacing and font size that optimizes information consumption",
+        "crowdinContext": "Description for the standard/comfortable density option"
+    },
+    "density.dialog.option.compact": {
+        "text": "Compact",
+        "crowdinContext": "Label for the compact density option in the content density dialog"
+    },
+    "density.dialog.option.default": {
+        "text": "{value} (default)",
+        "crowdinContext": "Label for the default density option in the content density dialog. {value} is the density value."
+    },
+    "density.dialog.option.compact.description": {
+        "text": "Reduced spacing and font size that provides more visibility over content",
+        "crowdinContext": "Description for the compact density option"
     },
     "options.menu.delete": {
         "text": "Delete",

@@ -144,14 +144,14 @@ export class OrganizationLlmProvidersService implements IOrganizationLlmProvider
             });
             const result = await GenAiApi_TestLlmProvider(client.axios, client.basePath, {
                 testLlmProviderDefinitionRequest: {
-                    providerConfig: patch.attributes.providerConfig ?? {
+                    providerConfig: patch.attributes?.providerConfig ?? {
                         type: "OPENAI",
                         auth: {
                             type: "API_KEY",
                             apiKey: "",
                         },
                     },
-                    models: patch.attributes.models ?? undefined,
+                    models: patch.attributes?.models ?? undefined,
                 },
             });
 

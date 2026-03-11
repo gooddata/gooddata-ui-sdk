@@ -1,0 +1,11 @@
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="LegendBottomRight" clip-path="url(#clip0_0_4)">
+<path id="Union" d="M0 2.28882e-05L1 2.28445e-05L1 15L16 15L16 16L6.99382e-07 16L0 2.28882e-05Z" fill="var(--fill-0, #B0BECA)" fill-opacity="0.4"/>
+<rect id="Rectangle 46" x="11" y="11" width="5" height="2" rx="1" fill="var(--fill-0, #B0BECA)"/>
+</g>
+<defs>
+<clipPath id="clip0_0_4">
+<rect width="16" height="16" fill="white"/>
+</clipPath>
+</defs>
+</svg>

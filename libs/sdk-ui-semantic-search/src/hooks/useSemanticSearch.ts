@@ -88,6 +88,14 @@ export type SemanticSearchHookInput = {
      * If omitted, all relationships and results are returned.
      */
     allowedRelationshipTypes?: IAllowedRelationshipType[];
+    /**
+     * The list of tags the returned objects must have.
+     */
+    includeTags?: string[];
+    /**
+     * The list of tags the returned objects must not have.
+     */
+    excludeTags?: string[];
 };
 
 const DEFAULT_OBJECT_TYPES: GenAIObjectType[] = [];
@@ -106,6 +114,8 @@ export const useSemanticSearch = ({
     backend,
     workspace,
     allowedRelationshipTypes,
+    includeTags,
+    excludeTags,
 }: SemanticSearchHookInput): SemanticSearchInputResult => {
     const [state, setState] = useState<SemanticSearchInputResult>(DEFAULT_STATE);
     const effectiveBackend = useBackendStrict(backend);
@@ -138,6 +148,12 @@ export const useSemanticSearch = ({
         }
         if (allowedRelationshipTypes?.length) {
             qb = qb.withAllowedRelationshipTypes(allowedRelationshipTypes);
+        }
+        if (includeTags?.length) {
+            qb = qb.withIncludeTags(includeTags);
+        }
+        if (excludeTags?.length) {
+            qb = qb.withExcludeTags(excludeTags);
         }
 
         // Execute the query
@@ -183,6 +199,8 @@ export const useSemanticSearch = ({
         deepSearch,
         limit,
         allowedRelationshipTypes,
+        includeTags,
+        excludeTags,
     ]);
 
     return state;

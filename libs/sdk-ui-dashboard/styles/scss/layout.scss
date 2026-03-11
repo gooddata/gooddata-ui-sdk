@@ -528,3 +528,67 @@ $gd-dashboards-section-description-color: var(
     // stylelint-disable-next-line declaration-no-important
     z-index: zIndexes.$dashboard-canvas-tooltip !important;
 }
+
+.gd-dash-content--density-compact {
+    .gd-grid-layout__container--root {
+        column-gap: 6px;
+        row-gap: 6px;
+    }
+
+    .gd-grid-layout__container--nested {
+        column-gap: 6px;
+        row-gap: 6px;
+    }
+
+    .gd-grid-layout__section {
+        column-gap: 6px;
+        row-gap: 6px;
+    }
+
+    // Hidden items (isHidden=true) render with height:0 but still occupy a grid row,
+    // triggering row-gap before the next item. Hide them from grid flow entirely.
+    .gd-grid-layout__item:empty {
+        display: none;
+    }
+
+    // Nested layout containers have a JS-computed minHeight (inline style) based on gridHeight × row size.
+    // When items stack at narrow viewports, this inflates container height beyond content,
+    // creating visible gray gaps. Let content determine height instead.
+    .gd-nested-layout-widget-renderer {
+        // stylelint-disable-next-line declaration-no-important
+        min-height: 0 !important;
+    }
+
+    .gd-fluid-layout-row-header {
+        .gd-fluid-layout-row-header-container {
+            margin-top: 0;
+        }
+
+        .gd-row-header-title-wrapper {
+            .title {
+                padding: 0;
+            }
+            .gd-typography--h2 {
+                font-size: 16px;
+            }
+        }
+    }
+
+    .gd-grid-layout {
+        .gd-fluid-layout-row-header {
+            .gd-row-header-view {
+                .description {
+                    padding: 0;
+                    font-size: 12px;
+                    // stylelint-disable-next-line max-nesting-depth
+                    .gd-rich-text-content {
+                        // stylelint-disable-next-line max-nesting-depth
+                        p {
+                            font-size: 12px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

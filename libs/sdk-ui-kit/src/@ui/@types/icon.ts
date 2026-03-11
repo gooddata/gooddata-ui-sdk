@@ -64,6 +64,8 @@ export type IconType =
     | "copy"
     | "rain"
     | "earth"
+    | "geoCollection"
+    | "geoCollectionUpload"
     | "minimize"
     | "shrink"
     | "copyright"
@@ -156,4 +158,5 @@ export type IconType =
     | "recommendation"
     | "streamUp"
     | "streamDown"
-    | "stream";
+    | "stream"
+    | "density";

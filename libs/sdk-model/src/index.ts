@@ -995,6 +995,7 @@ export type {
     IThemeAxis,
     IThemeChartTooltip,
     IThemeDataLabel,
+    ThemeDashboardDensity,
 } from "./theme/index.js";
 
 export type { IWorkspacePermissions, WorkspacePermission } from "./permissions/index.js";

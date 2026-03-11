@@ -18,6 +18,7 @@ import { selectAccessibleDashboardsLoaded } from "../../../model/store/accessibl
 import { selectCatalogIsLoaded } from "../../../model/store/catalog/catalogSelectors.js";
 import { selectLocale } from "../../../model/store/config/configSelectors.js";
 import { selectIsInEditMode } from "../../../model/store/renderMode/renderModeSelectors.js";
+import { selectDashboardDensity } from "../../../model/store/ui/uiSelectors.js";
 import {
     DASHBOARD_HEADER_OVERLAYS_Z_INDEX,
     DASHBOARD_TOASTS_OVERLAY_Z_INDEX,
@@ -43,6 +44,7 @@ export function DashboardInner(props: IDashboardProps) {
     const isEditMode = useDashboardSelector(selectIsInEditMode);
     const isCatalogLoaded = useDashboardSelector(selectCatalogIsLoaded);
     const accessibleDashboardsLoaded = useDashboardSelector(selectAccessibleDashboardsLoaded);
+    const density = useDashboardSelector(selectDashboardDensity);
 
     const headerRef = useRef<HTMLDivElement | null>(null);
     const layoutRef = useRef<HTMLDivElement | null>(null);
@@ -68,6 +70,11 @@ export function DashboardInner(props: IDashboardProps) {
           }
         : {};
 
+    const dashboardContentClassNames = cx("gd-dash-content", {
+        "gd-dash-content--density-standard": density === "comfortable",
+        "gd-dash-content--density-compact": density === "compact",
+    });
+
     return (
         <IntlWrapper locale={locale}>
             <ToastsCenterContextProvider skipAutomaticMessageRendering>
@@ -91,7 +98,7 @@ export function DashboardInner(props: IDashboardProps) {
                             WrapCreatePanelItemWithDragComponent={WrapCreatePanelItemWithDrag}
                             WrapInsightListItemWithDragComponent={WrapInsightListItemWithDrag}
                         />
-                        <main className="gd-dash-content" {...mainContentNavigationProps}>
+                        <main className={dashboardContentClassNames} {...mainContentNavigationProps}>
                             {/* gd-dash-header-wrapper-sdk-8-12 style is added because we should keep old styles unchanged to not brake plugins */}
                             <div
                                 className="gd-dash-header-wrapper gd-dash-header-wrapper-sdk-8-12"

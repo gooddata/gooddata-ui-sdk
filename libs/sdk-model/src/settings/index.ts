@@ -668,6 +668,11 @@ export interface ISettings {
     enableGeoBasemapConfig?: boolean;
 
     /**
+     * Enable Geo collections management UI.
+     */
+    enableCustomGeoCollection?: boolean;
+
+    /**
      * Enable automation management in dashboards
      */
     enableAutomationManagement?: boolean;
@@ -805,6 +810,14 @@ export interface ISettings {
      */
     enableNullJoins?: boolean;
 
+    /**
+     * Enable dashboard density setting.
+     *
+     * When enabled, users can switch between "comfortable" and "compact" information density
+     * in dashboard view mode.
+     */
+    enableDashboardDensitySetting?: boolean;
+
     [key: string]: number | boolean | string | object | undefined | null;
 }
 
@@ -881,6 +894,11 @@ export interface ILlmActiveProvider {
      * Type of the LLM endpoint.
      */
     type: "llmProvider";
+
+    /**
+     * Name of the LLM provider.
+     */
+    defaultModelId: string;
 }
 
 /**

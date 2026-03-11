@@ -110,7 +110,7 @@ exports[`sizing > getDashboardLayoutWidgetMinGridHeight > should get min height 
 
 exports[`sizing > getDashboardLayoutWidgetMinGridHeight > should get min height for insight widget funnel 1`] = `6`;
 
-exports[`sizing > getDashboardLayoutWidgetMinGridHeight > should get min height for insight widget headline 1`] = `6`;
+exports[`sizing > getDashboardLayoutWidgetMinGridHeight > should get min height for insight widget headline 1`] = `5`;
 
 exports[`sizing > getDashboardLayoutWidgetMinGridHeight > should get min height for insight widget heatmap 1`] = `6`;
 

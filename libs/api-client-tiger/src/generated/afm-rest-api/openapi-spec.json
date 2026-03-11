@@ -74,6 +74,22 @@
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    {
+                        "name": "state",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "query",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
                     }
                 ],
                 "responses": {
@@ -1544,6 +1560,15 @@
                         }
                     }
                 ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TestLlmProviderByIdRequest"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -1551,6 +1576,39 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/TestLlmProviderResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/actions/ai/llmProvider/{llmProviderId}/listModels": {
+            "post": {
+                "tags": [
+                    "Smart Functions",
+                    "actions"
+                ],
+                "summary": "List LLM Provider Models By Id",
+                "description": "Lists models available on an existing LLM provider by its ID. For Azure AI Foundry providers, the model family will be set to UNKNOWN because the endpoint does not expose the family.",
+                "operationId": "listLlmProviderModelsById",
+                "parameters": [
+                    {
+                        "name": "llmProviderId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ListLlmProviderModelsResponse"
                                 }
                             }
                         }
@@ -1584,6 +1642,39 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/TestLlmProviderResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/actions/ai/llmProvider/listModels": {
+            "post": {
+                "tags": [
+                    "Smart Functions",
+                    "actions"
+                ],
+                "summary": "List LLM Provider Models",
+                "description": "Lists models available on an LLM provider with a full definition. For Azure AI Foundry providers, the model family will be set to UNKNOWN because the endpoint does not expose the family.",
+                "operationId": "listLlmProviderModels",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ListLlmProviderModelsRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ListLlmProviderModelsResponse"
                                 }
                             }
                         }
@@ -1789,6 +1880,44 @@
                             }
                         }
                     }
+                }
+            }
+        },
+        "/api/v1/ailake/services/{serviceId}/status": {
+            "get": {
+                "tags": [
+                    "AI Lake"
+                ],
+                "summary": "(BETA) Get AI Lake service status",
+                "description": "(BETA) Returns the status of a service in the organization's AI Lake. The status is controller-specific (e.g., available commands, readiness).",
+                "operationId": "getAiLakeServiceStatus",
+                "parameters": [
+                    {
+                        "name": "serviceId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "AI Lake service status successfully retrieved",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/GetServiceStatusResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "MANAGE"
+                    ],
+                    "description": "Permissions required to get AI Lake service status."
                 }
             }
         },
@@ -7117,54 +7246,6 @@
                     }
                 }
             },
-            "ModelTestResult": {
-                "required": [
-                    "message",
-                    "modelId",
-                    "successful"
-                ],
-                "type": "object",
-                "properties": {
-                    "modelId": {
-                        "type": "string",
-                        "description": "The model ID that was tested."
-                    },
-                    "successful": {
-                        "type": "boolean",
-                        "description": "Whether the model test was successful."
-                    },
-                    "message": {
-                        "type": "string",
-                        "description": "Message about the model test result."
-                    }
-                },
-                "description": "Per-model test results."
-            },
-            "TestLlmProviderResponse": {
-                "required": [
-                    "modelResults",
-                    "providerMessage",
-                    "providerReachable"
-                ],
-                "type": "object",
-                "properties": {
-                    "providerReachable": {
-                        "type": "boolean",
-                        "description": "Whether the LLM provider is reachable."
-                    },
-                    "providerMessage": {
-                        "type": "string",
-                        "description": "Message about the provider connectivity test."
-                    },
-                    "modelResults": {
-                        "type": "array",
-                        "description": "Per-model test results.",
-                        "items": {
-                            "$ref": "#/components/schemas/ModelTestResult"
-                        }
-                    }
-                }
-            },
             "AwsBedrockAccessKeyAuth": {
                 "required": [
                     "type"
@@ -7280,8 +7361,8 @@
                     "endpoint": {
                         "maxLength": 255,
                         "type": "string",
-                        "description": "Azure AI inference endpoint URL.",
-                        "example": "https://my-resource.services.ai.azure.com/models"
+                        "description": "Azure OpenAI endpoint URL.",
+                        "example": "https://my-resource.openai.azure.com"
                     },
                     "auth": {
                         "$ref": "#/components/schemas/AzureFoundryProviderAuth"
@@ -7327,14 +7408,15 @@
                             "MISTRAL",
                             "AMAZON",
                             "GOOGLE",
-                            "COHERE"
+                            "COHERE",
+                            "UNKNOWN"
                         ]
                     }
                 },
                 "description": "LLM Model configuration (id, family) within a provider."
             },
             "LlmProviderConfig": {
-                "description": "Provider configuration to test.",
+                "description": "Provider configuration overrides.",
                 "oneOf": [
                     {
                         "$ref": "#/components/schemas/AwsBedrockProviderConfig"
@@ -7364,8 +7446,7 @@
                         "maxLength": 255,
                         "type": "string",
                         "description": "Custom base URL for OpenAI API.",
-                        "nullable": true,
-                        "default": "https://api.openai.com"
+                        "default": "https://api.openai.com/v1"
                     },
                     "auth": {
                         "$ref": "#/components/schemas/OpenAiProviderAuth"
@@ -7416,6 +7497,104 @@
                     }
                 ]
             },
+            "TestLlmProviderByIdRequest": {
+                "type": "object",
+                "properties": {
+                    "providerConfig": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/AwsBedrockProviderConfig"
+                            },
+                            {
+                                "$ref": "#/components/schemas/AzureFoundryProviderConfig"
+                            },
+                            {
+                                "$ref": "#/components/schemas/OpenAIProviderConfig"
+                            }
+                        ]
+                    },
+                    "models": {
+                        "type": "array",
+                        "description": "Models overrides.",
+                        "items": {
+                            "$ref": "#/components/schemas/LlmModel"
+                        }
+                    }
+                }
+            },
+            "ModelTestResult": {
+                "required": [
+                    "message",
+                    "modelId",
+                    "successful"
+                ],
+                "type": "object",
+                "properties": {
+                    "modelId": {
+                        "type": "string",
+                        "description": "The model ID that was tested."
+                    },
+                    "successful": {
+                        "type": "boolean",
+                        "description": "Whether the model test was successful."
+                    },
+                    "message": {
+                        "type": "string",
+                        "description": "Message about the model test result."
+                    }
+                },
+                "description": "Per-model test results."
+            },
+            "TestLlmProviderResponse": {
+                "required": [
+                    "modelResults",
+                    "providerMessage",
+                    "providerReachable"
+                ],
+                "type": "object",
+                "properties": {
+                    "providerReachable": {
+                        "type": "boolean",
+                        "description": "Whether the LLM provider is reachable."
+                    },
+                    "providerMessage": {
+                        "type": "string",
+                        "description": "Message about the provider connectivity test."
+                    },
+                    "modelResults": {
+                        "type": "array",
+                        "description": "Per-model test results.",
+                        "items": {
+                            "$ref": "#/components/schemas/ModelTestResult"
+                        }
+                    }
+                }
+            },
+            "ListLlmProviderModelsResponse": {
+                "required": [
+                    "message",
+                    "models",
+                    "success"
+                ],
+                "type": "object",
+                "properties": {
+                    "success": {
+                        "type": "boolean",
+                        "description": "Whether the model listing succeeded."
+                    },
+                    "message": {
+                        "type": "string",
+                        "description": "Message about the listing result."
+                    },
+                    "models": {
+                        "type": "array",
+                        "description": "Available models on the provider.",
+                        "items": {
+                            "$ref": "#/components/schemas/LlmModel"
+                        }
+                    }
+                }
+            },
             "TestLlmProviderDefinitionRequest": {
                 "required": [
                     "providerConfig"
@@ -7441,6 +7620,27 @@
                         "items": {
                             "$ref": "#/components/schemas/LlmModel"
                         }
+                    }
+                }
+            },
+            "ListLlmProviderModelsRequest": {
+                "required": [
+                    "providerConfig"
+                ],
+                "type": "object",
+                "properties": {
+                    "providerConfig": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/AwsBedrockProviderConfig"
+                            },
+                            {
+                                "$ref": "#/components/schemas/AzureFoundryProviderConfig"
+                            },
+                            {
+                                "$ref": "#/components/schemas/OpenAIProviderConfig"
+                            }
+                        ]
                     }
                 }
             },
@@ -7579,6 +7779,18 @@
                         "type": "boolean"
                     }
                 }
+            },
+            "GetServiceStatusResponse": {
+                "required": [
+                    "status"
+                ],
+                "type": "object",
+                "properties": {
+                    "status": {
+                        "$ref": "#/components/schemas/JsonNode"
+                    }
+                },
+                "description": "Status of an AI Lake service"
             },
             "ListServicesResponse": {
                 "required": [
@@ -7869,13 +8081,13 @@
                             "nullable": true
                         }
                     },
-                    "xcoord": {
+                    "ycoord": {
                         "type": "array",
                         "items": {
                             "type": "number"
                         }
                     },
-                    "ycoord": {
+                    "xcoord": {
                         "type": "array",
                         "items": {
                             "type": "number"
@@ -8753,6 +8965,112 @@
                         "type": "integer",
                         "description": "Time window in hours",
                         "format": "int32"
+                    }
+                }
+            },
+            "TrendingObjectItem": {
+                "required": [
+                    "id",
+                    "tags",
+                    "title",
+                    "type",
+                    "usageCount",
+                    "workspaceId"
+                ],
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Object ID."
+                    },
+                    "type": {
+                        "type": "string",
+                        "description": "Object type, e.g. dashboard, visualization, metric."
+                    },
+                    "workspaceId": {
+                        "type": "string",
+                        "description": "Workspace ID the object belongs to."
+                    },
+                    "title": {
+                        "type": "string",
+                        "description": "Object title."
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "Object description."
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "description": "Tags assigned to the object."
+                        }
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "description": "Timestamp when object was created.",
+                        "format": "date-time"
+                    },
+                    "modifiedAt": {
+                        "type": "string",
+                        "description": "Timestamp when object was last modified.",
+                        "format": "date-time"
+                    },
+                    "createdBy": {
+                        "type": "string",
+                        "description": "ID of the user who created the object."
+                    },
+                    "modifiedBy": {
+                        "type": "string",
+                        "description": "ID of the user who last modified the object."
+                    },
+                    "isHidden": {
+                        "type": "boolean",
+                        "description": "If true, this object is hidden from AI search results by default."
+                    },
+                    "isHiddenFromKda": {
+                        "type": "boolean",
+                        "description": "If true, this object is hidden from KDA."
+                    },
+                    "visualizationUrl": {
+                        "type": "string",
+                        "description": "URL of the visualization, if applicable."
+                    },
+                    "metricType": {
+                        "type": "string",
+                        "description": "Type of the metric (e.g. MAQL), if applicable."
+                    },
+                    "datasetId": {
+                        "type": "string",
+                        "description": "ID of the associated dataset, if applicable."
+                    },
+                    "datasetType": {
+                        "type": "string",
+                        "description": "Type of the associated dataset, if applicable."
+                    },
+                    "datasetTitle": {
+                        "type": "string",
+                        "description": "Title of the associated dataset, if applicable."
+                    },
+                    "usageCount": {
+                        "type": "integer",
+                        "description": "Number of times this object has been used/referenced.",
+                        "format": "int32"
+                    }
+                },
+                "description": "Trending analytics catalog objects"
+            },
+            "TrendingObjectsResult": {
+                "required": [
+                    "objects"
+                ],
+                "type": "object",
+                "properties": {
+                    "objects": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/TrendingObjectItem"
+                        }
                     }
                 }
             },

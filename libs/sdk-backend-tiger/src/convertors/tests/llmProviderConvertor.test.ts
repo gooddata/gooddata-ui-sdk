@@ -42,7 +42,7 @@ describe("llmProviderConvertor", () => {
                 organization: undefined,
                 type: "openAI",
             },
-            models: [{ id: "gpt-4", family: "OPENAI" }],
+            models: [{ id: "gpt-4", family: "OPENAI", isDefault: false }],
         });
     });
 
