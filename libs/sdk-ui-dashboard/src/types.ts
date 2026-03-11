@@ -227,6 +227,24 @@ export interface IMenuButtonItemsVisibility {
 export type RenderMode = "view" | "edit" | "export";
 
 /**
+ * Dashboard information density setting.
+ *
+ * @alpha
+ */
+export type DashboardDensity = "comfortable" | "compact";
+
+/**
+ * Tests whether the provided density is supported.
+ *
+ * @param density
+ *
+ * @alpha
+ */
+export function isSupportedDashboardDensity(density: unknown): density is DashboardDensity {
+    return density === "comfortable" || density === "compact";
+}
+
+/**
  * @public
  */
 export type DateFilterValidationResult = "TOO_MANY_CONFIGS" | "NO_CONFIG" | DateFilterConfigValidationResult;

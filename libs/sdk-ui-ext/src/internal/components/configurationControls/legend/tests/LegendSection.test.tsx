@@ -1,10 +1,12 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
+import { userEvent } from "@testing-library/user-event";
 import { cloneDeep, set } from "lodash-es";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import { InternalIntlWrapper } from "../../../../utils/internalIntlProvider.js";
+import { GeoLegendSection, type IGeoLegendSectionProps } from "../GeoLegendSection.js";
 import { type ILegendSection, LegendSection } from "../LegendSection.js";
 
 const defaultProps: ILegendSection = {
@@ -19,6 +21,15 @@ function createComponent(customProps: Partial<ILegendSection> = {}) {
     return render(
         <InternalIntlWrapper>
             <LegendSection {...props} />
+        </InternalIntlWrapper>,
+    );
+}
+
+function createGeoComponent(customProps: Partial<IGeoLegendSectionProps> = {}) {
+    const props: IGeoLegendSectionProps = { ...cloneDeep(defaultProps), ...customProps };
+    return render(
+        <InternalIntlWrapper>
+            <GeoLegendSection {...props} />
         </InternalIntlWrapper>,
     );
 }
@@ -98,5 +109,51 @@ describe("LegendSection render", () => {
         expect(screen.getByText("Position")).toBeInTheDocument();
         expect(screen.getByRole("checkbox")).toBeDisabled();
         expect(screen.getByRole("combobox")).toHaveClass("disabled");
+    });
+});
+
+describe("GeoLegendSection render", () => {
+    it("renders corner-based geo legend positions and normalizes legacy selection", async () => {
+        createGeoComponent({
+            controlsDisabled: false,
+            properties: set(set({}, "controls.legend.enabled", true), "controls.legend.position", "top"),
+            propertiesMeta: set({}, "legend_section.collapsed", false),
+        });
+
+        expect(screen.getByText("top right")).toBeInTheDocument();
+
+        await userEvent.click(screen.getByRole("combobox"));
+
+        await waitFor(() => {
+            expect(screen.getByText("top left")).toBeInTheDocument();
+            expect(screen.getByText("bottom left")).toBeInTheDocument();
+            expect(screen.getByText("bottom right")).toBeInTheDocument();
+        });
+    });
+
+    it("persists the new geo corner value from the dropdown", async () => {
+        const pushData = (data: { properties?: { controls?: { legend?: { position?: string } } } }) => data;
+        const pushDataSpy = vi.fn(pushData);
+
+        createGeoComponent({
+            controlsDisabled: false,
+            properties: set(set({}, "controls.legend.enabled", true), "controls.legend.position", "auto"),
+            propertiesMeta: set({}, "legend_section.collapsed", false),
+            pushData: pushDataSpy,
+        });
+
+        await userEvent.click(screen.getByRole("combobox"));
+        await userEvent.click(screen.getByText("bottom left"));
+
+        expect(pushDataSpy).toHaveBeenCalledWith({
+            properties: {
+                controls: {
+                    legend: {
+                        enabled: true,
+                        position: "bottom-left",
+                    },
+                },
+            },
+        });
     });
 });

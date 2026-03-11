@@ -2,6 +2,7 @@
 
 import { useCallback } from "react";
 
+import cx from "classnames";
 import { useIntl } from "react-intl";
 
 import { Button, UiTooltip, useMediaQuery } from "@gooddata/sdk-ui-kit";
@@ -16,7 +17,10 @@ import { selectCatalogIsLoaded } from "../../../../../model/store/catalog/catalo
 import { selectIsDashboardLoading } from "../../../../../model/store/loading/loadingSelectors.js";
 import { selectIsInEditMode } from "../../../../../model/store/renderMode/renderModeSelectors.js";
 import { selectCanEnterEditMode } from "../../../../../model/store/topBar/topBarSelectors.js";
-import { selectExecutionTimestamp } from "../../../../../model/store/ui/uiSelectors.js";
+import {
+    selectDashboardDensity,
+    selectExecutionTimestamp,
+} from "../../../../../model/store/ui/uiSelectors.js";
 
 /**
  * @internal
@@ -51,6 +55,7 @@ export function useEditButtonProps(): IEditButtonProps {
  */
 export function DefaultEditButton({ isVisible, isEnabled, onEditClick, tooltipText }: IEditButtonProps) {
     const intl = useIntl();
+    const density = useDashboardSelector(selectDashboardDensity);
 
     if (!isVisible) {
         return null;
@@ -62,7 +67,9 @@ export function DefaultEditButton({ isVisible, isEnabled, onEditClick, tooltipTe
             content={tooltipText}
             anchor={
                 <Button
-                    className="gd-button-action dash-header-edit-button gd-icon-pencil s-edit_button"
+                    className={cx("gd-button-action dash-header-edit-button gd-icon-pencil s-edit_button", {
+                        "gd-button-small": density === "compact",
+                    })}
                     value={intl.formatMessage({ id: "controlButtons.edit.value" })}
                     disabled={!isEnabled}
                     onClick={onEditClick}

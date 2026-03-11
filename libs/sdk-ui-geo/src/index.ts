@@ -73,7 +73,12 @@ export { createAreaLayer } from "./next/layers/area/layerFactory.js";
 export { createPushpinLayer } from "./next/layers/pushpin/layerFactory.js";
 export type { IGeoCommonExecutionProps, IGeoSingleLayerWrapperProps } from "./next/types/props/shared.js";
 
-export type { IGeoChartLegendConfig } from "./next/types/config/legend.js";
+export type {
+    GeoLegendCornerPosition,
+    GeoLegendPosition,
+    LegacyGeoLegendPosition,
+    IGeoChartLegendConfig,
+} from "./next/types/config/legend.js";
 export {
     isValidViewportArea,
     type IGeoChartViewportNavigation,

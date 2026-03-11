@@ -9,12 +9,12 @@ CURRENT_DIR=$(echo $(cd $(dirname $0) && pwd -P))
 MAPPINGS_DIR="${CURRENT_DIR}/recordings/mappings"
 FILES_DIR="${CURRENT_DIR}/recordings/__files"
 
-WIREMOCK_HOST=${HOST:-https://localhost:8442}
+GOODMOCK_HOST=${HOST:-https://localhost:8442}
 #
 # Stop recording - this will make Wiremock dump all recorded files into recordings dir
 #
 
-curl  -X POST --insecure "$WIREMOCK_HOST/__admin/recordings/stop"
+curl  -X POST --insecure "$GOODMOCK_HOST/__admin/recordings/stop"
 
 #
 # Now delete anything that may been captured and is related to authentication.

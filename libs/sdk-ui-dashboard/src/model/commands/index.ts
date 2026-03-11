@@ -21,6 +21,7 @@ import {
     type InitializeDashboard,
     type SaveDashboardAs,
 } from "./dashboard.js";
+import { type IChangeDashboardDensity, type IRequestOpenDensityDialog } from "./density.js";
 import {
     type IChangeDrillableItems,
     type ICrossFiltering,
@@ -156,6 +157,8 @@ export type DashboardCommands =
     | ChangeAttributeFilterSelection
     //beta
     | IChangeRenderMode
+    | IChangeDashboardDensity
+    | IRequestOpenDensityDialog
     | ISaveDashboard
     | IRenameDashboard
     | IResetDashboard

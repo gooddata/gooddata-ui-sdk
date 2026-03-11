@@ -434,7 +434,7 @@
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.tooltip": "Nonaktifkan atribut atau tanggal untuk mengecualikan nilainya agar tidak diteruskan sebagai filter ke tujuan penelusuran.",
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.all": "Semua",
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.none": "Tidak ada",
-    "configurationPanel.drillConfig.filterSelection.button": "Pemilihan filter",
+    "configurationPanel.drillConfig.filterSelection.button.withCount": "Menggunakan {count, plural, other {# filter}}",
     "configurationPanel.drillConfig.filterSelection.subview.title": "Filter",
     "configurationPanel.drillConfig.filterSelection.subview.tooltip": "Filter yang dipilih diteruskan ke tujuan drill.",
     "configurationPanel.drillConfig.filterSelection.section.drilledDataPoint": "Titik data yang di-drill",

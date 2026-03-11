@@ -16,7 +16,7 @@ describe("applyGeoChartConfigDefaults", () => {
         expect(config.points?.maxSize).toBe("normal");
         expect(config.points?.groupNearbyPoints).toBe(true);
         expect(config.legend?.enabled).toBe(true);
-        expect(config.legend?.position).toBe("top");
+        expect(config.legend?.position).toBe("auto");
         expect(config.cooperativeGestures).toBe(true);
     });
 });

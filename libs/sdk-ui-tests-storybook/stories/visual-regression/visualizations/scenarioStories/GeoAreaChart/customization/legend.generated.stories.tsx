@@ -12,14 +12,16 @@ export default {
     title: "01 Stories From Test Scenarios/GeoAreaChart/customization/legend",
 };
 
-export const AreaLegendPositionTop = () =>
+export const AreaLegendPositionTopLeft = () =>
     (() => {
         const scenarios = getScenariosGroupByIndexes(21, 2).asScenarioDescAndScenario();
-        const scenarioAndDescriptions = scenarios.filter(([name]) => name === "area legend position top");
+        const scenarioAndDescriptions = scenarios.filter(
+            ([name]) => name === "area legend position top-left",
+        );
         if (scenarioAndDescriptions.length === 0)
-            throw new Error("Failed to find scenario 'area legend position top'");
+            throw new Error("Failed to find scenario 'area legend position top-left'");
         if (scenarioAndDescriptions.length > 1)
-            throw new Error("Multiple 'area legend position top' scenarios found");
+            throw new Error("Multiple 'area legend position top-left' scenarios found");
         const scenarioAndDescription = scenarioAndDescriptions[0];
 
         const scenario = scenarioAndDescription[1];
@@ -29,22 +31,24 @@ export const AreaLegendPositionTop = () =>
 
         return buildStory(Component, props, { width: 800, height: 800 }, scenario.tags)();
     })();
-AreaLegendPositionTop.parameters = {
-    kind: "area legend position top",
+AreaLegendPositionTopLeft.parameters = {
+    kind: "area legend position top-left",
     screenshot: {
         readySelector: { selector: ".screenshot-ready-wrapper-done", state: State.Attached },
         viewports: [{ label: "desktop", width: 1464, height: 768 }],
     },
 } satisfies IStoryParameters;
 
-export const AreaLegendPositionRight = () =>
+export const AreaLegendPositionTopRight = () =>
     (() => {
         const scenarios = getScenariosGroupByIndexes(21, 2).asScenarioDescAndScenario();
-        const scenarioAndDescriptions = scenarios.filter(([name]) => name === "area legend position right");
+        const scenarioAndDescriptions = scenarios.filter(
+            ([name]) => name === "area legend position top-right",
+        );
         if (scenarioAndDescriptions.length === 0)
-            throw new Error("Failed to find scenario 'area legend position right'");
+            throw new Error("Failed to find scenario 'area legend position top-right'");
         if (scenarioAndDescriptions.length > 1)
-            throw new Error("Multiple 'area legend position right' scenarios found");
+            throw new Error("Multiple 'area legend position top-right' scenarios found");
         const scenarioAndDescription = scenarioAndDescriptions[0];
 
         const scenario = scenarioAndDescription[1];
@@ -54,22 +58,24 @@ export const AreaLegendPositionRight = () =>
 
         return buildStory(Component, props, { width: 800, height: 800 }, scenario.tags)();
     })();
-AreaLegendPositionRight.parameters = {
-    kind: "area legend position right",
+AreaLegendPositionTopRight.parameters = {
+    kind: "area legend position top-right",
     screenshot: {
         readySelector: { selector: ".screenshot-ready-wrapper-done", state: State.Attached },
         viewports: [{ label: "desktop", width: 1464, height: 768 }],
     },
 } satisfies IStoryParameters;
 
-export const AreaLegendPositionBottom = () =>
+export const AreaLegendPositionBottomLeft = () =>
     (() => {
         const scenarios = getScenariosGroupByIndexes(21, 2).asScenarioDescAndScenario();
-        const scenarioAndDescriptions = scenarios.filter(([name]) => name === "area legend position bottom");
+        const scenarioAndDescriptions = scenarios.filter(
+            ([name]) => name === "area legend position bottom-left",
+        );
         if (scenarioAndDescriptions.length === 0)
-            throw new Error("Failed to find scenario 'area legend position bottom'");
+            throw new Error("Failed to find scenario 'area legend position bottom-left'");
         if (scenarioAndDescriptions.length > 1)
-            throw new Error("Multiple 'area legend position bottom' scenarios found");
+            throw new Error("Multiple 'area legend position bottom-left' scenarios found");
         const scenarioAndDescription = scenarioAndDescriptions[0];
 
         const scenario = scenarioAndDescription[1];
@@ -79,22 +85,24 @@ export const AreaLegendPositionBottom = () =>
 
         return buildStory(Component, props, { width: 800, height: 800 }, scenario.tags)();
     })();
-AreaLegendPositionBottom.parameters = {
-    kind: "area legend position bottom",
+AreaLegendPositionBottomLeft.parameters = {
+    kind: "area legend position bottom-left",
     screenshot: {
         readySelector: { selector: ".screenshot-ready-wrapper-done", state: State.Attached },
         viewports: [{ label: "desktop", width: 1464, height: 768 }],
     },
 } satisfies IStoryParameters;
 
-export const AreaLegendPositionLeft = () =>
+export const AreaLegendPositionBottomRight = () =>
     (() => {
         const scenarios = getScenariosGroupByIndexes(21, 2).asScenarioDescAndScenario();
-        const scenarioAndDescriptions = scenarios.filter(([name]) => name === "area legend position left");
+        const scenarioAndDescriptions = scenarios.filter(
+            ([name]) => name === "area legend position bottom-right",
+        );
         if (scenarioAndDescriptions.length === 0)
-            throw new Error("Failed to find scenario 'area legend position left'");
+            throw new Error("Failed to find scenario 'area legend position bottom-right'");
         if (scenarioAndDescriptions.length > 1)
-            throw new Error("Multiple 'area legend position left' scenarios found");
+            throw new Error("Multiple 'area legend position bottom-right' scenarios found");
         const scenarioAndDescription = scenarioAndDescriptions[0];
 
         const scenario = scenarioAndDescription[1];
@@ -104,8 +112,8 @@ export const AreaLegendPositionLeft = () =>
 
         return buildStory(Component, props, { width: 800, height: 800 }, scenario.tags)();
     })();
-AreaLegendPositionLeft.parameters = {
-    kind: "area legend position left",
+AreaLegendPositionBottomRight.parameters = {
+    kind: "area legend position bottom-right",
     screenshot: {
         readySelector: { selector: ".screenshot-ready-wrapper-done", state: State.Attached },
         viewports: [{ label: "desktop", width: 1464, height: 768 }],

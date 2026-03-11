@@ -156,26 +156,30 @@ export const getVisibleFiltersByFilters = (
         return undefined;
     }
 
-    const filters = (selectedFilters ?? []).map((selectedFilter) => {
-        const targetFilter = (visibleFiltersMetadata ?? []).find((visibleFilter) => {
-            if (isDashboardAttributeFilter(selectedFilter)) {
-                return selectedFilter.attributeFilter.localIdentifier === visibleFilter.localIdentifier;
-            } else {
-                return selectedFilter.dateFilter.localIdentifier === visibleFilter.localIdentifier;
+    const filters = (selectedFilters ?? [])
+        // Strip noop "All values" attribute filters — they have no effect on execution
+        // and should not be stored in visible filters metadata.
+        .filter((filter) => !isAllValuesDashboardAttributeFilter(filter))
+        .map((selectedFilter) => {
+            const targetFilter = (visibleFiltersMetadata ?? []).find((visibleFilter) => {
+                if (isDashboardAttributeFilter(selectedFilter)) {
+                    return selectedFilter.attributeFilter.localIdentifier === visibleFilter.localIdentifier;
+                } else {
+                    return selectedFilter.dateFilter.localIdentifier === visibleFilter.localIdentifier;
+                }
+            });
+
+            if (targetFilter && isDashboardDateFilter(selectedFilter)) {
+                return {
+                    ...targetFilter,
+                    // NOTE: despite the name, this flag is used to mark *noop* "All time" filters (implicit default)
+                    // that are intentionally not stored in automation execution filters.
+                    isAllTimeDateFilter: isNoopAllTimeDashboardDateFilter(selectedFilter),
+                };
             }
+
+            return targetFilter;
         });
-
-        if (targetFilter && isDashboardDateFilter(selectedFilter)) {
-            return {
-                ...targetFilter,
-                // NOTE: despite the name, this flag is used to mark *noop* "All time" filters (implicit default)
-                // that are intentionally not stored in automation execution filters.
-                isAllTimeDateFilter: isNoopAllTimeDashboardDateFilter(selectedFilter),
-            };
-        }
-
-        return targetFilter;
-    });
 
     return compact(filters);
 };

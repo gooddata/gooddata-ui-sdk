@@ -9,6 +9,8 @@ import { objRefToString, widgetRef } from "@gooddata/sdk-model";
 import { UiIcon, UiTooltip, isActionKey, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 import { simplifyText } from "@gooddata/util";
 
+import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
+import { selectDashboardDensity } from "../../../../model/store/ui/uiSelectors.js";
 import { type IShowAsTableButtonProps } from "../types.js";
 
 export const AS_TABLE_MENU_BUTTON_ID = "AS_TABLE_MENU_BUTTON_ID";
@@ -20,6 +22,7 @@ export function ShowAsTableButton({
 }: IShowAsTableButtonProps): ReactElement | null {
     const intl = useIntl();
     const [announcementText, setAnnouncementText] = useState<string>("");
+    const density = useDashboardSelector(selectDashboardDensity);
 
     const onMenuButtonClick = useCallback(() => {
         // Announce what state we're changing TO (opposite of current state)
@@ -79,7 +82,11 @@ export function ShowAsTableButton({
                         aria-label={title}
                     >
                         <div className={asTableIconClasses}>
-                            <UiIcon size={18} type={iconType} color="complementary-7" />
+                            <UiIcon
+                                size={density === "compact" ? 12 : 18}
+                                type={iconType}
+                                color="complementary-7"
+                            />
                         </div>
                     </div>
                 }

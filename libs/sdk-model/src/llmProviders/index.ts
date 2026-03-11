@@ -6,12 +6,21 @@
 export interface ILlmModel {
     id: string;
     family: LlmProviderFamily;
+    isDefault?: boolean;
 }
 
 /**
  * @alpha
  */
-export type LlmProviderFamily = "OPENAI" | "ANTHROPIC" | "META" | "MISTRAL" | "AMAZON" | "GOOGLE" | "COHERE";
+export type LlmProviderFamily =
+    | "OPENAI"
+    | "ANTHROPIC"
+    | "META"
+    | "MISTRAL"
+    | "AMAZON"
+    | "GOOGLE"
+    | "COHERE"
+    | "UNKNOWN";
 
 /**
  * @alpha
@@ -58,7 +67,7 @@ export interface ILlmProvider {
     id: string;
     name: string | null;
     description?: string | null;
-    providerConfig: LlmProviderConfig;
+    providerConfig?: LlmProviderConfig;
     models: ILlmModel[] | null;
 }
 

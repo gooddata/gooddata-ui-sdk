@@ -434,7 +434,7 @@
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.tooltip": "Vô hiệu hóa thuộc tính hoặc ngày để loại trừ giá trị của nó khỏi việc được truyền dưới dạng bộ lọc đến đích đi sâu.",
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.all": "Tất cả",
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.none": "Không có",
-    "configurationPanel.drillConfig.filterSelection.button": "Lựa chọn bộ lọc",
+    "configurationPanel.drillConfig.filterSelection.button.withCount": "Đang dùng {count, plural, other {# bộ lọc}}",
     "configurationPanel.drillConfig.filterSelection.subview.title": "Bộ lọc",
     "configurationPanel.drillConfig.filterSelection.subview.tooltip": "Các bộ lọc đã chọn được chuyển đến đích drill.",
     "configurationPanel.drillConfig.filterSelection.section.drilledDataPoint": "Điểm dữ liệu được drill",

@@ -48,6 +48,25 @@ describe("geoConfigFromInsight", () => {
 
         expect(config.zoom).toBe(4);
     });
+
+    it("normalizes legacy legend positions from insight properties", () => {
+        const locationAttribute = newAttribute(idRef("nm_location", "displayForm"), (attribute) =>
+            attribute.localId("location_id"),
+        );
+        const insight = newInsightDefinition("local:geoPushpin", (builder) =>
+            builder.buckets([newBucket(BucketNames.LOCATION, locationAttribute)]).properties({
+                controls: {
+                    legend: {
+                        position: "top",
+                    },
+                },
+            }),
+        );
+
+        const config = geoConfigFromInsight(insight);
+
+        expect(config.legend?.position).toBe("top-right");
+    });
 });
 
 describe("geoInsightConversion", () => {
@@ -161,6 +180,32 @@ describe("buildGeoVisualizationConfig", () => {
         expect(embeddedConfig.applyViewportNavigation).toBeUndefined();
         expect(adConfig.applyViewportNavigation).toBe(false);
     });
+
+    it("normalizes legacy legend positions and keeps new corner values", () => {
+        const config = buildGeoVisualizationConfig({
+            options,
+            supportedControls: {
+                legend: {
+                    position: "bottom",
+                },
+            },
+            colorMapping: undefined,
+            environment: "",
+        });
+        const configWithCorner = buildGeoVisualizationConfig({
+            options,
+            supportedControls: {
+                legend: {
+                    position: "bottom-left",
+                },
+            },
+            colorMapping: undefined,
+            environment: "",
+        });
+
+        expect(config.legend?.position).toBe("bottom-right");
+        expect(configWithCorner.legend?.position).toBe("bottom-left");
+    });
 });
 
 describe("buildAreaVisualizationConfig", () => {
@@ -204,5 +249,20 @@ describe("buildAreaVisualizationConfig", () => {
         expect(dashboardWidgetConfig.applyViewportNavigation).toBe(true);
         expect(embeddedConfig.applyViewportNavigation).toBeUndefined();
         expect(adConfig.applyViewportNavigation).toBe(false);
+    });
+
+    it("normalizes legacy legend positions for geo area charts", () => {
+        const config = buildAreaVisualizationConfig({
+            options,
+            supportedControls: {
+                legend: {
+                    position: "left",
+                },
+            },
+            colorMapping: undefined,
+            environment: "",
+        });
+
+        expect(config.legend?.position).toBe("top-left");
     });
 });

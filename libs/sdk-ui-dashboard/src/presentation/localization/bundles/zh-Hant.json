@@ -434,7 +434,7 @@
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.tooltip": "停用屬性或日期以排除其值作為篩選器傳遞到鑽取目標。",
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.all": "全部",
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.none": "沒有任何",
-    "configurationPanel.drillConfig.filterSelection.button": "篩選器選取",
+    "configurationPanel.drillConfig.filterSelection.button.withCount": "使用 {count, plural, other {# 個篩選器}}",
     "configurationPanel.drillConfig.filterSelection.subview.title": "過濾器",
     "configurationPanel.drillConfig.filterSelection.subview.tooltip": "選取的篩選器會傳遞至鑽研目的地。",
     "configurationPanel.drillConfig.filterSelection.section.drilledDataPoint": "鑽研的資料點",

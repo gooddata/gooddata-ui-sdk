@@ -7,6 +7,7 @@ import { type IntlShape, defineMessages, useIntl } from "react-intl";
 
 import {
     type FilterContextItem,
+    type ICatalogMeasure,
     type IDashboardDateFilterConfig,
     type IDashboardDateFilterConfigItem,
     type IDrillToDashboard,
@@ -41,6 +42,7 @@ import { useDashboardSelector } from "../../../../../model/react/DashboardStoreP
 import {
     selectCatalogAttributeDisplayForms,
     selectCatalogDateDatasets,
+    selectCatalogMeasures,
 } from "../../../../../model/store/catalog/catalogSelectors.js";
 import { selectInsightByWidgetRef } from "../../../../../model/store/insights/insightsSelectors.js";
 import { selectDateFilterConfigOverrides } from "../../../../../model/store/tabs/dateFilterConfig/dateFilterConfigSelectors.js";
@@ -177,12 +179,14 @@ function mapSourceInsightFilterToOption({
     allCatalogDisplayForms,
     allDateDatasets,
     sourceInsightMeasures,
+    allCatalogMeasures,
     intl,
 }: {
     sourceInsightFilter: IFilter;
     allCatalogDisplayForms: Array<{ ref: ObjRef; title?: string }>;
     allDateDatasets: Array<{ dataSet: { ref: ObjRef; title?: string } }>;
     sourceInsightMeasures: IMeasure[];
+    allCatalogMeasures: ICatalogMeasure[];
     intl: IntlShape;
 }): IDrillFiltersConfigOption | undefined {
     const sourceFilterObjRef = getSourceInsightFilterObjRef(sourceInsightFilter);
@@ -221,6 +225,7 @@ function mapSourceInsightFilterToOption({
         const measureTitleFromInsight = getMeasureTitleFromSourceInsightMeasures(
             sourceInsightMeasures,
             measureRef,
+            allCatalogMeasures,
         );
 
         return {
@@ -235,6 +240,7 @@ function mapSourceInsightFilterToOption({
         const measureTitleFromInsight = getMeasureTitleFromSourceInsightMeasures(
             sourceInsightMeasures,
             measureRef,
+            allCatalogMeasures,
         );
         const rankingPreviewMessage =
             sourceInsightFilter.rankingFilter.operator === "TOP"
@@ -308,6 +314,7 @@ export function useDrillFiltersConfig({ item, onUpdateDrillItem }: IUseDrillFilt
     const allCatalogDisplayForms = useDashboardSelector(selectCatalogAttributeDisplayForms);
     const allDateDatasets = useDashboardSelector(selectCatalogDateDatasets);
     const dateFilterConfigOverride = useDashboardSelector(selectDateFilterConfigOverrides);
+    const allCatalogMeasures = useDashboardSelector(selectCatalogMeasures);
     const allDateFilterConfigsOverrides = useDashboardSelector(selectDateFilterConfigsOverrides);
 
     const sourceInsightAttributes = useMemo(
@@ -348,6 +355,7 @@ export function useDrillFiltersConfig({ item, onUpdateDrillItem }: IUseDrillFilt
                     allCatalogDisplayForms,
                     allDateDatasets,
                     sourceInsightMeasures,
+                    allCatalogMeasures,
                     intl,
                 }),
             )
@@ -358,6 +366,7 @@ export function useDrillFiltersConfig({ item, onUpdateDrillItem }: IUseDrillFilt
         allCatalogDisplayForms,
         allDateDatasets,
         sourceInsightMeasures,
+        allCatalogMeasures,
         intl,
     ]);
     const sourceMeasureFiltersOptions = useMemo(() => {

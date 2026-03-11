@@ -248,7 +248,7 @@ export function TextFilterBody(props: ITextFilterBodyProps) {
                 </div>
             )}
 
-            <TextFilterStateSummary operator={operator} values={values} literal={literal} />
+            {isAll ? null : <TextFilterStateSummary operator={operator} values={values} literal={literal} />}
         </div>
     );
 }

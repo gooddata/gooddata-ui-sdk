@@ -12,14 +12,14 @@ export default {
     title: "01 Stories From Test Scenarios/GeoPushpinChart/customization/legend",
 };
 
-export const LegendPositionTop = () =>
+export const LegendPositionTopLeft = () =>
     (() => {
         const scenarios = getScenariosGroupByIndexes(20, 3).asScenarioDescAndScenario();
-        const scenarioAndDescriptions = scenarios.filter(([name]) => name === "legend position top");
+        const scenarioAndDescriptions = scenarios.filter(([name]) => name === "legend position top-left");
         if (scenarioAndDescriptions.length === 0)
-            throw new Error("Failed to find scenario 'legend position top'");
+            throw new Error("Failed to find scenario 'legend position top-left'");
         if (scenarioAndDescriptions.length > 1)
-            throw new Error("Multiple 'legend position top' scenarios found");
+            throw new Error("Multiple 'legend position top-left' scenarios found");
         const scenarioAndDescription = scenarioAndDescriptions[0];
 
         const scenario = scenarioAndDescription[1];
@@ -29,22 +29,22 @@ export const LegendPositionTop = () =>
 
         return buildStory(Component, props, { width: 800, height: 800 }, scenario.tags)();
     })();
-LegendPositionTop.parameters = {
-    kind: "legend position top",
+LegendPositionTopLeft.parameters = {
+    kind: "legend position top-left",
     screenshot: {
         readySelector: { selector: ".screenshot-ready-wrapper-done", state: State.Attached },
         viewports: [{ label: "desktop", width: 1464, height: 768 }],
     },
 } satisfies IStoryParameters;
 
-export const LegendPositionRight = () =>
+export const LegendPositionTopRight = () =>
     (() => {
         const scenarios = getScenariosGroupByIndexes(20, 3).asScenarioDescAndScenario();
-        const scenarioAndDescriptions = scenarios.filter(([name]) => name === "legend position right");
+        const scenarioAndDescriptions = scenarios.filter(([name]) => name === "legend position top-right");
         if (scenarioAndDescriptions.length === 0)
-            throw new Error("Failed to find scenario 'legend position right'");
+            throw new Error("Failed to find scenario 'legend position top-right'");
         if (scenarioAndDescriptions.length > 1)
-            throw new Error("Multiple 'legend position right' scenarios found");
+            throw new Error("Multiple 'legend position top-right' scenarios found");
         const scenarioAndDescription = scenarioAndDescriptions[0];
 
         const scenario = scenarioAndDescription[1];
@@ -54,22 +54,22 @@ export const LegendPositionRight = () =>
 
         return buildStory(Component, props, { width: 800, height: 800 }, scenario.tags)();
     })();
-LegendPositionRight.parameters = {
-    kind: "legend position right",
+LegendPositionTopRight.parameters = {
+    kind: "legend position top-right",
     screenshot: {
         readySelector: { selector: ".screenshot-ready-wrapper-done", state: State.Attached },
         viewports: [{ label: "desktop", width: 1464, height: 768 }],
     },
 } satisfies IStoryParameters;
 
-export const LegendPositionBottom = () =>
+export const LegendPositionBottomLeft = () =>
     (() => {
         const scenarios = getScenariosGroupByIndexes(20, 3).asScenarioDescAndScenario();
-        const scenarioAndDescriptions = scenarios.filter(([name]) => name === "legend position bottom");
+        const scenarioAndDescriptions = scenarios.filter(([name]) => name === "legend position bottom-left");
         if (scenarioAndDescriptions.length === 0)
-            throw new Error("Failed to find scenario 'legend position bottom'");
+            throw new Error("Failed to find scenario 'legend position bottom-left'");
         if (scenarioAndDescriptions.length > 1)
-            throw new Error("Multiple 'legend position bottom' scenarios found");
+            throw new Error("Multiple 'legend position bottom-left' scenarios found");
         const scenarioAndDescription = scenarioAndDescriptions[0];
 
         const scenario = scenarioAndDescription[1];
@@ -79,22 +79,22 @@ export const LegendPositionBottom = () =>
 
         return buildStory(Component, props, { width: 800, height: 800 }, scenario.tags)();
     })();
-LegendPositionBottom.parameters = {
-    kind: "legend position bottom",
+LegendPositionBottomLeft.parameters = {
+    kind: "legend position bottom-left",
     screenshot: {
         readySelector: { selector: ".screenshot-ready-wrapper-done", state: State.Attached },
         viewports: [{ label: "desktop", width: 1464, height: 768 }],
     },
 } satisfies IStoryParameters;
 
-export const LegendPositionLeft = () =>
+export const LegendPositionBottomRight = () =>
     (() => {
         const scenarios = getScenariosGroupByIndexes(20, 3).asScenarioDescAndScenario();
-        const scenarioAndDescriptions = scenarios.filter(([name]) => name === "legend position left");
+        const scenarioAndDescriptions = scenarios.filter(([name]) => name === "legend position bottom-right");
         if (scenarioAndDescriptions.length === 0)
-            throw new Error("Failed to find scenario 'legend position left'");
+            throw new Error("Failed to find scenario 'legend position bottom-right'");
         if (scenarioAndDescriptions.length > 1)
-            throw new Error("Multiple 'legend position left' scenarios found");
+            throw new Error("Multiple 'legend position bottom-right' scenarios found");
         const scenarioAndDescription = scenarioAndDescriptions[0];
 
         const scenario = scenarioAndDescription[1];
@@ -104,8 +104,8 @@ export const LegendPositionLeft = () =>
 
         return buildStory(Component, props, { width: 800, height: 800 }, scenario.tags)();
     })();
-LegendPositionLeft.parameters = {
-    kind: "legend position left",
+LegendPositionBottomRight.parameters = {
+    kind: "legend position bottom-right",
     screenshot: {
         readySelector: { selector: ".screenshot-ready-wrapper-done", state: State.Attached },
         viewports: [{ label: "desktop", width: 1464, height: 768 }],

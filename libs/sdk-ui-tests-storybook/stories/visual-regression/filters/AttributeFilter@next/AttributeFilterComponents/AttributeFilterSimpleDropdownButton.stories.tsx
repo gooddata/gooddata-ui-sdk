@@ -68,7 +68,7 @@ function AttributeFilterButtonExamples() {
                     <AttributeFilterSimpleDropdownButtonWithSelection
                         isOpen={false}
                         title={attributeTitle}
-                        subtitle={"All except Educationally, PhoenixSoft, WonderKid"}
+                        subtitle={"is not Educationally, PhoenixSoft, WonderKid"}
                         selectedItemsCount={3}
                         isFiltering={false}
                         isLoaded
@@ -79,7 +79,7 @@ function AttributeFilterButtonExamples() {
                     <AttributeFilterSimpleDropdownButtonWithSelection
                         isOpen={false}
                         title={attributeTitle}
-                        subtitle={"All except Educationally, PhoenixSoft, WonderKid"}
+                        subtitle={"is not Educationally, PhoenixSoft, WonderKid"}
                         selectedItemsCount={3}
                         showSelectionCount={false}
                         isFiltering={false}
@@ -92,7 +92,7 @@ function AttributeFilterButtonExamples() {
                         <AttributeFilterSimpleDropdownButtonWithSelection
                             isOpen={false}
                             title={"Long Attribute name"}
-                            subtitle={"All except Educationally, PhoenixSoft, WonderKid"}
+                            subtitle={"is not Educationally, PhoenixSoft, WonderKid"}
                             selectedItemsCount={3}
                             isFiltering={false}
                             isLoaded

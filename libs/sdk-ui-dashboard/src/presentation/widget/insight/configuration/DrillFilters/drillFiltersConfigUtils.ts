@@ -1,6 +1,7 @@
 // (C) 2020-2026 GoodData Corporation
 
 import {
+    type ICatalogMeasure,
     type IDashboardDateFilterConfigItem,
     type IMeasure,
     type ObjRef,
@@ -19,19 +20,26 @@ import { sourceInsightFilterObjRefValue } from "../../../../../_staging/drills/d
 export function getMeasureTitleFromSourceInsightMeasures(
     sourceInsightMeasures: IMeasure[],
     measureRef: ObjRefInScope | undefined,
+    allCatalogMeasures: ICatalogMeasure[],
 ): string | undefined {
-    if (!measureRef || !isLocalIdRef(measureRef)) {
+    if (!measureRef) {
         return undefined;
     }
 
-    const sourceMeasure = sourceInsightMeasures.find(
-        (measure) => measureLocalId(measure) === measureRef.localIdentifier,
-    );
-    if (!sourceMeasure) {
-        return undefined;
+    if (isLocalIdRef(measureRef)) {
+        const sourceMeasure = sourceInsightMeasures.find(
+            (measure) => measureLocalId(measure) === measureRef.localIdentifier,
+        );
+        if (!sourceMeasure) {
+            return undefined;
+        }
+
+        return measureAlias(sourceMeasure) ?? measureTitle(sourceMeasure);
     }
 
-    return measureAlias(sourceMeasure) ?? measureTitle(sourceMeasure);
+    //fallback to catalog lookup in case of object ref
+    return allCatalogMeasures.find((measure) => areObjRefsEqual(measure.measure.ref, measureRef))?.measure
+        .title;
 }
 
 export function sourceFilterOptionId(sourceFilterObjRef: SourceInsightFilterObjRef): string {

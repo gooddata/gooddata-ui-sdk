@@ -1,5 +1,7 @@
 // (C) 2021-2026 GoodData Corporation
 
+import { isEqual } from "lodash-es";
+
 import {
     type FilterContextItem,
     type IAttribute,
@@ -113,6 +115,39 @@ export function validateDrillDefinitionByLocalIdentifier(
     return result;
 }
 
+export function wasDrillFilterConfigurationSanitized(
+    originalDrillDefinition: InsightDrillDefinition,
+    validatedDrillDefinition: InsightDrillDefinition,
+): boolean {
+    if (
+        !isEqual(
+            originalDrillDefinition.drillIntersectionIgnoredAttributes ?? [],
+            validatedDrillDefinition.drillIntersectionIgnoredAttributes ?? [],
+        )
+    ) {
+        return true;
+    }
+
+    if (isDrillToInsight(originalDrillDefinition) && isDrillToInsight(validatedDrillDefinition)) {
+        return (
+            !isEqual(
+                originalDrillDefinition.includedSourceInsightFiltersObjRefs ?? [],
+                validatedDrillDefinition.includedSourceInsightFiltersObjRefs ?? [],
+            ) ||
+            !isEqual(
+                originalDrillDefinition.includedSourceMeasureFiltersObjRefs ?? [],
+                validatedDrillDefinition.includedSourceMeasureFiltersObjRefs ?? [],
+            ) ||
+            !isEqual(
+                originalDrillDefinition.ignoredDashboardFilters ?? [],
+                validatedDrillDefinition.ignoredDashboardFilters ?? [],
+            )
+        );
+    }
+
+    return false;
+}
+
 export function extractInsightRefs(items: ReadonlyArray<InsightDrillDefinition>): ObjRef[] {
     return items.filter(isDrillToInsight).map((item) => item.target);
 }
@@ -165,7 +200,6 @@ export interface IInsightDrillDefinitionValidationData {
     sourceInsightFilters: IFilter[];
     sourceInsightMeasures: IMeasure[];
     dashboardFilters: FilterContextItem[];
-    enableFilterControlInDrillingConfiguration: boolean;
     dashboardsMap: ObjRefMap<IListedDashboard>;
     insightsMap: ObjRefMap<IInsight>;
     displayFormsMap: ObjRefMap<IAttributeDisplayFormMetadataObject>;
@@ -196,6 +230,71 @@ export function validateInsightDrillDefinition(
     }
 
     throw new Error("Can not validate unknown drillDefinition");
+}
+
+function sanitizeDrillIntersectionIgnoredAttributes(
+    drillIntersectionIgnoredAttributes: string[] | undefined,
+    widgetInsightAttributes: IAttribute[],
+): string[] | undefined {
+    if (!drillIntersectionIgnoredAttributes) {
+        return drillIntersectionIgnoredAttributes;
+    }
+
+    const availableAttributeLocalIdentifiers = new Set(
+        widgetInsightAttributes.map((attr) => attr.attribute.localIdentifier),
+    );
+
+    return drillIntersectionIgnoredAttributes.filter((localId) =>
+        availableAttributeLocalIdentifiers.has(localId),
+    );
+}
+
+function sanitizeIncludedSourceInsightFilters(
+    includedSourceInsightFiltersObjRefs: IDrillToInsight["includedSourceInsightFiltersObjRefs"],
+    sourceInsightFilters: IFilter[],
+): IDrillToInsight["includedSourceInsightFiltersObjRefs"] {
+    if (!includedSourceInsightFiltersObjRefs) {
+        return includedSourceInsightFiltersObjRefs;
+    }
+
+    return includedSourceInsightFiltersObjRefs.filter((includedFilterObjRef) =>
+        sourceInsightFilters.some((sourceFilter) =>
+            isMatchingSourceInsightFilter(sourceFilter, includedFilterObjRef),
+        ),
+    );
+}
+
+function sanitizeIncludedSourceMeasureFilters(
+    includedSourceMeasureFiltersObjRefs: IDrillToInsight["includedSourceMeasureFiltersObjRefs"],
+    sourceMeasureFilters: IFilter[],
+): IDrillToInsight["includedSourceMeasureFiltersObjRefs"] {
+    if (!includedSourceMeasureFiltersObjRefs) {
+        return includedSourceMeasureFiltersObjRefs;
+    }
+
+    return includedSourceMeasureFiltersObjRefs.filter((includedFilterObjRef) =>
+        sourceMeasureFilters.some((sourceFilter) =>
+            isMatchingSourceInsightFilter(sourceFilter, includedFilterObjRef),
+        ),
+    );
+}
+
+function sanitizeIgnoredDashboardFilters(
+    ignoredDashboardFilters: IDrillToInsight["ignoredDashboardFilters"],
+    dashboardFilters: FilterContextItem[],
+): IDrillToInsight["ignoredDashboardFilters"] {
+    if (!ignoredDashboardFilters) {
+        return ignoredDashboardFilters;
+    }
+
+    const dashboardFilterLocalIdentifiers = new Set(
+        dashboardFilters.flatMap((filter) => {
+            const localId = dashboardFilterLocalIdentifier(filter);
+            return localId ? [localId] : [];
+        }),
+    );
+
+    return ignoredDashboardFilters.filter((localId) => dashboardFilterLocalIdentifiers.has(localId));
 }
 
 function validateDrillToDashboardDefinition(
@@ -242,20 +341,20 @@ function validateDrillToDashboardDefinition(
             };
         }
 
-        if (drillIntersectionIgnoredAttributes && drillIntersectionIgnoredAttributes.length > 0) {
-            const areAllIgnoredAttributesAvailable = drillIntersectionIgnoredAttributes.every((localId) =>
-                validationContext.widgetInsightAttributes.some(
-                    (attr) => attr.attribute.localIdentifier === localId,
-                ),
+        if (result) {
+            const sanitizedDrillIntersectionIgnoredAttributes = sanitizeDrillIntersectionIgnoredAttributes(
+                drillIntersectionIgnoredAttributes,
+                validationContext.widgetInsightAttributes,
             );
 
-            if (!areAllIgnoredAttributesAvailable) {
-                throw new Error("Not all drill intersection ignored attributes are available in the insight");
+            if (sanitizedDrillIntersectionIgnoredAttributes === undefined) {
+                return result;
             }
-        }
 
-        if (result) {
-            return result;
+            return {
+                ...result,
+                drillIntersectionIgnoredAttributes: sanitizedDrillIntersectionIgnoredAttributes,
+            };
         }
     } else {
         return drillDefinition;
@@ -268,14 +367,7 @@ function validateDrillToInsightDefinition(
     drillDefinition: IDrillToInsight,
     validationContext: IInsightDrillDefinitionValidationData,
 ): IDrillToInsight {
-    const {
-        target,
-        drillIntersectionIgnoredAttributes,
-        includedSourceInsightFiltersObjRefs,
-        includedSourceMeasureFiltersObjRefs,
-        ignoredDashboardFilters,
-    } = drillDefinition;
-    const { enableFilterControlInDrillingConfiguration } = validationContext;
+    const { target } = drillDefinition;
     let result: IDrillToInsight | undefined = undefined;
 
     if (target) {
@@ -289,80 +381,12 @@ function validateDrillToInsightDefinition(
             };
         }
 
-        if (drillIntersectionIgnoredAttributes && drillIntersectionIgnoredAttributes.length > 0) {
-            const areAllIgnoredAttributesAvailable = drillIntersectionIgnoredAttributes.every((localId) =>
-                validationContext.widgetInsightAttributes.some(
-                    (attr) => attr.attribute.localIdentifier === localId,
-                ),
-            );
-
-            if (!areAllIgnoredAttributesAvailable) {
-                throw new Error("Not all drill intersection ignored attributes are available in the insight");
-            }
-        }
-
-        if (
-            enableFilterControlInDrillingConfiguration &&
-            includedSourceInsightFiltersObjRefs &&
-            includedSourceInsightFiltersObjRefs.length > 0
-        ) {
-            const areAllIncludedSourceInsightFiltersAvailable = includedSourceInsightFiltersObjRefs.every(
-                (includedFilterObjRef) =>
-                    validationContext.sourceInsightFilters.some((sourceFilter) =>
-                        isMatchingSourceInsightFilter(sourceFilter, includedFilterObjRef),
-                    ),
-            );
-
-            if (!areAllIncludedSourceInsightFiltersAvailable) {
-                throw new Error("Not all included source insight filters are available in the insight");
-            }
-        }
-
-        if (
-            enableFilterControlInDrillingConfiguration &&
-            includedSourceMeasureFiltersObjRefs &&
-            includedSourceMeasureFiltersObjRefs.length > 0
-        ) {
-            const sourceMeasureFilters = getSourceMeasureFiltersForDrillDefinition(
-                drillDefinition,
-                validationContext.sourceInsightMeasures,
-            );
-            const areAllIncludedSourceMeasureFiltersAvailable = includedSourceMeasureFiltersObjRefs.every(
-                (includedFilterObjRef) =>
-                    sourceMeasureFilters.some((sourceFilter) =>
-                        isMatchingSourceInsightFilter(sourceFilter, includedFilterObjRef),
-                    ),
-            );
-
-            if (!areAllIncludedSourceMeasureFiltersAvailable) {
-                throw new Error("Not all included source measure filters are available in the measure");
-            }
-        }
-
-        if (
-            enableFilterControlInDrillingConfiguration &&
-            ignoredDashboardFilters &&
-            ignoredDashboardFilters.length > 0
-        ) {
-            const dashboardFilterLocalIdentifiers = validationContext.dashboardFilters.flatMap((filter) => {
-                const localId = dashboardFilterLocalIdentifier(filter);
-                return localId ? [localId] : [];
-            });
-            const areAllIgnoredDashboardFiltersAvailable = ignoredDashboardFilters.every((localId) =>
-                dashboardFilterLocalIdentifiers.includes(localId),
-            );
-
-            if (!areAllIgnoredDashboardFiltersAvailable) {
-                throw new Error("Not all ignored dashboard filters are available on the dashboard");
-            }
-        }
+        // Optional drill filter selections are sanitized against the current dashboard and insight
+        // state so a stale filter entry does not invalidate the whole interaction.
     }
 
     if (result) {
-        return sanitizeDrillToInsightFilterConfiguration(
-            result,
-            validationContext.enableFilterControlInDrillingConfiguration,
-        );
+        return sanitizeDrillToInsightFilterConfiguration(result, validationContext);
     }
 
     throw Error("Unknown target Insight");
@@ -370,18 +394,42 @@ function validateDrillToInsightDefinition(
 
 function sanitizeDrillToInsightFilterConfiguration(
     drillDefinition: IDrillToInsight,
-    enableFilterControlInDrillingConfiguration: boolean,
+    validationContext: IInsightDrillDefinitionValidationData,
 ): IDrillToInsight {
-    if (enableFilterControlInDrillingConfiguration) {
-        return drillDefinition;
+    const sourceMeasureFilters = getSourceMeasureFiltersForDrillDefinition(
+        drillDefinition,
+        validationContext.sourceInsightMeasures,
+    );
+    const sanitizedDrillDefinition: IDrillToInsight = { ...drillDefinition };
+
+    if (sanitizedDrillDefinition.drillIntersectionIgnoredAttributes !== undefined) {
+        sanitizedDrillDefinition.drillIntersectionIgnoredAttributes =
+            sanitizeDrillIntersectionIgnoredAttributes(
+                sanitizedDrillDefinition.drillIntersectionIgnoredAttributes,
+                validationContext.widgetInsightAttributes,
+            );
     }
 
-    const {
-        includedSourceInsightFiltersObjRefs: _includedSourceInsightFiltersObjRefs,
-        includedSourceMeasureFiltersObjRefs: _includedSourceMeasureFiltersObjRefs,
-        ignoredDashboardFilters: _ignoredDashboardFilters,
-        ...sanitizedDrillDefinition
-    } = drillDefinition;
+    if (sanitizedDrillDefinition.includedSourceInsightFiltersObjRefs !== undefined) {
+        sanitizedDrillDefinition.includedSourceInsightFiltersObjRefs = sanitizeIncludedSourceInsightFilters(
+            sanitizedDrillDefinition.includedSourceInsightFiltersObjRefs,
+            validationContext.sourceInsightFilters,
+        );
+    }
+
+    if (sanitizedDrillDefinition.includedSourceMeasureFiltersObjRefs !== undefined) {
+        sanitizedDrillDefinition.includedSourceMeasureFiltersObjRefs = sanitizeIncludedSourceMeasureFilters(
+            sanitizedDrillDefinition.includedSourceMeasureFiltersObjRefs,
+            sourceMeasureFilters,
+        );
+    }
+
+    if (sanitizedDrillDefinition.ignoredDashboardFilters !== undefined) {
+        sanitizedDrillDefinition.ignoredDashboardFilters = sanitizeIgnoredDashboardFilters(
+            sanitizedDrillDefinition.ignoredDashboardFilters,
+            validationContext.dashboardFilters,
+        );
+    }
 
     return sanitizedDrillDefinition;
 }

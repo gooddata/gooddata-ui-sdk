@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
 
@@ -9,7 +9,6 @@ import {
     type IDashboardDateFilterConfig,
     type IDashboardDateFilterConfigItem,
     areObjRefsEqual,
-    dashboardFilterLocalIdentifier,
     isAllValuesDashboardAttributeFilter,
     isDashboardAttributeFilter,
     isDashboardCommonDateFilter,
@@ -141,9 +140,8 @@ export const selectAutomationAvailableDashboardFilters: DashboardSelector<Filter
  */
 export const selectAutomationDefaultSelectedFilters: DashboardSelector<FilterContextItem[]> = createSelector(
     selectAutomationAvailableDashboardFilters,
-    selectDashboardLockedFilters,
-    (availableDashboardFilters, lockedFilters) => {
-        return removeNonLockedEmptyDashboardAttributeFilters(availableDashboardFilters, lockedFilters);
+    (availableDashboardFilters) => {
+        return removeEmptyDashboardAttributeFilters(availableDashboardFilters);
     },
 );
 
@@ -179,23 +177,10 @@ const removeCrossFilteringFilters = (
     });
 };
 
-export function removeNonLockedEmptyDashboardAttributeFilters(
-    filters: FilterContextItem[] = [],
-    lockedFilters: FilterContextItem[] = [],
-) {
+export function removeEmptyDashboardAttributeFilters(filters: FilterContextItem[] = []) {
     return filters.filter((filter) => {
         if (isDashboardAttributeFilter(filter)) {
-            const isLocked = lockedFilters.some(
-                (lockedFilter) =>
-                    dashboardFilterLocalIdentifier(lockedFilter) === filter.attributeFilter.localIdentifier,
-            );
-            if (isLocked) {
-                return true;
-            }
-
-            const isAllFilter = isAllValuesDashboardAttributeFilter(filter);
-
-            return !isAllFilter;
+            return !isAllValuesDashboardAttributeFilter(filter);
         }
 
         return true;
@@ -383,11 +368,8 @@ export const selectAutomationFiltersByTab: DashboardSelector<IAutomationFiltersT
                 isFilterContextItemHidden(filter, filterConfigurations),
             );
 
-            // Get default selected filters (non-locked empty attribute filters removed)
-            const defaultSelectedFilters = removeNonLockedEmptyDashboardAttributeFilters(
-                availableFilters,
-                lockedFilters,
-            );
+            // Get default selected filters (empty "All values" attribute filters removed)
+            const defaultSelectedFilters = removeEmptyDashboardAttributeFilters(availableFilters);
 
             return {
                 tabId,

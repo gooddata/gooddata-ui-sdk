@@ -179,6 +179,17 @@ $gd-dashboards-section-title-lineColor: var(
     margin-left: 10px;
 }
 
+.gd-dash-content--density-compact {
+    .dash-title {
+        font-size: 18px;
+        padding-left: 3px;
+    }
+
+    .dash-header-share-button {
+        margin-left: 5px;
+    }
+}
+
 .overlay-wrapper {
     z-index: zIndexes.$topbar-basic;
 }

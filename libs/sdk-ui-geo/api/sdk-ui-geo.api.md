@@ -73,6 +73,12 @@ export type GeoChartPushpinSizeOption = "0.5x" | "0.75x" | "normal" | "1.25x" | 
 export type GeoLayerType = "pushpin" | "area";
 
 // @public
+export type GeoLegendCornerPosition = "top-left" | "top-right" | "bottom-left" | "bottom-right";
+
+// @public
+export type GeoLegendPosition = GeoLegendCornerPosition | "auto";
+
+// @public
 export function GeoPushpinChart(props: IGeoPushpinChartProps): ReactElement;
 
 // @alpha
@@ -229,7 +235,7 @@ export type IGeoChartInnerProps = ICoreGeoChartProps & ILoadingInjectedProps & W
 // @public
 export interface IGeoChartLegendConfig {
     enabled?: boolean;
-    position?: "top" | "right" | "bottom" | "left" | "auto";
+    position?: GeoLegendPosition | LegacyGeoLegendPosition;
     responsive?: boolean | "autoPositionWithPopup";
 }
 
@@ -624,6 +630,9 @@ export function isValidPushpinSizeOption(value: string): value is GeoChartPushpi
 
 // @public
 export function isValidViewportArea(value: string): value is IGeoChartViewportArea;
+
+// @public @deprecated
+export type LegacyGeoLegendPosition = "top" | "right" | "bottom" | "left";
 
 // @public
 export function LegacyGeoPushpinChart(props: ILegacyGeoPushpinChartProps | ILegacyGeoPushpinChartLatitudeLongitudeProps): JSX.Element;

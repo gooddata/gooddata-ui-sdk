@@ -17,7 +17,7 @@ import { BasemapDropdownControl } from "../configurationControls/BasemapDropdown
 import { ColorsSection } from "../configurationControls/colors/ColorsSection.js";
 import { ConfigSection } from "../configurationControls/ConfigSection.js";
 import { GeoViewportControl, type ICurrentMapView } from "../configurationControls/GeoViewportControl.js";
-import { LegendSection } from "../configurationControls/legend/LegendSection.js";
+import { GeoLegendSection } from "../configurationControls/legend/GeoLegendSection.js";
 
 interface IGeoAreaConfigurationPanelProps extends IConfigurationPanelContentProps {
     getCurrentMapView?: () => ICurrentMapView;
@@ -50,7 +50,7 @@ export class GeoAreaConfigurationPanel extends ConfigurationPanelContent<IGeoAre
             hasAreaAttribute(insight) && !hasSegmentAttribute(insight) && !hasColorMeasure(insight);
 
         return (
-            <LegendSection
+            <GeoLegendSection
                 properties={properties}
                 propertiesMeta={propertiesMeta}
                 controlsDisabled={controlsDisabled}

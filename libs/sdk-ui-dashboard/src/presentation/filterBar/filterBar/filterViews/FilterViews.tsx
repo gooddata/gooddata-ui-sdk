@@ -36,6 +36,7 @@ import { selectCanCreateFilterView } from "../../../../model/store/permissions/p
 import { selectIsInEditMode } from "../../../../model/store/renderMode/renderModeSelectors.js";
 import { uiActions } from "../../../../model/store/ui/index.js";
 import {
+    selectDashboardDensity,
     selectFilterViewsDialogMode,
     selectIsFilterViewsDialogOpen,
 } from "../../../../model/store/ui/uiSelectors.js";
@@ -130,6 +131,7 @@ export function FilterViews() {
         isDialogOpen,
         filterViews.length,
     );
+    const density = useDashboardSelector(selectDashboardDensity);
 
     const listDialogTitleId = useIdPrefixed("FilterViewsListTitle");
     const addDialogTitleId = useIdPrefixed("AddFilterViewTitle");
@@ -150,7 +152,8 @@ export function FilterViews() {
     // dashboard components
     const dropdownAnchorClassName = useMemo(() => `gd-filter-views__dropdown-anchor-${uuid()}`, []);
 
-    const buttonClassNames = cx("gd-filter-views-button", dropdownAnchorClassName, "gd-button-large", {
+    const buttonClassNames = cx("gd-filter-views-button", dropdownAnchorClassName, {
+        "gd-button-large": density === "comfortable", // button is set as gs-button-small via default isSmall prop of DropdownButton component
         "gd-filter-views-button--open": isDialogOpen,
         "deprecated-margin-top": !isApplyAllAtOnceEnabledAndSet,
     });

@@ -14,7 +14,12 @@ import { OfflineMapStyle } from "./_infra/offlineMapStyle.js";
 import { scenariosFor } from "../../scenarioGroup.js";
 import { ScenarioGroupNames } from "../charts/_infra/groupNames.js";
 
-const legendPositions: Array<IGeoChartLegendConfig["position"]> = ["top", "right", "bottom", "left"];
+const legendPositions: Array<IGeoChartLegendConfig["position"]> = [
+    "top-left",
+    "top-right",
+    "bottom-left",
+    "bottom-right",
+];
 const selectedRegionSegments = ["West Coast", "East Coast"];
 const GeoStateArea = modifyAttribute(ReferenceMd.State.Code, (m) => m.localId("geo.area"));
 const Population = modifyMeasure(ReferenceMd.Population.Sum, (m) => m.alias("Population"));
@@ -75,7 +80,7 @@ export const legends = scenariosFor<IGeoPushpinChartProps>("GeoPushpinChart", Ge
         config: {
             mapStyle: OfflineMapStyle,
             tooltipText: ReferenceMd.City.Name,
-            legend: { position: "right" },
+            legend: { position: "top-right" },
             selectedSegmentItems: selectedRegionSegments,
         },
     })
@@ -90,7 +95,7 @@ export const legends = scenariosFor<IGeoPushpinChartProps>("GeoPushpinChart", Ge
             mapStyle: OfflineMapStyle,
             tooltipText: ReferenceMd.City.Name,
             viewport: { area: "continent_na" },
-            legend: { position: "right" },
+            legend: { position: "top-right" },
         },
     })
     .addScenario("legend category edge case with empty regions", {
@@ -102,7 +107,7 @@ export const legends = scenariosFor<IGeoPushpinChartProps>("GeoPushpinChart", Ge
             mapStyle: OfflineMapStyle,
             tooltipText: ReferenceMd.City.Name,
             viewport: { area: "continent_na" },
-            legend: { position: "right" },
+            legend: { position: "top-right" },
         },
     });
 
@@ -149,7 +154,7 @@ export const areaLegends = scenariosFor<IGeoAreaChartProps>("GeoAreaChart", GeoA
         config: {
             mapStyle: OfflineMapStyle,
             viewport: { area: "continent_na" },
-            legend: { position: "right" },
+            legend: { position: "top-right" },
             selectedSegmentItems: selectedRegionSegments,
             areas: areaBorderConfig,
         },
@@ -160,7 +165,7 @@ export const areaLegends = scenariosFor<IGeoAreaChartProps>("GeoAreaChart", GeoA
         config: {
             mapStyle: OfflineMapStyle,
             viewport: { area: "continent_na" },
-            legend: { position: "bottom" },
+            legend: { position: "bottom-right" },
             areas: areaBorderConfig,
         },
     })
@@ -172,7 +177,7 @@ export const areaLegends = scenariosFor<IGeoAreaChartProps>("GeoAreaChart", GeoA
         config: {
             mapStyle: OfflineMapStyle,
             viewport: { area: "continent_na" },
-            legend: { position: "right" },
+            legend: { position: "top-right" },
             areas: areaBorderConfig,
         },
     });

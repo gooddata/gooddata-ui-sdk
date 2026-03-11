@@ -64,8 +64,8 @@ export class OrganizationSettingsService
         return this.deleteSettingByType("ACTIVE_LLM_ENDPOINT");
     }
 
-    public async setActiveLlmProvider(provider: string): Promise<void> {
-        return this.setSetting("ACTIVE_LLM_PROVIDER", { id: provider, type: "llmProvider" });
+    public async setActiveLlmProvider(provider: string, defaultModelId: string): Promise<void> {
+        return this.setSetting("ACTIVE_LLM_PROVIDER", { id: provider, type: "llmProvider", defaultModelId });
     }
 
     public async deleteActiveLlmProvider(): Promise<void> {

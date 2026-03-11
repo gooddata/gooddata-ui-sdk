@@ -2,7 +2,7 @@
 
 import { type ISettings } from "@gooddata/sdk-model";
 import { type IGeoAreaChartConfig } from "@gooddata/sdk-ui-geo";
-import { isConcreteViewportPreset } from "@gooddata/sdk-ui-geo/internal";
+import { isConcreteViewportPreset, normalizeGeoLegendPosition } from "@gooddata/sdk-ui-geo/internal";
 import { type IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 
 import { isGeoChartsViewportConfigEnabled } from "../../../constants/featureFlags.js";
@@ -55,7 +55,7 @@ export function buildAreaVisualizationConfig({
         tileset,
     } = controls;
     const legendEnabled = legend?.enabled;
-    const legendPosition = legend?.position;
+    const legendPosition = normalizeGeoLegendPosition(legend?.position);
     const isViewportConfigEnabled = isGeoChartsViewportConfigEnabled(featureFlags);
     const isPresetViewportAreaSelected = Boolean(isConcreteViewportPreset(viewport.area));
     const sanitizedViewport = isViewportConfigEnabled

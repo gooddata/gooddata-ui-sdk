@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -42,10 +42,7 @@ export function useInvertableSelectionStatusText<T>(
         stringChunks.push(intl.formatMessage({ id: "gs.filterLabel.none" }));
     }
     if (isAllExcept) {
-        stringChunks.push(
-            intl.formatMessage({ id: "gs.list.all" }),
-            intl.formatMessage({ id: "gs.list.except" }),
-        );
+        stringChunks.push(intl.formatMessage({ id: "gs.list.isNot" }));
     }
 
     let count = undefined;
@@ -84,15 +81,13 @@ export function InvertableSelectStatus<T>({
 
     return (
         <>
-            <span>&nbsp;{intl.formatMessage({ id: "gs.list.is" })}&nbsp;</span>
+            {isAllExcept ? (
+                <span>&nbsp;{intl.formatMessage({ id: "gs.list.isNot" })}&nbsp;</span>
+            ) : (
+                <span>&nbsp;{intl.formatMessage({ id: "gs.list.is" })}&nbsp;</span>
+            )}
             {isAll ? <b>{intl.formatMessage({ id: "gs.list.all" })}</b> : null}
             {isNone ? <b>{intl.formatMessage({ id: "gs.filterLabel.none" })}</b> : null}
-            {isAllExcept ? (
-                <span>
-                    <b>{intl.formatMessage({ id: "gs.list.all" })}</b>&nbsp;
-                    {intl.formatMessage({ id: "gs.list.except" })}&nbsp;
-                </span>
-            ) : null}
             {!isAll && !isSelectionEmpty ? (
                 <UiTooltip
                     arrowPlacement="top-start"

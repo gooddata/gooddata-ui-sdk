@@ -434,7 +434,7 @@
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.tooltip": "Disable the attribute or date to exclude its value from being passed as a filter to the drilling destination.",
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.all": "All",
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.none": "None",
-    "configurationPanel.drillConfig.filterSelection.button": "Filter selection",
+    "configurationPanel.drillConfig.filterSelection.button.withCount": "Using {count, plural, one {# filter} other {# filters}}",
     "configurationPanel.drillConfig.filterSelection.subview.title": "Filters",
     "configurationPanel.drillConfig.filterSelection.subview.tooltip": "Selected filters are passed to the drill destination.",
     "configurationPanel.drillConfig.filterSelection.section.drilledDataPoint": "Drilled data point",

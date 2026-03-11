@@ -93,10 +93,12 @@ export interface IWorkspaceSettingsService {
      * Set active LLM provider for the organization.
      *
      * @param provider - id of the LLM provider to set as active for the organization.
+     * @param defaultModelId - id of the default model to set as active for the organization.
      *
      * @returns promise
+     *
      */
-    setActiveLlmProvider(provider: string): Promise<void>;
+    setActiveLlmProvider(provider: string, defaultModelId: string): Promise<void>;
 
     /**
      * Sets timezone for current workspace.

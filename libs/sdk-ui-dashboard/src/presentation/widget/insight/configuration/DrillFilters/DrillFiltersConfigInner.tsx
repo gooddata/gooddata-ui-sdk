@@ -66,6 +66,7 @@ export function DrillFiltersConfigInner({
     return (
         <div className="gd-drill-filters-config-inner">
             <DrillFiltersConfigSection
+                dataTestId="drill-filters-data-point-section"
                 title={intl.formatMessage({
                     id: "configurationPanel.drillConfig.filterSelection.section.drilledDataPoint",
                 })}
@@ -76,6 +77,7 @@ export function DrillFiltersConfigInner({
             {supportsExtendedFiltersConfig ? (
                 <>
                     <DrillFiltersConfigSection
+                        dataTestId="drill-filters-dashboard-section"
                         title={intl.formatMessage({
                             id: "configurationPanel.drillConfig.filterSelection.section.dashboard",
                         })}
@@ -84,6 +86,7 @@ export function DrillFiltersConfigInner({
                         onSelectionChange={onDashboardSelectionChange}
                     />
                     <DrillFiltersConfigSection
+                        dataTestId="drill-filters-visualization-section"
                         title={intl.formatMessage({
                             id: "configurationPanel.drillConfig.filterSelection.section.visualization",
                         })}
@@ -92,6 +95,7 @@ export function DrillFiltersConfigInner({
                         onSelectionChange={onIncludedSourceInsightFiltersChange}
                     />
                     <DrillFiltersConfigSection
+                        dataTestId="drill-filters-metric-section"
                         title={intl.formatMessage({
                             id: "configurationPanel.drillConfig.filterSelection.section.metric",
                         })}

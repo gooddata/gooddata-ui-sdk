@@ -427,6 +427,7 @@ function useInitOrReload(
         withoutApply: boolean;
         isSelectionInvalid: boolean;
         isTextMode: boolean;
+        filterModeChanged?: boolean;
     },
     supportsKeepingDependentFiltersSelection: boolean,
     supportsCircularDependencyInFilters: boolean,
@@ -449,6 +450,7 @@ function useInitOrReload(
         withoutApply,
         isSelectionInvalid,
         isTextMode,
+        filterModeChanged,
     } = props;
 
     const prevIsTextModeRef = useRef(isTextMode);
@@ -500,7 +502,8 @@ function useInitOrReload(
         const justSwitchedFromText = prevIsTextModeRef.current && !isTextMode;
         prevIsTextModeRef.current = isTextMode;
 
-        const filterChanged = justSwitchedFromText ? false : getFilterChanged(filter, handler);
+        const filterChanged =
+            justSwitchedFromText || filterModeChanged ? false : getFilterChanged(filter, handler);
 
         const limitingValidationItemsChanged =
             shouldIncludeLimitingFilters &&
@@ -562,6 +565,7 @@ function useInitOrReload(
         shouldIncludeLimitingFilters,
         isSelectionInvalid,
         isTextMode,
+        filterModeChanged,
     ]);
 
     const isMountedRef = useRef(false);
@@ -1077,6 +1081,7 @@ export function useElementsFilterController(props: IElementsFilterControllerProp
             withoutApply,
             isSelectionInvalid: (withoutApply ?? false) && attributeFilterControllerData.isSelectionInvalid,
             isTextMode,
+            filterModeChanged,
         },
         supportsKeepingDependentFiltersSelection ?? false,
         supportsCircularDependencyInFilters ?? false,

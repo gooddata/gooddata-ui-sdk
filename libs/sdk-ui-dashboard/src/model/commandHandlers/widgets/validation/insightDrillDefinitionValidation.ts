@@ -29,7 +29,6 @@ import { type ObjRefMap } from "../../../../_staging/metadata/objRefMap.js";
 import { type IDashboardCommand } from "../../../commands/base.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import { selectAccessibleDashboardsMap } from "../../../store/accessibleDashboards/accessibleDashboardsSelectors.js";
-import { selectEnableFilterControlInDrillingConfiguration } from "../../../store/config/configSelectors.js";
 import { selectDrillTargetsByWidgetRef } from "../../../store/drillTargets/drillTargetsSelectors.js";
 import { type IDrillTargets } from "../../../store/drillTargets/drillTargetsTypes.js";
 import { selectInaccessibleDashboardsMap } from "../../../store/inaccessibleDashboards/inaccessibleDashboardsSelectors.js";
@@ -76,7 +75,6 @@ export function validateDrillDefinition(
         sourceInsightFilters: validationData.sourceInsightFilters,
         sourceInsightMeasures: validationData.sourceInsightMeasures,
         dashboardFilters: validationData.dashboardFilters,
-        enableFilterControlInDrillingConfiguration: validationData.enableFilterControlInDrillingConfiguration,
         dashboardsMap: validationData.accessibleDashboardMap,
         insightsMap: validationData.resolvedInsights.resolved,
         displayFormsMap: validationData.resolvedDisplayForms.resolved,
@@ -101,7 +99,6 @@ export interface IDrillDefinitionValidationData {
     sourceInsightFilters: IFilter[];
     sourceInsightMeasures: IMeasure[];
     dashboardFilters: FilterContextItem[];
-    enableFilterControlInDrillingConfiguration: boolean;
     drillTargets: IDrillTargets | undefined;
     resolvedInsights: IInsightResolutionResult;
     resolvedDisplayForms: DisplayFormResolutionResult;
@@ -124,9 +121,6 @@ export function* getValidationData(
     const sourceInsightMeasures = widgetInsight ? insightMeasures(widgetInsight) : [];
     const dashboardFilters: ReturnType<typeof selectFilterContextFilters> =
         yield select(selectFilterContextFilters);
-    const enableFilterControlInDrillingConfiguration: ReturnType<
-        typeof selectEnableFilterControlInDrillingConfiguration
-    > = yield select(selectEnableFilterControlInDrillingConfiguration);
 
     const selectDrillTargetsByWidgetRefSelector = selectDrillTargetsByWidgetRef(widgetRef);
     const drillTargets: ReturnType<typeof selectDrillTargetsByWidgetRefSelector> = yield select(
@@ -167,7 +161,6 @@ export function* getValidationData(
         sourceInsightFilters,
         sourceInsightMeasures,
         dashboardFilters,
-        enableFilterControlInDrillingConfiguration,
         drillTargets,
         accessibleDashboardMap,
         resolvedInsights,

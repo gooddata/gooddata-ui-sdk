@@ -1104,6 +1104,18 @@ export const selectEnableVisualizationFilteringByTags: DashboardSelector<boolean
 );
 
 /**
+ * Returns whether the dashboard density setting is enabled.
+ *
+ * @internal
+ */
+export const selectEnableDashboardDensitySetting: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableDashboardDensitySetting ?? false;
+    },
+);
+
+/**
  * Returns whether filter control in drilling configuration is enabled.
  *
  * @internal

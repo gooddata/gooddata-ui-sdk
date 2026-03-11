@@ -434,7 +434,7 @@
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.tooltip": "Izključi atribut ali datum, da izključite njegovo vrednost iz poslanega filtra na ciljno destinacijo poglobitve.",
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.all": "Vsi",
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.none": "Noben",
-    "configurationPanel.drillConfig.filterSelection.button": "Izbira filtrov",
+    "configurationPanel.drillConfig.filterSelection.button.withCount": "Uporaba {count, plural, one {# filtra} two {# filtrov} few {# filtrov} other {# filtrov}}",
     "configurationPanel.drillConfig.filterSelection.subview.title": "Filtri",
     "configurationPanel.drillConfig.filterSelection.subview.tooltip": "Izbrani filtri se posredujejo cilju vrtanja.",
     "configurationPanel.drillConfig.filterSelection.section.drilledDataPoint": "Zavrtana podatkovna točka",

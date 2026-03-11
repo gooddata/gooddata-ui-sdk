@@ -858,6 +858,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableCustomGeoCollection,
+            "enableCustomGeoCollection",
+            "BOOLEAN",
+            FeatureFlagsValues.enableCustomGeoCollection,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableAutomationManagement,
             "enableAutomationManagement",
             "BOOLEAN",
@@ -1030,6 +1037,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableNullJoins",
             "BOOLEAN",
             FeatureFlagsValues.enableNullJoins,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableDashboardDensitySetting,
+            "enableDashboardDensitySetting",
+            "BOOLEAN",
+            FeatureFlagsValues.enableDashboardDensitySetting,
         ),
     };
 }

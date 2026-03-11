@@ -88,12 +88,15 @@ export function useTextFilterController(props: ITextFilterControllerProps): Text
         filterInput && (isArbitraryAttributeFilter(filterInput) || isMatchAttributeFilter(filterInput));
     // When in elements mode, always pass empty so the effect doesn't overwrite the reset from
     // textResetForModeSwitch with the stale filter prop (parent's onChange may not have propagated yet).
+    // Use displayFormRef (from filterInput) rather than effectiveDisplayFormRef for the fallback
+    // so that a local setDisplayForm call does not cause the memo to produce an "all" filter
+    // that would reset the inner controller's operator state via the sync effect.
     const textFilter = useMemo(
         () =>
             isTextMode && filterInput && isSourceTextFilter
                 ? filterInput
-                : createEmptyFilterForMode("text", effectiveDisplayFormRef, localId),
-        [effectiveDisplayFormRef, isTextMode, localId, filterInput, isSourceTextFilter],
+                : createEmptyFilterForMode("text", displayFormRef, localId),
+        [displayFormRef, isTextMode, localId, filterInput, isSourceTextFilter],
     );
 
     const onChangeForText = useCallback(

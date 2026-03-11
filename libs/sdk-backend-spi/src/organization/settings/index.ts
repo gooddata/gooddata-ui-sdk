@@ -83,8 +83,9 @@ export interface IOrganizationSettingsService {
      * Set active LLM provider for the organization.
      *
      * @param provider - id of the LLM provider to set as active for the organization.
+     * @param defaultModelId - id of the default model to use for the provider.
      */
-    setActiveLlmProvider(provider: string): Promise<void>;
+    setActiveLlmProvider(provider: string, defaultModelId: string): Promise<void>;
 
     /**
      * Deletes active LLM provider for the organization.

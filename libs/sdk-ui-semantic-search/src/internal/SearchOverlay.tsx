@@ -144,6 +144,14 @@ export type SearchOverlayProps = {
      */
     canFullControl?: boolean;
     /**
+     * The list of tags the returned objects must have.
+     */
+    includeTags?: string[];
+    /**
+     * The list of tags the returned objects must not have.
+     */
+    excludeTags?: string[];
+    /**
      * A function to render the footer of the search overlay.
      */
     renderFooter?: (
@@ -172,6 +180,8 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
         className,
         threshold = THRESHOLD,
         renderFooter,
+        includeTags,
+        excludeTags,
     } = props;
 
     const canEdit = canFullControl || canManage || canAnalyze;
@@ -199,6 +209,8 @@ function SearchOverlayCore(props: Omit<SearchOverlayProps, "locale" | "metadataT
         deepSearch,
         limit,
         allowedRelationshipTypes,
+        includeTags,
+        excludeTags,
     });
 
     // Search history

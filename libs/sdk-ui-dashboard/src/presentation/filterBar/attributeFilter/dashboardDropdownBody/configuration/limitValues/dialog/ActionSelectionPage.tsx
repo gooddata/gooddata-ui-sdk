@@ -88,7 +88,7 @@ export function ActionSelectionPage({
                                     <span />
                                 ) : (
                                     <a
-                                        href="https://help.gooddata.com/doc/growth/en/dashboards-and-insights/dashboards/filters-in-dashboards/"
+                                        href="https://www.gooddata.com/docs/cloud/create-dashboards/filters/"
                                         rel="noopener noreferrer"
                                         target="_blank"
                                         className="attribute-filter__limit__popup__action-select__option__link"

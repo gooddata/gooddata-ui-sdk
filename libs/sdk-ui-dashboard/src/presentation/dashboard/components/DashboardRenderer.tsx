@@ -14,6 +14,7 @@ import { ThemeProvider } from "@gooddata/sdk-ui-theme-provider";
 
 import { DashboardItemPathAndSizeProvider } from "./DashboardItemPathAndSizeContext.js";
 import { DashboardLoading } from "./DashboardLoading.js";
+import { DensityInitializer } from "./DensityInitializer.js";
 import { DashboardStoreProvider } from "../../../model/react/DashboardStoreProvider.js";
 import { DefaultAlertingDialogNew } from "../../alerting/DefaultAlertingDialog/DefaultAlertingDialogNew.js";
 import { DefaultAlertingManagementDialogNew } from "../../alerting/DefaultAlertingManagementDialog/DefaultAlertingManagementDialogNew.js";
@@ -232,6 +233,7 @@ export function DashboardRenderer(props: IDashboardProps) {
                                                 <LayoutResizeStateProvider>
                                                     <DashboardItemPathAndSizeProvider>
                                                         <HoveredWidgetProvider>
+                                                            <DensityInitializer />
                                                             <DashboardLoading {...props} />
                                                         </HoveredWidgetProvider>
                                                     </DashboardItemPathAndSizeProvider>

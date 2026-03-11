@@ -4,6 +4,7 @@ import { type Identifier, type ObjRef, type Uri } from "@gooddata/sdk-model";
 
 import { type DraggableLayoutItem } from "../../../presentation/dragAndDrop/types.js";
 import {
+    type DashboardDensity,
     type DropZoneType,
     type IAlertDialogContext,
     type ILayoutItemPath,
@@ -61,6 +62,10 @@ export interface IUiState {
     settingsDialog: {
         open: boolean;
     };
+    densityDialog: {
+        open: boolean;
+    };
+    density: DashboardDensity;
     shareDialog: {
         open: boolean;
     };
@@ -109,6 +114,7 @@ export interface IUiState {
     /** @alpha */
     drillValidationMessages: {
         invalidDrillWidgetRefs: ObjRef[];
+        sanitizedDrillWidgetRefs: ObjRef[];
         invalidCustomUrlDrillParameterWidgets: IInvalidCustomUrlDrillParameterInfo[];
     };
     /** @internal */
@@ -144,6 +150,10 @@ export const uiInitialState: IUiState = {
     settingsDialog: {
         open: false,
     },
+    densityDialog: {
+        open: false,
+    },
+    density: "comfortable",
     shareDialog: {
         open: false,
     },
@@ -187,6 +197,7 @@ export const uiInitialState: IUiState = {
     },
     drillValidationMessages: {
         invalidDrillWidgetRefs: [],
+        sanitizedDrillWidgetRefs: [],
         invalidCustomUrlDrillParameterWidgets: [],
     },
     draggingWidgetSource: undefined,

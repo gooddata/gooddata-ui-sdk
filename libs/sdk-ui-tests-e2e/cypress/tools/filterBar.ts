@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { camelCase } from "lodash-es";
 
@@ -193,8 +193,15 @@ export class AttributeFilter {
         return this;
     }
 
-    hasSubtitle(value: string) {
-        this.getElement().find(".s-attribute-filter-button-subtitle").should("have.text", value);
+    hasSubtitle(value: string | RegExp) {
+        if (value instanceof RegExp) {
+            this.getElement()
+                .find(".s-attribute-filter-button-subtitle")
+                .invoke("text")
+                .should("match", value);
+        } else {
+            this.getElement().find(".s-attribute-filter-button-subtitle").should("have.text", value);
+        }
         return this;
     }
 

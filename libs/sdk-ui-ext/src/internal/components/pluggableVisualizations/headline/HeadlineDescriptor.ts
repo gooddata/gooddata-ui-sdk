@@ -62,7 +62,7 @@ export class HeadlineDescriptor implements IVisualizationDescriptor {
     }
 
     private getMinHeight(insight: IInsightDefinition): number {
-        return hasSecondaryMeasure(insight) ? 10 : 6;
+        return hasSecondaryMeasure(insight) ? 9 : 5;
     }
 
     private getMaxHeight(_insight: IInsightDefinition): number {

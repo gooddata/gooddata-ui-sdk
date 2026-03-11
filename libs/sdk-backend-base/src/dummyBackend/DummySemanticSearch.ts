@@ -45,6 +45,12 @@ export class DummySemanticSearchQueryBuilder implements ISemanticSearchQuery {
         this.allowedRelationshipTypes = allowedRelationshipTypes;
         return this;
     }
+    withIncludeTags() {
+        return this;
+    }
+    withExcludeTags() {
+        return this;
+    }
     async query({ signal }: { signal?: AbortSignal } = {}) {
         await cancellableTimeout(100, signal);
         const sourceTypes = new Set(this.allowedRelationshipTypes?.map((r) => r.sourceType) ?? []);

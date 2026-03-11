@@ -434,7 +434,7 @@
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.tooltip": "Deaktivieren Sie das Attribut oder Datum, um auszuschließen, dass sein Wert als Filter an das Drilldown-Ziel übergeben wird.",
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.all": "Alle",
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.none": "Keine",
-    "configurationPanel.drillConfig.filterSelection.button": "Filterauswahl",
+    "configurationPanel.drillConfig.filterSelection.button.withCount": "Verwenden von {count, plural, one {# Filter} other {# Filtern}}",
     "configurationPanel.drillConfig.filterSelection.subview.title": "Filter",
     "configurationPanel.drillConfig.filterSelection.subview.tooltip": "Ausgewählte Filter werden an das Drill-Ziel übergeben.",
     "configurationPanel.drillConfig.filterSelection.section.drilledDataPoint": "Drilldown-Datenpunkt",

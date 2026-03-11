@@ -434,7 +434,7 @@
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.tooltip": "ปิดใช้งานแอตทริบิวต์หรือวันที่เพื่อยกเว้นไม่ให้ส่งค่าของมันเป็นตัวกรองไปยังปลายทางการเจาะลึก",
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.all": "ทั้งหมด",
     "configurationPanel.drillConfig.drillIntersectionIgnoredAttributes.dropdown.none": "ไม่มี",
-    "configurationPanel.drillConfig.filterSelection.button": "การเลือกตัวกรอง",
+    "configurationPanel.drillConfig.filterSelection.button.withCount": "ใช้ {count, plural, other {# ตัวกรอง}}",
     "configurationPanel.drillConfig.filterSelection.subview.title": "ตัวกรอง",
     "configurationPanel.drillConfig.filterSelection.subview.tooltip": "ตัวกรองที่เลือกจะถูกส่งต่อไปยังปลายทางการเจาะข้อมูล",
     "configurationPanel.drillConfig.filterSelection.section.drilledDataPoint": "จุดข้อมูลที่ถูกเจาะข้อมูล",

@@ -107,6 +107,10 @@
         "text": "is",
         "crowdinContext": "Used in filter expressions to indicate equality, e.g., 'Product is Shoes'. Appears in filter component descriptions."
     },
+    "gs.list.isNot": {
+        "text": "is not",
+        "crowdinContext": "Used in filter expressions to indicate exclusion, e.g., 'Product is not Shoes'. Appears in filter component descriptions."
+    },
     "gs.list.search.placeholder": {
         "text": "Search…",
         "crowdinContext": "Placeholder text displayed in search input fields within list components, prompting users to enter search terms."
@@ -1620,8 +1624,8 @@
         "crowdinContext": "Text filter operator label for like does not end with."
     },
     "attributeFilter.operator.summary.isNot": {
-        "text": "isn't",
-        "crowdinContext": "Shortened text filter operator label for negative arbitrary selection used in filter summary."
+        "text": "is not",
+        "crowdinContext": "Text filter operator label for negative arbitrary selection used in filter summary."
     },
     "attributeFilter.operator.summary.doesNotContain": {
         "text": "doesn't contain",

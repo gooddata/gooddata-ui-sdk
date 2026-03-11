@@ -8,11 +8,13 @@ import {
     type GoodDataSdkError,
     type UseCancelablePromiseStatus,
     convertError,
+    isNoDataSdkError,
     useBackendStrict,
     useCancelablePromise,
     useWorkspaceStrict,
 } from "@gooddata/sdk-ui";
 
+import { processSettledLayerResults } from "./processSettledLayerResults.js";
 import { getLayerAdapter } from "../../layers/registry/adapterRegistry.js";
 import { type IGeoAdapterContext } from "../../layers/registry/adapterTypes.js";
 import type { ILayerExecutionRecord } from "../../types/props/geoChart/internal.js";
@@ -26,7 +28,7 @@ import { createExecutionsFingerprint, createLayersStructureFingerprint } from ".
 export interface ILayersDataResult {
     /**
      * Map of layerId to DataViewFacade for each successfully loaded layer.
-     * Empty until all layers complete successfully.
+     * Can contain partial results when some layers fail.
      */
     layerDataViews: Map<string, DataViewFacade>;
 
@@ -34,8 +36,8 @@ export interface ILayersDataResult {
      * Combined loading status for all layers.
      * - "pending" if no executions provided
      * - "loading" while any execution is in progress
-     * - "success" when all executions complete successfully
-     * - "error" if any execution fails
+     * - "success" when the primary layer completes successfully
+     * - "error" when the primary layer fails
      */
     status: UseCancelablePromiseStatus;
 
@@ -48,6 +50,11 @@ export interface ILayersDataResult {
 interface ILayerDataViewEntry {
     layerId: string;
     dataView: DataViewFacade;
+}
+
+interface IExecuteAllLayersResult {
+    dataViews: ILayerDataViewEntry[];
+    firstError?: GoodDataSdkError;
 }
 
 async function prepareExecution(
@@ -72,7 +79,11 @@ async function prepareExecution(
             layerExecution.execution,
         );
         return preparedExecution;
-    } catch {
+    } catch (error) {
+        console.error("[useLayersData] Failed to prepare layer execution, using fallback execution.", {
+            layerId: layerExecution.layerId,
+            error,
+        });
         return layerExecution.execution;
     }
 }
@@ -109,19 +120,36 @@ async function executeAllLayers(
     layerExecutions: ILayerExecutionRecord[],
     backend: IAnalyticalBackend,
     workspace: string,
-): Promise<ILayerDataViewEntry[]> {
-    return Promise.all(
+): Promise<IExecuteAllLayersResult> {
+    const settledResults = await Promise.allSettled(
         layerExecutions.map((layerExecution) => executeLayerData(layerExecution, backend, workspace)),
     );
+    const { fulfilledValues: dataViews, firstError } = processSettledLayerResults({
+        settledResults,
+        layerExecutions,
+        onRejected: ({ layerId, error }) => {
+            if (!isNoDataSdkError(error)) {
+                console.error("[useLayersData] Failed to load layer data.", {
+                    layerId,
+                    error,
+                });
+            }
+        },
+    });
+
+    return {
+        dataViews,
+        firstError,
+    };
 }
 
 /**
  * Hook that executes all layer executions in parallel and returns combined results.
  *
  * @remarks
- * Uses Promise.all to execute all layers simultaneously. The status is:
- * - "success" only when ALL layers have loaded successfully
- * - "error" if ANY layer fails (returns first error)
+ * Uses Promise.allSettled to execute all layers simultaneously. The status is:
+ * - "success" when the primary layer has loaded successfully
+ * - "error" when the primary layer fails (returns the primary-layer error)
  * - "loading" while any layer is still loading
  *
  * @param layerExecutions - Array of layer execution records
@@ -153,7 +181,11 @@ export function useLayersData(
         [layerExecutions],
     );
 
-    const { result, status, error } = useCancelablePromise<ILayerDataViewEntry[], GoodDataSdkError>(
+    const {
+        result,
+        status: promiseStatus,
+        error: promiseError,
+    } = useCancelablePromise<IExecuteAllLayersResult, GoodDataSdkError>(
         {
             promise:
                 layerExecutions.length > 0
@@ -166,12 +198,20 @@ export function useLayersData(
     const layerDataViews = useMemo(() => {
         const map = new Map<string, DataViewFacade>();
         if (result) {
-            for (const entry of result) {
+            for (const entry of result.dataViews) {
                 map.set(entry.layerId, entry.dataView);
             }
         }
         return map;
     }, [result]);
+
+    const primaryLayerId = layerExecutions[0]?.layerId;
+    const hasPrimaryLayerLoaded = primaryLayerId ? layerDataViews.has(primaryLayerId) : false;
+    const hasLayersToLoad = layerExecutions.length > 0;
+    const status: UseCancelablePromiseStatus =
+        promiseStatus === "success" && hasLayersToLoad && !hasPrimaryLayerLoaded ? "error" : promiseStatus;
+    const error =
+        status === "error" && !hasPrimaryLayerLoaded ? (result?.firstError ?? promiseError) : promiseError;
 
     return {
         layerDataViews,

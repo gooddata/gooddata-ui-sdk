@@ -330,7 +330,7 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
      * @param supportedControls - Supported visualization properties
      * @returns Next-gen geo chart configuration
      */
-    protected override buildVisualizationConfig(
+    private buildGeoVisualizationConfig(
         options: IVisProps,
         supportedControls: IVisualizationProperties,
     ): IGeoChartConfig {
@@ -394,7 +394,7 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
             ...this.getInsightControlsWithFallback(insight),
             ...supportedControls,
         };
-        const fullConfig = this.buildVisualizationConfig(options, controlsWithFallback);
+        const fullConfig = this.buildGeoVisualizationConfig(options, controlsWithFallback);
         const filters = insightFilters(insight);
         const sortBy = insightSorts(insight);
         const title = insightTitle(insight);

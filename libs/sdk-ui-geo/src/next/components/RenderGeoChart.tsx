@@ -9,6 +9,7 @@ import ReactMeasure, { type ContentRect, type MeasuredComponentProps } from "rea
 import { v4 } from "uuid";
 
 import {
+    type GoodDataSdkError,
     type ITranslationsComponentProps,
     IntlTranslationsProvider,
     convertDrillableItemsToPredicates,
@@ -48,7 +49,11 @@ const containerBaseId = "geo-chart-next";
  *
  * @internal
  */
-export function RenderGeoChart(): ReactElement {
+interface IRenderGeoChartProps {
+    onMapError?: (error: GoodDataSdkError | null) => void;
+}
+
+export function RenderGeoChart({ onMapError }: IRenderGeoChartProps): ReactElement {
     const props = useGeoChartProps();
     const intl = useIntl();
     const { layers, layerExecutions, primaryLayer } = useGeoLayers();
@@ -155,6 +160,7 @@ export function RenderGeoChart(): ReactElement {
                         mapInstructionsId={mapInstructionsId}
                         mapCanvasTitle={mapCanvasTitle}
                         legendPanelRef={legendPanelRef}
+                        onMapError={onMapError}
                     />
                     <PushDataSync availableLegends={availableLegends} geoLayerType={props.type} />
                 </div>

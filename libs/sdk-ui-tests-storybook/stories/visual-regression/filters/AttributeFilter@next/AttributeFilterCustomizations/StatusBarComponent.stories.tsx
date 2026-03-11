@@ -30,7 +30,7 @@ function CustomStatusBar({ selectedItems, isInverted }: IAttributeFilterStatusBa
             <div>
                 {isInverted && selectedItems.length === 0 ? "All" : ""}
                 {!isInverted && selectedItems.length === 0 ? "None" : ""}
-                {isInverted && selectedItems.length > 0 ? "All except:" : ""}{" "}
+                {isInverted && selectedItems.length > 0 ? "is not:" : ""}{" "}
                 <b>{selectedItems.map((item) => item.title).join(", ")}</b>
             </div>
         </div>

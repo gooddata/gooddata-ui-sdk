@@ -111,6 +111,7 @@ export type {
     WorkspaceDataFilterSetting,
     ICSPDirective,
     ICustomApplicationSetting,
+    IGeoCollection,
     ScanSqlResult,
     WorkspaceEntitiesDatasets,
     IScanRequest,

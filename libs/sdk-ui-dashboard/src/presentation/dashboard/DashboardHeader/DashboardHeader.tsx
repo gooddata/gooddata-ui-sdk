@@ -4,6 +4,7 @@ import { type ReactElement } from "react";
 
 import { AlertingDialogProvider } from "./AlertingDialogProvider.js";
 import { DashboardTabs, useDashboardTabsProps } from "./DashboardTabs.js";
+import { DensityDialogProvider } from "./DensityDialogProvider.js";
 import { ScheduledEmailDialogProvider } from "./ScheduledEmailDialogProvider.js";
 import { SettingsDialogProvider } from "./SettingsDialogProvider.js";
 import { ShareDialogDashboardHeader } from "./ShareDialogDashboardHeader.js";
@@ -79,6 +80,7 @@ export function DashboardHeader(): ReactElement {
             <AlertingDialogProvider />
             <ShareDialogDashboardHeader />
             <SettingsDialogProvider />
+            <DensityDialogProvider />
             <DeleteDialogWrapper />
             <WidgetDeleteDialogWrapper />
             <KpiDeleteDialogWrapper />

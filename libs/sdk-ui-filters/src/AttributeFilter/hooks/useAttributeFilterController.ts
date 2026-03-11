@@ -348,6 +348,18 @@ export const useAttributeFilterController = (
         ],
     );
 
+    // Wrap text filter's setDisplayForm so it also propagates the new display form
+    // to the elements controller's displayAsLabel, keeping autocomplete (onSearch) in sync.
+    const { setDisplayForm: setTextDisplayForm } = textFilterController;
+    const { setDisplayForm: setElementsDisplayForm } = elementsFilterController;
+    const setDisplayFormForTextMode = useCallback(
+        (newDisplayFormRef: ObjRef) => {
+            setTextDisplayForm?.(newDisplayFormRef);
+            setElementsDisplayForm?.(newDisplayFormRef);
+        },
+        [setTextDisplayForm, setElementsDisplayForm],
+    );
+
     if (isTextMode) {
         return {
             attribute: elementsFilterController.attribute,
@@ -377,7 +389,7 @@ export const useAttributeFilterController = (
             onApply: onApplyTextFilter,
             onReset: textFilterController.onReset ?? noop,
             filterDetailRequestHandler,
-            setDisplayForm: textFilterController.setDisplayForm,
+            setDisplayForm: setDisplayFormForTextMode,
             resetForModeSwitch: textFilterController.resetForModeSwitch ?? noop,
             onFilterModeChange:
                 availableInternalFilterModes.length > 1 ? onFilterModeChangeForControllers : undefined,

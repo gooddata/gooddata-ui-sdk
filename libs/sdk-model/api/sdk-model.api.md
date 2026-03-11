@@ -2669,6 +2669,7 @@ export interface IListedDashboard extends Readonly<Required<IAuditableDates>>, R
 
 // @public (undocumented)
 export interface ILlmActiveProvider {
+    defaultModelId: string;
     id: string;
     type: "llmProvider";
 }
@@ -2698,6 +2699,8 @@ export interface ILlmModel {
     family: LlmProviderFamily;
     // (undocumented)
     id: string;
+    // (undocumented)
+    isDefault?: boolean;
 }
 
 // @alpha (undocumented)
@@ -2711,7 +2714,7 @@ export interface ILlmProvider {
     // (undocumented)
     name: string | null;
     // (undocumented)
-    providerConfig: LlmProviderConfig;
+    providerConfig?: LlmProviderConfig;
 }
 
 // @public
@@ -4124,7 +4127,9 @@ export interface ISettings {
     enableCreateUser?: boolean;
     // @internal
     enableCrossFilteringAliasTitles?: boolean;
+    enableCustomGeoCollection?: boolean;
     enableCustomizedDashboardsWithoutPluginOverlay?: boolean;
+    enableDashboardDensitySetting?: boolean;
     enableDashboardDescriptionDynamicHeight?: boolean;
     enableDashboardFilterGroups?: boolean;
     enableDashboardFilterViews?: boolean;
@@ -4801,6 +4806,8 @@ export interface IThemeComplementaryPalette {
 // @beta
 export interface IThemeDashboard {
     content?: IThemeDashboardContent;
+    // @alpha
+    density?: ThemeDashboardDensity;
     editPanel?: IThemeDashboardEditPanel;
     filterBar?: IThemeDashboardFilterBar;
     navigation?: IThemeDashboardNavigation;
@@ -5397,7 +5404,7 @@ export type LlmModelsTestResults = {
 export type LlmProviderConfig = IOpenAIProviderConfig | IAzureFoundryProviderConfig | IAwsBedrockProviderConfig;
 
 // @alpha (undocumented)
-export type LlmProviderFamily = "OPENAI" | "ANTHROPIC" | "META" | "MISTRAL" | "AMAZON" | "GOOGLE" | "COHERE";
+export type LlmProviderFamily = "OPENAI" | "ANTHROPIC" | "META" | "MISTRAL" | "AMAZON" | "GOOGLE" | "COHERE" | "UNKNOWN";
 
 // @alpha (undocumented)
 export type LlmProviderPatch = Partial<ILlmProvider> & Pick<ILlmProvider, "id">;
@@ -5887,6 +5894,9 @@ export type SourceMeasureFilterObjRef = Extract<SourceInsightFilterObjRef, ISour
 
 // @beta
 export type ThemeColor = string;
+
+// @alpha
+export type ThemeDashboardDensity = "comfortable" | "compact";
 
 // @beta
 export type ThemeFontUri = string;

@@ -62,7 +62,6 @@ const TYPE_TO_KEY_MAP = {
     ACTIVE_CALENDARS: "activeCalendars",
     ENABLE_AI_ON_DATA: "enableAiOnData",
     API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE: "apiEntitiesDefaultContentMediaType",
-    ENABLE_NULL_JOINS: "enableNullJoins",
     RESTRICT_BASE_UI: "restrictBaseUi",
     ACTIVE_LLM_PROVIDER: "activeLlmProvider",
     SORT_COLLATION: "sortCollation",

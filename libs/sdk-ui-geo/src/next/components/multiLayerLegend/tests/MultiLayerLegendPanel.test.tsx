@@ -104,6 +104,24 @@ const mockModel: ILegendModel = {
 };
 
 describe("MultiLayerLegendPanel", () => {
+    it("renders explicit corner positions literally", () => {
+        const { getByTestId } = render(<A11yEnabledLegendPanel model={mockModel} position="bottom-left" />, {
+            wrapper: IntlWrapper,
+        });
+
+        expect(getByTestId("gd-geo-multi-layer-legend")).toHaveClass(
+            "gd-geo-multi-layer-legend--bottom-left",
+        );
+    });
+
+    it("maps auto position to top-right overlay placement", () => {
+        const { getByTestId } = render(<A11yEnabledLegendPanel model={mockModel} position="auto" />, {
+            wrapper: IntlWrapper,
+        });
+
+        expect(getByTestId("gd-geo-multi-layer-legend")).toHaveClass("gd-geo-multi-layer-legend--top-right");
+    });
+
     it("does not render when disabled", () => {
         const { queryByTestId } = render(<A11yEnabledLegendPanel enabled={false} model={mockModel} />, {
             wrapper: IntlWrapper,

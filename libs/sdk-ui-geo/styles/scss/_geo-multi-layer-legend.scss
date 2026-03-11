@@ -12,11 +12,6 @@ $legend-divider-color: var(--gd-palette-complementary-3, #dde4eb);
 $legend-title-color: var(--gd-palette-complementary-8, #464e56);
 $legend-text-color: var(--gd-palette-complementary-7, #6d7680);
 $legend-chevron-color: #94a1ad;
-$legend-toggle-bg: #f2f6f7;
-$legend-toggle-border: #c6d5e1;
-$legend-toggle-thumb-border: var(--gd-palette-complementary-5, #b0beca);
-$legend-toggle-active-bg: var(--gd-palette-primary-base, #14b2e2);
-
 @mixin legend-focus-outline($offset) {
     outline: 2px solid var(--gd-palette-primary-base);
     outline-offset: $offset;
@@ -217,6 +212,10 @@ $legend-toggle-active-bg: var(--gd-palette-primary-base, #14b2e2);
         flex-shrink: 0;
         display: flex;
         align-items: center;
+    }
+
+    &__toggle-switch {
+        display: block;
     }
 
     // Content wrapper for CSS Grid animation (smooth expand/collapse)
@@ -492,111 +491,5 @@ $legend-toggle-active-bg: var(--gd-palette-primary-base, #14b2e2);
         font-size: 12px;
         line-height: 16px;
         color: $legend-text-color;
-    }
-}
-
-// ==========================================================================
-// LAYER TOGGLE SWITCH
-// Pill-shaped toggle switch (30x14) matching Figma design
-// ==========================================================================
-.gd-geo-legend-toggle {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    width: 30px;
-    height: 14px;
-    padding: 0;
-    border: none;
-    background: transparent;
-    cursor: pointer;
-
-    &:focus {
-        outline: none;
-    }
-
-    &:focus-visible {
-        .gd-geo-legend-toggle__track {
-            outline: 2px solid var(--gd-palette-primary-base, #14b2e2);
-            outline-offset: 1px;
-        }
-    }
-
-    // Track (pill background)
-    &__track {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 30px;
-        height: 14px;
-        background-color: $legend-toggle-bg;
-        border: 1px solid $legend-toggle-border;
-        border-radius: 7px;
-        transition:
-            background-color 0.2s ease,
-            border-color 0.2s ease;
-
-        @media (prefers-reduced-motion: reduce) {
-            transition-duration: 0s;
-        }
-    }
-
-    // Thumb (sliding circle)
-    &__thumb {
-        position: absolute;
-        top: 2px;
-        left: 2px;
-        width: 10px;
-        height: 10px;
-        background-color: kit-variables.$gd-color-white;
-        border: 1px solid $legend-toggle-thumb-border;
-        border-radius: 50%;
-        transition:
-            left 0.2s ease,
-            background-color 0.2s ease,
-            border-color 0.2s ease;
-
-        @media (prefers-reduced-motion: reduce) {
-            transition-duration: 0s;
-        }
-    }
-
-    // Checked state
-    &--checked {
-        .gd-geo-legend-toggle__track {
-            background-color: $legend-toggle-active-bg;
-            border-color: $legend-toggle-active-bg;
-        }
-
-        .gd-geo-legend-toggle__thumb {
-            left: 16px;
-            background-color: kit-variables.$gd-color-white;
-            border-color: kit-variables.$gd-color-white;
-        }
-    }
-
-    // Hover state
-    &:hover:not(&--disabled) {
-        .gd-geo-legend-toggle__thumb {
-            border-color: var(--gd-palette-complementary-6, #94a1ad);
-        }
-
-        &.gd-geo-legend-toggle--checked {
-            .gd-geo-legend-toggle__track {
-                background-color: var(--gd-palette-primary-base-d06, #129cc6);
-            }
-        }
-    }
-
-    // Disabled state
-    &--disabled {
-        cursor: not-allowed;
-
-        .gd-geo-legend-toggle__track {
-            opacity: 0.5;
-        }
-
-        .gd-geo-legend-toggle__thumb {
-            opacity: 0.5;
-        }
     }
 }

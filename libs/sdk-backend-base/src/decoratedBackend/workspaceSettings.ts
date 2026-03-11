@@ -52,8 +52,8 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
         return this.decorated.setActiveLlmEndpoint(endpoint);
     }
 
-    async setActiveLlmProvider(provider: string): Promise<void> {
-        return this.decorated.setActiveLlmProvider(provider);
+    async setActiveLlmProvider(provider: string, defaultModelId: string): Promise<void> {
+        return this.decorated.setActiveLlmProvider(provider, defaultModelId);
     }
 
     async setTimezone(timezone: string): Promise<void> {

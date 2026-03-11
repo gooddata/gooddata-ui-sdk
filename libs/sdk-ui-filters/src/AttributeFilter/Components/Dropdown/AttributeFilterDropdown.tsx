@@ -9,7 +9,11 @@ import { Dropdown, isArrowKey, useMediaQuery } from "@gooddata/sdk-ui-kit";
 import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilterComponentsContext.js";
 import { useAttributeFilterContext } from "../../Context/AttributeFilterContext.js";
 import { useResolveAttributeFilterSubtitle } from "../../hooks/useResolveAttributeFilterSubtitle.js";
-import { createFilterFromOperator, isArbitraryOperator } from "../../textFilterOperatorUtils.js";
+import {
+    createFilterFromOperator,
+    getValuesFromFilter,
+    isArbitraryOperator,
+} from "../../textFilterOperatorUtils.js";
 import { AttributeFilterButtonErrorTooltip } from "../DropdownButton/AttributeFilterButtonErrorTooltip.js";
 
 const ALIGN_POINTS = [
@@ -89,7 +93,14 @@ export function AttributeFilterDropdown() {
     );
 
     const isMultiselect = selectionMode !== "single";
-    const textSelectionCount = isArbitraryOperator(operator) ? (textFilterValues?.length ?? 0) : 0;
+    const committedValues = getValuesFromFilter(textFilterCommittedFilter);
+    let arbitraryCount = 0;
+    if (withoutApply) {
+        arbitraryCount = textFilterValues?.length ?? 0;
+    } else {
+        arbitraryCount = Array.isArray(committedValues) ? committedValues.length : 0;
+    }
+    const textSelectionCount = isArbitraryOperator(operator) ? arbitraryCount : 0;
     const selectionCount = currentFilterMode === "text" ? textSelectionCount : selectionElements.length;
     const showSelectionCount = isMultiselect && selectionCount !== 0;
     const handleKeyDown = useCallback<KeyboardEventHandler<HTMLDivElement>>((e) => {

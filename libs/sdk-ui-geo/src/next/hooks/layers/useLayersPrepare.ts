@@ -14,6 +14,7 @@ import {
     useCancelablePromise,
 } from "@gooddata/sdk-ui";
 
+import { processSettledLayerResults } from "./processSettledLayerResults.js";
 import { getLayerAdapter } from "../../layers/registry/adapterRegistry.js";
 import type { IGeoAdapterContext, IGeoLayerOutput } from "../../layers/registry/adapterTypes.js";
 import type { IGeoChartConfig } from "../../types/config/unified.js";
@@ -44,6 +45,11 @@ export interface ILayerPreparedData {
     output: IGeoLayerOutput | null;
 }
 
+interface IPrepareAllLayersResult {
+    preparedData: ILayerPreparedData[];
+    firstError?: GoodDataSdkError;
+}
+
 /**
  * Result of preparing all layer outputs.
  *
@@ -52,7 +58,7 @@ export interface ILayerPreparedData {
 export interface ILayersPrepareResult {
     /**
      * Map of layerId to prepared layer data.
-     * Empty until all layers are prepared successfully.
+     * Can contain partial results when some layers fail.
      */
     layerOutputs: Map<string, ILayerPreparedData>;
 
@@ -60,8 +66,8 @@ export interface ILayersPrepareResult {
      * Combined preparation status for all layers.
      * - "pending" if no dataViews provided or dataViews not ready
      * - "loading" while any preparation is in progress
-     * - "success" when all preparations complete successfully
-     * - "error" if any preparation fails
+     * - "success" when the primary layer is prepared successfully
+     * - "error" when the primary layer fails to prepare
      */
     status: UseCancelablePromiseStatus;
 
@@ -116,18 +122,33 @@ async function prepareAllLayers(
     layerExecutions: ILayerExecutionRecord[],
     layerDataViews: Map<string, DataViewFacade>,
     createAdapterContext: (layerExecution: ILayerExecutionRecord) => IGeoAdapterContext,
-): Promise<ILayerPreparedData[]> {
-    return Promise.all(
+): Promise<IPrepareAllLayersResult> {
+    const settledResults = await Promise.allSettled(
         layerExecutions.map((le) => prepareSingleLayer(le, layerDataViews, createAdapterContext(le))),
     );
+    const { fulfilledValues: preparedData, firstError } = processSettledLayerResults({
+        settledResults,
+        layerExecutions,
+        onRejected: ({ layerId, error }) => {
+            console.error("[useLayersPrepare] Failed to prepare layer output.", {
+                layerId,
+                error,
+            });
+        },
+    });
+
+    return {
+        preparedData,
+        firstError,
+    };
 }
 
 /**
  * Hook that prepares all layer outputs in parallel once dataViews are available.
  *
  * @remarks
- * Calls adapter's `prepareLayer` for each layer simultaneously using Promise.all.
- * Only runs when all dataViews are available (status from useLayersData is "success").
+ * Calls adapter's `prepareLayer` for each layer simultaneously using Promise.allSettled.
+ * Runs when useLayersData returns "success" (the primary layer dataView is available).
  *
  * @param layerExecutions - Array of layer execution records
  * @param layerDataViews - Map of layerId to DataViewFacade (from useLayersData)
@@ -176,11 +197,23 @@ export function useLayersPrepare(
         [backend, workspace, config, execConfig, intl],
     );
 
-    const { result, status, error } = useCancelablePromise<ILayerPreparedData[], GoodDataSdkError>(
+    // Only prepare layers that have a loaded dataView; failed data layers are already
+    // reported by useLayersData and should not produce synthetic "No dataView found" errors here.
+    const layerExecutionsWithDataViews = useMemo(
+        () => layerExecutions.filter((layerExecution) => layerDataViews.has(layerExecution.layerId)),
+        [layerExecutions, layerDataViews],
+    );
+
+    const {
+        result,
+        status: promiseStatus,
+        error: promiseError,
+    } = useCancelablePromise<IPrepareAllLayersResult, GoodDataSdkError>(
         {
             promise:
-                dataStatus === "success" && layerExecutions.length > 0
-                    ? () => prepareAllLayers(layerExecutions, layerDataViews, createAdapterContext)
+                dataStatus === "success" && layerExecutionsWithDataViews.length > 0
+                    ? () =>
+                          prepareAllLayers(layerExecutionsWithDataViews, layerDataViews, createAdapterContext)
                     : undefined,
         },
         [backend, workspace, dataViewsFingerprint, layersStructureFingerprint, intl],
@@ -189,12 +222,22 @@ export function useLayersPrepare(
     const layerOutputs = useMemo(() => {
         const map = new Map<string, ILayerPreparedData>();
         if (result) {
-            for (const entry of result) {
+            for (const entry of result.preparedData) {
                 map.set(entry.layerId, entry);
             }
         }
         return map;
     }, [result]);
+
+    const primaryLayerId = layerExecutions[0]?.layerId;
+    const hasPrimaryLayerPrepared = primaryLayerId ? layerOutputs.has(primaryLayerId) : false;
+    const hasLayersToPrepare = layerExecutionsWithDataViews.length > 0;
+    const status: UseCancelablePromiseStatus =
+        promiseStatus === "success" && hasLayersToPrepare && !hasPrimaryLayerPrepared
+            ? "error"
+            : promiseStatus;
+    const error =
+        status === "error" && !hasPrimaryLayerPrepared ? (result?.firstError ?? promiseError) : promiseError;
 
     return {
         layerOutputs,

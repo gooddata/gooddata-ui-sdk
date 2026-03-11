@@ -9,6 +9,7 @@ import { type FilterViewDialogMode, type IInvalidCustomUrlDrillParameterInfo } f
 import { ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
 import { type DraggableLayoutItem } from "../../../presentation/dragAndDrop/types.js";
 import {
+    type DashboardDensity,
     type DropZoneType,
     type IAlertDialogContext,
     type ILayoutCoordinates,
@@ -19,7 +20,8 @@ import {
 } from "../../../types.js";
 import { type IDashboardWidgetOverlay } from "../../types/commonTypes.js";
 import { createMemoizedSelector } from "../_infra/selectors.js";
-import { selectConfig } from "../config/configSelectors.js";
+import { selectConfig, selectEnableDashboardDensitySetting } from "../config/configSelectors.js";
+import { selectIsInEditMode } from "../renderMode/renderModeSelectors.js";
 import { selectWidgetsMap } from "../tabs/layout/layoutSelectors.js";
 import { type DashboardSelector, type DashboardState } from "../types.js";
 
@@ -133,6 +135,30 @@ export const selectIsShareDialogOpen: DashboardSelector<boolean> = createSelecto
 export const selectIsSettingsDialogOpen: DashboardSelector<boolean> = createSelector(
     selectSelf,
     (state) => state.settingsDialog.open,
+);
+
+/**
+ * @alpha
+ */
+export const selectIsDensityDialogOpen: DashboardSelector<boolean> = createSelector(
+    selectSelf,
+    (state) => state.densityDialog.open,
+);
+
+/**
+ * Returns the current dashboard density setting.
+ *
+ * @remarks
+ * The value reflects either the theme-enforced density or the user's local preference.
+ * Defaults to "comfortable".
+ *
+ * @alpha
+ */
+export const selectDashboardDensity: DashboardSelector<DashboardDensity> = createSelector(
+    selectSelf,
+    selectEnableDashboardDensitySetting,
+    selectIsInEditMode,
+    (state, isEnabled, isInEditMode) => (isEnabled && !isInEditMode ? state.density : "comfortable"),
 );
 
 /**
@@ -378,6 +404,14 @@ export const selectActiveSection: DashboardSelector<ILayoutSectionPath | undefin
 export const selectInvalidDrillWidgetRefs: DashboardSelector<ObjRef[]> = createSelector(
     selectSelf,
     (state) => state.drillValidationMessages.invalidDrillWidgetRefs,
+);
+
+/**
+ * @internal
+ */
+export const selectSanitizedDrillWidgetRefs: DashboardSelector<ObjRef[]> = createSelector(
+    selectSelf,
+    (state) => state.drillValidationMessages.sanitizedDrillWidgetRefs,
 );
 
 const selectInvalidCustomUrlDrillParameterWidgets = createSelector(
