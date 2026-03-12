@@ -2,6 +2,7 @@
 
 import { type ReactElement, memo } from "react";
 
+import { resolveLegendGroupTitle } from "./groupTitle.js";
 import { LegendGroupContainer } from "./LegendGroupContainer.js";
 import {
     type ILegendGroup,
@@ -67,13 +68,14 @@ export const LegendGroupSize = memo(function LegendGroupSize({
     isFocusable = false,
 }: ILegendGroupSizeProps): ReactElement {
     const sizeItems = group.items.filter(isLegendSizeAnchorItem);
+    const groupTitle = resolveLegendGroupTitle(group);
 
     if (!enableGeoChartA11yImprovements) {
         return (
             <div className="gd-geo-multi-layer-legend__group gd-geo-multi-layer-legend__group--size">
-                {group.title ? (
-                    <div className="gd-geo-multi-layer-legend__group-title" title={group.title}>
-                        {group.title}
+                {groupTitle ? (
+                    <div className="gd-geo-multi-layer-legend__group-title" title={groupTitle}>
+                        {groupTitle}
                     </div>
                 ) : null}
                 <div className="gd-geo-multi-layer-legend__size-list">
@@ -101,11 +103,11 @@ export const LegendGroupSize = memo(function LegendGroupSize({
     return (
         <LegendGroupContainer
             variantClassName="gd-geo-multi-layer-legend__group--size"
-            title={group.title}
+            title={groupTitle}
             isFocusable={isFocusable}
             useFocusTarget
         >
-            <div className="gd-geo-multi-layer-legend__size-list" role="list" aria-label={group.title}>
+            <div className="gd-geo-multi-layer-legend__size-list" role="list" aria-label={groupTitle}>
                 {sizeItems.map((item, index) => (
                     <SizeAnchorItem key={index} item={item} />
                 ))}

@@ -17,7 +17,7 @@ runs:
   using: 'composite'
   steps:
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: gooddata/github-actions/git/checkout-with-cache@master
       with:
         ref: ${{ inputs.source-branch }}
         token: ${{ inputs.token }}

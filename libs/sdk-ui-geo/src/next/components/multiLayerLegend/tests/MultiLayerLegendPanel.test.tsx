@@ -12,6 +12,7 @@ import { MultiLayerLegendPanel } from "../MultiLayerLegendPanel.js";
 
 const intlMessages: Record<string, string> = {
     "geochart.legend.colorScale.label": "Color scale from {min} to {max}",
+    "geochart.legend.colorScale.title.allSegments": "{metric} (all segments)",
     "geochart.legend.layer.hidden": "Map layer {name} hidden",
     "geochart.legend.layer.shown": "Map layer {name} shown",
     "geochart.legend.item.hidden": "{name} hidden",
@@ -805,6 +806,46 @@ describe("MultiLayerLegendPanel", () => {
             const labelledBy = group.getAttribute("aria-labelledby")!;
             expect(labelledBy).toBeTruthy();
             const titleEl = container.querySelector(`#${CSS.escape(labelledBy)}`)!;
+            expect(titleEl.textContent).toBe("Revenue");
+        });
+
+        it("falls back to the raw group title when no formatter is provided", () => {
+            const model: ILegendModel = {
+                title: "Legend",
+                sections: [
+                    {
+                        layerId: "layer-1",
+                        layerTitle: "Layer 1",
+                        layerKind: "area",
+                        groups: [
+                            {
+                                kind: "colorScale",
+                                title: "Revenue",
+                                titleMessageId: "geochart.legend.colorScale.title.allSegments",
+                                titleMessageValues: { metric: "Revenue" },
+                                items: [
+                                    {
+                                        type: "colorScale",
+                                        minLabel: "7",
+                                        maxLabel: "6,684",
+                                        minColor: "#ffffff",
+                                        maxColor: "#000000",
+                                    },
+                                ],
+                            },
+                        ],
+                    },
+                ],
+            };
+
+            const { container } = render(
+                <MultiLayerLegendPanel enableGeoChartA11yImprovements model={model} />,
+                {
+                    wrapper: IntlWrapper,
+                },
+            );
+
+            const titleEl = container.querySelector(".gd-geo-multi-layer-legend__group-title")!;
             expect(titleEl.textContent).toBe("Revenue");
         });
     });

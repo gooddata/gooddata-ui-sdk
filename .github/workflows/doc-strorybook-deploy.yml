@@ -20,7 +20,7 @@ jobs:
     needs: [storybook-deploy]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: gooddata/github-actions/git/checkout-with-cache@master
         with:
           token: ${{ secrets.TOKEN_GITHUB_YENKINS}}
       - name: Notify to slack

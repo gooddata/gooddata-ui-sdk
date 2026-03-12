@@ -3,7 +3,11 @@
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 
 import type { StyleSpecification } from "../../layers/common/mapFacade.js";
-import type { GeoTileset } from "../../types/map/tileset.js";
+import {
+    type GeoBasemap,
+    type GeoColorScheme,
+    doesGeoBasemapSupportColorScheme,
+} from "../../types/map/basemap.js";
 
 const ABSOLUTE_URL_PATTERN = /^https?:\/\//i;
 
@@ -12,80 +16,37 @@ type VectorSourceWithTiles = {
     tiles?: string[];
 } & Record<string, unknown>;
 
-const RASTER_TILESETS: Array<GeoTileset> = ["satellite"];
-
 /**
  * Fetches the MapLibre style specification from the backend.
  *
  * @remarks
+ * The backend returns a complete MapLibre v8 style with all tile, glyph, and sprite URLs
+ * already proxied through the GoodData API. No manual URL construction is needed on the
+ * UI side — the returned style JSON can be passed directly to MapLibre.
+ *
  * Caching is handled by the caching backend layer. Multiple calls with the same
- * backend instance will be deduplicated if the backend is wrapped with `withCaching`.
+ * backend instance and params will be deduplicated if the backend is wrapped with `withCaching`.
+ *
+ * When basemap is `undefined`, no basemap parameter is sent and the backend returns its own
+ * default style. In that case `colorScheme` is also omitted because the default basemap does
+ * not support explicit color variants.
  *
  * @internal
  */
 export async function fetchMapStyle(
     backend: IAnalyticalBackend,
-    tileset: GeoTileset,
+    basemap?: GeoBasemap,
+    colorScheme?: GeoColorScheme,
 ): Promise<StyleSpecification> {
-    const style = (await backend.geo().getDefaultStyle()) as unknown;
+    const colorSchemeParam =
+        colorScheme === undefined || basemap === undefined || !doesGeoBasemapSupportColorScheme(basemap)
+            ? undefined
+            : colorScheme;
+    const style = (await backend
+        .geo()
+        .getDefaultStyle({ basemap, colorScheme: colorSchemeParam })) as unknown;
     assertValidStyle(style);
-    // replace source and layer with raster tileset, we should change this later to fetch the raster style from backend
-    if (RASTER_TILESETS.includes(tileset)) {
-        return applyRasterTilesetQueryToStyle(style, tileset);
-    }
     return style;
-}
-
-function applyRasterTilesetQueryToStyle(style: StyleSpecification, tileset: GeoTileset): StyleSpecification {
-    const tileUrl = getVectorTileUrl(style);
-    if (!tileUrl) {
-        return style;
-    }
-
-    const rasterTiles = [appendTilesetQuery(tileUrl, tileset)];
-
-    return {
-        ...style,
-        name: style.name ? `${style.name} (${tileset})` : style.name,
-        sources: {
-            [tileset]: {
-                type: "raster",
-                tiles: rasterTiles,
-            },
-        },
-        layers: [
-            {
-                id: tileset,
-                type: "raster",
-                source: tileset,
-            },
-        ],
-    };
-}
-
-function appendTilesetQuery(tileUrl: string, tileset: string): string {
-    if (!tileUrl) {
-        return tileUrl;
-    }
-
-    return `${tileUrl}?tileset=${encodeURIComponent(tileset)}`;
-}
-
-function getVectorTileUrl(style: StyleSpecification): string | undefined {
-    const sources = style.sources ?? {};
-
-    for (const source of Object.values(sources)) {
-        if (!source || typeof source !== "object" || !("tiles" in source)) {
-            continue;
-        }
-
-        const tiles = (source as VectorSourceWithTiles).tiles;
-        if (Array.isArray(tiles) && tiles.length > 0) {
-            return tiles[0];
-        }
-    }
-
-    return undefined;
 }
 
 function assertValidStyle(style: unknown): asserts style is StyleSpecification {
@@ -115,10 +76,6 @@ function assertValidStyle(style: unknown): asserts style is StyleSpecification {
             return isVectorSourceWithTiles(source);
         },
     );
-
-    if (vectorSources.length === 0) {
-        throw new Error("Geo style payload must include at least one vector source.");
-    }
 
     for (const [sourceName, source] of vectorSources) {
         const tiles = Array.isArray(source.tiles) ? source.tiles : null;

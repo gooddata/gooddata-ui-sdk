@@ -2,6 +2,63 @@
 
 import { type ILlmProvider, type LlmProviderPatch, type LlmProviderTestResults } from "@gooddata/sdk-model";
 
+import { type IPagedResource } from "../../common/paging.js";
+
+/**
+ * Service to query LLM providers.
+ *
+ * @alpha
+ */
+export interface ILlmProvidersQuery {
+    /**
+     * Sets number of LLM providers to return per page.
+     * Default size: 100
+     *
+     * @param size - desired max number of LLM providers per page must be a positive number
+     * @returns LLM providers query
+     */
+    withSize(size: number): ILlmProvidersQuery;
+
+    /**
+     * Sets starting page for the query. Backend WILL return no data if the page is greater than
+     * total number of pages.
+     * Default page: 0
+     *
+     * @param page - zero indexed, must be non-negative
+     * @returns LLM providers query
+     */
+    withPage(page: number): ILlmProvidersQuery;
+
+    /**
+     * Sets sorting for the query.
+     *
+     * @param sort - Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @returns LLM providers query
+     */
+    withSorting(sort: string[]): ILlmProvidersQuery;
+
+    /**
+     * Starts the LLM providers query.
+     *
+     * @returns promise of first page of the results
+     */
+    query(): Promise<ILlmProvidersQueryResult>;
+
+    /**
+     * Starts the LLM providers query.
+     *
+     * @returns promise with a list of all LLM providers matching the specified options
+     */
+    queryAll(): Promise<ILlmProvider[]>;
+}
+
+/**
+ * Queried LLM providers are returned in a paged representation.
+ *
+ * @alpha
+ */
+export type ILlmProvidersQueryResult = IPagedResource<ILlmProvider>;
+
 /**
  * This service provides access to organization llm providers configuration.
  *
@@ -16,11 +73,11 @@ export interface IOrganizationLlmProvidersService {
     getCount(): Promise<number>;
 
     /**
-     * Get all llm providers
+     * Get providers query
      *
-     * @returns Promise resolved with array of llm providers.
+     * @returns providers query
      */
-    getAll(): Promise<ILlmProvider[]>;
+    getProvidersQuery(): ILlmProvidersQuery;
 
     /**
      * Delete a provider

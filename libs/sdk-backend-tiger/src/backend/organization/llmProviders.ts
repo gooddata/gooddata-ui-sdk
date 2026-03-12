@@ -13,9 +13,10 @@ import {
     GenAiApi_TestLlmProvider,
     GenAiApi_TestLlmProviderById,
 } from "@gooddata/api-client-tiger/endpoints/genAI";
-import { type IOrganizationLlmProvidersService } from "@gooddata/sdk-backend-spi";
+import { type ILlmProvidersQuery, type IOrganizationLlmProvidersService } from "@gooddata/sdk-backend-spi";
 import { type ILlmProvider, type LlmProviderPatch, type LlmProviderTestResults } from "@gooddata/sdk-model";
 
+import { LlmProvidersQuery } from "./llmProvidersQuery.js";
 import {
     convertLlmProviderFromBackend,
     convertLlmProviderPatchToBackend,
@@ -36,13 +37,8 @@ export class OrganizationLlmProvidersService implements IOrganizationLlmProvider
         });
     }
 
-    public getAll(): Promise<ILlmProvider[]> {
-        return this.authCall(async (client: ITigerClientBase) => {
-            const result = await EntitiesApi_GetAllEntitiesLlmProviders(client.axios, client.basePath, {});
-            const providers = result.data?.data || [];
-
-            return providers.map(convertLlmProviderFromBackend);
-        });
+    public getProvidersQuery(): ILlmProvidersQuery {
+        return new LlmProvidersQuery(this.authCall);
     }
 
     public getLlmProvider(id: string): Promise<ILlmProvider | undefined> {

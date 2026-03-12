@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: gooddata/github-actions/git/checkout-with-cache@master
         with:
           ref: master
       - name: Hugo Build

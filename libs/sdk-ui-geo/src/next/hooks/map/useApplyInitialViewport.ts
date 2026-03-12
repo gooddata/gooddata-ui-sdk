@@ -25,22 +25,23 @@ export function useApplyInitialViewport(
     config: IGeoChartConfig | undefined,
     initialViewport: Partial<IMapViewport> | null,
 ): void {
-    const appliedForMapRef = useRef<IMapFacade | null>(null);
+    const hasAppliedInitialViewportRef = useRef(false);
 
     useEffect(() => {
         if (!map || !isMapReady) {
             return;
         }
 
-        // Apply at most once per map instance.
-        if (appliedForMapRef.current === map) {
+        // Apply late initial viewport only once for the controller lifecycle.
+        // Basemap/style changes can recreate the map instance, but should not snap the camera back.
+        if (hasAppliedInitialViewportRef.current) {
             return;
         }
 
         const area = config?.viewport?.area;
         const hasExplicitViewport = Boolean(config?.center) || Boolean(area && area !== "auto");
         if (hasExplicitViewport) {
-            appliedForMapRef.current = map;
+            hasAppliedInitialViewportRef.current = true;
             return;
         }
 
@@ -49,6 +50,6 @@ export function useApplyInitialViewport(
         }
 
         applyViewport(map, initialViewport, false);
-        appliedForMapRef.current = map;
+        hasAppliedInitialViewportRef.current = true;
     }, [map, isMapReady, config?.center, config?.viewport?.area, initialViewport]);
 }

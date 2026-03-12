@@ -38,7 +38,7 @@ jobs:
         needs: [publish-netlify, update-apidocs-version, get-version]
         steps:
           - name: Checkout repository
-            uses: actions/checkout@v4
+            uses: gooddata/github-actions/git/checkout-with-cache@master
             with:
               token: ${{ secrets.TOKEN_GITHUB_YENKINS}}
           - name: Notify to slack

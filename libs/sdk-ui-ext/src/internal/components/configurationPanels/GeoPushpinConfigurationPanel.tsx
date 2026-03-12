@@ -12,7 +12,7 @@ import {
     insightHasMeasures,
 } from "@gooddata/sdk-model";
 import { BucketNames } from "@gooddata/sdk-ui";
-import type { GeoTileset } from "@gooddata/sdk-ui-geo";
+import { type GeoBasemap, type GeoColorScheme, doesGeoBasemapSupportColorScheme } from "@gooddata/sdk-ui-geo";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
 import {
@@ -27,10 +27,16 @@ import {
     HIDE_DELAY_DEFAULT,
     SHOW_DELAY_DEFAULT,
 } from "../../constants/bubble.js";
-import { isGeoBasemapConfigEnabled, isGeoChartsViewportConfigEnabled } from "../../constants/featureFlags.js";
+import {
+    isGeoBasemapConfigEnabled,
+    isGeoChartsViewportConfigEnabled,
+    isGeoSatelliteBasemapEnabled,
+} from "../../constants/featureFlags.js";
+import { sanitizeGeoMapStyleOptions } from "../../constants/geoMapStyle.js";
 import { BasemapDropdownControl } from "../configurationControls/BasemapDropdownControl.js";
 import { CheckboxControl } from "../configurationControls/CheckboxControl.js";
 import { ColorsSection } from "../configurationControls/colors/ColorsSection.js";
+import { ColorSchemeDropdownControl } from "../configurationControls/ColorSchemeDropdownControl.js";
 import { ConfigSection } from "../configurationControls/ConfigSection.js";
 import { type ICurrentMapView } from "../configurationControls/GeoViewportControl.js";
 import { GeoLegendSection } from "../configurationControls/legend/GeoLegendSection.js";
@@ -42,12 +48,21 @@ interface IGeoPushpinConfigurationPanelProps extends IConfigurationPanelContentP
 }
 
 export class GeoPushpinConfigurationPanel extends ConfigurationPanelContent<IGeoPushpinConfigurationPanelProps> {
-    protected getControlProperties(): { groupNearbyPoints: boolean; tileset: GeoTileset } {
+    protected getControlProperties(): {
+        groupNearbyPoints: boolean;
+        basemap: GeoBasemap | undefined;
+        colorScheme: GeoColorScheme | undefined;
+    } {
         const groupNearbyPoints = this.props.properties?.controls?.["points"]?.groupNearbyPoints ?? true;
-        const tileset = (this.props.properties?.controls?.["tileset"] as GeoTileset | undefined) ?? "default";
+        const { basemap, colorScheme } = sanitizeGeoMapStyleOptions({
+            basemap: this.props.properties?.controls?.["basemap"],
+            legacyTileset: this.props.properties?.controls?.["tileset"],
+            colorScheme: this.props.properties?.controls?.["colorScheme"],
+        });
         return {
             groupNearbyPoints,
-            tileset,
+            basemap,
+            colorScheme,
         };
     }
 
@@ -75,10 +90,13 @@ export class GeoPushpinConfigurationPanel extends ConfigurationPanelContent<IGeo
 
     protected renderViewportSection(): ReactElement {
         const { properties, propertiesMeta, pushData, featureFlags } = this.props;
-        const { tileset } = this.getControlProperties();
+        const { basemap, colorScheme } = this.getControlProperties();
         const isControlDisabled = this.isControlDisabled();
         const isBasemapConfigEnabled = isGeoBasemapConfigEnabled(featureFlags);
+        const isSatelliteBasemapEnabled = isGeoSatelliteBasemapEnabled(featureFlags);
         const isViewportConfigEnabled = isGeoChartsViewportConfigEnabled(featureFlags);
+        const isColorSchemeSupported = basemap !== undefined && doesGeoBasemapSupportColorScheme(basemap);
+        const isColorSchemeDisabled = isControlDisabled || !isColorSchemeSupported;
         return (
             <ConfigSection
                 id="map_section"
@@ -94,15 +112,27 @@ export class GeoPushpinConfigurationPanel extends ConfigurationPanelContent<IGeo
                     getCurrentMapView={isViewportConfigEnabled ? this.props.getCurrentMapView : undefined}
                     beforeNavigationContent={
                         isBasemapConfigEnabled ? (
-                            <BasemapDropdownControl
-                                valuePath="tileset"
-                                labelText={messages["basemapTitle"].id}
-                                properties={properties}
-                                value={tileset}
-                                disabled={isControlDisabled}
-                                showDisabledMessage={isControlDisabled}
-                                pushData={pushData}
-                            />
+                            <>
+                                <BasemapDropdownControl
+                                    valuePath="basemap"
+                                    labelText={messages["basemapTitle"].id}
+                                    properties={properties}
+                                    value={basemap}
+                                    disabled={isControlDisabled}
+                                    showDisabledMessage={isControlDisabled}
+                                    showSatelliteBasemapOption={isSatelliteBasemapEnabled}
+                                    pushData={pushData}
+                                />
+                                <ColorSchemeDropdownControl
+                                    valuePath="colorScheme"
+                                    labelText={messages["colorSchemeTitle"].id}
+                                    properties={properties}
+                                    value={colorScheme}
+                                    disabled={isColorSchemeDisabled}
+                                    showDisabledMessage={isColorSchemeDisabled}
+                                    pushData={pushData}
+                                />
+                            </>
                         ) : null
                     }
                 />

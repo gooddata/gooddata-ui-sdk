@@ -218,7 +218,7 @@ export const MultiLayerLegendSection = memo(function MultiLayerLegendSection({
     const titleId = `${sectionId}-title`;
     const toggleId = `${sectionId}-toggle`;
     const isFirstRenderRef = useRef(true);
-    const expandTimeoutRef = useRef<number | undefined>(undefined);
+    const expandTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
     // Wrap onItemClick to include layerId - this binds the section's layerId
     // so inner components don't need to know about multi-layer context
@@ -248,7 +248,7 @@ export const MultiLayerLegendSection = memo(function MultiLayerLegendSection({
 
     const clearExpandTimeout = useCallback(() => {
         if (expandTimeoutRef.current !== undefined) {
-            window.clearTimeout(expandTimeoutRef.current);
+            clearTimeout(expandTimeoutRef.current);
             expandTimeoutRef.current = undefined;
         }
     }, []);
@@ -306,10 +306,12 @@ export const MultiLayerLegendSection = memo(function MultiLayerLegendSection({
         clearExpandTimeout();
         setIsScrollEnabled(false);
         const durationMs = getToggleDurationMs();
-        expandTimeoutRef.current = window.setTimeout(() => {
+        expandTimeoutRef.current = setTimeout(() => {
             setIsScrollEnabled(true);
             expandTimeoutRef.current = undefined;
         }, durationMs + 50);
+
+        return clearExpandTimeout;
     }, [clearExpandTimeout, getToggleDurationMs, isExpanded]);
 
     const handleExpandClick = () => {

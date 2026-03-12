@@ -20,6 +20,20 @@ export const FALLBACK_LEGEND_COLOR = "#ccc";
 export const ATTRIBUTE_ONLY_URI_PREFIX = "__attribute_only__";
 
 /**
+ * Neutral grayscale start for segmented color scales.
+ *
+ * @internal
+ */
+export const SEGMENTED_COLOR_SCALE_MIN_COLOR = "var(--gd-palette-complementary-2)";
+
+/**
+ * Neutral grayscale end for segmented color scales.
+ *
+ * @internal
+ */
+export const SEGMENTED_COLOR_SCALE_MAX_COLOR = "var(--gd-palette-complementary-8)";
+
+/**
  * Converts existing legend items to color category items.
  *
  * @param legendItems - Base legend items from layer output

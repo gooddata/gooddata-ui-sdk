@@ -22,7 +22,7 @@ jobs:
       branch: ${{ steps.branch.outputs.branch }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: gooddata/github-actions/git/checkout-with-cache@master
         with:
           ref: 'master'
           token: ${{ secrets.TOKEN_GITHUB_YENKINS_ADMIN }}
@@ -153,7 +153,7 @@ jobs:
       needs: [publish-netlify, update-apidocs-version, publish-release]
       steps:
         - name: Checkout repository
-          uses: actions/checkout@v4
+          uses: gooddata/github-actions/git/checkout-with-cache@master
           with:
             token: ${{ secrets.TOKEN_GITHUB_YENKINS}}
         - name: Notify to slack

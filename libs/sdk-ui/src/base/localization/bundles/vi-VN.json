@@ -26,6 +26,7 @@
     "gs.list.allSearchResultsAndCount": "Tất cả kết quả tìm kiếm ({count})",
     "gs.list.except": "ngoại trừ",
     "gs.list.is": "là",
+    "gs.list.isNot": "không phải là",
     "gs.list.search.placeholder": "Tìm kiếm…",
     "gs.list.acessibility.search.label": "Tìm kiếm giá trị thuộc tính",
     "gs.list.notAvailableAbbreviation": "N/A",

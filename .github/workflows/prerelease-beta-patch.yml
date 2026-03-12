@@ -15,7 +15,7 @@ jobs:
             branch: ${{ steps.check-input-version-param.outputs.branch }}
         steps:
             - name: Checkout code
-              uses: actions/checkout@v4
+              uses: gooddata/github-actions/git/checkout-with-cache@master
             - name: Check if branch for version exists
               id: check-input-version-param
               run: |
