@@ -2,6 +2,7 @@
 
 import { type ReactElement, memo } from "react";
 
+import { resolveLegendGroupTitle } from "./groupTitle.js";
 import { LegendGroupContainer } from "./LegendGroupContainer.js";
 import { type LegendMessageFormatter } from "./legendMessages.js";
 import {
@@ -105,13 +106,14 @@ export const LegendGroupColorScale = memo(function LegendGroupColorScale({
     isFocusable = false,
 }: ILegendGroupColorScaleProps): ReactElement {
     const scaleItem = group.items.find(isLegendColorScaleItem);
+    const groupTitle = resolveLegendGroupTitle(group, formatMessage);
 
     if (!enableGeoChartA11yImprovements) {
         return (
             <div className="gd-geo-multi-layer-legend__group gd-geo-multi-layer-legend__group--color-scale">
-                {group.title ? (
-                    <div className="gd-geo-multi-layer-legend__group-title" title={group.title}>
-                        {group.title}
+                {groupTitle ? (
+                    <div className="gd-geo-multi-layer-legend__group-title" title={groupTitle}>
+                        {groupTitle}
                     </div>
                 ) : null}
                 {scaleItem ? (
@@ -128,7 +130,7 @@ export const LegendGroupColorScale = memo(function LegendGroupColorScale({
     return (
         <LegendGroupContainer
             variantClassName="gd-geo-multi-layer-legend__group--color-scale"
-            title={group.title}
+            title={groupTitle}
             isFocusable={isFocusable}
             useFocusTarget
         >

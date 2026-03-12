@@ -4,16 +4,50 @@ import { memo } from "react";
 
 import { useIntl } from "react-intl";
 
+import { type IPushData } from "@gooddata/sdk-ui";
+
 import { DropdownControl, type IDropdownControlProps } from "./DropdownControl.js";
-import { basemapDropdownItems } from "../../constants/dropdowns.js";
+import { getBasemapDropdownItems } from "../../constants/dropdowns.js";
 import { getTranslatedDropdownItems } from "../../utils/translations.js";
 
-type IBasemapDropdownControlProps = Omit<IDropdownControlProps, "items">;
+interface IBasemapDropdownControlProps extends Omit<IDropdownControlProps, "items"> {
+    showSatelliteBasemapOption: boolean;
+}
 
-export const BasemapDropdownControl = memo(function BasemapDropdownControl(
-    props: IBasemapDropdownControlProps,
-) {
+export const BasemapDropdownControl = memo(function BasemapDropdownControl({
+    showSatelliteBasemapOption,
+    ...props
+}: IBasemapDropdownControlProps) {
     const intl = useIntl();
+    const pushData = (data: IPushData) => {
+        if (data.properties?.controls?.["basemap"] !== "default") {
+            props.pushData?.(data);
+            return;
+        }
 
-    return <DropdownControl {...props} items={getTranslatedDropdownItems(basemapDropdownItems, intl)} />;
+        props.pushData?.({
+            ...data,
+            properties: {
+                ...data.properties,
+                controls: {
+                    ...data.properties?.controls,
+                    basemap: undefined,
+                    colorScheme: undefined,
+                    tileset: undefined,
+                },
+            },
+        });
+    };
+
+    return (
+        <DropdownControl
+            {...props}
+            value={props.value ?? "default"}
+            items={getTranslatedDropdownItems(
+                getBasemapDropdownItems(showSatelliteBasemapOption, props.value ?? "default"),
+                intl,
+            )}
+            pushData={pushData}
+        />
+    );
 });

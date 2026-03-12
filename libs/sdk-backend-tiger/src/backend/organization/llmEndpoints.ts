@@ -13,13 +13,14 @@ import {
     GenAiApi_ValidateLLMEndpoint,
     GenAiApi_ValidateLLMEndpointById,
 } from "@gooddata/api-client-tiger/endpoints/genAI";
-import { type IOrganizationLlmEndpointsService } from "@gooddata/sdk-backend-spi";
+import { type ILlmEndpointsQuery, type IOrganizationLlmEndpointsService } from "@gooddata/sdk-backend-spi";
 import {
     type ILlmEndpointOpenAI,
     type LlmEndpointOpenAIPatch,
     type LlmEndpointTestResults,
 } from "@gooddata/sdk-model";
 
+import { LlmEndpointsQuery } from "./llmEndpointsQuery.js";
 import { convertLlmEndpoint } from "../../convertors/fromBackend/llmEndpointConvertor.js";
 import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
 
@@ -36,13 +37,8 @@ export class OrganizationLlmEndpointsService implements IOrganizationLlmEndpoint
         });
     }
 
-    public getAll(): Promise<ILlmEndpointOpenAI[]> {
-        return this.authCall(async (client: ITigerClientBase) => {
-            const result = await EntitiesApi_GetAllEntitiesLlmEndpoints(client.axios, client.basePath, {});
-            const endpoints = result.data?.data || [];
-
-            return endpoints.map(convertLlmEndpoint);
-        });
+    public getEndpointsQuery(): ILlmEndpointsQuery {
+        return new LlmEndpointsQuery(this.authCall);
     }
 
     public getLlmEndpoint(id: string): Promise<ILlmEndpointOpenAI | undefined> {

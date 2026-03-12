@@ -37,6 +37,7 @@ describe("static features", () => {
                 [TigerFeaturesNames.EnableGeoChartsViewportConfig]: "TRUE",
                 [TigerFeaturesNames.EnableGeoSegmentConflictRecommendation]: "TRUE",
                 [TigerFeaturesNames.EnableGeoBasemapConfig]: "TRUE",
+                [TigerFeaturesNames.EnableGeoSatelliteBasemapOption]: "TRUE",
             }),
         );
         expect(results).toEqual({
@@ -48,6 +49,7 @@ describe("static features", () => {
             enableGeoChartsViewportConfig: true,
             enableGeoSegmentConflictRecommendation: true,
             enableGeoBasemapConfig: true,
+            enableGeoSatelliteBasemapOption: true,
         });
     });
 
@@ -63,6 +65,7 @@ describe("static features", () => {
                     [TigerFeaturesNames.EnableGeoChartsViewportConfig]: "TRUE",
                     [TigerFeaturesNames.EnableGeoSegmentConflictRecommendation]: "TRUE",
                     [TigerFeaturesNames.EnableGeoBasemapConfig]: "TRUE",
+                    [TigerFeaturesNames.EnableGeoSatelliteBasemapOption]: "TRUE",
                 },
                 ["beta"],
             ),
@@ -76,6 +79,7 @@ describe("static features", () => {
             enableGeoChartsViewportConfig: true,
             enableGeoSegmentConflictRecommendation: true,
             enableGeoBasemapConfig: true,
+            enableGeoSatelliteBasemapOption: true,
         });
     });
 });

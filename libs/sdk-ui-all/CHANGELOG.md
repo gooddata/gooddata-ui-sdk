@@ -1,6 +1,25 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 05 Mar 2026 08:43:40 GMT and should not be manually modified.
+This log was last generated on Thu, 12 Mar 2026 11:37:55 GMT and should not be manually modified.
+
+## 11.25.0
+
+Thu, 12 Mar 2026 11:37:55 GMT
+
+### Updates
+
+- sdk-ui-dashboard: Updated "Learn more" docs link in metric filter.
+- sdk-ui-kit: back button have property disabled
+- sdk-backend-tiger: Turn on FF for Crate and Athena data source by default.
+- sdk-ui-kit: Add minWidth prop to UiMenu
+- sdk-ui-dashboard: Fixed page crashing when reloading the plugins.
+- sdk-ui-semantic-search: support include and exclude tags in semantic search
+- fix: sdk-ui-all: Improve text filters. Change textual representation of negative attribute filter.
+- Dashboard now supports customizing the Drill Dialog Export dropdown through DrillDialogExportDropdownComponentProvider.
+- Add data-testid attributes for drill filters config sections and submenu header
+- sdk-ui-all: Add geo collections support.
+- sdk-backend-tiger: Set enableNewScheduledExport feature flag default true.
+- sdk-ui-dashboard: Introduce experimental dashboard layout density setting
 
 ## 11.24.0
 

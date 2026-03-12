@@ -1240,7 +1240,13 @@ export interface IGenAIService {
 
 // @alpha
 export interface IGeoService {
-    getDefaultStyle(): Promise<IGeoStyleSpecification>;
+    getDefaultStyle(params?: IGeoStyleParams): Promise<IGeoStyleSpecification>;
+}
+
+// @alpha
+export interface IGeoStyleParams {
+    basemap?: string;
+    colorScheme?: string;
 }
 
 // @alpha
@@ -1441,6 +1447,30 @@ export interface IListKnowledgeDocumentsOptions {
     state?: "enabled" | "disabled";
 }
 
+// @alpha
+export interface ILlmEndpointsQuery {
+    query(): Promise<ILlmEndpointsQueryResult>;
+    queryAll(): Promise<ILlmEndpointOpenAI[]>;
+    withPage(page: number): ILlmEndpointsQuery;
+    withSize(size: number): ILlmEndpointsQuery;
+    withSorting(sort: string[]): ILlmEndpointsQuery;
+}
+
+// @alpha
+export type ILlmEndpointsQueryResult = IPagedResource<ILlmEndpointOpenAI>;
+
+// @alpha
+export interface ILlmProvidersQuery {
+    query(): Promise<ILlmProvidersQueryResult>;
+    queryAll(): Promise<ILlmProvider[]>;
+    withPage(page: number): ILlmProvidersQuery;
+    withSize(size: number): ILlmProvidersQuery;
+    withSorting(sort: string[]): ILlmProvidersQuery;
+}
+
+// @alpha
+export type ILlmProvidersQueryResult = IPagedResource<ILlmProvider>;
+
 // @public
 export type IMeasureExpressionToken = IObjectExpressionToken | IAttributeElementExpressionToken | ITextExpressionToken | ICommentExpressionToken | IBracketExpressionToken;
 
@@ -1631,8 +1661,8 @@ export type IOrganizationAutomationsQueryResult = IPagedResource<IAutomationMeta
 export interface IOrganizationLlmEndpointsService {
     createLlmEndpoint(endpoint: ILlmEndpointOpenAI, token?: string): Promise<ILlmEndpointOpenAI>;
     deleteLlmEndpoint(id: string): Promise<void>;
-    getAll(): Promise<ILlmEndpointOpenAI[]>;
     getCount(): Promise<number>;
+    getEndpointsQuery(): ILlmEndpointsQuery;
     getLlmEndpoint(id: string): Promise<ILlmEndpointOpenAI | undefined>;
     patchLlmEndpoint(endpoint: LlmEndpointOpenAIPatch, token?: string): Promise<ILlmEndpointOpenAI>;
     testLlmEndpoint(endpoint: Partial<LlmEndpointOpenAIPatch>, token?: string): Promise<LlmEndpointTestResults>;
@@ -1643,9 +1673,9 @@ export interface IOrganizationLlmEndpointsService {
 export interface IOrganizationLlmProvidersService {
     createLlmProvider(provider: ILlmProvider): Promise<ILlmProvider>;
     deleteLlmProvider(id: string): Promise<void>;
-    getAll(): Promise<ILlmProvider[]>;
     getCount(): Promise<number>;
     getLlmProvider(id: string): Promise<ILlmProvider | undefined>;
+    getProvidersQuery(): ILlmProvidersQuery;
     patchLlmProvider(provider: LlmProviderPatch): Promise<ILlmProvider>;
     testLlmProvider(provider: Partial<LlmProviderPatch>): Promise<LlmProviderTestResults>;
     updateLlmProvider(provider: ILlmProvider): Promise<ILlmProvider>;

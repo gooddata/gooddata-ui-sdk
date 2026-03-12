@@ -207,6 +207,7 @@ export const useAttributeFilterController = (
         backend,
         workspace,
         filterInput: resolvedFilter!,
+        displayAsLabel: elementsModeDisplayAsLabel,
         onChange,
         withoutApply: withoutApply ?? false,
         selectionMode,

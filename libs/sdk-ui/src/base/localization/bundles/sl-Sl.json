@@ -26,6 +26,7 @@
     "gs.list.allSearchResultsAndCount": "Vsi rezultati iskanja ({count})",
     "gs.list.except": "razen",
     "gs.list.is": "je",
+    "gs.list.isNot": "ni",
     "gs.list.search.placeholder": "Iskanje…",
     "gs.list.acessibility.search.label": "Išči vrednosti atributov",
     "gs.list.notAvailableAbbreviation": "Ni na voljo",

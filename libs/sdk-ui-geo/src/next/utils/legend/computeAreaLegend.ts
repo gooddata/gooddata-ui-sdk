@@ -4,6 +4,8 @@ import { computeColorScale } from "./computeColorScale.js";
 import {
     ATTRIBUTE_ONLY_URI_PREFIX,
     FALLBACK_LEGEND_COLOR,
+    SEGMENTED_COLOR_SCALE_MAX_COLOR,
+    SEGMENTED_COLOR_SCALE_MIN_COLOR,
     convertToColorCategories,
     isAttributeOnlyAreaData,
 } from "./legendUtils.js";
@@ -67,21 +69,31 @@ export function computeAreaLegend(params: IComputeAreaLegendParams): ILegendSect
     }
 
     // Add numeric color scale group if available (color measure).
-    // Segment/category legend has precedence over gradient, so we only render the
-    // color scale when no category legend is present.
-    if (availableLegends.hasColorLegend && geoData.color && !hasCategoryLegend) {
+    // When segment categories are present, keep the scale and render it as a neutral grayscale
+    // so the legend explains the metric range without duplicating segment colors.
+    if (availableLegends.hasColorLegend && geoData.color) {
         const colorScale = computeColorScale(
             geoData.color.data,
             geoData.color.format,
             numericSymbols,
-            colorScaleBaseColor,
+            hasCategoryLegend ? undefined : colorScaleBaseColor,
             { allowFlatScale: true },
         );
         if (colorScale) {
             groups.push({
                 kind: "colorScale",
                 title: geoData.color.name,
-                items: [colorScale],
+                titleMessageId: hasCategoryLegend
+                    ? "geochart.legend.colorScale.title.allSegments"
+                    : undefined,
+                titleMessageValues: hasCategoryLegend ? { metric: geoData.color.name } : undefined,
+                items: [
+                    {
+                        ...colorScale,
+                        minColor: hasCategoryLegend ? SEGMENTED_COLOR_SCALE_MIN_COLOR : colorScale.minColor,
+                        maxColor: hasCategoryLegend ? SEGMENTED_COLOR_SCALE_MAX_COLOR : colorScale.maxColor,
+                    },
+                ],
             });
         }
     }

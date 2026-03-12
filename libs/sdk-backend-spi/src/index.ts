@@ -300,7 +300,7 @@ export type {
 export type { IOrganization, IOrganizations } from "./organization/index.js";
 export type { IEntitlements } from "./entitlements/index.js";
 export type { IDataSourcesService } from "./dataSources/index.js";
-export type { IGeoService, IGeoStyleSpecification } from "./geo/index.js";
+export type { IGeoService, IGeoStyleParams, IGeoStyleSpecification } from "./geo/index.js";
 export type { ISecuritySettingsService, ValidationContext } from "./organization/securitySettings/index.js";
 export type { IOrganizationStylingService } from "./organization/styling/index.js";
 export type { IOrganizationSettingsService } from "./organization/settings/index.js";
@@ -363,8 +363,16 @@ export type {
     IChangeAnalysisDefinition,
 } from "./workspace/keyDriverAnalysis/index.js";
 
-export type { IOrganizationLlmEndpointsService } from "./organization/llmEndpoints/index.js";
-export type { IOrganizationLlmProvidersService } from "./organization/llmProviders/index.js";
+export type {
+    IOrganizationLlmEndpointsService,
+    ILlmEndpointsQuery,
+    ILlmEndpointsQueryResult,
+} from "./organization/llmEndpoints/index.js";
+export type {
+    IOrganizationLlmProvidersService,
+    ILlmProvidersQuery,
+    ILlmProvidersQueryResult,
+} from "./organization/llmProviders/index.js";
 
 export type { IOrganizationNotificationService } from "./organization/notifications/index.js";
 export type { INotificationsQuery, INotificationsQueryResult } from "./organization/notifications/query.js";

@@ -26,6 +26,7 @@
     "gs.list.allSearchResultsAndCount": "Kaikki hakutulokset ({count})",
     "gs.list.except": "paitsi",
     "gs.list.is": "on",
+    "gs.list.isNot": "ei ole",
     "gs.list.search.placeholder": "Hae…",
     "gs.list.acessibility.search.label": "Hae määritteiden arvoja",
     "gs.list.notAvailableAbbreviation": "Ei saatavilla",

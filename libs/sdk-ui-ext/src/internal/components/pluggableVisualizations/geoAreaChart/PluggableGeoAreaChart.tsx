@@ -57,6 +57,11 @@ import { removeSort } from "../../../utils/sort.js";
 import { setGeoAreaUiConfig } from "../../../utils/uiConfigHelpers/geoAreaChartUiConfigHelper.js";
 import { GeoAreaConfigurationPanel } from "../../configurationPanels/GeoAreaConfigurationPanel.js";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
+import { extractControls } from "../geoChartNext/geoAttributeHelper.js";
+import {
+    getGeoControlsWithFallback,
+    getGeoVisualizationPropertiesWithFallback,
+} from "../geoCommon/geoVisualizationPropertiesWithFallback.js";
 import { LiveMapViewTracker, createSyncedViewportHandlers } from "../geoCommon/liveMapViewTracking.js";
 
 type GeoChartNextExecutionProps = Parameters<typeof GeoChartInternal>[0];
@@ -240,7 +245,10 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
                 <GeoAreaConfigurationPanel
                     locale={this.locale}
                     pushData={this.pushData}
-                    properties={this.visualizationProperties}
+                    properties={getGeoVisualizationPropertiesWithFallback(
+                        this.visualizationProperties,
+                        this.getInsightControlsWithFallback(insight),
+                    )}
                     references={this.references}
                     propertiesMeta={this.propertiesMeta}
                     insight={insight}
@@ -321,13 +329,16 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
         options: IVisProps,
         insight: IInsightDefinition,
     ): { primaryLayer: IGeoLayer; config: IGeoAreaChartConfig; filters: IFilter[] } | undefined {
-        const supportedControls = this.visualizationProperties.controls || {};
-        const fullConfig = this.buildGeoAreaVisualizationConfig(options, supportedControls);
+        const controlsWithFallback = getGeoControlsWithFallback(
+            this.visualizationProperties,
+            this.getInsightControlsWithFallback(insight),
+        );
+        const fullConfig = this.buildGeoAreaVisualizationConfig(options, controlsWithFallback);
         const filters = insightFilters(insight);
         const sortBy = createAreaSortForSegment(insight);
         const title = insightTitle(insight);
         const controlsForPrimaryLayer = {
-            ...supportedControls,
+            ...controlsWithFallback,
             ...(fullConfig.colorPalette ? { colorPalette: fullConfig.colorPalette } : {}),
         };
 
@@ -351,6 +362,10 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
             config: { ...fullConfig, colorPalette: undefined, colorMapping: undefined },
             filters,
         };
+    }
+
+    private getInsightControlsWithFallback(insight: IInsightDefinition): IVisualizationProperties {
+        return extractControls(insight) || {};
     }
 
     private buildAdditionalLayerExecutions(

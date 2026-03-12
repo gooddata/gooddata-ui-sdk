@@ -105,6 +105,40 @@ describe("PluggableGeoAreaChart", () => {
         expect(props.executions).toEqual([]);
     });
 
+    it("should use legacy tileset insight properties as a basemap fallback in dashboards", () => {
+        const { visualization } = createComponent();
+        const insightWithLegacyTileset = newInsightDefinition(visualizationUrl, (builder) =>
+            builder
+                .title("area chart with legacy tileset")
+                .buckets([
+                    newBucket(
+                        BucketNames.AREA,
+                        newAttribute("attr.country", (attribute) => attribute.localId("area")),
+                    ),
+                    newBucket(
+                        BucketNames.COLOR,
+                        newMeasure("m1", (m) => m.localId("m_color")),
+                    ),
+                ])
+                .properties({
+                    controls: {
+                        tileset: "satellite",
+                    },
+                }),
+        );
+
+        visualization.update({ messages }, insightWithLegacyTileset, {}, executionFactory);
+
+        const chartCall = mockRenderFun.mock.calls.find(
+            ([node]) => (node as ReactElement)?.type === GeoChartInternal,
+        );
+        expect(chartCall).toBeDefined();
+        const element = chartCall?.[0] as ReactElement;
+        const props = element.props as { config?: { basemap?: string } };
+
+        expect(props.config?.basemap).toBe("satellite");
+    });
+
     it("should preserve live viewport on rerender when viewport config is enabled", () => {
         const { visualization } = createComponent(vi.fn(), {
             enableGeoChartsViewportConfig: true,

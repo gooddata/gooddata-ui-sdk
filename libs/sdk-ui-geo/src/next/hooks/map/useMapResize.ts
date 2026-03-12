@@ -80,8 +80,6 @@ export function useMapResize(
 
         if (previousMapRef.current !== map) {
             previousMapRef.current = map;
-            previousViewportKeyRef.current = null;
-            prevContainerRect.current = null;
         }
 
         const prev = prevContainerRect.current?.client;

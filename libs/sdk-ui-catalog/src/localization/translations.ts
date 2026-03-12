@@ -35,6 +35,9 @@ const asyncCatalogTranslations: { [locale: string]: () => Promise<ITranslations>
     "pl-PL": () => import("./bundles/pl-PL.localization-bundle.js").then((module) => module.pl_PL),
     "ko-KR": () => import("./bundles/ko-KR.localization-bundle.js").then((module) => module.ko_KR),
     "sl-SI": () => import("./bundles/sl-SI.localization-bundle.js").then((module) => module.sl_SI),
+    "id-ID": () => import("./bundles/id-ID.localization-bundle.js").then((module) => module.id_ID),
+    "th-TH": () => import("./bundles/th-TH.localization-bundle.js").then((module) => module.th_TH),
+    "vi-VN": () => import("./bundles/vi-VN.localization-bundle.js").then((module) => module.vi_VN),
 };
 
 /**

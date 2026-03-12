@@ -5,7 +5,11 @@ import { type IGeoAreaChartConfig } from "@gooddata/sdk-ui-geo";
 import { isConcreteViewportPreset, normalizeGeoLegendPosition } from "@gooddata/sdk-ui-geo/internal";
 import { type IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 
-import { isGeoChartsViewportConfigEnabled } from "../../../constants/featureFlags.js";
+import {
+    isGeoBasemapConfigEnabled,
+    isGeoChartsViewportConfigEnabled,
+} from "../../../constants/featureFlags.js";
+import { sanitizeGeoMapStyleOptions } from "../../../constants/geoMapStyle.js";
 import { ANALYTICAL_ENVIRONMENT, DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
 import { type IVisProps, type IVisualizationProperties } from "../../../interfaces/Visualization.js";
 
@@ -24,7 +28,9 @@ interface IGeoAreaControls {
     viewport?: IGeoAreaChartConfig["viewport"];
     mapStyle?: IGeoAreaChartConfig["mapStyle"];
     maxZoomLevel?: IGeoAreaChartConfig["maxZoomLevel"];
-    tileset?: IGeoAreaChartConfig["tileset"];
+    basemap?: IGeoAreaChartConfig["basemap"];
+    tileset?: unknown;
+    colorScheme?: IGeoAreaChartConfig["colorScheme"];
 }
 
 /**
@@ -52,10 +58,18 @@ export function buildAreaVisualizationConfig({
         viewport = {},
         mapStyle,
         maxZoomLevel: controlsMaxZoomLevel,
+        basemap,
         tileset,
+        colorScheme,
     } = controls;
     const legendEnabled = legend?.enabled;
     const legendPosition = normalizeGeoLegendPosition(legend?.position);
+    const isBasemapConfigEnabled = isGeoBasemapConfigEnabled(featureFlags);
+    const sanitizedGeoMapStyle = sanitizeGeoMapStyleOptions({
+        basemap,
+        legacyTileset: tileset,
+        colorScheme,
+    });
     const isViewportConfigEnabled = isGeoChartsViewportConfigEnabled(featureFlags);
     const isPresetViewportAreaSelected = Boolean(isConcreteViewportPreset(viewport.area));
     const sanitizedViewport = isViewportConfigEnabled
@@ -97,9 +111,11 @@ export function buildAreaVisualizationConfig({
             : {}),
         ...viewportProp,
         mapStyle,
-        tileset,
+        ...(sanitizedGeoMapStyle.basemap ? { basemap: sanitizedGeoMapStyle.basemap } : {}),
+        ...(sanitizedGeoMapStyle.colorScheme ? { colorScheme: sanitizedGeoMapStyle.colorScheme } : {}),
         maxZoomLevel,
         a11yTitle,
+        enableGeoBasemapConfig: isBasemapConfigEnabled,
         enableGeoChartA11yImprovements: featureFlags?.["enableGeoChartA11yImprovements"] ?? false,
         enableGeoChartsViewportConfig: isViewportConfigEnabled,
         applyViewportNavigation,

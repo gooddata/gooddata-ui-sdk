@@ -4,10 +4,13 @@ import { type RefObject } from "react";
 
 import { act, renderHook, waitFor } from "@testing-library/react";
 import { IntlProvider } from "react-intl";
+import { type ContentRect } from "react-measure";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
+import { type IMapFacade, type StyleSpecification } from "../../../layers/common/mapFacade.js";
 import { type IGeoChartConfig } from "../../../types/config/unified.js";
 import { useMapInitialization } from "../useMapInitialization.js";
+import { useMapResize } from "../useMapResize.js";
 
 // Minimal keyboard handler mock matching MapLibre's KeyboardHandler API
 function createKeyboardHandlerMock() {
@@ -20,10 +23,14 @@ function createKeyboardHandlerMock() {
 
 function createMapInstanceMock(keyboardMock: ReturnType<typeof createKeyboardHandlerMock>) {
     const canvas = document.createElement("canvas");
+    const center = { lng: 14.42, lat: 50.08 };
+    const zoom = 7;
     return {
         map: {
             getCanvas: () => canvas,
             getCanvasContainer: () => canvas.parentElement as HTMLDivElement,
+            getCenter: () => center,
+            getZoom: () => zoom,
             keyboard: keyboardMock,
             remove: vi.fn(),
         },
@@ -31,6 +38,8 @@ function createMapInstanceMock(keyboardMock: ReturnType<typeof createKeyboardHan
             remove: vi.fn(),
         },
         canvas,
+        center,
+        zoom,
     };
 }
 
@@ -60,6 +69,55 @@ function wrapper({ children }: { children: React.ReactNode }) {
             {children}
         </IntlProvider>
     );
+}
+
+function createResizeMapMock(): IMapFacade {
+    const canvas = document.createElement("canvas");
+    canvas.width = 400;
+    canvas.height = 300;
+    const style: StyleSpecification = { version: 8, sources: {}, layers: [] };
+    const center: ReturnType<IMapFacade["getCenter"]> = {
+        lat: 0,
+        lng: 0,
+        wrap: () => center,
+        toArray: () => [0, 0] as [number, number],
+        distanceTo: () => 0,
+    };
+
+    const map = {
+        isStyleLoaded: vi.fn(() => true),
+        once: vi.fn(() => map),
+        on: vi.fn(() => map),
+        off: vi.fn(() => map),
+        addSource: vi.fn(() => map),
+        addLayer: vi.fn(() => map),
+        getLayer: vi.fn(() => undefined),
+        getSource: vi.fn(() => undefined),
+        removeLayer: vi.fn(() => map),
+        removeSource: vi.fn(() => map),
+        resize: vi.fn(() => map),
+        cameraForBounds: vi.fn(() => ({ center: [0, 0] as [number, number], zoom: 3 })),
+        flyTo: vi.fn(() => map),
+        jumpTo: vi.fn(() => map),
+        panTo: vi.fn(() => map),
+        zoomTo: vi.fn(() => map),
+        getCenter: vi.fn(() => center),
+        getZoom: vi.fn(() => 3),
+        getStyle: vi.fn(() => style),
+        getCanvas: vi.fn(() => canvas),
+        loaded: vi.fn(() => true),
+        areTilesLoaded: vi.fn(() => true),
+        queryRenderedFeatures: vi.fn(() => []),
+        setLayoutProperty: vi.fn(() => map),
+        setFilter: vi.fn(() => map),
+        keyboard: {
+            enable: vi.fn(),
+            disable: vi.fn(),
+            disableRotation: vi.fn(),
+        },
+    };
+
+    return map;
 }
 
 describe("useMapInitialization a11y", () => {
@@ -302,6 +360,143 @@ describe("useMapInitialization a11y", () => {
         expect(options.touchZoomRotate).toBeUndefined();
     });
 
+    it("passes public basemap style params to runtime without internal basemap FF", async () => {
+        renderHook(
+            () =>
+                useMapInitialization(
+                    containerRef,
+                    {
+                        enableGeoChartA11yImprovements: true,
+                        basemap: "standard",
+                        colorScheme: "dark",
+                    },
+                    null,
+                    undefined,
+                    "instructions-id",
+                ),
+            {
+                wrapper,
+            },
+        );
+
+        await waitFor(() => {
+            expect(initMock).toHaveBeenCalled();
+        });
+
+        const [options] = initMock.mock.calls[0];
+        expect(options.basemap).toBe("standard");
+        expect(options.colorScheme).toBe("dark");
+    });
+
+    it("ignores colorScheme when basemap is not specified", async () => {
+        renderHook(
+            () =>
+                useMapInitialization(
+                    containerRef,
+                    {
+                        enableGeoChartA11yImprovements: true,
+                        colorScheme: "dark",
+                    },
+                    null,
+                    undefined,
+                    "instructions-id",
+                ),
+            {
+                wrapper,
+            },
+        );
+
+        await waitFor(() => {
+            expect(initMock).toHaveBeenCalled();
+        });
+
+        const [options] = initMock.mock.calls[0];
+        expect(options.basemap).toBeUndefined();
+        expect(options.colorScheme).toBeUndefined();
+    });
+
+    it("ignores explicit default colorScheme when basemap is not specified", async () => {
+        renderHook(
+            () =>
+                useMapInitialization(
+                    containerRef,
+                    {
+                        enableGeoChartA11yImprovements: true,
+                    },
+                    null,
+                    undefined,
+                    "instructions-id",
+                ),
+            {
+                wrapper,
+            },
+        );
+
+        await waitFor(() => {
+            expect(initMock).toHaveBeenCalled();
+        });
+
+        const [options] = initMock.mock.calls[0];
+        expect(options.basemap).toBeUndefined();
+        expect(options.colorScheme).toBeUndefined();
+    });
+
+    it("ignores colorScheme in runtime when selected basemap does not support it", async () => {
+        renderHook(
+            () =>
+                useMapInitialization(
+                    containerRef,
+                    {
+                        enableGeoChartA11yImprovements: true,
+                        basemap: "none",
+                        colorScheme: "dark",
+                    },
+                    null,
+                    undefined,
+                    "instructions-id",
+                ),
+            {
+                wrapper,
+            },
+        );
+
+        await waitFor(() => {
+            expect(initMock).toHaveBeenCalled();
+        });
+
+        const [options] = initMock.mock.calls[0];
+        expect(options.basemap).toBe("none");
+        expect(options.colorScheme).toBeUndefined();
+    });
+
+    it("ignores colorScheme in runtime for hybrid basemap", async () => {
+        renderHook(
+            () =>
+                useMapInitialization(
+                    containerRef,
+                    {
+                        enableGeoChartA11yImprovements: true,
+                        basemap: "hybrid",
+                        colorScheme: "dark",
+                    },
+                    null,
+                    undefined,
+                    "instructions-id",
+                ),
+            {
+                wrapper,
+            },
+        );
+
+        await waitFor(() => {
+            expect(initMock).toHaveBeenCalled();
+        });
+
+        const [options] = initMock.mock.calls[0];
+        expect(options.basemap).toBe("hybrid");
+        expect(options.colorScheme).toBeUndefined();
+    });
+
     it("enables keyboard and disables rotation on canvas focus for interactive maps", async () => {
         renderHook(
             () => useMapInitialization(containerRef, enabledA11yConfig, null, undefined, "instructions-id"),
@@ -457,6 +652,85 @@ describe("useMapInitialization a11y", () => {
         });
     });
 
+    it("preserves current center and zoom when re-initializing after basemap change", async () => {
+        const standardConfig: IGeoChartConfig = {
+            enableGeoChartA11yImprovements: true,
+            basemap: "standard",
+        };
+        const monochromeConfig: IGeoChartConfig = {
+            ...standardConfig,
+            basemap: "monochrome",
+        };
+        const selectedPresetViewport = {
+            bounds: {
+                southWest: { lng: 112, lat: -44 },
+                northEast: { lng: 154, lat: -10 },
+            },
+        };
+
+        const { rerender } = renderHook(
+            ({ config }: { config: IGeoChartConfig }) =>
+                useMapInitialization(
+                    containerRef,
+                    config,
+                    selectedPresetViewport,
+                    undefined,
+                    "instructions-id",
+                ),
+            {
+                wrapper,
+                initialProps: { config: standardConfig },
+            },
+        );
+
+        await waitFor(() => {
+            expect(initMock).toHaveBeenCalledTimes(1);
+        });
+        expect(initMock.mock.calls[0][0].bounds).toEqual(selectedPresetViewport.bounds);
+
+        rerender({ config: monochromeConfig });
+
+        await waitFor(() => {
+            expect(initMock).toHaveBeenCalledTimes(2);
+        });
+
+        expect(initMock.mock.calls[1][0].center).toEqual(mapMock.center);
+        expect(initMock.mock.calls[1][0].zoom).toBe(mapMock.zoom);
+        expect(initMock.mock.calls[1][0].bounds).toBeUndefined();
+    });
+
+    it("does not re-initialize the map when config object identity changes but requested viewport stays the same", async () => {
+        const baseConfig: IGeoChartConfig = {
+            enableGeoChartA11yImprovements: true,
+            center: { lng: 11, lat: 49 },
+            zoom: 6,
+        };
+
+        const { rerender } = renderHook(
+            ({ config }: { config: IGeoChartConfig }) =>
+                useMapInitialization(containerRef, config, null, undefined, "instructions-id"),
+            {
+                wrapper,
+                initialProps: { config: baseConfig },
+            },
+        );
+
+        await waitFor(() => {
+            expect(initMock).toHaveBeenCalledTimes(1);
+        });
+
+        rerender({
+            config: {
+                ...baseConfig,
+                center: { ...baseConfig.center! },
+            },
+        });
+
+        await waitFor(() => {
+            expect(initMock).toHaveBeenCalledTimes(1);
+        });
+    });
+
     it("disables keyboard on canvas blur", async () => {
         renderHook(
             () => useMapInitialization(containerRef, enabledA11yConfig, null, undefined, "instructions-id"),
@@ -588,5 +862,43 @@ describe("useMapInitialization a11y", () => {
             (globalThis as unknown as { MutationObserver: typeof MutationObserver }).MutationObserver =
                 OriginalMutationObserver;
         }
+    });
+});
+
+describe("useMapResize", () => {
+    it("does not reapply the same viewport when only the map instance changes", async () => {
+        const firstMap = createResizeMapMock();
+        const recreatedMap = createResizeMapMock();
+        const chartContainerRect = {
+            client: {
+                width: 400,
+                height: 300,
+            },
+        } as ContentRect;
+        const viewport = {
+            bounds: {
+                southWest: { lng: 10, lat: 20 },
+                northEast: { lng: 30, lat: 40 },
+            },
+        };
+
+        const { rerender } = renderHook(
+            ({ map }: { map: IMapFacade }) =>
+                useMapResize(map, true, chartContainerRect, viewport, null, undefined),
+            {
+                initialProps: { map: firstMap },
+            },
+        );
+
+        await waitFor(() => {
+            expect(firstMap.jumpTo).toHaveBeenCalledTimes(1);
+        });
+
+        rerender({ map: recreatedMap });
+
+        await waitFor(() => {
+            expect(recreatedMap.jumpTo).not.toHaveBeenCalled();
+            expect(recreatedMap.resize).not.toHaveBeenCalled();
+        });
     });
 });

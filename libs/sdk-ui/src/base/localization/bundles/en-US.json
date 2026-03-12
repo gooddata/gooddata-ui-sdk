@@ -203,6 +203,10 @@
         "text": "Color scale from {min} to {max}",
         "crowdinContext": "Screen reader description for the gradient color scale bar in geo chart legend, conveying the numeric range."
     },
+    "geochart.legend.colorScale.title.allSegments": {
+        "text": "{metric} (all segments)",
+        "crowdinContext": "Title of a geo chart legend color scale shown together with segment categories. {metric} is the measure name, such as Revenue."
+    },
     "geochart.legend.layer.hidden": {
         "text": "Map layer {name} hidden",
         "crowdinContext": "Screen reader announcement when a map layer is toggled off in the geo chart legend. {name} is replaced with the layer title."

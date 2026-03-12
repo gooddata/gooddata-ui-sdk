@@ -65,6 +65,7 @@ export type { ActionsApiInterface as ResultActionsApiInterface } from "./generat
 export {
     type LocationStyleApiInterface,
     type LocationStyleDocument,
+    type ILocationStyleParams,
     tigerLocationStyleClientFactory,
 } from "./locationStyle.js";
 

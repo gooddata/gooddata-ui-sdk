@@ -2,6 +2,51 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.25.0",
+            "tag": "@gooddata/sdk-ui-all_v11.25.0",
+            "date": "Thu, 12 Mar 2026 11:37:55 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "sdk-ui-dashboard: Updated \"Learn more\" docs link in metric filter."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: back button have property disabled"
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: Turn on FF for Crate and Athena data source by default."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Add minWidth prop to UiMenu"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Fixed page crashing when reloading the plugins."
+                    },
+                    {
+                        "comment": "sdk-ui-semantic-search: support include and exclude tags in semantic search"
+                    },
+                    {
+                        "comment": "fix: sdk-ui-all: Improve text filters. Change textual representation of negative attribute filter."
+                    },
+                    {
+                        "comment": "Dashboard now supports customizing the Drill Dialog Export dropdown through DrillDialogExportDropdownComponentProvider."
+                    },
+                    {
+                        "comment": "Add data-testid attributes for drill filters config sections and submenu header"
+                    },
+                    {
+                        "comment": "sdk-ui-all: Add geo collections support."
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: Set enableNewScheduledExport feature flag default true."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Introduce experimental dashboard layout density setting"
+                    }
+                ]
+            }
+        },
+        {
             "version": "11.24.0",
             "tag": "@gooddata/sdk-ui-all_v11.24.0",
             "date": "Thu, 05 Mar 2026 08:43:40 GMT",
