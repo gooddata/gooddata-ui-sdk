@@ -26,6 +26,7 @@
     "gs.list.allSearchResultsAndCount": "모든 검색 결과 ({count})",
     "gs.list.except": "제외",
     "gs.list.is": ":",
+    "gs.list.isNot": "아님",
     "gs.list.search.placeholder": "검색…",
     "gs.list.acessibility.search.label": "속성 값 검색",
     "gs.list.notAvailableAbbreviation": "해당 없음",

@@ -38,7 +38,9 @@ export class OrganizationLlmEndpointsService implements IOrganizationLlmEndpoint
 
     public getAll(): Promise<ILlmEndpointOpenAI[]> {
         return this.authCall(async (client: ITigerClientBase) => {
-            const result = await EntitiesApi_GetAllEntitiesLlmEndpoints(client.axios, client.basePath, {});
+            const result = await EntitiesApi_GetAllEntitiesLlmEndpoints(client.axios, client.basePath, {
+                size: 500,
+            });
             const endpoints = result.data?.data || [];
 
             return endpoints.map(convertLlmEndpoint);

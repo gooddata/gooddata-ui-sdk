@@ -34,7 +34,7 @@ jobs:
         labels: runners-small
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: gooddata/github-actions/git/checkout-with-cache@master
         with:
           ref: ${{ inputs.source-branch }}
       - name: Setup node
@@ -121,7 +121,7 @@ jobs:
     needs: [bump-version, publish-prerelease,setup-params]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: gooddata/github-actions/git/checkout-with-cache@master
         with:
           token: ${{ secrets.TOKEN_GITHUB_YENKINS}}
       - name: Notify to slack

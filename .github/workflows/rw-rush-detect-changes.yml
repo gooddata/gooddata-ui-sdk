@@ -38,7 +38,7 @@ jobs:
           echo "target-branch: ${{ inputs.target-branch }}"
           echo "package-name: ${{ inputs.package-name }}"
 
-      - uses: actions/checkout@v4
+      - uses: gooddata/github-actions/git/checkout-with-cache@master
         with:
           ref: ${{ inputs.source-branch }}
           fetch-depth: 100

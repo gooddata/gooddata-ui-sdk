@@ -41,7 +41,7 @@ jobs:
         runs-on: ubuntu-latest
         image: some-docker-image
         steps:
-            - uses: actions/checkout@v4
+            - uses: gooddata/github-actions/git/checkout-with-cache@master
 
             - name: Detect zstd
               id: detect

@@ -39,6 +39,10 @@ export interface ITextFilterControllerProps {
     backend: IAnalyticalBackend;
     workspace: string;
     filterInput: IAttributeFilter;
+    /** Optional secondary display form used for showing element values in the UI.
+     *  When switching from elements mode to text mode, the text filter definition
+     *  should use this label instead of the primary label from filterInput. */
+    displayAsLabel?: ObjRef;
     onChange?: OnChangeCallbackType;
     withoutApply: boolean;
     selectionMode: DashboardAttributeFilterSelectionMode;
@@ -62,6 +66,7 @@ export function useTextFilterController(props: ITextFilterControllerProps): Text
         backend,
         workspace,
         filterInput,
+        displayAsLabel,
         onChange,
         withoutApply,
         selectionMode,
@@ -88,15 +93,19 @@ export function useTextFilterController(props: ITextFilterControllerProps): Text
         filterInput && (isArbitraryAttributeFilter(filterInput) || isMatchAttributeFilter(filterInput));
     // When in elements mode, always pass empty so the effect doesn't overwrite the reset from
     // textResetForModeSwitch with the stale filter prop (parent's onChange may not have propagated yet).
-    // Use displayFormRef (from filterInput) rather than effectiveDisplayFormRef for the fallback
-    // so that a local setDisplayForm call does not cause the memo to produce an "all" filter
-    // that would reset the inner controller's operator state via the sync effect.
+    // Use displayAsLabel (when available) so that switching from elements mode to text mode
+    // creates a text filter definition targeting the secondary label used for display,
+    // not the primary label from filterInput.
+    // We intentionally avoid effectiveDisplayFormRef here so that a local setDisplayForm call
+    // does not cause the memo to produce an "all" filter that would reset the inner
+    // controller's operator state via the sync effect.
+    const textFilterDisplayFormRef = displayAsLabel ?? displayFormRef;
     const textFilter = useMemo(
         () =>
             isTextMode && filterInput && isSourceTextFilter
                 ? filterInput
-                : createEmptyFilterForMode("text", displayFormRef, localId),
-        [displayFormRef, isTextMode, localId, filterInput, isSourceTextFilter],
+                : createEmptyFilterForMode("text", textFilterDisplayFormRef, localId),
+        [textFilterDisplayFormRef, isTextMode, localId, filterInput, isSourceTextFilter],
     );
 
     const onChangeForText = useCallback(

@@ -26,7 +26,7 @@ jobs:
             version: ${{ steps.version.outputs.version }}
         steps:
             - name: Checkout code
-              uses: actions/checkout@v4
+              uses: gooddata/github-actions/git/checkout-with-cache@master
               with:
                   ref: ${{ inputs.source-branch }}
                   token: ${{ secrets.TOKEN_GITHUB_YENKINS_ADMIN }}

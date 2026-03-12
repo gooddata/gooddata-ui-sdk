@@ -15,7 +15,7 @@ jobs:
     outputs:
       sha: ${{ steps.get-sha.outputs.sha }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: gooddata/github-actions/git/checkout-with-cache@master
         with:
           ref: refs/pull/${{ github.event.issue.number }}/head
       - name: get-sha

@@ -24,7 +24,7 @@ jobs:
       id-token: write
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: gooddata/github-actions/git/checkout-with-cache@master
       - name: Add repository to git safe directories to avoid dubious ownership issue
         run: git config --global --add safe.directory $GITHUB_WORKSPACE
       - name: Git config user
@@ -57,7 +57,7 @@ jobs:
       id-token: write
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: gooddata/github-actions/git/checkout-with-cache@master
       - name: Set SHORT SHA and BRANCH ESCAPE REF NAME to ENV Variable to use for image tag later
         run: |
           echo "GITHUB_SHORT_SHA=${GITHUB_SHA::8}" >> $GITHUB_ENV
