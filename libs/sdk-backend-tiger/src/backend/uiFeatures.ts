@@ -131,6 +131,7 @@ export enum TigerFeaturesNames {
     EnableGeoSegmentConflictRecommendation = "enableGeoSegmentConflictRecommendation",
     EnableGeoBasemapConfig = "enableGeoBasemapConfig",
     EnableCustomGeoCollection = "enableCustomGeoCollection",
+    EnableGeoSatelliteBasemapOption = "enableGeoSatelliteBasemapOption",
     EnableAutomationManagement = "enableAutomationManagement",
     EnableNewPdfTabularExport = "enableNewPdfTabularExport",
     EnableFilterAccessibility = "enableFilterAccessibility",
@@ -281,6 +282,7 @@ export type ITigerFeatureFlags = {
     enableGeoSegmentConflictRecommendation: (typeof FeatureFlagsValues)["enableGeoSegmentConflictRecommendation"][number];
     enableGeoBasemapConfig: (typeof FeatureFlagsValues)["enableGeoBasemapConfig"][number];
     enableCustomGeoCollection: (typeof FeatureFlagsValues)["enableCustomGeoCollection"][number];
+    enableGeoSatelliteBasemapOption: (typeof FeatureFlagsValues)["enableGeoSatelliteBasemapOption"][number];
     enableAutomationManagement: (typeof FeatureFlagsValues)["enableAutomationManagement"][number];
     enableNewPdfTabularExport: (typeof FeatureFlagsValues)["enableNewPdfTabularExport"][number];
     enableFilterAccessibility: (typeof FeatureFlagsValues)["enableFilterAccessibility"][number];
@@ -431,6 +433,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableGeoSegmentConflictRecommendation: false,
     enableGeoBasemapConfig: false,
     enableCustomGeoCollection: false,
+    enableGeoSatelliteBasemapOption: false,
     enableAutomationManagement: true,
     enableNewPdfTabularExport: true,
     enableFilterAccessibility: true,
@@ -582,6 +585,7 @@ export const FeatureFlagsValues = {
     enableGeoSegmentConflictRecommendation: [true, false] as const,
     enableGeoBasemapConfig: [true, false] as const,
     enableCustomGeoCollection: [true, false] as const,
+    enableGeoSatelliteBasemapOption: [true, false] as const,
     enableAutomationManagement: [true, false] as const,
     enableNewPdfTabularExport: [true, false] as const,
     enableFilterAccessibility: [false, true] as const,

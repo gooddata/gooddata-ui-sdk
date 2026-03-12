@@ -21,6 +21,10 @@ import {
     type IExecutionFactory,
     type IGenAIService,
     type IGeoService,
+    type ILlmEndpointsQuery,
+    type ILlmEndpointsQueryResult,
+    type ILlmProvidersQuery,
+    type ILlmProvidersQueryResult,
     type IOrganization,
     type IOrganizationLlmEndpointsService,
     type IOrganizationLlmProvidersService,
@@ -444,6 +448,50 @@ function recordedEntitlements(): IEntitlements {
     };
 }
 
+class RecordedLlmEndpointsQuery implements ILlmEndpointsQuery {
+    public withSize(_size: number): ILlmEndpointsQuery {
+        return this;
+    }
+
+    public withPage(_page: number): ILlmEndpointsQuery {
+        return this;
+    }
+
+    public withSorting(_sort: string[]): ILlmEndpointsQuery {
+        return this;
+    }
+
+    public query(): Promise<ILlmEndpointsQueryResult> {
+        return Promise.resolve(new InMemoryPaging([]));
+    }
+
+    public queryAll(): Promise<ILlmEndpointOpenAI[]> {
+        return Promise.resolve([]);
+    }
+}
+
+class RecordedLlmProvidersQuery implements ILlmProvidersQuery {
+    public withSize(_size: number): ILlmProvidersQuery {
+        return this;
+    }
+
+    public withPage(_page: number): ILlmProvidersQuery {
+        return this;
+    }
+
+    public withSorting(_sort: string[]): ILlmProvidersQuery {
+        return this;
+    }
+
+    public query(): Promise<ILlmProvidersQueryResult> {
+        return Promise.resolve(new InMemoryPaging([]));
+    }
+
+    public queryAll(): Promise<ILlmProvider[]> {
+        return Promise.resolve([]);
+    }
+}
+
 function recordedOrganization(organizationId: string, implConfig: RecordedBackendConfig): IOrganization {
     const scopeFactory =
         implConfig.securitySettingsOrganizationScope === undefined
@@ -649,7 +697,7 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
 
             return {
                 getCount: () => Promise.resolve(0),
-                getAll: () => Promise.resolve([]),
+                getEndpointsQuery: () => new RecordedLlmEndpointsQuery(),
                 deleteLlmEndpoint: () => Promise.resolve(),
                 getLlmEndpoint: () =>
                     Promise.resolve({
@@ -687,7 +735,7 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
 
             return {
                 getCount: () => Promise.resolve(0),
-                getAll: () => Promise.resolve([]),
+                getProvidersQuery: () => new RecordedLlmProvidersQuery(),
                 deleteLlmProvider: () => Promise.resolve(),
                 getLlmProvider: () => Promise.resolve(dummyProvider),
                 createLlmProvider: () => Promise.resolve(dummyProvider),

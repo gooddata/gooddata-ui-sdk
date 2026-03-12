@@ -26,6 +26,7 @@
     "gs.list.allSearchResultsAndCount": "ผลการค้นหาทั้งหมด ({count})",
     "gs.list.except": "ยกเว้น",
     "gs.list.is": "คือ",
+    "gs.list.isNot": "ไม่ใช่",
     "gs.list.search.placeholder": "ค้นหา…",
     "gs.list.acessibility.search.label": "ค้นหาค่าแอตทริบิวต์",
     "gs.list.notAvailableAbbreviation": "N/A",

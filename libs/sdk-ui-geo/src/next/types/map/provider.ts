@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import type { GeoTileset } from "./tileset.js";
+import type { GeoBasemap, GeoColorScheme } from "./basemap.js";
 import type { StyleSpecification } from "../../layers/common/mapFacade.js";
 import { type IGeoLngLat, type IGeoLngLatBounds } from "../common/coordinates.js";
 import { type IGeoPushpinChartConfig } from "../config/pushpinChart.js";
@@ -74,9 +74,20 @@ export interface IMapOptions {
     style?: string | StyleSpecification;
 
     /**
-     * Basemap tileset identifier.
+     * Basemap identifier.
+     *
+     * @remarks
+     * `undefined` uses the backend default basemap.
      */
-    tileset: GeoTileset;
+    basemap?: GeoBasemap;
+
+    /**
+     * Color scheme for the map style.
+     *
+     * @remarks
+     * `undefined` uses the backend default color scheme for the selected basemap.
+     */
+    colorScheme?: GeoColorScheme;
 }
 
 /**

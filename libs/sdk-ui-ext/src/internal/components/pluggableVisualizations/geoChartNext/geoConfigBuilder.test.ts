@@ -67,6 +67,45 @@ describe("geoConfigFromInsight", () => {
 
         expect(config.legend?.position).toBe("top-right");
     });
+
+    it("maps legacy tileset visualization properties to basemap", () => {
+        const locationAttribute = newAttribute(idRef("nm_location", "displayForm"), (attribute) =>
+            attribute.localId("location_id"),
+        );
+        const insight = newInsightDefinition("local:geoPushpin", (builder) =>
+            builder.buckets([newBucket(BucketNames.LOCATION, locationAttribute)]).properties({
+                controls: {
+                    tileset: "satellite",
+                    viewport: {
+                        area: "continent_na",
+                    },
+                },
+            }),
+        );
+
+        const config = geoConfigFromInsight(insight);
+
+        expect(config.basemap).toBe("satellite");
+        expect(config.viewport?.area).toBe("continent_na");
+    });
+
+    it("prefers explicit basemap over legacy tileset visualization properties", () => {
+        const locationAttribute = newAttribute(idRef("nm_location", "displayForm"), (attribute) =>
+            attribute.localId("location_id"),
+        );
+        const insight = newInsightDefinition("local:geoPushpin", (builder) =>
+            builder.buckets([newBucket(BucketNames.LOCATION, locationAttribute)]).properties({
+                controls: {
+                    basemap: "monochrome",
+                    tileset: "satellite",
+                },
+            }),
+        );
+
+        const config = geoConfigFromInsight(insight);
+
+        expect(config.basemap).toBe("monochrome");
+    });
 });
 
 describe("geoInsightConversion", () => {
@@ -206,6 +245,80 @@ describe("buildGeoVisualizationConfig", () => {
         expect(config.legend?.position).toBe("bottom-right");
         expect(configWithCorner.legend?.position).toBe("bottom-left");
     });
+
+    it("drops colorScheme for basemaps that do not support it even when the broad basemap FF is disabled", () => {
+        const supportedControls = {
+            basemap: "none",
+            colorScheme: "dark",
+        };
+
+        const disabledConfig = buildGeoVisualizationConfig({
+            options,
+            supportedControls,
+            colorMapping: undefined,
+            environment: ANALYTICAL_ENVIRONMENT,
+        });
+        const enabledConfig = buildGeoVisualizationConfig({
+            options,
+            supportedControls,
+            colorMapping: undefined,
+            environment: ANALYTICAL_ENVIRONMENT,
+            featureFlags: { enableGeoBasemapConfig: true },
+        });
+
+        expect(disabledConfig.enableGeoBasemapConfig).toBe(false);
+        expect(disabledConfig.basemap).toBe("none");
+        expect(disabledConfig.colorScheme).toBeUndefined();
+        expect(enabledConfig.enableGeoBasemapConfig).toBe(true);
+        expect(enabledConfig.basemap).toBe("none");
+        expect(enabledConfig.colorScheme).toBeUndefined();
+    });
+
+    it("does not let raw config or custom visualization config override sanitized supported controls", () => {
+        const rawGeoStyleConfig = {
+            basemap: "none",
+            colorScheme: "dark",
+        };
+        const config = buildGeoVisualizationConfig({
+            options: {
+                ...options,
+                config: {
+                    isInEditMode: false,
+                    ...rawGeoStyleConfig,
+                },
+                customVisualizationConfig: {
+                    ...rawGeoStyleConfig,
+                },
+            },
+            supportedControls: {
+                basemap: "monochrome",
+                colorScheme: "light",
+            },
+            colorMapping: undefined,
+            environment: ANALYTICAL_ENVIRONMENT,
+        });
+
+        expect(config.basemap).toBe("monochrome");
+        expect(config.colorScheme).toBe("light");
+    });
+
+    it("maps legacy tileset supported controls to basemap", () => {
+        const config = buildGeoVisualizationConfig({
+            options: {
+                ...options,
+                config: {
+                    isInEditMode: false,
+                },
+            },
+            supportedControls: {
+                tileset: "satellite",
+            },
+            colorMapping: undefined,
+            environment: ANALYTICAL_ENVIRONMENT,
+        });
+
+        expect(config.basemap).toBe("satellite");
+    });
 });
 
 describe("buildAreaVisualizationConfig", () => {
@@ -264,5 +377,53 @@ describe("buildAreaVisualizationConfig", () => {
         });
 
         expect(config.legend?.position).toBe("top-left");
+    });
+
+    it("preserves sanitized basemap config even when the broad basemap FF is disabled", () => {
+        const supportedControls = {
+            basemap: "monochrome",
+            colorScheme: "light",
+        };
+
+        const disabledConfig = buildAreaVisualizationConfig({
+            options,
+            supportedControls,
+            colorMapping: undefined,
+            environment: ANALYTICAL_ENVIRONMENT,
+        });
+        const enabledConfig = buildAreaVisualizationConfig({
+            options,
+            supportedControls,
+            colorMapping: undefined,
+            environment: ANALYTICAL_ENVIRONMENT,
+            featureFlags: { enableGeoBasemapConfig: true },
+        });
+
+        expect(disabledConfig.enableGeoBasemapConfig).toBe(false);
+        expect(disabledConfig.basemap).toBe("monochrome");
+        expect(disabledConfig.colorScheme).toBe("light");
+        expect(enabledConfig.enableGeoBasemapConfig).toBe(true);
+        expect(enabledConfig.basemap).toBe("monochrome");
+        expect(enabledConfig.colorScheme).toBe("light");
+    });
+
+    it("maps legacy tileset controls to basemap", () => {
+        const config = buildAreaVisualizationConfig({
+            options: {
+                ...options,
+                config: {
+                    isInEditMode: false,
+                },
+            },
+            supportedControls: {
+                controls: {
+                    tileset: "satellite",
+                },
+            },
+            colorMapping: undefined,
+            environment: ANALYTICAL_ENVIRONMENT,
+        });
+
+        expect(config.basemap).toBe("satellite");
     });
 });

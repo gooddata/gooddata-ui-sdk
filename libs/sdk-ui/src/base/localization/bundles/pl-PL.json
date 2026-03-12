@@ -26,6 +26,7 @@
     "gs.list.allSearchResultsAndCount": "Wyniki wszystkich wyszukiwań ({count})",
     "gs.list.except": "z wyjątkiem",
     "gs.list.is": "jest",
+    "gs.list.isNot": "nie jest",
     "gs.list.search.placeholder": "Szukaj…",
     "gs.list.acessibility.search.label": "Wyszukaj wartości atrybutów",
     "gs.list.notAvailableAbbreviation": "N/D",

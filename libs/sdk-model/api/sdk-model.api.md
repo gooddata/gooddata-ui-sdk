@@ -2718,7 +2718,7 @@ export interface ILlmProvider {
 }
 
 // @public
-export type ILocale = "en-US" | "en-US-x-24h" | "de-DE" | "es-ES" | "fr-FR" | "ja-JP" | "nl-NL" | "pt-BR" | "pt-PT" | "zh-Hans" | "ru-RU" | "it-IT" | "es-419" | "fr-CA" | "en-GB" | "en-AU" | "fi-FI" | "zh-Hant" | "zh-HK" | "tr-TR" | "pl-PL" | "ko-KR" | "sl-SI";
+export type ILocale = "en-US" | "en-US-x-24h" | "de-DE" | "es-ES" | "fr-FR" | "ja-JP" | "nl-NL" | "pt-BR" | "pt-PT" | "zh-Hans" | "ru-RU" | "it-IT" | "es-419" | "fr-CA" | "en-GB" | "en-AU" | "fi-FI" | "zh-Hant" | "zh-HK" | "tr-TR" | "pl-PL" | "ko-KR" | "sl-SI" | "id-ID" | "th-TH" | "vi-VN";
 
 // @public
 export type ILocatorItem = IAttributeLocatorItem | IMeasureLocatorItem | ITotalLocatorItem;
@@ -4164,6 +4164,7 @@ export interface ISettings {
     enableGeoBasemapConfig?: boolean;
     enableGeoChartA11yImprovements?: boolean;
     enableGeoChartsViewportConfig?: boolean;
+    enableGeoSatelliteBasemapOption?: boolean;
     enableGeoSegmentConflictRecommendation?: boolean;
     enableHeadlineExport?: boolean;
     enableHighchartsAccessibility?: boolean;

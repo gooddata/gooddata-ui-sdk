@@ -26,6 +26,7 @@
     "gs.list.allSearchResultsAndCount": "Semua hasil pencarian ({count})",
     "gs.list.except": "kecuali",
     "gs.list.is": "adalah",
+    "gs.list.isNot": "bukan",
     "gs.list.search.placeholder": "Cari…",
     "gs.list.acessibility.search.label": "Cari nilai atribut",
     "gs.list.notAvailableAbbreviation": "N/A",

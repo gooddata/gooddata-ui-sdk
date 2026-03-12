@@ -279,6 +279,38 @@ describe("PluggableGeoPushpinChartNext", () => {
         expect(props.execution?.context?.id).toBe(PUSHPIN_LAYER_ID);
     });
 
+    it("should pass legacy tileset insight properties to the configuration panel as a basemap fallback", () => {
+        const { visualization } = createComponent();
+        const insightWithLegacyTileset = newInsightDefinition(visualizationUrl, (builder) =>
+            builder
+                .title("with legacy tileset")
+                .buckets([
+                    newBucket(
+                        BucketNames.LOCATION,
+                        newAttribute("attr.region", (attribute) => attribute.localId("a1")),
+                    ),
+                ])
+                .properties({
+                    controls: {
+                        latitude: "latitude_df",
+                        longitude: "longitude_df",
+                        tileset: "satellite",
+                    },
+                }),
+        );
+
+        visualization.update({ messages }, insightWithLegacyTileset, {}, executionFactory);
+
+        const configPanelCall = mockRenderFun.mock.calls.find(([node]) => {
+            const props = (node as ReactElement).props as {
+                properties?: { controls?: { tileset?: string } };
+            };
+            return props.properties?.controls?.tileset === "satellite";
+        });
+
+        expect(configPanelCall).toBeDefined();
+    });
+
     it("should preserve live viewport on rerender when viewport config is enabled", () => {
         const { visualization } = createComponent(vi.fn(), {
             enableGeoChartsViewportConfig: true,

@@ -27,6 +27,7 @@ import {
     type IForecastConfig,
     type IForecastResult,
     type IGeoService,
+    type IGeoStyleParams,
     type IGeoStyleSpecification,
     type IGetAutomationOptions,
     type IGetAutomationsOptions,
@@ -148,7 +149,7 @@ type WorkspaceSettingsCacheEntry = {
 };
 
 type GeoCacheEntry = {
-    defaultStyle: Promise<IGeoStyleSpecification> | undefined;
+    stylesByParams: LRUCache<string, Promise<IGeoStyleSpecification>>;
 };
 
 type CachingContext = {
@@ -1717,22 +1718,25 @@ function cachedAutomations(ctx: CachingContext): AutomationsDecoratorFactory {
 // Geo caching
 //
 
+const MAX_GEO_STYLE_CACHE_ENTRIES = 10;
+
 class WithGeoCaching implements IGeoService {
     constructor(
         private readonly decorated: IGeoService,
         private readonly ctx: CachingContext,
     ) {}
 
-    public getDefaultStyle(): Promise<IGeoStyleSpecification> {
+    public getDefaultStyle(params?: IGeoStyleParams): Promise<IGeoStyleSpecification> {
         const cache = this.ctx.caches.geo!;
-        let result = cache.defaultStyle;
+        const key = `${params?.basemap ?? ""}:${params?.colorScheme ?? ""}`;
+        let result = cache.stylesByParams.get(key);
 
         if (!result) {
-            result = this.decorated.getDefaultStyle().catch((e: unknown) => {
-                cache.defaultStyle = undefined;
+            result = this.decorated.getDefaultStyle(params).catch((e: unknown) => {
+                cache.stylesByParams.delete(key);
                 throw e;
             });
-            cache.defaultStyle = result;
+            cache.stylesByParams.set(key, result);
         }
 
         return result;
@@ -1770,9 +1774,7 @@ function cacheControl(ctx: CachingContext): CacheControl {
         },
 
         resetGeoStyles: () => {
-            if (ctx.caches.geo) {
-                ctx.caches.geo.defaultStyle = undefined;
-            }
+            ctx.caches.geo?.stylesByParams.clear();
         },
 
         resetAll: () => {
@@ -2069,9 +2071,9 @@ export type CachingConfiguration = {
     /**
      * When true, cache the geo style returned by `backend.geo().getDefaultStyle()`.
      *
-     * The geo style is the same for all workspaces within a single backend instance, so a single
-     * cached entry is maintained. This is useful to avoid repeated network calls when multiple
-     * geo charts are rendered on the same page.
+     * The geo style is the same for all workspaces within a single backend instance. Cached entries
+     * are keyed by the requested basemap and color scheme and kept in a small LRU cache. This is
+     * useful to avoid repeated network calls when multiple geo charts are rendered on the same page.
      *
      * @remarks
      * Default is false. Set to true to enable caching.
@@ -2161,7 +2163,9 @@ export function withCaching(
             workspaceAutomations: automationsCaching
                 ? new LRUCache({ max: config.maxAutomationsWorkspaces! })
                 : undefined,
-            geo: geoCaching ? { defaultStyle: undefined } : undefined,
+            geo: geoCaching
+                ? { stylesByParams: new LRUCache({ max: MAX_GEO_STYLE_CACHE_ENTRIES }) }
+                : undefined,
         },
         config,
         capabilities: realBackend.capabilities,

@@ -18,6 +18,7 @@ const callbacksMock = vi.fn();
 const syncMock = vi.fn();
 const afterRenderMock = vi.fn();
 const applyViewportOnConfigChangeMock = vi.fn();
+const applyViewportMock = vi.fn();
 
 function createMapFacadeStub(): IMapFacade {
     const style: StyleSpecification = { version: 8, sources: {}, layers: [] };
@@ -121,6 +122,9 @@ vi.mock("../../hooks/map/useAfterRender.js", () => ({
 vi.mock("../../hooks/map/useApplyViewportOnConfigChange.js", () => ({
     useApplyViewportOnConfigChange: (...args: unknown[]) => applyViewportOnConfigChangeMock(...args),
 }));
+vi.mock("../../map/viewport/viewportCalculation.js", () => ({
+    applyViewport: (...args: unknown[]) => applyViewportMock(...args),
+}));
 
 describe("MapController", () => {
     beforeEach(() => {
@@ -130,6 +134,7 @@ describe("MapController", () => {
         syncMock.mockClear();
         afterRenderMock.mockClear();
         applyViewportOnConfigChangeMock.mockClear();
+        applyViewportMock.mockClear();
     });
 
     it("wires map lifecycle hooks with provided props", () => {
@@ -205,5 +210,52 @@ describe("MapController", () => {
             "Geo accessibility title",
             undefined,
         );
+    });
+
+    it("does not reapply initial viewport when map instance is recreated", () => {
+        const mapContainerRef = { current: document.createElement("div") };
+        const initialViewport = {
+            bounds: {
+                southWest: { lng: 10, lat: 20 },
+                northEast: { lng: 30, lat: 40 },
+            },
+        };
+        const recreatedMapFacadeStub = createMapFacadeStub();
+
+        initMock
+            .mockReturnValueOnce({ map: mapFacadeStub, tooltip: popupFacadeStub, isMapReady: true })
+            .mockReturnValueOnce({
+                map: recreatedMapFacadeStub,
+                tooltip: popupFacadeStub,
+                isMapReady: true,
+            });
+
+        const { rerender } = render(
+            <MapController
+                mapContainerRef={mapContainerRef}
+                chartContainerRect={null}
+                initialViewport={initialViewport}
+                dataViewport={null}
+                layerExecutions={[]}
+                drillablePredicates={[]}
+                config={undefined}
+            />,
+        );
+
+        expect(applyViewportMock).toHaveBeenCalledTimes(1);
+
+        rerender(
+            <MapController
+                mapContainerRef={mapContainerRef}
+                chartContainerRect={null}
+                initialViewport={initialViewport}
+                dataViewport={null}
+                layerExecutions={[]}
+                drillablePredicates={[]}
+                config={undefined}
+            />,
+        );
+
+        expect(applyViewportMock).toHaveBeenCalledTimes(1);
     });
 });

@@ -10,6 +10,7 @@ import {
     type IDataView,
     type IElementsQueryResult,
     type IExecutionResult,
+    type IGeoService,
     type IPreparedExecution,
 } from "@gooddata/sdk-backend-spi";
 import {
@@ -33,13 +34,14 @@ import {
 import { decoratedBackend } from "../../decoratedBackend/index.js";
 import { dummyBackend, dummyBackendEmptyData } from "../../dummyBackend/index.js";
 import { withEventing } from "../../eventingBackend/index.js";
-import { type CacheControl, withCaching } from "../index.js";
+import { type CacheControl, type CachingConfiguration, withCaching } from "../index.js";
 
 const defaultBackend = dummyBackendEmptyData();
 
 function withCachingForTests(
     realBackend: IAnalyticalBackend = defaultBackend,
     onCacheReady?: (cacheControl: CacheControl) => void,
+    configOverrides: Partial<CachingConfiguration> = {},
 ): IAnalyticalBackend {
     return withCaching(realBackend, {
         maxCatalogs: 1,
@@ -58,7 +60,9 @@ function withCachingForTests(
         maxAttributeWorkspaces: 1,
         maxWorkspaceSettings: 1,
         maxAutomationsWorkspaces: 1,
+        cacheGeoStyles: true,
         onCacheReady,
+        ...configOverrides,
     });
 }
 
@@ -108,6 +112,17 @@ function createGeoCollectionBackend(provider: CollectionItemsProvider): IAnalyti
                 (execution) => new GeoPreparedExecution(execution, provider),
             ),
     });
+}
+
+function createGeoStyleBackend(getDefaultStyle: IGeoService["getDefaultStyle"]): IAnalyticalBackend {
+    const backend = dummyBackendEmptyData();
+
+    return {
+        ...backend,
+        geo: () => ({
+            getDefaultStyle,
+        }),
+    };
 }
 
 function createGeoFeature(value: string): IGeoJsonFeature {
@@ -201,6 +216,25 @@ describe("withCaching", () => {
         const second = doExecution(backend, [ReferenceMd.Won]);
 
         expect(second).not.toBe(first);
+    });
+
+    it("evicts least recently used geo styles when the geo style cache reaches its max size", async () => {
+        const getDefaultStyle = vi.fn<IGeoService["getDefaultStyle"]>(async (params) => ({
+            basemap: params?.basemap,
+            colorScheme: params?.colorScheme,
+        }));
+        const backend = withCachingForTests(createGeoStyleBackend(getDefaultStyle));
+
+        for (let i = 0; i < 10; i += 1) {
+            await backend.geo().getDefaultStyle({ basemap: `basemap-${i}` });
+        }
+
+        expect(getDefaultStyle).toHaveBeenCalledTimes(10);
+
+        await backend.geo().getDefaultStyle({ basemap: "basemap-10" });
+        await backend.geo().getDefaultStyle({ basemap: "basemap-0" });
+
+        expect(getDefaultStyle).toHaveBeenCalledTimes(12);
     });
 
     it("evicts when execution cache TTL expires (time-based)", async () => {

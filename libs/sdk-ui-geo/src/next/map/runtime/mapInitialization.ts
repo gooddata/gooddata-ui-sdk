@@ -70,13 +70,15 @@ export async function initializeMapLibreMap(
         cooperativeGestures = true,
         maxZoom,
         style,
-        tileset,
+        basemap,
+        colorScheme,
     }: IMapInitializationOptions,
     locale?: IMapLibreLocale,
     backend?: IAnalyticalBackend,
 ): Promise<IMapInitResult> {
     const maplibregl = await import("maplibre-gl");
-    const styleSpecification = style ?? (backend ? await fetchMapStyle(backend, tileset) : undefined);
+    const styleSpecification =
+        style ?? (backend ? await fetchMapStyle(backend, basemap, colorScheme) : undefined);
 
     if (!styleSpecification) {
         throw new Error("Map style is required. Provide either a style option or a backend instance.");

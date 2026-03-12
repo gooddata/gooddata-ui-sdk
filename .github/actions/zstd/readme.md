@@ -10,7 +10,6 @@ The provided actions are:
 
 1. **detect-zstd**
    Checks if `zstd` is installed and outputs:
-
     - `exists`: whether `zstd` is present.
     - `zstd_dir`: the installation directory of `zstd`.
       It also sets the `ZSTD_DIR` environment variable.
@@ -25,8 +24,8 @@ The provided actions are:
 
 ### Cypress Image (All images that has zstd installed) and Cache Compression Issue
 
--   **Cypress Image Issue:**
-    The `cypress/included:13.17.0` image includes `zstd`. As noted in [this issue](https://github.com/runs-on/cache/issues/29), the caching action uses `zstd` if available, causing cache restore failures on our runners that use gzip.
+- **Cypress Image Issue:**
+  The `cypress/included:13.17.0` image includes `zstd`. As noted in [this issue](https://github.com/runs-on/cache/issues/29), the caching action uses `zstd` if available, causing cache restore failures on our runners that use gzip.
 
 ## Usage
 

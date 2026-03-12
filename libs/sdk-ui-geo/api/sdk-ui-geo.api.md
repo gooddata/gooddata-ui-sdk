@@ -53,6 +53,9 @@ export function createAreaLayer(layer: Omit<IGeoLayerArea, "type" | "id">, id?: 
 // @public
 export function createPushpinLayer(layer: Omit<IGeoLayerPushpin, "type" | "id">, id?: string): IGeoLayerPushpin;
 
+// @alpha
+export function doesGeoBasemapSupportColorScheme(basemap: GeoBasemap): boolean;
+
 // @public @deprecated (undocumented)
 export function enrichMapboxToken<T>(config?: T & {
     mapboxToken?: string;
@@ -63,11 +66,17 @@ export function enrichMapboxToken<T>(config?: T & {
 // @public
 export function GeoAreaChart(props: IGeoAreaChartProps): ReactElement;
 
+// @alpha
+export type GeoBasemap = "standard" | "satellite" | "monochrome" | "hybrid" | "none";
+
 // @public
 export function GeoChart(props: IGeoChartProps): ReactElement;
 
 // @public
 export type GeoChartPushpinSizeOption = "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
+
+// @alpha
+export type GeoColorScheme = "light" | "dark";
 
 // @public
 export type GeoLayerType = "pushpin" | "area";
@@ -80,9 +89,6 @@ export type GeoLegendPosition = GeoLegendCornerPosition | "auto";
 
 // @public
 export function GeoPushpinChart(props: IGeoPushpinChartProps): ReactElement;
-
-// @alpha
-export type GeoTileset = "default" | "satellite";
 
 export { getColorMappingPredicate }
 
@@ -126,6 +132,8 @@ export interface IGeoAreaChartConfig {
     applyViewportNavigation?: boolean;
     // (undocumented)
     areas?: IGeoAreasConfig;
+    // @alpha
+    basemap?: GeoBasemap;
     // (undocumented)
     center?: IGeoLngLat;
     // (undocumented)
@@ -134,10 +142,14 @@ export interface IGeoAreaChartConfig {
     colorPalette?: IColorPalette;
     // (undocumented)
     colors?: string[];
+    // @alpha
+    colorScheme?: GeoColorScheme;
     // (undocumented)
     cooperativeGestures?: boolean;
     // (undocumented)
     enableExecutionCancelling?: boolean;
+    // @internal
+    enableGeoBasemapConfig?: boolean;
     // @internal
     enableGeoChartA11yImprovements?: boolean;
     // @internal
@@ -158,8 +170,6 @@ export interface IGeoAreaChartConfig {
     separators?: ISeparators;
     // (undocumented)
     showLabels?: boolean;
-    // @alpha
-    tileset?: GeoTileset;
     // (undocumented)
     viewport?: IGeoChartViewport;
     // (undocumented)
@@ -191,12 +201,18 @@ export interface IGeoChartConfig {
     // @internal
     applyViewportNavigation?: boolean;
     areas?: IGeoAreasConfig;
+    // @alpha
+    basemap?: GeoBasemap;
     center?: IGeoLngLat;
     colorMapping?: IColorMapping[];
     colorPalette?: IColorPalette;
     colors?: string[];
+    // @alpha
+    colorScheme?: GeoColorScheme;
     cooperativeGestures?: boolean;
     enableExecutionCancelling?: boolean;
+    // @internal
+    enableGeoBasemapConfig?: boolean;
     // @internal
     enableGeoChartA11yImprovements?: boolean;
     // @internal
@@ -211,8 +227,6 @@ export interface IGeoChartConfig {
     selectedSegmentItems?: string[];
     separators?: ISeparators;
     showLabels?: boolean;
-    // @alpha
-    tileset?: GeoTileset;
     viewport?: IGeoChartViewport;
     zoom?: number;
 }
@@ -515,6 +529,8 @@ export interface IGeoPushpinChartConfig {
     a11yTitle?: string;
     // @internal
     applyViewportNavigation?: boolean;
+    // @alpha
+    basemap?: GeoBasemap;
     // (undocumented)
     center?: IGeoLngLat;
     // (undocumented)
@@ -523,10 +539,14 @@ export interface IGeoPushpinChartConfig {
     colorPalette?: IColorPalette;
     // (undocumented)
     colors?: string[];
+    // @alpha
+    colorScheme?: GeoColorScheme;
     // (undocumented)
     cooperativeGestures?: boolean;
     // (undocumented)
     enableExecutionCancelling?: boolean;
+    // @internal
+    enableGeoBasemapConfig?: boolean;
     // @internal
     enableGeoChartA11yImprovements?: boolean;
     // @internal
@@ -551,8 +571,6 @@ export interface IGeoPushpinChartConfig {
     separators?: ISeparators;
     // (undocumented)
     showLabels?: boolean;
-    // @alpha
-    tileset?: GeoTileset;
     tooltipText?: IAttribute;
     // (undocumented)
     viewport?: IGeoChartViewport;

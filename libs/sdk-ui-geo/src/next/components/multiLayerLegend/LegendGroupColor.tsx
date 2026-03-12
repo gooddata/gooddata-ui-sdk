@@ -19,6 +19,7 @@ import cx from "classnames";
 import { useAutoupdateRef } from "@gooddata/sdk-ui";
 import { makeLinearKeyboardNavigation, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
+import { resolveLegendGroupTitle } from "./groupTitle.js";
 import {
     type ILegendColorCategoryItem,
     type ILegendGroup,
@@ -164,11 +165,12 @@ function LegacyLegendGroupColor({
     const colorItems = group.items.filter(isLegendColorCategoryItem);
     const isInteractive = resolveGroupInteractivity(group, onItemClick);
     const onItemClickHandler = isInteractive ? onItemClick : undefined;
+    const groupTitle = resolveLegendGroupTitle(group);
     return (
         <div className="gd-geo-multi-layer-legend__group gd-geo-multi-layer-legend__group--color">
-            {group.title ? (
-                <div className="gd-geo-multi-layer-legend__group-title" title={group.title}>
-                    {group.title}
+            {groupTitle ? (
+                <div className="gd-geo-multi-layer-legend__group-title" title={groupTitle}>
+                    {groupTitle}
                 </div>
             ) : null}
             <div className="gd-geo-multi-layer-legend__color-list">
@@ -187,6 +189,7 @@ function EnhancedLegendGroupColor({
     const colorItems = group.items.filter(isLegendColorCategoryItem);
     const isInteractive = resolveGroupInteractivity(group, onItemClick);
     const onItemClickHandler = isInteractive ? onItemClick : undefined;
+    const groupTitle = resolveLegendGroupTitle(group);
     const titleId = useId();
     const idPrefix = useIdPrefixed("geo-color-list");
     const [activeIndex, setActiveIndex] = useState(0);
@@ -260,18 +263,18 @@ function EnhancedLegendGroupColor({
         <div
             className="gd-geo-multi-layer-legend__group gd-geo-multi-layer-legend__group--color"
             role="group"
-            aria-labelledby={group.title ? titleId : undefined}
+            aria-labelledby={groupTitle ? titleId : undefined}
         >
-            {group.title ? (
+            {groupTitle ? (
                 <div id={titleId} className="gd-geo-multi-layer-legend__group-title">
-                    {group.title}
+                    {groupTitle}
                 </div>
             ) : null}
             <div
                 ref={listRef}
                 className="gd-geo-multi-layer-legend__color-list"
                 role={isInteractive ? "listbox" : "list"}
-                aria-label={group.title}
+                aria-label={groupTitle}
                 aria-multiselectable={isInteractive ? true : undefined}
                 aria-activedescendant={
                     isInteractive && colorItems.length > 0 ? makeItemId(idPrefix, clampedIndex) : undefined

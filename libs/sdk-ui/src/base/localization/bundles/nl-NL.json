@@ -26,6 +26,7 @@
     "gs.list.allSearchResultsAndCount": "Alle zoekresultaten ({count})",
     "gs.list.except": "behalve",
     "gs.list.is": "is",
+    "gs.list.isNot": "is niet",
     "gs.list.search.placeholder": "Bezig met zoeken…",
     "gs.list.acessibility.search.label": "Waarden van eigenschappen zoeken",
     "gs.list.notAvailableAbbreviation": "Nvt",

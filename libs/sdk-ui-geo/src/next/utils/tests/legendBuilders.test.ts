@@ -59,7 +59,7 @@ function createAvailableLegends(overrides?: Partial<IAvailableLegends>): IAvaila
 }
 
 describe("legend builders precedence", () => {
-    it("does not render pushpin gradient legend when segmentation is present", () => {
+    it("renders pushpin segmented color legend together with a neutral color scale", () => {
         const section = computePushpinLegend({
             layerId: "pushpin",
             layerName: "Pushpin layer",
@@ -71,7 +71,20 @@ describe("legend builders precedence", () => {
             }),
         });
 
-        expect(section?.groups.map((group) => group.kind)).toEqual(["color"]);
+        expect(section?.groups.map((group) => group.kind)).toEqual(["color", "colorScale"]);
+        expect(section?.groups[0]?.title).toBe("Country");
+        expect(section?.groups[1]).toMatchObject({
+            title: "Revenue",
+            titleMessageId: "geochart.legend.colorScale.title.allSegments",
+            titleMessageValues: { metric: "Revenue" },
+        });
+        expect(section?.groups[1]?.items[0]).toMatchObject({
+            type: "colorScale",
+            minLabel: "10",
+            maxLabel: "100",
+            minColor: "var(--gd-palette-complementary-2)",
+            maxColor: "var(--gd-palette-complementary-8)",
+        });
     });
 
     it("renders pushpin gradient legend when segmentation is absent", () => {
@@ -91,7 +104,31 @@ describe("legend builders precedence", () => {
         expect(section?.groups.map((group) => group.kind)).toEqual(["colorScale"]);
     });
 
-    it("does not render area gradient legend when segmentation is present", () => {
+    it("keeps pushpin size legend before segmented color and color scale groups", () => {
+        const section = computePushpinLegend({
+            layerId: "pushpin",
+            layerName: "Pushpin layer",
+            geoData: {
+                ...pushpinGeoData,
+                size: {
+                    name: "Population",
+                    index: 2,
+                    data: [10, 50, 100],
+                    format: "#,##0",
+                },
+            },
+            legendItems,
+            availableLegends: createAvailableLegends({
+                hasCategoryLegend: true,
+                hasColorLegend: true,
+                hasSizeLegend: true,
+            }),
+        });
+
+        expect(section?.groups.map((group) => group.kind)).toEqual(["size", "color", "colorScale"]);
+    });
+
+    it("renders area segmented color legend together with a neutral color scale", () => {
         const section = computeAreaLegend({
             layerId: "area",
             layerName: "Area layer",
@@ -103,7 +140,20 @@ describe("legend builders precedence", () => {
             }),
         });
 
-        expect(section?.groups.map((group) => group.kind)).toEqual(["color"]);
+        expect(section?.groups.map((group) => group.kind)).toEqual(["color", "colorScale"]);
+        expect(section?.groups[0]?.title).toBe("Country");
+        expect(section?.groups[1]).toMatchObject({
+            title: "Revenue",
+            titleMessageId: "geochart.legend.colorScale.title.allSegments",
+            titleMessageValues: { metric: "Revenue" },
+        });
+        expect(section?.groups[1]?.items[0]).toMatchObject({
+            type: "colorScale",
+            minLabel: "10",
+            maxLabel: "100",
+            minColor: "var(--gd-palette-complementary-2)",
+            maxColor: "var(--gd-palette-complementary-8)",
+        });
     });
 
     it("renders area gradient legend when segmentation is absent", () => {

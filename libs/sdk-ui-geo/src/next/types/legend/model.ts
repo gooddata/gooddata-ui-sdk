@@ -1,5 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
+import { type LegendMessageId, type LegendMessageValues } from "./messages.js";
 import { type GeoLayerType } from "../layers/index.js";
 
 /**
@@ -149,6 +150,20 @@ export interface ILegendGroup {
      * Display title for the group (e.g., "Size", "Color", measure name).
      */
     title: string;
+
+    /**
+     * Optional localized message ID for the group title.
+     *
+     * @remarks
+     * The raw `title` is kept as a fallback/plain value. Rendering code should
+     * prefer this message descriptor when it is present.
+     */
+    titleMessageId?: LegendMessageId;
+
+    /**
+     * Optional values for localized group title formatting.
+     */
+    titleMessageValues?: LegendMessageValues;
 
     /**
      * Items in this group.

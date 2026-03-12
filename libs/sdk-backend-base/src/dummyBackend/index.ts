@@ -67,6 +67,10 @@ import {
     type IGetScheduledMailOptions,
     type IInsightsQuery,
     type IInsightsQueryResult,
+    type ILlmEndpointsQuery,
+    type ILlmEndpointsQueryResult,
+    type ILlmProvidersQuery,
+    type ILlmProvidersQueryResult,
     type IMeasureExpressionToken,
     type IMeasureKeyDrivers,
     type IMeasureReferencing,
@@ -902,6 +906,50 @@ class DummyWorkspaceCatalogWithAvailableItems implements IWorkspaceCatalogWithAv
     }
 }
 
+class DummyLlmEndpointsQuery implements ILlmEndpointsQuery {
+    public withSize(_size: number): ILlmEndpointsQuery {
+        return this;
+    }
+
+    public withPage(_page: number): ILlmEndpointsQuery {
+        return this;
+    }
+
+    public withSorting(_sort: string[]): ILlmEndpointsQuery {
+        return this;
+    }
+
+    public query(): Promise<ILlmEndpointsQueryResult> {
+        return Promise.resolve(createEmptyPagedResource());
+    }
+
+    public queryAll(): Promise<ILlmEndpointOpenAI[]> {
+        return Promise.resolve([]);
+    }
+}
+
+class DummyLlmProvidersQuery implements ILlmProvidersQuery {
+    public withSize(_size: number): ILlmProvidersQuery {
+        return this;
+    }
+
+    public withPage(_page: number): ILlmProvidersQuery {
+        return this;
+    }
+
+    public withSorting(_sort: string[]): ILlmProvidersQuery {
+        return this;
+    }
+
+    public query(): Promise<ILlmProvidersQueryResult> {
+        return Promise.resolve(createEmptyPagedResource());
+    }
+
+    public queryAll(): Promise<ILlmProvider[]> {
+        return Promise.resolve([]);
+    }
+}
+
 class DummyOrganization implements IOrganization {
     constructor(public organizationId: string) {}
 
@@ -1082,7 +1130,7 @@ class DummyOrganization implements IOrganization {
 
         return {
             getCount: () => Promise.resolve(0),
-            getAll: () => Promise.resolve([]),
+            getEndpointsQuery: () => new DummyLlmEndpointsQuery(),
             deleteLlmEndpoint: () => Promise.resolve(),
             getLlmEndpoint: () =>
                 Promise.resolve({
@@ -1120,7 +1168,7 @@ class DummyOrganization implements IOrganization {
 
         return {
             getCount: () => Promise.resolve(0),
-            getAll: () => Promise.resolve([]),
+            getProvidersQuery: () => new DummyLlmProvidersQuery(),
             deleteLlmProvider: () => Promise.resolve(),
             getLlmProvider: () => Promise.resolve(dummyProvider),
             createLlmProvider: () => Promise.resolve(dummyProvider),

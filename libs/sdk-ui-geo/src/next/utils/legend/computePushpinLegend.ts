@@ -6,6 +6,8 @@ import { computeColorScale } from "./computeColorScale.js";
 import {
     ATTRIBUTE_ONLY_URI_PREFIX,
     FALLBACK_LEGEND_COLOR,
+    SEGMENTED_COLOR_SCALE_MAX_COLOR,
+    SEGMENTED_COLOR_SCALE_MIN_COLOR,
     convertToColorCategories,
     isAttributeOnlyPushpinData,
 } from "./legendUtils.js";
@@ -168,26 +170,6 @@ export function computePushpinLegend(params: IComputePushpinLegendParams): ILege
         }
     }
 
-    // Add numeric color scale group if available.
-    // Segment/category legend has precedence over gradient, so we only render the
-    // color scale when no category legend is present.
-    // Order: Size -> Metric-Color -> Segment By
-    if (availableLegends.hasColorLegend && geoData.color && !hasCategoryLegend) {
-        const colorScale = computeColorScale(
-            geoData.color.data,
-            geoData.color.format,
-            numericSymbols,
-            colorScaleBaseColor,
-        );
-        if (colorScale) {
-            groups.push({
-                kind: "colorScale",
-                title: geoData.color.name,
-                items: [colorScale],
-            });
-        }
-    }
-
     // Add category legend group if available (Segment By)
     if (hasCategoryLegend) {
         const colorCategories = convertToColorCategories(legendItems);
@@ -196,6 +178,36 @@ export function computePushpinLegend(params: IComputePushpinLegendParams): ILege
             title: geoData.segment?.name ?? "Color",
             items: colorCategories,
         });
+    }
+
+    // Add numeric color scale group if available.
+    // When segment categories are present, keep the scale and render it as a neutral grayscale
+    // so the legend explains the metric range without implying a per-segment color ramp.
+    // Order: Size -> Segment By -> Metric-Color
+    if (availableLegends.hasColorLegend && geoData.color) {
+        const colorScale = computeColorScale(
+            geoData.color.data,
+            geoData.color.format,
+            numericSymbols,
+            hasCategoryLegend ? undefined : colorScaleBaseColor,
+        );
+        if (colorScale) {
+            groups.push({
+                kind: "colorScale",
+                title: geoData.color.name,
+                titleMessageId: hasCategoryLegend
+                    ? "geochart.legend.colorScale.title.allSegments"
+                    : undefined,
+                titleMessageValues: hasCategoryLegend ? { metric: geoData.color.name } : undefined,
+                items: [
+                    {
+                        ...colorScale,
+                        minColor: hasCategoryLegend ? SEGMENTED_COLOR_SCALE_MIN_COLOR : colorScale.minColor,
+                        maxColor: hasCategoryLegend ? SEGMENTED_COLOR_SCALE_MAX_COLOR : colorScale.maxColor,
+                    },
+                ],
+            });
+        }
     }
 
     // Attribute-only fallback is mutually exclusive with category/color/size groups above:
