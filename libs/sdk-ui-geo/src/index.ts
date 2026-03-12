@@ -57,7 +57,11 @@ export type { IGeoAreaChartBaseProps, IGeoAreaChartProps } from "./next/types/pr
 export type { IGeoAreaChartConfig } from "./next/types/config/areaChart.js";
 export type { IGeoAreasConfig } from "./next/types/config/areas.js";
 
-export type { GeoTileset } from "./next/types/map/tileset.js";
+export {
+    doesGeoBasemapSupportColorScheme,
+    type GeoBasemap,
+    type GeoColorScheme,
+} from "./next/types/map/basemap.js";
 export {
     isGeoLayerArea,
     isGeoLayerPushpin,

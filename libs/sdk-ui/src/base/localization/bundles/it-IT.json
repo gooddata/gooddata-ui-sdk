@@ -26,6 +26,7 @@
     "gs.list.allSearchResultsAndCount": "Tutti i risultati della ricerca ({count})",
     "gs.list.except": "tranne",
     "gs.list.is": "è",
+    "gs.list.isNot": "non è",
     "gs.list.search.placeholder": "Cerca…",
     "gs.list.acessibility.search.label": "Valori degli attributi di ricerca",
     "gs.list.notAvailableAbbreviation": "nd",

@@ -60,7 +60,7 @@ describe("OrganizationLlmProvidersService", () => {
         );
     });
 
-    it("should get all LLM providers", async () => {
+    it("should get LLM providers query", async () => {
         vi.mocked(api.EntitiesApi_GetAllEntitiesLlmProviders).mockResolvedValue({
             data: {
                 data: [
@@ -70,17 +70,24 @@ describe("OrganizationLlmProvidersService", () => {
                         attributes: { name: "Provider 1", providerConfig: { type: "openAI" } },
                     },
                 ],
+                meta: {
+                    page: {
+                        totalElements: 1,
+                    },
+                },
             },
         } as unknown as AxiosResponse<JsonApiLlmProviderOutList>);
 
-        const result = await service.getAll();
+        const result = await service.getProvidersQuery().query();
 
-        expect(result).toHaveLength(1);
-        expect(result[0].id).toBe("p1");
+        expect(result.items).toHaveLength(1);
+        expect(result.items[0].id).toBe("p1");
         expect(api.EntitiesApi_GetAllEntitiesLlmProviders).toHaveBeenCalledWith(
             expect.anything(),
             expect.anything(),
-            {},
+            expect.objectContaining({
+                size: 100,
+            }),
         );
     });
 

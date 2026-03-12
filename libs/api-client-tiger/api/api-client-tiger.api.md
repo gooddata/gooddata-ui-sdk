@@ -14680,6 +14680,12 @@ export interface ILiveFeatures {
 }
 
 // @public
+export interface ILocationStyleParams {
+    basemap?: string;
+    colorScheme?: string;
+}
+
+// @public
 export class ImageExportExport extends ExportBaseAPI implements ImageExportExportInterface {
     createImageExport(requestParameters: ImageExportExportCreateImageExportRequest, options?: AxiosRequestConfig): AxiosPromise<ExportExportResponse>;
     getImageExport(requestParameters: ImageExportExportGetImageExportRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
@@ -22474,7 +22480,7 @@ export interface LocalIdentifier {
 
 // @public
 export type LocationStyleApiInterface = {
-    getDefaultStyle(): Promise<LocationStyleDocument>;
+    getDefaultStyle(params?: ILocationStyleParams): Promise<LocationStyleDocument>;
 };
 
 // @public

@@ -673,6 +673,11 @@ export interface ISettings {
     enableCustomGeoCollection?: boolean;
 
     /**
+     * Enable satellite/hybrid basemap option in geo chart configuration.
+     */
+    enableGeoSatelliteBasemapOption?: boolean;
+
+    /**
      * Enable automation management in dashboards
      */
     enableAutomationManagement?: boolean;

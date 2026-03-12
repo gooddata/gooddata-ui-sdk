@@ -1,10 +1,67 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import {
     type ILlmEndpointOpenAI,
     type LlmEndpointOpenAIPatch,
     type LlmEndpointTestResults,
 } from "@gooddata/sdk-model";
+
+import { type IPagedResource } from "../../common/paging.js";
+
+/**
+ * Service to query LLM endpoints.
+ *
+ * @alpha
+ */
+export interface ILlmEndpointsQuery {
+    /**
+     * Sets number of LLM endpoints to return per page.
+     * Default size: 100
+     *
+     * @param size - desired max number of LLM endpoints per page must be a positive number
+     * @returns LLM endpoints query
+     */
+    withSize(size: number): ILlmEndpointsQuery;
+
+    /**
+     * Sets starting page for the query. Backend WILL return no data if the page is greater than
+     * total number of pages.
+     * Default page: 0
+     *
+     * @param page - zero indexed, must be non-negative
+     * @returns LLM endpoints query
+     */
+    withPage(page: number): ILlmEndpointsQuery;
+
+    /**
+     * Sets sorting for the query.
+     *
+     * @param sort - Sorting criteria in the format: property,(asc|desc). Default sort order is ascending. Multiple sort criteria are supported.
+     * @returns LLM endpoints query
+     */
+    withSorting(sort: string[]): ILlmEndpointsQuery;
+
+    /**
+     * Starts the LLM endpoints query.
+     *
+     * @returns promise of first page of the results
+     */
+    query(): Promise<ILlmEndpointsQueryResult>;
+
+    /**
+     * Starts the LLM endpoints query.
+     *
+     * @returns promise with a list of all LLM endpoints matching the specified options
+     */
+    queryAll(): Promise<ILlmEndpointOpenAI[]>;
+}
+
+/**
+ * Queried LLM endpoints are returned in a paged representation.
+ *
+ * @alpha
+ */
+export type ILlmEndpointsQueryResult = IPagedResource<ILlmEndpointOpenAI>;
 
 /**
  * This service provides access to organization llm endpoints configuration.
@@ -20,11 +77,11 @@ export interface IOrganizationLlmEndpointsService {
     getCount(): Promise<number>;
 
     /**
-     * Get all llm endpoints
+     * Get endpoints query
      *
-     * @returns Promise resolved with array of llm endpoints.
+     * @returns endpoints query
      */
-    getAll(): Promise<ILlmEndpointOpenAI[]>;
+    getEndpointsQuery(): ILlmEndpointsQuery;
 
     /**
      * Delete an endpoint

@@ -18,8 +18,8 @@ import {
 import { resolveMapInteractionOptions } from "../../map/runtime/mapConfig.js";
 import { initializeMapLibreMap } from "../../map/runtime/mapInitialization.js";
 import { type IGeoChartConfig } from "../../types/config/unified.js";
+import { type GeoBasemap, doesGeoBasemapSupportColorScheme } from "../../types/map/basemap.js";
 import { type IMapViewport } from "../../types/map/provider.js";
-import type { GeoTileset } from "../../types/map/tileset.js";
 import { getMapCanvasRuntimeCapabilities } from "../../utils/mapCanvasAccessibility.js";
 import { generateMapLibreLocale } from "../../utils/mapLocale.js";
 
@@ -81,6 +81,22 @@ function resolveInitialNavigationConfig(
         pan: shouldApplyViewportNavigation ? (pan ?? true) : true,
         zoom: shouldApplyViewportNavigation ? (zoom ?? true) : true,
     };
+}
+
+function normalizeGeoBasemapOption(basemap: string | undefined): GeoBasemap | undefined {
+    switch (basemap) {
+        case undefined:
+        case "default":
+            return undefined;
+        case "standard":
+        case "satellite":
+        case "monochrome":
+        case "hybrid":
+        case "none":
+            return basemap;
+        default:
+            return undefined;
+    }
 }
 
 /**
@@ -278,6 +294,58 @@ function cleanupMapA11y(canvas: HTMLCanvasElement | undefined, a11ySetup: IMapA1
     a11ySetup?.observer?.disconnect();
 }
 
+function captureCurrentViewport(map: Map): Partial<IMapViewport> {
+    const center = map.getCenter();
+
+    return {
+        center: {
+            lng: center.lng,
+            lat: center.lat,
+        },
+        zoom: map.getZoom(),
+    };
+}
+
+function getRequestedViewport(
+    initialViewportBounds:
+        | {
+              southWest: { lng: number; lat: number };
+              northEast: { lng: number; lat: number };
+          }
+        | undefined,
+    initialViewportCenter: { lng: number; lat: number } | undefined,
+    initialViewportZoom: number | undefined,
+    configCenter: { lng: number; lat: number } | undefined,
+    configZoom: IGeoChartConfig["zoom"] | undefined,
+): Partial<IMapViewport> {
+    return {
+        center: initialViewportCenter ?? configCenter,
+        zoom: initialViewportZoom ?? configZoom,
+        bounds: initialViewportBounds,
+    };
+}
+
+function getViewportKey(viewport: Partial<IMapViewport>): string {
+    if (viewport.bounds) {
+        const { southWest, northEast } = viewport.bounds;
+        return `bounds:${southWest.lng}:${southWest.lat}:${northEast.lng}:${northEast.lat}`;
+    }
+
+    if (viewport.center && viewport.zoom !== undefined) {
+        return `center:${viewport.center.lng}:${viewport.center.lat}:zoom:${viewport.zoom}`;
+    }
+
+    if (viewport.center) {
+        return `center:${viewport.center.lng}:${viewport.center.lat}`;
+    }
+
+    if (viewport.zoom !== undefined) {
+        return `zoom:${viewport.zoom}`;
+    }
+
+    return "empty";
+}
+
 /**
  * Initialize map instance
  *
@@ -329,26 +397,82 @@ export function useMapInitialization(
 
     const mapInstanceRef = useRef<Map | null>(null);
     const tooltipInstanceRef = useRef<Popup | null>(null);
+    const initialViewportBoundsSouthWestLng = initialViewport?.bounds?.southWest.lng;
+    const initialViewportBoundsSouthWestLat = initialViewport?.bounds?.southWest.lat;
+    const initialViewportBoundsNorthEastLng = initialViewport?.bounds?.northEast.lng;
+    const initialViewportBoundsNorthEastLat = initialViewport?.bounds?.northEast.lat;
+    const initialViewportCenterLng = initialViewport?.center?.lng;
+    const initialViewportCenterLat = initialViewport?.center?.lat;
+    const initialViewportZoom = initialViewport?.zoom;
+    const configCenterLng = config?.center?.lng;
+    const configCenterLat = config?.center?.lat;
+    const configZoom = config?.zoom;
 
-    const initialViewportRef = useRef<Partial<IMapViewport>>({
-        center: initialViewport?.center ?? config?.center,
-        zoom: initialViewport?.zoom ?? config?.zoom,
-        bounds: initialViewport?.bounds,
-    });
+    const requestedViewport = useMemo(
+        () =>
+            getRequestedViewport(
+                initialViewportBoundsSouthWestLng !== undefined &&
+                    initialViewportBoundsSouthWestLat !== undefined &&
+                    initialViewportBoundsNorthEastLng !== undefined &&
+                    initialViewportBoundsNorthEastLat !== undefined
+                    ? {
+                          southWest: {
+                              lng: initialViewportBoundsSouthWestLng,
+                              lat: initialViewportBoundsSouthWestLat,
+                          },
+                          northEast: {
+                              lng: initialViewportBoundsNorthEastLng,
+                              lat: initialViewportBoundsNorthEastLat,
+                          },
+                      }
+                    : undefined,
+                initialViewportCenterLng !== undefined && initialViewportCenterLat !== undefined
+                    ? {
+                          lng: initialViewportCenterLng,
+                          lat: initialViewportCenterLat,
+                      }
+                    : undefined,
+                initialViewportZoom,
+                configCenterLng !== undefined && configCenterLat !== undefined
+                    ? {
+                          lng: configCenterLng,
+                          lat: configCenterLat,
+                      }
+                    : undefined,
+                configZoom,
+            ),
+        [
+            initialViewportBoundsSouthWestLng,
+            initialViewportBoundsSouthWestLat,
+            initialViewportBoundsNorthEastLng,
+            initialViewportBoundsNorthEastLat,
+            initialViewportCenterLng,
+            initialViewportCenterLat,
+            initialViewportZoom,
+            configCenterLng,
+            configCenterLat,
+            configZoom,
+        ],
+    );
+    const requestedViewportKey = useMemo(() => getViewportKey(requestedViewport), [requestedViewport]);
+    const initialViewportRef = useRef<Partial<IMapViewport>>(requestedViewport);
+    const requestedViewportKeyRef = useRef(requestedViewportKey);
     const navigationConfig = useMemo(
         () => resolveInitialNavigationConfig(applyViewportNavigation, panNavigation, zoomNavigation),
         [applyViewportNavigation, panNavigation, zoomNavigation],
     );
 
     useEffect(() => {
-        if (!mapInstanceRef.current) {
-            initialViewportRef.current = {
-                center: initialViewport?.center ?? config?.center,
-                zoom: initialViewport?.zoom ?? config?.zoom,
-                bounds: initialViewport?.bounds,
-            };
+        if (requestedViewportKeyRef.current === requestedViewportKey) {
+            return;
         }
-    }, [config?.center, config?.zoom, initialViewport]);
+
+        requestedViewportKeyRef.current = requestedViewportKey;
+
+        if (!mapInstanceRef.current) {
+            initialViewportRef.current = requestedViewport;
+        }
+    }, [requestedViewport, requestedViewportKey]);
 
     const cooperativeGestures = config?.cooperativeGestures ?? true;
     const locale = useMemo(() => {
@@ -362,7 +486,10 @@ export function useMapInitialization(
         [isViewportFrozen],
     );
     const maxZoom = config?.maxZoomLevel;
-    const tileset: GeoTileset = config?.tileset ?? "default";
+    const rawBasemap = config?.basemap === undefined ? undefined : `${config.basemap}`;
+    const basemap = normalizeGeoBasemapOption(rawBasemap);
+    const colorScheme =
+        basemap !== undefined && doesGeoBasemapSupportColorScheme(basemap) ? config?.colorScheme : undefined;
     const isGeoChartA11yImprovementsEnabled = config?.enableGeoChartA11yImprovements ?? false;
     const { isKeyboardInteractionEnabled, isKeyboardRotationEnabled } = useMemo(
         () =>
@@ -407,7 +534,8 @@ export function useMapInitialization(
                 preserveDrawingBuffer: isExportMode,
                 maxZoom,
                 style: config?.mapStyle,
-                tileset,
+                basemap,
+                colorScheme,
             },
             locale,
             backend,
@@ -452,6 +580,10 @@ export function useMapInitialization(
             isMountedRef.current = false;
             setIsMapReady(false);
 
+            if (mapInstanceRef.current) {
+                initialViewportRef.current = captureCurrentViewport(mapInstanceRef.current);
+            }
+
             cleanupMapA11y(mapInstanceRef.current?.getCanvas(), a11ySetup);
 
             cleanupMapResources(mapInstanceRef.current, tooltipInstanceRef.current);
@@ -474,7 +606,8 @@ export function useMapInitialization(
         locale,
         backend,
         maxZoom,
-        tileset,
+        basemap,
+        colorScheme,
         intl,
         mapInstructionsId,
         mapCanvasTitle,

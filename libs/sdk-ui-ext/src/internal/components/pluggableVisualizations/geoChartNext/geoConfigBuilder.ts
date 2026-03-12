@@ -16,7 +16,11 @@ import { type IGeoChartConfig } from "@gooddata/sdk-ui-geo";
 import { isConcreteViewportPreset, normalizeGeoLegendPosition } from "@gooddata/sdk-ui-geo/internal";
 import { type IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 
-import { isGeoChartsViewportConfigEnabled } from "../../../constants/featureFlags.js";
+import {
+    isGeoBasemapConfigEnabled,
+    isGeoChartsViewportConfigEnabled,
+} from "../../../constants/featureFlags.js";
+import { sanitizeGeoMapStyleOptions } from "../../../constants/geoMapStyle.js";
 import { ANALYTICAL_ENVIRONMENT, DASHBOARDS_ENVIRONMENT } from "../../../constants/properties.js";
 import { type IVisProps, type IVisualizationProperties } from "../../../interfaces/Visualization.js";
 import { type IEmbeddingCodeContext } from "../../../interfaces/VisualizationDescriptor.js";
@@ -46,7 +50,19 @@ export function buildGeoVisualizationConfig({
 }: IBuildGeoConfigParams): IGeoChartConfig {
     const { config = {}, customVisualizationConfig = {}, a11yTitle } = options;
     const { center, zoom, legend, viewport = {}, ...restSupportedControls } = supportedControls;
+    const {
+        basemap: rawBasemap,
+        tileset: legacyTileset,
+        colorScheme: rawColorScheme,
+        ...restSupportedControlsWithoutGeoStyle
+    } = restSupportedControls;
     const { isInEditMode, isExportMode } = config;
+    const isBasemapConfigEnabled = isGeoBasemapConfigEnabled(featureFlags);
+    const sanitizedGeoMapStyle = sanitizeGeoMapStyleOptions({
+        basemap: rawBasemap,
+        legacyTileset,
+        colorScheme: rawColorScheme,
+    });
     const isViewportConfigEnabled = isGeoChartsViewportConfigEnabled(featureFlags);
     const isPresetViewportAreaSelected = isConcreteViewportPreset(viewport.area);
     const sanitizedViewport = isViewportConfigEnabled
@@ -109,17 +125,20 @@ export function buildGeoVisualizationConfig({
 
     // Merge all configuration
     const geoConfig: IGeoChartConfig = {
-        ...restSupportedControls,
+        ...restSupportedControlsWithoutGeoStyle,
         ...config,
         ...centerAndZoomProp,
         ...legendProp,
         ...viewportProp,
         ...customVisualizationConfig,
+        basemap: sanitizedGeoMapStyle.basemap,
+        colorScheme: sanitizedGeoMapStyle.colorScheme,
         separators: config.separators,
         colorPalette: config.colorPalette,
         colorMapping,
         cooperativeGestures,
         a11yTitle,
+        enableGeoBasemapConfig: isBasemapConfigEnabled,
         enableGeoChartA11yImprovements: featureFlags?.["enableGeoChartA11yImprovements"] ?? false,
         enableGeoChartsViewportConfig: isViewportConfigEnabled,
         applyViewportNavigation,
@@ -135,7 +154,8 @@ const supportedGeoConfigProperties = new Set<keyof IGeoChartConfig>([
     "legend",
     "limit",
     "mapStyle",
-    "tileset",
+    "basemap",
+    "colorScheme",
     "selectedSegmentItems",
     "separators",
     "viewport",
@@ -155,9 +175,16 @@ export function geoConfigFromInsight(
               position: normalizeGeoLegendPosition(controls.legend.position),
           }
         : undefined;
+    const sanitizedGeoMapStyle = sanitizeGeoMapStyleOptions({
+        basemap: controls.basemap,
+        legacyTileset: controls.tileset,
+        colorScheme: controls.colorScheme,
+    });
     const withValuesFromContext = {
         ...controls,
         ...(normalizedLegend ? { legend: normalizedLegend } : {}),
+        basemap: sanitizedGeoMapStyle.basemap,
+        colorScheme: sanitizedGeoMapStyle.colorScheme,
         ...(ctx?.settings?.separators ? { separators: ctx?.settings?.separators } : {}),
     };
 

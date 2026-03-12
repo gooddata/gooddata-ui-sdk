@@ -89,7 +89,7 @@ describe("initializeMapLibreMap", () => {
         await initializeMapLibreMap({
             container: createContainer(),
             style: MAP_STYLE,
-            tileset: "default",
+            basemap: "monochrome",
         });
 
         expect(lastMapOptions?.renderWorldCopies).toBe(false);
@@ -99,7 +99,7 @@ describe("initializeMapLibreMap", () => {
         await initializeMapLibreMap({
             container: createContainer(),
             style: MAP_STYLE,
-            tileset: "default",
+            basemap: "monochrome",
         });
 
         expect(lastMapOptions?.maxZoom).toBe(8);
@@ -109,7 +109,7 @@ describe("initializeMapLibreMap", () => {
         await initializeMapLibreMap({
             container: createContainer(),
             style: MAP_STYLE,
-            tileset: "default",
+            basemap: "monochrome",
             maxZoom: 5,
         });
 
@@ -120,7 +120,7 @@ describe("initializeMapLibreMap", () => {
         await initializeMapLibreMap({
             container: createContainer(),
             style: MAP_STYLE,
-            tileset: "default",
+            basemap: "monochrome",
             maxZoom: null,
         });
 
@@ -131,7 +131,7 @@ describe("initializeMapLibreMap", () => {
         await initializeMapLibreMap({
             container: createContainer(),
             style: MAP_STYLE,
-            tileset: "default",
+            basemap: "monochrome",
         });
 
         expect(lastMapOptions?.dragPan).toBeUndefined();
@@ -145,7 +145,7 @@ describe("initializeMapLibreMap", () => {
         await initializeMapLibreMap({
             container: createContainer(),
             style: MAP_STYLE,
-            tileset: "default",
+            basemap: "monochrome",
             navigation: {
                 pan: false,
                 zoom: false,
@@ -164,7 +164,7 @@ describe("initializeMapLibreMap", () => {
         await initializeMapLibreMap({
             container: createContainer(),
             style: MAP_STYLE,
-            tileset: "default",
+            basemap: "monochrome",
             touchZoomRotate: true,
             navigation: {
                 zoom: true,
@@ -178,7 +178,7 @@ describe("initializeMapLibreMap", () => {
         await initializeMapLibreMap({
             container: createContainer(),
             style: MAP_STYLE,
-            tileset: "default",
+            basemap: "monochrome",
             bounds: {
                 southWest: { lng: -170, lat: -20 },
                 northEast: { lng: 170, lat: 20 },
@@ -195,7 +195,7 @@ describe("initializeMapLibreMap", () => {
         await initializeMapLibreMap({
             container: createContainer(),
             style: MAP_STYLE,
-            tileset: "default",
+            basemap: "monochrome",
             bounds: {
                 southWest: { lng: 170, lat: -15 },
                 northEast: { lng: -170, lat: 25 },

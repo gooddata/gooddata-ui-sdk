@@ -61,6 +61,10 @@ import { removeSort } from "../../../utils/sort.js";
 import { setGeoPushpinUiConfig } from "../../../utils/uiConfigHelpers/geoPushpinChartUiConfigHelper.js";
 import { GeoPushpinConfigurationPanel } from "../../configurationPanels/GeoPushpinConfigurationPanel.js";
 import { PluggableBaseChart } from "../baseChart/PluggableBaseChart.js";
+import {
+    getGeoControlsWithFallback,
+    getGeoVisualizationPropertiesWithFallback,
+} from "../geoCommon/geoVisualizationPropertiesWithFallback.js";
 import { LiveMapViewTracker, createSyncedViewportHandlers } from "../geoCommon/liveMapViewTracking.js";
 
 type GeoChartNextExecutionProps = Parameters<typeof GeoChartInternal>[0];
@@ -211,11 +215,10 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
             throw new GeoLocationMissingSdkError();
         }
 
-        const supportedControls = this.visualizationProperties.controls || {};
-        const controlsWithFallback: Record<string, unknown> = {
-            ...this.getInsightControlsWithFallback(insight),
-            ...supportedControls,
-        };
+        const controlsWithFallback = getGeoControlsWithFallback(
+            this.visualizationProperties,
+            this.getInsightControlsWithFallback(insight),
+        );
         const latitudeCandidate = controlsWithFallback?.["latitude"];
         const longitudeCandidate = controlsWithFallback?.["longitude"];
         const latitudeId = typeof latitudeCandidate === "string" ? latitudeCandidate : undefined;
@@ -304,7 +307,10 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
                 <GeoPushpinConfigurationPanel
                     locale={this.locale}
                     pushData={this.pushData}
-                    properties={this.visualizationProperties}
+                    properties={getGeoVisualizationPropertiesWithFallback(
+                        this.visualizationProperties,
+                        this.getInsightControlsWithFallback(insight),
+                    )}
                     references={this.references}
                     propertiesMeta={this.propertiesMeta}
                     insight={insight}
@@ -389,11 +395,10 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
         options: IVisProps,
         insight: IInsightDefinition,
     ): { primaryLayer: IGeoLayer; config: IGeoChartConfig; filters: IFilter[] } | undefined {
-        const supportedControls = this.visualizationProperties.controls || {};
-        const controlsWithFallback: Record<string, unknown> = {
-            ...this.getInsightControlsWithFallback(insight),
-            ...supportedControls,
-        };
+        const controlsWithFallback = getGeoControlsWithFallback(
+            this.visualizationProperties,
+            this.getInsightControlsWithFallback(insight),
+        );
         const fullConfig = this.buildGeoVisualizationConfig(options, controlsWithFallback);
         const filters = insightFilters(insight);
         const sortBy = insightSorts(insight);

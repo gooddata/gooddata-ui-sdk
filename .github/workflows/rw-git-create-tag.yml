@@ -23,7 +23,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
-              uses: actions/checkout@v4
+              uses: gooddata/github-actions/git/checkout-with-cache@master
             - name: Create Release
               id: create_release
               uses: ncipollo/release-action@v1.14.0

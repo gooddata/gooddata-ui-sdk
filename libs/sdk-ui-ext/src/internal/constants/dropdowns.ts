@@ -36,9 +36,43 @@ export const pushpinViewportDropdownItems: IDropdownItem[] = [
     { title: messages["areaContinent_eu"].id, value: "continent_eu" },
 ];
 
-export const basemapDropdownItems: IDropdownItem[] = [
-    { title: messages["basemapDefault"].id, value: "default" },
-    { title: messages["basemapSatellite"].id, value: "satellite" },
+function getPersistedHiddenBasemapItems(currentBasemap: IDropdownItem["value"]): IDropdownItem[] {
+    if (currentBasemap === "hybrid") {
+        return [{ title: messages["basemapHybrid"].id, value: "hybrid" }];
+    }
+
+    if (currentBasemap === "satellite") {
+        return [{ title: messages["basemapSatellite"].id, value: "satellite" }];
+    }
+
+    return [];
+}
+
+export function getBasemapDropdownItems(
+    showSatelliteBasemapOption: boolean,
+    currentBasemap: IDropdownItem["value"] = "default",
+): IDropdownItem[] {
+    const satelliteBasemapItems = showSatelliteBasemapOption
+        ? [
+              { title: messages["basemapHybrid"].id, value: "hybrid" },
+              { title: messages["basemapSatellite"].id, value: "satellite" },
+          ]
+        : getPersistedHiddenBasemapItems(currentBasemap);
+
+    return [
+        { title: messages["basemapDefault"].id, value: "default" },
+        { title: messages["basemapMonochrome"].id, value: "monochrome" },
+        { title: messages["basemapStandard"].id, value: "standard" },
+        ...satelliteBasemapItems,
+        { type: "separator" },
+        { title: messages["basemapNone"].id, value: "none", info: messages["basemapNoneInfo"].id },
+    ];
+}
+
+export const colorSchemeDropdownItems: IDropdownItem[] = [
+    { title: messages["colorSchemeAutoDefault"].id, value: "default" },
+    { title: messages["colorSchemeLight"].id, value: "light" },
+    { title: messages["colorSchemeDark"].id, value: "dark" },
 ];
 
 export const rotationDropdownItems: IDropdownItem[] = [

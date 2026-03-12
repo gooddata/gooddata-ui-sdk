@@ -38,7 +38,7 @@ jobs:
       version: ${{ steps.get-version.outputs.version }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: gooddata/github-actions/git/checkout-with-cache@master
         with:
           ref: ${{ inputs.source-branch }}
       - name: Setup node
@@ -77,7 +77,7 @@ jobs:
       labels: runners-small
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: gooddata/github-actions/git/checkout-with-cache@master
       - name: Setup node
         uses: ./.github/actions/node/set-up-node
         id: node-init
@@ -134,7 +134,7 @@ jobs:
     needs: [bump-version, check-npm-package]
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: gooddata/github-actions/git/checkout-with-cache@master
         with:
           token: ${{ secrets.TOKEN_GITHUB_YENKINS}}
       - name: Set up message

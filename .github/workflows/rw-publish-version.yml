@@ -22,7 +22,7 @@ jobs:
             contents: read
         steps:
             - name: Checkout repository
-              uses: actions/checkout@v4
+              uses: gooddata/github-actions/git/checkout-with-cache@master
               with:
                 ref: ${{inputs.source-branch}}
             - name: Add repository to git safe directories to avoid dubious ownership issue
@@ -61,7 +61,7 @@ jobs:
         runs-on: [ubuntu-latest]
         steps:
             - name: Checkout repository
-              uses: actions/checkout@v4
+              uses: gooddata/github-actions/git/checkout-with-cache@master
               with:
                 token: ${{ secrets.TOKEN_GITHUB_YENKINS}}
             - name: Inform to slack when publish workflows failed
