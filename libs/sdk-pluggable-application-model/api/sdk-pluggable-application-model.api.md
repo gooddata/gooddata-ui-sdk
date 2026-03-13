@@ -42,7 +42,11 @@ export interface IOrganization {
 // @alpha
 export interface IOrganizationPermissions {
     // (undocumented)
+    canCreateDevToken?: boolean;
+    // (undocumented)
     canManageOrganization?: boolean;
+    // (undocumented)
+    hasBaseUiAccess?: boolean;
 }
 
 // @alpha

@@ -4,13 +4,10 @@ import {
     type IDrillToInsight as IDrillToInsightDefinition,
     type IFilter,
     type IInsight,
-    type SourceInsightFilterObjRef,
     areObjRefsEqual,
     filterObjRef,
     insightFilters,
-    insightMeasures,
     insightSetFilters,
-    isAttributeFilter,
     isDateFilter,
     isMeasureValueFilter,
     isRankingFilter,
@@ -19,9 +16,9 @@ import { addIntersectionFiltersToInsight } from "@gooddata/sdk-ui-ext";
 
 import { removeIgnoredValuesFromDrillIntersection } from "./common/intersectionUtils.js";
 import {
-    getSourceMeasureFiltersForDrillDefinition,
-    isMatchingSourceInsightFilter,
-} from "../../../_staging/drills/drillingUtils.js";
+    getIncludedSourceInsightFilters,
+    getIncludedSourceMeasureFilters,
+} from "./common/sourceDrillFilters.js";
 import { type IDashboardDrillEvent } from "../../../types.js";
 
 /**
@@ -60,7 +57,7 @@ export function addDrillFiltersToInsight(
     const insightWithSourceInsightFilters = addSourceInsightFiltersToInsight(
         insightWithIntersectionFilters,
         sourceInsight,
-        drillDefinition.includedSourceInsightFiltersObjRefs ?? [],
+        drillDefinition,
     );
 
     const insightWithSourceMeasureFilters = addSourceMeasureFiltersToInsight(
@@ -75,18 +72,12 @@ export function addDrillFiltersToInsight(
 function addSourceInsightFiltersToInsight(
     targetInsight: IInsight,
     sourceInsight: IInsight | null,
-    includedSourceInsightFiltersObjRefs: SourceInsightFilterObjRef[],
+    drillDefinition: IDrillToInsightDefinition,
 ) {
-    const sourceFilters = sourceInsight
-        ? insightFilters(sourceInsight).filter(
-              (filter) =>
-                  isAttributeFilter(filter) ||
-                  isDateFilter(filter) ||
-                  isMeasureValueFilter(filter) ||
-                  isRankingFilter(filter),
-          )
-        : [];
-    const sourceFiltersToApply = includedSourceFilters(sourceFilters, includedSourceInsightFiltersObjRefs);
+    const sourceFiltersToApply = getIncludedSourceInsightFilters(
+        sourceInsight,
+        drillDefinition.includedSourceInsightFiltersObjRefs ?? [],
+    );
     const targetFilters = insightFilters(targetInsight);
     const mergedFilters = mergeInsightFilters(sourceFiltersToApply, targetFilters);
     return insightSetFilters(targetInsight, mergedFilters);
@@ -101,28 +92,10 @@ function addSourceMeasureFiltersToInsight(
         return targetInsight;
     }
 
-    const sourceMeasureFilters = getSourceMeasureFiltersForDrillDefinition(
-        drillDefinition,
-        insightMeasures(sourceInsight),
-    );
-    const sourceFiltersToApply = includedSourceFilters(
-        sourceMeasureFilters,
-        drillDefinition.includedSourceMeasureFiltersObjRefs ?? [],
-    );
+    const sourceFiltersToApply = getIncludedSourceMeasureFilters(sourceInsight, drillDefinition);
     const targetFilters = insightFilters(targetInsight);
     const mergedFilters = mergeInsightFilters(sourceFiltersToApply, targetFilters);
     return insightSetFilters(targetInsight, mergedFilters);
-}
-
-function includedSourceFilters(
-    sourceFilters: IFilter[],
-    includedFilterObjRefs: SourceInsightFilterObjRef[],
-): IFilter[] {
-    return sourceFilters.filter((sourceFilter) => {
-        return includedFilterObjRefs.some((includedFilterObjRef) =>
-            isMatchingSourceInsightFilter(sourceFilter, includedFilterObjRef),
-        );
-    });
 }
 
 function mergeInsightFilters(sourceFiltersToApply: IFilter[], targetFilters: IFilter[]): IFilter[] {

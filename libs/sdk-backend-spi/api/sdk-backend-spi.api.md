@@ -86,7 +86,6 @@ import { IGranularAccessGrantee } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
 import { IInsightDefinition } from '@gooddata/sdk-model';
 import type { IListedDashboard } from '@gooddata/sdk-model';
-import type { ILlmEndpointBase } from '@gooddata/sdk-model';
 import { ILlmEndpointOpenAI } from '@gooddata/sdk-model';
 import { ILlmProvider } from '@gooddata/sdk-model';
 import { IMeasure } from '@gooddata/sdk-model';
@@ -1073,6 +1072,7 @@ export type IExplainResult = {
 // @public
 export interface IExportConfig {
     format?: "xlsx" | "csv" | "raw" | "pdf";
+    grandTotalsPosition?: "pinnedBottom" | "pinnedTop" | "bottom" | "top";
     mergeHeaders?: boolean;
     pdfConfiguration?: IExportPdfConfig;
     showFilters?: boolean;
@@ -1229,7 +1229,7 @@ export interface IGenAIService {
     getChatThread(): IChatThread;
     // @internal
     getKnowledgeDocuments(): IKnowledgeDocumentsService;
-    getLlmEndpoints(): Promise<ILlmEndpointBase[]>;
+    getLlmConfigured(): Promise<boolean>;
     // @internal
     getMemoryItems(): IMemoryItemsService;
     // @internal

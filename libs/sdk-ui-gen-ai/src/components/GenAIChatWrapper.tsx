@@ -5,6 +5,7 @@ import { type FC, type MouseEvent, useCallback, useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { connect } from "react-redux";
 
+import { type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
 import { useWorkspaceStrict } from "@gooddata/sdk-ui";
 import { Button, Typography, UiNavigationBypass, useKeyboardNavigationTarget } from "@gooddata/sdk-ui-kit";
 
@@ -15,6 +16,7 @@ import { useEndpointCheck } from "./hooks/useEndpointCheck.js";
 import { useThreadLoading } from "./hooks/useThreadLoading.js";
 import { Input } from "./Input.js";
 import { Messages } from "./Messages.js";
+import { settingsSelector } from "../store/chatWindow/chatWindowSelectors.js";
 import { getAbsoluteSettingHref, getSettingHref } from "../utils.js";
 import { KeyDriverAnalysis } from "./KeyDriverAnalysis.js";
 import { ALLOWED_RELATIONSHIP_TYPES_FOR_VIEWER } from "../store/chatWindow/allowedRelationshipTypes.js";
@@ -36,6 +38,7 @@ type GenAIChatWrapperProps = GenAIChatOwnProps & {
     autofocus?: boolean;
     initializing?: boolean;
     isClearing?: boolean;
+    settings?: IUserWorkspaceSettings;
 };
 
 const GEN_AI_SECTION = "ai";
@@ -54,12 +57,13 @@ function GenAIChatWrapperComponent({
     autofocus,
     initializing,
     isClearing,
+    settings,
 }: GenAIChatWrapperProps) {
     const intl = useIntl();
     const workspaceId = useWorkspaceStrict();
     const { linkHandler, allowNativeLinks, catalogItems, canManage, canAnalyze, canFullControl } =
         useConfig();
-    const { checking, evaluated, count, restart } = useEndpointCheck(canFullControl);
+    const { checking, evaluated, count, restart } = useEndpointCheck(settings, canFullControl);
 
     const canEdit = canFullControl || canManage || canAnalyze;
     const allowedRelationshipTypes = canEdit ? undefined : ALLOWED_RELATIONSHIP_TYPES_FOR_VIEWER;
@@ -161,6 +165,7 @@ function NavigationBypass() {
 
 const mapStateToProps = (state: RootState) => ({
     isClearing: asyncProcessSelector(state) === "clearing",
+    settings: settingsSelector(state),
 });
 
 const mapDispatchToProps = {

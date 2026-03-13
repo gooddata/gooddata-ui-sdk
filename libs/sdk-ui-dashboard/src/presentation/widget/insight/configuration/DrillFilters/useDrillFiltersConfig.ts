@@ -3,48 +3,35 @@
 import { useCallback, useMemo } from "react";
 
 import { isEqual } from "lodash-es";
-import { type IntlShape, defineMessages, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import {
-    type FilterContextItem,
-    type ICatalogMeasure,
-    type IDashboardDateFilterConfig,
-    type IDashboardDateFilterConfigItem,
     type IDrillToDashboard,
     type IDrillToInsight,
-    type IFilter,
-    type IMeasure,
     type InsightDrillDefinition,
-    type ObjRef,
-    type SourceMeasureFilterObjRef,
     bucketsAttributes,
     insightBuckets,
     insightFilters,
     insightMeasures,
-    isDashboardAttributeFilter,
-    isDashboardDateFilter,
-    isRankingFilter,
     measureFilters,
     measureLocalId,
 } from "@gooddata/sdk-model";
 
-import {
-    getDashboardDateFilterCustomTitle,
-    getDateDatasetTitle,
-    getDisplayFormTitle,
-    getMeasureTitleFromSourceInsightMeasures,
-    sourceFilterOptionId,
-} from "./drillFiltersConfigUtils.js";
+import { mapDashboardFilterToOption } from "./optionMappings/mapDashboardFilterToOption.js";
+import { mapIntersectionAttributeToOption } from "./optionMappings/mapIntersectionAttributeToOption.js";
+import { mapSourceInsightFilterToOption } from "./optionMappings/mapSourceInsightFilterToOption.js";
+import { mapSourceMeasureFilterToOption } from "./optionMappings/mapSourceMeasureFilterToOption.js";
 import { type IDrillFiltersConfigOption } from "./types.js";
 import { type IDrillFiltersConfigSelection } from "./useDrillFiltersConfigInner.js";
-import { sourceInsightFilterObjRef as getSourceInsightFilterObjRef } from "../../../../../_staging/drills/drillingUtils.js";
+import { useFetchTargetDashboardFilters } from "./useFetchTargetDashboardFilters.js";
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
 import {
-    selectCatalogAttributeDisplayForms,
+    selectAllCatalogDisplayFormsMap,
     selectCatalogDateDatasets,
     selectCatalogMeasures,
 } from "../../../../../model/store/catalog/catalogSelectors.js";
 import { selectInsightByWidgetRef } from "../../../../../model/store/insights/insightsSelectors.js";
+import { selectAttributeFilterConfigsOverrides } from "../../../../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectDateFilterConfigOverrides } from "../../../../../model/store/tabs/dateFilterConfig/dateFilterConfigSelectors.js";
 import { selectDateFilterConfigsOverrides } from "../../../../../model/store/tabs/dateFilterConfigs/dateFilterConfigsSelectors.js";
 import { selectFilterContextFilters } from "../../../../../model/store/tabs/filterContext/filterContextSelectors.js";
@@ -54,7 +41,9 @@ import {
     type IDrillConfigItem,
     type IDrillDownAttributeHierarchyConfig,
     type IDrillDownAttributeHierarchyDefinition,
+    type IDrillToDashboardConfig,
     type IDrillToInsightConfig,
+    isDrillToDashboardConfig,
     isDrillToInsightConfig,
 } from "../../../../drill/types.js";
 
@@ -66,256 +55,32 @@ interface IUseDrillFiltersConfigParams {
     ) => void;
 }
 
-const messages = defineMessages({
-    commonDateFilterTitle: {
-        id: "dateFilterDropdown.title",
-    },
-    rankingFilterPreviewTopWithoutAttributePlain: {
-        id: "rankingFilter.preview.top_without_attribute_plain",
-    },
-    rankingFilterPreviewBottomWithoutAttributePlain: {
-        id: "rankingFilter.preview.bottom_without_attribute_plain",
-    },
-});
-
-function mapIntersectionAttributeToOption({
-    insightAttribute,
-    allCatalogDisplayForms,
-    allCatalogDateAttributeDisplayForms,
-}: {
-    insightAttribute: ReturnType<typeof bucketsAttributes>[number];
-    allCatalogDisplayForms: Array<{ ref: ObjRef; title?: string }>;
-    allCatalogDateAttributeDisplayForms: Array<{ ref: ObjRef; title?: string }>;
-}): IDrillFiltersConfigOption {
-    return {
-        id: insightAttribute.attribute.localIdentifier,
-        title: getDisplayFormTitle({
-            displayFormRef: insightAttribute.attribute.displayForm,
-            allCatalogDisplayForms,
-            allCatalogDateAttributeDisplayForms,
-        }),
-    };
-}
-
-function mapDashboardFilterToOption({
-    dashboardFilter,
-    allCatalogDisplayForms,
-    allCatalogDateAttributeDisplayForms,
-    allDateDatasets,
-    dateFilterConfigOverride,
-    allDateFilterConfigsOverrides,
-    intl,
-}: {
-    dashboardFilter: FilterContextItem;
-    allCatalogDisplayForms: Array<{ ref: ObjRef; title?: string }>;
-    allCatalogDateAttributeDisplayForms: Array<{ ref: ObjRef; title?: string }>;
-    allDateDatasets: Array<{ dataSet: { ref: ObjRef; title?: string } }>;
-    dateFilterConfigOverride: IDashboardDateFilterConfig | undefined;
-    allDateFilterConfigsOverrides: IDashboardDateFilterConfigItem[];
-    intl: IntlShape;
-}): IDrillFiltersConfigOption | undefined {
-    if (isDashboardAttributeFilter(dashboardFilter)) {
-        const displayFormRef = dashboardFilter.attributeFilter.displayForm;
-        const localIdentifier = dashboardFilter.attributeFilter.localIdentifier;
-        const customTitle = dashboardFilter.attributeFilter.title;
-
-        if (!localIdentifier) {
-            return undefined;
-        }
-
-        return {
-            id: localIdentifier,
-            title:
-                customTitle ??
-                getDisplayFormTitle({
-                    displayFormRef,
-                    allCatalogDisplayForms,
-                    allCatalogDateAttributeDisplayForms,
-                }),
-        };
-    }
-
-    if (isDashboardDateFilter(dashboardFilter)) {
-        const localIdentifier = dashboardFilter.dateFilter.localIdentifier;
-
-        if (!localIdentifier) {
-            return undefined;
-        }
-
-        const datasetRef = dashboardFilter.dateFilter.dataSet;
-
-        //common date filter
-        if (!datasetRef) {
-            return {
-                id: localIdentifier,
-                title:
-                    dateFilterConfigOverride?.filterName ??
-                    intl.formatMessage(messages.commonDateFilterTitle),
-            };
-        }
-
-        //date filter with dimension
-        const customTitle = getDashboardDateFilterCustomTitle({
-            datasetRef,
-            allDateFilterConfigsOverrides,
-        });
-
-        return {
-            id: localIdentifier,
-            title:
-                customTitle ??
-                getDateDatasetTitle({
-                    datasetRef,
-                    allDateDatasets,
-                }),
-        };
-    }
-
-    return undefined;
-}
-
-function mapSourceInsightFilterToOption({
-    sourceInsightFilter,
-    allCatalogDisplayForms,
-    allDateDatasets,
-    sourceInsightMeasures,
-    allCatalogMeasures,
-    intl,
-}: {
-    sourceInsightFilter: IFilter;
-    allCatalogDisplayForms: Array<{ ref: ObjRef; title?: string }>;
-    allDateDatasets: Array<{ dataSet: { ref: ObjRef; title?: string } }>;
-    sourceInsightMeasures: IMeasure[];
-    allCatalogMeasures: ICatalogMeasure[];
-    intl: IntlShape;
-}): IDrillFiltersConfigOption | undefined {
-    const sourceFilterObjRef = getSourceInsightFilterObjRef(sourceInsightFilter);
-    if (!sourceFilterObjRef) {
-        return undefined;
-    }
-
-    if (sourceFilterObjRef.type === "attributeFilter") {
-        const displayFormRef = sourceFilterObjRef.label;
-
-        return {
-            id: sourceFilterOptionId(sourceFilterObjRef),
-            title: getDisplayFormTitle({
-                displayFormRef,
-                allCatalogDisplayForms,
-            }),
-            sourceInsightFilterObjRef: sourceFilterObjRef,
-        };
-    }
-
-    if (sourceFilterObjRef.type === "dateFilter") {
-        const dateDatasetRef = sourceFilterObjRef.dataSet;
-
-        return {
-            id: sourceFilterOptionId(sourceFilterObjRef),
-            title: getDateDatasetTitle({
-                datasetRef: dateDatasetRef,
-                allDateDatasets,
-            }),
-            sourceInsightFilterObjRef: sourceFilterObjRef,
-        };
-    }
-
-    if (sourceFilterObjRef.type === "measureValueFilter") {
-        const measureRef = sourceFilterObjRef.measure;
-        const measureTitleFromInsight = getMeasureTitleFromSourceInsightMeasures(
-            sourceInsightMeasures,
-            measureRef,
-            allCatalogMeasures,
-        );
-
-        return {
-            id: sourceFilterOptionId(sourceFilterObjRef),
-            title: measureTitleFromInsight ?? "",
-            sourceInsightFilterObjRef: sourceFilterObjRef,
-        };
-    }
-
-    if (sourceFilterObjRef.type === "rankingFilter" && isRankingFilter(sourceInsightFilter)) {
-        const measureRef = sourceFilterObjRef.measure;
-        const measureTitleFromInsight = getMeasureTitleFromSourceInsightMeasures(
-            sourceInsightMeasures,
-            measureRef,
-            allCatalogMeasures,
-        );
-        const rankingPreviewMessage =
-            sourceInsightFilter.rankingFilter.operator === "TOP"
-                ? messages.rankingFilterPreviewTopWithoutAttributePlain
-                : messages.rankingFilterPreviewBottomWithoutAttributePlain;
-
-        const title = intl.formatMessage(rankingPreviewMessage, {
-            value: sourceInsightFilter.rankingFilter.value,
-            measure: measureTitleFromInsight ?? "",
-        });
-        return {
-            id: sourceFilterOptionId(sourceFilterObjRef),
-            title,
-            sourceInsightFilterObjRef: sourceFilterObjRef,
-        };
-    }
-
-    return undefined;
-}
-
-function mapSourceMeasureFilterToOption({
-    sourceMeasureFilter,
-    allCatalogDisplayForms,
-    allDateDatasets,
-}: {
-    sourceMeasureFilter: IFilter;
-    allCatalogDisplayForms: Array<{ ref: ObjRef; title?: string }>;
-    allDateDatasets: Array<{ dataSet: { ref: ObjRef; title?: string } }>;
-}): IDrillFiltersConfigOption | undefined {
-    const sourceFilterObjRef = getSourceInsightFilterObjRef(sourceMeasureFilter);
-    if (!sourceFilterObjRef) {
-        return undefined;
-    }
-
-    if (sourceFilterObjRef.type === "attributeFilter") {
-        const displayFormRef = sourceFilterObjRef.label;
-
-        return {
-            id: sourceFilterOptionId(sourceFilterObjRef),
-            title: getDisplayFormTitle({
-                displayFormRef,
-                allCatalogDisplayForms,
-            }),
-            sourceMeasureFilterObjRef: sourceFilterObjRef as SourceMeasureFilterObjRef,
-        };
-    }
-
-    if (sourceFilterObjRef.type === "dateFilter") {
-        const dateDatasetRef = sourceFilterObjRef.dataSet;
-
-        return {
-            id: sourceFilterOptionId(sourceFilterObjRef),
-            title: getDateDatasetTitle({
-                datasetRef: dateDatasetRef,
-                allDateDatasets,
-            }),
-            sourceMeasureFilterObjRef: sourceFilterObjRef as SourceMeasureFilterObjRef,
-        };
-    }
-
-    return undefined;
-}
-
 export function useDrillFiltersConfig({ item, onUpdateDrillItem }: IUseDrillFiltersConfigParams) {
     const intl = useIntl();
-    const supportsExtendedFiltersConfig = item.drillTargetType === DRILL_TARGET_TYPE.DRILL_TO_INSIGHT;
-    const drillToInsightItem = isDrillToInsightConfig(item) ? (item as IDrillToInsightConfig) : undefined;
+    const isDrillToDashboard = item.drillTargetType === DRILL_TARGET_TYPE.DRILL_TO_DASHBOARD;
+    const supportsExtendedFiltersConfig =
+        item.drillTargetType === DRILL_TARGET_TYPE.DRILL_TO_INSIGHT ||
+        item.drillTargetType === DRILL_TARGET_TYPE.DRILL_TO_DASHBOARD;
+    const isDrillDown = item.drillTargetType === DRILL_TARGET_TYPE.DRILL_DOWN;
+    const extendedDrillFiltersItem =
+        isDrillToInsightConfig(item) || isDrillToDashboardConfig(item)
+            ? (item as IDrillToInsightConfig | IDrillToDashboardConfig)
+            : undefined;
     const insight = useDashboardSelector(selectInsightByWidgetRef(item.widgetRef));
     const widgetDrills = useDashboardSelector(selectWidgetDrills(item.widgetRef));
-    const dashboardFilters = useDashboardSelector(selectFilterContextFilters);
-    const allCatalogDisplayForms = useDashboardSelector(selectCatalogAttributeDisplayForms);
-    const allDateDatasets = useDashboardSelector(selectCatalogDateDatasets);
+    const sourceDashboardFilters = useDashboardSelector(selectFilterContextFilters);
+    const sourceDashboardAttributeFilterConfigs = useDashboardSelector(selectAttributeFilterConfigsOverrides);
+    const allCatalogDisplayFormsMap = useDashboardSelector(selectAllCatalogDisplayFormsMap);
+    const allCatalogDateDatasets = useDashboardSelector(selectCatalogDateDatasets);
     const dateFilterConfigOverride = useDashboardSelector(selectDateFilterConfigOverrides);
     const allCatalogMeasures = useDashboardSelector(selectCatalogMeasures);
     const allDateFilterConfigsOverrides = useDashboardSelector(selectDateFilterConfigsOverrides);
+    const {
+        targetDashboardFilters,
+        targetDashboardAttributeFilters,
+        targetDashboardAttributeFilterConfigs,
+        isLoading,
+    } = useFetchTargetDashboardFilters(item);
 
     const sourceInsightAttributes = useMemo(
         () => bucketsAttributes(insight ? insightBuckets(insight) : []),
@@ -323,8 +88,9 @@ export function useDrillFiltersConfig({ item, onUpdateDrillItem }: IUseDrillFilt
     );
     const sourceInsightMeasures = useMemo(() => (insight ? insightMeasures(insight) : []), [insight]);
     const allCatalogDateAttributeDisplayForms = useMemo(
-        () => allDateDatasets.flatMap((ds) => ds.dateAttributes).flatMap((da) => da.defaultDisplayForm),
-        [allDateDatasets],
+        () =>
+            allCatalogDateDatasets.flatMap((ds) => ds.dateAttributes).flatMap((da) => da.defaultDisplayForm),
+        [allCatalogDateDatasets],
     );
     const sourceMeasure =
         item.type === "measure"
@@ -336,15 +102,23 @@ export function useDrillFiltersConfig({ item, onUpdateDrillItem }: IUseDrillFilt
             sourceInsightAttributes.map((insightAttribute) =>
                 mapIntersectionAttributeToOption({
                     insightAttribute,
-                    allCatalogDisplayForms,
+                    allCatalogDisplayFormsMap,
                     allCatalogDateAttributeDisplayForms,
+                    isDrillToDashboard,
+                    intl,
                 }),
             ),
-        [sourceInsightAttributes, allCatalogDisplayForms, allCatalogDateAttributeDisplayForms],
+        [
+            sourceInsightAttributes,
+            allCatalogDisplayFormsMap,
+            allCatalogDateAttributeDisplayForms,
+            isDrillToDashboard,
+            intl,
+        ],
     );
 
     const sourceInsightFiltersOptions = useMemo(() => {
-        if (!supportsExtendedFiltersConfig || !insight) {
+        if (!(supportsExtendedFiltersConfig || isDrillDown) || !insight) {
             return [];
         }
 
@@ -352,10 +126,14 @@ export function useDrillFiltersConfig({ item, onUpdateDrillItem }: IUseDrillFilt
             .map((sourceInsightFilter) =>
                 mapSourceInsightFilterToOption({
                     sourceInsightFilter,
-                    allCatalogDisplayForms,
-                    allDateDatasets,
+                    allCatalogDisplayFormsMap,
+                    allCatalogDateDatasets,
                     sourceInsightMeasures,
                     allCatalogMeasures,
+                    targetDashboardFilters,
+                    targetDashboardAttributeFilters,
+                    isDrillDown,
+                    isDrillToDashboard,
                     intl,
                 }),
             )
@@ -363,10 +141,14 @@ export function useDrillFiltersConfig({ item, onUpdateDrillItem }: IUseDrillFilt
     }, [
         supportsExtendedFiltersConfig,
         insight,
-        allCatalogDisplayForms,
-        allDateDatasets,
+        allCatalogDisplayFormsMap,
+        allCatalogDateDatasets,
         sourceInsightMeasures,
         allCatalogMeasures,
+        targetDashboardFilters,
+        targetDashboardAttributeFilters,
+        isDrillDown,
+        isDrillToDashboard,
         intl,
     ]);
     const sourceMeasureFiltersOptions = useMemo(() => {
@@ -378,38 +160,62 @@ export function useDrillFiltersConfig({ item, onUpdateDrillItem }: IUseDrillFilt
             .map((sourceMeasureFilter) =>
                 mapSourceMeasureFilterToOption({
                     sourceMeasureFilter,
-                    allCatalogDisplayForms,
-                    allDateDatasets,
-                }),
-            )
-            .filter((option): option is IDrillFiltersConfigOption => !!option);
-    }, [supportsExtendedFiltersConfig, insight, sourceMeasure, allCatalogDisplayForms, allDateDatasets]);
-    const dashboardFiltersOptions = useMemo(() => {
-        if (!supportsExtendedFiltersConfig) {
-            return [];
-        }
-
-        return dashboardFilters
-            .map((dashboardFilter) =>
-                mapDashboardFilterToOption({
-                    dashboardFilter,
-                    allCatalogDisplayForms,
-                    allCatalogDateAttributeDisplayForms,
-                    allDateDatasets,
-                    dateFilterConfigOverride,
-                    allDateFilterConfigsOverrides,
+                    allCatalogDisplayFormsMap,
+                    allCatalogDateDatasets,
+                    targetDashboardFilters,
+                    targetDashboardAttributeFilters,
+                    isDrillToDashboard,
                     intl,
                 }),
             )
             .filter((option): option is IDrillFiltersConfigOption => !!option);
     }, [
         supportsExtendedFiltersConfig,
-        dashboardFilters,
-        allCatalogDisplayForms,
-        allCatalogDateAttributeDisplayForms,
-        allDateDatasets,
+        insight,
+        sourceMeasure,
+        allCatalogDisplayFormsMap,
+        allCatalogDateDatasets,
+        targetDashboardFilters,
+        targetDashboardAttributeFilters,
+        isDrillToDashboard,
+        intl,
+    ]);
+    const dashboardFiltersOptions = useMemo(() => {
+        if (!(supportsExtendedFiltersConfig || isDrillDown)) {
+            return [];
+        }
+
+        return sourceDashboardFilters
+            .map((dashboardFilter) =>
+                mapDashboardFilterToOption({
+                    dashboardFilter,
+                    allCatalogDisplayFormsMap,
+                    allCatalogDateDatasets,
+                    dateFilterConfigOverride,
+                    allDateFilterConfigsOverrides,
+                    sourceDashboardAttributeFilterConfigs,
+                    targetDashboardFilters,
+                    targetDashboardAttributeFilters,
+                    targetDashboardAttributeFilterConfigs,
+                    isDrillDown,
+                    isDrillToDashboard,
+                    intl,
+                }),
+            )
+            .filter((option): option is IDrillFiltersConfigOption => !!option);
+    }, [
+        supportsExtendedFiltersConfig,
+        isDrillDown,
+        sourceDashboardFilters,
+        allCatalogDisplayFormsMap,
+        allCatalogDateDatasets,
         dateFilterConfigOverride,
         allDateFilterConfigsOverrides,
+        sourceDashboardAttributeFilterConfigs,
+        targetDashboardFilters,
+        targetDashboardAttributeFilters,
+        targetDashboardAttributeFilterConfigs,
+        isDrillToDashboard,
         intl,
     ]);
 
@@ -417,16 +223,16 @@ export function useDrillFiltersConfig({ item, onUpdateDrillItem }: IUseDrillFilt
         () => ({
             drillIntersectionIgnoredAttributes: item.drillIntersectionIgnoredAttributes ?? [],
             includedSourceInsightFiltersObjRefs:
-                drillToInsightItem?.includedSourceInsightFiltersObjRefs ?? [],
-            ignoredDashboardFilters: drillToInsightItem?.ignoredDashboardFilters ?? [],
+                extendedDrillFiltersItem?.includedSourceInsightFiltersObjRefs ?? [],
+            ignoredDashboardFilters: extendedDrillFiltersItem?.ignoredDashboardFilters ?? [],
             includedSourceMeasureFiltersObjRefs:
-                drillToInsightItem?.includedSourceMeasureFiltersObjRefs ?? [],
+                extendedDrillFiltersItem?.includedSourceMeasureFiltersObjRefs ?? [],
         }),
         [
             item.drillIntersectionIgnoredAttributes,
-            drillToInsightItem?.includedSourceInsightFiltersObjRefs,
-            drillToInsightItem?.ignoredDashboardFilters,
-            drillToInsightItem?.includedSourceMeasureFiltersObjRefs,
+            extendedDrillFiltersItem?.includedSourceInsightFiltersObjRefs,
+            extendedDrillFiltersItem?.ignoredDashboardFilters,
+            extendedDrillFiltersItem?.includedSourceMeasureFiltersObjRefs,
         ],
     );
 
@@ -442,7 +248,6 @@ export function useDrillFiltersConfig({ item, onUpdateDrillItem }: IUseDrillFilt
                 ...selection,
             };
             const targetDrill = widgetDrills.find((d) => d.localIdentifier === item.localIdentifier);
-            const isDrillDown = item.drillTargetType === DRILL_TARGET_TYPE.DRILL_DOWN;
             const isIntersectionAttributesChanged = !isEqual(
                 currentSelection.drillIntersectionIgnoredAttributes,
                 drillIntersectionIgnoredAttributes,
@@ -490,7 +295,7 @@ export function useDrillFiltersConfig({ item, onUpdateDrillItem }: IUseDrillFilt
                             includedSourceInsightFiltersObjRefs,
                             ignoredDashboardFilters,
                             includedSourceMeasureFiltersObjRefs,
-                        } as IDrillToInsight,
+                        } as IDrillToInsight | IDrillToDashboard,
                         {
                             ...item,
                             drillIntersectionIgnoredAttributes: drillIntersectionIgnoredAttributes,
@@ -513,10 +318,11 @@ export function useDrillFiltersConfig({ item, onUpdateDrillItem }: IUseDrillFilt
                 }
             }
         },
-        [currentSelection, widgetDrills, item, supportsExtendedFiltersConfig, onUpdateDrillItem],
+        [currentSelection, widgetDrills, item, isDrillDown, supportsExtendedFiltersConfig, onUpdateDrillItem],
     );
 
     return {
+        isLoading,
         supportsExtendedFiltersConfig,
         intersectionAttributesOptions,
         sourceInsightFiltersOptions,

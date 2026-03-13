@@ -4,7 +4,10 @@ import { isEqual } from "lodash-es";
 
 import {
     type IAttributeDescriptor,
+    type IAttributeFilter,
+    type IDateFilter,
     type IDrillDownIntersectionIgnoredAttributes,
+    type IDrillToDashboard,
     type IDrillToInsight,
     type IFilter,
     type IMeasure,
@@ -131,9 +134,9 @@ export function getLocalIdentifierOrDie(ref: ObjRefInScope): string {
  * @internal
  */
 export function getSourceMeasureFiltersForDrillDefinition(
-    drillDefinition: IDrillToInsight,
+    drillDefinition: Pick<IDrillToDashboard | IDrillToInsight, "origin">,
     sourceInsightMeasures: IMeasure[],
-): IFilter[] {
+): Array<IAttributeFilter | IDateFilter> {
     const { origin } = drillDefinition;
 
     if (!isDrillFromMeasure(origin)) {

@@ -41,6 +41,9 @@ export const anyBucket: BucketPredicate;
 // @public
 export const anyMeasure: MeasurePredicate;
 
+// @alpha
+export type ApplicationScope = "organization" | "workspace";
+
 // @public
 export function applyRatioRule<T extends IAttributeOrMeasure>(items: T[], rule?: ComputeRatioRule): T[];
 
@@ -328,6 +331,9 @@ export enum ComputeRatioRule {
 }
 
 // @alpha
+export type Condition<T> = T | IConditionOr<T> | IConditionAnd<T>;
+
+// @alpha
 export type DashboardAttachmentType = "PDF" | "XLSX" | "PPTX" | "PDF_SLIDES";
 
 // @alpha
@@ -527,6 +533,9 @@ export function exportDefinitionTitle(exportDefinition: IExportDefinitionMetadat
 
 // @alpha
 export function exportDefinitionUpdated(exportDefinition: IExportDefinitionMetadataObject): string | undefined;
+
+// @alpha
+export type ExternalPluggableApplicationRegistryItem = IExternalPluggableApplicationRegistryItemV1;
 
 // @public
 export const factoryNotationFor: (data: any, additionalConversion?: ((data: any) => string | undefined) | undefined) => string;
@@ -1426,6 +1435,18 @@ export interface IComparisonConditionBody {
     value: number;
 }
 
+// @alpha
+export interface IConditionAnd<T> {
+    // (undocumented)
+    $and: Array<Condition<T>>;
+}
+
+// @alpha
+export interface IConditionOr<T> {
+    // (undocumented)
+    $or: Array<Condition<T>>;
+}
+
 // @public
 export interface ICrossFiltering extends IDrill {
     type: "crossFiltering";
@@ -2034,6 +2055,9 @@ export interface IDrillToCustomUrlTarget {
 
 // @public
 export interface IDrillToDashboard extends IDrill {
+    ignoredDashboardFilters?: string[];
+    includedSourceInsightFiltersObjRefs?: SourceInsightFilterObjRef[];
+    includedSourceMeasureFiltersObjRefs?: SourceMeasureFilterObjRef[];
     target?: ObjRef;
     // @alpha
     targetTabLocalIdentifier?: string;
@@ -2197,6 +2221,8 @@ export interface IExportDefinitionVisualizationObjectSettings {
     // (undocumented)
     exportInfo?: boolean;
     // (undocumented)
+    grandTotalsPosition?: "pinnedBottom" | "pinnedTop" | "bottom" | "top";
+    // (undocumented)
     mergeHeaders?: boolean;
     // (undocumented)
     orientation?: "portrait" | "landscape";
@@ -2226,12 +2252,175 @@ export interface IExportResult {
 // @public
 export type IExportResultStatus = "SUCCESS" | "ERROR" | "INTERNAL_ERROR" | "TIMEOUT";
 
+// @alpha
+export interface IExternalPluggableApplicationRegistryItemV1 extends IPluggableApplicationMetaV1 {
+    external: IExternalUrlPluggableApplicationModule;
+}
+
+// @alpha
+export interface IExternalUrlPluggableApplicationModule {
+    url: string;
+}
+
 // @public
 export interface IFactMetadataObject extends IMetadataObject {
     dataSet?: IDataSetMetadataObject;
     isLocked?: boolean;
     // (undocumented)
     type: "fact";
+}
+
+// @public
+export interface IFeatureFlags {
+    aiChatSearchLimit?: number;
+    enableAccessibilityMode?: boolean;
+    enableAccessibleChartTooltip?: boolean;
+    // @deprecated
+    enableAIFunctions?: boolean;
+    enableAIKnowledge?: boolean;
+    enableAiOnData?: boolean;
+    enableAlertAttributes?: boolean;
+    enableAlerting?: boolean;
+    enableAlertingRollout?: boolean;
+    enableAlertOncePerInterval?: boolean;
+    enableAlertsEvaluationFrequencySetup?: boolean;
+    enableAmplitudeTracker?: boolean;
+    enableAnalyticalCatalog?: boolean;
+    enableAnomalyDetectionAlert?: boolean;
+    enableAnomalyDetectionVisualization?: boolean;
+    enableArbitraryFilterAD?: boolean;
+    enableArbitraryFilterKD?: boolean;
+    // (undocumented)
+    enableAthenaDataSource?: boolean;
+    enableAutomationFilterContext?: boolean;
+    enableAutomationManagement?: boolean;
+    enableCatalogTrendingObjects?: boolean;
+    enableCertification?: boolean;
+    enableChangeAnalysis?: boolean;
+    enableComparisonInAlerting?: boolean;
+    enableCompositeGrain?: boolean;
+    // (undocumented)
+    enableCrateDbDataSource?: boolean;
+    enableCreateUser?: boolean;
+    // @internal
+    enableCrossFilteringAliasTitles?: boolean;
+    enableCustomGeoCollection?: boolean;
+    enableCustomizedDashboardsWithoutPluginOverlay?: boolean;
+    enableDashboardDensitySetting?: boolean;
+    enableDashboardDescriptionDynamicHeight?: boolean;
+    enableDashboardFilterGroups?: boolean;
+    enableDashboardFilterViews?: boolean;
+    // @alpha
+    enableDashboardSectionHeadersDateDataSet?: boolean;
+    enableDashboardShareDialogLink?: boolean;
+    enableDashboardShareLink?: boolean;
+    enableDashboardTabularExport?: boolean;
+    // (undocumented)
+    enableDataSection?: boolean;
+    enableDateFilterIdentifiersRollout?: boolean;
+    enableDefaultSmtp?: boolean;
+    enableDescriptions?: boolean;
+    enableDestinationTesting?: boolean;
+    enableDrilledTooltip?: boolean;
+    enableDrillToUrlByDefault?: boolean;
+    enableEmbedButtonInAD?: boolean;
+    enableEmbedButtonInKD?: boolean;
+    enableExecutionCancelling?: boolean;
+    enableExecutionTimestamp?: boolean;
+    enableExportToDocumentStorage?: boolean;
+    enableExternalRecipients?: boolean;
+    enableFilterAccessibility?: boolean;
+    enableFilterControlInDrillingConfiguration?: boolean;
+    enableFiscalCalendars?: boolean;
+    enableGenAICatalogQualityChecker?: boolean;
+    enableGenAIChat?: boolean;
+    enableGenAIChatRollout?: boolean;
+    enableGenAIMemory?: boolean;
+    enableGenAIReasoningVisibility?: boolean;
+    enableGeoArea?: boolean;
+    enableGeoBasemapConfig?: boolean;
+    enableGeoChartA11yImprovements?: boolean;
+    enableGeoChartsViewportConfig?: boolean;
+    enableGeoSatelliteBasemapOption?: boolean;
+    enableGeoSegmentConflictRecommendation?: boolean;
+    enableHeadlineExport?: boolean;
+    enableHighchartsAccessibility?: boolean;
+    enableIgnoreCrossFiltering?: boolean;
+    enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
+    enableImplicitDrillToUrl?: boolean;
+    enableImprovedAdFilters?: boolean;
+    enableInPlatformNotifications?: boolean;
+    enableKDAttributeFilterDatesValidation?: boolean;
+    enableKDCrossFiltering?: boolean;
+    enableKDEmptyDateValuesFilter?: boolean;
+    enableKDRespectLegendPosition?: boolean;
+    enableKDRichText?: boolean;
+    enableKDVisualizationSwitcher?: boolean;
+    enableLineChartTrendThreshold?: boolean;
+    enableLlmEndpointReplacement?: boolean;
+    // (undocumented)
+    enableMariaDbDataSource?: boolean;
+    enableMatchFilterAD?: boolean;
+    enableMatchFilterKD?: boolean;
+    enableMetricFormatOverrides?: boolean;
+    // (undocumented)
+    enableMongoDbDataSource?: boolean;
+    // (undocumented)
+    enableMotherDuckDataSource?: boolean;
+    enableMultipleDataSourcesInWorkspace?: boolean;
+    enableMultipleDateFilters?: boolean;
+    enableMultipleMvfConditions?: boolean;
+    // (undocumented)
+    enableMySqlDataSource?: boolean;
+    enableNewGeoPushpin?: boolean;
+    enableNewPdfTabularExport?: boolean;
+    enableNewPivotTable?: boolean;
+    enableNewScheduledExport?: boolean;
+    enableNewUserCreationFlow?: boolean;
+    enableNotificationChannelIdentifiers?: boolean;
+    enableNullJoins?: boolean;
+    enableNumberSeparators?: boolean;
+    // (undocumented)
+    enableOracleDataSource?: boolean;
+    enableOrchestratedTabularExports?: boolean;
+    enablePivotTableIncreaseBucketSize?: boolean;
+    enablePivotTablePagination?: boolean;
+    enablePreAggregationDatasets?: boolean;
+    enableRankingWithMvf?: boolean;
+    enableRawExports?: boolean;
+    enableRichTextDescriptions?: boolean;
+    enableRichTextDynamicReferences?: boolean;
+    // @alpha
+    enableRichTextWidgetFilterConfiguration?: boolean;
+    enableScatterPlotClustering?: boolean;
+    enableScatterPlotSegmentation?: boolean;
+    enableScheduling?: boolean;
+    enableSeamlessIdpSwitch?: boolean;
+    enableSemanticSearch?: boolean;
+    enableSemanticSearchRollout?: boolean;
+    enableShellApplication?: boolean;
+    // (undocumented)
+    enableSingleStoreDataSource?: boolean;
+    enableSlidesExport?: boolean;
+    enableSlideshowExports?: boolean;
+    enableSmtp?: boolean;
+    enableSnapshotExport?: boolean;
+    enableSnapshotExportAccessibility?: boolean;
+    // (undocumented)
+    enableSnowflakeKeyPairAuthentication?: boolean;
+    // (undocumented)
+    enableStarrocksDataSource?: boolean;
+    enableToDateFilters?: boolean;
+    enableUserManagement?: boolean;
+    enableVisualizationFilteringByTags?: boolean;
+    enableVisualizationFineTuning?: boolean;
+    enableWaterfallChart?: boolean;
+    enableWidgetExportPdf?: boolean;
+    enableWidgetExportPngImage?: boolean;
+    enableWidgetIdentifiersRollout?: boolean;
+    enableWorkspaceSettingsAppHeaderMenuItem?: boolean;
+    // @alpha
+    productionFeatures?: IProductionFeaturesConfig;
 }
 
 // @public
@@ -2719,6 +2908,23 @@ export interface ILlmProvider {
 
 // @public
 export type ILocale = "en-US" | "en-US-x-24h" | "de-DE" | "es-ES" | "fr-FR" | "ja-JP" | "nl-NL" | "pt-BR" | "pt-PT" | "zh-Hans" | "ru-RU" | "it-IT" | "es-419" | "fr-CA" | "en-GB" | "en-AU" | "fi-FI" | "zh-Hant" | "zh-HK" | "tr-TR" | "pl-PL" | "ko-KR" | "sl-SI" | "id-ID" | "th-TH" | "vi-VN";
+
+// @alpha
+export interface ILocalPluggableApplicationModule {
+    localModule: string;
+    routeBase: string;
+}
+
+// @alpha
+export interface ILocalPluggableApplicationRegistryItemV1 extends IPluggableApplicationMetaV1 {
+    local: ILocalPluggableApplicationModule;
+}
+
+// @alpha
+export interface ILocalPluggableApplicationsRegistryV1 {
+    apiVersion: "1.0";
+    applications: PluggableApplicationRegistryItem[];
+}
 
 // @public
 export type ILocatorItem = IAttributeLocatorItem | IMeasureLocatorItem | ITotalLocatorItem;
@@ -3404,6 +3610,60 @@ export interface IOrganizationUserGroup {
 }
 
 // @public
+export interface IPermanentSettings {
+    activeCalendars?: IActiveCalendars;
+    activeLlmProvider?: ILlmActiveProvider;
+    ADCatalogGroupsExpanded?: boolean;
+    aiRateLimit?: number;
+    alertDefault?: IAlertDefault;
+    allowUnsafeFlexConnectEndpoints?: boolean;
+    attachmentSizeLimit?: number | null;
+    // @alpha
+    currencyFormatOverride?: string | null;
+    // @alpha
+    dashboardFiltersApplyMode?: DashboardFiltersApplyMode;
+    // @alpha
+    dateFilterConfig?: IDateFilterConfig;
+    disableKpiDashboardHeadlineUnderline?: boolean;
+    // @beta
+    earlyAccessFeatures?: IEarlyAccessFeaturesConfig;
+    enableAutomationEvaluationMode?: boolean;
+    exportResultPollingTimeoutSeconds?: number;
+    fiscalYear?: IFiscalYear;
+    formatLocale?: string;
+    llmEndpoint?: ILlmEndpoint;
+    maxZoomLevel?: number | null;
+    metadataLocale?: string;
+    metadataTimeZone?: string;
+    // @alpha
+    metricFormatOverride?: IMetricFormatOverrideSetting;
+    // @alpha
+    openAiConfig?: IOpenAiConfig;
+    platformEdition?: PlatformEdition;
+    responsiveUiDateFormat?: string;
+    restrictBaseUi?: boolean;
+    showHiddenCatalogItems?: boolean;
+    timezone?: string;
+    weekStart?: WeekStart;
+    whiteLabeling?: IWhiteLabeling;
+}
+
+// @alpha
+export interface IPluggableApplicationMetaV1 {
+    apiVersion: "1.0";
+    applicationScope: ApplicationScope;
+    id: string;
+    isEnabled?: boolean;
+    localizedTitle?: LocalizedTitle;
+    menuOrder: number;
+    requiredEntitlements?: RequiredEntitlements;
+    requiredOrganizationPermissions?: RequiredOrganizationPermissions;
+    requiredSettings?: RequiredSettings;
+    requiredWorkspacePermissions?: RequiredWorkspacePermissions;
+    title: string;
+}
+
+// @public
 export interface IPoPMeasureDefinition {
     // (undocumented)
     popMeasureDefinition: IPoPMeasureDefinitionBody;
@@ -3597,6 +3857,29 @@ export interface IRelativeDateFilterValues {
     granularity: string;
     // (undocumented)
     to: number;
+}
+
+// @alpha
+export interface IRemotePluggableApplicationModule {
+    module: string;
+    routeBase: string;
+    scope: string;
+    url: string;
+}
+
+// @alpha
+export interface IRemotePluggableApplicationRegistryItemV1 extends IPluggableApplicationMetaV1 {
+    remote: IRemotePluggableApplicationModule;
+}
+
+// @alpha
+export interface IRemotePluggableApplicationsRegistryV1 {
+    allowedStandardApplications?: string[];
+    apiVersion: "1.0";
+    applications?: PluggableApplicationRegistryItem[];
+    overrides?: {
+        [applicationId: string]: Partial<PluggableApplicationRegistryItem>;
+    };
 }
 
 // @public
@@ -4076,193 +4359,11 @@ export interface ISeparators {
 }
 
 // @public
-export interface ISettings {
+export interface ISettings extends IPermanentSettings, IFeatureFlags {
     // (undocumented)
     [key: string]: number | boolean | string | object | undefined | null;
-    activeCalendars?: IActiveCalendars;
-    activeLlmProvider?: ILlmActiveProvider;
-    ADCatalogGroupsExpanded?: boolean;
-    aiChatSearchLimit?: number;
-    aiRateLimit?: number;
-    alertDefault?: IAlertDefault;
-    allowUnsafeFlexConnectEndpoints?: boolean;
-    attachmentSizeLimit?: number | null;
     // @alpha
-    currencyFormatOverride?: string | null;
-    // @alpha
-    dashboardFiltersApplyMode?: DashboardFiltersApplyMode;
-    // @alpha
-    dateFilterConfig?: IDateFilterConfig;
-    disableKpiDashboardHeadlineUnderline?: boolean;
-    // @beta
-    earlyAccessFeatures?: IEarlyAccessFeaturesConfig;
-    enableAccessibilityMode?: boolean;
-    enableAccessibleChartTooltip?: boolean;
-    // @deprecated
-    enableAIFunctions?: boolean;
-    enableAIKnowledge?: boolean;
-    enableAiOnData?: boolean;
-    enableAlertAttributes?: boolean;
-    enableAlerting?: boolean;
-    enableAlertingRollout?: boolean;
-    enableAlertOncePerInterval?: boolean;
-    enableAlertsEvaluationFrequencySetup?: boolean;
-    enableAmplitudeTracker?: boolean;
-    enableAnomalyDetectionAlert?: boolean;
-    enableAnomalyDetectionVisualization?: boolean;
-    enableArbitraryFilterAD?: boolean;
-    enableArbitraryFilterKD?: boolean;
-    // (undocumented)
-    enableAthenaDataSource?: boolean;
-    enableAutomationEvaluationMode?: boolean;
-    enableAutomationFilterContext?: boolean;
-    enableAutomationManagement?: boolean;
-    enableCatalogTrendingObjects?: boolean;
-    enableCertification?: boolean;
-    enableChangeAnalysis?: boolean;
-    enableComparisonInAlerting?: boolean;
-    enableCompositeGrain?: boolean;
-    // (undocumented)
-    enableCrateDbDataSource?: boolean;
-    enableCreateUser?: boolean;
-    // @internal
-    enableCrossFilteringAliasTitles?: boolean;
-    enableCustomGeoCollection?: boolean;
-    enableCustomizedDashboardsWithoutPluginOverlay?: boolean;
-    enableDashboardDensitySetting?: boolean;
-    enableDashboardDescriptionDynamicHeight?: boolean;
-    enableDashboardFilterGroups?: boolean;
-    enableDashboardFilterViews?: boolean;
-    // @alpha
-    enableDashboardSectionHeadersDateDataSet?: boolean;
-    enableDashboardShareDialogLink?: boolean;
-    enableDashboardShareLink?: boolean;
-    enableDashboardTabularExport?: boolean;
-    // (undocumented)
-    enableDataSection?: boolean;
-    enableDateFilterIdentifiersRollout?: boolean;
-    enableDefaultSmtp?: boolean;
-    enableDescriptions?: boolean;
-    enableDestinationTesting?: boolean;
-    enableDrilledTooltip?: boolean;
-    enableDrillToUrlByDefault?: boolean;
-    enableEmbedButtonInAD?: boolean;
-    enableEmbedButtonInKD?: boolean;
-    enableExecutionCancelling?: boolean;
-    enableExecutionTimestamp?: boolean;
-    enableExportToDocumentStorage?: boolean;
-    enableExternalRecipients?: boolean;
-    enableFilterAccessibility?: boolean;
-    enableFilterControlInDrillingConfiguration?: boolean;
-    enableFiscalCalendars?: boolean;
-    enableGenAICatalogQualityChecker?: boolean;
-    enableGenAIChat?: boolean;
-    enableGenAIChatRollout?: boolean;
-    enableGenAIMemory?: boolean;
-    enableGenAIReasoningVisibility?: boolean;
-    enableGeoArea?: boolean;
-    enableGeoBasemapConfig?: boolean;
-    enableGeoChartA11yImprovements?: boolean;
-    enableGeoChartsViewportConfig?: boolean;
-    enableGeoSatelliteBasemapOption?: boolean;
-    enableGeoSegmentConflictRecommendation?: boolean;
-    enableHeadlineExport?: boolean;
-    enableHighchartsAccessibility?: boolean;
-    enableIgnoreCrossFiltering?: boolean;
-    enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
-    enableImplicitDrillToUrl?: boolean;
-    enableImprovedAdFilters?: boolean;
-    enableInPlatformNotifications?: boolean;
-    enableKDAttributeFilterDatesValidation?: boolean;
-    enableKDCrossFiltering?: boolean;
-    enableKDEmptyDateValuesFilter?: boolean;
-    enableKDRespectLegendPosition?: boolean;
-    enableKDRichText?: boolean;
-    enableKDVisualizationSwitcher?: boolean;
-    enableLineChartTrendThreshold?: boolean;
-    enableLlmEndpointReplacement?: boolean;
-    // (undocumented)
-    enableMariaDbDataSource?: boolean;
-    enableMatchFilterAD?: boolean;
-    enableMatchFilterKD?: boolean;
-    enableMetricFormatOverrides?: boolean;
-    // (undocumented)
-    enableMongoDbDataSource?: boolean;
-    // (undocumented)
-    enableMotherDuckDataSource?: boolean;
-    enableMultipleDataSourcesInWorkspace?: boolean;
-    enableMultipleDateFilters?: boolean;
-    enableMultipleMvfConditions?: boolean;
-    // (undocumented)
-    enableMySqlDataSource?: boolean;
-    enableNewGeoPushpin?: boolean;
-    enableNewPdfTabularExport?: boolean;
-    enableNewPivotTable?: boolean;
-    enableNewScheduledExport?: boolean;
-    enableNewUserCreationFlow?: boolean;
-    enableNotificationChannelIdentifiers?: boolean;
-    enableNullJoins?: boolean;
-    enableNumberSeparators?: boolean;
-    // (undocumented)
-    enableOracleDataSource?: boolean;
-    enableOrchestratedTabularExports?: boolean;
-    enablePivotTableIncreaseBucketSize?: boolean;
-    enablePivotTablePagination?: boolean;
-    enablePreAggregationDatasets?: boolean;
-    enableRankingWithMvf?: boolean;
-    enableRawExports?: boolean;
-    enableRichTextDescriptions?: boolean;
-    enableRichTextDynamicReferences?: boolean;
-    // @alpha
-    enableRichTextWidgetFilterConfiguration?: boolean;
-    enableScatterPlotClustering?: boolean;
-    enableScatterPlotSegmentation?: boolean;
-    enableScheduling?: boolean;
-    enableSeamlessIdpSwitch?: boolean;
-    enableSemanticSearch?: boolean;
-    enableSemanticSearchRollout?: boolean;
-    enableShellApplication?: boolean;
-    // (undocumented)
-    enableSingleStoreDataSource?: boolean;
-    enableSlidesExport?: boolean;
-    enableSlideshowExports?: boolean;
-    enableSmtp?: boolean;
-    enableSnapshotExport?: boolean;
-    enableSnapshotExportAccessibility?: boolean;
-    // (undocumented)
-    enableSnowflakeKeyPairAuthentication?: boolean;
-    // (undocumented)
-    enableStarrocksDataSource?: boolean;
-    enableToDateFilters?: boolean;
-    enableUserManagement?: boolean;
-    enableVisualizationFilteringByTags?: boolean;
-    enableVisualizationFineTuning?: boolean;
-    enableWaterfallChart?: boolean;
-    enableWidgetExportPdf?: boolean;
-    enableWidgetExportPngImage?: boolean;
-    enableWidgetIdentifiersRollout?: boolean;
-    enableWorkspaceSettingsAppHeaderMenuItem?: boolean;
-    exportResultPollingTimeoutSeconds?: number;
-    fiscalYear?: IFiscalYear;
-    formatLocale?: string;
-    llmEndpoint?: ILlmEndpoint;
-    maxZoomLevel?: number | null;
-    metadataLocale?: string;
-    metadataTimeZone?: string;
-    // @alpha
-    metricFormatOverride?: IMetricFormatOverrideSetting;
-    // @alpha
-    openAiConfig?: IOpenAiConfig;
-    platformEdition?: PlatformEdition;
-    // @alpha
-    productionFeatures?: IProductionFeaturesConfig;
-    registeredPluggableApplications?: string;
-    responsiveUiDateFormat?: string;
-    restrictBaseUi?: boolean;
-    showHiddenCatalogItems?: boolean;
-    timezone?: string;
-    weekStart?: WeekStart;
-    whiteLabeling?: IWhiteLabeling;
+    registeredPluggableApplications?: RemotePluggableApplicationsRegistry;
 }
 
 // @alpha
@@ -4270,6 +4371,9 @@ export function isExportDefinitionDashboardRequestPayload(obj: unknown): obj is 
 
 // @alpha
 export function isExportDefinitionVisualizationObjectRequestPayload(obj: unknown): obj is IExportDefinitionVisualizationObjectRequestPayload;
+
+// @alpha
+export function isExternalPluggableApplicationRegistryItem(app: PluggableApplicationRegistryItem): app is ExternalPluggableApplicationRegistryItem;
 
 // @public
 export function isFactMetadataObject(obj: unknown): obj is IFactMetadataObject;
@@ -4360,6 +4464,9 @@ export const isLocale: (locale: unknown) => locale is ILocale;
 
 // @public
 export function isLocalIdRef(obj: unknown): obj is LocalIdRef;
+
+// @alpha
+export function isLocalPluggableApplicationRegistryItem(app: PluggableApplicationRegistryItem): app is LocalPluggableApplicationRegistryItem;
 
 // @public
 export function isLowerBound(obj: unknown): obj is ILowerBoundedFilter;
@@ -4559,6 +4666,9 @@ export function isRelativeUpperBoundedDateFilter(obj: unknown): obj is IRelative
 export function isRelativeUpperBoundedDateFilterBody(obj: unknown): obj is IRelativeBoundedDateFilterBody & {
     boundedFilter: IUpperBoundedFilter;
 };
+
+// @alpha
+export function isRemotePluggableApplicationRegistryItem(app: PluggableApplicationRegistryItem): app is RemotePluggableApplicationRegistryItem;
 
 // @public
 export function isResultAttributeHeader(obj: unknown): obj is IResultAttributeHeader;
@@ -5428,6 +5538,17 @@ export type LocalIdRef = {
 // @public
 export function localIdRef(localIdentifier: Identifier): LocalIdRef;
 
+// @alpha
+export type LocalizedTitle = {
+    [locale in ILocale]: string;
+};
+
+// @alpha
+export type LocalPluggableApplicationRegistryItem = ILocalPluggableApplicationRegistryItemV1;
+
+// @alpha
+export type LocalPluggableApplicationsRegistry = ILocalPluggableApplicationsRegistryV1;
+
 // @public
 export type MatchFilterOperator = "contains" | "startsWith" | "endsWith";
 
@@ -5768,6 +5889,12 @@ export const OrganizationPermissionAssignmentValue: {
 // @public
 export type PlatformEdition = "free" | "growth" | "enterprise";
 
+// @alpha
+export type PluggableApplicationMeta = IPluggableApplicationMetaV1;
+
+// @alpha
+export type PluggableApplicationRegistryItem = RemotePluggableApplicationRegistryItem | LocalPluggableApplicationRegistryItem | ExternalPluggableApplicationRegistryItem;
+
 // @public
 export class PoPMeasureBuilder extends MeasureBuilderBase<IPoPMeasureDefinition> {
     // @internal
@@ -5815,6 +5942,28 @@ export type RelativeDateFilterGranularityOffset = number;
 
 // @public
 export function relativeDateFilterValues(filter: IRelativeDateFilter, includeDataSet?: boolean): IRelativeDateFilterValues;
+
+// @alpha
+export type RemotePluggableApplicationRegistryItem = IRemotePluggableApplicationRegistryItemV1;
+
+// @alpha
+export type RemotePluggableApplicationsRegistry = IRemotePluggableApplicationsRegistryV1;
+
+// @alpha
+export type RequiredEntitlements = Condition<Partial<{
+    [entitlement in IEntitlementsName]: string | boolean;
+}>>;
+
+// @alpha
+export type RequiredOrganizationPermissions = Condition<Partial<{
+    [permission in OrganizationPermissionAssignment]: boolean;
+}>>;
+
+// @alpha
+export type RequiredSettings = Condition<Partial<IPermanentSettings | IFeatureFlags>>;
+
+// @alpha
+export type RequiredWorkspacePermissions = Condition<Partial<IWorkspacePermissions>>;
 
 // @public
 export function resultHeaderName(header: IResultHeader): string | null;

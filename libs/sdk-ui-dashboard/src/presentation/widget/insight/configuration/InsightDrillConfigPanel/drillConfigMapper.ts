@@ -128,6 +128,9 @@ const createDashboardConfig = (
         complete: true,
         widgetRef: widgetRef,
         drillIntersectionIgnoredAttributes: drillData.drillIntersectionIgnoredAttributes,
+        includedSourceInsightFiltersObjRefs: drillData.includedSourceInsightFiltersObjRefs,
+        ignoredDashboardFilters: drillData.ignoredDashboardFilters,
+        includedSourceMeasureFiltersObjRefs: drillData.includedSourceMeasureFiltersObjRefs,
     };
 };
 

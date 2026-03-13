@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type IExecutionResult, type IExportConfig, type IExportResult } from "@gooddata/sdk-backend-spi";
 
@@ -15,6 +15,7 @@ function buildExportRequestConfig(exportConfig: IExtendedExportConfig, exportTit
         mergeHeaders,
         title: customTitle,
         pdfConfiguration,
+        grandTotalsPosition,
         timeout,
     } = exportConfig;
 
@@ -24,6 +25,7 @@ function buildExportRequestConfig(exportConfig: IExtendedExportConfig, exportTit
         format,
         mergeHeaders,
         title,
+        ...(grandTotalsPosition ? { grandTotalsPosition } : {}),
         timeout,
     };
 

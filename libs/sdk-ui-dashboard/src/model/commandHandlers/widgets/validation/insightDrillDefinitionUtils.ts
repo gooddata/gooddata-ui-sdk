@@ -128,7 +128,10 @@ export function wasDrillFilterConfigurationSanitized(
         return true;
     }
 
-    if (isDrillToInsight(originalDrillDefinition) && isDrillToInsight(validatedDrillDefinition)) {
+    if (
+        (isDrillToInsight(originalDrillDefinition) && isDrillToInsight(validatedDrillDefinition)) ||
+        (isDrillToDashboard(originalDrillDefinition) && isDrillToDashboard(validatedDrillDefinition))
+    ) {
         return (
             !isEqual(
                 originalDrillDefinition.includedSourceInsightFiltersObjRefs ?? [],
@@ -297,11 +300,53 @@ function sanitizeIgnoredDashboardFilters(
     return ignoredDashboardFilters.filter((localId) => dashboardFilterLocalIdentifiers.has(localId));
 }
 
+function sanitizeDrillFilterConfiguration<T extends IDrillToDashboard | IDrillToInsight>(
+    drillDefinition: T,
+    validationContext: IInsightDrillDefinitionValidationData,
+): T {
+    const sourceMeasureFilters = getSourceMeasureFiltersForDrillDefinition(
+        drillDefinition,
+        validationContext.sourceInsightMeasures,
+    );
+    const sanitizedDrillDefinition: T = { ...drillDefinition };
+
+    if (sanitizedDrillDefinition.drillIntersectionIgnoredAttributes !== undefined) {
+        sanitizedDrillDefinition.drillIntersectionIgnoredAttributes =
+            sanitizeDrillIntersectionIgnoredAttributes(
+                sanitizedDrillDefinition.drillIntersectionIgnoredAttributes,
+                validationContext.widgetInsightAttributes,
+            );
+    }
+
+    if (sanitizedDrillDefinition.includedSourceInsightFiltersObjRefs !== undefined) {
+        sanitizedDrillDefinition.includedSourceInsightFiltersObjRefs = sanitizeIncludedSourceInsightFilters(
+            sanitizedDrillDefinition.includedSourceInsightFiltersObjRefs,
+            validationContext.sourceInsightFilters,
+        );
+    }
+
+    if (sanitizedDrillDefinition.includedSourceMeasureFiltersObjRefs !== undefined) {
+        sanitizedDrillDefinition.includedSourceMeasureFiltersObjRefs = sanitizeIncludedSourceMeasureFilters(
+            sanitizedDrillDefinition.includedSourceMeasureFiltersObjRefs,
+            sourceMeasureFilters,
+        );
+    }
+
+    if (sanitizedDrillDefinition.ignoredDashboardFilters !== undefined) {
+        sanitizedDrillDefinition.ignoredDashboardFilters = sanitizeIgnoredDashboardFilters(
+            sanitizedDrillDefinition.ignoredDashboardFilters,
+            validationContext.dashboardFilters,
+        );
+    }
+
+    return sanitizedDrillDefinition;
+}
+
 function validateDrillToDashboardDefinition(
     drillDefinition: IDrillToDashboard,
     validationContext: IInsightDrillDefinitionValidationData,
 ): IDrillToDashboard {
-    const { target, drillIntersectionIgnoredAttributes, targetTabLocalIdentifier } = drillDefinition;
+    const { target, targetTabLocalIdentifier } = drillDefinition;
     if (target) {
         let result: IDrillToDashboard | undefined = undefined;
         const targetDashboard =
@@ -342,22 +387,12 @@ function validateDrillToDashboardDefinition(
         }
 
         if (result) {
-            const sanitizedDrillIntersectionIgnoredAttributes = sanitizeDrillIntersectionIgnoredAttributes(
-                drillIntersectionIgnoredAttributes,
-                validationContext.widgetInsightAttributes,
-            );
-
-            if (sanitizedDrillIntersectionIgnoredAttributes === undefined) {
-                return result;
-            }
-
-            return {
-                ...result,
-                drillIntersectionIgnoredAttributes: sanitizedDrillIntersectionIgnoredAttributes,
-            };
+            return sanitizeDrillFilterConfiguration(result, validationContext);
         }
-    } else {
-        return drillDefinition;
+    }
+
+    if (!target) {
+        return sanitizeDrillFilterConfiguration(drillDefinition, validationContext);
     }
 
     throw Error("Unknown target dashboard");
@@ -396,42 +431,7 @@ function sanitizeDrillToInsightFilterConfiguration(
     drillDefinition: IDrillToInsight,
     validationContext: IInsightDrillDefinitionValidationData,
 ): IDrillToInsight {
-    const sourceMeasureFilters = getSourceMeasureFiltersForDrillDefinition(
-        drillDefinition,
-        validationContext.sourceInsightMeasures,
-    );
-    const sanitizedDrillDefinition: IDrillToInsight = { ...drillDefinition };
-
-    if (sanitizedDrillDefinition.drillIntersectionIgnoredAttributes !== undefined) {
-        sanitizedDrillDefinition.drillIntersectionIgnoredAttributes =
-            sanitizeDrillIntersectionIgnoredAttributes(
-                sanitizedDrillDefinition.drillIntersectionIgnoredAttributes,
-                validationContext.widgetInsightAttributes,
-            );
-    }
-
-    if (sanitizedDrillDefinition.includedSourceInsightFiltersObjRefs !== undefined) {
-        sanitizedDrillDefinition.includedSourceInsightFiltersObjRefs = sanitizeIncludedSourceInsightFilters(
-            sanitizedDrillDefinition.includedSourceInsightFiltersObjRefs,
-            validationContext.sourceInsightFilters,
-        );
-    }
-
-    if (sanitizedDrillDefinition.includedSourceMeasureFiltersObjRefs !== undefined) {
-        sanitizedDrillDefinition.includedSourceMeasureFiltersObjRefs = sanitizeIncludedSourceMeasureFilters(
-            sanitizedDrillDefinition.includedSourceMeasureFiltersObjRefs,
-            sourceMeasureFilters,
-        );
-    }
-
-    if (sanitizedDrillDefinition.ignoredDashboardFilters !== undefined) {
-        sanitizedDrillDefinition.ignoredDashboardFilters = sanitizeIgnoredDashboardFilters(
-            sanitizedDrillDefinition.ignoredDashboardFilters,
-            validationContext.dashboardFilters,
-        );
-    }
-
-    return sanitizedDrillDefinition;
+    return sanitizeDrillFilterConfiguration(drillDefinition, validationContext);
 }
 
 export function validateDrillToCustomURLDefinition(

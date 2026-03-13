@@ -182,7 +182,6 @@ import {
     type IInsight,
     type IInsightDefinition,
     type IListedDashboard,
-    type ILlmEndpointBase,
     type ILlmEndpointOpenAI,
     type ILlmProvider,
     type IMeasure,
@@ -503,7 +502,7 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
                 semanticSearchIndex(): Promise<void> {
                     throw new NotSupported("not supported");
                 },
-                getLlmEndpoints(): Promise<ILlmEndpointBase[]> {
+                getLlmConfigured(): Promise<boolean> {
                     throw new NotSupported("not supported");
                 },
                 getMemoryItems() {

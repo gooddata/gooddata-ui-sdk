@@ -5,6 +5,7 @@ import { useIntl } from "react-intl";
 import { type SourceInsightFilterObjRef, type SourceMeasureFilterObjRef } from "@gooddata/sdk-model";
 
 import { DrillFiltersConfigSection } from "./DrillFiltersConfigSection.js";
+import { messages } from "./messages.js";
 import { type IDrillFiltersConfigOption } from "./types.js";
 import { useDrillFiltersConfigInner } from "./useDrillFiltersConfigInner.js";
 import { type IDrillFiltersConfigExtended } from "../../../../drill/types.js";
@@ -18,7 +19,6 @@ interface IDrillFiltersConfigInnerProps {
     includedSourceInsightFiltersObjRefs: SourceInsightFilterObjRef[];
     ignoredDashboardFilters: string[];
     includedSourceMeasureFiltersObjRefs: SourceMeasureFilterObjRef[];
-    supportsExtendedFiltersConfig: boolean;
     onDrillFiltersChange: (
         selection: Partial<
             IDrillFiltersConfigExtended & {
@@ -37,7 +37,6 @@ export function DrillFiltersConfigInner({
     includedSourceInsightFiltersObjRefs,
     ignoredDashboardFilters,
     includedSourceMeasureFiltersObjRefs,
-    supportsExtendedFiltersConfig,
     onDrillFiltersChange,
 }: IDrillFiltersConfigInnerProps) {
     const intl = useIntl();
@@ -59,7 +58,6 @@ export function DrillFiltersConfigInner({
         includedSourceInsightFiltersObjRefs,
         ignoredDashboardFilters,
         includedSourceMeasureFiltersObjRefs,
-        supportsExtendedFiltersConfig,
         onDrillFiltersChange,
     });
 
@@ -67,44 +65,32 @@ export function DrillFiltersConfigInner({
         <div className="gd-drill-filters-config-inner">
             <DrillFiltersConfigSection
                 dataTestId="drill-filters-data-point-section"
-                title={intl.formatMessage({
-                    id: "configurationPanel.drillConfig.filterSelection.section.drilledDataPoint",
-                })}
+                title={intl.formatMessage(messages.drillFiltersDrilledDataPointSectionTitle)}
                 options={intersectionAttributesOptions}
                 selectedIds={intersectionSelection}
                 onSelectionChange={onIgnoredDrillAttributesChange}
             />
-            {supportsExtendedFiltersConfig ? (
-                <>
-                    <DrillFiltersConfigSection
-                        dataTestId="drill-filters-dashboard-section"
-                        title={intl.formatMessage({
-                            id: "configurationPanel.drillConfig.filterSelection.section.dashboard",
-                        })}
-                        options={dashboardFiltersOptions}
-                        selectedIds={dashboardSelection}
-                        onSelectionChange={onDashboardSelectionChange}
-                    />
-                    <DrillFiltersConfigSection
-                        dataTestId="drill-filters-visualization-section"
-                        title={intl.formatMessage({
-                            id: "configurationPanel.drillConfig.filterSelection.section.visualization",
-                        })}
-                        options={sourceInsightFiltersOptions}
-                        selectedIds={sourceInsightSelection}
-                        onSelectionChange={onIncludedSourceInsightFiltersChange}
-                    />
-                    <DrillFiltersConfigSection
-                        dataTestId="drill-filters-metric-section"
-                        title={intl.formatMessage({
-                            id: "configurationPanel.drillConfig.filterSelection.section.metric",
-                        })}
-                        options={sourceMeasureFiltersOptions}
-                        selectedIds={sourceMeasureSelection}
-                        onSelectionChange={onSourceMeasureSelectionChange}
-                    />
-                </>
-            ) : null}
+            <DrillFiltersConfigSection
+                dataTestId="drill-filters-dashboard-section"
+                title={intl.formatMessage(messages.drillFiltersDashboardSectionTitle)}
+                options={dashboardFiltersOptions}
+                selectedIds={dashboardSelection}
+                onSelectionChange={onDashboardSelectionChange}
+            />
+            <DrillFiltersConfigSection
+                dataTestId="drill-filters-visualization-section"
+                title={intl.formatMessage(messages.drillFiltersVisualizationSectionTitle)}
+                options={sourceInsightFiltersOptions}
+                selectedIds={sourceInsightSelection}
+                onSelectionChange={onIncludedSourceInsightFiltersChange}
+            />
+            <DrillFiltersConfigSection
+                dataTestId="drill-filters-metric-section"
+                title={intl.formatMessage(messages.drillFiltersMetricSectionTitle)}
+                options={sourceMeasureFiltersOptions}
+                selectedIds={sourceMeasureSelection}
+                onSelectionChange={onSourceMeasureSelectionChange}
+            />
         </div>
     );
 }

@@ -924,9 +924,12 @@ export {
     isDashboardTab,
 } from "./dashboard/dashboard.js";
 
+export { type ISettings } from "./settings/index.js";
+
 export {
     type ISeparators,
-    type ISettings,
+    type IPermanentSettings,
+    type IFeatureFlags,
     type PlatformEdition,
     type IWhiteLabeling,
     type IAlertDefault,
@@ -946,7 +949,7 @@ export {
     type IProductionFeaturesConfig,
     type IMetricFormatOverrideSetting,
     isSeparators,
-} from "./settings/index.js";
+} from "./settings/settings.js";
 
 export type { IWorkspaceUserGroup } from "./userGroup/index.js";
 
@@ -1248,3 +1251,34 @@ export {
     SemanticQualityIssueCodeValues,
     SemanticQualityIssueSeverityOrder,
 } from "./genAI/quality.js";
+
+export {
+    type IRemotePluggableApplicationsRegistryV1,
+    type RemotePluggableApplicationsRegistry,
+    type ILocalPluggableApplicationsRegistryV1,
+    type LocalPluggableApplicationsRegistry,
+    type PluggableApplicationRegistryItem,
+    type IExternalPluggableApplicationRegistryItemV1,
+    type ExternalPluggableApplicationRegistryItem,
+    type ILocalPluggableApplicationRegistryItemV1,
+    type LocalPluggableApplicationRegistryItem,
+    type IRemotePluggableApplicationRegistryItemV1,
+    type RemotePluggableApplicationRegistryItem,
+    type IExternalUrlPluggableApplicationModule,
+    type ILocalPluggableApplicationModule,
+    type IRemotePluggableApplicationModule,
+    type IPluggableApplicationMetaV1,
+    type PluggableApplicationMeta,
+    type Condition,
+    type IConditionOr,
+    type IConditionAnd,
+    type RequiredOrganizationPermissions,
+    type RequiredWorkspacePermissions,
+    type RequiredEntitlements,
+    type RequiredSettings,
+    type LocalizedTitle,
+    type ApplicationScope,
+    isExternalPluggableApplicationRegistryItem,
+    isLocalPluggableApplicationRegistryItem,
+    isRemotePluggableApplicationRegistryItem,
+} from "./pluggableApplication/index.js";

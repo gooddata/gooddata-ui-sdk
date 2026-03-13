@@ -421,7 +421,7 @@ export interface AttributeHeaderAttributeHeader {
 }
 
 export type AttributeHeaderAttributeHeaderGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
-export type AttributeHeaderAttributeHeaderValueTypeEnum = 'TEXT' | 'HYPERLINK' | 'GEO' | 'GEO_LONGITUDE' | 'GEO_LATITUDE' | 'GEO_AREA' | 'IMAGE';
+export type AttributeHeaderAttributeHeaderValueTypeEnum = 'TEXT' | 'HYPERLINK' | 'GEO' | 'GEO_LONGITUDE' | 'GEO_LATITUDE' | 'GEO_AREA' | 'GEO_ICON' | 'IMAGE';
 
 export interface AttributeItem {
     /**
@@ -1577,7 +1577,7 @@ export interface KeyDriversDimension {
 }
 
 export type KeyDriversDimensionGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
-export type KeyDriversDimensionValueTypeEnum = 'TEXT' | 'HYPERLINK' | 'GEO' | 'GEO_LONGITUDE' | 'GEO_LATITUDE' | 'GEO_AREA' | 'IMAGE';
+export type KeyDriversDimensionValueTypeEnum = 'TEXT' | 'HYPERLINK' | 'GEO' | 'GEO_LONGITUDE' | 'GEO_LATITUDE' | 'GEO_AREA' | 'GEO_ICON' | 'IMAGE';
 
 export interface KeyDriversRequest {
     'metric': MeasureItem;
@@ -6544,20 +6544,20 @@ export async function ActionsApiAxiosParamCreator_RetrieveExecutionMetadata(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
- * Gets a single execution result.
+ * Gets a single execution result. Note that the Arrow File and Arrow Stream content types are currently in BETA.
  * @summary Get a single execution result
  * @param {string} workspaceId Workspace identifier
  * @param {string} resultId Result ID
+ * @param {string} [xGDCCANCELTOKEN] 
  * @param {Array<number>} [offset] Request page with these offsets. Format is offset&#x3D;1,2,3,... - one offset for each dimensions in ResultSpec from originating AFM.
  * @param {Array<number>} [limit] Return only this number of items. Format is limit&#x3D;1,2,3,... - one limit for each dimensions in ResultSpec from originating AFM.
  * @param {Array<string>} [excludedTotalDimensions] Identifiers of the dimensions where grand total data should not be returned for this request. A grand total will not be returned if all of its totalDimensions are in excludedTotalDimensions.
- * @param {string} [xGDCCANCELTOKEN] 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function ActionsApiAxiosParamCreator_RetrieveResult(
-    workspaceId: string, resultId: string, offset?: Array<number>, limit?: Array<number>, excludedTotalDimensions?: Array<string>, xGDCCANCELTOKEN?: string, 
+    workspaceId: string, resultId: string, xGDCCANCELTOKEN?: string, offset?: Array<number>, limit?: Array<number>, excludedTotalDimensions?: Array<string>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -8170,7 +8170,7 @@ export async function ActionsApi_RetrieveExecutionMetadata(
 
 // ActionsApi Api FP
 /**
- * Gets a single execution result.
+ * Gets a single execution result. Note that the Arrow File and Arrow Stream content types are currently in BETA.
  * @summary Get a single execution result
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -8186,7 +8186,7 @@ export async function ActionsApi_RetrieveResult(
     configuration?: Configuration,
 ): AxiosPromise<ExecutionResult> {
     const localVarAxiosArgs = await ActionsApiAxiosParamCreator_RetrieveResult(
-        requestParameters.workspaceId, requestParameters.resultId, requestParameters.offset, requestParameters.limit, requestParameters.excludedTotalDimensions, requestParameters.xGDCCANCELTOKEN, 
+        requestParameters.workspaceId, requestParameters.resultId, requestParameters.xGDCCANCELTOKEN, requestParameters.offset, requestParameters.limit, requestParameters.excludedTotalDimensions, 
         options || {},
         configuration,
     );
@@ -8835,7 +8835,7 @@ export interface ActionsApiInterface {
     retrieveExecutionMetadata(requestParameters: ActionsApiRetrieveExecutionMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<ResultCacheMetadata>;
 
     /**
-     * Gets a single execution result.
+     * Gets a single execution result. Note that the Arrow File and Arrow Stream content types are currently in BETA.
      * @summary Get a single execution result
      * @param {ActionsApiRetrieveResultRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -9977,6 +9977,13 @@ export interface ActionsApiRetrieveResultRequest {
     readonly resultId: string
 
     /**
+     * 
+     * @type {string}
+     * @memberof ActionsApiRetrieveResult
+     */
+    readonly xGDCCANCELTOKEN?: string
+
+    /**
      * Request page with these offsets. Format is offset&#x3D;1,2,3,... - one offset for each dimensions in ResultSpec from originating AFM.
      * @type {Array<number>}
      * @memberof ActionsApiRetrieveResult
@@ -9996,13 +10003,6 @@ export interface ActionsApiRetrieveResultRequest {
      * @memberof ActionsApiRetrieveResult
      */
     readonly excludedTotalDimensions?: Array<string>
-
-    /**
-     * 
-     * @type {string}
-     * @memberof ActionsApiRetrieveResult
-     */
-    readonly xGDCCANCELTOKEN?: string
 }
 
 /**
@@ -10672,7 +10672,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
-     * Gets a single execution result.
+     * Gets a single execution result. Note that the Arrow File and Arrow Stream content types are currently in BETA.
      * @summary Get a single execution result
      * @param {ActionsApiRetrieveResultRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -11607,20 +11607,20 @@ export async function ComputationApiAxiosParamCreator_RetrieveExecutionMetadata(
 
 // ComputationApi FP - ComputationApiAxiosParamCreator
 /**
- * Gets a single execution result.
+ * Gets a single execution result. Note that the Arrow File and Arrow Stream content types are currently in BETA.
  * @summary Get a single execution result
  * @param {string} workspaceId Workspace identifier
  * @param {string} resultId Result ID
+ * @param {string} [xGDCCANCELTOKEN] 
  * @param {Array<number>} [offset] Request page with these offsets. Format is offset&#x3D;1,2,3,... - one offset for each dimensions in ResultSpec from originating AFM.
  * @param {Array<number>} [limit] Return only this number of items. Format is limit&#x3D;1,2,3,... - one limit for each dimensions in ResultSpec from originating AFM.
  * @param {Array<string>} [excludedTotalDimensions] Identifiers of the dimensions where grand total data should not be returned for this request. A grand total will not be returned if all of its totalDimensions are in excludedTotalDimensions.
- * @param {string} [xGDCCANCELTOKEN] 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function ComputationApiAxiosParamCreator_RetrieveResult(
-    workspaceId: string, resultId: string, offset?: Array<number>, limit?: Array<number>, excludedTotalDimensions?: Array<string>, xGDCCANCELTOKEN?: string, 
+    workspaceId: string, resultId: string, xGDCCANCELTOKEN?: string, offset?: Array<number>, limit?: Array<number>, excludedTotalDimensions?: Array<string>, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -12015,7 +12015,7 @@ export async function ComputationApi_RetrieveExecutionMetadata(
 
 // ComputationApi Api FP
 /**
- * Gets a single execution result.
+ * Gets a single execution result. Note that the Arrow File and Arrow Stream content types are currently in BETA.
  * @summary Get a single execution result
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -12031,7 +12031,7 @@ export async function ComputationApi_RetrieveResult(
     configuration?: Configuration,
 ): AxiosPromise<ExecutionResult> {
     const localVarAxiosArgs = await ComputationApiAxiosParamCreator_RetrieveResult(
-        requestParameters.workspaceId, requestParameters.resultId, requestParameters.offset, requestParameters.limit, requestParameters.excludedTotalDimensions, requestParameters.xGDCCANCELTOKEN, 
+        requestParameters.workspaceId, requestParameters.resultId, requestParameters.xGDCCANCELTOKEN, requestParameters.offset, requestParameters.limit, requestParameters.excludedTotalDimensions, 
         options || {},
         configuration,
     );
@@ -12176,7 +12176,7 @@ export interface ComputationApiInterface {
     retrieveExecutionMetadata(requestParameters: ComputationApiRetrieveExecutionMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<ResultCacheMetadata>;
 
     /**
-     * Gets a single execution result.
+     * Gets a single execution result. Note that the Arrow File and Arrow Stream content types are currently in BETA.
      * @summary Get a single execution result
      * @param {ComputationApiRetrieveResultRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -12565,6 +12565,13 @@ export interface ComputationApiRetrieveResultRequest {
     readonly resultId: string
 
     /**
+     * 
+     * @type {string}
+     * @memberof ComputationApiRetrieveResult
+     */
+    readonly xGDCCANCELTOKEN?: string
+
+    /**
      * Request page with these offsets. Format is offset&#x3D;1,2,3,... - one offset for each dimensions in ResultSpec from originating AFM.
      * @type {Array<number>}
      * @memberof ComputationApiRetrieveResult
@@ -12584,13 +12591,6 @@ export interface ComputationApiRetrieveResultRequest {
      * @memberof ComputationApiRetrieveResult
      */
     readonly excludedTotalDimensions?: Array<string>
-
-    /**
-     * 
-     * @type {string}
-     * @memberof ComputationApiRetrieveResult
-     */
-    readonly xGDCCANCELTOKEN?: string
 }
 
 /**
@@ -12757,7 +12757,7 @@ export class ComputationApi extends BaseAPI implements ComputationApiInterface {
     }
 
     /**
-     * Gets a single execution result.
+     * Gets a single execution result. Note that the Arrow File and Arrow Stream content types are currently in BETA.
      * @summary Get a single execution result
      * @param {ComputationApiRetrieveResultRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.

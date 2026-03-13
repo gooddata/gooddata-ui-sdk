@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useState } from "react";
 
@@ -20,15 +20,15 @@ export function useGenAiChatAvailability(
         {
             promise: () => {
                 if (!workspaceId || !enabled || canManage) {
-                    return Promise.resolve([]);
+                    return Promise.resolve(false);
                 }
-                return backend.workspace(workspaceId).genAI().getLlmEndpoints();
+                return backend.workspace(workspaceId).genAI().getLlmConfigured();
             },
             onCancel: () => {
                 setShowGenAiButton(false);
             },
-            onSuccess: (endpoints) => {
-                setShowGenAiButton(Boolean((endpoints.length > 0 || canManage) && enabled));
+            onSuccess: (llmConfigured) => {
+                setShowGenAiButton(Boolean((llmConfigured || canManage) && enabled));
             },
         },
         [backend, workspaceId, enabled, canManage],

@@ -6,6 +6,7 @@ import { type IInsightWidget, isInsightWidget, objRefToString } from "@gooddata/
 import { OverlayController, OverlayControllerProvider, ScrollablePanel } from "@gooddata/sdk-ui-kit";
 import { simplifyText } from "@gooddata/util";
 
+import { TargetDashboardFiltersProvider } from "./DrillFilters/TargetDashboardFiltersContext.js";
 import { InsightDrillConfigPanel } from "./InsightDrillConfigPanel/InsightDrillConfigPanel.js";
 import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/zIndex.js";
 
@@ -28,7 +29,9 @@ export function InsightInteractions({ widget }: IInsightConfigurationProps) {
         <ScrollablePanel className={classes}>
             {/* Header z-index start at  6000 so we need force all overlays z-indexes start at 6000 to be under header */}
             <OverlayControllerProvider overlayController={overlayController}>
-                <InsightDrillConfigPanel widgetRef={widget.ref} />
+                <TargetDashboardFiltersProvider>
+                    <InsightDrillConfigPanel widgetRef={widget.ref} />
+                </TargetDashboardFiltersProvider>
             </OverlayControllerProvider>
         </ScrollablePanel>
     );

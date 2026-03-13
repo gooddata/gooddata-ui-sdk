@@ -2553,7 +2553,7 @@
                     "actions"
                 ],
                 "summary": "Get a single execution result",
-                "description": "Gets a single execution result.",
+                "description": "Gets a single execution result. Note that the Arrow File and Arrow Stream content types are currently in BETA.",
                 "operationId": "retrieveResult",
                 "parameters": [
                     {
@@ -2575,6 +2575,14 @@
                             "type": "string"
                         },
                         "example": "a9b28f9dc55f37ea9f4a5fb0c76895923591e781"
+                    },
+                    {
+                        "name": "X-GDC-CANCEL-TOKEN",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
                     },
                     {
                         "name": "offset",
@@ -2625,20 +2633,14 @@
                             "default": []
                         },
                         "example": "excludedTotalDimensions=dim_0,dim_1"
-                    },
-                    {
-                        "name": "X-GDC-CANCEL-TOKEN",
-                        "in": "header",
-                        "required": false,
-                        "schema": {
-                            "type": "string"
-                        }
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "Execution result was found and returned.",
                         "content": {
+                            "application/vnd.apache.arrow.stream": {},
+                            "application/vnd.apache.arrow.file": {},
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ExecutionResult"
@@ -4697,6 +4699,7 @@
                             "GEO_LONGITUDE",
                             "GEO_LATITUDE",
                             "GEO_AREA",
+                            "GEO_ICON",
                             "IMAGE"
                         ]
                     }
@@ -5583,6 +5586,7 @@
                                     "GEO_LONGITUDE",
                                     "GEO_LATITUDE",
                                     "GEO_AREA",
+                                    "GEO_ICON",
                                     "IMAGE"
                                 ]
                             },
@@ -8081,13 +8085,13 @@
                             "nullable": true
                         }
                     },
-                    "ycoord": {
+                    "xcoord": {
                         "type": "array",
                         "items": {
                             "type": "number"
                         }
                     },
-                    "xcoord": {
+                    "ycoord": {
                         "type": "array",
                         "items": {
                             "type": "number"

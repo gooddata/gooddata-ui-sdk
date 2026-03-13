@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type IFilter } from "@gooddata/sdk-model";
 
@@ -52,6 +52,15 @@ export interface IExportConfig {
      * when visualizationObject is given. (PDF only)
      */
     visualizationObjectCustomFilters?: Array<IFilter>;
+
+    /**
+     * Position of grand totals in the exported document.
+     *
+     * @remarks
+     * Takes precedence over the position specified in the visualization object.
+     * Applicable to all tabular export formats (XLSX, CSV, PDF).
+     */
+    grandTotalsPosition?: "pinnedBottom" | "pinnedTop" | "bottom" | "top";
 
     /**
      * Override the default export result polling timeout (in milliseconds).

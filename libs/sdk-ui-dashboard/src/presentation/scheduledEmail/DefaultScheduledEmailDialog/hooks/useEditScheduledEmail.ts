@@ -21,6 +21,7 @@ import {
     type INotificationChannelIdentifier,
     type INotificationChannelMetadataObject,
     type WidgetAttachmentType,
+    insightProperties,
     isAutomationExternalUserRecipient,
     isAutomationUnknownUserRecipient,
     isAutomationUserRecipient,
@@ -1040,15 +1041,24 @@ function newWidgetExportDefinitionMetadataObjectDefinition({
         filtersObj = { filters: dashboardFilters };
     }
 
+    const grandTotalsPosition = insightProperties(insight)?.["controls"]?.["grandTotalsPosition"];
+
     const pdfSettings: IExportDefinitionVisualizationObjectSettings = {
         pageSize: defaultPdfPageSize ?? "A4",
         orientation: "portrait",
         exportInfo: true,
+        ...(grandTotalsPosition ? { grandTotalsPosition } : {}),
+    };
+
+    const xlsxSettings: IExportDefinitionVisualizationObjectSettings = {
+        mergeHeaders: true,
+        exportInfo: true,
+        ...(grandTotalsPosition ? { grandTotalsPosition } : {}),
     };
 
     const settingsObj =
         format === "XLSX"
-            ? { settings: { mergeHeaders: true, exportInfo: true } }
+            ? { settings: xlsxSettings }
             : format === "PDF_TABULAR"
               ? { settings: pdfSettings }
               : {};

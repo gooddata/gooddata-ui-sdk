@@ -4,6 +4,8 @@ import { useIntl } from "react-intl";
 
 import { typedUiMenuContextStore } from "@gooddata/sdk-ui-kit";
 
+import { messages } from "./messages.js";
+
 const DRILL_FILTERS_SUBVIEW_PATH = "ignoredFilters";
 
 export function useDrillFiltersSubview() {
@@ -29,12 +31,8 @@ export function useDrillFiltersSubview() {
                 payload: {
                     drillItemLocalId,
                 },
-                title: intl.formatMessage({
-                    id: "configurationPanel.drillConfig.filterSelection.subview.title",
-                }),
-                tooltipText: intl.formatMessage({
-                    id: "configurationPanel.drillConfig.filterSelection.subview.tooltip",
-                }),
+                title: intl.formatMessage(messages.drillFiltersSubviewTitle),
+                tooltipText: intl.formatMessage(messages.drillFiltersSubviewTooltip),
             }),
     };
 }

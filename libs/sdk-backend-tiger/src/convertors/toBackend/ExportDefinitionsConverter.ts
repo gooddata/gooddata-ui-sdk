@@ -312,7 +312,7 @@ export const convertToTabularExportRequest = (
         isExportDefinitionVisualizationObjectRequestPayload(exportRequest)
     ) {
         const { visualizationObject, filters, widget, dashboard } = exportRequest.content;
-        const { mergeHeaders, orientation, exportInfo } = exportRequest.settings ?? {};
+        const { mergeHeaders, orientation, exportInfo, grandTotalsPosition } = exportRequest.settings ?? {};
         const filtersObj = filters
             ? { visualizationObjectCustomFilters: convertSdkFiltersToTiger(filters) }
             : {};
@@ -327,6 +327,7 @@ export const convertToTabularExportRequest = (
                 ...(mergeHeaders ? { mergeHeaders } : {}),
                 ...(orientation ? { pdfPageSize: orientation } : {}),
                 ...(exportInfo ? { exportInfo } : {}),
+                ...(grandTotalsPosition ? { grandTotalsPosition } : {}),
             },
             metadata: {
                 widget,
@@ -420,7 +421,7 @@ export const convertExportDefinitionRequestPayload = (
         } as VisualExportRequest;
     }
 
-    const { mergeHeaders, orientation } = exportRequest.settings ?? {};
+    const { mergeHeaders, orientation, grandTotalsPosition } = exportRequest.settings ?? {};
     const { visualizationObject, filters, widget, dashboard } = exportRequest.content;
     const filtersObj = filters ? { visualizationObjectCustomFilters: convertSdkFiltersToTiger(filters) } : {};
 
@@ -433,6 +434,7 @@ export const convertExportDefinitionRequestPayload = (
         settings: {
             ...(mergeHeaders ? { mergeHeaders } : {}),
             ...(orientation ? { pdfPageSize: orientation } : {}),
+            ...(grandTotalsPosition ? { grandTotalsPosition } : {}),
         },
         metadata: {
             widget,

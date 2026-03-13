@@ -255,6 +255,21 @@ export interface IDrillToDashboard extends IDrill {
      * @alpha
      */
     targetTabLocalIdentifier?: string;
+
+    /**
+     * Dashboard-level filters that should be excluded (opt-out).
+     */
+    ignoredDashboardFilters?: string[];
+
+    /**
+     * Source insight filters that are explicitly included (opt-in).
+     */
+    includedSourceInsightFiltersObjRefs?: SourceInsightFilterObjRef[];
+
+    /**
+     * Source measure-level filters that are explicitly included (opt-in).
+     */
+    includedSourceMeasureFiltersObjRefs?: SourceMeasureFilterObjRef[];
 }
 
 /**

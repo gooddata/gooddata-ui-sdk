@@ -1,10 +1,8 @@
 // (C) 2020-2026 GoodData Corporation
 
-import { FormattedMessage } from "react-intl";
-
 import { Checkbox, DialogListHeader, UiTooltip } from "@gooddata/sdk-ui-kit";
 
-import { type IDrillFiltersConfigOption } from "./types.js";
+import { type IDrillFiltersConfigOption, isDrillFiltersConfigOptionSelected } from "./types.js";
 
 interface IDrillFiltersConfigSectionProps {
     title: string;
@@ -39,15 +37,15 @@ export function DrillFiltersConfigSection({
             <DialogListHeader title={title} className="gd-drill-filters-config-section-header" />
             <div className="gd-drill-filters-config-section-items">
                 {options.map((option) => {
-                    const isChecked = selectedIds.includes(option.id);
-                    const isRanking = option.sourceInsightFilterObjRef?.type === "rankingFilter";
+                    const isChecked = isDrillFiltersConfigOptionSelected(option, selectedIds);
+                    const isDisabled = !!option.disabled;
                     const checkbox = (
                         <Checkbox
                             value={isChecked}
                             onChange={handleOptionChange(option.id)}
                             text={option.title}
                             labelSize="small"
-                            disabled={isRanking}
+                            disabled={isDisabled}
                         />
                     );
 
@@ -55,16 +53,16 @@ export function DrillFiltersConfigSection({
                         <div
                             key={option.id}
                             className="gd-drill-filters-config-section-item"
-                            title={option.title}
+                            title={isDisabled ? undefined : option.title}
                         >
-                            {isRanking ? (
+                            {option.disabled ? (
                                 <UiTooltip
                                     triggerBy={["hover", "focus"]}
                                     arrowPlacement="left"
                                     optimalPlacement
                                     content={
                                         <div className="gd-drill-filters-config-section-tooltip">
-                                            <FormattedMessage id="configurationPanel.drillConfig.filterSelection.rankingFilter.tooltip" />
+                                            {option.disabled.message}
                                         </div>
                                     }
                                     anchor={checkbox}
