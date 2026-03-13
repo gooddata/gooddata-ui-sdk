@@ -1,10 +1,6 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { type ITigerClientBase } from "@gooddata/api-client-tiger";
-import {
-    ActionsApi_MetadataSync,
-    ActionsApi_ResolveLlmEndpoints,
-} from "@gooddata/api-client-tiger/endpoints/actions";
+import { ActionsApi_MetadataSync } from "@gooddata/api-client-tiger/endpoints/actions";
 import type {
     IAnalyticsCatalogService,
     IChatThread,
@@ -14,7 +10,6 @@ import type {
     ISemanticQualityService,
     ISemanticSearchQuery,
 } from "@gooddata/sdk-backend-spi";
-import { type ILlmEndpointBase } from "@gooddata/sdk-model";
 
 import { AnalyticsCatalogService } from "./AnalyticsCatalogService.js";
 import { ChatThreadService } from "./ChatThread.js";
@@ -23,8 +18,8 @@ import { MemoryItemsService } from "./MemoryItemsService.js";
 import { SemanticQualityService } from "./SemanticQualityService.js";
 import { SemanticSearchQuery } from "./SemanticSearchQuery.js";
 import { type DateNormalizer } from "../../../convertors/fromBackend/dateFormatting/types.js";
-import { convertResolvedLlmEndpoint } from "../../../convertors/fromBackend/llmEndpointConvertor.js";
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
+import { resolveSettings } from "../settings/index.js";
 
 export class GenAIService implements IGenAIService {
     constructor(
@@ -49,14 +44,10 @@ export class GenAIService implements IGenAIService {
         );
     }
 
-    async getLlmEndpoints(): Promise<ILlmEndpointBase[]> {
-        return await this.authCall(async (client: ITigerClientBase) => {
-            const result = await ActionsApi_ResolveLlmEndpoints(client.axios, client.basePath, {
-                workspaceId: this.workspaceId,
-            });
-            const endpoints = result.data?.data;
-            return convertResolvedLlmEndpoint(endpoints ?? []);
-        });
+    async getLlmConfigured(): Promise<boolean> {
+        const settings = await resolveSettings(this.authCall, this.workspaceId);
+
+        return Boolean(settings.activeLlmProvider || settings.llmEndpoint);
     }
 
     getKnowledgeDocuments(): IKnowledgeDocumentsService {

@@ -17,6 +17,7 @@ import {
     type IInsightWidget,
     type ObjRef,
     areObjRefsEqual,
+    dashboardFilterLocalIdentifier,
     insightMeasures,
     isDashboardAttributeFilter,
     isDateFilter,
@@ -30,6 +31,7 @@ import {
     convertIntersectionToAttributeFilters,
     removeIgnoredValuesFromDrillIntersection,
 } from "./common/intersectionUtils.js";
+import { getIncludedSourceFiltersForDashboard } from "./common/sourceDrillFilters.js";
 import {
     dashboardAttributeFilterToAttributeFilter,
     dashboardDateFilterToDateFilterByWidget,
@@ -83,10 +85,14 @@ export function* drillToDashboardHandler(
     // if this bombs, widget is not an insight widget and something is seriously wrong
     invariant(insight);
 
+    const ignoredDashboardFilterIds = new Set(cmd.payload.drillDefinition.ignoredDashboardFilters ?? []);
     const shouldUseDateFilter = !!widget.dateDataSet && !isDateFilterDisabled(insight);
     // widget's dateDataSet is not needed in common date filter because target dashboard widget's will use their own dateDataSet
-    const commonDateFilter: ReturnType<typeof selectDrillingDateFilter> = shouldUseDateFilter
-        ? yield select(selectDrillingDateFilter)
+    const commonDateFilter: ReturnType<typeof selectDrillingDateFilter> | undefined = shouldUseDateFilter
+        ? removeIgnoredDashboardFilters(
+              [yield select(selectDrillingDateFilter)],
+              ignoredDashboardFilterIds,
+          )[0]
         : undefined;
 
     // get proper attr filters
@@ -104,13 +110,17 @@ export function* drillToDashboardHandler(
         ? []
         : yield call(getWidgetAwareDashboardFilters, ctx, widget, includeOtherDateFilters);
 
-    const dashboardFilters = isDrillingToSelf
+    const candidateDashboardFilters = isDrillingToSelf
         ? // if drilling to self, just take all filters
           includeOtherDateFilters
             ? allOtherFilters
             : allAttributeFilters
         : // if drilling to other, resolve widget filter ignores
           widgetAwareFilters;
+    const dashboardFilters = removeIgnoredDashboardFilters(
+        candidateDashboardFilters,
+        ignoredDashboardFilterIds,
+    );
 
     const dateAttributes: ReturnType<typeof selectCatalogDateAttributes> =
         yield select(selectCatalogDateAttributes);
@@ -147,9 +157,15 @@ export function* drillToDashboardHandler(
         attributeFilterDisplayAsLabelMap,
     );
     attributeFilterConfigs.push(...dashboardFilterConfigs);
+    const includedSourceFilters = getIncludedSourceFiltersForDashboard(insight, cmd.payload.drillDefinition);
 
-    // concat everything, order is important – drill filters must go first
-    const resultingFilters = compact([commonDateFilter, ...intersectionFilters, ...dashboardFilters]);
+    // Order matters: explicitly included source filters should win over carried-over dashboard filters.
+    const resultingFilters = compact([
+        ...includedSourceFilters,
+        commonDateFilter,
+        ...intersectionFilters,
+        ...dashboardFilters,
+    ]);
 
     const targetTabLocalIdentifier = cmd.payload.drillDefinition.targetTabLocalIdentifier;
     if (targetTabLocalIdentifier && isDrillingToSelf) {
@@ -243,6 +259,20 @@ function convertFilterItemsToFilters(
     return isDashboardAttributeFilter(filter)
         ? dashboardAttributeFilterToAttributeFilter(filter)
         : dashboardDateFilterToDateFilterByWidget(filter, widget);
+}
+
+function removeIgnoredDashboardFilters<T extends FilterContextItem>(
+    filters: T[],
+    ignoredDashboardFilterIds: Set<string>,
+): T[] {
+    if (!ignoredDashboardFilterIds.size) {
+        return filters;
+    }
+
+    return filters.filter((filter) => {
+        const localIdentifier = dashboardFilterLocalIdentifier(filter);
+        return !localIdentifier || !ignoredDashboardFilterIds.has(localIdentifier);
+    });
 }
 
 function* getWidgetAwareDashboardFilters(

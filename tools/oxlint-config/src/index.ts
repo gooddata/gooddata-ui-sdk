@@ -32,12 +32,13 @@ export const common: IConfiguration[] = [
 export const variants: Record<string, IConfiguration[]> = {
     browser: [browserEnv], // for any packages that uses document, but are not react libs
     "browser-esm": [browserEnv, importEsm], // unsure if needed
+    cypress: [browserEnv, cypress, chaiFriendly, noOnlyTests], // for sdk-ui-tests
     vitest: [noOnlyTests],
     esm: [importEsm], // used for this lib
     "esm-vitest": [importEsm, noOnlyTests], // for @gooddata/util and MAQL language server
     react: [browserEnv], // for skel tsx
     "react-vitest": [browserEnv, noOnlyTests], // for gdc-ui libs
-    "react-cypress": [browserEnv, cypress, chaiFriendly, noOnlyTests], // for sdk-ui-tests, and probably gdc-ui
+    "react-cypress": [browserEnv, cypress, chaiFriendly, noOnlyTests], // for gdc e2e libs
     "esm-react": [browserEnv, importEsm], // for most react libs
     "esm-react-cypress": [browserEnv, importEsm, cypress, chaiFriendly, noOnlyTests], // probably unused
     "esm-react-vitest": [browserEnv, importEsm, noOnlyTests], // for most sdk react libs with vitest

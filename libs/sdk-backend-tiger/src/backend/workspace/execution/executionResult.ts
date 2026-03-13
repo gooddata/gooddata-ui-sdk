@@ -387,6 +387,7 @@ export class TigerExecutionResult implements IExecutionResult {
                       pdfTopRightContent: options.pdfConfiguration?.pdfTopRightContent,
                   }
                 : {}),
+            ...(options.grandTotalsPosition ? { grandTotalsPosition: options.grandTotalsPosition } : {}),
         };
 
         const customOverride = resolveCustomOverride(this.dimensions, this.definition);

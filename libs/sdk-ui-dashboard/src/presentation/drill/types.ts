@@ -226,7 +226,9 @@ export interface IDrillToDashboardConfigTarget {
     dashboardTab?: string;
 }
 
-export type IDrillToDashboardConfig = IDrillConfigItemBase & IDrillToDashboardConfigTarget;
+export type IDrillToDashboardConfig = IDrillConfigItemBase &
+    IDrillToDashboardConfigTarget &
+    IDrillFiltersConfigExtended;
 
 export function isDrillToDashboardConfig(item: unknown): item is IDrillToDashboardConfig {
     return !isEmpty(item) && (item as IDrillToDashboardConfig).dashboard !== undefined;

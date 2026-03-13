@@ -1,12 +1,12 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import {
     type JsonApiAttributeOutWithLinks,
     type JsonApiDatasetOutWithLinks,
     type JsonApiFactOutWithLinks,
     type JsonApiLabelOutWithLinks,
-    type JsonApiMetricOutIncludes,
     type JsonApiMetricOutWithLinks,
+    type JsonApiVisualizationObjectOutIncludes,
 } from "@gooddata/api-client-tiger";
 import {
     type AttributeDisplayFormMetadataObjectBuilder,
@@ -97,7 +97,7 @@ export const convertAttribute = (
 
 export const convertMeasure = (
     measure: JsonApiMetricOutWithLinks,
-    included: JsonApiMetricOutIncludes[] = [],
+    included: JsonApiVisualizationObjectOutIncludes[] = [],
 ): ICatalogMeasure => {
     const { maql, format, metricType } = measure.attributes?.content ?? {};
 

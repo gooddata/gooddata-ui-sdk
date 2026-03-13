@@ -30,6 +30,7 @@ export interface IExportDefinitionVisualizationObjectSettings {
     exportInfo?: boolean;
     pageSize?: "A3" | "A4" | "LETTER";
     orientation?: "portrait" | "landscape";
+    grandTotalsPosition?: "pinnedBottom" | "pinnedTop" | "bottom" | "top";
 }
 
 /**

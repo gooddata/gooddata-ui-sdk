@@ -17,9 +17,9 @@ import {
     isAttributeDescriptor,
 } from "@gooddata/sdk-model";
 import { messages } from "@gooddata/sdk-ui";
-import { UiButton } from "@gooddata/sdk-ui-kit";
 import { simplifyText } from "@gooddata/util";
 
+import { DrillFiltersTrigger } from "./DrillFilters/DrillFiltersTrigger.js";
 import { useDrillFiltersCount } from "./DrillFilters/useDrillFiltersCount.js";
 import { useDrillFiltersSubview } from "./DrillFilters/useDrillFiltersSubview.js";
 import { DrillIntersectionIgnoredAttributes } from "./DrillIntersectionIgnoredAttributes.js";
@@ -102,7 +102,7 @@ export function DrillConfigItem({
         "drill-config-target-with-warning": !!item.warning,
     });
 
-    const selectedFiltersCount = useDrillFiltersCount(item, onSetup);
+    const { count: selectedFiltersCount, isLoading } = useDrillFiltersCount(item, onSetup);
 
     const drillFilterButtonLabel = intl.formatMessage(
         {
@@ -212,14 +212,11 @@ export function DrillConfigItem({
 
                     {isDrillFiltersConfigEnabled ? (
                         showDrillConfigButton ? (
-                            <div className="gd-drill-filter-config-link">
-                                <UiButton
-                                    variant="tertiary"
-                                    size="small"
-                                    label={drillFilterButtonLabel}
-                                    onClick={() => openDrillFilters(item.localIdentifier)}
-                                />
-                            </div>
+                            <DrillFiltersTrigger
+                                label={drillFilterButtonLabel}
+                                isLoading={isLoading}
+                                onClick={() => openDrillFilters(item.localIdentifier)}
+                            />
                         ) : null
                     ) : showDrillIntersectionIgnoredAttributes ? (
                         <DrillIntersectionIgnoredAttributes

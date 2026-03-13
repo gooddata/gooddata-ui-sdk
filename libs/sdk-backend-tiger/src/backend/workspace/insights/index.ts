@@ -4,8 +4,8 @@ import {
     type EntitiesApiGetAllEntitiesVisualizationObjectsRequest,
     type EntitiesApiGetEntityVisualizationObjectsRequest,
     type JsonApiAttributeOutWithLinks,
-    type JsonApiMetricOutIncludes,
     type JsonApiVisualizationObjectOutDocument,
+    type JsonApiVisualizationObjectOutIncludes,
     MetadataUtilities,
     type VisualizationObjectModelV1,
     type VisualizationObjectModelV2,
@@ -234,7 +234,7 @@ export class TigerWorkspaceInsights implements IWorkspaceInsightsService {
         references: EntitiesApiGetEntityVisualizationObjectsRequest["include"] = [],
     ): Promise<{
         insight: IInsight;
-        included: JsonApiMetricOutIncludes[] | undefined;
+        included: JsonApiVisualizationObjectOutIncludes[] | undefined;
     }> => {
         const id = objRefToIdentifier(ref, this.authCall);
         const includeObj = references.length ? { include: references } : {};

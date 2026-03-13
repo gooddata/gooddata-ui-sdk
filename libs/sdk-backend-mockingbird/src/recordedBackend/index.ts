@@ -67,7 +67,6 @@ import {
     type IColorPalette,
     type IColorPaletteDefinition,
     type IColorPaletteMetadataObject,
-    type ILlmEndpointBase,
     type ILlmEndpointOpenAI,
     type ILlmProvider,
     type IMetricFormatOverrideSetting,
@@ -410,7 +409,7 @@ function recordedWorkspace(
                 semanticSearchIndex: () => {
                     throw new NotSupported("not supported");
                 },
-                getLlmEndpoints(): Promise<ILlmEndpointBase[]> {
+                getLlmConfigured(): Promise<boolean> {
                     throw new NotSupported("not supported");
                 },
                 getMemoryItems: () => {

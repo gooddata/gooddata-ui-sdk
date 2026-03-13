@@ -11,6 +11,7 @@ import {
     type IInsightWidget,
     type ObjRef,
     areObjRefsEqual,
+    insightProperties,
     insightVisualizationType,
 } from "@gooddata/sdk-model";
 import { type IExtendedExportConfig, VisualizationTypes } from "@gooddata/sdk-ui";
@@ -63,6 +64,9 @@ export const useInsightExport = (config: {
     enableNewTabularExport?: boolean;
 }) => {
     const { title, widgetRef, insight, widget, enableNewTabularExport = true } = config;
+    const grandTotalsPosition = insight
+        ? insightProperties(insight)?.["controls"]?.["grandTotalsPosition"]
+        : undefined;
     const [isExporting, setIsExporting] = useState(false);
     const intl = useIntl();
     const { formatLocale } = useDashboardSelector(selectSettings);
@@ -141,9 +145,11 @@ export const useInsightExport = (config: {
         setIsExporting(true);
         // if this bombs there is an issue with the logic enabling the buttons
         invariant(exportFunction);
-        void exportHandler(exportFunction, { format: "csv", title }).finally(() => setIsExporting(false));
+        void exportHandler(exportFunction, { format: "csv", title, grandTotalsPosition }).finally(() =>
+            setIsExporting(false),
+        );
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [exportFunction, setIsExporting, title]);
+    }, [exportFunction, setIsExporting, title, grandTotalsPosition]);
 
     const onExportRawCSV = useCallback(() => {
         setIsExporting(true);
@@ -206,6 +212,7 @@ export const useInsightExport = (config: {
                         format: "pdf",
                         title,
                         pdfConfiguration: { pageSize, pageOrientation },
+                        grandTotalsPosition,
                     }).finally(() => setIsExporting(false));
                 },
                 pageSize: defaultPageSize,
@@ -272,6 +279,7 @@ export const useInsightExport = (config: {
                         includeFilterContext,
                         showFilters: includeFilterContext,
                         title,
+                        grandTotalsPosition,
                     }).finally(() => setIsExporting(false));
                 },
                 includeFilterContext: Boolean(settings?.["activeFiltersByDefault"] ?? true),

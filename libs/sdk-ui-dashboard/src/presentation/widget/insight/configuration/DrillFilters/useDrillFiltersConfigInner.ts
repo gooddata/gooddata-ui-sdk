@@ -23,7 +23,6 @@ interface IUseDrillFiltersConfigInnerParams {
     includedSourceInsightFiltersObjRefs: SourceInsightFilterObjRef[];
     ignoredDashboardFilters: string[];
     includedSourceMeasureFiltersObjRefs: SourceMeasureFilterObjRef[];
-    supportsExtendedFiltersConfig: boolean;
     onDrillFiltersChange: (selection: IDrillFiltersConfigSelection) => void;
 }
 
@@ -36,7 +35,6 @@ export function useDrillFiltersConfigInner({
     includedSourceInsightFiltersObjRefs,
     ignoredDashboardFilters,
     includedSourceMeasureFiltersObjRefs,
-    supportsExtendedFiltersConfig,
     onDrillFiltersChange,
 }: IUseDrillFiltersConfigInnerParams) {
     const intersectionSelection = useMemo(
@@ -101,9 +99,6 @@ export function useDrillFiltersConfigInner({
 
     const onIncludedSourceInsightFiltersChange = useCallback(
         (nextSelection: string[]) => {
-            if (!supportsExtendedFiltersConfig) {
-                return;
-            }
             const selectedSourceInsightFiltersSet = new Set(nextSelection);
             const nextIncludedSourceInsightFiltersObjRefs = sourceInsightFiltersOptions
                 .filter((option) => selectedSourceInsightFiltersSet.has(option.id))
@@ -114,7 +109,7 @@ export function useDrillFiltersConfigInner({
                 includedSourceInsightFiltersObjRefs: nextIncludedSourceInsightFiltersObjRefs,
             });
         },
-        [supportsExtendedFiltersConfig, sourceInsightFiltersOptions, onDrillFiltersChange],
+        [sourceInsightFiltersOptions, onDrillFiltersChange],
     );
     const onDashboardSelectionChange = useCallback(
         (nextSelection: string[]) => {

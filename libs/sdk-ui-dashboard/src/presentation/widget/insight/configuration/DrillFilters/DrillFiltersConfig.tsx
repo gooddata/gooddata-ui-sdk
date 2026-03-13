@@ -19,7 +19,6 @@ interface IDrillFiltersConfigProps {
 
 export function DrillFiltersConfig({ item, onUpdateDrillItem }: IDrillFiltersConfigProps) {
     const {
-        supportsExtendedFiltersConfig,
         intersectionAttributesOptions,
         sourceInsightFiltersOptions,
         sourceMeasureFiltersOptions,
@@ -41,7 +40,6 @@ export function DrillFiltersConfig({ item, onUpdateDrillItem }: IDrillFiltersCon
             includedSourceInsightFiltersObjRefs={includedSourceInsightFiltersObjRefs}
             ignoredDashboardFilters={ignoredDashboardFilters}
             includedSourceMeasureFiltersObjRefs={includedSourceMeasureFiltersObjRefs}
-            supportsExtendedFiltersConfig={supportsExtendedFiltersConfig}
             onDrillFiltersChange={onDrillFiltersChange}
         />
     );

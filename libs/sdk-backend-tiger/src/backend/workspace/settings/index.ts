@@ -240,7 +240,7 @@ function resolveCurrencyFormatOverride(
 /**
  * @internal
  */
-async function resolveSettings(
+export async function resolveSettings(
     authCall: TigerAuthenticatedCallGuard,
     workspace: string,
     excludeUserSettings = false,
@@ -287,17 +287,21 @@ export function getSettingsForCurrentUser(
     workspace: string,
 ): Promise<IUserWorkspaceSettings> {
     return authCall(async (client) => {
-        const profile = await ProfileApi_GetCurrent(client.axios);
+        // Fire independent requests in parallel to avoid unnecessary waterfall.
+        const [profile, workspaceEntity, resolvedSettings] = await Promise.all([
+            ProfileApi_GetCurrent(client.axios),
+            EntitiesApi_GetEntityWorkspaces(client.axios, client.basePath, {
+                id: workspace,
+                ...GET_OPTIMIZED_WORKSPACE_PARAMS,
+            }),
+            resolveSettings(authCall, workspace),
+        ]);
+
         const {
             data: {
                 data: { meta: config, attributes: wsAttributes },
             },
-        } = await EntitiesApi_GetEntityWorkspaces(client.axios, client.basePath, {
-            id: workspace,
-            ...GET_OPTIMIZED_WORKSPACE_PARAMS,
-        });
-
-        const resolvedSettings: ISettings = await resolveSettings(authCall, workspace);
+        } = workspaceEntity;
 
         const context: Partial<FeatureContext> = {
             jsSdkVersion: LIB_VERSION,

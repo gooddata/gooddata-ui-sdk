@@ -55,6 +55,8 @@ export interface IOrganization {
  */
 export interface IOrganizationPermissions {
     canManageOrganization?: boolean;
+    hasBaseUiAccess?: boolean;
+    canCreateDevToken?: boolean;
 }
 
 /**

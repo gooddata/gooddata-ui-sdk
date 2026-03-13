@@ -1,0 +1,1088 @@
+// (C) 2026 GoodData Corporation
+
+import { isEmpty } from "lodash-es";
+
+import type { IDateFilterConfig } from "../dateFilterConfig/index.js";
+
+/**
+ * Describes metric format override configuration.
+ *
+ * @alpha
+ */
+export interface IMetricFormatOverrideSetting {
+    /**
+     * Mapping of metric type to custom format string.
+     * When undefined or null, backend defaults are used.
+     */
+    formats?: Record<string, string> | null;
+}
+
+/**
+ * Indicates current platform edition.
+ *
+ * @public
+ */
+export type PlatformEdition = "free" | "growth" | "enterprise";
+
+/**
+ * Settings for regional number formatting
+ *
+ * @public
+ */
+export interface ISeparators {
+    /**
+     * Thousand separator (e.g. " " or ",")
+     */
+    thousand: string;
+
+    /**
+     * Decimal separator (e.g. "," or ".")
+     */
+    decimal: string;
+}
+
+/**
+ * Determines whether the given object is an instance of {@link ISeparators}.
+ * @param obj - object to check
+ *
+ * @public
+ */
+export function isSeparators(obj: unknown): obj is ISeparators {
+    return !isEmpty(obj) && !!(obj as ISeparators).decimal && !!(obj as ISeparators).thousand;
+}
+
+/**
+ * @public
+ */
+export interface ILlmEndpoint {
+    /**
+     * Unique identifier of the LLM endpoint.
+     */
+    id: string;
+    /**
+     * Type of the LLM endpoint.
+     */
+    type: "llmEndpoint";
+}
+
+/**
+ * @public
+ */
+export interface ILlmActiveProvider {
+    /**
+     * Unique identifier of the LLM endpoint.
+     */
+    id: string;
+    /**
+     * Type of the LLM endpoint.
+     */
+    type: "llmProvider";
+
+    /**
+     * Name of the LLM provider.
+     */
+    defaultModelId: string;
+}
+
+/**
+ * Configuration of WhiteLabeling.
+ *
+ * @public
+ */
+export interface IWhiteLabeling {
+    /**
+     * (De)/Activate whiteLabeling
+     */
+    enabled: boolean;
+
+    /**
+     * Whitelabeling favicon url
+     */
+    faviconUrl?: string;
+
+    /**
+     * Company logo url
+     */
+    logoUrl?: string;
+
+    /**
+     * Whitelabeling of Apple touch icon url
+     */
+    appleTouchIconUrl?: string;
+}
+
+/**
+ * Alert Default
+ *
+ * @public
+ */
+export interface IAlertDefault {
+    /**
+     * Default evaluation frequency
+     */
+    defaultCron: string;
+    /**
+     * Default timezone
+     */
+    defaultTimezone: string;
+}
+
+/**
+ * Configuration of integration of OpenAI.
+ *
+ * @alpha
+ */
+export interface IOpenAiConfig {
+    /**
+     * OpenAI organization ID
+     */
+    org: string;
+
+    /**
+     * OpenAI API token
+     */
+    token: string;
+}
+
+/**
+ * Values of Dashboard Filters Apply Mode setting. Used for organization and workspace.
+ * INDIVIDUAL mean that each filter has its own apply button.
+ * ALL_AT_ONCE mean that there is a single apply button for all dashboard filters.
+ *
+ * @public
+ */
+export type DashboardFiltersApplyMode = { mode: "INDIVIDUAL" } | { mode: "ALL_AT_ONCE" };
+
+/**
+ * Week start day
+ *
+ * @public
+ */
+export type WeekStart = "Sunday" | "Monday";
+
+/**
+ * Fiscal year calendar configuration
+ *
+ * @public
+ */
+export interface IFiscalYear {
+    /**
+     * Month offset from January (0 = January, 1 = February, ..., -1 = December of previous year, etc.)
+     */
+    monthOffset: number;
+    /**
+     * Prefix for fiscal year labels (e.g. "FY")
+     */
+    yearPrefix?: string;
+    /**
+     * Prefix for fiscal quarter labels (e.g. "Q")
+     */
+    quarterPrefix?: string;
+    /**
+     * Prefix for fiscal month/period labels (e.g. "P")
+     */
+    monthPrefix?: string;
+}
+
+/**
+ * Calendar type
+ *
+ * @public
+ */
+export type CalendarType = "STANDARD" | "FISCAL";
+
+/**
+ * Active calendars configuration
+ *
+ * @public
+ */
+export interface IActiveCalendars {
+    /**
+     * Which calendar type is the default
+     */
+    default: CalendarType;
+    /**
+     * Whether standard calendar is enabled
+     */
+    standard: boolean;
+    /**
+     * Whether fiscal calendar is enabled
+     */
+    fiscal: boolean;
+}
+
+/**
+ * @beta
+ */
+export type EarlyAccessFeatureContext = "WORKSPACE" | "ORGANIZATION";
+
+/**
+ * @beta
+ */
+export type EarlyAccessFeatureStatus = "EXPERIMENTAL" | "BETA";
+
+/**
+ * @beta
+ */
+export interface IEarlyAccessFeatureConfig {
+    title: string;
+    description: string;
+    docs?: string;
+    earlyAccess: string;
+    context: EarlyAccessFeatureContext;
+    status: EarlyAccessFeatureStatus;
+}
+
+/**
+ * @beta
+ */
+export interface IEarlyAccessFeaturesConfig {
+    features: IEarlyAccessFeatureConfig[];
+}
+
+/**
+ * @alpha
+ */
+export interface IProductionFeatureConfig {
+    title: string;
+    description: string;
+    docs?: string;
+    earlyAccess: string;
+    /**
+     * Expect global rollout date in ISO-8601 calendar date format (YYYY-MM-DD)
+     */
+    globalRollout: string;
+}
+
+/**
+ * @alpha
+ */
+export interface IProductionFeaturesConfig {
+    features?: IProductionFeatureConfig[];
+}
+
+/**
+ * Setting properties are used to customize platform behavior for end users.
+ * These are permanent setting options that are intended to remain, unlike feature-flag-based settings.
+ *
+ * On the Panther/Tiger platform, each setting is backed by a metadata object with a unique setting type
+ * registered in the backend.
+ *
+ * @public
+ */
+export interface IPermanentSettings {
+    /**
+     * Represents whiteLabeling configuration
+     */
+    whiteLabeling?: IWhiteLabeling;
+
+    /**
+     * Represents alert default configuration
+     */
+    alertDefault?: IAlertDefault;
+
+    /**
+     * Represents configuration for OpenAI integration
+     * @alpha
+     */
+    openAiConfig?: IOpenAiConfig;
+
+    /**
+     * Represents configuration for Dashboard Filters Apply Mode
+     * @alpha
+     */
+    dashboardFiltersApplyMode?: DashboardFiltersApplyMode;
+
+    /**
+     * Indicates current platform edition.
+     */
+    platformEdition?: PlatformEdition;
+
+    /**
+     * Early access features configuration.
+     * @beta
+     */
+    earlyAccessFeatures?: IEarlyAccessFeaturesConfig;
+
+    /**
+     * Week start day
+     */
+    weekStart?: WeekStart;
+
+    /**
+     * Fiscal year calendar configuration
+     */
+    fiscalYear?: IFiscalYear;
+
+    /**
+     * Active calendars configuration
+     */
+    activeCalendars?: IActiveCalendars;
+
+    /**
+     * Locale code to use for metadata.
+     */
+    metadataLocale?: string;
+
+    /**
+     * Locale code to use for date formatting.
+     */
+    formatLocale?: string;
+
+    /**
+     * Indicates the format in which the dates will be displayed
+     */
+    responsiveUiDateFormat?: string;
+
+    /**
+     * IANA identifier of time zone in which the platform metadata are stored.
+     */
+    metadataTimeZone?: string;
+
+    /**
+     * Timezone
+     */
+    timezone?: string;
+
+    /**
+     * Ai rate limit in requests per minute.
+     */
+    aiRateLimit?: number;
+
+    /**
+     * Metric format override configuration.
+     * @alpha
+     */
+    metricFormatOverride?: IMetricFormatOverrideSetting;
+
+    /**
+     * Resolved currency format override from metricFormatOverride.formats["CURRENCY"].
+     * This is a convenience property normalized during settings resolution.
+     * @alpha
+     */
+    currencyFormatOverride?: string | null;
+
+    /**
+     * LLM endpoint id as default for the platform.
+     */
+    llmEndpoint?: ILlmEndpoint;
+
+    /**
+     * LLM provider id as default for the platform.
+     */
+    activeLlmProvider?: ILlmActiveProvider;
+
+    /**
+     * Attachment size limit in bytes (null for no limit).
+     */
+    attachmentSizeLimit?: number | null;
+
+    /**
+     * If true, non-TLS endpoints may be used for FlexConnect.
+     * Otherwise, only TLS-enabled endpoints may be used.
+     */
+    allowUnsafeFlexConnectEndpoints?: boolean;
+
+    /**
+     * Enable automation evaluation mode.
+     */
+    enableAutomationEvaluationMode?: boolean;
+
+    /**
+     * Maximum zoom level applied to geo visualizations.
+     *
+     * @remarks
+     * Null or undefined means that zoom is unrestricted
+     * and default chart settings will be applied.
+     */
+    maxZoomLevel?: number | null;
+
+    /**
+     * Override the default timeout for polling for the export results.
+     */
+    exportResultPollingTimeoutSeconds?: number;
+
+    /**
+     * Headline component will not be underlined when it is set up with drilling.
+     */
+    disableKpiDashboardHeadlineUnderline?: boolean;
+
+    /**
+     * Indicates whether unavailable data items are visible in the settings API
+     * only available on Tiger/Panther
+     */
+    showHiddenCatalogItems?: boolean;
+
+    /**
+     * Indicates whether the catalog groups in analytical designer are expanded by default.
+     */
+    ADCatalogGroupsExpanded?: boolean;
+
+    /**
+     * Date filter configuration.
+     * @alpha
+     */
+    dateFilterConfig?: IDateFilterConfig;
+
+    /**
+     * Restrict access to Base UI applications.
+     */
+    restrictBaseUi?: boolean;
+}
+
+/**
+ * Setting properties are used to gate features that are in development or in various stages of rollout.
+ * Each property will be retired in a future version of the SDK once the feature has been rolled out to
+ * all users and is considered stable enough that there is no longer a need to roll it back or disable
+ * it easily.
+ *
+ * On the Panther platform, each setting is controlled by FeatureHub and is registered as a feature flag
+ * in the backend so that it can be configured for GoodData.CN (Tiger).
+ *
+ * @public
+ */
+export interface IFeatureFlags {
+    /**
+     * Enables UI and API support for metric type selection and metric format overrides management.
+     */
+    enableMetricFormatOverrides?: boolean;
+
+    /**
+     * Enables Highcharts accessibility features.
+     */
+    enableHighchartsAccessibility?: boolean;
+
+    /**
+     * Enables accessible chart tooltips with improved readability and persistence for disabled users.
+     */
+    enableAccessibleChartTooltip?: boolean;
+
+    /**
+     * Indicates whether the Waterfall Chart is available in AD.
+     */
+    enableWaterfallChart?: boolean;
+
+    /**
+     * Indicates whether the Embed dashboard button is available in KPI dashboards.
+     */
+    enableEmbedButtonInKD?: boolean;
+
+    /**
+     * Indicates whether the Embed button/dialog is available in AD.
+     */
+    enableEmbedButtonInAD?: boolean;
+
+    /**
+     * Enable usage of insights, widgets, kpis descriptions.
+     */
+    enableDescriptions?: boolean;
+
+    /**
+     * Enable use of composite grain
+     */
+    enableCompositeGrain?: boolean;
+
+    /**
+     * Enable new max bucket size items limit for Pivot Table
+     */
+    enablePivotTableIncreaseBucketSize?: boolean;
+
+    /**
+     * Enable user management page in Home UI.
+     */
+    enableUserManagement?: boolean;
+
+    /**
+     * Enable cross filtering in KD
+     */
+    enableKDCrossFiltering?: boolean;
+
+    /**
+     * Enable change analysis
+     */
+    enableChangeAnalysis?: boolean;
+
+    /**
+     * Enable multiple date filters.
+     */
+    enableMultipleDateFilters?: boolean;
+
+    /**
+     * Enable multiple conditions in measure value filters (MVF).
+     *
+     * @remarks
+     * Defaults to true when not provided by the backend.
+     */
+    enableMultipleMvfConditions?: boolean;
+
+    /**
+     * Enable ranking filter to be used together with measure value filters (MVF).
+     *
+     * @remarks
+     * Defaults to false when not provided by the backend.
+     */
+    enableRankingWithMvf?: boolean;
+
+    /**
+     * Enables rich text widgets on dashboards.
+     */
+    enableKDRichText?: boolean;
+
+    /**
+     * Enables visualization switcher widgets on dashboards.
+     */
+    enableKDVisualizationSwitcher?: boolean;
+
+    /**
+     * Enable creating users in user management.
+     */
+    enableCreateUser?: boolean;
+
+    /**
+     * Enable attribute filter values validation by date filters.
+     */
+    enableKDAttributeFilterDatesValidation?: boolean;
+
+    /**
+     * Enable multiple data sources to be used in a single workspace.
+     */
+    enableMultipleDataSourcesInWorkspace?: boolean;
+
+    /**
+     * Enables segmentation in scatter plot.
+     */
+    enableScatterPlotSegmentation?: boolean;
+
+    /**
+     * Enable clustering in scatter plot.
+     */
+    enableScatterPlotClustering?: boolean;
+
+    /**
+     * Enables rich text in descriptions.
+     */
+    enableRichTextDescriptions?: boolean;
+
+    /**
+     * Enables scheduling of the dashboard pdf export.
+     */
+    enableScheduling?: boolean;
+
+    /**
+     * Enables alerting of the dashboard widgets.
+     */
+    enableAlerting?: boolean;
+
+    /**
+     * Enables the replacement of LLM endpoints.
+     */
+    enableLlmEndpointReplacement?: boolean;
+
+    /**
+     * Enables attributes in alerts.
+     */
+    enableAlertAttributes?: boolean;
+
+    /**
+     * Enables comparison in alerting.
+     */
+    enableComparisonInAlerting?: boolean;
+
+    /**
+     * Enables alerting rollout of the dashboard widgets.
+     */
+    enableAlertingRollout?: boolean;
+
+    /**
+     * Enables smtp settings.
+     */
+    enableSmtp?: boolean;
+
+    /**
+     * Enables storing widget identifiers.
+     */
+    enableWidgetIdentifiersRollout?: boolean;
+
+    enableDataSection?: boolean;
+    enableMySqlDataSource?: boolean;
+    enableMariaDbDataSource?: boolean;
+    enableOracleDataSource?: boolean;
+    enableSnowflakeKeyPairAuthentication?: boolean;
+    enableMotherDuckDataSource?: boolean;
+    enableMongoDbDataSource?: boolean;
+    enableStarrocksDataSource?: boolean;
+    enableSingleStoreDataSource?: boolean;
+    enableAthenaDataSource?: boolean;
+    enableCrateDbDataSource?: boolean;
+
+    /**
+     * Enable GenAI-powered functionality, such as semantic-search.
+     * @deprecated Use separate flags for semantic search and GenAI chat below.
+     */
+    enableAIFunctions?: boolean;
+
+    /**
+     * Enable Semantic Search in the UI.
+     */
+    enableSemanticSearch?: boolean;
+
+    /**
+     * Enable Semantic Search rollout in the UI.
+     */
+    enableSemanticSearchRollout?: boolean;
+
+    /**
+     * Enable Gen AI Chatbot in UI.
+     */
+    enableGenAIChat?: boolean;
+
+    /**
+     * Enable Gen AI Chatbot rollout in UI.
+     */
+    enableGenAIChatRollout?: boolean;
+
+    /**
+     * Enable GenAI catalog quality checker in Analytics Catalog.
+     */
+    enableGenAICatalogQualityChecker?: boolean;
+
+    /**
+     * Enable trending and recommended object tabs in Analytics Catalog.
+     */
+    enableCatalogTrendingObjects?: boolean;
+
+    /**
+     * Enable certification indicators in Analytics Catalog.
+     */
+    enableCertification?: boolean;
+
+    /**
+     * Allow sending aggregated data to LLM.
+     */
+    enableAiOnData?: boolean;
+
+    /**
+     * Enable multiple data sources to be used in a single workspace.
+     */
+    enableDashboardFilterViews?: boolean;
+
+    /**
+     * Enable customized dashboards without plugin overlay.
+     * When enabled, the plugin overlay will not be displayed on dashboard items.
+     */
+    enableCustomizedDashboardsWithoutPluginOverlay?: boolean;
+
+    /**
+     * Enables ignore cross-filtering in widgets on dashboard.
+     */
+    enableIgnoreCrossFiltering?: boolean;
+
+    /**
+     * Enables manual headline exports on dashboard.
+     */
+    enableHeadlineExport?: boolean;
+
+    /**
+     * Enable the use of alias filter titles in cross filtering.
+     * @internal
+     */
+    enableCrossFilteringAliasTitles?: boolean;
+
+    /**
+     * Enable the use of default SMTP in destinations.
+     */
+    enableDefaultSmtp?: boolean;
+
+    /**
+     * Enable number separators configuration in home-ui (both organization and workspace level).
+     */
+    enableNumberSeparators?: boolean;
+
+    /**
+     * Enable the use of new user creation flow.
+     */
+    enableNewUserCreationFlow?: boolean;
+
+    /**
+     * Enable the possibility to test destinations (emails, webhooks) in the UI.
+     */
+    enableDestinationTesting?: boolean;
+
+    /**
+     * Enable in-platform notifications.
+     */
+    enableInPlatformNotifications?: boolean;
+
+    /**
+     * Enable fine-tuning options for visualization in AD configuration panel.
+     */
+    enableVisualizationFineTuning?: boolean;
+
+    /**
+     * Enable improved attribute filters experience in Analytical Designer.
+     */
+    enableImprovedAdFilters?: boolean;
+
+    /**
+     * Enable external recipients options
+     */
+    enableExternalRecipients?: boolean;
+
+    /**
+     * Enable drilled tooltip in drill dialog
+     */
+    enableDrilledTooltip?: boolean;
+
+    /**
+     * Enable dashboard tabular export
+     */
+    enableDashboardTabularExport?: boolean;
+
+    /**
+     * Enable orchestrated tabular exports
+     */
+    enableOrchestratedTabularExports?: boolean;
+
+    /**
+     * Enable dynamic height of the dashboard section description fields in dashboard edit mode.
+     */
+    enableDashboardDescriptionDynamicHeight?: boolean;
+
+    /**
+     * Enables tracking events to Amplitude.
+     */
+    enableAmplitudeTracker?: boolean;
+
+    /**
+     * Enable slideshow exports using the new export render mode in KD.
+     */
+    enableSlideshowExports?: boolean;
+
+    /**
+     * Enable slideshow exports settings from server
+     */
+    enableSlidesExport?: boolean;
+
+    /**
+     * Enable rich text dynamic references.
+     */
+    enableRichTextDynamicReferences?: boolean;
+
+    /**
+     * Enable insights export of raw data when limit is reached.
+     */
+    enableRawExports?: boolean;
+
+    /**
+     * Enable new PDF tabular export option for insights.
+     */
+    enableNewPdfTabularExport?: boolean;
+
+    /**
+     * Enable rich text widget filter configuration.
+     * Allows users to configure date and attribute filter settings for rich text widgets.
+     * @alpha
+     */
+    enableRichTextWidgetFilterConfiguration?: boolean;
+
+    /**
+     * Enable dashboard-level date dataset configuration for section headers.
+     * Allows users to select which date dataset to use for filtering metrics in section header rich text.
+     * @alpha
+     */
+    enableDashboardSectionHeadersDateDataSet?: boolean;
+
+    /**
+     * Enable execution cancelling.
+     */
+    enableExecutionCancelling?: boolean;
+
+    /**
+     * Enable immediate attribute filter displayAsLabel migration information propagation right upon the load of the component.
+     */
+    enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
+
+    /**
+     * Enable the URL sharing functionality in the dashboard share dialog.
+     */
+    enableDashboardShareLink?: boolean;
+
+    /**
+     * Enable using execution timestamp.
+     */
+    enableExecutionTimestamp?: boolean;
+
+    /**
+     * Enable automation filter context.
+     */
+    enableAutomationFilterContext?: boolean;
+
+    /**
+     * Enables storing date filter identifiers.
+     */
+    enableDateFilterIdentifiersRollout?: boolean;
+
+    /**
+     * Enable to setup alerts evaluation frequency in dashboard settings.
+     */
+    enableAlertsEvaluationFrequencySetup?: boolean;
+
+    /**
+     * Enable a configurable trend threshold in line chart visualization.
+     */
+    enableLineChartTrendThreshold?: boolean;
+
+    /**
+     * Enable to respect chart legend position in KD.
+     */
+    enableKDRespectLegendPosition?: boolean;
+
+    /**
+     * Enables workspace settings link in account menu of the user in every app header.
+     */
+    enableWorkspaceSettingsAppHeaderMenuItem?: boolean;
+
+    /**
+     * Enable accessibility enhancements for snapshot export.
+     */
+    enableSnapshotExportAccessibility?: boolean;
+
+    /**
+     * Enable widget export to PDF.
+     */
+    enableWidgetExportPdf?: boolean;
+
+    /**
+     * Enable widget export to PNG image.
+     */
+    enableWidgetExportPngImage?: boolean;
+
+    /**
+     * Enable export to document storage.
+     */
+    enableExportToDocumentStorage?: boolean;
+
+    /**
+     * Enable notification channel identifiers
+     */
+    enableNotificationChannelIdentifiers?: boolean;
+
+    /**
+     * Enable dashboard share dialog link
+     */
+    enableDashboardShareDialogLink?: boolean;
+
+    /**
+     * Enable production features
+     *
+     * @alpha
+     */
+    productionFeatures?: IProductionFeaturesConfig;
+
+    /**
+     * Enable new scheduled export
+     */
+    enableNewScheduledExport?: boolean;
+
+    /**
+     * Enable custom Identity Provider
+     */
+    enableSeamlessIdpSwitch?: boolean;
+
+    /**
+     * Enable pre-aggregation datasets support in LDM Modeler.
+     */
+    enablePreAggregationDatasets?: boolean;
+
+    /**
+     * Enable "to date" filters also known as "bounded" filters (e.g. YTD, QTD, MTD, WTD)
+     */
+    enableToDateFilters?: boolean;
+
+    /**
+     * Enable new pivot table
+     */
+    enableNewPivotTable?: boolean;
+
+    /**
+     * Enable new geo pushpin chart
+     */
+    enableNewGeoPushpin?: boolean;
+
+    /**
+     * Enable geo area labels.
+     */
+    enableGeoArea?: boolean;
+
+    /**
+     * Enables geo accessibility enhancements introduced for map canvas, legend semantics,
+     * live announcements, and alternate table view.
+     */
+    enableGeoChartA11yImprovements?: boolean;
+
+    /**
+     * Enables viewport configuration for geo charts (custom viewport + pan/zoom navigation controls).
+     */
+    enableGeoChartsViewportConfig?: boolean;
+
+    /**
+     * Enables analytical designer recommendation for geo charts when locations contain conflicting segment values.
+     */
+    enableGeoSegmentConflictRecommendation?: boolean;
+
+    /**
+     * Enable basemap selection in geo chart configuration.
+     */
+    enableGeoBasemapConfig?: boolean;
+
+    /**
+     * Enable Geo collections management UI.
+     */
+    enableCustomGeoCollection?: boolean;
+
+    /**
+     * Enable satellite/hybrid basemap option in geo chart configuration.
+     */
+    enableGeoSatelliteBasemapOption?: boolean;
+
+    /**
+     * Enable automation management in dashboards
+     */
+    enableAutomationManagement?: boolean;
+
+    /**
+     * Enable filter accessibility features including redesigned date filter components.
+     */
+    enableFilterAccessibility?: boolean;
+
+    /**
+     * Enable GenAI memory feature
+     */
+    enableGenAIMemory?: boolean;
+
+    /**
+     * Enable AI Knowledge feature
+     */
+    enableAIKnowledge?: boolean;
+
+    /**
+     * Enable GenAI reasoning visibility.
+     */
+    enableGenAIReasoningVisibility?: boolean;
+
+    /**
+     * AI Chat search limit
+     */
+    aiChatSearchLimit?: number;
+
+    /**
+     * Enable snapshot export
+     */
+    enableSnapshotExport?: boolean;
+
+    /**
+     * Enable accessibility mode
+     */
+    enableAccessibilityMode?: boolean;
+
+    /**
+     * This setting enables drills into URL in pivot table charts by default on all available attributes.
+     * Renders table cells as hyperlinks.
+     */
+    enableDrillToUrlByDefault?: boolean;
+
+    /**
+     * This feature flag enables automatic drill to url setting feature.
+     */
+    enableImplicitDrillToUrl?: boolean;
+
+    /**
+     * Enable anomaly detection alert
+     */
+    enableAnomalyDetectionAlert?: boolean;
+
+    /**
+     * Enable anomaly detection in visualization
+     */
+    enableAnomalyDetectionVisualization?: boolean;
+
+    /**
+     * Enable alert once per interval
+     */
+    enableAlertOncePerInterval?: boolean;
+
+    /**
+     * Enable fiscal calendars configuration.
+     */
+    enableFiscalCalendars?: boolean;
+
+    /**
+     * Enable pagination for the pivot table.
+     */
+    enablePivotTablePagination?: boolean;
+
+    /**
+     * Enable dashboard filter groups.
+     *
+     * Filter group are items in a filter bar which groups regular attribute filters into a logical groups.
+     * Groups are configured via dashboard metadata new tab property called filterGroupsConfig.
+     */
+    enableDashboardFilterGroups?: boolean;
+
+    /**
+     * Enable match filter in Analytical Designer.
+     */
+    enableMatchFilterAD?: boolean;
+
+    /**
+     * Enable arbitrary filter in Analytical Designer.
+     */
+    enableArbitraryFilterAD?: boolean;
+
+    /**
+     * Enable match filter in Dashboard app.
+     */
+    enableMatchFilterKD?: boolean;
+
+    /**
+     * Enable arbitrary filter in Dashboard app.
+     */
+    enableArbitraryFilterKD?: boolean;
+    /**
+     * Enable filtering of visualizations by tags provided via URL.
+     */
+    enableVisualizationFilteringByTags?: boolean;
+
+    /**
+     * Enables "Empty date values" configuration in KPI Dashboards date filter.
+     */
+    enableKDEmptyDateValuesFilter?: boolean;
+
+    /**
+     * Enable filter control in drilling configuration.
+     */
+    enableFilterControlInDrillingConfiguration?: boolean;
+
+    /**
+     * Enable shell application.
+     */
+    enableShellApplication?: boolean;
+
+    /**
+     * Enable NULL-aware joins used for FULL OUTER JOIN conditions.
+     */
+    enableNullJoins?: boolean;
+
+    /**
+     * Enable dashboard density setting.
+     *
+     * When enabled, users can switch between "comfortable" and "compact" information density
+     * in dashboard view mode.
+     */
+    enableDashboardDensitySetting?: boolean;
+
+    /**
+     * Enable Analytical Catalog application.
+     */
+    enableAnalyticalCatalog?: boolean;
+}

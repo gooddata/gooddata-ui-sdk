@@ -414,6 +414,11 @@
             flex-wrap: wrap;
             gap: 8px;
 
+            .gd-drill-target-tab-selector__label {
+                color: var(--gd-palette-complementary-7, #6d7680);
+                padding-top: 5px;
+            }
+
             .gd-tabs-dropdown-button {
                 max-width: 130px;
             }
@@ -434,7 +439,7 @@
 }
 
 .drill-config-item-intro {
-    color: kit-variables.$gd-color-link;
+    color: var(--gd-palette-complementary-7, #6d7680);
 
     .addon {
         color: kit-variables.$gd-color-state-blank;
@@ -442,7 +447,11 @@
 }
 
 .gd-drill-filter-config-link {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
     padding-top: 5px;
+    min-height: calc(var(--gd-button-S) + 5px);
 }
 
 .gd-drill-config-panel-target,

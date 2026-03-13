@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/oxlint-config",
-    "version": "11.26.0-alpha.1",
+    "version": "11.26.0-alpha.2",
     "license": "MIT",
     "author": "GoodData",
     "repository": {
@@ -22,6 +22,7 @@
         ".": "./dist/base.json",
         "./browser": "./dist/browser.json",
         "./browser-esm": "./dist/browser-esm.json",
+        "./cypress": "./dist/cypress.json",
         "./vitest": "./dist/vitest.json",
         "./esm": "./dist/esm.json",
         "./esm-vitest": "./dist/esm-vitest.json",
