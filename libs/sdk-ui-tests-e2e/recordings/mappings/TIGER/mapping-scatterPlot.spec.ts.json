@@ -1,46 +1,13 @@
 {
     "mappings": [
         {
-            "id": "538adbcd-192d-4a51-a2b0-46245c11f63b",
-            "name": "api_v1_actions_workspaces_c76e0537d0614abb0027f7c992656b964922506f_execution_afm_execute_result_82de848d7d2dbae7bf986a9ca1356c1be7faa64cd0c3f468003ee654a74f7e4193af50b9c93012fa05c52fbc37dd44993e4c1eb5",
-            "request": {
-                "url": "/api/v1/actions/workspaces/c76e0537d0614abb0027f7c992656b964922506f/execution/afm/execute/result/82de848d7d2dbae7bf986a9ca1356c1be7faa64c%3Ad0c3f468003ee654a74f7e4193af50b9c93012fa05c52fbc37dd44993e4c1eb5",
-                "method": "GET"
-            },
-            "response": {
-                "status": 200,
-                "body": "{\"data\":[[2423890.44,14619.896561743342],[1229796.71,15851.630392609699],[1219510.1,23453.791789473686],[61200.4,15108.65382647386],[200000.0,21204.94606571188],[null,23164.952256],[null,61080.7092],[null,84288.606],[null,null],[null,8875.86],[null,null],[null,3644.0]],\"dimensionHeaders\":[{\"headerGroups\":[{\"headers\":[{\"attributeHeader\":{\"labelValue\":\"2010\",\"primaryLabelValue\":\"2010\"}},{\"attributeHeader\":{\"labelValue\":\"2010\",\"primaryLabelValue\":\"2010\"}},{\"attributeHeader\":{\"labelValue\":\"2011\",\"primaryLabelValue\":\"2011\"}},{\"attributeHeader\":{\"labelValue\":\"2011\",\"primaryLabelValue\":\"2011\"}},{\"attributeHeader\":{\"labelValue\":\"2012\",\"primaryLabelValue\":\"2012\"}},{\"attributeHeader\":{\"labelValue\":\"2012\",\"primaryLabelValue\":\"2012\"}},{\"attributeHeader\":{\"labelValue\":\"2013\",\"primaryLabelValue\":\"2013\"}},{\"attributeHeader\":{\"labelValue\":\"2013\",\"primaryLabelValue\":\"2013\"}},{\"attributeHeader\":{\"labelValue\":\"2014\",\"primaryLabelValue\":\"2014\"}},{\"attributeHeader\":{\"labelValue\":\"2014\",\"primaryLabelValue\":\"2014\"}},{\"attributeHeader\":{\"labelValue\":\"2016\",\"primaryLabelValue\":\"2016\"}},{\"attributeHeader\":{\"labelValue\":\"2017\",\"primaryLabelValue\":\"2017\"}}]},{\"headers\":[{\"attributeHeader\":{\"labelValue\":\"Direct Sales\",\"primaryLabelValue\":\"Direct Sales\"}},{\"attributeHeader\":{\"labelValue\":\"Inside Sales\",\"primaryLabelValue\":\"Inside Sales\"}},{\"attributeHeader\":{\"labelValue\":\"Direct Sales\",\"primaryLabelValue\":\"Direct Sales\"}},{\"attributeHeader\":{\"labelValue\":\"Inside Sales\",\"primaryLabelValue\":\"Inside Sales\"}},{\"attributeHeader\":{\"labelValue\":\"Direct Sales\",\"primaryLabelValue\":\"Direct Sales\"}},{\"attributeHeader\":{\"labelValue\":\"Inside Sales\",\"primaryLabelValue\":\"Inside Sales\"}},{\"attributeHeader\":{\"labelValue\":\"Direct Sales\",\"primaryLabelValue\":\"Direct Sales\"}},{\"attributeHeader\":{\"labelValue\":\"Inside Sales\",\"primaryLabelValue\":\"Inside Sales\"}},{\"attributeHeader\":{\"labelValue\":\"Direct Sales\",\"primaryLabelValue\":\"Direct Sales\"}},{\"attributeHeader\":{\"labelValue\":\"Inside Sales\",\"primaryLabelValue\":\"Inside Sales\"}},{\"attributeHeader\":{\"labelValue\":\"Direct Sales\",\"primaryLabelValue\":\"Direct Sales\"}},{\"attributeHeader\":{\"labelValue\":\"Inside Sales\",\"primaryLabelValue\":\"Inside Sales\"}}]}]},{\"headerGroups\":[{\"headers\":[{\"measureHeader\":{\"measureIndex\":0}},{\"measureHeader\":{\"measureIndex\":1}}]}]}],\"grandTotals\":[],\"paging\":{\"count\":[12,2],\"offset\":[0,0],\"total\":[12,2]},\"metadata\":{\"dataSourceMessages\":[]}}",
-                "headers": {
-                    "X-Content-Type-Options": "nosniff",
-                    "X-RateLimit-Reset": "44",
-                    "Pragma": "no-cache",
-                    "Referrer-Policy": "no-referrer",
-                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
-                    "X-RateLimit-Remaining": "3951",
-                    "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
-                    "Vary": [
-                        "Accept-Encoding",
-                        "Origin",
-                        "Access-Control-Request-Method",
-                        "Access-Control-Request-Headers"
-                    ],
-                    "Expires": "0",
-                    "X-RateLimit-Limit": "4000",
-                    "X-XSS-Protection": "0",
-                    "Content-Type": "application/json"
-                }
-            },
-            "uuid": "538adbcd-192d-4a51-a2b0-46245c11f63b"
-        },
-        {
-            "id": "7407bd91-95cb-4c94-9045-219f42703394",
             "name": "api_v1_actions_workspaces_c76e0537d0614abb0027f7c992656b964922506f_execution_afm_execute",
             "request": {
                 "url": "/api/v1/actions/workspaces/c76e0537d0614abb0027f7c992656b964922506f/execution/afm/execute",
                 "method": "POST",
                 "bodyPatterns": [
                     {
-                        "equalToJson": "{\"resultSpec\":{\"dimensions\":[{\"localIdentifier\":\"dim_0\",\"itemIdentifiers\":[\"a_dt_closedate_timestamp.year\",\"a_f_owner.department_id\"]},{\"localIdentifier\":\"dim_1\",\"itemIdentifiers\":[\"measureGroup\"]}],\"totals\":[]},\"execution\":{\"measures\":[{\"localIdentifier\":\"m_amount_bop\",\"definition\":{\"measure\":{\"item\":{\"identifier\":{\"id\":\"amount_bop\",\"type\":\"metric\"}}}}},{\"localIdentifier\":\"m_avg._amount\",\"definition\":{\"measure\":{\"item\":{\"identifier\":{\"id\":\"avg._amount\",\"type\":\"metric\"}}}}}],\"attributes\":[{\"label\":{\"identifier\":{\"id\":\"dt_closedate_timestamp.year\",\"type\":\"label\"}},\"localIdentifier\":\"a_dt_closedate_timestamp.year\"},{\"label\":{\"identifier\":{\"id\":\"f_owner.department_id\",\"type\":\"label\"}},\"localIdentifier\":\"a_f_owner.department_id\"}],\"filters\":[],\"auxMeasures\":[]},\"settings\":{}}",
+                        "equalToJson": "{\"execution\":{\"attributes\":[{\"label\":{\"identifier\":{\"id\":\"dt_closedate_timestamp.year\",\"type\":\"label\"}},\"localIdentifier\":\"a_dt_closedate_timestamp.year\"},{\"label\":{\"identifier\":{\"id\":\"f_owner.department_id\",\"type\":\"label\"}},\"localIdentifier\":\"a_f_owner.department_id\"}],\"auxMeasures\":[],\"filters\":[],\"measures\":[{\"definition\":{\"measure\":{\"item\":{\"identifier\":{\"id\":\"amount_bop\",\"type\":\"metric\"}}}},\"localIdentifier\":\"m_amount_bop\"},{\"definition\":{\"measure\":{\"item\":{\"identifier\":{\"id\":\"avg._amount\",\"type\":\"metric\"}}}},\"localIdentifier\":\"m_avg._amount\"}]},\"resultSpec\":{\"dimensions\":[{\"itemIdentifiers\":[\"a_dt_closedate_timestamp.year\",\"a_f_owner.department_id\"],\"localIdentifier\":\"dim_0\"},{\"itemIdentifiers\":[\"measureGroup\"],\"localIdentifier\":\"dim_1\"}],\"totals\":[]},\"settings\":{}}",
                         "ignoreArrayOrder": false,
                         "ignoreExtraElements": false
                     }
@@ -48,31 +15,684 @@
             },
             "response": {
                 "status": 200,
-                "body": "{\"executionResponse\":{\"dimensions\":[{\"headers\":[{\"attributeHeader\":{\"localIdentifier\":\"a_dt_closedate_timestamp.year\",\"label\":{\"id\":\"dt_closedate_timestamp.year\",\"type\":\"label\"},\"labelName\":\"Closed - Year\",\"attribute\":{\"id\":\"dt_closedate_timestamp.year\",\"type\":\"attribute\"},\"attributeName\":\"Closed - Year\",\"granularity\":\"YEAR\",\"primaryLabel\":{\"id\":\"dt_closedate_timestamp.year\",\"type\":\"label\"},\"format\":{\"locale\":\"en-US\",\"pattern\":\"y\",\"timezone\":\"America/Juneau\"},\"valueType\":\"TEXT\"}},{\"attributeHeader\":{\"localIdentifier\":\"a_f_owner.department_id\",\"label\":{\"id\":\"f_owner.department_id\",\"type\":\"label\"},\"labelName\":\"Department\",\"attribute\":{\"id\":\"f_owner.department_id\",\"type\":\"attribute\"},\"attributeName\":\"Department\",\"granularity\":null,\"primaryLabel\":{\"id\":\"f_owner.department_id\",\"type\":\"label\"},\"valueType\":\"TEXT\"}}],\"localIdentifier\":\"dim_0\"},{\"headers\":[{\"measureGroupHeaders\":[{\"localIdentifier\":\"m_amount_bop\",\"format\":\"$#,##0.00\",\"name\":\"Amount [BOP]\"},{\"localIdentifier\":\"m_avg._amount\",\"format\":\"$#,##0.00\",\"name\":\"Avg. Amount\"}]}],\"localIdentifier\":\"dim_1\"}],\"links\":{\"executionResult\":\"82de848d7d2dbae7bf986a9ca1356c1be7faa64c:d0c3f468003ee654a74f7e4193af50b9c93012fa05c52fbc37dd44993e4c1eb5\"}}}",
+                "jsonBody": {
+                    "executionResponse": {
+                        "dimensions": [
+                            {
+                                "headers": [
+                                    {
+                                        "attributeHeader": {
+                                            "attribute": {
+                                                "id": "dt_closedate_timestamp.year",
+                                                "type": "attribute"
+                                            },
+                                            "attributeName": "Closed - Year",
+                                            "format": {
+                                                "locale": "en-US",
+                                                "pattern": "y",
+                                                "timezone": "America/Juneau"
+                                            },
+                                            "granularity": "YEAR",
+                                            "label": {
+                                                "id": "dt_closedate_timestamp.year",
+                                                "type": "label"
+                                            },
+                                            "labelName": "Closed - Year",
+                                            "localIdentifier": "a_dt_closedate_timestamp.year",
+                                            "primaryLabel": {
+                                                "id": "dt_closedate_timestamp.year",
+                                                "type": "label"
+                                            },
+                                            "valueType": "TEXT"
+                                        }
+                                    },
+                                    {
+                                        "attributeHeader": {
+                                            "attribute": {
+                                                "id": "f_owner.department_id",
+                                                "type": "attribute"
+                                            },
+                                            "attributeName": "Department",
+                                            "granularity": null,
+                                            "label": {
+                                                "id": "f_owner.department_id",
+                                                "type": "label"
+                                            },
+                                            "labelName": "Department",
+                                            "localIdentifier": "a_f_owner.department_id",
+                                            "primaryLabel": {
+                                                "id": "f_owner.department_id",
+                                                "type": "label"
+                                            },
+                                            "valueType": "TEXT"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "dim_0"
+                            },
+                            {
+                                "headers": [
+                                    {
+                                        "measureGroupHeaders": [
+                                            {
+                                                "format": "$#,##0.00",
+                                                "localIdentifier": "m_amount_bop",
+                                                "name": "Amount [BOP]"
+                                            },
+                                            {
+                                                "format": "$#,##0.00",
+                                                "localIdentifier": "m_avg._amount",
+                                                "name": "Avg. Amount"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "localIdentifier": "dim_1"
+                            }
+                        ],
+                        "links": {
+                            "executionResult": "cb6e52065b47a66879d150422aa9d1e64bc753e0:0415dbeda5bd21a1a0edfd05514e7dbb7c2c67661dd0ca924bc0042c4305edcc"
+                        }
+                    }
+                },
                 "headers": {
-                    "X-Content-Type-Options": "nosniff",
-                    "X-RateLimit-Reset": "45",
+                    "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+                    "Content-Type": "application/json",
+                    "Expires": "0",
                     "Pragma": "no-cache",
                     "Referrer-Policy": "no-referrer",
                     "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
-                    "X-RateLimit-Remaining": "3952",
-                    "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
                     "Vary": [
                         "Accept-Encoding",
                         "Origin",
                         "Access-Control-Request-Method",
                         "Access-Control-Request-Headers"
                     ],
-                    "Expires": "0",
-                    "X-RateLimit-Limit": "4000",
-                    "X-XSS-Protection": "0",
-                    "Content-Type": "application/json"
+                    "X-Content-Type-Options": "nosniff",
+                    "X-Ratelimit-Limit": "4000",
+                    "X-Ratelimit-Remaining": "3406",
+                    "X-Ratelimit-Reset": "4",
+                    "X-XSS-Protection": "0"
                 }
-            },
-            "uuid": "7407bd91-95cb-4c94-9045-219f42703394"
+            }
         },
         {
-            "id": "5874edbc-0fe7-4846-a878-c64047cd6d4e",
+            "name": "api_v1_actions_workspaces_c76e0537d0614abb0027f7c992656b964922506f_execution_afm_execute",
+            "request": {
+                "url": "/api/v1/actions/workspaces/c76e0537d0614abb0027f7c992656b964922506f/execution/afm/execute",
+                "method": "POST",
+                "bodyPatterns": [
+                    {
+                        "equalToJson": "{\"execution\":{\"attributes\":[{\"label\":{\"identifier\":{\"id\":\"f_owner.department_id\",\"type\":\"label\"}},\"localIdentifier\":\"a_f_owner.department_id\"},{\"label\":{\"identifier\":{\"id\":\"dt_closedate_timestamp.year\",\"type\":\"label\"}},\"localIdentifier\":\"a_dt_closedate_timestamp.year\"}],\"auxMeasures\":[],\"filters\":[],\"measures\":[{\"definition\":{\"measure\":{\"item\":{\"identifier\":{\"id\":\"amount_bop\",\"type\":\"metric\"}}}},\"localIdentifier\":\"m_amount_bop\"},{\"definition\":{\"measure\":{\"item\":{\"identifier\":{\"id\":\"avg._amount\",\"type\":\"metric\"}}}},\"localIdentifier\":\"m_avg._amount\"}]},\"resultSpec\":{\"dimensions\":[{\"itemIdentifiers\":[\"a_f_owner.department_id\",\"a_dt_closedate_timestamp.year\"],\"localIdentifier\":\"dim_0\"},{\"itemIdentifiers\":[\"measureGroup\"],\"localIdentifier\":\"dim_1\"}],\"totals\":[]},\"settings\":{}}",
+                        "ignoreArrayOrder": false,
+                        "ignoreExtraElements": false
+                    }
+                ]
+            },
+            "response": {
+                "status": 200,
+                "jsonBody": {
+                    "executionResponse": {
+                        "dimensions": [
+                            {
+                                "headers": [
+                                    {
+                                        "attributeHeader": {
+                                            "attribute": {
+                                                "id": "f_owner.department_id",
+                                                "type": "attribute"
+                                            },
+                                            "attributeName": "Department",
+                                            "granularity": null,
+                                            "label": {
+                                                "id": "f_owner.department_id",
+                                                "type": "label"
+                                            },
+                                            "labelName": "Department",
+                                            "localIdentifier": "a_f_owner.department_id",
+                                            "primaryLabel": {
+                                                "id": "f_owner.department_id",
+                                                "type": "label"
+                                            },
+                                            "valueType": "TEXT"
+                                        }
+                                    },
+                                    {
+                                        "attributeHeader": {
+                                            "attribute": {
+                                                "id": "dt_closedate_timestamp.year",
+                                                "type": "attribute"
+                                            },
+                                            "attributeName": "Closed - Year",
+                                            "format": {
+                                                "locale": "en-US",
+                                                "pattern": "y",
+                                                "timezone": "America/Juneau"
+                                            },
+                                            "granularity": "YEAR",
+                                            "label": {
+                                                "id": "dt_closedate_timestamp.year",
+                                                "type": "label"
+                                            },
+                                            "labelName": "Closed - Year",
+                                            "localIdentifier": "a_dt_closedate_timestamp.year",
+                                            "primaryLabel": {
+                                                "id": "dt_closedate_timestamp.year",
+                                                "type": "label"
+                                            },
+                                            "valueType": "TEXT"
+                                        }
+                                    }
+                                ],
+                                "localIdentifier": "dim_0"
+                            },
+                            {
+                                "headers": [
+                                    {
+                                        "measureGroupHeaders": [
+                                            {
+                                                "format": "$#,##0.00",
+                                                "localIdentifier": "m_amount_bop",
+                                                "name": "Amount [BOP]"
+                                            },
+                                            {
+                                                "format": "$#,##0.00",
+                                                "localIdentifier": "m_avg._amount",
+                                                "name": "Avg. Amount"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "localIdentifier": "dim_1"
+                            }
+                        ],
+                        "links": {
+                            "executionResult": "22fc1287014b9539c9ec05178f12a7d2deacedfa:14bd28bb583dec7cd413efc99f616e1306637f6b9355204e695749e65eb3c311"
+                        }
+                    }
+                },
+                "headers": {
+                    "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+                    "Content-Type": "application/json",
+                    "Expires": "0",
+                    "Pragma": "no-cache",
+                    "Referrer-Policy": "no-referrer",
+                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Vary": [
+                        "Accept-Encoding",
+                        "Origin",
+                        "Access-Control-Request-Method",
+                        "Access-Control-Request-Headers"
+                    ],
+                    "X-Content-Type-Options": "nosniff",
+                    "X-Ratelimit-Limit": "4000",
+                    "X-Ratelimit-Remaining": "3437",
+                    "X-Ratelimit-Reset": "7",
+                    "X-XSS-Protection": "0"
+                }
+            }
+        },
+        {
+            "name": "api_v1_actions_workspaces_c76e0537d0614abb0027f7c992656b964922506f_execution_afm_execute_result_22fc1287014b9539c9ec05178f12a7d2deacedfa14bd28bb583dec7cd413efc99f616e1306637f6b9355204e695749e65eb3c311",
+            "request": {
+                "url": "/api/v1/actions/workspaces/c76e0537d0614abb0027f7c992656b964922506f/execution/afm/execute/result/22fc1287014b9539c9ec05178f12a7d2deacedfa%3A14bd28bb583dec7cd413efc99f616e1306637f6b9355204e695749e65eb3c311",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "jsonBody": {
+                    "data": [
+                        [2423890.44, 14619.896561743342],
+                        [1219510.1, 23453.791789473686],
+                        [200000, 21204.94606571188],
+                        [null, 61080.7092],
+                        [null, null],
+                        [null, null],
+                        [1229796.71, 15851.630392609699],
+                        [61200.4, 15108.65382647386],
+                        [null, 23164.952256],
+                        [null, 84288.606],
+                        [null, 8875.86],
+                        [null, 3644]
+                    ],
+                    "dimensionHeaders": [
+                        {
+                            "headerGroups": [
+                                {
+                                    "headers": [
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "Direct Sales",
+                                                "primaryLabelValue": "Direct Sales"
+                                            }
+                                        },
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "Direct Sales",
+                                                "primaryLabelValue": "Direct Sales"
+                                            }
+                                        },
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "Direct Sales",
+                                                "primaryLabelValue": "Direct Sales"
+                                            }
+                                        },
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "Direct Sales",
+                                                "primaryLabelValue": "Direct Sales"
+                                            }
+                                        },
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "Direct Sales",
+                                                "primaryLabelValue": "Direct Sales"
+                                            }
+                                        },
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "Direct Sales",
+                                                "primaryLabelValue": "Direct Sales"
+                                            }
+                                        },
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "Inside Sales",
+                                                "primaryLabelValue": "Inside Sales"
+                                            }
+                                        },
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "Inside Sales",
+                                                "primaryLabelValue": "Inside Sales"
+                                            }
+                                        },
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "Inside Sales",
+                                                "primaryLabelValue": "Inside Sales"
+                                            }
+                                        },
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "Inside Sales",
+                                                "primaryLabelValue": "Inside Sales"
+                                            }
+                                        },
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "Inside Sales",
+                                                "primaryLabelValue": "Inside Sales"
+                                            }
+                                        },
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "Inside Sales",
+                                                "primaryLabelValue": "Inside Sales"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "headers": [
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "2010",
+                                                "primaryLabelValue": "2010"
+                                            }
+                                        },
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "2011",
+                                                "primaryLabelValue": "2011"
+                                            }
+                                        },
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "2012",
+                                                "primaryLabelValue": "2012"
+                                            }
+                                        },
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "2013",
+                                                "primaryLabelValue": "2013"
+                                            }
+                                        },
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "2014",
+                                                "primaryLabelValue": "2014"
+                                            }
+                                        },
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "2016",
+                                                "primaryLabelValue": "2016"
+                                            }
+                                        },
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "2010",
+                                                "primaryLabelValue": "2010"
+                                            }
+                                        },
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "2011",
+                                                "primaryLabelValue": "2011"
+                                            }
+                                        },
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "2012",
+                                                "primaryLabelValue": "2012"
+                                            }
+                                        },
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "2013",
+                                                "primaryLabelValue": "2013"
+                                            }
+                                        },
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "2014",
+                                                "primaryLabelValue": "2014"
+                                            }
+                                        },
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "2017",
+                                                "primaryLabelValue": "2017"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "headerGroups": [
+                                {
+                                    "headers": [
+                                        {
+                                            "measureHeader": {
+                                                "measureIndex": 0
+                                            }
+                                        },
+                                        {
+                                            "measureHeader": {
+                                                "measureIndex": 1
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "grandTotals": [],
+                    "metadata": {
+                        "dataSourceMessages": []
+                    },
+                    "paging": {
+                        "count": [12, 2],
+                        "offset": [0, 0],
+                        "total": [12, 2]
+                    }
+                },
+                "headers": {
+                    "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+                    "Content-Type": "application/json",
+                    "Expires": "0",
+                    "Pragma": "no-cache",
+                    "Referrer-Policy": "no-referrer",
+                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Vary": [
+                        "Accept-Encoding",
+                        "Origin",
+                        "Access-Control-Request-Method",
+                        "Access-Control-Request-Headers"
+                    ],
+                    "X-Content-Type-Options": "nosniff",
+                    "X-Ratelimit-Limit": "4000",
+                    "X-Ratelimit-Remaining": "3433",
+                    "X-Ratelimit-Reset": "6",
+                    "X-XSS-Protection": "0"
+                }
+            }
+        },
+        {
+            "name": "api_v1_actions_workspaces_c76e0537d0614abb0027f7c992656b964922506f_execution_afm_execute_result_cb6e52065b47a66879d150422aa9d1e64bc753e00415dbeda5bd21a1a0edfd05514e7dbb7c2c67661dd0ca924bc0042c4305edcc",
+            "request": {
+                "url": "/api/v1/actions/workspaces/c76e0537d0614abb0027f7c992656b964922506f/execution/afm/execute/result/cb6e52065b47a66879d150422aa9d1e64bc753e0%3A0415dbeda5bd21a1a0edfd05514e7dbb7c2c67661dd0ca924bc0042c4305edcc",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "jsonBody": {
+                    "data": [
+                        [2423890.44, 14619.896561743342],
+                        [1229796.71, 15851.630392609699],
+                        [1219510.1, 23453.791789473686],
+                        [61200.4, 15108.65382647386],
+                        [200000, 21204.94606571188],
+                        [null, 23164.952256],
+                        [null, 61080.7092],
+                        [null, 84288.606],
+                        [null, null],
+                        [null, 8875.86],
+                        [null, null],
+                        [null, 3644]
+                    ],
+                    "dimensionHeaders": [
+                        {
+                            "headerGroups": [
+                                {
+                                    "headers": [
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "2010",
+                                                "primaryLabelValue": "2010"
+                                            }
+                                        },
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "2010",
+                                                "primaryLabelValue": "2010"
+                                            }
+                                        },
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "2011",
+                                                "primaryLabelValue": "2011"
+                                            }
+                                        },
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "2011",
+                                                "primaryLabelValue": "2011"
+                                            }
+                                        },
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "2012",
+                                                "primaryLabelValue": "2012"
+                                            }
+                                        },
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "2012",
+                                                "primaryLabelValue": "2012"
+                                            }
+                                        },
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "2013",
+                                                "primaryLabelValue": "2013"
+                                            }
+                                        },
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "2013",
+                                                "primaryLabelValue": "2013"
+                                            }
+                                        },
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "2014",
+                                                "primaryLabelValue": "2014"
+                                            }
+                                        },
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "2014",
+                                                "primaryLabelValue": "2014"
+                                            }
+                                        },
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "2016",
+                                                "primaryLabelValue": "2016"
+                                            }
+                                        },
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "2017",
+                                                "primaryLabelValue": "2017"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "headers": [
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "Direct Sales",
+                                                "primaryLabelValue": "Direct Sales"
+                                            }
+                                        },
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "Inside Sales",
+                                                "primaryLabelValue": "Inside Sales"
+                                            }
+                                        },
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "Direct Sales",
+                                                "primaryLabelValue": "Direct Sales"
+                                            }
+                                        },
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "Inside Sales",
+                                                "primaryLabelValue": "Inside Sales"
+                                            }
+                                        },
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "Direct Sales",
+                                                "primaryLabelValue": "Direct Sales"
+                                            }
+                                        },
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "Inside Sales",
+                                                "primaryLabelValue": "Inside Sales"
+                                            }
+                                        },
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "Direct Sales",
+                                                "primaryLabelValue": "Direct Sales"
+                                            }
+                                        },
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "Inside Sales",
+                                                "primaryLabelValue": "Inside Sales"
+                                            }
+                                        },
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "Direct Sales",
+                                                "primaryLabelValue": "Direct Sales"
+                                            }
+                                        },
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "Inside Sales",
+                                                "primaryLabelValue": "Inside Sales"
+                                            }
+                                        },
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "Direct Sales",
+                                                "primaryLabelValue": "Direct Sales"
+                                            }
+                                        },
+                                        {
+                                            "attributeHeader": {
+                                                "labelValue": "Inside Sales",
+                                                "primaryLabelValue": "Inside Sales"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "headerGroups": [
+                                {
+                                    "headers": [
+                                        {
+                                            "measureHeader": {
+                                                "measureIndex": 0
+                                            }
+                                        },
+                                        {
+                                            "measureHeader": {
+                                                "measureIndex": 1
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ],
+                    "grandTotals": [],
+                    "metadata": {
+                        "dataSourceMessages": []
+                    },
+                    "paging": {
+                        "count": [12, 2],
+                        "offset": [0, 0],
+                        "total": [12, 2]
+                    }
+                },
+                "headers": {
+                    "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+                    "Content-Type": "application/json",
+                    "Expires": "0",
+                    "Pragma": "no-cache",
+                    "Referrer-Policy": "no-referrer",
+                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Vary": [
+                        "Accept-Encoding",
+                        "Origin",
+                        "Access-Control-Request-Method",
+                        "Access-Control-Request-Headers"
+                    ],
+                    "X-Content-Type-Options": "nosniff",
+                    "X-Ratelimit-Limit": "4000",
+                    "X-Ratelimit-Remaining": "3397",
+                    "X-Ratelimit-Reset": "3",
+                    "X-XSS-Protection": "0"
+                }
+            }
+        },
+        {
             "name": "api_v1_actions_workspaces_c76e0537d0614abb0027f7c992656b964922506f_resolvesettings",
             "request": {
                 "url": "/api/v1/actions/workspaces/c76e0537d0614abb0027f7c992656b964922506f/resolveSettings",
@@ -80,29 +700,389 @@
             },
             "response": {
                 "status": 200,
-                "body": "[{\"content\":{\"value\":\"America/Juneau\"},\"id\":\"timezone\",\"type\":\"TIMEZONE\"},{\"content\":{\"id\":\"\",\"type\":\"theme\"},\"id\":\"activeTheme\",\"type\":\"ACTIVE_THEME\"},{\"content\":{\"id\":\"\",\"type\":\"colorPalette\"},\"id\":\"activeColorPalette\",\"type\":\"ACTIVE_COLOR_PALETTE\"},{\"content\":{\"id\":\"\",\"type\":\"llmEndpoint\"},\"id\":\"activeLlmEndpoint\",\"type\":\"ACTIVE_LLM_ENDPOINT\"},{\"content\":{\"id\":\"\",\"type\":\"llmProvider\"},\"id\":\"activeLlmProvider\",\"type\":\"ACTIVE_LLM_PROVIDER\"},{\"content\":{\"standard\":true,\"fiscal\":false,\"default\":\"STANDARD\"},\"id\":\"activeCalendars\",\"type\":\"ACTIVE_CALENDARS\"},{\"content\":{\"enabled\":false,\"logoUrl\":\"\"},\"id\":\"whiteLabeling\",\"type\":\"WHITE_LABELING\"},{\"content\":{\"value\":\"en-US\"},\"id\":\"locale\",\"type\":\"LOCALE\"},{\"content\":{\"value\":\"en-US\"},\"id\":\"metadataLocale\",\"type\":\"METADATA_LOCALE\"},{\"content\":{\"value\":\"en-US\"},\"id\":\"formatLocale\",\"type\":\"FORMAT_LOCALE\"},{\"content\":{\"value\":\"\"},\"id\":\"mapboxToken\",\"type\":\"MAPBOX_TOKEN\"},{\"content\":{\"value\":\"\"},\"id\":\"agGridToken\",\"type\":\"AG_GRID_TOKEN\"},{\"content\":{\"value\":\"Monday\"},\"id\":\"weekStart\",\"type\":\"WEEK_START\"},{\"content\":{\"monthOffset\":3,\"yearPrefix\":\"FCUS\",\"quarterPrefix\":\"QCUS\",\"monthPrefix\":\"PCUS\"},\"id\":\"fiscalYear\",\"type\":\"FISCAL_YEAR\"},{\"content\":{\"value\":false},\"id\":\"showHiddenCatalogItems\",\"type\":\"SHOW_HIDDEN_CATALOG_ITEMS\"},{\"content\":{\"overrides\":[]},\"id\":\"operatorOverrides\",\"type\":\"OPERATOR_OVERRIDES\"},{\"content\":{\"value\":true},\"id\":\"timezoneValidation\",\"type\":\"TIMEZONE_VALIDATION_ENABLED\"},{\"content\":{\"org\":\"\",\"token\":\"\"},\"id\":\"openAiConfig\",\"type\":\"OPENAI_CONFIG\"},{\"content\":{\"value\":true},\"id\":\"enableFileAnalytics\",\"type\":\"ENABLE_FILE_ANALYTICS\"},{\"content\":{\"defaultCron\":\"0 0 * * * ?\",\"defaultTimezone\":\"Etc/UTC\"},\"id\":\"alert\",\"type\":\"ALERT\"},{\"content\":{\"thousand\":\",\",\"decimal\":\".\"},\"id\":\"separators\",\"type\":\"SEPARATORS\"},{\"content\":{\"config\":null},\"id\":\"dateFilterConfig\",\"type\":\"DATE_FILTER_CONFIG\"},{\"content\":{\"enabled\":true,\"userGroupsScopeEnabled\":true},\"id\":\"jitProvisioning\",\"type\":\"JIT_PROVISIONING\"},{\"content\":{\"enabled\":false,\"userGroupsClaimName\":null,\"userGroupsDefaults\":null},\"id\":\"jwtJitProvisioning\",\"type\":\"JWT_JIT_PROVISIONING\"},{\"content\":{\"mode\":\"INDIVIDUAL\"},\"id\":\"dashboardFiltersApplyMode\",\"type\":\"DASHBOARD_FILTERS_APPLY_MODE\"},{\"content\":{\"value\":true},\"id\":\"enableSlidesExport\",\"type\":\"ENABLE_SLIDES_EXPORT\"},{\"content\":{\"value\":true},\"id\":\"enableSnapshotExport\",\"type\":\"ENABLE_SNAPSHOT_EXPORT\"},{\"content\":{\"maxInteractions\":30,\"timeWindowHours\":24},\"id\":\"aiRateLimit\",\"type\":\"AI_RATE_LIMIT\"},{\"content\":{\"value\":null},\"id\":\"attachmentSizeLimit\",\"type\":\"ATTACHMENT_SIZE_LIMIT\"},{\"content\":{\"value\":\"PT168H\"},\"id\":\"attachmentLinkTtl\",\"type\":\"ATTACHMENT_LINK_TTL\"},{\"content\":{\"value\":true},\"id\":\"ADCatalogGroupsExpanded\",\"type\":\"AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE\"},{\"content\":{\"value\":false},\"id\":\"enableDrillToUrlByDefault\",\"type\":\"ENABLE_DRILL_TO_URL_BY_DEFAULT\"},{\"content\":{\"value\":true},\"id\":\"allowUnsafeFlexConnectEndpoints\",\"type\":\"ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS\"},{\"content\":{\"value\":false},\"id\":\"enableAutomationEvaluationMode\",\"type\":\"ENABLE_AUTOMATION_EVALUATION_MODE\"},{\"content\":{\"value\":false},\"id\":\"enableAccessibilityMode\",\"type\":\"ENABLE_ACCESSIBILITY_MODE\"},{\"content\":{\"applications\":null},\"id\":\"registeredPluggableApplications\",\"type\":\"REGISTERED_PLUGGABLE_APPLICATIONS\"},{\"content\":{\"value\":null},\"id\":\"dataLocale\",\"type\":\"DATA_LOCALE\"},{\"content\":{\"value\":null},\"id\":\"ldmDefaultLocale\",\"type\":\"LDM_DEFAULT_LOCALE\"},{\"content\":{\"value\":420},\"id\":\"exportResultPollingTimeoutSeconds\",\"type\":\"EXPORT_RESULT_POLLING_TIMEOUT_SECONDS\"},{\"content\":{\"value\":8},\"id\":\"maxZoomLevel\",\"type\":\"MAX_ZOOM_LEVEL\"},{\"content\":{\"value\":true},\"id\":\"sortCaseSensitive\",\"type\":\"SORT_CASE_SENSITIVE\"},{\"content\":{\"value\":\"\"},\"id\":\"sortCollation\",\"type\":\"SORT_COLLATION\"},{\"content\":{\"formats\":null},\"id\":\"metricFormatOverride\",\"type\":\"METRIC_FORMAT_OVERRIDE\"},{\"content\":{\"value\":false},\"id\":\"enableAiOnData\",\"type\":\"ENABLE_AI_ON_DATA\"},{\"content\":{\"value\":\"application/vnd.gooddata.api+json\"},\"id\":\"apiEntitiesDefaultContentMediaType\",\"type\":\"API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE\"},{\"content\":{\"value\":false},\"id\":\"enableNullJoins\",\"type\":\"ENABLE_NULL_JOINS\"},{\"content\":{\"value\":\",\"},\"id\":\"exportCsvCustomDelimiter\",\"type\":\"EXPORT_CSV_CUSTOM_DELIMITER\"},{\"content\":{\"value\":false},\"id\":\"enableQueryTags\",\"type\":\"ENABLE_QUERY_TAGS\"},{\"content\":{\"value\":false},\"id\":\"restrictBaseUi\",\"type\":\"RESTRICT_BASE_UI\"},{\"content\":{\"value\":false},\"id\":\"certifyParentObjects\",\"type\":\"CERTIFY_PARENT_OBJECTS\"}]",
+                "jsonBody": [
+                    {
+                        "content": {
+                            "value": "America/Juneau"
+                        },
+                        "id": "timezone",
+                        "type": "TIMEZONE"
+                    },
+                    {
+                        "content": {
+                            "id": "",
+                            "type": "theme"
+                        },
+                        "id": "activeTheme",
+                        "type": "ACTIVE_THEME"
+                    },
+                    {
+                        "content": {
+                            "id": "",
+                            "type": "colorPalette"
+                        },
+                        "id": "activeColorPalette",
+                        "type": "ACTIVE_COLOR_PALETTE"
+                    },
+                    {
+                        "content": {
+                            "id": "",
+                            "type": "llmEndpoint"
+                        },
+                        "id": "activeLlmEndpoint",
+                        "type": "ACTIVE_LLM_ENDPOINT"
+                    },
+                    {
+                        "content": {
+                            "defaultModelId": null,
+                            "id": "",
+                            "type": "llmProvider"
+                        },
+                        "id": "activeLlmProvider",
+                        "type": "ACTIVE_LLM_PROVIDER"
+                    },
+                    {
+                        "content": {
+                            "default": "STANDARD",
+                            "fiscal": false,
+                            "standard": true
+                        },
+                        "id": "activeCalendars",
+                        "type": "ACTIVE_CALENDARS"
+                    },
+                    {
+                        "content": {
+                            "enabled": false,
+                            "logoUrl": ""
+                        },
+                        "id": "whiteLabeling",
+                        "type": "WHITE_LABELING"
+                    },
+                    {
+                        "content": {
+                            "value": "en-US"
+                        },
+                        "id": "locale",
+                        "type": "LOCALE"
+                    },
+                    {
+                        "content": {
+                            "value": "en-US"
+                        },
+                        "id": "metadataLocale",
+                        "type": "METADATA_LOCALE"
+                    },
+                    {
+                        "content": {
+                            "value": "en-US"
+                        },
+                        "id": "formatLocale",
+                        "type": "FORMAT_LOCALE"
+                    },
+                    {
+                        "content": {
+                            "value": ""
+                        },
+                        "id": "mapboxToken",
+                        "type": "MAPBOX_TOKEN"
+                    },
+                    {
+                        "content": {
+                            "value": ""
+                        },
+                        "id": "agGridToken",
+                        "type": "AG_GRID_TOKEN"
+                    },
+                    {
+                        "content": {
+                            "value": "Sunday"
+                        },
+                        "id": "weekStart",
+                        "type": "WEEK_START"
+                    },
+                    {
+                        "content": {
+                            "monthOffset": 3,
+                            "monthPrefix": "PCUS",
+                            "quarterPrefix": "QCUS",
+                            "yearPrefix": "FCUS"
+                        },
+                        "id": "fiscalYear",
+                        "type": "FISCAL_YEAR"
+                    },
+                    {
+                        "content": {
+                            "value": false
+                        },
+                        "id": "showHiddenCatalogItems",
+                        "type": "SHOW_HIDDEN_CATALOG_ITEMS"
+                    },
+                    {
+                        "content": {
+                            "overrides": []
+                        },
+                        "id": "operatorOverrides",
+                        "type": "OPERATOR_OVERRIDES"
+                    },
+                    {
+                        "content": {
+                            "value": true
+                        },
+                        "id": "timezoneValidation",
+                        "type": "TIMEZONE_VALIDATION_ENABLED"
+                    },
+                    {
+                        "content": {
+                            "org": "",
+                            "token": ""
+                        },
+                        "id": "openAiConfig",
+                        "type": "OPENAI_CONFIG"
+                    },
+                    {
+                        "content": {
+                            "value": true
+                        },
+                        "id": "enableFileAnalytics",
+                        "type": "ENABLE_FILE_ANALYTICS"
+                    },
+                    {
+                        "content": {
+                            "defaultCron": "0 0 * * * ?",
+                            "defaultTimezone": "Etc/UTC"
+                        },
+                        "id": "alert",
+                        "type": "ALERT"
+                    },
+                    {
+                        "content": {
+                            "decimal": ".",
+                            "thousand": ","
+                        },
+                        "id": "separators",
+                        "type": "SEPARATORS"
+                    },
+                    {
+                        "content": {
+                            "config": null
+                        },
+                        "id": "dateFilterConfig",
+                        "type": "DATE_FILTER_CONFIG"
+                    },
+                    {
+                        "content": {
+                            "enabled": true,
+                            "userGroupsScopeEnabled": true
+                        },
+                        "id": "jitProvisioning",
+                        "type": "JIT_PROVISIONING"
+                    },
+                    {
+                        "content": {
+                            "enabled": false,
+                            "userGroupsClaimName": null,
+                            "userGroupsDefaults": null
+                        },
+                        "id": "jwtJitProvisioning",
+                        "type": "JWT_JIT_PROVISIONING"
+                    },
+                    {
+                        "content": {
+                            "mode": "INDIVIDUAL"
+                        },
+                        "id": "dashboardFiltersApplyMode",
+                        "type": "DASHBOARD_FILTERS_APPLY_MODE"
+                    },
+                    {
+                        "content": {
+                            "value": true
+                        },
+                        "id": "enableSlidesExport",
+                        "type": "ENABLE_SLIDES_EXPORT"
+                    },
+                    {
+                        "content": {
+                            "value": true
+                        },
+                        "id": "enableSnapshotExport",
+                        "type": "ENABLE_SNAPSHOT_EXPORT"
+                    },
+                    {
+                        "content": {
+                            "maxInteractions": 30,
+                            "timeWindowHours": 24
+                        },
+                        "id": "aiRateLimit",
+                        "type": "AI_RATE_LIMIT"
+                    },
+                    {
+                        "content": {
+                            "value": null
+                        },
+                        "id": "attachmentSizeLimit",
+                        "type": "ATTACHMENT_SIZE_LIMIT"
+                    },
+                    {
+                        "content": {
+                            "value": "PT168H"
+                        },
+                        "id": "attachmentLinkTtl",
+                        "type": "ATTACHMENT_LINK_TTL"
+                    },
+                    {
+                        "content": {
+                            "value": true
+                        },
+                        "id": "ADCatalogGroupsExpanded",
+                        "type": "AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE"
+                    },
+                    {
+                        "content": {
+                            "value": false
+                        },
+                        "id": "enableDrillToUrlByDefault",
+                        "type": "ENABLE_DRILL_TO_URL_BY_DEFAULT"
+                    },
+                    {
+                        "content": {
+                            "value": true
+                        },
+                        "id": "allowUnsafeFlexConnectEndpoints",
+                        "type": "ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS"
+                    },
+                    {
+                        "content": {
+                            "value": false
+                        },
+                        "id": "enableAutomationEvaluationMode",
+                        "type": "ENABLE_AUTOMATION_EVALUATION_MODE"
+                    },
+                    {
+                        "content": {
+                            "value": false
+                        },
+                        "id": "enableAccessibilityMode",
+                        "type": "ENABLE_ACCESSIBILITY_MODE"
+                    },
+                    {
+                        "content": {
+                            "applications": null
+                        },
+                        "id": "registeredPluggableApplications",
+                        "type": "REGISTERED_PLUGGABLE_APPLICATIONS"
+                    },
+                    {
+                        "content": {
+                            "value": null
+                        },
+                        "id": "dataLocale",
+                        "type": "DATA_LOCALE"
+                    },
+                    {
+                        "content": {
+                            "value": null
+                        },
+                        "id": "ldmDefaultLocale",
+                        "type": "LDM_DEFAULT_LOCALE"
+                    },
+                    {
+                        "content": {
+                            "value": 420
+                        },
+                        "id": "exportResultPollingTimeoutSeconds",
+                        "type": "EXPORT_RESULT_POLLING_TIMEOUT_SECONDS"
+                    },
+                    {
+                        "content": {
+                            "value": 8
+                        },
+                        "id": "maxZoomLevel",
+                        "type": "MAX_ZOOM_LEVEL"
+                    },
+                    {
+                        "content": {
+                            "value": true
+                        },
+                        "id": "sortCaseSensitive",
+                        "type": "SORT_CASE_SENSITIVE"
+                    },
+                    {
+                        "content": {
+                            "value": ""
+                        },
+                        "id": "sortCollation",
+                        "type": "SORT_COLLATION"
+                    },
+                    {
+                        "content": {
+                            "formats": null
+                        },
+                        "id": "metricFormatOverride",
+                        "type": "METRIC_FORMAT_OVERRIDE"
+                    },
+                    {
+                        "content": {
+                            "value": false
+                        },
+                        "id": "enableAiOnData",
+                        "type": "ENABLE_AI_ON_DATA"
+                    },
+                    {
+                        "content": {
+                            "value": "application/vnd.gooddata.api+json"
+                        },
+                        "id": "apiEntitiesDefaultContentMediaType",
+                        "type": "API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE"
+                    },
+                    {
+                        "content": {
+                            "value": ","
+                        },
+                        "id": "exportCsvCustomDelimiter",
+                        "type": "EXPORT_CSV_CUSTOM_DELIMITER"
+                    },
+                    {
+                        "content": {
+                            "value": false
+                        },
+                        "id": "enableQueryTags",
+                        "type": "ENABLE_QUERY_TAGS"
+                    },
+                    {
+                        "content": {
+                            "value": false
+                        },
+                        "id": "restrictBaseUi",
+                        "type": "RESTRICT_BASE_UI"
+                    },
+                    {
+                        "content": {
+                            "value": false
+                        },
+                        "id": "certifyParentObjects",
+                        "type": "CERTIFY_PARENT_OBJECTS"
+                    }
+                ],
                 "headers": {
-                    "X-Content-Type-Options": "nosniff",
-                    "X-RateLimit-Reset": "45",
+                    "Cache-Control": "max-age=10, private",
+                    "Content-Type": "application/json",
                     "Referrer-Policy": "no-referrer",
                     "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
-                    "X-RateLimit-Remaining": "3862",
-                    "Cache-Control": "max-age=10, private",
                     "Vary": [
                         "Accept-Encoding",
                         "Origin",
                         "Access-Control-Request-Method",
                         "Access-Control-Request-Headers"
                     ],
-                    "X-RateLimit-Limit": "4000",
-                    "X-XSS-Protection": "0",
-                    "Content-Type": "application/json"
+                    "X-Content-Type-Options": "nosniff",
+                    "X-Ratelimit-Limit": "4000",
+                    "X-Ratelimit-Remaining": "1942",
+                    "X-Ratelimit-Reset": "4",
+                    "X-XSS-Protection": "0"
                 }
-            },
-            "uuid": "5874edbc-0fe7-4846-a878-c64047cd6d4e"
+            }
         },
         {
-            "id": "6470ece5-1f91-4c11-9d23-e81701b4eab0",
             "name": "api_v1_entities_workspaces_c76e0537d0614abb0027f7c992656b964922506f",
             "request": {
                 "urlPath": "/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f",
@@ -126,24 +1106,155 @@
             },
             "response": {
                 "status": 200,
-                "body": "{\"data\":{\"attributes\":{\"name\":\"E2E_SDK_cypress_test -- 2026-03-02T12:52:17.789Z\"},\"id\":\"c76e0537d0614abb0027f7c992656b964922506f\",\"meta\":{\"config\":{\"approximateCountAvailable\":true,\"dataSamplingAvailable\":true,\"showAllValuesOnDatesAvailable\":true},\"permissions\":[\"MANAGE\",\"ANALYZE\",\"EXPORT\",\"EXPORT_TABULAR\",\"EXPORT_PDF\",\"CREATE_AUTOMATION\",\"USE_AI_ASSISTANT\",\"WRITE_KNOWLEDGE_DOCUMENTS\",\"READ_KNOWLEDGE_DOCUMENTS\",\"CREATE_FILTER_VIEW\",\"VIEW\"]},\"type\":\"workspace\"},\"links\":{\"self\":\"https://staging-automation.staging-ui.stg11.panther.intgdc.com/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f?include=parent&metaInclude=config%2Cpermissions\"}}",
+                "jsonBody": {
+                    "data": {
+                        "attributes": {
+                            "name": "E2E_SDK_cypress_test -- 2026-03-16T15:12:39.495Z"
+                        },
+                        "id": "c76e0537d0614abb0027f7c992656b964922506f",
+                        "meta": {
+                            "config": {
+                                "approximateCountAvailable": true,
+                                "dataSamplingAvailable": true,
+                                "showAllValuesOnDatesAvailable": true
+                            },
+                            "permissions": [
+                                "MANAGE",
+                                "ANALYZE",
+                                "EXPORT",
+                                "EXPORT_TABULAR",
+                                "EXPORT_PDF",
+                                "CREATE_AUTOMATION",
+                                "USE_AI_ASSISTANT",
+                                "WRITE_KNOWLEDGE_DOCUMENTS",
+                                "READ_KNOWLEDGE_DOCUMENTS",
+                                "CREATE_FILTER_VIEW",
+                                "VIEW"
+                            ]
+                        },
+                        "type": "workspace"
+                    },
+                    "links": {
+                        "self": "https://staging-automation.staging-ui.stg11.panther.intgdc.com/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f?include=parent&metaInclude=config%2Cpermissions"
+                    }
+                },
                 "headers": {
-                    "X-Content-Type-Options": "nosniff",
-                    "X-RateLimit-Reset": "45",
+                    "Cache-Control": "max-age=5, private",
+                    "Content-Type": "application/json",
                     "Referrer-Policy": "no-referrer",
                     "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
-                    "X-RateLimit-Remaining": "3864",
-                    "Cache-Control": "max-age=5, private",
                     "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
-                    "X-RateLimit-Limit": "4000",
-                    "X-XSS-Protection": "0",
-                    "Content-Type": "application/json"
+                    "X-Content-Type-Options": "nosniff",
+                    "X-Ratelimit-Limit": "4000",
+                    "X-Ratelimit-Remaining": "1942",
+                    "X-Ratelimit-Reset": "4",
+                    "X-XSS-Protection": "0"
                 }
-            },
-            "uuid": "6470ece5-1f91-4c11-9d23-e81701b4eab0"
+            }
         },
         {
-            "id": "6108b865-69b6-42db-ab8e-3ad1427f8992",
+            "name": "api_v1_entities_workspaces_c76e0537d0614abb0027f7c992656b964922506f_filtercontexts",
+            "request": {
+                "url": "/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f/filterContexts",
+                "method": "POST",
+                "bodyPatterns": [
+                    {
+                        "equalToJson": "{\"data\":{\"attributes\":{\"content\":{\"filters\":[{\"attributeFilter\":{\"attributeElements\":{\"uris\":[\"Adam Bradley\",\"Alejandro Vabiano\",\"Alexsandr Fyodr\",\"Antony\"]},\"displayForm\":{\"identifier\":{\"id\":\"label.f_owner.salesrep.ownername\",\"type\":\"label\"}},\"localIdentifier\":\"569694f5c5af4307ace4b75fce3b43a4\",\"negativeSelection\":false,\"selectionMode\":\"multi\"}},{\"dateFilter\":{\"dataSet\":{\"identifier\":{\"id\":\"dt_activity_timestamp\",\"type\":\"dataset\"}},\"granularity\":\"GDC.time.date\",\"localIdentifier\":\"dt_activity_timestamp_1_dateFilter\",\"type\":\"relative\"}},{\"dateFilter\":{\"dataSet\":{\"identifier\":{\"id\":\"dt_oppcreated_timestamp\",\"type\":\"dataset\"}},\"granularity\":\"GDC.time.date\",\"localIdentifier\":\"dt_oppcreated_timestamp_2_dateFilter\",\"type\":\"relative\"}}],\"version\":\"2\"},\"description\":\"\",\"title\":\"filterContext\"},\"type\":\"filterContext\"}}",
+                        "ignoreArrayOrder": false,
+                        "ignoreExtraElements": false
+                    }
+                ]
+            },
+            "response": {
+                "status": 201,
+                "jsonBody": {
+                    "data": {
+                        "attributes": {
+                            "content": {
+                                "filters": [
+                                    {
+                                        "attributeFilter": {
+                                            "attributeElements": {
+                                                "uris": [
+                                                    "Adam Bradley",
+                                                    "Alejandro Vabiano",
+                                                    "Alexsandr Fyodr",
+                                                    "Antony"
+                                                ]
+                                            },
+                                            "displayForm": {
+                                                "identifier": {
+                                                    "id": "label.f_owner.salesrep.ownername",
+                                                    "type": "label"
+                                                }
+                                            },
+                                            "localIdentifier": "569694f5c5af4307ace4b75fce3b43a4",
+                                            "negativeSelection": false,
+                                            "selectionMode": "multi"
+                                        }
+                                    },
+                                    {
+                                        "dateFilter": {
+                                            "dataSet": {
+                                                "identifier": {
+                                                    "id": "dt_activity_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "granularity": "GDC.time.date",
+                                            "localIdentifier": "dt_activity_timestamp_1_dateFilter",
+                                            "type": "relative"
+                                        }
+                                    },
+                                    {
+                                        "dateFilter": {
+                                            "dataSet": {
+                                                "identifier": {
+                                                    "id": "dt_oppcreated_timestamp",
+                                                    "type": "dataset"
+                                                }
+                                            },
+                                            "granularity": "GDC.time.date",
+                                            "localIdentifier": "dt_oppcreated_timestamp_2_dateFilter",
+                                            "type": "relative"
+                                        }
+                                    }
+                                ],
+                                "version": "2"
+                            },
+                            "description": "",
+                            "title": "filterContext"
+                        },
+                        "id": "e87ca732-5106-428e-bf4d-eb5038f7a8a1",
+                        "meta": {
+                            "origin": {
+                                "originId": "c76e0537d0614abb0027f7c992656b964922506f",
+                                "originType": "NATIVE"
+                            }
+                        },
+                        "type": "filterContext"
+                    },
+                    "links": {
+                        "self": "https://staging-automation.staging-ui.stg11.panther.intgdc.com/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f/filterContexts/e87ca732-5106-428e-bf4d-eb5038f7a8a1"
+                    }
+                },
+                "headers": {
+                    "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+                    "Content-Type": "application/json",
+                    "Expires": "0",
+                    "Pragma": "no-cache",
+                    "Referrer-Policy": "no-referrer",
+                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
+                    "Vary": ["Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"],
+                    "X-Content-Type-Options": "nosniff",
+                    "X-Ratelimit-Limit": "4000",
+                    "X-Ratelimit-Remaining": "2056",
+                    "X-Ratelimit-Reset": "8",
+                    "X-XSS-Protection": "0"
+                }
+            }
+        },
+        {
             "name": "api_v1_entities_workspaces_c76e0537d0614abb0027f7c992656b964922506f_visualizationobjects_3fb464aa-4a2c-4412-8811-609e5d6e06a5",
             "request": {
                 "url": "/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f/visualizationObjects/3fb464aa-4a2c-4412-8811-609e5d6e06a5",
@@ -151,31 +1262,133 @@
             },
             "response": {
                 "status": 200,
-                "body": "{\"data\":{\"attributes\":{\"title\":\"Scatter plot segment by attribute\",\"description\":\"\",\"content\":{\"buckets\":[{\"items\":[{\"measure\":{\"definition\":{\"measureDefinition\":{\"filters\":[],\"item\":{\"identifier\":{\"id\":\"amount_bop\",\"type\":\"metric\"}}}},\"localIdentifier\":\"e2443104dc0442dcadf04eb8a45996fe\",\"title\":\"Amount [BOP]\"}}],\"localIdentifier\":\"measures\"},{\"items\":[{\"measure\":{\"definition\":{\"measureDefinition\":{\"filters\":[],\"item\":{\"identifier\":{\"id\":\"avg._amount\",\"type\":\"metric\"}}}},\"localIdentifier\":\"218a741d464f47c1bd6e7607ba3ca1c3\",\"title\":\"Avg. Amount\"}}],\"localIdentifier\":\"secondary_measures\"},{\"items\":[{\"attribute\":{\"displayForm\":{\"identifier\":{\"id\":\"dt_closedate_timestamp.year\",\"type\":\"label\"}},\"localIdentifier\":\"073f360b71214bbcab4002517983dc1f\"}}],\"localIdentifier\":\"attribute\"},{\"items\":[{\"attribute\":{\"displayForm\":{\"identifier\":{\"id\":\"f_owner.department_id\",\"type\":\"label\"}},\"localIdentifier\":\"88027b1059024979a33227cfebad0638\"}}],\"localIdentifier\":\"segment\"}],\"filters\":[],\"properties\":{},\"sorts\":[],\"version\":\"2\",\"visualizationUrl\":\"local:scatter\"},\"createdAt\":\"2024-05-27 09:56\"},\"id\":\"3fb464aa-4a2c-4412-8811-609e5d6e06a5\",\"meta\":{\"origin\":{\"originId\":\"c76e0537d0614abb0027f7c992656b964922506f\",\"originType\":\"NATIVE\"}},\"type\":\"visualizationObject\"},\"links\":{\"self\":\"https://staging-automation.staging-ui.stg11.panther.intgdc.com/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f/visualizationObjects/3fb464aa-4a2c-4412-8811-609e5d6e06a5\"}}",
+                "jsonBody": {
+                    "data": {
+                        "attributes": {
+                            "content": {
+                                "buckets": [
+                                    {
+                                        "items": [
+                                            {
+                                                "measure": {
+                                                    "definition": {
+                                                        "measureDefinition": {
+                                                            "filters": [],
+                                                            "item": {
+                                                                "identifier": {
+                                                                    "id": "amount_bop",
+                                                                    "type": "metric"
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    "localIdentifier": "e2443104dc0442dcadf04eb8a45996fe",
+                                                    "title": "Amount [BOP]"
+                                                }
+                                            }
+                                        ],
+                                        "localIdentifier": "measures"
+                                    },
+                                    {
+                                        "items": [
+                                            {
+                                                "measure": {
+                                                    "definition": {
+                                                        "measureDefinition": {
+                                                            "filters": [],
+                                                            "item": {
+                                                                "identifier": {
+                                                                    "id": "avg._amount",
+                                                                    "type": "metric"
+                                                                }
+                                                            }
+                                                        }
+                                                    },
+                                                    "localIdentifier": "218a741d464f47c1bd6e7607ba3ca1c3",
+                                                    "title": "Avg. Amount"
+                                                }
+                                            }
+                                        ],
+                                        "localIdentifier": "secondary_measures"
+                                    },
+                                    {
+                                        "items": [
+                                            {
+                                                "attribute": {
+                                                    "displayForm": {
+                                                        "identifier": {
+                                                            "id": "dt_closedate_timestamp.year",
+                                                            "type": "label"
+                                                        }
+                                                    },
+                                                    "localIdentifier": "073f360b71214bbcab4002517983dc1f"
+                                                }
+                                            }
+                                        ],
+                                        "localIdentifier": "attribute"
+                                    },
+                                    {
+                                        "items": [
+                                            {
+                                                "attribute": {
+                                                    "displayForm": {
+                                                        "identifier": {
+                                                            "id": "f_owner.department_id",
+                                                            "type": "label"
+                                                        }
+                                                    },
+                                                    "localIdentifier": "88027b1059024979a33227cfebad0638"
+                                                }
+                                            }
+                                        ],
+                                        "localIdentifier": "segment"
+                                    }
+                                ],
+                                "filters": [],
+                                "properties": {},
+                                "sorts": [],
+                                "version": "2",
+                                "visualizationUrl": "local:scatter"
+                            },
+                            "createdAt": "2024-05-27 09:56",
+                            "description": "",
+                            "title": "Scatter plot segment by attribute"
+                        },
+                        "id": "3fb464aa-4a2c-4412-8811-609e5d6e06a5",
+                        "meta": {
+                            "origin": {
+                                "originId": "c76e0537d0614abb0027f7c992656b964922506f",
+                                "originType": "NATIVE"
+                            }
+                        },
+                        "type": "visualizationObject"
+                    },
+                    "links": {
+                        "self": "https://staging-automation.staging-ui.stg11.panther.intgdc.com/api/v1/entities/workspaces/c76e0537d0614abb0027f7c992656b964922506f/visualizationObjects/3fb464aa-4a2c-4412-8811-609e5d6e06a5"
+                    }
+                },
                 "headers": {
-                    "X-Content-Type-Options": "nosniff",
-                    "X-RateLimit-Reset": "45",
+                    "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
+                    "Content-Type": "application/json",
+                    "Expires": "0",
                     "Pragma": "no-cache",
                     "Referrer-Policy": "no-referrer",
                     "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
-                    "X-RateLimit-Remaining": "3864",
-                    "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
                     "Vary": [
                         "Accept-Encoding",
                         "Origin",
                         "Access-Control-Request-Method",
                         "Access-Control-Request-Headers"
                     ],
-                    "Expires": "0",
-                    "X-RateLimit-Limit": "4000",
-                    "X-XSS-Protection": "0",
-                    "Content-Type": "application/json"
+                    "X-Content-Type-Options": "nosniff",
+                    "X-Ratelimit-Limit": "4000",
+                    "X-Ratelimit-Remaining": "1943",
+                    "X-Ratelimit-Reset": "4",
+                    "X-XSS-Protection": "0"
                 }
-            },
-            "uuid": "6108b865-69b6-42db-ab8e-3ad1427f8992"
+            }
         },
         {
-            "id": "fb50ffe4-0545-4430-9dd2-8ad328ce0bf2",
             "name": "api_v1_profile",
             "request": {
                 "url": "/api/v1/profile",
@@ -183,97 +1396,107 @@
             },
             "response": {
                 "status": 200,
-                "body": "{\"organizationId\":\"staging-automation-ui\",\"organizationName\":\"Staging Automation UI\",\"userId\":\"admin\",\"permissions\":[\"MANAGE\",\"SELF_CREATE_TOKEN\",\"BASE_UI_ACCESS\"],\"telemetryConfig\":{\"context\":{\"deploymentId\":\"deploymentId\",\"organizationHash\":\"ae9c5834d7f32ed2a3d5bc5126f3020a649057ec\",\"userHash\":\"9774a4bc8775287d90fafa811af0a6d0a26f6f1f\"},\"services\":{\"openTelemetry\":{\"host\":\"https://collector.stg11.intgdc.com\"}}},\"links\":{\"self\":\"https://staging-automation.staging-ui.stg11.panther.intgdc.com/api/v1/profile\",\"organization\":\"https://staging-automation.staging-ui.stg11.panther.intgdc.com/api/v1/entities/admin/organizations/staging-automation-ui\",\"user\":\"https://staging-automation.staging-ui.stg11.panther.intgdc.com/api/v1/entities/users/admin\"},\"features\":{\"live\":{\"configuration\":{\"host\":\"https://staging-automation.staging-ui.stg11.panther.intgdc.com\",\"key\":\"default/50e8946c-ef93-4748-bfb1-f0522214cc69/uUu2Xu6caqiAhVHcvaPoVifhQPQFxYKaSe0l5Abl\"},\"context\":{\"earlyAccessValues\":[],\"earlyAccess\":\"\"}}},\"entitlements\":[{\"name\":\"Tier\",\"value\":\"Professional\"},{\"name\":\"Contract\",\"expiry\":\"2028-04-26\"},{\"name\":\"UnlimitedWorkspaces\"},{\"name\":\"UnlimitedUsers\"},{\"name\":\"UnlimitedAutomations\"},{\"name\":\"AutomationRecipientCount\",\"value\":\"10\"},{\"name\":\"UnlimitedDailyScheduledActions\"},{\"name\":\"UnlimitedDailyAlertActions\"},{\"name\":\"ScheduledActionMinimumRecurrenceMinutes\",\"value\":\"60\"},{\"name\":\"UserTelemetryDisabled\"},{\"name\":\"CustomTheming\"},{\"name\":\"UiLocalization\"},{\"name\":\"WhiteLabeling\"},{\"name\":\"PdfExports\"}]}",
+                "jsonBody": {
+                    "entitlements": [
+                        {
+                            "name": "AutomationRecipientCount",
+                            "value": "10"
+                        },
+                        {
+                            "expiry": "2028-04-26",
+                            "name": "Contract"
+                        },
+                        {
+                            "name": "ScheduledActionMinimumRecurrenceMinutes",
+                            "value": "60"
+                        },
+                        {
+                            "name": "Tier",
+                            "value": "Professional"
+                        },
+                        {
+                            "name": "UnlimitedAutomations"
+                        },
+                        {
+                            "name": "UnlimitedDailyAlertActions"
+                        },
+                        {
+                            "name": "UnlimitedDailyScheduledActions"
+                        },
+                        {
+                            "name": "UnlimitedUsers"
+                        },
+                        {
+                            "name": "UnlimitedWorkspaces"
+                        },
+                        {
+                            "name": "UserTelemetryDisabled"
+                        },
+                        {
+                            "name": "CustomTheming"
+                        },
+                        {
+                            "name": "UiLocalization"
+                        },
+                        {
+                            "name": "WhiteLabeling"
+                        },
+                        {
+                            "name": "PdfExports"
+                        }
+                    ],
+                    "features": {
+                        "live": {
+                            "configuration": {
+                                "host": "https://staging-automation.staging-ui.stg11.panther.intgdc.com",
+                                "key": "default/50e8946c-ef93-4748-bfb1-f0522214cc69/uUu2Xu6caqiAhVHcvaPoVifhQPQFxYKaSe0l5Abl"
+                            },
+                            "context": {
+                                "earlyAccess": "",
+                                "earlyAccessValues": []
+                            }
+                        }
+                    },
+                    "links": {
+                        "organization": "https://staging-automation.staging-ui.stg11.panther.intgdc.com/api/v1/entities/admin/organizations/staging-automation-ui",
+                        "self": "https://staging-automation.staging-ui.stg11.panther.intgdc.com/api/v1/profile",
+                        "user": "https://staging-automation.staging-ui.stg11.panther.intgdc.com/api/v1/entities/users/admin"
+                    },
+                    "organizationId": "staging-automation-ui",
+                    "organizationName": "Staging Automation UI",
+                    "permissions": ["MANAGE", "SELF_CREATE_TOKEN", "BASE_UI_ACCESS"],
+                    "telemetryConfig": {
+                        "context": {
+                            "deploymentId": "deploymentId",
+                            "organizationHash": "ae9c5834d7f32ed2a3d5bc5126f3020a649057ec",
+                            "userHash": "9774a4bc8775287d90fafa811af0a6d0a26f6f1f"
+                        },
+                        "services": {
+                            "openTelemetry": {
+                                "host": "https://collector.stg11.intgdc.com"
+                            }
+                        }
+                    },
+                    "userId": "admin"
+                },
                 "headers": {
-                    "X-Content-Type-Options": "nosniff",
-                    "X-RateLimit-Reset": "45",
-                    "Referrer-Policy": "no-referrer",
-                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
-                    "X-RateLimit-Remaining": "3989",
                     "Cache-Control": "max-age=10, private",
-                    "Vary": [
-                        "Accept-Encoding",
-                        "Origin",
-                        "Access-Control-Request-Method",
-                        "Access-Control-Request-Headers"
-                    ],
-                    "X-RateLimit-Limit": "4000",
-                    "X-XSS-Protection": "0",
-                    "Content-Type": "application/json"
-                }
-            },
-            "uuid": "fb50ffe4-0545-4430-9dd2-8ad328ce0bf2"
-        },
-        {
-            "id": "31159c8f-17e5-4892-87ac-1d1904da4e93",
-            "name": "api_v1_actions_workspaces_c76e0537d0614abb0027f7c992656b964922506f_execution_afm_execute_result_bc029fd84b27ab5f7f4e777b3f256240766322160044141aaad6544c25953d64e4f1103c04c9d4ed0a45102b16585a9abc71b1fe",
-            "request": {
-                "url": "/api/v1/actions/workspaces/c76e0537d0614abb0027f7c992656b964922506f/execution/afm/execute/result/bc029fd84b27ab5f7f4e777b3f25624076632216%3A0044141aaad6544c25953d64e4f1103c04c9d4ed0a45102b16585a9abc71b1fe",
-                "method": "GET"
-            },
-            "response": {
-                "status": 200,
-                "body": "{\"data\":[[2423890.44,14619.896561743342],[1219510.1,23453.791789473686],[200000.0,21204.94606571188],[null,61080.7092],[null,null],[null,null],[1229796.71,15851.630392609699],[61200.4,15108.65382647386],[null,23164.952256],[null,84288.606],[null,8875.86],[null,3644.0]],\"dimensionHeaders\":[{\"headerGroups\":[{\"headers\":[{\"attributeHeader\":{\"labelValue\":\"Direct Sales\",\"primaryLabelValue\":\"Direct Sales\"}},{\"attributeHeader\":{\"labelValue\":\"Direct Sales\",\"primaryLabelValue\":\"Direct Sales\"}},{\"attributeHeader\":{\"labelValue\":\"Direct Sales\",\"primaryLabelValue\":\"Direct Sales\"}},{\"attributeHeader\":{\"labelValue\":\"Direct Sales\",\"primaryLabelValue\":\"Direct Sales\"}},{\"attributeHeader\":{\"labelValue\":\"Direct Sales\",\"primaryLabelValue\":\"Direct Sales\"}},{\"attributeHeader\":{\"labelValue\":\"Direct Sales\",\"primaryLabelValue\":\"Direct Sales\"}},{\"attributeHeader\":{\"labelValue\":\"Inside Sales\",\"primaryLabelValue\":\"Inside Sales\"}},{\"attributeHeader\":{\"labelValue\":\"Inside Sales\",\"primaryLabelValue\":\"Inside Sales\"}},{\"attributeHeader\":{\"labelValue\":\"Inside Sales\",\"primaryLabelValue\":\"Inside Sales\"}},{\"attributeHeader\":{\"labelValue\":\"Inside Sales\",\"primaryLabelValue\":\"Inside Sales\"}},{\"attributeHeader\":{\"labelValue\":\"Inside Sales\",\"primaryLabelValue\":\"Inside Sales\"}},{\"attributeHeader\":{\"labelValue\":\"Inside Sales\",\"primaryLabelValue\":\"Inside Sales\"}}]},{\"headers\":[{\"attributeHeader\":{\"labelValue\":\"2010\",\"primaryLabelValue\":\"2010\"}},{\"attributeHeader\":{\"labelValue\":\"2011\",\"primaryLabelValue\":\"2011\"}},{\"attributeHeader\":{\"labelValue\":\"2012\",\"primaryLabelValue\":\"2012\"}},{\"attributeHeader\":{\"labelValue\":\"2013\",\"primaryLabelValue\":\"2013\"}},{\"attributeHeader\":{\"labelValue\":\"2014\",\"primaryLabelValue\":\"2014\"}},{\"attributeHeader\":{\"labelValue\":\"2016\",\"primaryLabelValue\":\"2016\"}},{\"attributeHeader\":{\"labelValue\":\"2010\",\"primaryLabelValue\":\"2010\"}},{\"attributeHeader\":{\"labelValue\":\"2011\",\"primaryLabelValue\":\"2011\"}},{\"attributeHeader\":{\"labelValue\":\"2012\",\"primaryLabelValue\":\"2012\"}},{\"attributeHeader\":{\"labelValue\":\"2013\",\"primaryLabelValue\":\"2013\"}},{\"attributeHeader\":{\"labelValue\":\"2014\",\"primaryLabelValue\":\"2014\"}},{\"attributeHeader\":{\"labelValue\":\"2017\",\"primaryLabelValue\":\"2017\"}}]}]},{\"headerGroups\":[{\"headers\":[{\"measureHeader\":{\"measureIndex\":0}},{\"measureHeader\":{\"measureIndex\":1}}]}]}],\"grandTotals\":[],\"paging\":{\"count\":[12,2],\"offset\":[0,0],\"total\":[12,2]},\"metadata\":{\"dataSourceMessages\":[]}}",
-                "headers": {
-                    "X-Content-Type-Options": "nosniff",
-                    "X-RateLimit-Reset": "46",
-                    "Pragma": "no-cache",
+                    "Content-Type": "application/json",
                     "Referrer-Policy": "no-referrer",
                     "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
-                    "X-RateLimit-Remaining": "3953",
-                    "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
                     "Vary": [
                         "Accept-Encoding",
                         "Origin",
                         "Access-Control-Request-Method",
                         "Access-Control-Request-Headers"
                     ],
-                    "Expires": "0",
-                    "X-RateLimit-Limit": "4000",
-                    "X-XSS-Protection": "0",
-                    "Content-Type": "application/json"
-                }
-            },
-            "uuid": "31159c8f-17e5-4892-87ac-1d1904da4e93"
-        },
-        {
-            "id": "ae58bf65-7920-43d1-8cd0-54e870694b58",
-            "name": "api_v1_actions_workspaces_c76e0537d0614abb0027f7c992656b964922506f_execution_afm_execute",
-            "request": {
-                "url": "/api/v1/actions/workspaces/c76e0537d0614abb0027f7c992656b964922506f/execution/afm/execute",
-                "method": "POST",
-                "bodyPatterns": [
-                    {
-                        "equalToJson": "{\"resultSpec\":{\"dimensions\":[{\"localIdentifier\":\"dim_0\",\"itemIdentifiers\":[\"a_f_owner.department_id\",\"a_dt_closedate_timestamp.year\"]},{\"localIdentifier\":\"dim_1\",\"itemIdentifiers\":[\"measureGroup\"]}],\"totals\":[]},\"execution\":{\"measures\":[{\"localIdentifier\":\"m_amount_bop\",\"definition\":{\"measure\":{\"item\":{\"identifier\":{\"id\":\"amount_bop\",\"type\":\"metric\"}}}}},{\"localIdentifier\":\"m_avg._amount\",\"definition\":{\"measure\":{\"item\":{\"identifier\":{\"id\":\"avg._amount\",\"type\":\"metric\"}}}}}],\"attributes\":[{\"label\":{\"identifier\":{\"id\":\"f_owner.department_id\",\"type\":\"label\"}},\"localIdentifier\":\"a_f_owner.department_id\"},{\"label\":{\"identifier\":{\"id\":\"dt_closedate_timestamp.year\",\"type\":\"label\"}},\"localIdentifier\":\"a_dt_closedate_timestamp.year\"}],\"filters\":[],\"auxMeasures\":[]},\"settings\":{}}",
-                        "ignoreArrayOrder": false,
-                        "ignoreExtraElements": false
-                    }
-                ]
-            },
-            "response": {
-                "status": 200,
-                "body": "{\"executionResponse\":{\"dimensions\":[{\"headers\":[{\"attributeHeader\":{\"localIdentifier\":\"a_f_owner.department_id\",\"label\":{\"id\":\"f_owner.department_id\",\"type\":\"label\"},\"labelName\":\"Department\",\"attribute\":{\"id\":\"f_owner.department_id\",\"type\":\"attribute\"},\"attributeName\":\"Department\",\"granularity\":null,\"primaryLabel\":{\"id\":\"f_owner.department_id\",\"type\":\"label\"},\"valueType\":\"TEXT\"}},{\"attributeHeader\":{\"localIdentifier\":\"a_dt_closedate_timestamp.year\",\"label\":{\"id\":\"dt_closedate_timestamp.year\",\"type\":\"label\"},\"labelName\":\"Closed - Year\",\"attribute\":{\"id\":\"dt_closedate_timestamp.year\",\"type\":\"attribute\"},\"attributeName\":\"Closed - Year\",\"granularity\":\"YEAR\",\"primaryLabel\":{\"id\":\"dt_closedate_timestamp.year\",\"type\":\"label\"},\"format\":{\"locale\":\"en-US\",\"pattern\":\"y\",\"timezone\":\"America/Juneau\"},\"valueType\":\"TEXT\"}}],\"localIdentifier\":\"dim_0\"},{\"headers\":[{\"measureGroupHeaders\":[{\"localIdentifier\":\"m_amount_bop\",\"format\":\"$#,##0.00\",\"name\":\"Amount [BOP]\"},{\"localIdentifier\":\"m_avg._amount\",\"format\":\"$#,##0.00\",\"name\":\"Avg. Amount\"}]}],\"localIdentifier\":\"dim_1\"}],\"links\":{\"executionResult\":\"bc029fd84b27ab5f7f4e777b3f25624076632216:0044141aaad6544c25953d64e4f1103c04c9d4ed0a45102b16585a9abc71b1fe\"}}}",
-                "headers": {
                     "X-Content-Type-Options": "nosniff",
-                    "X-RateLimit-Reset": "46",
-                    "Pragma": "no-cache",
-                    "Referrer-Policy": "no-referrer",
-                    "Strict-Transport-Security": "max-age=63072000; includeSubDomains",
-                    "X-RateLimit-Remaining": "3954",
-                    "Cache-Control": "no-cache, no-store, max-age=0, must-revalidate",
-                    "Vary": [
-                        "Accept-Encoding",
-                        "Origin",
-                        "Access-Control-Request-Method",
-                        "Access-Control-Request-Headers"
-                    ],
-                    "Expires": "0",
-                    "X-RateLimit-Limit": "4000",
-                    "X-XSS-Protection": "0",
-                    "Content-Type": "application/json"
+                    "X-Ratelimit-Limit": "6500",
+                    "X-Ratelimit-Remaining": "3586",
+                    "X-Ratelimit-Reset": "4",
+                    "X-XSS-Protection": "0"
                 }
-            },
-            "uuid": "ae58bf65-7920-43d1-8cd0-54e870694b58"
+            }
         }
     ]
 }

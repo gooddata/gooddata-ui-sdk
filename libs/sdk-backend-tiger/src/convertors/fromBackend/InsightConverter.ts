@@ -2,8 +2,8 @@
 
 import {
     type JsonApiAnalyticalDashboardOutIncludes,
+    type JsonApiMetricOutIncludes,
     type JsonApiVisualizationObjectOut,
-    type JsonApiVisualizationObjectOutIncludes,
     type JsonApiVisualizationObjectOutList,
     type JsonApiVisualizationObjectOutWithLinks,
     type VisualizationObjectModelV1,
@@ -49,7 +49,7 @@ export const insightFromInsightDefinition = (
 
 export const visualizationObjectsItemToInsight = (
     visualizationObject: JsonApiVisualizationObjectOut | JsonApiVisualizationObjectOutWithLinks,
-    included: (JsonApiAnalyticalDashboardOutIncludes | JsonApiVisualizationObjectOutIncludes)[] = [],
+    included: (JsonApiAnalyticalDashboardOutIncludes | JsonApiMetricOutIncludes)[] = [],
 ): IInsight => {
     const { id, attributes, relationships = {} } = visualizationObject;
     const { createdBy, modifiedBy, certifiedBy } = relationships;

@@ -1,25 +1,14 @@
 {
-    "_note": "This file is only for IDE. For build use tsconfig.[dev/build].json (dev mode is less strict)",
+    "include": ["**/*.ts"],
     "compilerOptions": {
-        "target": "es2017",
-        "jsx": "react-jsx",
-        "lib": ["es2017", "dom"],
+        "target": "ESNext",
         "module": "ESNext",
-        "moduleResolution": "node",
-        "esModuleInterop": true,
-        "importHelpers": true,
-        "incremental": false,
+        "moduleResolution": "bundler",
         "strict": true,
-        "noImplicitAny": true,
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
-        "outDir": "dist",
-        "sourceMap": false,
-        "types": ["cypress-real-events", "node", "@cypress/grep"],
-        "paths": {
-            "gooddata/util": ["../util/src"]
-        }
-    },
-    "compileOnSave": false,
-    "exclude": ["**/node_modules", "dist", "esm"]
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "resolveJsonModule": true,
+        "noEmit": true,
+        "noImplicitAny": false
+    }
 }

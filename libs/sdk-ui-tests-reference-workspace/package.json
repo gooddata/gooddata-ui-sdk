@@ -1,0 +1,88 @@
+{
+    "name": "@gooddata/sdk-ui-tests-reference-workspace",
+    "version": "1.0.0",
+    "private": true,
+    "description": "GoodData SDK reference workspace",
+    "license": "LicenseRef-LICENSE",
+    "author": "GoodData Corporation",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
+        "directory": "libs/sdk-ui-tests-reference-workspace"
+    },
+    "files": [
+        "esm/**/*.js",
+        "esm/**/*.json",
+        "esm/**/*.d.ts",
+        "esm/**/*.map"
+    ],
+    "type": "module",
+    "exports": {
+        ".": {
+            "types": "./esm/goodsales/current_reference_workspace_objects_tiger.d.ts",
+            "import": "./esm/goodsales/current_reference_workspace_objects_tiger.js",
+            "require": "./esm/goodsales/current_reference_workspace_objects_tiger.js"
+        },
+        "./current_tiger": {
+            "types": "./esm/goodsales/current_reference_workspace_objects_tiger.d.ts",
+            "import": "./esm/goodsales/current_reference_workspace_objects_tiger.js",
+            "require": "./esm/goodsales/current_reference_workspace_objects_tiger.js"
+        },
+        "./current_bear": {
+            "types": "./esm/goodsales/current_reference_workspace_objects_bear.d.ts",
+            "import": "./esm/goodsales/current_reference_workspace_objects_bear.js",
+            "require": "./esm/goodsales/current_reference_workspace_objects_bear.js"
+        },
+        "./current_child_tiger": {
+            "types": "./esm/goodsales/current_child_reference_workspace_objects_tiger.d.ts",
+            "import": "./esm/goodsales/current_child_reference_workspace_objects_tiger.js",
+            "require": "./esm/goodsales/current_child_reference_workspace_objects_tiger.js"
+        },
+        "./recordings_workspace": {
+            "import": "./recordings_workspace.json",
+            "require": "./recordings_workspace.json"
+        }
+    },
+    "scripts": {
+        "_phase:build": "npm run build",
+        "_phase:validate": "npm run validate",
+        "build": "npm-run-all -p build-check build-ts",
+        "build-check": "tsgo",
+        "build-ts": "tsgo -p tsconfig.build.json",
+        "clean": "../../common/scripts/clean-command-state.sh && rm -rf ci esm coverage *.log",
+        "create-ref-workspace": "node ./create_ref_workspace.js && npm run format-write",
+        "delete-ref-workspace": "node ./delete_ref_workspace.js",
+        "export-fixture": "node ./export_workspace_fixture.js",
+        "prepare-recording-workspace-id": "node ./prepareRecordingWorkspaceId.js",
+        "format-check": "oxfmt --check .",
+        "format-write": "oxfmt .",
+        "update-ref-workspace": "npm run delete-ref-workspace && npm run create-ref-workspace",
+        "validate": "npm run lint && npm run format-check",
+        "lint": "oxlint . --type-aware --quiet && eslint .",
+        "lint-fix": "oxlint . --type-aware --quiet --fix && eslint . --fix"
+    },
+    "devDependencies": {
+        "@gooddata/catalog-export": "workspace:*",
+        "@gooddata/eslint-config": "workspace:*",
+        "@gooddata/fixtures": "3.3.12",
+        "@gooddata/oxlint-config": "workspace:*",
+        "@gooddata/sdk-model": "workspace:*",
+        "@typescript-eslint/eslint-plugin": "8.52.0",
+        "@typescript-eslint/parser": "8.52.0",
+        "@typescript/native-preview": "7.0.0-dev.20260202.1",
+        "dotenv": "16.4.5",
+        "eslint": "^9.39.2",
+        "eslint-import-resolver-typescript": "4.4.4",
+        "eslint-plugin-headers": "1.3.3",
+        "eslint-plugin-import-x": "4.16.1",
+        "eslint-plugin-jsdoc": "62.1.0",
+        "eslint-plugin-no-barrel-files": "1.2.2",
+        "eslint-plugin-sonarjs": "3.0.6",
+        "npm-run-all": "^4.1.5",
+        "oxfmt": "0.27.0",
+        "oxlint": "^1.43.0",
+        "oxlint-tsgolint": "0.11.4",
+        "typescript": "5.9.3"
+    },
+    "dependenciesInfo": "This is package is SDK tool and is not distributed all dependencies must be defined as devDependencies due to FOSSA automated report generation"
+}

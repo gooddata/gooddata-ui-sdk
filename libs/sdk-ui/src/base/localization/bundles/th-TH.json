@@ -50,6 +50,7 @@
     "geochart.map.canvas.instructions.zoomOnly": "แคนวาสแผนที่ ใช้บวกและลบเพื่อซูม กด Tab เพื่อย้ายไปยังตัวควบคุมถัดไป",
     "geochart.map.canvas.static": "แผนที่เป็นแบบคงที่ การนำทางด้วยแป้นพิมพ์ถูกปิดใช้งาน",
     "geochart.legend.colorScale.label": "สเกลสีจาก {min} ถึง {max}",
+    "geochart.legend.colorScale.title.allSegments": "{metric} (ทุกเซกเมนต์)",
     "geochart.legend.layer.hidden": "ซ่อนเลเยอร์แผนที่ {name}",
     "geochart.legend.layer.shown": "แสดงเลเยอร์แผนที่ {name}",
     "geochart.legend.item.hidden": "ซ่อน {name}",

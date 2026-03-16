@@ -2,6 +2,7 @@
 
 import { type IAnalyticalBackend, type IUserSettings } from "@gooddata/sdk-backend-spi";
 import {
+    type ApplicationScope,
     type IEntitlementDescriptor,
     type ILocale,
     type ITheme,
@@ -93,8 +94,8 @@ export interface IPlatformContextV1 {
     pantherTier?: PantherTier;
     theme?: ITheme;
 
-    currentPath?: string;
     currentWorkspaceId?: string;
+    currentApplicationScope?: ApplicationScope;
 
     embeddingMode: EmbeddingMode;
 }

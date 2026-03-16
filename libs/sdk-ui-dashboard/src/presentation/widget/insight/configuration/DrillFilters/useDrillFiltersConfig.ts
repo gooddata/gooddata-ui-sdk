@@ -43,7 +43,6 @@ import {
     type IDrillDownAttributeHierarchyDefinition,
     type IDrillToDashboardConfig,
     type IDrillToInsightConfig,
-    isDrillToDashboardConfig,
     isDrillToInsightConfig,
 } from "../../../../drill/types.js";
 
@@ -63,7 +62,7 @@ export function useDrillFiltersConfig({ item, onUpdateDrillItem }: IUseDrillFilt
         item.drillTargetType === DRILL_TARGET_TYPE.DRILL_TO_DASHBOARD;
     const isDrillDown = item.drillTargetType === DRILL_TARGET_TYPE.DRILL_DOWN;
     const extendedDrillFiltersItem =
-        isDrillToInsightConfig(item) || isDrillToDashboardConfig(item)
+        isDrillToInsightConfig(item) || item.drillTargetType === DRILL_TARGET_TYPE.DRILL_TO_DASHBOARD
             ? (item as IDrillToInsightConfig | IDrillToDashboardConfig)
             : undefined;
     const insight = useDashboardSelector(selectInsightByWidgetRef(item.widgetRef));

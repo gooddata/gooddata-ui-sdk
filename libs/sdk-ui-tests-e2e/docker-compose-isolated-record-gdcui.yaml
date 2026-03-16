@@ -1,0 +1,44 @@
+version: "3.7"
+services:
+    isolated-tests:
+        image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/mcr.microsoft.com/playwright:v1.58.2-noble
+        entrypoint: >
+            bash -c "
+              if [ -n \"$$FILTER\" ]; then
+                npx playwright test --config ./playwright/playwright.config.ts --grep '@pre-merge-isolated' $$(echo \"$$FILTER\" | tr ',' ' ') --update-snapshots;
+              else
+                npx playwright test --config ./playwright/playwright.config.ts --grep '@pre-merge-isolated' --update-snapshots;
+              fi
+            "
+        volumes:
+            - ../../../:/gooddata-ui-sdk-e2e:rw
+        working_dir: /gooddata-ui-sdk-e2e/sdk/libs/sdk-ui-tests-e2e
+        user: "root"
+        depends_on:
+            - gooddata-ui-sdk-scenarios
+            - backend-mock
+        environment:
+            - BASE_URL=http://gooddata-ui-sdk-scenarios:9500
+            - GOODMOCK_HOST=backend-mock:8080
+            - GDC_UI
+            - HOST
+            - NO_COLOR
+            - TIGER_API_TOKEN
+            - RECORD_MODE=true
+            - TEST_WORKSPACE_ID
+            - FILTER
+
+    gooddata-ui-sdk-scenarios:
+        image: $IMAGE_ID
+        volumes:
+            - ./nginx/proxy-isolated-tests.conf:/etc/nginx/extra-conf.d/proxy-isolated-tests.conf
+        depends_on:
+            - backend-mock
+
+    backend-mock:
+        image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/docker.io/gooddata/gooddata-goodmock:0.6.0
+        command: record
+        # Use environment variable "VERBOSE=true" for verbose logging
+        environment:
+            - REFERER_PATH=/dashboards/
+            - PROXY_HOST=${HOST}

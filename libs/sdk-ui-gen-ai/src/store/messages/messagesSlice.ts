@@ -41,11 +41,12 @@ type MessagesSliceState = {
     /**
      * If the interface is busy, this specifies the details of the async operation.
      * Where:
-     * - loading: the thread history is being loaded
+     * - loading: the thread history is being loaded from the backend (no messages to show yet)
+     * - restoring: cached messages have been restored while the backend fetch is still in-flight
      * - clearing: the thread is being cleared
      * - evaluating: the new user message is being evaluated by assistant
      */
-    asyncProcess?: "loading" | "clearing" | "evaluating";
+    asyncProcess?: "loading" | "restoring" | "clearing" | "evaluating";
     /**
      * An ID of the conversation thread.
      * Not the same as threadIdSuffix in some of the REST APIs,
@@ -139,6 +140,29 @@ const messagesSlice = createSlice({
             setNormalizedMessages(state, messages);
             state.threadId = threadId;
             delete state.asyncProcess;
+        },
+        /**
+         * Restore previously cached messages immediately while the backend is still loading.
+         * Unlike loadThreadSuccessAction, this does not mark the thread as fully loaded,
+         * so the backend fetch continues and will replace these messages when complete.
+         * Sets asyncProcess to "restoring" so that:
+         * - The skeleton spinner is hidden and cached messages are rendered (Messages checks for "loading"/"clearing" only).
+         * - The input remains disabled (Input checks !!asyncProcess, and "restoring" is truthy).
+         */
+        restoreCachedMessagesAction: (
+            state,
+            { payload: { messages } }: PayloadAction<{ messages: Message[] }>,
+        ) => {
+            const normalized = messages.reduce(
+                (acc, message) => {
+                    acc[message.localId] = message;
+                    return acc;
+                },
+                {} as MessagesSliceState["messages"],
+            );
+            state.messages = normalized;
+            state.messageOrder = messages.map((message) => message.localId);
+            state.asyncProcess = "restoring";
         },
         clearThreadAction: (state) => {
             state.asyncProcess = "clearing";
@@ -407,6 +431,7 @@ export const {
     loadThreadAction,
     loadThreadErrorAction,
     loadThreadSuccessAction,
+    restoreCachedMessagesAction,
     clearThreadErrorAction,
     clearThreadSuccessAction,
     evaluateMessageAction,

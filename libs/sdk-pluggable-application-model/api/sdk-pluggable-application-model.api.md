@@ -4,6 +4,7 @@
 
 ```ts
 
+import { ApplicationScope } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IEntitlementDescriptor } from '@gooddata/sdk-model';
 import { ILocale } from '@gooddata/sdk-model';
@@ -57,7 +58,7 @@ export interface IPlatformContextV1 {
     // (undocumented)
     backend: IAnalyticalBackend;
     // (undocumented)
-    currentPath?: string;
+    currentApplicationScope?: ApplicationScope;
     // (undocumented)
     currentWorkspaceId?: string;
     // (undocumented)

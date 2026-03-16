@@ -50,6 +50,7 @@
     "geochart.map.canvas.instructions.zoomOnly": "Harita tuvali. Yakınlaştırmak için artı ve eksi tuşlarını kullanın. Bir sonraki denetime geçmek için Tab tuşuna basın.",
     "geochart.map.canvas.static": "Harita statik. Klavye ile gezinme devre dışı.",
     "geochart.legend.colorScale.label": "{min} ile {max} arasında renk ölçeği",
+    "geochart.legend.colorScale.title.allSegments": "{metric} (tüm segmentler)",
     "geochart.legend.layer.hidden": "Harita katmanı {name} gizlendi",
     "geochart.legend.layer.shown": "Harita katmanı {name} gösterildi",
     "geochart.legend.item.hidden": "{name} gizlendi",

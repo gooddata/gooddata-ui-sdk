@@ -50,6 +50,7 @@
     "geochart.map.canvas.instructions.zoomOnly": "Karten-Canvas. Verwenden Sie Plus und Minus zum Zoomen. Drücken Sie die Tabulatortaste, um zum nächsten Steuerelement zu wechseln.",
     "geochart.map.canvas.static": "Karte ist statisch. Tastaturnavigation ist deaktiviert.",
     "geochart.legend.colorScale.label": "Farbschema von {min} bis {max}",
+    "geochart.legend.colorScale.title.allSegments": "{metric} (alle Segmente)",
     "geochart.legend.layer.hidden": "Kartenebene {name} ausgeblendet",
     "geochart.legend.layer.shown": "Kartenebene {name} eingeblendet",
     "geochart.legend.item.hidden": "{name} ausgeblendet",

@@ -1,0 +1,12 @@
+{
+    "$schema": "./node_modules/oxlint/configuration_schema.json",
+    "extends": ["node_modules/@gooddata/oxlint-config/dist/esm-cypress.json"],
+    "overrides": [
+        {
+            "files": ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts"],
+            "rules": {
+                "@typescript-eslint/no-explicit-any": "warn"
+            }
+        }
+    ]
+}

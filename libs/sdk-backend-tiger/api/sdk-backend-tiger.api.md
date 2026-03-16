@@ -36,12 +36,12 @@ import { ImportCsvResponse } from '@gooddata/api-client-tiger';
 import { Invitation } from '@gooddata/api-client-tiger';
 import { ITigerClient } from '@gooddata/api-client-tiger';
 import { IUser } from '@gooddata/sdk-model';
+import { JsonApiAnalyticalDashboardOutMetaOriginOriginTypeEnum } from '@gooddata/api-client-tiger';
 import { JsonApiDatasetOutList } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInAttributesCacheStrategyEnum } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInAttributesTypeEnum } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceInDocument } from '@gooddata/api-client-tiger';
 import { JsonApiDataSourceOutAttributesAuthenticationTypeEnum } from '@gooddata/api-client-tiger';
-import { JsonApiFactOutMetaOriginOriginTypeEnum } from '@gooddata/api-client-tiger';
 import { JsonApiNotificationChannelOut } from '@gooddata/api-client-tiger';
 import { JsonApiOrganizationOutMetaPermissionsEnum } from '@gooddata/api-client-tiger';
 import { JsonApiWorkspaceDataFilterInDocument } from '@gooddata/api-client-tiger';
@@ -343,7 +343,7 @@ export interface IOriginInfoWithId {
     // (undocumented)
     originId: string;
     // (undocumented)
-    originType: JsonApiFactOutMetaOriginOriginTypeEnum;
+    originType: JsonApiAnalyticalDashboardOutMetaOriginOriginTypeEnum;
 }
 
 // @public

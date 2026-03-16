@@ -18,7 +18,11 @@ import { useDashboardSelector } from "../../../../../model/react/DashboardStoreP
 import { selectDashboardRef } from "../../../../../model/store/meta/metaSelectors.js";
 import { selectAttributeFilterConfigsOverrides } from "../../../../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import { selectFilterContextFilters } from "../../../../../model/store/tabs/filterContext/filterContextSelectors.js";
-import { type IDrillConfigItem, isDrillToDashboardConfig } from "../../../../drill/types.js";
+import {
+    DRILL_TARGET_TYPE,
+    type IDrillConfigItem,
+    type IDrillToDashboardConfig,
+} from "../../../../drill/types.js";
 
 interface IUseFetchTargetDashboardFiltersResult {
     targetDashboardFilters: FilterContextItem[];
@@ -34,9 +38,10 @@ export function useFetchTargetDashboardFilters(
     const sourceDashboardFilters = useDashboardSelector(selectFilterContextFilters);
     const sourceDashboardAttributeFilterConfigs = useDashboardSelector(selectAttributeFilterConfigsOverrides);
     const { cache, fetchTargetDashboardFilters } = useTargetDashboardFiltersContext();
-    const isDrillToDashboard = isDrillToDashboardConfig(item);
-    const targetDashboardRef = isDrillToDashboard ? item.dashboard : undefined;
-    const targetDashboardTab = isDrillToDashboard ? item.dashboardTab : undefined;
+    const isDrillToDashboard = item.drillTargetType === DRILL_TARGET_TYPE.DRILL_TO_DASHBOARD;
+    const drillToDashboardItem = isDrillToDashboard ? (item as IDrillToDashboardConfig) : undefined;
+    const targetDashboardRef = drillToDashboardItem?.dashboard;
+    const targetDashboardTab = drillToDashboardItem?.dashboardTab;
     const isDrillToCurrentDashboard =
         !targetDashboardRef ||
         (sourceDashboardRef ? areObjRefsEqual(sourceDashboardRef, targetDashboardRef) : false);

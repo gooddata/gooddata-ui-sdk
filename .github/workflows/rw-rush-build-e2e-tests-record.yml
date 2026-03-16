@@ -12,26 +12,7 @@ on:
           type: string
 
 jobs:
-  warm-up-cache:
-    runs-on:
-      group: infra1-runners-arc
-      labels: runners-cxa-xlarge
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ inputs.source-ref }}
-          fetch-depth: 2
-      - name: Git config user
-        uses: snow-actions/git-config-user@v1.0.0
-        with:
-          name: git-action
-          email: git-action@gooddata.com
-      - name: Warmup rush
-        env:
-          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        uses: ./.github/actions/rush/warm-up-rush
   build:
-    needs: [warm-up-cache]
     runs-on:
       group: infra1-runners-arc
       labels: runners-rxa-xlarge
@@ -55,10 +36,10 @@ jobs:
         run: node common/scripts/install-run-rush.js build --to @gooddata/sdk-ui-tests-e2e
 
   e2e:
-    needs: [warm-up-cache,build]
+    needs: [build]
     runs-on:
       group: infra1-runners-arc
-      labels: runners-rxa-xlarge
+      labels: runners-cxa-xlarge
     steps:
       - uses: actions/checkout@v4
         with:
@@ -89,11 +70,11 @@ jobs:
           GH_RUN_ID: ${{ github.run_id }}
           TIGER_API_TOKEN: ${{ secrets.AWS_STAGING_TEST_API_TOKEN }}
           USER_FILTER: ${{ inputs.filter }}
-      - name: Archive the cypress test artifacts
+      - name: Archive the test artifacts
         uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
-          name: cypress-test-artifacts
+          name: e2e-test-artifacts-sdk-record
           path: |
             libs/sdk-ui-tests-e2e/recordings/mappings/TIGER/**/*.spec.ts.json
-            libs/sdk-ui-tests-e2e/cypress/videos/**/*.mp4
+            libs/sdk-ui-tests-e2e/playwright/results/**/*

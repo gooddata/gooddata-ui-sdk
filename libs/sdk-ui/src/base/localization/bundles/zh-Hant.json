@@ -50,6 +50,7 @@
     "geochart.map.canvas.instructions.zoomOnly": "地圖畫布。使用加號和減號進行縮放。按 Tab 移至下一個控制項。",
     "geochart.map.canvas.static": "地圖為靜態。鍵盤導覽已停用。",
     "geochart.legend.colorScale.label": "色階從 {min} 到 {max}",
+    "geochart.legend.colorScale.title.allSegments": "{metric}（所有區段）",
     "geochart.legend.layer.hidden": "地圖圖層 {name} 已隱藏",
     "geochart.legend.layer.shown": "地圖圖層 {name} 已顯示",
     "geochart.legend.item.hidden": "{name} 已隱藏",

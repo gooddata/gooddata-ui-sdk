@@ -127,6 +127,10 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
+      "name": "@gooddata/e2e-utils",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@gooddata/emailjs-mime-codec-new",
       "allowedCategories": [ "production" ]
     },
@@ -243,6 +247,14 @@
       "allowedCategories": [ "examples", "production" ]
     },
     {
+      "name": "@gooddata/sdk-ui-tests-app",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@gooddata/sdk-ui-tests-reference-workspace",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@gooddata/sdk-ui-tests-scenarios",
       "allowedCategories": [ "production" ]
     },
@@ -288,6 +300,10 @@
     },
     {
       "name": "@openapitools/openapi-generator-cli",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "@playwright/test",
       "allowedCategories": [ "production" ]
     },
     {
@@ -920,7 +936,7 @@
     },
     {
       "name": "jiti",
-      "allowedCategories": [ "tools" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "js-object-pretty-print",

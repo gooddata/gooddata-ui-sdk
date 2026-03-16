@@ -11,7 +11,7 @@ import {
 } from "../../model.js";
 import { copyToClipboardAction, setOpenAction } from "../chatWindow/chatWindowSlice.js";
 import { type EventDispatcher } from "../events.js";
-import { setIsOpened } from "../localStorage.js";
+import { clearCachedMessages, saveMessages, setIsOpened } from "../localStorage.js";
 import { messagesSelector, threadIdSelector } from "../messages/messagesSelectors.js";
 import {
     clearThreadAction,
@@ -39,6 +39,12 @@ export function* onEvent() {
     yield takeEvery(copyToClipboardAction.type, onCopyToClipboard);
 }
 
+function* persistMessages() {
+    const workspace: string = yield getContext("workspace");
+    const messages: Message[] = yield select(messagesSelector);
+    saveMessages(workspace, messages);
+}
+
 function* onSetOpen({ payload: { isOpen } }: ReturnType<typeof setOpenAction>) {
     setIsOpened(isOpen);
 
@@ -57,6 +63,14 @@ function* onSetOpen({ payload: { isOpen } }: ReturnType<typeof setOpenAction>) {
 }
 
 function* onThreadLoaded({ payload: { threadId } }: ReturnType<typeof loadThreadSuccessAction>) {
+    yield* persistMessages();
+
+    // Only emit the chatOpened event when we have a real server-side threadId.
+    // The cache-restore dispatch uses an empty threadId and should not trigger telemetry.
+    if (!threadId) {
+        return;
+    }
+
     const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
 
     eventDispatcher.dispatch({
@@ -66,6 +80,9 @@ function* onThreadLoaded({ payload: { threadId } }: ReturnType<typeof loadThread
 }
 
 function* onClearThread(_action: ReturnType<typeof clearThreadAction>) {
+    const workspace: string = yield getContext("workspace");
+    clearCachedMessages(workspace);
+
     const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
     const threadId: string | undefined = yield select(threadIdSelector);
 
@@ -100,6 +117,8 @@ function* onNewMessage({ payload: message }: ReturnType<typeof newMessageAction>
 function* onEvaluateMessageComplete({
     payload: { assistantMessageId },
 }: ReturnType<typeof evaluateMessageCompleteAction>) {
+    yield* persistMessages();
+
     const allMessages: Message[] = yield select(messagesSelector);
     const assistantMessage = allMessages.find((m) => m.localId === assistantMessageId);
 

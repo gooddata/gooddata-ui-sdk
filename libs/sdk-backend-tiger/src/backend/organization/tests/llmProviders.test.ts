@@ -228,7 +228,19 @@ describe("OrganizationLlmProvidersService", () => {
             expect(genAiApi.GenAiApi_TestLlmProviderById).toHaveBeenCalledWith(
                 expect.anything(),
                 expect.anything(),
-                { llmProviderId: "p1" },
+                {
+                    llmProviderId: "p1",
+                    testLlmProviderByIdRequest: {
+                        models: undefined,
+                        providerConfig: {
+                            auth: {
+                                apiKey: "",
+                                type: "API_KEY",
+                            },
+                            type: "OPENAI",
+                        },
+                    },
+                },
             );
         });
 

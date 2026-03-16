@@ -1,5 +1,8 @@
-// (C) 2021-2024 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import fs from "fs";
+
+import recordings from "@gooddata/sdk-ui-tests-reference-workspace/recordings_workspace" with { type: "json" };
 
 export function recordingsPresent() {
     const recordingsLength = fs.readdirSync(`./recordings/mappings/TIGER`).length;
@@ -7,5 +10,5 @@ export function recordingsPresent() {
 }
 
 export function getRecordingsWorkspaceId() {
-    return "c76e0537d0614abb0027f7c992656b964922506f";
+    return recordings.workspaceId;
 }

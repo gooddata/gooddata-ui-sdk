@@ -240,7 +240,7 @@ function resolveCurrencyFormatOverride(
 /**
  * @internal
  */
-export async function resolveSettings(
+async function resolveSettings(
     authCall: TigerAuthenticatedCallGuard,
     workspace: string,
     excludeUserSettings = false,

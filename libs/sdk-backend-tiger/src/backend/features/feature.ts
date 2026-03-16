@@ -431,6 +431,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableHybridSearch,
+            "enableHybridSearch",
+            "BOOLEAN",
+            FeatureFlagsValues.enableHybridSearch,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableGenAIChat,
             "enableGenAIChat",
             "BOOLEAN",

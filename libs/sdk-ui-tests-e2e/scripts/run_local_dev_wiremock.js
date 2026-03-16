@@ -16,12 +16,7 @@ import { spawn } from "child_process";
 
 import "./env.js";
 import { recordingsPresent } from "./lib/recordings.js";
-import {
-    wiremockMockLogRequests,
-    wiremockSettings,
-    wiremockStartRecording,
-    wiremockWait,
-} from "./lib/wiremock.js";
+import { wiremockMockLogRequests, wiremockStartRecording } from "./lib/wiremock.js";
 
 const wiremockHost = "localhost:8080";
 
@@ -43,9 +38,6 @@ async function main() {
     }
 
     runWiremockDocker(HOST, verbose, proxy);
-
-    await wiremockWait(wiremockHost);
-    await wiremockSettings(wiremockHost);
 
     if (simulateRecording) {
         await wiremockStartRecording(wiremockHost, HOST);

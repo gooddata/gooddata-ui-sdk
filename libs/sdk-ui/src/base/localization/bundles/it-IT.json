@@ -50,6 +50,7 @@
     "geochart.map.canvas.instructions.zoomOnly": "Canvas mappa. Usa più e meno per aumentare e ridurre lo zoom. Premi Tab per passare al controllo successivo.",
     "geochart.map.canvas.static": "La mappa è statica. La navigazione tramite tastiera è disabilitata.",
     "geochart.legend.colorScale.label": "Scala colori da {min} a {max}",
+    "geochart.legend.colorScale.title.allSegments": "{metric} (tutti i segmenti)",
     "geochart.legend.layer.hidden": "Livello mappa {name} nascosto",
     "geochart.legend.layer.shown": "Livello mappa {name} mostrato",
     "geochart.legend.item.hidden": "{name} nascosto",

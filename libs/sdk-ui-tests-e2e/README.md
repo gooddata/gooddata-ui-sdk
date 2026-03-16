@@ -2,6 +2,8 @@
 
 This project contains End-to-End tests for GoodData.UI components.
 
+The scenarios application that these tests run against lives in [`../sdk-ui-tests-app`](../sdk-ui-tests-app).
+
 ## Overview
 
 Tests in this library verify various go-through scenarios for GoodData.UI components. Tests are implemented using [Cypress](https://www.cypress.io/).
@@ -32,17 +34,18 @@ Add FILTER env variable with test file name to run and CYPRESS_TEST_TAGS env var
 
 ### Reference workspace
 
-The tests run against reference workspace that contains LDM, data, dashboards, insights and other metadata objects.
-It's based on the fixture defined in FIXTURE_TYPE (`goodsales` if not defined) env variable and extended with metadata objects specific for KD tests.
+The tests run against a reference workspace that contains LDM, data, dashboards, insights and other metadata objects.
+It's based on the fixture defined in FIXTURE_TYPE (`goodsales` if not defined) env variable and extended with metadata objects specific for tests.
 
-Reference workspace can be created from fixture via `rushx create-ref-workspace`.
+Reference workspace management is handled by the `@gooddata/sdk-ui-tests-reference-workspace` package.
+Create the workspace from fixture via `rushx create-ref-workspace` in that package.
 Update your reference workspace after each rebase with `rushx update-ref-workspace`.
 Current workspace ID will be automatically added to the `.env` file as `TEST_WORKSPACE_ID`.
 
 ### Fixture export and update
 
-The fixture is imported from the @gooddata/fixtures package.
-When have a new change on dashboard, we should run `rushx export-fixture` to update metadata objects inserted into the fixture are located [here](./reference_workspace/fixtures).
+The fixture is imported from the `@gooddata/fixtures` package.
+When you have a new change on dashboard, run `rushx export-fixture` in the `sdk-ui-tests-reference-workspace` package to update metadata objects.
 
 ## DEV Guide for isolated tests
 
@@ -50,15 +53,14 @@ When have a new change on dashboard, we should run `rushx export-fixture` to upd
 
 To run the tests against a mock backend follow these steps:
 
-- Run `rushx prepare-recording-workspace-id` to update workspace_id in record mapping file to `.env`.
-- Run `rushx build-scenarios` to build the testing application. The application will run on port 9500.
+- Build the scenarios app: `rush build -t sdk-ui-tests-app`
 - Run `rushx run-isolated-local` to start isolated test with mock backend in local instance.
 
 ### Adding new test
 
-- In folder `cypres/integration` you can either create new folder for the tests you're writing. You can then add new `*.spec.ts` file into either this new folder or to suitable existing one.
-- In the `scenarios/src/components/Scenarios`, create new Scenario file and within the new file use the component you are about to test.
-- In the `scenarios/src/routes/ComponentResolver`, add the `ScenarioComponent` you just created with a new unique hash. Navigation component takes this hash as its parameter and navigates the application to matching component.
+- In folder `cypress/integration` you can either create new folder for the tests you're writing. You can then add new `*.spec.ts` file into either this new folder or to suitable existing one.
+- In `../sdk-ui-tests-app/src/components/Scenarios`, create new Scenario file and within the new file use the component you are about to test.
+- In `../sdk-ui-tests-app/src/routes/ComponentResolver`, add the `ScenarioComponent` you just created with a new unique hash. Navigation component takes this hash as its parameter and navigates the application to matching component.
 - In the `.env` file, type the spec file name into `FILTER` variable, file name must be fully specified (e.g. dateFilter.spec.ts). This will keep all the recordings untouched and creates the recording for the new spec only.
 - Run command `rushx run-isolated-record` to create new recordings for tests.
 
@@ -75,7 +77,7 @@ Good for debugging the tooling when tests are passing with live backend but fail
 Runs Cypress, Scenarios, and Wiremock separately in Docker.
 
 - Start recorded backend `npm run local-dev-wiremock` (add `--verbose` param for debugging)
-- Start Scenarios `npm run run-scenarios-local`
+- Start the scenarios app via `rushx dev` in `../sdk-ui-tests-app`
 - Run Cypress `npm run local-dev-test-visual-recordings`
 
 _Note:_ this approach allows running only a single test at a time.
@@ -91,11 +93,6 @@ To preview the examples running locally on http://localhost:9500 you need to pro
 - Use modheader browser extension and add `Authorization` header with `Bearer <API_TOKEN>` (replace `<API_TOKEN>` with your token)
   Make sure you filter requests to http://localhost:9500 so that your token is not leaked to every site you visit.
 
-- Comment out `process.env.TIGER_API_TOKEN=""` line in scenarios/webpack_config.cjs and build the
-  scenarios with `rushx build-scenarios`. The token would get bundled there.
-
-Finally run `rushx start-scenarios`
-
 ## DEV Guide for integrated tests
 
 ### Run on docker
@@ -103,8 +100,8 @@ Finally run `rushx start-scenarios`
 To run the tests locally, you would need to build the sdk and the scenarios against which the tests run and then run the tests, i.e.
 
 ```
-rush build -t sdk-ui-tests-e2e && rushx build-scenarios && \
-    docker build --file Dockerfile_local -t $IMAGE_ID . && \
+rush build -t sdk-ui-tests-app && \
+    cd ../sdk-ui-tests-app && docker build --file Dockerfile_local -t $IMAGE_ID . && cd ../sdk-ui-tests-e2e && \
     docker-compose -f docker-compose-integrated.yaml up \
         --force-recreate --always-recreate-deps --renew-anon-volumes \
         --exit-code-from integrated-tests --abort-on-container-exit
@@ -113,8 +110,8 @@ rush build -t sdk-ui-tests-e2e && rushx build-scenarios && \
 To debug tests in visual mode, you need to first build the scenarios and start them in docker compose
 
 ```
-rush build -t sdk-ui-tests-e2e && rushx build-scenarios && \
-    docker build --file Dockerfile_local -t $IMAGE_ID . && \
+rush build -t sdk-ui-tests-app && \
+    cd ../sdk-ui-tests-app && docker build --file Dockerfile_local -t $IMAGE_ID . && cd ../sdk-ui-tests-e2e && \
     docker-compose -f docker-compose-integrated.yaml up \
         --force-recreate --always-recreate-deps --renew-anon-volumes gooddata-ui-sdk-scenarios
 ```
@@ -128,40 +125,11 @@ $ CYPRESS_HOST=http://localhost:9500 rushx run-integrated
 ### Run on live backend with Cypress visual mode
 
 ```
-$ rushx create-ref-workspace
-$ rushx build-scenarios
-$ rushx start-scenarios
+$ cd ../sdk-ui-tests-reference-workspace && rushx create-ref-workspace && cd ../sdk-ui-tests-e2e
+$ cd ../sdk-ui-tests-app && rushx dev
 $ CYPRESS_HOST=http://localhost:9500 rushx run-integrated
 ```
 
 ### Tips for running the scenarios app without Cypress
 
-1. TIGER_API_TOKEN provided in `.env` file.
-
-2. Ensure HOST is provided from the `.env` file.
-
-3. Basic working `.env` file can look like this. Other params may cause cross issues, so beware.
-
-```
-HOST=https://staging.dev-latest.stg11.panther.intgdc.com
-TIGER_API_TOKEN=<token>
-FIXTURE_TYPE=goodsales
-TIGER_DATASOURCES_NAME=vertica_staging-goodsales
-VISUAL_MODE=true
-CYPRESS_TEST_TAGS=pre-merge_isolated_tiger_fe
-FILTER=
-```
-
-4. Provide the Tiger token and run the scenarios app:
-
-    ```
-    rushx start-scenarios
-    ```
-
-5. In your browser, specify the scenario you want to view as a variable:
-
-    ```
-    http://localhost:9500/gooddata-ui-sdk?scenario=dashboard/dashboard
-    ```
-
-    A list of scenarios can be found [here](https://github.com/gooddata/gooddata-ui-sdk/blob/master/libs/sdk-ui-tests-e2e/scenarios/src/routes/ComponentResolver.tsx#L294).
+See the [sdk-ui-tests-app README](../sdk-ui-tests-app/README.md) for instructions on running the scenarios app standalone.

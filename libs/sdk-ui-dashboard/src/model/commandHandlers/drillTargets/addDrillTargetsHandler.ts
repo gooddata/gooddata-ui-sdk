@@ -41,7 +41,10 @@ export function* addDrillTargetsHandler(
     // and also validate drill to custom URL parameters
     const isInEditMode: ReturnType<typeof selectIsInEditMode> = yield select(selectIsInEditMode);
     if (isInEditMode) {
-        yield call(validateDrills, ctx, cmd, [insightWidget]);
+        // Preserve the message from filter ref sanitization
+        yield call(validateDrills, ctx, cmd, [insightWidget], {
+            preserveSanitizedWarnings: true,
+        });
         yield call(validateDrillToCustomUrlParams, [insightWidget]);
     }
 

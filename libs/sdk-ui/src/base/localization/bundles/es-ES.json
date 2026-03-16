@@ -50,6 +50,7 @@
     "geochart.map.canvas.instructions.zoomOnly": "Lienzo del mapa. Use más y menos para ampliar o reducir. Presione Tab para ir al siguiente control.",
     "geochart.map.canvas.static": "El mapa es estático. La navegación con el teclado está deshabilitada.",
     "geochart.legend.colorScale.label": "Escala de color de {min} a {max}",
+    "geochart.legend.colorScale.title.allSegments": "{metric} (todos los segmentos)",
     "geochart.legend.layer.hidden": "Capa del mapa {name} oculta",
     "geochart.legend.layer.shown": "Capa del mapa {name} mostrada",
     "geochart.legend.item.hidden": "{name} oculto",
