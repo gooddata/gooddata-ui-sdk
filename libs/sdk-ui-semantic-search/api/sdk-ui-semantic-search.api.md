@@ -11,7 +11,15 @@ import { ISemanticSearchRelationship } from '@gooddata/sdk-model';
 import { ISemanticSearchResultItem } from '@gooddata/sdk-model';
 import { JSX } from 'react/jsx-runtime';
 import { MouseEvent as MouseEvent_2 } from 'react';
+import { ObjectType } from '@gooddata/sdk-model';
+import { ObjRef } from '@gooddata/sdk-model';
 import { ReactNode } from 'react';
+
+// @alpha
+export function customMatcher<I extends SearchItem, G extends SearchItemGroup<I>>(props: (keyof I & keyof G)[]): HybridSearchMatcher;
+
+// @alpha
+export function defaultMatcher<I extends SearchItem, G extends SearchItemGroup<I>>(item: I | G | string, searchQueryUpper: string): boolean;
 
 // @public (undocumented)
 export function FooterButtonAiAssistant({ onClick }: FooterButtonAiAssistantProps): JSX.Element;
@@ -19,6 +27,95 @@ export function FooterButtonAiAssistant({ onClick }: FooterButtonAiAssistantProp
 // @public (undocumented)
 export type FooterButtonAiAssistantProps = {
     onClick?: (e: MouseEvent_2) => void;
+};
+
+// @alpha
+export type HybridSearchItemBuilder<I extends SearchItem> = (item: ISemanticSearchResultItem, props: {
+    ref: ObjRef;
+    type: ObjectType;
+}) => I | null | undefined;
+
+// @alpha
+export type HybridSearchMatcher = <I extends SearchItem, G extends SearchItemGroup<I>>(item: I | G | string, searchQueryUpper: string) => boolean;
+
+// @alpha
+export interface ICombinedSearchResults<I extends SearchItem, G extends SearchItemGroup<I>> extends SearchResults<I, G> {
+    // (undocumented)
+    searchRelatedItems: ReadonlyArray<I>;
+    // (undocumented)
+    searchState: ISearchState;
+    // (undocumented)
+    semanticSearchState: ISemanticSearchState;
+}
+
+// @alpha
+export interface IHybridSearchResult<I extends SearchItem, G extends SearchItemGroup<I>> {
+    // (undocumented)
+    onSearchQueryChange: OnSearchQueryChanged;
+    // (undocumented)
+    search: (props: {
+        items: ReadonlyArray<I>;
+        allItems?: ReadonlyArray<I>;
+        itemGroups?: ReadonlyArray<G>;
+        keywords?: string[];
+    }) => ICombinedSearchResults<I, G>;
+    // (undocumented)
+    searchState: ISearchState;
+    // (undocumented)
+    semanticSearchState: ISemanticSearchState;
+}
+
+// @alpha
+export interface ISearchState {
+    debouncedQuery: string;
+    query: string;
+    state: "idle" | "searching" | "completed";
+}
+
+// @alpha
+export interface ISemanticSearchState {
+    error?: string;
+    message: string;
+    state: "idle" | "loading" | "error" | "success";
+}
+
+// @alpha
+export interface IUseHybridSearchOptions<I extends SearchItem> extends Pick<SemanticSearchHookInput, "deepSearch" | "limit" | "includeTags" | "excludeTags" | "objectTypes"> {
+    allowSematicSearch?: boolean;
+    backend?: IAnalyticalBackend;
+    debounceMs?: number;
+    itemBuilder: HybridSearchItemBuilder<I>;
+    matcher?: HybridSearchMatcher;
+    workspace?: string;
+}
+
+// @alpha
+export type OnSearchQueryChanged = (searchQuery: string) => void;
+
+// @alpha
+export type SearchItem = {
+    ref: ObjRef;
+    title?: string;
+    name?: string;
+    description?: string;
+    summary?: string;
+};
+
+// @alpha
+export type SearchItemGroup<I> = {
+    title?: string;
+    name?: string;
+    description?: string;
+    summary?: string;
+    items?: I[];
+};
+
+// @alpha
+export type SearchResults<I extends SearchItem, G extends SearchItemGroup<I>> = {
+    searchItems: ReadonlyArray<I>;
+    searchAllItems: ReadonlyArray<I>;
+    searchItemGroups: ReadonlyArray<G>;
+    searchKeywords: ReadonlyArray<string>;
 };
 
 // @beta
@@ -68,6 +165,9 @@ export type SemanticSearchProps = {
         closeSearch: () => void;
     }) => ReactNode;
 };
+
+// @alpha
+export function useHybridSearch<I extends SearchItem, G extends SearchItemGroup<I>>({ limit, workspace, backend, debounceMs, allowSematicSearch, deepSearch, objectTypes, includeTags, excludeTags, matcher, itemBuilder }: IUseHybridSearchOptions<I>): IHybridSearchResult<I, G>;
 
 // @beta
 export const useSemanticSearch: ({ searchTerm, objectTypes, deepSearch, limit, backend, workspace, allowedRelationshipTypes, includeTags, excludeTags, }: SemanticSearchHookInput) => SemanticSearchInputResult;

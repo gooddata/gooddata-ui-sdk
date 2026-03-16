@@ -50,6 +50,7 @@
     "geochart.map.canvas.instructions.zoomOnly": "Map canvas. Use plus and minus to zoom. Press Tab to move to the next control.",
     "geochart.map.canvas.static": "Map is static. Keyboard navigation is disabled.",
     "geochart.legend.colorScale.label": "Colour scale from {min} to {max}",
+    "geochart.legend.colorScale.title.allSegments": "{metric} (all segments)",
     "geochart.legend.layer.hidden": "Map layer {name} hidden",
     "geochart.legend.layer.shown": "Map layer {name} shown",
     "geochart.legend.item.hidden": "{name} hidden",

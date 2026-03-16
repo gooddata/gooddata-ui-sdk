@@ -50,6 +50,7 @@
     "geochart.map.canvas.instructions.zoomOnly": "Холст карты. Используйте плюс и минус для масштабирования. Нажмите Tab, чтобы перейти к следующему элементу управления.",
     "geochart.map.canvas.static": "Карта статична. Навигация с клавиатуры отключена.",
     "geochart.legend.colorScale.label": "Цветовая шкала от {min} до {max}",
+    "geochart.legend.colorScale.title.allSegments": "{metric} (все сегменты)",
     "geochart.legend.layer.hidden": "Слой карты {name} скрыт",
     "geochart.legend.layer.shown": "Слой карты {name} показан",
     "geochart.legend.item.hidden": "{name} скрыт",

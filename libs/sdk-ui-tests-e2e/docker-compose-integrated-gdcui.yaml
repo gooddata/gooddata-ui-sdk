@@ -10,26 +10,36 @@ services:
             - ./nginx/templates:/etc/nginx/templates/
 
     integrated-tests:
-        image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/docker.io/cypress/included:13.17.0
-        entrypoint: node ./scripts/run_integrated.js
+        image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/mcr.microsoft.com/playwright:v1.58.2-noble
+        entrypoint: >
+            bash -c "
+              EXTRA_ARGS='';
+              if [ \"$$PLAYWRIGHT_UPDATE_SNAPSHOTS\" = '1' ]; then EXTRA_ARGS='--update-snapshots'; fi;
+              if [ -n \"$$FILTER\" ]; then
+                npx playwright test --config ./playwright/playwright.config.ts --grep \"$$PLAYWRIGHT_GREP\" $$EXTRA_ARGS $$(echo \"$$FILTER\" | tr ',' ' ');
+              else
+                SHARD_ARGS='';
+                if [ -n \"$$SHARD_INDEX\" ] && [ -n \"$$SHARD_TOTAL\" ]; then SHARD_ARGS=\"--shard=$$SHARD_INDEX/$$SHARD_TOTAL\"; fi;
+                npx playwright test --config ./playwright/playwright.config.ts --grep \"$$PLAYWRIGHT_GREP\" $$EXTRA_ARGS $$SHARD_ARGS;
+              fi
+            "
         volumes:
             - ../../../:/gooddata-ui-sdk-e2e:rw
         working_dir: /gooddata-ui-sdk-e2e/sdk/libs/sdk-ui-tests-e2e
-        user: "$USER_UID:$USER_GID"
+        user: "root"
         depends_on:
             - gooddata-ui-sdk-scenarios
         environment:
-            - CYPRESS_HOST=http://gooddata-ui-sdk-scenarios:9500
-            - MODE
-            - GDC_UI
-            - FILTER
-            - BUILD_URL
+            - BASE_URL=http://gooddata-ui-sdk-scenarios:9500
             - HOST=http://gooddata-ui-sdk-scenarios:9500
-            - TEST_WORKSPACE_ID
-            - TIGER_API_TOKEN
-            - VISUAL_MODE=false
-            - CYPRESS_TEST_TAGS
-            - FIXTURE_TYPE
-            - TIGER_DATASOURCES_NAME
+            - GDC_UI
             - NO_COLOR
-            - EXECUTION_ENV=$EXECUTION_ENV
+            - TIGER_API_TOKEN
+            - TIGER_DATASOURCES_NAME
+            - TEST_WORKSPACE_ID
+            - FIXTURE_TYPE
+            - PLAYWRIGHT_GREP
+            - PLAYWRIGHT_UPDATE_SNAPSHOTS
+            - SHARD_INDEX
+            - SHARD_TOTAL
+            - FILTER

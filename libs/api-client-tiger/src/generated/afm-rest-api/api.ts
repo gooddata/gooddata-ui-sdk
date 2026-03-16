@@ -793,6 +793,10 @@ export interface ChatResult {
      */
     'chatHistoryInteractionId'?: string;
     'reasoning'?: Reasoning;
+    /**
+     * Tool call events emitted during the agentic loop (only present when GEN_AI_YIELD_TOOL_CALL_EVENTS is enabled).
+     */
+    'toolCallEvents'?: Array<ToolCallEventResult>;
 }
 
 export interface ChatUsageResponse {
@@ -986,6 +990,25 @@ export interface CreatedVisualizations {
      */
     'suggestions': Array<Suggestion>;
 }
+
+/**
+ * Dashboard the user is currently viewing.
+ */
+export interface DashboardContext {
+    /**
+     * Dashboard object ID.
+     */
+    'id': string;
+    /**
+     * Widgets currently visible on the dashboard.
+     */
+    'widgets': Array<DashboardContextWidgetsInner>;
+}
+
+/**
+ * @type DashboardContextWidgetsInner
+ */
+export type DashboardContextWidgetsInner = InsightWidgetDescriptor | RichTextWidgetDescriptor | VisualizationSwitcherWidgetDescriptor;
 
 /**
  * Mapping from dimension items (either \'localIdentifier\' from \'AttributeItem\', or \"measureGroup\") to their respective values. This effectively specifies the path (location) of the data column used for sorting. Therefore values for all dimension items must be specified.
@@ -1566,6 +1589,28 @@ export interface InlineMeasureDefinitionInline {
     'maql': string;
 }
 
+/**
+ * Insight widget displaying a visualization.
+ */
+export interface InsightWidgetDescriptor extends WidgetDescriptor {
+    /**
+     * Widget object ID.
+     */
+    'widgetId': string;
+    /**
+     * Widget title as displayed on the dashboard.
+     */
+    'title': string;
+    /**
+     * Signed result ID for this widget\'s cached execution result.
+     */
+    'resultId'?: string;
+    /**
+     * Visualization object ID referenced by this insight widget.
+     */
+    'visualizationId': string;
+}
+
 export interface KeyDriversDimension {
     'label': RestApiIdentifier;
     'labelName': string;
@@ -1940,6 +1985,27 @@ export interface NegativeAttributeFilterNegativeAttributeFilter {
     'localIdentifier'?: string;
     'applyOnResult'?: boolean;
     'label': AfmIdentifier;
+}
+
+export interface ObjectReference {
+    /**
+     * Type of the referenced object.
+     */
+    'type': ObjectReferenceTypeEnum;
+    /**
+     * Object identifier (e.g. widget ID, metric ID).
+     */
+    'id': string;
+}
+
+export type ObjectReferenceTypeEnum = 'WIDGET' | 'METRIC' | 'ATTRIBUTE' | 'DASHBOARD';
+
+export interface ObjectReferenceGroup {
+    'context'?: ObjectReference;
+    /**
+     * Objects the user explicitly referenced within this context.
+     */
+    'objects': Array<ObjectReference>;
 }
 
 /**
@@ -2377,6 +2443,14 @@ export interface RelativeDateFilterRelativeDateFilter {
 export type RelativeDateFilterRelativeDateFilterGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
 export type RelativeDateFilterRelativeDateFilterEmptyValueHandlingEnum = 'INCLUDE' | 'EXCLUDE' | 'ONLY';
 
+/**
+ * The resolved LLM configuration, or null if none is configured.
+ */
+export interface ResolvedLlm {
+    'id': string;
+    'title': string;
+}
+
 export interface ResolvedLlmEndpoint {
     /**
      * Endpoint Id
@@ -2391,6 +2465,27 @@ export interface ResolvedLlmEndpoint {
 export interface ResolvedLlmEndpoints {
     'data': Array<ResolvedLlmEndpoint>;
 }
+
+export interface ResolvedLlmProvider {
+    /**
+     * Provider Id
+     */
+    'id': string;
+    /**
+     * Provider Title
+     */
+    'title': string;
+    'models': Array<LlmModel>;
+}
+
+export interface ResolvedLlms {
+    'data'?: ResolvedLlmsData;
+}
+
+/**
+ * @type ResolvedLlmsData
+ */
+export type ResolvedLlmsData = ResolvedLlmEndpoint | ResolvedLlmProvider;
 
 /**
  * Object identifier.
@@ -2433,6 +2528,20 @@ export type ResultDimensionHeader = AttributeHeader | MeasureGroupHeaders;
 export interface ResultSpec {
     'dimensions': Array<Dimension>;
     'totals'?: Array<Total>;
+}
+
+/**
+ * Rich text widget displaying static content. Has no execution result.
+ */
+export interface RichTextWidgetDescriptor extends WidgetDescriptor {
+    /**
+     * Widget object ID.
+     */
+    'widgetId': string;
+    /**
+     * Widget title as displayed on the dashboard.
+     */
+    'title': string;
 }
 
 /**
@@ -2821,6 +2930,24 @@ export interface Thought {
 }
 
 /**
+ * Tool call events emitted during the agentic loop (only present when GEN_AI_YIELD_TOOL_CALL_EVENTS is enabled).
+ */
+export interface ToolCallEventResult {
+    /**
+     * Name of the tool function that was called.
+     */
+    'functionName': string;
+    /**
+     * JSON-encoded arguments passed to the tool function.
+     */
+    'functionArguments': string;
+    /**
+     * Result returned by the tool function.
+     */
+    'result': string;
+}
+
+/**
  * Definition of a total. There are two types of totals: grand totals and subtotals. Grand total data will be returned in a separate section of the result structure while subtotals are fully integrated into the main result data. The mechanism for this distinction is automatic and it\'s described in `TotalDimension`
  */
 export interface Total {
@@ -2958,6 +3085,13 @@ export interface TriggerQualityIssuesCalculationResponse {
 
 export type TriggerQualityIssuesCalculationResponseStatusEnum = 'RUNNING' | 'COMPLETED' | 'FAILED' | 'CANCELLED' | 'DISABLED';
 
+/**
+ * Ambient UI state: what the user is currently looking at (dashboard, visible widgets).
+ */
+export interface UIContext {
+    'dashboard'?: DashboardContext;
+}
+
 export interface UpsertKnowledgeDocumentRequestDto {
     'filename': string;
     'content': string;
@@ -2974,10 +3108,15 @@ export interface UpsertKnowledgeDocumentResponseDto {
 }
 
 /**
- * User context, which can affect the behavior of the underlying AI features.
+ * User context with ambient UI state (view) and explicitly referenced objects.
  */
 export interface UserContext {
-    'activeObject': ActiveObjectIdentification;
+    'view'?: UIContext;
+    /**
+     * Groups of explicitly referenced objects, each optionally scoped by a context (e.g. a dashboard context with widget references).
+     */
+    'referencedObjects'?: Array<ObjectReferenceGroup>;
+    'activeObject'?: ActiveObjectIdentification;
 }
 
 export interface ValidateByItem {
@@ -3059,6 +3198,32 @@ export interface VisualizationConfig {
 }
 
 /**
+ * Visualization switcher widget allowing users to toggle between multiple visualizations.
+ */
+export interface VisualizationSwitcherWidgetDescriptor extends WidgetDescriptor {
+    /**
+     * Widget object ID.
+     */
+    'widgetId': string;
+    /**
+     * Widget title as displayed on the dashboard.
+     */
+    'title': string;
+    /**
+     * Signed result ID for the currently active visualization\'s execution result.
+     */
+    'resultId'?: string;
+    /**
+     * ID of the currently active visualization in the switcher.
+     */
+    'activeVisualizationId': string;
+    /**
+     * IDs of all visualizations available in the switcher.
+     */
+    'visualizationIds': Array<string>;
+}
+
+/**
  * Measure adjustments for this scenario
  */
 export interface WhatIfMeasureAdjustmentConfig {
@@ -3102,6 +3267,15 @@ export interface WhatIfScenarioItem {
      * Measure adjustments for this scenario
      */
     'adjustments': Array<WhatIfMeasureAdjustmentConfig>;
+}
+
+/**
+ * Descriptor for a widget on the dashboard.
+ */
+export interface WidgetDescriptor {
+    'title': string;
+    'widgetId': string;
+    'widgetType': string;
 }
 
 export interface WorkflowDashboardSummaryRequestDto {
@@ -6450,7 +6624,7 @@ export async function ActionsApiAxiosParamCreator_PatchDocument(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
- * Returns a list of available LLM Endpoints
+ * Will be soon removed and replaced by LlmProvider-based resolution.
  * @summary Get Active LLM Endpoints for this workspace
  * @param {string} workspaceId Workspace identifier
  * @param {*} [options] Override http request option.
@@ -6465,6 +6639,51 @@ export async function ActionsApiAxiosParamCreator_ResolveLlmEndpoints(
     // verify required parameter 'workspaceId' is not null or undefined
     assertParamExists('resolveLlmEndpoints', 'workspaceId', workspaceId)
     const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/resolveLlmEndpoints`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * Resolves the active LLM configuration for the given workspace. When the ENABLE_LLM_ENDPOINT_REPLACEMENT feature flag is enabled, returns LLM Providers with their associated models. Otherwise, falls back to the legacy LLM Endpoints.
+ * @summary Get Active LLM configuration for this workspace
+ * @param {string} workspaceId Workspace identifier
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_ResolveLlmProviders(
+    workspaceId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('resolveLlmProviders', 'workspaceId', workspaceId)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/resolveLlmProviders`
         .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
     // use dummy base URL string because the URL constructor only accepts absolute URLs.
     const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6544,20 +6763,20 @@ export async function ActionsApiAxiosParamCreator_RetrieveExecutionMetadata(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
- * Gets a single execution result. Note that the Arrow File and Arrow Stream content types are currently in BETA.
+ * Gets a single execution result.
  * @summary Get a single execution result
  * @param {string} workspaceId Workspace identifier
  * @param {string} resultId Result ID
- * @param {string} [xGDCCANCELTOKEN] 
  * @param {Array<number>} [offset] Request page with these offsets. Format is offset&#x3D;1,2,3,... - one offset for each dimensions in ResultSpec from originating AFM.
  * @param {Array<number>} [limit] Return only this number of items. Format is limit&#x3D;1,2,3,... - one limit for each dimensions in ResultSpec from originating AFM.
  * @param {Array<string>} [excludedTotalDimensions] Identifiers of the dimensions where grand total data should not be returned for this request. A grand total will not be returned if all of its totalDimensions are in excludedTotalDimensions.
+ * @param {string} [xGDCCANCELTOKEN] 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function ActionsApiAxiosParamCreator_RetrieveResult(
-    workspaceId: string, resultId: string, xGDCCANCELTOKEN?: string, offset?: Array<number>, limit?: Array<number>, excludedTotalDimensions?: Array<string>, 
+    workspaceId: string, resultId: string, offset?: Array<number>, limit?: Array<number>, excludedTotalDimensions?: Array<string>, xGDCCANCELTOKEN?: string, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -6589,6 +6808,60 @@ export async function ActionsApiAxiosParamCreator_RetrieveResult(
     if (excludedTotalDimensions) {
         localVarQueryParameter['excludedTotalDimensions'] = excludedTotalDimensions.join(COLLECTION_FORMATS.csv);
     }
+
+    if (xGDCCANCELTOKEN !== undefined && xGDCCANCELTOKEN !== null) {
+        localVarHeaderParameter['X-GDC-CANCEL-TOKEN'] = String(xGDCCANCELTOKEN);
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ActionsApi FP - ActionsApiAxiosParamCreator
+/**
+ * (BETA) Gets a single execution result as an Apache Arrow IPC File or Stream format.
+ * @summary (BETA) Get a single execution result in Apache Arrow File or Stream format
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} resultId Result ID
+ * @param {string} [xGDCCANCELTOKEN] 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApiAxiosParamCreator_RetrieveResultBinary(
+    workspaceId: string, resultId: string, xGDCCANCELTOKEN?: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('retrieveResultBinary', 'workspaceId', workspaceId)
+    // verify required parameter 'resultId' is not null or undefined
+    assertParamExists('retrieveResultBinary', 'resultId', resultId)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/afm/execute/result/{resultId}/binary`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
 
     if (xGDCCANCELTOKEN !== undefined && xGDCCANCELTOKEN !== null) {
         localVarHeaderParameter['X-GDC-CANCEL-TOKEN'] = String(xGDCCANCELTOKEN);
@@ -6993,7 +7266,7 @@ export async function ActionsApiAxiosParamCreator_UpsertDocument(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
- * Validates LLM endpoint with provided parameters.
+ * Will be soon removed and replaced by testLlmProvider.
  * @summary Validate LLM Endpoint
  * @param {ValidateLLMEndpointRequest} validateLLMEndpointRequest 
  * @param {*} [options] Override http request option.
@@ -7051,7 +7324,7 @@ export async function ActionsApiAxiosParamCreator_ValidateLLMEndpoint(
 
 // ActionsApi FP - ActionsApiAxiosParamCreator
 /**
- * Validates existing LLM endpoint with provided parameters and updates it if they are valid.
+ * Will be soon removed and replaced by testLlmProviderById.
  * @summary Validate LLM Endpoint By Id
  * @param {string} llmEndpointId 
  * @param {ValidateLLMEndpointByIdRequest} [validateLLMEndpointByIdRequest] 
@@ -8118,7 +8391,7 @@ export async function ActionsApi_PatchDocument(
 
 // ActionsApi Api FP
 /**
- * Returns a list of available LLM Endpoints
+ * Will be soon removed and replaced by LlmProvider-based resolution.
  * @summary Get Active LLM Endpoints for this workspace
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -8134,6 +8407,32 @@ export async function ActionsApi_ResolveLlmEndpoints(
     configuration?: Configuration,
 ): AxiosPromise<ResolvedLlmEndpoints> {
     const localVarAxiosArgs = await ActionsApiAxiosParamCreator_ResolveLlmEndpoints(
+        requestParameters.workspaceId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
+ * Resolves the active LLM configuration for the given workspace. When the ENABLE_LLM_ENDPOINT_REPLACEMENT feature flag is enabled, returns LLM Providers with their associated models. Otherwise, falls back to the legacy LLM Endpoints.
+ * @summary Get Active LLM configuration for this workspace
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiResolveLlmProvidersRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_ResolveLlmProviders(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiResolveLlmProvidersRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ResolvedLlms> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_ResolveLlmProviders(
         requestParameters.workspaceId, 
         options || {},
         configuration,
@@ -8170,7 +8469,7 @@ export async function ActionsApi_RetrieveExecutionMetadata(
 
 // ActionsApi Api FP
 /**
- * Gets a single execution result. Note that the Arrow File and Arrow Stream content types are currently in BETA.
+ * Gets a single execution result.
  * @summary Get a single execution result
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -8186,7 +8485,33 @@ export async function ActionsApi_RetrieveResult(
     configuration?: Configuration,
 ): AxiosPromise<ExecutionResult> {
     const localVarAxiosArgs = await ActionsApiAxiosParamCreator_RetrieveResult(
-        requestParameters.workspaceId, requestParameters.resultId, requestParameters.xGDCCANCELTOKEN, requestParameters.offset, requestParameters.limit, requestParameters.excludedTotalDimensions, 
+        requestParameters.workspaceId, requestParameters.resultId, requestParameters.offset, requestParameters.limit, requestParameters.excludedTotalDimensions, requestParameters.xGDCCANCELTOKEN, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ActionsApi Api FP
+/**
+ * (BETA) Gets a single execution result as an Apache Arrow IPC File or Stream format.
+ * @summary (BETA) Get a single execution result in Apache Arrow File or Stream format
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ActionsApiRetrieveResultBinaryRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ActionsApi_RetrieveResultBinary(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ActionsApiRetrieveResultBinaryRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<File> {
+    const localVarAxiosArgs = await ActionsApiAxiosParamCreator_RetrieveResultBinary(
+        requestParameters.workspaceId, requestParameters.resultId, requestParameters.xGDCCANCELTOKEN, 
         options || {},
         configuration,
     );
@@ -8376,7 +8701,7 @@ export async function ActionsApi_UpsertDocument(
 
 // ActionsApi Api FP
 /**
- * Validates LLM endpoint with provided parameters.
+ * Will be soon removed and replaced by testLlmProvider.
  * @summary Validate LLM Endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -8402,7 +8727,7 @@ export async function ActionsApi_ValidateLLMEndpoint(
 
 // ActionsApi Api FP
 /**
- * Validates existing LLM endpoint with provided parameters and updates it if they are valid.
+ * Will be soon removed and replaced by testLlmProviderById.
  * @summary Validate LLM Endpoint By Id
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -8815,14 +9140,25 @@ export interface ActionsApiInterface {
     patchDocument(requestParameters: ActionsApiPatchDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<KnowledgeDocumentMetadataDto>;
 
     /**
-     * Returns a list of available LLM Endpoints
+     * Will be soon removed and replaced by LlmProvider-based resolution.
      * @summary Get Active LLM Endpoints for this workspace
      * @param {ActionsApiResolveLlmEndpointsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof ActionsApiInterface
      */
     resolveLlmEndpoints(requestParameters: ActionsApiResolveLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<ResolvedLlmEndpoints>;
+
+    /**
+     * Resolves the active LLM configuration for the given workspace. When the ENABLE_LLM_ENDPOINT_REPLACEMENT feature flag is enabled, returns LLM Providers with their associated models. Otherwise, falls back to the legacy LLM Endpoints.
+     * @summary Get Active LLM configuration for this workspace
+     * @param {ActionsApiResolveLlmProvidersRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    resolveLlmProviders(requestParameters: ActionsApiResolveLlmProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<ResolvedLlms>;
 
     /**
      * The resource provides execution result\'s metadata as AFM and resultSpec used in execution request and an executionResponse
@@ -8835,7 +9171,7 @@ export interface ActionsApiInterface {
     retrieveExecutionMetadata(requestParameters: ActionsApiRetrieveExecutionMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<ResultCacheMetadata>;
 
     /**
-     * Gets a single execution result. Note that the Arrow File and Arrow Stream content types are currently in BETA.
+     * Gets a single execution result.
      * @summary Get a single execution result
      * @param {ActionsApiRetrieveResultRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -8843,6 +9179,16 @@ export interface ActionsApiInterface {
      * @memberof ActionsApiInterface
      */
     retrieveResult(requestParameters: ActionsApiRetrieveResultRequest, options?: AxiosRequestConfig): AxiosPromise<ExecutionResult>;
+
+    /**
+     * (BETA) Gets a single execution result as an Apache Arrow IPC File or Stream format.
+     * @summary (BETA) Get a single execution result in Apache Arrow File or Stream format
+     * @param {ActionsApiRetrieveResultBinaryRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApiInterface
+     */
+    retrieveResultBinary(requestParameters: ActionsApiRetrieveResultBinaryRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
 
     /**
      * 
@@ -8913,20 +9259,22 @@ export interface ActionsApiInterface {
     upsertDocument(requestParameters: ActionsApiUpsertDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<UpsertKnowledgeDocumentResponseDto>;
 
     /**
-     * Validates LLM endpoint with provided parameters.
+     * Will be soon removed and replaced by testLlmProvider.
      * @summary Validate LLM Endpoint
      * @param {ActionsApiValidateLLMEndpointRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof ActionsApiInterface
      */
     validateLLMEndpoint(requestParameters: ActionsApiValidateLLMEndpointRequest, options?: AxiosRequestConfig): AxiosPromise<ValidateLLMEndpointResponse>;
 
     /**
-     * Validates existing LLM endpoint with provided parameters and updates it if they are valid.
+     * Will be soon removed and replaced by testLlmProviderById.
      * @summary Validate LLM Endpoint By Id
      * @param {ActionsApiValidateLLMEndpointByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof ActionsApiInterface
      */
@@ -9936,6 +10284,20 @@ export interface ActionsApiResolveLlmEndpointsRequest {
 }
 
 /**
+ * Request parameters for resolveLlmProviders operation in ActionsApi.
+ * @export
+ * @interface ActionsApiResolveLlmProvidersRequest
+ */
+export interface ActionsApiResolveLlmProvidersRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiResolveLlmProviders
+     */
+    readonly workspaceId: string
+}
+
+/**
  * Request parameters for retrieveExecutionMetadata operation in ActionsApi.
  * @export
  * @interface ActionsApiRetrieveExecutionMetadataRequest
@@ -9977,13 +10339,6 @@ export interface ActionsApiRetrieveResultRequest {
     readonly resultId: string
 
     /**
-     * 
-     * @type {string}
-     * @memberof ActionsApiRetrieveResult
-     */
-    readonly xGDCCANCELTOKEN?: string
-
-    /**
      * Request page with these offsets. Format is offset&#x3D;1,2,3,... - one offset for each dimensions in ResultSpec from originating AFM.
      * @type {Array<number>}
      * @memberof ActionsApiRetrieveResult
@@ -10003,6 +10358,41 @@ export interface ActionsApiRetrieveResultRequest {
      * @memberof ActionsApiRetrieveResult
      */
     readonly excludedTotalDimensions?: Array<string>
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionsApiRetrieveResult
+     */
+    readonly xGDCCANCELTOKEN?: string
+}
+
+/**
+ * Request parameters for retrieveResultBinary operation in ActionsApi.
+ * @export
+ * @interface ActionsApiRetrieveResultBinaryRequest
+ */
+export interface ActionsApiRetrieveResultBinaryRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ActionsApiRetrieveResultBinary
+     */
+    readonly workspaceId: string
+
+    /**
+     * Result ID
+     * @type {string}
+     * @memberof ActionsApiRetrieveResultBinary
+     */
+    readonly resultId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ActionsApiRetrieveResultBinary
+     */
+    readonly xGDCCANCELTOKEN?: string
 }
 
 /**
@@ -10648,15 +11038,28 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
-     * Returns a list of available LLM Endpoints
+     * Will be soon removed and replaced by LlmProvider-based resolution.
      * @summary Get Active LLM Endpoints for this workspace
      * @param {ActionsApiResolveLlmEndpointsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof ActionsApi
      */
     public resolveLlmEndpoints(requestParameters: ActionsApiResolveLlmEndpointsRequest, options?: AxiosRequestConfig) {
         return ActionsApi_ResolveLlmEndpoints(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Resolves the active LLM configuration for the given workspace. When the ENABLE_LLM_ENDPOINT_REPLACEMENT feature flag is enabled, returns LLM Providers with their associated models. Otherwise, falls back to the legacy LLM Endpoints.
+     * @summary Get Active LLM configuration for this workspace
+     * @param {ActionsApiResolveLlmProvidersRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public resolveLlmProviders(requestParameters: ActionsApiResolveLlmProvidersRequest, options?: AxiosRequestConfig) {
+        return ActionsApi_ResolveLlmProviders(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -10672,7 +11075,7 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
-     * Gets a single execution result. Note that the Arrow File and Arrow Stream content types are currently in BETA.
+     * Gets a single execution result.
      * @summary Get a single execution result
      * @param {ActionsApiRetrieveResultRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -10681,6 +11084,18 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
      */
     public retrieveResult(requestParameters: ActionsApiRetrieveResultRequest, options?: AxiosRequestConfig) {
         return ActionsApi_RetrieveResult(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * (BETA) Gets a single execution result as an Apache Arrow IPC File or Stream format.
+     * @summary (BETA) Get a single execution result in Apache Arrow File or Stream format
+     * @param {ActionsApiRetrieveResultBinaryRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ActionsApi
+     */
+    public retrieveResultBinary(requestParameters: ActionsApiRetrieveResultBinaryRequest, options?: AxiosRequestConfig) {
+        return ActionsApi_RetrieveResultBinary(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -10766,10 +11181,11 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
-     * Validates LLM endpoint with provided parameters.
+     * Will be soon removed and replaced by testLlmProvider.
      * @summary Validate LLM Endpoint
      * @param {ActionsApiValidateLLMEndpointRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof ActionsApi
      */
@@ -10778,10 +11194,11 @@ export class ActionsApi extends BaseAPI implements ActionsApiInterface {
     }
 
     /**
-     * Validates existing LLM endpoint with provided parameters and updates it if they are valid.
+     * Will be soon removed and replaced by testLlmProviderById.
      * @summary Validate LLM Endpoint By Id
      * @param {ActionsApiValidateLLMEndpointByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof ActionsApi
      */
@@ -11607,20 +12024,20 @@ export async function ComputationApiAxiosParamCreator_RetrieveExecutionMetadata(
 
 // ComputationApi FP - ComputationApiAxiosParamCreator
 /**
- * Gets a single execution result. Note that the Arrow File and Arrow Stream content types are currently in BETA.
+ * Gets a single execution result.
  * @summary Get a single execution result
  * @param {string} workspaceId Workspace identifier
  * @param {string} resultId Result ID
- * @param {string} [xGDCCANCELTOKEN] 
  * @param {Array<number>} [offset] Request page with these offsets. Format is offset&#x3D;1,2,3,... - one offset for each dimensions in ResultSpec from originating AFM.
  * @param {Array<number>} [limit] Return only this number of items. Format is limit&#x3D;1,2,3,... - one limit for each dimensions in ResultSpec from originating AFM.
  * @param {Array<string>} [excludedTotalDimensions] Identifiers of the dimensions where grand total data should not be returned for this request. A grand total will not be returned if all of its totalDimensions are in excludedTotalDimensions.
+ * @param {string} [xGDCCANCELTOKEN] 
  * @param {*} [options] Override http request option.
  * @param {Configuration} [configuration] Optional configuration.
  * @throws {RequiredError}
  */
 export async function ComputationApiAxiosParamCreator_RetrieveResult(
-    workspaceId: string, resultId: string, xGDCCANCELTOKEN?: string, offset?: Array<number>, limit?: Array<number>, excludedTotalDimensions?: Array<string>, 
+    workspaceId: string, resultId: string, offset?: Array<number>, limit?: Array<number>, excludedTotalDimensions?: Array<string>, xGDCCANCELTOKEN?: string, 
     options: AxiosRequestConfig = {},
     configuration?: Configuration,
 ): Promise<RequestArgs> {
@@ -11652,6 +12069,60 @@ export async function ComputationApiAxiosParamCreator_RetrieveResult(
     if (excludedTotalDimensions) {
         localVarQueryParameter['excludedTotalDimensions'] = excludedTotalDimensions.join(COLLECTION_FORMATS.csv);
     }
+
+    if (xGDCCANCELTOKEN !== undefined && xGDCCANCELTOKEN !== null) {
+        localVarHeaderParameter['X-GDC-CANCEL-TOKEN'] = String(xGDCCANCELTOKEN);
+    }
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// ComputationApi FP - ComputationApiAxiosParamCreator
+/**
+ * (BETA) Gets a single execution result as an Apache Arrow IPC File or Stream format.
+ * @summary (BETA) Get a single execution result in Apache Arrow File or Stream format
+ * @param {string} workspaceId Workspace identifier
+ * @param {string} resultId Result ID
+ * @param {string} [xGDCCANCELTOKEN] 
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputationApiAxiosParamCreator_RetrieveResultBinary(
+    workspaceId: string, resultId: string, xGDCCANCELTOKEN?: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('retrieveResultBinary', 'workspaceId', workspaceId)
+    // verify required parameter 'resultId' is not null or undefined
+    assertParamExists('retrieveResultBinary', 'resultId', resultId)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/execution/afm/execute/result/{resultId}/binary`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)))
+        .replace(`{${"resultId"}}`, encodeURIComponent(String(resultId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
 
     if (xGDCCANCELTOKEN !== undefined && xGDCCANCELTOKEN !== null) {
         localVarHeaderParameter['X-GDC-CANCEL-TOKEN'] = String(xGDCCANCELTOKEN);
@@ -12015,7 +12486,7 @@ export async function ComputationApi_RetrieveExecutionMetadata(
 
 // ComputationApi Api FP
 /**
- * Gets a single execution result. Note that the Arrow File and Arrow Stream content types are currently in BETA.
+ * Gets a single execution result.
  * @summary Get a single execution result
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -12031,7 +12502,33 @@ export async function ComputationApi_RetrieveResult(
     configuration?: Configuration,
 ): AxiosPromise<ExecutionResult> {
     const localVarAxiosArgs = await ComputationApiAxiosParamCreator_RetrieveResult(
-        requestParameters.workspaceId, requestParameters.resultId, requestParameters.xGDCCANCELTOKEN, requestParameters.offset, requestParameters.limit, requestParameters.excludedTotalDimensions, 
+        requestParameters.workspaceId, requestParameters.resultId, requestParameters.offset, requestParameters.limit, requestParameters.excludedTotalDimensions, requestParameters.xGDCCANCELTOKEN, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// ComputationApi Api FP
+/**
+ * (BETA) Gets a single execution result as an Apache Arrow IPC File or Stream format.
+ * @summary (BETA) Get a single execution result in Apache Arrow File or Stream format
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {ComputationApiRetrieveResultBinaryRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function ComputationApi_RetrieveResultBinary(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: ComputationApiRetrieveResultBinaryRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<File> {
+    const localVarAxiosArgs = await ComputationApiAxiosParamCreator_RetrieveResultBinary(
+        requestParameters.workspaceId, requestParameters.resultId, requestParameters.xGDCCANCELTOKEN, 
         options || {},
         configuration,
     );
@@ -12176,7 +12673,7 @@ export interface ComputationApiInterface {
     retrieveExecutionMetadata(requestParameters: ComputationApiRetrieveExecutionMetadataRequest, options?: AxiosRequestConfig): AxiosPromise<ResultCacheMetadata>;
 
     /**
-     * Gets a single execution result. Note that the Arrow File and Arrow Stream content types are currently in BETA.
+     * Gets a single execution result.
      * @summary Get a single execution result
      * @param {ComputationApiRetrieveResultRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -12184,6 +12681,16 @@ export interface ComputationApiInterface {
      * @memberof ComputationApiInterface
      */
     retrieveResult(requestParameters: ComputationApiRetrieveResultRequest, options?: AxiosRequestConfig): AxiosPromise<ExecutionResult>;
+
+    /**
+     * (BETA) Gets a single execution result as an Apache Arrow IPC File or Stream format.
+     * @summary (BETA) Get a single execution result in Apache Arrow File or Stream format
+     * @param {ComputationApiRetrieveResultBinaryRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApiInterface
+     */
+    retrieveResultBinary(requestParameters: ComputationApiRetrieveResultBinaryRequest, options?: AxiosRequestConfig): AxiosPromise<File>;
 
 }
 
@@ -12565,13 +13072,6 @@ export interface ComputationApiRetrieveResultRequest {
     readonly resultId: string
 
     /**
-     * 
-     * @type {string}
-     * @memberof ComputationApiRetrieveResult
-     */
-    readonly xGDCCANCELTOKEN?: string
-
-    /**
      * Request page with these offsets. Format is offset&#x3D;1,2,3,... - one offset for each dimensions in ResultSpec from originating AFM.
      * @type {Array<number>}
      * @memberof ComputationApiRetrieveResult
@@ -12591,6 +13091,41 @@ export interface ComputationApiRetrieveResultRequest {
      * @memberof ComputationApiRetrieveResult
      */
     readonly excludedTotalDimensions?: Array<string>
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ComputationApiRetrieveResult
+     */
+    readonly xGDCCANCELTOKEN?: string
+}
+
+/**
+ * Request parameters for retrieveResultBinary operation in ComputationApi.
+ * @export
+ * @interface ComputationApiRetrieveResultBinaryRequest
+ */
+export interface ComputationApiRetrieveResultBinaryRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof ComputationApiRetrieveResultBinary
+     */
+    readonly workspaceId: string
+
+    /**
+     * Result ID
+     * @type {string}
+     * @memberof ComputationApiRetrieveResultBinary
+     */
+    readonly resultId: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof ComputationApiRetrieveResultBinary
+     */
+    readonly xGDCCANCELTOKEN?: string
 }
 
 /**
@@ -12757,7 +13292,7 @@ export class ComputationApi extends BaseAPI implements ComputationApiInterface {
     }
 
     /**
-     * Gets a single execution result. Note that the Arrow File and Arrow Stream content types are currently in BETA.
+     * Gets a single execution result.
      * @summary Get a single execution result
      * @param {ComputationApiRetrieveResultRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -12766,6 +13301,18 @@ export class ComputationApi extends BaseAPI implements ComputationApiInterface {
      */
     public retrieveResult(requestParameters: ComputationApiRetrieveResultRequest, options?: AxiosRequestConfig) {
         return ComputationApi_RetrieveResult(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * (BETA) Gets a single execution result as an Apache Arrow IPC File or Stream format.
+     * @summary (BETA) Get a single execution result in Apache Arrow File or Stream format
+     * @param {ComputationApiRetrieveResultBinaryRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ComputationApi
+     */
+    public retrieveResultBinary(requestParameters: ComputationApiRetrieveResultBinaryRequest, options?: AxiosRequestConfig) {
+        return ComputationApi_RetrieveResultBinary(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 }
 
@@ -13866,7 +14413,7 @@ export async function SmartFunctionsApiAxiosParamCreator_MemoryCreatedByUsers(
 
 // SmartFunctionsApi FP - SmartFunctionsApiAxiosParamCreator
 /**
- * Returns a list of available LLM Endpoints
+ * Will be soon removed and replaced by LlmProvider-based resolution.
  * @summary Get Active LLM Endpoints for this workspace
  * @param {string} workspaceId Workspace identifier
  * @param {*} [options] Override http request option.
@@ -13881,6 +14428,51 @@ export async function SmartFunctionsApiAxiosParamCreator_ResolveLlmEndpoints(
     // verify required parameter 'workspaceId' is not null or undefined
     assertParamExists('resolveLlmEndpoints', 'workspaceId', workspaceId)
     const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/resolveLlmEndpoints`
+        .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
+    // use dummy base URL string because the URL constructor only accepts absolute URLs.
+    const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+    let baseOptions;
+    if (configuration) {
+        baseOptions = configuration.baseOptions;
+    }
+    const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+    const localVarHeaderParameter = {} as any;
+    const localVarQueryParameter = {} as any;
+
+
+    
+    setSearchParams(localVarUrlObj, localVarQueryParameter);
+    const headersFromBaseOptions = baseOptions?.headers ? baseOptions.headers : {};
+    localVarRequestOptions.headers = {
+        ...localVarHeaderParameter,
+        ...headersFromBaseOptions,
+        ...options.headers,
+    };
+
+    return {
+        url: toPathString(localVarUrlObj),
+        options: localVarRequestOptions,
+    };
+}
+
+
+// SmartFunctionsApi FP - SmartFunctionsApiAxiosParamCreator
+/**
+ * Resolves the active LLM configuration for the given workspace. When the ENABLE_LLM_ENDPOINT_REPLACEMENT feature flag is enabled, returns LLM Providers with their associated models. Otherwise, falls back to the legacy LLM Endpoints.
+ * @summary Get Active LLM configuration for this workspace
+ * @param {string} workspaceId Workspace identifier
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApiAxiosParamCreator_ResolveLlmProviders(
+    workspaceId: string, 
+    options: AxiosRequestConfig = {},
+    configuration?: Configuration,
+): Promise<RequestArgs> {
+    // verify required parameter 'workspaceId' is not null or undefined
+    assertParamExists('resolveLlmProviders', 'workspaceId', workspaceId)
+    const localVarPath = `/api/v1/actions/workspaces/{workspaceId}/ai/resolveLlmProviders`
         .replace(`{${"workspaceId"}}`, encodeURIComponent(String(workspaceId)));
     // use dummy base URL string because the URL constructor only accepts absolute URLs.
     const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -14164,7 +14756,7 @@ export async function SmartFunctionsApiAxiosParamCreator_TriggerQualityIssuesCal
 
 // SmartFunctionsApi FP - SmartFunctionsApiAxiosParamCreator
 /**
- * Validates LLM endpoint with provided parameters.
+ * Will be soon removed and replaced by testLlmProvider.
  * @summary Validate LLM Endpoint
  * @param {ValidateLLMEndpointRequest} validateLLMEndpointRequest 
  * @param {*} [options] Override http request option.
@@ -14222,7 +14814,7 @@ export async function SmartFunctionsApiAxiosParamCreator_ValidateLLMEndpoint(
 
 // SmartFunctionsApi FP - SmartFunctionsApiAxiosParamCreator
 /**
- * Validates existing LLM endpoint with provided parameters and updates it if they are valid.
+ * Will be soon removed and replaced by testLlmProviderById.
  * @summary Validate LLM Endpoint By Id
  * @param {string} llmEndpointId 
  * @param {ValidateLLMEndpointByIdRequest} [validateLLMEndpointByIdRequest] 
@@ -14777,7 +15369,7 @@ export async function SmartFunctionsApi_MemoryCreatedByUsers(
 
 // SmartFunctionsApi Api FP
 /**
- * Returns a list of available LLM Endpoints
+ * Will be soon removed and replaced by LlmProvider-based resolution.
  * @summary Get Active LLM Endpoints for this workspace
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -14793,6 +15385,32 @@ export async function SmartFunctionsApi_ResolveLlmEndpoints(
     configuration?: Configuration,
 ): AxiosPromise<ResolvedLlmEndpoints> {
     const localVarAxiosArgs = await SmartFunctionsApiAxiosParamCreator_ResolveLlmEndpoints(
+        requestParameters.workspaceId, 
+        options || {},
+        configuration,
+    );
+    return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, basePath);
+}
+
+
+// SmartFunctionsApi Api FP
+/**
+ * Resolves the active LLM configuration for the given workspace. When the ENABLE_LLM_ENDPOINT_REPLACEMENT feature flag is enabled, returns LLM Providers with their associated models. Otherwise, falls back to the legacy LLM Endpoints.
+ * @summary Get Active LLM configuration for this workspace
+ * @param {AxiosInstance} axios Axios instance.
+ * @param {string} basePath Base path.
+ * @param {SmartFunctionsApiResolveLlmProvidersRequest} requestParameters Request parameters.
+ * @param {*} [options] Override http request option.
+ * @param {Configuration} [configuration] Optional configuration.
+ * @throws {RequiredError}
+ */
+export async function SmartFunctionsApi_ResolveLlmProviders(
+    axios: AxiosInstance, basePath: string,
+    requestParameters: SmartFunctionsApiResolveLlmProvidersRequest, 
+    options?: AxiosRequestConfig,
+    configuration?: Configuration,
+): AxiosPromise<ResolvedLlms> {
+    const localVarAxiosArgs = await SmartFunctionsApiAxiosParamCreator_ResolveLlmProviders(
         requestParameters.workspaceId, 
         options || {},
         configuration,
@@ -14933,7 +15551,7 @@ export async function SmartFunctionsApi_TriggerQualityIssuesCalculation(
 
 // SmartFunctionsApi Api FP
 /**
- * Validates LLM endpoint with provided parameters.
+ * Will be soon removed and replaced by testLlmProvider.
  * @summary Validate LLM Endpoint
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -14959,7 +15577,7 @@ export async function SmartFunctionsApi_ValidateLLMEndpoint(
 
 // SmartFunctionsApi Api FP
 /**
- * Validates existing LLM endpoint with provided parameters and updates it if they are valid.
+ * Will be soon removed and replaced by testLlmProviderById.
  * @summary Validate LLM Endpoint By Id
  * @param {AxiosInstance} axios Axios instance.
  * @param {string} basePath Base path.
@@ -15180,14 +15798,25 @@ export interface SmartFunctionsApiInterface {
     memoryCreatedByUsers(requestParameters: SmartFunctionsApiMemoryCreatedByUsersRequest, options?: AxiosRequestConfig): AxiosPromise<MemoryItemCreatedByUsers>;
 
     /**
-     * Returns a list of available LLM Endpoints
+     * Will be soon removed and replaced by LlmProvider-based resolution.
      * @summary Get Active LLM Endpoints for this workspace
      * @param {SmartFunctionsApiResolveLlmEndpointsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof SmartFunctionsApiInterface
      */
     resolveLlmEndpoints(requestParameters: SmartFunctionsApiResolveLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<ResolvedLlmEndpoints>;
+
+    /**
+     * Resolves the active LLM configuration for the given workspace. When the ENABLE_LLM_ENDPOINT_REPLACEMENT feature flag is enabled, returns LLM Providers with their associated models. Otherwise, falls back to the legacy LLM Endpoints.
+     * @summary Get Active LLM configuration for this workspace
+     * @param {SmartFunctionsApiResolveLlmProvidersRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApiInterface
+     */
+    resolveLlmProviders(requestParameters: SmartFunctionsApiResolveLlmProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<ResolvedLlms>;
 
     /**
      * Returns a list of tags for this workspace
@@ -15240,20 +15869,22 @@ export interface SmartFunctionsApiInterface {
     triggerQualityIssuesCalculation(requestParameters: SmartFunctionsApiTriggerQualityIssuesCalculationRequest, options?: AxiosRequestConfig): AxiosPromise<TriggerQualityIssuesCalculationResponse>;
 
     /**
-     * Validates LLM endpoint with provided parameters.
+     * Will be soon removed and replaced by testLlmProvider.
      * @summary Validate LLM Endpoint
      * @param {SmartFunctionsApiValidateLLMEndpointRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof SmartFunctionsApiInterface
      */
     validateLLMEndpoint(requestParameters: SmartFunctionsApiValidateLLMEndpointRequest, options?: AxiosRequestConfig): AxiosPromise<ValidateLLMEndpointResponse>;
 
     /**
-     * Validates existing LLM endpoint with provided parameters and updates it if they are valid.
+     * Will be soon removed and replaced by testLlmProviderById.
      * @summary Validate LLM Endpoint By Id
      * @param {SmartFunctionsApiValidateLLMEndpointByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof SmartFunctionsApiInterface
      */
@@ -15717,6 +16348,20 @@ export interface SmartFunctionsApiResolveLlmEndpointsRequest {
 }
 
 /**
+ * Request parameters for resolveLlmProviders operation in SmartFunctionsApi.
+ * @export
+ * @interface SmartFunctionsApiResolveLlmProvidersRequest
+ */
+export interface SmartFunctionsApiResolveLlmProvidersRequest {
+    /**
+     * Workspace identifier
+     * @type {string}
+     * @memberof SmartFunctionsApiResolveLlmProviders
+     */
+    readonly workspaceId: string
+}
+
+/**
  * Request parameters for tags operation in SmartFunctionsApi.
  * @export
  * @interface SmartFunctionsApiTagsRequest
@@ -16064,15 +16709,28 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
     }
 
     /**
-     * Returns a list of available LLM Endpoints
+     * Will be soon removed and replaced by LlmProvider-based resolution.
      * @summary Get Active LLM Endpoints for this workspace
      * @param {SmartFunctionsApiResolveLlmEndpointsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof SmartFunctionsApi
      */
     public resolveLlmEndpoints(requestParameters: SmartFunctionsApiResolveLlmEndpointsRequest, options?: AxiosRequestConfig) {
         return SmartFunctionsApi_ResolveLlmEndpoints(this.axios, this.basePath, requestParameters, options, this.configuration);
+    }
+
+    /**
+     * Resolves the active LLM configuration for the given workspace. When the ENABLE_LLM_ENDPOINT_REPLACEMENT feature flag is enabled, returns LLM Providers with their associated models. Otherwise, falls back to the legacy LLM Endpoints.
+     * @summary Get Active LLM configuration for this workspace
+     * @param {SmartFunctionsApiResolveLlmProvidersRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SmartFunctionsApi
+     */
+    public resolveLlmProviders(requestParameters: SmartFunctionsApiResolveLlmProvidersRequest, options?: AxiosRequestConfig) {
+        return SmartFunctionsApi_ResolveLlmProviders(this.axios, this.basePath, requestParameters, options, this.configuration);
     }
 
     /**
@@ -16136,10 +16794,11 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
     }
 
     /**
-     * Validates LLM endpoint with provided parameters.
+     * Will be soon removed and replaced by testLlmProvider.
      * @summary Validate LLM Endpoint
      * @param {SmartFunctionsApiValidateLLMEndpointRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof SmartFunctionsApi
      */
@@ -16148,10 +16807,11 @@ export class SmartFunctionsApi extends BaseAPI implements SmartFunctionsApiInter
     }
 
     /**
-     * Validates existing LLM endpoint with provided parameters and updates it if they are valid.
+     * Will be soon removed and replaced by testLlmProviderById.
      * @summary Validate LLM Endpoint By Id
      * @param {SmartFunctionsApiValidateLLMEndpointByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
+     * @deprecated
      * @throws {RequiredError}
      * @memberof SmartFunctionsApi
      */

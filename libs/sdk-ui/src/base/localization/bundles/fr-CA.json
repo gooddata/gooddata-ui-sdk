@@ -50,6 +50,7 @@
     "geochart.map.canvas.instructions.zoomOnly": "Canevas de carte. Utilisez plus et moins pour zoomer. Appuyez sur Tab pour passer au contrôle suivant.",
     "geochart.map.canvas.static": "La carte est statique. La navigation au clavier est désactivée.",
     "geochart.legend.colorScale.label": "Échelle de couleurs de {min} à {max}",
+    "geochart.legend.colorScale.title.allSegments": "{metric} (tous les segments)",
     "geochart.legend.layer.hidden": "Couche de carte {name} masquée",
     "geochart.legend.layer.shown": "Couche de carte {name} affichée",
     "geochart.legend.item.hidden": "{name} masqué",

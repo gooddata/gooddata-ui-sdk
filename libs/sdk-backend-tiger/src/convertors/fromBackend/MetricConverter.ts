@@ -2,8 +2,8 @@
 
 import {
     type JsonApiMetricOutDocument,
+    type JsonApiMetricOutIncludes,
     type JsonApiMetricOutWithLinks,
-    type JsonApiVisualizationObjectOutIncludes,
 } from "@gooddata/api-client-tiger";
 import { newMeasureMetadataObject } from "@gooddata/sdk-backend-base";
 import { type IMeasureMetadataObject, idRef } from "@gooddata/sdk-model";
@@ -21,7 +21,7 @@ function isJsonApiMetricOutDocument(obj: unknown): obj is JsonApiMetricOutDocume
 
 export function convertMetricFromBackend(
     data: JsonApiMetricOutDocument | JsonApiMetricOutWithLinks,
-    included: JsonApiVisualizationObjectOutIncludes[] = [],
+    included: JsonApiMetricOutIncludes[] = [],
 ): IMeasureMetadataObject {
     const { id, attributes, object, createdAt, createdBy, modifiedAt, modifiedBy, certifiedBy } =
         getPropertiesFromData(data);

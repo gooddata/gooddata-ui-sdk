@@ -50,6 +50,7 @@
     "geochart.map.canvas.instructions.zoomOnly": "Karttakankaan piirtoalue. Käytä plus- ja miinusnäppäimiä zoomaukseen. Paina sarkainta siirtyäksesi seuraavaan ohjausobjektiin.",
     "geochart.map.canvas.static": "Kartta on staattinen. Näppäimistönavigointi on poistettu käytöstä.",
     "geochart.legend.colorScale.label": "Väriskaala välillä {min}–{max}",
+    "geochart.legend.colorScale.title.allSegments": "{metric} (kaikki segmentit)",
     "geochart.legend.layer.hidden": "Karttataso {name} piilotettu",
     "geochart.legend.layer.shown": "Karttataso {name} näkyvissä",
     "geochart.legend.item.hidden": "{name} piilotettu",

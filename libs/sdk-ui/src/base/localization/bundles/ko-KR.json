@@ -50,6 +50,7 @@
     "geochart.map.canvas.instructions.zoomOnly": "지도 캔버스. 더하기 및 빼기를 사용하여 확대/축소합니다. Tab을 눌러 다음 컨트롤로 이동합니다.",
     "geochart.map.canvas.static": "지도는 고정되어 있습니다. 키보드 탐색이 비활성화되었습니다.",
     "geochart.legend.colorScale.label": "{min}에서 {max}까지의 색상 스케일",
+    "geochart.legend.colorScale.title.allSegments": "{metric} (모든 세그먼트)",
     "geochart.legend.layer.hidden": "지도 레이어 {name} 숨김",
     "geochart.legend.layer.shown": "지도 레이어 {name} 표시됨",
     "geochart.legend.item.hidden": "{name} 숨김",

@@ -122,6 +122,8 @@ export function* changeInsightWidgetInsightHandler(
         ]),
     );
 
+    // Run insight filter ref sanitization.
+    // This is the only place where we still have both the old and new insight state.
     if (shouldRevalidateDrillsAfterInsightChange(originalInsight, insight)) {
         const updatedWidget = yield select(selectWidgetByRef(insightWidget.ref));
         yield call(validateDrills, ctx, cmd, [updatedWidget]);

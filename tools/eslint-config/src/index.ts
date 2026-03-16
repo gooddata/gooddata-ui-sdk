@@ -51,8 +51,9 @@ export const commonVariants: Record<string, IDualConfiguration[]> = {
     react: [browserEnv, esm, react, reactHooks], // for skel tsx
     "react-vitest": [browserEnv, esm, react, reactHooks, vitest, noOnlyTests], // for gdc-ui libs
     "react-cypress": [browserEnv, esm, react, reactHooks, cypress, chaiFriendly, noOnlyTests], // for gdc e2e libs
+    "esm-cypress": [browserEnv, esm, importEsm, cypress, chaiFriendly, noOnlyTests], // for e2e-utils
     "esm-react": [browserEnv, esm, react, reactHooks, importEsm], // for most react libs
-    "esm-react-cypress": [browserEnv, esm, react, reactHooks, importEsm, cypress, chaiFriendly, noOnlyTests], // probably unused
+    "esm-react-cypress": [browserEnv, esm, react, reactHooks, importEsm, cypress, chaiFriendly, noOnlyTests], // for gdc e2e libs with react
     "esm-react-vitest": [browserEnv, esm, react, reactHooks, importEsm, vitest, noOnlyTests], // for most sdk react libs with vitest
     "esm-react-vitest-storybook": [
         browserEnv,

@@ -17,26 +17,7 @@ on:
         value: ${{ jobs.e2e-neobackstop.outputs.results }}
 
 jobs:
-  warm-up-cache:
-    runs-on:
-      group: infra1-runners-arc
-      labels: runners-small
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ inputs.source-ref }}
-          fetch-depth: 2
-      - name: Git config user
-        uses: snow-actions/git-config-user@v1.0.0
-        with:
-          name: git-action
-          email: git-action@gooddata.com
-      - name: Warmup rush
-        env:
-          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        uses: ./.github/actions/rush/warm-up-rush
   build:
-    needs: [warm-up-cache]
     runs-on:
       group: infra1-runners-arc
       labels: runners-rxa-xlarge
@@ -60,7 +41,7 @@ jobs:
         run: node common/scripts/install-run-rush.js build --to @gooddata/sdk-ui-tests
 
   e2e-neobackstop:
-    needs: [warm-up-cache,build]
+    needs: [build]
     runs-on:
       group: infra1-runners-arc
       labels: runners-cxa-2xlarge

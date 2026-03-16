@@ -627,6 +627,11 @@ export interface IFeatureFlags {
     enableSemanticSearch?: boolean;
 
     /**
+     * Enable Hybrid Search in the UI.
+     */
+    enableHybridSearch?: boolean;
+
+    /**
      * Enable Semantic Search rollout in the UI.
      */
     enableSemanticSearchRollout?: boolean;

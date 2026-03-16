@@ -5,9 +5,9 @@ import { isEmpty } from "lodash-es";
 import {
     type IUserProfile,
     type JsonApiAnalyticalDashboardOutIncludes,
+    type JsonApiMetricOutIncludes,
     type JsonApiUserIdentifierLinkage,
     type JsonApiUserIdentifierOutAttributes,
-    type JsonApiVisualizationObjectOutIncludes,
     type JsonApiWorkspaceAutomationOut,
     type JsonApiWorkspaceAutomationOutWithLinks,
 } from "@gooddata/api-client-tiger";
@@ -64,7 +64,7 @@ function isJsonApiUserIdentifierOutAttributes(
 }
 
 export type IIncludedWithUserIdentifier =
-    | JsonApiVisualizationObjectOutIncludes
+    | JsonApiMetricOutIncludes
     | JsonApiWorkspaceAutomationOutWithLinks
     | JsonApiAnalyticalDashboardOutIncludes
     | JsonApiWorkspaceAutomationOut;

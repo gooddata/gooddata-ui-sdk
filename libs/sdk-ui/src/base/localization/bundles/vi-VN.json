@@ -50,6 +50,7 @@
     "geochart.map.canvas.instructions.zoomOnly": "Khung vẽ bản đồ. Sử dụng dấu cộng và dấu trừ để thu phóng. Nhấn Tab để chuyển đến điều khiển tiếp theo.",
     "geochart.map.canvas.static": "Bản đồ là tĩnh. Điều hướng bằng bàn phím bị vô hiệu hóa.",
     "geochart.legend.colorScale.label": "Thang màu từ {min} đến {max}",
+    "geochart.legend.colorScale.title.allSegments": "{metric} (tất cả phân khúc)",
     "geochart.legend.layer.hidden": "Lớp bản đồ {name} đã bị ẩn",
     "geochart.legend.layer.shown": "Lớp bản đồ {name} đã được hiển thị",
     "geochart.legend.item.hidden": "{name} đã bị ẩn",

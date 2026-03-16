@@ -27,7 +27,7 @@ export const importXRulesNativeNotSupported = {
                     position: "before",
                 },
                 {
-                    pattern: "@gooddata/**",
+                    pattern: "{@gooddata/**,gdc-*}",
                     group: "external",
                     position: "after",
                 },

@@ -5,8 +5,8 @@ import {
     type JsonApiDatasetOutWithLinks,
     type JsonApiFactOutWithLinks,
     type JsonApiLabelOutWithLinks,
+    type JsonApiMetricOutIncludes,
     type JsonApiMetricOutWithLinks,
-    type JsonApiVisualizationObjectOutIncludes,
 } from "@gooddata/api-client-tiger";
 import {
     type AttributeDisplayFormMetadataObjectBuilder,
@@ -97,7 +97,7 @@ export const convertAttribute = (
 
 export const convertMeasure = (
     measure: JsonApiMetricOutWithLinks,
-    included: JsonApiVisualizationObjectOutIncludes[] = [],
+    included: JsonApiMetricOutIncludes[] = [],
 ): ICatalogMeasure => {
     const { maql, format, metricType } = measure.attributes?.content ?? {};
 

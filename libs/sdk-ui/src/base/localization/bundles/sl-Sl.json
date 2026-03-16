@@ -50,6 +50,7 @@
     "geochart.map.canvas.instructions.zoomOnly": "Platno zemljevida. Za povečavo uporabite plus in minus. Pritisnite Tab, da se premaknete na naslednji kontrolnik.",
     "geochart.map.canvas.static": "Zemljevid je statičen. Navigacija s tipkovnico je onemogočena.",
     "geochart.legend.colorScale.label": "Barvna lestvica od {min} do {max}",
+    "geochart.legend.colorScale.title.allSegments": "{metric} (vsi segmenti)",
     "geochart.legend.layer.hidden": "Sloj zemljevida {name} je skrit",
     "geochart.legend.layer.shown": "Sloj zemljevida {name} je prikazan",
     "geochart.legend.item.hidden": "{name} je skrit",

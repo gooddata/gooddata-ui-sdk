@@ -2345,6 +2345,7 @@ export interface IFeatureFlags {
     enableGeoSegmentConflictRecommendation?: boolean;
     enableHeadlineExport?: boolean;
     enableHighchartsAccessibility?: boolean;
+    enableHybridSearch?: boolean;
     enableIgnoreCrossFiltering?: boolean;
     enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
     enableImplicitDrillToUrl?: boolean;

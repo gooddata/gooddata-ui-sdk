@@ -3,17 +3,6 @@
 import fs from "fs";
 
 import axios from "axios";
-import waitOn from "wait-on";
-
-export async function wiremockWait(wiremockHost) {
-    return waitOn({ resources: [`http-get://${wiremockHost}/__admin`], interval: 2000 });
-}
-
-export async function wiremockSettings(wiremockHost) {
-    await axios.post(`http://${wiremockHost}/__admin/settings`, {
-        fixedDelay: 0,
-    });
-}
 
 export async function wiremockStartRecording(wiremockHost, appHost) {
     return axios.post(`http://${wiremockHost}/__admin/mappings`, {

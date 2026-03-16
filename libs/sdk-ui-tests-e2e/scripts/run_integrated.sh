@@ -1,13 +1,12 @@
 #!/bin/bash
-# (C) 2021-2022 GoodData Corporation
+# (C) 2021-2025 GoodData Corporation
 
 #*
 # Run Integrated tests
-# This is useful to run integrated tests for bear/tiger.
+# This is useful to run integrated tests for tiger.
 #
 # CYPRESS_TEST_TAGS (mandatory) list of tags compatible with chosen backend
 # TEST_WORKSPACE_ID workspace
-
 
 if [ -f .env ]; then
     export $(grep -v '^#' .env | xargs -0)
@@ -28,13 +27,14 @@ echo "Filtering by tags: $CYPRESS_TEST_TAGS"
 COMPOSE_FILE="docker-compose-integrated.yaml"
 
 if [ -z "$IMAGE_ID" ]; then
-    echo "Build docker image with what's already in the 'scenarios/build' folder, using IMAGE_ID=gooddata-ui-sdk"
-    docker build --file ../Dockerfile_local -t gooddata-ui-sdk ..
-    export IMAGE_ID=gooddata-ui-sdk
+    echo "Build docker image from sdk-ui-tests-app, using IMAGE_ID=sdk-ui-tests-app"
+    (cd ../sdk-ui-tests-app; npm run prepare-env && npm run dist && npm run pack-build)
+    docker build -t sdk-ui-tests-app ../sdk-ui-tests-app
+    export IMAGE_ID=sdk-ui-tests-app
 else
     echo "Skipping image build, using given image in IMAGE_ID: $IMAGE_ID"
 fi
 
 echo "Run tests in Docker"
 cd "$(dirname "$0")/.."
-docker compose -f ./$COMPOSE_FILE  -p sdk-ui-tests-e2e-$BUILD_ID up --abort-on-container-exit --exit-code-from integrated-tests --force-recreate --always-recreate-deps --renew-anon-volumes
+docker compose -f ./$COMPOSE_FILE -p sdk-ui-tests-e2e-$BUILD_ID up --abort-on-container-exit --exit-code-from integrated-tests --force-recreate --always-recreate-deps --renew-anon-volumes

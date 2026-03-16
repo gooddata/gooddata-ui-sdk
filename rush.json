@@ -395,6 +395,24 @@
             "shouldPublish": true
         },
         {
+            "packageName": "@gooddata/sdk-ui-tests-reference-workspace",
+            "projectFolder": "libs/sdk-ui-tests-reference-workspace",
+            "reviewCategory": "production",
+            "shouldPublish": false
+        },
+        {
+            "packageName": "@gooddata/sdk-ui-tests-app",
+            "projectFolder": "libs/sdk-ui-tests-app",
+            "reviewCategory": "production",
+            "shouldPublish": false
+        },
+        {
+            "packageName": "@gooddata/e2e-utils",
+            "projectFolder": "libs/e2e-utils",
+            "reviewCategory": "production",
+            "shouldPublish": false
+        },
+        {
             "packageName": "@gooddata/sdk-ui-tests-e2e",
             "projectFolder": "libs/sdk-ui-tests-e2e",
             "reviewCategory": "production",

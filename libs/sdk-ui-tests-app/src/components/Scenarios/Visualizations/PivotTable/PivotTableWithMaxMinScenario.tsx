@@ -1,0 +1,123 @@
+// (C) 2023-2026 GoodData Corporation
+
+import {
+    type IAbsoluteDateFilter,
+    type IAttribute,
+    type IMeasure,
+    type IMeasureDefinition,
+    type IPositiveAttributeFilter,
+    newAbsoluteDateFilter,
+    newPositiveAttributeFilter,
+} from "@gooddata/sdk-model";
+import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
+import { PivotTable } from "@gooddata/sdk-ui-pivot";
+import * as ReferenceMd from "@gooddata/sdk-ui-tests-reference-workspace/current_tiger";
+
+// @ts-expect-error Pre-existing issue, never reported
+const measuresOfMaxCase = [ReferenceMd.Amount, ReferenceMd.SumOfAmountWithCaseAndMax];
+const attributesOfCountyAndClosedCreated = [
+    ReferenceMd.CountyName,
+    ReferenceMd.DateDatasets.Closed.ClosedYear.Default,
+    ReferenceMd.DateDatasets.Created.CreatedYear.Default,
+];
+const filtersOfCountyAndClosedDate = [
+    newAbsoluteDateFilter("dt_closedate_timestamp", "2010-01-01", "2011-12-31"),
+    newPositiveAttributeFilter("county_name", ["Clark", "Dutchess"]),
+];
+const measuresOfMaxWithMacroYear = [
+    // @ts-expect-error Pre-existing issue, never reported
+    ReferenceMd.SumOfAmountBetweenMaxCreatedYearAndPreviousYear,
+    // @ts-expect-error Pre-existing issue, never reported
+    ReferenceMd.SumOfAmountNotBetweenMaxCreatedYearAndThisYear,
+];
+const attributesOfCreatedAndClosedYear = [
+    ReferenceMd.DateDatasets.Created.CreatedYear.Default,
+    ReferenceMd.DateDatasets.Closed.ClosedYear.Default,
+];
+const measuresOfMinWithByAllOther = [
+    ReferenceMd.Amount,
+    // @ts-expect-error Pre-existing issue, never reported
+    ReferenceMd.SumOfAmountWithMinAndByAllOther,
+    // @ts-expect-error Pre-existing issue, never reported
+    ReferenceMd.SumOfAmountWithMinAndByAllOtherExcept,
+];
+const filtersOfCreatedAndClosedYear = [
+    newAbsoluteDateFilter("dt_oppcreated_timestamp", "2010-01-01", "2012-12-31"),
+    newAbsoluteDateFilter("dt_closedate_timestamp", "2010-01-01", "2012-12-31"),
+];
+const filtersOfCreated2011 = [newAbsoluteDateFilter("dt_oppcreated_timestamp", "2011-01-01", "2011-12-31")];
+// @ts-expect-error Pre-existing issue, never reported
+const measuresOfMinWithIfThen = [ReferenceMd.Amount, ReferenceMd.SumOfAmountWithIfHavingAndMin];
+const attributesOfCountyAndCreatedClosed = [
+    ReferenceMd.CountyName,
+    ReferenceMd.DateDatasets.Created.CreatedYear.Default,
+    ReferenceMd.DateDatasets.Closed.ClosedYear.Default,
+];
+const filtersOfCountyAndCreatedDate = [
+    newAbsoluteDateFilter("dt_oppcreated_timestamp", "2009-01-01", "2010-12-31"),
+    newPositiveAttributeFilter("county_name", ["Clark", "Dutchess"]),
+];
+
+export interface IPivotTableMaxMinCoreProps {
+    measures?: IMeasure<IMeasureDefinition>[] | undefined;
+    rows?: IAttribute[] | undefined;
+    column?: IAttribute[] | undefined;
+    filters?: (IAbsoluteDateFilter | IPositiveAttributeFilter)[];
+}
+
+function PivotTableMaxMin({ measures, rows, filters }: IPivotTableMaxMinCoreProps) {
+    const backend = useBackendStrict();
+    const workspace = useWorkspaceStrict();
+
+    return (
+        <div style={{ height: 300 }} className="s-pivot-table">
+            <PivotTable
+                backend={backend}
+                workspace={workspace}
+                measures={measures}
+                rows={rows}
+                filters={filters}
+            />
+        </div>
+    );
+}
+
+export function PivotTableOfMaxWithCaseWhen() {
+    return (
+        <PivotTableMaxMin
+            measures={measuresOfMaxCase}
+            rows={attributesOfCountyAndClosedCreated}
+            filters={filtersOfCountyAndClosedDate}
+        />
+    );
+}
+
+export function PivotTableOfMaxWithMacroYear() {
+    return (
+        <PivotTableMaxMin
+            measures={measuresOfMaxWithMacroYear}
+            rows={attributesOfCreatedAndClosedYear}
+            filters={filtersOfCreated2011}
+        />
+    );
+}
+
+export function PivotTableOfMinWithByAllOther() {
+    return (
+        <PivotTableMaxMin
+            measures={measuresOfMinWithByAllOther}
+            rows={attributesOfCreatedAndClosedYear}
+            filters={filtersOfCreatedAndClosedYear}
+        />
+    );
+}
+
+export function PivotTableOfMinWithIfThen() {
+    return (
+        <PivotTableMaxMin
+            measures={measuresOfMinWithIfThen}
+            rows={attributesOfCountyAndCreatedClosed}
+            filters={filtersOfCountyAndCreatedDate}
+        />
+    );
+}

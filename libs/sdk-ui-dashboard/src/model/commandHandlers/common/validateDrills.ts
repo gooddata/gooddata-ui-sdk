@@ -33,11 +33,19 @@ interface IInvalidDrillInfo {
     widget: IInsightWidget;
 }
 
+interface IValidateDrillsOptions {
+    // Used for follow-up validation passes that happen after pushData refreshes drill targets.
+    // In this moment we dont have information about previous insight filters so we want to keep the warning.
+    preserveSanitizedWarnings?: boolean;
+}
+
 export function* validateDrills(
     ctx: DashboardContext,
     cmd: IDashboardCommand,
     widgets: (IKpiWidget | IInsightWidget | IRichTextWidget | IVisualizationSwitcherWidget)[],
+    options: IValidateDrillsOptions = {},
 ) {
+    const { preserveSanitizedWarnings = false } = options;
     const drillValidationResults: SagaReturnType<typeof validateInsightDrillDefinitions>[] = yield all(
         widgets
             .filter(isInsightWidget) // KPI drills should not be validated like this and never removed
@@ -82,7 +90,7 @@ export function* validateDrills(
         );
     }
 
-    if (widgetsWithoutSanitizedDrillFilterConfig.length > 0) {
+    if (!preserveSanitizedWarnings && widgetsWithoutSanitizedDrillFilterConfig.length > 0) {
         yield put(
             uiActions.removeSanitizedDrillWidgetRefs(
                 widgetsWithoutSanitizedDrillFilterConfig.map((drill) => drill.widget.ref),

@@ -64,6 +64,8 @@ export {
     // Execution Result
     ActionsApi_ResolveLlmEndpoints,
     type ActionsApiResolveLlmEndpointsRequest,
+    ActionsApi_ResolveLlmProviders,
+    type ActionsApiResolveLlmProvidersRequest,
     ActionsApi_GenerateDescription,
     type ActionsApiGenerateDescriptionRequest,
     ActionsApi_GenerateTitle,

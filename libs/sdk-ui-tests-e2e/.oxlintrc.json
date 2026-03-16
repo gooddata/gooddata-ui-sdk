@@ -1,6 +1,6 @@
 {
     "$schema": "./node_modules/oxlint/configuration_schema.json",
-    "extends": ["node_modules/@gooddata/oxlint-config/dist/react-cypress.json"],
+    "extends": ["node_modules/@gooddata/oxlint-config/dist/cypress.json"],
     "rules": {
         "no-undef": "warn",
         "import/no-unassigned-import": "warn"

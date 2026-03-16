@@ -10,7 +10,6 @@ import { execSync } from "child_process";
 import "./env.js";
 import { runCypress } from "./lib/cypress.js";
 import { getRecordingsWorkspaceId, recordingsPresent } from "./lib/recordings.js";
-import { wiremockSettings, wiremockWait } from "./lib/wiremock.js";
 
 const wiremockHost = "backend-mock:8080";
 
@@ -59,12 +58,6 @@ async function main() {
             process.stderr.write("Recordings are missing. Run again with the --record parameter.\n");
             process.exit(0);
         }
-
-        process.stdout.write("Waiting for Wiremock\n");
-        await wiremockWait(wiremockHost);
-        process.stdout.write("Wiremock ready\n");
-
-        await wiremockSettings(wiremockHost);
 
         let testWorkspaceId = TEST_WORKSPACE_ID;
         if (!recording) {

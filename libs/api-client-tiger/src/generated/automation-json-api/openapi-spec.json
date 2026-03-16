@@ -2789,7 +2789,7 @@
                     "delimiter": {
                         "maxLength": 1,
                         "minLength": 1,
-                        "pattern": "^[^\\r\\n\"]$",
+                        "pattern": "^[\\t !#$%&()*+\\-.,/:;<=>?@\\[\\\\\\]^_{|}~]$",
                         "type": "string",
                         "description": "Set column delimiter. (CSV)"
                     },
@@ -3041,7 +3041,7 @@
                     "delimiter": {
                         "maxLength": 1,
                         "minLength": 1,
-                        "pattern": "^[^\\r\\n\"]$",
+                        "pattern": "^[\\t !#$%&()*+\\-.,/:;<=>?@\\[\\\\\\]^_{|}~]$",
                         "type": "string",
                         "description": "Set column delimiter. (CSV)"
                     },

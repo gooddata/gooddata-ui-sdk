@@ -50,6 +50,7 @@
     "geochart.map.canvas.instructions.zoomOnly": "Kanvas peta. Gunakan plus dan minus untuk memperbesar atau memperkecil. Tekan Tab untuk berpindah ke kontrol berikutnya.",
     "geochart.map.canvas.static": "Peta bersifat statis. Navigasi keyboard dinonaktifkan.",
     "geochart.legend.colorScale.label": "Skala warna dari {min} hingga {max}",
+    "geochart.legend.colorScale.title.allSegments": "{metric} (semua segmen)",
     "geochart.legend.layer.hidden": "Lapisan peta {name} disembunyikan",
     "geochart.legend.layer.shown": "Lapisan peta {name} ditampilkan",
     "geochart.legend.item.hidden": "{name} disembunyikan",

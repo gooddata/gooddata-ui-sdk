@@ -12,26 +12,7 @@ on:
           type: string
 
 jobs:
-  warm-up-cache:
-    runs-on:
-      group: infra1-runners-arc
-      labels: runners-cxa-xlarge
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ inputs.source-ref }}
-          fetch-depth: 2
-      - name: Git config user
-        uses: snow-actions/git-config-user@v1.0.0
-        with:
-          name: git-action
-          email: git-action@gooddata.com
-      - name: Warmup rush
-        env:
-          NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        uses: ./.github/actions/rush/warm-up-rush
   build:
-    needs: [warm-up-cache]
     runs-on:
       group: infra1-runners-arc
       labels: runners-rxa-xlarge
@@ -54,11 +35,48 @@ jobs:
       - name: Rush build
         run: node common/scripts/install-run-rush.js build --to @gooddata/sdk-ui-tests-e2e
 
-  e2e:
-    needs: [warm-up-cache,build]
+  e2e-prepare-matrix:
     runs-on:
       group: infra1-runners-arc
-      labels: runners-rxa-xlarge
+      labels: runners-small
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+      count: ${{ steps.set-matrix.outputs.count }}
+    steps:
+      - id: set-matrix
+        run: |
+          if [ -n "$USER_FILTER" ]; then
+            # only one runner when user provided filter
+            echo "matrix=[\"runner1\"]" >> $GITHUB_OUTPUT
+            echo "count=1" >> $GITHUB_OUTPUT
+          else
+            # hardcode runners count
+            COUNT=3
+            MATRIX="["
+            for i in $(seq 1 $COUNT); do
+              if [ $i -ne 1 ]; then
+                MATRIX+=", "
+              fi
+              MATRIX+="\"runner$i\""
+            done
+            MATRIX+="]"
+
+            echo "Matrix for $COUNT: $MATRIX"
+            echo "matrix=$MATRIX" >> $GITHUB_OUTPUT
+            echo "count=$COUNT" >> $GITHUB_OUTPUT
+          fi
+    env:
+      USER_FILTER: ${{ inputs.filter }}
+
+  e2e:
+    needs: [build, e2e-prepare-matrix]
+    runs-on:
+      group: infra1-runners-arc
+      labels: runners-cxa-xlarge
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: ${{fromJson(needs.e2e-prepare-matrix.outputs.matrix)}}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -81,20 +99,26 @@ jobs:
           export TEST_BACKEND=https://staging-automation.staging-ui.stg11.panther.intgdc.com
           export TIGER_DATASOURCES_NAME=pg_staging-goodsales
           export EXECUTOR_NUMBER=$GH_RUN_ID
-          export CYPRESS_TEST_TAGS=post-merge_integrated_tiger
+          export PLAYWRIGHT_GREP=@pre-merge-integrated
           if [ -n "$USER_FILTER" ]; then
             export FILTER=$USER_FILTER
+          else
+            export SHARD_INDEX=${RUNNER//[!0-9]/}
+            export SHARD_TOTAL=$RUNNERS_COUNT
           fi
-          echo "Running with FILTER=$FILTER"
+          echo "Running SHARD=$SHARD_INDEX/$SHARD_TOTAL FILTER=$FILTER PLAYWRIGHT_GREP=$PLAYWRIGHT_GREP for RUNNER=$RUNNER"
           ./common/scripts/ci/run_cypress_integrated_tests.sh
         env:
           GH_RUN_ID: ${{ github.run_id }}
+          RUNNER: ${{ matrix.runner }}
+          RUNNERS_COUNT: ${{ needs.e2e-prepare-matrix.outputs.count }}
           TIGER_API_TOKEN: ${{ secrets.AWS_STAGING_TEST_API_TOKEN }}
           USER_FILTER: ${{ inputs.filter }}
-      - name: Archive the cypress test artifacts
+      - name: Archive the test artifacts
         uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
-          name: cypress-test-artifacts
+          name: e2e-test-artifacts-sdk-integrated-${{matrix.runner}}
           path: |
-            libs/sdk-ui-tests-e2e/cypress/videos/**/*.mp4
+            libs/sdk-ui-tests-e2e/test-results/**/*
+            libs/sdk-ui-tests-e2e/playwright/results/**/*

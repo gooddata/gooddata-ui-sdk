@@ -1,6 +1,9 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { ActionsApi_MetadataSync } from "@gooddata/api-client-tiger/endpoints/actions";
+import {
+    ActionsApi_MetadataSync,
+    ActionsApi_ResolveLlmProviders,
+} from "@gooddata/api-client-tiger/endpoints/actions";
 import type {
     IAnalyticsCatalogService,
     IChatThread,
@@ -19,7 +22,6 @@ import { SemanticQualityService } from "./SemanticQualityService.js";
 import { SemanticSearchQuery } from "./SemanticSearchQuery.js";
 import { type DateNormalizer } from "../../../convertors/fromBackend/dateFormatting/types.js";
 import { type TigerAuthenticatedCallGuard } from "../../../types/index.js";
-import { resolveSettings } from "../settings/index.js";
 
 export class GenAIService implements IGenAIService {
     constructor(
@@ -45,9 +47,12 @@ export class GenAIService implements IGenAIService {
     }
 
     async getLlmConfigured(): Promise<boolean> {
-        const settings = await resolveSettings(this.authCall, this.workspaceId);
-
-        return Boolean(settings.activeLlmProvider || settings.llmEndpoint);
+        const result = await this.authCall((client) =>
+            ActionsApi_ResolveLlmProviders(client.axios, client.basePath, {
+                workspaceId: this.workspaceId,
+            }),
+        );
+        return Boolean(result.data.data);
     }
 
     getKnowledgeDocuments(): IKnowledgeDocumentsService {

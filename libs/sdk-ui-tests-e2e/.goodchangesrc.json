@@ -1,7 +1,8 @@
 {
     "targets": [
         {
-            "type": "target"
+            "type": "target",
+            "app": "@gooddata/sdk-ui-tests-app"
         }
     ],
     "ignores": [

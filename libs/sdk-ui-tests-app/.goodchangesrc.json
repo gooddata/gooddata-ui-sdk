@@ -1,0 +1,13 @@
+{
+    "ignores": [
+        "README.md",
+        "favicon.ico",
+        ".oxlintrc.json",
+        "eslint.config.ts",
+        ".copyrightexclude",
+        ".i18nrc.js",
+        ".env.template",
+        ".gitignore",
+        ".dockerignore"
+    ]
+}

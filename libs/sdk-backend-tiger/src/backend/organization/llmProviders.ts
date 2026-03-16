@@ -119,8 +119,22 @@ export class OrganizationLlmProvidersService implements IOrganizationLlmProvider
     public testLlmProvider(provider: Partial<LlmProviderPatch>): Promise<LlmProviderTestResults> {
         return this.authCall(async (client: ITigerClientBase) => {
             if (provider.id) {
+                const patch = convertLlmProviderPatchToBackend({
+                    ...provider,
+                    id: "",
+                });
                 const result = await GenAiApi_TestLlmProviderById(client.axios, client.basePath, {
                     llmProviderId: provider.id,
+                    testLlmProviderByIdRequest: {
+                        providerConfig: patch.attributes?.providerConfig ?? {
+                            type: "OPENAI",
+                            auth: {
+                                type: "API_KEY",
+                                apiKey: "",
+                            },
+                        },
+                        models: patch.attributes?.models ?? undefined,
+                    },
                 });
 
                 return {

@@ -50,6 +50,7 @@
     "geochart.map.canvas.instructions.zoomOnly": "Kaartcanvas. Gebruik plus en min om te zoomen. Druk op Tab om naar het volgende besturingselement te gaan.",
     "geochart.map.canvas.static": "Kaart is statisch. Toetsenbordnavigatie is uitgeschakeld.",
     "geochart.legend.colorScale.label": "Kleurschaal van {min} tot {max}",
+    "geochart.legend.colorScale.title.allSegments": "{metric} (alle segmenten)",
     "geochart.legend.layer.hidden": "Kaartlaag {name} verborgen",
     "geochart.legend.layer.shown": "Kaartlaag {name} weergegeven",
     "geochart.legend.item.hidden": "{name} verborgen",

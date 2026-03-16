@@ -1689,7 +1689,7 @@
                     "actions"
                 ],
                 "summary": "Validate LLM Endpoint By Id",
-                "description": "Validates existing LLM endpoint with provided parameters and updates it if they are valid.",
+                "description": "Will be soon removed and replaced by testLlmProviderById.",
                 "operationId": "validateLLMEndpointById",
                 "parameters": [
                     {
@@ -1721,7 +1721,8 @@
                             }
                         }
                     }
-                }
+                },
+                "deprecated": true
             }
         },
         "/api/v1/actions/ai/llmEndpoint/test": {
@@ -1731,7 +1732,7 @@
                     "actions"
                 ],
                 "summary": "Validate LLM Endpoint",
-                "description": "Validates LLM endpoint with provided parameters.",
+                "description": "Will be soon removed and replaced by testLlmProvider.",
                 "operationId": "validateLLMEndpoint",
                 "requestBody": {
                     "content": {
@@ -1754,7 +1755,8 @@
                             }
                         }
                     }
-                }
+                },
+                "deprecated": true
             }
         },
         "/api/v1/actions/workspaces/{workspaceId}/ai/knowledge/documents/{filename}": {
@@ -2546,15 +2548,15 @@
                 }
             }
         },
-        "/api/v1/actions/workspaces/{workspaceId}/execution/afm/execute/result/{resultId}": {
+        "/api/v1/actions/workspaces/{workspaceId}/execution/afm/execute/result/{resultId}/binary": {
             "get": {
                 "tags": [
                     "Computation",
                     "actions"
                 ],
-                "summary": "Get a single execution result",
-                "description": "Gets a single execution result. Note that the Arrow File and Arrow Stream content types are currently in BETA.",
-                "operationId": "retrieveResult",
+                "summary": "(BETA) Get a single execution result in Apache Arrow File or Stream format",
+                "description": "(BETA) Gets a single execution result as an Apache Arrow IPC File or Stream format.",
+                "operationId": "retrieveResultBinary",
                 "parameters": [
                     {
                         "name": "workspaceId",
@@ -2583,6 +2585,64 @@
                         "schema": {
                             "type": "string"
                         }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Execution result was found and returned.",
+                        "content": {
+                            "application/vnd.apache.arrow.file": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            },
+                            "application/vnd.apache.arrow.stream": {
+                                "schema": {
+                                    "type": "string",
+                                    "format": "binary"
+                                }
+                            }
+                        }
+                    }
+                },
+                "x-gdc-security-info": {
+                    "permissions": [
+                        "VIEW"
+                    ],
+                    "description": "Permissions required to view a report or label elements."
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/execution/afm/execute/result/{resultId}": {
+            "get": {
+                "tags": [
+                    "Computation",
+                    "actions"
+                ],
+                "summary": "Get a single execution result",
+                "description": "Gets a single execution result.",
+                "operationId": "retrieveResult",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "resultId",
+                        "in": "path",
+                        "description": "Result ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "a9b28f9dc55f37ea9f4a5fb0c76895923591e781"
                     },
                     {
                         "name": "offset",
@@ -2633,14 +2693,20 @@
                             "default": []
                         },
                         "example": "excludedTotalDimensions=dim_0,dim_1"
+                    },
+                    {
+                        "name": "X-GDC-CANCEL-TOKEN",
+                        "in": "header",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "Execution result was found and returned.",
                         "content": {
-                            "application/vnd.apache.arrow.stream": {},
-                            "application/vnd.apache.arrow.file": {},
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/ExecutionResult"
@@ -2697,6 +2763,41 @@
                 }
             }
         },
+        "/api/v1/actions/workspaces/{workspaceId}/ai/resolveLlmProviders": {
+            "get": {
+                "tags": [
+                    "Smart Functions",
+                    "actions"
+                ],
+                "summary": "Get Active LLM configuration for this workspace",
+                "description": "Resolves the active LLM configuration for the given workspace. When the ENABLE_LLM_ENDPOINT_REPLACEMENT feature flag is enabled, returns LLM Providers with their associated models. Otherwise, falls back to the legacy LLM Endpoints.",
+                "operationId": "resolveLlmProviders",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ResolvedLlms"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/actions/workspaces/{workspaceId}/ai/resolveLlmEndpoints": {
             "get": {
                 "tags": [
@@ -2704,7 +2805,7 @@
                     "actions"
                 ],
                 "summary": "Get Active LLM Endpoints for this workspace",
-                "description": "Returns a list of available LLM Endpoints",
+                "description": "Will be soon removed and replaced by LlmProvider-based resolution.",
                 "operationId": "resolveLlmEndpoints",
                 "parameters": [
                     {
@@ -2729,7 +2830,8 @@
                             }
                         }
                     }
-                }
+                },
+                "deprecated": true
             }
         },
         "/api/v1/actions/workspaces/{workspaceId}/ai/memory/createdBy": {
@@ -6319,17 +6421,237 @@
                     }
                 }
             },
-            "UserContext": {
+            "DashboardContext": {
                 "required": [
-                    "activeObject"
+                    "id",
+                    "widgets"
                 ],
                 "type": "object",
                 "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "Dashboard object ID."
+                    },
+                    "widgets": {
+                        "type": "array",
+                        "description": "Widgets currently visible on the dashboard.",
+                        "items": {
+                            "oneOf": [
+                                {
+                                    "$ref": "#/components/schemas/InsightWidgetDescriptor"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/RichTextWidgetDescriptor"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/VisualizationSwitcherWidgetDescriptor"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "description": "Dashboard the user is currently viewing."
+            },
+            "InsightWidgetDescriptor": {
+                "required": [
+                    "title",
+                    "visualizationId",
+                    "widgetId"
+                ],
+                "type": "object",
+                "description": "Insight widget displaying a visualization.",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/WidgetDescriptor"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "widgetId": {
+                                "type": "string",
+                                "description": "Widget object ID."
+                            },
+                            "title": {
+                                "type": "string",
+                                "description": "Widget title as displayed on the dashboard."
+                            },
+                            "resultId": {
+                                "type": "string",
+                                "description": "Signed result ID for this widget's cached execution result."
+                            },
+                            "visualizationId": {
+                                "type": "string",
+                                "description": "Visualization object ID referenced by this insight widget."
+                            }
+                        }
+                    }
+                ]
+            },
+            "ObjectReference": {
+                "required": [
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Type of the referenced object.",
+                        "enum": [
+                            "WIDGET",
+                            "METRIC",
+                            "ATTRIBUTE",
+                            "DASHBOARD"
+                        ]
+                    },
+                    "id": {
+                        "type": "string",
+                        "description": "Object identifier (e.g. widget ID, metric ID)."
+                    }
+                }
+            },
+            "ObjectReferenceGroup": {
+                "required": [
+                    "objects"
+                ],
+                "type": "object",
+                "properties": {
+                    "context": {
+                        "$ref": "#/components/schemas/ObjectReference"
+                    },
+                    "objects": {
+                        "type": "array",
+                        "description": "Objects the user explicitly referenced within this context.",
+                        "items": {
+                            "$ref": "#/components/schemas/ObjectReference"
+                        }
+                    }
+                }
+            },
+            "RichTextWidgetDescriptor": {
+                "required": [
+                    "title",
+                    "widgetId"
+                ],
+                "type": "object",
+                "description": "Rich text widget displaying static content. Has no execution result.",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/WidgetDescriptor"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "widgetId": {
+                                "type": "string",
+                                "description": "Widget object ID."
+                            },
+                            "title": {
+                                "type": "string",
+                                "description": "Widget title as displayed on the dashboard."
+                            }
+                        }
+                    }
+                ]
+            },
+            "UIContext": {
+                "type": "object",
+                "properties": {
+                    "dashboard": {
+                        "$ref": "#/components/schemas/DashboardContext"
+                    }
+                },
+                "description": "Ambient UI state: what the user is currently looking at (dashboard, visible widgets)."
+            },
+            "UserContext": {
+                "type": "object",
+                "properties": {
+                    "view": {
+                        "$ref": "#/components/schemas/UIContext"
+                    },
+                    "referencedObjects": {
+                        "type": "array",
+                        "description": "Groups of explicitly referenced objects, each optionally scoped by a context (e.g. a dashboard context with widget references).",
+                        "items": {
+                            "$ref": "#/components/schemas/ObjectReferenceGroup"
+                        }
+                    },
                     "activeObject": {
                         "$ref": "#/components/schemas/ActiveObjectIdentification"
                     }
                 },
-                "description": "User context, which can affect the behavior of the underlying AI features."
+                "description": "User context with ambient UI state (view) and explicitly referenced objects."
+            },
+            "VisualizationSwitcherWidgetDescriptor": {
+                "required": [
+                    "activeVisualizationId",
+                    "title",
+                    "visualizationIds",
+                    "widgetId"
+                ],
+                "type": "object",
+                "description": "Visualization switcher widget allowing users to toggle between multiple visualizations.",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/WidgetDescriptor"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "widgetId": {
+                                "type": "string",
+                                "description": "Widget object ID."
+                            },
+                            "title": {
+                                "type": "string",
+                                "description": "Widget title as displayed on the dashboard."
+                            },
+                            "resultId": {
+                                "type": "string",
+                                "description": "Signed result ID for the currently active visualization's execution result."
+                            },
+                            "activeVisualizationId": {
+                                "type": "string",
+                                "description": "ID of the currently active visualization in the switcher."
+                            },
+                            "visualizationIds": {
+                                "type": "array",
+                                "description": "IDs of all visualizations available in the switcher.",
+                                "items": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "WidgetDescriptor": {
+                "required": [
+                    "title",
+                    "widgetId",
+                    "widgetType"
+                ],
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "type": "string"
+                    },
+                    "widgetId": {
+                        "type": "string"
+                    },
+                    "widgetType": {
+                        "type": "string"
+                    }
+                },
+                "description": "Descriptor for a widget on the dashboard.",
+                "discriminator": {
+                    "propertyName": "widgetType",
+                    "mapping": {
+                        "insight": "#/components/schemas/InsightWidgetDescriptor",
+                        "richText": "#/components/schemas/RichTextWidgetDescriptor",
+                        "visualizationSwitcher": "#/components/schemas/VisualizationSwitcherWidgetDescriptor"
+                    }
+                }
             },
             "ServerSentEventChatResult": {
                 "type": "object"
@@ -7173,8 +7495,38 @@
                     },
                     "reasoning": {
                         "$ref": "#/components/schemas/Reasoning"
+                    },
+                    "toolCallEvents": {
+                        "type": "array",
+                        "description": "Tool call events emitted during the agentic loop (only present when GEN_AI_YIELD_TOOL_CALL_EVENTS is enabled).",
+                        "items": {
+                            "$ref": "#/components/schemas/ToolCallEventResult"
+                        }
                     }
                 }
+            },
+            "ToolCallEventResult": {
+                "required": [
+                    "functionArguments",
+                    "functionName",
+                    "result"
+                ],
+                "type": "object",
+                "properties": {
+                    "functionName": {
+                        "type": "string",
+                        "description": "Name of the tool function that was called."
+                    },
+                    "functionArguments": {
+                        "type": "string",
+                        "description": "JSON-encoded arguments passed to the tool function."
+                    },
+                    "result": {
+                        "type": "string",
+                        "description": "Result returned by the tool function."
+                    }
+                },
+                "description": "Tool call events emitted during the agentic loop (only present when GEN_AI_YIELD_TOOL_CALL_EVENTS is enabled)."
             },
             "GenerateTitleRequest": {
                 "required": [
@@ -8624,7 +8976,7 @@
                     }
                 }
             },
-            "ResolvedLlmEndpoint": {
+            "ResolvedLlm": {
                 "required": [
                     "id",
                     "title"
@@ -8632,12 +8984,85 @@
                 "type": "object",
                 "properties": {
                     "id": {
-                        "type": "string",
-                        "description": "Endpoint Id"
+                        "type": "string"
                     },
                     "title": {
-                        "type": "string",
-                        "description": "Endpoint Title"
+                        "type": "string"
+                    }
+                },
+                "description": "The resolved LLM configuration, or null if none is configured."
+            },
+            "ResolvedLlmEndpoint": {
+                "required": [
+                    "id",
+                    "title"
+                ],
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/ResolvedLlm"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string",
+                                "description": "Endpoint Id"
+                            },
+                            "title": {
+                                "type": "string",
+                                "description": "Endpoint Title"
+                            }
+                        }
+                    }
+                ]
+            },
+            "ResolvedLlmProvider": {
+                "required": [
+                    "id",
+                    "models",
+                    "title"
+                ],
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/ResolvedLlm"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string",
+                                "description": "Provider Id"
+                            },
+                            "title": {
+                                "type": "string",
+                                "description": "Provider Title"
+                            },
+                            "models": {
+                                "maxItems": 1,
+                                "minItems": 1,
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/LlmModel"
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "ResolvedLlms": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/ResolvedLlmEndpoint"
+                            },
+                            {
+                                "$ref": "#/components/schemas/ResolvedLlmProvider"
+                            }
+                        ]
                     }
                 }
             },

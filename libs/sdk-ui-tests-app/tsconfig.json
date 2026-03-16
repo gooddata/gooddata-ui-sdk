@@ -1,0 +1,19 @@
+{
+    "extends": "../../tsconfig.strict.json",
+    "exclude": ["node_modules", "dist"],
+    "compilerOptions": {
+        "jsx": "react-jsx",
+        "module": "ESNext",
+        "moduleResolution": "bundler",
+        "noEmit": true,
+        "outDir": "dist",
+        "sourceMap": true,
+        "allowSyntheticDefaultImports": true,
+        "paths": {
+            "react": ["./node_modules/@types/react"]
+        },
+        "strictFunctionTypes": true,
+        "strictNullChecks": true,
+        "skipLibCheck": true
+    }
+}

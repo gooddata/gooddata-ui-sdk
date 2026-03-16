@@ -11,10 +11,10 @@ import {
     type AutomationDashboardExportSettings,
     type ITigerFilter,
     type ITigerFilterContextItem,
-    type JsonApiAutomationOutAttributesDashboardTabularExportsInner,
-    type JsonApiAutomationOutAttributesRawExportsInner,
     type JsonApiExportDefinitionOutIncludes,
     type JsonApiExportDefinitionOutWithLinks,
+    type JsonApiWorkspaceAutomationOutAttributesDashboardTabularExportsInner,
+    type JsonApiWorkspaceAutomationOutAttributesRawExportsInner,
     type TabularExportRequest,
     type VisualExportRequest,
     isTigerFilters,
@@ -99,7 +99,7 @@ export const wrapExportDefinition = (
 };
 
 export const convertDashboardTabularExportRequest = (
-    exportRequest: JsonApiAutomationOutAttributesDashboardTabularExportsInner,
+    exportRequest: JsonApiWorkspaceAutomationOutAttributesDashboardTabularExportsInner,
 ): IExportDefinitionDashboardRequestPayload | IExportDefinitionVisualizationObjectRequestPayload => {
     const {
         requestPayload: {
@@ -194,7 +194,7 @@ export const convertVisualExportRequest = (
 };
 
 export const convertToRawExportRequest = (
-    exportRequest: JsonApiAutomationOutAttributesRawExportsInner,
+    exportRequest: JsonApiWorkspaceAutomationOutAttributesRawExportsInner,
 ): IExportDefinitionVisualizationObjectRequestPayload => {
     const {
         requestPayload: { fileName, execution, metadata },

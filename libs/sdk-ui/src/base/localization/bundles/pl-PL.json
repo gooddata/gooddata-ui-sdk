@@ -50,6 +50,7 @@
     "geochart.map.canvas.instructions.zoomOnly": "Płótno mapy. Użyj plusa i minusa, aby powiększać. Naciśnij Tab, aby przejść do następnej kontrolki.",
     "geochart.map.canvas.static": "Mapa jest statyczna. Nawigacja za pomocą klawiatury jest wyłączona.",
     "geochart.legend.colorScale.label": "Skala kolorów od {min} do {max}",
+    "geochart.legend.colorScale.title.allSegments": "{metric} (wszystkie segmenty)",
     "geochart.legend.layer.hidden": "Warstwa mapy {name} ukryta",
     "geochart.legend.layer.shown": "Warstwa mapy {name} pokazana",
     "geochart.legend.item.hidden": "{name} ukryte",
