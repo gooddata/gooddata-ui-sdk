@@ -14,6 +14,7 @@ GoodData.UI provides a React component for embedding a semantic search interface
 - Embed UI for semantic search functionality.
 - Search for analytical objects using natural language.
 - Filter search results by object types.
+- Filter search results by tags.
 - Enable deep search to find dashboards by their contents.
 - Theming is supported out of the box through [Theme Provider].
 
@@ -49,6 +50,8 @@ const App = () => {
                 limit={10}
                 // Optional: Custom placeholder
                 placeholder="Search for dashboards, metrics..."
+                // Optional: Exclude objects with specific tags
+                excludeTags={["hidden"]}
                 // Optional: Custom footer in search results
                 renderFooter={(props, { closeSearch }) => {
                     return null;
@@ -73,6 +76,8 @@ const App = () => {
 | deepSearch   | boolean                                                                               | false   | Enable deep search to find dashboards by their contents                                 |
 | limit        | number                                                                                | 10      | Target number of search results to return. See note below about actual result count     |
 | placeholder  | string                                                                                | -       | Placeholder text for the search input                                                   |
+| includeTags  | string[]                                                                              | -       | A list of tags the returned objects must have                                           |
+| excludeTags  | string[]                                                                              | -       | A list of tags the returned objects must not have                                       |
 | renderFooter | (props: SemanticSearchFooterProps, context: SemanticSearchFooterContext) => ReactNode | -       | Optional function to render a custom footer in the search results                       |
 
 > **Note about result limits:** The `limit` parameter specifies a target number of results, but the actual number of returned items may vary:
@@ -97,6 +102,7 @@ const MyCustomSearchComponent = () => {
         objectTypes: ["dashboard", "metric"],
         deepSearch: true,
         limit: 10,
+        excludeTags: ["hidden"],
         // backend and workspace are optional if provided via context
     });
 
@@ -136,6 +142,8 @@ const MyCustomSearchComponent = () => {
 | limit       | number             | -       | Target number of search results to return. See note in Props section     |
 | backend     | IAnalyticalBackend | -       | Backend instance. Falls back to BackendProvider context if not specified |
 | workspace   | string             | -       | Workspace ID. Falls back to WorkspaceProvider context if not specified   |
+| includeTags | string[]           | -       | A list of tags the returned objects must have                            |
+| excludeTags | string[]           | -       | A list of tags the returned objects must not have                        |
 
 ### Hook Return Value
 

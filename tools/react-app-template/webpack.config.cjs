@@ -1,7 +1,8 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 const path = require("path");
 const { URL } = require("url");
+const zlib = require("zlib");
 
 const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
 const { EsbuildPlugin } = require("esbuild-loader");
@@ -15,7 +16,7 @@ require("dotenv").config();
 const BACKEND_URL = pack.gooddata.hostname;
 const WORKSPACE_ID = pack.gooddata.workspaceId;
 
-const GEO_STYLE_ENDPOINT = "/api/v1/location/style";
+const GEO_STYLE_ENDPOINT = /^\/api\/v1\/location\/style(?:$|\?)/;
 const ABSOLUTE_URL_PATTERN = /^https?:\/\//i;
 
 function applyProxyRequestHeaders(proxyReq) {
@@ -23,16 +24,49 @@ function applyProxyRequestHeaders(proxyReq) {
     proxyReq.setHeader("accept-encoding", "identity");
 }
 
+function getPrimaryContentEncoding(encoding) {
+    const headerValue = Array.isArray(encoding) ? encoding.join(",") : (encoding ?? "");
+    const [primaryEncoding = ""] = headerValue.split(",");
+    return primaryEncoding.split(";")[0].trim().toLowerCase();
+}
+
+function decompressBuffer(buffer, encoding, callback) {
+    const normalizedEncoding = getPrimaryContentEncoding(encoding);
+
+    if (normalizedEncoding === "gzip") {
+        zlib.gunzip(buffer, callback);
+    } else if (normalizedEncoding === "br") {
+        zlib.brotliDecompress(buffer, callback);
+    } else if (normalizedEncoding === "deflate") {
+        zlib.inflate(buffer, callback);
+    } else {
+        callback(null, buffer);
+    }
+}
+
 function rewriteLocationStyleResponse(buffer, origin) {
+    // Swap all backend-origin URLs to the dev-server origin so MapLibre fetches
+    // them through the dev-server proxy instead of directly (which would be cross-origin).
     const payload = JSON.parse(buffer.toString("utf8"));
 
     if (typeof payload.glyphs === "string") {
         payload.glyphs = replaceUrlOrigin(payload.glyphs, origin);
     }
 
+    // sprite can be a string or an array of { id, url } objects (MapLibre v3+)
+    if (typeof payload.sprite === "string") {
+        payload.sprite = replaceUrlOrigin(payload.sprite, origin);
+    } else if (Array.isArray(payload.sprite)) {
+        payload.sprite = payload.sprite.map((entry) =>
+            entry && typeof entry.url === "string"
+                ? { ...entry, url: replaceUrlOrigin(entry.url, origin) }
+                : entry,
+        );
+    }
+
     if (payload.sources && typeof payload.sources === "object") {
         Object.values(payload.sources).forEach((source) => {
-            if (isVectorSourceWithTiles(source) && Array.isArray(source.tiles)) {
+            if (isSourceWithTiles(source) && Array.isArray(source.tiles)) {
                 source.tiles = source.tiles.map((tileUrl) => replaceUrlOrigin(tileUrl, origin));
             }
         });
@@ -55,13 +89,18 @@ function replaceUrlOrigin(value, origin) {
     return `${origin}${suffix}`;
 }
 
-function isVectorSourceWithTiles(source) {
-    return Boolean(source && typeof source === "object" && source.type === "vector");
+function isSourceWithTiles(source) {
+    return Boolean(
+        source &&
+        typeof source === "object" &&
+        (source.type === "vector" || source.type === "raster") &&
+        Array.isArray(source.tiles),
+    );
 }
 
 function createGeoStyleProxy({ backend, origin, cookieDomain }) {
     return {
-        context: GEO_STYLE_ENDPOINT,
+        context: (pathname) => GEO_STYLE_ENDPOINT.test(pathname || ""),
         changeOrigin: true,
         cookieDomainRewrite: cookieDomain,
         secure: false,
@@ -84,15 +123,23 @@ function createGeoStyleProxy({ backend, origin, cookieDomain }) {
                     return;
                 }
 
-                try {
-                    const rewrittenBody = rewriteLocationStyleResponse(buffer, origin);
-                    res.setHeader("content-type", "application/json");
-                    res.end(rewrittenBody);
-                } catch (err) {
-                    console.error("[devServer] Failed to rewrite geo style response", err);
-                    res.writeHead(500, { "content-type": "application/json" });
-                    res.end(JSON.stringify({ error: "Failed to rewrite geo style response." }));
-                }
+                decompressBuffer(buffer, proxyRes.headers["content-encoding"], (err, decompressed) => {
+                    if (err) {
+                        console.error("[devServer] Failed to decompress geo style response", err);
+                        res.writeHead(500, { "content-type": "application/json" });
+                        res.end(JSON.stringify({ error: "Failed to decompress geo style response." }));
+                        return;
+                    }
+                    try {
+                        const rewrittenBody = rewriteLocationStyleResponse(decompressed, origin);
+                        res.setHeader("content-type", "application/json");
+                        res.end(rewrittenBody);
+                    } catch (rewriteErr) {
+                        console.error("[devServer] Failed to rewrite geo style response", rewriteErr);
+                        res.writeHead(500, { "content-type": "application/json" });
+                        res.end(JSON.stringify({ error: "Failed to rewrite geo style response." }));
+                    }
+                });
             });
         },
     };
@@ -201,7 +248,7 @@ module.exports = (_env, argv) => {
                         use: ["style-loader", "css-loader"],
                     },
                     {
-                        test: /\.(eot|woff|ttf|svg|jpg|jpeg|gif)/,
+                        test: /\.(eot|woff|woff2|ttf|svg|jpg|jpeg|gif)/,
                         type: "asset/resource",
                     },
                     !isProduction && {

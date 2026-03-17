@@ -26,8 +26,6 @@ import {
     type JsonApiApiTokenOutList,
     type JsonApiCspDirectiveInDocument,
     type JsonApiCustomApplicationSettingOut,
-    type JsonApiCustomGeoCollectionInDocument,
-    type JsonApiCustomGeoCollectionPatchDocument,
     type JsonApiDataSourceIdentifierOutDocument,
     type JsonApiDataSourceIdentifierOutWithLinks,
     type JsonApiDataSourceInAttributesCacheStrategyEnum,
@@ -75,7 +73,6 @@ import {
     EntitiesApi_CreateEntityApiTokens,
     EntitiesApi_CreateEntityCspDirectives,
     EntitiesApi_CreateEntityCustomApplicationSettings,
-    EntitiesApi_CreateEntityCustomGeoCollections,
     EntitiesApi_CreateEntityDataSources,
     EntitiesApi_CreateEntityWorkspaceDataFilterSettings,
     EntitiesApi_CreateEntityWorkspaceDataFilters,
@@ -83,13 +80,11 @@ import {
     EntitiesApi_DeleteEntityApiTokens,
     EntitiesApi_DeleteEntityCspDirectives,
     EntitiesApi_DeleteEntityCustomApplicationSettings,
-    EntitiesApi_DeleteEntityCustomGeoCollections,
     EntitiesApi_DeleteEntityDataSources,
     EntitiesApi_DeleteEntityWorkspaces,
     EntitiesApi_GetAllEntitiesApiTokens,
     EntitiesApi_GetAllEntitiesCspDirectives,
     EntitiesApi_GetAllEntitiesCustomApplicationSettings,
-    EntitiesApi_GetAllEntitiesCustomGeoCollections,
     EntitiesApi_GetAllEntitiesDataSourceIdentifiers,
     EntitiesApi_GetAllEntitiesDataSources,
     EntitiesApi_GetAllEntitiesDatasets,
@@ -103,7 +98,6 @@ import {
     EntitiesApi_GetEntityUsers,
     EntitiesApi_GetEntityWorkspaceDataFilterSettings,
     EntitiesApi_GetEntityWorkspaceDataFilters,
-    EntitiesApi_PatchEntityCustomGeoCollections,
     EntitiesApi_PatchEntityDataSources,
     EntitiesApi_PatchEntityOrganizations,
     EntitiesApi_PatchEntityWorkspaces,
@@ -120,11 +114,8 @@ import {
 import {
     type ResultApiReadCsvFileManifestsRequest,
     ResultApi_AnalyzeCsv,
-    ResultApi_ConvertGeoFile,
-    ResultApi_CustomGeoCollectionStagingUpload,
     ResultApi_DeleteFiles,
     ResultApi_ImportCsv,
-    ResultApi_ImportCustomGeoCollection,
     ResultApi_ListFiles,
     ResultApi_ReadCsvFileManifests,
     ResultApi_StagingUpload,
@@ -326,15 +317,6 @@ export interface ICSPDirective {
 /**
  * @internal
  */
-export interface IGeoCollection {
-    id: string;
-    name?: string | null;
-    description?: string | null;
-}
-
-/**
- * @internal
- */
 export type INotificationChannel = Omit<JsonApiNotificationChannelOut, "type">;
 
 /**
@@ -529,13 +511,6 @@ export type TigerSpecificFunctions = {
     createCSPDirective?: (requestData: ICSPDirective) => Promise<ICSPDirective>;
     updateCSPDirective?: (directiveId: string, requestData: ICSPDirective) => Promise<ICSPDirective>;
     deleteCSPDirective?: (directiveId: string) => Promise<void>;
-    getAllCustomGeoCollections?: () => Promise<IGeoCollection[]>;
-    createCustomGeoCollection?: (id: string, name: string, description: string) => Promise<void>;
-    deleteCustomGeoCollection?: (id: string) => Promise<void>;
-    updateCustomGeoCollection?: (id: string, name: string, description: string) => Promise<void>;
-    uploadCustomGeoCollectionFile?: (file: File) => Promise<{ location: string }>;
-    convertCustomGeoCollectionFile?: (location: string) => Promise<{ location: string }>;
-    importCustomGeoCollectionFile?: (collectionId: string, location: string) => Promise<void>;
     registerUploadNotification?: (dataSourceId: string) => Promise<void>;
 
     /**
@@ -1871,135 +1846,6 @@ export const buildTigerSpecificFunctions = (
                 });
             });
         } catch (error: any) {
-            throw convertApiError(error);
-        }
-    },
-
-    getAllCustomGeoCollections: async (): Promise<IGeoCollection[]> => {
-        try {
-            return await authApiCall(async (sdk) => {
-                const result = await EntitiesApi_GetAllEntitiesCustomGeoCollections(
-                    sdk.axios,
-                    sdk.basePath,
-                    {},
-                );
-                return (result.data?.data || [])
-                    .map((item) => ({
-                        id: item.id,
-                        name: item.attributes?.name,
-                        description: item.attributes?.description,
-                    }))
-                    .sort((a, b) => a.id.localeCompare(b.id));
-            });
-        } catch (error: any) {
-            throw convertApiError(error);
-        }
-    },
-
-    createCustomGeoCollection: async (id: string, name: string, description: string): Promise<void> => {
-        try {
-            await authApiCall(async (sdk) => {
-                const jsonApiCustomGeoCollectionInDocument: JsonApiCustomGeoCollectionInDocument = {
-                    data: {
-                        id,
-                        type: "customGeoCollection",
-                        attributes: { name, description },
-                    },
-                };
-                await EntitiesApi_CreateEntityCustomGeoCollections(sdk.axios, sdk.basePath, {
-                    jsonApiCustomGeoCollectionInDocument,
-                });
-            });
-        } catch (error: any) {
-            if (error.response?.status === 400) {
-                const message = error?.response?.data?.detail ?? "Server error";
-                throw new UnexpectedError(message, error);
-            }
-            throw convertApiError(error);
-        }
-    },
-
-    deleteCustomGeoCollection: async (id: string): Promise<void> => {
-        try {
-            await authApiCall(async (sdk) => {
-                await EntitiesApi_DeleteEntityCustomGeoCollections(sdk.axios, sdk.basePath, { id });
-            });
-        } catch (error: any) {
-            throw convertApiError(error);
-        }
-    },
-
-    updateCustomGeoCollection: async (id: string, name: string, description: string): Promise<void> => {
-        try {
-            await authApiCall(async (sdk) => {
-                const jsonApiCustomGeoCollectionPatchDocument: JsonApiCustomGeoCollectionPatchDocument = {
-                    data: {
-                        id,
-                        type: "customGeoCollection",
-                        attributes: { name, description },
-                    },
-                };
-                await EntitiesApi_PatchEntityCustomGeoCollections(sdk.axios, sdk.basePath, {
-                    id,
-                    jsonApiCustomGeoCollectionPatchDocument,
-                });
-            });
-        } catch (error: any) {
-            if (error.response?.status === 400) {
-                const message = error?.response?.data?.detail ?? "Server error";
-                throw new UnexpectedError(message, error);
-            }
-            throw convertApiError(error);
-        }
-    },
-
-    uploadCustomGeoCollectionFile: async (file: File): Promise<{ location: string }> => {
-        try {
-            return await authApiCall(async (sdk) => {
-                const res = await ResultApi_CustomGeoCollectionStagingUpload(sdk.axios, sdk.basePath, {
-                    file,
-                });
-                return { location: res.data.location };
-            });
-        } catch (error: any) {
-            if (error.response?.status === 400) {
-                const message = error?.response?.data?.detail ?? "Server error";
-                throw new UnexpectedError(message, error);
-            }
-            throw convertApiError(error);
-        }
-    },
-
-    convertCustomGeoCollectionFile: async (location: string): Promise<{ location: string }> => {
-        try {
-            return await authApiCall(async (sdk) => {
-                const res = await ResultApi_ConvertGeoFile(sdk.axios, sdk.basePath, {
-                    convertGeoFileRequest: { location },
-                });
-                return { location: res.data.location };
-            });
-        } catch (error: any) {
-            if (error.response?.status === 400) {
-                const message = error?.response?.data?.detail ?? "Server error";
-                throw new UnexpectedError(message, error);
-            }
-            throw convertApiError(error);
-        }
-    },
-
-    importCustomGeoCollectionFile: async (collectionId: string, location: string): Promise<void> => {
-        try {
-            await authApiCall(async (sdk) => {
-                await ResultApi_ImportCustomGeoCollection(sdk.axios, sdk.basePath, {
-                    collectionId,
-                    importGeoCollectionRequest: { location },
-                });
-            });
-        } catch (error: any) {
-            if (error.response?.status === 400) {
-                const message = error?.response?.data?.detail ?? "Server error";
-                throw new UnexpectedError(message, error);
-            }
             throw convertApiError(error);
         }
     },

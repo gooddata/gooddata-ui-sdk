@@ -215,6 +215,10 @@ class CustomExecutionResult implements IExecutionResult {
         });
     };
 
+    public readBinaryStreamAll = (): Promise<ReadableStream> => {
+        throw new NotSupported("Binary Stream results are not supported by the custom backend.");
+    };
+
     public transform = (): IPreparedExecution => {
         return this.execution;
     };

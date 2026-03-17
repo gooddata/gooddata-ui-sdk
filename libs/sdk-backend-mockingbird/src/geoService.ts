@@ -14,5 +14,16 @@ export function createMockGeoService(style?: IGeoStyleSpecification): IGeoServic
 
     return {
         getDefaultStyle: async () => Promise.resolve(resolvedStyle),
+        collections: () => ({
+            getAll: () => Promise.resolve([]),
+            getGeoCollection: () => Promise.resolve(undefined),
+            createGeoCollection: (definition) =>
+                Promise.resolve({ id: "mock_geo_collection", ...definition }),
+            updateGeoCollection: (geoCollection) => Promise.resolve({ ...geoCollection }),
+            deleteGeoCollection: () => Promise.resolve(),
+            uploadGeoCollectionFile: () => Promise.resolve({ location: "mock-upload-location" }),
+            convertGeoCollectionFile: () => Promise.resolve({ location: "mock-convert-location" }),
+            importGeoCollectionFile: () => Promise.resolve(),
+        }),
     };
 }

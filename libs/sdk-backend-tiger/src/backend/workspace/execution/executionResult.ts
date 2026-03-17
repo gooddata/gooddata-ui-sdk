@@ -1,5 +1,6 @@
 // (C) 2019-2026 GoodData Corporation
 
+import { type AxiosRequestConfig } from "axios";
 import SparkMD5 from "spark-md5";
 
 import {
@@ -9,7 +10,10 @@ import {
     type TabularExportRequest,
     type TabularExportRequestFormatEnum,
 } from "@gooddata/api-client-tiger";
-import { ExecutionResultAPI_RetrieveResult } from "@gooddata/api-client-tiger/endpoints/execution";
+import {
+    ExecutionResultAPI_RetrieveResult,
+    ExecutionResultAPI_RetrieveResultBinary,
+} from "@gooddata/api-client-tiger/endpoints/execution";
 import { ExportApi_CreateTabularExport } from "@gooddata/api-client-tiger/endpoints/export";
 import {
     ResultApi_GetCollectionItems,
@@ -37,6 +41,7 @@ import {
     type IExecutionContext,
     type IExecutionFactory,
     type IExecutionResult,
+    type IExecutionResultBinaryStreamConfig,
     type IExecutionResultMetadata,
     type IExportConfig,
     type IExportResult,
@@ -356,6 +361,34 @@ export class TigerExecutionResult implements IExecutionResult {
         );
 
         return this.asDataView(executionResultPromise);
+    }
+
+    public async readBinaryStreamAll(config: IExecutionResultBinaryStreamConfig): Promise<ReadableStream> {
+        if (config?.format && config.format !== "arrow-stream") {
+            throw new Error(`Unsupported format config '${config.format}'`);
+        }
+
+        const options: AxiosRequestConfig = { ...this.enrichClientWithCancelOptions() };
+        if (!options.headers) {
+            options.headers = {};
+        }
+
+        options.headers["Accept"] = "application/vnd.apache.arrow.stream";
+        // the "fetch" adapter makes it so that the "stream" responseType can be used in browser
+        options.adapter = "fetch";
+        options.responseType = "stream";
+
+        return this.authCall((client) =>
+            ExecutionResultAPI_RetrieveResultBinary(
+                client.axios,
+                client.basePath,
+                {
+                    workspaceId: this.workspace,
+                    resultId: this.resultId,
+                },
+                options,
+            ).then(({ data }) => data as unknown as ReadableStream),
+        );
     }
 
     public transform(): IPreparedExecution {

@@ -203,6 +203,7 @@ function createExecutionResults(
                 xcoord: [],
                 ycoord: [],
             }),
+        readBinaryStreamAll: () => Promise.reject(new Error("This method is not implemented.")),
         transform: () => {
             throw new Error("This method is not implemented.");
         },

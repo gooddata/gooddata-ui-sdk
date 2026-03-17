@@ -1741,6 +1741,10 @@ class WithGeoCaching implements IGeoService {
 
         return result;
     }
+
+    public collections() {
+        return this.decorated.collections();
+    }
 }
 
 function cachedGeo(ctx: CachingContext): GeoDecoratorFactory {

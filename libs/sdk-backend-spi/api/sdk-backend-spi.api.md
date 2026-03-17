@@ -81,6 +81,9 @@ import type { IGenAIChatRouting } from '@gooddata/sdk-model';
 import type { IGenAICreatedVisualizations } from '@gooddata/sdk-model';
 import type { IGenAIFoundObjects } from '@gooddata/sdk-model';
 import type { IGenAIUserContext } from '@gooddata/sdk-model';
+import { IGeoCollection } from '@gooddata/sdk-model';
+import { IGeoCollectionDefinition } from '@gooddata/sdk-model';
+import { IGeoCollectionFileUploadResult } from '@gooddata/sdk-model';
 import { IGeoJsonFeature } from '@gooddata/sdk-model';
 import { IGranularAccessGrantee } from '@gooddata/sdk-model';
 import { IInsight } from '@gooddata/sdk-model';
@@ -143,6 +146,7 @@ import { IWorkspaceUser } from '@gooddata/sdk-model';
 import { IWorkspaceUserGroup } from '@gooddata/sdk-model';
 import { LlmEndpointOpenAIPatch } from '@gooddata/sdk-model';
 import { LlmEndpointTestResults } from '@gooddata/sdk-model';
+import { LlmProviderListModelsResults } from '@gooddata/sdk-model';
 import { LlmProviderPatch } from '@gooddata/sdk-model';
 import { LlmProviderTestResults } from '@gooddata/sdk-model';
 import type { MemoryItemStrategy } from '@gooddata/sdk-model';
@@ -230,6 +234,9 @@ export type ElementsQueryOptionsElementsSpecification = IElementsQueryOptionsEle
 
 // @public
 export type ErrorConverter = (e: Error) => AnalyticalBackendError;
+
+// @alpha
+export type ExecutionResultBinaryStreamFormat = "arrow-stream";
 
 // @internal
 export type ExplainConfig<T extends ExplainType | undefined> = {
@@ -1026,6 +1033,8 @@ export interface IExecutionResult extends ICancelable<IExecutionResult> {
     // @alpha
     readAnomalyDetectionAll(config: IAnomalyDetectionConfig): Promise<IAnomalyDetectionResult>;
     // @alpha
+    readBinaryStreamAll(config: IExecutionResultBinaryStreamConfig): Promise<ReadableStream>;
+    // @alpha
     readClusteringAll(config: IClusteringConfig): Promise<IClusteringResult>;
     // @beta
     readForecastAll(config: IForecastConfig): Promise<IForecastResult>;
@@ -1034,6 +1043,11 @@ export interface IExecutionResult extends ICancelable<IExecutionResult> {
     readWindow(offset: number[], size: number[]): Promise<IDataView>;
     readonly signal?: AbortSignal;
     transform(): IPreparedExecution;
+}
+
+// @alpha
+export interface IExecutionResultBinaryStreamConfig {
+    format?: ExecutionResultBinaryStreamFormat;
 }
 
 // @alpha
@@ -1240,6 +1254,7 @@ export interface IGenAIService {
 
 // @alpha
 export interface IGeoService {
+    collections(): IOrganizationGeoCollectionsService;
     getDefaultStyle(params?: IGeoStyleParams): Promise<IGeoStyleSpecification>;
 }
 
@@ -1658,6 +1673,18 @@ export interface IOrganizationAutomationsQuery {
 export type IOrganizationAutomationsQueryResult = IPagedResource<IAutomationMetadataObject>;
 
 // @alpha
+export interface IOrganizationGeoCollectionsService {
+    convertGeoCollectionFile(location: string): Promise<IGeoCollectionFileUploadResult>;
+    createGeoCollection(definition: IGeoCollectionDefinition): Promise<IGeoCollection>;
+    deleteGeoCollection(id: string): Promise<void>;
+    getAll(): Promise<IGeoCollection[]>;
+    getGeoCollection(id: string): Promise<IGeoCollection | undefined>;
+    importGeoCollectionFile(collectionId: string, location: string): Promise<void>;
+    updateGeoCollection(geoCollection: IGeoCollection): Promise<IGeoCollection>;
+    uploadGeoCollectionFile(file: File): Promise<IGeoCollectionFileUploadResult>;
+}
+
+// @alpha
 export interface IOrganizationLlmEndpointsService {
     createLlmEndpoint(endpoint: ILlmEndpointOpenAI, token?: string): Promise<ILlmEndpointOpenAI>;
     deleteLlmEndpoint(id: string): Promise<void>;
@@ -1676,6 +1703,8 @@ export interface IOrganizationLlmProvidersService {
     getCount(): Promise<number>;
     getLlmProvider(id: string): Promise<ILlmProvider | undefined>;
     getProvidersQuery(): ILlmProvidersQuery;
+    listLlmProviderModels(id: string): Promise<LlmProviderListModelsResults>;
+    listLlmProviderModels(provider: Partial<LlmProviderPatch>): Promise<LlmProviderListModelsResults>;
     patchLlmProvider(provider: LlmProviderPatch): Promise<ILlmProvider>;
     testLlmProvider(provider: Partial<LlmProviderPatch>): Promise<LlmProviderTestResults>;
     updateLlmProvider(provider: ILlmProvider): Promise<ILlmProvider>;

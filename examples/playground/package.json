@@ -10,17 +10,15 @@
         "url": "https://github.com/gooddata/gooddata-ui-sdk.git",
         "directory": "examples/playground"
     },
-    "files": [
-        "dist",
-        "src",
-        "styles",
-        "LICENSE"
-    ],
     "type": "module",
     "scripts": {
+        "_phase:build": "npm run build",
         "_phase:validate": "npm run validate",
-        "build": "echo Build of playground is skipped by default. See the alternative 'build_' script.",
-        "dev": "vite",
+        "build": "npm-run-all -p dist build-check",
+        "build-check": "tsgo",
+        "clean": "../../common/scripts/clean-command-state.sh && rm -rf dist *.log",
+        "dev": "vite --force",
+        "dist": "rm -rf dist && export NODE_OPTIONS=\"--max_old_space_size=4096\" && vite build",
         "format-check": "oxfmt --check .",
         "format-write": "oxfmt .",
         "refresh-md": "./scripts/refresh-md.sh && npm run build",
@@ -56,6 +54,7 @@
         "@types/react-dom": "19.1.7",
         "@typescript-eslint/eslint-plugin": "8.52.0",
         "@typescript-eslint/parser": "8.52.0",
+        "@typescript/native-preview": "7.0.0-dev.20260202.1",
         "@vitejs/plugin-react": "^5.1.2",
         "eslint": "^9.39.2",
         "eslint-import-resolver-typescript": "4.4.4",
@@ -75,11 +74,12 @@
         "oxlint-tsgolint": "0.11.4",
         "react": "19.1.1",
         "react-dom": "19.1.1",
+        "rolldown": "1.0.0-rc.9",
         "sass": "1.70.0",
         "ts-invariant": "0.10.3",
         "tslib": "2.8.1",
         "typescript": "5.9.3",
-        "vite": "^7.3.1"
+        "vite": "8.0.0"
     },
     "dependenciesInfo": "This is package is SDk tool and is not distributed all dependencies must be defined as devDependencies due to FOSSA automated report generation"
 }

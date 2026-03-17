@@ -6850,6 +6850,8 @@ export interface IUiPagedVirtualListProps<T> {
     // (undocumented)
     maxHeight: number;
     // (undocumented)
+    onFocus?: (e: React.FocusEvent) => void;
+    // (undocumented)
     onKeyDownConfirm?: (item: T) => void;
     // (undocumented)
     onKeyDownSelect?: (item: T) => void;

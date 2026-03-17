@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type Ref, useEffect, useMemo, useRef, useState } from "react";
+import { type Ref, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { useSkeletonItem } from "./SkeletonItemFactory.js";
 import { isEnterKey } from "../../../utils/events.js";
@@ -26,7 +26,7 @@ export function UiAsyncTableBody<T extends { id: string }>({
 }: IUiAsyncTableBodyProps<T>) {
     const SkeletonItem = useSkeletonItem(columns, bulkActions, isLargeRow ?? false);
 
-    const { handleKeyDown, focusedRowIndex, focusedColumnIndex, focusedItemRef } =
+    const { handleKeyDown, handleFocus, focusedRowIndex, focusedColumnIndex, focusedItemRef } =
         useAsyncTableBodyKeyboardNavigation(items.length, columns.length, !!bulkActions, scrollToIndex);
 
     return (
@@ -47,6 +47,7 @@ export function UiAsyncTableBody<T extends { id: string }>({
             shouldLoadNextPage={shouldLoadNextPage}
             tabIndex={items.length ? 0 : -1}
             customKeyboardNavigationHandler={handleKeyDown}
+            onFocus={handleFocus}
         >
             {(item: T, focusedIndex?: number) => {
                 const itemIndex = focusedIndex ?? 0;
@@ -68,15 +69,13 @@ const useAsyncTableBodyKeyboardNavigation = (
     hasBulkActions: boolean,
     scrollToIndex: number | undefined,
 ) => {
-    const [focusedRowIndex, setFocusedRowIndex] = useState<number>(0);
+    const [focusedRowIndex, setFocusedRowIndex] = useState<number | undefined>(undefined);
     const [focusedColumnIndex, setFocusedColumnIndex] = useState<number | undefined>(undefined);
 
     const focusedItemRef = useRef<HTMLElement | null>(null);
 
     useEffect(() => {
-        if (scrollToIndex !== undefined) {
-            setFocusedRowIndex(scrollToIndex);
-        }
+        setFocusedRowIndex(undefined);
     }, [scrollToIndex]);
 
     const columnsLength = useMemo(() => {
@@ -84,7 +83,7 @@ const useAsyncTableBodyKeyboardNavigation = (
     }, [definedColumnsLength, hasBulkActions]);
 
     const isFirstRow = useMemo(() => {
-        return focusedRowIndex === 0;
+        return focusedRowIndex === undefined || focusedRowIndex === 0;
     }, [focusedRowIndex]);
 
     const isLastRow = useMemo(() => {
@@ -102,10 +101,10 @@ const useAsyncTableBodyKeyboardNavigation = (
     const handleKeyDown = useMemo(() => {
         return makeGridKeyboardNavigation({
             onFocusDown: () => {
-                setFocusedRowIndex(isLastRow ? 0 : focusedRowIndex + 1);
+                setFocusedRowIndex(isLastRow ? 0 : (focusedRowIndex ?? 0) + 1);
             },
             onFocusUp: () => {
-                setFocusedRowIndex(isFirstRow ? rowsLength - 1 : focusedRowIndex - 1);
+                setFocusedRowIndex(isFirstRow ? rowsLength - 1 : (focusedRowIndex ?? 0) - 1);
             },
             onFocusFirst: () => {
                 setFocusedRowIndex(0);
@@ -149,8 +148,18 @@ const useAsyncTableBodyKeyboardNavigation = (
         isLastColumn,
     ]);
 
+    const handleFocus = useCallback(
+        (e: React.FocusEvent) => {
+            if (focusedRowIndex === undefined && e.target.matches(":focus-visible")) {
+                setFocusedRowIndex(0);
+            }
+        },
+        [focusedRowIndex],
+    );
+
     return {
         handleKeyDown,
+        handleFocus,
         focusedRowIndex,
         focusedColumnIndex,
         focusedItemRef,

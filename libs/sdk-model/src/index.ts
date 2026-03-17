@@ -1219,6 +1219,12 @@ export type {
 export type { GenAIObjectType } from "./genAI/common.js";
 
 export type {
+    IGeoCollection,
+    IGeoCollectionDefinition,
+    IGeoCollectionFileUploadResult,
+} from "./geoCollections/index.js";
+
+export type {
     ILlmEndpointBase,
     ILlmEndpointOpenAI,
     LlmEndpointOpenAIPatch,
@@ -1236,6 +1242,7 @@ export type {
     LlmProviderPatch,
     LlmProviderTestResults,
     LlmModelsTestResults,
+    LlmProviderListModelsResults,
 } from "./llmProviders/index.js";
 
 export {

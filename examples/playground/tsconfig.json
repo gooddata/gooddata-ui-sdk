@@ -16,7 +16,7 @@
         "sourceMap": true,
         "strictNullChecks": false,
         "rootDir": ".",
-        "outDir": "./esm",
+        "outDir": "./dist",
         "noEmit": true
     }
 }

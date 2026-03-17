@@ -76,6 +76,7 @@ export interface IUiPagedVirtualListProps<T> {
     getIsItemSelected?: (item: T) => boolean;
     itemHeightGetter?: (index: number) => number;
     onScroll?: () => void;
+    onFocus?: (e: React.FocusEvent) => void;
     handleFocusIndexChange?: boolean; // this is internal flag that navigate focused item and trigger pagination default is true
 }
 
@@ -111,6 +112,7 @@ function UiPagedVirtualListNotWrapped<T>(
         getIsItemSelected,
         itemHeightGetter,
         onScroll,
+        onFocus,
         // NOTE: UiPagedVirtualListNotWrapped has built-in keyboard navigation (keydown).
         // When the user navigates to the last item and pagination is available,
         // the next page is automatically loaded.
@@ -203,6 +205,7 @@ function UiPagedVirtualListNotWrapped<T>(
                         position: "relative",
                     }}
                     tabIndex={tabIndex}
+                    onFocus={onFocus}
                     onKeyDown={
                         tabIndex < 0 ? undefined : (customKeyboardNavigationHandler ?? onKeyboardNavigation)
                     }

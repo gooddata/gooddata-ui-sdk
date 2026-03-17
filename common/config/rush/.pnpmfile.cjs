@@ -2,7 +2,7 @@
 
 "use strict";
 
-// baseline-browser-mapping needs to be updated to the latest version very 14 days
+// baseline-browser-mapping needs to be updated to the latest version every 14 days
 const baselineBrowserMappingVersion = "2.10.8";
 
 // browserslist needs to be updated every 6 months
@@ -53,7 +53,7 @@ function readPackage(packageJson, context) {
         packageJson.peerDependencies["vite"]
     ) {
         context.log("Fixed up dependencies for " + packageJson.name);
-        packageJson.peerDependencies["vite"] = "^7.3.1 || 8.0.0-beta.13";
+        packageJson.peerDependencies["vite"] = "^7.3.1 || ^8.0.0";
     }
 
     if (packageJson.dependencies && packageJson.dependencies["baseline-browser-mapping"]) {

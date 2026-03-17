@@ -449,6 +449,9 @@ function recordedExecutionResult(
         readClusteringAll(): Promise<IClusteringResult> {
             throw new NotSupported("Clustering is not supported by the recorded backend.");
         },
+        readBinaryStreamAll(): Promise<ReadableStream> {
+            throw new NotSupported("Binary Stream results are not supported by the recorded backend.");
+        },
         fingerprint(): string {
             return fp;
         },

@@ -310,16 +310,6 @@ export interface IEntitlement {
 }
 
 // @internal (undocumented)
-export interface IGeoCollection {
-    // (undocumented)
-    description?: string | null;
-    // (undocumented)
-    id: string;
-    // (undocumented)
-    name?: string | null;
-}
-
-// @internal (undocumented)
 export interface IInvitationUserResponse {
     // (undocumented)
     errorMessage?: string;
@@ -529,17 +519,6 @@ export type TigerSpecificFunctions = {
     createCSPDirective?: (requestData: ICSPDirective) => Promise<ICSPDirective>;
     updateCSPDirective?: (directiveId: string, requestData: ICSPDirective) => Promise<ICSPDirective>;
     deleteCSPDirective?: (directiveId: string) => Promise<void>;
-    getAllCustomGeoCollections?: () => Promise<IGeoCollection[]>;
-    createCustomGeoCollection?: (id: string, name: string, description: string) => Promise<void>;
-    deleteCustomGeoCollection?: (id: string) => Promise<void>;
-    updateCustomGeoCollection?: (id: string, name: string, description: string) => Promise<void>;
-    uploadCustomGeoCollectionFile?: (file: File) => Promise<{
-        location: string;
-    }>;
-    convertCustomGeoCollectionFile?: (location: string) => Promise<{
-        location: string;
-    }>;
-    importCustomGeoCollectionFile?: (collectionId: string, location: string) => Promise<void>;
     registerUploadNotification?: (dataSourceId: string) => Promise<void>;
     getWorkspaceCustomAppSettings?: (workspaceId: string, applicationName?: string) => Promise<ICustomApplicationSetting[]>;
     getWorkspaceCustomAppSetting?: (workspaceId: string, settingId: string) => Promise<ICustomApplicationSetting>;

@@ -5,14 +5,12 @@ $base_path: "@gooddata/sdk-ui-kit/styles";
 
 @font-face {
     font-family: "Indigo";
-    src: url($base_path + "/fonts/Indigo-v2.eot");
     src:
-        url($base_path + "/fonts/Indigo-v2.eot?#iefix") format("embedded-opentype"),
-        url($base_path + "/fonts/Indigo-v2.woff") format("woff"),
-        url($base_path + "/fonts/Indigo-v2.ttf") format("truetype"),
-        url($base_path + "/fonts/Indigo-v2.svg#Indigo-v2") format("svg");
+        url($base_path + "/fonts/Indigo-v2.woff2") format("woff2"),
+        url($base_path + "/fonts/Indigo-v2.woff") format("woff");
     font-weight: normal;
     font-style: normal;
+    font-display: block;
 }
 
 // stylelint-enable function-url-quotes

@@ -69,7 +69,7 @@ export enum TigerFeaturesNames {
     EnableWidgetIdentifiersRollout = "enableWidgetIdentifiersRollout",
     EnableAIFunctions = "enableAIFunctions",
     EnableSemanticSearch = "enableSemanticSearch",
-    EnableHybridSearch = "enableHybridSearch",
+    EnableCatalogSmartSearchResults = "enableCatalogSmartSearchResults",
     EnableSemanticSearchRollout = "enableSemanticSearchRollout",
     EnableGenAIChat = "enableGenAIChat",
     EnableGenAIChatRollout = "enableGenAIChatRollout",
@@ -218,7 +218,7 @@ export type ITigerFeatureFlags = {
     enableWidgetIdentifiersRollout: (typeof FeatureFlagsValues)["enableWidgetIdentifiersRollout"][number];
     enableAIFunctions: (typeof FeatureFlagsValues)["enableAIFunctions"][number];
     enableSemanticSearch: (typeof FeatureFlagsValues)["enableSemanticSearch"][number];
-    enableHybridSearch: (typeof FeatureFlagsValues)["enableHybridSearch"][number];
+    enableCatalogSmartSearchResults: (typeof FeatureFlagsValues)["enableCatalogSmartSearchResults"][number];
     enableSemanticSearchRollout: (typeof FeatureFlagsValues)["enableSemanticSearchRollout"][number];
     enableGenAIChat: (typeof FeatureFlagsValues)["enableGenAIChat"][number];
     enableGenAIChatRollout: (typeof FeatureFlagsValues)["enableGenAIChatRollout"][number];
@@ -370,7 +370,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableWidgetIdentifiersRollout: true,
     enableAIFunctions: false,
     enableSemanticSearch: false,
-    enableHybridSearch: false,
+    enableCatalogSmartSearchResults: false,
     enableSemanticSearchRollout: false,
     enableGenAIChat: false,
     enableGenAIChatRollout: false,
@@ -522,7 +522,7 @@ export const FeatureFlagsValues = {
     enableWidgetIdentifiersRollout: [true, false] as const,
     enableAIFunctions: [true, false] as const,
     enableSemanticSearch: [true, false] as const,
-    enableHybridSearch: [true, false] as const,
+    enableCatalogSmartSearchResults: [true, false] as const,
     enableSemanticSearchRollout: [true, false] as const,
     enableGenAIChat: [true, false] as const,
     enableGenAIChatRollout: [true, false] as const,

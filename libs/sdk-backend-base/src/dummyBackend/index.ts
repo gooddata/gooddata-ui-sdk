@@ -304,7 +304,22 @@ export function dummyBackend(config: DummyBackendConfig = defaultDummyBackendCon
             throw new NotSupported("not supported");
         },
         geo(): IGeoService {
-            throw new NotSupported("not supported");
+            return {
+                getDefaultStyle: () => {
+                    throw new NotSupported("not supported");
+                },
+                collections: () => ({
+                    getAll: () => Promise.resolve([]),
+                    getGeoCollection: () => Promise.resolve(undefined),
+                    createGeoCollection: (definition) =>
+                        Promise.resolve({ id: "dummy_geo_collection", ...definition }),
+                    updateGeoCollection: (geoCollection) => Promise.resolve({ ...geoCollection }),
+                    deleteGeoCollection: () => Promise.resolve(),
+                    uploadGeoCollectionFile: () => Promise.resolve({ location: "dummy-upload-location" }),
+                    convertGeoCollectionFile: () => Promise.resolve({ location: "dummy-convert-location" }),
+                    importGeoCollectionFile: () => Promise.resolve(),
+                }),
+            };
         },
         workspaces(): IWorkspacesQueryFactory {
             throw new NotSupported("not supported");
@@ -598,6 +613,9 @@ function dummyExecutionResult(
         },
         readClusteringAll(): Promise<IClusteringResult> {
             throw new NotSupported("Clustering is not supported in dummy backend.");
+        },
+        readBinaryStreamAll(): Promise<ReadableStream> {
+            throw new NotSupported("Binary Stream results are not supported in dummy backend.");
         },
         fingerprint(): string {
             return fp;
@@ -1174,6 +1192,10 @@ class DummyOrganization implements IOrganization {
             updateLlmProvider: () => Promise.resolve(dummyProvider),
             patchLlmProvider: () => Promise.resolve(dummyProvider),
             testLlmProvider: () =>
+                Promise.resolve({
+                    success: true,
+                }),
+            listLlmProviderModels: () =>
                 Promise.resolve({
                     success: true,
                 }),

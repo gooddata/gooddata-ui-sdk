@@ -1,5 +1,7 @@
 // (C) 2025-2026 GoodData Corporation
 
+import { type IOrganizationGeoCollectionsService } from "../organization/geoCollections/index.js";
+
 /**
  * Geo style specification document returned by backend.
  *
@@ -31,7 +33,8 @@ export interface IGeoStyleParams {
 }
 
 /**
- * Service allowing access to geo location assets (styles, tiles, glyphs).
+ * Service allowing access to geo location assets (styles, tiles, glyphs)
+ * and management of custom geo collections.
  *
  * @alpha
  */
@@ -42,4 +45,9 @@ export interface IGeoService {
      * @param params - Optional basemap and colorScheme query parameters.
      */
     getDefaultStyle(params?: IGeoStyleParams): Promise<IGeoStyleSpecification>;
+
+    /**
+     * Returns service for managing custom geo collections.
+     */
+    collections(): IOrganizationGeoCollectionsService;
 }
