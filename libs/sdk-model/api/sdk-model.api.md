@@ -2294,6 +2294,7 @@ export interface IFeatureFlags {
     enableAthenaDataSource?: boolean;
     enableAutomationFilterContext?: boolean;
     enableAutomationManagement?: boolean;
+    enableCatalogSmartSearchResults?: boolean;
     enableCatalogTrendingObjects?: boolean;
     enableCertification?: boolean;
     enableChangeAnalysis?: boolean;
@@ -2345,7 +2346,6 @@ export interface IFeatureFlags {
     enableGeoSegmentConflictRecommendation?: boolean;
     enableHeadlineExport?: boolean;
     enableHighchartsAccessibility?: boolean;
-    enableHybridSearch?: boolean;
     enableIgnoreCrossFiltering?: boolean;
     enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
     enableImplicitDrillToUrl?: boolean;
@@ -2613,6 +2613,24 @@ export interface IGenAIWhatIfConfig {
 export interface IGenAIWhatIfScenario {
     adjustments: IGenAIWhatIfAdjustment[];
     label: string;
+}
+
+// @alpha
+export interface IGeoCollection {
+    description?: string;
+    id: string;
+    name?: string;
+}
+
+// @alpha
+export interface IGeoCollectionDefinition {
+    description?: string;
+    name: string;
+}
+
+// @alpha
+export interface IGeoCollectionFileUploadResult {
+    location: string;
 }
 
 // @alpha
@@ -5517,6 +5535,13 @@ export type LlmProviderConfig = IOpenAIProviderConfig | IAzureFoundryProviderCon
 
 // @alpha (undocumented)
 export type LlmProviderFamily = "OPENAI" | "ANTHROPIC" | "META" | "MISTRAL" | "AMAZON" | "GOOGLE" | "COHERE" | "UNKNOWN";
+
+// @alpha
+export type LlmProviderListModelsResults = {
+    success: boolean;
+    message?: string;
+    models?: ILlmModel[];
+};
 
 // @alpha (undocumented)
 export type LlmProviderPatch = Partial<ILlmProvider> & Pick<ILlmProvider, "id">;

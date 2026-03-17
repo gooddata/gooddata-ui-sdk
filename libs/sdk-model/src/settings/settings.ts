@@ -627,9 +627,9 @@ export interface IFeatureFlags {
     enableSemanticSearch?: boolean;
 
     /**
-     * Enable Hybrid Search in the UI.
+     * Enable Catalog smart search results in the UI.
      */
-    enableHybridSearch?: boolean;
+    enableCatalogSmartSearchResults?: boolean;
 
     /**
      * Enable Semantic Search rollout in the UI.

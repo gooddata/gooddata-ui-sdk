@@ -95,3 +95,13 @@ export type LlmModelsTestResults = {
     success: boolean;
     message?: string;
 };
+
+/**
+ * @alpha
+ * Results of the list models call
+ */
+export type LlmProviderListModelsResults = {
+    success: boolean;
+    message?: string;
+    models?: ILlmModel[];
+};

@@ -77,6 +77,7 @@ import { IExecutionContext } from '@gooddata/sdk-backend-spi';
 import { IExecutionDefinition } from '@gooddata/sdk-model';
 import { IExecutionFactory } from '@gooddata/sdk-backend-spi';
 import { IExecutionResult } from '@gooddata/sdk-backend-spi';
+import { IExecutionResultBinaryStreamConfig } from '@gooddata/sdk-backend-spi';
 import { IExistingDashboard } from '@gooddata/sdk-model';
 import { IExplainProvider } from '@gooddata/sdk-backend-spi';
 import { IExportConfig } from '@gooddata/sdk-backend-spi';
@@ -476,6 +477,8 @@ export abstract class DecoratedExecutionResult implements IExecutionResult {
     readAll(): Promise<IDataView>;
     // (undocumented)
     readAnomalyDetectionAll(config: IAnomalyDetectionConfig): Promise<IAnomalyDetectionResult>;
+    // (undocumented)
+    readBinaryStreamAll(config: IExecutionResultBinaryStreamConfig): Promise<ReadableStream>;
     // (undocumented)
     readClusteringAll(config: IClusteringConfig): Promise<IClusteringResult>;
     // (undocumented)

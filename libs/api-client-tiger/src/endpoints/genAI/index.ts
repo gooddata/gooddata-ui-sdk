@@ -11,6 +11,8 @@ import {
     type ActionsApiAiSearchRequest,
     type ActionsApiCreatedByRequest,
     type ActionsApiGetQualityIssuesRequest,
+    type ActionsApiListLlmProviderModelsByIdRequest,
+    type ActionsApiListLlmProviderModelsRequest,
     type ActionsApiMemoryCreatedByUsersRequest,
     type ActionsApiTagsRequest,
     type ActionsApiTestLlmProviderByIdRequest,
@@ -25,6 +27,8 @@ import {
     ActionsApi_CreatedBy,
     ActionsApi_GetQualityIssues,
     ActionsApi_GetQualityIssuesCalculationStatus,
+    ActionsApi_ListLlmProviderModels,
+    ActionsApi_ListLlmProviderModelsById,
     ActionsApi_MemoryCreatedByUsers,
     ActionsApi_Tags,
     ActionsApi_TestLlmProvider,
@@ -64,6 +68,10 @@ export {
     type ActionsApiTestLlmProviderRequest as GenAiApiTestLlmProviderRequest,
     ActionsApi_TestLlmProviderById as GenAiApi_TestLlmProviderById,
     type ActionsApiTestLlmProviderByIdRequest as GenAiApiTestLlmProviderByIdRequest,
+    ActionsApi_ListLlmProviderModels,
+    type ActionsApiListLlmProviderModelsRequest,
+    ActionsApi_ListLlmProviderModelsById,
+    type ActionsApiListLlmProviderModelsByIdRequest,
 };
 
 export type GenAiApiTrendingObjectsRequest = {

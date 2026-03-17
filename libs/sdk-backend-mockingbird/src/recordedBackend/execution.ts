@@ -374,6 +374,10 @@ class RecordedExecutionResult implements IExecutionResult {
         throw new NotSupported("Clustering is not supported by the recorded backend.");
     }
 
+    public readBinaryStreamAll(): Promise<ReadableStream> {
+        throw new NotSupported("Binary Stream results are not supported by the recorded backend.");
+    }
+
     public transform = (): IPreparedExecution => {
         return this.executionFactory.forDefinition(this.definition, {
             context: this.context,

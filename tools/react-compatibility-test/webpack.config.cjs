@@ -1,4 +1,5 @@
-// (C) 2007-2021 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CaseSensitivePathsPlugin = require("case-sensitive-paths-webpack-plugin");
 const { ModuleFederationPlugin } = require("webpack").container;
@@ -11,7 +12,13 @@ const Dotenv = require("dotenv-webpack");
 const { EsbuildPlugin } = require("esbuild-loader");
 require("dotenv").config();
 
-const { MODULE_FEDERATION_NAME, PLUGIN_BUILD_DIRECTORY, PLUGIN_PARAMETERS_JSON_PATH, BACKEND_URL, REACT_VERSION } = process.env;
+const {
+    MODULE_FEDERATION_NAME,
+    PLUGIN_BUILD_DIRECTORY,
+    PLUGIN_PARAMETERS_JSON_PATH,
+    BACKEND_URL,
+    REACT_VERSION,
+} = process.env;
 
 const PLUGIN_PARAMETERS = PLUGIN_PARAMETERS_JSON_PATH ? require(PLUGIN_PARAMETERS_JSON_PATH) : undefined;
 
@@ -87,12 +94,15 @@ module.exports = (_env, argv) => {
             mainFields: ["module", "browser", "main"],
 
             // React version resolution based on environment variable
-            alias: reactVersion === "19" ? {
-                "react": "react-19",
-                "react-dom": "react-dom-19",
-                "@types/react": "@types/react-19",
-                "@types/react-dom": "@types/react-dom-19",
-            } : {},
+            alias:
+                reactVersion === "19"
+                    ? {
+                          react: "react-19",
+                          "react-dom": "react-dom-19",
+                          "@types/react": "@types/react-19",
+                          "@types/react-dom": "@types/react-dom-19",
+                      }
+                    : {},
 
             fallback: {
                 // semver package depends on node `util`,
@@ -134,7 +144,7 @@ module.exports = (_env, argv) => {
                     use: ["style-loader", "css-loader"],
                 },
                 {
-                    test: /\.(eot|woff|ttf|svg|jpg|jpeg|gif)/,
+                    test: /\.(eot|woff|woff2|ttf|svg|jpg|jpeg|gif)/,
                     type: "asset/resource",
                 },
                 !isProduction && {
@@ -172,15 +182,15 @@ module.exports = (_env, argv) => {
                 static: [
                     {
                         directory: path.join(__dirname, "esm"),
-                        publicPath: '/test',
+                        publicPath: "/test",
                     },
                     {
                         directory: path.join(PLUGIN_BUILD_DIRECTORY),
-                        publicPath: '/plugin',
+                        publicPath: "/plugin",
                     },
                 ],
                 headers: {
-                            "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Origin": "*",
                 },
                 port: PORT,
                 host: "localhost",
@@ -210,7 +220,7 @@ module.exports = (_env, argv) => {
                             singleton: true,
                             requiredVersion: false,
                         },
-                        'react/jsx-runtime': {
+                        "react/jsx-runtime": {
                             singleton: true,
                             requiredVersion: false,
                         },

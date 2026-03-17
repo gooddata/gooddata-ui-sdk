@@ -10,11 +10,18 @@ import {
     EntitiesApi_UpdateEntityLlmProviders,
 } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import {
+    ActionsApi_ListLlmProviderModels,
+    ActionsApi_ListLlmProviderModelsById,
     GenAiApi_TestLlmProvider,
     GenAiApi_TestLlmProviderById,
 } from "@gooddata/api-client-tiger/endpoints/genAI";
 import { type ILlmProvidersQuery, type IOrganizationLlmProvidersService } from "@gooddata/sdk-backend-spi";
-import { type ILlmProvider, type LlmProviderPatch, type LlmProviderTestResults } from "@gooddata/sdk-model";
+import {
+    type ILlmProvider,
+    type LlmProviderListModelsResults,
+    type LlmProviderPatch,
+    type LlmProviderTestResults,
+} from "@gooddata/sdk-model";
 
 import { LlmProvidersQuery } from "./llmProvidersQuery.js";
 import {
@@ -172,6 +179,53 @@ export class OrganizationLlmProvidersService implements IOrganizationLlmProvider
                     id: model.modelId,
                     success: model.successful,
                     message: model.message,
+                })),
+            };
+        });
+    }
+
+    public listLlmProviderModels(
+        providerOrId: string | Partial<LlmProviderPatch>,
+    ): Promise<LlmProviderListModelsResults> {
+        return this.authCall(async (client: ITigerClientBase) => {
+            if (typeof providerOrId === "string") {
+                const result = await ActionsApi_ListLlmProviderModelsById(client.axios, client.basePath, {
+                    llmProviderId: providerOrId,
+                });
+
+                return {
+                    success: result.data?.success,
+                    message: result.data?.message,
+                    models: result.data?.models?.map((model) => ({
+                        id: model.id,
+                        family: model.family,
+                    })),
+                };
+            }
+
+            const patch = convertLlmProviderPatchToBackend({
+                ...providerOrId,
+                id: "",
+            });
+
+            const result = await ActionsApi_ListLlmProviderModels(client.axios, client.basePath, {
+                listLlmProviderModelsRequest: {
+                    providerConfig: patch.attributes?.providerConfig ?? {
+                        type: "OPENAI",
+                        auth: {
+                            type: "API_KEY",
+                            apiKey: "",
+                        },
+                    },
+                },
+            });
+
+            return {
+                success: result.data?.success,
+                message: result.data?.message,
+                models: result.data?.models?.map((model) => ({
+                    id: model.id,
+                    family: model.family,
                 })),
             };
         });

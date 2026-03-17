@@ -214,7 +214,7 @@ module.exports = (_env, argv) => {
                     use: ["style-loader", "css-loader"],
                 },
                 {
-                    test: /\.(eot|woff|ttf|svg|jpg|jpeg|gif)/,
+                    test: /\.(eot|woff|woff2|ttf|svg|jpg|jpeg|gif)/,
                     type: "asset/resource",
                 },
                 !isProduction && {

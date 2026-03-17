@@ -744,6 +744,10 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                     Promise.resolve({
                         success: true,
                     }),
+                listLlmProviderModels: () =>
+                    Promise.resolve({
+                        success: true,
+                    }),
             };
         },
     };

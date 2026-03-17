@@ -431,10 +431,10 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
-            TigerFeaturesNames.EnableHybridSearch,
-            "enableHybridSearch",
+            TigerFeaturesNames.EnableCatalogSmartSearchResults,
+            "enableCatalogSmartSearchResults",
             "BOOLEAN",
-            FeatureFlagsValues.enableHybridSearch,
+            FeatureFlagsValues.enableCatalogSmartSearchResults,
         ),
         ...loadFeature(
             features,

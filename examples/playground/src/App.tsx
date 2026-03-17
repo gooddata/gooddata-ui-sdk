@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -9,7 +9,7 @@ import { Playground } from "./playground/Playground.js";
 import "./global.css"; // Import global styles
 
 function hasCredentialsSetup(): boolean {
-    return !!import.meta.env.VITE_TIGER_API_TOKEN;
+    return !!import.meta.env["VITE_TIGER_API_TOKEN"];
 }
 
 function AppWithBackend() {
@@ -20,7 +20,7 @@ function AppWithBackend() {
 
     return (
         <BackendProvider backend={backend}>
-            <WorkspaceProvider workspace={import.meta.env.VITE_WORKSPACE}>
+            <WorkspaceProvider workspace={import.meta.env["VITE_WORKSPACE"]}>
                 <Playground />
             </WorkspaceProvider>
         </BackendProvider>

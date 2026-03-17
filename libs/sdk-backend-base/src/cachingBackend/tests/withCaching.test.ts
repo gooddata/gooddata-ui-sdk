@@ -120,6 +120,7 @@ function createGeoStyleBackend(getDefaultStyle: IGeoService["getDefaultStyle"]):
     return {
         ...backend,
         geo: () => ({
+            ...backend.geo(),
             getDefaultStyle,
         }),
     };

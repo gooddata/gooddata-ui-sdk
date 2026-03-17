@@ -13,6 +13,7 @@ import {
     type IExecutionContext,
     type IExecutionFactory,
     type IExecutionResult,
+    type IExecutionResultBinaryStreamConfig,
     type IExecutionResultMetadata,
     type IExplainProvider,
     type IExportConfig,
@@ -236,6 +237,10 @@ export abstract class DecoratedExecutionResult implements IExecutionResult {
 
     public readWindow(offset: number[], size: number[]): Promise<IDataView> {
         return this.decorated.readWindow(offset, size);
+    }
+
+    public readBinaryStreamAll(config: IExecutionResultBinaryStreamConfig): Promise<ReadableStream> {
+        return this.decorated.readBinaryStreamAll(config);
     }
 
     public transform(): IPreparedExecution {

@@ -1,6 +1,11 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { type ILlmProvider, type LlmProviderPatch, type LlmProviderTestResults } from "@gooddata/sdk-model";
+import {
+    type ILlmProvider,
+    type LlmProviderListModelsResults,
+    type LlmProviderPatch,
+    type LlmProviderTestResults,
+} from "@gooddata/sdk-model";
 
 import { type IPagedResource } from "../../common/paging.js";
 
@@ -126,4 +131,24 @@ export interface IOrganizationLlmProvidersService {
      * @returns Promise resolved with test results.
      */
     testLlmProvider(provider: Partial<LlmProviderPatch>): Promise<LlmProviderTestResults>;
+
+    /**
+     * List models for a provider
+     *
+     * @param id - id of the provider
+     * @returns Promise resolved with list of models.
+     *
+     * @alpha
+     */
+    listLlmProviderModels(id: string): Promise<LlmProviderListModelsResults>;
+
+    /**
+     * List models for a provider definition
+     *
+     * @param provider - definition of the llm provider
+     * @returns Promise resolved with list of models.
+     *
+     * @alpha
+     */
+    listLlmProviderModels(provider: Partial<LlmProviderPatch>): Promise<LlmProviderListModelsResults>;
 }

@@ -209,6 +209,26 @@ export interface IExecutionResultMetadata {
 }
 
 /**
+ * Format in which the result data are streamed.
+ *
+ * - "arrow-stream" for Apache Arrow IPC Stream format (application/vnd.apache.arrow.stream MIME type)
+ *
+ * @alpha
+ */
+export type ExecutionResultBinaryStreamFormat = "arrow-stream";
+
+/**
+ * Additional configuration of the execution result retrieval as binary stream.
+ * @alpha
+ */
+export interface IExecutionResultBinaryStreamConfig {
+    /**
+     * Which format to retrieve the data in.
+     */
+    format?: ExecutionResultBinaryStreamFormat;
+}
+
+/**
  * Additional options for the prepared execution.
  *
  * @public
@@ -598,6 +618,12 @@ export interface IExecutionResult extends ICancelable<IExecutionResult> {
      * @alpha
      */
     readClusteringAll(config: IClusteringConfig): Promise<IClusteringResult>;
+
+    /**
+     * Reads all the execution result data as a binary stream.
+     * @alpha
+     */
+    readBinaryStreamAll(config: IExecutionResultBinaryStreamConfig): Promise<ReadableStream>;
 
     /**
      * Transforms this execution result - changing the result sorting, dimensionality and available

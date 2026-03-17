@@ -1,8 +1,9 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import * as fs from "fs";
 import type { ClientRequest, IncomingMessage, ServerResponse } from "http";
 import * as path from "path";
+import * as zlib from "zlib";
 
 import react from "@vitejs/plugin-react";
 import { type ProxyOptions, type ServerOptions, defineConfig, loadEnv } from "vite";
@@ -32,7 +33,7 @@ const packagesWithStyles = [
     "@gooddata/sdk-ui-catalog",
 ];
 
-const GEO_STYLE_ENDPOINT = "/api/v1/location/style";
+const GEO_STYLE_ENDPOINT = "^/api/v1/location/style($|\\?)";
 const ABSOLUTE_URL_PATTERN = /^https?:\/\//i;
 
 type JsonRecord = Record<string, unknown>;
@@ -41,13 +42,13 @@ function isJsonRecord(value: unknown): value is JsonRecord {
     return typeof value === "object" && value !== null;
 }
 
-function isVectorSourceWithTiles(source: unknown): source is { tiles: string[] } {
+function isSourceWithTiles(source: unknown): source is { type: string; tiles: string[] } {
     if (!isJsonRecord(source)) {
         return false;
     }
 
     const typeValue = source["type"];
-    if (typeValue !== "vector") {
+    if (typeValue !== "vector" && typeValue !== "raster") {
         return false;
     }
 
@@ -83,14 +84,25 @@ function rewriteLocationStyleResponse(buffer: Buffer, origin: string): string {
         return text;
     }
 
-    if (typeof payload.glyphs === "string") {
-        payload.glyphs = replaceUrlOrigin(payload.glyphs, origin);
+    if (typeof payload["glyphs"] === "string") {
+        payload["glyphs"] = replaceUrlOrigin(payload["glyphs"], origin);
     }
 
-    const sources = payload.sources;
+    // sprite can be a string or an array of { id, url } objects (MapLibre v3+)
+    if (typeof payload["sprite"] === "string") {
+        payload["sprite"] = replaceUrlOrigin(payload["sprite"], origin);
+    } else if (Array.isArray(payload["sprite"])) {
+        payload["sprite"] = (payload["sprite"] as JsonRecord[]).map((entry) =>
+            entry && typeof entry["url"] === "string"
+                ? { ...entry, url: replaceUrlOrigin(entry["url"], origin) }
+                : entry,
+        );
+    }
+
+    const sources = payload["sources"];
     if (isJsonRecord(sources)) {
         Object.values(sources).forEach((source) => {
-            if (isVectorSourceWithTiles(source)) {
+            if (isSourceWithTiles(source)) {
                 source.tiles = source.tiles.map((tileUrl) => replaceUrlOrigin(tileUrl, origin));
             }
         });
@@ -102,6 +114,30 @@ function rewriteLocationStyleResponse(buffer: Buffer, origin: string): string {
 function handleProxyRequest(proxyReq: ClientRequest): void {
     proxyReq.removeHeader("origin");
     proxyReq.setHeader("accept-encoding", "identity");
+}
+
+function getPrimaryContentEncoding(encoding: string | string[] | undefined): string {
+    const headerValue = Array.isArray(encoding) ? encoding.join(",") : (encoding ?? "");
+    const [primaryEncoding = ""] = headerValue.split(",");
+    return primaryEncoding.split(";")[0].trim().toLowerCase();
+}
+
+function decompressBuffer(buffer: Buffer, encoding: string | string[] | undefined): Promise<Buffer> {
+    const normalizedEncoding = getPrimaryContentEncoding(encoding);
+
+    return new Promise((resolve, reject) => {
+        const callback = (err: Error | null, result: Buffer) => (err ? reject(err) : resolve(result));
+
+        if (normalizedEncoding === "gzip") {
+            zlib.gunzip(buffer, callback);
+        } else if (normalizedEncoding === "br") {
+            zlib.brotliDecompress(buffer, callback);
+        } else if (normalizedEncoding === "deflate") {
+            zlib.inflate(buffer, callback);
+        } else {
+            resolve(buffer);
+        }
+    });
 }
 
 function handleGeoStyleResponse(proxyRes: IncomingMessage, res: ServerResponse, origin: string): void {
@@ -116,15 +152,17 @@ function handleGeoStyleResponse(proxyRes: IncomingMessage, res: ServerResponse, 
             return;
         }
 
-        try {
-            const rewrittenBody = rewriteLocationStyleResponse(buffer, origin);
-            res.setHeader("content-type", "application/json");
-            res.end(rewrittenBody);
-        } catch (error) {
-            console.error("[devServer] Failed to rewrite geo style response", error);
-            res.writeHead(500, { "content-type": "application/json" });
-            res.end(JSON.stringify({ error: "Failed to rewrite geo style response." }));
-        }
+        decompressBuffer(buffer, proxyRes.headers["content-encoding"])
+            .then((decompressed) => {
+                const rewrittenBody = rewriteLocationStyleResponse(decompressed, origin);
+                res.setHeader("content-type", "application/json");
+                res.end(rewrittenBody);
+            })
+            .catch((error) => {
+                console.error("[devServer] Failed to rewrite geo style response", error);
+                res.writeHead(500, { "content-type": "application/json" });
+                res.end(JSON.stringify({ error: "Failed to rewrite geo style response." }));
+            });
     });
 }
 
@@ -174,7 +212,7 @@ function makePackageStylesAlias(packageName: string) {
 }
 
 // Define the directory to store certificates
-const certDir = path.join(process.env.HOME || process.env.USERPROFILE, ".gooddata", "certs");
+const certDir = path.join(process.env["HOME"] || process.env["USERPROFILE"], ".gooddata", "certs");
 let httpsOptions: ServerOptions["https"] | undefined;
 
 try {
@@ -193,13 +231,16 @@ const serverOptions = httpsOptions ? { https: httpsOptions } : {};
 // eslint-disable-next-line no-restricted-exports
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, process.cwd(), "");
-    const backendUrl = env.VITE_BACKEND_URL ?? "https://staging.dev-latest.stg11.panther.intgdc.com";
+    const backendUrl = env["VITE_BACKEND_URL"] ?? "https://staging.dev-latest.stg11.panther.intgdc.com";
     const port = 8999;
     const protocol = httpsOptions ? "https" : "http";
     const devServerOrigin = `${protocol}://localhost:${port}`;
 
     return {
         plugins: [react()],
+        build: {
+            chunkSizeWarningLimit: 15000, // Increased to suppress warnings for large chunks
+        },
         optimizeDeps: {
             exclude: [
                 "@codemirror/state",

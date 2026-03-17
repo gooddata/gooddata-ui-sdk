@@ -16,6 +16,7 @@
         "esm/**/*.map",
         "esm/**/*.svg",
         "esm/**/*.woff",
+        "esm/**/*.woff2",
         "esm/**/*.eot",
         "esm/**/*.ttf",
         "bin/**/*.sh"
