@@ -7,7 +7,12 @@ import { type DashboardContext } from "../../../types/commonTypes.js";
 export function loadFilterViews(ctx: DashboardContext): Promise<IDashboardFilterView[]> {
     const { backend, workspace } = ctx;
 
-    if (!ctx.dashboardRef || ctx.config?.isReadOnly || ctx.config?.isExport) {
+    if (
+        !ctx.dashboardRef ||
+        ctx.config?.isReadOnly ||
+        ctx.config?.isExport ||
+        ctx.config?.initialRenderMode === "export"
+    ) {
         return Promise.resolve([]);
     }
 

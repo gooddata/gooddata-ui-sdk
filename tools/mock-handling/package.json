@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/mock-handling",
-    "version": "11.26.0-alpha.7",
+    "version": "11.26.0-alpha.8",
     "description": "GoodData SDK Mock data capture and management tool",
     "license": "MIT",
     "author": "GoodData",
@@ -23,7 +23,6 @@
     "exports": "./esm/interface.js",
     "scripts": {
         "_phase:build": "npm run build",
-        "_phase:post-build": "npm run build-dynamic-files",
         "_phase:test": "npm run build-dynamic-files && npm run test-once",
         "_phase:validate": "npm run build-dynamic-files && npm run validate",
         "build": "bash scripts/build.sh",

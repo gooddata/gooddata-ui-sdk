@@ -11,9 +11,10 @@ import {
 
 const ABSOLUTE_URL_PATTERN = /^https?:\/\//i;
 
-type VectorSourceWithTiles = {
+type VectorSource = {
     type: "vector";
     tiles?: string[];
+    url?: string;
 } & Record<string, unknown>;
 
 /**
@@ -72,19 +73,29 @@ function assertValidStyle(style: unknown): asserts style is StyleSpecification {
     assertAbsoluteUrl(specification.glyphs, "glyphs");
 
     const vectorSources = Object.entries(specification.sources).filter(
-        (entry): entry is [string, VectorSourceWithTiles] => {
+        (entry): entry is [string, VectorSource] => {
             const [, source] = entry;
-            return isVectorSourceWithTiles(source);
+            return isVectorSource(source);
         },
     );
 
     for (const [sourceName, source] of vectorSources) {
-        const tiles = Array.isArray(source.tiles) ? source.tiles : null;
-        if (!tiles || tiles.length === 0) {
-            throw new Error(`Geo style source "${sourceName}" must define vector tiles.`);
+        const hasTiles = Array.isArray(source.tiles) && source.tiles.length > 0;
+        const hasUrl = typeof source.url === "string" && source.url.length > 0;
+
+        if (!hasTiles && !hasUrl) {
+            throw new Error(
+                `Geo style source "${sourceName}" must define vector tiles via "tiles" or "url".`,
+            );
         }
 
-        tiles.forEach((tileUrl) => assertAbsoluteUrl(tileUrl, `source "${sourceName}" tiles`));
+        if (hasTiles) {
+            source.tiles!.forEach((tileUrl) => assertAbsoluteUrl(tileUrl, `source "${sourceName}" tiles`));
+        }
+
+        if (hasUrl) {
+            assertAbsoluteUrl(source.url!, `source "${sourceName}" url`);
+        }
     }
 }
 
@@ -94,7 +105,7 @@ function assertAbsoluteUrl(value: string, fieldName: string): void {
     }
 }
 
-function isVectorSourceWithTiles(source: unknown): source is VectorSourceWithTiles {
+function isVectorSource(source: unknown): source is VectorSource {
     if (!source || typeof source !== "object") {
         return false;
     }
@@ -102,5 +113,5 @@ function isVectorSourceWithTiles(source: unknown): source is VectorSourceWithTil
     if (!("type" in source)) {
         return false;
     }
-    return (source as Partial<VectorSourceWithTiles>).type === "vector";
+    return (source as Partial<VectorSource>).type === "vector";
 }

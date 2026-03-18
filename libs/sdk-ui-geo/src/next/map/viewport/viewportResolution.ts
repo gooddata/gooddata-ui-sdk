@@ -52,7 +52,7 @@ export function computeViewportFromConfig(
 
     const area = config.viewport?.area;
     const shouldPreferConfiguredArea =
-        (config.enableGeoChartsViewportConfig ?? false) && area !== undefined && area !== "custom";
+        (config.enableGeoChartsViewportConfig ?? true) && area !== undefined && area !== "custom";
 
     if (shouldPreferConfiguredArea) {
         return resolveAreaViewport(area, dataViewport);
@@ -86,7 +86,7 @@ export function computeViewportFromConfig(
 export function getViewportConfigKey(config: IGeoChartConfig | undefined): string {
     const area = config?.viewport?.area;
     const shouldPreferConfiguredArea =
-        (config?.enableGeoChartsViewportConfig ?? false) && area !== undefined && area !== "custom";
+        (config?.enableGeoChartsViewportConfig ?? true) && area !== undefined && area !== "custom";
 
     if (shouldPreferConfiguredArea) {
         return `area:${area}`;

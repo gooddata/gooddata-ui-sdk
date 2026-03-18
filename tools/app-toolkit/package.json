@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/app-toolkit",
-    "version": "11.26.0-alpha.7",
+    "version": "11.26.0-alpha.8",
     "description": "CLI with useful tools for creating and maintaining GoodData web applications.",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData",
@@ -26,7 +26,6 @@
     "exports": "./esm/index.js",
     "scripts": {
         "_phase:build": "npm run build",
-        "_phase:post-build": "npm run build-dynamic-files",
         "_phase:test": "npm run build-dynamic-files && npm run test-once",
         "_phase:validate": "npm run build-dynamic-files && npm run validate",
         "build": "bash scripts/build.sh && tsgo",

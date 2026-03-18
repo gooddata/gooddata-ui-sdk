@@ -7,10 +7,6 @@
             "outputFolderNames": ["esm", "styles/css"]
         },
         {
-            "operationName": "_phase:post-build",
-            "disableBuildCacheForOperation": true
-        },
-        {
             "operationName": "_phase:validate",
             "outputFolderNames": []
         },

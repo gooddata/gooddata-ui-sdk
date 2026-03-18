@@ -65,7 +65,7 @@ export async function initializeMapLibreMap(
         pitchWithRotate,
         touchZoomRotate,
         navigation,
-        enableGeoChartsViewportConfig = false,
+        enableGeoChartsViewportConfig = true,
         preserveDrawingBuffer = false,
         cooperativeGestures = true,
         maxZoom,

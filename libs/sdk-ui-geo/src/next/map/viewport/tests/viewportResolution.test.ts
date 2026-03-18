@@ -45,6 +45,24 @@ describe("viewportResolution", () => {
         expect(viewport).toEqual(dataViewport);
     });
 
+    it("prefers configured area over stale center when advanced viewport config flag is omitted", () => {
+        const viewport = computeViewportFromConfig(
+            {
+                center: { lat: 40, lng: 20 },
+                zoom: 4,
+                viewport: { area: "world" },
+            },
+            dataViewport,
+        );
+
+        expect(viewport).toEqual({
+            bounds: {
+                southWest: { lat: -84, lng: -180 },
+                northEast: { lat: 84, lng: 180 },
+            },
+        });
+    });
+
     it("keeps legacy center precedence when advanced viewport config is disabled", () => {
         const viewport = computeViewportFromConfig(
             {
@@ -65,6 +83,16 @@ describe("viewportResolution", () => {
     it("uses area key for configured area when advanced viewport config is enabled", () => {
         const key = getViewportConfigKey({
             enableGeoChartsViewportConfig: true,
+            center: { lat: 40, lng: 20 },
+            zoom: 4,
+            viewport: { area: "auto" },
+        });
+
+        expect(key).toBe("area:auto");
+    });
+
+    it("uses area key for configured area when advanced viewport config flag is omitted", () => {
+        const key = getViewportConfigKey({
             center: { lat: 40, lng: 20 },
             zoom: 4,
             viewport: { area: "auto" },

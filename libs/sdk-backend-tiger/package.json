@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-backend-tiger",
-    "version": "11.26.0-alpha.7",
+    "version": "11.26.0-alpha.8",
     "description": "GoodData Backend SPI implementation for GoodData Cloud and GoodData.CN",
     "license": "MIT",
     "author": "GoodData",
@@ -22,7 +22,6 @@
     "exports": "./esm/index.js",
     "scripts": {
         "_phase:build": "npm run build",
-        "_phase:post-build": "npm run build-dynamic-files",
         "_phase:test": "npm run build-dynamic-files && npm run test-once",
         "_phase:validate": "npm run build-dynamic-files && npm run validate",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l) || (api-extractor run)",

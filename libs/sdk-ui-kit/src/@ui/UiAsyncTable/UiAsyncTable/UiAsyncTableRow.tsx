@@ -4,7 +4,7 @@ import { type MouseEvent, type ReactNode, type Ref, useCallback } from "react";
 
 import { UiAsyncTableCheckbox } from "./UiAsyncTableCheckbox.js";
 import { UiAsyncTableIconRenderer } from "./UiAsyncTableIconRenderer.js";
-import { getColumnWidth, getRowLabelId } from "./utils.js";
+import { getCellId, getColumnWidth, getRowId, getRowLabelId } from "./utils.js";
 import { WithConditionalAnchor } from "./WithConditionalAnchor.js";
 import { Dropdown } from "../../../Dropdown/Dropdown.js";
 import { UiIconButton } from "../../UiIconButton/UiIconButton.js";
@@ -59,6 +59,7 @@ export function UiAsyncTableRow<T extends { id: string }>({
             })}
             ref={isRowFocused ? (focusedElementRef as Ref<HTMLDivElement>) : undefined}
             role="row"
+            id={item ? getRowId(item.id) : undefined}
             aria-rowindex={itemIndex + 1}
             aria-labelledby={getRowLabelId(itemIndex)}
         >
@@ -69,6 +70,7 @@ export function UiAsyncTableRow<T extends { id: string }>({
                     ariaLabel={accessibilityConfig?.getCheckboxItemAriaLabel?.(item)}
                     isCellFocused={isFocused ? focusedColumnIndex === 0 : undefined}
                     cellRef={isFocused && focusedColumnIndex === 0 ? focusedElementRef : undefined}
+                    cellId={getCellId(item.id, 0)}
                 />
             ) : null}
             {columns.map((column, index) => {
@@ -81,6 +83,7 @@ export function UiAsyncTableRow<T extends { id: string }>({
                     <div
                         style={{ width }}
                         key={index}
+                        id={item ? getCellId(item.id, totalColumnIndex) : undefined}
                         className={e("cell", {
                             bold: bold ?? false,
                             align: column.align ?? false,

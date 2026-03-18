@@ -438,7 +438,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableGeoChartsViewportConfig: false,
     enableGeoSegmentConflictRecommendation: false,
     enableGeoBasemapConfig: false,
-    enableCustomGeoCollection: false,
+    enableCustomGeoCollection: true,
     enableGeoSatelliteBasemapOption: false,
     enableAutomationManagement: true,
     enableNewPdfTabularExport: true,

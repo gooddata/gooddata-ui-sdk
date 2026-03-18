@@ -10,7 +10,8 @@ export function loadNotificationChannelsCount(ctx: DashboardContext, settings: I
     if (
         !(settings?.enableScheduling || settings?.enableAlerting) ||
         ctx.config?.isReadOnly ||
-        ctx.config?.isExport
+        ctx.config?.isExport ||
+        ctx.config?.initialRenderMode === "export"
     ) {
         return Promise.resolve(0);
     }

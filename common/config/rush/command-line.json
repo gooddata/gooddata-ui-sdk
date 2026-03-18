@@ -13,14 +13,6 @@
             },
             "ignoreMissingScript": true,
             "allowWarningsOnSuccess": false
-        },
-        {
-            "name": "_phase:post-build",
-            "dependencies": {
-                "self": ["_phase:build"]
-            },
-            "missingScriptBehavior": "silent",
-            "allowWarningsOnSuccess": true
         }
     ],
 
@@ -37,7 +29,7 @@
             "commandKind": "phased",
             "name": "build",
             "summary": "Build all projects. This command will build all projects in the correct dependency order. This command will not use build cache.",
-            "phases": ["_phase:build", "_phase:post-build"],
+            "phases": ["_phase:build"],
             "enableParallelism": true,
             "incremental": true
         },
