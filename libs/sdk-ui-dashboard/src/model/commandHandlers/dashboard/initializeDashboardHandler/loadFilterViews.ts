@@ -1,4 +1,4 @@
-// (C) 2024 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type IDashboardFilterView } from "@gooddata/sdk-model";
 
@@ -7,7 +7,7 @@ import { type DashboardContext } from "../../../types/commonTypes.js";
 export function loadFilterViews(ctx: DashboardContext): Promise<IDashboardFilterView[]> {
     const { backend, workspace } = ctx;
 
-    if (!ctx.dashboardRef || ctx.config?.isReadOnly) {
+    if (!ctx.dashboardRef || ctx.config?.isReadOnly || ctx.config?.isExport) {
         return Promise.resolve([]);
     }
 

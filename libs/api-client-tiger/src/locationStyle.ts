@@ -20,6 +20,12 @@ export interface ILocationStyleParams {
      * Color scheme. Valid values: `light`, `dark`. Ignored for `satellite` and `none` basemaps.
      */
     colorScheme?: string;
+
+    /**
+     * Two-letter ISO 639-1 language code (e.g. `en`, `de`, `fr`).
+     * When provided, map labels are returned in the requested language.
+     */
+    language?: string;
 }
 
 /**
@@ -54,6 +60,7 @@ export async function LocationStyleApi_GetDefaultStyle(
     const queryParams = {
         ...(params?.basemap === undefined ? {} : { basemap: params.basemap }),
         ...(params?.colorScheme === undefined ? {} : { colorScheme: params.colorScheme }),
+        ...(params?.language === undefined ? {} : { language: params.language }),
     };
 
     const response = await axios.get<LocationStyleDocument>("/api/v1/location/style", {

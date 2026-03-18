@@ -7,11 +7,12 @@
 // Based on Figma design: https://www.figma.com/design/L2DE4SJXqNxEECwidh88HT/25Q4---Geocharts
 //
 
-$legend-border-color: #c9d5e0;
-$legend-divider-color: var(--gd-palette-complementary-3, #dde4eb);
-$legend-title-color: var(--gd-palette-complementary-8, #464e56);
-$legend-text-color: var(--gd-palette-complementary-7, #6d7680);
-$legend-chevron-color: #94a1ad;
+$legend-border-color: var(--gd-palette-complementary-3);
+$legend-divider-color: var(--gd-palette-complementary-3);
+$legend-title-color: var(--gd-palette-complementary-8);
+$legend-text-color: var(--gd-palette-complementary-7);
+$legend-chevron-color: var(--gd-palette-complementary-6);
+
 @mixin legend-focus-outline($offset) {
     outline: 2px solid var(--gd-palette-primary-base);
     outline-offset: $offset;
@@ -329,6 +330,7 @@ $legend-chevron-color: #94a1ad;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+        text-align: left;
     }
 
     // ==========================================================================

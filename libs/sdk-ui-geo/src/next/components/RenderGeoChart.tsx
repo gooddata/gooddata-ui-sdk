@@ -157,6 +157,7 @@ export function RenderGeoChart({ onMapError }: IRenderGeoChartProps): ReactEleme
                         afterRender={props.afterRender}
                         config={props.config}
                         backend={props.backend}
+                        locale={props.locale}
                         mapInstructionsId={mapInstructionsId}
                         mapCanvasTitle={mapCanvasTitle}
                         legendPanelRef={legendPanelRef}

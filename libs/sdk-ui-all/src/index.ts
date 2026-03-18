@@ -16,6 +16,7 @@
 
 export * from "@gooddata/sdk-model";
 export type { IExportResult as IExportResultModel } from "@gooddata/sdk-model";
+export type { GeoLayerType } from "@gooddata/sdk-model";
 export * from "@gooddata/sdk-backend-spi";
 export type { IExportResult } from "@gooddata/sdk-model";
 export * from "@gooddata/sdk-ui";

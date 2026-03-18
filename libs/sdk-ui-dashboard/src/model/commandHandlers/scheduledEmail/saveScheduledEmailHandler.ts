@@ -18,13 +18,18 @@ import {
     isWidget,
     newDefForInsight,
 } from "@gooddata/sdk-model";
-import { fillMissingTitles, resolveMessages } from "@gooddata/sdk-ui";
+import {
+    fillMissingTitles,
+    resolveDefaultDisplayFormRefForDisplayForm,
+    resolveMessages,
+} from "@gooddata/sdk-ui";
 
 import { prepareCsvRawExecutionDefinition } from "./csvRawExecutionDefinition.js";
 import { type ISaveScheduledEmail } from "../../commands/scheduledEmail.js";
 import { type IDashboardScheduledEmailSaved, scheduledEmailSaved } from "../../events/scheduledEmail.js";
 import { queryWithInsight } from "../../queryServices/queryWidgetFilters.js";
-import { selectLocale } from "../../store/config/configSelectors.js";
+import { selectCatalogAttributes } from "../../store/catalog/catalogSelectors.js";
+import { selectLocale, selectSettings } from "../../store/config/configSelectors.js";
 import { selectExecutionResultByRef } from "../../store/executionResults/executionResultsSelectors.js";
 import { selectAutomationCommonDateFilterId } from "../../store/filtering/dashboardFilterSelectors.js";
 import {
@@ -32,8 +37,10 @@ import {
     selectInsightByWidgetRef,
     selectRawExportOverridesForInsight,
 } from "../../store/insights/insightsSelectors.js";
+import { selectPreloadedAttributesWithReferences } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { selectWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
+import { prepareGeoRawExportDefinition } from "../common/prepareGeoRawExportDefinition.js";
 
 function saveScheduledEmail(
     ctx: DashboardContext,
@@ -84,10 +91,6 @@ export function* saveScheduledEmailHandler(
         ? yield call(fillMissingTitles, lookupInsight, locale, messages)
         : undefined;
 
-    const overrides: ReturnType<ReturnType<typeof selectRawExportOverridesForInsight>> = filledInsight
-        ? yield select(selectRawExportOverridesForInsight(filledInsight))
-        : undefined;
-
     // Build execution definition from insight when execution result is unavailable
     // (e.g., when widget shows "no data"). Uses the same filter resolution as widget rendering.
     if (!preparedExecutionDefinition && csvRawRequest && widgetId && lookupInsight && isWidget(widget)) {
@@ -115,8 +118,37 @@ export function* saveScheduledEmailHandler(
         widget,
         commonDateFilterId,
     );
+    const settings = yield select(selectSettings);
+    const catalogAttributes = yield select(selectCatalogAttributes);
+    const preloadedAttributesWithReferences = yield select(selectPreloadedAttributesWithReferences);
+    const preparedGeoRawExport =
+        lookupInsight && filledInsight && preparedExecutionDefinitionWithFilters
+            ? prepareGeoRawExportDefinition({
+                  baseExecutionDefinition: preparedExecutionDefinitionWithFilters,
+                  sourceInsight: lookupInsight,
+                  filledInsight,
+                  workspace: ctx.workspace,
+                  settings,
+                  resolveDefaultDisplayFormRef: (displayFormRef) =>
+                      resolveDefaultDisplayFormRefForDisplayForm(
+                          displayFormRef,
+                          catalogAttributes,
+                          preloadedAttributesWithReferences,
+                      ),
+              })
+            : undefined;
+    const overridesInsight = preparedGeoRawExport?.filledInsight ?? filledInsight;
+    const overrides: ReturnType<ReturnType<typeof selectRawExportOverridesForInsight>> = overridesInsight
+        ? yield select(selectRawExportOverridesForInsight(overridesInsight))
+        : undefined;
 
-    yield call(saveScheduledEmail, ctx, scheduledEmail, preparedExecutionDefinitionWithFilters, overrides);
+    yield call(
+        saveScheduledEmail,
+        ctx,
+        scheduledEmail,
+        preparedGeoRawExport?.executionDefinition ?? preparedExecutionDefinitionWithFilters,
+        overrides,
+    );
 
     return scheduledEmailSaved(ctx, cmd.correlationId);
 }

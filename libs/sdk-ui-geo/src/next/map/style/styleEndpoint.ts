@@ -37,6 +37,7 @@ export async function fetchMapStyle(
     backend: IAnalyticalBackend,
     basemap?: GeoBasemap,
     colorScheme?: GeoColorScheme,
+    language?: string,
 ): Promise<StyleSpecification> {
     const colorSchemeParam =
         colorScheme === undefined || basemap === undefined || !doesGeoBasemapSupportColorScheme(basemap)
@@ -44,7 +45,7 @@ export async function fetchMapStyle(
             : colorScheme;
     const style = (await backend
         .geo()
-        .getDefaultStyle({ basemap, colorScheme: colorSchemeParam })) as unknown;
+        .getDefaultStyle({ basemap, colorScheme: colorSchemeParam, language })) as unknown;
     assertValidStyle(style);
     return style;
 }

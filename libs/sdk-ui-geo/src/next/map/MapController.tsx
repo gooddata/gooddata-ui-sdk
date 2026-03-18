@@ -41,6 +41,7 @@ export type MapControllerProps = {
     afterRender?: () => void;
     config: IGeoChartConfig | undefined;
     backend?: IAnalyticalBackend;
+    locale?: string;
     mapInstructionsId?: string;
     mapCanvasTitle?: string;
     onMapError?: (error: GoodDataSdkError | null) => void;
@@ -64,6 +65,7 @@ export function MapController({
     afterRender,
     config,
     backend,
+    locale,
     mapInstructionsId,
     mapCanvasTitle,
     onMapError,
@@ -74,6 +76,7 @@ export function MapController({
         config,
         initialViewport,
         resolvedBackend,
+        locale,
         mapInstructionsId,
         mapCanvasTitle,
         legendPanelRef,

@@ -455,6 +455,11 @@ function useInitOrReload(
 
     const prevIsTextModeRef = useRef(isTextMode);
 
+    // Ref for isTextMode so the displayAsLabel sync effect can read it without
+    // having it in its dependency array (avoids re-firing on mode switch).
+    const isTextModeRef = useRef(isTextMode);
+    isTextModeRef.current = isTextMode;
+
     useEffect(() => {
         if (shouldIncludeLimitingFilters && limitingAttributeFilters && limitingAttributeFilters.length > 0) {
             handler.setLimitingAttributeFilters(limitingAttributeFilters);
@@ -606,7 +611,7 @@ function useInitOrReload(
                 }
             });
             handler.setDisplayAsLabel(displayAsLabel);
-            handler.init(DISPLAY_FORM_CHANGED_CORRELATION, isTextMode);
+            handler.init(DISPLAY_FORM_CHANGED_CORRELATION, isTextModeRef.current);
             return () => {
                 if (!isMountedRef.current) {
                     unsubscribe();
@@ -614,7 +619,7 @@ function useInitOrReload(
             };
         }
         return undefined;
-    }, [handler, displayAsLabel, onChange, selectionMode, isSelectionInvalid, isTextMode]);
+    }, [handler, displayAsLabel, onChange, selectionMode, isSelectionInvalid]);
 }
 
 function useSingleSelectModeHandler(

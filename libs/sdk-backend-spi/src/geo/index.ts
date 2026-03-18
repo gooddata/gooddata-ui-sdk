@@ -30,6 +30,15 @@ export interface IGeoStyleParams {
      * Valid values: `light`, `dark`. Ignored for `satellite`, `hybrid` and `none` basemaps.
      */
     colorScheme?: string;
+
+    /**
+     * Language tag passed as `language` query parameter.
+     *
+     * @remarks
+     * Two-letter ISO 639-1 code (e.g. `en`, `de`, `fr`).
+     * When provided, map labels are returned in the requested language.
+     */
+    language?: string;
 }
 
 /**

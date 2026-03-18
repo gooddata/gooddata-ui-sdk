@@ -17,7 +17,7 @@ import {
     insightRef,
     newDefForInsight,
 } from "@gooddata/sdk-model";
-import { fillMissingTitles } from "@gooddata/sdk-ui";
+import { fillMissingTitles, resolveDefaultDisplayFormRefForDisplayForm } from "@gooddata/sdk-ui";
 
 import { filterContextItemsToDashboardFiltersByWidget } from "../../../converters/filterConverters.js";
 import { type IExportRawInsightWidget } from "../../commands/insight.js";
@@ -25,15 +25,24 @@ import {
     type IDashboardInsightWidgetExportResolved,
     insightWidgetExportResolved,
 } from "../../events/insight.js";
-import { selectExportResultPollingTimeout, selectLocale } from "../../store/config/configSelectors.js";
+import { selectCatalogAttributes } from "../../store/catalog/catalogSelectors.js";
+import {
+    selectExportResultPollingTimeout,
+    selectLocale,
+    selectSettings,
+} from "../../store/config/configSelectors.js";
 import { selectExecutionResultByRef } from "../../store/executionResults/executionResultsSelectors.js";
 import {
     selectInsightByRef,
     selectRawExportOverridesForInsight,
 } from "../../store/insights/insightsSelectors.js";
-import { selectFilterContextFilters } from "../../store/tabs/filterContext/filterContextSelectors.js";
+import {
+    selectFilterContextFilters,
+    selectPreloadedAttributesWithReferences,
+} from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { type PromiseFnReturnType } from "../../types/sagas.js";
+import { prepareGeoRawExportDefinition } from "../common/prepareGeoRawExportDefinition.js";
 
 async function exportDashboardToCSVRaw(
     ctx: DashboardContext,
@@ -64,28 +73,45 @@ export function* exportRawInsightWidgetHandler(
     const filterContextFilters: ReturnType<typeof selectFilterContextFilters> =
         yield select(selectFilterContextFilters);
 
-    const mergedFilters: INullableFilter[] = [
-        ...insight.insight.filters,
-        ...filterContextItemsToDashboardFiltersByWidget(filterContextFilters, widget),
-    ];
+    const dashboardFilters: INullableFilter[] = filterContextItemsToDashboardFiltersByWidget(
+        filterContextFilters,
+        widget,
+    );
+    const mergedFilters: INullableFilter[] = [...insight.insight.filters, ...dashboardFilters];
 
     const definition = defWithDimensions(
         newDefForInsight(workspace, insight, mergedFilters),
         defaultDimensionsGenerator,
     );
 
-    const preparedExecutionDefinition = executionEnvelope?.executionResult?.definition ?? definition;
-
-    // execution definition must be defined at this point
-    invariant(preparedExecutionDefinition);
-
     const selectedInsight = yield select(selectInsightByRef(insightRef(insight)));
     const locale = yield select(selectLocale);
     const filledInsight = yield call(fillMissingTitles, selectedInsight, locale, undefined);
+    const settings = yield select(selectSettings);
+    const catalogAttributes = yield select(selectCatalogAttributes);
+    const preloadedAttributesWithReferences = yield select(selectPreloadedAttributesWithReferences);
+    const baseExecutionDefinition = executionEnvelope?.executionResult?.definition ?? definition;
+    const { executionDefinition: preparedExecutionDefinition, filledInsight: preparedFilledInsight } =
+        prepareGeoRawExportDefinition({
+            baseExecutionDefinition,
+            sourceInsight: insight,
+            filledInsight,
+            workspace,
+            settings,
+            resolveDefaultDisplayFormRef: (displayFormRef) =>
+                resolveDefaultDisplayFormRefForDisplayForm(
+                    displayFormRef,
+                    catalogAttributes,
+                    preloadedAttributesWithReferences,
+                ),
+        });
 
     const overrides: ReturnType<ReturnType<typeof selectRawExportOverridesForInsight>> = yield select(
-        selectRawExportOverridesForInsight(filledInsight),
+        selectRawExportOverridesForInsight(preparedFilledInsight),
     );
+
+    // execution definition must be defined at this point
+    invariant(preparedExecutionDefinition);
 
     const timeout: ReturnType<typeof selectExportResultPollingTimeout> = yield select(
         selectExportResultPollingTimeout,

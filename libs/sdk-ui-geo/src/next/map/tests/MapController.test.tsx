@@ -171,6 +171,7 @@ describe("MapController", () => {
             undefined,
             undefined,
             undefined,
+            undefined,
         );
         expect(resizeMock).toHaveBeenCalledWith(mapFacadeStub, true, null, null, null, config);
         expect(applyViewportOnConfigChangeMock).toHaveBeenCalledWith(mapFacadeStub, true, config, null);
@@ -205,6 +206,7 @@ describe("MapController", () => {
             mapContainerRef,
             undefined,
             null,
+            undefined,
             undefined,
             undefined,
             "Geo accessibility title",

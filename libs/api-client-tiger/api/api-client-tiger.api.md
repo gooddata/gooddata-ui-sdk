@@ -16035,6 +16035,7 @@ export interface ILiveFeatures {
 export interface ILocationStyleParams {
     basemap?: string;
     colorScheme?: string;
+    language?: string;
 }
 
 // @public

@@ -56,6 +56,7 @@ import {
     type selectEnableScheduling,
     selectExternalRecipient,
     selectFocusObject,
+    selectIsExport,
     selectIsReadOnly,
     selectOpenAutomationOnLoad,
 } from "../../store/config/configSelectors.js";
@@ -97,6 +98,7 @@ export function* initializeAutomationsHandler(
     const automationsIsLoading: ReturnType<typeof selectAutomationsIsLoading> =
         yield select(selectAutomationsIsLoading);
     const isReadOnly: ReturnType<typeof selectIsReadOnly> = yield select(selectIsReadOnly);
+    const isExport: ReturnType<typeof selectIsExport> = yield select(selectIsExport);
     const { automationId }: ReturnType<typeof selectFocusObject> = yield select(selectFocusObject);
     const externalRecipient: ReturnType<typeof selectExternalRecipient> =
         yield select(selectExternalRecipient);
@@ -109,7 +111,8 @@ export function* initializeAutomationsHandler(
         !enableAutomations ||
         automationsInitialized ||
         automationsIsLoading ||
-        isReadOnly
+        isReadOnly ||
+        isExport
     ) {
         return;
     }

@@ -5,7 +5,7 @@ import { type RefObject, useEffect, useMemo, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
 import type { IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import { type GoodDataSdkError, convertError } from "@gooddata/sdk-ui";
+import { type GoodDataSdkError, convertError, resolveLocale } from "@gooddata/sdk-ui";
 
 import {
     type IMapFacade,
@@ -368,6 +368,7 @@ function getViewportKey(viewport: Partial<IMapViewport>): string {
  * @param config - Geo configuration (optional)
  * @param initialViewport - Pre-calculated viewport from data (optional)
  * @param backend - Backend used to resolve map style when not provided inline (optional)
+ * @param locale - Locale string used to derive the map label language (optional)
  * @param mapInstructionsId - ID of screen-reader-only map instructions element (optional)
  * @param mapCanvasTitle - Optional title used for map canvas accessible name
  * @param legendPanelRef - Optional ref to legend root element rendered by React
@@ -380,6 +381,7 @@ export function useMapInitialization(
     config?: IGeoChartConfig,
     initialViewport?: Partial<IMapViewport> | null,
     backend?: IAnalyticalBackend,
+    locale?: string,
     mapInstructionsId?: string,
     mapCanvasTitle?: string,
     legendPanelRef?: RefObject<HTMLDivElement | null>,
@@ -475,9 +477,18 @@ export function useMapInitialization(
     }, [requestedViewport, requestedViewportKey]);
 
     const cooperativeGestures = config?.cooperativeGestures ?? true;
-    const locale = useMemo(() => {
+    const mapLibreLocale = useMemo(() => {
         return cooperativeGestures ? generateMapLibreLocale(intl) : undefined;
     }, [cooperativeGestures, intl]);
+
+    const mapLanguage = useMemo(() => {
+        if (typeof locale !== "string" || locale.trim().length === 0) {
+            return undefined;
+        }
+
+        const resolvedLocale = resolveLocale(locale);
+        return resolvedLocale.split("-")[0].toLowerCase();
+    }, [locale]);
 
     const isExportMode = config?.isExportMode ?? false;
     const isViewportFrozen = Boolean(config?.viewport?.frozen);
@@ -536,8 +547,9 @@ export function useMapInitialization(
                 style: config?.mapStyle,
                 basemap,
                 colorScheme,
+                language: mapLanguage,
             },
-            locale,
+            mapLibreLocale,
             backend,
         )
             .then((result) => {
@@ -603,11 +615,12 @@ export function useMapInitialization(
         isKeyboardPanEnabled,
         isKeyboardZoomEnabled,
         isKeyboardRotationEnabled,
-        locale,
+        mapLibreLocale,
         backend,
         maxZoom,
         basemap,
         colorScheme,
+        mapLanguage,
         intl,
         mapInstructionsId,
         mapCanvasTitle,

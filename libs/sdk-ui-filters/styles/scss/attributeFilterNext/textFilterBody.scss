@@ -83,6 +83,24 @@
             margin-left: -3px;
         }
     }
+
+    &__values-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+
+        .gd-ui-kit-link {
+            flex-shrink: 0;
+            font-size: 12px;
+        }
+
+        &--disabled .gd-ui-kit-link {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+    }
 }
 
 .gd-text-filter-state-summary {

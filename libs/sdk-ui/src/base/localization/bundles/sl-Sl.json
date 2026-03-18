@@ -435,6 +435,7 @@
     "attributeFilter.text.values.helpIconLabel": "Pomoč",
     "attributeFilter.text.values.removeTagAriaLabel": "Odstrani {value}",
     "attributeFilter.text.autocomplete.listLabel": "Predlogi",
+    "attributeFilter.text.values.clearAll": "Počisti",
     "attributeFilter.details.infoButtonLabel": "Pokaži podrobnosti atributa",
     "attributeFilter.details.label": "Oznaka",
     "attributeFilter.details.elementsMore": "…in še {count} drugih",

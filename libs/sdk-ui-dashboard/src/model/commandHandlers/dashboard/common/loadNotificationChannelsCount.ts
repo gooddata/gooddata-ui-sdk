@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { type ISettings, type NotificationChannelDestinationType } from "@gooddata/sdk-model";
 
 import { type DashboardContext } from "../../../types/commonTypes.js";
@@ -6,7 +7,11 @@ import { type DashboardContext } from "../../../types/commonTypes.js";
 export function loadNotificationChannelsCount(ctx: DashboardContext, settings: ISettings): Promise<number> {
     const { backend } = ctx;
 
-    if (!(settings?.enableScheduling || settings?.enableAlerting) || ctx.config?.isReadOnly) {
+    if (
+        !(settings?.enableScheduling || settings?.enableAlerting) ||
+        ctx.config?.isReadOnly ||
+        ctx.config?.isExport
+    ) {
         return Promise.resolve(0);
     }
 

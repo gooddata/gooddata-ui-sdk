@@ -435,6 +435,7 @@
     "attributeFilter.text.values.helpIconLabel": "帮助",
     "attributeFilter.text.values.removeTagAriaLabel": "移除 {value}",
     "attributeFilter.text.autocomplete.listLabel": "建议",
+    "attributeFilter.text.values.clearAll": "清空",
     "attributeFilter.details.infoButtonLabel": "显示属性详细信息",
     "attributeFilter.details.label": "标签",
     "attributeFilter.details.elementsMore": "…和另外 {count} 个",

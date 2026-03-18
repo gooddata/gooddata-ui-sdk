@@ -12,6 +12,8 @@ const mapping: [JsonApiLabelOutAttributesValueTypeEnum, AttributeDisplayFormType
     ["GEO", "GDC.geo.pin"],
     ["GEO_LATITUDE", "GDC.geo.pin_latitude"],
     ["GEO_LONGITUDE", "GDC.geo.pin_longitude"],
+    ["GEO_AREA", "GDC.geo.area"],
+    ["GEO_ICON", "GDC.geo.icon"],
 ];
 
 describe("LabelTypeConverter", () => {

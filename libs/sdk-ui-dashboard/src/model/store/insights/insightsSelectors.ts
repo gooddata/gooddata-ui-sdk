@@ -1,10 +1,12 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { createSelector } from "@reduxjs/toolkit";
 
 import { type IRawExportCustomOverride, type IRawExportCustomOverrides } from "@gooddata/sdk-backend-spi";
 import {
+    type ICatalogAttribute,
     type IInsight,
+    type IInsightDefinition,
     type IInsightWidget,
     type ObjRef,
     areObjRefsEqual,
@@ -26,6 +28,7 @@ import { createMemoizedSelector } from "../_infra/selectors.js";
 import { selectBackendCapabilities } from "../backendCapabilities/backendCapabilitiesSelectors.js";
 import {
     selectCatalogAttributeDisplayForms,
+    selectCatalogAttributes,
     selectCatalogDateDatasets,
     selectCatalogMeasures,
 } from "../catalog/catalogSelectors.js";
@@ -175,9 +178,9 @@ const selectRawExportMeasureOverridesForInsightByRef: (
  * @alpha
  */
 const selectRawExportMeasureOverridesForInsight: (
-    insight: IInsight | undefined,
+    insight: IInsightDefinition | undefined,
 ) => DashboardSelector<IRawExportCustomOverrides["measures"] | undefined> = createMemoizedSelector(
-    (insight: IInsight | undefined) => {
+    (insight: IInsightDefinition | undefined) => {
         return createSelector(selectCatalogMeasures, (catalogMeasures) => {
             if (!insight) {
                 return undefined;
@@ -221,6 +224,28 @@ const selectRawExportMeasureOverridesForInsight: (
 );
 
 /**
+ * For geo display forms (latitude, longitude, area, pin), resolves the parent attribute's
+ * default display form title instead of the geo-specific display form title.
+ * Returns the original title for non-geo display forms.
+ */
+function resolveDisplayFormTitle(
+    catalogDisplayFormTitle: string,
+    catalogDisplayFormType: string | undefined,
+    catalogDisplayFormAttributeRef: ObjRef,
+    catalogAttributes: ICatalogAttribute[],
+): string {
+    if (typeof catalogDisplayFormType === "string" && catalogDisplayFormType.startsWith("GDC.geo.")) {
+        const parentCatalogAttribute = catalogAttributes.find((ca) =>
+            areObjRefsEqual(ca.attribute.ref, catalogDisplayFormAttributeRef),
+        );
+        if (parentCatalogAttribute) {
+            return parentCatalogAttribute.defaultDisplayForm.title;
+        }
+    }
+    return catalogDisplayFormTitle;
+}
+
+/**
  * Selects raw export custom display form overrides for insight by ref.
  *
  * @privateRemarks
@@ -229,17 +254,19 @@ const selectRawExportMeasureOverridesForInsight: (
  * The order of precedence is:
  * 1. If the attribute has an alias in the insight definition, use that.
  * 2. Use the title of the attribute from the catalog, trying normal attributes first and then date datasets.
+ *    For geo display forms, the parent attribute's default display form title is used instead.
  *
  * @alpha
  */
 const selectRawExportDisplayFormOverridesForInsight: (
-    insight: IInsight | undefined,
+    insight: IInsightDefinition | undefined,
 ) => DashboardSelector<IRawExportCustomOverrides["displayForms"] | undefined> = createMemoizedSelector(
-    (insight: IInsight | undefined) => {
+    (insight: IInsightDefinition | undefined) => {
         return createSelector(
             selectCatalogAttributeDisplayForms,
             selectCatalogDateDatasets,
-            (catalogAttributeDisplayForms, catalogDateDatasets) => {
+            selectCatalogAttributes,
+            (catalogAttributeDisplayForms, catalogDateDatasets, catalogAttributes) => {
                 if (!insight) {
                     return undefined;
                 }
@@ -264,7 +291,12 @@ const selectRawExportDisplayFormOverridesForInsight: (
                         );
                         if (catalogDisplayForm) {
                             overrides[localId] = {
-                                title: catalogDisplayForm.title,
+                                title: resolveDisplayFormTitle(
+                                    catalogDisplayForm.title,
+                                    catalogDisplayForm.displayFormType,
+                                    catalogDisplayForm.attribute,
+                                    catalogAttributes,
+                                ),
                             };
                             return overrides;
                         }
@@ -298,6 +330,7 @@ const selectRawExportDisplayFormOverridesForInsight: (
  * The order of precedence is:
  * 1. If the attribute has an alias in the insight definition, use that.
  * 2. Use the title of the attribute from the catalog, trying normal attributes first and then date datasets.
+ *    For geo display forms, the parent attribute's default display form title is used instead.
  *
  * @alpha
  */
@@ -309,7 +342,8 @@ const selectRawExportDisplayFormOverridesForInsightByRef: (
             selectInsightByRef(ref),
             selectCatalogAttributeDisplayForms,
             selectCatalogDateDatasets,
-            (insight, catalogAttributeDisplayForms, catalogDateDatasets) => {
+            selectCatalogAttributes,
+            (insight, catalogAttributeDisplayForms, catalogDateDatasets, catalogAttributes) => {
                 if (!insight) {
                     return undefined;
                 }
@@ -334,7 +368,12 @@ const selectRawExportDisplayFormOverridesForInsightByRef: (
                         );
                         if (catalogDisplayForm) {
                             overrides[localId] = {
-                                title: catalogDisplayForm.title,
+                                title: resolveDisplayFormTitle(
+                                    catalogDisplayForm.title,
+                                    catalogDisplayForm.displayFormType,
+                                    catalogDisplayForm.attribute,
+                                    catalogAttributes,
+                                ),
                             };
                             return overrides;
                         }
@@ -390,9 +429,9 @@ export const selectRawExportOverridesForInsightByRef: (
  * @alpha
  */
 export const selectRawExportOverridesForInsight: (
-    insight: IInsight | undefined,
+    insight: IInsightDefinition | undefined,
 ) => DashboardSelector<IRawExportCustomOverrides | undefined> = createMemoizedSelector(
-    (insight: IInsight | undefined) => {
+    (insight: IInsightDefinition | undefined) => {
         return createSelector(
             selectRawExportMeasureOverridesForInsight(insight),
             selectRawExportDisplayFormOverridesForInsight(insight),

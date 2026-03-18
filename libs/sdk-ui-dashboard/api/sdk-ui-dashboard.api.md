@@ -5485,6 +5485,7 @@ export interface IExportInsightWidget extends IDashboardCommand {
 // @beta
 export interface IExportInsightWidgetPayload {
     readonly config: IExportConfig;
+    readonly insight?: IInsight;
     readonly ref: ObjRef;
 }
 

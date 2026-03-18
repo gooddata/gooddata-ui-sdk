@@ -289,10 +289,10 @@ describe("convertInsightToLayerTables", () => {
         expect(result![1].layerName).toBe("unnamed-layer");
     });
 
-    it("normalizes choropleth type to area", () => {
+    it("maps choropleth root visualization to area layer type", () => {
         const layer = createLayer(
             "layer-1",
-            VisualizationTypes.CHOROPLETH,
+            "area",
             [
                 {
                     localIdentifier: BucketNames.AREA,

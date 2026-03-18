@@ -288,6 +288,76 @@ export interface IColorMappingItem {
 }
 
 /**
+ * Geo chart layer types.
+ *
+ * @remarks
+ * This type is shared across model, geo rendering, and export conversion logic.
+ *
+ * @public
+ */
+export const GeoLayerTypes = {
+    PUSHPIN: "pushpin",
+    AREA: "area",
+} as const;
+
+/**
+ * Geo chart root visualization types.
+ *
+ * @remarks
+ * These values identify geo visualizations at insight root level.
+ *
+ * @public
+ */
+export const GeoVisualizationTypes = {
+    PUSHPIN: "pushpin",
+    CHOROPLETH: "choropleth",
+} as const;
+
+/**
+ * Geo chart layer type.
+ *
+ * @public
+ */
+export type GeoLayerType = (typeof GeoLayerTypes)[keyof typeof GeoLayerTypes];
+
+/**
+ * Geo chart root visualization type.
+ *
+ * @public
+ */
+export type GeoVisualizationType = (typeof GeoVisualizationTypes)[keyof typeof GeoVisualizationTypes];
+
+/**
+ * Type guard for geo layer type.
+ *
+ * @public
+ */
+export function isGeoLayerType(layerType: string): layerType is GeoLayerType {
+    return layerType === GeoLayerTypes.PUSHPIN || layerType === GeoLayerTypes.AREA;
+}
+
+/**
+ * Resolves geo layer type from root insight visualization type.
+ *
+ * @remarks
+ * For root insights, geo area is represented as visualization type `"choropleth"`,
+ * while layer type uses `"area"`.
+ *
+ * @public
+ */
+export function geoLayerTypeFromVisualizationType(visualizationType: string): GeoLayerType | undefined {
+    if (visualizationType === GeoVisualizationTypes.PUSHPIN) {
+        return GeoLayerTypes.PUSHPIN;
+    }
+
+    if (visualizationType === GeoVisualizationTypes.CHOROPLETH) {
+        return GeoLayerTypes.AREA;
+    }
+
+    return undefined;
+}
+
+/**
  * Defines a single layer in a multi-layer visualization (e.g., geo charts).
  *
  * @remarks

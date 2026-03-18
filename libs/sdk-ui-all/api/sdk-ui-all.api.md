@@ -4,7 +4,10 @@
 
 ```ts
 
+import { GeoLayerType } from '@gooddata/sdk-model';
 import { IExportResult } from '@gooddata/sdk-model';
+
+export { GeoLayerType }
 
 export { IExportResult }
 export { IExportResult as IExportResultModel }

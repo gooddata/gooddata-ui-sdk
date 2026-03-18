@@ -5,7 +5,7 @@ import { useCallback } from "react";
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { Checkbox, Input } from "@gooddata/sdk-ui-kit";
+import { Checkbox, Input, UiLink } from "@gooddata/sdk-ui-kit";
 
 import { ArbitraryValuesInput } from "./ArbitraryValuesInput.js";
 import { ArbitraryValuesTooltip } from "./ArbitraryValuesTooltip.js";
@@ -185,14 +185,35 @@ export function TextFilterBody(props: ITextFilterBodyProps) {
 
             {!isAll && (
                 <div className="gd-text-filter-body__values">
-                    <label
-                        className={cx("gd-text-filter-body__label", {
-                            "gd-text-filter-body__label-with-help": isArbitraryOperator,
+                    <div
+                        className={cx("gd-text-filter-body__values-header", {
+                            "gd-text-filter-body__values-header--disabled": disabled,
                         })}
                     >
-                        {isArbitraryOperator ? arbitraryFilterValue : matchFilterValue}
-                        {isArbitraryOperator ? <ArbitraryValuesTooltip /> : null}
-                    </label>
+                        <label
+                            className={cx("gd-text-filter-body__label", {
+                                "gd-text-filter-body__label-with-help": isArbitraryOperator,
+                            })}
+                        >
+                            {isArbitraryOperator ? arbitraryFilterValue : matchFilterValue}
+                            {isArbitraryOperator ? <ArbitraryValuesTooltip /> : null}
+                        </label>
+                        {isArbitraryOperator && values.length > 0 ? (
+                            <UiLink
+                                variant="secondary"
+                                role="button"
+                                onClick={() => !disabled && onValuesChange?.([])}
+                                aria-label={intl.formatMessage({
+                                    id: "attributeFilter.text.values.clearAll",
+                                })}
+                                aria-disabled={disabled}
+                                tabIndex={disabled ? -1 : 0}
+                                dataTestId="s-text-filter-clear-all"
+                            >
+                                <FormattedMessage id="attributeFilter.text.values.clearAll" />
+                            </UiLink>
+                        ) : null}
+                    </div>
 
                     {isArbitraryOperator ? (
                         <ArbitraryValuesInput

@@ -11,6 +11,7 @@ import { type GoodDataSdkError } from "@gooddata/sdk-ui";
 
 import { type AttributeFilterMode, type AttributeFilterTextMode } from "../filterModeTypes.js";
 import { type TextFilterOperator } from "../textFilterOperatorUtils.js";
+import { type ITextFilterState } from "./useTextFilterInnerController.js";
 
 /**
  * Shared filter controller state (common across all modes).
@@ -482,11 +483,11 @@ export type ElementsFilterController = CommonFilterControllerData &
 /**
  * Text mode controller return type.
  * Only text-specific data and callbacks; root controller merges with common data and elements stubs.
+ * Does NOT include display form — root controller owns display form state.
  *
  * @internal
  */
 export type TextFilterController = TextFilterControllerCallbacks & {
-    currentDisplayFormRef: ObjRef;
     isApplyDisabled: boolean;
     isTextFilterInvalid: boolean;
     isWorkingSelectionChanged?: boolean;
@@ -498,11 +499,10 @@ export type TextFilterController = TextFilterControllerCallbacks & {
     textFilterValuesLimitReachedWarning?: boolean;
     textFilterValuesLimitExceededError?: boolean;
     textFilterCaseSensitive?: boolean;
-    textFilterCommittedFilter?: IAttributeFilter;
+    committedState?: ITextFilterState;
     syncFromFilter?: (nextFilter: IAttributeFilter, updateCommitted?: boolean) => void;
     onResetForDisplayFormChange?: (newDisplayFormRef: ObjRef) => void;
     resetForModeSwitch?: (newFilter: IAttributeFilter) => void;
     onCommitTextFilter?: () => void;
     onReset?: () => void;
-    setDisplayForm?: (displayFormRef: ObjRef) => void;
 };

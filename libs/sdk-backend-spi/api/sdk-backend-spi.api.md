@@ -1262,6 +1262,7 @@ export interface IGeoService {
 export interface IGeoStyleParams {
     basemap?: string;
     colorScheme?: string;
+    language?: string;
 }
 
 // @alpha

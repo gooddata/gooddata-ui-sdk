@@ -383,6 +383,20 @@ export {
 } from "./base/vis/drilling.js";
 export { createExportFunction, createExportErrorFunction } from "./base/vis/export.js";
 export {
+    type GeoDefaultDisplayFormRefResolver,
+    type IGeoInsightExportNormalizationOptions,
+    normalizeGeoInsightForRawExport,
+} from "./base/vis/geoExportNormalization.js";
+export { isGeoVisualizationUsingNewEngine } from "./base/vis/isGeoVisualizationUsingNewEngine.js";
+export {
+    type GeoTableConversionOptions,
+    type IGeoDataExportPreparationOptions,
+    convertGeoInsightToTableDefinition,
+    getGeoDefaultDisplayFormRefs,
+    prepareGeoInsightForDataExport,
+    resolveDefaultDisplayFormRefForDisplayForm,
+} from "./base/vis/geoDataExport.js";
+export {
     type VisualizationEnvironment,
     type ChartType,
     type VisType,

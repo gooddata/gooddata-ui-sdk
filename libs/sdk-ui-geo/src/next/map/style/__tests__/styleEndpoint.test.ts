@@ -34,7 +34,11 @@ describe("fetchMapStyle", () => {
         const style = await fetchMapStyle(backend, "standard");
 
         expect(style).toEqual(SAMPLE_STYLE);
-        expect(getDefaultStyle).toHaveBeenCalledWith({ basemap: "standard", colorScheme: undefined });
+        expect(getDefaultStyle).toHaveBeenCalledWith({
+            basemap: "standard",
+            colorScheme: undefined,
+            language: undefined,
+        });
     });
 
     it("sends no basemap param when basemap is undefined", async () => {
@@ -43,7 +47,11 @@ describe("fetchMapStyle", () => {
 
         await fetchMapStyle(backend);
 
-        expect(getDefaultStyle).toHaveBeenCalledWith({ basemap: undefined, colorScheme: undefined });
+        expect(getDefaultStyle).toHaveBeenCalledWith({
+            basemap: undefined,
+            colorScheme: undefined,
+            language: undefined,
+        });
     });
 
     it("ignores colorScheme when basemap is omitted", async () => {
@@ -52,7 +60,11 @@ describe("fetchMapStyle", () => {
 
         await fetchMapStyle(backend, undefined, "dark");
 
-        expect(getDefaultStyle).toHaveBeenCalledWith({ basemap: undefined, colorScheme: undefined });
+        expect(getDefaultStyle).toHaveBeenCalledWith({
+            basemap: undefined,
+            colorScheme: undefined,
+            language: undefined,
+        });
     });
 
     it("passes colorScheme param to backend", async () => {
@@ -61,7 +73,11 @@ describe("fetchMapStyle", () => {
 
         await fetchMapStyle(backend, "standard", "dark");
 
-        expect(getDefaultStyle).toHaveBeenCalledWith({ basemap: "standard", colorScheme: "dark" });
+        expect(getDefaultStyle).toHaveBeenCalledWith({
+            basemap: "standard",
+            colorScheme: "dark",
+            language: undefined,
+        });
     });
 
     it("passes satellite basemap param to backend", async () => {
@@ -70,7 +86,11 @@ describe("fetchMapStyle", () => {
 
         await fetchMapStyle(backend, "satellite");
 
-        expect(getDefaultStyle).toHaveBeenCalledWith({ basemap: "satellite", colorScheme: undefined });
+        expect(getDefaultStyle).toHaveBeenCalledWith({
+            basemap: "satellite",
+            colorScheme: undefined,
+            language: undefined,
+        });
     });
 
     it("ignores colorScheme for satellite basemap", async () => {
@@ -79,7 +99,11 @@ describe("fetchMapStyle", () => {
 
         await fetchMapStyle(backend, "satellite", "dark");
 
-        expect(getDefaultStyle).toHaveBeenCalledWith({ basemap: "satellite", colorScheme: undefined });
+        expect(getDefaultStyle).toHaveBeenCalledWith({
+            basemap: "satellite",
+            colorScheme: undefined,
+            language: undefined,
+        });
     });
 
     it("ignores colorScheme for hybrid basemap", async () => {
@@ -88,7 +112,11 @@ describe("fetchMapStyle", () => {
 
         await fetchMapStyle(backend, "hybrid", "dark");
 
-        expect(getDefaultStyle).toHaveBeenCalledWith({ basemap: "hybrid", colorScheme: undefined });
+        expect(getDefaultStyle).toHaveBeenCalledWith({
+            basemap: "hybrid",
+            colorScheme: undefined,
+            language: undefined,
+        });
     });
 
     it("accepts none basemap style with empty sources", async () => {
@@ -98,7 +126,11 @@ describe("fetchMapStyle", () => {
         const style = await fetchMapStyle(backend, "none");
 
         expect(style).toEqual(NONE_STYLE);
-        expect(getDefaultStyle).toHaveBeenCalledWith({ basemap: "none", colorScheme: undefined });
+        expect(getDefaultStyle).toHaveBeenCalledWith({
+            basemap: "none",
+            colorScheme: undefined,
+            language: undefined,
+        });
     });
 
     it("ignores colorScheme for none basemap", async () => {
@@ -107,7 +139,24 @@ describe("fetchMapStyle", () => {
 
         await fetchMapStyle(backend, "none", "light");
 
-        expect(getDefaultStyle).toHaveBeenCalledWith({ basemap: "none", colorScheme: undefined });
+        expect(getDefaultStyle).toHaveBeenCalledWith({
+            basemap: "none",
+            colorScheme: undefined,
+            language: undefined,
+        });
+    });
+
+    it("passes language param to backend", async () => {
+        const getDefaultStyle = vi.fn().mockResolvedValue(SAMPLE_STYLE);
+        const backend = createBackendMock(getDefaultStyle);
+
+        await fetchMapStyle(backend, "standard", "light", "de");
+
+        expect(getDefaultStyle).toHaveBeenCalledWith({
+            basemap: "standard",
+            colorScheme: "light",
+            language: "de",
+        });
     });
 
     it("throws when style is missing version", async () => {

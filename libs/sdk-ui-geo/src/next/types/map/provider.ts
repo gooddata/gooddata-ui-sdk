@@ -88,6 +88,11 @@ export interface IMapOptions {
      * `undefined` uses the backend default color scheme for the selected basemap.
      */
     colorScheme?: GeoColorScheme;
+
+    /**
+     * Two-letter ISO 639-1 language code for map labels (e.g. `en`, `de`).
+     */
+    language?: string;
 }
 
 /**

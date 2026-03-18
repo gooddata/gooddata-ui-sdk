@@ -435,6 +435,7 @@
     "attributeFilter.text.values.helpIconLabel": "Trợ giúp",
     "attributeFilter.text.values.removeTagAriaLabel": "Loại bỏ {value}",
     "attributeFilter.text.autocomplete.listLabel": "Gợi ý",
+    "attributeFilter.text.values.clearAll": "Xóa",
     "attributeFilter.details.infoButtonLabel": "Hiển thị chi tiết thuộc tính",
     "attributeFilter.details.label": "Nhãn",
     "attributeFilter.details.elementsMore": "…và {count} nữa",

@@ -435,6 +435,7 @@
     "attributeFilter.text.values.helpIconLabel": "Bantuan",
     "attributeFilter.text.values.removeTagAriaLabel": "Hapus {value}",
     "attributeFilter.text.autocomplete.listLabel": "Saran",
+    "attributeFilter.text.values.clearAll": "Hapus",
     "attributeFilter.details.infoButtonLabel": "Tampilkan detail atribut",
     "attributeFilter.details.label": "Label",
     "attributeFilter.details.elementsMore": "…dan {count} lainnya",

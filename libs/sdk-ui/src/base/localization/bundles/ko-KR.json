@@ -435,6 +435,7 @@
     "attributeFilter.text.values.helpIconLabel": "도움말",
     "attributeFilter.text.values.removeTagAriaLabel": "{value} 제거",
     "attributeFilter.text.autocomplete.listLabel": "제안",
+    "attributeFilter.text.values.clearAll": "지우기",
     "attributeFilter.details.infoButtonLabel": "속성 세부 정보 표시",
     "attributeFilter.details.label": "레이블",
     "attributeFilter.details.elementsMore": "…및 {count} 더보기",

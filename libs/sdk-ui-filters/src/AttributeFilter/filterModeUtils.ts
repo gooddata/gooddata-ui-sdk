@@ -144,7 +144,7 @@ export function createEmptyFilterForAvailableMode(
     }
 
     if (mode === "arbitrary") {
-        return newArbitraryAttributeFilter(displayForm, [], false, localIdentifier);
+        return newArbitraryAttributeFilter(displayForm, [], true, localIdentifier);
     }
 
     const defaultMatchOperator: MatchFilterOperator = "contains";

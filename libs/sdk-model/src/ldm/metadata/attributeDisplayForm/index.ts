@@ -35,7 +35,11 @@ export type AttributeDisplayFormType =
     /**
      * Display form representing geo area.
      */
-    | "GDC.geo.area";
+    | "GDC.geo.area"
+    /**
+     * Display form representing geo icon (pushpin).
+     */
+    | "GDC.geo.icon";
 
 /**
  * Kind of geo collection.

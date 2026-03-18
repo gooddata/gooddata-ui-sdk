@@ -139,7 +139,15 @@ describe("useMapInitialization a11y", () => {
 
     it("sets tabIndex=0 on the canvas after initialization", async () => {
         renderHook(
-            () => useMapInitialization(containerRef, enabledA11yConfig, null, undefined, "instructions-id"),
+            () =>
+                useMapInitialization(
+                    containerRef,
+                    enabledA11yConfig,
+                    null,
+                    undefined,
+                    undefined,
+                    "instructions-id",
+                ),
             {
                 wrapper,
             },
@@ -152,7 +160,15 @@ describe("useMapInitialization a11y", () => {
 
     it("sets fallback aria-label on the canvas when a11y title is not provided", async () => {
         renderHook(
-            () => useMapInitialization(containerRef, enabledA11yConfig, null, undefined, "instructions-id"),
+            () =>
+                useMapInitialization(
+                    containerRef,
+                    enabledA11yConfig,
+                    null,
+                    undefined,
+                    undefined,
+                    "instructions-id",
+                ),
             {
                 wrapper,
             },
@@ -171,6 +187,7 @@ describe("useMapInitialization a11y", () => {
                     enabledA11yConfig,
                     null,
                     undefined,
+                    undefined,
                     "instructions-id",
                     "Revenue map",
                 ),
@@ -184,7 +201,15 @@ describe("useMapInitialization a11y", () => {
 
     it("sets aria-describedby when mapInstructionsId is provided", async () => {
         renderHook(
-            () => useMapInitialization(containerRef, enabledA11yConfig, null, undefined, "my-instructions"),
+            () =>
+                useMapInitialization(
+                    containerRef,
+                    enabledA11yConfig,
+                    null,
+                    undefined,
+                    undefined,
+                    "my-instructions",
+                ),
             {
                 wrapper,
             },
@@ -196,9 +221,13 @@ describe("useMapInitialization a11y", () => {
     });
 
     it("does not set aria-describedby when mapInstructionsId is not provided", async () => {
-        renderHook(() => useMapInitialization(containerRef, enabledA11yConfig, null, undefined, undefined), {
-            wrapper,
-        });
+        renderHook(
+            () =>
+                useMapInitialization(containerRef, enabledA11yConfig, null, undefined, undefined, undefined),
+            {
+                wrapper,
+            },
+        );
 
         await waitFor(() => {
             expect(mapMock.canvas.tabIndex).toBe(0);
@@ -234,6 +263,7 @@ describe("useMapInitialization a11y", () => {
                     enabledA11yConfig,
                     null,
                     undefined,
+                    undefined,
                     "instructions-id",
                     undefined,
                     legendPanelRef,
@@ -263,6 +293,7 @@ describe("useMapInitialization a11y", () => {
                     containerRef,
                     enabledA11yConfig,
                     null,
+                    undefined,
                     undefined,
                     "instructions-id",
                     undefined,
@@ -306,6 +337,7 @@ describe("useMapInitialization a11y", () => {
                     enabledA11yConfig,
                     null,
                     undefined,
+                    undefined,
                     "instructions-id",
                     undefined,
                     legendPanelRef,
@@ -330,7 +362,15 @@ describe("useMapInitialization a11y", () => {
 
     it("disables keyboard by default after initialization", async () => {
         renderHook(
-            () => useMapInitialization(containerRef, enabledA11yConfig, null, undefined, "instructions-id"),
+            () =>
+                useMapInitialization(
+                    containerRef,
+                    enabledA11yConfig,
+                    null,
+                    undefined,
+                    undefined,
+                    "instructions-id",
+                ),
             {
                 wrapper,
             },
@@ -343,7 +383,15 @@ describe("useMapInitialization a11y", () => {
 
     it("passes effective interaction options to map initialization", async () => {
         renderHook(
-            () => useMapInitialization(containerRef, enabledA11yConfig, null, undefined, "instructions-id"),
+            () =>
+                useMapInitialization(
+                    containerRef,
+                    enabledA11yConfig,
+                    null,
+                    undefined,
+                    undefined,
+                    "instructions-id",
+                ),
             {
                 wrapper,
             },
@@ -360,6 +408,54 @@ describe("useMapInitialization a11y", () => {
         expect(options.touchZoomRotate).toBeUndefined();
     });
 
+    it("omits map language when locale is not provided", async () => {
+        renderHook(
+            () =>
+                useMapInitialization(
+                    containerRef,
+                    enabledA11yConfig,
+                    null,
+                    undefined,
+                    undefined,
+                    "instructions-id",
+                ),
+            {
+                wrapper,
+            },
+        );
+
+        await waitFor(() => {
+            expect(initMock).toHaveBeenCalled();
+        });
+
+        const [options] = initMock.mock.calls[0];
+        expect(options.language).toBeUndefined();
+    });
+
+    it("passes two-letter map language derived from locale", async () => {
+        renderHook(
+            () =>
+                useMapInitialization(
+                    containerRef,
+                    enabledA11yConfig,
+                    null,
+                    undefined,
+                    "de-DE",
+                    "instructions-id",
+                ),
+            {
+                wrapper,
+            },
+        );
+
+        await waitFor(() => {
+            expect(initMock).toHaveBeenCalled();
+        });
+
+        const [options] = initMock.mock.calls[0];
+        expect(options.language).toBe("de");
+    });
+
     it("passes public basemap style params to runtime without internal basemap FF", async () => {
         renderHook(
             () =>
@@ -371,6 +467,7 @@ describe("useMapInitialization a11y", () => {
                         colorScheme: "dark",
                     },
                     null,
+                    undefined,
                     undefined,
                     "instructions-id",
                 ),
@@ -399,6 +496,7 @@ describe("useMapInitialization a11y", () => {
                     },
                     null,
                     undefined,
+                    undefined,
                     "instructions-id",
                 ),
             {
@@ -424,6 +522,7 @@ describe("useMapInitialization a11y", () => {
                         enableGeoChartA11yImprovements: true,
                     },
                     null,
+                    undefined,
                     undefined,
                     "instructions-id",
                 ),
@@ -453,6 +552,7 @@ describe("useMapInitialization a11y", () => {
                     },
                     null,
                     undefined,
+                    undefined,
                     "instructions-id",
                 ),
             {
@@ -481,6 +581,7 @@ describe("useMapInitialization a11y", () => {
                     },
                     null,
                     undefined,
+                    undefined,
                     "instructions-id",
                 ),
             {
@@ -499,7 +600,15 @@ describe("useMapInitialization a11y", () => {
 
     it("enables keyboard and disables rotation on canvas focus for interactive maps", async () => {
         renderHook(
-            () => useMapInitialization(containerRef, enabledA11yConfig, null, undefined, "instructions-id"),
+            () =>
+                useMapInitialization(
+                    containerRef,
+                    enabledA11yConfig,
+                    null,
+                    undefined,
+                    undefined,
+                    "instructions-id",
+                ),
             {
                 wrapper,
             },
@@ -535,7 +644,14 @@ describe("useMapInitialization a11y", () => {
 
         renderHook(
             () =>
-                useMapInitialization(containerRef, noPanNavigationConfig, null, undefined, "instructions-id"),
+                useMapInitialization(
+                    containerRef,
+                    noPanNavigationConfig,
+                    null,
+                    undefined,
+                    undefined,
+                    "instructions-id",
+                ),
             {
                 wrapper,
             },
@@ -577,6 +693,7 @@ describe("useMapInitialization a11y", () => {
                     containerRef,
                     noZoomNavigationConfig,
                     null,
+                    undefined,
                     undefined,
                     "instructions-id",
                 ),
@@ -626,7 +743,7 @@ describe("useMapInitialization a11y", () => {
 
         const { rerender } = renderHook(
             ({ config }: { config: IGeoChartConfig }) =>
-                useMapInitialization(containerRef, config, null, undefined, "instructions-id"),
+                useMapInitialization(containerRef, config, null, undefined, undefined, "instructions-id"),
             {
                 wrapper,
                 initialProps: { config: noPanNavigationConfig },
@@ -675,6 +792,7 @@ describe("useMapInitialization a11y", () => {
                     config,
                     selectedPresetViewport,
                     undefined,
+                    undefined,
                     "instructions-id",
                 ),
             {
@@ -708,7 +826,7 @@ describe("useMapInitialization a11y", () => {
 
         const { rerender } = renderHook(
             ({ config }: { config: IGeoChartConfig }) =>
-                useMapInitialization(containerRef, config, null, undefined, "instructions-id"),
+                useMapInitialization(containerRef, config, null, undefined, undefined, "instructions-id"),
             {
                 wrapper,
                 initialProps: { config: baseConfig },
@@ -733,7 +851,15 @@ describe("useMapInitialization a11y", () => {
 
     it("disables keyboard on canvas blur", async () => {
         renderHook(
-            () => useMapInitialization(containerRef, enabledA11yConfig, null, undefined, "instructions-id"),
+            () =>
+                useMapInitialization(
+                    containerRef,
+                    enabledA11yConfig,
+                    null,
+                    undefined,
+                    undefined,
+                    "instructions-id",
+                ),
             {
                 wrapper,
             },
@@ -759,7 +885,15 @@ describe("useMapInitialization a11y", () => {
         };
 
         renderHook(
-            () => useMapInitialization(containerRef, frozenConfig, null, undefined, "instructions-id"),
+            () =>
+                useMapInitialization(
+                    containerRef,
+                    frozenConfig,
+                    null,
+                    undefined,
+                    undefined,
+                    "instructions-id",
+                ),
             { wrapper },
         );
 
@@ -780,7 +914,15 @@ describe("useMapInitialization a11y", () => {
         const removeEventListenerSpy = vi.spyOn(mapMock.canvas, "removeEventListener");
 
         const { unmount } = renderHook(
-            () => useMapInitialization(containerRef, enabledA11yConfig, null, undefined, "instructions-id"),
+            () =>
+                useMapInitialization(
+                    containerRef,
+                    enabledA11yConfig,
+                    null,
+                    undefined,
+                    undefined,
+                    "instructions-id",
+                ),
             { wrapper },
         );
 
@@ -832,6 +974,7 @@ describe("useMapInitialization a11y", () => {
                         containerRef,
                         enabledA11yConfig,
                         null,
+                        undefined,
                         undefined,
                         "instructions-id",
                         undefined,
