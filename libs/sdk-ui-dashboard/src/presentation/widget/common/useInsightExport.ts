@@ -27,6 +27,7 @@ import {
     type IExportRawInsightWidget,
     type IExportSlidesInsightWidget,
     exportImageInsightWidget,
+    exportInlineInsightWidget,
     exportInsightWidget,
     exportRawInsightWidget,
     exportSlidesInsightWidget,
@@ -76,22 +77,37 @@ export const useInsightExport = (config: {
         (configToUse: IExtendedExportConfig) =>
             dispatchAndWaitFor<IExportInsightWidget, IDashboardInsightWidgetExportResolved>(
                 dispatch,
-                exportInsightWidget(
-                    widgetRef,
-                    {
-                        ...configToUse,
-                        format:
-                            configToUse.format === "xlsx"
-                                ? "xlsx"
-                                : configToUse.format === "pdf"
-                                  ? "pdf"
-                                  : "csv",
-                    },
-                    uuid(),
-                ),
+                insight
+                    ? exportInlineInsightWidget(
+                          widgetRef,
+                          {
+                              ...configToUse,
+                              format:
+                                  configToUse.format === "xlsx"
+                                      ? "xlsx"
+                                      : configToUse.format === "pdf"
+                                        ? "pdf"
+                                        : "csv",
+                          },
+                          insight,
+                          uuid(),
+                      )
+                    : exportInsightWidget(
+                          widgetRef,
+                          {
+                              ...configToUse,
+                              format:
+                                  configToUse.format === "xlsx"
+                                      ? "xlsx"
+                                      : configToUse.format === "pdf"
+                                        ? "pdf"
+                                        : "csv",
+                          },
+                          uuid(),
+                      ),
             ).then((result) => result.payload.result),
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        [widgetRef],
+        [widgetRef, insight],
     );
 
     const exportRawFunction = useCallback(

@@ -1743,6 +1743,10 @@
         "text": "Suggestions",
         "crowdinContext": "Accessible label for the autocomplete suggestions listbox in the text attribute filter values input."
     },
+    "attributeFilter.text.values.clearAll": {
+        "text": "Clear",
+        "crowdinContext": "Link to remove all values from the arbitrary text filter input. Shown next to the Values label when values are present."
+    },
     "attributeFilter.details.infoButtonLabel": {
         "text": "Show attribute details",
         "crowdinContext": "Accessible label for the info button that opens the attribute details bubble in the attribute filter header."

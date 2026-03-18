@@ -1728,7 +1728,7 @@ class WithGeoCaching implements IGeoService {
 
     public getDefaultStyle(params?: IGeoStyleParams): Promise<IGeoStyleSpecification> {
         const cache = this.ctx.caches.geo!;
-        const key = `${params?.basemap ?? ""}:${params?.colorScheme ?? ""}`;
+        const key = `${params?.basemap ?? ""}:${params?.colorScheme ?? ""}:${params?.language ?? ""}`;
         let result = cache.stylesByParams.get(key);
 
         if (!result) {

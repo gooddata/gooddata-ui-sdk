@@ -973,6 +973,10 @@ export interface IExportInsightWidgetPayload {
      * Options for the export.
      */
     readonly config: IExportConfig;
+    /**
+     * Optional transient insight definition to export.
+     */
+    readonly insight?: IInsight;
 }
 
 /**
@@ -1004,6 +1008,34 @@ export function exportInsightWidget(
         payload: {
             config,
             ref,
+        },
+    };
+}
+
+/**
+ * Creates the ExportInlineInsightWidget command. Dispatching this command will result in exporting of the inline insight to a CSV of XLSX file.
+ *
+ * @param ref - reference to the Insight widget to export
+ * @param config - configuration of the export operation
+ * @param insight - transient insight definition to export
+ * @param correlationId - specify correlation id to use for this command. this will be included in all
+ *  events that will be emitted during the command processing
+ *
+ * @beta
+ */
+export function exportInlineInsightWidget(
+    ref: ObjRef,
+    config: IExportConfig,
+    insight: IInsight,
+    correlationId?: string,
+): IExportInsightWidget {
+    return {
+        type: "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT",
+        correlationId,
+        payload: {
+            config,
+            ref,
+            insight,
         },
     };
 }

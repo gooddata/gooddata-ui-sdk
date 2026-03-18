@@ -164,7 +164,11 @@ export type AttributeDisplayFormType =
 /**
 * Display form representing geo area.
 */
-| "GDC.geo.area";
+| "GDC.geo.area"
+/**
+* Display form representing geo icon (pushpin).
+*/
+| "GDC.geo.icon";
 
 // @internal
 export function attributeElementsCount(attributeElements: IAttributeElements): number;
@@ -645,6 +649,27 @@ export type GeoCollectionKind = "STATIC" | "CUSTOM";
 
 // @alpha
 export function geoFeatureId(feature: IGeoJsonFeature): string | undefined;
+
+// @public
+export type GeoLayerType = (typeof GeoLayerTypes)[keyof typeof GeoLayerTypes];
+
+// @public
+export function geoLayerTypeFromVisualizationType(visualizationType: string): GeoLayerType | undefined;
+
+// @public
+export const GeoLayerTypes: {
+    readonly PUSHPIN: "pushpin";
+    readonly AREA: "area";
+};
+
+// @public
+export type GeoVisualizationType = (typeof GeoVisualizationTypes)[keyof typeof GeoVisualizationTypes];
+
+// @public
+export const GeoVisualizationTypes: {
+    readonly PUSHPIN: "pushpin";
+    readonly CHOROPLETH: "choropleth";
+};
 
 // @internal
 export function getAttributeElementsItems(attributeElements: IAttributeElements): Array<string | null>;
@@ -4408,6 +4433,9 @@ export function isFilterContextDefinition(obj: unknown): obj is IFilterContextDe
 
 // @alpha
 export function isFilterContextItem(obj: unknown): obj is FilterContextItem;
+
+// @public
+export function isGeoLayerType(layerType: string): layerType is GeoLayerType;
 
 // @alpha
 export const isGranularAccess: (obj: unknown) => obj is IGranularUserAccess | IGranularUserGroupAccess;

@@ -72,13 +72,14 @@ export async function initializeMapLibreMap(
         style,
         basemap,
         colorScheme,
+        language,
     }: IMapInitializationOptions,
     locale?: IMapLibreLocale,
     backend?: IAnalyticalBackend,
 ): Promise<IMapInitResult> {
     const maplibregl = await import("maplibre-gl");
     const styleSpecification =
-        style ?? (backend ? await fetchMapStyle(backend, basemap, colorScheme) : undefined);
+        style ?? (backend ? await fetchMapStyle(backend, basemap, colorScheme, language) : undefined);
 
     if (!styleSpecification) {
         throw new Error("Map style is required. Provide either a style option or a backend instance.");

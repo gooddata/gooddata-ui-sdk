@@ -127,6 +127,7 @@ export enum TigerFeaturesNames {
     EnableNewPivotTable = "enableNewPivotTable",
     EnableNewGeoPushpin = "enableNewGeoPushpin",
     EnableGeoArea = "enableGeoArea",
+    EnableGeoPushpinIcon = "enableGeoPushpinIcon",
     EnableGeoChartA11yImprovements = "enableGeoChartA11yImprovements",
     EnableGeoChartsViewportConfig = "enableGeoChartsViewportConfig",
     EnableGeoSegmentConflictRecommendation = "enableGeoSegmentConflictRecommendation",
@@ -279,6 +280,7 @@ export type ITigerFeatureFlags = {
     enableNewPivotTable: (typeof FeatureFlagsValues)["enableNewPivotTable"][number];
     enableNewGeoPushpin: (typeof FeatureFlagsValues)["enableNewGeoPushpin"][number];
     enableGeoArea: (typeof FeatureFlagsValues)["enableGeoArea"][number];
+    enableGeoPushpinIcon: (typeof FeatureFlagsValues)["enableGeoPushpinIcon"][number];
     enableGeoChartA11yImprovements: (typeof FeatureFlagsValues)["enableGeoChartA11yImprovements"][number];
     enableGeoChartsViewportConfig: (typeof FeatureFlagsValues)["enableGeoChartsViewportConfig"][number];
     enableGeoSegmentConflictRecommendation: (typeof FeatureFlagsValues)["enableGeoSegmentConflictRecommendation"][number];
@@ -431,6 +433,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableNewPivotTable: true,
     enableNewGeoPushpin: true,
     enableGeoArea: true,
+    enableGeoPushpinIcon: false,
     enableGeoChartA11yImprovements: false,
     enableGeoChartsViewportConfig: false,
     enableGeoSegmentConflictRecommendation: false,
@@ -584,6 +587,7 @@ export const FeatureFlagsValues = {
     enableNewPivotTable: [true, false] as const,
     enableNewGeoPushpin: [true, false] as const,
     enableGeoArea: [true, false] as const,
+    enableGeoPushpinIcon: [true, false] as const,
     enableGeoChartA11yImprovements: [true, false] as const,
     enableGeoChartsViewportConfig: [true, false] as const,
     enableGeoSegmentConflictRecommendation: [true, false] as const,

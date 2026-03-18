@@ -22,7 +22,9 @@ import { IAttribute } from '@gooddata/sdk-model';
 import { IAttributeDescriptor } from '@gooddata/sdk-model';
 import { IAttributeFilter } from '@gooddata/sdk-model';
 import { IAttributeOrMeasure } from '@gooddata/sdk-model';
+import { IAttributeWithReferences } from '@gooddata/sdk-backend-spi';
 import { IBucket } from '@gooddata/sdk-model';
+import { ICatalogAttribute } from '@gooddata/sdk-model';
 import { IClusteringConfig } from '@gooddata/sdk-backend-spi';
 import { ICollectionItemsResult } from '@gooddata/sdk-backend-spi';
 import { IColor } from '@gooddata/sdk-model';
@@ -66,6 +68,7 @@ import { IResultMeasureHeader } from '@gooddata/sdk-model';
 import { IResultTotalHeader } from '@gooddata/sdk-model';
 import { IResultWarning } from '@gooddata/sdk-model';
 import { ISeparators } from '@gooddata/sdk-model';
+import { ISettings } from '@gooddata/sdk-model';
 import { isLocale } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
 import { ITotal } from '@gooddata/sdk-model';
@@ -241,6 +244,9 @@ export function convertDrillableItemsToPredicates(drillableItems: ExplicitDrill[
 
 // @public
 export function convertError(error: unknown): GoodDataSdkError;
+
+// @internal (undocumented)
+export function convertGeoInsightToTableDefinition(insight: IInsightDefinition, options?: GeoTableConversionOptions): IInsightDefinition | undefined;
 
 // @public
 export function CorrelationProvider({ children, correlationData }: ICorrelationProviderProps): JSX.Element;
@@ -528,10 +534,19 @@ export class GeoAreaMissingSdkError extends GoodDataSdkError {
     constructor(message?: string, cause?: Error);
 }
 
+// @internal (undocumented)
+export type GeoDefaultDisplayFormRefResolver = (displayFormRef: ObjRef) => ObjRef | undefined;
+
 // @public
 export class GeoLocationMissingSdkError extends GoodDataSdkError {
     constructor(message?: string, cause?: Error);
 }
+
+// @internal (undocumented)
+export type GeoTableConversionOptions = {
+    settings?: ISettings;
+    defaultDisplayFormRefs?: Map<string, ObjRef>;
+};
 
 // @public
 export class GeoTokenMissingSdkError extends GoodDataSdkError {
@@ -546,6 +561,9 @@ export function getChartClickCoordinates(targetElement: HTMLElement | EventTarge
 
 // @internal (undocumented)
 export function getDrillIntersection(drillItems: IMappingHeader[]): IDrillEventIntersectionElement[];
+
+// @internal (undocumented)
+export function getGeoDefaultDisplayFormRefs(insight: IInsightDefinition, settings: ISettings | undefined, catalogAttributes: ICatalogAttribute[], preloadedAttributesWithReferences?: IAttributeWithReferences[]): Map<string, ObjRef> | undefined;
 
 // @internal
 export function getIntersectionAttributes(fromAttribute: IAttributeDescriptor, attributes: IAttributeDescriptor[]): IAttributeDescriptor[];
@@ -1198,6 +1216,18 @@ export interface IFocusHighchartsDatapointEventDetail {
     seriesIndex: number;
 }
 
+// @internal (undocumented)
+export type IGeoDataExportPreparationOptions = {
+    settings?: ISettings;
+    catalogAttributes: ICatalogAttribute[];
+    preloadedAttributesWithReferences?: IAttributeWithReferences[];
+};
+
+// @internal (undocumented)
+export type IGeoInsightExportNormalizationOptions = {
+    resolveDefaultDisplayFormRef: GeoDefaultDisplayFormRefResolver;
+};
+
 // @internal
 export function ignoreTitlesForSimpleMeasures<T extends IInsightDefinition>(insight: T): T;
 
@@ -1545,6 +1575,9 @@ export function isGeoLocationMissing(obj: unknown): obj is GeoLocationMissingSdk
 
 // @public
 export function isGeoTokenMissing(obj: unknown): obj is GeoTokenMissingSdkError;
+
+// @internal (undocumented)
+export function isGeoVisualizationUsingNewEngine(visualizationType: string, settings: ISettings | undefined): boolean;
 
 // @public
 export function isGoodDataSdkError(obj: unknown): obj is GoodDataSdkError;
@@ -2193,6 +2226,9 @@ export class NoDataSdkError extends GoodDataSdkError {
     constructor(message?: string, cause?: Error);
 }
 
+// @internal (undocumented)
+export function normalizeGeoInsightForRawExport(insight: IInsightDefinition, options: IGeoInsightExportNormalizationOptions): IInsightDefinition;
+
 // @public
 export class NotFoundSdkError extends GoodDataSdkError {
     constructor(message?: string, cause?: Error);
@@ -2260,6 +2296,9 @@ export type PlaceholdersValues<Tuple extends [...any[]]> = {
 // @public
 export type PlaceholderValue<T> = T extends IPlaceholder<infer A> ? A : T extends IComposedPlaceholder<infer B, any, any> ? B : T;
 
+// @internal (undocumented)
+export function prepareGeoInsightForDataExport(insight: IInsightDefinition, options: IGeoDataExportPreparationOptions): IInsightDefinition | undefined;
+
 // @public
 export class ProtectedReportSdkError extends GoodDataSdkError {
     constructor(message?: string, cause?: Error);
@@ -2273,6 +2312,9 @@ export const RawExecute: ComponentType<IRawExecuteProps>;
 
 // @alpha
 export function ResolvedClientWorkspaceProvider(props: IClientWorkspaceIdentifiers): JSX.Element;
+
+// @internal (undocumented)
+export function resolveDefaultDisplayFormRefForDisplayForm(displayFormRef: ObjRef, catalogAttributes: ICatalogAttribute[], preloadedAttributesWithReferences?: IAttributeWithReferences[]): ObjRef | undefined;
 
 // @alpha
 export function resolveLCMWorkspaceIdentifiers(backend: any, { client, dataProduct, workspace }: IClientWorkspaceIdentifiers): IClientWorkspaceIdentifiers;

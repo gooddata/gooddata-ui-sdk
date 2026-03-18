@@ -435,6 +435,7 @@
     "attributeFilter.text.values.helpIconLabel": "Yardım",
     "attributeFilter.text.values.removeTagAriaLabel": "{value} öğesini kaldır",
     "attributeFilter.text.autocomplete.listLabel": "Öneriler",
+    "attributeFilter.text.values.clearAll": "Temizle",
     "attributeFilter.details.infoButtonLabel": "Öznitelik ayrıntılarını göster",
     "attributeFilter.details.label": "Etiket",
     "attributeFilter.details.elementsMore": "…ve {count} daha fazla",

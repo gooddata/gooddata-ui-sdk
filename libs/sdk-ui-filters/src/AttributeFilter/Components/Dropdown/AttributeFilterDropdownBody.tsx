@@ -162,9 +162,13 @@ export function AttributeFilterDropdownBody({
 
     const autocompleteOptions = useMemo(
         () =>
-            elements
-                .map((el) => el.formattedTitle ?? el.title)
-                .filter((t): t is string => t !== null && t !== undefined),
+            Array.from(
+                new Set(
+                    elements
+                        .map((el) => el.formattedTitle ?? el.title)
+                        .filter((t): t is string => t !== null && t !== undefined),
+                ),
+            ),
         [elements],
     );
 

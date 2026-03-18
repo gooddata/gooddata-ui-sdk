@@ -435,6 +435,7 @@
     "attributeFilter.text.values.helpIconLabel": "วิธีใช้",
     "attributeFilter.text.values.removeTagAriaLabel": "นำ {value} ออก",
     "attributeFilter.text.autocomplete.listLabel": "คำแนะนำ",
+    "attributeFilter.text.values.clearAll": "ล้าง",
     "attributeFilter.details.infoButtonLabel": "แสดงรายละเอียดแอตทริบิวต์",
     "attributeFilter.details.label": "ป้ายกำกับ",
     "attributeFilter.details.elementsMore": "…และอีก {count} รายการ",

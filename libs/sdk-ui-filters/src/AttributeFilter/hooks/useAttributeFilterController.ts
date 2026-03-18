@@ -1,6 +1,6 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import noop from "lodash-es/noop.js";
 import { invariant } from "ts-invariant";
@@ -8,6 +8,7 @@ import { invariant } from "ts-invariant";
 import {
     type IAttributeFilter,
     type ObjRef,
+    areObjRefsEqual,
     filterLocalIdentifier,
     filterObjRef,
     isArbitraryAttributeFilter,
@@ -23,6 +24,7 @@ import { useResolveDependentDateFiltersInput } from "./useResolveDependentDateFi
 import { useResolveFilterInput } from "./useResolveFilterInput.js";
 import { useResolveParentFiltersInput } from "./useResolveParentFiltersInput.js";
 import { useTextFilterController } from "./useTextFilterController.js";
+import { type ITextFilterState } from "./useTextFilterInnerController.js";
 import { type AttributeFilterAvailableMode, type AttributeFilterMode } from "../filterModeTypes.js";
 import {
     createEmptyFilterForAvailableMode,
@@ -52,6 +54,7 @@ export type IUseAttributeFilterControllerProps = Omit<
 
 const NOOP_ON_APPLY: OnApplyCallbackType = () => {};
 const NOOP_ON_CHANGE: OnChangeCallbackType = () => {};
+const DEFAULT_AVAILABLE_FILTER_MODES: AttributeFilterAvailableMode[] = ["elements"];
 
 /**
  * UseAttributeFilterController hook is responsible for initialization of AttributeFilterHandler {@link IMultiSelectAttributeFilterHandler} Core API for Attribute Filter components
@@ -95,7 +98,7 @@ export const useAttributeFilterController = (
         selectFirst = false,
         enableImmediateAttributeFilterDisplayAsLabelMigration = false,
         withoutApply = false,
-        availableFilterModes = ["elements"],
+        availableFilterModes = DEFAULT_AVAILABLE_FILTER_MODES,
     } = props;
 
     const backend = useBackendStrict(backendInput, "AttributeFilter");
@@ -125,6 +128,8 @@ export const useAttributeFilterController = (
     const originalFilterMode = getFilterModeFromFilter(resolvedFilter);
     const filterModeChanged = originalFilterMode !== filterMode;
 
+    // The display form from the filter definition itself. For elements filters this is
+    // always the primary label. For text filters it is whatever label the text filter uses.
     const resolvedDisplayFormRef = (resolvedFilter && filterObjRef(resolvedFilter)) ?? displayAsLabel;
     invariant(
         resolvedDisplayFormRef,
@@ -134,6 +139,34 @@ export const useAttributeFilterController = (
     const originalIsTextFilter =
         resolvedFilter &&
         (isArbitraryAttributeFilter(resolvedFilter) || isMatchAttributeFilter(resolvedFilter));
+
+    // ─── Single source of truth for display form ───────────────────────
+    // Tracks the user-selected display form (via header menu or displayAsLabel prop).
+    // In elements mode: passed as displayAsLabel to handler (for showing element values in UI).
+    // In text mode: used as displayForm in text filter construction.
+    // Persists across mode switches — no shuffling needed.
+    // When undefined, effectiveDisplayFormRef falls back to resolvedDisplayFormRef.
+    const [userSelectedDisplayForm, setUserSelectedDisplayForm] = useState<ObjRef | undefined>(
+        displayAsLabel,
+    );
+
+    // Sync from external prop changes (controlled mode).
+    // Uses render-phase state update (React-supported pattern) instead of useEffect
+    // to avoid a one-render lag. The lag caused stale displayAsLabel values to be passed
+    // to the elements controller when both displayAsLabel and limitingAttributeFilters
+    // changed in the same render (e.g., after auto-migration + parent filter add).
+    const prevDisplayAsLabelRef = useRef<ObjRef | undefined>(displayAsLabel);
+    if (!areObjRefsEqual(displayAsLabel, prevDisplayAsLabelRef.current)) {
+        prevDisplayAsLabelRef.current = displayAsLabel;
+        setUserSelectedDisplayForm(displayAsLabel);
+    }
+
+    // Effective display form: user's selection with fallback to primary.
+    // - In text mode: becomes the text filter's displayForm
+    // - In elements mode: becomes displayAsLabel for the handler
+    // - In onApply/onChange: passed as the displayAsLabel parameter
+    const effectiveDisplayFormRef = userSelectedDisplayForm ?? resolvedDisplayFormRef;
+
     // Memoized to keep a stable reference so useInitOrReload does not re-run (and reset the
     // committed selection) on every re-render triggered by handler.commitSelection().
     const elementsModeFilter = useMemo(
@@ -143,9 +176,6 @@ export const useAttributeFilterController = (
                 : resolvedFilter) as IAttributeFilter,
         [resolvedFilter, originalIsTextFilter, resolvedDisplayFormRef],
     );
-
-    const elementsModeDisplayAsLabel =
-        displayAsLabel ?? (originalIsTextFilter ? resolvedFilter && filterObjRef(resolvedFilter) : undefined);
 
     const effectiveOnApply = isTextMode ? NOOP_ON_APPLY : (onApply ?? NOOP_ON_APPLY);
     const effectiveOnChange = isTextMode
@@ -171,12 +201,18 @@ export const useAttributeFilterController = (
 
     const localId = resolvedFilter ? filterLocalIdentifier(resolvedFilter) : undefined;
 
+    // When the original filter is a text filter, the elements controller gets a synthetic
+    // elements filter whose displayForm is the text filter's label (non-primary).
+    // Don't also pass it as displayAsLabel — the handler would see both as non-primary
+    // and log an error. Let the handler discover the primary and migrate on its own.
+    const elementsDisplayAsLabel = originalIsTextFilter ? undefined : userSelectedDisplayForm;
+
     // Elements filter controller runs first to provide handler/attribute data for text mode
     const elementsFilterController = useElementsFilterController({
         backend,
         workspace,
         filter: elementsModeFilter,
-        displayAsLabel: elementsModeDisplayAsLabel,
+        displayAsLabel: elementsDisplayAsLabel,
         limitingAttributeFilters,
         limitingDateFilters,
         limitingValidationItems: validateElementsBy,
@@ -201,31 +237,109 @@ export const useAttributeFilterController = (
         filterModeChanged,
     });
 
-    // Text mode controller uses attribute data from elements controller (handler).
+    // ─── Text state change handler ─────────────────────────────────────
+    // Root constructs filters from text controller's raw state + root's display form.
+    const onTextStateChange = useCallback(
+        (state: ITextFilterState) => {
+            const valuesOrLiteral = isArbitraryOperator(state.operator) ? state.values : state.literal;
+            const nextFilter = createFilterFromOperator(
+                state.operator,
+                valuesOrLiteral,
+                effectiveDisplayFormRef,
+                localId,
+                state.caseSensitive,
+            );
+            const isInverted = isArbitraryAttributeFilter(nextFilter)
+                ? (nextFilter.arbitraryAttributeFilter.negativeSelection ?? false)
+                : false;
+
+            // When withoutApply=false, do NOT update the placeholder on every working change.
+            // That would flow back via resolvedFilter → textModeFilter → syncFromFilter (with
+            // updateCommitted=true), auto-committing working state and disabling the Apply button.
+            // The placeholder is updated on Apply click instead (see onApplyTextFilter).
+            if (connectToPlaceholder && withoutApply) {
+                setConnectedPlaceholderValue(nextFilter);
+            }
+            onChange?.(nextFilter, isInverted, selectionMode, [], effectiveDisplayFormRef, false, {});
+        },
+        [
+            effectiveDisplayFormRef,
+            localId,
+            connectToPlaceholder,
+            withoutApply,
+            setConnectedPlaceholderValue,
+            onChange,
+            selectionMode,
+        ],
+    );
+
+    // Stable text filter for the text controller.
+    // When the source is a text filter, use it directly.
+    // Otherwise, create an empty text filter only on mode switch — not on displayFormRef changes,
+    // so that changing the display form in text mode does not reset operator/values.
+    //
+    // Cache is cleared when leaving text mode so that re-entering creates a fresh filter.
+    // While in text mode, the cached filter is returned even if effectiveDisplayFormRef changes.
+    // State (not ref) is used so we never mutate during render — React requires render-phase purity.
+    const [cachedTextModeFilter, setCachedTextModeFilter] = useState<IAttributeFilter | null>(null);
+
+    const textModeFilter = useMemo(() => {
+        if (originalIsTextFilter && resolvedFilter) {
+            return resolvedFilter;
+        }
+        if (!isTextMode) {
+            return createEmptyFilterForMode("text", effectiveDisplayFormRef, localId);
+        }
+        if (cachedTextModeFilter) {
+            return cachedTextModeFilter;
+        }
+        return createEmptyFilterForMode("text", effectiveDisplayFormRef, localId);
+    }, [
+        isTextMode,
+        originalIsTextFilter,
+        resolvedFilter,
+        effectiveDisplayFormRef,
+        localId,
+        cachedTextModeFilter,
+    ]);
+
+    // Sync cache in effect — never mutate during render (React purity rules).
+    useEffect(() => {
+        if (!isTextMode) {
+            setCachedTextModeFilter(null);
+            return;
+        }
+        if (originalIsTextFilter && resolvedFilter) {
+            return;
+        }
+        setCachedTextModeFilter(
+            (prev) => prev ?? createEmptyFilterForMode("text", effectiveDisplayFormRef, localId),
+        );
+    }, [isTextMode, originalIsTextFilter, resolvedFilter, effectiveDisplayFormRef, localId]);
+
     const textFilterController = useTextFilterController({
         isTextMode,
         backend,
         workspace,
-        filterInput: resolvedFilter!,
-        displayAsLabel: elementsModeDisplayAsLabel,
-        onChange,
-        withoutApply: withoutApply ?? false,
-        selectionMode,
+        filterInput: textModeFilter,
+        onTextStateChange,
         availableFilterModes,
         filterModeChanged,
     });
 
+    const { resetForModeSwitch: textResetForModeSwitchFn } = textFilterController;
     const textResetForModeSwitch = useCallback(
         (newFilter: IAttributeFilter) => {
-            textFilterController.resetForModeSwitch?.(newFilter);
+            textResetForModeSwitchFn?.(newFilter);
         },
-        [textFilterController],
+        [textResetForModeSwitchFn],
     );
+    const { resetForModeSwitch: elementsResetForModeSwitchFn } = elementsFilterController;
     const elementsResetForModeSwitch = useCallback(
         (newFilter: IAttributeFilter, newDisplayAsLabel?: ObjRef) => {
-            elementsFilterController.resetForModeSwitch?.(newFilter, newDisplayAsLabel);
+            elementsResetForModeSwitchFn?.(newFilter, newDisplayAsLabel);
         },
-        [elementsFilterController],
+        [elementsResetForModeSwitchFn],
     );
 
     const handleFilterModeChange = useCallback(
@@ -265,6 +379,7 @@ export const useAttributeFilterController = (
         ],
     );
 
+    const { currentDisplayFormRef: elementsCurrentDisplayFormRef } = elementsFilterController;
     const onFilterModeChangeForControllers = useCallback(
         (newMode: AttributeFilterMode) => {
             if (!resolvedDisplayFormRef) {
@@ -284,14 +399,13 @@ export const useAttributeFilterController = (
                 }
             }
 
+            // Use root's userSelectedDisplayForm — no need to shuffle between controllers.
             const displayFormForNewFilter =
                 newMode === "text"
-                    ? (elementsFilterController.currentDisplayAsDisplayFormRef ??
-                      elementsFilterController.currentDisplayFormRef)
-                    : elementsFilterController.currentDisplayFormRef;
+                    ? (userSelectedDisplayForm ?? elementsCurrentDisplayFormRef)
+                    : elementsCurrentDisplayFormRef;
 
-            const displayAsDisplayFormForNewFilter =
-                newMode === "text" ? undefined : textFilterController.currentDisplayFormRef;
+            const displayAsDisplayFormForNewFilter = newMode === "text" ? undefined : userSelectedDisplayForm;
 
             const newFilter = createEmptyFilterForAvailableMode(
                 nextAvailableMode,
@@ -305,61 +419,95 @@ export const useAttributeFilterController = (
             filterMode,
             handleFilterModeChange,
             localId,
-            elementsFilterController.currentDisplayAsDisplayFormRef,
-            elementsFilterController.currentDisplayFormRef,
-            textFilterController.currentDisplayFormRef,
+            userSelectedDisplayForm,
+            elementsCurrentDisplayFormRef,
             resolvedDisplayFormRef,
         ],
     );
 
+    const {
+        textFilterOperator,
+        textFilterValues,
+        textFilterLiteral,
+        textFilterCaseSensitive,
+        onCommitTextFilter,
+        isApplyDisabled: isTextApplyDisabled,
+    } = textFilterController;
     const onApplyTextFilter = useCallback(
         (applyRegardlessWithoutApplySetting: boolean = false, _applyToWorkingOnly: boolean = false) => {
             if (withoutApply && !applyRegardlessWithoutApplySetting) {
                 return;
             }
-            const valuesOrLiteral = isArbitraryOperator(textFilterController.textFilterOperator)
-                ? (textFilterController.textFilterValues ?? [])
-                : (textFilterController.textFilterLiteral ?? "").trim();
-            const caseSensitive = textFilterController.textFilterCaseSensitive ?? false;
-            const displayFormRef =
-                textFilterController.currentDisplayFormRef ??
-                (resolvedFilter && filterObjRef(resolvedFilter)) ??
-                resolvedDisplayFormRef;
+            const valuesOrLiteral = isArbitraryOperator(textFilterOperator)
+                ? (textFilterValues ?? [])
+                : (textFilterLiteral ?? "").trim();
+            const caseSensitive = textFilterCaseSensitive ?? false;
             const nextFilter = createFilterFromOperator(
-                textFilterController.textFilterOperator,
+                textFilterOperator,
                 valuesOrLiteral,
-                displayFormRef,
+                effectiveDisplayFormRef,
                 localId,
                 caseSensitive,
             );
-            textFilterController.onCommitTextFilter?.();
-            onApply?.(nextFilter, false, selectionMode, [], displayFormRef, false, {
-                isSelectionInvalid: textFilterController.isApplyDisabled,
+            onCommitTextFilter?.();
+            if (connectToPlaceholder) {
+                setConnectedPlaceholderValue(nextFilter);
+            }
+            onApply?.(nextFilter, false, selectionMode, [], effectiveDisplayFormRef, false, {
+                isSelectionInvalid: isTextApplyDisabled,
                 applyToWorkingOnly: _applyToWorkingOnly,
             });
         },
         [
             localId,
+            connectToPlaceholder,
             onApply,
-            resolvedFilter,
-            resolvedDisplayFormRef,
+            effectiveDisplayFormRef,
             selectionMode,
-            textFilterController,
+            setConnectedPlaceholderValue,
+            textFilterOperator,
+            textFilterValues,
+            textFilterLiteral,
+            textFilterCaseSensitive,
+            onCommitTextFilter,
+            isTextApplyDisabled,
             withoutApply,
         ],
     );
 
-    // Wrap text filter's setDisplayForm so it also propagates the new display form
-    // to the elements controller's displayAsLabel, keeping autocomplete (onSearch) in sync.
-    const { setDisplayForm: setTextDisplayForm } = textFilterController;
+    // ─── Unified setDisplayForm ────────────────────────────────────────
+    // Updates root state and propagates to elements handler + text controller.
     const { setDisplayForm: setElementsDisplayForm } = elementsFilterController;
-    const setDisplayFormForTextMode = useCallback(
+    const { onResetForDisplayFormChange: onTextResetForDisplayFormChange } = textFilterController;
+    const setDisplayForm = useCallback(
         (newDisplayFormRef: ObjRef) => {
-            setTextDisplayForm?.(newDisplayFormRef);
+            setUserSelectedDisplayForm(newDisplayFormRef);
+            // Propagate to elements handler (for autocomplete sync and handler state)
             setElementsDisplayForm?.(newDisplayFormRef);
+            // Reset text controller's values for display form change
+            onTextResetForDisplayFormChange?.(newDisplayFormRef);
         },
-        [setTextDisplayForm, setElementsDisplayForm],
+        [setElementsDisplayForm, onTextResetForDisplayFormChange],
     );
+
+    // Reconstruct committed filter from text controller's committed state + root's display form.
+    // This is needed for the button subtitle in non-withoutApply mode.
+    const textFilterCommittedFilter = useMemo(() => {
+        const committed = textFilterController.committedState;
+        if (!committed) {
+            return undefined;
+        }
+        const valuesOrLiteral = isArbitraryOperator(committed.operator)
+            ? committed.values
+            : committed.literal;
+        return createFilterFromOperator(
+            committed.operator,
+            valuesOrLiteral,
+            effectiveDisplayFormRef,
+            localId,
+            committed.caseSensitive,
+        );
+    }, [textFilterController.committedState, effectiveDisplayFormRef, localId]);
 
     if (isTextMode) {
         return {
@@ -367,7 +515,7 @@ export const useAttributeFilterController = (
             displayForms: elementsFilterController.displayForms,
             isInitializing: elementsFilterController.isInitializing,
             initError: elementsFilterController.initError,
-            currentDisplayFormRef: textFilterController.currentDisplayFormRef,
+            currentDisplayFormRef: effectiveDisplayFormRef,
             isFiltering: false,
             isSelectionInvalid: textFilterController.isTextFilterInvalid,
             isApplyDisabled: textFilterController.isApplyDisabled,
@@ -380,7 +528,7 @@ export const useAttributeFilterController = (
             textFilterValuesLimitReachedWarning: textFilterController.textFilterValuesLimitReachedWarning,
             textFilterValuesLimitExceededError: textFilterController.textFilterValuesLimitExceededError,
             textFilterCaseSensitive: textFilterController.textFilterCaseSensitive,
-            textFilterCommittedFilter: textFilterController.textFilterCommittedFilter,
+            textFilterCommittedFilter,
             onTextFilterOperatorChange: textFilterController.onTextFilterOperatorChange,
             onTextFilterValuesChange: textFilterController.onTextFilterValuesChange,
             onTextFilterValuesBlur: textFilterController.onTextFilterValuesBlur,
@@ -390,7 +538,7 @@ export const useAttributeFilterController = (
             onApply: onApplyTextFilter,
             onReset: textFilterController.onReset ?? noop,
             filterDetailRequestHandler,
-            setDisplayForm: setDisplayFormForTextMode,
+            setDisplayForm,
             resetForModeSwitch: textFilterController.resetForModeSwitch ?? noop,
             onFilterModeChange:
                 availableInternalFilterModes.length > 1 ? onFilterModeChangeForControllers : undefined,
@@ -426,6 +574,9 @@ export const useAttributeFilterController = (
     return {
         ...elementsFilterController,
         filterDetailRequestHandler,
+        // Override elements controller's setDisplayForm with root's unified version
+        // so header menu changes in elements mode also update userSelectedDisplayForm.
+        setDisplayForm,
         currentFilterMode: filterMode,
         availableInternalFilterModes,
         availableTextFilterModes,

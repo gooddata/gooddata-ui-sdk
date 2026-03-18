@@ -3,6 +3,8 @@
 import { type IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
 import {
     type ArithmeticMeasureOperator,
+    type GeoLayerType,
+    GeoLayerTypes,
     type IArithmeticMeasureDefinition,
     type IAttribute,
     type IAttributeOrMeasure,
@@ -19,6 +21,7 @@ import {
     bucketAttribute,
     bucketMeasure,
     bucketsFind,
+    geoLayerTypeFromVisualizationType,
     idRef,
     insightBuckets,
     insightLayers,
@@ -26,6 +29,7 @@ import {
     insightProperties,
     insightSorts,
     insightVisualizationType,
+    isGeoLayerType,
     isPoPMeasure,
     isPreviousPeriodMeasure,
     isUriRef,
@@ -34,7 +38,12 @@ import {
     serializeObjRef,
     uriRef,
 } from "@gooddata/sdk-model";
-import { BucketNames, VisualizationTypes } from "@gooddata/sdk-ui";
+import {
+    BucketNames,
+    VisualizationTypes,
+    convertGeoInsightToTableDefinition as convertGeoInsightToTableDefinitionShared,
+    isGeoVisualizationUsingNewEngine,
+} from "@gooddata/sdk-ui";
 
 import { resolveGeoDefaultDisplayFormRefs } from "./geoDefaultDisplayFormRefs.js";
 
@@ -266,7 +275,14 @@ function transformGeoBucketAttributeUsingTooltipText(
     // Generate a unique localId to avoid conflicts with existing attributes
     const uniqueLocalId = `${attributeLocalId(geoAttr)}_${uniqueLocalIdSuffix}`;
 
-    return newAttribute(ref, (m) => m.localId(uniqueLocalId).alias(attributeAlias(geoAttr)));
+    const alias = attributeAlias(geoAttr);
+    return newAttribute(ref, (m) => {
+        m.localId(uniqueLocalId);
+        if (alias) {
+            m.alias(alias);
+        }
+        return m;
+    });
 }
 
 /**
@@ -296,9 +312,14 @@ function transformGeoBucketAttributeUsingDefaultDisplayForm(
     }
 
     const uniqueLocalId = `${attributeLocalId(geoAttr)}_${uniqueLocalIdSuffix}`;
-    return newAttribute(defaultDisplayFormRef, (m) =>
-        m.localId(uniqueLocalId).alias(attributeAlias(geoAttr)),
-    );
+    const alias = attributeAlias(geoAttr);
+    return newAttribute(defaultDisplayFormRef, (m) => {
+        m.localId(uniqueLocalId);
+        if (alias) {
+            m.alias(alias);
+        }
+        return m;
+    });
 }
 
 function transformGeoLocationAttribute(
@@ -313,13 +334,11 @@ type GeoTableConversionOptions = {
     defaultDisplayFormRefs?: Map<string, ObjRef>;
 };
 
-type SupportedGeoLayerType = "pushpin" | "area";
-
 function resolveGeoPrimaryAttribute(
     options: GeoTableConversionOptions,
     insight: IInsight,
     buckets: IBucket[],
-    layerType?: SupportedGeoLayerType,
+    layerType?: GeoLayerType,
 ): IAttribute | undefined {
     if (layerType) {
         return resolveGeoPrimaryAttributeByLayerType(layerType, buckets, options.defaultDisplayFormRefs);
@@ -327,19 +346,21 @@ function resolveGeoPrimaryAttribute(
 
     const type = insightVisualizationType(insight);
     const isLegacyGeoPushpin = type === VisualizationTypes.PUSHPIN && !options.settings?.enableNewGeoPushpin;
-    const isNewGeoPushpin = type === VisualizationTypes.PUSHPIN && options.settings?.enableNewGeoPushpin;
-    const isNewGeoArea = type === VisualizationTypes.CHOROPLETH && options.settings?.enableGeoArea;
+    const isNewGeoVisualization = isGeoVisualizationUsingNewEngine(type, options.settings);
 
     if (isLegacyGeoPushpin) {
         return transformGeoLocationAttribute(bucketsFind(buckets, BucketNames.LOCATION), insight);
     }
 
-    if (isNewGeoPushpin) {
-        return resolveGeoPrimaryAttributeByLayerType("pushpin", buckets, options.defaultDisplayFormRefs);
-    }
-
-    if (isNewGeoArea) {
-        return resolveGeoPrimaryAttributeByLayerType("area", buckets, options.defaultDisplayFormRefs);
+    if (isNewGeoVisualization) {
+        const rootLayerType = geoLayerTypeFromVisualizationType(type);
+        if (rootLayerType) {
+            return resolveGeoPrimaryAttributeByLayerType(
+                rootLayerType,
+                buckets,
+                options.defaultDisplayFormRefs,
+            );
+        }
     }
 
     return undefined;
@@ -367,14 +388,13 @@ function getGeoTableAttributes(
     insight: IInsight,
     buckets: IBucket[],
     options: GeoTableConversionOptions,
-    layerType?: SupportedGeoLayerType,
+    layerType?: GeoLayerType,
 ): { rowAttributes: IAttributeOrMeasure[]; columnAttributes: IAttributeOrMeasure[] } | null {
     const type = insightVisualizationType(insight);
     const isLegacyGeoPushpin = type === VisualizationTypes.PUSHPIN && !options.settings?.enableNewGeoPushpin;
-    const isNewGeoPushpin = type === VisualizationTypes.PUSHPIN && options.settings?.enableNewGeoPushpin;
-    const isNewGeoArea = type === VisualizationTypes.CHOROPLETH && options.settings?.enableGeoArea;
+    const isNewGeoVisualization = isGeoVisualizationUsingNewEngine(type, options.settings);
 
-    if (!layerType && !isLegacyGeoPushpin && !isNewGeoPushpin && !isNewGeoArea) {
+    if (!layerType && !isLegacyGeoPushpin && !isNewGeoVisualization) {
         return null;
     }
 
@@ -382,22 +402,12 @@ function getGeoTableAttributes(
     return getGeoTableAttributesWithSegmentAndPrimary(buckets, primaryAttribute);
 }
 
-function parseGeoLayerType(visType: string): SupportedGeoLayerType | undefined {
-    if (visType === VisualizationTypes.CHOROPLETH || visType === "area") {
-        return "area";
-    }
-    if (visType === VisualizationTypes.PUSHPIN || visType === "pushpin") {
-        return "pushpin";
-    }
-    return undefined;
-}
-
 function resolveGeoPrimaryAttributeByLayerType(
-    layerType: SupportedGeoLayerType,
+    layerType: GeoLayerType,
     buckets: IBucket[],
     defaultDisplayFormRefs: Map<string, ObjRef> | undefined,
 ): IAttribute | undefined {
-    const bucketName = layerType === "area" ? BucketNames.AREA : BucketNames.LOCATION;
+    const bucketName = layerType === GeoLayerTypes.AREA ? BucketNames.AREA : BucketNames.LOCATION;
     return transformGeoBucketAttributeUsingDefaultDisplayForm(
         bucketsFind(buckets, bucketName),
         defaultDisplayFormRefs,
@@ -408,7 +418,7 @@ function resolveGeoPrimaryAttributeByLayerType(
 function buildTableInsightFromBuckets(
     insight: IInsight,
     buckets: IBucket[],
-    layerType: SupportedGeoLayerType,
+    layerType: GeoLayerType,
     defaultDisplayFormRefs: Map<string, ObjRef> | undefined,
 ): IInsight {
     const measureBucketIdentifiers: Set<string> = new Set([
@@ -499,14 +509,11 @@ export function convertGeoInsightToLayerTables(
     }
 
     const type = insightVisualizationType(insight);
-    const isNewGeoPushpin = type === VisualizationTypes.PUSHPIN && options.settings?.enableNewGeoPushpin;
-    const isNewGeoArea = type === VisualizationTypes.CHOROPLETH && options.settings?.enableGeoArea;
-
-    if (!isNewGeoPushpin && !isNewGeoArea) {
+    if (!isGeoVisualizationUsingNewEngine(type, options.settings)) {
         return undefined;
     }
 
-    const rootLayerType = parseGeoLayerType(type);
+    const rootLayerType = geoLayerTypeFromVisualizationType(type);
     if (!rootLayerType) {
         return undefined;
     }
@@ -528,10 +535,10 @@ export function convertGeoInsightToLayerTables(
 
     const layers = insightLayers(insight);
     const layerDefs = layers.flatMap((layer): ILayerTableDefinition[] => {
-        const layerType = parseGeoLayerType(layer.type);
-        if (!layerType) {
+        if (!isGeoLayerType(layer.type)) {
             return [];
         }
+        const layerType = layer.type;
         const displayFormRefs = resolveGeoDefaultDisplayFormRefs(
             layerType,
             layer.buckets,
@@ -582,6 +589,11 @@ export function convertInsightToTableDefinition(
     const type = insightVisualizationType(insight);
     if (!canConvertToTable(type)) {
         return insight;
+    }
+
+    const geoTableInsight = convertGeoInsightToTableDefinitionShared(insight, options);
+    if (geoTableInsight) {
+        return geoTableInsight as IInsight;
     }
 
     // Use sdk-model utils to extract all measures and attributes

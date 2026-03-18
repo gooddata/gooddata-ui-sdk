@@ -9,6 +9,7 @@ import { AttributeOrPlaceholder } from '@gooddata/sdk-ui';
 import { ChartFillType } from '@gooddata/sdk-ui-vis-commons';
 import { ComponentType } from 'react';
 import { ContentRect } from 'react-measure';
+import { GeoLayerType as GeoLayerType_2 } from '@gooddata/sdk-model';
 import { getColorMappingPredicate } from '@gooddata/sdk-ui-vis-commons';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IAttribute } from '@gooddata/sdk-model';
@@ -79,7 +80,7 @@ export type GeoChartPushpinSizeOption = "0.5x" | "0.75x" | "normal" | "1.25x" | 
 export type GeoColorScheme = "light" | "dark";
 
 // @public
-export type GeoLayerType = "pushpin" | "area";
+export type GeoLayerType = GeoLayerType_2;
 
 // @public
 export type GeoLegendCornerPosition = "top-left" | "top-right" | "bottom-left" | "bottom-right";

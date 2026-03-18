@@ -68,7 +68,13 @@ function getAttributeDataSet(
 function isGeoLabel(label: JsonApiLabelOutWithLinks): boolean {
     const type = label.attributes?.valueType;
 
-    return type === "GEO" || type === "GEO_LATITUDE" || type === "GEO_LONGITUDE" || type === "GEO_AREA";
+    return (
+        type === "GEO" ||
+        type === "GEO_LATITUDE" ||
+        type === "GEO_LONGITUDE" ||
+        type === "GEO_AREA" ||
+        type === "GEO_ICON"
+    );
 }
 
 function createNonDateAttributes(attributes: JsonApiAttributeOutList): ICatalogAttribute[] {

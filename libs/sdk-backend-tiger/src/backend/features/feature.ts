@@ -837,6 +837,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableGeoPushpinIcon,
+            "enableGeoPushpinIcon",
+            "BOOLEAN",
+            FeatureFlagsValues.enableGeoPushpinIcon,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableGeoChartA11yImprovements,
             "enableGeoChartA11yImprovements",
             "BOOLEAN",

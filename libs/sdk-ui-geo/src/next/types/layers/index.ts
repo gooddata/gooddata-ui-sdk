@@ -6,6 +6,7 @@ import {
     type IColorPalette,
     type INullableFilter,
     type ISortItem,
+    type GeoLayerType as ModelGeoLayerType,
 } from "@gooddata/sdk-model";
 import { type IColorMapping } from "@gooddata/sdk-ui-vis-commons";
 
@@ -19,7 +20,7 @@ import { type IColorMapping } from "@gooddata/sdk-ui-vis-commons";
  *
  * @public
  */
-export type GeoLayerType = "pushpin" | "area";
+export type GeoLayerType = ModelGeoLayerType;
 
 /**
  * Per-layer configuration for GeoChart layers.

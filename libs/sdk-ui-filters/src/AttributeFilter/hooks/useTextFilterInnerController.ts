@@ -3,14 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
-import {
-    type IAttributeFilter,
-    type ObjRef,
-    filterLocalIdentifier,
-    filterObjRef,
-    isArbitraryAttributeFilter,
-    isMatchAttributeFilter,
-} from "@gooddata/sdk-model";
+import { type IAttributeFilter, type ObjRef, isMatchAttributeFilter } from "@gooddata/sdk-model";
 import { type GoodDataSdkError, useDebounce } from "@gooddata/sdk-ui";
 
 import { MAX_SELECTION_SIZE } from "./constants.js";
@@ -18,17 +11,28 @@ import { type AsyncOperationStatus } from "../../AttributeFilterHandler/types/co
 import { type AttributeFilterTextMode } from "../filterModeTypes.js";
 import {
     type TextFilterOperator,
-    createFilterFromOperator,
     getOperatorFromFilter,
     getValuesFromFilter,
     isAllOperator,
     isArbitraryOperator,
     resolveValuesOnTextOperatorChange,
 } from "../textFilterOperatorUtils.js";
-import { type OnApplyCallbackType, type OnChangeCallbackType } from "../types.js";
 
 /**
- * Props for useTextFilterController hook.
+ * Snapshot of the text filter working state (operator, values, literal, caseSensitive).
+ * Used for state emission and committed state tracking — no display form, no filter object.
+ *
+ * @internal
+ */
+export interface ITextFilterState {
+    operator: TextFilterOperator;
+    values: Array<string | null>;
+    literal: string;
+    caseSensitive: boolean;
+}
+
+/**
+ * Props for useTextFilterInnerController hook.
  * @internal
  */
 export interface ITextFilterInnerControllerProps {
@@ -36,9 +40,7 @@ export interface ITextFilterInnerControllerProps {
     backend: IAnalyticalBackend;
     workspace: string;
     filter: IAttributeFilter;
-    onApply?: OnApplyCallbackType;
-    onChange?: OnChangeCallbackType;
-    withoutApply?: boolean;
+    onTextStateChange?: (state: ITextFilterState) => void;
     filterModeChanged?: boolean;
     availableTextModes?: AttributeFilterTextMode[];
     attributeMetadataStatus?: AsyncOperationStatus;
@@ -68,12 +70,11 @@ const getFallbackOperator = (availableTextModes: AttributeFilterTextMode[]): Tex
 };
 
 /**
- * Internal result of useTextFilterController. Not part of public API.
+ * Internal result of useTextFilterInnerController. Not part of public API.
  *
  * @internal
  */
 export interface ITextFilterInnerController {
-    currentDisplayFormRef: ObjRef;
     isTextFilterInvalid: boolean;
     isApplyDisabled: boolean;
     isWorkingSelectionChanged: boolean;
@@ -85,7 +86,7 @@ export interface ITextFilterInnerController {
     textFilterValuesLimitReachedWarning?: boolean;
     textFilterValuesLimitExceededError?: boolean;
     textFilterCaseSensitive?: boolean;
-    textFilterCommittedFilter?: IAttributeFilter;
+    committedState?: ITextFilterState;
     onTextFilterOperatorChange?: (operator: TextFilterOperator) => void;
     onTextFilterValuesChange?: (values: Array<string | null>) => void;
     onTextFilterValuesBlur?: () => void;
@@ -100,12 +101,20 @@ export interface ITextFilterInnerController {
 
 /**
  * Controller hook for text filter mode (arbitrary and match filters).
+ * Manages only operator, values, literal, caseSensitive, and validation.
+ * Does NOT track display form or construct filter objects — the parent handles that.
+ *
  * @internal
  */
 export function useTextFilterInnerController(
     props: ITextFilterInnerControllerProps,
 ): ITextFilterInnerController {
-    const { filter, onChange, availableTextModes = DEFAULT_TEXT_MODES, filterModeChanged = false } = props;
+    const {
+        filter,
+        onTextStateChange,
+        availableTextModes = DEFAULT_TEXT_MODES,
+        filterModeChanged = false,
+    } = props;
 
     const [operator, setOperator] = useState<TextFilterOperator>(
         () => getOperatorFromFilter(filter) ?? "all",
@@ -121,44 +130,46 @@ export function useTextFilterInnerController(
     const [caseSensitive, setCaseSensitive] = useState(
         isMatchAttributeFilter(filter) ? (filter.matchAttributeFilter.caseSensitive ?? false) : false,
     );
-    const [displayForm, setDisplayForm] = useState<ObjRef>(filterObjRef(filter));
 
-    const [committedFilter, setCommittedFilter] = useState<IAttributeFilter>(filter);
+    const [committedState, setCommittedState] = useState<ITextFilterState>(() =>
+        extractStateFromFilter(filter, availableTextModes),
+    );
     const [isLiteralTouched, setIsLiteralTouched] = useState(false);
     const [isValuesTouched, setIsValuesTouched] = useState(false);
     const [hasValuesLimitExceeded, setHasValuesLimitExceeded] = useState(false);
-    const [isEmptyAfterDisplayFormReset, setIsEmptyAfterDisplayFormReset] = useState(false);
     const [isEmptyAfterOperatorChange, setIsEmptyAfterOperatorChange] = useState(false);
 
-    const localIdentifier = filterLocalIdentifier(filter);
-
-    const emitSelect = useCallback(
-        (nextFilter: IAttributeFilter) => {
-            const isNegative = getNegativeSelection(nextFilter);
-            onChange?.(nextFilter, isNegative);
+    const emitStateChange = useCallback(
+        (state: ITextFilterState) => {
+            onTextStateChange?.(state);
         },
-        [onChange],
+        [onTextStateChange],
     );
 
     const syncFromFilter = useCallback(
         (nextFilter: IAttributeFilter, updateCommitted = true) => {
-            setDisplayForm(filterObjRef(nextFilter));
             const filterOperator = getOperatorFromFilter(nextFilter);
             const nextOperator = isOperatorAllowed(filterOperator, availableTextModes)
                 ? filterOperator
                 : getFallbackOperator(availableTextModes);
             const nextValues = getValuesFromFilter(nextFilter);
+            const nextLiteral = typeof nextValues === "string" ? nextValues : "";
+            const nextValuesArray = Array.isArray(nextValues) ? nextValues : [];
+            const nextCaseSensitive = isMatchAttributeFilter(nextFilter)
+                ? (nextFilter.matchAttributeFilter.caseSensitive ?? false)
+                : false;
+
             setOperator(nextOperator);
-            setValues(Array.isArray(nextValues) ? nextValues : []);
-            setLiteral(typeof nextValues === "string" ? nextValues : "");
-            setCaseSensitive(
-                isMatchAttributeFilter(nextFilter)
-                    ? (nextFilter.matchAttributeFilter.caseSensitive ?? false)
-                    : false,
-            );
+            setValues(nextValuesArray);
+            setLiteral(nextLiteral);
+            setCaseSensitive(nextCaseSensitive);
             if (updateCommitted) {
-                setCommittedFilter(nextFilter);
-                setIsEmptyAfterDisplayFormReset(false);
+                setCommittedState({
+                    operator: nextOperator,
+                    values: nextValuesArray,
+                    literal: nextLiteral,
+                    caseSensitive: nextCaseSensitive,
+                });
                 setIsEmptyAfterOperatorChange(false);
             }
             setIsLiteralTouched(false);
@@ -182,16 +193,8 @@ export function useTextFilterInnerController(
             setLiteral(next.literal);
             setIsLiteralTouched(false);
             setIsValuesTouched(false);
-            setIsEmptyAfterDisplayFormReset(false);
             setIsEmptyAfterOperatorChange(true);
-            const newFilter = createFilterFromOperator(
-                newOperator,
-                getFilterValues(newOperator, next.values, next.literal),
-                displayForm,
-                localIdentifier,
-                caseSensitive,
-            );
-            // When crossing groups (arbitrary ↔ match), reset committed filter so the filter
+            // When crossing groups (arbitrary ↔ match), reset committed state so the filter
             // is fully reset — Apply stays disabled until user enters new values.
             // Exception: "All" operator should NOT auto-commit - user must click Apply.
             // Also, when switching FROM "All", don't auto-commit.
@@ -200,20 +203,21 @@ export function useTextFilterInnerController(
                 !isAllOperator(operator) &&
                 isArbitraryOperator(newOperator) !== isArbitraryOperator(operator)
             ) {
-                setCommittedFilter(newFilter);
+                setCommittedState({
+                    operator: newOperator,
+                    values: next.values,
+                    literal: next.literal,
+                    caseSensitive,
+                });
             }
-            emitSelect(newFilter);
+            emitStateChange({
+                operator: newOperator,
+                values: next.values,
+                literal: next.literal,
+                caseSensitive,
+            });
         },
-        [
-            localIdentifier,
-            availableTextModes,
-            caseSensitive,
-            displayForm,
-            emitSelect,
-            operator,
-            literal,
-            values,
-        ],
+        [availableTextModes, caseSensitive, emitStateChange, operator, literal, values],
     );
 
     const onValuesChange = useCallback(
@@ -224,121 +228,89 @@ export function useTextFilterInnerController(
             setValues(cappedValues);
             setIsValuesTouched(false);
             if (cappedValues.length > 0) {
-                setIsEmptyAfterDisplayFormReset(false);
                 setIsEmptyAfterOperatorChange(false);
             }
-            const newFilter = createFilterFromOperator(
-                operator,
-                cappedValues,
-                displayForm,
-                localIdentifier,
-                caseSensitive,
-            );
-            emitSelect(newFilter);
+            emitStateChange({ operator, values: cappedValues, literal, caseSensitive });
         },
-        [localIdentifier, caseSensitive, displayForm, emitSelect, operator],
+        [caseSensitive, emitStateChange, operator, literal],
     );
 
-    const emitLiteralFilter = useCallback(
+    const emitLiteralStateChange = useCallback(
         (newLiteral: string) => {
-            const newFilter = createFilterFromOperator(
-                operator,
-                newLiteral,
-                displayForm,
-                localIdentifier,
-                caseSensitive,
-            );
-            emitSelect(newFilter);
+            emitStateChange({ operator, values, literal: newLiteral, caseSensitive });
         },
-        [localIdentifier, caseSensitive, displayForm, emitSelect, operator],
+        [caseSensitive, emitStateChange, operator, values],
     );
 
-    const debouncedEmitLiteralFilter = useDebounce(emitLiteralFilter, 300);
+    const debouncedEmitLiteralStateChange = useDebounce(emitLiteralStateChange, 300);
 
     const onLiteralChange = useCallback(
         (newLiteral: string) => {
             setLiteral(newLiteral);
             setIsLiteralTouched(false);
             if (newLiteral.trim() !== "") {
-                setIsEmptyAfterDisplayFormReset(false);
                 setIsEmptyAfterOperatorChange(false);
             }
-            debouncedEmitLiteralFilter(newLiteral);
+            debouncedEmitLiteralStateChange(newLiteral);
         },
-        [debouncedEmitLiteralFilter],
+        [debouncedEmitLiteralStateChange],
     );
 
     const onToggleCaseSensitive = useCallback(() => {
         const newCaseSensitive = !caseSensitive;
         setCaseSensitive(newCaseSensitive);
-        const newFilter = createFilterFromOperator(
-            operator,
-            isArbitraryOperator(operator) ? values : literal,
-            displayForm,
-            localIdentifier,
-            newCaseSensitive,
-        );
-        emitSelect(newFilter);
-    }, [localIdentifier, caseSensitive, displayForm, emitSelect, operator, literal, values]);
+        emitStateChange({ operator, values, literal, caseSensitive: newCaseSensitive });
+    }, [caseSensitive, emitStateChange, operator, literal, values]);
 
     const onLiteralBlur = useCallback(() => {
-        debouncedEmitLiteralFilter.flush();
+        debouncedEmitLiteralStateChange.flush();
         setIsLiteralTouched(true);
-    }, [debouncedEmitLiteralFilter]);
+    }, [debouncedEmitLiteralStateChange]);
 
     useEffect(() => {
-        return () => debouncedEmitLiteralFilter.cancel();
-    }, [debouncedEmitLiteralFilter]);
+        return () => debouncedEmitLiteralStateChange.cancel();
+    }, [debouncedEmitLiteralStateChange]);
 
     const onValuesBlur = useCallback(() => {
         setIsValuesTouched(true);
     }, []);
 
     const onCommitTextFilter = useCallback(() => {
-        const nextFilter = createFilterFromOperator(
-            operator,
-            getFilterValues(operator, values, literal),
-            displayForm,
-            localIdentifier,
-            caseSensitive,
-        );
-        setCommittedFilter(nextFilter);
+        setCommittedState({ operator, values, literal, caseSensitive });
         setIsEmptyAfterOperatorChange(false);
         setIsLiteralTouched(false);
         setIsValuesTouched(false);
-        setIsEmptyAfterDisplayFormReset(false);
-    }, [localIdentifier, caseSensitive, displayForm, operator, literal, values]);
+    }, [caseSensitive, operator, literal, values]);
 
-    const onResetForDisplayFormChange = useCallback(
-        (newDisplayFormRef: ObjRef) => {
-            const emptyFilter = createFilterFromOperator(
-                operator,
-                getFilterValues(operator, [], ""),
-                newDisplayFormRef,
-                localIdentifier,
-                caseSensitive,
-            );
-            setHasValuesLimitExceeded(false);
-            setIsEmptyAfterDisplayFormReset(true);
-            // Only sync working state; keep committedFilter so hasDraftChanged detects the change.
-            syncFromFilter(emptyFilter, false);
-        },
-        [localIdentifier, caseSensitive, operator, syncFromFilter],
-    );
+    const onResetForDisplayFormChange = useCallback((_newDisplayFormRef: ObjRef) => {
+        // Do not clear selection — values are plain text, valid from API standpoint.
+        // They may show no data for the new display form; user can manually clear via Clear button.
+        // Do not reset hasValuesLimitExceeded — values stay as-is, so limit state remains valid.
+    }, []);
+
+    const onReset = useCallback(() => {
+        setOperator(committedState.operator);
+        setValues(committedState.values);
+        setLiteral(committedState.literal);
+        setCaseSensitive(committedState.caseSensitive);
+        setIsLiteralTouched(false);
+        setIsValuesTouched(false);
+        setIsEmptyAfterOperatorChange(false);
+        setHasValuesLimitExceeded(false);
+    }, [committedState]);
 
     // Validation
     const isArbitraryInputEmpty = isArbitraryOperator(operator) && values.length === 0;
     const isMatchInputEmpty =
         !isArbitraryOperator(operator) && !isAllOperator(operator) && literal.trim() === "";
 
-    const hasUserInteractedOrReset =
-        isEmptyAfterDisplayFormReset || isEmptyAfterOperatorChange || filterModeChanged;
+    const hasUserInteractedOrReset = isEmptyAfterOperatorChange || filterModeChanged;
 
     const isArbitraryFilterInvalid = (isValuesTouched || hasUserInteractedOrReset) && isArbitraryInputEmpty;
 
     const isMatchFilterInvalid = (isLiteralTouched || hasUserInteractedOrReset) && isMatchInputEmpty;
 
-    // Input error state only when user touched - isEmptyAfterDisplayFormReset/isEmptyAfterOperatorChange do NOT trigger it.
+    // Input error state only when user touched - isEmptyAfterOperatorChange does NOT trigger it.
     // "All" operator is always valid (no input required)
     const isTextFilterInvalid =
         !isAllOperator(operator) && (isArbitraryFilterInvalid || isMatchFilterInvalid);
@@ -347,15 +319,14 @@ export function useTextFilterInnerController(
         hasValuesLimitExceeded ||
         isArbitraryInputEmpty ||
         isMatchInputEmpty ||
-        (!hasDraftChanged(operator, values, literal, caseSensitive ?? false, committedFilter) &&
+        (!hasDraftChanged(operator, values, literal, caseSensitive ?? false, committedState) &&
             !filterModeChanged);
 
     return {
-        currentDisplayFormRef: displayForm,
         isTextFilterInvalid: isTextFilterInvalid,
         isApplyDisabled,
         isWorkingSelectionChanged:
-            hasDraftChanged(operator, values, literal, caseSensitive ?? false, committedFilter) ||
+            hasDraftChanged(operator, values, literal, caseSensitive ?? false, committedState) ||
             filterModeChanged,
         textFilterOperator: operator,
         textFilterValues: values,
@@ -366,7 +337,7 @@ export function useTextFilterInnerController(
             isArbitraryOperator(operator) && values.length >= MAX_SELECTION_SIZE,
         textFilterValuesLimitExceededError: hasValuesLimitExceeded,
         textFilterCaseSensitive: caseSensitive,
-        textFilterCommittedFilter: committedFilter,
+        committedState,
         onTextFilterOperatorChange: onOperatorChange,
         onTextFilterValuesChange: onValuesChange,
         onTextFilterValuesBlur: onValuesBlur,
@@ -374,7 +345,7 @@ export function useTextFilterInnerController(
         onTextFilterLiteralBlur: onLiteralBlur,
         onToggleTextFilterCaseSensitive: onToggleCaseSensitive,
         onCommitTextFilter,
-        onReset: () => syncFromFilter(committedFilter),
+        onReset,
         onResetForDisplayFormChange,
         syncFromFilter,
     };
@@ -385,15 +356,9 @@ function hasDraftChanged(
     values: Array<string | null>,
     literal: string,
     caseSensitive: boolean,
-    committedFilter: IAttributeFilter,
+    committed: ITextFilterState,
 ): boolean {
-    const committedOperator = getOperatorFromFilter(committedFilter);
-    const committedValue = getValuesFromFilter(committedFilter);
-    const committedCaseSensitive = isMatchAttributeFilter(committedFilter)
-        ? committedFilter.matchAttributeFilter.caseSensitive
-        : false;
-
-    if (operator !== committedOperator) {
+    if (operator !== committed.operator) {
         return true;
     }
 
@@ -402,37 +367,30 @@ function hasDraftChanged(
     }
 
     if (isArbitraryOperator(operator)) {
-        const committedValues = Array.isArray(committedValue) ? committedValue : [];
-        if (values.length !== committedValues.length) {
+        if (values.length !== committed.values.length) {
             return true;
         }
-        return values.some((value, index) => value !== committedValues[index]);
+        return values.some((value, index) => value !== committed.values[index]);
     }
 
-    const committedLiteral = typeof committedValue === "string" ? committedValue : "";
-    return literal.trim() !== committedLiteral.trim() || caseSensitive !== committedCaseSensitive;
+    return literal.trim() !== committed.literal.trim() || caseSensitive !== committed.caseSensitive;
 }
 
-function getFilterValues(
-    operator: TextFilterOperator,
-    values: Array<string | null>,
-    literal: string,
-): Array<string | null> | string {
-    if (isAllOperator(operator)) {
-        return [];
-    }
-    if (isArbitraryOperator(operator)) {
-        return values;
-    }
-    return literal.trim();
+function extractStateFromFilter(
+    filter: IAttributeFilter,
+    availableTextModes: AttributeFilterTextMode[],
+): ITextFilterState {
+    const filterOperator = getOperatorFromFilter(filter);
+    const resolvedOperator = isOperatorAllowed(filterOperator, availableTextModes)
+        ? filterOperator
+        : getFallbackOperator(availableTextModes);
+    const filterValues = getValuesFromFilter(filter);
+    return {
+        operator: resolvedOperator,
+        values: Array.isArray(filterValues) ? filterValues : [],
+        literal: typeof filterValues === "string" ? filterValues : "",
+        caseSensitive: isMatchAttributeFilter(filter)
+            ? (filter.matchAttributeFilter.caseSensitive ?? false)
+            : false,
+    };
 }
-
-const getNegativeSelection = (filter: IAttributeFilter): boolean => {
-    if (isArbitraryAttributeFilter(filter)) {
-        return filter.arbitraryAttributeFilter.negativeSelection ?? false;
-    }
-    if (isMatchAttributeFilter(filter)) {
-        return filter.matchAttributeFilter.negativeSelection ?? false;
-    }
-    return false;
-};

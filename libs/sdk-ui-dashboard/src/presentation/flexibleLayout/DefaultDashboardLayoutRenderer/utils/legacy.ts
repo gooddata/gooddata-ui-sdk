@@ -2,7 +2,7 @@
 
 import { type CSSProperties } from "react";
 
-import { type VisType } from "@gooddata/sdk-ui";
+import { type VisType, VisualizationTypes } from "@gooddata/sdk-ui";
 import { DASHBOARD_LAYOUT_DEFAULT_VIS_HEIGHT_PX } from "@gooddata/sdk-ui-ext";
 
 import { DASHBOARD_LAYOUT_GRID_COLUMNS_COUNT } from "../../../../_staging/dashboard/flexibleLayout/config.js";
@@ -28,7 +28,7 @@ export function calculateGeoPushpinWidgetHeight(
 }
 
 export function isGeoPushpin(visType: VisType): boolean {
-    return visType === "pushpin";
+    return visType === VisualizationTypes.PUSHPIN;
 }
 
 export function isFullWidthGeoPushpin(currentColumnWidth: number, visType: VisType): boolean {

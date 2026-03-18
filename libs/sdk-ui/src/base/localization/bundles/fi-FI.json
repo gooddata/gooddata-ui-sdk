@@ -435,6 +435,7 @@
     "attributeFilter.text.values.helpIconLabel": "Apua",
     "attributeFilter.text.values.removeTagAriaLabel": "Poista {value}",
     "attributeFilter.text.autocomplete.listLabel": "Ehdotukset",
+    "attributeFilter.text.values.clearAll": "Tyhjennä",
     "attributeFilter.details.infoButtonLabel": "Näytä attribuutin tiedot",
     "attributeFilter.details.label": "Tunniste",
     "attributeFilter.details.elementsMore": "…ja {count} lisää",

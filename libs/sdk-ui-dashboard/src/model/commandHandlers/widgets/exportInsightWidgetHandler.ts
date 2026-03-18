@@ -5,8 +5,13 @@ import { call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 
 import { type IExecutionResult, type IExportResult } from "@gooddata/sdk-backend-spi";
-import { type ObjRef, serializeObjRef } from "@gooddata/sdk-model";
-import { type IExtendedExportConfig, createExportFunction } from "@gooddata/sdk-ui";
+import { type IExecutionDefinition, type ObjRef, serializeObjRef } from "@gooddata/sdk-model";
+import {
+    type IExtendedExportConfig,
+    createExportFunction,
+    prepareGeoInsightForDataExport,
+} from "@gooddata/sdk-ui";
+import { createExportExecutionDefinition } from "@gooddata/sdk-ui/internal";
 
 import { type IExportInsightWidget } from "../../commands/insight.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
@@ -15,7 +20,8 @@ import {
     insightWidgetExportRequested,
     insightWidgetExportResolved,
 } from "../../events/insight.js";
-import { selectExportResultPollingTimeout } from "../../store/config/configSelectors.js";
+import { selectCatalogAttributes } from "../../store/catalog/catalogSelectors.js";
+import { selectExportResultPollingTimeout, selectSettings } from "../../store/config/configSelectors.js";
 import {
     selectExecutionResultByRef,
     selectIsExecutionResultExportableToCsvByRef,
@@ -23,14 +29,22 @@ import {
     selectIsExecutionResultExportableToXlsxByRef,
     selectIsExecutionResultReadyForExportByRef,
 } from "../../store/executionResults/executionResultsSelectors.js";
+import { selectInsightByWidgetRef } from "../../store/insights/insightsSelectors.js";
+import { selectPreloadedAttributesWithReferences } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { type PromiseFnReturnType } from "../../types/sagas.js";
 
 async function performExport(
+    ctx: DashboardContext,
     executionResult: IExecutionResult,
     config: IExtendedExportConfig,
+    exportDefinition?: IExecutionDefinition,
 ): Promise<IExportResult> {
-    const exporter = createExportFunction(executionResult);
+    const exportExecutionResult = exportDefinition
+        ? await ctx.backend.workspace(ctx.workspace).execution().forDefinition(exportDefinition).execute()
+        : executionResult;
+    const exporter = createExportFunction(exportExecutionResult);
+
     return exporter(config);
 }
 
@@ -85,7 +99,7 @@ export function* exportInsightWidgetHandler(
     ctx: DashboardContext,
     cmd: IExportInsightWidget,
 ): SagaIterator<IDashboardInsightWidgetExportResolved> {
-    const { config, ref } = cmd.payload;
+    const { config, ref, insight: payloadInsight } = cmd.payload;
 
     yield put(insightWidgetExportRequested(ctx, ref, config, cmd.correlationId));
 
@@ -99,14 +113,42 @@ export function* exportInsightWidgetHandler(
     // executionResult must be defined at this point
     invariant(executionEnvelope?.executionResult);
 
+    const insight: ReturnType<ReturnType<typeof selectInsightByWidgetRef>> =
+        payloadInsight ?? (yield select(selectInsightByWidgetRef(ref)));
+    const settings: ReturnType<typeof selectSettings> = yield select(selectSettings);
+    const catalogAttributes: ReturnType<typeof selectCatalogAttributes> =
+        yield select(selectCatalogAttributes);
+    const preloadedAttributesWithReferences: ReturnType<typeof selectPreloadedAttributesWithReferences> =
+        yield select(selectPreloadedAttributesWithReferences);
+    let exportDefinition: IExecutionDefinition | undefined;
+    if (insight) {
+        const exportInsight =
+            prepareGeoInsightForDataExport(insight, {
+                settings,
+                catalogAttributes,
+                preloadedAttributesWithReferences,
+            }) ?? insight;
+
+        exportDefinition =
+            exportInsight === insight
+                ? undefined
+                : createExportExecutionDefinition(
+                      exportInsight,
+                      ctx.workspace,
+                      executionEnvelope.executionResult.definition,
+                  );
+    }
+
     const timeout: ReturnType<typeof selectExportResultPollingTimeout> = yield select(
         selectExportResultPollingTimeout,
     );
 
     const result: PromiseFnReturnType<typeof performExport> = yield call(
         performExport,
+        ctx,
         executionEnvelope.executionResult,
         { ...config, timeout },
+        exportDefinition,
     );
 
     // prepend hostname if provided so that the results are downloaded from there, not from where the app is hosted

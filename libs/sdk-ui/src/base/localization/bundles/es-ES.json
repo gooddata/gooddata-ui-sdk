@@ -435,6 +435,7 @@
     "attributeFilter.text.values.helpIconLabel": "Ayuda",
     "attributeFilter.text.values.removeTagAriaLabel": "Eliminar {value}",
     "attributeFilter.text.autocomplete.listLabel": "Sugerencias",
+    "attributeFilter.text.values.clearAll": "Borrar",
     "attributeFilter.details.infoButtonLabel": "Mostrar detalles del atributo",
     "attributeFilter.details.label": "Etiqueta",
     "attributeFilter.details.elementsMore": "…y {count} más",

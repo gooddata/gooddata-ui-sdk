@@ -435,6 +435,7 @@
     "attributeFilter.text.values.helpIconLabel": "Help",
     "attributeFilter.text.values.removeTagAriaLabel": "Verwijder {value}",
     "attributeFilter.text.autocomplete.listLabel": "Suggesties",
+    "attributeFilter.text.values.clearAll": "Wissen",
     "attributeFilter.details.infoButtonLabel": "Attribuutdetails weergeven",
     "attributeFilter.details.label": "Label",
     "attributeFilter.details.elementsMore": "…en {count} meer",

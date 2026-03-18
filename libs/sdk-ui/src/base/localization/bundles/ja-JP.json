@@ -434,6 +434,7 @@
     "attributeFilter.text.values.helpIconLabel": "ヘルプ",
     "attributeFilter.text.values.removeTagAriaLabel": "{value} を削除",
     "attributeFilter.text.autocomplete.listLabel": "候補",
+    "attributeFilter.text.values.clearAll": "クリア",
     "attributeFilter.details.infoButtonLabel": "属性の詳細を表示",
     "attributeFilter.details.label": "ラベル",
     "attributeFilter.details.elementsMore": "…及び{count}その他",
