@@ -64,6 +64,7 @@ import { selectInsightByWidgetRef } from "../../store/insights/insightsSelectors
 import { selectDashboardId } from "../../store/meta/metaSelectors.js";
 import { notificationChannelsActions } from "../../store/notificationChannels/index.js";
 import { selectCanManageWorkspace } from "../../store/permissions/permissionsSelectors.js";
+import { selectIsInExportMode } from "../../store/renderMode/renderModeSelectors.js";
 import {
     selectFilterContextFilters,
     selectFiltersForTab,
@@ -99,6 +100,7 @@ export function* initializeAutomationsHandler(
         yield select(selectAutomationsIsLoading);
     const isReadOnly: ReturnType<typeof selectIsReadOnly> = yield select(selectIsReadOnly);
     const isExport: ReturnType<typeof selectIsExport> = yield select(selectIsExport);
+    const isInExportMode: ReturnType<typeof selectIsInExportMode> = yield select(selectIsInExportMode);
     const { automationId }: ReturnType<typeof selectFocusObject> = yield select(selectFocusObject);
     const externalRecipient: ReturnType<typeof selectExternalRecipient> =
         yield select(selectExternalRecipient);
@@ -112,7 +114,8 @@ export function* initializeAutomationsHandler(
         automationsInitialized ||
         automationsIsLoading ||
         isReadOnly ||
-        isExport
+        isExport ||
+        isInExportMode
     ) {
         return;
     }

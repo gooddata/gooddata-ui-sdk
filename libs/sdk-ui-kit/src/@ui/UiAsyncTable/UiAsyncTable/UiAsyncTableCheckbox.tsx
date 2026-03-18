@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type Ref } from "react";
 
@@ -18,11 +18,13 @@ export function UiAsyncTableCheckbox({
     isCellFocused,
     header,
     cellRef,
+    cellId,
 }: UiAsyncTableCheckboxProps) {
     return (
         <div
             className={e("cell", { checkbox: true, focused: isCellFocused ?? false })}
             role={header ? undefined : "gridcell"}
+            id={cellId}
             aria-labelledby={header ? undefined : getColumnHeaderId("checkbox")}
             aria-describedby={header ? ASYNC_TABLE_SELECTED_COUNT_ID : undefined}
             onClick={(e) => {

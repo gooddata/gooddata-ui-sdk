@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-dashboard",
-    "version": "11.26.0-alpha.7",
+    "version": "11.26.0-alpha.8",
     "description": "GoodData SDK - Dashboard Component",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData Corporation",
@@ -35,7 +35,6 @@
     },
     "scripts": {
         "_phase:build": "npm run build",
-        "_phase:post-build": "npm run build-dynamic-files",
         "_phase:test": "npm run build-dynamic-files && npm run test-once",
         "_phase:validate": "npm run build-dynamic-files && npm run validate",
         "api-extractor": "mkdir -p api && [ -z \"${CI}\" ] && (api-extractor run -l; exit 0) || (api-extractor run)",

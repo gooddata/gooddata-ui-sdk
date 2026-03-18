@@ -218,6 +218,7 @@ export type UiAsyncTableCheckboxProps = {
     header?: boolean;
     isCellFocused?: boolean;
     cellRef?: Ref<HTMLElement>;
+    cellId?: string;
 };
 
 export interface IUiAsyncTableToolbarProps<T extends { id: string }> {

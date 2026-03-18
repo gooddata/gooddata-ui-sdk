@@ -9,6 +9,8 @@ type IMapConstructorOptions = {
     renderWorldCopies?: boolean;
     maxZoom?: number;
     bounds?: [[number, number], [number, number]];
+    center?: [number, number];
+    zoom?: number;
     dragPan?: boolean;
     scrollZoom?: boolean;
     doubleClickZoom?: boolean;
@@ -206,5 +208,18 @@ describe("initializeMapLibreMap", () => {
             [170, -15],
             [190, 25],
         ]);
+    });
+
+    it("applies zoom with explicit center when viewport config flag is omitted", async () => {
+        await initializeMapLibreMap({
+            container: createContainer(),
+            style: MAP_STYLE,
+            basemap: "monochrome",
+            center: { lng: 14.42, lat: 50.08 },
+            zoom: 7,
+        });
+
+        expect(lastMapOptions?.center).toEqual([14.42, 50.08]);
+        expect(lastMapOptions?.zoom).toBe(7);
     });
 });

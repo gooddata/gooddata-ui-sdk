@@ -391,7 +391,7 @@ export function useMapInitialization(
     const [tooltip, setTooltip] = useState<IPopupFacade | null>(null);
     const [isMapReady, setIsMapReady] = useState(false);
     const [error, setError] = useState<GoodDataSdkError | null>(null);
-    const isViewportConfigEnabled = config?.enableGeoChartsViewportConfig ?? false;
+    const isViewportConfigEnabled = config?.enableGeoChartsViewportConfig ?? true;
     const applyViewportNavigation = config?.applyViewportNavigation;
     const shouldApplyViewportNavigation = applyViewportNavigation ?? true;
     const panNavigation = shouldApplyViewportNavigation ? config?.viewport?.navigation?.pan : undefined;

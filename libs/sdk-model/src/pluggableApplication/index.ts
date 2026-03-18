@@ -289,15 +289,6 @@ export type RemotePluggableApplicationRegistryItem = IRemotePluggableApplication
  */
 export interface ILocalPluggableApplicationModule {
     /**
-     * Local module path.
-     * Imported from the host bundle asynchronously.
-     *
-     * @example
-     * "/src/localApps/organization.tsx"
-     */
-    localModule: string;
-
-    /**
      * Base route of the application.
      * It is relative to the shell application route.
      *
@@ -320,7 +311,10 @@ export interface ILocalPluggableApplicationModule {
  */
 export interface ILocalPluggableApplicationRegistryItemV1 extends IPluggableApplicationMetaV1 {
     /**
-     * Defines how the local module should be loaded.
+     * Defines the local application module reference and route registration.
+     *
+     * The loader strategy is intentionally not part of this data contract. The host resolves
+     * the loader implementation from application metadata (typically by `app.id`).
      */
     local: ILocalPluggableApplicationModule;
 }

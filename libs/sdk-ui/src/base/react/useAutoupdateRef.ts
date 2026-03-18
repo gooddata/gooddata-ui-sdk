@@ -1,6 +1,6 @@
 // (C) 2022-2025 GoodData Corporation
 
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 
 /**
  * Automatically updates ref contents with the argument value
@@ -9,10 +9,7 @@ import { useEffect, useRef } from "react";
  */
 export const useAutoupdateRef = <T>(value: T) => {
     const ref = useRef<T>(value);
-
-    useEffect(() => {
-        ref.current = value;
-    }, [value]);
+    ref.current = value;
 
     return ref;
 };

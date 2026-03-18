@@ -35,6 +35,14 @@ export const getRowLabelId = (key: number) => {
     return `${ASYNC_TABLE_ID_PREFIX}label-cell-row-${key}`;
 };
 
+export const getRowId = (itemId: string) => {
+    return `${ASYNC_TABLE_ID_PREFIX}row-${itemId}`;
+};
+
+export const getCellId = (itemId: string, columnIndex: number) => {
+    return `${ASYNC_TABLE_ID_PREFIX}cell-${itemId}-${columnIndex}`;
+};
+
 export const getFilterDropdownId = (label: string) => {
     return `${ASYNC_TABLE_ID_PREFIX}filter-dropdown-${label}`;
 };

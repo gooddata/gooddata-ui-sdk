@@ -33,6 +33,12 @@ describe("export mode skips non-essential calls", () => {
             expect(result).toBe(0);
         });
 
+        it("should return 0 when initialRenderMode is export", async () => {
+            const ctx = createCtx({ initialRenderMode: "export" });
+            const result = await loadWorkspaceAutomationsCount(ctx, enabledSettings);
+            expect(result).toBe(0);
+        });
+
         it("should return 0 when isReadOnly is true", async () => {
             const ctx = createCtx({ isReadOnly: true });
             const result = await loadWorkspaceAutomationsCount(ctx, enabledSettings);
@@ -53,6 +59,12 @@ describe("export mode skips non-essential calls", () => {
             expect(result).toBe(0);
         });
 
+        it("should return 0 when initialRenderMode is export", async () => {
+            const ctx = createCtx({ initialRenderMode: "export" });
+            const result = await loadNotificationChannelsCount(ctx, enabledSettings);
+            expect(result).toBe(0);
+        });
+
         it("should return 0 when isReadOnly is true", async () => {
             const ctx = createCtx({ isReadOnly: true });
             const result = await loadNotificationChannelsCount(ctx, enabledSettings);
@@ -69,6 +81,12 @@ describe("export mode skips non-essential calls", () => {
     describe("loadFilterViews", () => {
         it("should return empty array when isExport is true", async () => {
             const ctx = createCtx({ isExport: true });
+            const result = await loadFilterViews(ctx);
+            expect(result).toEqual([]);
+        });
+
+        it("should return empty array when initialRenderMode is export", async () => {
+            const ctx = createCtx({ initialRenderMode: "export" });
             const result = await loadFilterViews(ctx);
             expect(result).toEqual([]);
         });

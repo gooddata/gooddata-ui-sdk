@@ -3,6 +3,7 @@
 import { type Ref, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { useSkeletonItem } from "./SkeletonItemFactory.js";
+import { getCellId, getRowId } from "./utils.js";
 import { isEnterKey } from "../../../utils/events.js";
 import { makeGridKeyboardNavigation } from "../../@utils/keyboardNavigation.js";
 import { UiPagedVirtualList } from "../../UiPagedVirtualList/UiPagedVirtualList.js";
@@ -29,6 +30,17 @@ export function UiAsyncTableBody<T extends { id: string }>({
     const { handleKeyDown, handleFocus, focusedRowIndex, focusedColumnIndex, focusedItemRef } =
         useAsyncTableBodyKeyboardNavigation(items.length, columns.length, !!bulkActions, scrollToIndex);
 
+    const activeDescendantId = useMemo(() => {
+        if (focusedRowIndex === undefined || focusedRowIndex < 0 || focusedRowIndex >= items.length) {
+            return undefined;
+        }
+        const itemId = items[focusedRowIndex].id;
+        if (focusedColumnIndex !== undefined) {
+            return getCellId(itemId, focusedColumnIndex);
+        }
+        return getRowId(itemId);
+    }, [focusedRowIndex, focusedColumnIndex, items]);
+
     return (
         <UiPagedVirtualList
             maxHeight={maxHeight}
@@ -48,6 +60,9 @@ export function UiAsyncTableBody<T extends { id: string }>({
             tabIndex={items.length ? 0 : -1}
             customKeyboardNavigationHandler={handleKeyDown}
             onFocus={handleFocus}
+            listboxProps={{
+                "aria-activedescendant": activeDescendantId,
+            }}
         >
             {(item: T, focusedIndex?: number) => {
                 const itemIndex = focusedIndex ?? 0;

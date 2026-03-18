@@ -19,6 +19,18 @@ const SAMPLE_STYLE: StyleSpecification = {
     glyphs: "https://example.com/glyphs/{fontstack}/{range}",
 };
 
+const SAMPLE_STYLE_WITH_URL: StyleSpecification = {
+    version: 8,
+    sources: {
+        aws: {
+            type: "vector",
+            url: "https://example.com/tilejson.json",
+        },
+    },
+    layers: [],
+    glyphs: "https://example.com/glyphs/{fontstack}/{range}",
+};
+
 const NONE_STYLE: StyleSpecification = {
     version: 8,
     sources: {},
@@ -177,6 +189,48 @@ describe("fetchMapStyle", () => {
 
     it("throws when glyphs URL is not absolute", async () => {
         const invalidStyle = { ...SAMPLE_STYLE, glyphs: "/relative/path" };
+        const getDefaultStyle = vi.fn().mockResolvedValue(invalidStyle);
+        const backend = createBackendMock(getDefaultStyle);
+
+        await expect(fetchMapStyle(backend, "standard")).rejects.toThrow("must be an absolute URL");
+    });
+
+    it("accepts vector source with url instead of tiles", async () => {
+        const getDefaultStyle = vi.fn().mockResolvedValue(SAMPLE_STYLE_WITH_URL);
+        const backend = createBackendMock(getDefaultStyle);
+
+        const style = await fetchMapStyle(backend, "standard");
+
+        expect(style).toEqual(SAMPLE_STYLE_WITH_URL);
+    });
+
+    it("throws when vector source has neither tiles nor url", async () => {
+        const invalidStyle = {
+            ...SAMPLE_STYLE,
+            sources: {
+                test: {
+                    type: "vector",
+                },
+            },
+        };
+        const getDefaultStyle = vi.fn().mockResolvedValue(invalidStyle);
+        const backend = createBackendMock(getDefaultStyle);
+
+        await expect(fetchMapStyle(backend, "standard")).rejects.toThrow(
+            'must define vector tiles via "tiles" or "url"',
+        );
+    });
+
+    it("throws when vector source url is not absolute", async () => {
+        const invalidStyle = {
+            ...SAMPLE_STYLE,
+            sources: {
+                test: {
+                    type: "vector",
+                    url: "/relative/tilejson.json",
+                },
+            },
+        };
         const getDefaultStyle = vi.fn().mockResolvedValue(invalidStyle);
         const backend = createBackendMock(getDefaultStyle);
 
