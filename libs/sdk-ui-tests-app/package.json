@@ -45,7 +45,6 @@
         "@gooddata/sdk-ui-tests-reference-workspace": "workspace:*",
         "@types/react": "19.1.11",
         "@types/react-dom": "19.1.7",
-        "@types/react-router-dom": "^5.1.5",
         "@typescript-eslint/eslint-plugin": "8.52.0",
         "@typescript-eslint/parser": "8.52.0",
         "@typescript/native-preview": "7.0.0-dev.20260202.1",
@@ -69,10 +68,10 @@
         "oxlint-tsgolint": "0.11.4",
         "react": "19.1.1",
         "react-dom": "19.1.1",
-        "react-router-dom": "^5.2.0",
+        "rolldown": "1.0.0-rc.9",
         "sass": "1.70.0",
         "typescript": "5.9.3",
-        "vite": "^7.3.1"
+        "vite": "8.0.0"
     },
     "dependenciesInfo": "This is package is SDK tool and is not distributed all dependencies must be defined as devDependencies due to FOSSA automated report generation"
 }

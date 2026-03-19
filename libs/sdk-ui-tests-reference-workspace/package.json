@@ -28,11 +28,6 @@
             "import": "./esm/goodsales/current_reference_workspace_objects_tiger.js",
             "require": "./esm/goodsales/current_reference_workspace_objects_tiger.js"
         },
-        "./current_bear": {
-            "types": "./esm/goodsales/current_reference_workspace_objects_bear.d.ts",
-            "import": "./esm/goodsales/current_reference_workspace_objects_bear.js",
-            "require": "./esm/goodsales/current_reference_workspace_objects_bear.js"
-        },
         "./current_child_tiger": {
             "types": "./esm/goodsales/current_child_reference_workspace_objects_tiger.d.ts",
             "import": "./esm/goodsales/current_child_reference_workspace_objects_tiger.js",

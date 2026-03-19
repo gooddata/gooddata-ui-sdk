@@ -24,6 +24,7 @@ services:
         environment:
             - BASE_URL=http://gooddata-ui-sdk-scenarios:9500
             - GOODMOCK_HOST=backend-mock:8080
+            - GOODMOCK_MODE=${GOODMOCK_MODE:-replay}
             - GDC_UI
             - HOST
             - NO_COLOR

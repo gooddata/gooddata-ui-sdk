@@ -135,8 +135,8 @@ export default defineConfig(({ mode }) => {
             emptyOutDir: true,
             chunkSizeWarningLimit: 15000, // Increased to suppress warnings for large chunks
             sourcemap: mode !== "production",
-            rollupOptions: {
-                onwarn(warning, defaultHandler) {
+            rolldownOptions: {
+                onLog(logLevel, warning, warn) {
                     if (
                         warning.message?.includes(
                             'is not exported by "../sdk-ui-tests-reference-workspace/esm/goodsales/',
@@ -144,7 +144,7 @@ export default defineConfig(({ mode }) => {
                     ) {
                         return;
                     }
-                    defaultHandler(warning);
+                    warn(logLevel, warning);
                 },
             },
         },

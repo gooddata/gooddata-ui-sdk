@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-pluggable-application-model",
-    "version": "11.26.0-alpha.8",
+    "version": "11.26.0-alpha.9",
     "description": "GoodData SDK model contracts for pluggable applications",
     "license": "MIT",
     "author": "GoodData Corporation",
@@ -68,6 +68,6 @@
         "oxlint": "^1.43.0",
         "oxlint-tsgolint": "0.11.4",
         "typescript": "5.9.3",
-        "vitest": "4.0.8"
+        "vitest": "4.1.0"
     }
 }

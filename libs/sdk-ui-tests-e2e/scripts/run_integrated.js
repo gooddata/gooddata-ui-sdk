@@ -3,7 +3,7 @@
 
 /**
  * Run Integrated tests
- * This is useful to run tests against bear/tiger when you already have a project created.
+ * This is useful to run tests against tiger when you already have a project created.
  * It is run also from other scripts on ci.
  *
  * specify the params
