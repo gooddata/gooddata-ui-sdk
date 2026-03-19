@@ -2,6 +2,57 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.26.0",
+            "tag": "@gooddata/sdk-ui-all_v11.26.0",
+            "date": "Thu, 19 Mar 2026 07:54:08 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "sdk-ui-all: Grand totals position in exports."
+                    },
+                    {
+                        "comment": "sdk-backend-tiger: Parallelized independent API calls in `getSettingsForCurrentUser()` to reduce initial load time."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Skip loading automations, notification channels, and filter views in export mode to reduce dashboard export render time."
+                    },
+                    {
+                        "comment": "sdk-ui-gen-ai: different aproach of determining configured llm"
+                    },
+                    {
+                        "comment": "sdk-ui-semantic-search: added `useHybridSearch` hook for combining keyword and AI-powered semantic search."
+                    },
+                    {
+                        "comment": "sdk-pluggable-application-model: Added currentApplicationScope to the platform context."
+                    },
+                    {
+                        "comment": "Add more viewport configuration options for geo charts."
+                    },
+                    {
+                        "comment": "sdk-backend-spi: Support for geo collections management."
+                    },
+                    {
+                        "comment": "sdk-ui-filters: Improve handling of labels change in AF."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Update Indigo icon font - add WOFF2, remove legacy formats (EOT, TTF, SVG)."
+                    },
+                    {
+                        "comment": "sdk-model: Introduce experimental pluggable application registry."
+                    },
+                    {
+                        "comment": "sdk-pluggable-application-model: extend organization permissions"
+                    },
+                    {
+                        "comment": "sdk-ui-catalog: Extend drill filter config for drill to dashboard and drilldown."
+                    },
+                    {
+                        "comment": "Fix search widget disappearing after reloading page"
+                    }
+                ]
+            }
+        },
+        {
             "version": "11.25.0",
             "tag": "@gooddata/sdk-ui-all_v11.25.0",
             "date": "Thu, 12 Mar 2026 11:37:55 GMT",
