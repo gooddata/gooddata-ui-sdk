@@ -8,7 +8,8 @@ export {
     resetMappings,
     resetScenarios,
     mockLogRequests,
-    isRecordMode,
+    goodmockMode,
+    GoodmockMode,
     startRecording,
     snapshotAndSaveRecording,
 } from "./goodmock.js";

@@ -5,8 +5,8 @@
     "description": "Tool to test plugins during react transition",
     "license": "MIT",
     "author": "Gooddata",
-    "type": "module",
     "files": [],
+    "type": "module",
     "scripts": {
         "start:react18": "REACT_VERSION=18 webpack-cli serve --config-name harness",
         "start:react19": "REACT_VERSION=19 webpack-cli serve --config-name harness"
@@ -85,7 +85,7 @@
         "style-loader": "3.3.4",
         "ts-loader": "^8.3.0",
         "typescript": "5.9.3",
-        "vitest": "4.0.8",
+        "vitest": "4.1.0",
         "webpack": "5.93.0",
         "webpack-bundle-analyzer": "4.10.2",
         "webpack-cli": "6.0.1",

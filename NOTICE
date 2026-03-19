@@ -7,9 +7,9 @@
 
 The following 3rd-party software packages may be used by or distributed with gooddata-ui-sdk. Any information relevant to third-party vendors listed below are collected using common, reasonable means.
 
-Date generated: 2026-3-17
+Date generated: 2026-3-18
 
-Revision ID: d12d0be77c0f97db8e691eac2bc0d333fdda644e
+Revision ID: 2be6171ea03da946560912937ff32d0b1e69adb5
 
 ================================================================================
 ================================================================================
@@ -252,6 +252,7 @@ Revision ID: d12d0be77c0f97db8e691eac2bc0d333fdda644e
 - @sidvind/better-ajv-errors (4.0.0) [Apache-2.0]
 - @sindresorhus/is (4.6.0) [MIT]
 - @standard-schema/spec (1.0.0) [MIT]
+- @standard-schema/spec (1.1.0) [MIT]
 - @standard-schema/utils (0.3.0) [MIT]
 - @swc/helpers (0.5.17) [Apache-2.0]
 - @tanstack/react-virtual (3.13.12) [MIT]
@@ -305,13 +306,13 @@ Revision ID: d12d0be77c0f97db8e691eac2bc0d333fdda644e
 - @types/whatwg-mimetype (3.0.2) [MIT]
 - @types/ws (8.18.1) [MIT]
 - @ungap/structured-clone (1.3.0) [ISC]
-- @vitest/expect (4.0.8) [MIT]
-- @vitest/mocker (4.0.8) [MIT]
-- @vitest/pretty-format (4.0.8) [MIT]
-- @vitest/runner (4.0.8) [MIT]
-- @vitest/snapshot (4.0.8) [MIT]
-- @vitest/spy (4.0.8) [MIT]
-- @vitest/utils (4.0.8) [MIT, Apache-2.0]
+- @vitest/expect (4.1.0) [MIT]
+- @vitest/mocker (4.1.0) [MIT]
+- @vitest/pretty-format (4.1.0) [MIT]
+- @vitest/runner (4.1.0) [MIT]
+- @vitest/snapshot (4.1.0) [MIT]
+- @vitest/spy (4.1.0) [MIT]
+- @vitest/utils (4.1.0) [MIT, Apache-2.0]
 - @vtaits/use-lazy-ref (0.1.4) [MIT]
 - @webassemblyjs/ast (1.14.1) [MIT]
 - @webassemblyjs/floating-point-hex-parser (1.13.2) [MIT]
@@ -497,6 +498,7 @@ Revision ID: d12d0be77c0f97db8e691eac2bc0d333fdda644e
 - es-define-property (1.0.1) [MIT]
 - es-errors (1.3.0) [MIT]
 - es-module-lexer (1.7.0) [MIT]
+- es-module-lexer (2.0.0) [MIT]
 - es-object-atoms (1.1.1) [MIT]
 - es-set-tostringtag (2.1.0) [MIT]
 - esbuild (0.27.2) [MIT]
@@ -516,7 +518,7 @@ Revision ID: d12d0be77c0f97db8e691eac2bc0d333fdda644e
 - eventemitter3 (4.0.7) [MIT]
 - events (3.3.0) [MIT]
 - eventsource-parser (3.0.6) [MIT]
-- expect-type (1.2.2) [Apache-2.0]
+- expect-type (1.3.0) [Apache-2.0]
 - exponential-backoff (3.1.2) [Apache-2.0]
 - express (4.21.2) [MIT]
 - extend (3.0.2) [MIT]
@@ -796,6 +798,7 @@ Revision ID: d12d0be77c0f97db8e691eac2bc0d333fdda644e
 - object-inspect (1.13.4) [MIT]
 - object-keys (1.1.1) [MIT]
 - obuf (1.1.2) [MIT]
+- obug (2.1.1) [MIT]
 - on-finished (2.4.1) [MIT]
 - on-headers (1.1.0) [MIT]
 - once (1.4.0) [ISC]
@@ -969,7 +972,7 @@ Revision ID: d12d0be77c0f97db8e691eac2bc0d333fdda644e
 - stackback (0.0.2) [MIT, BSD-3-Clause]
 - statuses (1.5.0) [MIT]
 - statuses (2.0.1) [MIT]
-- std-env (3.10.0) [MIT]
+- std-env (4.0.0) [MIT]
 - string-width (4.2.3) [MIT]
 - string-width (5.1.2) [MIT]
 - string-width-cjs (5.1.1) [ISC]
@@ -1008,7 +1011,7 @@ Revision ID: d12d0be77c0f97db8e691eac2bc0d333fdda644e
 - thunky (1.1.0) [MIT]
 - tinybench (2.9.0) [MIT]
 - tinycolor2 (1.6.0) [MIT]
-- tinyexec (0.3.2) [MIT]
+- tinyexec (1.0.4) [MIT, ISC]
 - tinyglobby (0.2.15) [MIT]
 - tinypool (2.0.0) [MIT]
 - tinyqueue (2.0.3) [ISC]
@@ -3844,6 +3847,18 @@ MIT
 
 
 --------------------------------------------------------------------------------
+Package Title: @standard-schema/spec (1.1.0)
+
+Package Locator: npm+@standard-schema/spec$1.1.0
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+--------------------------------------------------------------------------------
 Package Title: @standard-schema/utils (0.3.0)
 
 Package Locator: npm+@standard-schema/utils$0.3.0
@@ -4484,21 +4499,9 @@ ISC
 
 
 --------------------------------------------------------------------------------
-Package Title: @vitest/expect (4.0.8)
+Package Title: @vitest/expect (4.1.0)
 
-Package Locator: npm+@vitest/expect$4.0.8
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
---------------------------------------------------------------------------------
-Package Title: @vitest/mocker (4.0.8)
-
-Package Locator: npm+@vitest/mocker$4.0.8
+Package Locator: npm+@vitest/expect$4.1.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -4508,21 +4511,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: @vitest/pretty-format (4.0.8)
+Package Title: @vitest/mocker (4.1.0)
 
-Package Locator: npm+@vitest/pretty-format$4.0.8
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
---------------------------------------------------------------------------------
-Package Title: @vitest/runner (4.0.8)
-
-Package Locator: npm+@vitest/runner$4.0.8
+Package Locator: npm+@vitest/mocker$4.1.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -4532,21 +4523,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: @vitest/snapshot (4.0.8)
+Package Title: @vitest/pretty-format (4.1.0)
 
-Package Locator: npm+@vitest/snapshot$4.0.8
-
-Package Depth: Transitive
---------------------------------------------------------------------------------
-
-* Declared Licenses *
-MIT
-
-
---------------------------------------------------------------------------------
-Package Title: @vitest/spy (4.0.8)
-
-Package Locator: npm+@vitest/spy$4.0.8
+Package Locator: npm+@vitest/pretty-format$4.1.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -4556,9 +4535,45 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: @vitest/utils (4.0.8)
+Package Title: @vitest/runner (4.1.0)
 
-Package Locator: npm+@vitest/utils$4.0.8
+Package Locator: npm+@vitest/runner$4.1.0
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+--------------------------------------------------------------------------------
+Package Title: @vitest/snapshot (4.1.0)
+
+Package Locator: npm+@vitest/snapshot$4.1.0
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+--------------------------------------------------------------------------------
+Package Title: @vitest/spy (4.1.0)
+
+Package Locator: npm+@vitest/spy$4.1.0
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+--------------------------------------------------------------------------------
+Package Title: @vitest/utils (4.1.0)
+
+Package Locator: npm+@vitest/utils$4.1.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -6808,6 +6823,18 @@ MIT
 
 
 --------------------------------------------------------------------------------
+Package Title: es-module-lexer (2.0.0)
+
+Package Locator: npm+es-module-lexer$2.0.0
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+--------------------------------------------------------------------------------
 Package Title: es-object-atoms (1.1.1)
 
 Package Locator: npm+es-object-atoms$1.1.1
@@ -7036,9 +7063,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: expect-type (1.2.2)
+Package Title: expect-type (1.3.0)
 
-Package Locator: npm+expect-type$1.2.2
+Package Locator: npm+expect-type$1.3.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -10424,6 +10451,18 @@ MIT
 
 
 --------------------------------------------------------------------------------
+Package Title: obug (2.1.1)
+
+Package Locator: npm+obug$2.1.1
+
+Package Depth: Transitive
+--------------------------------------------------------------------------------
+
+* Declared Licenses *
+MIT
+
+
+--------------------------------------------------------------------------------
 Package Title: on-finished (2.4.1)
 
 Package Locator: npm+on-finished$2.4.1
@@ -12542,9 +12581,9 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: std-env (3.10.0)
+Package Title: std-env (4.0.0)
 
-Package Locator: npm+std-env$3.10.0
+Package Locator: npm+std-env$4.0.0
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
@@ -13010,15 +13049,19 @@ MIT
 
 
 --------------------------------------------------------------------------------
-Package Title: tinyexec (0.3.2)
+Package Title: tinyexec (1.0.4)
 
-Package Locator: npm+tinyexec$0.3.2
+Package Locator: npm+tinyexec$1.0.4
 
 Package Depth: Transitive
 --------------------------------------------------------------------------------
 
 * Declared Licenses *
 MIT
+
+
+* Other Licenses *
+ISC
 
 
 --------------------------------------------------------------------------------
@@ -33914,6 +33957,33 @@ SOFTWARE.
 
 The MIT License (MIT)
 
+Copyright © 2025-PRESENT Kevin Deng (https://github.com/sxzz)
+Copyright (c) 2014-2017 TJ Holowaychuk <tj@vision-media.ca>
+Copyright (c) 2018-2021 Josh Junon
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+
+* MIT *
+
+The MIT License (MIT)
+
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
@@ -34859,6 +34929,92 @@ POSSIBILITY OF SUCH DAMAGES.
 
 \n\n    UNICODE, INC. LICENSE AGREEMENT - DATA FILES AND SOFTWARE\n\n    See Terms of Use for definitions of Unicode Inc.'s\n    Data Files and Software.\n\n    NOTICE TO USER: Carefully read the following legal agreement.\n    BY DOWNLOADING, INSTALLING, COPYING OR OTHERWISE USING UNICODE INC.'S\n    DATA FILES ("DATA FILES"), AND/OR SOFTWARE ("SOFTWARE"),\n    YOU UNEQUIVOCALLY ACCEPT, AND AGREE TO BE BOUND BY, ALL OF THE\n    TERMS AND CONDITIONS OF THIS AGREEMENT.\n    IF YOU DO NOT AGREE, DO NOT DOWNLOAD, INSTALL, COPY, DISTRIBUTE OR USE\n    THE DATA FILES OR SOFTWARE.\n\n    COPYRIGHT AND PERMISSION NOTICE\n\n    Copyright © 1991-2020 Unicode, Inc. All rights reserved.\n    Distributed under the Terms of Use in https://www.unicode.org/copyright.html.\n\n    Permission is hereby granted, free of charge, to any person obtaining\n    a copy of the Unicode data files and any associated documentation\n    (the "Data Files") or Unicode software and any associated documentation\n    (the "Software") to deal in the Data Files or Software\n    without restriction, including without limitation the rights to use,\n    copy, modify, merge, publish, distribute, and/or sell copies of\n    the Data Files or Software, and to permit persons to whom the Data Files\n    or Software are furnished to do so, provided that either\n    (a) this copyright and permission notice appear with all copies\n    of the Data Files or Software, or\n    (b) this copyright and permission notice appear in associated\n    Documentation.\n\n    THE DATA FILES AND SOFTWARE ARE PROVIDED "AS IS", WITHOUT WARRANTY OF\n    ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE\n    WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND\n    NONINFRINGEMENT OF THIRD PARTY RIGHTS.\n    IN NO EVENT SHALL THE COPYRIGHT HOLDER OR HOLDERS INCLUDED IN THIS\n    NOTICE BE LIABLE FOR ANY CLAIM, OR ANY SPECIAL INDIRECT OR CONSEQUENTIAL\n    DAMAGES, OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE,\n    DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER\n    TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR\n    PERFORMANCE OF THE DATA FILES OR SOFTWARE.\n\n    Except as contained in this notice, the name of a copyright holder\n    shall not be used in advertising or otherwise to promote the sale,\n    use or other dealings in these Data Files or Software without prior\n    written authorization of the copyright holder.\n\n
 
+* ISC *
+
+isexe:2.0.0 -- The ISC License
+
+Copyright (c) Isaac Z. Schlueter and Contributors
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
+IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+which:2.0.2 -- The ISC License
+
+Copyright (c) Isaac Z. Schlueter and Contributors
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
+IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+path-key:3.1.1 -- MIT License
+
+Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+cross-spawn:7.0.6 -- The MIT License (MIT)
+
+Copyright (c) 2018 Made With MOXY Lda <hello@moxy.studio>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+shebang-regex:3.0.0 -- MIT License
+
+Copyright (c) Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+shebang-command:2.0.0 -- MIT License
+
+Copyright (c) Kevin Mårtensson <kevinmartensson@gmail.com> (github.com/kevva)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 * MIT *
 
 jsonschema is licensed under MIT license.
@@ -34952,4 +35108,4 @@ POSSIBILITY OF SUCH DAMAGE.
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-Report Generated by FOSSA on 2026-3-17
+Report Generated by FOSSA on 2026-3-18

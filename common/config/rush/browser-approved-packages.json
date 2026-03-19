@@ -87,10 +87,6 @@
       "allowedCategories": [ "production" ]
     },
     {
-      "name": "@cypress/grep",
-      "allowedCategories": [ "production" ]
-    },
-    {
       "name": "@eslint/js",
       "allowedCategories": [ "tools" ]
     },
@@ -705,22 +701,6 @@
     {
       "name": "css-loader",
       "allowedCategories": [ "examples", "production", "tools" ]
-    },
-    {
-      "name": "cypress",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "cypress-multi-reporters",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "cypress-real-events",
-      "allowedCategories": [ "production" ]
-    },
-    {
-      "name": "cypress-terminal-report",
-      "allowedCategories": [ "production" ]
     },
     {
       "name": "date-fns",

@@ -173,6 +173,12 @@ const main = async () => {
         process.exit(1);
     }
 
+    const defaultBaseUrl = "https://staging-automation.staging-ui.stg11.panther.intgdc.com";
+    if (baseUrl !== defaultBaseUrl) {
+        console.warn(`WARN: Using different baseUrl than ${defaultBaseUrl} is not recommended.`);
+        console.warn(`WARN: Use the ${defaultBaseUrl} to make sure we use production-ready apis.`);
+    }
+
     try {
         console.error(`Getting specs from ${baseUrl}`);
 

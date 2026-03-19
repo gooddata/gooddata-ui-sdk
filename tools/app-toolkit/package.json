@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/app-toolkit",
-    "version": "11.26.0-alpha.8",
+    "version": "11.26.0-alpha.9",
     "description": "CLI with useful tools for creating and maintaining GoodData web applications.",
     "license": "LicenseRef-LICENSE",
     "author": "GoodData",
@@ -94,7 +94,7 @@
         "oxlint": "^1.43.0",
         "oxlint-tsgolint": "0.11.4",
         "typescript": "5.9.3",
-        "vitest": "4.0.8",
+        "vitest": "4.1.0",
         "webpack": "5.93.0"
     }
 }
