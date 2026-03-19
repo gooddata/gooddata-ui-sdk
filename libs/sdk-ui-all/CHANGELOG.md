@@ -1,6 +1,27 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 12 Mar 2026 11:37:55 GMT and should not be manually modified.
+This log was last generated on Thu, 19 Mar 2026 07:54:08 GMT and should not be manually modified.
+
+## 11.26.0
+
+Thu, 19 Mar 2026 07:54:08 GMT
+
+### Updates
+
+- sdk-ui-all: Grand totals position in exports.
+- sdk-backend-tiger: Parallelized independent API calls in `getSettingsForCurrentUser()` to reduce initial load time.
+- sdk-ui-dashboard: Skip loading automations, notification channels, and filter views in export mode to reduce dashboard export render time.
+- sdk-ui-gen-ai: different aproach of determining configured llm
+- sdk-ui-semantic-search: added `useHybridSearch` hook for combining keyword and AI-powered semantic search.
+- sdk-pluggable-application-model: Added currentApplicationScope to the platform context.
+- Add more viewport configuration options for geo charts.
+- sdk-backend-spi: Support for geo collections management.
+- sdk-ui-filters: Improve handling of labels change in AF.
+- sdk-ui-kit: Update Indigo icon font - add WOFF2, remove legacy formats (EOT, TTF, SVG).
+- sdk-model: Introduce experimental pluggable application registry.
+- sdk-pluggable-application-model: extend organization permissions
+- sdk-ui-catalog: Extend drill filter config for drill to dashboard and drilldown.
+- Fix search widget disappearing after reloading page
 
 ## 11.25.0
 
