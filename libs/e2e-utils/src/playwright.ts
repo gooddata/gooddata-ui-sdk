@@ -3,8 +3,9 @@
 import { type TestDetails, test } from "@playwright/test";
 
 import {
+    GoodmockMode,
     type IWorkspaceIdMapping,
-    isRecordMode,
+    goodmockMode as getGoodmockMode,
     loadMappings,
     resetMappings,
     resetScenarios,
@@ -35,18 +36,19 @@ export function createDescribe(
 
         let suite = fn;
         if (goodmockHost) {
+            const goodmockMode = getGoodmockMode();
             suite = () => {
                 test.beforeAll(async () => {
                     await resetMappings(goodmockHost);
-                    if (isRecordMode()) {
+                    if (goodmockMode === GoodmockMode.Record) {
                         await startRecording(goodmockHost, backendHost);
-                    } else {
+                    } else if (goodmockMode === GoodmockMode.Replay) {
                         await loadMappings(goodmockHost, getMappingPath(specName));
                     }
                 });
 
                 test.afterAll(async () => {
-                    if (isRecordMode()) {
+                    if (goodmockMode === GoodmockMode.Record) {
                         await snapshotAndSaveRecording(
                             goodmockHost,
                             getMappingPath(specName),
@@ -55,7 +57,9 @@ export function createDescribe(
                             baseUrl,
                         );
                     }
-                    await resetMappings(goodmockHost);
+                    if (goodmockMode !== GoodmockMode.Proxy) {
+                        await resetMappings(goodmockHost);
+                    }
                 });
 
                 test.beforeEach(async () => {

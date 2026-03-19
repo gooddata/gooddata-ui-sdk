@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-backend-base",
-    "version": "11.26.0-alpha.8",
+    "version": "11.26.0-alpha.9",
     "description": "GoodData.UI SDK - Base for backend implementations",
     "license": "MIT",
     "author": "GoodData",
@@ -77,6 +77,6 @@
         "oxlint": "^1.43.0",
         "oxlint-tsgolint": "0.11.4",
         "typescript": "5.9.3",
-        "vitest": "4.0.8"
+        "vitest": "4.1.0"
     }
 }

@@ -90,7 +90,6 @@ rushx export-fixture
 
 The `workspace_objects/` directory contains exported TypeScript catalog files with identifiers of metadata objects:
 
-- `current_reference_workspace_objects_bear.ts`
 - `current_reference_workspace_objects_tiger.ts`
 - `current_child_reference_workspace_objects_tiger.ts`
 

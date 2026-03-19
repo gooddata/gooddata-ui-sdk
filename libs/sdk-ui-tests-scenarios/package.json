@@ -96,7 +96,7 @@
         "storybook": "^10.1.11",
         "ts-invariant": "0.10.3",
         "typescript": "5.9.3",
-        "vitest": "4.0.8"
+        "vitest": "4.1.0"
     },
     "peerDependencies": {
         "@gooddata/sdk-ui": "workspace:*",

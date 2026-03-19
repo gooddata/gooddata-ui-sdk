@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui-pluggable-application",
-    "version": "11.26.0-alpha.8",
+    "version": "11.26.0-alpha.9",
     "description": "GoodData SDK React helpers for pluggable applications",
     "license": "MIT",
     "author": "GoodData Corporation",
@@ -75,7 +75,7 @@
         "react": "19.1.1",
         "react-dom": "19.1.1",
         "typescript": "5.9.3",
-        "vitest": "4.0.8"
+        "vitest": "4.1.0"
     },
     "peerDependencies": {
         "react": "^18.0.0 || ^19.0.0",

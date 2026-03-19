@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/sdk-ui",
-    "version": "11.26.0-alpha.8",
+    "version": "11.26.0-alpha.9",
     "description": "GoodData.UI SDK - Core",
     "license": "MIT",
     "author": "GoodData Corporation",
@@ -115,7 +115,7 @@
         "stylelint": "^16.26.1",
         "tsd": "^0.32.0",
         "typescript": "5.9.3",
-        "vitest": "4.0.8",
+        "vitest": "4.1.0",
         "vitest-dom": "0.1.1"
     },
     "peerDependencies": {

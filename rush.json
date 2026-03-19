@@ -201,7 +201,7 @@
         /**
          * The list of shell commands to run after the Rush installation finishes
          */
-        "postRushInstall": [],
+        "postRushInstall": ["common/scripts/rush-post-install.sh"],
 
         /**
          * The list of shell commands to run before the Rush build command starts
@@ -211,7 +211,7 @@
         /**
          * The list of shell commands to run after the Rush build command finishes
          */
-        "postRushBuild": ["common/scripts/rush-post-build.sh"]
+        "postRushBuild": []
     },
 
     /**

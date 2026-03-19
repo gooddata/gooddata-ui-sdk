@@ -84,11 +84,16 @@ export async function mockLogRequests(host: string): Promise<void> {
 }
 
 /**
- * Whether the tests are running in recording mode (capturing goodmock stubs
- * from a real backend via --proxy-all).
+ * Which mode goodmock is running in
  */
-export function isRecordMode(): boolean {
-    return process.env["RECORD_MODE"] === "true";
+export enum GoodmockMode {
+    Replay = "replay",
+    Record = "record",
+    Proxy = "proxy",
+}
+
+export function goodmockMode(): GoodmockMode {
+    return process.env["GOODMOCK_MODE"] as GoodmockMode;
 }
 
 /**
