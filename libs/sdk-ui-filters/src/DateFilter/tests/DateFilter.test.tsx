@@ -197,6 +197,9 @@ describe("DateFilter", () => {
             clickDateFilterButton();
 
             expect(getSelectedItemText()).toEqual("Static period");
+
+            clickAbsoluteFormFilter();
+
             expect(absoluteForm.getStartDate()).toEqual(fromInputValue);
             expect(absoluteForm.getEndDate()).toEqual(toInputValue);
         });
@@ -214,8 +217,10 @@ describe("DateFilter", () => {
             expect(onApply).toHaveBeenCalledTimes(1);
 
             clickDateFilterButton();
-            expect(isRelativeFormGranularitySelected("year")).toBe(true);
             expect(getSelectedItemText()).toEqual("Relative period");
+
+            clickRelativeFormFilter();
+            expect(isRelativeFormGranularitySelected("year")).toBe(true);
             expect(getRelativeFormInputFromValue()).toEqual("2 years ago");
             expect(getRelativeFormInputToValue()).toEqual("2 years ahead");
         });
@@ -255,16 +260,16 @@ describe("DateFilter", () => {
             expect(getExcludeCurrentPeriodCheckbox()).toBeDisabled();
         });
 
-        it("should be disabled for relative date selection", () => {
+        it("should not render for relative date selection", () => {
             createDateFilter();
             openRelativeFormFilter();
-            expect(getExcludeCurrentPeriodCheckbox()).toBeDisabled();
+            expect(getExcludeCurrentPeriodCheckbox()).not.toBeInTheDocument();
         });
 
-        it("should be disabled for absolute form", () => {
+        it("should not render for absolute form", () => {
             createDateFilter();
             openAbsoluteFormFilter();
-            expect(getExcludeCurrentPeriodCheckbox()).toBeDisabled();
+            expect(getExcludeCurrentPeriodCheckbox()).not.toBeInTheDocument();
         });
 
         it("should stay checked when switching between options where it is valid", () => {
@@ -441,7 +446,7 @@ describe("DateFilter", () => {
             expect(absoluteForm.isVisible()).toBe(false);
             clickAbsoluteFormFilter();
             expect(absoluteForm.isVisible()).toBe(true);
-            clickAllTime();
+            clickCancelButton();
             expect(absoluteForm.isVisible()).toBe(false);
         });
 
@@ -640,7 +645,7 @@ describe("DateFilter", () => {
             expect(isRelativeFormVisible()).toBe(false);
             clickRelativeFormFilter();
             expect(isRelativeFormVisible()).toBe(true);
-            clickAllTime();
+            clickCancelButton();
             expect(isRelativeFormVisible()).toBe(false);
         });
 
@@ -707,6 +712,9 @@ describe("DateFilter", () => {
             clickDateFilterButton();
 
             expect(getSelectedItemText()).toEqual("Static period");
+
+            clickAbsoluteFormFilter();
+
             expect(absoluteForm.getStartDate()).toEqual(fromInputValue);
             expect(absoluteForm.getEndDate()).toEqual(toInputValue);
             expect(absoluteForm.getStartTime()).toEqual(fromTime);
@@ -735,6 +743,9 @@ describe("DateFilter", () => {
             clickDateFilterButton();
 
             expect(getSelectedItemText()).toEqual("Static period");
+
+            clickAbsoluteFormFilter();
+
             expect(absoluteForm.getStartDate()).toEqual(fromInputValue);
             expect(absoluteForm.getEndDate()).toEqual(toInputValue);
             expect(absoluteForm.getStartTime()).toEqual("00:00");

@@ -17,6 +17,7 @@ import {
     isCatalogAttribute,
     isCatalogDateDataset,
     isDashboardAttributeFilter,
+    isDashboardAttributeFilterItem,
     isDashboardCommonDateFilter,
     isDashboardDateFilter,
 } from "@gooddata/sdk-model";
@@ -472,11 +473,7 @@ export function AutomationFiltersSelect({
 
                                     return (
                                         <AutomationFilter
-                                            key={
-                                                isDashboardAttributeFilter(filter)
-                                                    ? filter.attributeFilter.localIdentifier
-                                                    : filter.dateFilter.localIdentifier
-                                            }
+                                            key={dashboardFilterLocalIdentifier(filter)}
                                             filter={filter}
                                             attributeConfigs={attributeConfigs}
                                             onChange={handleChangeFilter}
@@ -617,10 +614,12 @@ function AutomationFilter({
     isReadOnly,
     tabId,
 }: IAutomationFilterProps) {
-    if (isDashboardAttributeFilter(filter)) {
-        const config = attributeConfigs.find(
-            (attribute) => attribute.localIdentifier === filter.attributeFilter.localIdentifier,
-        );
+    if (isDashboardAttributeFilterItem(filter)) {
+        const config = isDashboardAttributeFilter(filter)
+            ? attributeConfigs.find(
+                  (attribute) => attribute.localIdentifier === filter.attributeFilter.localIdentifier,
+              )
+            : undefined;
         const displayAsLabel = config?.displayAsLabel;
         const isLocked = lockedFilters.some(
             (f) => dashboardFilterLocalIdentifier(f) === dashboardFilterLocalIdentifier(filter),
@@ -628,7 +627,7 @@ function AutomationFilter({
 
         return (
             <AutomationAttributeFilter
-                key={filter.attributeFilter.localIdentifier}
+                key={dashboardFilterLocalIdentifier(filter)}
                 filter={filter}
                 onChange={onChange}
                 onDelete={onDelete}
@@ -639,7 +638,7 @@ function AutomationFilter({
                 tabId={tabId}
             />
         );
-    } else {
+    } else if (isDashboardDateFilter(filter)) {
         const isLocked = lockedFilters.some(
             (f) => dashboardFilterLocalIdentifier(f) === dashboardFilterLocalIdentifier(filter),
         );
@@ -658,6 +657,8 @@ function AutomationFilter({
             />
         );
     }
+
+    return null;
 }
 
 interface IAutomationFiltersTabSectionProps {
@@ -744,11 +745,7 @@ function AutomationFiltersTabSection({
 
                         return (
                             <AutomationFilter
-                                key={
-                                    isDashboardAttributeFilter(filter)
-                                        ? filter.attributeFilter.localIdentifier
-                                        : filter.dateFilter.localIdentifier
-                                }
+                                key={dashboardFilterLocalIdentifier(filter)}
                                 filter={filter}
                                 attributeConfigs={attributeConfigs}
                                 onChange={onChange}

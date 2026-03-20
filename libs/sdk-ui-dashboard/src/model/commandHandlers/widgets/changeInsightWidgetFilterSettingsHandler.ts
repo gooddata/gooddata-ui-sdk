@@ -8,7 +8,9 @@ import {
     type IDashboardAttributeFilterReference,
     type IDashboardDateFilterReference,
     type IInsightWidget,
+    dashboardAttributeFilterItemDisplayForm,
     isDashboardAttributeFilter,
+    isDashboardAttributeFilterItem,
     isDashboardDateFilterWithDimension,
 } from "@gooddata/sdk-model";
 
@@ -62,10 +64,10 @@ export function* changeInsightWidgetFilterSettingsHandler(
     const { dateDataSet, ignoredFilters } = result;
 
     const ignoreDashboardFilters = ignoredFilters?.map((filter) => {
-        if (isDashboardAttributeFilter(filter)) {
+        if (isDashboardAttributeFilterItem(filter)) {
             const filterReference: IDashboardAttributeFilterReference = {
                 type: "attributeFilterReference",
-                displayForm: filter.attributeFilter.displayForm,
+                displayForm: dashboardAttributeFilterItemDisplayForm(filter),
             };
 
             return filterReference;

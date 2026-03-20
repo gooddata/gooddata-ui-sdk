@@ -6,8 +6,11 @@ import { invariant } from "ts-invariant";
 
 import {
     type IWidget,
+    dashboardAttributeFilterItemDisplayForm,
+    dashboardAttributeFilterItemLocalIdentifier,
+    dashboardAttributeFilterItemTitle,
     isAttributeMetadataObject,
-    isDashboardAttributeFilter,
+    isDashboardAttributeFilterItem,
     isDashboardDateFilterWithDimension,
     objRefToString,
 } from "@gooddata/sdk-model";
@@ -38,16 +41,16 @@ export function FilterConfiguration({ widget }: IFilterConfigurationProps) {
 
     const draggableFilters = useMemo(() => {
         return allFilters.filter(
-            (f) => isDashboardAttributeFilter(f) || isDashboardDateFilterWithDimension(f),
+            (f) => isDashboardAttributeFilterItem(f) || isDashboardDateFilterWithDimension(f),
         );
     }, [allFilters]);
 
     const attributeFilters = useMemo(() => {
-        return draggableFilters.filter(isDashboardAttributeFilter);
+        return draggableFilters.filter(isDashboardAttributeFilterItem);
     }, [draggableFilters]);
 
     const displayForms = useMemo(() => {
-        return attributeFilters.map((filter) => filter.attributeFilter.displayForm);
+        return attributeFilters.map((filter) => dashboardAttributeFilterItemDisplayForm(filter));
     }, [attributeFilters]);
 
     const { attributes, attributesLoading } = useAttributes(displayForms);
@@ -63,13 +66,12 @@ export function FilterConfiguration({ widget }: IFilterConfigurationProps) {
     return (
         <div className="s-attribute-filter-configuration">
             {draggableFilters.map((filter) => {
-                if (isDashboardAttributeFilter(filter)) {
+                if (isDashboardAttributeFilterItem(filter)) {
                     if (!attributes) {
                         return null;
                     }
-                    const displayForm = getAttributeFilterDisplayFormFromMap(
-                        filter.attributeFilter.displayForm,
-                    );
+                    const filterDisplayForm = dashboardAttributeFilterItemDisplayForm(filter);
+                    const displayForm = getAttributeFilterDisplayFormFromMap(filterDisplayForm);
                     invariant(displayForm, "Inconsistent state in AttributeFilterConfiguration");
 
                     const attributeByDisplayForm = getAttributeByDisplayForm(
@@ -84,15 +86,17 @@ export function FilterConfiguration({ widget }: IFilterConfigurationProps) {
                         ? attribute.title
                         : attribute.attribute.title;
 
-                    const localIdentifier = filter.attributeFilter.localIdentifier;
-                    const displayAsLabel = displayAsLabelMap.get(localIdentifier!);
+                    const localIdentifier = dashboardAttributeFilterItemLocalIdentifier(filter);
+                    const displayAsLabel = localIdentifier
+                        ? displayAsLabelMap.get(localIdentifier)
+                        : undefined;
 
                     return (
                         <AttributeFilterConfigurationItem
                             key={objRefToString(displayForm.ref)}
                             displayFormRef={displayForm.ref}
                             displayAsLabel={displayAsLabel}
-                            title={filter.attributeFilter.title ?? attributeTitle}
+                            title={dashboardAttributeFilterItemTitle(filter) ?? attributeTitle}
                             widget={widget}
                         />
                     );

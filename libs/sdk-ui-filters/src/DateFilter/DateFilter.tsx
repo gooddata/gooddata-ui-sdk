@@ -109,13 +109,6 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     overlayPositionType?: OverlayPositionType;
 
     /**
-     * Specifies whether to improve accessibility for the date filter content.
-     *
-     * @alpha
-     */
-    improveAccessibility?: boolean;
-
-    /**
      * Enables empty date values UI (e.g. “Other → Empty values” preset, empty-values handling controls).
      *
      * @remarks
@@ -326,7 +319,6 @@ export class DateFilter extends PureComponent<IDateFilterProps, IDateFilterState
             withoutApply,
             ButtonComponent,
             overlayPositionType,
-            improveAccessibility,
             activeCalendars,
             enableEmptyDateValues,
         } = this.props;
@@ -361,7 +353,6 @@ export class DateFilter extends PureComponent<IDateFilterProps, IDateFilterState
                 withoutApply={withoutApply}
                 ButtonComponent={ButtonComponent}
                 overlayPositionType={overlayPositionType}
-                improveAccessibility={improveAccessibility}
                 activeCalendars={activeCalendars}
                 enableEmptyDateValues={enableEmptyDateValues}
             />

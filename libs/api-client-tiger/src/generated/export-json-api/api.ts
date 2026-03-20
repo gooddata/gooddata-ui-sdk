@@ -372,6 +372,20 @@ export interface ExportCustomOverride {
     'metrics'?: { [key: string]: ExportCustomMetric; };
 }
 
+export interface ExportDashboardArbitraryAttributeFilter {
+    'arbitraryAttributeFilter': ExportDashboardArbitraryAttributeFilterArbitraryAttributeFilter;
+}
+
+export interface ExportDashboardArbitraryAttributeFilterArbitraryAttributeFilter {
+    'displayForm': ExportIdentifierRef;
+    'values': Array<string>;
+    'negativeSelection': boolean;
+    'filterElementsBy'?: Array<ExportAttributeFilterParent>;
+    'filterElementsByDate'?: Array<ExportAttributeFilterByDate>;
+    'title'?: string;
+    'localIdentifier'?: string;
+}
+
 export interface ExportDashboardAttributeFilter {
     'attributeFilter': ExportDashboardAttributeFilterAttributeFilter;
 }
@@ -443,7 +457,23 @@ export type ExportDashboardExportSettingsPageOrientationEnum = 'PORTRAIT' | 'LAN
 /**
  * @type ExportDashboardFilter
  */
-export type ExportDashboardFilter = ExportDashboardAttributeFilter | ExportDashboardDateFilter;
+export type ExportDashboardFilter = ExportDashboardArbitraryAttributeFilter | ExportDashboardAttributeFilter | ExportDashboardDateFilter | ExportDashboardMatchAttributeFilter;
+
+export interface ExportDashboardMatchAttributeFilter {
+    'matchAttributeFilter': ExportDashboardMatchAttributeFilterMatchAttributeFilter;
+}
+
+export interface ExportDashboardMatchAttributeFilterMatchAttributeFilter {
+    'displayForm': ExportIdentifierRef;
+    'operator': ExportDashboardMatchAttributeFilterMatchAttributeFilterOperatorEnum;
+    'literal': string;
+    'negativeSelection': boolean;
+    'caseSensitive': boolean;
+    'title'?: string;
+    'localIdentifier'?: string;
+}
+
+export type ExportDashboardMatchAttributeFilterMatchAttributeFilterOperatorEnum = 'contains' | 'startsWith' | 'endsWith';
 
 /**
  * Export request object describing the export properties for dashboard tabular exports.

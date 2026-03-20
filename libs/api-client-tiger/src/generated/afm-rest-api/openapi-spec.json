@@ -4802,7 +4802,8 @@
                             "GEO_LATITUDE",
                             "GEO_AREA",
                             "GEO_ICON",
-                            "IMAGE"
+                            "IMAGE",
+                            "HYPERLOGLOG"
                         ]
                     }
                 }
@@ -5689,7 +5690,8 @@
                                     "GEO_LATITUDE",
                                     "GEO_AREA",
                                     "GEO_ICON",
-                                    "IMAGE"
+                                    "IMAGE",
+                                    "HYPERLOGLOG"
                                 ]
                             },
                             "geoAreaConfig": {

@@ -168,7 +168,11 @@ export type AttributeDisplayFormType =
 /**
 * Display form representing geo icon (pushpin).
 */
-| "GDC.geo.icon";
+| "GDC.geo.icon"
+/**
+* Display form representing HyperLogLog sketch values.
+*/
+| "GDC.hyperloglog";
 
 // @internal
 export function attributeElementsCount(attributeElements: IAttributeElements): number;
@@ -346,6 +350,27 @@ export type DashboardAttributeFilterConfigMode = "readonly" | "hidden" | "active
 // @internal
 export const DashboardAttributeFilterConfigModeValues: Record<Uppercase<DashboardAttributeFilterConfigMode>, DashboardAttributeFilterConfigMode>;
 
+// @alpha
+export type DashboardAttributeFilterItem = IDashboardAttributeFilter | IDashboardArbitraryAttributeFilter | IDashboardMatchAttributeFilter;
+
+// @alpha
+export function dashboardAttributeFilterItemDisplayForm(filter: DashboardAttributeFilterItem): ObjRef;
+
+// @alpha
+export function dashboardAttributeFilterItemFilterElementsBy(filter: DashboardAttributeFilterItem): IDashboardAttributeFilterParent[] | undefined;
+
+// @alpha
+export function dashboardAttributeFilterItemFilterElementsByDate(filter: DashboardAttributeFilterItem): IDashboardAttributeFilterByDate[] | undefined;
+
+// @alpha
+export function dashboardAttributeFilterItemLocalIdentifier(filter: DashboardAttributeFilterItem): string | undefined;
+
+// @alpha
+export function dashboardAttributeFilterItemTitle(filter: DashboardAttributeFilterItem): string | undefined;
+
+// @alpha
+export function dashboardAttributeFilterItemValidateElementsBy(filter: DashboardAttributeFilterItem): ObjRef[] | undefined;
+
 // @beta
 export type DashboardAttributeFilterSelectionMode = "single" | "multi";
 
@@ -370,6 +395,9 @@ export type DashboardFiltersApplyMode = {
 } | {
     mode: "ALL_AT_ONCE";
 };
+
+// @alpha
+export type DashboardTextAttributeFilter = IDashboardArbitraryAttributeFilter | IDashboardMatchAttributeFilter;
 
 // @public
 export type DataColumnType = "ATTRIBUTE" | "FACT" | "DATE";
@@ -551,7 +579,7 @@ export function filterAttributeElements(filter: IAttributeFilterWithSelection): 
 export function filterAttributeElements(filter: IFilter): IAttributeElements | undefined;
 
 // @alpha
-export type FilterContextItem = IDashboardAttributeFilter | IDashboardDateFilter;
+export type FilterContextItem = DashboardAttributeFilterItem | IDashboardDateFilter;
 
 // @public
 export function filterIsEmpty(filter: IAttributeFilter): boolean;
@@ -1508,6 +1536,21 @@ export interface IDashboard<TWidget = IDashboardWidget> extends IDashboardBase, 
     readonly type: "IDashboard";
 }
 
+// @alpha
+export interface IDashboardArbitraryAttributeFilter {
+    // (undocumented)
+    arbitraryAttributeFilter: {
+        displayForm: ObjRef;
+        values: Array<string | null>;
+        negativeSelection: boolean;
+        localIdentifier?: string;
+        title?: string;
+        filterElementsBy?: IDashboardAttributeFilterParent[];
+        filterElementsByDate?: IDashboardAttributeFilterByDate[];
+        validateElementsBy?: ObjRef[];
+    };
+}
+
 // @alpha @deprecated
 export interface IDashboardAttachment {
     dashboard: ObjRef;
@@ -1753,6 +1796,20 @@ export interface IDashboardLayoutSizeByScreenSize {
 export interface IDashboardLayoutWidget extends IDashboardLayout<IDashboardWidget>, IBaseWidget, IDashboardObjectIdentity {
     // (undocumented)
     type: "IDashboardLayout";
+}
+
+// @alpha
+export interface IDashboardMatchAttributeFilter {
+    // (undocumented)
+    matchAttributeFilter: {
+        displayForm: ObjRef;
+        operator: MatchFilterOperator;
+        literal: string;
+        caseSensitive?: boolean;
+        negativeSelection?: boolean;
+        localIdentifier?: string;
+        title?: string;
+    };
 }
 
 // @public
@@ -2355,7 +2412,6 @@ export interface IFeatureFlags {
     enableExecutionTimestamp?: boolean;
     enableExportToDocumentStorage?: boolean;
     enableExternalRecipients?: boolean;
-    enableFilterAccessibility?: boolean;
     enableFilterControlInDrillingConfiguration?: boolean;
     enableFiscalCalendars?: boolean;
     enableGenAICatalogQualityChecker?: boolean;
@@ -2371,6 +2427,7 @@ export interface IFeatureFlags {
     enableGeoSegmentConflictRecommendation?: boolean;
     enableHeadlineExport?: boolean;
     enableHighchartsAccessibility?: boolean;
+    enableHyperLogLog?: boolean;
     enableIgnoreCrossFiltering?: boolean;
     enableImmediateAttributeFilterDisplayAsLabelMigration?: boolean;
     enableImplicitDrillToUrl?: boolean;
@@ -4229,10 +4286,16 @@ export function isCrossFiltering(obj: unknown): obj is ICrossFiltering;
 export function isDashboard(obj: unknown): obj is IDashboard;
 
 // @alpha
+export function isDashboardArbitraryAttributeFilter(obj: unknown): obj is IDashboardArbitraryAttributeFilter;
+
+// @alpha
 export function isDashboardAttachment(obj: unknown): obj is IDashboardAttachment;
 
 // @alpha
 export function isDashboardAttributeFilter(obj: unknown): obj is IDashboardAttributeFilter;
+
+// @alpha
+export function isDashboardAttributeFilterItem(obj: unknown): obj is DashboardAttributeFilterItem;
 
 // @public
 export function isDashboardAttributeFilterReference(obj: unknown): obj is IDashboardAttributeFilterReference;
@@ -4261,11 +4324,17 @@ export function isDashboardLayoutItem<TWidget>(obj: unknown): obj is IDashboardL
 // @alpha
 export function isDashboardLayoutSection<TWidget>(obj: unknown): obj is IDashboardLayoutSection<TWidget>;
 
+// @alpha
+export function isDashboardMatchAttributeFilter(obj: unknown): obj is IDashboardMatchAttributeFilter;
+
 // @public
 export function isDashboardMetadataObject(obj: unknown): obj is IDashboardMetadataObject;
 
 // @alpha
 export function isDashboardTab(obj: unknown): obj is IDashboardTab;
+
+// @alpha
+export function isDashboardTextAttributeFilter(obj: unknown): obj is DashboardTextAttributeFilter;
 
 // @alpha
 export const isDashboardWidget: (obj: unknown) => obj is IDashboardWidget;

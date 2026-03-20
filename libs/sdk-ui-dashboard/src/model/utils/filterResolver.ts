@@ -1,4 +1,5 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { isEmpty } from "lodash-es";
 import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call } from "redux-saga/effects";
@@ -8,7 +9,8 @@ import {
     type FilterContextItem,
     type IAttributeDisplayFormMetadataObject,
     type ObjRef,
-    isDashboardAttributeFilter,
+    dashboardAttributeFilterItemDisplayForm,
+    isDashboardAttributeFilterItem,
     objRefToString,
 } from "@gooddata/sdk-model";
 
@@ -34,8 +36,8 @@ export function* resolveFilterDisplayForms(
     displayForms?: ObjRefMap<IAttributeDisplayFormMetadataObject>,
 ): SagaIterator<IAttributeDisplayFormMetadataObject[]> {
     const displayFormRefs = filters
-        .filter(isDashboardAttributeFilter)
-        .map((filter) => filter.attributeFilter.displayForm);
+        .filter(isDashboardAttributeFilterItem)
+        .map((filter) => dashboardAttributeFilterItemDisplayForm(filter)!);
 
     const resolvedDisplayForms: SagaReturnType<typeof resolveDisplayFormMetadata> = yield call(
         resolveDisplayFormMetadata,

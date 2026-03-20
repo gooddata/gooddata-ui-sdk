@@ -63,8 +63,6 @@ export function DefaultDashboardDateFilter({
     const activeCalendars = useDashboardSelector(selectActiveCalendars);
     const enableEmptyDateValues = useDashboardSelector(selectEnableKDEmptyDateValuesFilter);
 
-    const enableFilterAccessibility = settings?.enableFilterAccessibility;
-
     const allDateDatasets = useDashboardSelector(selectCatalogDateDatasets);
     let defaultDateFilterName: string;
     if (filter?.dateFilter.dataSet) {
@@ -206,7 +204,6 @@ export function DefaultDashboardDateFilter({
             withoutApply={isApplyAllAtOnceEnabledAndSet}
             ButtonComponent={ButtonComponent}
             overlayPositionType={overlayPositionType}
-            improveAccessibility={enableFilterAccessibility}
             activeCalendars={activeCalendars}
             enableEmptyDateValues={enableEmptyDateValues}
             hideDisabledExclude

@@ -9,8 +9,12 @@ import {
     type DashboardAttributeFilterSelectionMode,
     type IAttributeElement,
     type IAttributeFilter,
+    areObjRefsEqual,
     attributeElementsCount,
     filterAttributeElements,
+    filterObjRef,
+    isArbitraryAttributeFilter,
+    isMatchAttributeFilter,
     isPositiveAttributeFilter,
 } from "@gooddata/sdk-model";
 import { UnexpectedSdkError } from "@gooddata/sdk-ui";
@@ -75,6 +79,7 @@ export function validateAttributeFilterProps({
     onApply,
     hiddenElements,
     staticElements,
+    displayAsLabel,
 }: IAttributeFilterBaseProps) {
     invariant(
         !(filter && connectToPlaceholder),
@@ -95,6 +100,15 @@ export function validateAttributeFilterProps({
         !(!isEmpty(hiddenElements) && isEmpty(staticElements)),
         "Hidden elements are not supported by the current backend implementation.",
     );
+    if (
+        displayAsLabel &&
+        (isArbitraryAttributeFilter(filter) || isMatchAttributeFilter(filter)) &&
+        !areObjRefsEqual(displayAsLabel, filterObjRef(filter))
+    ) {
+        console.warn(
+            `Provided displayAsLabel ${displayAsLabel} will not be used for text filters (arbitrary, match).`,
+        );
+    }
 }
 
 /**

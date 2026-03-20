@@ -8,6 +8,7 @@ import { AxiosInstance } from 'axios';
 import { AxiosPromise } from 'axios';
 import { AxiosRequestConfig } from 'axios';
 import { GenericAbortSignal } from 'axios';
+import { MatchFilterOperator } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 import type { RawAxiosRequestConfig } from 'axios';
 
@@ -2459,7 +2460,7 @@ export function AnalyticalDashboardControllerApi_UpdateEntityAnalyticalDashboard
 export function AnalyticalDashboardControllerApiAxiosParamCreator_CreateEntityAnalyticalDashboards(workspaceId: string, jsonApiAnalyticalDashboardPostOptionalIdDocument: JsonApiAnalyticalDashboardPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'visualizationObjects' | 'analyticalDashboards' | 'labels' | 'metrics' | 'datasets' | 'filterContexts' | 'dashboardPlugins' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, metaInclude?: Array<'permissions' | 'origin' | 'accessInfo' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function AnalyticalDashboardControllerApiAxiosParamCreator_DeleteEntityAnalyticalDashboards(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function AnalyticalDashboardControllerApiAxiosParamCreator_DeleteEntityAnalyticalDashboards(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function AnalyticalDashboardControllerApiAxiosParamCreator_GetAllEntitiesAnalyticalDashboards(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'visualizationObjects' | 'analyticalDashboards' | 'labels' | 'metrics' | 'datasets' | 'filterContexts' | 'dashboardPlugins' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'permissions' | 'origin' | 'accessInfo' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -2486,7 +2487,6 @@ export interface AnalyticalDashboardControllerApiCreateEntityAnalyticalDashboard
 
 // @public
 export interface AnalyticalDashboardControllerApiDeleteEntityAnalyticalDashboardsRequest {
-    readonly filter?: string;
     readonly objectId: string;
     readonly workspaceId: string;
 }
@@ -2744,7 +2744,7 @@ export function ApiTokenControllerApi_GetEntityApiTokens(axios: AxiosInstance, b
 export function ApiTokenControllerApiAxiosParamCreator_CreateEntityApiTokens(userId: string, jsonApiApiTokenInDocument: JsonApiApiTokenInDocument, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function ApiTokenControllerApiAxiosParamCreator_DeleteEntityApiTokens(userId: string, id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function ApiTokenControllerApiAxiosParamCreator_DeleteEntityApiTokens(userId: string, id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function ApiTokenControllerApiAxiosParamCreator_GetAllEntitiesApiTokens(userId: string, filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -2760,7 +2760,6 @@ export interface ApiTokenControllerApiCreateEntityApiTokensRequest {
 
 // @public
 export interface ApiTokenControllerApiDeleteEntityApiTokensRequest {
-    readonly filter?: string;
     readonly id: string;
     readonly userId: string;
 }
@@ -2814,7 +2813,7 @@ export function APITokensApi_GetEntityApiTokens(axios: AxiosInstance, basePath: 
 export function APITokensApiAxiosParamCreator_CreateEntityApiTokens(userId: string, jsonApiApiTokenInDocument: JsonApiApiTokenInDocument, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function APITokensApiAxiosParamCreator_DeleteEntityApiTokens(userId: string, id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function APITokensApiAxiosParamCreator_DeleteEntityApiTokens(userId: string, id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function APITokensApiAxiosParamCreator_GetAllEntitiesApiTokens(userId: string, filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -2830,7 +2829,6 @@ export interface APITokensApiCreateEntityApiTokensRequest {
 
 // @public
 export interface APITokensApiDeleteEntityApiTokensRequest {
-    readonly filter?: string;
     readonly id: string;
     readonly userId: string;
 }
@@ -3252,7 +3250,7 @@ export interface AttributeHeaderAttributeHeader {
 export type AttributeHeaderAttributeHeaderGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
 
 // @public (undocumented)
-export type AttributeHeaderAttributeHeaderValueTypeEnum = 'TEXT' | 'HYPERLINK' | 'GEO' | 'GEO_LONGITUDE' | 'GEO_LATITUDE' | 'GEO_AREA' | 'GEO_ICON' | 'IMAGE';
+export type AttributeHeaderAttributeHeaderValueTypeEnum = 'TEXT' | 'HYPERLINK' | 'GEO' | 'GEO_LONGITUDE' | 'GEO_LATITUDE' | 'GEO_AREA' | 'GEO_ICON' | 'IMAGE' | 'HYPERLOGLOG';
 
 // @public
 export class AttributeHierarchiesApi extends MetadataBaseApi implements AttributeHierarchiesApiInterface {
@@ -3290,7 +3288,7 @@ export function AttributeHierarchiesApi_UpdateEntityAttributeHierarchies(axios: 
 export function AttributeHierarchiesApiAxiosParamCreator_CreateEntityAttributeHierarchies(workspaceId: string, jsonApiAttributeHierarchyInDocument: JsonApiAttributeHierarchyInDocument, include?: Array<'userIdentifiers' | 'attributes' | 'createdBy' | 'modifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function AttributeHierarchiesApiAxiosParamCreator_DeleteEntityAttributeHierarchies(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function AttributeHierarchiesApiAxiosParamCreator_DeleteEntityAttributeHierarchies(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function AttributeHierarchiesApiAxiosParamCreator_GetAllEntitiesAttributeHierarchies(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'attributes' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -3317,7 +3315,6 @@ export interface AttributeHierarchiesApiCreateEntityAttributeHierarchiesRequest 
 
 // @public
 export interface AttributeHierarchiesApiDeleteEntityAttributeHierarchiesRequest {
-    readonly filter?: string;
     readonly objectId: string;
     readonly workspaceId: string;
 }
@@ -3418,7 +3415,7 @@ export function AttributeHierarchyControllerApi_UpdateEntityAttributeHierarchies
 export function AttributeHierarchyControllerApiAxiosParamCreator_CreateEntityAttributeHierarchies(workspaceId: string, jsonApiAttributeHierarchyInDocument: JsonApiAttributeHierarchyInDocument, include?: Array<'userIdentifiers' | 'attributes' | 'createdBy' | 'modifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function AttributeHierarchyControllerApiAxiosParamCreator_DeleteEntityAttributeHierarchies(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function AttributeHierarchyControllerApiAxiosParamCreator_DeleteEntityAttributeHierarchies(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function AttributeHierarchyControllerApiAxiosParamCreator_GetAllEntitiesAttributeHierarchies(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'attributes' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -3445,7 +3442,6 @@ export interface AttributeHierarchyControllerApiCreateEntityAttributeHierarchies
 
 // @public
 export interface AttributeHierarchyControllerApiDeleteEntityAttributeHierarchiesRequest {
-    readonly filter?: string;
     readonly objectId: string;
     readonly workspaceId: string;
 }
@@ -4160,7 +4156,7 @@ export function AutomationControllerApi_UpdateEntityAutomations(axios: AxiosInst
 export function AutomationControllerApiAxiosParamCreator_CreateEntityAutomations(workspaceId: string, jsonApiAutomationInDocument: JsonApiAutomationInDocument, include?: Array<'notificationChannels' | 'analyticalDashboards' | 'userIdentifiers' | 'exportDefinitions' | 'users' | 'automationResults' | 'notificationChannel' | 'analyticalDashboard' | 'createdBy' | 'modifiedBy' | 'recipients' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function AutomationControllerApiAxiosParamCreator_DeleteEntityAutomations(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function AutomationControllerApiAxiosParamCreator_DeleteEntityAutomations(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function AutomationControllerApiAxiosParamCreator_GetAllEntitiesAutomations(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'notificationChannels' | 'analyticalDashboards' | 'userIdentifiers' | 'exportDefinitions' | 'users' | 'automationResults' | 'notificationChannel' | 'analyticalDashboard' | 'createdBy' | 'modifiedBy' | 'recipients' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -4187,7 +4183,6 @@ export interface AutomationControllerApiCreateEntityAutomationsRequest {
 
 // @public
 export interface AutomationControllerApiDeleteEntityAutomationsRequest {
-    readonly filter?: string;
     readonly objectId: string;
     readonly workspaceId: string;
 }
@@ -5033,7 +5028,7 @@ export function AutomationsApi_UpdateEntityAutomations(axios: AxiosInstance, bas
 export function AutomationsApiAxiosParamCreator_CreateEntityAutomations(workspaceId: string, jsonApiAutomationInDocument: JsonApiAutomationInDocument, include?: Array<'notificationChannels' | 'analyticalDashboards' | 'userIdentifiers' | 'exportDefinitions' | 'users' | 'automationResults' | 'notificationChannel' | 'analyticalDashboard' | 'createdBy' | 'modifiedBy' | 'recipients' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function AutomationsApiAxiosParamCreator_DeleteEntityAutomations(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function AutomationsApiAxiosParamCreator_DeleteEntityAutomations(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function AutomationsApiAxiosParamCreator_DeleteOrganizationAutomations(organizationAutomationManagementBulkRequest: OrganizationAutomationManagementBulkRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -5105,7 +5100,6 @@ export interface AutomationsApiCreateEntityAutomationsRequest {
 
 // @public
 export interface AutomationsApiDeleteEntityAutomationsRequest {
-    readonly filter?: string;
     readonly objectId: string;
     readonly workspaceId: string;
 }
@@ -5801,7 +5795,7 @@ export interface ColumnOverride {
 }
 
 // @public (undocumented)
-export type ColumnOverrideLabelTypeEnum = 'TEXT' | 'HYPERLINK' | 'GEO' | 'GEO_LONGITUDE' | 'GEO_LATITUDE' | 'GEO_AREA' | 'GEO_ICON' | 'IMAGE';
+export type ColumnOverrideLabelTypeEnum = 'TEXT' | 'HYPERLINK' | 'GEO' | 'GEO_LONGITUDE' | 'GEO_LATITUDE' | 'GEO_AREA' | 'GEO_ICON' | 'IMAGE' | 'HYPERLOGLOG';
 
 // @public (undocumented)
 export type ColumnOverrideLdmTypeOverrideEnum = 'FACT' | 'LABEL';
@@ -6320,7 +6314,7 @@ export function CustomApplicationSettingControllerApi_UpdateEntityCustomApplicat
 export function CustomApplicationSettingControllerApiAxiosParamCreator_CreateEntityCustomApplicationSettings(workspaceId: string, jsonApiCustomApplicationSettingPostOptionalIdDocument: JsonApiCustomApplicationSettingPostOptionalIdDocument, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function CustomApplicationSettingControllerApiAxiosParamCreator_DeleteEntityCustomApplicationSettings(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function CustomApplicationSettingControllerApiAxiosParamCreator_DeleteEntityCustomApplicationSettings(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function CustomApplicationSettingControllerApiAxiosParamCreator_GetAllEntitiesCustomApplicationSettings(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -6346,7 +6340,6 @@ export interface CustomApplicationSettingControllerApiCreateEntityCustomApplicat
 
 // @public
 export interface CustomApplicationSettingControllerApiDeleteEntityCustomApplicationSettingsRequest {
-    readonly filter?: string;
     readonly objectId: string;
     readonly workspaceId: string;
 }
@@ -6439,7 +6432,7 @@ export function CustomGeoCollectionControllerApi_UpdateEntityCustomGeoCollection
 export function CustomGeoCollectionControllerApiAxiosParamCreator_CreateEntityCustomGeoCollections(jsonApiCustomGeoCollectionInDocument: JsonApiCustomGeoCollectionInDocument, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function CustomGeoCollectionControllerApiAxiosParamCreator_DeleteEntityCustomGeoCollections(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function CustomGeoCollectionControllerApiAxiosParamCreator_DeleteEntityCustomGeoCollections(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function CustomGeoCollectionControllerApiAxiosParamCreator_GetAllEntitiesCustomGeoCollections(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -6460,7 +6453,6 @@ export interface CustomGeoCollectionControllerApiCreateEntityCustomGeoCollection
 
 // @public
 export interface CustomGeoCollectionControllerApiDeleteEntityCustomGeoCollectionsRequest {
-    readonly filter?: string;
     readonly id: string;
 }
 
@@ -6522,6 +6514,30 @@ export interface CustomOverride {
     'metrics'?: {
         [key: string]: CustomMetric;
     };
+}
+
+// @public (undocumented)
+export interface DashboardArbitraryAttributeFilter {
+    // (undocumented)
+    'arbitraryAttributeFilter': DashboardArbitraryAttributeFilterArbitraryAttributeFilter;
+}
+
+// @public (undocumented)
+export interface DashboardArbitraryAttributeFilterArbitraryAttributeFilter {
+    // (undocumented)
+    'displayForm': IdentifierRef;
+    // (undocumented)
+    'filterElementsBy'?: Array<AttributeFilterParent>;
+    // (undocumented)
+    'filterElementsByDate'?: Array<AttributeFilterByDate>;
+    // (undocumented)
+    'localIdentifier'?: string;
+    // (undocumented)
+    'negativeSelection': boolean;
+    // (undocumented)
+    'title'?: string;
+    // (undocumented)
+    'values': Array<string | null>;
 }
 
 // @public (undocumented)
@@ -6610,7 +6626,34 @@ export type DashboardExportSettingsPageOrientationEnum = 'PORTRAIT' | 'LANDSCAPE
 export type DashboardExportSettingsPageSizeEnum = 'A3' | 'A4' | 'LETTER';
 
 // @public
-export type DashboardFilter = DashboardAttributeFilter | DashboardDateFilter;
+export type DashboardFilter = DashboardArbitraryAttributeFilter | DashboardAttributeFilter | DashboardDateFilter | DashboardMatchAttributeFilter;
+
+// @public (undocumented)
+export interface DashboardMatchAttributeFilter {
+    // (undocumented)
+    'matchAttributeFilter': DashboardMatchAttributeFilterMatchAttributeFilter;
+}
+
+// @public (undocumented)
+export interface DashboardMatchAttributeFilterMatchAttributeFilter {
+    // (undocumented)
+    'caseSensitive': boolean;
+    // (undocumented)
+    'displayForm': IdentifierRef;
+    // (undocumented)
+    'literal': string;
+    // (undocumented)
+    'localIdentifier'?: string;
+    // (undocumented)
+    'negativeSelection': boolean;
+    // (undocumented)
+    'operator': DashboardMatchAttributeFilterMatchAttributeFilterOperatorEnum;
+    // (undocumented)
+    'title'?: string;
+}
+
+// @public (undocumented)
+export type DashboardMatchAttributeFilterMatchAttributeFilterOperatorEnum = 'contains' | 'startsWith' | 'endsWith';
 
 // @public (undocumented)
 export interface DashboardPermissions {
@@ -6664,7 +6707,7 @@ export function DashboardPluginControllerApi_UpdateEntityDashboardPlugins(axios:
 export function DashboardPluginControllerApiAxiosParamCreator_CreateEntityDashboardPlugins(workspaceId: string, jsonApiDashboardPluginPostOptionalIdDocument: JsonApiDashboardPluginPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function DashboardPluginControllerApiAxiosParamCreator_DeleteEntityDashboardPlugins(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function DashboardPluginControllerApiAxiosParamCreator_DeleteEntityDashboardPlugins(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function DashboardPluginControllerApiAxiosParamCreator_GetAllEntitiesDashboardPlugins(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -6691,7 +6734,6 @@ export interface DashboardPluginControllerApiCreateEntityDashboardPluginsRequest
 
 // @public
 export interface DashboardPluginControllerApiDeleteEntityDashboardPluginsRequest {
-    readonly filter?: string;
     readonly objectId: string;
     readonly workspaceId: string;
 }
@@ -6792,7 +6834,7 @@ export function DashboardsApi_UpdateEntityAnalyticalDashboards(axios: AxiosInsta
 export function DashboardsApiAxiosParamCreator_CreateEntityAnalyticalDashboards(workspaceId: string, jsonApiAnalyticalDashboardPostOptionalIdDocument: JsonApiAnalyticalDashboardPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'visualizationObjects' | 'analyticalDashboards' | 'labels' | 'metrics' | 'datasets' | 'filterContexts' | 'dashboardPlugins' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, metaInclude?: Array<'permissions' | 'origin' | 'accessInfo' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function DashboardsApiAxiosParamCreator_DeleteEntityAnalyticalDashboards(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function DashboardsApiAxiosParamCreator_DeleteEntityAnalyticalDashboards(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function DashboardsApiAxiosParamCreator_GetAllEntitiesAnalyticalDashboards(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'visualizationObjects' | 'analyticalDashboards' | 'labels' | 'metrics' | 'datasets' | 'filterContexts' | 'dashboardPlugins' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'permissions' | 'origin' | 'accessInfo' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -6819,7 +6861,6 @@ export interface DashboardsApiCreateEntityAnalyticalDashboardsRequest {
 
 // @public
 export interface DashboardsApiDeleteEntityAnalyticalDashboardsRequest {
-    readonly filter?: string;
     readonly objectId: string;
     readonly workspaceId: string;
 }
@@ -7037,13 +7078,13 @@ export function DataFiltersApiAxiosParamCreator_CreateEntityWorkspaceDataFilters
 export function DataFiltersApiAxiosParamCreator_CreateEntityWorkspaceDataFilterSettings(workspaceId: string, jsonApiWorkspaceDataFilterSettingInDocument: JsonApiWorkspaceDataFilterSettingInDocument, include?: Array<'workspaceDataFilters' | 'workspaceDataFilter' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function DataFiltersApiAxiosParamCreator_DeleteEntityUserDataFilters(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function DataFiltersApiAxiosParamCreator_DeleteEntityUserDataFilters(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function DataFiltersApiAxiosParamCreator_DeleteEntityWorkspaceDataFilters(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function DataFiltersApiAxiosParamCreator_DeleteEntityWorkspaceDataFilters(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function DataFiltersApiAxiosParamCreator_DeleteEntityWorkspaceDataFilterSettings(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function DataFiltersApiAxiosParamCreator_DeleteEntityWorkspaceDataFilterSettings(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function DataFiltersApiAxiosParamCreator_GetAllEntitiesUserDataFilters(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'user' | 'userGroup' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -7122,21 +7163,18 @@ export interface DataFiltersApiCreateEntityWorkspaceDataFiltersRequest {
 
 // @public
 export interface DataFiltersApiDeleteEntityUserDataFiltersRequest {
-    readonly filter?: string;
     readonly objectId: string;
     readonly workspaceId: string;
 }
 
 // @public
 export interface DataFiltersApiDeleteEntityWorkspaceDataFilterSettingsRequest {
-    readonly filter?: string;
     readonly objectId: string;
     readonly workspaceId: string;
 }
 
 // @public
 export interface DataFiltersApiDeleteEntityWorkspaceDataFiltersRequest {
-    readonly filter?: string;
     readonly objectId: string;
     readonly workspaceId: string;
 }
@@ -7543,7 +7581,7 @@ export function DataSourceControllerApi_UpdateEntityDataSources(axios: AxiosInst
 export function DataSourceControllerApiAxiosParamCreator_CreateEntityDataSources(jsonApiDataSourceInDocument: JsonApiDataSourceInDocument, metaInclude?: Array<'permissions' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function DataSourceControllerApiAxiosParamCreator_DeleteEntityDataSources(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function DataSourceControllerApiAxiosParamCreator_DeleteEntityDataSources(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function DataSourceControllerApiAxiosParamCreator_GetAllEntitiesDataSources(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'permissions' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -7565,7 +7603,6 @@ export interface DataSourceControllerApiCreateEntityDataSourcesRequest {
 
 // @public
 export interface DataSourceControllerApiDeleteEntityDataSourcesRequest {
-    readonly filter?: string;
     readonly id: string;
 }
 
@@ -7678,7 +7715,7 @@ export function DataSourceEntityAPIsApi_UpdateEntityDataSources(axios: AxiosInst
 export function DataSourceEntityAPIsApiAxiosParamCreator_CreateEntityDataSources(jsonApiDataSourceInDocument: JsonApiDataSourceInDocument, metaInclude?: Array<'permissions' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function DataSourceEntityAPIsApiAxiosParamCreator_DeleteEntityDataSources(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function DataSourceEntityAPIsApiAxiosParamCreator_DeleteEntityDataSources(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function DataSourceEntityAPIsApiAxiosParamCreator_GetAllEntitiesDataSourceIdentifiers(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'permissions' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -7706,7 +7743,6 @@ export interface DataSourceEntityAPIsApiCreateEntityDataSourcesRequest {
 
 // @public
 export interface DataSourceEntityAPIsApiDeleteEntityDataSourcesRequest {
-    readonly filter?: string;
     readonly id: string;
 }
 
@@ -8359,7 +8395,7 @@ export interface DeclarativeLabelTranslation {
 }
 
 // @public (undocumented)
-export type DeclarativeLabelValueTypeEnum = 'TEXT' | 'HYPERLINK' | 'GEO' | 'GEO_LONGITUDE' | 'GEO_LATITUDE' | 'GEO_AREA' | 'GEO_ICON' | 'IMAGE';
+export type DeclarativeLabelValueTypeEnum = 'TEXT' | 'HYPERLINK' | 'GEO' | 'GEO_LONGITUDE' | 'GEO_LATITUDE' | 'GEO_AREA' | 'GEO_ICON' | 'IMAGE' | 'HYPERLOGLOG';
 
 // @public
 export interface DeclarativeLdm {
@@ -8579,7 +8615,7 @@ export interface DeclarativeSetting {
 }
 
 // @public (undocumented)
-export type DeclarativeSettingTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_ENDPOINT' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS';
+export type DeclarativeSettingTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_ENDPOINT' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS';
 
 // @public (undocumented)
 export interface DeclarativeSingleWorkspacePermission {
@@ -10165,16 +10201,16 @@ export function EntitiesApiAxiosParamCreator_CreateEntityWorkspaces(jsonApiWorks
 export function EntitiesApiAxiosParamCreator_CreateEntityWorkspaceSettings(workspaceId: string, jsonApiWorkspaceSettingPostOptionalIdDocument: JsonApiWorkspaceSettingPostOptionalIdDocument, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function EntitiesApiAxiosParamCreator_DeleteEntityAnalyticalDashboards(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function EntitiesApiAxiosParamCreator_DeleteEntityAnalyticalDashboards(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function EntitiesApiAxiosParamCreator_DeleteEntityApiTokens(userId: string, id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function EntitiesApiAxiosParamCreator_DeleteEntityApiTokens(userId: string, id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function EntitiesApiAxiosParamCreator_DeleteEntityAttributeHierarchies(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function EntitiesApiAxiosParamCreator_DeleteEntityAttributeHierarchies(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function EntitiesApiAxiosParamCreator_DeleteEntityAutomations(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function EntitiesApiAxiosParamCreator_DeleteEntityAutomations(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function EntitiesApiAxiosParamCreator_DeleteEntityColorPalettes(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -10183,34 +10219,34 @@ export function EntitiesApiAxiosParamCreator_DeleteEntityColorPalettes(id: strin
 export function EntitiesApiAxiosParamCreator_DeleteEntityCspDirectives(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function EntitiesApiAxiosParamCreator_DeleteEntityCustomApplicationSettings(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function EntitiesApiAxiosParamCreator_DeleteEntityCustomApplicationSettings(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function EntitiesApiAxiosParamCreator_DeleteEntityCustomGeoCollections(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function EntitiesApiAxiosParamCreator_DeleteEntityCustomGeoCollections(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function EntitiesApiAxiosParamCreator_DeleteEntityDashboardPlugins(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function EntitiesApiAxiosParamCreator_DeleteEntityDashboardPlugins(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function EntitiesApiAxiosParamCreator_DeleteEntityDataSources(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function EntitiesApiAxiosParamCreator_DeleteEntityDataSources(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function EntitiesApiAxiosParamCreator_DeleteEntityExportDefinitions(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function EntitiesApiAxiosParamCreator_DeleteEntityExportDefinitions(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function EntitiesApiAxiosParamCreator_DeleteEntityExportTemplates(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function EntitiesApiAxiosParamCreator_DeleteEntityFilterContexts(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function EntitiesApiAxiosParamCreator_DeleteEntityFilterContexts(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function EntitiesApiAxiosParamCreator_DeleteEntityFilterViews(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function EntitiesApiAxiosParamCreator_DeleteEntityFilterViews(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function EntitiesApiAxiosParamCreator_DeleteEntityIdentityProviders(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function EntitiesApiAxiosParamCreator_DeleteEntityJwks(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function EntitiesApiAxiosParamCreator_DeleteEntityJwks(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public (undocumented)
 export function EntitiesApiAxiosParamCreator_DeleteEntityKnowledgeRecommendations(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -10225,7 +10261,7 @@ export function EntitiesApiAxiosParamCreator_DeleteEntityLlmProviders(id: string
 export function EntitiesApiAxiosParamCreator_DeleteEntityMemoryItems(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function EntitiesApiAxiosParamCreator_DeleteEntityMetrics(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function EntitiesApiAxiosParamCreator_DeleteEntityMetrics(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function EntitiesApiAxiosParamCreator_DeleteEntityNotificationChannels(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -10237,7 +10273,7 @@ export function EntitiesApiAxiosParamCreator_DeleteEntityOrganizationSettings(id
 export function EntitiesApiAxiosParamCreator_DeleteEntityThemes(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function EntitiesApiAxiosParamCreator_DeleteEntityUserDataFilters(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function EntitiesApiAxiosParamCreator_DeleteEntityUserDataFilters(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function EntitiesApiAxiosParamCreator_DeleteEntityUserGroups(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -10246,22 +10282,22 @@ export function EntitiesApiAxiosParamCreator_DeleteEntityUserGroups(id: string, 
 export function EntitiesApiAxiosParamCreator_DeleteEntityUsers(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function EntitiesApiAxiosParamCreator_DeleteEntityUserSettings(userId: string, id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function EntitiesApiAxiosParamCreator_DeleteEntityUserSettings(userId: string, id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function EntitiesApiAxiosParamCreator_DeleteEntityVisualizationObjects(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function EntitiesApiAxiosParamCreator_DeleteEntityVisualizationObjects(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function EntitiesApiAxiosParamCreator_DeleteEntityWorkspaceDataFilters(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function EntitiesApiAxiosParamCreator_DeleteEntityWorkspaceDataFilters(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function EntitiesApiAxiosParamCreator_DeleteEntityWorkspaceDataFilterSettings(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function EntitiesApiAxiosParamCreator_DeleteEntityWorkspaceDataFilterSettings(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function EntitiesApiAxiosParamCreator_DeleteEntityWorkspaces(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function EntitiesApiAxiosParamCreator_DeleteEntityWorkspaceSettings(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function EntitiesApiAxiosParamCreator_DeleteEntityWorkspaceSettings(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function EntitiesApiAxiosParamCreator_GetAllAutomationsWorkspaceAutomations(filter?: string, include?: Array<'workspaces' | 'notificationChannels' | 'analyticalDashboards' | 'userIdentifiers' | 'exportDefinitions' | 'users' | 'automationResults' | 'workspace' | 'notificationChannel' | 'analyticalDashboard' | 'createdBy' | 'modifiedBy' | 'recipients' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -11031,28 +11067,24 @@ export interface EntitiesApiCreateEntityWorkspacesRequest {
 
 // @public
 export interface EntitiesApiDeleteEntityAnalyticalDashboardsRequest {
-    readonly filter?: string;
     readonly objectId: string;
     readonly workspaceId: string;
 }
 
 // @public
 export interface EntitiesApiDeleteEntityApiTokensRequest {
-    readonly filter?: string;
     readonly id: string;
     readonly userId: string;
 }
 
 // @public
 export interface EntitiesApiDeleteEntityAttributeHierarchiesRequest {
-    readonly filter?: string;
     readonly objectId: string;
     readonly workspaceId: string;
 }
 
 // @public
 export interface EntitiesApiDeleteEntityAutomationsRequest {
-    readonly filter?: string;
     readonly objectId: string;
     readonly workspaceId: string;
 }
@@ -11071,33 +11103,28 @@ export interface EntitiesApiDeleteEntityCspDirectivesRequest {
 
 // @public
 export interface EntitiesApiDeleteEntityCustomApplicationSettingsRequest {
-    readonly filter?: string;
     readonly objectId: string;
     readonly workspaceId: string;
 }
 
 // @public
 export interface EntitiesApiDeleteEntityCustomGeoCollectionsRequest {
-    readonly filter?: string;
     readonly id: string;
 }
 
 // @public
 export interface EntitiesApiDeleteEntityDashboardPluginsRequest {
-    readonly filter?: string;
     readonly objectId: string;
     readonly workspaceId: string;
 }
 
 // @public
 export interface EntitiesApiDeleteEntityDataSourcesRequest {
-    readonly filter?: string;
     readonly id: string;
 }
 
 // @public
 export interface EntitiesApiDeleteEntityExportDefinitionsRequest {
-    readonly filter?: string;
     readonly objectId: string;
     readonly workspaceId: string;
 }
@@ -11110,14 +11137,12 @@ export interface EntitiesApiDeleteEntityExportTemplatesRequest {
 
 // @public
 export interface EntitiesApiDeleteEntityFilterContextsRequest {
-    readonly filter?: string;
     readonly objectId: string;
     readonly workspaceId: string;
 }
 
 // @public
 export interface EntitiesApiDeleteEntityFilterViewsRequest {
-    readonly filter?: string;
     readonly objectId: string;
     readonly workspaceId: string;
 }
@@ -11130,7 +11155,6 @@ export interface EntitiesApiDeleteEntityIdentityProvidersRequest {
 
 // @public
 export interface EntitiesApiDeleteEntityJwksRequest {
-    readonly filter?: string;
     readonly id: string;
 }
 
@@ -11162,7 +11186,6 @@ export interface EntitiesApiDeleteEntityMemoryItemsRequest {
 
 // @public
 export interface EntitiesApiDeleteEntityMetricsRequest {
-    readonly filter?: string;
     readonly objectId: string;
     readonly workspaceId: string;
 }
@@ -11187,7 +11210,6 @@ export interface EntitiesApiDeleteEntityThemesRequest {
 
 // @public
 export interface EntitiesApiDeleteEntityUserDataFiltersRequest {
-    readonly filter?: string;
     readonly objectId: string;
     readonly workspaceId: string;
 }
@@ -11200,7 +11222,6 @@ export interface EntitiesApiDeleteEntityUserGroupsRequest {
 
 // @public
 export interface EntitiesApiDeleteEntityUserSettingsRequest {
-    readonly filter?: string;
     readonly id: string;
     readonly userId: string;
 }
@@ -11213,28 +11234,24 @@ export interface EntitiesApiDeleteEntityUsersRequest {
 
 // @public
 export interface EntitiesApiDeleteEntityVisualizationObjectsRequest {
-    readonly filter?: string;
     readonly objectId: string;
     readonly workspaceId: string;
 }
 
 // @public
 export interface EntitiesApiDeleteEntityWorkspaceDataFilterSettingsRequest {
-    readonly filter?: string;
     readonly objectId: string;
     readonly workspaceId: string;
 }
 
 // @public
 export interface EntitiesApiDeleteEntityWorkspaceDataFiltersRequest {
-    readonly filter?: string;
     readonly objectId: string;
     readonly workspaceId: string;
 }
 
 // @public
 export interface EntitiesApiDeleteEntityWorkspaceSettingsRequest {
-    readonly filter?: string;
     readonly objectId: string;
     readonly workspaceId: string;
 }
@@ -13623,6 +13640,30 @@ export interface ExportCustomOverride {
 }
 
 // @public (undocumented)
+export interface ExportDashboardArbitraryAttributeFilter {
+    // (undocumented)
+    'arbitraryAttributeFilter': ExportDashboardArbitraryAttributeFilterArbitraryAttributeFilter;
+}
+
+// @public (undocumented)
+export interface ExportDashboardArbitraryAttributeFilterArbitraryAttributeFilter {
+    // (undocumented)
+    'displayForm': ExportIdentifierRef;
+    // (undocumented)
+    'filterElementsBy'?: Array<ExportAttributeFilterParent>;
+    // (undocumented)
+    'filterElementsByDate'?: Array<ExportAttributeFilterByDate>;
+    // (undocumented)
+    'localIdentifier'?: string;
+    // (undocumented)
+    'negativeSelection': boolean;
+    // (undocumented)
+    'title'?: string;
+    // (undocumented)
+    'values': Array<string>;
+}
+
+// @public (undocumented)
 export interface ExportDashboardAttributeFilter {
     // (undocumented)
     'attributeFilter': ExportDashboardAttributeFilterAttributeFilter;
@@ -13708,7 +13749,34 @@ export type ExportDashboardExportSettingsPageOrientationEnum = 'PORTRAIT' | 'LAN
 export type ExportDashboardExportSettingsPageSizeEnum = 'A3' | 'A4' | 'LETTER';
 
 // @public
-export type ExportDashboardFilter = ExportDashboardAttributeFilter | ExportDashboardDateFilter;
+export type ExportDashboardFilter = ExportDashboardArbitraryAttributeFilter | ExportDashboardAttributeFilter | ExportDashboardDateFilter | ExportDashboardMatchAttributeFilter;
+
+// @public (undocumented)
+export interface ExportDashboardMatchAttributeFilter {
+    // (undocumented)
+    'matchAttributeFilter': ExportDashboardMatchAttributeFilterMatchAttributeFilter;
+}
+
+// @public (undocumented)
+export interface ExportDashboardMatchAttributeFilterMatchAttributeFilter {
+    // (undocumented)
+    'caseSensitive': boolean;
+    // (undocumented)
+    'displayForm': ExportIdentifierRef;
+    // (undocumented)
+    'literal': string;
+    // (undocumented)
+    'localIdentifier'?: string;
+    // (undocumented)
+    'negativeSelection': boolean;
+    // (undocumented)
+    'operator': ExportDashboardMatchAttributeFilterMatchAttributeFilterOperatorEnum;
+    // (undocumented)
+    'title'?: string;
+}
+
+// @public (undocumented)
+export type ExportDashboardMatchAttributeFilterMatchAttributeFilterOperatorEnum = 'contains' | 'startsWith' | 'endsWith';
 
 // @public
 export interface ExportDashboardTabularExportRequest {
@@ -13771,7 +13839,7 @@ export function ExportDefinitionControllerApi_UpdateEntityExportDefinitions(axio
 export function ExportDefinitionControllerApiAxiosParamCreator_CreateEntityExportDefinitions(workspaceId: string, jsonApiExportDefinitionPostOptionalIdDocument: JsonApiExportDefinitionPostOptionalIdDocument, include?: Array<'visualizationObjects' | 'analyticalDashboards' | 'automations' | 'userIdentifiers' | 'visualizationObject' | 'analyticalDashboard' | 'automation' | 'createdBy' | 'modifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function ExportDefinitionControllerApiAxiosParamCreator_DeleteEntityExportDefinitions(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function ExportDefinitionControllerApiAxiosParamCreator_DeleteEntityExportDefinitions(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function ExportDefinitionControllerApiAxiosParamCreator_GetAllEntitiesExportDefinitions(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'visualizationObjects' | 'analyticalDashboards' | 'automations' | 'userIdentifiers' | 'visualizationObject' | 'analyticalDashboard' | 'automation' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -13798,7 +13866,6 @@ export interface ExportDefinitionControllerApiCreateEntityExportDefinitionsReque
 
 // @public
 export interface ExportDefinitionControllerApiDeleteEntityExportDefinitionsRequest {
-    readonly filter?: string;
     readonly objectId: string;
     readonly workspaceId: string;
 }
@@ -13899,7 +13966,7 @@ export function ExportDefinitionsApi_UpdateEntityExportDefinitions(axios: AxiosI
 export function ExportDefinitionsApiAxiosParamCreator_CreateEntityExportDefinitions(workspaceId: string, jsonApiExportDefinitionPostOptionalIdDocument: JsonApiExportDefinitionPostOptionalIdDocument, include?: Array<'visualizationObjects' | 'analyticalDashboards' | 'automations' | 'userIdentifiers' | 'visualizationObject' | 'analyticalDashboard' | 'automation' | 'createdBy' | 'modifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function ExportDefinitionsApiAxiosParamCreator_DeleteEntityExportDefinitions(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function ExportDefinitionsApiAxiosParamCreator_DeleteEntityExportDefinitions(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function ExportDefinitionsApiAxiosParamCreator_GetAllEntitiesExportDefinitions(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'visualizationObjects' | 'analyticalDashboards' | 'automations' | 'userIdentifiers' | 'visualizationObject' | 'analyticalDashboard' | 'automation' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -13926,7 +13993,6 @@ export interface ExportDefinitionsApiCreateEntityExportDefinitionsRequest {
 
 // @public
 export interface ExportDefinitionsApiDeleteEntityExportDefinitionsRequest {
-    readonly filter?: string;
     readonly objectId: string;
     readonly workspaceId: string;
 }
@@ -14846,7 +14912,7 @@ export function FilterContextApi_UpdateEntityFilterContexts(axios: AxiosInstance
 export function FilterContextApiAxiosParamCreator_CreateEntityFilterContexts(workspaceId: string, jsonApiFilterContextPostOptionalIdDocument: JsonApiFilterContextPostOptionalIdDocument, include?: Array<'attributes' | 'datasets' | 'labels' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function FilterContextApiAxiosParamCreator_DeleteEntityFilterContexts(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function FilterContextApiAxiosParamCreator_DeleteEntityFilterContexts(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function FilterContextApiAxiosParamCreator_GetAllEntitiesFilterContexts(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'attributes' | 'datasets' | 'labels' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -14873,7 +14939,6 @@ export interface FilterContextApiCreateEntityFilterContextsRequest {
 
 // @public
 export interface FilterContextApiDeleteEntityFilterContextsRequest {
-    readonly filter?: string;
     readonly objectId: string;
     readonly workspaceId: string;
 }
@@ -14974,7 +15039,7 @@ export function FilterContextControllerApi_UpdateEntityFilterContexts(axios: Axi
 export function FilterContextControllerApiAxiosParamCreator_CreateEntityFilterContexts(workspaceId: string, jsonApiFilterContextPostOptionalIdDocument: JsonApiFilterContextPostOptionalIdDocument, include?: Array<'attributes' | 'datasets' | 'labels' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function FilterContextControllerApiAxiosParamCreator_DeleteEntityFilterContexts(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function FilterContextControllerApiAxiosParamCreator_DeleteEntityFilterContexts(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function FilterContextControllerApiAxiosParamCreator_GetAllEntitiesFilterContexts(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'attributes' | 'datasets' | 'labels' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -15001,7 +15066,6 @@ export interface FilterContextControllerApiCreateEntityFilterContextsRequest {
 
 // @public
 export interface FilterContextControllerApiDeleteEntityFilterContextsRequest {
-    readonly filter?: string;
     readonly objectId: string;
     readonly workspaceId: string;
 }
@@ -15108,7 +15172,7 @@ export function FilterViewControllerApi_UpdateEntityFilterViews(axios: AxiosInst
 export function FilterViewControllerApiAxiosParamCreator_CreateEntityFilterViews(workspaceId: string, jsonApiFilterViewInDocument: JsonApiFilterViewInDocument, include?: Array<'analyticalDashboards' | 'users' | 'analyticalDashboard' | 'user' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function FilterViewControllerApiAxiosParamCreator_DeleteEntityFilterViews(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function FilterViewControllerApiAxiosParamCreator_DeleteEntityFilterViews(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function FilterViewControllerApiAxiosParamCreator_GetAllEntitiesFilterViews(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'analyticalDashboards' | 'users' | 'analyticalDashboard' | 'user' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -15134,7 +15198,6 @@ export interface FilterViewControllerApiCreateEntityFilterViewsRequest {
 
 // @public
 export interface FilterViewControllerApiDeleteEntityFilterViewsRequest {
-    readonly filter?: string;
     readonly objectId: string;
     readonly workspaceId: string;
 }
@@ -15242,7 +15305,7 @@ export function FilterViewsApi_UpdateEntityFilterViews(axios: AxiosInstance, bas
 export function FilterViewsApiAxiosParamCreator_CreateEntityFilterViews(workspaceId: string, jsonApiFilterViewInDocument: JsonApiFilterViewInDocument, include?: Array<'analyticalDashboards' | 'users' | 'analyticalDashboard' | 'user' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function FilterViewsApiAxiosParamCreator_DeleteEntityFilterViews(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function FilterViewsApiAxiosParamCreator_DeleteEntityFilterViews(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function FilterViewsApiAxiosParamCreator_GetAllEntitiesFilterViews(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'analyticalDashboards' | 'users' | 'analyticalDashboard' | 'user' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -15274,7 +15337,6 @@ export interface FilterViewsApiCreateEntityFilterViewsRequest {
 
 // @public
 export interface FilterViewsApiDeleteEntityFilterViewsRequest {
-    readonly filter?: string;
     readonly objectId: string;
     readonly workspaceId: string;
 }
@@ -15512,7 +15574,7 @@ export function GeographicDataApi_UpdateEntityCustomGeoCollections(axios: AxiosI
 export function GeographicDataApiAxiosParamCreator_CreateEntityCustomGeoCollections(jsonApiCustomGeoCollectionInDocument: JsonApiCustomGeoCollectionInDocument, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function GeographicDataApiAxiosParamCreator_DeleteEntityCustomGeoCollections(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function GeographicDataApiAxiosParamCreator_DeleteEntityCustomGeoCollections(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function GeographicDataApiAxiosParamCreator_GetAllEntitiesCustomGeoCollections(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -15533,7 +15595,6 @@ export interface GeographicDataApiCreateEntityCustomGeoCollectionsRequest {
 
 // @public
 export interface GeographicDataApiDeleteEntityCustomGeoCollectionsRequest {
-    readonly filter?: string;
     readonly id: string;
 }
 
@@ -16484,6 +16545,21 @@ export interface ITigerCompoundCondition {
 }
 
 // @public
+export interface ITigerDashboardArbitraryAttributeFilter {
+    // (undocumented)
+    arbitraryAttributeFilter: {
+        displayForm: ObjRef;
+        values: string[];
+        negativeSelection: boolean;
+        localIdentifier?: string;
+        filterElementsBy?: ITigerDashboardAttributeFilterParent[];
+        filterElementsByDate?: ITigerDashboardAttributeFilterByDate[];
+        validateElementsBy?: ObjRef[];
+        title?: string;
+    };
+}
+
+// @public
 export interface ITigerDashboardAttributeFilterConfig {
     // (undocumented)
     displayAsLabel?: ObjRef;
@@ -16553,6 +16629,20 @@ export interface ITigerDashboardLayout<TWidget = ITigerWidget> {
 }
 
 // @public
+export interface ITigerDashboardMatchAttributeFilter {
+    // (undocumented)
+    matchAttributeFilter: {
+        displayForm: ObjRef;
+        operator: MatchFilterOperator;
+        literal: string;
+        caseSensitive?: boolean;
+        negativeSelection?: boolean;
+        localIdentifier?: string;
+        title?: string;
+    };
+}
+
+// @public
 export interface ITigerDashboardTab {
     // (undocumented)
     attributeFilterConfigs?: ITigerDashboardAttributeFilterConfig[];
@@ -16585,7 +16675,7 @@ export interface ITigerDashboardTab {
 export type ITigerFilter = ITigerAbsoluteDateFilter | ITigerRelativeDateFilter | ITigerPositiveAttributeFilter | ITigerNegativeAttributeFilter | ITigerMeasureValueFilter | ITigerRankingFilter;
 
 // @public
-export type ITigerFilterContextItem = DashboardFilter;
+export type ITigerFilterContextItem = DashboardFilter | ITigerDashboardArbitraryAttributeFilter | ITigerDashboardMatchAttributeFilter;
 
 // @public
 export interface ITigerInsightLayerDefinition {
@@ -18632,7 +18722,7 @@ export interface JsonApiDataSourceInAttributes {
     'clientId'?: string | null;
     'clientSecret'?: string | null;
     'name': string;
-    'parameters'?: Array<JsonApiDataSourceOutAttributesParametersInner> | null;
+    'parameters'?: Array<JsonApiDataSourceInAttributesParametersInner> | null;
     'password'?: string | null;
     'privateKey'?: string | null;
     'privateKeyPassphrase'?: string | null;
@@ -18645,6 +18735,14 @@ export interface JsonApiDataSourceInAttributes {
 
 // @public (undocumented)
 export type JsonApiDataSourceInAttributesCacheStrategyEnum = 'ALWAYS' | 'NEVER';
+
+// @public (undocumented)
+export interface JsonApiDataSourceInAttributesParametersInner {
+    // (undocumented)
+    'name': string;
+    // (undocumented)
+    'value': string;
+}
 
 // @public (undocumented)
 export type JsonApiDataSourceInAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'GREENPLUM' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE';
@@ -18674,9 +18772,9 @@ export interface JsonApiDataSourceOutAttributes {
     'authenticationType'?: JsonApiDataSourceOutAttributesAuthenticationTypeEnum | null;
     'cacheStrategy'?: JsonApiDataSourceOutAttributesCacheStrategyEnum | null;
     'clientId'?: string | null;
-    'decodedParameters'?: Array<JsonApiDataSourceOutAttributesParametersInner> | null;
+    'decodedParameters'?: Array<JsonApiDataSourceInAttributesParametersInner> | null;
     'name': string;
-    'parameters'?: Array<JsonApiDataSourceOutAttributesParametersInner> | null;
+    'parameters'?: Array<JsonApiDataSourceInAttributesParametersInner> | null;
     'schema': string;
     'type': JsonApiDataSourceOutAttributesTypeEnum;
     'url'?: string | null;
@@ -18688,14 +18786,6 @@ export type JsonApiDataSourceOutAttributesAuthenticationTypeEnum = 'USERNAME_PAS
 
 // @public (undocumented)
 export type JsonApiDataSourceOutAttributesCacheStrategyEnum = 'ALWAYS' | 'NEVER';
-
-// @public (undocumented)
-export interface JsonApiDataSourceOutAttributesParametersInner {
-    // (undocumented)
-    'name': string;
-    // (undocumented)
-    'value': string;
-}
 
 // @public (undocumented)
 export type JsonApiDataSourceOutAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'GREENPLUM' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE';
@@ -18759,7 +18849,7 @@ export interface JsonApiDataSourcePatchAttributes {
     'clientId'?: string | null;
     'clientSecret'?: string | null;
     'name'?: string;
-    'parameters'?: Array<JsonApiDataSourceOutAttributesParametersInner> | null;
+    'parameters'?: Array<JsonApiDataSourceInAttributesParametersInner> | null;
     'password'?: string | null;
     'privateKey'?: string | null;
     'privateKeyPassphrase'?: string | null;
@@ -20070,7 +20160,7 @@ export interface JsonApiLabelOutAttributesTranslationsInner {
 }
 
 // @public (undocumented)
-export type JsonApiLabelOutAttributesValueTypeEnum = 'TEXT' | 'HYPERLINK' | 'GEO' | 'GEO_LONGITUDE' | 'GEO_LATITUDE' | 'GEO_AREA' | 'GEO_ICON' | 'IMAGE';
+export type JsonApiLabelOutAttributesValueTypeEnum = 'TEXT' | 'HYPERLINK' | 'GEO' | 'GEO_LONGITUDE' | 'GEO_LATITUDE' | 'GEO_AREA' | 'GEO_ICON' | 'IMAGE' | 'HYPERLOGLOG';
 
 // @public (undocumented)
 export interface JsonApiLabelOutDocument {
@@ -21722,7 +21812,7 @@ export interface JsonApiUserSettingInAttributes {
 }
 
 // @public (undocumented)
-export type JsonApiUserSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_ENDPOINT' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS';
+export type JsonApiUserSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_ENDPOINT' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS';
 
 // @public (undocumented)
 export interface JsonApiUserSettingInDocument {
@@ -22684,7 +22774,7 @@ export function JwkControllerApi_UpdateEntityJwks(axios: AxiosInstance, basePath
 export function JwkControllerApiAxiosParamCreator_CreateEntityJwks(jsonApiJwkInDocument: JsonApiJwkInDocument, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function JwkControllerApiAxiosParamCreator_DeleteEntityJwks(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function JwkControllerApiAxiosParamCreator_DeleteEntityJwks(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function JwkControllerApiAxiosParamCreator_GetAllEntitiesJwks(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -22705,7 +22795,6 @@ export interface JwkControllerApiCreateEntityJwksRequest {
 
 // @public
 export interface JwkControllerApiDeleteEntityJwksRequest {
-    readonly filter?: string;
     readonly id: string;
 }
 
@@ -22780,7 +22869,7 @@ export function JWKSApi_UpdateEntityJwks(axios: AxiosInstance, basePath: string,
 export function JWKSApiAxiosParamCreator_CreateEntityJwks(jsonApiJwkInDocument: JsonApiJwkInDocument, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function JWKSApiAxiosParamCreator_DeleteEntityJwks(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function JWKSApiAxiosParamCreator_DeleteEntityJwks(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function JWKSApiAxiosParamCreator_GetAllEntitiesJwks(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -22801,7 +22890,6 @@ export interface JWKSApiCreateEntityJwksRequest {
 
 // @public
 export interface JWKSApiDeleteEntityJwksRequest {
-    readonly filter?: string;
     readonly id: string;
 }
 
@@ -22866,7 +22954,7 @@ export interface KeyDriversDimension {
 export type KeyDriversDimensionGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
 
 // @public (undocumented)
-export type KeyDriversDimensionValueTypeEnum = 'TEXT' | 'HYPERLINK' | 'GEO' | 'GEO_LONGITUDE' | 'GEO_LATITUDE' | 'GEO_AREA' | 'GEO_ICON' | 'IMAGE';
+export type KeyDriversDimensionValueTypeEnum = 'TEXT' | 'HYPERLINK' | 'GEO' | 'GEO_LONGITUDE' | 'GEO_LATITUDE' | 'GEO_AREA' | 'GEO_ICON' | 'IMAGE' | 'HYPERLOGLOG';
 
 // @public (undocumented)
 export interface KeyDriversRequest {
@@ -24247,7 +24335,7 @@ export function MetricControllerApi_UpdateEntityMetrics(axios: AxiosInstance, ba
 export function MetricControllerApiAxiosParamCreator_CreateEntityMetrics(workspaceId: string, jsonApiMetricPostOptionalIdDocument: JsonApiMetricPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function MetricControllerApiAxiosParamCreator_DeleteEntityMetrics(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function MetricControllerApiAxiosParamCreator_DeleteEntityMetrics(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function MetricControllerApiAxiosParamCreator_GetAllEntitiesMetrics(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -24274,7 +24362,6 @@ export interface MetricControllerApiCreateEntityMetricsRequest {
 
 // @public
 export interface MetricControllerApiDeleteEntityMetricsRequest {
-    readonly filter?: string;
     readonly objectId: string;
     readonly workspaceId: string;
 }
@@ -24383,7 +24470,7 @@ export function MetricsApi_UpdateEntityMetrics(axios: AxiosInstance, basePath: s
 export function MetricsApiAxiosParamCreator_CreateEntityMetrics(workspaceId: string, jsonApiMetricPostOptionalIdDocument: JsonApiMetricPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function MetricsApiAxiosParamCreator_DeleteEntityMetrics(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function MetricsApiAxiosParamCreator_DeleteEntityMetrics(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function MetricsApiAxiosParamCreator_GetAllEntitiesMetrics(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -24410,7 +24497,6 @@ export interface MetricsApiCreateEntityMetricsRequest {
 
 // @public
 export interface MetricsApiDeleteEntityMetricsRequest {
-    readonly filter?: string;
     readonly objectId: string;
     readonly workspaceId: string;
 }
@@ -26758,7 +26844,7 @@ export function PluginsApi_UpdateEntityDashboardPlugins(axios: AxiosInstance, ba
 export function PluginsApiAxiosParamCreator_CreateEntityDashboardPlugins(workspaceId: string, jsonApiDashboardPluginPostOptionalIdDocument: JsonApiDashboardPluginPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function PluginsApiAxiosParamCreator_DeleteEntityDashboardPlugins(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function PluginsApiAxiosParamCreator_DeleteEntityDashboardPlugins(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function PluginsApiAxiosParamCreator_GetAllEntitiesDashboardPlugins(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'createdBy' | 'modifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -26785,7 +26871,6 @@ export interface PluginsApiCreateEntityDashboardPluginsRequest {
 
 // @public
 export interface PluginsApiDeleteEntityDashboardPluginsRequest {
-    readonly filter?: string;
     readonly objectId: string;
     readonly workspaceId: string;
 }
@@ -27239,7 +27324,7 @@ export interface ResolvedSetting {
 }
 
 // @public (undocumented)
-export type ResolvedSettingTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_ENDPOINT' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS';
+export type ResolvedSettingTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_ENDPOINT' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS';
 
 // @public
 export interface ResolveSettingsRequest {
@@ -28181,7 +28266,7 @@ export function UserDataFilterControllerApi_UpdateEntityUserDataFilters(axios: A
 export function UserDataFilterControllerApiAxiosParamCreator_CreateEntityUserDataFilters(workspaceId: string, jsonApiUserDataFilterPostOptionalIdDocument: JsonApiUserDataFilterPostOptionalIdDocument, include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'user' | 'userGroup' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function UserDataFilterControllerApiAxiosParamCreator_DeleteEntityUserDataFilters(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function UserDataFilterControllerApiAxiosParamCreator_DeleteEntityUserDataFilters(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function UserDataFilterControllerApiAxiosParamCreator_GetAllEntitiesUserDataFilters(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'users' | 'userGroups' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'user' | 'userGroup' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -28208,7 +28293,6 @@ export interface UserDataFilterControllerApiCreateEntityUserDataFiltersRequest {
 
 // @public
 export interface UserDataFilterControllerApiDeleteEntityUserDataFiltersRequest {
-    readonly filter?: string;
     readonly objectId: string;
     readonly workspaceId: string;
 }
@@ -29018,7 +29102,7 @@ export function UserSettingControllerApi_UpdateEntityUserSettings(axios: AxiosIn
 export function UserSettingControllerApiAxiosParamCreator_CreateEntityUserSettings(userId: string, jsonApiUserSettingInDocument: JsonApiUserSettingInDocument, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function UserSettingControllerApiAxiosParamCreator_DeleteEntityUserSettings(userId: string, id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function UserSettingControllerApiAxiosParamCreator_DeleteEntityUserSettings(userId: string, id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function UserSettingControllerApiAxiosParamCreator_GetAllEntitiesUserSettings(userId: string, filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -29037,7 +29121,6 @@ export interface UserSettingControllerApiCreateEntityUserSettingsRequest {
 
 // @public
 export interface UserSettingControllerApiDeleteEntityUserSettingsRequest {
-    readonly filter?: string;
     readonly id: string;
     readonly userId: string;
 }
@@ -29104,7 +29187,7 @@ export function UserSettingsApi_UpdateEntityUserSettings(axios: AxiosInstance, b
 export function UserSettingsApiAxiosParamCreator_CreateEntityUserSettings(userId: string, jsonApiUserSettingInDocument: JsonApiUserSettingInDocument, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function UserSettingsApiAxiosParamCreator_DeleteEntityUserSettings(userId: string, id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function UserSettingsApiAxiosParamCreator_DeleteEntityUserSettings(userId: string, id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function UserSettingsApiAxiosParamCreator_GetAllEntitiesUserSettings(userId: string, filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -29123,7 +29206,6 @@ export interface UserSettingsApiCreateEntityUserSettingsRequest {
 
 // @public
 export interface UserSettingsApiDeleteEntityUserSettingsRequest {
-    readonly filter?: string;
     readonly id: string;
     readonly userId: string;
 }
@@ -29317,7 +29399,7 @@ export function VisualizationObjectApi_UpdateEntityVisualizationObjects(axios: A
 export function VisualizationObjectApiAxiosParamCreator_CreateEntityVisualizationObjects(workspaceId: string, jsonApiVisualizationObjectPostOptionalIdDocument: JsonApiVisualizationObjectPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function VisualizationObjectApiAxiosParamCreator_DeleteEntityVisualizationObjects(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function VisualizationObjectApiAxiosParamCreator_DeleteEntityVisualizationObjects(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function VisualizationObjectApiAxiosParamCreator_GetAllEntitiesVisualizationObjects(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -29344,7 +29426,6 @@ export interface VisualizationObjectApiCreateEntityVisualizationObjectsRequest {
 
 // @public
 export interface VisualizationObjectApiDeleteEntityVisualizationObjectsRequest {
-    readonly filter?: string;
     readonly objectId: string;
     readonly workspaceId: string;
 }
@@ -29445,7 +29526,7 @@ export function VisualizationObjectControllerApi_UpdateEntityVisualizationObject
 export function VisualizationObjectControllerApiAxiosParamCreator_CreateEntityVisualizationObjects(workspaceId: string, jsonApiVisualizationObjectPostOptionalIdDocument: JsonApiVisualizationObjectPostOptionalIdDocument, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function VisualizationObjectControllerApiAxiosParamCreator_DeleteEntityVisualizationObjects(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function VisualizationObjectControllerApiAxiosParamCreator_DeleteEntityVisualizationObjects(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function VisualizationObjectControllerApiAxiosParamCreator_GetAllEntitiesVisualizationObjects(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -29472,7 +29553,6 @@ export interface VisualizationObjectControllerApiCreateEntityVisualizationObject
 
 // @public
 export interface VisualizationObjectControllerApiDeleteEntityVisualizationObjectsRequest {
-    readonly filter?: string;
     readonly objectId: string;
     readonly workspaceId: string;
 }
@@ -29672,7 +29752,7 @@ export function WorkspaceDataFilterControllerApi_UpdateEntityWorkspaceDataFilter
 export function WorkspaceDataFilterControllerApiAxiosParamCreator_CreateEntityWorkspaceDataFilters(workspaceId: string, jsonApiWorkspaceDataFilterInDocument: JsonApiWorkspaceDataFilterInDocument, include?: Array<'workspaceDataFilterSettings' | 'filterSettings' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function WorkspaceDataFilterControllerApiAxiosParamCreator_DeleteEntityWorkspaceDataFilters(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function WorkspaceDataFilterControllerApiAxiosParamCreator_DeleteEntityWorkspaceDataFilters(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function WorkspaceDataFilterControllerApiAxiosParamCreator_GetAllEntitiesWorkspaceDataFilters(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'workspaceDataFilterSettings' | 'filterSettings' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -29699,7 +29779,6 @@ export interface WorkspaceDataFilterControllerApiCreateEntityWorkspaceDataFilter
 
 // @public
 export interface WorkspaceDataFilterControllerApiDeleteEntityWorkspaceDataFiltersRequest {
-    readonly filter?: string;
     readonly objectId: string;
     readonly workspaceId: string;
 }
@@ -29800,7 +29879,7 @@ export function WorkspaceDataFilterSettingControllerApi_UpdateEntityWorkspaceDat
 export function WorkspaceDataFilterSettingControllerApiAxiosParamCreator_CreateEntityWorkspaceDataFilterSettings(workspaceId: string, jsonApiWorkspaceDataFilterSettingInDocument: JsonApiWorkspaceDataFilterSettingInDocument, include?: Array<'workspaceDataFilters' | 'workspaceDataFilter' | 'ALL'>, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function WorkspaceDataFilterSettingControllerApiAxiosParamCreator_DeleteEntityWorkspaceDataFilterSettings(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function WorkspaceDataFilterSettingControllerApiAxiosParamCreator_DeleteEntityWorkspaceDataFilterSettings(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function WorkspaceDataFilterSettingControllerApiAxiosParamCreator_GetAllEntitiesWorkspaceDataFilterSettings(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'workspaceDataFilters' | 'workspaceDataFilter' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -29827,7 +29906,6 @@ export interface WorkspaceDataFilterSettingControllerApiCreateEntityWorkspaceDat
 
 // @public
 export interface WorkspaceDataFilterSettingControllerApiDeleteEntityWorkspaceDataFilterSettingsRequest {
-    readonly filter?: string;
     readonly objectId: string;
     readonly workspaceId: string;
 }
@@ -30471,7 +30549,7 @@ export function WorkspaceSettingControllerApi_UpdateEntityWorkspaceSettings(axio
 export function WorkspaceSettingControllerApiAxiosParamCreator_CreateEntityWorkspaceSettings(workspaceId: string, jsonApiWorkspaceSettingPostOptionalIdDocument: JsonApiWorkspaceSettingPostOptionalIdDocument, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function WorkspaceSettingControllerApiAxiosParamCreator_DeleteEntityWorkspaceSettings(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function WorkspaceSettingControllerApiAxiosParamCreator_DeleteEntityWorkspaceSettings(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function WorkspaceSettingControllerApiAxiosParamCreator_GetAllEntitiesWorkspaceSettings(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -30497,7 +30575,6 @@ export interface WorkspaceSettingControllerApiCreateEntityWorkspaceSettingsReque
 
 // @public
 export interface WorkspaceSettingControllerApiDeleteEntityWorkspaceSettingsRequest {
-    readonly filter?: string;
     readonly objectId: string;
     readonly workspaceId: string;
 }
@@ -30633,10 +30710,10 @@ export function WorkspacesSettingsApiAxiosParamCreator_CreateEntityCustomApplica
 export function WorkspacesSettingsApiAxiosParamCreator_CreateEntityWorkspaceSettings(workspaceId: string, jsonApiWorkspaceSettingPostOptionalIdDocument: JsonApiWorkspaceSettingPostOptionalIdDocument, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function WorkspacesSettingsApiAxiosParamCreator_DeleteEntityCustomApplicationSettings(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function WorkspacesSettingsApiAxiosParamCreator_DeleteEntityCustomApplicationSettings(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function WorkspacesSettingsApiAxiosParamCreator_DeleteEntityWorkspaceSettings(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function WorkspacesSettingsApiAxiosParamCreator_DeleteEntityWorkspaceSettings(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function WorkspacesSettingsApiAxiosParamCreator_GetAllEntitiesCustomApplicationSettings(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -30690,14 +30767,12 @@ export interface WorkspacesSettingsApiCreateEntityWorkspaceSettingsRequest {
 
 // @public
 export interface WorkspacesSettingsApiDeleteEntityCustomApplicationSettingsRequest {
-    readonly filter?: string;
     readonly objectId: string;
     readonly workspaceId: string;
 }
 
 // @public
 export interface WorkspacesSettingsApiDeleteEntityWorkspaceSettingsRequest {
-    readonly filter?: string;
     readonly objectId: string;
     readonly workspaceId: string;
 }
@@ -30871,5 +30946,10 @@ export interface Xliff {
     // (undocumented)
     'version'?: string;
 }
+
+// Warnings were encountered during analysis:
+//
+// src/gd-tiger-model/TigerTypes.ts:785:9 - (ae-forgotten-export) The symbol "ITigerDashboardAttributeFilterParent" needs to be exported by the entry point index.d.ts
+// src/gd-tiger-model/TigerTypes.ts:786:9 - (ae-forgotten-export) The symbol "ITigerDashboardAttributeFilterByDate" needs to be exported by the entry point index.d.ts
 
 ```

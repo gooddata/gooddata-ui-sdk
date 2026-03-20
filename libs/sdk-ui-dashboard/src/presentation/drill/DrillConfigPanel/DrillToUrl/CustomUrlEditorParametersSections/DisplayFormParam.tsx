@@ -2,13 +2,17 @@
 
 import { useIntl } from "react-intl";
 
-import { type AttributeDisplayFormType, type IAttributeDisplayFormMetadataObject } from "@gooddata/sdk-model";
+import {
+    type AttributeDisplayFormType,
+    type IAttributeDisplayFormMetadataObject,
+    dashboardAttributeFilterItemTitle,
+} from "@gooddata/sdk-model";
 import { useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 import { Parameter } from "./Parameter.js";
 import { useDashboardSelector } from "../../../../../model/react/DashboardStoreProvider.js";
 import { selectAllCatalogAttributesMap } from "../../../../../model/store/catalog/catalogSelectors.js";
-import { selectFilterContextAttributeFilterByDisplayForm } from "../../../../../model/store/tabs/filterContext/filterContextSelectors.js";
+import { selectFilterContextAttributeFilterItemByDisplayForm } from "../../../../../model/store/tabs/filterContext/filterContextSelectors.js";
 import { AttributeDisplayFormParameterDetail } from "../ParameterDetails/AttributeDisplayFormParameterDetail.js";
 
 interface IXProps {
@@ -23,13 +27,16 @@ export function DisplayFormParam({ item, onAdd, iconClassName, isFilter }: IXPro
     const y = x.get(item.attribute);
     const intl = useIntl();
     const projectId = useWorkspaceStrict();
-    const dashboardFilter = useDashboardSelector(selectFilterContextAttributeFilterByDisplayForm(item.ref));
+    const dashboardFilter = useDashboardSelector(
+        selectFilterContextAttributeFilterItemByDisplayForm(item.ref),
+    );
     const defaultTitle = y?.attribute.title || "";
+    const filterTitle = dashboardFilter ? dashboardAttributeFilterItemTitle(dashboardFilter) : undefined;
 
     return (
         <Parameter
             key={item.id}
-            name={isFilter ? (dashboardFilter?.attributeFilter?.title ?? defaultTitle) : defaultTitle}
+            name={isFilter ? (filterTitle ?? defaultTitle) : defaultTitle}
             description={item.title}
             detailContent={
                 <AttributeDisplayFormParameterDetail

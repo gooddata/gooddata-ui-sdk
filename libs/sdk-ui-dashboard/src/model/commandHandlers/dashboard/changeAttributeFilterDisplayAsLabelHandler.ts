@@ -4,13 +4,19 @@ import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 
+import { isDashboardTextAttributeFilter } from "@gooddata/sdk-model";
+
 import { type ISetDashboardAttributeFilterConfigDisplayAsLabel } from "../../commands/dashboard.js";
-import { dashboardAttributeConfigDisplayAsLabelChanged } from "../../events/filters.js";
+import {
+    attributeDisplayFormChanged,
+    dashboardAttributeConfigDisplayAsLabelChanged,
+} from "../../events/filters.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
-import { selectFilterContextAttributeFilterByLocalId } from "../../store/tabs/filterContext/filterContextSelectors.js";
+import { selectFilterContextAttributeFilterItemByLocalId } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
+import { resolveAndRegisterDisplayFormMetadata } from "../filterContext/attributeFilter/resolveDisplayFormMetadata.js";
 import { dispatchFilterContextChanged } from "../filterContext/common.js";
 
 export function* changeAttributeFilterDisplayAsLabelHandler(
@@ -20,8 +26,8 @@ export function* changeAttributeFilterDisplayAsLabelHandler(
     const { localIdentifier, displayAsLabel } = cmd.payload;
 
     // validate localIdentifier
-    const affectedFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterByLocalId>> =
-        yield select(selectFilterContextAttributeFilterByLocalId(localIdentifier));
+    const affectedFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterItemByLocalId>> =
+        yield select(selectFilterContextAttributeFilterItemByLocalId(localIdentifier));
 
     if (!affectedFilter) {
         throw invalidArgumentsProvided(ctx, cmd, `Filter with localIdentifier ${localIdentifier} not found.`);
@@ -29,8 +35,21 @@ export function* changeAttributeFilterDisplayAsLabelHandler(
 
     yield put(tabsActions.changeDisplayAsLabel(cmd.payload));
 
-    const changedFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterByLocalId>> =
-        yield select(selectFilterContextAttributeFilterByLocalId(localIdentifier));
+    // For text filters (arbitrary/match), also update the displayForm on the filter definition itself
+    if (isDashboardTextAttributeFilter(affectedFilter) && displayAsLabel) {
+        yield call(resolveAndRegisterDisplayFormMetadata, displayAsLabel);
+
+        yield put(
+            tabsActions.changeTextFilterDisplayForm({
+                filterLocalId: localIdentifier,
+                displayForm: displayAsLabel,
+                tabLocalIdentifier: cmd.payload.tabLocalIdentifier,
+            }),
+        );
+    }
+
+    const changedFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterItemByLocalId>> =
+        yield select(selectFilterContextAttributeFilterItemByLocalId(localIdentifier));
 
     invariant(
         changedFilter,
@@ -40,5 +59,9 @@ export function* changeAttributeFilterDisplayAsLabelHandler(
     yield dispatchDashboardEvent(
         dashboardAttributeConfigDisplayAsLabelChanged(ctx, changedFilter, displayAsLabel, cmd.correlationId),
     );
+
+    if (isDashboardTextAttributeFilter(affectedFilter) && displayAsLabel) {
+        yield dispatchDashboardEvent(attributeDisplayFormChanged(ctx, changedFilter, cmd.correlationId));
+    }
     yield call(dispatchFilterContextChanged, ctx, cmd);
 }

@@ -3,10 +3,11 @@
 import { createSelector } from "@reduxjs/toolkit";
 
 import {
+    type DashboardAttributeFilterItem,
     type IAttributeDisplayFormMetadataObject,
-    type IDashboardAttributeFilter,
     type ObjRef,
     areObjRefsEqual,
+    dashboardAttributeFilterItemDisplayForm,
     idRef,
     uriRef,
 } from "@gooddata/sdk-model";
@@ -24,11 +25,11 @@ function isDisplayFormEqual(displayForm: IAttributeDisplayFormMetadataObject, id
     );
 }
 
-const selectFilterAttribute = (filter: IDashboardAttributeFilter) =>
+const selectFilterAttribute = (filter: DashboardAttributeFilterItem) =>
     createSelector(selectCatalogAttributes, (attributes) =>
         attributes.find((attribute) =>
             attribute.displayForms.some((displayForm) =>
-                isDisplayFormEqual(displayForm, filter.attributeFilter.displayForm),
+                isDisplayFormEqual(displayForm, dashboardAttributeFilterItemDisplayForm(filter)!),
             ),
         ),
     );

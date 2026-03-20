@@ -45,6 +45,23 @@ export interface ITextFilterInnerControllerProps {
     availableTextModes?: AttributeFilterTextMode[];
     attributeMetadataStatus?: AsyncOperationStatus;
     attributeMetadataError?: GoodDataSdkError;
+    withoutApply?: boolean;
+}
+
+/**
+ * Check whether a text filter state is objectively invalid (empty values/literal),
+ * regardless of UI touched flags. Used to gate onChange/placeholder updates.
+ *
+ * @internal
+ */
+export function isTextStateInvalid(state: ITextFilterState): boolean {
+    if (isAllOperator(state.operator)) {
+        return false;
+    }
+    if (isArbitraryOperator(state.operator)) {
+        return state.values.length === 0;
+    }
+    return state.literal.trim() === "";
 }
 
 const DEFAULT_TEXT_MODES: AttributeFilterTextMode[] = ["arbitrary", "match"];
@@ -114,6 +131,7 @@ export function useTextFilterInnerController(
         onTextStateChange,
         availableTextModes = DEFAULT_TEXT_MODES,
         filterModeChanged = false,
+        withoutApply = false,
     } = props;
 
     const [operator, setOperator] = useState<TextFilterOperator>(
@@ -141,9 +159,17 @@ export function useTextFilterInnerController(
 
     const emitStateChange = useCallback(
         (state: ITextFilterState) => {
+            // When withoutApply, auto-commit valid states (matching elements filter
+            // which calls handler.commitSelection() on every valid select).
+            if (withoutApply && !isTextStateInvalid(state)) {
+                setCommittedState(state);
+                setIsEmptyAfterOperatorChange(false);
+                setIsLiteralTouched(false);
+                setIsValuesTouched(false);
+            }
             onTextStateChange?.(state);
         },
-        [onTextStateChange],
+        [onTextStateChange, withoutApply],
     );
 
     const syncFromFilter = useCallback(
@@ -194,22 +220,6 @@ export function useTextFilterInnerController(
             setIsLiteralTouched(false);
             setIsValuesTouched(false);
             setIsEmptyAfterOperatorChange(true);
-            // When crossing groups (arbitrary ↔ match), reset committed state so the filter
-            // is fully reset — Apply stays disabled until user enters new values.
-            // Exception: "All" operator should NOT auto-commit - user must click Apply.
-            // Also, when switching FROM "All", don't auto-commit.
-            if (
-                !isAllOperator(newOperator) &&
-                !isAllOperator(operator) &&
-                isArbitraryOperator(newOperator) !== isArbitraryOperator(operator)
-            ) {
-                setCommittedState({
-                    operator: newOperator,
-                    values: next.values,
-                    literal: next.literal,
-                    caseSensitive,
-                });
-            }
             emitStateChange({
                 operator: newOperator,
                 values: next.values,

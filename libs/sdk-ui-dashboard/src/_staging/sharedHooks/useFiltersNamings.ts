@@ -7,19 +7,26 @@ import {
     type FilterContextItem,
     type IAttributeElement,
     type ObjRef,
+    dashboardAttributeFilterItemLocalIdentifier,
+    dashboardAttributeFilterItemTitle,
     getAttributeElementsItems,
     isAllTimeDashboardDateFilter,
     isAllValuesDashboardAttributeFilter,
+    isDashboardArbitraryAttributeFilter,
     isDashboardAttributeFilter,
     isDashboardCommonDateFilter,
+    isDashboardDateFilter,
     isDashboardDateFilterWithDimension,
+    isDashboardMatchAttributeFilter,
     serializeObjRef,
 } from "@gooddata/sdk-model";
 import { type ILocale } from "@gooddata/sdk-ui";
 import {
     DateFilterHelpers,
+    type TextFilterOperator,
     getAttributeFilterSubtitle,
     getLocalizedIcuDateFormatPattern,
+    getTextFilterStateText,
 } from "@gooddata/sdk-ui-filters";
 
 import { useAttributeFilterDisplayFormFromMap } from "./useAttributeFilterDisplayFormFromMap.js";
@@ -135,7 +142,7 @@ function transformFiltersToNamings(
                 title: filter.attributeFilter.title ?? attribute.attribute.title,
                 subtitle,
             };
-        } else {
+        } else if (isDashboardDateFilter(filter)) {
             /**
              * Shenanigans inspired by core date filter and dashboard date filter implementation
              * to get the date filter option for its subtitle.
@@ -181,6 +188,60 @@ function transformFiltersToNamings(
                 };
             }
 
+            return undefined;
+        } else if (isDashboardArbitraryAttributeFilter(filter)) {
+            const { values, negativeSelection, displayForm } = filter.arbitraryAttributeFilter;
+            const filterDisplayForm = getAttributeFilterDisplayFormFromMap(displayForm);
+            if (!filterDisplayForm) {
+                return undefined;
+            }
+            const attribute = attrMap.get(filterDisplayForm.attribute);
+            if (!attribute) {
+                return undefined;
+            }
+            const operator: TextFilterOperator =
+                values.length === 0 && negativeSelection ? "all" : negativeSelection ? "isNot" : "is";
+            const subtitle = getTextFilterStateText(operator, values, "", intl);
+            const title = dashboardAttributeFilterItemTitle(filter) ?? attribute.attribute.title;
+            return {
+                type: "attributeFilter",
+                all: values.length === 0 && negativeSelection,
+                id: dashboardAttributeFilterItemLocalIdentifier(filter)!,
+                title,
+                subtitle,
+            };
+        } else if (isDashboardMatchAttributeFilter(filter)) {
+            const {
+                operator: matchOperator,
+                literal,
+                negativeSelection,
+                displayForm,
+            } = filter.matchAttributeFilter;
+            const filterDisplayForm = getAttributeFilterDisplayFormFromMap(displayForm);
+            if (!filterDisplayForm) {
+                return undefined;
+            }
+            const attribute = attrMap.get(filterDisplayForm.attribute);
+            if (!attribute) {
+                return undefined;
+            }
+            const isNegative = negativeSelection ?? false;
+            const operatorMap: Record<string, TextFilterOperator> = {
+                contains: isNegative ? "doesNotContain" : "contains",
+                startsWith: isNegative ? "doesNotStartWith" : "startsWith",
+                endsWith: isNegative ? "doesNotEndWith" : "endsWith",
+            };
+            const operator: TextFilterOperator = operatorMap[matchOperator] ?? "contains";
+            const subtitle = getTextFilterStateText(operator, [], literal, intl);
+            const title = dashboardAttributeFilterItemTitle(filter) ?? attribute.attribute.title;
+            return {
+                type: "attributeFilter",
+                all: false,
+                id: dashboardAttributeFilterItemLocalIdentifier(filter)!,
+                title,
+                subtitle,
+            };
+        } else {
             return undefined;
         }
     });

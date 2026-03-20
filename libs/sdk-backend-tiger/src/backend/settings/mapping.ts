@@ -37,6 +37,7 @@ const TYPE_TO_KEY_MAP = {
     ACTIVE_THEME: "activeTheme",
     LOCALE: "locale",
     MAPBOX_TOKEN: "mapboxToken",
+    GEO_ICON_SHEET: "geoIconSheet",
     AG_GRID_TOKEN: "agGridToken",
     METADATA_LOCALE: "metadataLocale",
     TIMEZONE: "timezone",

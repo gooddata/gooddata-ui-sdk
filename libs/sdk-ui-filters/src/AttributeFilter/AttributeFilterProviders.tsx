@@ -38,7 +38,7 @@ export function AttributeFilterProviders(props: IAttributeFilterBaseProps & { ch
         withoutApply = false,
         overlayPositionType,
         alignPoints,
-        availableFilterModes,
+        menuConfig,
         onApply,
         onChange,
         onSelect,
@@ -125,7 +125,7 @@ export function AttributeFilterProviders(props: IAttributeFilterBaseProps & { ch
                     withoutApply={withoutApply}
                     overlayPositionType={overlayPositionType}
                     alignPoints={alignPoints}
-                    availableFilterModes={availableFilterModes}
+                    menuConfig={menuConfig}
                 >
                     {children}
                 </AttributeFilterContextProvider>

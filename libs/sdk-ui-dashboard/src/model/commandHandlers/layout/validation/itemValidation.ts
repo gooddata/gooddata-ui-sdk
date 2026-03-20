@@ -6,13 +6,15 @@ import { type SagaReturnType, call, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 
 import {
-    type IDashboardAttributeFilter,
+    type DashboardAttributeFilterItem,
     type IInsight,
     type IInsightWidget,
     type IKpiWidget,
     type IRichTextWidget,
     type ObjRef,
     areObjRefsEqual,
+    dashboardAttributeFilterItemDisplayForm,
+    dashboardAttributeFilterItemLocalIdentifier,
     insightRef,
     isDashboardAttributeFilterReference,
     isInsightWidget,
@@ -34,7 +36,7 @@ import {
 import { type IMeasureDateDatasets, queryDateDatasetsForMeasure } from "../../../queries/kpis.js";
 import { query } from "../../../store/_infra/queryCall.js";
 import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
-import { selectFilterContextAttributeFilters } from "../../../store/tabs/filterContext/filterContextSelectors.js";
+import { selectFilterContextAttributeFilterItems } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { type DashboardContext } from "../../../types/commonTypes.js";
 import { type ExtendedDashboardItem } from "../../../types/layoutTypes.js";
 import { extractInsightRefsFromItems } from "../../../utils/dashboardItemUtils.js";
@@ -216,16 +218,17 @@ function* validateAndResolveRichTextFilters(
 
 function removeObsoleteAttributeFilterIgnores<T extends IKpiWidget | IInsightWidget | IRichTextWidget>(
     widget: T,
-    attributeFilters: IDashboardAttributeFilter[],
+    attributeFilters: DashboardAttributeFilterItem[],
     displayAsLabelMap: Map<string, ObjRef>,
 ): T {
     const onlyExistingFilterIgnores = widget.ignoreDashboardFilters.filter((filterRef) => {
         if (isDashboardAttributeFilterReference(filterRef)) {
             return attributeFilters.find((filter) => {
-                const displayAsLabel = displayAsLabelMap.get(filter.attributeFilter.localIdentifier!);
+                const localId = dashboardAttributeFilterItemLocalIdentifier(filter);
+                const displayAsLabel = localId ? displayAsLabelMap.get(localId) : undefined;
                 return (
-                    areObjRefsEqual(filter.attributeFilter.displayForm, filterRef.displayForm) ||
-                    areObjRefsEqual(filter.attributeFilter.displayForm, displayAsLabel)
+                    areObjRefsEqual(dashboardAttributeFilterItemDisplayForm(filter), filterRef.displayForm) ||
+                    areObjRefsEqual(dashboardAttributeFilterItemDisplayForm(filter), displayAsLabel)
                 );
             });
         }
@@ -262,8 +265,8 @@ export function* validateAndResolveItemFilterSettings(
     items: ItemValidationResult,
     autoDateDataset: boolean = false,
 ): SagaIterator<ExtendedDashboardItem[]> {
-    const attributeFilters: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
-        selectFilterContextAttributeFilters,
+    const attributeFilters: ReturnType<typeof selectFilterContextAttributeFilterItems> = yield select(
+        selectFilterContextAttributeFilterItems,
     );
     const displayAsLabelMap: ReturnType<typeof selectAttributeFilterConfigsDisplayAsLabelMap> = yield select(
         selectAttributeFilterConfigsDisplayAsLabelMap,

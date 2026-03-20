@@ -5,13 +5,19 @@ import { batchActions } from "redux-batched-actions";
 import { type SagaIterator } from "redux-saga";
 import { call, put, select } from "redux-saga/effects";
 
-import { areObjRefsEqual, isInsightWidget } from "@gooddata/sdk-model";
+import {
+    areObjRefsEqual,
+    dashboardAttributeFilterItemDisplayForm,
+    dashboardAttributeFilterItemFilterElementsBy,
+    dashboardAttributeFilterItemLocalIdentifier,
+    isInsightWidget,
+} from "@gooddata/sdk-model";
 
 import { type IRemoveAttributeFilters } from "../../../commands/filters.js";
 import { attributeFilterRemoved } from "../../../events/filters.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
-import { selectFilterContextAttributeFilters } from "../../../store/tabs/filterContext/filterContextSelectors.js";
+import { selectFilterContextAttributeFilterItems } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../../store/tabs/index.js";
 import { selectAllAnalyticalWidgets } from "../../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../../types/commonTypes.js";
@@ -24,17 +30,17 @@ export function* removeAttributeFiltersHandler(
 ): SagaIterator<void> {
     const { filterLocalIds } = cmd.payload;
 
-    const allFilters: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
-        selectFilterContextAttributeFilters,
+    const allFilters: ReturnType<typeof selectFilterContextAttributeFilterItems> = yield select(
+        selectFilterContextAttributeFilterItems,
     );
 
     const [removedFilters, survivingFilters] = partition(allFilters, (item) =>
-        filterLocalIds.includes(item.attributeFilter.localIdentifier!),
+        filterLocalIds.includes(dashboardAttributeFilterItemLocalIdentifier(item)!),
     );
 
     const invalidLocalIds = difference(
         filterLocalIds,
-        allFilters.map((filter) => filter.attributeFilter.localIdentifier),
+        allFilters.map((filter) => dashboardAttributeFilterItemLocalIdentifier(filter)),
     );
 
     if (invalidLocalIds.length) {
@@ -46,48 +52,49 @@ export function* removeAttributeFiltersHandler(
     }
 
     for (const removedFilter of removedFilters) {
-        const affectedChildren = survivingFilters.filter((item) =>
-            item.attributeFilter.filterElementsBy?.some((parent) =>
-                filterLocalIds.includes(parent.filterLocalIdentifier),
-            ),
-        );
+        // Standard and arbitrary attribute filters can have parent-child relationships via filterElementsBy
+        const affectedChildren = survivingFilters.filter((item) => {
+            const filterElementsBy = dashboardAttributeFilterItemFilterElementsBy(item);
+            return filterElementsBy?.some((parent) => filterLocalIds.includes(parent.filterLocalIdentifier));
+        });
+
+        const removedDisplayForm = dashboardAttributeFilterItemDisplayForm(removedFilter)!;
+        const removedLocalId = dashboardAttributeFilterItemLocalIdentifier(removedFilter)!;
 
         // When cross filtering, duplicate filter may exist in surviving filters. In such cases, we
         // don't want to remove the filter from ignored filters of widget. We match by display form
         // here instead of local identifier as the local identifier is not available in ignored
         // filters state.
         const isFilterDuplicatedInSurvivingFilters = survivingFilters.some((item) =>
-            areObjRefsEqual(item.attributeFilter.displayForm, removedFilter.attributeFilter.displayForm),
+            areObjRefsEqual(dashboardAttributeFilterItemDisplayForm(item), removedDisplayForm),
         );
         const removeIgnoredAttributeFilterActionArray = isFilterDuplicatedInSurvivingFilters
             ? []
             : [
                   tabsActions.removeIgnoredAttributeFilter({
-                      displayFormRefs: [removedFilter.attributeFilter.displayForm],
+                      displayFormRefs: [removedDisplayForm],
                   }),
               ];
 
         const batch = batchActions(
             compact([
-                // remove filter from parents and keep track of the affected filters
-                ...affectedChildren.map(({ attributeFilter }) =>
+                // remove filter from parents for all affected children (standard and arbitrary filters)
+                ...affectedChildren.map((item) =>
                     tabsActions.setAttributeFilterParents({
-                        filterLocalId: attributeFilter.localIdentifier!,
-                        parentFilters: attributeFilter.filterElementsBy!.filter(
-                            (parent) =>
-                                parent.filterLocalIdentifier !==
-                                removedFilter?.attributeFilter.localIdentifier,
+                        filterLocalId: dashboardAttributeFilterItemLocalIdentifier(item)!,
+                        parentFilters: (dashboardAttributeFilterItemFilterElementsBy(item) ?? []).filter(
+                            (parent) => parent.filterLocalIdentifier !== removedLocalId,
                         ),
                     }),
                 ),
                 // remove filter itself
                 tabsActions.removeAttributeFilter({
-                    filterLocalId: removedFilter.attributeFilter.localIdentifier!,
+                    filterLocalId: removedLocalId,
                 }),
                 // remove filter's display form metadata object
-                tabsActions.removeAttributeFilterDisplayForms(removedFilter.attributeFilter.displayForm),
+                tabsActions.removeAttributeFilterDisplayForms(removedDisplayForm),
                 // remove reflect dashboard attribute filter config
-                tabsActions.removeAttributeFilterConfig(removedFilter.attributeFilter.localIdentifier!),
+                tabsActions.removeAttributeFilterConfig(removedLocalId),
                 // house-keeping: ensure the removed attribute filter disappears from widget ignore lists
                 ...removeIgnoredAttributeFilterActionArray,
             ]),

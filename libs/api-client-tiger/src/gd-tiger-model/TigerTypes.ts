@@ -28,7 +28,7 @@
  * @public
  */
 
-import { type DateFilterGranularity, type ObjRef } from "@gooddata/sdk-model";
+import { type DateFilterGranularity, type MatchFilterOperator, type ObjRef } from "@gooddata/sdk-model";
 
 import { type DashboardFilter } from "../generated/metadata-json-api/index.js";
 
@@ -773,10 +773,46 @@ export interface ITigerDashboardDateFilter {
 }
 
 /**
+ * Tiger-specific dashboard arbitrary attribute filter
+ * @public
+ */
+export interface ITigerDashboardArbitraryAttributeFilter {
+    arbitraryAttributeFilter: {
+        displayForm: ObjRef;
+        values: string[];
+        negativeSelection: boolean;
+        localIdentifier?: string;
+        filterElementsBy?: ITigerDashboardAttributeFilterParent[];
+        filterElementsByDate?: ITigerDashboardAttributeFilterByDate[];
+        validateElementsBy?: ObjRef[];
+        title?: string;
+    };
+}
+
+/**
+ * Tiger-specific dashboard match attribute filter
+ * @public
+ */
+export interface ITigerDashboardMatchAttributeFilter {
+    matchAttributeFilter: {
+        displayForm: ObjRef;
+        operator: MatchFilterOperator;
+        literal: string;
+        caseSensitive?: boolean;
+        negativeSelection?: boolean;
+        localIdentifier?: string;
+        title?: string;
+    };
+}
+
+/**
  * Tiger-specific filter context item
  * @public
  */
-export type ITigerFilterContextItem = DashboardFilter;
+export type ITigerFilterContextItem =
+    | DashboardFilter
+    | ITigerDashboardArbitraryAttributeFilter
+    | ITigerDashboardMatchAttributeFilter;
 
 //
 // =====================================================================================================================

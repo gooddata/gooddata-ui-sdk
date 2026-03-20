@@ -3,9 +3,9 @@
 import { type ComponentType, type ReactNode, type RefObject } from "react";
 
 import {
+    type DashboardAttributeFilterItem,
     type ICatalogAttribute,
     type ICatalogDateDataset,
-    type IDashboardAttributeFilter,
     type ObjRef,
 } from "@gooddata/sdk-model";
 import type { IAttributeFilterButtonProps } from "@gooddata/sdk-ui-filters";
@@ -22,13 +22,16 @@ import type { IFilterBarFilterGroupItem } from "../filterBar/useFiltersWithAdded
 export interface IDashboardAttributeFilterProps {
     /**
      * Definition of filter to render.
+     *
+     * @remarks
+     * This can be any attribute filter type: element-based, arbitrary, or match filter.
      */
-    filter: IDashboardAttributeFilter;
+    filter: DashboardAttributeFilterItem;
 
     /**
      * Working filter which selection will be used to render.
      */
-    workingFilter?: IDashboardAttributeFilter;
+    workingFilter?: DashboardAttributeFilterItem;
 
     /**
      * When the user interacts with the filter and changes its value, it MUST use this callback to propagate the
@@ -43,7 +46,7 @@ export interface IDashboardAttributeFilterProps {
      * @param isSelectionInvalid - specifies if filter selection is invalid
      */
     onFilterChanged: (
-        filter: IDashboardAttributeFilter,
+        filter: DashboardAttributeFilterItem,
         displayAsLabel?: ObjRef,
         isWorkingSelectionChange?: boolean,
         isResultOfMigration?: boolean,
@@ -137,7 +140,7 @@ export type CustomDashboardAttributeFilterComponent = ComponentType<IDashboardAt
  */
 export interface IDashboardFilterGroupProps {
     groupItem: IFilterBarFilterGroupItem;
-    onAttributeFilterChanged: (filter: IDashboardAttributeFilter) => void;
+    onAttributeFilterChanged: (filter: DashboardAttributeFilterItem) => void;
     DashboardAttributeFilterComponent?: CustomDashboardAttributeFilterComponent;
 }
 

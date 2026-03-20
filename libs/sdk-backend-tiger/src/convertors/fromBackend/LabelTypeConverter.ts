@@ -35,6 +35,9 @@ export function convertLabelType(
         case "GEO_ICON":
             return "GDC.geo.icon";
 
+        case "HYPERLOGLOG":
+            return "GDC.hyperloglog";
+
         default:
             return undefined;
     }

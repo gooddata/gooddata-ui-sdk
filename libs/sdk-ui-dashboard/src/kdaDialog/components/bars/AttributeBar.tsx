@@ -6,6 +6,7 @@ import cx from "classnames";
 import { useIntl } from "react-intl";
 
 import {
+    type DashboardAttributeFilterItem,
     type IDashboardAttributeFilter,
     type IDashboardAttributeFilterConfig,
     type ObjRef,
@@ -70,8 +71,8 @@ function KdaAttributeFilterWrapper({
     onDelete?: (filter: IDashboardAttributeFilter) => void;
 }) {
     const handleFilterChanged = useCallback(
-        (newFilter: IDashboardAttributeFilter) => {
-            onChange?.(newFilter);
+        (newFilter: DashboardAttributeFilterItem) => {
+            onChange?.(newFilter as IDashboardAttributeFilter);
         },
         [onChange],
     );

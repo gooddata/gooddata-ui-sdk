@@ -7,7 +7,6 @@ import { fileURLToPath } from "node:url";
 import { type OutputChunk } from "rollup";
 import { defineConfig, loadEnv } from "vite";
 import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js";
-import environment from "vite-plugin-environment";
 
 const require = createRequire(import.meta.url);
 const npmPackage = require("./package.json");
@@ -27,10 +26,6 @@ export default defineConfig(({ command, mode }) => {
     if (command === "serve") {
         return {
             plugins: [
-                environment({
-                    NODE_DEBUG: "",
-                    TEST_PSEUDOMAP: "",
-                }),
                 {
                     name: "inject-insight-id",
                     transformIndexHtml(html) {
@@ -46,7 +41,9 @@ export default defineConfig(({ command, mode }) => {
                 VITE_WORKSPACE: JSON.stringify(env["VITE_WORKSPACE"]),
                 VITE_INSIGHT: JSON.stringify(env["VITE_INSIGHT"]),
                 VITE_AUTH_TOKEN: JSON.stringify(env["VITE_AUTH_TOKEN"]),
-                "process.env": { NODE_ENV: mode },
+                "process.env.NODE_ENV": JSON.stringify(mode),
+                "process.env.NODE_DEBUG": JSON.stringify(""),
+                "process.env.TEST_PSEUDOMAP": JSON.stringify(""),
             },
             root: debugDir,
             publicDir: false,
@@ -66,10 +63,6 @@ export default defineConfig(({ command, mode }) => {
     // this is config for the build
     return {
         plugins: [
-            environment({
-                NODE_DEBUG: "",
-                TEST_PSEUDOMAP: "",
-            }),
             cssInjectedByJsPlugin({
                 jsAssetsFilterFunction: (chunk: OutputChunk) => /^index\.js$/.test(chunk.fileName),
             }),
@@ -94,7 +87,9 @@ if (typeof window !== "undefined") {
         define: {
             NPM_PACKAGE_NAME: JSON.stringify(npmPackage.name),
             NPM_PACKAGE_VERSION: JSON.stringify(sdkModelVersion),
-            "process.env": { NODE_ENV: mode },
+            "process.env.NODE_ENV": JSON.stringify(mode),
+            "process.env.NODE_DEBUG": JSON.stringify(""),
+            "process.env.TEST_PSEUDOMAP": JSON.stringify(""),
         },
         build: {
             minify: mode === "production",

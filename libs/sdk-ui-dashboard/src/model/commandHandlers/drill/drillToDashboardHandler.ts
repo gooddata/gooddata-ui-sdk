@@ -6,6 +6,7 @@ import { type SagaReturnType, call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 
 import {
+    type DashboardAttributeFilterItem,
     type FilterContextItem,
     type IAttributeFilter,
     type IDashboardAttributeFilter,
@@ -33,7 +34,7 @@ import {
 } from "./common/intersectionUtils.js";
 import { getIncludedSourceFiltersForDashboard } from "./common/sourceDrillFilters.js";
 import {
-    dashboardAttributeFilterToAttributeFilter,
+    dashboardAttributeFilterItemToAttributeFilter,
     dashboardDateFilterToDateFilterByWidget,
 } from "../../../converters/filterConverters.js";
 import { type IDashboardFilter } from "../../../types.js";
@@ -54,9 +55,9 @@ import {
     selectAttributeFilterConfigsOverrides,
 } from "../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import {
-    selectFilterContextAttributeFilters,
+    selectFilterContextAttributeFilterItems,
     selectFilterContextDateFilter,
-    selectFilterContextDraggableFilters,
+    selectFilterContextDraggableFilterItems,
 } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { selectAnalyticalWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardState } from "../../store/types.js";
@@ -184,7 +185,7 @@ export function* drillToDashboardHandler(
 }
 
 function getDashboardFilterConfigs(
-    dashboardFilters: FilterContextItem[] | IDashboardAttributeFilter[],
+    dashboardFilters: FilterContextItem[] | DashboardAttributeFilterItem[],
     attributeFilterDisplayAsLabelMap: Map<string, ObjRef>,
 ): IDashboardAttributeFilterConfig[] {
     return dashboardFilters.reduce((result, filter) => {
@@ -244,21 +245,22 @@ function selectDrillingDateFilter(state: DashboardState): IDashboardDateFilter {
     return globalDateFilter ?? newAllTimeDashboardDateFilter();
 }
 
-function selectAllAttributeFilters(state: DashboardState): IDashboardAttributeFilter[] {
-    return selectFilterContextAttributeFilters(state);
+function selectAllAttributeFilters(state: DashboardState): DashboardAttributeFilterItem[] {
+    return selectFilterContextAttributeFilterItems(state);
 }
 
 function selectAllOtherFilters(state: DashboardState): FilterContextItem[] {
-    return selectFilterContextDraggableFilters(state);
+    return selectFilterContextDraggableFilterItems(state);
 }
 
 function convertFilterItemsToFilters(
-    filter: IDashboardAttributeFilter | IDashboardDateFilter,
+    filter: DashboardAttributeFilterItem | IDashboardDateFilter,
     widget: IInsightWidget,
 ): IAttributeFilter | IDateFilter {
-    return isDashboardAttributeFilter(filter)
-        ? dashboardAttributeFilterToAttributeFilter(filter)
-        : dashboardDateFilterToDateFilterByWidget(filter, widget);
+    if ("dateFilter" in filter) {
+        return dashboardDateFilterToDateFilterByWidget(filter, widget);
+    }
+    return dashboardAttributeFilterItemToAttributeFilter(filter);
 }
 
 function removeIgnoredDashboardFilters<T extends FilterContextItem>(
@@ -279,10 +281,14 @@ function* getWidgetAwareDashboardFilters(
     ctx: DashboardContext,
     widget: IInsightWidget,
     includeOtherDateFilters: boolean,
-): SagaIterator<IDashboardAttributeFilter[]> {
-    const filterContextItems: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
-        includeOtherDateFilters ? selectFilterContextDraggableFilters : selectFilterContextAttributeFilters,
+): SagaIterator<FilterContextItem[]> {
+    const filtersIncludingDateFilters: ReturnType<typeof selectFilterContextDraggableFilterItems> =
+        yield select(selectFilterContextDraggableFilterItems);
+    const attributeFilters: ReturnType<typeof selectFilterContextAttributeFilterItems> = yield select(
+        selectFilterContextAttributeFilterItems,
     );
+
+    const filterContextItems = includeOtherDateFilters ? filtersIncludingDateFilters : attributeFilters;
 
     const attributeFilterConfigs: ReturnType<typeof selectAttributeFilterConfigsOverrides> = yield select(
         selectAttributeFilterConfigsOverrides,

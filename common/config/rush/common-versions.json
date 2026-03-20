@@ -32,8 +32,6 @@
      * This design avoids unnecessary churn in this file.
      */
     "allowedAlternativeVersions": {
-        // In playground, sdk-ui-tests-e2e and web-components, vite is not yet updated. Once it is, this can be removed
-        "vite": ["8.0.0"]
         /**
          * For example, allow some projects to use an older TypeScript compiler
          * (in addition to whatever "usual" version is being used by other projects in the repo):

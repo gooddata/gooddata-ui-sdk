@@ -11,7 +11,6 @@ import {
     type IDashboard,
     type IDashboardAttributeFilter,
     type IDashboardAttributeFilterConfig,
-    type IDashboardDateFilter,
     type IDashboardDateFilterConfig,
     type IDashboardDateFilterConfigItem,
     type IDashboardDefinition,
@@ -30,6 +29,7 @@ import {
     isDashboardAttributeFilter,
     isDashboardCommonDateFilter,
     isDashboardDateFilterWithDimension,
+    isDashboardTextAttributeFilter,
     isTempFilterContext,
     uriRef,
 } from "@gooddata/sdk-model";
@@ -284,31 +284,37 @@ const selectWorkingAttributeFiltersByTab: DashboardSelector<Record<string, IDash
         );
     });
 
-const selectPersistedDashboardDraggableFiltersByTab: DashboardSelector<
-    Record<string, Array<IDashboardDateFilter | IDashboardAttributeFilter>>
-> = createSelector(selectPersistedDashboardFilterContextFiltersByTab, (filtersByTab) => {
-    return Object.entries(filtersByTab).reduce<
-        Record<string, Array<IDashboardDateFilter | IDashboardAttributeFilter>>
-    >((acc, [identifier, filters]) => {
-        acc[identifier] = filters.filter(
-            (filter) => isDashboardDateFilterWithDimension(filter) || isDashboardAttributeFilter(filter),
+const selectPersistedDashboardDraggableFiltersByTab: DashboardSelector<Record<string, FilterContextItem[]>> =
+    createSelector(selectPersistedDashboardFilterContextFiltersByTab, (filtersByTab) => {
+        return Object.entries(filtersByTab).reduce<Record<string, FilterContextItem[]>>(
+            (acc, [identifier, filters]) => {
+                acc[identifier] = filters.filter(
+                    (filter) =>
+                        isDashboardDateFilterWithDimension(filter) ||
+                        isDashboardAttributeFilter(filter) ||
+                        isDashboardTextAttributeFilter(filter),
+                );
+                return acc;
+            },
+            {},
         );
-        return acc;
-    }, {});
-});
+    });
 
-const selectWorkingDraggableFiltersByTab: DashboardSelector<
-    Record<string, Array<IDashboardDateFilter | IDashboardAttributeFilter>>
-> = createSelector(selectWorkingFilterContextFiltersByTab, (filtersByTab) => {
-    return Object.entries(filtersByTab).reduce<
-        Record<string, Array<IDashboardDateFilter | IDashboardAttributeFilter>>
-    >((acc, [identifier, filters]) => {
-        acc[identifier] = filters.filter(
-            (filter) => isDashboardDateFilterWithDimension(filter) || isDashboardAttributeFilter(filter),
+const selectWorkingDraggableFiltersByTab: DashboardSelector<Record<string, FilterContextItem[]>> =
+    createSelector(selectWorkingFilterContextFiltersByTab, (filtersByTab) => {
+        return Object.entries(filtersByTab).reduce<Record<string, FilterContextItem[]>>(
+            (acc, [identifier, filters]) => {
+                acc[identifier] = filters.filter(
+                    (filter) =>
+                        isDashboardDateFilterWithDimension(filter) ||
+                        isDashboardAttributeFilter(filter) ||
+                        isDashboardTextAttributeFilter(filter),
+                );
+                return acc;
+            },
+            {},
         );
-        return acc;
-    }, {});
-});
+    });
 
 /**
  * Selects persisted filter context for the active tab (legacy selector).

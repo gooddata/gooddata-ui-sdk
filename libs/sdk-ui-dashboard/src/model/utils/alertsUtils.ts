@@ -12,6 +12,7 @@ import {
     areObjRefsEqual,
     filterObjRef,
     isAttributeFilter,
+    isDashboardAttributeFilter,
     isDashboardAttributeFilterReference,
     isDashboardDateFilter,
     isDashboardDateFilterReference,
@@ -47,7 +48,8 @@ export function getBrokenAlertFiltersBasicInfo(
     }
 
     const result: IBrokenAlertFilterBasicInfo[] = [];
-    const [alertDateFilters, alertAttributeFilters] = partition(alertFilters, isDashboardDateFilter);
+    const [alertDateFilters, alertNonDateFilters] = partition(alertFilters, isDashboardDateFilter);
+    const alertAttributeFilters = alertNonDateFilters.filter(isDashboardAttributeFilter);
 
     // attribute filters
     const appliedAttributeFilters = appliedFilters.filter(isAttributeFilter);

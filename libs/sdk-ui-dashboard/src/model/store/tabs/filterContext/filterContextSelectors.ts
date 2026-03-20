@@ -6,6 +6,7 @@ import { invariant } from "ts-invariant";
 
 import { type IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
 import {
+    type DashboardAttributeFilterItem,
     type FilterContextItem,
     type IAttributeDisplayFormMetadataObject,
     type IDashboardAttributeFilter,
@@ -14,11 +15,17 @@ import {
     type IFilterContextDefinition,
     type ObjRef,
     areObjRefsEqual,
+    dashboardAttributeFilterItemDisplayForm,
+    dashboardAttributeFilterItemFilterElementsBy,
+    dashboardAttributeFilterItemFilterElementsByDate,
+    dashboardAttributeFilterItemLocalIdentifier,
     getAttributeElementsItems,
     idRef,
     isDashboardAttributeFilter,
+    isDashboardAttributeFilterItem,
     isDashboardCommonDateFilter,
     isDashboardDateFilterWithDimension,
+    isDashboardTextAttributeFilter,
     isObjRef,
     uriRef,
 } from "@gooddata/sdk-model";
@@ -277,6 +284,14 @@ export const selectIsWorkingFilterContextChanged: DashboardSelector<boolean | un
                         )
                     );
                 }
+                // Text filters (arbitrary, match) — straight deep comparison,
+                // type change between arbitrary and match is considered a change
+                if (
+                    isDashboardTextAttributeFilter(appliedFilter) ||
+                    isDashboardTextAttributeFilter(workingFilter)
+                ) {
+                    return isEqual(appliedFilter, workingFilter);
+                }
                 // Date filters
                 return isEqual(appliedFilter, workingFilter);
             })
@@ -386,13 +401,17 @@ export const selectWorkingFilterContextFilters: DashboardSelector<FilterContextI
 );
 
 /**
- * This selector returns dashboard's applied filter context attribute filters.
+ * This selector returns dashboard's applied filter context attribute filters with element-based selection only.
  *
  * @remarks
  * It is expected that the selector is called only after the filter context state is correctly initialized.
  * Invocations before initialization lead to invariant errors.
  *
+ * Note: This selector does not include arbitrary or match (text) attribute filters.
+ * Use {@link selectFilterContextAttributeFilterItems} to get all attribute-based filters.
+ *
  * @public
+ * @deprecated Use {@link selectFilterContextAttributeFilterItems} to include all attribute filter types.
  */
 export const selectFilterContextAttributeFilters: DashboardSelector<IDashboardAttributeFilter[]> =
     createSelector(selectFilterContextFilters, (filters): IDashboardAttributeFilter[] =>
@@ -400,7 +419,8 @@ export const selectFilterContextAttributeFilters: DashboardSelector<IDashboardAt
     );
 
 /**
- * This selector returns dashboard's working filter context attribute filters.
+ * This selector returns all dashboard's applied filter context attribute-based filters,
+ * including element-based, arbitrary, and match filters.
  *
  * @remarks
  * It is expected that the selector is called only after the filter context state is correctly initialized.
@@ -408,10 +428,44 @@ export const selectFilterContextAttributeFilters: DashboardSelector<IDashboardAt
  *
  * @public
  */
+export const selectFilterContextAttributeFilterItems: DashboardSelector<DashboardAttributeFilterItem[]> =
+    createSelector(selectFilterContextFilters, (filters): DashboardAttributeFilterItem[] =>
+        filters.filter(isDashboardAttributeFilterItem),
+    );
+
+/**
+ * This selector returns dashboard's working filter context attribute filters with element-based selection only.
+ *
+ * @remarks
+ * It is expected that the selector is called only after the filter context state is correctly initialized.
+ * Invocations before initialization lead to invariant errors.
+ *
+ * Note: This selector does not include arbitrary or match (text) attribute filters.
+ * Use {@link selectWorkingFilterContextAttributeFilterItems} to get all attribute-based filters.
+ *
+ * @public
+ * @deprecated Use {@link selectWorkingFilterContextAttributeFilterItems} to include all attribute filter types.
+ */
 export const selectWorkingFilterContextAttributeFilters: DashboardSelector<IDashboardAttributeFilter[]> =
     createSelector(selectWorkingFilterContextFilters, (filters): IDashboardAttributeFilter[] =>
         filters.filter(isDashboardAttributeFilter),
     );
+
+/**
+ * This selector returns all dashboard's working filter context attribute-based filters,
+ * including element-based, arbitrary, and match filters.
+ *
+ * @remarks
+ * It is expected that the selector is called only after the filter context state is correctly initialized.
+ * Invocations before initialization lead to invariant errors.
+ *
+ * @public
+ */
+export const selectWorkingFilterContextAttributeFilterItems: DashboardSelector<
+    DashboardAttributeFilterItem[]
+> = createSelector(selectWorkingFilterContextFilters, (filters): DashboardAttributeFilterItem[] =>
+    filters.filter(isDashboardAttributeFilterItem),
+);
 
 /**
  * This selector returns dashboard's applied filter context date filter.
@@ -442,13 +496,17 @@ export const selectWorkingFilterContextDateFilter: DashboardSelector<IDashboardD
     );
 
 /**
- * This selector returns dashboard's filter context draggable filters.
+ * This selector returns dashboard's filter context draggable filters (element-based attribute filters and date filters).
  *
  * @remarks
  * It is expected that the selector is called only after the filter context state is correctly initialized.
  * Invocations before initialization lead to invariant errors.
  *
+ * Note: This selector does not include arbitrary or match (text) attribute filters.
+ * Use {@link selectFilterContextDraggableFilterItems} to get all draggable filters.
+ *
  * @public
+ * @deprecated Use {@link selectFilterContextDraggableFilterItems} to include all attribute filter types.
  */
 export const selectFilterContextDraggableFilters: DashboardSelector<
     Array<IDashboardDateFilter | IDashboardAttributeFilter>
@@ -456,6 +514,24 @@ export const selectFilterContextDraggableFilters: DashboardSelector<
     selectFilterContextFilters,
     (filters): Array<IDashboardDateFilter | IDashboardAttributeFilter> =>
         filters.filter((f) => isDashboardDateFilterWithDimension(f) || isDashboardAttributeFilter(f)),
+);
+
+/**
+ * This selector returns all dashboard's filter context draggable filters,
+ * including date filters and all attribute-based filters (element-based, arbitrary, and match).
+ *
+ * @remarks
+ * It is expected that the selector is called only after the filter context state is correctly initialized.
+ * Invocations before initialization lead to invariant errors.
+ *
+ * @public
+ */
+export const selectFilterContextDraggableFilterItems: DashboardSelector<
+    Array<IDashboardDateFilter | DashboardAttributeFilterItem>
+> = createSelector(
+    selectFilterContextFilters,
+    (filters): Array<IDashboardDateFilter | DashboardAttributeFilterItem> =>
+        filters.filter((f) => isDashboardDateFilterWithDimension(f) || isDashboardAttributeFilterItem(f)),
 );
 
 /**
@@ -578,7 +654,7 @@ export const selectFilterContextDateFilterByDataSetForTab: (
 /**
  * Creates a selector for selecting draggable filter's index by its ref:
  * dataSet ref for date filters {@link @gooddata/sdk-model#ObjRef}
- * localIdentifier for attribute filters
+ * localIdentifier for attribute and text attribute filters
  *
  * @remarks
  * Invocations before initialization lead to invariant errors.
@@ -593,8 +669,8 @@ export const selectFilterContextDraggableFilterIndexByRef: (
             if (isDashboardDateFilterWithDimension(filter) && isObjRef(ref)) {
                 return areObjRefsEqual(filter.dateFilter.dataSet, ref);
             }
-            if (isDashboardAttributeFilter(filter) && typeof ref === "string") {
-                return filter.attributeFilter.localIdentifier === ref;
+            if (isDashboardAttributeFilterItem(filter) && typeof ref === "string") {
+                return dashboardAttributeFilterItemLocalIdentifier(filter) === ref;
             }
             return false;
         });
@@ -602,12 +678,16 @@ export const selectFilterContextDraggableFilterIndexByRef: (
 );
 
 /**
- * Creates a selector for selecting attribute filter by its displayForm {@link @gooddata/sdk-model#ObjRef}.
+ * Creates a selector for selecting element-based attribute filter by its displayForm {@link @gooddata/sdk-model#ObjRef}.
  *
  * @remarks
  * Invocations before initialization lead to invariant errors.
  *
+ * Note: This selector does not match arbitrary or match (text) attribute filters.
+ * Use {@link selectFilterContextAttributeFilterItemByDisplayForm} to match all attribute filter types.
+ *
  * @public
+ * @deprecated Use {@link selectFilterContextAttributeFilterItemByDisplayForm} to include all attribute filter types.
  */
 export const selectFilterContextAttributeFilterByDisplayForm: (
     displayForm: ObjRef,
@@ -632,12 +712,48 @@ export const selectFilterContextAttributeFilterByDisplayForm: (
 );
 
 /**
- * Creates a selector for selecting attribute filter by its localId.
+ * Creates a selector for selecting any attribute-based filter by its displayForm {@link @gooddata/sdk-model#ObjRef}.
+ * Matches element-based, arbitrary, and match attribute filters.
  *
  * @remarks
  * Invocations before initialization lead to invariant errors.
  *
  * @public
+ */
+export const selectFilterContextAttributeFilterItemByDisplayForm: (
+    displayForm: ObjRef,
+) => (state: DashboardState) => DashboardAttributeFilterItem | undefined = createMemoizedSelector(
+    (displayForm: ObjRef) =>
+        createSelector(
+            selectAttributeFilterDisplayFormsMap,
+            selectFilterContextAttributeFilterItems,
+            (attributeDisplayFormsMap, attributeFilters) => {
+                const df = attributeDisplayFormsMap.get(displayForm);
+                if (!df) {
+                    return undefined;
+                }
+                return attributeFilters.find((filter) => {
+                    const filterDf = dashboardAttributeFilterItemDisplayForm(filter);
+                    return (
+                        areObjRefsEqual(filterDf, idRef(df.id, "displayForm")) ||
+                        areObjRefsEqual(filterDf, uriRef(df.uri))
+                    );
+                });
+            },
+        ),
+);
+
+/**
+ * Creates a selector for selecting element-based attribute filter by its localId.
+ *
+ * @remarks
+ * Invocations before initialization lead to invariant errors.
+ *
+ * Note: This selector does not match arbitrary or match (text) attribute filters.
+ * Use {@link selectFilterContextAttributeFilterItemByLocalId} to match all attribute filter types.
+ *
+ * @public
+ * @deprecated Use {@link selectFilterContextAttributeFilterItemByLocalId} to include all attribute filter types.
  */
 export const selectFilterContextAttributeFilterByLocalId: (
     localId: string,
@@ -648,12 +764,30 @@ export const selectFilterContextAttributeFilterByLocalId: (
 );
 
 /**
- * Returns attribute filters for a specific tab.
+ * Creates a selector for selecting any attribute-based filter by its localId.
+ * Matches element-based, arbitrary, and match attribute filters.
+ *
+ * @remarks
+ * Invocations before initialization lead to invariant errors.
+ *
+ * @public
+ */
+export const selectFilterContextAttributeFilterItemByLocalId: (
+    localId: string,
+) => DashboardSelector<DashboardAttributeFilterItem | undefined> = createMemoizedSelector((localId: string) =>
+    createSelector(selectFilterContextAttributeFilterItems, (attributeFilters) =>
+        attributeFilters.find((filter) => dashboardAttributeFilterItemLocalIdentifier(filter) === localId),
+    ),
+);
+
+/**
+ * Returns element-based attribute filters for a specific tab.
  *
  * @param tabLocalIdentifier - Tab local identifier
  * @returns Attribute filters for the specified tab
  *
  * @internal
+ * @deprecated Use {@link selectFilterContextAttributeFilterItemsForTab} to include all attribute filter types.
  */
 export const selectFilterContextAttributeFiltersForTab: (
     tabLocalIdentifier: string,
@@ -665,13 +799,32 @@ export const selectFilterContextAttributeFiltersForTab: (
 );
 
 /**
- * Creates a selector for selecting attribute filter by its display form from a specific tab.
+ * Returns all attribute-based filters (element-based, arbitrary, and match) for a specific tab.
+ *
+ * @param tabLocalIdentifier - Tab local identifier
+ * @returns All attribute-based filters for the specified tab
+ *
+ * @internal
+ */
+export const selectFilterContextAttributeFilterItemsForTab: (
+    tabLocalIdentifier: string,
+) => DashboardSelector<DashboardAttributeFilterItem[]> = createMemoizedSelector(
+    (tabLocalIdentifier: string) =>
+        createSelector(selectFiltersByTab, (filtersByTab): DashboardAttributeFilterItem[] => {
+            const filters = filtersByTab[tabLocalIdentifier] ?? [];
+            return filters.filter(isDashboardAttributeFilterItem);
+        }),
+);
+
+/**
+ * Creates a selector for selecting element-based attribute filter by its display form from a specific tab.
  *
  * @param displayForm - Display form ref
  * @param tabLocalIdentifier - Tab local identifier
  * @returns Attribute filter matching the display form, or undefined if not found
  *
  * @internal
+ * @deprecated Use {@link selectFilterContextAttributeFilterItemByDisplayFormForTab} to include all attribute filter types.
  */
 export const selectFilterContextAttributeFilterByDisplayFormForTab: (
     displayForm: ObjRef,
@@ -697,13 +850,48 @@ export const selectFilterContextAttributeFilterByDisplayFormForTab: (
 );
 
 /**
- * Creates a selector for selecting attribute filter by its localId from a specific tab.
+ * Creates a selector for selecting any attribute-based filter by its display form from a specific tab.
+ * Matches element-based, arbitrary, and match attribute filters.
+ *
+ * @param displayForm - Display form ref
+ * @param tabLocalIdentifier - Tab local identifier
+ * @returns Attribute filter item matching the display form, or undefined if not found
+ *
+ * @internal
+ */
+export const selectFilterContextAttributeFilterItemByDisplayFormForTab: (
+    displayForm: ObjRef,
+    tabLocalIdentifier: string,
+) => DashboardSelector<DashboardAttributeFilterItem | undefined> = createMemoizedSelector(
+    (displayForm: ObjRef, tabLocalIdentifier: string) =>
+        createSelector(
+            selectAttributeFilterDisplayFormsMap,
+            selectFilterContextAttributeFilterItemsForTab(tabLocalIdentifier),
+            (attributeDisplayFormsMap, attributeFilters) => {
+                const df = attributeDisplayFormsMap.get(displayForm);
+                if (!df) {
+                    return undefined;
+                }
+                return attributeFilters.find((filter) => {
+                    const filterDf = dashboardAttributeFilterItemDisplayForm(filter);
+                    return (
+                        areObjRefsEqual(filterDf, idRef(df.id, "displayForm")) ||
+                        areObjRefsEqual(filterDf, uriRef(df.uri))
+                    );
+                });
+            },
+        ),
+);
+
+/**
+ * Creates a selector for selecting element-based attribute filter by its localId from a specific tab.
  *
  * @param localId - Filter local identifier
  * @param tabLocalIdentifier - Tab local identifier
  * @returns Attribute filter matching the local id, or undefined if not found
  *
  * @internal
+ * @deprecated Use {@link selectFilterContextAttributeFilterItemByLocalIdForTab} to include all attribute filter types.
  */
 export const selectFilterContextAttributeFilterByLocalIdForTab: (
     localId: string,
@@ -716,18 +904,65 @@ export const selectFilterContextAttributeFilterByLocalIdForTab: (
 );
 
 /**
- * Creates a selector for selecting attribute filter index by its localId.
+ * Creates a selector for selecting any attribute-based filter by its localId from a specific tab.
+ * Matches element-based, arbitrary, and match attribute filters.
+ *
+ * @param localId - Filter local identifier
+ * @param tabLocalIdentifier - Tab local identifier
+ * @returns Attribute filter item matching the local id, or undefined if not found
+ *
+ * @internal
+ */
+export const selectFilterContextAttributeFilterItemByLocalIdForTab: (
+    localId: string,
+    tabLocalIdentifier: string,
+) => DashboardSelector<DashboardAttributeFilterItem | undefined> = createMemoizedSelector(
+    (localId: string, tabLocalIdentifier: string) =>
+        createSelector(
+            selectFilterContextAttributeFilterItemsForTab(tabLocalIdentifier),
+            (attributeFilters) =>
+                attributeFilters.find(
+                    (filter) => dashboardAttributeFilterItemLocalIdentifier(filter) === localId,
+                ),
+        ),
+);
+
+/**
+ * Creates a selector for selecting element-based attribute filter index by its localId.
  *
  * @remarks
  * Invocations before initialization lead to invariant errors.
  *
+ * Note: This selector does not match arbitrary or match (text) attribute filters.
+ * Use {@link selectFilterContextAttributeFilterItemIndexByLocalId} to match all attribute filter types.
+ *
  * @public
+ * @deprecated Use {@link selectFilterContextAttributeFilterItemIndexByLocalId} to include all attribute filter types.
  */
 export const selectFilterContextAttributeFilterIndexByLocalId: (
     localId: string,
 ) => DashboardSelector<number> = createMemoizedSelector((localId: string) =>
     createSelector(selectFilterContextAttributeFilters, (attributeFilters) =>
         attributeFilters.findIndex((filter) => filter.attributeFilter.localIdentifier === localId),
+    ),
+);
+
+/**
+ * Creates a selector for selecting any attribute-based filter index by its localId.
+ * Matches element-based, arbitrary, and match attribute filters.
+ *
+ * @remarks
+ * Invocations before initialization lead to invariant errors.
+ *
+ * @public
+ */
+export const selectFilterContextAttributeFilterItemIndexByLocalId: (
+    localId: string,
+) => DashboardSelector<number> = createMemoizedSelector((localId: string) =>
+    createSelector(selectFilterContextAttributeFilterItems, (attributeFilters) =>
+        attributeFilters.findIndex(
+            (filter) => dashboardAttributeFilterItemLocalIdentifier(filter) === localId,
+        ),
     ),
 );
 
@@ -774,9 +1009,10 @@ export const selectAttributeFilterDescendants: (localId: string) => DashboardSel
     );
 
 /**
- * Creates a selector for selecting all filters with different reference than the given one.
+ * Creates a selector for selecting all element-based filters with different reference than the given one.
  *
  * @internal
+ * @deprecated Use {@link selectOtherContextAttributeFilterItems} to include all attribute filter types.
  */
 export const selectOtherContextAttributeFilters: (
     ref?: ObjRef,
@@ -789,9 +1025,29 @@ export const selectOtherContextAttributeFilters: (
 );
 
 /**
- * Creates a selector to get a display form of the filter defined by its local identifier.
+ * Creates a selector for selecting all attribute-based filters with different reference than the given one.
+ * Includes element-based, arbitrary, and match attribute filters.
  *
  * @internal
+ */
+export const selectOtherContextAttributeFilterItems: (
+    ref?: ObjRef,
+) => DashboardSelector<DashboardAttributeFilterItem[]> = createMemoizedSelector((ref?: ObjRef) =>
+    createSelector(
+        selectFilterContextAttributeFilterItems,
+        (attributeFilters): DashboardAttributeFilterItem[] => {
+            return attributeFilters.filter(
+                (filter) => !areObjRefsEqual(dashboardAttributeFilterItemDisplayForm(filter), ref),
+            );
+        },
+    ),
+);
+
+/**
+ * Creates a selector to get a display form of an element-based filter defined by its local identifier.
+ *
+ * @internal
+ * @deprecated Use {@link selectAttributeFilterItemDisplayFormByLocalId} to include all attribute filter types.
  */
 export const selectAttributeFilterDisplayFormByLocalId: (localId: string) => DashboardSelector<ObjRef> =
     createMemoizedSelector((localId: string) =>
@@ -801,6 +1057,23 @@ export const selectAttributeFilterDisplayFormByLocalId: (localId: string) => Das
             invariant(filter, "Unable to find current filter to get its title.");
 
             return filter.attributeFilter.displayForm;
+        }),
+    );
+
+/**
+ * Creates a selector to get a display form of any attribute-based filter defined by its local identifier.
+ * Matches element-based, arbitrary, and match attribute filters.
+ *
+ * @internal
+ */
+export const selectAttributeFilterItemDisplayFormByLocalId: (localId: string) => DashboardSelector<ObjRef> =
+    createMemoizedSelector((localId: string) =>
+        createSelector(selectFilterContextAttributeFilterItems, (filters) => {
+            const filter = filters.find((f) => dashboardAttributeFilterItemLocalIdentifier(f) === localId);
+
+            invariant(filter, "Unable to find current filter to get its display form.");
+
+            return dashboardAttributeFilterItemDisplayForm(filter);
         }),
     );
 
@@ -844,12 +1117,12 @@ const MAX_DRAGGABLE_FILTERS_COUNT = 30;
  * @deprecated use selectCanAddMoreFilters instead
  */
 export const selectCanAddMoreAttributeFilters: DashboardSelector<boolean> = createSelector(
-    selectFilterContextAttributeFilters,
+    selectFilterContextAttributeFilterItems,
     selectFilterContextDateFiltersWithDimension,
     selectCrossFilteringFiltersLocalIdentifiers,
-    (attributeFilters, dateFiltersWithDimension, crossFilters) => {
+    (attributeFilterItems, dateFiltersWithDimension, crossFilters) => {
         return (
-            attributeFilters.length + dateFiltersWithDimension.length - crossFilters.length <
+            attributeFilterItems.length + dateFiltersWithDimension.length - crossFilters.length <
             MAX_DRAGGABLE_FILTERS_COUNT
         );
     },
@@ -875,11 +1148,14 @@ export const selectIsAttributeFilterDependentByLocalIdentifier: (
     attributeFilterLocalIdentifier: string,
 ) => DashboardSelector<boolean> = createMemoizedSelector((attributeFilterLocalIdentifier: string) =>
     createSelector(
-        selectFilterContextAttributeFilterByLocalId(attributeFilterLocalIdentifier),
+        selectFilterContextAttributeFilterItemByLocalId(attributeFilterLocalIdentifier),
         (filterContextAttributeFilter) => {
+            if (!filterContextAttributeFilter) {
+                return false;
+            }
             return (
-                !isEmpty(filterContextAttributeFilter?.attributeFilter?.filterElementsBy) ||
-                !isEmpty(filterContextAttributeFilter?.attributeFilter?.filterElementsByDate)
+                !isEmpty(dashboardAttributeFilterItemFilterElementsBy(filterContextAttributeFilter)) ||
+                !isEmpty(dashboardAttributeFilterItemFilterElementsByDate(filterContextAttributeFilter))
             );
         },
     ),
@@ -948,12 +1224,13 @@ export const selectWorkingFiltersForTab: (
 );
 
 /**
- * Returns working attribute filters for a specific tab.
+ * Returns working element-based attribute filters for a specific tab.
  *
  * @param tabLocalIdentifier - Tab local identifier
  * @returns Working attribute filters for the specified tab
  *
  * @internal
+ * @deprecated Use {@link selectWorkingFilterContextAttributeFilterItemsForTab} to include all attribute filter types.
  */
 export const selectWorkingFilterContextAttributeFiltersForTab: (
     tabLocalIdentifier: string,
@@ -961,6 +1238,26 @@ export const selectWorkingFilterContextAttributeFiltersForTab: (
     createSelector(selectWorkingFiltersForTab(tabLocalIdentifier), (filters): IDashboardAttributeFilter[] => {
         return filters.filter(isDashboardAttributeFilter);
     }),
+);
+
+/**
+ * Returns all working attribute-based filters (element-based, arbitrary, and match) for a specific tab.
+ *
+ * @param tabLocalIdentifier - Tab local identifier
+ * @returns All working attribute-based filters for the specified tab
+ *
+ * @internal
+ */
+export const selectWorkingFilterContextAttributeFilterItemsForTab: (
+    tabLocalIdentifier: string,
+) => DashboardSelector<DashboardAttributeFilterItem[]> = createMemoizedSelector(
+    (tabLocalIdentifier: string) =>
+        createSelector(
+            selectWorkingFiltersForTab(tabLocalIdentifier),
+            (filters): DashboardAttributeFilterItem[] => {
+                return filters.filter(isDashboardAttributeFilterItem);
+            },
+        ),
 );
 
 /**
@@ -1014,14 +1311,17 @@ export const selectIsAttributeFilterDependentByLocalIdentifierForTab: (
 ) => DashboardSelector<boolean> = createMemoizedSelector(
     (attributeFilterLocalIdentifier: string, tabLocalIdentifier: string) =>
         createSelector(
-            selectFilterContextAttributeFilterByLocalIdForTab(
+            selectFilterContextAttributeFilterItemByLocalIdForTab(
                 attributeFilterLocalIdentifier,
                 tabLocalIdentifier,
             ),
             (filterContextAttributeFilter) => {
+                if (!filterContextAttributeFilter) {
+                    return false;
+                }
                 return (
-                    !isEmpty(filterContextAttributeFilter?.attributeFilter?.filterElementsBy) ||
-                    !isEmpty(filterContextAttributeFilter?.attributeFilter?.filterElementsByDate)
+                    !isEmpty(dashboardAttributeFilterItemFilterElementsBy(filterContextAttributeFilter)) ||
+                    !isEmpty(dashboardAttributeFilterItemFilterElementsByDate(filterContextAttributeFilter))
                 );
             },
         ),
@@ -1052,26 +1352,23 @@ export const selectPreloadedAttributesWithReferences: DashboardSelector<
 export const selectNamesOfFiltersWithInvalidSelection: DashboardSelector<string[]> = createSelector(
     selectFiltersWithInvalidSelection,
     selectAttributeFilterDisplayForms,
-    selectFilterContextAttributeFilters,
-    (invalidFilterIds, attributeFilterDisplayForms, attributeFilters): string[] => {
+    selectFilterContextAttributeFilterItems,
+    (invalidFilterIds, attributeFilterDisplayForms, attributeFilterItems): string[] => {
         // If attributeFilterDisplayForms is undefined, return empty array
         if (!attributeFilterDisplayForms) {
             return [];
         }
-
         // Find filters with invalid selection
-        const invalidFilters = attributeFilters.filter(
-            (filter) =>
-                filter.attributeFilter.localIdentifier &&
-                invalidFilterIds.includes(filter.attributeFilter.localIdentifier),
-        );
+        const invalidFilters = attributeFilterItems.filter((filter) => {
+            const localId = dashboardAttributeFilterItemLocalIdentifier(filter);
+            return localId && invalidFilterIds.includes(localId);
+        });
 
         // For each invalid filter, find the attribute name from attributeFilterDisplayForms
         const attributeNames = invalidFilters.map((filter) => {
-            const displayFormRef = filter.attributeFilter.displayForm;
-
-            // Find the attribute that contains this display form
-            const attributeWithReferences = attributeFilterDisplayForms.find((item) =>
+            // TODO INE: add support for aliases
+            const displayFormRef = dashboardAttributeFilterItemDisplayForm(filter);
+            const attributeWithReferences = attributeFilterDisplayForms?.find((item) =>
                 areObjRefsEqual(item.ref, displayFormRef),
             );
 

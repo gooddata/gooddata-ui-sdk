@@ -10,8 +10,12 @@ import {
     type IDashboardDateFilterConfig,
     type IDashboardDateFilterConfigItem,
     type ObjRef,
+    dashboardAttributeFilterItemDisplayForm,
+    dashboardAttributeFilterItemLocalIdentifier,
+    dashboardAttributeFilterItemTitle,
     isDashboardAttributeFilter,
     isDashboardDateFilter,
+    isDashboardTextAttributeFilter,
 } from "@gooddata/sdk-model";
 
 import { type ObjRefMap } from "../../../../../../_staging/metadata/objRefMap.js";
@@ -21,6 +25,7 @@ import {
     getDisabledOptionProps,
     getDisplayFormTitle,
     hasMatchingTargetDashboardAttributeFilter,
+    hasMatchingTargetDashboardAttributeFilterDisplayForm,
     hasMatchingTargetDashboardDateFilter,
 } from "../drillFiltersConfigUtils.js";
 import { messages } from "../messages.js";
@@ -78,6 +83,37 @@ export function mapDashboardFilterToOption({
             targetDashboardAttributeFilters,
             targetDashboardAttributeFilterConfigs,
             allCatalogDisplayFormsMap,
+        );
+
+        return {
+            id: localIdentifier,
+            title:
+                customTitle ??
+                getDisplayFormTitle({
+                    displayFormRef,
+                    allCatalogDisplayFormsMap,
+                }),
+            ...disabled,
+            ...getDisabledOptionProps(
+                isDrillToDashboard && !hasMatchingTargetAttributeFilter,
+                intl.formatMessage(messages.drillToDashboardDashboardFilterTooltip),
+                false,
+            ),
+        };
+    }
+
+    if (isDashboardTextAttributeFilter(dashboardFilter)) {
+        const displayFormRef = dashboardAttributeFilterItemDisplayForm(dashboardFilter);
+        const localIdentifier = dashboardAttributeFilterItemLocalIdentifier(dashboardFilter);
+        const customTitle = dashboardAttributeFilterItemTitle(dashboardFilter);
+
+        if (!localIdentifier) {
+            return undefined;
+        }
+
+        const hasMatchingTargetAttributeFilter = hasMatchingTargetDashboardAttributeFilterDisplayForm(
+            displayFormRef,
+            targetDashboardAttributeFilters,
         );
 
         return {

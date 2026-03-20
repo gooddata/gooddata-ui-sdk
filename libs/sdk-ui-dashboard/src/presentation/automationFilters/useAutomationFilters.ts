@@ -21,6 +21,7 @@ import {
     getCatalogAttributesByFilters,
     getCatalogDateDatasetsByFilters,
     getFilterByCatalogItemRef,
+    getFilterLocalIdentifier,
     getFilterTitle,
     getNonHiddenFilters,
     getNonSelectedFilters,
@@ -481,14 +482,10 @@ export const useAutomationFiltersByTab = ({
                 return;
             }
 
-            const filterLocalId = isDashboardAttributeFilter(updatedFilter)
-                ? updatedFilter.attributeFilter.localIdentifier
-                : updatedFilter.dateFilter.localIdentifier;
+            const filterLocalId = getFilterLocalIdentifier(updatedFilter);
 
             const updatedTabFilters = currentTabFilters.map((f) => {
-                const currentFilterLocalId = isDashboardAttributeFilter(f)
-                    ? f.attributeFilter.localIdentifier
-                    : f.dateFilter.localIdentifier;
+                const currentFilterLocalId = getFilterLocalIdentifier(f);
                 return currentFilterLocalId === filterLocalId ? updatedFilter : f;
             });
 
@@ -507,14 +504,10 @@ export const useAutomationFiltersByTab = ({
             }
 
             const currentTabFilters = editedFiltersByTab[tabId] ?? [];
-            const filterLocalId = isDashboardAttributeFilter(filterToDelete)
-                ? filterToDelete.attributeFilter.localIdentifier
-                : filterToDelete.dateFilter.localIdentifier;
+            const filterLocalId = getFilterLocalIdentifier(filterToDelete);
 
             const updatedTabFilters = currentTabFilters.filter((f) => {
-                const currentFilterLocalId = isDashboardAttributeFilter(f)
-                    ? f.attributeFilter.localIdentifier
-                    : f.dateFilter.localIdentifier;
+                const currentFilterLocalId = getFilterLocalIdentifier(f);
                 return currentFilterLocalId !== filterLocalId;
             });
 

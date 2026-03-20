@@ -4,7 +4,18 @@ import { type ReactElement, type ReactNode, useCallback, useMemo, useState } fro
 
 import { useIntl } from "react-intl";
 
-import { DashboardAttributeFilterConfigModeValues, filterObjRef } from "@gooddata/sdk-model";
+import {
+    DashboardAttributeFilterConfigModeValues,
+    type DashboardAttributeFilterItem,
+    type IDashboardAttributeFilter,
+    dashboardAttributeFilterItemDisplayForm,
+    dashboardAttributeFilterItemLocalIdentifier,
+    dashboardAttributeFilterItemTitle,
+    dashboardAttributeFilterItemValidateElementsBy,
+    filterObjRef,
+    isDashboardArbitraryAttributeFilter,
+    isDashboardAttributeFilter,
+} from "@gooddata/sdk-model";
 import {
     AttributeDatasetInfo,
     AttributeFilterButton,
@@ -17,7 +28,9 @@ import {
     type IAttributeFilterDropdownButtonProps,
     type IAttributeFilterElementsSelectProps,
     type IAttributeFilterStatusBarProps,
+    type ITextFilterBodyProps,
     SingleSelectionAttributeFilterStatusBar,
+    TextFilterBody,
     useAttributeFilterContext,
     useAutoOpenAttributeFilterDropdownButton,
     useOnCloseAttributeFilterDropdownButton,
@@ -37,15 +50,14 @@ import { useAttributeDataSet } from "./dashboardDropdownBody/configuration/hooks
 import { type IDashboardAttributeFilterProps } from "./types.js";
 import { useDependentDateFilters } from "./useDependentDateFilters.js";
 import { useParentFilters } from "./useParentFilters.js";
-import {
-    attributeFilterToDashboardAttributeFilter,
-    dashboardAttributeFilterToAttributeFilter,
-} from "../../../_staging/dashboard/dashboardFilterConverter.js";
+import { attributeFilterToDashboardAttributeFilter } from "../../../_staging/dashboard/dashboardFilterConverter.js";
 import { useAttributes } from "../../../_staging/sharedHooks/useAttributes.js";
+import { dashboardAttributeFilterItemToAttributeFilter } from "../../../converters/filterConverters.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { useDashboardUserInteraction } from "../../../model/react/useDashboardUserInteraction.js";
 import { selectBackendCapabilities } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
 import {
+    selectAvailableAttributeFilterModes,
     selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
     selectLocale,
@@ -114,6 +126,14 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
     const isEditMode = useDashboardSelector(selectIsInEditMode);
     const capabilities = useDashboardSelector(selectBackendCapabilities);
 
+    // Extract common properties using wide utilities; narrow props only for standard filters
+    const filterLocalId = dashboardAttributeFilterItemLocalIdentifier(filter)!;
+    const filterTitle = dashboardAttributeFilterItemTitle(filter);
+    const filterDisplayFormRef = dashboardAttributeFilterItemDisplayForm(filter);
+    const filterValidateElementsBy = dashboardAttributeFilterItemValidateElementsBy(filter);
+    const standardFilter = isDashboardAttributeFilter(filter) ? filter : undefined;
+    const filterSelectionMode = standardFilter?.attributeFilter.selectionMode;
+
     // Use tab-specific selectors when tabId is provided
     // Always call all hooks unconditionally
     const attributeFilterConfigsModeMapByTab = useDashboardSelector(selectAttributeFilterConfigsModeMapByTab);
@@ -126,9 +146,9 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
         [tabId, attributeFilterConfigsModeMapByTab, attributeFilterConfigsModeMapActive],
     );
 
-    const attributeFilter = useMemo(() => dashboardAttributeFilterToAttributeFilter(filter), [filter]);
+    const attributeFilter = useMemo(() => dashboardAttributeFilterItemToAttributeFilter(filter), [filter]);
     const workingAttributeFilter = useMemo(
-        () => dashboardAttributeFilterToAttributeFilter(workingFilter ?? filter),
+        () => dashboardAttributeFilterItemToAttributeFilter(workingFilter ?? filter),
         [workingFilter, filter],
     );
     const [isConfigurationOpen, setIsConfigurationOpen] = useState(false);
@@ -136,26 +156,33 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
 
     // Always call selectors unconditionally, select the right one based on tabId
     const isAttributeFilterDependentActive = useDashboardSelector(
-        selectIsAttributeFilterDependentByLocalIdentifier(filter.attributeFilter.localIdentifier!),
+        selectIsAttributeFilterDependentByLocalIdentifier(filterLocalId),
     );
     const isAttributeFilterDependentForTab = useDashboardSelector(
         tabId
-            ? selectIsAttributeFilterDependentByLocalIdentifierForTab(
-                  filter.attributeFilter.localIdentifier!,
-                  tabId,
-              )
-            : selectIsAttributeFilterDependentByLocalIdentifier(filter.attributeFilter.localIdentifier!),
+            ? selectIsAttributeFilterDependentByLocalIdentifierForTab(filterLocalId, tabId)
+            : selectIsAttributeFilterDependentByLocalIdentifier(filterLocalId),
     );
     const isAttributeFilterDependent = tabId
         ? isAttributeFilterDependentForTab
         : isAttributeFilterDependentActive;
     const isVirtualAttributeFilter = useDashboardSelector(
-        selectIsFilterFromCrossFilteringByLocalIdentifier(filter.attributeFilter.localIdentifier!),
+        selectIsFilterFromCrossFilteringByLocalIdentifier(filterLocalId),
     );
     const enableImmediateAttributeFilterDisplayAsLabelMigration = useDashboardSelector(
         selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
     );
     const isApplyAllAtOnceEnabledAndSet = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
+    const allAvailableFilterModes = useDashboardSelector(selectAvailableAttributeFilterModes);
+    const availableFilterModes = useMemo(() => {
+        if (isEditMode) {
+            return allAvailableFilterModes;
+        }
+        if (standardFilter) {
+            return allAvailableFilterModes.filter((mode) => mode === "elements");
+        }
+        return allAvailableFilterModes.filter((mode) => mode !== "elements");
+    }, [isEditMode, allAvailableFilterModes, standardFilter]);
 
     const filterRef = useMemo(() => {
         return filterObjRef(attributeFilter);
@@ -211,14 +238,14 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
     const visibilityIcon = useMemo(
         () =>
             getVisibilityIcon(
-                attributeFilterConfigsModeMap.get(filter.attributeFilter.localIdentifier!),
+                attributeFilterConfigsModeMap.get(filterLocalId),
                 isEditMode,
                 !!capabilities.supportsHiddenAndLockedFiltersOnUI,
                 intl,
             ),
         [
             attributeFilterConfigsModeMap,
-            filter.attributeFilter.localIdentifier,
+            filterLocalId,
             isEditMode,
             capabilities.supportsHiddenAndLockedFiltersOnUI,
             intl,
@@ -342,8 +369,8 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
                     ) : (
                         <CustomAttributeFilterDropdownActions
                             {...props}
-                            filterDisplayFormRef={filter.attributeFilter.displayForm}
-                            filterSelectionMode={filter.attributeFilter.selectionMode}
+                            filterDisplayFormRef={filterDisplayFormRef}
+                            filterSelectionMode={filterSelectionMode}
                             applyText={applyText}
                             cancelText={withoutApply ? closeText : cancelText}
                             onConfigurationButtonClick={() => {
@@ -366,8 +393,8 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
         isConfigurationOpen,
         cancelText,
         saveText,
-        filter.attributeFilter.displayForm,
-        filter.attributeFilter.selectionMode,
+        filterDisplayFormRef,
+        filterSelectionMode,
         applyText,
         attributes,
     ]);
@@ -411,6 +438,56 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
         }
 
         return ElementsSelect;
+    }, [
+        isConfigurationOpen,
+        filterRef,
+        filterByText,
+        displayValuesAsText,
+        titleText,
+        resetTitleText,
+        selectionTitleText,
+        multiSelectionOptionText,
+        singleSelectionOptionText,
+        singleSelectionDisabledTooltip,
+        parentFiltersDisabledTooltip,
+        modeCategoryTitleText,
+        intl,
+        capabilities,
+    ]);
+
+    const CustomTextFilterBody = useMemo(() => {
+        function CustomTextFilter(props: ITextFilterBodyProps) {
+            const closeHandler = useCallback(() => {
+                setIsConfigurationOpen(false);
+            }, []);
+
+            return (
+                <>
+                    {isConfigurationOpen ? (
+                        <AttributeFilterConfiguration
+                            intl={intl}
+                            closeHandler={closeHandler}
+                            filterRef={filterRef}
+                            filterByText={filterByText}
+                            displayValuesAsText={displayValuesAsText}
+                            titleText={titleText}
+                            resetTitleText={resetTitleText}
+                            selectionTitleText={selectionTitleText}
+                            multiSelectionOptionText={multiSelectionOptionText}
+                            singleSelectionOptionText={singleSelectionOptionText}
+                            modeCategoryTitleText={modeCategoryTitleText}
+                            singleSelectionDisabledTooltip={singleSelectionDisabledTooltip}
+                            parentFiltersDisabledTooltip={parentFiltersDisabledTooltip}
+                            showConfigModeSection={!!capabilities.supportsHiddenAndLockedFiltersOnUI}
+                        />
+                    ) : (
+                        <TextFilterBody {...props} />
+                    )}
+                </>
+            );
+        }
+
+        return CustomTextFilter;
     }, [
         isConfigurationOpen,
         filterRef,
@@ -487,13 +564,13 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
 
     const CustomStatusBarComponent = useMemo(() => {
         return createStatusBarComponent({
-            filterSelectionMode: filter.attributeFilter.selectionMode,
+            filterSelectionMode: filterSelectionMode,
             isApplyAllAtOnceEnabledAndSet,
             supportsShowingFilteredElements: capabilities.supportsShowingFilteredElements ?? false,
             userInteraction,
         });
     }, [
-        filter.attributeFilter.selectionMode,
+        filterSelectionMode,
         capabilities.supportsShowingFilteredElements,
         userInteraction,
         isApplyAllAtOnceEnabledAndSet,
@@ -501,104 +578,161 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
 
     const AttributeFilterComponent = props.AttributeFilterComponent ?? AttributeFilterButton;
 
+    const filterContent = (
+        <AttributeFilterComponent
+            title={filterTitle}
+            resetOnParentFilterChange={false}
+            filter={isApplyAllAtOnceEnabledAndSet ? workingAttributeFilter : attributeFilter}
+            displayAsLabel={displayAsLabel}
+            overlayPositionType={overlayPositionType}
+            onApply={(
+                newFilter,
+                isInverted,
+                selectionMode,
+                selectionTitles,
+                displayAsLabel,
+                isResultOfMigration,
+                additionalProps,
+            ) => {
+                const isSelectionInvalid = additionalProps?.isSelectionInvalid ?? false;
+                const applyToWorkingOnly = additionalProps?.applyToWorkingOnly ?? false;
+
+                // Convert the SDK-level filter to a dashboard filter item.
+                // The result may be a text filter (arbitrary/match) after a mode switch.
+                const convertedFilter = attributeFilterToDashboardAttributeFilter(
+                    newFilter,
+                    filterLocalId,
+                    filterTitle,
+                    selectionTitles,
+                    isInverted,
+                    selectionMode,
+                );
+                if (isApplyAllAtOnceEnabledAndSet) {
+                    onFilterChanged(convertedFilter, displayAsLabel, true, false, isSelectionInvalid);
+                }
+                if (!applyToWorkingOnly) {
+                    onFilterChanged(
+                        convertedFilter,
+                        displayAsLabel,
+                        false,
+                        isResultOfMigration,
+                        isSelectionInvalid,
+                    );
+                }
+            }}
+            onSelect={(
+                newFilter,
+                isInverted,
+                selectionMode,
+                selectionTitles,
+                displayAsLabel,
+                isResultOfMigration,
+                additionalProps,
+            ) => {
+                if (isApplyAllAtOnceEnabledAndSet) {
+                    onFilterChanged(
+                        // Convert the SDK-level filter to a dashboard filter item.
+                        // The result may be a text filter (arbitrary/match) after a mode switch.
+                        attributeFilterToDashboardAttributeFilter(
+                            newFilter,
+                            filterLocalId,
+                            filterTitle,
+                            selectionTitles,
+                            isInverted,
+                            selectionMode,
+                        ),
+                        displayAsLabel,
+                        true,
+                        isResultOfMigration as unknown as boolean | undefined,
+                        (
+                            additionalProps as unknown as {
+                                isSelectionInvalid?: boolean;
+                            }
+                        )?.isSelectionInvalid,
+                    );
+                }
+            }}
+            parentFilters={parentFilters}
+            dependentDateFilters={dependentDateFilters}
+            parentFilterOverAttribute={parentFilterOverAttribute}
+            validateElementsBy={filterValidateElementsBy}
+            locale={locale}
+            DropdownButtonComponent={passDropdownButton ? CustomDropdownButton : undefined}
+            DropdownActionsComponent={CustomDropdownActions}
+            ElementsSelectComponent={CustomElementsSelect}
+            TextFilterBodyComponent={CustomTextFilterBody}
+            fullscreenOnMobile
+            selectionMode={filterSelectionMode}
+            selectFirst
+            attributeFilterMode={
+                readonly
+                    ? DashboardAttributeFilterConfigModeValues.READONLY
+                    : DashboardAttributeFilterConfigModeValues.ACTIVE
+            }
+            customIcon={visibilityIcon}
+            StatusBarComponent={CustomStatusBarComponent}
+            enableImmediateAttributeFilterDisplayAsLabelMigration={
+                enableImmediateAttributeFilterDisplayAsLabelMigration
+            }
+            withoutApply={isApplyAllAtOnceEnabledAndSet}
+            menuConfig={{ availableFilterModes, showLabelsSwitch: false }}
+        />
+    );
+
+    const providerFilter = standardFilter ?? toSyntheticAttributeFilter(filter);
+
     return (
         <AttributeFilterParentFilteringProvider
-            filter={filter}
+            filter={providerFilter}
             attributes={attributes}
             displayAsLabel={displayAsLabel}
         >
-            <AttributeFilterComponent
-                title={filter.attributeFilter.title}
-                resetOnParentFilterChange={false}
-                filter={isApplyAllAtOnceEnabledAndSet ? workingAttributeFilter : attributeFilter}
-                displayAsLabel={displayAsLabel}
-                overlayPositionType={overlayPositionType}
-                onApply={(
-                    newFilter,
-                    isInverted,
-                    selectionMode,
-                    selectionTitles,
-                    displayAsLabel,
-                    isResultOfMigration,
-                    additionalProps,
-                ) => {
-                    const isSelectionInvalid = additionalProps?.isSelectionInvalid ?? false;
-                    const applyToWorkingOnly = additionalProps?.applyToWorkingOnly ?? false;
-
-                    const convertedFilter = attributeFilterToDashboardAttributeFilter(
-                        newFilter,
-                        filter.attributeFilter.localIdentifier,
-                        filter.attributeFilter.title,
-                        selectionTitles,
-                        isInverted,
-                        selectionMode,
-                    );
-                    if (isApplyAllAtOnceEnabledAndSet) {
-                        onFilterChanged(convertedFilter, displayAsLabel, true, false, isSelectionInvalid);
-                    }
-                    if (!applyToWorkingOnly) {
-                        onFilterChanged(
-                            convertedFilter,
-                            displayAsLabel,
-                            false,
-                            isResultOfMigration,
-                            isSelectionInvalid,
-                        );
-                    }
-                }}
-                onSelect={(
-                    newFilter,
-                    isInverted,
-                    selectionMode,
-                    selectionTitles,
-                    displayAsLabel,
-                    isResultOfMigration,
-                    additionalProps,
-                ) => {
-                    if (isApplyAllAtOnceEnabledAndSet) {
-                        onFilterChanged(
-                            attributeFilterToDashboardAttributeFilter(
-                                newFilter,
-                                filter.attributeFilter.localIdentifier,
-                                filter.attributeFilter.title,
-                                selectionTitles,
-                                isInverted,
-                                selectionMode,
-                            ),
-                            displayAsLabel,
-                            true,
-                            isResultOfMigration as unknown as boolean | undefined,
-                            (
-                                additionalProps as unknown as {
-                                    isSelectionInvalid?: boolean;
-                                }
-                            )?.isSelectionInvalid,
-                        );
-                    }
-                }}
-                parentFilters={parentFilters}
-                dependentDateFilters={dependentDateFilters}
-                parentFilterOverAttribute={parentFilterOverAttribute}
-                validateElementsBy={filter.attributeFilter.validateElementsBy}
-                locale={locale}
-                DropdownButtonComponent={passDropdownButton ? CustomDropdownButton : undefined}
-                DropdownActionsComponent={CustomDropdownActions}
-                ElementsSelectComponent={CustomElementsSelect}
-                fullscreenOnMobile
-                selectionMode={filter.attributeFilter.selectionMode}
-                selectFirst
-                attributeFilterMode={
-                    readonly
-                        ? DashboardAttributeFilterConfigModeValues.READONLY
-                        : DashboardAttributeFilterConfigModeValues.ACTIVE
-                }
-                customIcon={visibilityIcon}
-                StatusBarComponent={CustomStatusBarComponent}
-                enableImmediateAttributeFilterDisplayAsLabelMigration={
-                    enableImmediateAttributeFilterDisplayAsLabelMigration
-                }
-                withoutApply={isApplyAllAtOnceEnabledAndSet}
-            />
+            {filterContent}
         </AttributeFilterParentFilteringProvider>
     );
+}
+
+/**
+ * Converts a text filter (arbitrary or match) to a synthetic IDashboardAttributeFilter
+ * so it can be consumed by the AttributeFilterParentFilteringProvider.
+ * The provider hooks only need displayForm, localIdentifier, title, filterElementsBy,
+ * filterElementsByDate, and validateElementsBy - the rest is stubbed.
+ */
+function toSyntheticAttributeFilter(filter: DashboardAttributeFilterItem): IDashboardAttributeFilter {
+    if (isDashboardArbitraryAttributeFilter(filter)) {
+        const {
+            displayForm,
+            localIdentifier,
+            title,
+            filterElementsBy,
+            filterElementsByDate,
+            validateElementsBy,
+        } = filter.arbitraryAttributeFilter;
+        return {
+            attributeFilter: {
+                displayForm,
+                localIdentifier,
+                title,
+                filterElementsBy,
+                filterElementsByDate,
+                validateElementsBy,
+                negativeSelection: false,
+                attributeElements: { uris: [] },
+            },
+        };
+    }
+
+    // Match filter
+    const displayForm = dashboardAttributeFilterItemDisplayForm(filter);
+    const localIdentifier = dashboardAttributeFilterItemLocalIdentifier(filter);
+    const title = dashboardAttributeFilterItemTitle(filter);
+    return {
+        attributeFilter: {
+            displayForm,
+            localIdentifier,
+            title,
+            negativeSelection: false,
+            attributeElements: { uris: [] },
+        },
+    };
 }

@@ -4,7 +4,7 @@ import { action } from "storybook/actions";
 
 import {
     DateFilter,
-    type IDateFilterOptionsByType,
+    type IDateFilterProps,
     type IUiAbsoluteDateFilterForm,
     defaultDateFilterOptions,
 } from "@gooddata/sdk-ui-filters";
@@ -23,10 +23,19 @@ const fixedAbsoluteDateForm: IUiAbsoluteDateFilterForm = {
     name: "",
     visible: true,
 };
-const filterOptions: IDateFilterOptionsByType = {
-    ...defaultDateFilterOptions,
-    absoluteForm: fixedAbsoluteDateForm,
-};
+
+const requiredProps = {
+    availableGranularities: ["GDC.time.date", "GDC.time.month", "GDC.time.quarter", "GDC.time.year"],
+    dateFilterMode: "active",
+    excludeCurrentPeriod: false,
+    filterOptions: { ...defaultDateFilterOptions, absoluteForm: fixedAbsoluteDateForm },
+    selectedFilterOption: defaultDateFilterOptions.allTime!,
+    onApply: action("applyClick"),
+    onCancel: action("cancelClick"),
+    onOpen: action("onOpen"),
+    onClose: action("onClose"),
+} satisfies IDateFilterProps;
+
 export default {
     title: "10 Filters/DateFilter",
 };
@@ -35,9 +44,7 @@ export function FullFeatured() {
     return (
         <div style={wrapperStyle} className="screenshot-target">
             <DateFilter
-                excludeCurrentPeriod={false}
-                selectedFilterOption={defaultDateFilterOptions.allTime}
-                filterOptions={filterOptions}
+                {...requiredProps}
                 availableGranularities={[
                     "GDC.time.minute",
                     "GDC.time.hour",
@@ -46,12 +53,6 @@ export function FullFeatured() {
                     "GDC.time.quarter",
                     "GDC.time.year",
                 ]}
-                isEditMode={false}
-                dateFilterMode="active"
-                onApply={action("applyClick")}
-                onCancel={action("cancelClick")}
-                onOpen={action("onOpen")}
-                onClose={action("onClose")}
             />
         </div>
     );
@@ -69,14 +70,14 @@ FullFeatured.parameters = {
         },
         "absolute-form": {
             readySelector: { selector: ".screenshot-target", state: State.Attached },
-            clickSelectors: [{ selector: ".s-date-filter-button" }, { selector: ".s-absolute-form" }],
+            clickSelectors: [{ selector: ".s-date-filter-button" }, { selector: ".s-absolute-form-button" }],
             delay: {
                 postOperation: 200,
             },
         },
         "relative-form": {
             readySelector: { selector: ".screenshot-target", state: State.Attached },
-            clickSelectors: [{ selector: ".s-date-filter-button" }, { selector: ".s-relative-form" }],
+            clickSelectors: [{ selector: ".s-date-filter-button" }, { selector: ".s-relative-form-button" }],
             delay: {
                 postOperation: 200,
             },
@@ -85,10 +86,10 @@ FullFeatured.parameters = {
             readySelector: { selector: ".screenshot-target", state: State.Attached },
             clickSelectors: [
                 { selector: ".s-date-filter-button" },
-                { selector: ".s-relative-form" },
+                { selector: ".s-relative-form-button" },
                 { selector: ".s-relative-range-picker-from .s-relative-range-input" },
                 { selector: ".s-relative-range-picker-to .s-relative-range-input" },
-                { selector: ".s-relative-form" },
+                { selector: ".s-granularity-month" },
             ],
             delay: {
                 postOperation: 200,
@@ -100,20 +101,7 @@ FullFeatured.parameters = {
 export function Localized() {
     return (
         <div style={wrapperStyle} className="screenshot-target">
-            <DateFilter
-                locale="de-DE"
-                excludeCurrentPeriod={false}
-                selectedFilterOption={defaultDateFilterOptions.allTime}
-                filterOptions={filterOptions}
-                availableGranularities={[
-                    "GDC.time.date",
-                    "GDC.time.month",
-                    "GDC.time.quarter",
-                    "GDC.time.year",
-                ]}
-                isEditMode={false}
-                dateFilterMode="active"
-            />
+            <DateFilter {...requiredProps} locale="de-DE" />
         </div>
     );
 }
@@ -130,14 +118,14 @@ Localized.parameters = {
         },
         "absolute-form": {
             readySelector: { selector: ".screenshot-target", state: State.Attached },
-            clickSelectors: [{ selector: ".s-date-filter-button" }, { selector: ".s-absolute-form" }],
+            clickSelectors: [{ selector: ".s-date-filter-button" }, { selector: ".s-absolute-form-button" }],
             delay: {
                 postOperation: 200,
             },
         },
         "relative-form": {
             readySelector: { selector: ".screenshot-target", state: State.Attached },
-            clickSelectors: [{ selector: ".s-date-filter-button" }, { selector: ".s-relative-form" }],
+            clickSelectors: [{ selector: ".s-date-filter-button" }, { selector: ".s-relative-form-button" }],
             delay: {
                 postOperation: 200,
             },
@@ -149,11 +137,8 @@ export function Dateformat() {
     return (
         <div style={wrapperStyle} className="screenshot-target">
             <DateFilter
-                excludeCurrentPeriod={false}
+                {...requiredProps}
                 selectedFilterOption={defaultDateFilterOptions.absoluteForm}
-                filterOptions={filterOptions}
-                isEditMode={false}
-                dateFilterMode="active"
                 dateFormat="yyyy/MM/dd"
             />
         </div>
@@ -170,23 +155,7 @@ Dateformat.parameters = {
 export const Themed = () =>
     wrapWithTheme(
         <div style={wrapperStyle} className="screenshot-target">
-            <DateFilter
-                excludeCurrentPeriod={false}
-                selectedFilterOption={defaultDateFilterOptions.allTime}
-                filterOptions={filterOptions}
-                availableGranularities={[
-                    "GDC.time.date",
-                    "GDC.time.month",
-                    "GDC.time.quarter",
-                    "GDC.time.year",
-                ]}
-                isEditMode={false}
-                dateFilterMode="active"
-                onApply={action("applyClick")}
-                onCancel={action("cancelClick")}
-                onOpen={action("onOpen")}
-                onClose={action("onClose")}
-            />
+            <DateFilter {...requiredProps} dateFilterMode="active" />
         </div>,
     );
 Themed.parameters = {
@@ -202,14 +171,14 @@ Themed.parameters = {
         },
         "absolute-form": {
             readySelector: { selector: ".screenshot-target", state: State.Attached },
-            clickSelectors: [{ selector: ".s-date-filter-button" }, { selector: ".s-absolute-form" }],
+            clickSelectors: [{ selector: ".s-date-filter-button" }, { selector: ".s-absolute-form-button" }],
             delay: {
                 postOperation: 200,
             },
         },
         "relative-form": {
             readySelector: { selector: ".screenshot-target", state: State.Attached },
-            clickSelectors: [{ selector: ".s-date-filter-button" }, { selector: ".s-relative-form" }],
+            clickSelectors: [{ selector: ".s-date-filter-button" }, { selector: ".s-relative-form-button" }],
             delay: {
                 postOperation: 200,
             },
@@ -221,9 +190,7 @@ export function DateFilterAlignedToTheRight() {
     return (
         <div style={{ width: 300, position: "absolute", right: 0 }} className="screenshot-target">
             <DateFilter
-                excludeCurrentPeriod={false}
-                selectedFilterOption={defaultDateFilterOptions.allTime}
-                filterOptions={filterOptions}
+                {...requiredProps}
                 availableGranularities={[
                     "GDC.time.minute",
                     "GDC.time.hour",
@@ -232,12 +199,6 @@ export function DateFilterAlignedToTheRight() {
                     "GDC.time.quarter",
                     "GDC.time.year",
                 ]}
-                isEditMode={false}
-                dateFilterMode="active"
-                onApply={action("applyClick")}
-                onCancel={action("cancelClick")}
-                onOpen={action("onOpen")}
-                onClose={action("onClose")}
             />
         </div>
     );
@@ -255,14 +216,14 @@ DateFilterAlignedToTheRight.parameters = {
         },
         "absolute-form": {
             readySelector: { selector: ".screenshot-target", state: State.Attached },
-            clickSelectors: [{ selector: ".s-date-filter-button" }, { selector: ".s-absolute-form" }],
+            clickSelectors: [{ selector: ".s-date-filter-button" }, { selector: ".s-absolute-form-button" }],
             delay: {
                 postOperation: 200,
             },
         },
         "relative-form": {
             readySelector: { selector: ".screenshot-target", state: State.Attached },
-            clickSelectors: [{ selector: ".s-date-filter-button" }, { selector: ".s-relative-form" }],
+            clickSelectors: [{ selector: ".s-date-filter-button" }, { selector: ".s-relative-form-button" }],
             delay: {
                 postOperation: 200,
             },
@@ -281,11 +242,9 @@ export function DateformatWithTime() {
     return (
         <div style={wrapperStyle} className="screenshot-target">
             <DateFilter
+                {...requiredProps}
                 customFilterName="Selected date"
-                excludeCurrentPeriod={false}
                 selectedFilterOption={selectedFilterOption}
-                filterOptions={filterOptions}
-                dateFilterMode="active"
                 dateFormat="yyyy/MM/dd"
                 isTimeForAbsoluteRangeEnabled
             />
@@ -298,7 +257,7 @@ DateformatWithTime.parameters = {
         closed: { readySelector: { selector: ".screenshot-target", state: State.Attached } },
         opened: {
             readySelector: { selector: ".screenshot-target", state: State.Attached },
-            clickSelector: ".s-date-filter-button",
+            clickSelectors: [{ selector: ".s-date-filter-button" }, { selector: ".s-absolute-form-button" }],
             postInteractionWait: { delay: 200 },
         },
     },

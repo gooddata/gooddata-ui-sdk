@@ -192,7 +192,7 @@ const configurationButton = ".s-configuration-button";
 const dateFilterButton = ".s-date-filter-button";
 const dateButtonFilterTitle = ".s-date-filter-title";
 const dateFilterButtonText = ".s-button-text";
-const dateFilterSelectedItem = ".gd-filter-list-item-selected";
+const dateFilterSelectedItem = ".gd-list-item.is-selected";
 
 const dateFilterBody = ".s-extended-date-filters-body";
 
@@ -200,9 +200,9 @@ const excludeCurrentPeriodCheckbox = ".s-exclude-current-period input";
 
 const allTimeButton = "button.s-all-time";
 
-const absoluteFormButton = "button.s-absolute-form";
+const absoluteFormButton = "button.s-absolute-form-button";
 
-const relativeFormButton = "button.s-relative-form";
+const relativeFormButton = "button.s-relative-form-button";
 const relativeFormPicker = ".s-relative-range-picker";
 const relativeFormSelectMenu = ".s-select-menu";
 const relativeFormInputFrom = ".s-relative-range-picker-from input";

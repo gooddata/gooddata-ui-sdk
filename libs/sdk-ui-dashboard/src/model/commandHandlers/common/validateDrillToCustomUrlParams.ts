@@ -21,14 +21,14 @@ import {
 } from "@gooddata/sdk-model";
 
 import { isDisplayFormRelevantToDrill } from "./isDisplayFormRelevantToDrill.js";
-import { dashboardAttributeFilterToAttributeFilter } from "../../../_staging/dashboard/dashboardFilterConverter.js";
 import { type ObjRefMap } from "../../../_staging/metadata/objRefMap.js";
+import { dashboardAttributeFilterItemToAttributeFilter } from "../../../converters/filterConverters.js";
 import { queryWidgetFilters } from "../../queries/widgets.js";
 import { query } from "../../store/_infra/queryCall.js";
 import { selectAllCatalogDisplayFormsMap } from "../../store/catalog/catalogSelectors.js";
 import { selectDrillTargetsByWidgetRef } from "../../store/drillTargets/drillTargetsSelectors.js";
 import { selectAttributeFilterConfigsOverrides } from "../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
-import { selectFilterContextAttributeFilters } from "../../store/tabs/filterContext/filterContextSelectors.js";
+import { selectFilterContextAttributeFilterItems } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { uiActions } from "../../store/ui/index.js";
 import {
     extractDashboardFilterDisplayFormIdentifiers,
@@ -77,10 +77,10 @@ function* validateWidgetDrillToCustomUrlParams(widget: IInsightWidget): SagaIter
         sanitizeAttributeFilter(filter, displayForms),
     );
 
-    const dashboardFilters: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
-        selectFilterContextAttributeFilters,
+    const dashboardFilters: ReturnType<typeof selectFilterContextAttributeFilterItems> = yield select(
+        selectFilterContextAttributeFilterItems,
     );
-    const dashboardAttributeFilters = dashboardFilters.map(dashboardAttributeFilterToAttributeFilter);
+    const dashboardAttributeFilters = dashboardFilters.map(dashboardAttributeFilterItemToAttributeFilter);
     const sanitizedDashboardAttributeFilters = dashboardAttributeFilters.map((filter) =>
         sanitizeAttributeFilter(filter, displayForms),
     );

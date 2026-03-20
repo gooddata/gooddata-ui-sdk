@@ -127,6 +127,7 @@ export enum TigerFeaturesNames {
     EnableNewPivotTable = "enableNewPivotTable",
     EnableNewGeoPushpin = "enableNewGeoPushpin",
     EnableGeoArea = "enableGeoArea",
+    EnableHyperLogLog = "enableHyperLogLog",
     EnableGeoPushpinIcon = "enableGeoPushpinIcon",
     EnableGeoChartA11yImprovements = "enableGeoChartA11yImprovements",
     EnableGeoChartsViewportConfig = "enableGeoChartsViewportConfig",
@@ -136,7 +137,6 @@ export enum TigerFeaturesNames {
     EnableGeoSatelliteBasemapOption = "enableGeoSatelliteBasemapOption",
     EnableAutomationManagement = "enableAutomationManagement",
     EnableNewPdfTabularExport = "enableNewPdfTabularExport",
-    EnableFilterAccessibility = "enableFilterAccessibility",
     EnableGenAIMemory = "enableGenAIMemory",
     EnableAIKnowledge = "enableAIKnowledge",
     EnableGenAIReasoningVisibility = "enableGenAIReasoningVisibility",
@@ -280,6 +280,7 @@ export type ITigerFeatureFlags = {
     enableNewPivotTable: (typeof FeatureFlagsValues)["enableNewPivotTable"][number];
     enableNewGeoPushpin: (typeof FeatureFlagsValues)["enableNewGeoPushpin"][number];
     enableGeoArea: (typeof FeatureFlagsValues)["enableGeoArea"][number];
+    enableHyperLogLog: (typeof FeatureFlagsValues)["enableHyperLogLog"][number];
     enableGeoPushpinIcon: (typeof FeatureFlagsValues)["enableGeoPushpinIcon"][number];
     enableGeoChartA11yImprovements: (typeof FeatureFlagsValues)["enableGeoChartA11yImprovements"][number];
     enableGeoChartsViewportConfig: (typeof FeatureFlagsValues)["enableGeoChartsViewportConfig"][number];
@@ -289,7 +290,6 @@ export type ITigerFeatureFlags = {
     enableGeoSatelliteBasemapOption: (typeof FeatureFlagsValues)["enableGeoSatelliteBasemapOption"][number];
     enableAutomationManagement: (typeof FeatureFlagsValues)["enableAutomationManagement"][number];
     enableNewPdfTabularExport: (typeof FeatureFlagsValues)["enableNewPdfTabularExport"][number];
-    enableFilterAccessibility: (typeof FeatureFlagsValues)["enableFilterAccessibility"][number];
     enableGenAIMemory: (typeof FeatureFlagsValues)["enableGenAIMemory"][number];
     enableAIKnowledge: (typeof FeatureFlagsValues)["enableAIKnowledge"][number];
     enableGenAIReasoningVisibility: (typeof FeatureFlagsValues)["enableGenAIReasoningVisibility"][number];
@@ -433,16 +433,16 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableNewPivotTable: true,
     enableNewGeoPushpin: true,
     enableGeoArea: true,
+    enableHyperLogLog: false,
     enableGeoPushpinIcon: false,
     enableGeoChartA11yImprovements: false,
-    enableGeoChartsViewportConfig: false,
+    enableGeoChartsViewportConfig: true,
     enableGeoSegmentConflictRecommendation: false,
     enableGeoBasemapConfig: false,
     enableCustomGeoCollection: true,
     enableGeoSatelliteBasemapOption: false,
     enableAutomationManagement: true,
     enableNewPdfTabularExport: true,
-    enableFilterAccessibility: true,
     enableGenAIMemory: false,
     enableAIKnowledge: false,
     enableGenAIReasoningVisibility: false,
@@ -587,6 +587,7 @@ export const FeatureFlagsValues = {
     enableNewPivotTable: [true, false] as const,
     enableNewGeoPushpin: [true, false] as const,
     enableGeoArea: [true, false] as const,
+    enableHyperLogLog: [true, false] as const,
     enableGeoPushpinIcon: [true, false] as const,
     enableGeoChartA11yImprovements: [true, false] as const,
     enableGeoChartsViewportConfig: [true, false] as const,
@@ -596,7 +597,6 @@ export const FeatureFlagsValues = {
     enableGeoSatelliteBasemapOption: [true, false] as const,
     enableAutomationManagement: [true, false] as const,
     enableNewPdfTabularExport: [true, false] as const,
-    enableFilterAccessibility: [false, true] as const,
     enableGenAIMemory: [false, true] as const,
     enableAIKnowledge: [false, true] as const,
     enableGenAIReasoningVisibility: [false, true] as const,

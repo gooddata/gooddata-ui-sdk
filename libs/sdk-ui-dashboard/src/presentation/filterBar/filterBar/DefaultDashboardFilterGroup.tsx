@@ -7,8 +7,14 @@ import { useIntl } from "react-intl";
 
 import {
     DashboardAttributeFilterConfigModeValues,
+    dashboardAttributeFilterItemFilterElementsBy,
+    dashboardAttributeFilterItemFilterElementsByDate,
+    dashboardAttributeFilterItemLocalIdentifier,
     dashboardFilterLocalIdentifier,
     getSelectedElementsCount,
+    isDashboardArbitraryAttributeFilter,
+    isDashboardAttributeFilter,
+    isDashboardMatchAttributeFilter,
 } from "@gooddata/sdk-model";
 import {
     AttributeFilterDependencyTooltip,
@@ -27,7 +33,11 @@ import {
     selectBackendCapabilities,
     selectSupportsElementUris,
 } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
-import { selectIsApplyFiltersAllAtOnceEnabledAndSet } from "../../../model/store/config/configSelectors.js";
+import {
+    selectEnableArbitraryFilterKD,
+    selectEnableMatchFilterKD,
+    selectIsApplyFiltersAllAtOnceEnabledAndSet,
+} from "../../../model/store/config/configSelectors.js";
 import {
     selectAttributeFilterConfigsDisplayAsLabelMap,
     selectEffectiveAttributeFiltersModeMap,
@@ -53,13 +63,27 @@ export function DefaultDashboardFilterGroup(props: IDashboardFilterGroupProps): 
         selectAttributeFilterConfigsDisplayAsLabelMap,
     );
     const attributeFiltersModeMap = useDashboardSelector(selectEffectiveAttributeFiltersModeMap);
+    const enableArbitraryFilter = useDashboardSelector(selectEnableArbitraryFilterKD);
+    const enableMatchFilter = useDashboardSelector(selectEnableMatchFilterKD);
 
     const getFilterIdentifier = useCallback((filter: FilterBarAttributeFilterIndexed) => {
-        return dashboardFilterLocalIdentifier(filter.filter)!;
+        return (
+            dashboardAttributeFilterItemLocalIdentifier(filter.filter) ??
+            dashboardFilterLocalIdentifier(filter.filter)!
+        );
     }, []);
 
     const hasSelectedElements = useCallback((filter: FilterBarAttributeFilterIndexed) => {
-        return getSelectedElementsCount(filter.filter) > 0;
+        if (isDashboardAttributeFilter(filter.filter)) {
+            return getSelectedElementsCount(filter.filter) > 0;
+        }
+        if (isDashboardArbitraryAttributeFilter(filter.filter)) {
+            return filter.filter.arbitraryAttributeFilter.values.length > 0;
+        }
+        if (isDashboardMatchAttributeFilter(filter.filter)) {
+            return filter.filter.matchAttributeFilter.literal.length > 0;
+        }
+        return true;
     }, []);
 
     const renderFilter = useCallback(
@@ -67,12 +91,9 @@ export function DefaultDashboardFilterGroup(props: IDashboardFilterGroupProps): 
             filter: FilterBarAttributeFilterIndexed,
             AttributeFilterComponent?: ComponentType<IAttributeFilterProps>,
         ): ReactElement => {
-            const displayAsLabel = attributeFiltersDisplayAsLabelMap.get(
-                filter.filter.attributeFilter.localIdentifier!,
-            );
-            const attributeFilterMode = attributeFiltersModeMap.get(
-                filter.filter.attributeFilter.localIdentifier!,
-            );
+            const localId = dashboardAttributeFilterItemLocalIdentifier(filter.filter)!;
+            const displayAsLabel = attributeFiltersDisplayAsLabelMap.get(localId);
+            const attributeFilterMode = attributeFiltersModeMap.get(localId);
             const DashboardAttributeFilterComponent =
                 CustomDashboardAttributeFilterComponent ?? DefaultDashboardAttributeFilter;
             return (
@@ -102,6 +123,10 @@ export function DefaultDashboardFilterGroup(props: IDashboardFilterGroupProps): 
                 if (!isFilterBarAttributeFilter(filter)) {
                     return undefined;
                 }
+                // Text filter types (arbitrary, match) don't need URI conversion
+                if (!isDashboardAttributeFilter(filter.filter)) {
+                    return filter;
+                }
                 if (supportElementUris) {
                     return filter;
                 }
@@ -111,20 +136,42 @@ export function DefaultDashboardFilterGroup(props: IDashboardFilterGroupProps): 
                 };
             })
             .filter((filter): filter is FilterBarAttributeFilterIndexed => filter !== undefined)
-            .filter(
-                (filter) =>
-                    attributeFiltersModeMap.get(filter.filter.attributeFilter.localIdentifier!) !==
-                    DashboardAttributeFilterConfigModeValues.HIDDEN,
-            );
-    }, [groupItem.filters, supportElementUris, attributeFiltersModeMap]);
+            .filter((filter) => {
+                const localId = dashboardAttributeFilterItemLocalIdentifier(filter.filter);
+                return (
+                    attributeFiltersModeMap.get(localId!) !== DashboardAttributeFilterConfigModeValues.HIDDEN
+                );
+            })
+            .filter((filter) => {
+                // Gate text filter types by feature flags
+                if (isDashboardArbitraryAttributeFilter(filter.filter)) {
+                    return enableArbitraryFilter;
+                }
+                if (isDashboardMatchAttributeFilter(filter.filter)) {
+                    return enableMatchFilter;
+                }
+                return true;
+            });
+    }, [
+        groupItem.filters,
+        supportElementUris,
+        attributeFiltersModeMap,
+        enableArbitraryFilter,
+        enableMatchFilter,
+    ]);
 
     const filterDependenciesByLocalIdUnstable = useMemo(() => {
         return new Map<string, boolean>(
             itemFilters.map((filter) => {
-                const { localIdentifier, filterElementsBy, filterElementsByDate } =
-                    filter.filter.attributeFilter;
+                const localId = dashboardAttributeFilterItemLocalIdentifier(filter.filter)!;
+                // Match filter type has no parent filter dependencies by design
+                if (isDashboardMatchAttributeFilter(filter.filter)) {
+                    return [localId, false];
+                }
+                const filterElementsBy = dashboardAttributeFilterItemFilterElementsBy(filter.filter);
+                const filterElementsByDate = dashboardAttributeFilterItemFilterElementsByDate(filter.filter);
                 const isDependent = !isEmpty(filterElementsBy) || !isEmpty(filterElementsByDate);
-                return [localIdentifier!, isDependent];
+                return [localId, isDependent];
             }),
         );
     }, [itemFilters]);

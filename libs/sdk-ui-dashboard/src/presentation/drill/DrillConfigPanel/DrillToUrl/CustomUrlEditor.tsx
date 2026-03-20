@@ -34,13 +34,13 @@ import {
 
 import { ParametersPanel } from "./CustomUrlEditorParameters.js";
 import { type IAttributeWithDisplayForm } from "./types.js";
-import { dashboardAttributeFilterToAttributeFilter } from "../../../../converters/filterConverters.js";
+import { dashboardAttributeFilterItemToAttributeFilter } from "../../../../converters/filterConverters.js";
 import { useDashboardSelector } from "../../../../model/react/DashboardStoreProvider.js";
 import { useWidgetFilters } from "../../../../model/react/useWidgetFilters.js";
 import { selectAllCatalogDisplayFormsMap } from "../../../../model/store/catalog/catalogSelectors.js";
 import { selectIsWhiteLabeled } from "../../../../model/store/config/configSelectors.js";
 import { selectAttributeFilterConfigsOverrides } from "../../../../model/store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
-import { selectFilterContextAttributeFilters } from "../../../../model/store/tabs/filterContext/filterContextSelectors.js";
+import { selectFilterContextAttributeFilterItems } from "../../../../model/store/tabs/filterContext/filterContextSelectors.js";
 import { selectFilterableWidgetByRef } from "../../../../model/store/tabs/layout/layoutSelectors.js";
 import { DASHBOARD_HEADER_OVERLAYS_Z_INDEX } from "../../../constants/zIndex.js";
 import { useInvalidFilteringParametersIdentifiers } from "../../../widget/insight/configuration/DrillTargets/useInvalidFilteringParametersIdentifiers.js";
@@ -480,12 +480,12 @@ function useSanitizedInsightFilters(widgetRef: ObjRef) {
 
 function useSanitizedDashboardFilters() {
     // Date filters are currently not supported, so select only attribute filters
-    const dashboardFilters = useDashboardSelector(selectFilterContextAttributeFilters);
+    const dashboardFilters = useDashboardSelector(selectFilterContextAttributeFilterItems);
     const sanitizeAttributeFilter = useSanitizeAttributeFilter();
 
     return useMemo(() => {
         return dashboardFilters
-            ?.map(dashboardAttributeFilterToAttributeFilter)
+            ?.map(dashboardAttributeFilterItemToAttributeFilter)
             .map(sanitizeAttributeFilter)
             .filter(isAttributeFilter); // filter out undefined values (eg. filters with removed display forms)
     }, [dashboardFilters, sanitizeAttributeFilter]);

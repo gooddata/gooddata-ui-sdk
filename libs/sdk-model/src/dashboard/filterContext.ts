@@ -9,6 +9,7 @@ import {
     type IAttributeElements,
     type ILowerBoundedFilter,
     type IUpperBoundedFilter,
+    type MatchFilterOperator,
     isAttributeElementsByRef,
 } from "../execution/filter/index.js";
 import { type ObjRef, isObjRef } from "../objRef/index.js";
@@ -160,6 +161,170 @@ export function getSelectedElementsCount(filter: IDashboardAttributeFilter) {
     return isAttributeElementsByRef(filter.attributeFilter.attributeElements)
         ? filter.attributeFilter.attributeElements.uris.length
         : filter.attributeFilter.attributeElements.values.length;
+}
+
+/**
+ * Arbitrary attribute filter of the filter context.
+ *
+ * @remarks
+ * Allows filtering by custom string values that don't need to exist as actual attribute elements.
+ * Unlike {@link IDashboardAttributeFilter}, values are free-form strings, not references to existing elements.
+ *
+ * @alpha
+ */
+export interface IDashboardArbitraryAttributeFilter {
+    arbitraryAttributeFilter: {
+        /**
+         * Display form object ref
+         */
+        displayForm: ObjRef;
+
+        /**
+         * Arbitrary string values to filter by
+         */
+        values: Array<string | null>;
+
+        /**
+         * Is negative filter?
+         */
+        negativeSelection: boolean;
+
+        /**
+         * Identifier of the filter which is valid in the scope of the filter context
+         */
+        localIdentifier?: string;
+
+        /**
+         * Custom title of the filter. If specified has priority over the default filter title.
+         */
+        title?: string;
+
+        /**
+         * Parent filters that are limiting autocomplete suggestions available in this filter.
+         * @beta
+         */
+        filterElementsBy?: IDashboardAttributeFilterParent[];
+
+        /**
+         * Date filters that are limiting autocomplete suggestions available in this filter.
+         * @beta
+         */
+        filterElementsByDate?: IDashboardAttributeFilterByDate[];
+
+        /**
+         * Items that are limiting attribute elements for autocomplete suggestions available in this filter.
+         * @alpha
+         */
+        validateElementsBy?: ObjRef[];
+    };
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IDashboardArbitraryAttributeFilter}.
+ * @alpha
+ */
+export function isDashboardArbitraryAttributeFilter(obj: unknown): obj is IDashboardArbitraryAttributeFilter {
+    return !isEmpty(obj) && !!(obj as IDashboardArbitraryAttributeFilter).arbitraryAttributeFilter;
+}
+
+/**
+ * Match attribute filter of the filter context.
+ *
+ * @remarks
+ * Allows filtering by pattern matching on attribute values using operators
+ * like "contains", "startsWith", or "endsWith".
+ *
+ * @alpha
+ */
+export interface IDashboardMatchAttributeFilter {
+    matchAttributeFilter: {
+        /**
+         * Display form object ref
+         */
+        displayForm: ObjRef;
+
+        /**
+         * Match operator
+         */
+        operator: MatchFilterOperator;
+
+        /**
+         * The literal string to match against attribute values
+         */
+        literal: string;
+
+        /**
+         * Whether matching is case sensitive. Defaults to false.
+         */
+        caseSensitive?: boolean;
+
+        /**
+         * Whether this is a negative match (NOT LIKE). Defaults to false.
+         */
+        negativeSelection?: boolean;
+
+        /**
+         * Identifier of the filter which is valid in the scope of the filter context
+         */
+        localIdentifier?: string;
+
+        /**
+         * Custom title of the filter. If specified has priority over the default filter title.
+         */
+        title?: string;
+    };
+}
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link IDashboardMatchAttributeFilter}.
+ * @alpha
+ */
+export function isDashboardMatchAttributeFilter(obj: unknown): obj is IDashboardMatchAttributeFilter {
+    return !isEmpty(obj) && !!(obj as IDashboardMatchAttributeFilter).matchAttributeFilter;
+}
+
+/**
+ * Union of text mode attribute filter types (arbitrary and match).
+ *
+ * @remarks
+ * These filters use free-text values rather than element selection.
+ *
+ * @alpha
+ */
+export type DashboardTextAttributeFilter =
+    | IDashboardArbitraryAttributeFilter
+    | IDashboardMatchAttributeFilter;
+
+/**
+ * Type-guard testing whether the provided object is a text mode attribute filter
+ * ({@link IDashboardArbitraryAttributeFilter} or {@link IDashboardMatchAttributeFilter}).
+ * @alpha
+ */
+export function isDashboardTextAttributeFilter(obj: unknown): obj is DashboardTextAttributeFilter {
+    return isDashboardArbitraryAttributeFilter(obj) || isDashboardMatchAttributeFilter(obj);
+}
+
+/**
+ * Union of all dashboard attribute-based filter types, including element selection
+ * filters and text mode filters (arbitrary, match).
+ *
+ * @alpha
+ */
+export type DashboardAttributeFilterItem =
+    | IDashboardAttributeFilter
+    | IDashboardArbitraryAttributeFilter
+    | IDashboardMatchAttributeFilter;
+
+/**
+ * Type-guard testing whether the provided object is an instance of {@link DashboardAttributeFilterItem}.
+ * @alpha
+ */
+export function isDashboardAttributeFilterItem(obj: unknown): obj is DashboardAttributeFilterItem {
+    return (
+        isDashboardAttributeFilter(obj) ||
+        isDashboardArbitraryAttributeFilter(obj) ||
+        isDashboardMatchAttributeFilter(obj)
+    );
 }
 
 /**
@@ -415,20 +580,130 @@ export function isAllValuesDashboardAttributeFilter(obj: unknown): boolean {
             return obj.attributeFilter.attributeElements.values.length === 0;
         }
     }
+    if (isDashboardArbitraryAttributeFilter(obj) && obj.arbitraryAttributeFilter.negativeSelection) {
+        return obj.arbitraryAttributeFilter.values.length === 0;
+    }
     return false;
+}
+
+/**
+ * Returns the display form of any attribute-based dashboard filter.
+ *
+ * @alpha
+ */
+export function dashboardAttributeFilterItemDisplayForm(filter: DashboardAttributeFilterItem): ObjRef {
+    if (isDashboardAttributeFilter(filter)) {
+        return filter.attributeFilter.displayForm;
+    }
+    if (isDashboardArbitraryAttributeFilter(filter)) {
+        return filter.arbitraryAttributeFilter.displayForm;
+    }
+    return filter.matchAttributeFilter.displayForm;
+}
+
+/**
+ * Returns the local identifier of any attribute-based dashboard filter.
+ *
+ * @alpha
+ */
+export function dashboardAttributeFilterItemLocalIdentifier(
+    filter: DashboardAttributeFilterItem,
+): string | undefined {
+    if (isDashboardAttributeFilter(filter)) {
+        return filter.attributeFilter.localIdentifier;
+    }
+    if (isDashboardArbitraryAttributeFilter(filter)) {
+        return filter.arbitraryAttributeFilter.localIdentifier;
+    }
+    return filter.matchAttributeFilter.localIdentifier;
+}
+
+/**
+ * Returns the title of any attribute-based dashboard filter.
+ *
+ * @alpha
+ */
+export function dashboardAttributeFilterItemTitle(filter: DashboardAttributeFilterItem): string | undefined {
+    if (isDashboardAttributeFilter(filter)) {
+        return filter.attributeFilter.title;
+    }
+    if (isDashboardArbitraryAttributeFilter(filter)) {
+        return filter.arbitraryAttributeFilter.title;
+    }
+    return filter.matchAttributeFilter.title;
+}
+
+/**
+ * Returns the parent attribute filter dependencies of any attribute-based dashboard filter.
+ *
+ * Standard and arbitrary filters support parent filtering; match filters do not,
+ * so this returns undefined for match filters.
+ *
+ * @alpha
+ */
+export function dashboardAttributeFilterItemFilterElementsBy(
+    filter: DashboardAttributeFilterItem,
+): IDashboardAttributeFilterParent[] | undefined {
+    if (isDashboardAttributeFilter(filter)) {
+        return filter.attributeFilter.filterElementsBy;
+    }
+    if (isDashboardArbitraryAttributeFilter(filter)) {
+        return filter.arbitraryAttributeFilter.filterElementsBy;
+    }
+    return undefined;
+}
+
+/**
+ * Returns the dependent date filter dependencies of any attribute-based dashboard filter.
+ *
+ * Standard and arbitrary filters support dependent date filtering; match filters do not,
+ * so this returns undefined for match filters.
+ *
+ * @alpha
+ */
+export function dashboardAttributeFilterItemFilterElementsByDate(
+    filter: DashboardAttributeFilterItem,
+): IDashboardAttributeFilterByDate[] | undefined {
+    if (isDashboardAttributeFilter(filter)) {
+        return filter.attributeFilter.filterElementsByDate;
+    }
+    if (isDashboardArbitraryAttributeFilter(filter)) {
+        return filter.arbitraryAttributeFilter.filterElementsByDate;
+    }
+    return undefined;
+}
+
+/**
+ * Returns the validateElementsBy of any attribute-based dashboard filter.
+ *
+ * Standard and arbitrary filters support element validation; match filters do not,
+ * so this returns undefined for match filters.
+ *
+ * @alpha
+ */
+export function dashboardAttributeFilterItemValidateElementsBy(
+    filter: DashboardAttributeFilterItem,
+): ObjRef[] | undefined {
+    if (isDashboardAttributeFilter(filter)) {
+        return filter.attributeFilter.validateElementsBy;
+    }
+    if (isDashboardArbitraryAttributeFilter(filter)) {
+        return filter.arbitraryAttributeFilter.validateElementsBy;
+    }
+    return undefined;
 }
 
 /**
  * Returns objRef of the dashboard filter.
  *
- * For attribute filters, this will be reference to the display form.
+ * For attribute filters (including text mode filters), this will be reference to the display form.
  * For date filters, it's reference to the data set, or undefined if it's the default date filter.
  *
  * @alpha
  */
 export function dashboardFilterObjRef(filter: FilterContextItem): ObjRef | undefined {
-    if (isDashboardAttributeFilter(filter)) {
-        return filter.attributeFilter.displayForm;
+    if (isDashboardAttributeFilterItem(filter)) {
+        return dashboardAttributeFilterItemDisplayForm(filter);
     }
     if (isDashboardDateFilter(filter)) {
         return filter.dateFilter.dataSet;
@@ -442,8 +717,8 @@ export function dashboardFilterObjRef(filter: FilterContextItem): ObjRef | undef
  * @alpha
  */
 export function dashboardFilterLocalIdentifier(filter: FilterContextItem): string | undefined {
-    if (isDashboardAttributeFilter(filter)) {
-        return filter.attributeFilter.localIdentifier;
+    if (isDashboardAttributeFilterItem(filter)) {
+        return dashboardAttributeFilterItemLocalIdentifier(filter);
     }
     if (isDashboardDateFilter(filter)) {
         return filter.dateFilter.localIdentifier;
@@ -456,14 +731,14 @@ export function dashboardFilterLocalIdentifier(filter: FilterContextItem): strin
  * Supported filter context items
  * @alpha
  */
-export type FilterContextItem = IDashboardAttributeFilter | IDashboardDateFilter;
+export type FilterContextItem = DashboardAttributeFilterItem | IDashboardDateFilter;
 
 /**
  * Type-guard testing whether the provided object is an instance of {@link FilterContextItem}.
  * @alpha
  */
 export function isFilterContextItem(obj: unknown): obj is FilterContextItem {
-    return isDashboardDateFilter(obj) || isDashboardAttributeFilter(obj);
+    return isDashboardDateFilter(obj) || isDashboardAttributeFilterItem(obj);
 }
 
 /**

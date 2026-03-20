@@ -2921,6 +2921,54 @@
                     }
                 }
             },
+            "DashboardArbitraryAttributeFilter": {
+                "required": [
+                    "arbitraryAttributeFilter"
+                ],
+                "type": "object",
+                "properties": {
+                    "arbitraryAttributeFilter": {
+                        "required": [
+                            "displayForm",
+                            "negativeSelection",
+                            "values"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "displayForm": {
+                                "$ref": "#/components/schemas/IdentifierRef"
+                            },
+                            "values": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "negativeSelection": {
+                                "type": "boolean"
+                            },
+                            "filterElementsBy": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/AttributeFilterParent"
+                                }
+                            },
+                            "filterElementsByDate": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/AttributeFilterByDate"
+                                }
+                            },
+                            "title": {
+                                "type": "string"
+                            },
+                            "localIdentifier": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
             "DashboardAttributeFilter": {
                 "required": [
                     "attributeFilter"
@@ -3121,8 +3169,60 @@
                     },
                     {
                         "$ref": "#/components/schemas/DashboardDateFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/DashboardArbitraryAttributeFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/DashboardMatchAttributeFilter"
                     }
                 ]
+            },
+            "DashboardMatchAttributeFilter": {
+                "required": [
+                    "matchAttributeFilter"
+                ],
+                "type": "object",
+                "properties": {
+                    "matchAttributeFilter": {
+                        "required": [
+                            "caseSensitive",
+                            "displayForm",
+                            "literal",
+                            "negativeSelection",
+                            "operator"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "displayForm": {
+                                "$ref": "#/components/schemas/IdentifierRef"
+                            },
+                            "operator": {
+                                "type": "string",
+                                "enum": [
+                                    "contains",
+                                    "startsWith",
+                                    "endsWith"
+                                ]
+                            },
+                            "literal": {
+                                "type": "string"
+                            },
+                            "negativeSelection": {
+                                "type": "boolean"
+                            },
+                            "caseSensitive": {
+                                "type": "boolean"
+                            },
+                            "title": {
+                                "type": "string"
+                            },
+                            "localIdentifier": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
             },
             "DashboardTabularExportRequest": {
                 "required": [

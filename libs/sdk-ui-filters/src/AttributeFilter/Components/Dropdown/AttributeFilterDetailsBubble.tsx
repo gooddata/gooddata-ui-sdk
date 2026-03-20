@@ -156,7 +156,12 @@ export function AttributeFilterDetailsBubble({
                             variant="tertiary"
                             iconColor="complementary-7"
                             label={intl.formatMessage(messages["attributeFilterDetailsInfoButtonLabel"])}
-                            accessibilityConfig={{ ariaExpanded: isOpen }}
+                            accessibilityConfig={{
+                                ariaLabel: intl.formatMessage(
+                                    messages["attributeFilterDetailsInfoButtonLabel"],
+                                ),
+                                ariaExpanded: isOpen,
+                            }}
                             dataTestId="attribute-filter-details-trigger"
                         />
                     </span>

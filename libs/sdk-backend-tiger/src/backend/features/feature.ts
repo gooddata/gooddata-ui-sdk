@@ -837,6 +837,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableHyperLogLog,
+            "enableHyperLogLog",
+            "BOOLEAN",
+            FeatureFlagsValues.enableHyperLogLog,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableGeoPushpinIcon,
             "enableGeoPushpinIcon",
             "BOOLEAN",
@@ -897,13 +904,6 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableNewPdfTabularExport",
             "BOOLEAN",
             FeatureFlagsValues.enableNewPdfTabularExport,
-        ),
-        ...loadFeature(
-            features,
-            TigerFeaturesNames.EnableFilterAccessibility,
-            "enableFilterAccessibility",
-            "BOOLEAN",
-            FeatureFlagsValues.enableFilterAccessibility,
         ),
         ...loadFeature(
             features,

@@ -278,6 +278,8 @@ export const convertToDashboardTabularExportRequest = (
         const { mergeHeaders, exportInfo } = exportRequest.settings ?? {};
 
         // Convert filtersByTab to API format (dashboardTabsFiltersOverrides)
+        // Note: ITigerFilterContextItem is wider than generated DashboardFilter to support
+        // arbitrary/match attribute filters not yet in the OpenAPI spec.
         const dashboardTabsFiltersOverrides = filtersByTab
             ? Object.entries(filtersByTab).reduce<Record<string, ITigerFilterContextItem[]>>(
                   (acc, [tabId, tabFilters]) => {
@@ -296,8 +298,13 @@ export const convertToDashboardTabularExportRequest = (
                 ...(mergeHeaders ? { mergeHeaders } : {}),
                 ...(exportInfo ? { exportInfo } : {}),
             },
-            dashboardFiltersOverride: filters ? convertSdkFiltersToTiger(filters) : undefined,
-            dashboardTabsFiltersOverrides,
+            dashboardFiltersOverride: filters
+                ? (convertSdkFiltersToTiger(
+                      filters,
+                  ) as unknown as DashboardTabularExportRequestV2["dashboardFiltersOverride"])
+                : undefined,
+            dashboardTabsFiltersOverrides:
+                dashboardTabsFiltersOverrides as unknown as DashboardTabularExportRequestV2["dashboardTabsFiltersOverrides"],
         };
     }
     throw new UnexpectedError("Export definition must be dashboard and XLSX");
@@ -374,7 +381,9 @@ export const convertVisualizationToDashboardTabularExportRequest = (
         format: exportRequest.format === "PDF_TABULAR" ? "PDF" : "XLSX",
         dashboardId: dashboard,
         widgetIds: [widget],
-        dashboardFiltersOverride: convertSdkFiltersToTiger(filters)?.filter(isTigerFilterContextItem),
+        dashboardFiltersOverride: convertSdkFiltersToTiger(filters)?.filter(
+            isTigerFilterContextItem,
+        ) as unknown as DashboardTabularExportRequestV2["dashboardFiltersOverride"],
         settings,
     };
 };

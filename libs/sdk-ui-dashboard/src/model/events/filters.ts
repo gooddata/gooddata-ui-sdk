@@ -1,6 +1,7 @@
 // (C) 2021-2026 GoodData Corporation
 
 import {
+    type DashboardAttributeFilterItem,
     type IDashboardAttributeFilter,
     type IDashboardAttributeFilterConfig,
     type IDashboardDateFilter,
@@ -150,7 +151,7 @@ export interface IDashboardAttributeFilterRemovedPayload {
     /**
      * The dashboard attribute filter that has been removed.
      */
-    readonly removed: IDashboardAttributeFilter;
+    readonly removed: DashboardAttributeFilterItem;
 
     /**
      * If the removed filter figured as a parent filter for some other filters, then
@@ -159,7 +160,7 @@ export interface IDashboardAttributeFilterRemovedPayload {
      * If any children filters were impacted by the removal, their new definition that does
      * not include the parent relationship is included here.
      */
-    readonly children?: ReadonlyArray<IDashboardAttributeFilter>;
+    readonly children?: ReadonlyArray<DashboardAttributeFilterItem>;
 }
 
 /**
@@ -177,8 +178,8 @@ export interface IDashboardAttributeFilterRemoved extends IDashboardEvent {
 
 export function attributeFilterRemoved(
     ctx: DashboardContext,
-    removed: IDashboardAttributeFilter,
-    children?: IDashboardAttributeFilter[],
+    removed: DashboardAttributeFilterItem,
+    children?: DashboardAttributeFilterItem[],
     correlationId?: string,
 ): IDashboardAttributeFilterRemoved {
     return {
@@ -214,7 +215,7 @@ export interface IDashboardAttributeFilterMovedPayload {
     /**
      * Definition of the dashboard attribute filter that was moved.
      */
-    readonly moved: IDashboardAttributeFilter;
+    readonly moved: DashboardAttributeFilterItem;
 
     /**
      * The original position of the filter.
@@ -240,7 +241,7 @@ export interface IDashboardAttributeFilterMoved extends IDashboardEvent {
 
 export function attributeFilterMoved(
     ctx: DashboardContext,
-    moved: IDashboardAttributeFilter,
+    moved: DashboardAttributeFilterItem,
     fromIndex: number,
     toIndex: number,
     correlationId?: string,
@@ -338,6 +339,64 @@ export const isDashboardAttributeFilterSelectionChanged =
 //
 
 /**
+ * Payload of the {@link DashboardAttributeFilterItemSelectionReplaced} event.
+ *
+ * @public
+ */
+export type DashboardAttributeFilterItemSelectionReplacedPayload = {
+    /**
+     * The updated definition of the dashboard attribute filter item.
+     *
+     * This can be any attribute filter type: element-based, arbitrary text, or match text filter.
+     */
+    readonly filter: DashboardAttributeFilterItem;
+};
+
+/**
+ * This event is emitted after an attribute filter item's selection is replaced.
+ *
+ * @remarks
+ * Unlike {@link DashboardAttributeFilterSelectionChanged}, this event supports all attribute filter
+ * types including text filters (arbitrary and match).
+ *
+ * @public
+ */
+export type DashboardAttributeFilterItemSelectionReplaced = IDashboardEvent & {
+    readonly type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER_ITEM.SELECTION_REPLACED";
+    readonly payload: DashboardAttributeFilterItemSelectionReplacedPayload;
+};
+
+export function attributeFilterItemSelectionReplaced(
+    ctx: DashboardContext,
+    filter: DashboardAttributeFilterItem,
+    correlationId?: string,
+): DashboardAttributeFilterItemSelectionReplaced {
+    return {
+        type: "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER_ITEM.SELECTION_REPLACED",
+        ctx,
+        correlationId,
+        payload: {
+            filter,
+        },
+    };
+}
+
+/**
+ * Tests whether the provided object is an instance of {@link DashboardAttributeFilterItemSelectionReplaced}.
+ *
+ * @param obj - object to test
+ * @public
+ */
+export const isDashboardAttributeFilterItemSelectionReplaced =
+    eventGuard<DashboardAttributeFilterItemSelectionReplaced>(
+        "GDC.DASH/EVT.FILTER_CONTEXT.ATTRIBUTE_FILTER_ITEM.SELECTION_REPLACED",
+    );
+
+//
+//
+//
+
+/**
  * Payload of the {@link IDashboardAttributeFilterParentChanged} event.
  * @beta
  */
@@ -347,7 +406,7 @@ export interface IDashboardAttributeFilterParentChangedPayload {
      *
      * The definition of parents represents the new state.
      */
-    readonly filter: IDashboardAttributeFilter;
+    readonly filter: DashboardAttributeFilterItem;
 }
 
 /**
@@ -362,7 +421,7 @@ export interface IDashboardAttributeFilterParentChanged extends IDashboardEvent 
 
 export function attributeFilterParentChanged(
     ctx: DashboardContext,
-    filter: IDashboardAttributeFilter,
+    filter: DashboardAttributeFilterItem,
     correlationId?: string,
 ): IDashboardAttributeFilterParentChanged {
     return {
@@ -399,7 +458,7 @@ export interface IDashboardAttributeTitleChangedPayload {
      *
      * The definition of parents represents the new state.
      */
-    readonly filter: IDashboardAttributeFilter;
+    readonly filter: DashboardAttributeFilterItem;
 }
 
 /**
@@ -414,7 +473,7 @@ export interface IDashboardAttributeTitleChanged extends IDashboardEvent {
 
 export function attributeDisplayTitleChanged(
     ctx: DashboardContext,
-    filter: IDashboardAttributeFilter,
+    filter: DashboardAttributeFilterItem,
     correlationId?: string,
 ): IDashboardAttributeTitleChanged {
     return {
@@ -443,7 +502,7 @@ export interface IDashboardAttributeDisplayFormChangedPayload {
      *
      * The definition of parents represents the new state.
      */
-    readonly filter: IDashboardAttributeFilter;
+    readonly filter: DashboardAttributeFilterItem;
 }
 
 export interface IDashboardAttributeDisplayFormChanged extends IDashboardEvent {
@@ -453,7 +512,7 @@ export interface IDashboardAttributeDisplayFormChanged extends IDashboardEvent {
 
 export function attributeDisplayFormChanged(
     ctx: DashboardContext,
-    filter: IDashboardAttributeFilter,
+    filter: DashboardAttributeFilterItem,
     correlationId?: string,
 ): IDashboardAttributeDisplayFormChanged {
     return {
@@ -476,8 +535,9 @@ export interface IDashboardAttributeSelectionModeChangedPayload {
      * The updated definition of the dashboard attribute filter.
      *
      * The definition of selection mode represents the new state.
+     * For text filters (arbitrary, match), selection mode has no effect.
      */
-    readonly filter: IDashboardAttributeFilter;
+    readonly filter: DashboardAttributeFilterItem;
 }
 
 /**
@@ -492,7 +552,7 @@ export interface IDashboardAttributeSelectionModeChanged extends IDashboardEvent
 
 export function attributeSelectionModeChanged(
     ctx: DashboardContext,
-    filter: IDashboardAttributeFilter,
+    filter: DashboardAttributeFilterItem,
     correlationId?: string,
 ): IDashboardAttributeSelectionModeChanged {
     return {
@@ -531,7 +591,7 @@ export interface IDashboardAttributeFilterConfigModeChangedPayload {
      *
      * The definition of mode represents the new state.
      */
-    readonly filter: IDashboardAttributeFilter;
+    readonly filter: DashboardAttributeFilterItem;
 }
 
 /**
@@ -546,7 +606,7 @@ export interface IDashboardAttributeFilterConfigModeChanged extends IDashboardEv
 
 export function dashboardAttributeConfigModeChanged(
     ctx: DashboardContext,
-    filter: IDashboardAttributeFilter,
+    filter: DashboardAttributeFilterItem,
 ): IDashboardAttributeFilterConfigModeChanged {
     return {
         type: "GDC.DASH/EVT.ATTRIBUTE_FILTER_CONFIG.MODE_CHANGED",
@@ -581,7 +641,7 @@ export interface IDashboardAttributeFilterConfigDisplayAsLabelChangedPayload {
     /**
      * The definition of the dashboard attribute filter.
      */
-    readonly filter: IDashboardAttributeFilter;
+    readonly filter: DashboardAttributeFilterItem;
     /**
      * New label used for displaying filter attribute values
      */
@@ -600,7 +660,7 @@ export interface IDashboardAttributeFilterConfigDisplayAsLabelChanged extends ID
 
 export function dashboardAttributeConfigDisplayAsLabelChanged(
     ctx: DashboardContext,
-    filter: IDashboardAttributeFilter,
+    filter: DashboardAttributeFilterItem,
     displayAsLabel: ObjRef | undefined,
     correlationId?: string,
 ): IDashboardAttributeFilterConfigDisplayAsLabelChanged {
@@ -641,7 +701,7 @@ export interface IDashboardAttributeFilterConfigLimitingItemsChangedPayload {
      *
      * The definition of mode represents the new state.
      */
-    readonly filter: IDashboardAttributeFilter;
+    readonly filter: DashboardAttributeFilterItem;
 }
 
 /**
@@ -656,7 +716,7 @@ export interface IDashboardAttributeFilterConfigLimitingItemsChanged extends IDa
 
 export function dashboardAttributeConfigLimitingItemsChanged(
     ctx: DashboardContext,
-    filter: IDashboardAttributeFilter,
+    filter: DashboardAttributeFilterItem,
 ): IDashboardAttributeFilterConfigLimitingItemsChanged {
     return {
         type: "GDC.DASH/EVT.ATTRIBUTE_FILTER_CONFIG.LIMITING_ITEMS_CHANGED",

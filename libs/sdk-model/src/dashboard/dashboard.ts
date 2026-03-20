@@ -125,7 +125,7 @@ export interface IDashboardAttributeFilterConfig {
     mode?: DashboardAttributeFilterConfigMode;
 
     /**
-     * Display form to use to show elements of attribute filter in UI
+     * Display form to use to show elements of attribute filter in UI. Used only for attribute filters with elements selection. For text filters (arbitrary, match) it is not used.
      */
     displayAsLabel?: ObjRef;
 }

@@ -1,8 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { FormattedMessage } from "react-intl";
-
-import { MAX_SELECTION_SIZE } from "../../hooks/constants.js";
+import cx from "classnames";
 
 /**
  * Props for TextFilterValidationMessages component.
@@ -10,11 +8,6 @@ import { MAX_SELECTION_SIZE } from "../../hooks/constants.js";
  * @alpha
  */
 export interface ITextFilterValidationMessagesProps {
-    /**
-     * Whether the current operator is an arbitrary operator (is/isNot).
-     */
-    isArbitraryOperator: boolean;
-
     /**
      * True if empty-literal validation should be shown.
      */
@@ -34,6 +27,16 @@ export interface ITextFilterValidationMessagesProps {
      * True when value limit exceeded (truncated) — error shown, Apply disabled.
      */
     hasValuesLimitExceededError?: boolean;
+
+    /**
+     * Optional id used for description.
+     */
+    descriptionId?: string;
+
+    /**
+     * Optional error text.
+     */
+    errorText?: string;
 }
 
 /**
@@ -43,41 +46,30 @@ export interface ITextFilterValidationMessagesProps {
  */
 export function TextFilterValidationMessages(props: ITextFilterValidationMessagesProps) {
     const {
-        isArbitraryOperator,
         hasLiteralEmptyError,
         hasValuesEmptyError,
         hasValuesLimitReachedWarning,
         hasValuesLimitExceededError,
+        descriptionId,
+        errorText,
     } = props;
 
+    if (!errorText) {
+        return null;
+    }
+
     return (
-        <>
-            {isArbitraryOperator && hasValuesEmptyError ? (
-                <div className="gd-text-filter-body__error s-text-filter-input-error-message">
-                    <FormattedMessage id="attributeFilter.text.validation.valueCannotBeEmpty" />
-                </div>
-            ) : null}
-            {isArbitraryOperator && hasValuesLimitExceededError ? (
-                <div className="gd-text-filter-body__error gd-text-filter-body__error--limit-exceeded s-text-filter-values-limit-error">
-                    <FormattedMessage
-                        id="attributeFilter.text.validation.valuesLimitExceeded"
-                        values={{ maxValues: MAX_SELECTION_SIZE }}
-                    />
-                </div>
-            ) : null}
-            {isArbitraryOperator && hasValuesLimitReachedWarning && !hasValuesLimitExceededError ? (
-                <div className="gd-text-filter-body__error gd-text-filter-body__error--limit s-text-filter-values-limit-warning">
-                    <FormattedMessage
-                        id="attributeFilter.text.validation.valuesLimitReached"
-                        values={{ maxValues: MAX_SELECTION_SIZE }}
-                    />
-                </div>
-            ) : null}
-            {!isArbitraryOperator && hasLiteralEmptyError ? (
-                <div className="gd-text-filter-body__error s-text-filter-input-error-message">
-                    <FormattedMessage id="attributeFilter.text.validation.valueCannotBeEmpty" />
-                </div>
-            ) : null}
-        </>
+        <div
+            id={descriptionId}
+            className={cx("gd-text-filter-body__error", {
+                "s-text-filter-input-error-message": hasLiteralEmptyError || hasValuesEmptyError,
+                "gd-text-filter-body__error--limit-exceeded s-text-filter-values-limit-error":
+                    hasValuesLimitExceededError,
+                "gd-text-filter-body__error--limit s-text-filter-values-limit-warning":
+                    hasValuesLimitReachedWarning && !hasValuesLimitExceededError,
+            })}
+        >
+            {errorText}
+        </div>
     );
 }

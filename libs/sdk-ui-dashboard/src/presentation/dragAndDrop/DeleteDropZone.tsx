@@ -5,7 +5,11 @@ import { type Ref } from "react";
 import cx from "classnames";
 import { FormattedMessage } from "react-intl";
 
-import { isDashboardAttributeFilter } from "@gooddata/sdk-model";
+import {
+    dashboardAttributeFilterItemLocalIdentifier,
+    isDashboardAttributeFilterItem,
+    isDashboardDateFilter,
+} from "@gooddata/sdk-model";
 
 import { getDropZoneDebugStyle } from "./debug.js";
 import { useDashboardDrop } from "./useDashboardDrop.js";
@@ -18,10 +22,10 @@ export function DeleteDropZone() {
         ["attributeFilter", "dateFilter"],
         {
             drop: ({ filter }) => {
-                if (isDashboardAttributeFilter(filter)) {
-                    const identifier = filter.attributeFilter.localIdentifier!;
+                if (isDashboardAttributeFilterItem(filter)) {
+                    const identifier = dashboardAttributeFilterItemLocalIdentifier(filter)!;
                     dispatch(removeAttributeFilter(identifier));
-                } else {
+                } else if (isDashboardDateFilter(filter)) {
                     const dataSet = filter.dateFilter.dataSet!;
                     dispatch(removeDateFilter(dataSet));
                 }

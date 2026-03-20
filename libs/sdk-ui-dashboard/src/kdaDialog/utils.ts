@@ -4,15 +4,12 @@ import { invariant } from "ts-invariant";
 
 import { ClientFormatterFacade, type ISeparators } from "@gooddata/number-formatter";
 import {
-    type IAttributeFilter,
     type ICatalogAttribute,
     type IDashboardAttributeFilter,
     type ObjRef,
     areObjRefsEqual,
     isAttributeElementsByRef,
     isAttributeElementsByValue,
-    newNegativeAttributeFilter,
-    newPositiveAttributeFilter,
     objRefToString,
 } from "@gooddata/sdk-model";
 import { DateFilterHelpers } from "@gooddata/sdk-ui-filters";
@@ -133,17 +130,6 @@ export function clearSummaryValue(definition: DeepReadonly<IKdaDefinition> | nul
               }
             : {}),
     };
-}
-
-export function dashboardAttributeFilterToAttributeFilter(
-    dashboardFilter: IDashboardAttributeFilter,
-): IAttributeFilter {
-    const { attributeElements, displayForm, negativeSelection } = dashboardFilter.attributeFilter;
-    if (negativeSelection) {
-        return newNegativeAttributeFilter(displayForm, attributeElements);
-    } else {
-        return newPositiveAttributeFilter(displayForm, attributeElements);
-    }
 }
 
 const ISO_TOKEN_MAP: Array<[RegExp, (match: string) => string]> = [

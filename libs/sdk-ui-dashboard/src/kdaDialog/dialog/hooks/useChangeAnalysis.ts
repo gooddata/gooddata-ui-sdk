@@ -20,13 +20,13 @@ import { useBackendStrict, useCancelablePromise, useWorkspaceStrict } from "@goo
 import { type IUiListboxInteractiveItem } from "@gooddata/sdk-ui-kit";
 
 import { useTags } from "./useTags.js";
+import { dashboardAttributeFilterItemToAttributeFilter } from "../../../converters/filterConverters.js";
 import { useAttribute } from "../../hooks/useAttribute.js";
 import { useDateAttribute } from "../../hooks/useDateAttribute.js";
 import { useRelevantFilters } from "../../hooks/useRelevantFilters.js";
 import { type IKdaItem, type IKdaState } from "../../internalTypes.js";
 import { useKdaState } from "../../providers/KdaState.js";
 import { type DeepReadonly, type IKdaDefinition } from "../../types.js";
-import { dashboardAttributeFilterToAttributeFilter } from "../../utils.js";
 
 export function useChangeAnalysis() {
     const { state, setState } = useKdaState();
@@ -87,7 +87,7 @@ function useChangeAnalysisResults(
                           .filter(Boolean) as IAttribute[];
                       const filters = attrFilters
                           .filter((f) => !isAllValuesDashboardAttributeFilter(f))
-                          .map(dashboardAttributeFilterToAttributeFilter);
+                          .map(dashboardAttributeFilterItemToAttributeFilter);
 
                       return backend
                           .workspace(workspace)

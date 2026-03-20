@@ -1,12 +1,15 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
+
 import { differenceBy, zip } from "lodash-es";
 
 import {
+    type DashboardAttributeFilterItem,
     type IAttributeDisplayFormMetadataObject,
-    type IDashboardAttributeFilter,
     type IDashboardAttributeFilterParent,
     type ObjRef,
     areObjRefsEqual,
+    dashboardAttributeFilterItemDisplayForm,
+    dashboardAttributeFilterItemLocalIdentifier,
     objRefToString,
 } from "@gooddata/sdk-model";
 
@@ -21,18 +24,21 @@ export type AttributeFilterParentsValidationResult =
 
 export async function validateAttributeFilterParents(
     ctx: DashboardContext,
-    dashboardFilter: IDashboardAttributeFilter,
+    dashboardFilter: DashboardAttributeFilterItem,
     parents: IDashboardAttributeFilterParent[],
-    allFilters: IDashboardAttributeFilter[],
+    allFilters: DashboardAttributeFilterItem[],
     displayFormsMap: ObjRefMap<IAttributeDisplayFormMetadataObject>,
 ): Promise<AttributeFilterParentsValidationResult> {
+    const dashboardFilterDisplayForm = dashboardAttributeFilterItemDisplayForm(dashboardFilter);
+
     const allExceptValidated = allFilters.filter(
-        (item) =>
-            !areObjRefsEqual(item.attributeFilter.displayForm, dashboardFilter.attributeFilter.displayForm),
+        (item) => !areObjRefsEqual(dashboardAttributeFilterItemDisplayForm(item), dashboardFilterDisplayForm),
     );
 
     // first, validate that the parents only use the filters that are available
-    const allExceptValidatedLocalIds = allExceptValidated.map((item) => item.attributeFilter.localIdentifier);
+    const allExceptValidatedLocalIds = allExceptValidated.map((item) =>
+        dashboardAttributeFilterItemLocalIdentifier(item),
+    );
     const hasExtraneousParent = parents.some(
         (parent) => !allExceptValidatedLocalIds.includes(parent.filterLocalIdentifier),
     );
@@ -43,13 +49,13 @@ export async function validateAttributeFilterParents(
     // then validate that the connecting attributes are valid
     const parentValidationData = parents.map((parent) => {
         const parentFilter = allExceptValidated.find(
-            (item) => item.attributeFilter.localIdentifier === parent.filterLocalIdentifier,
+            (item) => dashboardAttributeFilterItemLocalIdentifier(item) === parent.filterLocalIdentifier,
         )!; // the ! is cool here, we validated that the parents are available in the code above
 
-        const parentAttribute = displayFormsMap.get(parentFilter.attributeFilter.displayForm)?.attribute;
-        const dashboardFilterAttribute = displayFormsMap.get(
-            dashboardFilter.attributeFilter.displayForm,
+        const parentAttribute = displayFormsMap.get(
+            dashboardAttributeFilterItemDisplayForm(parentFilter),
         )?.attribute;
+        const dashboardFilterAttribute = displayFormsMap.get(dashboardFilterDisplayForm)?.attribute;
 
         if (!parentAttribute || !dashboardFilterAttribute) {
             return undefined;

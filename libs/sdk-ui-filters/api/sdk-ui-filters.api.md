@@ -28,6 +28,7 @@ import { IAttributeMetadataObject } from '@gooddata/sdk-model';
 import { IDashboardDateFilter } from '@gooddata/sdk-model';
 import { IDataSetMetadataObject } from '@gooddata/sdk-model';
 import { IDateFilter } from '@gooddata/sdk-model';
+import { IDropdownButtonRenderProps } from '@gooddata/sdk-ui-kit';
 import { IElementsQueryAttributeFilter } from '@gooddata/sdk-backend-spi';
 import { IEmptyValuesDateFilterOption } from '@gooddata/sdk-model';
 import { ILocale } from '@gooddata/sdk-model';
@@ -424,12 +425,15 @@ export function hasStandardPresets(presets: DateFilterRelativeOptionGroup): bool
 
 // @alpha
 export interface IArbitraryValuesInputProps {
+    ariaDescribedBy?: string;
+    ariaLabelledBy?: string;
     autocompleteOptions?: string[];
     disabled?: boolean;
     emptyValueDisplay: string;
     hasEmptyError?: boolean;
     hasValuesLimitExceededError?: boolean;
     hasValuesLimitReachedWarning?: boolean;
+    inputId?: string;
     isAutocompleteLoading?: boolean;
     onAutocompleteSearch?: (searchString: string) => void;
     onBlur?: FocusEventHandler<HTMLInputElement>;
@@ -554,13 +558,11 @@ export interface IAttributeFilterConfigurationButtonProps {
 }
 
 // @beta
-export type IAttributeFilterContext = AttributeFilterController & Pick<IAttributeFilterCoreProps, "fullscreenOnMobile" | "title" | "selectionMode" | "selectFirst" | "disabled" | "customIcon" | "withoutApply" | "workingFilter" | "overlayPositionType" | "alignPoints">;
+export type IAttributeFilterContext = AttributeFilterController & Pick<IAttributeFilterCoreProps, "fullscreenOnMobile" | "title" | "selectionMode" | "selectFirst" | "disabled" | "customIcon" | "withoutApply" | "workingFilter" | "overlayPositionType" | "alignPoints" | "menuConfig">;
 
 // @public (undocumented)
 export interface IAttributeFilterCoreProps {
     alignPoints?: IAlignPoint[];
-    // @alpha
-    availableFilterModes?: AttributeFilterAvailableMode[];
     backend?: IAnalyticalBackend;
     connectToPlaceholder?: IPlaceholder<IAttributeFilter>;
     // @alpha
@@ -576,6 +578,8 @@ export interface IAttributeFilterCoreProps {
     fullscreenOnMobile?: boolean;
     hiddenElements?: string[];
     locale?: ILocale;
+    // @alpha
+    menuConfig?: IAttributeFilterMenuConfig;
     onApply?: OnApplyCallbackType;
     onChange?: OnChangeCallbackType;
     onError?: (error: GoodDataSdkError) => void;
@@ -834,6 +838,12 @@ export interface IAttributeFilterLoadingProps {
     onClick?: () => void;
 }
 
+// @alpha
+export interface IAttributeFilterMenuConfig {
+    availableFilterModes?: AttributeFilterAvailableMode[];
+    showLabelsSwitch?: boolean;
+}
+
 // @public (undocumented)
 export interface IAttributeFilterProps extends IAttributeFilterBaseProps {
     // (undocumented)
@@ -979,8 +989,6 @@ export interface IDateFilterOwnProps extends IDateFilterStatePropsIntersection {
     filterOptions: IDateFilterOptionsByType;
     // @alpha
     hideDisabledExclude?: boolean;
-    // @alpha
-    improveAccessibility?: boolean;
     // (undocumented)
     isEditMode?: boolean;
     // (undocumented)
@@ -1092,6 +1100,8 @@ export interface IFilterGroupProps<P> {
 
 // @alpha
 export interface IFilterModeMenuButtonProps {
+    accessibilityConfig?: IDropdownButtonRenderProps["accessibilityConfig"];
+    ariaAttributes?: IDropdownButtonRenderProps["ariaAttributes"];
     isOpen: boolean;
     onClick: () => void;
 }
@@ -1418,6 +1428,7 @@ export interface ITextFilterBodyProps {
 // @alpha
 export interface ITextFilterOperatorDropdownProps {
     availableTextModes?: AttributeFilterTextMode[];
+    controlId?: string;
     disabled?: boolean;
     onOperatorChange?: (operator: TextFilterOperator) => void;
     operator: TextFilterOperator;

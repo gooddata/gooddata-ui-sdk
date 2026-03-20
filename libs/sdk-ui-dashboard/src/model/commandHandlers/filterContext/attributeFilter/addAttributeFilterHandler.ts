@@ -27,7 +27,7 @@ import {
     selectCanAddMoreFilters,
     selectFilterContextAttributeFilterByDisplayForm,
     selectFilterContextAttributeFilterByLocalId,
-    selectFilterContextAttributeFilters,
+    selectFilterContextAttributeFilterItems,
 } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../../store/tabs/index.js";
 import { selectAllAnalyticalWidgets } from "../../../store/tabs/layout/layoutSelectors.js";
@@ -70,8 +70,8 @@ export function* addAttributeFilterHandler(
         );
     }
 
-    const allFilters: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
-        selectFilterContextAttributeFilters,
+    const allFilters: ReturnType<typeof selectFilterContextAttributeFilterItems> = yield select(
+        selectFilterContextAttributeFilterItems,
     );
 
     const resolvedDisplayForm: SagaReturnType<typeof resolveDisplayFormMetadata> = yield call(

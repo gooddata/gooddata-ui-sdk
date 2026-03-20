@@ -206,19 +206,24 @@ function convertAndSanitizeFilter(
         (visibleFilter) => visibleFilter.localIdentifier === filterLocalIdentifier(filter),
     );
 
-    return isDashboardAttributeFilter(convertedItem)
-        ? {
-              ...convertedItem,
-              attributeFilter: {
-                  ...convertedItem.attributeFilter,
-                  title: titleToUse?.title,
-              },
-          }
-        : {
-              ...convertedItem,
-              dateFilter: {
-                  ...convertedItem.dateFilter,
-                  title: titleToUse?.title,
-              },
-          };
+    if (isDashboardAttributeFilter(convertedItem)) {
+        return {
+            ...convertedItem,
+            attributeFilter: {
+                ...convertedItem.attributeFilter,
+                title: titleToUse?.title,
+            },
+        };
+    } else if (isDashboardDateFilter(convertedItem)) {
+        return {
+            ...convertedItem,
+            dateFilter: {
+                ...convertedItem.dateFilter,
+                title: titleToUse?.title,
+            },
+        };
+    }
+
+    // New filter types (arbitrary, match) - return as-is
+    return convertedItem;
 }
