@@ -15,7 +15,8 @@ import {
     type InsightDrillDefinition,
     type ObjRef,
     type ScreenSize,
-    isDashboardAttributeFilter,
+    dashboardAttributeFilterItemLocalIdentifier,
+    isDashboardAttributeFilterItem,
     isDashboardCommonDateFilter,
     isDashboardLayout,
     isInsightWidget,
@@ -404,10 +405,9 @@ export const selectAllFiltersForWidgetByRef: (
 
             // Widget is the source of cross-filtering, so filtering out the cross-filtering filters
             const filtersWithoutCrossFilteringFilters = dashboardFilters.filter((f) => {
-                if (isDashboardAttributeFilter(f)) {
-                    return !crossFilteringFiltersLocalIdentifiers?.includes(
-                        f.attributeFilter.localIdentifier!,
-                    );
+                if (isDashboardAttributeFilterItem(f)) {
+                    const localId = dashboardAttributeFilterItemLocalIdentifier(f);
+                    return !crossFilteringFiltersLocalIdentifiers?.includes(localId!);
                 }
 
                 return true;
@@ -417,10 +417,9 @@ export const selectAllFiltersForWidgetByRef: (
             const filtersWithoutAllCrossFiltering =
                 isIgnoreCrossFilteringEnabled && shouldIgnoreCrossFiltering
                     ? filtersWithoutCrossFilteringFilters.filter((f) => {
-                          if (isDashboardAttributeFilter(f)) {
-                              return !allCrossFilteringLocalIdentifiers.includes(
-                                  f.attributeFilter.localIdentifier!,
-                              );
+                          if (isDashboardAttributeFilterItem(f)) {
+                              const localId = dashboardAttributeFilterItemLocalIdentifier(f);
+                              return !allCrossFilteringLocalIdentifiers.includes(localId!);
                           }
 
                           return true;

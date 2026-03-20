@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type ReactNode, createContext, useContext } from "react";
 
@@ -23,6 +23,7 @@ export type IAttributeFilterContext = AttributeFilterController &
         | "workingFilter"
         | "overlayPositionType"
         | "alignPoints"
+        | "menuConfig"
     >;
 
 export const AttributeFilterContext = createContext<IAttributeFilterContext | null>(null);
@@ -57,6 +58,7 @@ export function AttributeFilterContextProvider(props: IAttributeFilterCoreProps 
         workingFilter,
         overlayPositionType,
         alignPoints,
+        menuConfig,
     } = props;
 
     const controller = useAttributeFilterController(props);
@@ -76,6 +78,7 @@ export function AttributeFilterContextProvider(props: IAttributeFilterCoreProps 
                 workingFilter,
                 overlayPositionType,
                 alignPoints,
+                menuConfig,
             }}
         >
             {children}

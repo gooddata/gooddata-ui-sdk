@@ -48,6 +48,7 @@ import {
     type IDashboardKeyDriverAnalysisResolved,
 } from "./drill.js";
 import {
+    type DashboardAttributeFilterItemSelectionReplaced,
     type DashboardAttributeFilterSelectionChanged,
     type DashboardDateFilterSelectionChanged,
     type DashboardFilterContextChanged,
@@ -191,6 +192,7 @@ export type DashboardEvents =
     | IDashboardAttributeFilterRemoved
     | IDashboardAttributeFilterMoved
     | DashboardAttributeFilterSelectionChanged
+    | DashboardAttributeFilterItemSelectionReplaced
     | IDashboardAttributeTitleChanged
     | IDashboardAttributeSelectionModeChanged
     | IDashboardAttributeFilterParentChanged

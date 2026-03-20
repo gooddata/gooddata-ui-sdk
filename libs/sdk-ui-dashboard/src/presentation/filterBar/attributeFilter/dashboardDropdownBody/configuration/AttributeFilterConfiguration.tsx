@@ -8,8 +8,10 @@ import { invariant } from "ts-invariant";
 import {
     type DashboardAttributeFilterConfigMode,
     DashboardAttributeFilterConfigModeValues,
-    type IDashboardAttributeFilter,
     type ObjRef,
+    dashboardAttributeFilterItemDisplayForm,
+    dashboardAttributeFilterItemLocalIdentifier,
+    isDashboardAttributeFilter,
 } from "@gooddata/sdk-model";
 import { LoadingSpinner } from "@gooddata/sdk-ui-kit";
 import { useTheme } from "@gooddata/sdk-ui-theme-provider";
@@ -31,8 +33,8 @@ import {
     selectSupportsSingleSelectDependentFilters,
 } from "../../../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
 import {
-    selectFilterContextAttributeFilters,
-    selectOtherContextAttributeFilters,
+    selectFilterContextAttributeFilterItems,
+    selectOtherContextAttributeFilterItems,
 } from "../../../../../model/store/tabs/filterContext/filterContextSelectors.js";
 import { ConfigModeSelect } from "../../../configuration/ConfigurationModeSelect.js";
 import { AttributeTitleRenaming } from "../../../configuration/title/AttributeTitleRenaming.js";
@@ -79,9 +81,7 @@ export function AttributeFilterConfiguration({
         };
     }, [closeHandler]);
 
-    const neighborFilters: IDashboardAttributeFilter[] = useDashboardSelector(
-        selectOtherContextAttributeFilters(filterRef),
-    );
+    const neighborFilters = useDashboardSelector(selectOtherContextAttributeFilterItems(filterRef));
     const supportsSingleSelectDependentFilters = useDashboardSelector(
         selectSupportsSingleSelectDependentFilters,
     );
@@ -89,17 +89,20 @@ export function AttributeFilterConfiguration({
     const showDependentFiltersConfiguration = !capabilities.supportsAttributeFilterElementsLimiting;
 
     const neighborFilterDisplayForms = useMemo(() => {
-        return neighborFilters.map((filter) => filter.attributeFilter.displayForm);
+        return neighborFilters
+            .filter(isDashboardAttributeFilter)
+            .map((filter) => filter.attributeFilter.displayForm);
     }, [neighborFilters]);
 
-    const currentFilter = useDashboardSelector(selectFilterContextAttributeFilters).find((filter) =>
+    const currentFilterItem = useDashboardSelector(selectFilterContextAttributeFilterItems).find((filter) =>
         neighborFilters.every(
             (neighborFilter) =>
-                filter.attributeFilter.localIdentifier !== neighborFilter.attributeFilter.localIdentifier,
+                dashboardAttributeFilterItemLocalIdentifier(filter) !==
+                dashboardAttributeFilterItemLocalIdentifier(neighborFilter),
         ),
     );
 
-    invariant(currentFilter, "Cannot find current filter in the filter context store.");
+    invariant(currentFilterItem, "Cannot find current filter in the filter context store.");
 
     const {
         title,
@@ -128,7 +131,7 @@ export function AttributeFilterConfiguration({
     const disableParentFiltersList = selectionMode === "single" && !supportsSingleSelectDependentFilters;
 
     const { connectingAttributesLoading, connectingAttributes } = useConnectingAttributes(
-        currentFilter.attributeFilter.displayForm,
+        dashboardAttributeFilterItemDisplayForm(currentFilterItem)!,
         neighborFilterDisplayForms,
     );
 
@@ -220,7 +223,7 @@ export function AttributeFilterConfiguration({
                 <>
                     <ConfigurationCategory categoryTitle={filterByText} />
                     <ParentFiltersList
-                        currentFilterLocalId={currentFilter.attributeFilter.localIdentifier!}
+                        currentFilterLocalId={dashboardAttributeFilterItemLocalIdentifier(currentFilterItem)!}
                         parents={parents}
                         setParents={onParentSelect}
                         onConnectingAttributeChanged={onConnectingAttributeChanged}

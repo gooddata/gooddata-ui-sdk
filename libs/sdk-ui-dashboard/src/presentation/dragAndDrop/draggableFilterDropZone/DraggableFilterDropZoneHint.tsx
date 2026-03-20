@@ -4,6 +4,8 @@ import { type Ref } from "react";
 
 import cx from "classnames";
 
+import { dashboardAttributeFilterItemLocalIdentifier } from "@gooddata/sdk-model";
+
 import { moveAttributeFilter, moveDateFilter } from "../../../model/commands/filters.js";
 import { useDashboardDispatch } from "../../../model/react/DashboardStoreProvider.js";
 import { getDropZoneDebugStyle } from "../debug.js";
@@ -68,7 +70,7 @@ export function DraggableFilterDropZoneHint({
                     placement === "inside" && hintPosition === "next" ? 1 : 0;
 
                 if (isAttributeFilterDraggableItem(item)) {
-                    const identifier = item.filter.attributeFilter.localIdentifier!;
+                    const identifier = dashboardAttributeFilterItemLocalIdentifier(item.filter)!;
                     const originalIndex = item.filterIndex;
                     const originalPositionCorrection = originalIndex < targetIndex ? -1 : 0;
                     const index = targetIndex + targetIndexPositionCorrection + originalPositionCorrection;

@@ -4,10 +4,15 @@ import { useMemo } from "react";
 
 import { invariant } from "ts-invariant";
 
-import { type IAttributeFilter, type IDashboardAttributeFilter, type ObjRef } from "@gooddata/sdk-model";
+import {
+    type DashboardAttributeFilterItem,
+    type IAttributeFilter,
+    type ObjRef,
+    dashboardAttributeFilterItemFilterElementsBy,
+} from "@gooddata/sdk-model";
 import { type IAttributeFilterBaseProps } from "@gooddata/sdk-ui-filters";
 
-import { dashboardAttributeFilterToAttributeFilter } from "../../../_staging/dashboard/dashboardFilterConverter.js";
+import { dashboardAttributeFilterItemToAttributeFilter } from "../../../converters/filterConverters.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectSupportsSettingConnectingAttributes } from "../../../model/store/backendCapabilities/backendCapabilitiesSelectors.js";
 import { selectIsApplyFiltersAllAtOnceEnabledAndSet } from "../../../model/store/config/configSelectors.js";
@@ -37,7 +42,7 @@ export type UseParentFiltersResult = Pick<
  * @public
  */
 export const useParentFilters = (
-    filter: IDashboardAttributeFilter,
+    filter: DashboardAttributeFilterItem,
     tabId?: string,
 ): UseParentFiltersResult => {
     const isApplyAllAtOnceEnabledAndSet = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
@@ -60,8 +65,10 @@ export const useParentFilters = (
         selectSupportsSettingConnectingAttributes,
     );
 
+    const filterElementsBy = dashboardAttributeFilterItemFilterElementsBy(filter);
+
     const parentFiltersData = useMemo(() => {
-        return filter.attributeFilter.filterElementsBy?.map((parent) => {
+        return filterElementsBy?.map((parent) => {
             const matchingFilter = allAttributeFilters.find(
                 (filter) => filter.attributeFilter.localIdentifier === parent.filterLocalIdentifier,
             );
@@ -70,10 +77,10 @@ export const useParentFilters = (
 
             return { filter: matchingFilter, over: parent.over.attributes[0] };
         });
-    }, [allAttributeFilters, filter.attributeFilter.filterElementsBy]);
+    }, [allAttributeFilters, filterElementsBy]);
 
     const parentFilters = useMemo(() => {
-        return parentFiltersData?.map((item) => dashboardAttributeFilterToAttributeFilter(item.filter));
+        return parentFiltersData?.map((item) => dashboardAttributeFilterItemToAttributeFilter(item.filter));
     }, [parentFiltersData]);
 
     const parentOverLookup = useMemo(() => {

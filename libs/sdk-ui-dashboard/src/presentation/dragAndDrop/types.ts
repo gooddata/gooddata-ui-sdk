@@ -3,7 +3,7 @@
 import { type ComponentType, type ReactElement } from "react";
 
 import {
-    type IDashboardAttributeFilter,
+    type DashboardAttributeFilterItem,
     type IDashboardDateFilter,
     type IFilter,
     type IInsight,
@@ -54,7 +54,7 @@ export type DraggableItemType = DraggableContentItemType | DraggableInternalItem
  */
 export type AttributeFilterDraggableItem = {
     type: "attributeFilter";
-    filter: IDashboardAttributeFilter;
+    filter: DashboardAttributeFilterItem;
     filterIndex: number;
 };
 

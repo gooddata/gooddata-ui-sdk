@@ -10,10 +10,14 @@ import {
     type IDashboardObjectIdentity,
     type IFilterContextDefinition,
     areObjRefsEqual,
+    dashboardAttributeFilterItemLocalIdentifier,
     isAllTimeDashboardDateFilter,
+    isDashboardArbitraryAttributeFilter,
     isDashboardAttributeFilter,
+    isDashboardAttributeFilterItem,
     isDashboardCommonDateFilter,
     isDashboardDateFilter,
+    isDashboardMatchAttributeFilter,
     objRefToString,
 } from "@gooddata/sdk-model";
 
@@ -42,6 +46,18 @@ export function applyFilterContext(
                             appliedFilter.attributeFilter.localIdentifier,
                     );
             if (!workingFilter?.attributeFilter) {
+                // Cross-type fallback: check if a text filter replaced this list filter
+                // in working context (list→text migration).
+                const crossTypeFilter = workingFilterContext?.filters?.find(
+                    (item) =>
+                        !isDashboardAttributeFilter(item) &&
+                        isDashboardAttributeFilterItem(item) &&
+                        dashboardAttributeFilterItemLocalIdentifier(item) ===
+                            appliedFilter.attributeFilter.localIdentifier,
+                );
+                if (crossTypeFilter) {
+                    return crossTypeFilter as FilterContextItem;
+                }
                 return appliedFilter;
             }
 
@@ -60,6 +76,15 @@ export function applyFilterContext(
                         appliedFilter.attributeFilter.negativeSelection,
                 },
             };
+        } else if (isDashboardAttributeFilterItem(appliedFilter)) {
+            // Text filter types (arbitrary, match) — replace with working version if available
+            const appliedLocalId = dashboardAttributeFilterItemLocalIdentifier(appliedFilter);
+            const workingFilter = workingFilterContext?.filters?.find(
+                (item) =>
+                    isDashboardAttributeFilterItem(item) &&
+                    dashboardAttributeFilterItemLocalIdentifier(item) === appliedLocalId,
+            );
+            return (workingFilter ?? appliedFilter) as FilterContextItem;
         } else if (isDashboardDateFilter(appliedFilter)) {
             const workingFilter: IDashboardDateFilter | undefined = workingFilterContext?.filters
                 ?.filter(isDashboardDateFilter)
@@ -128,18 +153,41 @@ export function applyFilterContext(
 export function initializeFilterContextDefinition(
     filterContextDefinition: IFilterContextDefinition,
 ): IFilterContextDefinition {
-    // Make sure attribute filters always have localId
-    const filtersWithLocalId = filterContextDefinition.filters?.map((filter: FilterContextItem, i) =>
-        isDashboardAttributeFilter(filter)
-            ? {
-                  attributeFilter: {
-                      ...filter.attributeFilter,
-                      localIdentifier:
-                          filter.attributeFilter.localIdentifier ??
-                          generateFilterLocalIdentifier(filter.attributeFilter.displayForm, i),
-                  },
-              }
-            : filter,
+    // Make sure all attribute filter types always have localId
+    const filtersWithLocalId = filterContextDefinition.filters?.map(
+        (filter: FilterContextItem, i): FilterContextItem => {
+            if (isDashboardAttributeFilter(filter)) {
+                return {
+                    attributeFilter: {
+                        ...filter.attributeFilter,
+                        localIdentifier:
+                            filter.attributeFilter.localIdentifier ??
+                            generateFilterLocalIdentifier(filter.attributeFilter.displayForm, i),
+                    },
+                };
+            }
+            if (isDashboardArbitraryAttributeFilter(filter)) {
+                return {
+                    arbitraryAttributeFilter: {
+                        ...filter.arbitraryAttributeFilter,
+                        localIdentifier:
+                            filter.arbitraryAttributeFilter.localIdentifier ??
+                            generateFilterLocalIdentifier(filter.arbitraryAttributeFilter.displayForm, i),
+                    },
+                };
+            }
+            if (isDashboardMatchAttributeFilter(filter)) {
+                return {
+                    matchAttributeFilter: {
+                        ...filter.matchAttributeFilter,
+                        localIdentifier:
+                            filter.matchAttributeFilter.localIdentifier ??
+                            generateFilterLocalIdentifier(filter.matchAttributeFilter.displayForm, i),
+                    },
+                };
+            }
+            return filter;
+        },
     );
 
     // Make sure that common date filter is always first if present
@@ -196,6 +244,13 @@ export function getFilterIdentifier(filter: FilterContextItem): string {
                 "Attribute filter without localIdentifier found. Using displayForm as fallback which may not be reliable.",
             );
             return objRefToString(filter.attributeFilter.displayForm);
+        }
+        return localIdentifier;
+    }
+    if (isDashboardAttributeFilterItem(filter)) {
+        const localIdentifier = dashboardAttributeFilterItemLocalIdentifier(filter);
+        if (!localIdentifier) {
+            throw new Error("Text attribute filter without localIdentifier found.");
         }
         return localIdentifier;
     }

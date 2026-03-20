@@ -1,4 +1,5 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
+
 import { type IntlShape } from "react-intl";
 
 import {
@@ -6,6 +7,7 @@ import {
     DashboardAttributeFilterConfigModeValues,
     type DashboardDateFilterConfigMode,
     DashboardDateFilterConfigModeValues,
+    dashboardAttributeFilterItemLocalIdentifier,
     serializeObjRef,
 } from "@gooddata/sdk-model";
 import { type IFilterButtonCustomIcon, type VisibilityMode } from "@gooddata/sdk-ui-filters";
@@ -83,9 +85,8 @@ const isAttributeFilterHidden = (
         return false;
     }
     if (isFilterBarAttributeFilter(filter)) {
-        const attributeFilterMode = effectedAttributeFiltersModeMap.get(
-            filter.filter.attributeFilter.localIdentifier!,
-        );
+        const localId = dashboardAttributeFilterItemLocalIdentifier(filter.filter);
+        const attributeFilterMode = effectedAttributeFiltersModeMap.get(localId!);
         return attributeFilterMode === DashboardAttributeFilterConfigModeValues.HIDDEN;
     }
     return false;

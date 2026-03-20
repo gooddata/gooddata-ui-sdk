@@ -9,6 +9,9 @@ import {
     DashboardDateFilterConfigModeValues,
     type ObjRef,
     areObjRefsEqual,
+    dashboardAttributeFilterItemDisplayForm,
+    dashboardAttributeFilterItemLocalIdentifier,
+    isDashboardAttributeFilter,
     objRefToString,
     serializeObjRef,
 } from "@gooddata/sdk-model";
@@ -136,13 +139,19 @@ export function DefaultFilterBarItem(props: IFilterBarItemProps): ReactNode {
 
     if (isFilterBarAttributeFilter(item)) {
         const { filter, filterIndex, workingFilter } = item;
-        const convertedFilter = supportElementUris
-            ? filter
-            : convertDashboardAttributeFilterElementsUrisToValues(filter);
+
+        const filterLocalId = dashboardAttributeFilterItemLocalIdentifier(filter);
+        const filterDisplayForm = dashboardAttributeFilterItemDisplayForm(filter);
+
+        // URI conversion only applies to standard element-based attribute filters
+        const convertedFilter =
+            supportElementUris || !isDashboardAttributeFilter(filter)
+                ? filter
+                : convertDashboardAttributeFilterElementsUrisToValues(filter);
         const CustomAttributeFilterComponent =
             AttributeFilterComponentSet.MainComponentProvider(convertedFilter);
-        const attributeFilterMode = attributeFiltersModeMap.get(filter.attributeFilter.localIdentifier!);
-        const displayAsLabel = attributeFiltersDisplayAsLabelMap.get(filter.attributeFilter.localIdentifier!);
+        const attributeFilterMode = attributeFiltersModeMap.get(filterLocalId!);
+        const displayAsLabel = attributeFiltersDisplayAsLabelMap.get(filterLocalId!);
 
         /**
          * Use the attribute as key, not the display form.
@@ -152,7 +161,8 @@ export function DefaultFilterBarItem(props: IFilterBarItemProps): ReactNode {
          * This is fine because we do not allow multiple filters of the same attribute to be on
          * the same dashboard.
          */
-        const displayForm = displayFormsMap.get(convertedFilter.attributeFilter.displayForm);
+        const convertedDisplayForm = dashboardAttributeFilterItemDisplayForm(convertedFilter);
+        const displayForm = displayFormsMap.get(convertedDisplayForm!);
         invariant(displayForm, "inconsistent state, display form for a filter was not found");
 
         if (attributeFilterMode === DashboardAttributeFilterConfigModeValues.HIDDEN) {
@@ -160,8 +170,8 @@ export function DefaultFilterBarItem(props: IFilterBarItemProps): ReactNode {
         }
 
         if (
-            filter.attributeFilter.localIdentifier &&
-            crossFilterLocalIds.includes(filter.attributeFilter.localIdentifier) &&
+            filterLocalId &&
+            crossFilterLocalIds.includes(filterLocalId) &&
             isWorkingFilterContextChanged &&
             isApplyAllAtOnceEnabledAndSet
         ) {
@@ -170,8 +180,8 @@ export function DefaultFilterBarItem(props: IFilterBarItemProps): ReactNode {
 
         return (
             <DraggableAttributeFilter
-                key={`${objRefToString(displayForm.attribute)}-${filter.attributeFilter.localIdentifier}`}
-                autoOpen={areObjRefsEqual(filter.attributeFilter.displayForm, autoOpenFilter)}
+                key={`${objRefToString(displayForm.attribute)}-${filterLocalId}`}
+                autoOpen={areObjRefsEqual(filterDisplayForm, autoOpenFilter)}
                 filter={filter}
                 workingFilter={isApplyAllAtOnceEnabledAndSet ? workingFilter : undefined}
                 filterIndex={filterIndex}

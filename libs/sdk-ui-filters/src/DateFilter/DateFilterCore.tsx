@@ -32,7 +32,6 @@ import {
 import { createDateFilterKeyboardHandler } from "./accessibility/keyboardNavigation.js";
 import { DEFAULT_DATE_FORMAT, TIME_FORMAT_WITH_SEPARATOR } from "./constants/Platform.js";
 import { DateFilterBody } from "./DateFilterBody/DateFilterBody.js";
-import { DateFilterBodyRedesigned } from "./DateFilterBody/DateFilterBodyRedesigned.js";
 import { type IFilterConfigurationProps } from "./DateFilterBody/types.js";
 import { type IDateFilterButtonProps } from "./DateFilterButton/DateFilterButton.js";
 import { DateFilterButtonLocalized } from "./DateFilterButtonLocalized/DateFilterButtonLocalized.js";
@@ -94,12 +93,6 @@ export interface IDateFilterCoreProps {
      * Specifies the overlay position type for the date filter dropdown.
      */
     overlayPositionType?: OverlayPositionType;
-    /**
-     * Specifies whether to improve accessibility for the date filter content.
-     *
-     * @alpha
-     */
-    improveAccessibility?: boolean;
 
     /**
      * Active calendars configuration from workspace settings.
@@ -141,13 +134,8 @@ const adjustDateFormatForDisplay = (dateFormat: string, isTimeForAbsoluteRangeEn
 const getInitialFocus = (
     selectedFilterOption: DateFilterOption,
     filterOptions: IDateFilterOptionsByType,
-    improveAccessibility: boolean,
     activeCalendars?: IActiveCalendars,
 ) => {
-    if (!improveAccessibility) {
-        return DATE_FILTER_SELECTED_LIST_ITEM_ID;
-    }
-
     const { showTabs } = getFiscalTabsConfig(filterOptions.relativePreset, activeCalendars);
     if (showTabs) {
         return DATE_FILTER_ACTIVE_CALENDAR_TAB_ID;
@@ -184,7 +172,6 @@ export function DateFilterCore({
     withoutApply,
     ButtonComponent,
     overlayPositionType,
-    improveAccessibility = false,
     activeCalendars,
     hideDisabledExclude,
     ...dropdownBodyProps
@@ -244,13 +231,7 @@ export function DateFilterCore({
         [dateFilterContainerRef, dateFilterBodyRef],
     );
 
-    const DateFilterBodyComponent = improveAccessibility ? DateFilterBodyRedesigned : DateFilterBody;
-    const initialFocus = getInitialFocus(
-        selectedFilterOption,
-        filterOptions,
-        improveAccessibility,
-        activeCalendars,
-    );
+    const initialFocus = getInitialFocus(selectedFilterOption, filterOptions, activeCalendars);
 
     return (
         <IntlWrapper locale={locale || "en-US"}>
@@ -326,20 +307,15 @@ export function DateFilterCore({
                                         // Dropdown component uses Children.map and adds special props to this component
                                         // https://stackoverflow.com/questions/32370994/how-to-pass-props-to-this-props-children
                                         <div
-                                            {...(!improveAccessibility && { role: "dialog" })}
                                             className="gd-extended-date-filter-container"
-                                            {...(!improveAccessibility && { id: ariaAttributes.id })}
                                             ref={dateFilterContainerRef}
                                             onKeyDown={(e) => handleKeyDown(e, closeDropdown)}
-                                            {...(!improveAccessibility && { "aria-label": customFilterName })}
                                         >
-                                            <DateFilterBodyComponent
+                                            <DateFilterBody
                                                 {...dropdownBodyProps}
                                                 activeCalendars={activeCalendars}
-                                                {...(improveAccessibility && { id: ariaAttributes.id })}
-                                                {...(improveAccessibility && {
-                                                    "aria-label": customFilterName,
-                                                })}
+                                                id={ariaAttributes.id}
+                                                aria-label={customFilterName}
                                                 selectedFilterOption={selectedFilterOption}
                                                 excludeCurrentPeriod={excludeCurrentPeriod}
                                                 hideDisabledExclude={hideDisabledExclude}

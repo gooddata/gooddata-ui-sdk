@@ -421,7 +421,7 @@ export interface AttributeHeaderAttributeHeader {
 }
 
 export type AttributeHeaderAttributeHeaderGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
-export type AttributeHeaderAttributeHeaderValueTypeEnum = 'TEXT' | 'HYPERLINK' | 'GEO' | 'GEO_LONGITUDE' | 'GEO_LATITUDE' | 'GEO_AREA' | 'GEO_ICON' | 'IMAGE';
+export type AttributeHeaderAttributeHeaderValueTypeEnum = 'TEXT' | 'HYPERLINK' | 'GEO' | 'GEO_LONGITUDE' | 'GEO_LATITUDE' | 'GEO_AREA' | 'GEO_ICON' | 'IMAGE' | 'HYPERLOGLOG';
 
 export interface AttributeItem {
     /**
@@ -1622,7 +1622,7 @@ export interface KeyDriversDimension {
 }
 
 export type KeyDriversDimensionGranularityEnum = 'MINUTE' | 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'QUARTER' | 'YEAR' | 'MINUTE_OF_HOUR' | 'HOUR_OF_DAY' | 'DAY_OF_WEEK' | 'DAY_OF_MONTH' | 'DAY_OF_QUARTER' | 'DAY_OF_YEAR' | 'WEEK_OF_YEAR' | 'MONTH_OF_YEAR' | 'QUARTER_OF_YEAR' | 'FISCAL_MONTH' | 'FISCAL_QUARTER' | 'FISCAL_YEAR';
-export type KeyDriversDimensionValueTypeEnum = 'TEXT' | 'HYPERLINK' | 'GEO' | 'GEO_LONGITUDE' | 'GEO_LATITUDE' | 'GEO_AREA' | 'GEO_ICON' | 'IMAGE';
+export type KeyDriversDimensionValueTypeEnum = 'TEXT' | 'HYPERLINK' | 'GEO' | 'GEO_LONGITUDE' | 'GEO_LATITUDE' | 'GEO_AREA' | 'GEO_ICON' | 'IMAGE' | 'HYPERLOGLOG';
 
 export interface KeyDriversRequest {
     'metric': MeasureItem;

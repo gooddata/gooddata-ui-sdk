@@ -5,8 +5,8 @@
     "compilerOptions": {
         "target": "ES2022",
         "lib": ["ES2022", "dom"],
-        "module": "NodeNext",
-        "moduleResolution": "NodeNext",
+        "module": "ESNext",
+        "moduleResolution": "bundler",
         "jsx": "react-jsx",
         "importHelpers": true,
         "incremental": false,
@@ -17,6 +17,7 @@
         "strictNullChecks": false,
         "rootDir": ".",
         "outDir": "./dist",
-        "noEmit": true
+        "noEmit": true,
+        "skipLibCheck": true
     }
 }

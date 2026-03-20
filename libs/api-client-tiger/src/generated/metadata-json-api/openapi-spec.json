@@ -1279,15 +1279,6 @@
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/idPathParameter"
-                    },
-                    {
-                        "name": "filter",
-                        "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "example": "name==someString;description==someString"
                     }
                 ],
                 "responses": {
@@ -1793,15 +1784,6 @@
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/idPathParameter"
-                    },
-                    {
-                        "name": "filter",
-                        "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "example": "name==someString;type==DatabaseTypeValue"
                     }
                 ],
                 "responses": {
@@ -2834,15 +2816,6 @@
                 "parameters": [
                     {
                         "$ref": "#/components/parameters/idPathParameter"
-                    },
-                    {
-                        "name": "filter",
-                        "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "example": "content==JwkSpecificationValue"
                     }
                 ],
                 "responses": {
@@ -5853,15 +5826,6 @@
                     },
                     {
                         "$ref": "#/components/parameters/idPathParameter"
-                    },
-                    {
-                        "name": "filter",
-                        "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "example": "bearerToken==someString"
                     }
                 ],
                 "responses": {
@@ -6131,15 +6095,6 @@
                     },
                     {
                         "$ref": "#/components/parameters/idPathParameter"
-                    },
-                    {
-                        "name": "filter",
-                        "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "example": "content==JsonNodeValue;type==SettingTypeValue"
                     }
                 ],
                 "responses": {
@@ -7520,15 +7475,6 @@
                         "schema": {
                             "type": "string"
                         }
-                    },
-                    {
-                        "name": "filter",
-                        "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "example": "title==someString;description==someString;createdBy.id==321;modifiedBy.id==321"
                     }
                 ],
                 "responses": {
@@ -8191,15 +8137,6 @@
                         "schema": {
                             "type": "string"
                         }
-                    },
-                    {
-                        "name": "filter",
-                        "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "example": "title==someString;description==someString;createdBy.id==321;modifiedBy.id==321"
                     }
                 ],
                 "responses": {
@@ -9379,15 +9316,6 @@
                         "schema": {
                             "type": "string"
                         }
-                    },
-                    {
-                        "name": "filter",
-                        "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "example": "title==someString;description==someString;notificationChannel.id==321;analyticalDashboard.id==321"
                     }
                 ],
                 "responses": {
@@ -9950,15 +9878,6 @@
                         "schema": {
                             "type": "string"
                         }
-                    },
-                    {
-                        "name": "filter",
-                        "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "example": "applicationName==someString;content==JsonNodeValue"
                     }
                 ],
                 "responses": {
@@ -10576,15 +10495,6 @@
                         "schema": {
                             "type": "string"
                         }
-                    },
-                    {
-                        "name": "filter",
-                        "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "example": "title==someString;description==someString;createdBy.id==321;modifiedBy.id==321"
                     }
                 ],
                 "responses": {
@@ -11685,15 +11595,6 @@
                         "schema": {
                             "type": "string"
                         }
-                    },
-                    {
-                        "name": "filter",
-                        "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "example": "title==someString;description==someString;visualizationObject.id==321;analyticalDashboard.id==321"
                     }
                 ],
                 "responses": {
@@ -12764,15 +12665,6 @@
                         "schema": {
                             "type": "string"
                         }
-                    },
-                    {
-                        "name": "filter",
-                        "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "example": "title==someString;description==someString"
                     }
                 ],
                 "responses": {
@@ -13382,15 +13274,6 @@
                         "schema": {
                             "type": "string"
                         }
-                    },
-                    {
-                        "name": "filter",
-                        "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "example": "title==someString;description==someString;analyticalDashboard.id==321;user.id==321"
                     }
                 ],
                 "responses": {
@@ -15707,15 +15590,6 @@
                         "schema": {
                             "type": "string"
                         }
-                    },
-                    {
-                        "name": "filter",
-                        "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "example": "title==someString;description==someString;createdBy.id==321;modifiedBy.id==321"
                     }
                 ],
                 "responses": {
@@ -16396,15 +16270,6 @@
                         "schema": {
                             "type": "string"
                         }
-                    },
-                    {
-                        "name": "filter",
-                        "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "example": "title==someString;description==someString;user.id==321;userGroup.id==321"
                     }
                 ],
                 "responses": {
@@ -17085,15 +16950,6 @@
                         "schema": {
                             "type": "string"
                         }
-                    },
-                    {
-                        "name": "filter",
-                        "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "example": "title==someString;description==someString;createdBy.id==321;modifiedBy.id==321"
                     }
                 ],
                 "responses": {
@@ -17746,15 +17602,6 @@
                         "schema": {
                             "type": "string"
                         }
-                    },
-                    {
-                        "name": "filter",
-                        "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "example": "title==someString;description==someString;workspaceDataFilter.id==321"
                     }
                 ],
                 "responses": {
@@ -18400,15 +18247,6 @@
                         "schema": {
                             "type": "string"
                         }
-                    },
-                    {
-                        "name": "filter",
-                        "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "example": "title==someString;description==someString"
                     }
                 ],
                 "responses": {
@@ -18962,15 +18800,6 @@
                         "schema": {
                             "type": "string"
                         }
-                    },
-                    {
-                        "name": "filter",
-                        "in": "query",
-                        "description": "Filtering parameter in RSQL. See https://github.com/jirutka/rsql-parser. You can specify any object parameter and parameter of related entity (for example title=='Some Title';description=='desc'). Additionally, if the entity relationship represents a polymorphic entity type, it can be casted to its subtypes (for example relatedEntity::subtype.subtypeProperty=='Value 123').",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "example": "content==JsonNodeValue;type==SettingTypeValue"
                     }
                 ],
                 "responses": {
@@ -24096,224 +23925,6 @@
                 },
                 "description": "JSON:API representation of patching customGeoCollection entity."
             },
-            "JsonApiDataSourceOutWithLinks": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiDataSourceOut"
-                    },
-                    {
-                        "$ref": "#/components/schemas/ObjectLinksContainer"
-                    }
-                ]
-            },
-            "JsonApiDataSourceOutList": {
-                "required": [
-                    "data"
-                ],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiDataSourceOutWithLinks"
-                        }
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ListLinks"
-                    },
-                    "meta": {
-                        "type": "object",
-                        "properties": {
-                            "page": {
-                                "$ref": "#/components/schemas/PageMetadata"
-                            }
-                        }
-                    }
-                },
-                "description": "A JSON:API document with a list of resources"
-            },
-            "JsonApiDataSourceOut": {
-                "required": [
-                    "attributes",
-                    "id",
-                    "type"
-                ],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "dataSource",
-                        "enum": [
-                            "dataSource"
-                        ]
-                    },
-                    "id": {
-                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "meta": {
-                        "type": "object",
-                        "properties": {
-                            "permissions": {
-                                "type": "array",
-                                "description": "List of valid permissions for a logged-in user.",
-                                "items": {
-                                    "type": "string",
-                                    "enum": [
-                                        "MANAGE",
-                                        "USE"
-                                    ]
-                                }
-                            }
-                        }
-                    },
-                    "attributes": {
-                        "required": [
-                            "name",
-                            "schema",
-                            "type"
-                        ],
-                        "type": "object",
-                        "properties": {
-                            "name": {
-                                "maxLength": 255,
-                                "type": "string",
-                                "description": "User-facing name of the data source."
-                            },
-                            "type": {
-                                "type": "string",
-                                "description": "Type of the database providing the data for the data source.",
-                                "enum": [
-                                    "POSTGRESQL",
-                                    "REDSHIFT",
-                                    "VERTICA",
-                                    "SNOWFLAKE",
-                                    "ADS",
-                                    "BIGQUERY",
-                                    "MSSQL",
-                                    "PRESTO",
-                                    "DREMIO",
-                                    "DRILL",
-                                    "GREENPLUM",
-                                    "AZURESQL",
-                                    "SYNAPSESQL",
-                                    "DATABRICKS",
-                                    "GDSTORAGE",
-                                    "CLICKHOUSE",
-                                    "MYSQL",
-                                    "MARIADB",
-                                    "ORACLE",
-                                    "PINOT",
-                                    "SINGLESTORE",
-                                    "MOTHERDUCK",
-                                    "FLEXCONNECT",
-                                    "STARROCKS",
-                                    "ATHENA",
-                                    "MONGODB",
-                                    "CRATEDB",
-                                    "AILAKEHOUSE"
-                                ]
-                            },
-                            "url": {
-                                "maxLength": 255,
-                                "type": "string",
-                                "description": "The URL of the database providing the data for the data source.",
-                                "nullable": true
-                            },
-                            "schema": {
-                                "maxLength": 255,
-                                "type": "string",
-                                "description": "The schema to use as the root of the data for the data source."
-                            },
-                            "username": {
-                                "maxLength": 255,
-                                "type": "string",
-                                "description": "The username to use to connect to the database providing the data for the data source.",
-                                "nullable": true
-                            },
-                            "clientId": {
-                                "maxLength": 255,
-                                "type": "string",
-                                "description": "The client id to use to connect to the database providing the data for the data source (for example a Databricks Service Account).",
-                                "nullable": true
-                            },
-                            "parameters": {
-                                "type": "array",
-                                "description": "Additional parameters to be used when connecting to the database providing the data for the data source.",
-                                "nullable": true,
-                                "items": {
-                                    "required": [
-                                        "name",
-                                        "value"
-                                    ],
-                                    "type": "object",
-                                    "properties": {
-                                        "name": {
-                                            "type": "string"
-                                        },
-                                        "value": {
-                                            "type": "string"
-                                        }
-                                    }
-                                }
-                            },
-                            "decodedParameters": {
-                                "type": "array",
-                                "description": "Decoded parameters to be used when connecting to the database providing the data for the data source.",
-                                "nullable": true,
-                                "items": {
-                                    "required": [
-                                        "name",
-                                        "value"
-                                    ],
-                                    "type": "object",
-                                    "properties": {
-                                        "name": {
-                                            "type": "string"
-                                        },
-                                        "value": {
-                                            "type": "string"
-                                        }
-                                    }
-                                }
-                            },
-                            "cacheStrategy": {
-                                "type": "string",
-                                "description": "Determines how the results coming from a particular datasource should be cached.",
-                                "nullable": true,
-                                "enum": [
-                                    "ALWAYS",
-                                    "NEVER"
-                                ]
-                            },
-                            "authenticationType": {
-                                "type": "string",
-                                "description": "Type of authentication used to connect to the database.",
-                                "nullable": true,
-                                "enum": [
-                                    "USERNAME_PASSWORD",
-                                    "TOKEN",
-                                    "KEY_PAIR",
-                                    "CLIENT_SECRET",
-                                    "ACCESS_TOKEN"
-                                ]
-                            },
-                            "alternativeDataSourceId": {
-                                "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                                "type": "string",
-                                "description": "Alternative data source ID. It is a weak reference meaning data source does not have to exist. All the entities (e.g. tables) from the data source must be available also in the alternative data source. It must be present in the same organization as the data source.",
-                                "nullable": true,
-                                "example": "pg_local_docker-demo2"
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of dataSource entity."
-            },
             "JsonApiDataSourceInDocument": {
                 "required": [
                     "data"
@@ -24501,6 +24112,224 @@
                         "$ref": "#/components/schemas/ObjectLinks"
                     }
                 }
+            },
+            "JsonApiDataSourceOut": {
+                "required": [
+                    "attributes",
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "dataSource",
+                        "enum": [
+                            "dataSource"
+                        ]
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "permissions": {
+                                "type": "array",
+                                "description": "List of valid permissions for a logged-in user.",
+                                "items": {
+                                    "type": "string",
+                                    "enum": [
+                                        "MANAGE",
+                                        "USE"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "attributes": {
+                        "required": [
+                            "name",
+                            "schema",
+                            "type"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "maxLength": 255,
+                                "type": "string",
+                                "description": "User-facing name of the data source."
+                            },
+                            "type": {
+                                "type": "string",
+                                "description": "Type of the database providing the data for the data source.",
+                                "enum": [
+                                    "POSTGRESQL",
+                                    "REDSHIFT",
+                                    "VERTICA",
+                                    "SNOWFLAKE",
+                                    "ADS",
+                                    "BIGQUERY",
+                                    "MSSQL",
+                                    "PRESTO",
+                                    "DREMIO",
+                                    "DRILL",
+                                    "GREENPLUM",
+                                    "AZURESQL",
+                                    "SYNAPSESQL",
+                                    "DATABRICKS",
+                                    "GDSTORAGE",
+                                    "CLICKHOUSE",
+                                    "MYSQL",
+                                    "MARIADB",
+                                    "ORACLE",
+                                    "PINOT",
+                                    "SINGLESTORE",
+                                    "MOTHERDUCK",
+                                    "FLEXCONNECT",
+                                    "STARROCKS",
+                                    "ATHENA",
+                                    "MONGODB",
+                                    "CRATEDB",
+                                    "AILAKEHOUSE"
+                                ]
+                            },
+                            "url": {
+                                "maxLength": 255,
+                                "type": "string",
+                                "description": "The URL of the database providing the data for the data source.",
+                                "nullable": true
+                            },
+                            "schema": {
+                                "maxLength": 255,
+                                "type": "string",
+                                "description": "The schema to use as the root of the data for the data source."
+                            },
+                            "username": {
+                                "maxLength": 255,
+                                "type": "string",
+                                "description": "The username to use to connect to the database providing the data for the data source.",
+                                "nullable": true
+                            },
+                            "clientId": {
+                                "maxLength": 255,
+                                "type": "string",
+                                "description": "The client id to use to connect to the database providing the data for the data source (for example a Databricks Service Account).",
+                                "nullable": true
+                            },
+                            "parameters": {
+                                "type": "array",
+                                "description": "Additional parameters to be used when connecting to the database providing the data for the data source.",
+                                "nullable": true,
+                                "items": {
+                                    "required": [
+                                        "name",
+                                        "value"
+                                    ],
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "value": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            },
+                            "decodedParameters": {
+                                "type": "array",
+                                "description": "Decoded parameters to be used when connecting to the database providing the data for the data source.",
+                                "nullable": true,
+                                "items": {
+                                    "required": [
+                                        "name",
+                                        "value"
+                                    ],
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "value": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            },
+                            "cacheStrategy": {
+                                "type": "string",
+                                "description": "Determines how the results coming from a particular datasource should be cached.",
+                                "nullable": true,
+                                "enum": [
+                                    "ALWAYS",
+                                    "NEVER"
+                                ]
+                            },
+                            "authenticationType": {
+                                "type": "string",
+                                "description": "Type of authentication used to connect to the database.",
+                                "nullable": true,
+                                "enum": [
+                                    "USERNAME_PASSWORD",
+                                    "TOKEN",
+                                    "KEY_PAIR",
+                                    "CLIENT_SECRET",
+                                    "ACCESS_TOKEN"
+                                ]
+                            },
+                            "alternativeDataSourceId": {
+                                "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                                "type": "string",
+                                "description": "Alternative data source ID. It is a weak reference meaning data source does not have to exist. All the entities (e.g. tables) from the data source must be available also in the alternative data source. It must be present in the same organization as the data source.",
+                                "nullable": true,
+                                "example": "pg_local_docker-demo2"
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of dataSource entity."
+            },
+            "JsonApiDataSourceOutWithLinks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiDataSourceOut"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiDataSourceOutList": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiDataSourceOutWithLinks"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "page": {
+                                "$ref": "#/components/schemas/PageMetadata"
+                            }
+                        }
+                    }
+                },
+                "description": "A JSON:API document with a list of resources"
             },
             "JsonApiDataSourcePatchDocument": {
                 "required": [
@@ -27858,6 +27687,54 @@
                 },
                 "description": "Filter the result by applying multiple comparison and/or range conditions combined with OR logic. If conditions list is empty, no filtering is applied (all rows are returned)."
             },
+            "DashboardArbitraryAttributeFilter": {
+                "required": [
+                    "arbitraryAttributeFilter"
+                ],
+                "type": "object",
+                "properties": {
+                    "arbitraryAttributeFilter": {
+                        "required": [
+                            "displayForm",
+                            "negativeSelection",
+                            "values"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "displayForm": {
+                                "$ref": "#/components/schemas/IdentifierRef"
+                            },
+                            "values": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "negativeSelection": {
+                                "type": "boolean"
+                            },
+                            "filterElementsBy": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/AttributeFilterParent"
+                                }
+                            },
+                            "filterElementsByDate": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/AttributeFilterByDate"
+                                }
+                            },
+                            "title": {
+                                "type": "string"
+                            },
+                            "localIdentifier": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
             "DashboardAttributeFilter": {
                 "required": [
                     "attributeFilter"
@@ -28058,8 +27935,60 @@
                     },
                     {
                         "$ref": "#/components/schemas/DashboardDateFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/DashboardArbitraryAttributeFilter"
+                    },
+                    {
+                        "$ref": "#/components/schemas/DashboardMatchAttributeFilter"
                     }
                 ]
+            },
+            "DashboardMatchAttributeFilter": {
+                "required": [
+                    "matchAttributeFilter"
+                ],
+                "type": "object",
+                "properties": {
+                    "matchAttributeFilter": {
+                        "required": [
+                            "caseSensitive",
+                            "displayForm",
+                            "literal",
+                            "negativeSelection",
+                            "operator"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "displayForm": {
+                                "$ref": "#/components/schemas/IdentifierRef"
+                            },
+                            "operator": {
+                                "type": "string",
+                                "enum": [
+                                    "contains",
+                                    "startsWith",
+                                    "endsWith"
+                                ]
+                            },
+                            "literal": {
+                                "type": "string"
+                            },
+                            "negativeSelection": {
+                                "type": "boolean"
+                            },
+                            "caseSensitive": {
+                                "type": "boolean"
+                            },
+                            "title": {
+                                "type": "string"
+                            },
+                            "localIdentifier": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
             },
             "DashboardTabularExportRequestV2": {
                 "required": [
@@ -29355,76 +29284,6 @@
                     }
                 }
             },
-            "JsonApiApiTokenOutWithLinks": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiApiTokenOut"
-                    },
-                    {
-                        "$ref": "#/components/schemas/ObjectLinksContainer"
-                    }
-                ]
-            },
-            "JsonApiApiTokenOutList": {
-                "required": [
-                    "data"
-                ],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiApiTokenOutWithLinks"
-                        }
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ListLinks"
-                    },
-                    "meta": {
-                        "type": "object",
-                        "properties": {
-                            "page": {
-                                "$ref": "#/components/schemas/PageMetadata"
-                            }
-                        }
-                    }
-                },
-                "description": "A JSON:API document with a list of resources"
-            },
-            "JsonApiApiTokenOut": {
-                "required": [
-                    "id",
-                    "type"
-                ],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "apiToken",
-                        "enum": [
-                            "apiToken"
-                        ]
-                    },
-                    "id": {
-                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "bearerToken": {
-                                "type": "string",
-                                "description": "The value of the Bearer token. It is only returned when the API token is created."
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of apiToken entity."
-            },
             "JsonApiApiTokenInDocument": {
                 "required": [
                     "data"
@@ -29473,6 +29332,76 @@
                         "$ref": "#/components/schemas/ObjectLinks"
                     }
                 }
+            },
+            "JsonApiApiTokenOut": {
+                "required": [
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "apiToken",
+                        "enum": [
+                            "apiToken"
+                        ]
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "bearerToken": {
+                                "type": "string",
+                                "description": "The value of the Bearer token. It is only returned when the API token is created."
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of apiToken entity."
+            },
+            "JsonApiApiTokenOutWithLinks": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiApiTokenOut"
+                    },
+                    {
+                        "$ref": "#/components/schemas/ObjectLinksContainer"
+                    }
+                ]
+            },
+            "JsonApiApiTokenOutList": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiApiTokenOutWithLinks"
+                        }
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
+                    },
+                    "meta": {
+                        "type": "object",
+                        "properties": {
+                            "page": {
+                                "$ref": "#/components/schemas/PageMetadata"
+                            }
+                        }
+                    }
+                },
+                "description": "A JSON:API document with a list of resources"
             },
             "JsonApiUserSettingInDocument": {
                 "required": [
@@ -29528,6 +29457,7 @@
                                     "METADATA_LOCALE",
                                     "FORMAT_LOCALE",
                                     "MAPBOX_TOKEN",
+                                    "GEO_ICON_SHEET",
                                     "AG_GRID_TOKEN",
                                     "WEEK_START",
                                     "FISCAL_YEAR",
@@ -29630,6 +29560,7 @@
                                     "METADATA_LOCALE",
                                     "FORMAT_LOCALE",
                                     "MAPBOX_TOKEN",
+                                    "GEO_ICON_SHEET",
                                     "AG_GRID_TOKEN",
                                     "WEEK_START",
                                     "FISCAL_YEAR",
@@ -30660,7 +30591,8 @@
                                     "GEO_LATITUDE",
                                     "GEO_AREA",
                                     "GEO_ICON",
-                                    "IMAGE"
+                                    "IMAGE",
+                                    "HYPERLOGLOG"
                                 ]
                             },
                             "isHidden": {
@@ -32145,28 +32077,6 @@
                 },
                 "description": "A JSON:API document with a list of resources"
             },
-            "JsonApiAttributeOutDocument": {
-                "required": [
-                    "data"
-                ],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiAttributeOut"
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ObjectLinks"
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiAttributeOutIncludes"
-                        }
-                    }
-                }
-            },
             "JsonApiAttributePatchDocument": {
                 "required": [
                     "data"
@@ -32236,6 +32146,28 @@
                     }
                 },
                 "description": "JSON:API representation of patching attribute entity."
+            },
+            "JsonApiAttributeOutDocument": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiAttributeOut"
+                    },
+                    "links": {
+                        "$ref": "#/components/schemas/ObjectLinks"
+                    },
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiAttributeOutIncludes"
+                        }
+                    }
+                }
             },
             "JsonApiAutomationInDocument": {
                 "required": [
@@ -34377,57 +34309,6 @@
                 },
                 "description": "JSON:API representation of patching dataset entity."
             },
-            "JsonApiExportDefinitionOutIncludes": {
-                "oneOf": [
-                    {
-                        "$ref": "#/components/schemas/JsonApiAnalyticalDashboardOutWithLinks"
-                    },
-                    {
-                        "$ref": "#/components/schemas/JsonApiAutomationOutWithLinks"
-                    },
-                    {
-                        "$ref": "#/components/schemas/JsonApiUserIdentifierOutWithLinks"
-                    },
-                    {
-                        "$ref": "#/components/schemas/JsonApiVisualizationObjectOutWithLinks"
-                    }
-                ]
-            },
-            "JsonApiExportDefinitionOutList": {
-                "required": [
-                    "data"
-                ],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiExportDefinitionOutWithLinks"
-                        }
-                    },
-                    "links": {
-                        "$ref": "#/components/schemas/ListLinks"
-                    },
-                    "meta": {
-                        "type": "object",
-                        "properties": {
-                            "page": {
-                                "$ref": "#/components/schemas/PageMetadata"
-                            }
-                        }
-                    },
-                    "included": {
-                        "uniqueItems": true,
-                        "type": "array",
-                        "description": "Included resources",
-                        "items": {
-                            "$ref": "#/components/schemas/JsonApiExportDefinitionOutIncludes"
-                        }
-                    }
-                },
-                "description": "A JSON:API document with a list of resources"
-            },
             "JsonApiExportDefinitionPostOptionalIdDocument": {
                 "required": [
                     "data"
@@ -34523,6 +34404,22 @@
                 },
                 "description": "JSON:API representation of exportDefinition entity."
             },
+            "JsonApiExportDefinitionOutIncludes": {
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/JsonApiAnalyticalDashboardOutWithLinks"
+                    },
+                    {
+                        "$ref": "#/components/schemas/JsonApiAutomationOutWithLinks"
+                    },
+                    {
+                        "$ref": "#/components/schemas/JsonApiUserIdentifierOutWithLinks"
+                    },
+                    {
+                        "$ref": "#/components/schemas/JsonApiVisualizationObjectOutWithLinks"
+                    }
+                ]
+            },
             "JsonApiExportDefinitionOutDocument": {
                 "required": [
                     "data"
@@ -34545,101 +34442,40 @@
                     }
                 }
             },
-            "JsonApiExportDefinitionPatchDocument": {
+            "JsonApiExportDefinitionOutList": {
                 "required": [
                     "data"
                 ],
                 "type": "object",
                 "properties": {
                     "data": {
-                        "$ref": "#/components/schemas/JsonApiExportDefinitionPatch"
-                    }
-                }
-            },
-            "JsonApiExportDefinitionPatch": {
-                "required": [
-                    "id",
-                    "type"
-                ],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "exportDefinition",
-                        "enum": [
-                            "exportDefinition"
-                        ]
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiExportDefinitionOutWithLinks"
+                        }
                     },
-                    "id": {
-                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
+                    "links": {
+                        "$ref": "#/components/schemas/ListLinks"
                     },
-                    "attributes": {
+                    "meta": {
                         "type": "object",
                         "properties": {
-                            "title": {
-                                "maxLength": 255,
-                                "type": "string"
-                            },
-                            "description": {
-                                "maxLength": 10000,
-                                "type": "string"
-                            },
-                            "tags": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
-                            },
-                            "requestPayload": {
-                                "type": "object",
-                                "description": "JSON content to be used as export request payload for /export/tabular and /export/visual endpoints. ",
-                                "oneOf": [
-                                    {
-                                        "$ref": "#/components/schemas/VisualExportRequest"
-                                    },
-                                    {
-                                        "$ref": "#/components/schemas/TabularExportRequest"
-                                    }
-                                ]
-                            },
-                            "areRelationsValid": {
-                                "type": "boolean"
+                            "page": {
+                                "$ref": "#/components/schemas/PageMetadata"
                             }
                         }
                     },
-                    "relationships": {
-                        "type": "object",
-                        "properties": {
-                            "visualizationObject": {
-                                "required": [
-                                    "data"
-                                ],
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiVisualizationObjectToOneLinkage"
-                                    }
-                                }
-                            },
-                            "analyticalDashboard": {
-                                "required": [
-                                    "data"
-                                ],
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiAnalyticalDashboardToOneLinkage"
-                                    }
-                                }
-                            }
+                    "included": {
+                        "uniqueItems": true,
+                        "type": "array",
+                        "description": "Included resources",
+                        "items": {
+                            "$ref": "#/components/schemas/JsonApiExportDefinitionOutIncludes"
                         }
                     }
                 },
-                "description": "JSON:API representation of patching exportDefinition entity."
+                "description": "A JSON:API document with a list of resources"
             },
             "JsonApiExportDefinitionInDocument": {
                 "required": [
@@ -34736,6 +34572,102 @@
                     }
                 },
                 "description": "JSON:API representation of exportDefinition entity."
+            },
+            "JsonApiExportDefinitionPatchDocument": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiExportDefinitionPatch"
+                    }
+                }
+            },
+            "JsonApiExportDefinitionPatch": {
+                "required": [
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "exportDefinition",
+                        "enum": [
+                            "exportDefinition"
+                        ]
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "title": {
+                                "maxLength": 255,
+                                "type": "string"
+                            },
+                            "description": {
+                                "maxLength": 10000,
+                                "type": "string"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "requestPayload": {
+                                "type": "object",
+                                "description": "JSON content to be used as export request payload for /export/tabular and /export/visual endpoints. ",
+                                "oneOf": [
+                                    {
+                                        "$ref": "#/components/schemas/VisualExportRequest"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/TabularExportRequest"
+                                    }
+                                ]
+                            },
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            }
+                        }
+                    },
+                    "relationships": {
+                        "type": "object",
+                        "properties": {
+                            "visualizationObject": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiVisualizationObjectToOneLinkage"
+                                    }
+                                }
+                            },
+                            "analyticalDashboard": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiAnalyticalDashboardToOneLinkage"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of patching exportDefinition entity."
             },
             "JsonApiFactOutList": {
                 "required": [
@@ -36293,95 +36225,6 @@
                 },
                 "description": "A JSON:API document with a list of resources"
             },
-            "JsonApiUserDataFilterPatchDocument": {
-                "required": [
-                    "data"
-                ],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiUserDataFilterPatch"
-                    }
-                }
-            },
-            "JsonApiUserDataFilterPatch": {
-                "required": [
-                    "attributes",
-                    "id",
-                    "type"
-                ],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "userDataFilter",
-                        "enum": [
-                            "userDataFilter"
-                        ]
-                    },
-                    "id": {
-                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "title": {
-                                "maxLength": 255,
-                                "type": "string"
-                            },
-                            "description": {
-                                "maxLength": 10000,
-                                "type": "string"
-                            },
-                            "tags": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
-                            },
-                            "areRelationsValid": {
-                                "type": "boolean"
-                            },
-                            "maql": {
-                                "maxLength": 10000,
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "relationships": {
-                        "type": "object",
-                        "properties": {
-                            "user": {
-                                "required": [
-                                    "data"
-                                ],
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiUserToOneLinkage"
-                                    }
-                                }
-                            },
-                            "userGroup": {
-                                "required": [
-                                    "data"
-                                ],
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiUserGroupToOneLinkage"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of patching userDataFilter entity."
-            },
             "JsonApiUserDataFilterInDocument": {
                 "required": [
                     "data"
@@ -36473,6 +36316,95 @@
                     }
                 },
                 "description": "JSON:API representation of userDataFilter entity."
+            },
+            "JsonApiUserDataFilterPatchDocument": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiUserDataFilterPatch"
+                    }
+                }
+            },
+            "JsonApiUserDataFilterPatch": {
+                "required": [
+                    "attributes",
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "userDataFilter",
+                        "enum": [
+                            "userDataFilter"
+                        ]
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "title": {
+                                "maxLength": 255,
+                                "type": "string"
+                            },
+                            "description": {
+                                "maxLength": 10000,
+                                "type": "string"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            },
+                            "maql": {
+                                "maxLength": 10000,
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "relationships": {
+                        "type": "object",
+                        "properties": {
+                            "user": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiUserToOneLinkage"
+                                    }
+                                }
+                            },
+                            "userGroup": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiUserGroupToOneLinkage"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of patching userDataFilter entity."
             },
             "JsonApiVisualizationObjectPostOptionalIdDocument": {
                 "required": [
@@ -37299,6 +37231,7 @@
                                     "METADATA_LOCALE",
                                     "FORMAT_LOCALE",
                                     "MAPBOX_TOKEN",
+                                    "GEO_ICON_SHEET",
                                     "AG_GRID_TOKEN",
                                     "WEEK_START",
                                     "FISCAL_YEAR",
@@ -37427,6 +37360,7 @@
                                     "METADATA_LOCALE",
                                     "FORMAT_LOCALE",
                                     "MAPBOX_TOKEN",
+                                    "GEO_ICON_SHEET",
                                     "AG_GRID_TOKEN",
                                     "WEEK_START",
                                     "FISCAL_YEAR",
@@ -37509,105 +37443,6 @@
                 },
                 "description": "A JSON:API document with a list of resources"
             },
-            "JsonApiWorkspaceSettingInDocument": {
-                "required": [
-                    "data"
-                ],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiWorkspaceSettingIn"
-                    }
-                }
-            },
-            "JsonApiWorkspaceSettingIn": {
-                "required": [
-                    "id",
-                    "type"
-                ],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "workspaceSetting",
-                        "enum": [
-                            "workspaceSetting"
-                        ]
-                    },
-                    "id": {
-                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "attributes": {
-                        "type": "object",
-                        "properties": {
-                            "content": {
-                                "type": "object",
-                                "description": "Free-form JSON content. Maximum supported length is 15000 characters.",
-                                "example": {}
-                            },
-                            "type": {
-                                "type": "string",
-                                "enum": [
-                                    "TIMEZONE",
-                                    "ACTIVE_THEME",
-                                    "ACTIVE_COLOR_PALETTE",
-                                    "ACTIVE_LLM_ENDPOINT",
-                                    "ACTIVE_LLM_PROVIDER",
-                                    "ACTIVE_CALENDARS",
-                                    "WHITE_LABELING",
-                                    "LOCALE",
-                                    "METADATA_LOCALE",
-                                    "FORMAT_LOCALE",
-                                    "MAPBOX_TOKEN",
-                                    "AG_GRID_TOKEN",
-                                    "WEEK_START",
-                                    "FISCAL_YEAR",
-                                    "SHOW_HIDDEN_CATALOG_ITEMS",
-                                    "OPERATOR_OVERRIDES",
-                                    "TIMEZONE_VALIDATION_ENABLED",
-                                    "OPENAI_CONFIG",
-                                    "ENABLE_FILE_ANALYTICS",
-                                    "ALERT",
-                                    "SEPARATORS",
-                                    "DATE_FILTER_CONFIG",
-                                    "JIT_PROVISIONING",
-                                    "JWT_JIT_PROVISIONING",
-                                    "DASHBOARD_FILTERS_APPLY_MODE",
-                                    "ENABLE_SLIDES_EXPORT",
-                                    "ENABLE_SNAPSHOT_EXPORT",
-                                    "AI_RATE_LIMIT",
-                                    "ATTACHMENT_SIZE_LIMIT",
-                                    "ATTACHMENT_LINK_TTL",
-                                    "AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE",
-                                    "ENABLE_DRILL_TO_URL_BY_DEFAULT",
-                                    "ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS",
-                                    "ENABLE_AUTOMATION_EVALUATION_MODE",
-                                    "ENABLE_ACCESSIBILITY_MODE",
-                                    "REGISTERED_PLUGGABLE_APPLICATIONS",
-                                    "DATA_LOCALE",
-                                    "LDM_DEFAULT_LOCALE",
-                                    "EXPORT_RESULT_POLLING_TIMEOUT_SECONDS",
-                                    "MAX_ZOOM_LEVEL",
-                                    "SORT_CASE_SENSITIVE",
-                                    "SORT_COLLATION",
-                                    "METRIC_FORMAT_OVERRIDE",
-                                    "ENABLE_AI_ON_DATA",
-                                    "API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE",
-                                    "EXPORT_CSV_CUSTOM_DELIMITER",
-                                    "ENABLE_QUERY_TAGS",
-                                    "RESTRICT_BASE_UI",
-                                    "CERTIFY_PARENT_OBJECTS"
-                                ]
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of workspaceSetting entity."
-            },
             "JsonApiWorkspaceSettingPatchDocument": {
                 "required": [
                     "data"
@@ -37662,6 +37497,7 @@
                                     "METADATA_LOCALE",
                                     "FORMAT_LOCALE",
                                     "MAPBOX_TOKEN",
+                                    "GEO_ICON_SHEET",
                                     "AG_GRID_TOKEN",
                                     "WEEK_START",
                                     "FISCAL_YEAR",
@@ -37706,6 +37542,106 @@
                     }
                 },
                 "description": "JSON:API representation of patching workspaceSetting entity."
+            },
+            "JsonApiWorkspaceSettingInDocument": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiWorkspaceSettingIn"
+                    }
+                }
+            },
+            "JsonApiWorkspaceSettingIn": {
+                "required": [
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "workspaceSetting",
+                        "enum": [
+                            "workspaceSetting"
+                        ]
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "attributes": {
+                        "type": "object",
+                        "properties": {
+                            "content": {
+                                "type": "object",
+                                "description": "Free-form JSON content. Maximum supported length is 15000 characters.",
+                                "example": {}
+                            },
+                            "type": {
+                                "type": "string",
+                                "enum": [
+                                    "TIMEZONE",
+                                    "ACTIVE_THEME",
+                                    "ACTIVE_COLOR_PALETTE",
+                                    "ACTIVE_LLM_ENDPOINT",
+                                    "ACTIVE_LLM_PROVIDER",
+                                    "ACTIVE_CALENDARS",
+                                    "WHITE_LABELING",
+                                    "LOCALE",
+                                    "METADATA_LOCALE",
+                                    "FORMAT_LOCALE",
+                                    "MAPBOX_TOKEN",
+                                    "GEO_ICON_SHEET",
+                                    "AG_GRID_TOKEN",
+                                    "WEEK_START",
+                                    "FISCAL_YEAR",
+                                    "SHOW_HIDDEN_CATALOG_ITEMS",
+                                    "OPERATOR_OVERRIDES",
+                                    "TIMEZONE_VALIDATION_ENABLED",
+                                    "OPENAI_CONFIG",
+                                    "ENABLE_FILE_ANALYTICS",
+                                    "ALERT",
+                                    "SEPARATORS",
+                                    "DATE_FILTER_CONFIG",
+                                    "JIT_PROVISIONING",
+                                    "JWT_JIT_PROVISIONING",
+                                    "DASHBOARD_FILTERS_APPLY_MODE",
+                                    "ENABLE_SLIDES_EXPORT",
+                                    "ENABLE_SNAPSHOT_EXPORT",
+                                    "AI_RATE_LIMIT",
+                                    "ATTACHMENT_SIZE_LIMIT",
+                                    "ATTACHMENT_LINK_TTL",
+                                    "AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE",
+                                    "ENABLE_DRILL_TO_URL_BY_DEFAULT",
+                                    "ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS",
+                                    "ENABLE_AUTOMATION_EVALUATION_MODE",
+                                    "ENABLE_ACCESSIBILITY_MODE",
+                                    "REGISTERED_PLUGGABLE_APPLICATIONS",
+                                    "DATA_LOCALE",
+                                    "LDM_DEFAULT_LOCALE",
+                                    "EXPORT_RESULT_POLLING_TIMEOUT_SECONDS",
+                                    "MAX_ZOOM_LEVEL",
+                                    "SORT_CASE_SENSITIVE",
+                                    "SORT_COLLATION",
+                                    "METRIC_FORMAT_OVERRIDE",
+                                    "ENABLE_AI_ON_DATA",
+                                    "API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE",
+                                    "EXPORT_CSV_CUSTOM_DELIMITER",
+                                    "ENABLE_QUERY_TAGS",
+                                    "RESTRICT_BASE_UI",
+                                    "CERTIFY_PARENT_OBJECTS"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of workspaceSetting entity."
             },
             "JsonApiKnowledgeRecommendationPostOptionalIdDocument": {
                 "required": [
@@ -38531,6 +38467,266 @@
                 },
                 "description": "A JSON:API document with a list of resources"
             },
+            "JsonApiKnowledgeRecommendationInDocument": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiKnowledgeRecommendationIn"
+                    }
+                }
+            },
+            "JsonApiKnowledgeRecommendationIn": {
+                "required": [
+                    "attributes",
+                    "id",
+                    "relationships",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "knowledgeRecommendation",
+                        "enum": [
+                            "knowledgeRecommendation"
+                        ]
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "attributes": {
+                        "required": [
+                            "comparisonType",
+                            "direction",
+                            "title"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "title": {
+                                "maxLength": 255,
+                                "type": "string",
+                                "description": "Human-readable title for the recommendation, e.g. 'Revenue decreased vs last month'"
+                            },
+                            "description": {
+                                "maxLength": 10000,
+                                "type": "string",
+                                "description": "Description of the recommendation"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            },
+                            "metricTitle": {
+                                "maxLength": 255,
+                                "type": "string",
+                                "description": "Human-readable title of the metric (denormalized for display)",
+                                "example": "Revenue"
+                            },
+                            "direction": {
+                                "type": "string",
+                                "description": "Direction of the metric change",
+                                "example": "DECREASED",
+                                "enum": [
+                                    "INCREASED",
+                                    "DECREASED"
+                                ]
+                            },
+                            "comparisonType": {
+                                "type": "string",
+                                "description": "Time period for comparison",
+                                "example": "MONTH",
+                                "enum": [
+                                    "MONTH",
+                                    "QUARTER",
+                                    "YEAR"
+                                ]
+                            },
+                            "widgetId": {
+                                "maxLength": 255,
+                                "type": "string",
+                                "description": "ID of the widget where the anomaly was detected",
+                                "example": "widget-123"
+                            },
+                            "widgetName": {
+                                "maxLength": 255,
+                                "type": "string",
+                                "description": "Name of the widget where the anomaly was detected",
+                                "example": "Revenue Trend"
+                            },
+                            "confidence": {
+                                "description": "Confidence score (0.0 to 1.0)",
+                                "example": 0.62
+                            },
+                            "recommendations": {
+                                "type": "object",
+                                "description": "Structured recommendations data as JSON",
+                                "example": "{\"summary\": \"...\", \"recommendations\": [...], \"key_metrics\": [...]}"
+                            },
+                            "sourceCount": {
+                                "type": "integer",
+                                "description": "Number of source documents used for generation",
+                                "format": "int32",
+                                "example": 2
+                            },
+                            "referencePeriod": {
+                                "maxLength": 255,
+                                "type": "string",
+                                "description": "Reference time period for comparison (e.g., '2023-06' or 'Jun 2023')",
+                                "example": "2023-06"
+                            },
+                            "analyzedPeriod": {
+                                "maxLength": 255,
+                                "type": "string",
+                                "description": "Analyzed time period (e.g., '2023-07' or 'July 2023')",
+                                "example": "2023-07"
+                            },
+                            "referenceValue": {
+                                "description": "Metric value in the reference period",
+                                "example": 2400000000
+                            },
+                            "analyzedValue": {
+                                "description": "Metric value in the analyzed period (the observed value that triggered the anomaly)",
+                                "example": 2600000000
+                            },
+                            "analyticalDashboardTitle": {
+                                "maxLength": 255,
+                                "type": "string",
+                                "description": "Human-readable title of the analytical dashboard (denormalized for display)",
+                                "example": "Portfolio Health Insights"
+                            }
+                        }
+                    },
+                    "relationships": {
+                        "required": [
+                            "metric"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "metric": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiMetricToOneLinkage"
+                                    }
+                                }
+                            },
+                            "analyticalDashboard": {
+                                "required": [
+                                    "data"
+                                ],
+                                "type": "object",
+                                "properties": {
+                                    "data": {
+                                        "$ref": "#/components/schemas/JsonApiAnalyticalDashboardToOneLinkage"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of knowledgeRecommendation entity."
+            },
+            "JsonApiMemoryItemInDocument": {
+                "required": [
+                    "data"
+                ],
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/JsonApiMemoryItemIn"
+                    }
+                }
+            },
+            "JsonApiMemoryItemIn": {
+                "required": [
+                    "attributes",
+                    "id",
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "description": "Object type",
+                        "example": "memoryItem",
+                        "enum": [
+                            "memoryItem"
+                        ]
+                    },
+                    "id": {
+                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                        "type": "string",
+                        "description": "API identifier of an object",
+                        "example": "id1"
+                    },
+                    "attributes": {
+                        "required": [
+                            "instruction",
+                            "strategy"
+                        ],
+                        "type": "object",
+                        "properties": {
+                            "title": {
+                                "maxLength": 255,
+                                "type": "string"
+                            },
+                            "description": {
+                                "maxLength": 10000,
+                                "type": "string"
+                            },
+                            "tags": {
+                                "type": "array",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "areRelationsValid": {
+                                "type": "boolean"
+                            },
+                            "strategy": {
+                                "type": "string",
+                                "description": "Strategy defining when the memory item should be applied",
+                                "enum": [
+                                    "ALWAYS",
+                                    "AUTO"
+                                ]
+                            },
+                            "instruction": {
+                                "maxLength": 255,
+                                "type": "string",
+                                "description": "The text that will be injected into the system prompt"
+                            },
+                            "keywords": {
+                                "type": "array",
+                                "description": "Set of unique strings used for semantic similarity filtering",
+                                "items": {
+                                    "type": "string"
+                                }
+                            },
+                            "isDisabled": {
+                                "type": "boolean",
+                                "description": "Whether memory item is disabled"
+                            }
+                        }
+                    }
+                },
+                "description": "JSON:API representation of memoryItem entity."
+            },
             "JsonApiAggregatedFactOutDocument": {
                 "required": [
                     "data"
@@ -38800,266 +38996,6 @@
                     }
                 },
                 "description": "JSON:API representation of patching memoryItem entity."
-            },
-            "JsonApiKnowledgeRecommendationInDocument": {
-                "required": [
-                    "data"
-                ],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiKnowledgeRecommendationIn"
-                    }
-                }
-            },
-            "JsonApiKnowledgeRecommendationIn": {
-                "required": [
-                    "attributes",
-                    "id",
-                    "relationships",
-                    "type"
-                ],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "knowledgeRecommendation",
-                        "enum": [
-                            "knowledgeRecommendation"
-                        ]
-                    },
-                    "id": {
-                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "attributes": {
-                        "required": [
-                            "comparisonType",
-                            "direction",
-                            "title"
-                        ],
-                        "type": "object",
-                        "properties": {
-                            "title": {
-                                "maxLength": 255,
-                                "type": "string",
-                                "description": "Human-readable title for the recommendation, e.g. 'Revenue decreased vs last month'"
-                            },
-                            "description": {
-                                "maxLength": 10000,
-                                "type": "string",
-                                "description": "Description of the recommendation"
-                            },
-                            "tags": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
-                            },
-                            "areRelationsValid": {
-                                "type": "boolean"
-                            },
-                            "metricTitle": {
-                                "maxLength": 255,
-                                "type": "string",
-                                "description": "Human-readable title of the metric (denormalized for display)",
-                                "example": "Revenue"
-                            },
-                            "direction": {
-                                "type": "string",
-                                "description": "Direction of the metric change",
-                                "example": "DECREASED",
-                                "enum": [
-                                    "INCREASED",
-                                    "DECREASED"
-                                ]
-                            },
-                            "comparisonType": {
-                                "type": "string",
-                                "description": "Time period for comparison",
-                                "example": "MONTH",
-                                "enum": [
-                                    "MONTH",
-                                    "QUARTER",
-                                    "YEAR"
-                                ]
-                            },
-                            "widgetId": {
-                                "maxLength": 255,
-                                "type": "string",
-                                "description": "ID of the widget where the anomaly was detected",
-                                "example": "widget-123"
-                            },
-                            "widgetName": {
-                                "maxLength": 255,
-                                "type": "string",
-                                "description": "Name of the widget where the anomaly was detected",
-                                "example": "Revenue Trend"
-                            },
-                            "confidence": {
-                                "description": "Confidence score (0.0 to 1.0)",
-                                "example": 0.62
-                            },
-                            "recommendations": {
-                                "type": "object",
-                                "description": "Structured recommendations data as JSON",
-                                "example": "{\"summary\": \"...\", \"recommendations\": [...], \"key_metrics\": [...]}"
-                            },
-                            "sourceCount": {
-                                "type": "integer",
-                                "description": "Number of source documents used for generation",
-                                "format": "int32",
-                                "example": 2
-                            },
-                            "referencePeriod": {
-                                "maxLength": 255,
-                                "type": "string",
-                                "description": "Reference time period for comparison (e.g., '2023-06' or 'Jun 2023')",
-                                "example": "2023-06"
-                            },
-                            "analyzedPeriod": {
-                                "maxLength": 255,
-                                "type": "string",
-                                "description": "Analyzed time period (e.g., '2023-07' or 'July 2023')",
-                                "example": "2023-07"
-                            },
-                            "referenceValue": {
-                                "description": "Metric value in the reference period",
-                                "example": 2400000000
-                            },
-                            "analyzedValue": {
-                                "description": "Metric value in the analyzed period (the observed value that triggered the anomaly)",
-                                "example": 2600000000
-                            },
-                            "analyticalDashboardTitle": {
-                                "maxLength": 255,
-                                "type": "string",
-                                "description": "Human-readable title of the analytical dashboard (denormalized for display)",
-                                "example": "Portfolio Health Insights"
-                            }
-                        }
-                    },
-                    "relationships": {
-                        "required": [
-                            "metric"
-                        ],
-                        "type": "object",
-                        "properties": {
-                            "metric": {
-                                "required": [
-                                    "data"
-                                ],
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiMetricToOneLinkage"
-                                    }
-                                }
-                            },
-                            "analyticalDashboard": {
-                                "required": [
-                                    "data"
-                                ],
-                                "type": "object",
-                                "properties": {
-                                    "data": {
-                                        "$ref": "#/components/schemas/JsonApiAnalyticalDashboardToOneLinkage"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of knowledgeRecommendation entity."
-            },
-            "JsonApiMemoryItemInDocument": {
-                "required": [
-                    "data"
-                ],
-                "type": "object",
-                "properties": {
-                    "data": {
-                        "$ref": "#/components/schemas/JsonApiMemoryItemIn"
-                    }
-                }
-            },
-            "JsonApiMemoryItemIn": {
-                "required": [
-                    "attributes",
-                    "id",
-                    "type"
-                ],
-                "type": "object",
-                "properties": {
-                    "type": {
-                        "type": "string",
-                        "description": "Object type",
-                        "example": "memoryItem",
-                        "enum": [
-                            "memoryItem"
-                        ]
-                    },
-                    "id": {
-                        "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                        "type": "string",
-                        "description": "API identifier of an object",
-                        "example": "id1"
-                    },
-                    "attributes": {
-                        "required": [
-                            "instruction",
-                            "strategy"
-                        ],
-                        "type": "object",
-                        "properties": {
-                            "title": {
-                                "maxLength": 255,
-                                "type": "string"
-                            },
-                            "description": {
-                                "maxLength": 10000,
-                                "type": "string"
-                            },
-                            "tags": {
-                                "type": "array",
-                                "items": {
-                                    "type": "string"
-                                }
-                            },
-                            "areRelationsValid": {
-                                "type": "boolean"
-                            },
-                            "strategy": {
-                                "type": "string",
-                                "description": "Strategy defining when the memory item should be applied",
-                                "enum": [
-                                    "ALWAYS",
-                                    "AUTO"
-                                ]
-                            },
-                            "instruction": {
-                                "maxLength": 255,
-                                "type": "string",
-                                "description": "The text that will be injected into the system prompt"
-                            },
-                            "keywords": {
-                                "type": "array",
-                                "description": "Set of unique strings used for semantic similarity filtering",
-                                "items": {
-                                    "type": "string"
-                                }
-                            },
-                            "isDisabled": {
-                                "type": "boolean",
-                                "description": "Whether memory item is disabled"
-                            }
-                        }
-                    }
-                },
-                "description": "JSON:API representation of memoryItem entity."
             },
             "JsonApiColorPaletteInDocument": {
                 "required": [
@@ -40509,6 +40445,7 @@
                                     "METADATA_LOCALE",
                                     "FORMAT_LOCALE",
                                     "MAPBOX_TOKEN",
+                                    "GEO_ICON_SHEET",
                                     "AG_GRID_TOKEN",
                                     "WEEK_START",
                                     "FISCAL_YEAR",
@@ -40611,6 +40548,7 @@
                                     "METADATA_LOCALE",
                                     "FORMAT_LOCALE",
                                     "MAPBOX_TOKEN",
+                                    "GEO_ICON_SHEET",
                                     "AG_GRID_TOKEN",
                                     "WEEK_START",
                                     "FISCAL_YEAR",
@@ -42766,6 +42704,7 @@
                                     "METADATA_LOCALE",
                                     "FORMAT_LOCALE",
                                     "MAPBOX_TOKEN",
+                                    "GEO_ICON_SHEET",
                                     "AG_GRID_TOKEN",
                                     "WEEK_START",
                                     "FISCAL_YEAR",
@@ -43932,7 +43871,8 @@
                             "GEO_LATITUDE",
                             "GEO_AREA",
                             "GEO_ICON",
-                            "IMAGE"
+                            "IMAGE",
+                            "HYPERLOGLOG"
                         ]
                     },
                     "isHidden": {
@@ -45680,6 +45620,7 @@
                             "METADATA_LOCALE",
                             "FORMAT_LOCALE",
                             "MAPBOX_TOKEN",
+                            "GEO_ICON_SHEET",
                             "AG_GRID_TOKEN",
                             "WEEK_START",
                             "FISCAL_YEAR",
@@ -47431,6 +47372,7 @@
                             "METADATA_LOCALE",
                             "FORMAT_LOCALE",
                             "MAPBOX_TOKEN",
+                            "GEO_ICON_SHEET",
                             "AG_GRID_TOKEN",
                             "WEEK_START",
                             "FISCAL_YEAR",
@@ -48185,7 +48127,8 @@
                             "GEO_LATITUDE",
                             "GEO_AREA",
                             "GEO_ICON",
-                            "IMAGE"
+                            "IMAGE",
+                            "HYPERLOGLOG"
                         ]
                     },
                     "labelTargetColumn": {

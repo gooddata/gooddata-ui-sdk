@@ -1,23 +1,13 @@
 // (C) 2007-2026 GoodData Corporation
 
-import {
-    type ClipboardEvent,
-    type FocusEventHandler,
-    type JSX,
-    type KeyboardEvent,
-    useCallback,
-    useEffect,
-    useMemo,
-    useRef,
-    useState,
-} from "react";
+import { type FocusEventHandler, type JSX } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
 
-import { Input, LoadingSpinner, UiTag, isArrowDownKey, isEnterKey, isEscapeKey } from "@gooddata/sdk-ui-kit";
+import { Input, LoadingSpinner, UiTag, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
-import { parseArbitraryValues } from "../../parseArbitraryValues.js";
+import { useArbitraryValuesInput } from "./useArbitraryValuesInput.js";
 
 /**
  * Props for ArbitraryValuesInput component.
@@ -89,6 +79,21 @@ export interface IArbitraryValuesInputProps {
      * Whether autocomplete is currently loading results from the backend.
      */
     isAutocompleteLoading?: boolean;
+
+    /**
+     * Optional id of the values input.
+     */
+    inputId?: string;
+
+    /**
+     * Optional id of an external label that describes this control.
+     */
+    ariaLabelledBy?: string;
+
+    /**
+     * Optional id(s) of elements that describe this control.
+     */
+    ariaDescribedBy?: string;
 }
 /**
  * Wraps the first occurrence of `query` inside `text` in a `<strong>` tag for visual highlighting.
@@ -133,184 +138,53 @@ export function ArbitraryValuesInput(props: IArbitraryValuesInputProps) {
         autocompleteOptions,
         onAutocompleteSearch,
         isAutocompleteLoading,
+        inputId: inputIdProp,
+        ariaLabelledBy,
+        ariaDescribedBy,
     } = props;
 
     const intl = useIntl();
-    const [inputValue, setInputValue] = useState("");
-    const [activeAutocompleteIndex, setActiveAutocompleteIndex] = useState<number | null>(null);
-    // Tracks whether the user pressed Escape to dismiss the dropdown for the current input text.
-    const [autocompletesDismissed, setAutocompleteDismissed] = useState(false);
-    const chipsContainerRef = useRef<HTMLDivElement>(null);
-    const prevValuesLengthRef = useRef<number>(values.length);
+    const generatedInputId = useIdPrefixed("text-filter-values-input");
+    const inputId = inputIdProp ?? generatedInputId;
+    const autocompleteListId = `${inputId}-autocomplete-list`;
 
-    const filteredSuggestions = useMemo(() => {
-        if (!autocompleteOptions?.length || !inputValue.trim() || autocompletesDismissed) {
-            return [];
+    const {
+        chipsContainerRef,
+        inputValue,
+        setInputValue,
+        activeAutocompleteIndex,
+        filteredSuggestions,
+        shouldShowAutocompleteDropdown,
+        handleKeyDown,
+        handleBlur,
+        handlePaste,
+        handleSelectSuggestion,
+        handleRemoveValue,
+    } = useArbitraryValuesInput({
+        values,
+        onValuesChange,
+        onBlur,
+        emptyValueDisplay,
+        autocompleteOptions,
+        onAutocompleteSearch,
+        isAutocompleteLoading,
+    });
+
+    const getDisplayLabel = (value: string | null) => {
+        if (value === null) {
+            return emptyValueDisplay;
         }
-        const q = inputValue.toLowerCase();
-        const stringValues = values.filter((v): v is string => v !== null);
-        return autocompleteOptions.filter(
-            (opt) => opt.toLowerCase().includes(q) && !stringValues.includes(opt),
-        );
-    }, [autocompleteOptions, inputValue, values, autocompletesDismissed]);
-
-    const shouldShowAutocompleteDropdown =
-        inputValue.trim() &&
-        !autocompletesDismissed &&
-        (filteredSuggestions.length > 0 || isAutocompleteLoading);
-    const isAutocompleteOpen = filteredSuggestions.length > 0;
-
-    // Reset active index and dismissed flag whenever the input text changes.
-    useEffect(() => {
-        setActiveAutocompleteIndex(null);
-        setAutocompleteDismissed(false);
-    }, [inputValue]);
-
-    // Trigger search when user types (lazy load elements for autocomplete)
-    useEffect(() => {
-        if (inputValue.trim() && onAutocompleteSearch) {
-            onAutocompleteSearch(inputValue);
+        if (value === "") {
+            return '""';
         }
-    }, [inputValue, onAutocompleteSearch]);
-
-    // Auto-scroll to the latest added value only when values are added, not removed
-    useEffect(() => {
-        if (chipsContainerRef.current && values.length > prevValuesLengthRef.current) {
-            const container = chipsContainerRef.current;
-            container.scrollTop = container.scrollHeight;
-        }
-        prevValuesLengthRef.current = values.length;
-    }, [values]);
-
-    const mergeParsedValues = useCallback(
-        (parsed: Array<string | null>) => {
-            const combined: Array<string | null> = [...values];
-            for (const v of parsed) {
-                const alreadyExists = combined.includes(v);
-                if (!alreadyExists) {
-                    combined.push(v);
-                }
-            }
-            onValuesChange?.(combined);
-        },
-        [values, onValuesChange],
-    );
-
-    const handleParseAndAdd = useCallback(
-        (raw: string) => {
-            if (!raw.trim()) return;
-            const parsed = parseArbitraryValues(raw, emptyValueDisplay);
-            if (parsed.length > 0) {
-                mergeParsedValues(parsed);
-            }
-        },
-        [emptyValueDisplay, mergeParsedValues],
-    );
-
-    const handleSelectSuggestion = useCallback(
-        (suggestion: string) => {
-            mergeParsedValues([suggestion]);
-            setInputValue("");
-            setActiveAutocompleteIndex(null);
-        },
-        [mergeParsedValues],
-    );
-
-    const handleKeyDown = useCallback(
-        (event: KeyboardEvent) => {
-            if (isAutocompleteOpen) {
-                if (isArrowDownKey(event)) {
-                    event.preventDefault();
-                    setActiveAutocompleteIndex((prev) =>
-                        prev === null ? 0 : Math.min(prev + 1, filteredSuggestions.length - 1),
-                    );
-                    return;
-                }
-                if (event.key === "ArrowUp") {
-                    event.preventDefault();
-                    setActiveAutocompleteIndex((prev) =>
-                        prev === null ? filteredSuggestions.length - 1 : Math.max(prev - 1, 0),
-                    );
-                    return;
-                }
-                if (isEscapeKey(event)) {
-                    event.preventDefault();
-                    setAutocompleteDismissed(true);
-                    setActiveAutocompleteIndex(null);
-                    return;
-                }
-            }
-            if (isEnterKey(event) && inputValue.trim()) {
-                event.preventDefault();
-                if (activeAutocompleteIndex !== null && filteredSuggestions[activeAutocompleteIndex]) {
-                    handleSelectSuggestion(filteredSuggestions[activeAutocompleteIndex]);
-                } else {
-                    handleParseAndAdd(inputValue);
-                    setInputValue("");
-                }
-            } else if (event.key === "Backspace" && !inputValue && values.length > 0) {
-                event.preventDefault();
-                onValuesChange?.(values.slice(0, -1));
-            }
-        },
-        [
-            isAutocompleteOpen,
-            filteredSuggestions,
-            inputValue,
-            values,
-            onValuesChange,
-            handleParseAndAdd,
-            activeAutocompleteIndex,
-            handleSelectSuggestion,
-        ],
-    );
-
-    const handleBlur = useCallback(
-        (e: React.FocusEvent<HTMLInputElement>) => {
-            if (inputValue.trim()) {
-                handleParseAndAdd(inputValue);
-                setInputValue("");
-            }
-            onBlur?.(e);
-        },
-        [inputValue, handleParseAndAdd, onBlur],
-    );
-
-    const handlePaste = useCallback(
-        (event: ClipboardEvent) => {
-            const pasted = event.clipboardData.getData("text");
-            if (pasted.includes(",") || pasted.includes("\n")) {
-                event.preventDefault();
-                handleParseAndAdd(pasted);
-            }
-        },
-        [handleParseAndAdd],
-    );
-
-    const handleRemoveValue = useCallback(
-        (index: number) => {
-            onValuesChange?.(values.filter((_, i) => i !== index));
-        },
-        [values, onValuesChange],
-    );
-
-    const getDisplayLabel = useCallback(
-        (value: string | null) => {
-            if (value === null) {
-                return emptyValueDisplay;
-            }
-            if (value === "") {
-                return '""';
-            }
-            return value;
-        },
-        [emptyValueDisplay],
-    );
+        return value;
+    };
 
     const hasValues = values.length > 0;
 
     const inputElement = (
         <Input
+            id={inputId}
             type="text"
             className="gd-chips-input__input s-chips-input-field"
             value={inputValue}
@@ -319,6 +193,19 @@ export function ArbitraryValuesInput(props: IArbitraryValuesInputProps) {
             onBlur={handleBlur}
             placeholder={placeholder}
             disabled={disabled}
+            accessibilityConfig={{
+                role: "combobox",
+                ariaAutocomplete: "list",
+                ariaControls: autocompleteListId,
+                ariaExpanded: shouldShowAutocompleteDropdown,
+                ariaActiveDescendant:
+                    activeAutocompleteIndex === null
+                        ? undefined
+                        : `${autocompleteListId}-item-${activeAutocompleteIndex}`,
+                ariaLabelledBy: ariaLabelledBy,
+                ariaDescribedBy: ariaDescribedBy,
+                ariaInvalid: hasEmptyError || hasValuesLimitExceededError || undefined,
+            }}
         />
     );
 
@@ -334,56 +221,56 @@ export function ArbitraryValuesInput(props: IArbitraryValuesInputProps) {
                 })}
             >
                 {hasValues ? (
-                    <>
-                        <div
-                            className="gd-chips-input__chips-frame"
-                            onPaste={handlePaste}
-                            ref={chipsContainerRef}
-                        >
-                            <div className="gd-chips-input__chips">
-                                {values.map((value, index) => (
-                                    <UiTag
-                                        key={`${value ?? "__null__"}-${index}`}
-                                        label={getDisplayLabel(value)}
-                                        isDeletable
-                                        isDisabled={disabled}
-                                        onDelete={() => handleRemoveValue(index)}
-                                        accessibilityConfig={{
-                                            deleteAriaLabel: intl.formatMessage(
-                                                {
-                                                    id: "attributeFilter.text.values.removeTagAriaLabel",
-                                                },
-                                                {
-                                                    value: getDisplayLabel(value),
-                                                },
-                                            ),
-                                        }}
-                                    />
-                                ))}
-                            </div>
-                        </div>
-                        <div className="gd-chips-input__input-frame" onPaste={handlePaste}>
-                            {inputElement}
-                        </div>
-                    </>
-                ) : (
                     <div
-                        className="gd-chips-input__input-frame gd-chips-input__input-frame--standalone"
+                        className="gd-chips-input__chips-frame"
                         onPaste={handlePaste}
+                        ref={chipsContainerRef}
                     >
-                        {inputElement}
+                        <div className="gd-chips-input__chips">
+                            {values.map((value, index) => (
+                                <UiTag
+                                    key={`${value ?? "__null__"}-${index}`}
+                                    label={getDisplayLabel(value)}
+                                    isDeletable
+                                    isDisabled={disabled}
+                                    dataTestId={`s-text-filter-value-tag-${index}`}
+                                    tabIndex={-1}
+                                    onDelete={() => handleRemoveValue(index)}
+                                    accessibilityConfig={{
+                                        deleteAriaLabel: intl.formatMessage(
+                                            {
+                                                id: "attributeFilter.text.values.removeTagAriaLabel",
+                                            },
+                                            {
+                                                value: getDisplayLabel(value),
+                                            },
+                                        ),
+                                    }}
+                                />
+                            ))}
+                        </div>
                     </div>
-                )}
-            </div>
-            {shouldShowAutocompleteDropdown ? (
-                <ul
-                    className="gd-chips-input__autocomplete s-chips-input-autocomplete"
-                    role="listbox"
-                    aria-label={intl.formatMessage({
-                        id: "attributeFilter.text.autocomplete.listLabel",
+                ) : null}
+                <div
+                    className={cx("gd-chips-input__input-frame", {
+                        "gd-chips-input__input-frame--standalone": !hasValues,
                     })}
+                    onPaste={handlePaste}
                 >
-                    {isAutocompleteLoading ? (
+                    {inputElement}
+                </div>
+            </div>
+            <ul
+                id={autocompleteListId}
+                className="gd-chips-input__autocomplete s-chips-input-autocomplete"
+                role="listbox"
+                hidden={!shouldShowAutocompleteDropdown}
+                aria-label={intl.formatMessage({
+                    id: "attributeFilter.text.autocomplete.listLabel",
+                })}
+            >
+                {shouldShowAutocompleteDropdown ? (
+                    isAutocompleteLoading ? (
                         <li className="gd-chips-input__autocomplete-loading s-chips-input-autocomplete-loading">
                             <LoadingSpinner className="small" />
                         </li>
@@ -391,7 +278,7 @@ export function ArbitraryValuesInput(props: IArbitraryValuesInputProps) {
                         filteredSuggestions.map((suggestion, index) => (
                             <li
                                 key={suggestion}
-                                id={`gd-chips-autocomplete-item-${index}`}
+                                id={`${autocompleteListId}-item-${index}`}
                                 className={cx("gd-chips-input__autocomplete-item", {
                                     "gd-chips-input__autocomplete-item--active":
                                         index === activeAutocompleteIndex,
@@ -405,9 +292,9 @@ export function ArbitraryValuesInput(props: IArbitraryValuesInputProps) {
                                 {highlightMatch(suggestion, inputValue)}
                             </li>
                         ))
-                    )}
-                </ul>
-            ) : null}
+                    )
+                ) : null}
+            </ul>
         </div>
     );
 }

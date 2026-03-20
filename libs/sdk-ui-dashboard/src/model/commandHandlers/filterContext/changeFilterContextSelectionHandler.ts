@@ -8,6 +8,8 @@ import { type SagaReturnType, all, call, put, select } from "redux-saga/effects"
 
 import { NotSupported } from "@gooddata/sdk-backend-spi";
 import {
+    type DashboardAttributeFilterItem,
+    type DashboardTextAttributeFilter,
     type FilterContextItem,
     type IDashboardAttributeFilter,
     type IDashboardAttributeFilterConfig,
@@ -15,11 +17,15 @@ import {
     type ObjRef,
     areObjRefsEqual,
     attributeElementsIsEmpty,
+    dashboardAttributeFilterItemDisplayForm,
+    dashboardAttributeFilterItemLocalIdentifier,
     getAttributeElementsItems,
     isAllTimeDashboardDateFilter,
     isDashboardAttributeFilter,
+    isDashboardAttributeFilterItem,
     isDashboardCommonDateFilter,
     isDashboardDateFilter,
+    isDashboardTextAttributeFilter,
     isSingleSelectionFilter,
     isUriRef,
     objRefToString,
@@ -45,6 +51,10 @@ import {
     selectFilterContextAttributeFilterByDisplayFormForTab,
     selectFilterContextAttributeFilterByLocalId,
     selectFilterContextAttributeFilterByLocalIdForTab,
+    selectFilterContextAttributeFilterItemByLocalId,
+    selectFilterContextAttributeFilterItemByLocalIdForTab,
+    selectFilterContextAttributeFilterItems,
+    selectFilterContextAttributeFilterItemsForTab,
     selectFilterContextAttributeFilters,
     selectFilterContextAttributeFiltersForTab,
     selectFilterContextDateFilterByDataSet,
@@ -87,7 +97,7 @@ export function* changeFilterContextSelectionHandler(
     // (removed the check that prevented cross-filtering without tabs)
 
     const normalizedFilters: FilterContextItem[] = filters.map((filter) => {
-        if (isDashboardAttributeFilter(filter) || isDashboardDateFilter(filter)) {
+        if (isDashboardAttributeFilterItem(filter) || isDashboardDateFilter(filter)) {
             return filter;
         } else {
             return dashboardFilterToFilterContextItem(
@@ -97,7 +107,27 @@ export function* changeFilterContextSelectionHandler(
         }
     });
 
-    const uniqueFilters = uniqBy(normalizedFilters, (filter) => {
+    // Separate text filter types (arbitrary, match) — they use whole-filter replacement
+    const textAttributeFiltersRaw = normalizedFilters.filter(
+        (filter): filter is DashboardAttributeFilterItem =>
+            isDashboardAttributeFilterItem(filter) && !isDashboardAttributeFilter(filter),
+    );
+
+    // Deduplicate text filters by localIdentifier (last occurrence wins, matching batch behavior)
+    const textAttributeFilters = uniqBy(
+        textAttributeFiltersRaw
+            .filter((f) => dashboardAttributeFilterItemLocalIdentifier(f))
+            .slice()
+            .reverse(),
+        (f) => dashboardAttributeFilterItemLocalIdentifier(f)!,
+    ).reverse();
+
+    const supportedFilters = normalizedFilters.filter(
+        (filter): filter is IDashboardAttributeFilter | IDashboardDateFilter =>
+            isDashboardAttributeFilter(filter) || isDashboardDateFilter(filter),
+    );
+
+    const uniqueFilters = uniqBy(supportedFilters, (filter) => {
         const identification = isDashboardAttributeFilter(filter)
             ? filter.attributeFilter.displayForm
             : filter.dateFilter.dataSet;
@@ -129,6 +159,7 @@ export function* changeFilterContextSelectionHandler(
         call(
             getAttributeFiltersUpdateActions,
             [...attributeFilters].reverse(),
+            textAttributeFilters,
             attributeFilterConfigs,
             resetOthers,
             ctx,
@@ -244,6 +275,7 @@ function* getDashboardFilterByDisplayAsLabelMatching(
 
 function* getAttributeFiltersUpdateActions(
     attributeFilters: IDashboardAttributeFilter[],
+    textAttributeFilters: DashboardAttributeFilterItem[],
     attributeFilterConfigs: IDashboardAttributeFilterConfig[],
     resetOthers: boolean,
     ctx: DashboardContext,
@@ -259,6 +291,7 @@ function* getAttributeFiltersUpdateActions(
 
     for (const attributeFilter of attributeFilters) {
         const filterRef = attributeFilter.attributeFilter.displayForm;
+        // only attribute filters with elements are relevant
         let dashboardFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterByDisplayForm>> =
             tabLocalIdentifier
                 ? yield select(
@@ -347,13 +380,43 @@ function* getAttributeFiltersUpdateActions(
         }
     }
 
+    // Build replace actions for text filter types (arbitrary, match).
+    // Only replace filters that are already text filters — converting a standard attribute filter
+    // (with element selection) to a text filter is not supported.
+    for (const textFilter of textAttributeFilters) {
+        const localId = dashboardAttributeFilterItemLocalIdentifier(textFilter);
+        if (localId) {
+            const existingFilter: ReturnType<
+                ReturnType<typeof selectFilterContextAttributeFilterItemByLocalId>
+            > = tabLocalIdentifier
+                ? yield select(
+                      selectFilterContextAttributeFilterItemByLocalIdForTab(localId, tabLocalIdentifier),
+                  )
+                : yield select(selectFilterContextAttributeFilterItemByLocalId(localId));
+
+            // Skip if the target filter does not exist or is a standard attribute filter
+            if (!existingFilter || !isDashboardTextAttributeFilter(existingFilter)) {
+                continue;
+            }
+
+            updateActions.push(
+                tabsActions.replaceAttributeFilterItem({
+                    filterLocalId: localId,
+                    filter: textFilter,
+                    tabLocalIdentifier,
+                }),
+            );
+            handledLocalIds.add(localId);
+        }
+    }
+
     if (resetOthers) {
         const currentAttributeFilters: ReturnType<typeof selectFilterContextAttributeFilters> =
             tabLocalIdentifier
                 ? yield select(selectFilterContextAttributeFiltersForTab(tabLocalIdentifier))
                 : yield select(selectFilterContextAttributeFilters);
 
-        // for filters that have not been handled by the loop above, create a clear selection actions
+        // for element-based filters that have not been handled, create clear selection actions
         const unhandledFilters = currentAttributeFilters.filter(
             (filter) => !handledLocalIds.has(filter.attributeFilter.localIdentifier!),
         );
@@ -361,6 +424,37 @@ function* getAttributeFiltersUpdateActions(
             updateActions.push(
                 tabsActions.clearAttributeFiltersSelection({
                     filterLocalIds: unhandledFilters.map((filter) => filter.attributeFilter.localIdentifier!),
+                    tabLocalIdentifier,
+                }),
+            );
+        }
+
+        // for text filters (arbitrary/match) that have not been handled, reset to All state
+        // (negative arbitrary filter with empty selection)
+        const currentAllFilterItems: ReturnType<typeof selectFilterContextAttributeFilterItems> =
+            tabLocalIdentifier
+                ? yield select(selectFilterContextAttributeFilterItemsForTab(tabLocalIdentifier))
+                : yield select(selectFilterContextAttributeFilterItems);
+
+        const unhandledTextFilters = currentAllFilterItems.filter(
+            (filter): filter is DashboardTextAttributeFilter =>
+                isDashboardTextAttributeFilter(filter) &&
+                !handledLocalIds.has(dashboardAttributeFilterItemLocalIdentifier(filter)!),
+        );
+        for (const textFilter of unhandledTextFilters) {
+            const localId = dashboardAttributeFilterItemLocalIdentifier(textFilter)!;
+            const resetFilter: DashboardAttributeFilterItem = {
+                arbitraryAttributeFilter: {
+                    displayForm: dashboardAttributeFilterItemDisplayForm(textFilter),
+                    values: [],
+                    negativeSelection: true,
+                    localIdentifier: localId,
+                },
+            };
+            updateActions.push(
+                tabsActions.replaceAttributeFilterItem({
+                    filterLocalId: localId,
+                    filter: resetFilter,
                     tabLocalIdentifier,
                 }),
             );

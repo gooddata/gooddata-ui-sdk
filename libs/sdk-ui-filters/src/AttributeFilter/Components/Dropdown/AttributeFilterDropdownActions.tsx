@@ -101,6 +101,7 @@ export function AttributeFilterDropdownActions({
                                 onClick={onApplyButtonClick}
                                 value={applyText}
                                 title={applyText}
+                                describedByFromValidation
                             />
                         }
                     />

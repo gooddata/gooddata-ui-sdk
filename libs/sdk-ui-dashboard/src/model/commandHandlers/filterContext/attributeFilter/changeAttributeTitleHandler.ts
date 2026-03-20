@@ -8,7 +8,7 @@ import { type ISetAttributeFilterTitle } from "../../../commands/filters.js";
 import { attributeDisplayTitleChanged } from "../../../events/filters.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
-import { selectFilterContextAttributeFilterByLocalId } from "../../../store/tabs/filterContext/filterContextSelectors.js";
+import { selectFilterContextAttributeFilterItemByLocalId } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../../store/tabs/index.js";
 import { type DashboardContext } from "../../../types/commonTypes.js";
 import { dispatchFilterContextChanged } from "../common.js";
@@ -20,8 +20,8 @@ export function* changeAttributeTitleHandler(
     const { filterLocalId, title } = cmd.payload;
 
     // validate filterLocalId
-    const affectedFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterByLocalId>> =
-        yield select(selectFilterContextAttributeFilterByLocalId(cmd.payload.filterLocalId));
+    const affectedFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterItemByLocalId>> =
+        yield select(selectFilterContextAttributeFilterItemByLocalId(cmd.payload.filterLocalId));
 
     if (!affectedFilter) {
         throw invalidArgumentsProvided(ctx, cmd, `Filter with filterLocalId ${filterLocalId} not found.`);
@@ -34,8 +34,8 @@ export function* changeAttributeTitleHandler(
         }),
     );
 
-    const changedFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterByLocalId>> =
-        yield select(selectFilterContextAttributeFilterByLocalId(cmd.payload.filterLocalId));
+    const changedFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterItemByLocalId>> =
+        yield select(selectFilterContextAttributeFilterItemByLocalId(cmd.payload.filterLocalId));
 
     invariant(
         changedFilter,

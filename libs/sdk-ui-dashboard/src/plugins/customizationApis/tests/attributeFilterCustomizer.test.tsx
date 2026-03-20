@@ -6,7 +6,11 @@ import { render } from "@testing-library/react";
 import { invariant } from "ts-invariant";
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { type IDashboardAttributeFilter } from "@gooddata/sdk-model";
+import {
+    type DashboardAttributeFilterItem,
+    type IDashboardAttributeFilter,
+    dashboardAttributeFilterItemTitle,
+} from "@gooddata/sdk-model";
 
 import { EMPTY_MUTATIONS } from "./utils.js";
 import {
@@ -57,7 +61,7 @@ function createTestComponent(name: string): FC {
 
 function createTestComponentProvider(
     name: string,
-    predicate: (filter: IDashboardAttributeFilter) => boolean,
+    predicate: (filter: DashboardAttributeFilterItem) => boolean,
 ): OptionalAttributeFilterComponentProvider {
     const Component = createTestComponent(name);
 
@@ -70,7 +74,10 @@ function createTestComponentProvider(
     };
 }
 
-function createTestDecoratorFactory(name: string, predicate: (filter: IDashboardAttributeFilter) => boolean) {
+function createTestDecoratorFactory(
+    name: string,
+    predicate: (filter: DashboardAttributeFilterItem) => boolean,
+) {
     return (next: AttributeFilterComponentProvider): OptionalAttributeFilterComponentProvider => {
         return (filter) => {
             if (!predicate(filter)) {
@@ -101,7 +108,7 @@ const DefaultTestComponentProvider: AttributeFilterComponentProvider = createTes
 //
 //
 
-function renderToHtml(customizer: DefaultAttributeFiltersCustomizer, filter: IDashboardAttributeFilter) {
+function renderToHtml(customizer: DefaultAttributeFiltersCustomizer, filter: DashboardAttributeFilterItem) {
     const provider = customizer.getAttributeFilterProvider();
     const Component = provider(filter);
     const dummyProps: IDashboardAttributeFilterProps = { dummyAttributeFilterProps: true } as any;
@@ -134,7 +141,7 @@ describe("Attribute Filter customizer", () => {
         it("should work for attribute filter that matches predicate", () => {
             const provider = createTestComponentProvider(
                 "fromCustomProvider",
-                (filter) => filter.attributeFilter.title === CustomTitle,
+                (filter) => dashboardAttributeFilterItemTitle(filter) === CustomTitle,
             );
             Customizer.withCustomProvider(provider);
 
@@ -148,7 +155,7 @@ describe("Attribute Filter customizer", () => {
         it("should fallback to default component if attribute filter does not match provider criteria", () => {
             const provider = createTestComponentProvider(
                 "fromCustomProvider",
-                (filter) => filter.attributeFilter.title === CustomTitle,
+                (filter) => dashboardAttributeFilterItemTitle(filter) === CustomTitle,
             );
             Customizer.withCustomProvider(provider);
 
@@ -162,15 +169,15 @@ describe("Attribute Filter customizer", () => {
         it("should use component from latest registered provider that matches the filter", () => {
             const provider1 = createTestComponentProvider(
                 "fromCustomProvider1",
-                (filter) => filter.attributeFilter.title === CustomTitle,
+                (filter) => dashboardAttributeFilterItemTitle(filter) === CustomTitle,
             );
             const provider2 = createTestComponentProvider(
                 "fromCustomProvider2",
-                (filter) => filter.attributeFilter.title === CustomTitle,
+                (filter) => dashboardAttributeFilterItemTitle(filter) === CustomTitle,
             );
             const provider3 = createTestComponentProvider(
                 "fromCustomProvider3",
-                (filter) => filter.attributeFilter.title === CustomTitle,
+                (filter) => dashboardAttributeFilterItemTitle(filter) === CustomTitle,
             );
             Customizer.withCustomProvider(provider1);
             Customizer.withCustomProvider(provider2);
@@ -203,7 +210,7 @@ describe("Attribute Filter customizer", () => {
 
             const provider = createTestComponentProvider(
                 "fromCustomProvider",
-                (filter) => filter.attributeFilter.title === CustomTitle,
+                (filter) => dashboardAttributeFilterItemTitle(filter) === CustomTitle,
             );
             Customizer.withCustomProvider(provider);
 
@@ -219,7 +226,7 @@ describe("Attribute Filter customizer", () => {
             Customizer.withCustomDecorator(factory);
             const provider = createTestComponentProvider(
                 "fromCustomProvider",
-                (filter) => filter.attributeFilter.title === CustomTitle,
+                (filter) => dashboardAttributeFilterItemTitle(filter) === CustomTitle,
             );
             Customizer.withCustomProvider(provider);
 
@@ -233,7 +240,7 @@ describe("Attribute Filter customizer", () => {
         it("should decorate if attribute filter matches criteria", () => {
             const factory = createTestDecoratorFactory(
                 "decorator1",
-                (filter) => filter.attributeFilter.title === CustomTitle,
+                (filter) => dashboardAttributeFilterItemTitle(filter) === CustomTitle,
             );
             Customizer.withCustomDecorator(factory);
 
@@ -247,7 +254,7 @@ describe("Attribute Filter customizer", () => {
         it("should not decorate if attribute filter does not match criteria", () => {
             const factory = createTestDecoratorFactory(
                 "decorator1",
-                (filter) => filter.attributeFilter.title === CustomTitle,
+                (filter) => dashboardAttributeFilterItemTitle(filter) === CustomTitle,
             );
             Customizer.withCustomDecorator(factory);
 
@@ -261,11 +268,11 @@ describe("Attribute Filter customizer", () => {
         it("should use multiple decorators if attribute filter matches criteria", () => {
             const factory1 = createTestDecoratorFactory(
                 "decorator1",
-                (filter) => filter.attributeFilter.title === CustomTitle,
+                (filter) => dashboardAttributeFilterItemTitle(filter) === CustomTitle,
             );
             const factory2 = createTestDecoratorFactory(
                 "decorator2",
-                (filter) => filter.attributeFilter.title === CustomTitle,
+                (filter) => dashboardAttributeFilterItemTitle(filter) === CustomTitle,
             );
             Customizer.withCustomDecorator(factory1);
             Customizer.withCustomDecorator(factory2);
@@ -281,15 +288,15 @@ describe("Attribute Filter customizer", () => {
         it("should use multiple decorators and custom component if attribute fiter matches criteria", () => {
             const factory1 = createTestDecoratorFactory(
                 "decorator1",
-                (filter) => filter.attributeFilter.title === CustomTitle,
+                (filter) => dashboardAttributeFilterItemTitle(filter) === CustomTitle,
             );
             const factory2 = createTestDecoratorFactory(
                 "decorator2",
-                (filter) => filter.attributeFilter.title === CustomTitle,
+                (filter) => dashboardAttributeFilterItemTitle(filter) === CustomTitle,
             );
             const provider = createTestComponentProvider(
                 "customProvider1",
-                (filter) => filter.attributeFilter.title === CustomTitle,
+                (filter) => dashboardAttributeFilterItemTitle(filter) === CustomTitle,
             );
             Customizer.withCustomDecorator(factory1);
             Customizer.withCustomDecorator(factory2);
@@ -307,11 +314,11 @@ describe("Attribute Filter customizer", () => {
             const factory1 = createTestDecoratorFactory("decorator1", () => false);
             const factory2 = createTestDecoratorFactory(
                 "decorator2",
-                (filter) => filter.attributeFilter.title === CustomTitle,
+                (filter) => dashboardAttributeFilterItemTitle(filter) === CustomTitle,
             );
             const provider = createTestComponentProvider(
                 "customProvider1",
-                (filter) => filter.attributeFilter.title === CustomTitle,
+                (filter) => dashboardAttributeFilterItemTitle(filter) === CustomTitle,
             );
 
             Customizer.withCustomDecorator(factory1);

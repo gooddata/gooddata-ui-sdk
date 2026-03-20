@@ -39,7 +39,11 @@ export type AttributeDisplayFormType =
     /**
      * Display form representing geo icon (pushpin).
      */
-    | "GDC.geo.icon";
+    | "GDC.geo.icon"
+    /**
+     * Display form representing HyperLogLog sketch values.
+     */
+    | "GDC.hyperloglog";
 
 /**
  * Kind of geo collection.

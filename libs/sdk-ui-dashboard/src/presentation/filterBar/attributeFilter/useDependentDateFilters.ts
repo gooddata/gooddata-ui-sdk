@@ -5,8 +5,10 @@ import { useMemo } from "react";
 import { invariant } from "ts-invariant";
 
 import {
-    type IDashboardAttributeFilter,
+    type DashboardAttributeFilterItem,
+    type IDashboardAttributeFilterByDate,
     type IDashboardDateFilter,
+    dashboardAttributeFilterItemFilterElementsByDate,
     objRefToString,
 } from "@gooddata/sdk-model";
 import { type IAttributeFilterBaseProps } from "@gooddata/sdk-ui-filters";
@@ -40,7 +42,7 @@ export type UseParentFiltersResult = Pick<IAttributeFilterBaseProps, "dependentD
  * @beta
  */
 export const useDependentDateFilters = (
-    filter: IDashboardAttributeFilter,
+    filter: DashboardAttributeFilterItem,
     tabId?: string,
 ): UseParentFiltersResult => {
     const isApplyAllAtOnceEnabledAndSet = useDashboardSelector(selectIsApplyFiltersAllAtOnceEnabledAndSet);
@@ -72,8 +74,10 @@ export const useDependentDateFilters = (
         : commonAppliedDateFilter;
     const commonDateFilterWithAllTime = getCommonDateFilterWithAllTime(commonDateFilter);
 
+    const filterElementsByDate = dashboardAttributeFilterItemFilterElementsByDate(filter);
+
     const dependentDateFilters = useMemo(() => {
-        return filter.attributeFilter.filterElementsByDate?.map((dependentDateFilter) => {
+        return filterElementsByDate?.map((dependentDateFilter: IDashboardAttributeFilterByDate) => {
             if (dependentDateFilter.isCommonDate) {
                 const commonDashboardDateFilter: IDashboardDateFilter = {
                     dateFilter: {
@@ -101,7 +105,7 @@ export const useDependentDateFilters = (
                 return matchingFilter;
             }
         });
-    }, [allDateFilters, commonDateFilterWithAllTime, filter.attributeFilter.filterElementsByDate]);
+    }, [allDateFilters, commonDateFilterWithAllTime, filterElementsByDate]);
 
     return {
         dependentDateFilters,

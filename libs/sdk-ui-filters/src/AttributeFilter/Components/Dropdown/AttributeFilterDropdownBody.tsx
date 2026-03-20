@@ -4,10 +4,10 @@ import { type KeyboardEvent, useCallback, useMemo } from "react";
 
 import { useIntl } from "react-intl";
 
-import { type IAttributeElement, areObjRefsEqual } from "@gooddata/sdk-model";
+import { type IAttributeElement } from "@gooddata/sdk-model";
+import { ValidationContextStore, createInvalidNode, useValidationContextValue } from "@gooddata/sdk-ui";
 import { isEscapeKey, useMediaQuery } from "@gooddata/sdk-ui-kit";
 
-import { AttributeFilterDropdownHeader } from "./AttributeFilterDropdownHeader.js";
 import { type IAttributeFilterDropdownBodyProps } from "./types.js";
 import { ATTRIBUTE_FILTER_DROPDOWN_BODY_CLASS, DEFAULT_DROPDOWN_BODY_WIDTH } from "../../constants.js";
 import { useAttributeFilterComponentsContext } from "../../Context/AttributeFilterComponentsContext.js";
@@ -30,18 +30,13 @@ export function AttributeFilterDropdownBody({
 }: IAttributeFilterDropdownBodyProps) {
     const { DropdownActionsComponent, ElementsSelectComponent, TextFilterBodyComponent } =
         useAttributeFilterComponentsContext();
-    const {
-        withoutApply,
-        attribute,
-        displayForms,
-        currentDisplayFormRef,
-        currentDisplayAsDisplayFormRef,
-        filterDetailRequestHandler,
-        setDisplayForm,
-    } = useAttributeFilterContext();
+    const { withoutApply } = useAttributeFilterContext();
     const intl = useIntl();
     const isMobile = useMediaQuery("mobileDevice");
 
+    const validationContextValue = useValidationContextValue(
+        createInvalidNode({ id: "AttributeFilterDropdownBody" }),
+    );
     const {
         initialElementsPageError,
         nextElementsPageError,
@@ -74,7 +69,6 @@ export function AttributeFilterDropdownBody({
         disabled,
         // New mode-related fields
         currentFilterMode,
-        availableInternalFilterModes,
         availableTextFilterModes,
         textFilterOperator,
         textFilterValues,
@@ -84,7 +78,6 @@ export function AttributeFilterDropdownBody({
         textFilterValuesLimitReachedWarning,
         textFilterValuesLimitExceededError,
         textFilterCaseSensitive,
-        onFilterModeChange,
         onTextFilterOperatorChange,
         onTextFilterValuesChange,
         onTextFilterValuesBlur,
@@ -96,10 +89,6 @@ export function AttributeFilterDropdownBody({
     const parentFilterTitles = useMemo(() => {
         return parentFilterAttributes.map((attr) => attr.title);
     }, [parentFilterAttributes]);
-
-    const currentLabel = useMemo(() => {
-        return displayForms.find((df) => areObjRefsEqual(df.ref, currentDisplayFormRef));
-    }, [displayForms, currentDisplayFormRef]);
 
     const applyDisabledTooltip = useMemo(() => {
         if (!isApplyDisabled) {
@@ -243,37 +232,19 @@ export function AttributeFilterDropdownBody({
         );
     };
 
-    const totalAvailableModes = availableInternalFilterModes?.length ?? 0;
-    const showFilterHeader =
-        totalAvailableModes > 1 &&
-        ((onFilterModeChange && (availableInternalFilterModes?.length ?? 0) > 1) ||
-            (displayForms.length > 1 && setDisplayForm));
-
     return (
-        <div className={ATTRIBUTE_FILTER_DROPDOWN_BODY_CLASS} style={style} onKeyDown={handleKeyDown}>
-            {showFilterHeader ? (
-                <AttributeFilterDropdownHeader
-                    title={title}
-                    currentFilterMode={currentFilterMode}
-                    availableInternalFilterModes={availableInternalFilterModes}
-                    onFilterModeChange={onFilterModeChange}
-                    attribute={attribute}
-                    label={currentLabel}
-                    requestHandler={filterDetailRequestHandler}
-                    labels={displayForms}
-                    selectedLabelRef={currentDisplayAsDisplayFormRef ?? currentDisplayFormRef}
-                    onLabelChange={setDisplayForm}
+        <ValidationContextStore value={validationContextValue}>
+            <div className={ATTRIBUTE_FILTER_DROPDOWN_BODY_CLASS} style={style} onKeyDown={handleKeyDown}>
+                {renderFilterBody()}
+                <DropdownActionsComponent
+                    onApplyButtonClick={onApplyButtonClick}
+                    onCancelButtonClick={onCancelButtonClick}
+                    isApplyDisabled={isApplyDisabled}
+                    isSelectionChanged={isWorkingSelectionChanged}
+                    applyDisabledTooltip={applyDisabledTooltip}
+                    withoutApply={withoutApply}
                 />
-            ) : null}
-            {renderFilterBody()}
-            <DropdownActionsComponent
-                onApplyButtonClick={onApplyButtonClick}
-                onCancelButtonClick={onCancelButtonClick}
-                isApplyDisabled={isApplyDisabled}
-                isSelectionChanged={isWorkingSelectionChanged}
-                applyDisabledTooltip={applyDisabledTooltip}
-                withoutApply={withoutApply}
-            />
-        </div>
+            </div>
+        </ValidationContextStore>
     );
 }

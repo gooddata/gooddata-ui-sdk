@@ -920,6 +920,11 @@ export interface IFeatureFlags {
     enableGeoArea?: boolean;
 
     /**
+     * Enable HyperLogLog labels.
+     */
+    enableHyperLogLog?: boolean;
+
+    /**
      * Enables geo accessibility enhancements introduced for map canvas, legend semantics,
      * live announcements, and alternate table view.
      */
@@ -954,11 +959,6 @@ export interface IFeatureFlags {
      * Enable automation management in dashboards
      */
     enableAutomationManagement?: boolean;
-
-    /**
-     * Enable filter accessibility features including redesigned date filter components.
-     */
-    enableFilterAccessibility?: boolean;
 
     /**
      * Enable GenAI memory feature

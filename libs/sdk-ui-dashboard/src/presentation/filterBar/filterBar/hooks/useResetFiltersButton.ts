@@ -7,10 +7,10 @@ import { difference, isEqual, partition } from "lodash-es";
 import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
 import {
     type FilterContextItem,
-    type IDashboardAttributeFilter,
     type IDashboardDateFilter,
+    dashboardAttributeFilterItemLocalIdentifier,
     dashboardFilterLocalIdentifier,
-    isDashboardAttributeFilter,
+    isDashboardAttributeFilterItem,
     isDashboardCommonDateFilter,
     isDashboardDateFilter,
     isNoopAllTimeDashboardDateFilter,
@@ -135,11 +135,11 @@ const getNewlyAddedFilterLocalIds = (
     originalFilters: FilterContextItem[],
 ): string[] => {
     const originalAttributeFiltersLocalIds = originalFilters
-        .filter(isDashboardAttributeFilter)
-        .map((filter) => filter.attributeFilter.localIdentifier!);
+        .filter(isDashboardAttributeFilterItem)
+        .map((filter) => dashboardAttributeFilterItemLocalIdentifier(filter)!);
     const currentFiltersLocalIds = currentFilters
-        .filter(isDashboardAttributeFilter)
-        .map((filter) => filter.attributeFilter.localIdentifier!);
+        .filter(isDashboardAttributeFilterItem)
+        .map((filter) => dashboardAttributeFilterItemLocalIdentifier(filter)!);
     return difference(currentFiltersLocalIds, originalAttributeFiltersLocalIds);
 };
 
@@ -274,7 +274,7 @@ export const useResetFiltersButton = (): {
             const [[commonDateFilter], otherFilters] = partition(
                 originalFilters,
                 isDashboardCommonDateFilter,
-            ) as [IDashboardDateFilter[], Array<IDashboardAttributeFilter | IDashboardDateFilter>];
+            ) as [IDashboardDateFilter[], FilterContextItem[]];
 
             if (isApplyAllAtOnceEnabledAndSet) {
                 dispatch(resetFilterContextWorkingSelection());

@@ -36,8 +36,41 @@ import {
     type IAttributeFilterElementsSelectProps,
 } from "./Components/ElementsSelect/types.js";
 import { type IFilterModeMenuProps } from "./Components/FilterModeMenu/FilterModeMenu.js";
-import { type ITextFilterBodyProps } from "./Components/TextFilterBody/TextFilterBody.js";
+import { type ITextFilterBodyProps } from "./Components/TextFilterBody/types.js";
 import { type AttributeFilterAvailableMode } from "./filterModeTypes.js";
+
+/**
+ * Configuration for the attribute filter header menu.
+ *
+ * @remarks
+ * Groups together props that control the header menu behavior,
+ * such as which filter modes are available and whether label switching is shown.
+ *
+ * @alpha
+ */
+export interface IAttributeFilterMenuConfig {
+    /**
+     * Limit which filter modes are available for switching.
+     *
+     * @remarks
+     * When more than one mode is available, the mode switch menu is shown.
+     * Defaults to all modes: ["elements", "arbitrary", "match"].
+     * The UI maps arbitrary/match to internal text mode and distinguishes them by operator:
+     * "is"/"isNot" = arbitrary, others = match.
+     */
+    availableFilterModes?: AttributeFilterAvailableMode[];
+
+    /**
+     * Show the "Values as" label switching section in the header menu.
+     *
+     * @remarks
+     * When true, the "Values as" section is shown in the header menu,
+     * allowing users to switch between different display forms of the attribute.
+     * The section is only visible when the attribute has more than one display form.
+     * Defaults to true.
+     */
+    showLabelsSwitch?: boolean;
+}
 
 /**
  * @public
@@ -134,7 +167,7 @@ export interface IAttributeFilterCoreProps {
      *
      * Note: It's not possible to combine this property with "connectToPlaceholder" property. Either - provide a value, or a placeholder.
      * The 'onApply' callback must be specified in order to handle filter changes.
-     * This filter definition needs to use primary label of given attribute
+     * This filter definition needs to use primary label of given attribute for filter with elements selection or any label for text filters (arbitrary, match).
      */
     filter?: IAttributeFilter;
 
@@ -280,6 +313,7 @@ export interface IAttributeFilterCoreProps {
 
     /**
      * Provide a attribute filter label used for representing elements in component.
+     * Used only for filter with elements selection. For text filters (arbitrary, match) it is not used.
      *
      * @alpha
      */
@@ -357,17 +391,15 @@ export interface IAttributeFilterCoreProps {
     alignPoints?: IAlignPoint[];
 
     /**
-     * Limit which filter modes are available for switching.
+     * Configuration for the attribute filter header menu.
      *
      * @remarks
-     * When more than one mode is available, the mode switch menu is shown.
-     * Defaults to all modes: ["elements", "arbitrary", "match"].
-     * The UI maps arbitrary/match to internal text mode and distinguishes them by operator:
-     * "is"/"isNot" = arbitrary, others = match.
+     * Groups together props controlling the header menu:
+     * available filter modes and label switching visibility.
      *
      * @alpha
      */
-    availableFilterModes?: AttributeFilterAvailableMode[];
+    menuConfig?: IAttributeFilterMenuConfig;
 }
 
 /**

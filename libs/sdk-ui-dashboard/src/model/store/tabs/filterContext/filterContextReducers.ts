@@ -5,6 +5,7 @@ import { invariant } from "ts-invariant";
 
 import { type IAttributeWithReferences } from "@gooddata/sdk-backend-spi";
 import {
+    type DashboardAttributeFilterItem,
     type DashboardAttributeFilterSelectionMode,
     type DateFilterGranularity,
     type DateFilterType,
@@ -24,10 +25,17 @@ import {
     type ObjRef,
     areObjRefsEqual,
     attributeElementsIsEmpty,
+    dashboardAttributeFilterItemFilterElementsBy,
+    dashboardAttributeFilterItemFilterElementsByDate,
+    dashboardAttributeFilterItemLocalIdentifier,
+    dashboardAttributeFilterItemValidateElementsBy,
     isAttributeElementsByRef,
+    isDashboardArbitraryAttributeFilter,
     isDashboardAttributeFilter,
+    isDashboardAttributeFilterItem,
     isDashboardCommonDateFilter,
     isDashboardDateFilter,
+    isDashboardMatchAttributeFilter,
     newAllTimeDashboardDateFilter,
 } from "@gooddata/sdk-model";
 
@@ -446,7 +454,7 @@ const updateAttributeFilterSelection: FilterContextReducer<
                 attributeElements: elements,
                 negativeSelection,
             },
-        };
+        } as IDashboardAttributeFilter;
     } else if (isWorkingSelectionChange) {
         filterContextDefinition.filters.push({
             attributeFilter: {
@@ -454,7 +462,7 @@ const updateAttributeFilterSelection: FilterContextReducer<
                 attributeElements: elements,
                 negativeSelection,
             },
-        });
+        } as IDashboardAttributeFilter);
     } else if (existingFilterIndex >= 0) {
         filterContextDefinition.filters[existingFilterIndex] = {
             attributeFilter: {
@@ -489,6 +497,127 @@ const updateAttributeFilterSelection: FilterContextReducer<
         }
     } else {
         // Remove filterLocalId from the array if present
+        targetTab.filterContext.filtersWithInvalidSelection =
+            targetTab.filterContext.filtersWithInvalidSelection.filter((id) => id !== filterLocalId);
+    }
+};
+
+//
+//
+//
+
+/**
+ * Payload for replacing an attribute filter item (standard, arbitrary, or match) in the filter context.
+ * @internal
+ */
+export interface IReplaceAttributeFilterItemPayload {
+    readonly filterLocalId: string;
+    readonly filter: DashboardAttributeFilterItem;
+    readonly isWorkingSelectionChange?: boolean;
+    readonly isSelectionInvalid?: boolean;
+    /**
+     * Optional tab local identifier to target a specific tab.
+     * If not provided, the active tab will be used.
+     */
+    readonly tabLocalIdentifier?: string;
+}
+
+/**
+ * Carries over filterElementsBy, filterElementsByDate, and validateElementsBy from the existing filter
+ * to the replacement filter, so that parent filter dependencies are not lost
+ * when filter selection/params change.
+ */
+function preserveFilterDependencies(
+    existing: DashboardAttributeFilterItem,
+    replacement: DashboardAttributeFilterItem,
+): DashboardAttributeFilterItem {
+    const filterElementsBy = dashboardAttributeFilterItemFilterElementsBy(existing);
+    const filterElementsByDate = dashboardAttributeFilterItemFilterElementsByDate(existing);
+    const validateElementsBy = dashboardAttributeFilterItemValidateElementsBy(existing);
+
+    if (!filterElementsBy?.length && !filterElementsByDate?.length && !validateElementsBy?.length) {
+        return replacement;
+    }
+
+    const preserved = {
+        ...(filterElementsBy?.length ? { filterElementsBy } : {}),
+        ...(filterElementsByDate?.length ? { filterElementsByDate } : {}),
+        ...(validateElementsBy?.length ? { validateElementsBy } : {}),
+    };
+
+    if (isDashboardAttributeFilter(replacement)) {
+        return {
+            attributeFilter: {
+                ...replacement.attributeFilter,
+                ...preserved,
+            },
+        };
+    }
+    if (isDashboardArbitraryAttributeFilter(replacement)) {
+        return {
+            arbitraryAttributeFilter: {
+                ...replacement.arbitraryAttributeFilter,
+                ...preserved,
+            },
+        };
+    }
+    // Match filters do not support parent dependencies
+    return replacement;
+}
+
+const replaceAttributeFilterItem: FilterContextReducer<PayloadAction<IReplaceAttributeFilterItemPayload>> = (
+    state,
+    action,
+) => {
+    const targetTab = getTabOrActive(state, action.payload.tabLocalIdentifier);
+    if (!targetTab) {
+        return;
+    }
+    if (!targetTab.filterContext) {
+        targetTab.filterContext = { ...filterContextInitialState };
+    }
+
+    const { filterLocalId, filter, isWorkingSelectionChange, isSelectionInvalid } = action.payload;
+
+    const filterContextDefinition = isWorkingSelectionChange
+        ? targetTab.filterContext.workingFilterContextDefinition
+        : targetTab.filterContext.filterContextDefinition;
+    invariant(filterContextDefinition?.filters, "Attempt to edit uninitialized filter context");
+
+    const existingFilterIndex = filterContextDefinition.filters.findIndex(
+        (item) =>
+            isDashboardAttributeFilterItem(item) &&
+            dashboardAttributeFilterItemLocalIdentifier(item) === filterLocalId,
+    );
+
+    // Preserve parent filter relationships from the existing filter when replacing.
+    // The replacement filter typically only carries selection data, not dependency configuration.
+    const replacementFilter =
+        existingFilterIndex >= 0
+            ? preserveFilterDependencies(
+                  filterContextDefinition.filters[existingFilterIndex] as DashboardAttributeFilterItem,
+                  filter,
+              )
+            : filter;
+
+    // Type assertion: filterContextDefinition.filters is either FilterContextItem[] or
+    // WorkingFilterContextItem[] depending on isWorkingSelectionChange. We cast to FilterContextItem[]
+    // since DashboardAttributeFilterItem is a subtype of FilterContextItem.
+    const filters = filterContextDefinition.filters as FilterContextItem[];
+    if (isWorkingSelectionChange && existingFilterIndex >= 0) {
+        filters[existingFilterIndex] = replacementFilter;
+    } else if (isWorkingSelectionChange) {
+        filters.push(replacementFilter);
+    } else if (existingFilterIndex >= 0) {
+        filters[existingFilterIndex] = replacementFilter;
+    }
+
+    // Handle isSelectionInvalid flag to update filtersWithInvalidSelection array
+    if (isSelectionInvalid) {
+        if (!targetTab.filterContext.filtersWithInvalidSelection.includes(filterLocalId)) {
+            targetTab.filterContext.filtersWithInvalidSelection.push(filterLocalId);
+        }
+    } else {
         targetTab.filterContext.filtersWithInvalidSelection =
             targetTab.filterContext.filtersWithInvalidSelection.filter((id) => id !== filterLocalId);
     }
@@ -602,7 +731,10 @@ const removeAttributeFilter: FilterContextReducer<PayloadAction<IRemoveAttribute
     const { filterLocalId } = action.payload;
 
     const newFilters = activeTab.filterContext.filterContextDefinition.filters.filter(
-        (item) => isDashboardDateFilter(item) || item.attributeFilter.localIdentifier !== filterLocalId,
+        (item) =>
+            isDashboardDateFilter(item) ||
+            !isDashboardAttributeFilterItem(item) ||
+            dashboardAttributeFilterItemLocalIdentifier(item) !== filterLocalId,
     );
 
     activeTab.filterContext.filterContextDefinition = {
@@ -643,7 +775,9 @@ const moveAttributeFilter: FilterContextReducer<PayloadAction<IMoveAttributeFilt
     const { filterLocalId, index } = action.payload;
 
     const currentFilterIndex = activeTab.filterContext.filterContextDefinition.filters.findIndex(
-        (item) => isDashboardAttributeFilter(item) && item.attributeFilter.localIdentifier === filterLocalId,
+        (item) =>
+            isDashboardAttributeFilterItem(item) &&
+            dashboardAttributeFilterItemLocalIdentifier(item) === filterLocalId,
     );
 
     invariant(currentFilterIndex >= 0, "Attempt to move non-existing filter");
@@ -697,16 +831,21 @@ const setAttributeFilterParents: FilterContextReducer<PayloadAction<ISetAttribut
     const { filterLocalId, parentFilters } = action.payload;
 
     const currentFilterIndex = activeTab.filterContext.filterContextDefinition.filters.findIndex(
-        (item) => isDashboardAttributeFilter(item) && item.attributeFilter.localIdentifier === filterLocalId,
+        (item) =>
+            isDashboardAttributeFilterItem(item) &&
+            dashboardAttributeFilterItemLocalIdentifier(item) === filterLocalId,
     );
 
     invariant(currentFilterIndex >= 0, "Attempt to set parent of a non-existing filter");
 
-    (
-        activeTab.filterContext.filterContextDefinition.filters[
-            currentFilterIndex
-        ] as IDashboardAttributeFilter
-    ).attributeFilter.filterElementsBy = [...parentFilters];
+    // silently ignore when targeting match filter, will have no effect
+    const filter = activeTab.filterContext.filterContextDefinition.filters[currentFilterIndex];
+
+    if (isDashboardAttributeFilter(filter)) {
+        filter.attributeFilter.filterElementsBy = [...parentFilters];
+    } else if (isDashboardArbitraryAttributeFilter(filter)) {
+        filter.arbitraryAttributeFilter.filterElementsBy = [...parentFilters];
+    }
 };
 
 //
@@ -740,16 +879,20 @@ const setAttributeFilterDependentDateFilters: FilterContextReducer<
     const { filterLocalId, dependentDateFilters } = action.payload;
 
     const currentFilterIndex = activeTab.filterContext.filterContextDefinition.filters.findIndex(
-        (item) => isDashboardAttributeFilter(item) && item.attributeFilter.localIdentifier === filterLocalId,
+        (item) =>
+            isDashboardAttributeFilterItem(item) &&
+            dashboardAttributeFilterItemLocalIdentifier(item) === filterLocalId,
     );
 
     invariant(currentFilterIndex >= 0, "Attempt to set dependent date filter of a non-existing filter");
 
-    (
-        activeTab.filterContext.filterContextDefinition.filters[
-            currentFilterIndex
-        ] as IDashboardAttributeFilter
-    ).attributeFilter.filterElementsByDate = [...dependentDateFilters];
+    const filter = activeTab.filterContext.filterContextDefinition.filters[currentFilterIndex];
+    if (isDashboardAttributeFilter(filter)) {
+        filter.attributeFilter.filterElementsByDate = [...dependentDateFilters];
+    } else if (isDashboardArbitraryAttributeFilter(filter)) {
+        filter.arbitraryAttributeFilter.filterElementsByDate = [...dependentDateFilters];
+    }
+    // Match filters do not support filterElementsByDate
 };
 
 //
@@ -889,6 +1032,53 @@ const changeAttributeDisplayForm: FilterContextReducer<PayloadAction<IChangeAttr
 /**
  * @internal
  */
+export interface IChangeTextFilterDisplayFormPayload {
+    readonly filterLocalId: string;
+    readonly displayForm: ObjRef;
+    readonly tabLocalIdentifier?: string;
+}
+
+/**
+ * Updates the displayForm on a text filter (arbitrary or match) definition.
+ * This is needed when displayAsLabel changes on a text filter, because the label
+ * must be written to the filter's own definition, not only to the filter config.
+ */
+const changeTextFilterDisplayForm: FilterContextReducer<
+    PayloadAction<IChangeTextFilterDisplayFormPayload>
+> = (state, action) => {
+    const targetTab = getTabOrActive(state, action.payload.tabLocalIdentifier);
+    if (!targetTab?.filterContext) {
+        return;
+    }
+
+    const { filterLocalId, displayForm } = action.payload;
+    const filterContextDefinition = targetTab.filterContext.filterContextDefinition;
+    if (!filterContextDefinition?.filters) {
+        return;
+    }
+
+    const currentFilterIndex = filterContextDefinition.filters.findIndex(
+        (item) =>
+            isDashboardAttributeFilterItem(item) &&
+            !isDashboardAttributeFilter(item) &&
+            dashboardAttributeFilterItemLocalIdentifier(item) === filterLocalId,
+    );
+
+    if (currentFilterIndex < 0) {
+        return;
+    }
+
+    const filter = filterContextDefinition.filters[currentFilterIndex];
+    if (isDashboardArbitraryAttributeFilter(filter)) {
+        filter.arbitraryAttributeFilter.displayForm = { ...displayForm };
+    } else if (isDashboardMatchAttributeFilter(filter)) {
+        filter.matchAttributeFilter.displayForm = { ...displayForm };
+    }
+};
+
+/**
+ * @internal
+ */
 export interface IChangeAttributeTitlePayload {
     readonly filterLocalId: string;
     readonly title?: string;
@@ -917,12 +1107,20 @@ const changeAttributeTitle: FilterContextReducer<PayloadAction<IChangeAttributeT
     const { filterLocalId, title } = action.payload;
 
     const findFilter = activeTab.filterContext.filterContextDefinition.filters.find(
-        (item) => isDashboardAttributeFilter(item) && item.attributeFilter.localIdentifier === filterLocalId,
+        (item) =>
+            isDashboardAttributeFilterItem(item) &&
+            dashboardAttributeFilterItemLocalIdentifier(item) === filterLocalId,
     );
 
     invariant(findFilter, "Attempt to change title of a non-existing filter");
 
-    (findFilter as IDashboardAttributeFilter).attributeFilter.title = title;
+    if (isDashboardAttributeFilter(findFilter)) {
+        findFilter.attributeFilter.title = title;
+    } else if (isDashboardArbitraryAttributeFilter(findFilter)) {
+        findFilter.arbitraryAttributeFilter.title = title;
+    } else if (isDashboardMatchAttributeFilter(findFilter)) {
+        findFilter.matchAttributeFilter.title = title;
+    }
 };
 
 /**
@@ -956,12 +1154,17 @@ const changeSelectionMode: FilterContextReducer<PayloadAction<IChangeAttributeSe
     const { filterLocalId, selectionMode } = action.payload;
 
     const findFilter = activeTab.filterContext.filterContextDefinition.filters.find(
-        (item) => isDashboardAttributeFilter(item) && item.attributeFilter.localIdentifier === filterLocalId,
+        (item) =>
+            isDashboardAttributeFilterItem(item) &&
+            dashboardAttributeFilterItemLocalIdentifier(item) === filterLocalId,
     );
 
     invariant(findFilter, "Attempt to change selection mode of a non-existing filter");
 
-    (findFilter as IDashboardAttributeFilter).attributeFilter.selectionMode = selectionMode;
+    // Text filters (arbitrary, match) do not have selectionMode; no-op for them
+    if (isDashboardAttributeFilter(findFilter)) {
+        findFilter.attributeFilter.selectionMode = selectionMode;
+    }
 };
 
 const addDateFilter: FilterContextReducer<PayloadAction<IAddDateFilterPayload>> = (state, action) => {
@@ -1029,7 +1232,7 @@ const removeDateFilter: FilterContextReducer<PayloadAction<IRemoveDateFilterPayl
     const { dataSet } = action.payload;
 
     const newFilters = activeTab.filterContext.filterContextDefinition.filters.filter(
-        (item) => isDashboardAttributeFilter(item) || !areObjRefsEqual(item.dateFilter.dataSet!, dataSet),
+        (item) => !isDashboardDateFilter(item) || !areObjRefsEqual(item.dateFilter.dataSet!, dataSet),
     );
 
     activeTab.filterContext.filterContextDefinition = {
@@ -1123,12 +1326,19 @@ const changeLimitingItems: FilterContextReducer<PayloadAction<IChangeAttributeLi
     const { filterLocalId, limitingItems } = action.payload;
 
     const findFilter = activeTab.filterContext.filterContextDefinition.filters.find(
-        (item) => isDashboardAttributeFilter(item) && item.attributeFilter.localIdentifier === filterLocalId,
+        (item) =>
+            isDashboardAttributeFilterItem(item) &&
+            dashboardAttributeFilterItemLocalIdentifier(item) === filterLocalId,
     );
 
     invariant(findFilter, "Attempt to change limiting items of a non-existing filter");
 
-    (findFilter as IDashboardAttributeFilter).attributeFilter.validateElementsBy = limitingItems;
+    if (isDashboardAttributeFilter(findFilter)) {
+        findFilter.attributeFilter.validateElementsBy = limitingItems;
+    } else if (isDashboardArbitraryAttributeFilter(findFilter)) {
+        findFilter.arbitraryAttributeFilter.validateElementsBy = limitingItems;
+    }
+    // Match filters do not support validateElementsBy
 };
 
 //
@@ -1223,11 +1433,13 @@ export const filterContextReducers = {
     removeDateFilter,
     moveDateFilter,
     updateAttributeFilterSelection,
+    replaceAttributeFilterItem,
     setAttributeFilterParents,
     setAttributeFilterDependentDateFilters,
     clearAttributeFiltersSelection,
     upsertDateFilter,
     changeAttributeDisplayForm,
+    changeTextFilterDisplayForm,
     changeAttributeTitle,
     changeSelectionMode,
     changeLimitingItems,

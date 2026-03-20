@@ -74,7 +74,7 @@ export function AttributeFilterDropdown() {
     );
     const selectionElements = withoutApply ? workingSelectionElements : committedSelectionElements;
     const operator = textFilterOperator ?? "is";
-    const subtitleFilter =
+    const subtitleFilterRaw =
         currentFilterMode === "text"
             ? withoutApply && currentDisplayFormRef
                 ? createFilterFromOperator(
@@ -86,6 +86,12 @@ export function AttributeFilterDropdown() {
                   )
                 : textFilterCommittedFilter
             : undefined;
+    // In text mode with withoutApply, cache last valid subtitle filter to prevent
+    // showing invalid state (matching useLastValidValue usage for elements mode).
+    const subtitleFilter = useLastValidValue(
+        subtitleFilterRaw,
+        currentFilterMode !== "text" || !isSelectionInvalid || !withoutApply,
+    );
     const subtitle = useResolveAttributeFilterSubtitle(
         isSelectionInverted,
         selectionElements,

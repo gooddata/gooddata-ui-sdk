@@ -14,6 +14,7 @@ import {
     type WeekStart,
 } from "@gooddata/sdk-model";
 import { type ILocale } from "@gooddata/sdk-ui";
+import { type AttributeFilterAvailableMode } from "@gooddata/sdk-ui-filters";
 
 import {
     type IDashboardFocusObject,
@@ -527,6 +528,52 @@ export const selectEnableImmediateAttributeFilterDisplayAsLabelMigration: Dashbo
     createSelector(selectConfig, (state) => {
         return state.settings?.enableImmediateAttributeFilterDisplayAsLabelMigration ?? false;
     });
+
+/**
+ * Returns whether arbitrary text filter mode is enabled in dashboards.
+ *
+ * @alpha
+ */
+export const selectEnableArbitraryFilterKD: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return state.settings?.enableArbitraryFilterKD ?? false;
+    },
+);
+
+/**
+ * Returns whether match text filter mode is enabled in dashboards.
+ *
+ * @alpha
+ */
+export const selectEnableMatchFilterKD: DashboardSelector<boolean> = createSelector(selectConfig, (state) => {
+    return state.settings?.enableMatchFilterKD ?? false;
+});
+
+/**
+ * Returns available attribute filter modes based on feature flags.
+ *
+ * @remarks
+ * Always includes "elements" mode. Adds "arbitrary" and/or "match" when
+ * the corresponding feature flags are enabled.
+ *
+ * @alpha
+ */
+export const selectAvailableAttributeFilterModes: DashboardSelector<AttributeFilterAvailableMode[]> =
+    createSelector(
+        selectEnableArbitraryFilterKD,
+        selectEnableMatchFilterKD,
+        (arbitraryEnabled, matchEnabled): AttributeFilterAvailableMode[] => {
+            const modes: AttributeFilterAvailableMode[] = ["elements"];
+            if (arbitraryEnabled) {
+                modes.push("arbitrary");
+            }
+            if (matchEnabled) {
+                modes.push("match");
+            }
+            return modes;
+        },
+    );
 
 /**
  * Returns whether rich text in descriptions is enabled.

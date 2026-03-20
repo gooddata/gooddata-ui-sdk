@@ -5,9 +5,9 @@ import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, select } from "redux-saga/effects";
 
 import {
+    type DashboardAttributeFilterItem,
     type IAnalyticalWidget,
     type ICatalogDateDataset,
-    type IDashboardAttributeFilter,
     type IDashboardDateFilter,
     type IInsight,
     type IInsightWidget,
@@ -15,6 +15,8 @@ import {
     type IRichTextWidget,
     type ObjRef,
     areObjRefsEqual,
+    dashboardAttributeFilterItemDisplayForm,
+    dashboardAttributeFilterItemLocalIdentifier,
     objRefToString,
 } from "@gooddata/sdk-model";
 
@@ -32,7 +34,7 @@ import {
 import { selectEnableUnavailableItemsVisibility } from "../../../store/config/configSelectors.js";
 import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
 import {
-    selectFilterContextAttributeFilters,
+    selectFilterContextAttributeFilterItems,
     selectFilterContextDateFiltersWithDimension,
 } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { type DashboardContext } from "../../../types/commonTypes.js";
@@ -205,7 +207,7 @@ export function* validateAttributeFiltersToIgnore(
     cmd: IDashboardCommand,
     _widget: IAnalyticalWidget,
     toIgnore: ObjRef[],
-): SagaIterator<IDashboardAttributeFilter[]> {
+): SagaIterator<DashboardAttributeFilterItem[]> {
     const resolvedDisplayForms: SagaReturnType<typeof resolveDisplayFormMetadata> = yield call(
         resolveDisplayFormMetadata,
         ctx,
@@ -223,20 +225,21 @@ export function* validateAttributeFiltersToIgnore(
         );
     }
 
-    const existingFilters: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
-        selectFilterContextAttributeFilters,
+    const existingFilters: ReturnType<typeof selectFilterContextAttributeFilterItems> = yield select(
+        selectFilterContextAttributeFilterItems,
     );
     const displayAsLabelMap: ReturnType<typeof selectAttributeFilterConfigsDisplayAsLabelMap> = yield select(
         selectAttributeFilterConfigsDisplayAsLabelMap,
     );
     const badIgnores: ObjRef[] = [];
-    const filtersToIgnore: IDashboardAttributeFilter[] = [];
+    const filtersToIgnore: DashboardAttributeFilterItem[] = [];
 
     for (const toIgnore of resolved.values()) {
         const filterForDisplayForm = existingFilters.find((filter) => {
-            const displayAsLabel = displayAsLabelMap.get(filter.attributeFilter.localIdentifier!);
+            const localId = dashboardAttributeFilterItemLocalIdentifier(filter);
+            const displayAsLabel = localId ? displayAsLabelMap.get(localId) : undefined;
             return (
-                areObjRefsEqual(filter.attributeFilter.displayForm, toIgnore.ref) ||
+                areObjRefsEqual(dashboardAttributeFilterItemDisplayForm(filter), toIgnore.ref) ||
                 areObjRefsEqual(displayAsLabel, toIgnore.ref)
             );
         });

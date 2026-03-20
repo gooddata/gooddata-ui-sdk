@@ -24,7 +24,6 @@ import {
     idRef,
     insightFilters,
     isAttributeFilter,
-    isAttributeFilterWithSelection,
     isDashboardAttributeFilterReference,
     isDashboardDateFilterReference,
     isDateFilter,
@@ -315,7 +314,7 @@ export function* queryWithInsight(
             getResolvedInsightAttributeFilters,
             ctx,
             widget,
-            widgetAwareDashboardOtherFilters.filter(isAttributeFilterWithSelection),
+            widgetAwareDashboardOtherFilters.filter(isAttributeFilter),
             effectiveInsightFilters.filter(isAttributeFilter),
         ),
     ]);
@@ -361,7 +360,7 @@ function* queryWithoutInsight(
             getResolvedAttributeFilters,
             ctx,
             widget,
-            widgetAwareDashboardOtherFilters.filter(isAttributeFilterWithSelection),
+            widgetAwareDashboardOtherFilters.filter(isAttributeFilter),
         ),
     ]);
 

@@ -4,8 +4,8 @@ import { type ComponentType } from "react";
 
 import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
 import {
+    type DashboardAttributeFilterItem,
     type IDashboard,
-    type IDashboardAttributeFilter,
     type IDashboardDateFilter,
     type IDashboardFilterGroup,
     type IDashboardLayout,
@@ -269,7 +269,7 @@ export type OptionalDateFilterComponentProvider = OptionalProvider<DateFilterCom
  * @public
  */
 export type AttributeFilterComponentProvider = (
-    filter: IDashboardAttributeFilter,
+    filter: DashboardAttributeFilterItem,
 ) => CustomDashboardAttributeFilterComponent;
 
 /**

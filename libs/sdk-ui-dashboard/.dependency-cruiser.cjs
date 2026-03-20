@@ -107,6 +107,7 @@ const options = {
         ]),
         depCruiser.moduleWithDependencies("filterBar", "src/presentation/filterBar", [
             "src/_staging/*",
+            "src/converters/*",
             "src/model/*",
             "src/presentation/componentDefinition/*",
             "src/presentation/constants/*",

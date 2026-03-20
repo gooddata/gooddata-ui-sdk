@@ -11,10 +11,13 @@ import {
     type IInsightDefinition,
     type ObjRef,
     areObjRefsEqual,
-    attributeElementsIsEmpty,
+    dashboardAttributeFilterItemDisplayForm,
+    dashboardAttributeFilterItemLocalIdentifier,
     filterObjRef,
     isAllTimeDashboardDateFilter,
-    isDashboardAttributeFilter,
+    isAllValuesDashboardAttributeFilter,
+    isDashboardAttributeFilterItem,
+    isDashboardDateFilter,
     isDashboardDateFilterWithDimension,
 } from "@gooddata/sdk-model";
 import { usePrevious } from "@gooddata/sdk-ui";
@@ -136,9 +139,10 @@ function useNonIgnoredFilters(widget: FilterableDashboardWidget | undefined | nu
     );
 
     const usedFilters = dashboardFilters.filter((f) => {
-        if (isDashboardAttributeFilter(f)) {
+        if (isDashboardAttributeFilterItem(f)) {
             // If the widget is cross filtering, virtual filters added by this particular widget should be ignored
-            return !crossFilteringLocalIdentifiersForThisWidget?.includes(f.attributeFilter.localIdentifier!);
+            const localId = dashboardAttributeFilterItemLocalIdentifier(f);
+            return !crossFilteringLocalIdentifiersForThisWidget?.includes(localId!);
         }
 
         return true;
@@ -220,15 +224,16 @@ function useNonIgnoredFilters(widget: FilterableDashboardWidget | undefined | nu
     const nonIgnoredFilters = useMemo(
         () =>
             usedFilters.filter((filter) => {
-                if (isDashboardAttributeFilter(filter)) {
+                if (isDashboardAttributeFilterItem(filter)) {
                     return nonIgnoredFilterState.nonIgnoredFilterRefs.some((validRef) =>
-                        areObjRefsEqual(validRef, filter.attributeFilter.displayForm),
+                        areObjRefsEqual(validRef, dashboardAttributeFilterItemDisplayForm(filter)),
                     );
                 } else if (isDashboardDateFilterWithDimension(filter)) {
                     return nonIgnoredFilterState.nonIgnoredFilterRefs.some((validRef) =>
                         areObjRefsEqual(validRef, filter.dateFilter.dataSet),
                     );
                 } else {
+                    // Common date filter: include only when widget does not ignore date filters
                     return !widgetIgnoresDateFilter;
                 }
             }),
@@ -318,22 +323,20 @@ function filtersDigest(
 ): string {
     return filters
         .filter((filter) => {
-            if (isDashboardAttributeFilter(filter)) {
+            if (isDashboardAttributeFilterItem(filter)) {
                 /**
-                 * Remove noop attribute filters in edit mode as they would cause a useless query when a new filter (noop by default) is added.
+                 * Remove noop attribute filters (standard, arbitrary, match) in edit mode as they would cause a useless query when a new filter (noop by default) is added.
                  * Keep them in view mode so that switching to and from All on an ignored filter does not show loading.
                  * This is a tradeoff so that we optimize for the view mode performance and also keep the more frequent use case in edit mode
                  * (adding a new filter) loading-free as well. Switching to and from All in edit mode will still show loading, but have no way
                  * of telling whether a noop filter is noop because it was just added or because it was set that way by the user.
                  */
-                const isNoop =
-                    filter.attributeFilter.negativeSelection &&
-                    attributeElementsIsEmpty(filter.attributeFilter.attributeElements);
+                const isNoop = isAllValuesDashboardAttributeFilter(filter);
 
                 return !isNoop || !isInEditMode;
             } else if (isDashboardDateFilterWithDimension(filter)) {
                 /**
-                 * Remove noop attribute filters in edit mode as they would cause a useless query when a new filter (noop by default) is added.
+                 * Remove noop date filters in edit mode as they would cause a useless query when a new filter (noop by default) is added.
                  * Keep them in view mode so that switching to and from All on an ignored filter does not show loading.
                  * This is a tradeoff so that we optimize for the view mode performance and also keep the more frequent use case in edit mode
                  * (adding a new filter) loading-free as well. Switching to and from All in edit mode will still show loading, but have no way
@@ -342,19 +345,21 @@ function filtersDigest(
                 const isNoop = isAllTimeDashboardDateFilter(filter.dateFilter);
 
                 return !isNoop || !isInEditMode;
-            } else {
-                // if the widget ignores date filters, remove it from the digest to avoid false positives
+            } else if (isDashboardDateFilter(filter)) {
+                // Common date filter: if the widget ignores date filters, remove it from the digest to avoid false positives
                 // when date filter changes to or from All time (this effectively adds/removes the date filter in the filters set,
                 // but we do not care either way, so remove it altogether)
                 return !ignoreDateFilter;
             }
+            return true;
         })
         .map((filter) => {
-            return isDashboardAttributeFilter(filter)
-                ? `df_${safeSerializeObjRef(filter.attributeFilter.displayForm)}_${
-                      filter.attributeFilter.localIdentifier
-                  }`
-                : `ds_${safeSerializeObjRef(filter.dateFilter.dataSet)}`;
+            if (isDashboardAttributeFilterItem(filter)) {
+                return `df_${safeSerializeObjRef(dashboardAttributeFilterItemDisplayForm(filter))}_${dashboardAttributeFilterItemLocalIdentifier(filter)}`;
+            } else if (isDashboardDateFilter(filter)) {
+                return `ds_${safeSerializeObjRef(filter.dateFilter.dataSet)}`;
+            }
+            return `unknown_${stringify(filter)}`;
         })
         .sort()
         .join("|");

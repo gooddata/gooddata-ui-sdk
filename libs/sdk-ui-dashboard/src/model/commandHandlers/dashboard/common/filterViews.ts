@@ -1,18 +1,26 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { isEqual, omit } from "lodash-es";
 
 import {
+    type DashboardTextAttributeFilter,
     type FilterContextItem,
     type IDashboard,
+    type IDashboardArbitraryAttributeFilter,
     type IDashboardAttributeFilter,
     type IDashboardDateFilter,
     type IDashboardFilterView,
     type IFilterContext,
     type ISettings,
     areObjRefsEqual,
+    dashboardAttributeFilterItemDisplayForm,
+    dashboardAttributeFilterItemLocalIdentifier,
+    dashboardAttributeFilterItemTitle,
+    isDashboardArbitraryAttributeFilter,
     isDashboardAttributeFilter,
     isDashboardDateFilter,
+    isDashboardMatchAttributeFilter,
+    isDashboardTextAttributeFilter,
     isFilterContext,
 } from "@gooddata/sdk-model";
 
@@ -25,6 +33,19 @@ const findMatchingAttributeFilterByLocalIdentifier = (
             isDashboardAttributeFilter(item) &&
             item.attributeFilter.localIdentifier === filter.attributeFilter.localIdentifier,
     ) as IDashboardAttributeFilter;
+
+const findMatchingTextFilterByLocalIdentifier = (
+    filter: DashboardTextAttributeFilter,
+    viewFilters: FilterContextItem[],
+): DashboardTextAttributeFilter | undefined => {
+    const localId = dashboardAttributeFilterItemLocalIdentifier(filter);
+    if (!localId) return undefined;
+    return viewFilters.find(
+        (item): item is DashboardTextAttributeFilter =>
+            isDashboardTextAttributeFilter(item) &&
+            dashboardAttributeFilterItemLocalIdentifier(item) === localId,
+    );
+};
 
 // date filters do not have localIdentifier set, compare them by dataSet instead
 const findMatchingDateFilterByDataSet = (
@@ -53,6 +74,56 @@ const hasSameAttributeFilterConfiguration = (
     );
 };
 
+/**
+ * Checks that the non-view-editable configuration of two text filters matches.
+ * Only displayForm and title are compared — everything changeable in view mode
+ * (type, values, operator, literal, caseSensitive, negativeSelection) is ignored.
+ */
+const hasSameTextFilterConfiguration = (
+    filterA: DashboardTextAttributeFilter,
+    filterB: DashboardTextAttributeFilter,
+) => {
+    return (
+        areObjRefsEqual(
+            dashboardAttributeFilterItemDisplayForm(filterA),
+            dashboardAttributeFilterItemDisplayForm(filterB),
+        ) && dashboardAttributeFilterItemTitle(filterA) === dashboardAttributeFilterItemTitle(filterB)
+    );
+};
+
+/** Creates "All" state for text filters: always a negative arbitrary filter with empty selection */
+const createResetTextFilter = (filter: DashboardTextAttributeFilter): IDashboardArbitraryAttributeFilter => {
+    const displayForm = dashboardAttributeFilterItemDisplayForm(filter);
+    const localIdentifier = dashboardAttributeFilterItemLocalIdentifier(filter);
+    const title = dashboardAttributeFilterItemTitle(filter);
+    if (isDashboardArbitraryAttributeFilter(filter)) {
+        const { filterElementsBy, filterElementsByDate, validateElementsBy } =
+            filter.arbitraryAttributeFilter;
+        return {
+            arbitraryAttributeFilter: {
+                displayForm,
+                values: [],
+                negativeSelection: true,
+                localIdentifier,
+                title,
+                filterElementsBy,
+                filterElementsByDate,
+                validateElementsBy,
+            },
+        };
+    }
+    // Match filter - no validateElementsBy, filterElementsBy, or filterElementsByDate
+    return {
+        arbitraryAttributeFilter: {
+            displayForm,
+            values: [],
+            negativeSelection: true,
+            localIdentifier,
+            title,
+        },
+    };
+};
+
 const isCommonDateFilter = (filter: FilterContextItem) =>
     isDashboardDateFilter(filter) && filter.dateFilter.dataSet === undefined;
 
@@ -75,6 +146,43 @@ const handleCommonDateFilter = (
     }
 
     return mergedFilters;
+};
+
+/**
+ * Applies the view filter's type and values to the dashboard filter,
+ * preserving the dashboard filter's config (title, filterElementsBy,
+ * filterElementsByDate, validateElementsBy) and taking only selection
+ * fields from the view. Handles type changes between arbitrary and match filters.
+ */
+const applyTextFilterFromView = (
+    dashboardFilter: DashboardTextAttributeFilter,
+    viewFilter: DashboardTextAttributeFilter,
+): DashboardTextAttributeFilter => {
+    const dashboardFilterTitle = dashboardAttributeFilterItemTitle(dashboardFilter);
+
+    if (isDashboardArbitraryAttributeFilter(viewFilter)) {
+        const dashboardArbitrary = isDashboardArbitraryAttributeFilter(dashboardFilter)
+            ? dashboardFilter.arbitraryAttributeFilter
+            : undefined;
+        return {
+            arbitraryAttributeFilter: {
+                ...viewFilter.arbitraryAttributeFilter,
+                title: dashboardFilterTitle,
+                filterElementsBy: dashboardArbitrary?.filterElementsBy,
+                filterElementsByDate: dashboardArbitrary?.filterElementsByDate,
+                validateElementsBy: dashboardArbitrary?.validateElementsBy,
+            },
+        };
+    }
+    if (isDashboardMatchAttributeFilter(viewFilter)) {
+        return {
+            matchAttributeFilter: {
+                ...viewFilter.matchAttributeFilter,
+                title: dashboardFilterTitle,
+            },
+        };
+    }
+    return viewFilter;
 };
 
 export const changeFilterContextSelection = (
@@ -104,7 +212,7 @@ export const changeFilterContextSelection = (
                     },
                 };
             }
-        } else {
+        } else if (isDashboardDateFilter(filter)) {
             const viewFilter = findMatchingDateFilterByDataSet(filter, filterViewFilters);
             if (viewFilter) {
                 return {
@@ -128,6 +236,15 @@ export const changeFilterContextSelection = (
                     },
                 };
             }
+        } else if (isDashboardTextAttributeFilter(filter)) {
+            const viewFilter = findMatchingTextFilterByLocalIdentifier(filter, filterViewFilters);
+            if (viewFilter !== undefined && hasSameTextFilterConfiguration(filter, viewFilter)) {
+                return applyTextFilterFromView(filter, viewFilter);
+            }
+            // reset text filter that has not been found or has different configuration
+            return createResetTextFilter(filter);
+        } else {
+            return filter;
         }
     });
 

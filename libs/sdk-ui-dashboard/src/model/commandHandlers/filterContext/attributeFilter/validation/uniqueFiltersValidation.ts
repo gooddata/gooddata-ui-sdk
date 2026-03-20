@@ -1,12 +1,18 @@
-// (C) 2021-2025 GoodData Corporation
-import { type IDashboardAttributeFilter, type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
+// (C) 2021-2026 GoodData Corporation
+
+import {
+    type DashboardAttributeFilterItem,
+    type ObjRef,
+    areObjRefsEqual,
+    dashboardAttributeFilterItemDisplayForm,
+} from "@gooddata/sdk-model";
 
 import { type DashboardContext } from "../../../../types/commonTypes.js";
 
 export async function canFilterBeAdded(
     ctx: DashboardContext,
     addedDisplayFormRef: ObjRef,
-    allFilters: IDashboardAttributeFilter[],
+    allFilters: DashboardAttributeFilterItem[],
 ): Promise<boolean> {
     // first filter is always ok, save some useless work upfront
     if (allFilters.length === 0) {
@@ -21,7 +27,7 @@ export async function canFilterBeAdded(
     const loadExistingDisplayForms = ctx.backend
         .workspace(ctx.workspace)
         .attributes()
-        .getAttributeDisplayForms(allFilters.map((item) => item.attributeFilter.displayForm));
+        .getAttributeDisplayForms(allFilters.map((item) => dashboardAttributeFilterItemDisplayForm(item)!));
 
     const [addedDisplayForm, existingDisplayForms] = await Promise.all([
         loadAddedDisplayForm,

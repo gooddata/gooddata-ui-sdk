@@ -26,6 +26,7 @@ export interface ITextFilterControllerProps {
     /** Attribute metadata from orchestrator (handler) */
     attributeMetadataStatus?: AsyncOperationStatus;
     attributeMetadataError?: GoodDataSdkError;
+    withoutApply?: boolean;
 }
 
 /**
@@ -50,6 +51,7 @@ export function useTextFilterController(props: ITextFilterControllerProps): Text
         attributeMetadataStatus,
         attributeMetadataError,
         filterModeChanged = false,
+        withoutApply = false,
     } = props;
 
     const availableTextFilterModes = useMemo(
@@ -90,6 +92,7 @@ export function useTextFilterController(props: ITextFilterControllerProps): Text
         attributeMetadataStatus,
         attributeMetadataError,
         filterModeChanged,
+        withoutApply,
     });
 
     const resetForModeSwitch = useCallback(

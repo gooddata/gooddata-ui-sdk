@@ -161,10 +161,13 @@ export {
 } from "./_staging/dateFilterConfig/dateFilterOptionMapping.js";
 export { convertDateFilterConfigToDateFilterOptions } from "./_staging/dateFilterConfig/dateFilterConfigConverters.js";
 export {
-    dashboardAttributeFilterToAttributeFilter,
     attributeFilterToDashboardAttributeFilter,
     dateFilterOptionToDashboardDateFilter,
 } from "./_staging/dashboard/dashboardFilterConverter.js";
+export {
+    dashboardAttributeFilterToAttributeFilter,
+    dashboardAttributeFilterItemToAttributeFilter,
+} from "./converters/filterConverters.js";
 export type {
     IKdaDateOptions,
     IKdaItem,

@@ -1,6 +1,6 @@
 // (C) 2022-2026 GoodData Corporation
 
-import { type ReactNode, createContext, useCallback, useContext, useMemo } from "react";
+import { type ReactNode, createContext, useCallback, useContext, useMemo, useRef } from "react";
 
 import { invariant } from "ts-invariant";
 
@@ -13,6 +13,8 @@ import {
     type IDashboardDateFilter,
     type ObjRef,
     areObjRefsEqual,
+    dashboardAttributeFilterItemDisplayForm,
+    dashboardAttributeFilterItemLocalIdentifier,
     filterObjRef,
 } from "@gooddata/sdk-model";
 
@@ -23,8 +25,8 @@ import { useModeConfiguration } from "./dashboardDropdownBody/configuration/hook
 import { useParentsConfiguration } from "./dashboardDropdownBody/configuration/hooks/useParentsConfiguration.js";
 import { useSelectionModeConfiguration } from "./dashboardDropdownBody/configuration/hooks/useSelectionModeConfiguration.js";
 import { useTitleConfiguration } from "./dashboardDropdownBody/configuration/hooks/useTitleConfiguration.js";
-import { dashboardAttributeFilterToAttributeFilter } from "../../../_staging/dashboard/dashboardFilterConverter.js";
 import { useAttributeFilterDisplayFormFromMap } from "../../../_staging/sharedHooks/useAttributeFilterDisplayFormFromMap.js";
+import { dashboardAttributeFilterItemToAttributeFilter } from "../../../converters/filterConverters.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { selectAllCatalogDisplayFormsMap } from "../../../model/store/catalog/catalogSelectors.js";
 import {
@@ -86,8 +88,8 @@ export function AttributeFilterParentFilteringProvider({
         () => [
             {
                 attribute: {
-                    localIdentifier: currentFilter.attributeFilter.localIdentifier!,
-                    displayForm: displayAsLabel ?? currentFilter.attributeFilter.displayForm,
+                    localIdentifier: dashboardAttributeFilterItemLocalIdentifier(currentFilter)!,
+                    displayForm: displayAsLabel ?? dashboardAttributeFilterItemDisplayForm(currentFilter),
                 },
             },
         ],
@@ -95,7 +97,7 @@ export function AttributeFilterParentFilteringProvider({
     );
 
     const attributeFilter = useMemo(
-        () => dashboardAttributeFilterToAttributeFilter(currentFilter),
+        () => dashboardAttributeFilterItemToAttributeFilter(currentFilter),
         [currentFilter],
     );
 
@@ -121,7 +123,9 @@ export function AttributeFilterParentFilteringProvider({
 
     const catalogDisplayFormsMap = useDashboardSelector(selectAllCatalogDisplayFormsMap);
     const getAttributeFilterDisplayFormFromMap = useAttributeFilterDisplayFormFromMap();
-    const filterDisplayForm = getAttributeFilterDisplayFormFromMap(currentFilter.attributeFilter.displayForm);
+    const filterDisplayForm = getAttributeFilterDisplayFormFromMap(
+        dashboardAttributeFilterItemDisplayForm(currentFilter),
+    );
     invariant(filterDisplayForm);
 
     const attributeByDisplayForm = memoizedAttributes.find((attribute) =>
@@ -286,6 +290,77 @@ export function AttributeFilterParentFilteringProvider({
                 onDependentDateFiltersConfigurationChanged,
             }}
         >
+            {children}
+        </AttributeFilterParentFiltering.Provider>
+    );
+}
+
+const noop = () => {};
+
+/**
+ * Lightweight noop provider for text filter types (arbitrary, match) that don't support
+ * the full parent filtering configuration yet. Prevents context consumers from crashing
+ * when the full {@link AttributeFilterParentFilteringProvider} is not rendered.
+ *
+ * @internal
+ */
+export function AttributeFilterNoopParentFilteringProvider({
+    children,
+    displayForm,
+}: {
+    children: ReactNode;
+    displayForm: ObjRef;
+}) {
+    const noopValueRef = useRef<IAttributeFilterParentFiltering>(null!);
+    if (!noopValueRef.current) {
+        noopValueRef.current = {
+            parents: [],
+            configurationChanged: false,
+            onParentSelect: noop,
+            onConnectingAttributeChanged: noop,
+            onParentFiltersChange: noop,
+            onDisplayFormSelect: noop,
+            filterDisplayForms: { availableDisplayForms: [], selectedDisplayForm: displayForm },
+            displayFormChanged: false,
+            onDisplayFormChange: noop,
+            displayFormChangeStatus: "success",
+            onConfigurationSave: noop as (
+                _currentDisplayFormRef: ObjRef,
+                _committedSelectionElements: IAttributeElement[],
+            ) => void,
+            onConfigurationClose: noop,
+            showDisplayFormPicker: false,
+            showResetTitle: false,
+            defaultAttributeFilterTitle: undefined,
+            attributeFilterDisplayForm: displayForm,
+            title: "",
+            titleChanged: false,
+            titleChangeStatus: "success",
+            onTitleUpdate: noop,
+            onTitleReset: noop,
+            onTitleChange: noop,
+            selectionMode: "multi",
+            selectionModeChanged: false,
+            onSelectionModeChange: noop,
+            onSelectionModeUpdate: noop,
+            mode: DashboardAttributeFilterConfigModeValues.ACTIVE,
+            modeChanged: false,
+            onModeChange: noop,
+            onModeUpdate: noop,
+            limitingItems: [],
+            limitingItemsChanged: false,
+            onLimitingItemsUpdate: noop,
+            onLimitingItemsChange: noop,
+            availableDatasetsForFilter: [],
+            dependentDateFilters: [],
+            dependentCommonDateFilter: undefined,
+            onDependentDateFiltersSelect: noop,
+            onDependentDateFiltersChange: noop,
+            onDependentDateFiltersConfigurationChanged: false,
+        } as unknown as IAttributeFilterParentFiltering;
+    }
+    return (
+        <AttributeFilterParentFiltering.Provider value={noopValueRef.current}>
             {children}
         </AttributeFilterParentFiltering.Provider>
     );

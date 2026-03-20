@@ -189,6 +189,7 @@ export type {
     IAttributeFilterBaseProps,
     IAttributeFilterCoreProps,
     IAttributeFilterCustomComponentProps,
+    IAttributeFilterMenuConfig,
 } from "./AttributeFilter/types.js";
 
 // AttributeFilter main components
@@ -341,10 +342,8 @@ export {
 } from "./AttributeFilter/Components/FilterModeMenu/FilterModeMenuItem.js";
 
 // AttributeFilter Components - Text Filter Body
-export {
-    type ITextFilterBodyProps,
-    TextFilterBody,
-} from "./AttributeFilter/Components/TextFilterBody/TextFilterBody.js";
+export { TextFilterBody } from "./AttributeFilter/Components/TextFilterBody/TextFilterBody.js";
+export type { ITextFilterBodyProps } from "./AttributeFilter/Components/TextFilterBody/types.js";
 export {
     type IArbitraryValuesInputProps,
     ArbitraryValuesInput,

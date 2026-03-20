@@ -64,7 +64,7 @@ export function Base() {
 
 Base.parameters = {
     kind: "Base",
-    screenshot: { misMatchThreshold: 0.01 },
+    screenshot: { misMatchThreshold: 0.01, readySelector: { selector: "gd-insight", state: State.Visible } },
 } satisfies IStoryParameters;
 
 export function WithLocalization() {
@@ -72,7 +72,7 @@ export function WithLocalization() {
 }
 WithLocalization.parameters = {
     kind: "With localization",
-    screenshot: { misMatchThreshold: 0.01 },
+    screenshot: { misMatchThreshold: 0.01, readySelector: { selector: "gd-insight", state: State.Visible } },
 } satisfies IStoryParameters;
 
 export function WithCustomTitle() {
@@ -80,7 +80,7 @@ export function WithCustomTitle() {
 }
 WithCustomTitle.parameters = {
     kind: "With custom title",
-    screenshot: { misMatchThreshold: 0.01 },
+    screenshot: { misMatchThreshold: 0.01, readySelector: { selector: "gd-insight", state: State.Visible } },
 } satisfies IStoryParameters;
 
 // JSX+React has issues with setting boolean props on custom element, so we can't use
@@ -90,7 +90,7 @@ export function WithDefaultTitle() {
 }
 WithDefaultTitle.parameters = {
     kind: "With default title",
-    screenshot: { misMatchThreshold: 0.01 },
+    screenshot: { misMatchThreshold: 0.01, readySelector: { selector: "gd-insight", state: State.Visible } },
 } satisfies IStoryParameters;
 
 // Expected counts: 17 charts + 1 pivot + 2 headlines = 20 visualizations
@@ -162,6 +162,7 @@ AllInsightTypes.parameters = {
     screenshot: {
         // Wait for all insights to finish loading
         readySelector: { selector: ".all-insights-ready", state: State.Attached },
+        delay: { postOperation: 5000 },
         misMatchThreshold: 0.06,
     },
 } satisfies IStoryParameters;

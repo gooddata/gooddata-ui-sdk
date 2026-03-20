@@ -6,6 +6,7 @@ import { type SagaIterator } from "redux-saga";
 import { type CallEffect, type SagaReturnType, all, call, select } from "redux-saga/effects";
 
 import {
+    type DashboardAttributeFilterItem,
     type IAttributeDisplayFormMetadataObject,
     type IDrillToCustomUrl as IDrillToCustomUrlModel,
     type IFilter,
@@ -18,6 +19,7 @@ import {
     insightId,
     isAttributeDescriptor,
     isAttributeElementsByValue,
+    isDashboardAttributeFilter,
     isNegativeAttributeFilter,
 } from "@gooddata/sdk-model";
 import {
@@ -44,7 +46,7 @@ import {
 import { selectInsightByRef } from "../../store/insights/insightsSelectors.js";
 import { selectDashboardId } from "../../store/meta/metaSelectors.js";
 import { selectAttributeFilterConfigsOverrides } from "../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
-import { selectFilterContextAttributeFilters } from "../../store/tabs/filterContext/filterContextSelectors.js";
+import { selectFilterContextAttributeFilterItems } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { selectAnalyticalWidgetByRef } from "../../store/tabs/layout/layoutSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { DRILL_TO_URL_PLACEHOLDER } from "../../types/drillTypes.js";
@@ -251,12 +253,16 @@ export function* getAttributeIdentifiersReplacements(
 
 function* resolveDashboardAttributeFilterReplacement(
     { placeholder: toBeReplaced, ref }: IDrillToUrlPlaceholder,
-    attributeFilters: ReturnType<typeof selectFilterContextAttributeFilters>,
+    attributeFilters: DashboardAttributeFilterItem[],
     catalogDisplayForms: ReturnType<typeof selectAllCatalogDisplayFormsMap>,
     attributeFilterConfigs: ReturnType<typeof selectAttributeFilterConfigsOverrides>,
     ctx: DashboardContext,
 ): SagaIterator<IDrillToUrlPlaceholderReplacement> {
-    let usedFilter = attributeFilters.find((filter) => {
+    // URL placeholder resolution only works with standard (element-based) attribute filters.
+    // Text filters (arbitrary/match) don't have element selections for URL placeholders.
+    const standardFilters = attributeFilters.filter(isDashboardAttributeFilter);
+
+    let usedFilter = standardFilters.find((filter) => {
         const df = catalogDisplayForms.get(filter.attributeFilter.displayForm);
         return df && areObjRefsEqual(idRef(df.id), ref);
     });
@@ -271,7 +277,7 @@ function* resolveDashboardAttributeFilterReplacement(
         const usedConfig = attributeFilterConfigs.find((config) => {
             return config.displayAsLabel && areObjRefsEqual(config.displayAsLabel, ref);
         });
-        usedFilter = attributeFilters.find((filter) => {
+        usedFilter = standardFilters.find((filter) => {
             return filter.attributeFilter.localIdentifier === usedConfig?.localIdentifier;
         });
         const elements = usedFilter?.attributeFilter.attributeElements;
@@ -307,8 +313,9 @@ export function* getDashboardAttributeFilterReplacements(
         return [];
     }
 
-    const attributeFilters: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
-        selectFilterContextAttributeFilters,
+    // TODO INE: consider using narrow selector as text filters are ignored in resolveDashboardAttributeFilterReplacement
+    const attributeFilters: ReturnType<typeof selectFilterContextAttributeFilterItems> = yield select(
+        selectFilterContextAttributeFilterItems,
     );
     const catalogDisplayForms: ReturnType<typeof selectAllCatalogDisplayFormsMap> = yield select(
         selectAllCatalogDisplayFormsMap,

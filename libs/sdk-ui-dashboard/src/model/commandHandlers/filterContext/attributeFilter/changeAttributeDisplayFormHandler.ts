@@ -5,22 +5,17 @@ import { type SagaIterator } from "redux-saga";
 import { type SagaReturnType, call, put, select } from "redux-saga/effects";
 import { invariant } from "ts-invariant";
 
-import { type IAttributeMetadataObject } from "@gooddata/sdk-model";
-
+import { resolveAndRegisterDisplayFormMetadata } from "./resolveDisplayFormMetadata.js";
 import { validateFilterDisplayForm } from "./validation/filterDisplayFormValidation.js";
-import { newDisplayFormMap } from "../../../../_staging/metadata/objRefMap.js";
 import { type ISetAttributeFilterDisplayForm } from "../../../commands/filters.js";
 import { attributeDisplayFormChanged } from "../../../events/filters.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
-import { queryAttributeByDisplayForm } from "../../../queries/attributes.js";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
-import { query } from "../../../store/_infra/queryCall.js";
-import { selectAllCatalogDisplayFormsMap } from "../../../store/catalog/catalogSelectors.js";
 import {
     selectEnableImmediateAttributeFilterDisplayAsLabelMigration,
     selectIsApplyFiltersAllAtOnceEnabledAndSet,
 } from "../../../store/config/configSelectors.js";
-import { selectFilterContextAttributeFilterByLocalId } from "../../../store/tabs/filterContext/filterContextSelectors.js";
+import { selectFilterContextAttributeFilterItemByLocalId } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../../store/tabs/index.js";
 import { type DashboardContext } from "../../../types/commonTypes.js";
 import { dispatchFilterContextChanged } from "../common.js";
@@ -31,19 +26,7 @@ export function* changeAttributeDisplayFormHandler(
 ): SagaIterator<void> {
     const { filterLocalId, displayForm, isWorkingSelectionChange, isResultOfMigration } = cmd.payload;
 
-    const catalogDisplayFormsMap: ReturnType<typeof selectAllCatalogDisplayFormsMap> = yield select(
-        selectAllCatalogDisplayFormsMap,
-    );
-
-    const attributes: IAttributeMetadataObject[] = yield call(
-        query,
-        queryAttributeByDisplayForm([displayForm]),
-    );
-
-    const attributeDisplayFormsMap = newDisplayFormMap([...attributes.flatMap((a) => a.displayForms)]);
-
-    const displayFormData =
-        catalogDisplayFormsMap.get(displayForm) || attributeDisplayFormsMap.get(displayForm);
+    const displayFormData = yield call(resolveAndRegisterDisplayFormMetadata, displayForm);
 
     invariant(
         displayFormData,
@@ -75,8 +58,6 @@ export function* changeAttributeDisplayFormHandler(
 
     yield put(
         batchActions([
-            // keep the attribute display form field up to date
-            tabsActions.addAttributeFilterDisplayForm(displayFormData),
             tabsActions.changeAttributeDisplayForm({
                 filterLocalId,
                 displayForm,
@@ -90,8 +71,8 @@ export function* changeAttributeDisplayFormHandler(
         ]),
     );
 
-    const changedFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterByLocalId>> =
-        yield select(selectFilterContextAttributeFilterByLocalId(filterLocalId));
+    const changedFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterItemByLocalId>> =
+        yield select(selectFilterContextAttributeFilterItemByLocalId(filterLocalId));
 
     invariant(
         changedFilter,

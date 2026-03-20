@@ -14,6 +14,7 @@ export {
     snapshotAndSaveRecording,
 } from "./goodmock.js";
 export { createDescribe } from "./playwright.js";
+export { clickByBoundingBox, hoverByBoundingBox } from "./helpers/mouse-actions.js";
 export {
     GOODMOCK_HOST,
     API_TOKEN,

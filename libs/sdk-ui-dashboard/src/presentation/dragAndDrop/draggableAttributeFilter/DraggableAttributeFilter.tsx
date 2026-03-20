@@ -4,7 +4,11 @@ import { type Ref, useCallback, useMemo } from "react";
 
 import classNames from "classnames";
 
-import { type IDashboardAttributeFilter, type ObjRef } from "@gooddata/sdk-model";
+import {
+    type DashboardAttributeFilterItem,
+    type ObjRef,
+    isDashboardAttributeFilter,
+} from "@gooddata/sdk-model";
 
 import { convertDashboardAttributeFilterElementsUrisToValues } from "../../../_staging/dashboard/legacyFilterConvertors.js";
 import { useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
@@ -17,14 +21,14 @@ import { DraggableFilterDropZoneHint } from "../draggableFilterDropZone/Draggabl
 import { useDashboardDrag } from "../useDashboardDrag.js";
 
 type DraggableAttributeFilterProps = {
-    filter: IDashboardAttributeFilter;
-    workingFilter?: IDashboardAttributeFilter;
+    filter: DashboardAttributeFilterItem;
+    workingFilter?: DashboardAttributeFilterItem;
     filterIndex: number;
     autoOpen: boolean;
     readonly: boolean;
     displayAsLabel?: ObjRef;
     FilterComponent: CustomDashboardAttributeFilterComponent;
-    onAttributeFilterChanged: (filter: IDashboardAttributeFilter) => void;
+    onAttributeFilterChanged: (filter: DashboardAttributeFilterItem) => void;
     onAttributeFilterAdded: (index: number) => void;
     onAttributeFilterClose: () => void;
 };
@@ -57,17 +61,18 @@ export function DraggableAttributeFilter({
     const supportElementUris = useDashboardSelector(selectSupportsElementUris);
     const canAddMoreAttributeFilters = useDashboardSelector(selectCanAddMoreFilters);
     const filterToUse = useMemo(() => {
-        if (supportElementUris) {
+        if (supportElementUris || !isDashboardAttributeFilter(filter)) {
             return filter;
         }
         return convertDashboardAttributeFilterElementsUrisToValues(filter);
     }, [filter, supportElementUris]);
 
     const workingFilterToUse = useMemo(() => {
-        if (supportElementUris) {
-            return workingFilter ?? filter;
+        const effective = workingFilter ?? filter;
+        if (supportElementUris || !isDashboardAttributeFilter(effective)) {
+            return effective;
         }
-        return convertDashboardAttributeFilterElementsUrisToValues(workingFilter ?? filter);
+        return convertDashboardAttributeFilterElementsUrisToValues(effective);
     }, [workingFilter, filter, supportElementUris]);
 
     const onClose = useCallback(() => {

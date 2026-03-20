@@ -3,8 +3,8 @@
 import { type ComponentType } from "react";
 
 import {
+    type DashboardAttributeFilterItem,
     type FilterContextItem,
-    type IDashboardAttributeFilter,
     type IDashboardDateFilter,
     type IDashboardFilterGroupsConfig,
     type ObjRef,
@@ -35,7 +35,7 @@ export interface IFilterBarProps {
      *
      * @param filter - filter that has changed
      */
-    onAttributeFilterChanged: (filter: IDashboardAttributeFilter, displayAsLabel?: ObjRef) => void;
+    onAttributeFilterChanged: (filter: DashboardAttributeFilterItem, displayAsLabel?: ObjRef) => void;
 
     /**
      * When value of a date filter that is part of the FilterBar changes, the filter bar MUST propagate the event

@@ -2,6 +2,7 @@
 
 import {
     type DashboardAttributeFilterConfigMode,
+    type DashboardAttributeFilterItem,
     type DashboardAttributeFilterSelectionMode,
     type DateFilterGranularity,
     type DateFilterType,
@@ -19,8 +20,12 @@ import {
     type ObjRef,
     absoluteDateFilterValues,
     filterAttributeElements,
+    filterLocalIdentifier,
+    filterObjRef,
     isAllTimeDateFilter,
+    isArbitraryAttributeFilter,
     isAttributeFilterWithSelection,
+    isMatchAttributeFilter,
     isPositiveAttributeFilter,
     isRelativeBoundedDateFilter,
     isRelativeDateFilter,
@@ -378,6 +383,7 @@ export interface IAddAttributeFilter extends IDashboardCommand {
  *
  * The filter will be set for the display form provided by reference. When created, the filter will be
  * no-op - all the elements will be selected.
+ * @remarks Does not support adding text filters.
  *
  * @param displayForm - specify attribute display form which will be used for filtering
  * @param index - specify index among the attribute filters at which the new filter should be placed.
@@ -790,7 +796,7 @@ export function applyAttributeFilter(
     filterLocalId: string,
     filter: IAttributeFilter,
     correlationId?: string,
-): ChangeAttributeFilterSelection | undefined {
+): ChangeAttributeFilterSelection | ReplaceAttributeFilterItemSelection | undefined {
     if (isAttributeFilterWithSelection(filter)) {
         return changeAttributeFilterSelection(
             filterLocalId,
@@ -799,7 +805,36 @@ export function applyAttributeFilter(
             correlationId,
         );
     }
-    // TODO INE: add support for match/arbitrary filters in CQ-2015
+    if (isArbitraryAttributeFilter(filter)) {
+        return replaceAttributeFilterItemSelection(
+            filterLocalId,
+            {
+                arbitraryAttributeFilter: {
+                    displayForm: filterObjRef(filter),
+                    values: filter.arbitraryAttributeFilter.values,
+                    negativeSelection: filter.arbitraryAttributeFilter.negativeSelection ?? false,
+                    localIdentifier: filterLocalIdentifier(filter),
+                },
+            },
+            correlationId,
+        );
+    }
+    if (isMatchAttributeFilter(filter)) {
+        return replaceAttributeFilterItemSelection(
+            filterLocalId,
+            {
+                matchAttributeFilter: {
+                    displayForm: filterObjRef(filter),
+                    operator: filter.matchAttributeFilter.operator,
+                    literal: filter.matchAttributeFilter.literal,
+                    caseSensitive: filter.matchAttributeFilter.caseSensitive,
+                    negativeSelection: filter.matchAttributeFilter.negativeSelection,
+                    localIdentifier: filterLocalIdentifier(filter),
+                },
+            },
+            correlationId,
+        );
+    }
     return undefined;
 }
 
@@ -827,6 +862,106 @@ export function resetAttributeFilterSelection(
             filterLocalId,
             elements: { uris: [] },
             selectionType: "NOT_IN",
+        },
+    };
+}
+
+//
+//
+//
+
+/**
+ * Payload type for {@link ReplaceAttributeFilterItemSelection} command.
+ *
+ * @internal
+ */
+export type ReplaceAttributeFilterItemSelectionPayload = {
+    /**
+     * Dashboard attribute filter's local identifier.
+     */
+    readonly filterLocalId: string;
+    /**
+     * The full replacement filter item (can be standard, arbitrary, or match attribute filter).
+     */
+    readonly filter: DashboardAttributeFilterItem;
+    /**
+     * Determines if this command should change working (staged for application) filters or applied filters.
+     * Default is false - command changes applied filters.
+     */
+    readonly isWorkingSelectionChange?: boolean;
+    /**
+     * Specifies if filter selection is invalid (e.g. text filter with missing value/literal).
+     */
+    readonly isSelectionInvalid?: boolean;
+};
+
+/**
+ * Command for replacing an attribute filter item's selection.
+ *
+ * @remarks
+ * This command replaces the entire filter item in the filter context. It supports all attribute filter
+ * types including standard element-based, arbitrary text, and match text filters.
+ *
+ * @public
+ */
+export type ReplaceAttributeFilterItemSelection = IDashboardCommand & {
+    readonly type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER_ITEM.REPLACE_SELECTION";
+    readonly payload: ReplaceAttributeFilterItemSelectionPayload;
+};
+
+/**
+ * Creates the ReplaceAttributeFilterItemSelection command for applied filters.
+ *
+ * @remarks
+ * Dispatching this command will result in replacement of the attribute filter item with the provided
+ * filter in the dashboard filter context.
+ *
+ * @param filterLocalId - dashboard attribute filter's local id
+ * @param filter - the replacement filter item
+ * @param correlationId - specify correlation id to use for this command
+ *
+ * @internal
+ */
+export function replaceAttributeFilterItemSelection(
+    filterLocalId: string,
+    filter: DashboardAttributeFilterItem,
+    correlationId?: string,
+    isSelectionInvalid?: boolean,
+): ReplaceAttributeFilterItemSelection {
+    return {
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER_ITEM.REPLACE_SELECTION",
+        correlationId,
+        payload: {
+            filterLocalId,
+            filter,
+            isSelectionInvalid,
+        },
+    };
+}
+
+/**
+ * Creates the ReplaceAttributeFilterItemSelection command for working filters.
+ *
+ * @param filterLocalId - dashboard attribute filter's local id
+ * @param filter - the replacement filter item
+ * @param correlationId - specify correlation id to use for this command
+ *
+ * @internal
+ */
+export function replaceWorkingAttributeFilterItemSelection(
+    filterLocalId: string,
+    filter: DashboardAttributeFilterItem,
+    correlationId?: string,
+    isSelectionInvalid?: boolean,
+): ReplaceAttributeFilterItemSelection {
+    return {
+        type: "GDC.DASH/CMD.FILTER_CONTEXT.ATTRIBUTE_FILTER_ITEM.REPLACE_SELECTION",
+        correlationId,
+        payload: {
+            filterLocalId,
+            filter,
+            isWorkingSelectionChange: true,
+            isSelectionInvalid,
         },
     };
 }

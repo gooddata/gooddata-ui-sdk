@@ -168,7 +168,7 @@ importers:
         version: 5.9.3
       vite:
         specifier: 8.0.0
-        version: 8.0.0(sass@1.70.0)
+        version: 8.0.0(@types/node@22.13.0)(sass@1.70.0)
 
   ../../examples/sdk-interactive-examples:
     devDependencies:
@@ -307,7 +307,7 @@ importers:
         version: 5.9.3
       vite:
         specifier: 8.0.0
-        version: 8.0.0(@types/node@22.13.0)
+        version: 8.0.0(@types/node@22.13.0)(sass@1.70.0)
       vite-plugin-html:
         specifier: ~3.2.0
         version: 3.2.2(vite@8.0.0)
@@ -443,7 +443,7 @@ importers:
         version: 5.9.3
       vite:
         specifier: 8.0.0
-        version: 8.0.0(@types/node@22.13.0)
+        version: 8.0.0(@types/node@22.13.0)(sass@1.70.0)
       vite-plugin-html:
         specifier: ~3.2.0
         version: 3.2.2(vite@8.0.0)
@@ -579,7 +579,7 @@ importers:
         version: 5.9.3
       vite:
         specifier: 8.0.0
-        version: 8.0.0(@types/node@22.13.0)
+        version: 8.0.0(@types/node@22.13.0)(sass@1.70.0)
       vite-plugin-html:
         specifier: ~3.2.0
         version: 3.2.2(vite@8.0.0)
@@ -715,7 +715,7 @@ importers:
         version: 5.9.3
       vite:
         specifier: 8.0.0
-        version: 8.0.0(@types/node@22.13.0)
+        version: 8.0.0(@types/node@22.13.0)(sass@1.70.0)
       vite-plugin-html:
         specifier: ~3.2.0
         version: 3.2.2(vite@8.0.0)
@@ -851,7 +851,7 @@ importers:
         version: 5.9.3
       vite:
         specifier: 8.0.0
-        version: 8.0.0(@types/node@22.13.0)
+        version: 8.0.0(@types/node@22.13.0)(sass@1.70.0)
       vite-plugin-html:
         specifier: ~3.2.0
         version: 3.2.2(vite@8.0.0)
@@ -987,7 +987,7 @@ importers:
         version: 5.9.3
       vite:
         specifier: 8.0.0
-        version: 8.0.0(@types/node@22.13.0)
+        version: 8.0.0(@types/node@22.13.0)(sass@1.70.0)
       vite-plugin-html:
         specifier: ~3.2.0
         version: 3.2.2(vite@8.0.0)
@@ -1123,7 +1123,7 @@ importers:
         version: 5.9.3
       vite:
         specifier: 8.0.0
-        version: 8.0.0(@types/node@22.13.0)
+        version: 8.0.0(@types/node@22.13.0)(sass@1.70.0)
       vite-plugin-html:
         specifier: ~3.2.0
         version: 3.2.2(vite@8.0.0)
@@ -1259,7 +1259,7 @@ importers:
         version: 5.9.3
       vite:
         specifier: 8.0.0
-        version: 8.0.0(@types/node@22.13.0)
+        version: 8.0.0(@types/node@22.13.0)(sass@1.70.0)
       vite-plugin-html:
         specifier: ~3.2.0
         version: 3.2.2(vite@8.0.0)
@@ -1404,7 +1404,7 @@ importers:
         version: 5.9.3
       vite:
         specifier: 8.0.0
-        version: 8.0.0(@types/node@22.13.0)
+        version: 8.0.0(@types/node@22.13.0)(sass@1.70.0)
       vite-plugin-html:
         specifier: ~3.2.0
         version: 3.2.2(vite@8.0.0)
@@ -1540,7 +1540,7 @@ importers:
         version: 5.9.3
       vite:
         specifier: 8.0.0
-        version: 8.0.0(@types/node@22.13.0)
+        version: 8.0.0(@types/node@22.13.0)(sass@1.70.0)
       vite-plugin-html:
         specifier: ~3.2.0
         version: 3.2.2(vite@8.0.0)
@@ -1676,7 +1676,7 @@ importers:
         version: 5.9.3
       vite:
         specifier: 8.0.0
-        version: 8.0.0(@types/node@22.13.0)
+        version: 8.0.0(@types/node@22.13.0)(sass@1.70.0)
       vite-plugin-html:
         specifier: ~3.2.0
         version: 3.2.2(vite@8.0.0)
@@ -1812,7 +1812,7 @@ importers:
         version: 5.9.3
       vite:
         specifier: 8.0.0
-        version: 8.0.0(@types/node@22.13.0)
+        version: 8.0.0(@types/node@22.13.0)(sass@1.70.0)
       vite-plugin-html:
         specifier: ~3.2.0
         version: 3.2.2(vite@8.0.0)
@@ -1948,7 +1948,7 @@ importers:
         version: 5.9.3
       vite:
         specifier: 8.0.0
-        version: 8.0.0(@types/node@22.13.0)
+        version: 8.0.0(@types/node@22.13.0)(sass@1.70.0)
       vite-plugin-html:
         specifier: ~3.2.0
         version: 3.2.2(vite@8.0.0)
@@ -2084,7 +2084,7 @@ importers:
         version: 5.9.3
       vite:
         specifier: 8.0.0
-        version: 8.0.0(@types/node@22.13.0)
+        version: 8.0.0(@types/node@22.13.0)(sass@1.70.0)
       vite-plugin-html:
         specifier: ~3.2.0
         version: 3.2.2(vite@8.0.0)
@@ -2193,7 +2193,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 4.1.0
-        version: 4.1.0
+        version: 4.1.0(happy-dom@18.0.1)(sass@1.70.0)
 
   ../../libs/e2e-utils:
     dependencies:
@@ -2387,7 +2387,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 4.1.0
-        version: 4.1.0
+        version: 4.1.0(happy-dom@18.0.1)(sass@1.70.0)
 
   ../../libs/sdk-backend-mockingbird:
     dependencies:
@@ -2487,7 +2487,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 4.1.0
-        version: 4.1.0
+        version: 4.1.0(happy-dom@18.0.1)(sass@1.70.0)
 
   ../../libs/sdk-backend-spi:
     dependencies:
@@ -2572,7 +2572,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 4.1.0
-        version: 4.1.0
+        version: 4.1.0(happy-dom@18.0.1)(sass@1.70.0)
 
   ../../libs/sdk-backend-tiger:
     dependencies:
@@ -2711,7 +2711,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 4.1.0
-        version: 4.1.0
+        version: 4.1.0(happy-dom@18.0.1)(sass@1.70.0)
 
   ../../libs/sdk-embedding:
     dependencies:
@@ -2796,7 +2796,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 4.1.0
-        version: 4.1.0
+        version: 4.1.0(happy-dom@18.0.1)(sass@1.70.0)
 
   ../../libs/sdk-model:
     dependencies:
@@ -2896,7 +2896,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 4.1.0
-        version: 4.1.0
+        version: 4.1.0(happy-dom@18.0.1)(sass@1.70.0)
 
   ../../libs/sdk-pluggable-application-model:
     dependencies:
@@ -5860,7 +5860,7 @@ importers:
         version: 5.9.3
       vite:
         specifier: 8.0.0
-        version: 8.0.0(sass@1.70.0)
+        version: 8.0.0(@types/node@22.13.0)(sass@1.70.0)
 
   ../../libs/sdk-ui-tests-e2e:
     devDependencies:
@@ -6412,7 +6412,7 @@ importers:
         version: 11.1.0
       vite:
         specifier: 8.0.0
-        version: 8.0.0(@types/node@22.13.0)
+        version: 8.0.0(@types/node@22.13.0)(sass@1.70.0)
       vite-node:
         specifier: ^5.2.0
         version: 5.2.0(@types/node@22.13.0)(jiti@2.6.1)
@@ -6890,6 +6890,9 @@ importers:
       react-dom:
         specifier: 19.1.1
         version: 19.1.1(react@19.1.1)
+      rolldown:
+        specifier: 1.0.0-rc.9
+        version: 1.0.0-rc.9
       rollup:
         specifier: ^4.51.0
         version: 4.54.0
@@ -6897,17 +6900,17 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
       vite:
-        specifier: ^7.3.1
-        version: 7.3.1(@types/node@22.13.0)(jiti@2.6.1)
+        specifier: 8.0.0
+        version: 8.0.0(@types/node@22.13.0)(sass@1.70.0)
       vite-plugin-css-injected-by-js:
         specifier: 3.1.1
-        version: 3.1.1(vite@7.3.1)
+        version: 3.1.1(vite@8.0.0)
       vite-plugin-environment:
         specifier: ^1.1.3
-        version: 1.1.3(vite@7.3.1)
+        version: 1.1.3(vite@8.0.0)
       vite-plugin-static-copy:
         specifier: 3.1.2
-        version: 3.1.2(vite@7.3.1)
+        version: 3.1.2(vite@8.0.0)
       vitest:
         specifier: 4.1.0
         version: 4.1.0(@types/node@22.13.0)(happy-dom@18.0.1)
@@ -6992,7 +6995,7 @@ importers:
         version: 5.9.3
       vitest:
         specifier: 4.1.0
-        version: 4.1.0
+        version: 4.1.0(happy-dom@18.0.1)(sass@1.70.0)
 
   ../../tools/app-toolkit:
     dependencies:
@@ -9936,7 +9939,6 @@ packages:
     dependencies:
       '@emnapi/wasi-threads': 1.1.0
       tslib: 2.8.1
-    dev: true
     optional: true
 
   /@emnapi/runtime@1.8.1:
@@ -9944,7 +9946,6 @@ packages:
     requiresBuild: true
     dependencies:
       tslib: 2.8.1
-    dev: true
     optional: true
 
   /@emnapi/wasi-threads@1.1.0:
@@ -9952,7 +9953,6 @@ packages:
     requiresBuild: true
     dependencies:
       tslib: 2.8.1
-    dev: true
     optional: true
 
   /@emotion/babel-plugin@11.13.5:
@@ -10079,6 +10079,7 @@ packages:
     cpu: [ppc64]
     os: [aix]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/android-arm64@0.25.9:
@@ -10096,6 +10097,7 @@ packages:
     cpu: [arm64]
     os: [android]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/android-arm@0.25.9:
@@ -10113,6 +10115,7 @@ packages:
     cpu: [arm]
     os: [android]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/android-x64@0.25.9:
@@ -10130,6 +10133,7 @@ packages:
     cpu: [x64]
     os: [android]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/darwin-arm64@0.25.9:
@@ -10147,6 +10151,7 @@ packages:
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/darwin-x64@0.25.9:
@@ -10164,6 +10169,7 @@ packages:
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/freebsd-arm64@0.25.9:
@@ -10181,6 +10187,7 @@ packages:
     cpu: [arm64]
     os: [freebsd]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/freebsd-x64@0.25.9:
@@ -10198,6 +10205,7 @@ packages:
     cpu: [x64]
     os: [freebsd]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/linux-arm64@0.25.9:
@@ -10215,6 +10223,7 @@ packages:
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/linux-arm@0.25.9:
@@ -10232,6 +10241,7 @@ packages:
     cpu: [arm]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/linux-ia32@0.25.9:
@@ -10249,6 +10259,7 @@ packages:
     cpu: [ia32]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/linux-loong64@0.25.9:
@@ -10266,6 +10277,7 @@ packages:
     cpu: [loong64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/linux-mips64el@0.25.9:
@@ -10283,6 +10295,7 @@ packages:
     cpu: [mips64el]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/linux-ppc64@0.25.9:
@@ -10300,6 +10313,7 @@ packages:
     cpu: [ppc64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/linux-riscv64@0.25.9:
@@ -10317,6 +10331,7 @@ packages:
     cpu: [riscv64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/linux-s390x@0.25.9:
@@ -10334,6 +10349,7 @@ packages:
     cpu: [s390x]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/linux-x64@0.25.9:
@@ -10351,6 +10367,7 @@ packages:
     cpu: [x64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/netbsd-arm64@0.25.9:
@@ -10368,6 +10385,7 @@ packages:
     cpu: [arm64]
     os: [netbsd]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/netbsd-x64@0.25.9:
@@ -10385,6 +10403,7 @@ packages:
     cpu: [x64]
     os: [netbsd]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/openbsd-arm64@0.25.9:
@@ -10402,6 +10421,7 @@ packages:
     cpu: [arm64]
     os: [openbsd]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/openbsd-x64@0.25.9:
@@ -10419,6 +10439,7 @@ packages:
     cpu: [x64]
     os: [openbsd]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/openharmony-arm64@0.25.9:
@@ -10436,6 +10457,7 @@ packages:
     cpu: [arm64]
     os: [openharmony]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/sunos-x64@0.25.9:
@@ -10453,6 +10475,7 @@ packages:
     cpu: [x64]
     os: [sunos]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/win32-arm64@0.25.9:
@@ -10470,6 +10493,7 @@ packages:
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/win32-ia32@0.25.9:
@@ -10487,6 +10511,7 @@ packages:
     cpu: [ia32]
     os: [win32]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@esbuild/win32-x64@0.25.9:
@@ -10504,6 +10529,7 @@ packages:
     cpu: [x64]
     os: [win32]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@eslint-community/eslint-utils@4.9.1(eslint@9.39.2):
@@ -10985,7 +11011,7 @@ packages:
     resolution: {integrity: sha512-9TGZuAX+liGkNKkwuo3FYJu7gHWT0vkBcf7GkOe7s7fmC19XwH/4u5u7sDIFrMooe558ORcmuBvBz7Ur5PlbHw==}
     peerDependencies:
       typescript: '>= 4.3.x'
-      vite: ^7.3.1 || ^8.0.0
+      vite: ^8.0.0
     peerDependenciesMeta:
       typescript:
         optional: true
@@ -10993,7 +11019,7 @@ packages:
       glob: 11.1.0
       react-docgen-typescript: 2.4.0(typescript@5.9.3)
       typescript: 5.9.3
-      vite: 8.0.0(@types/node@22.13.0)
+      vite: 8.0.0(@types/node@22.13.0)(sass@1.70.0)
     dev: true
 
   /@jridgewell/gen-mapping@0.3.13:
@@ -11291,7 +11317,6 @@ packages:
       '@emnapi/core': 1.8.1
       '@emnapi/runtime': 1.8.1
       '@tybys/wasm-util': 0.10.1
-    dev: true
     optional: true
 
   /@nestjs/axios@4.0.1(@nestjs/common@11.1.6)(axios@1.12.2)(rxjs@7.8.2):
@@ -11442,11 +11467,9 @@ packages:
   /@oxc-project/runtime@0.115.0:
     resolution: {integrity: sha512-Rg8Wlt5dCbXhQnsXPrkOjL1DTSvXLgb2R/KYfnf1/K+R0k6UMLEmbQXPM+kwrWqSmWA2t0B1EtHy2/3zikQpvQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
-    dev: true
 
   /@oxc-project/types@0.115.0:
     resolution: {integrity: sha512-4n91DKnebUS4yjUHl2g3/b2T+IUdCfmoZGhmwsovZCDaJSs+QkVAM+0AqqTxHSsHfeiMuueT75cZaZcT/m0pSw==}
-    dev: true
 
   /@oxfmt/darwin-arm64@0.27.0:
     resolution: {integrity: sha512-3vwqyzNlVTVFVzHMlrqxb4tgVgHp6FYS0uIxsIZ/SeEDG0azaqiOw/2t8LlJ9f72PKRLWSey+Ak99tiKgpbsnQ==}
@@ -11774,7 +11797,6 @@ packages:
     cpu: [arm64]
     os: [android]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@rolldown/binding-darwin-arm64@1.0.0-rc.9:
@@ -11783,7 +11805,6 @@ packages:
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@rolldown/binding-darwin-x64@1.0.0-rc.9:
@@ -11792,7 +11813,6 @@ packages:
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@rolldown/binding-freebsd-x64@1.0.0-rc.9:
@@ -11801,7 +11821,6 @@ packages:
     cpu: [x64]
     os: [freebsd]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@rolldown/binding-linux-arm-gnueabihf@1.0.0-rc.9:
@@ -11810,7 +11829,6 @@ packages:
     cpu: [arm]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@rolldown/binding-linux-arm64-gnu@1.0.0-rc.9:
@@ -11819,7 +11837,6 @@ packages:
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@rolldown/binding-linux-arm64-musl@1.0.0-rc.9:
@@ -11828,7 +11845,6 @@ packages:
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@rolldown/binding-linux-ppc64-gnu@1.0.0-rc.9:
@@ -11837,7 +11853,6 @@ packages:
     cpu: [ppc64]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@rolldown/binding-linux-s390x-gnu@1.0.0-rc.9:
@@ -11846,7 +11861,6 @@ packages:
     cpu: [s390x]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@rolldown/binding-linux-x64-gnu@1.0.0-rc.9:
@@ -11855,7 +11869,6 @@ packages:
     cpu: [x64]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@rolldown/binding-linux-x64-musl@1.0.0-rc.9:
@@ -11864,7 +11877,6 @@ packages:
     cpu: [x64]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@rolldown/binding-openharmony-arm64@1.0.0-rc.9:
@@ -11873,7 +11885,6 @@ packages:
     cpu: [arm64]
     os: [openharmony]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@rolldown/binding-wasm32-wasi@1.0.0-rc.9:
@@ -11883,7 +11894,6 @@ packages:
     requiresBuild: true
     dependencies:
       '@napi-rs/wasm-runtime': 1.1.1
-    dev: true
     optional: true
 
   /@rolldown/binding-win32-arm64-msvc@1.0.0-rc.9:
@@ -11892,7 +11902,6 @@ packages:
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@rolldown/binding-win32-x64-msvc@1.0.0-rc.9:
@@ -11901,7 +11910,6 @@ packages:
     cpu: [x64]
     os: [win32]
     requiresBuild: true
-    dev: true
     optional: true
 
   /@rolldown/pluginutils@1.0.0-rc.2:
@@ -11910,7 +11918,6 @@ packages:
 
   /@rolldown/pluginutils@1.0.0-rc.9:
     resolution: {integrity: sha512-w6oiRWgEBl04QkFZgmW+jnU1EC9b57Oihi2ot3HNWIQRqgHp5PnYDia5iZ5FF7rpa4EQdiqMDXjlqKGXBhsoXw==}
-    dev: true
 
   /@rollup/pluginutils@4.2.1:
     resolution: {integrity: sha512-iKnFXr7NkdZAIHiIWE+BX5ULi/ucVFYWD6TbAV+rZctiRTY2PL6tsIKhoIOaoskiWAkgu+VsbXgUVDNLHf+InQ==}
@@ -11939,6 +11946,7 @@ packages:
     cpu: [arm]
     os: [android]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@rollup/rollup-android-arm64@4.54.0:
@@ -11946,6 +11954,7 @@ packages:
     cpu: [arm64]
     os: [android]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@rollup/rollup-darwin-arm64@4.54.0:
@@ -11953,6 +11962,7 @@ packages:
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@rollup/rollup-darwin-x64@4.54.0:
@@ -11960,6 +11970,7 @@ packages:
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@rollup/rollup-freebsd-arm64@4.54.0:
@@ -11967,6 +11978,7 @@ packages:
     cpu: [arm64]
     os: [freebsd]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@rollup/rollup-freebsd-x64@4.54.0:
@@ -11974,6 +11986,7 @@ packages:
     cpu: [x64]
     os: [freebsd]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@rollup/rollup-linux-arm-gnueabihf@4.54.0:
@@ -11981,6 +11994,7 @@ packages:
     cpu: [arm]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@rollup/rollup-linux-arm-musleabihf@4.54.0:
@@ -11988,6 +12002,7 @@ packages:
     cpu: [arm]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@rollup/rollup-linux-arm64-gnu@4.54.0:
@@ -11995,6 +12010,7 @@ packages:
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@rollup/rollup-linux-arm64-musl@4.54.0:
@@ -12002,6 +12018,7 @@ packages:
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@rollup/rollup-linux-loong64-gnu@4.54.0:
@@ -12009,6 +12026,7 @@ packages:
     cpu: [loong64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@rollup/rollup-linux-ppc64-gnu@4.54.0:
@@ -12016,6 +12034,7 @@ packages:
     cpu: [ppc64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@rollup/rollup-linux-riscv64-gnu@4.54.0:
@@ -12023,6 +12042,7 @@ packages:
     cpu: [riscv64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@rollup/rollup-linux-riscv64-musl@4.54.0:
@@ -12030,6 +12050,7 @@ packages:
     cpu: [riscv64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@rollup/rollup-linux-s390x-gnu@4.54.0:
@@ -12037,6 +12058,7 @@ packages:
     cpu: [s390x]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@rollup/rollup-linux-x64-gnu@4.54.0:
@@ -12044,6 +12066,7 @@ packages:
     cpu: [x64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@rollup/rollup-linux-x64-musl@4.54.0:
@@ -12051,6 +12074,7 @@ packages:
     cpu: [x64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@rollup/rollup-openharmony-arm64@4.54.0:
@@ -12058,6 +12082,7 @@ packages:
     cpu: [arm64]
     os: [openharmony]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@rollup/rollup-win32-arm64-msvc@4.54.0:
@@ -12065,6 +12090,7 @@ packages:
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@rollup/rollup-win32-ia32-msvc@4.54.0:
@@ -12072,6 +12098,7 @@ packages:
     cpu: [ia32]
     os: [win32]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@rollup/rollup-win32-x64-gnu@4.54.0:
@@ -12079,6 +12106,7 @@ packages:
     cpu: [x64]
     os: [win32]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@rollup/rollup-win32-x64-msvc@4.54.0:
@@ -12086,6 +12114,7 @@ packages:
     cpu: [x64]
     os: [win32]
     requiresBuild: true
+    dev: true
     optional: true
 
   /@rushstack/node-core-library@5.14.0(@types/node@22.13.0):
@@ -12242,13 +12271,13 @@ packages:
     resolution: {integrity: sha512-MMD09Ap7FyzDfWG961pkIMv/w684XXe1bBEi+wCEpHxvrgAd3j3A9w/Rqp9Am2uRDPCEdi1QgSzS3SGW3aGThQ==}
     peerDependencies:
       storybook: ^10.1.11
-      vite: ^7.3.1 || ^8.0.0
+      vite: ^8.0.0
     dependencies:
       '@storybook/csf-plugin': 10.1.11(storybook@10.1.11)(vite@8.0.0)
       '@vitest/mocker': 3.2.4(vite@8.0.0)
       storybook: 10.1.11(@testing-library/dom@10.4.1)(prettier@3.6.2)(react-dom@19.1.1)(react@19.1.1)
       ts-dedent: 2.2.0
-      vite: 8.0.0(@types/node@22.13.0)
+      vite: 8.0.0(@types/node@22.13.0)(sass@1.70.0)
     transitivePeerDependencies:
       - esbuild
       - msw
@@ -12319,7 +12348,7 @@ packages:
     dependencies:
       storybook: 10.1.11(@testing-library/dom@10.4.1)(prettier@3.6.2)(react-dom@19.1.1)(react@19.1.1)
       unplugin: 2.3.10
-      vite: 8.0.0(@types/node@22.13.0)
+      vite: 8.0.0(@types/node@22.13.0)(sass@1.70.0)
     dev: true
 
   /@storybook/global@5.0.0:
@@ -12354,7 +12383,7 @@ packages:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
       storybook: ^10.1.11
-      vite: ^7.3.1 || ^8.0.0
+      vite: ^8.0.0
     dependencies:
       '@joshwooding/vite-plugin-react-docgen-typescript': 0.6.3(typescript@5.9.3)(vite@8.0.0)
       '@rollup/pluginutils': 5.3.0
@@ -12368,7 +12397,7 @@ packages:
       resolve: 1.22.10
       storybook: 10.1.11(@testing-library/dom@10.4.1)(prettier@3.6.2)(react-dom@19.1.1)(react@19.1.1)
       tsconfig-paths: 4.2.0
-      vite: 8.0.0(@types/node@22.13.0)
+      vite: 8.0.0(@types/node@22.13.0)(sass@1.70.0)
     transitivePeerDependencies:
       - esbuild
       - msw
@@ -12521,7 +12550,6 @@ packages:
     requiresBuild: true
     dependencies:
       tslib: 2.8.1
-    dev: true
     optional: true
 
   /@types/argparse@1.0.38:
@@ -13349,7 +13377,7 @@ packages:
     resolution: {integrity: sha512-NVUnA6gQCl8jfoYqKqQU5Clv0aPw14KkZYCsX6T9Lfu9slI0LOU10OTwFHS/WmptsMMpshNd/1tuWsHQ2Uk+cg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
-      vite: ^7.3.1 || ^8.0.0
+      vite: ^8.0.0
     dependencies:
       '@babel/core': 7.29.0
       '@babel/plugin-transform-react-jsx-self': 7.27.1(@babel/core@7.29.0)
@@ -13357,7 +13385,7 @@ packages:
       '@rolldown/pluginutils': 1.0.0-rc.2
       '@types/babel__core': 7.20.5
       react-refresh: 0.18.0
-      vite: 8.0.0(sass@1.70.0)
+      vite: 8.0.0(@types/node@22.13.0)(sass@1.70.0)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -13408,7 +13436,7 @@ packages:
     resolution: {integrity: sha512-46ryTE9RZO/rfDd7pEqFl7etuyzekzEhUbTW3BvmeO/BcCMEgq59BKhek3dXDWgAj4oMK6OZi+vRr1wPW6qjEQ==}
     peerDependencies:
       msw: ^2.4.9
-      vite: ^7.3.1 || ^8.0.0
+      vite: ^8.0.0
     peerDependenciesMeta:
       msw:
         optional: true
@@ -13418,14 +13446,14 @@ packages:
       '@vitest/spy': 3.2.4
       estree-walker: 3.0.3
       magic-string: 0.30.21
-      vite: 8.0.0(@types/node@22.13.0)
+      vite: 8.0.0(@types/node@22.13.0)(sass@1.70.0)
     dev: true
 
-  /@vitest/mocker@4.1.0(vite@7.3.1):
+  /@vitest/mocker@4.1.0(vite@8.0.0):
     resolution: {integrity: sha512-evxREh+Hork43+Y4IOhTo+h5lGmVRyjqI739Rz4RlUPqwrkFFDF6EMvOOYjTx4E8Tl6gyCLRL8Mu7Ry12a13Tw==}
     peerDependencies:
       msw: ^2.4.9
-      vite: ^7.3.1 || ^8.0.0
+      vite: ^8.0.0
     peerDependenciesMeta:
       msw:
         optional: true
@@ -13435,7 +13463,7 @@ packages:
       '@vitest/spy': 4.1.0
       estree-walker: 3.0.3
       magic-string: 0.30.21
-      vite: 7.3.1(@types/node@22.13.0)(jiti@2.6.1)
+      vite: 8.0.0(@types/node@22.13.0)(sass@1.70.0)
 
   /@vitest/pretty-format@3.2.4:
     resolution: {integrity: sha512-IVNZik8IVRJRTr9fxlitMKeJeXFFFN0JaB9PHPGQ8NKQbGpfjlTx9zO4RefN8gp7eqjNy8nyK3NZmBzOPeIxtA==}
@@ -15145,7 +15173,6 @@ packages:
   /detect-libc@2.1.2:
     resolution: {integrity: sha512-Btj2BOOO83o3WyH59e8MgXsxEQVcarkUOpEYrubB0urwnN10yQ364rsiByU11nZlqWYZm05i/of7io4mzihBtQ==}
     engines: {node: '>=8'}
-    dev: true
 
   /detect-node@2.1.0:
     resolution: {integrity: sha512-T0NIuQpnTvFDATNuHN5roPwSBG83rFsuO+MXXH9/3N1eFbn4wcPjttvjMLEPWJ0RGUYgQE7cGgS3tNxbqCGM7g==}
@@ -15655,6 +15682,7 @@ packages:
       '@esbuild/win32-arm64': 0.27.2
       '@esbuild/win32-ia32': 0.27.2
       '@esbuild/win32-x64': 0.27.2
+    dev: true
 
   /escalade@3.2.0:
     resolution: {integrity: sha512-WUj2qlxaQtO4g6Pq5c29GTcWGDyd8itL8zTlipgECz3JesAiiOKotd8JU6otB3PACgG6xkJUyVhboMS+bje/jA==}
@@ -17105,7 +17133,6 @@ packages:
 
   /immutable@4.3.4:
     resolution: {integrity: sha512-fsXeu4J4i6WNWSikpI88v/PcVflZz+6kMhUfIwc5SY+poQRPnaf5V7qds6SUyUN3cVxEzuCab7QIoLOQ+DQ1wA==}
-    dev: true
 
   /import-fresh@3.3.1:
     resolution: {integrity: sha512-TR3KfrTZTYLPB6jUjfx6MF9WcWrHL9su5TObK4ZkYgBdWKPOFoSoQIdEuTuR82pmtxH2spWG9h6etwfr1pLBqQ==}
@@ -17633,6 +17660,7 @@ packages:
   /jiti@2.6.1:
     resolution: {integrity: sha512-ekilCSN1jwRvIbgeg/57YFh8qQDNbwDb9xT/qu2DAHbFFZUicIl4ygVaAvzveMhMVr3LnpSKTNnwt8PoOfmKhQ==}
     hasBin: true
+    dev: true
 
   /jju@1.4.0:
     resolution: {integrity: sha512-8wb9Yw966OSxApiCt0K3yNJL8pnNeIv+OEq2YMidz4FKP6nonSRoOXc80iXY4JaN2FC11B9qsNmDsm+ZOfMROA==}
@@ -17842,7 +17870,6 @@ packages:
     cpu: [arm64]
     os: [android]
     requiresBuild: true
-    dev: true
     optional: true
 
   /lightningcss-darwin-arm64@1.32.0:
@@ -17851,7 +17878,6 @@ packages:
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
-    dev: true
     optional: true
 
   /lightningcss-darwin-x64@1.32.0:
@@ -17860,7 +17886,6 @@ packages:
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
-    dev: true
     optional: true
 
   /lightningcss-freebsd-x64@1.32.0:
@@ -17869,7 +17894,6 @@ packages:
     cpu: [x64]
     os: [freebsd]
     requiresBuild: true
-    dev: true
     optional: true
 
   /lightningcss-linux-arm-gnueabihf@1.32.0:
@@ -17878,7 +17902,6 @@ packages:
     cpu: [arm]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /lightningcss-linux-arm64-gnu@1.32.0:
@@ -17887,7 +17910,6 @@ packages:
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /lightningcss-linux-arm64-musl@1.32.0:
@@ -17896,7 +17918,6 @@ packages:
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /lightningcss-linux-x64-gnu@1.32.0:
@@ -17905,7 +17926,6 @@ packages:
     cpu: [x64]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /lightningcss-linux-x64-musl@1.32.0:
@@ -17914,7 +17934,6 @@ packages:
     cpu: [x64]
     os: [linux]
     requiresBuild: true
-    dev: true
     optional: true
 
   /lightningcss-win32-arm64-msvc@1.32.0:
@@ -17923,7 +17942,6 @@ packages:
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
-    dev: true
     optional: true
 
   /lightningcss-win32-x64-msvc@1.32.0:
@@ -17932,7 +17950,6 @@ packages:
     cpu: [x64]
     os: [win32]
     requiresBuild: true
-    dev: true
     optional: true
 
   /lightningcss@1.32.0:
@@ -17952,7 +17969,6 @@ packages:
       lightningcss-linux-x64-musl: 1.32.0
       lightningcss-win32-arm64-msvc: 1.32.0
       lightningcss-win32-x64-msvc: 1.32.0
-    dev: true
 
   /lines-and-columns@1.2.4:
     resolution: {integrity: sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==}
@@ -19595,7 +19611,6 @@ packages:
       nanoid: 3.3.11
       picocolors: 1.1.1
       source-map-js: 1.2.1
-    dev: true
 
   /potpack@2.1.0:
     resolution: {integrity: sha512-pcaShQc1Shq0y+E7GqJqvZj8DTthWV1KeHGdi0Z6IAin2Oi3JnLCOfwnCo84qc+HAp52wT9nK9H7FAJp5a44GQ==}
@@ -20453,7 +20468,6 @@ packages:
       '@rolldown/binding-wasm32-wasi': 1.0.0-rc.9
       '@rolldown/binding-win32-arm64-msvc': 1.0.0-rc.9
       '@rolldown/binding-win32-x64-msvc': 1.0.0-rc.9
-    dev: true
 
   /rollup@4.54.0:
     resolution: {integrity: sha512-3nk8Y3a9Ea8szgKhinMlGMhGMw89mqule3KWczxhIzqudyHdCIOHw8WJlj/r329fACjKLEh13ZSk7oE22kyeIw==}
@@ -20485,6 +20499,7 @@ packages:
       '@rollup/rollup-win32-x64-gnu': 4.54.0
       '@rollup/rollup-win32-x64-msvc': 4.54.0
       fsevents: 2.3.3
+    dev: true
 
   /run-applescript@7.1.0:
     resolution: {integrity: sha512-DPe5pVFaAsinSaV6QjQ6gdiedWDcRCbUuiQfQa2wmWV7+xC9bGulGI8+TdRmoFkAPaBXk8CrAbnlY2ISniJ47Q==}
@@ -20557,7 +20572,6 @@ packages:
       chokidar: 3.6.0
       immutable: 4.3.4
       source-map-js: 1.2.1
-    dev: true
 
   /scheduler@0.26.0:
     resolution: {integrity: sha512-NlHwttCI/l5gCPR3D1nNXtWABUmBwvZpEQiD4IXSbIDq8BzLIK/7Ir5gTFSGZDUu37K5cMNp0hFtzO38sC7gWA==}
@@ -22131,20 +22145,20 @@ packages:
       - yaml
     dev: true
 
-  /vite-plugin-css-injected-by-js@3.1.1(vite@7.3.1):
+  /vite-plugin-css-injected-by-js@3.1.1(vite@8.0.0):
     resolution: {integrity: sha512-mwrFvEEy0TuH8Ul0cb2HgjmNboQ/JnEFy+kHCWqAJph3ikMOiIuyYVdx0JO4nEIWJyzSnc4TTdmoTulsikvJEg==}
     peerDependencies:
       vite: '>2.0.0-0'
     dependencies:
-      vite: 7.3.1(@types/node@22.13.0)(jiti@2.6.1)
+      vite: 8.0.0(@types/node@22.13.0)(sass@1.70.0)
     dev: true
 
-  /vite-plugin-environment@1.1.3(vite@7.3.1):
+  /vite-plugin-environment@1.1.3(vite@8.0.0):
     resolution: {integrity: sha512-9LBhB0lx+2lXVBEWxFZC+WO7PKEyE/ykJ7EPWCq95NEcCpblxamTbs5Dm3DLBGzwODpJMEnzQywJU8fw6XGGGA==}
     peerDependencies:
       vite: '>= 2.7'
     dependencies:
-      vite: 7.3.1(@types/node@22.13.0)(jiti@2.6.1)
+      vite: 8.0.0(@types/node@22.13.0)(sass@1.70.0)
     dev: true
 
   /vite-plugin-html@3.2.2(vite@8.0.0):
@@ -22164,35 +22178,21 @@ packages:
       html-minifier-terser: 6.1.0
       node-html-parser: 5.4.2
       pathe: 0.2.0
-      vite: 8.0.0(@types/node@22.13.0)
-    dev: true
-
-  /vite-plugin-static-copy@3.1.2(vite@7.3.1):
-    resolution: {integrity: sha512-aVmYOzptLVOI2b1jL+cmkF7O6uhRv1u5fvOkQgbohWZp2CbR22kn9ZqkCUIt9umKF7UhdbsEpshn1rf4720QFg==}
-    engines: {node: ^18.0.0 || >=20.0.0}
-    peerDependencies:
-      vite: ^7.3.1 || ^8.0.0
-    dependencies:
-      chokidar: 3.6.0
-      fs-extra: 11.3.2
-      p-map: 7.0.3
-      picocolors: 1.1.1
-      tinyglobby: 0.2.15
-      vite: 7.3.1(@types/node@22.13.0)(jiti@2.6.1)
+      vite: 8.0.0(@types/node@22.13.0)(sass@1.70.0)
     dev: true
 
   /vite-plugin-static-copy@3.1.2(vite@8.0.0):
     resolution: {integrity: sha512-aVmYOzptLVOI2b1jL+cmkF7O6uhRv1u5fvOkQgbohWZp2CbR22kn9ZqkCUIt9umKF7UhdbsEpshn1rf4720QFg==}
     engines: {node: ^18.0.0 || >=20.0.0}
     peerDependencies:
-      vite: ^7.3.1 || ^8.0.0
+      vite: ^8.0.0
     dependencies:
       chokidar: 3.6.0
       fs-extra: 11.3.2
       p-map: 7.0.3
       picocolors: 1.1.1
       tinyglobby: 0.2.15
-      vite: 8.0.0(@types/node@22.13.0)
+      vite: 8.0.0(@types/node@22.13.0)(sass@1.70.0)
     dev: true
 
   /vite@7.3.1(@types/node@22.13.0)(jiti@2.6.1):
@@ -22245,60 +22245,9 @@ packages:
       tinyglobby: 0.2.15
     optionalDependencies:
       fsevents: 2.3.3
-
-  /vite@7.3.1(@types/node@22.13.0)(sass@1.70.0):
-    resolution: {integrity: sha512-w+N7Hifpc3gRjZ63vYBXA56dvvRlNWRczTdmCBBa+CotUzAPf5b7YMdMR/8CQoeYE5LX3W4wj6RYTgonm1b9DA==}
-    engines: {node: ^20.19.0 || >=22.12.0}
-    hasBin: true
-    peerDependencies:
-      '@types/node': ^20.19.0 || >=22.12.0
-      jiti: '>=1.21.0'
-      less: ^4.0.0
-      lightningcss: ^1.21.0
-      sass: ^1.70.0
-      sass-embedded: ^1.70.0
-      stylus: '>=0.54.8'
-      sugarss: ^5.0.0
-      terser: ^5.16.0
-      tsx: ^4.8.1
-      yaml: ^2.4.2
-    peerDependenciesMeta:
-      '@types/node':
-        optional: true
-      jiti:
-        optional: true
-      less:
-        optional: true
-      lightningcss:
-        optional: true
-      sass:
-        optional: true
-      sass-embedded:
-        optional: true
-      stylus:
-        optional: true
-      sugarss:
-        optional: true
-      terser:
-        optional: true
-      tsx:
-        optional: true
-      yaml:
-        optional: true
-    dependencies:
-      '@types/node': 22.13.0
-      esbuild: 0.27.2
-      fdir: 6.5.0(picomatch@4.0.3)
-      picomatch: 4.0.3
-      postcss: 8.5.6
-      rollup: 4.54.0
-      sass: 1.70.0
-      tinyglobby: 0.2.15
-    optionalDependencies:
-      fsevents: 2.3.3
     dev: true
 
-  /vite@8.0.0(@types/node@22.13.0):
+  /vite@8.0.0(@types/node@22.13.0)(sass@1.70.0):
     resolution: {integrity: sha512-fPGaRNj9Zytaf8LEiBhY7Z6ijnFKdzU/+mL8EFBaKr7Vw1/FWcTBAMW0wLPJAGMPX38ZPVCVgLceWiEqeoqL2Q==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
@@ -22347,64 +22296,10 @@ packages:
       picomatch: 4.0.3
       postcss: 8.5.8
       rolldown: 1.0.0-rc.9
-      tinyglobby: 0.2.15
-    optionalDependencies:
-      fsevents: 2.3.3
-    dev: true
-
-  /vite@8.0.0(sass@1.70.0):
-    resolution: {integrity: sha512-fPGaRNj9Zytaf8LEiBhY7Z6ijnFKdzU/+mL8EFBaKr7Vw1/FWcTBAMW0wLPJAGMPX38ZPVCVgLceWiEqeoqL2Q==}
-    engines: {node: ^20.19.0 || >=22.12.0}
-    hasBin: true
-    peerDependencies:
-      '@types/node': ^20.19.0 || >=22.12.0
-      '@vitejs/devtools': ^0.0.0-alpha.31
-      esbuild: ^0.27.0
-      jiti: '>=1.21.0'
-      less: ^4.0.0
-      sass: ^1.70.0
-      sass-embedded: ^1.70.0
-      stylus: '>=0.54.8'
-      sugarss: ^5.0.0
-      terser: ^5.16.0
-      tsx: ^4.8.1
-      yaml: ^2.4.2
-    peerDependenciesMeta:
-      '@types/node':
-        optional: true
-      '@vitejs/devtools':
-        optional: true
-      esbuild:
-        optional: true
-      jiti:
-        optional: true
-      less:
-        optional: true
-      sass:
-        optional: true
-      sass-embedded:
-        optional: true
-      stylus:
-        optional: true
-      sugarss:
-        optional: true
-      terser:
-        optional: true
-      tsx:
-        optional: true
-      yaml:
-        optional: true
-    dependencies:
-      '@oxc-project/runtime': 0.115.0
-      lightningcss: 1.32.0
-      picomatch: 4.0.3
-      postcss: 8.5.8
-      rolldown: 1.0.0-rc.9
       sass: 1.70.0
       tinyglobby: 0.2.15
     optionalDependencies:
       fsevents: 2.3.3
-    dev: true
 
   /vitest-dom@0.1.1(vitest@4.1.0):
     resolution: {integrity: sha512-n/bonR2hcRHCE5hlzG/P0yTXTUXx/gPtsaeUWP86ADfwo/+dHDpnTTV14qY7+kevsUbOZFYECu77MXY7AA0QSA==}
@@ -22418,74 +22313,6 @@ packages:
       lodash-es: 4.17.23
       redent: 4.0.0
       vitest: 4.1.0(@types/node@22.13.0)(happy-dom@18.0.1)
-    dev: true
-
-  /vitest@4.1.0:
-    resolution: {integrity: sha512-YbDrMF9jM2Lqc++2530UourxZHmkKLxrs4+mYhEwqWS97WJ7wOYEkcr+QfRgJ3PW9wz3odRijLZjHEaRLTNbqw==}
-    engines: {node: ^20.0.0 || ^22.0.0 || >=24.0.0}
-    hasBin: true
-    peerDependencies:
-      '@edge-runtime/vm': '*'
-      '@opentelemetry/api': ^1.9.0
-      '@types/node': ^20.0.0 || ^22.0.0 || >=24.0.0
-      '@vitest/browser-playwright': 4.1.0
-      '@vitest/browser-preview': 4.1.0
-      '@vitest/browser-webdriverio': 4.1.0
-      '@vitest/ui': 4.1.0
-      happy-dom: '*'
-      jsdom: '*'
-    peerDependenciesMeta:
-      '@edge-runtime/vm':
-        optional: true
-      '@opentelemetry/api':
-        optional: true
-      '@types/node':
-        optional: true
-      '@vitest/browser-playwright':
-        optional: true
-      '@vitest/browser-preview':
-        optional: true
-      '@vitest/browser-webdriverio':
-        optional: true
-      '@vitest/ui':
-        optional: true
-      happy-dom:
-        optional: true
-      jsdom:
-        optional: true
-    dependencies:
-      '@vitest/expect': 4.1.0
-      '@vitest/mocker': 4.1.0(vite@7.3.1)
-      '@vitest/pretty-format': 4.1.0
-      '@vitest/runner': 4.1.0
-      '@vitest/snapshot': 4.1.0
-      '@vitest/spy': 4.1.0
-      '@vitest/utils': 4.1.0
-      es-module-lexer: 2.0.0
-      expect-type: 1.3.0
-      magic-string: 0.30.21
-      obug: 2.1.1
-      pathe: 2.0.3
-      picomatch: 4.0.3
-      std-env: 4.0.0
-      tinybench: 2.9.0
-      tinyexec: 1.0.4
-      tinyglobby: 0.2.15
-      tinyrainbow: 3.0.3
-      vite: 7.3.1(@types/node@22.13.0)(jiti@2.6.1)
-      why-is-node-running: 2.3.0
-    transitivePeerDependencies:
-      - jiti
-      - less
-      - lightningcss
-      - msw
-      - sass
-      - sass-embedded
-      - stylus
-      - sugarss
-      - terser
-      - tsx
-      - yaml
     dev: true
 
   /vitest@4.1.0(@types/node@22.13.0)(happy-dom@18.0.1):
@@ -22524,7 +22351,7 @@ packages:
     dependencies:
       '@types/node': 22.13.0
       '@vitest/expect': 4.1.0
-      '@vitest/mocker': 4.1.0(vite@7.3.1)
+      '@vitest/mocker': 4.1.0(vite@8.0.0)
       '@vitest/pretty-format': 4.1.0
       '@vitest/runner': 4.1.0
       '@vitest/snapshot': 4.1.0
@@ -22542,12 +22369,13 @@ packages:
       tinyexec: 1.0.4
       tinyglobby: 0.2.15
       tinyrainbow: 3.0.3
-      vite: 7.3.1(@types/node@22.13.0)(jiti@2.6.1)
+      vite: 8.0.0(@types/node@22.13.0)(sass@1.70.0)
       why-is-node-running: 2.3.0
     transitivePeerDependencies:
+      - '@vitejs/devtools'
+      - esbuild
       - jiti
       - less
-      - lightningcss
       - msw
       - sass
       - sass-embedded
@@ -22593,7 +22421,7 @@ packages:
     dependencies:
       '@types/node': 22.13.0
       '@vitest/expect': 4.1.0
-      '@vitest/mocker': 4.1.0(vite@7.3.1)
+      '@vitest/mocker': 4.1.0(vite@8.0.0)
       '@vitest/pretty-format': 4.1.0
       '@vitest/runner': 4.1.0
       '@vitest/snapshot': 4.1.0
@@ -22611,12 +22439,13 @@ packages:
       tinyexec: 1.0.4
       tinyglobby: 0.2.15
       tinyrainbow: 3.0.3
-      vite: 7.3.1(@types/node@22.13.0)(sass@1.70.0)
+      vite: 8.0.0(@types/node@22.13.0)(sass@1.70.0)
       why-is-node-running: 2.3.0
     transitivePeerDependencies:
+      - '@vitejs/devtools'
+      - esbuild
       - jiti
       - less
-      - lightningcss
       - msw
       - sass
       - sass-embedded
@@ -22662,7 +22491,7 @@ packages:
         optional: true
     dependencies:
       '@vitest/expect': 4.1.0
-      '@vitest/mocker': 4.1.0(vite@7.3.1)
+      '@vitest/mocker': 4.1.0(vite@8.0.0)
       '@vitest/pretty-format': 4.1.0
       '@vitest/runner': 4.1.0
       '@vitest/snapshot': 4.1.0
@@ -22680,12 +22509,13 @@ packages:
       tinyexec: 1.0.4
       tinyglobby: 0.2.15
       tinyrainbow: 3.0.3
-      vite: 7.3.1(@types/node@22.13.0)(sass@1.70.0)
+      vite: 8.0.0(@types/node@22.13.0)(sass@1.70.0)
       why-is-node-running: 2.3.0
     transitivePeerDependencies:
+      - '@vitejs/devtools'
+      - esbuild
       - jiti
       - less
-      - lightningcss
       - msw
       - sass
       - sass-embedded

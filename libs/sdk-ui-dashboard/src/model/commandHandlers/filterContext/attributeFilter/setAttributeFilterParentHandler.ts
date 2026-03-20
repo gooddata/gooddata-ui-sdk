@@ -11,8 +11,8 @@ import { invalidArgumentsProvided } from "../../../events/general.js";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
 import {
     selectAttributeFilterDisplayFormsMap,
-    selectFilterContextAttributeFilterByLocalId,
-    selectFilterContextAttributeFilters,
+    selectFilterContextAttributeFilterItemByLocalId,
+    selectFilterContextAttributeFilterItems,
 } from "../../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../../store/tabs/index.js";
 import { type DashboardContext } from "../../../types/commonTypes.js";
@@ -24,12 +24,12 @@ export function* setAttributeFilterParentsHandler(
 ): SagaIterator<void> {
     const { filterLocalId, parentFilters } = cmd.payload;
 
-    const allFilters: ReturnType<typeof selectFilterContextAttributeFilters> = yield select(
-        selectFilterContextAttributeFilters,
+    const allFilters: ReturnType<typeof selectFilterContextAttributeFilterItems> = yield select(
+        selectFilterContextAttributeFilterItems,
     );
 
-    const affectedFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterByLocalId>> =
-        yield select(selectFilterContextAttributeFilterByLocalId(filterLocalId));
+    const affectedFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterItemByLocalId>> =
+        yield select(selectFilterContextAttributeFilterItemByLocalId(filterLocalId));
 
     const displayFormsMap: ReturnType<typeof selectAttributeFilterDisplayFormsMap> = yield select(
         selectAttributeFilterDisplayFormsMap,
@@ -67,8 +67,8 @@ export function* setAttributeFilterParentsHandler(
         }),
     );
 
-    const changedFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterByLocalId>> =
-        yield select(selectFilterContextAttributeFilterByLocalId(filterLocalId));
+    const changedFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterItemByLocalId>> =
+        yield select(selectFilterContextAttributeFilterItemByLocalId(filterLocalId));
 
     invariant(changedFilter, "Inconsistent state in attributeFilterSetParentCommandHandler");
 

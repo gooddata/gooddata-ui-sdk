@@ -39,18 +39,23 @@
 
     &__dropdown {
         width: var(--tooltipWidth-x, 160px);
-        max-height: 400px;
-        overflow-y: auto;
-        overscroll-behavior: contain;
+        max-height: none;
         box-shadow: 0 2px 20px 0 rgba(20, 56, 93, 0.2);
         border-radius: 3px;
-        padding: 6px 0;
+        padding: 8px 0;
+
+        .gd-ui-kit-listbox {
+            min-width: 100%;
+            max-height: none;
+            overflow-y: hidden;
+            padding: 0;
+        }
     }
 
     &__section {
         display: flex;
         align-items: center;
-        padding: 10px 10px 0;
+        padding: 10px 10px 2px;
     }
 
     &__section-label {
@@ -68,9 +73,14 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 20px;
-        height: 20px;
-        padding: 5px;
+        width: 16px;
+        height: 16px;
+
+        .gd-ui-kit-icon-button {
+            width: 16px;
+            height: 16px;
+            min-width: 16px;
+        }
     }
 
     &__item.gd-list-item {
@@ -105,6 +115,7 @@
             font-weight: 600;
             color: var(--gd-palette-primary-base, variables.$gd-color-highlight);
         }
+
         .gd-filter-mode-menu__item-check {
             flex: 0 0 auto;
             margin-left: auto;
@@ -114,9 +125,7 @@
         }
     }
 
-    &__divider {
-        height: 1px;
-        margin: 4px 0;
-        background-color: var(--gd-palette-complementary-3, #dde4eb);
+    &__divider.gd-list-item.gd-list-item-separator {
+        margin: 4px 0 6px;
     }
 }

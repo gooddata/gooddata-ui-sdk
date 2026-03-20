@@ -5,13 +5,14 @@ import { useCallback, useMemo, useState } from "react";
 import { partition } from "lodash-es";
 
 import {
+    type DashboardAttributeFilterItem,
     type FilterContextItem,
-    type IDashboardAttributeFilter,
     type IDashboardDateFilter,
     type IDashboardFilterGroup,
     type ObjRef,
     areObjRefsEqual,
-    isDashboardAttributeFilter,
+    dashboardAttributeFilterItemDisplayForm,
+    isDashboardAttributeFilterItem,
     isDashboardCommonDateFilter,
     isDashboardDateFilter,
     isDashboardDateFilterWithDimension,
@@ -52,9 +53,9 @@ export function isFilterBarFilterPlaceholder(object: any): object is FilterBarFi
  * @internal
  */
 export type FilterBarAttributeFilterIndexed = {
-    filter: IDashboardAttributeFilter;
+    filter: DashboardAttributeFilterItem;
     filterIndex: number;
-    workingFilter?: IDashboardAttributeFilter;
+    workingFilter?: DashboardAttributeFilterItem;
 };
 
 /**
@@ -62,7 +63,7 @@ export type FilterBarAttributeFilterIndexed = {
  */
 export type FilterBarAttributeItem = FilterBarFilterPlaceholder | FilterBarAttributeFilterIndexed;
 export function isFilterBarAttributeFilter(object: any): object is FilterBarAttributeFilterIndexed {
-    return isDashboardAttributeFilter(object.filter);
+    return isDashboardAttributeFilterItem(object.filter);
 }
 
 /**
@@ -127,8 +128,8 @@ export type FilterBarDraggableItems = FilterBarItem[];
 
 function isNotDashboardCommonDateFilter(
     obj: unknown,
-): obj is IDashboardAttributeFilter | IDashboardDateFilter {
-    return isDashboardAttributeFilter(obj) || isDashboardDateFilterWithDimension(obj);
+): obj is DashboardAttributeFilterItem | IDashboardDateFilter {
+    return isDashboardAttributeFilterItem(obj) || isDashboardDateFilterWithDimension(obj);
 }
 
 /**
@@ -158,7 +159,12 @@ export function useFiltersWithAddedPlaceholder(
     const dateDatasetsMap = useDashboardSelector(selectAllCatalogDateDatasetsMap);
 
     const commonWorkingDateFilter = workingFilters?.find(isDashboardCommonDateFilter);
-    const [draggableFilters, [commonDateFilter]] = partition(filters, isNotDashboardCommonDateFilter);
+    const [draggableFilters, nonDraggableFilters] = partition(filters, isNotDashboardCommonDateFilter);
+    // nonDraggableFilters may contain new filter types (arbitrary, match) alongside the common date filter.
+    // Use a cast since TypeScript cannot narrow FilterContextItem exclusions through .find().
+    const commonDateFilter = nonDraggableFilters.find((f) =>
+        isDashboardCommonDateFilter(f),
+    ) as unknown as IDashboardDateFilter;
     const [dateFiltersWithDimensions, attributeFilters] = partition(
         draggableFilters,
         isDashboardDateFilterWithDimension,
@@ -209,10 +215,10 @@ export function useFiltersWithAddedPlaceholder(
 
     const draggableFiltersWithPlaceholder = useMemo(() => {
         const filterObjects: FilterBarDraggableItems = draggableFilters.map((filter, filterIndex) => {
-            if (isDashboardAttributeFilter(filter)) {
+            if (isDashboardAttributeFilterItem(filter)) {
                 const workingFilter =
                     workingFilters
-                        ?.filter(isDashboardAttributeFilter)
+                        ?.filter(isDashboardAttributeFilterItem)
                         .find((wf) => getFilterIdentifier(wf) === getFilterIdentifier(filter)) ?? filter;
                 return {
                     filter,
@@ -235,8 +241,11 @@ export function useFiltersWithAddedPlaceholder(
         const containsAddedAttributeDisplayForm =
             selectedDisplayForm &&
             draggableFilters.some((draggableFilter) => {
-                if (isDashboardAttributeFilter(draggableFilter)) {
-                    return areObjRefsEqual(draggableFilter.attributeFilter.displayForm, selectedDisplayForm);
+                if (isDashboardAttributeFilterItem(draggableFilter)) {
+                    return areObjRefsEqual(
+                        dashboardAttributeFilterItemDisplayForm(draggableFilter),
+                        selectedDisplayForm,
+                    );
                 }
                 return areObjRefsEqual(draggableFilter.dateFilter.dataSet, selectedDisplayForm);
             });
@@ -285,9 +294,9 @@ export function useFiltersWithAddedPlaceholder(
                 );
 
                 const usedDisplayForm = relatedAttribute?.displayForms.find((df) => {
-                    return attributeFilters.find((x) =>
-                        areObjRefsEqual(x.attributeFilter.displayForm, df.ref),
-                    );
+                    return attributeFilters
+                        .filter(isDashboardAttributeFilterItem)
+                        .find((x) => areObjRefsEqual(dashboardAttributeFilterItemDisplayForm(x), df.ref));
                 });
 
                 const primaryDisplayForm = relatedAttribute?.displayForms.find((df) => {

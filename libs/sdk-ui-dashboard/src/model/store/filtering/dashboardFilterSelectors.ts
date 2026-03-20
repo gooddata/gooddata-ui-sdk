@@ -12,6 +12,7 @@ import {
     isAllValuesDashboardAttributeFilter,
     isDashboardAttributeFilter,
     isDashboardCommonDateFilter,
+    isDashboardDateFilter,
     isDashboardDateFilterWithDimension,
     newAllTimeDashboardDateFilter,
 } from "@gooddata/sdk-model";
@@ -221,14 +222,16 @@ export const isFilterContextItemHidden = (
         );
 
         return config?.mode === "hidden";
-    } else if ((isDashboardCommonDateFilter as RelaxedDateFilterGuard)(filter)) {
-        return commonDateFilterConfig?.mode === "hidden";
-    } else if ((isDashboardDateFilterWithDimension as RelaxedDateFilterGuard)(filter)) {
-        const config = dateFilterWithDimensionConfigs.find((date) =>
-            areObjRefsEqual(date.dateDataSet, filter.dateFilter.dataSet),
-        );
+    } else if (isDashboardDateFilter(filter)) {
+        if ((isDashboardCommonDateFilter as RelaxedDateFilterGuard)(filter)) {
+            return commonDateFilterConfig?.mode === "hidden";
+        } else if ((isDashboardDateFilterWithDimension as RelaxedDateFilterGuard)(filter)) {
+            const config = dateFilterWithDimensionConfigs.find((date) =>
+                areObjRefsEqual(date.dateDataSet, filter.dateFilter.dataSet),
+            );
 
-        return config?.config.mode === "hidden";
+            return config?.config.mode === "hidden";
+        }
     }
 
     return false;
@@ -251,14 +254,16 @@ export const isFilterContextItemLocked = (
         );
 
         return config?.mode === "readonly";
-    } else if ((isDashboardCommonDateFilter as RelaxedDateFilterGuard)(filter)) {
-        return commonDateFilterConfig?.mode === "readonly";
-    } else if ((isDashboardDateFilterWithDimension as RelaxedDateFilterGuard)(filter)) {
-        const config = dateFilterWithDimensionConfigs.find((date) =>
-            areObjRefsEqual(date.dateDataSet, filter.dateFilter.dataSet),
-        );
+    } else if (isDashboardDateFilter(filter)) {
+        if ((isDashboardCommonDateFilter as RelaxedDateFilterGuard)(filter)) {
+            return commonDateFilterConfig?.mode === "readonly";
+        } else if ((isDashboardDateFilterWithDimension as RelaxedDateFilterGuard)(filter)) {
+            const config = dateFilterWithDimensionConfigs.find((date) =>
+                areObjRefsEqual(date.dateDataSet, filter.dateFilter.dataSet),
+            );
 
-        return config?.config.mode === "readonly";
+            return config?.config.mode === "readonly";
+        }
     }
 
     return false;

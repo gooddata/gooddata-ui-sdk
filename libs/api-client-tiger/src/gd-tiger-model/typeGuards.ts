@@ -156,6 +156,14 @@ export function isTigerFilterContextItem(obj: unknown): obj is ITigerFilterConte
         return isDashboardDateFilter(obj);
     }
 
+    if ("arbitraryAttributeFilter" in obj) {
+        return true;
+    }
+
+    if ("matchAttributeFilter" in obj) {
+        return true;
+    }
+
     return false;
 }
 

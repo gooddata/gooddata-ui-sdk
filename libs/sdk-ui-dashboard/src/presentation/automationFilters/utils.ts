@@ -18,6 +18,7 @@ import {
     absoluteDateFilterValues,
     areObjRefsEqual,
     attributeLocalId,
+    dashboardFilterLocalIdentifier,
     filterAttributeElements,
     filterLocalIdentifier,
     filterObjRef,
@@ -29,9 +30,11 @@ import {
     isAllValuesDashboardAttributeFilter,
     isArbitraryAttributeFilter,
     isAttributeFilter,
+    isDashboardArbitraryAttributeFilter,
     isDashboardAttributeFilter,
     isDashboardCommonDateFilter,
     isDashboardDateFilter,
+    isDashboardMatchAttributeFilter,
     isDateFilter,
     isInsightWidget,
     isLocalIdRef,
@@ -50,12 +53,7 @@ import type { ExtendedDashboardWidget } from "../../model/types/layoutTypes.js";
 import { removeIgnoredWidgetFilters } from "../../model/utils/widgetFilters.js";
 
 export const getFilterLocalIdentifier = (filter: FilterContextItem): string | undefined => {
-    if (isDashboardAttributeFilter(filter)) {
-        return filter.attributeFilter.localIdentifier;
-    } else if (isDashboardDateFilter(filter)) {
-        return filter.dateFilter.localIdentifier;
-    }
-    return undefined;
+    return dashboardFilterLocalIdentifier(filter);
 };
 
 export const validateAllFilterLocalIdentifiers = (filters: FilterContextItem[]): boolean => {
@@ -161,12 +159,9 @@ export const getVisibleFiltersByFilters = (
         // and should not be stored in visible filters metadata.
         .filter((filter) => !isAllValuesDashboardAttributeFilter(filter))
         .map((selectedFilter) => {
+            const selectedLocalIdentifier = getFilterLocalIdentifier(selectedFilter);
             const targetFilter = (visibleFiltersMetadata ?? []).find((visibleFilter) => {
-                if (isDashboardAttributeFilter(selectedFilter)) {
-                    return selectedFilter.attributeFilter.localIdentifier === visibleFilter.localIdentifier;
-                } else {
-                    return selectedFilter.dateFilter.localIdentifier === visibleFilter.localIdentifier;
-                }
+                return selectedLocalIdentifier === visibleFilter.localIdentifier;
             });
 
             if (targetFilter && isDashboardDateFilter(selectedFilter)) {
@@ -356,11 +351,14 @@ export const getNonHiddenFilters = (
             return config?.mode !== "hidden";
         } else if ((isDashboardCommonDateFilter as (filter: FilterContextItem) => boolean)(filter)) {
             return !isCommonDateFilterHidden && !disableDateFilters;
-        } else {
+        } else if (isDashboardDateFilter(filter)) {
             const config = dateConfigs.find((date) =>
                 areObjRefsEqual(date.dateDataSet, filter.dateFilter.dataSet),
             );
             return config?.config.mode !== "hidden" && !disableDateFilters;
+        } else {
+            // New filter types (arbitrary, match) - show by default
+            return true;
         }
     });
 };
@@ -547,6 +545,22 @@ export const getFilterTitle = (
             attr.displayForms.some((df) => areObjRefsEqual(df.ref, filter.attributeFilter.displayForm)),
         );
         return attribute?.attribute.title || "";
+    }
+
+    if (isDashboardArbitraryAttributeFilter(filter)) {
+        const attribute = allAttributes.find((attr) =>
+            attr.displayForms.some((df) =>
+                areObjRefsEqual(df.ref, filter.arbitraryAttributeFilter.displayForm),
+            ),
+        );
+        return filter.arbitraryAttributeFilter.title || attribute?.attribute.title || "";
+    }
+
+    if (isDashboardMatchAttributeFilter(filter)) {
+        const attribute = allAttributes.find((attr) =>
+            attr.displayForms.some((df) => areObjRefsEqual(df.ref, filter.matchAttributeFilter.displayForm)),
+        );
+        return filter.matchAttributeFilter.title || attribute?.attribute.title || "";
     }
 
     if (isDashboardDateFilter(filter)) {

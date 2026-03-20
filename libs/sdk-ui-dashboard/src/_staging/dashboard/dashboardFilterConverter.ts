@@ -1,14 +1,16 @@
 // (C) 2021-2026 GoodData Corporation
 
 import {
+    type DashboardAttributeFilterItem,
     type DashboardAttributeFilterSelectionMode,
     type DateFilterGranularity,
     type IAttributeElement,
     type IAttributeElements,
     type IAttributeElementsByRef,
     type IAttributeFilter,
-    type IDashboardAttributeFilter,
+    type IDashboardArbitraryAttributeFilter,
     type IDashboardDateFilter,
+    type IDashboardMatchAttributeFilter,
     type ObjRef,
     absoluteDateFilterValues,
     filterAttributeElements,
@@ -20,37 +22,22 @@ import {
     isMatchAttributeFilter,
     isNegativeAttributeFilter,
     isRelativeDateFilter,
-    newNegativeAttributeFilter,
-    newPositiveAttributeFilter,
     relativeDateFilterValues,
 } from "@gooddata/sdk-model";
 import { DateFilterHelpers, type DateFilterOption } from "@gooddata/sdk-ui-filters";
 
 /**
- * Converts {@link IDashboardAttributeFilter} to {@link IAttributeFilter}.
+ * Converts {@link IAttributeFilter} to {@link DashboardAttributeFilterItem}.
  *
- * @internal
- * @param dashboardFilter - filter to convert
- * @returns converted filter
- */
-export function dashboardAttributeFilterToAttributeFilter(
-    dashboardFilter: IDashboardAttributeFilter,
-): IAttributeFilter {
-    const { attributeElements, displayForm, negativeSelection } = dashboardFilter.attributeFilter;
-    if (negativeSelection) {
-        return newNegativeAttributeFilter(displayForm, attributeElements);
-    } else {
-        return newPositiveAttributeFilter(displayForm, attributeElements);
-    }
-}
-
-/**
- * Converts {@link IAttributeFilter} to {@link IDashboardAttributeFilter}.
+ * @remarks
+ * For arbitrary and match filters, returns the corresponding dedicated dashboard filter type
+ * with full lossless conversion. For element-based filters, returns {@link IDashboardAttributeFilter}.
  *
  * @internal
  * @param filter - filter to convert
  * @param localIdentifier - localIdentifier of the filter
- * @param attributeElements - currently selected elements. Default is taken from the filter param.
+ * @param title - custom title of the filter
+ * @param attributeElements - currently selected elements. Only used for element-based filters.
  * @param isInverted - whether filter has negative selection (NOT_IN operator). Default is taken from the filter param.
  * @param selectionMode - selection mode of the filter (single / multi). Default is undefined.
  * @returns converted filter
@@ -62,40 +49,52 @@ export function attributeFilterToDashboardAttributeFilter(
     attributeElements?: IAttributeElement[],
     isInverted?: boolean,
     selectionMode?: DashboardAttributeFilterSelectionMode,
-): IDashboardAttributeFilter {
+): DashboardAttributeFilterItem {
+    if (isArbitraryAttributeFilter(filter)) {
+        const result: IDashboardArbitraryAttributeFilter = {
+            arbitraryAttributeFilter: {
+                displayForm: filterObjRef(filter),
+                values: filter.arbitraryAttributeFilter.values,
+                negativeSelection: filter.arbitraryAttributeFilter.negativeSelection ?? false,
+                localIdentifier,
+                title,
+            },
+        };
+        return result;
+    }
+
+    if (isMatchAttributeFilter(filter)) {
+        const result: IDashboardMatchAttributeFilter = {
+            matchAttributeFilter: {
+                displayForm: filterObjRef(filter),
+                operator: filter.matchAttributeFilter.operator,
+                literal: filter.matchAttributeFilter.literal,
+                caseSensitive: filter.matchAttributeFilter.caseSensitive,
+                negativeSelection: filter.matchAttributeFilter.negativeSelection ?? false,
+                localIdentifier,
+                title,
+            },
+        };
+        return result;
+    }
+
     const attributeElementsObj: IAttributeElementsByRef | undefined = attributeElements && {
         uris: attributeElements.map((element) => element.uri),
     };
 
     let resolvedElements: IAttributeElements | undefined = attributeElementsObj;
-    let resolvedNegativeSelection = isInverted;
-
-    // TODO INE: add proper support for match/arbitrary filters in CQ-2015
-    if (!resolvedElements) {
-        if (isAttributeFilterWithSelection(filter)) {
-            resolvedElements = filterAttributeElements(filter);
-        } else if (isArbitraryAttributeFilter(filter)) {
-            resolvedElements = {
-                values: filter.arbitraryAttributeFilter.values,
-            };
-            resolvedNegativeSelection = filter.arbitraryAttributeFilter.negativeSelection ?? false;
-        } else if (isMatchAttributeFilter(filter)) {
-            resolvedElements = {
-                values: [filter.matchAttributeFilter.literal],
-            };
-            resolvedNegativeSelection = filter.matchAttributeFilter.negativeSelection ?? false;
-        }
+    if (!resolvedElements && isAttributeFilterWithSelection(filter)) {
+        resolvedElements = filterAttributeElements(filter);
     }
 
     return {
         attributeFilter: {
             attributeElements: resolvedElements ?? { values: [] },
             displayForm: filterObjRef(filter),
-            negativeSelection: resolvedNegativeSelection ?? isNegativeAttributeFilter(filter),
+            negativeSelection: isInverted ?? isNegativeAttributeFilter(filter),
             localIdentifier,
             title,
             selectionMode,
-            // TODO filterElementsBy?
         },
     };
 }

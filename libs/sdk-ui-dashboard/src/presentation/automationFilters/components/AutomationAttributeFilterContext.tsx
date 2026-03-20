@@ -1,8 +1,8 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type ReactNode, createContext, useContext } from "react";
 
-import { type FilterContextItem, type IDashboardAttributeFilter } from "@gooddata/sdk-model";
+import { type DashboardAttributeFilterItem, type FilterContextItem } from "@gooddata/sdk-model";
 
 const AutomationAttributeFilterContext = createContext<IAutomationAttributeFilterContext | null>(null);
 
@@ -12,7 +12,7 @@ const AutomationAttributeFilterContext = createContext<IAutomationAttributeFilte
 export interface IAutomationAttributeFilterContext {
     onChange: (filter: FilterContextItem) => void;
     onDelete: (filter: FilterContextItem) => void;
-    filter: IDashboardAttributeFilter;
+    filter: DashboardAttributeFilterItem;
     isLocked?: boolean;
     deleteAriaLabel?: string;
     deleteTooltipContent?: string;

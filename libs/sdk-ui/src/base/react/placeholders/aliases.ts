@@ -121,7 +121,7 @@ export type NullableFiltersOrPlaceholders = Array<
     | ValueOrMultiValuePlaceholder<INegativeAttributeFilter | null>
     | ValueOrMultiValuePlaceholder<IMeasureValueFilter | null>
     | ValueOrMultiValuePlaceholder<IRankingFilter | null>
-    // TODO INE: do we need to add arbitrary and match filters here?
+    // Arbitrary and match filters are dashboard-level types, not execution filters — they don't belong here
 >;
 
 ///

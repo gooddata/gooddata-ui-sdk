@@ -22,15 +22,7 @@ export function ListItem({
             <button
                 id={isActive ? DATE_FILTER_SELECTED_LIST_ITEM_ID : undefined}
                 role="option"
-                className={cx(
-                    "gd-list-item",
-                    "gd-filter-list-item",
-                    {
-                        "is-selected": isActive,
-                        "gd-filter-list-item-selected": isActive,
-                    },
-                    className,
-                )}
+                className={cx("gd-list-item", "gd-filter-list-item", { "is-selected": isActive }, className)}
                 tabIndex={isActive || isFocusFallback ? 0 : -1}
                 aria-selected={isActive}
                 {...(restProps as any)}

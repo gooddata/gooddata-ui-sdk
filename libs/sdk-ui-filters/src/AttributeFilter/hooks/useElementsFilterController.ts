@@ -843,6 +843,11 @@ function useCallbacks(
     }, [handler]);
 
     const onReset = useCallback(() => {
+        // Cancel any pending debounced search to prevent it from firing after
+        // the dropdown closes — otherwise the stale search string would persist
+        // and trigger an unwanted loadInitialElementsPage on next open.
+        onSearch.cancel();
+
         if (!withoutApply) {
             handler.revertSelection();
         } else if (isSelectionInvalid && withoutApply && isAttributeFilterWithSelection(filter)) {
@@ -871,6 +876,7 @@ function useCallbacks(
         }
     }, [
         handler,
+        onSearch,
         limitingAttributeFilters,
         limitingDateFilters,
         setShouldIncludeLimitingFilters,

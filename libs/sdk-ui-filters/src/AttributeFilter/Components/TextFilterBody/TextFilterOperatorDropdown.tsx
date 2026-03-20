@@ -1,10 +1,17 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { useCallback } from "react";
+import { useCallback, useRef } from "react";
 
 import { defineMessages, useIntl } from "react-intl";
 
-import { Dropdown, type IAlignPoint, SingleSelectListItem } from "@gooddata/sdk-ui-kit";
+import {
+    Dropdown,
+    DropdownButton,
+    type IAlignPoint,
+    SingleSelectListItem,
+    UiListbox,
+    type UiListboxAriaAttributes,
+} from "@gooddata/sdk-ui-kit";
 
 import { type AttributeFilterTextMode } from "../../filterModeTypes.js";
 import { type TextFilterOperator } from "../../textFilterOperatorUtils.js";
@@ -34,6 +41,11 @@ export interface ITextFilterOperatorDropdownProps {
      * Available text sub-modes.
      */
     availableTextModes?: AttributeFilterTextMode[];
+
+    /**
+     * Optional id of the operator trigger button.
+     */
+    controlId?: string;
 }
 
 const operatorMessages = defineMessages({
@@ -55,8 +67,15 @@ const operatorMessages = defineMessages({
  * @alpha
  */
 export function TextFilterOperatorDropdown(props: ITextFilterOperatorDropdownProps) {
-    const { operator, onOperatorChange, disabled, availableTextModes = ["arbitrary", "match"] } = props;
+    const {
+        operator,
+        onOperatorChange,
+        disabled,
+        availableTextModes = ["arbitrary", "match"],
+        controlId,
+    } = props;
     const intl = useIntl();
+    const triggerRef = useRef<HTMLDivElement | null>(null);
 
     type OperatorItem = {
         value: TextFilterOperator;
@@ -114,6 +133,24 @@ export function TextFilterOperatorDropdown(props: ITextFilterOperatorDropdownPro
     const currentOperator = operators.find((op) => op.value === operator) ?? operators[0];
 
     const alignPoints: IAlignPoint[] = [{ align: "bl tl" }, { align: "tl bl" }];
+    const listboxItems = menuItems.map((item) => {
+        if ("type" in item && item.type === "divider") {
+            return {
+                type: "static" as const,
+                data: { type: "separator" as const },
+            };
+        }
+
+        const operatorItem = item as OperatorItem;
+        return {
+            type: "interactive" as const,
+            id: operatorItem.value,
+            stringTitle: intl.formatMessage(operatorItem.message),
+            data: operatorItem,
+        };
+    });
+
+    const buttonValue = intl.formatMessage(currentOperator.message);
 
     return (
         <div className="gd-text-filter-operator-dropdown s-text-filter-operator-dropdown">
@@ -121,47 +158,66 @@ export function TextFilterOperatorDropdown(props: ITextFilterOperatorDropdownPro
                 alignPoints={alignPoints}
                 closeOnParentScroll
                 closeOnOutsideClick
-                renderButton={({ toggleDropdown, isOpen }) => (
-                    <button
-                        type="button"
-                        className="gd-text-filter-operator-dropdown__button gd-input-field s-text-filter-operator-select"
-                        onClick={toggleDropdown}
-                        disabled={disabled}
+                autofocusOnOpen
+                renderButton={({ toggleDropdown, isOpen, buttonRef, dropdownId }) => (
+                    <div
+                        ref={(el) => {
+                            triggerRef.current = el;
+                        }}
                     >
-                        <span>{intl.formatMessage(currentOperator.message)}</span>
-                        <span
-                            className={`gd-text-filter-operator-dropdown__icon gd-icon-navigatedown ${
-                                isOpen ? "is-open" : ""
-                            }`}
+                        <DropdownButton
+                            id={controlId}
+                            value={buttonValue}
+                            disabled={disabled}
+                            className="gd-text-filter-operator-dropdown__button gd-input-field s-text-filter-operator-select"
+                            onClick={toggleDropdown}
+                            buttonRef={buttonRef as React.MutableRefObject<HTMLElement>}
+                            dropdownId={dropdownId}
+                            isOpen={isOpen}
+                            accessibilityConfig={{
+                                ariaExpanded: isOpen,
+                                popupType: "listbox",
+                            }}
                         />
-                    </button>
+                    </div>
                 )}
-                renderBody={({ closeDropdown }) => (
+                renderBody={({ closeDropdown, ariaAttributes }) => (
                     <div className="gd-text-filter-operator-dropdown__menu">
-                        {menuItems.map((item, index) => {
-                            if ("type" in item && item.type === "divider") {
+                        <UiListbox<OperatorItem, { type: "separator" }>
+                            shouldKeyboardActionPreventDefault
+                            shouldKeyboardActionStopPropagation
+                            width={triggerRef.current?.offsetWidth}
+                            items={listboxItems}
+                            selectedItemId={operator}
+                            maxHeight={400}
+                            onSelect={(item) => {
+                                handleOperatorSelect(item.data.value);
+                            }}
+                            onClose={closeDropdown}
+                            ariaAttributes={ariaAttributes as UiListboxAriaAttributes}
+                            InteractiveItemComponent={({ item, isSelected, onSelect, isFocused }) => {
                                 return (
-                                    <div
-                                        key={`divider-${index}`}
+                                    <SingleSelectListItem
+                                        className="gd-text-filter-operator-dropdown__item"
+                                        title={item.stringTitle}
+                                        isSelected={isSelected}
+                                        isFocused={isFocused}
+                                        onClick={onSelect}
+                                    />
+                                );
+                            }}
+                            StaticItemComponent={() => {
+                                return (
+                                    <SingleSelectListItem
+                                        type="separator"
+                                        accessibilityConfig={{
+                                            role: "separator",
+                                        }}
                                         className="gd-text-filter-operator-dropdown__divider"
                                     />
                                 );
-                            }
-                            const operatorItem = item as OperatorItem;
-                            return (
-                                <SingleSelectListItem
-                                    key={operatorItem.value}
-                                    className="gd-text-filter-operator-dropdown__item"
-                                    title={intl.formatMessage(operatorItem.message)}
-                                    isSelected={operatorItem.value === operator}
-                                    elementType="button"
-                                    onClick={() => {
-                                        handleOperatorSelect(operatorItem.value);
-                                        closeDropdown();
-                                    }}
-                                />
-                            );
-                        })}
+                            }}
+                        />
                     </div>
                 )}
             />

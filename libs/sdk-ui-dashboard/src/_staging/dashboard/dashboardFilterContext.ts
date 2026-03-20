@@ -8,6 +8,8 @@ import {
     type IDashboardObjectIdentity,
     type IDateFilterConfig,
     type IFilterContextDefinition,
+    dashboardAttributeFilterItemFilterElementsBy,
+    dashboardFilterLocalIdentifier,
     filterAttributeElements,
     filterLocalIdentifier,
     filterObjRef,
@@ -15,7 +17,9 @@ import {
     isAllTimeDateFilter,
     isArbitraryAttributeFilter,
     isAttributeFilterWithSelection,
+    isDashboardArbitraryAttributeFilter,
     isDashboardAttributeFilter,
+    isDashboardAttributeFilterItem,
     isMatchAttributeFilter,
     isNegativeAttributeFilter,
     isRelativeBoundedDateFilter,
@@ -115,24 +119,42 @@ export function dashboardFilterContextSanitize(
     filterContext: IFilterContextDefinition,
 ): IFilterContextDefinition {
     const filters = filterContext.filters;
-    const filterLocalIdentifiers = filters
-        .filter(isDashboardAttributeFilter)
-        .map((filter) => filter.attributeFilter.localIdentifier);
+    const allAttributeFilterLocalIds = filters
+        .filter((filter) => isDashboardAttributeFilterItem(filter))
+        .map(dashboardFilterLocalIdentifier)
+        .filter(Boolean) as string[];
 
     const sanitizedFilters = filters.map((filter) => {
-        if (!isDashboardAttributeFilter(filter) || !filter.attributeFilter.filterElementsBy) {
+        if (!isDashboardAttributeFilterItem(filter)) {
             return filter;
         }
-        const sanitizedFilterElementsBy = filter.attributeFilter.filterElementsBy.filter(
-            (filterElementsBy) =>
-                filterLocalIdentifiers.indexOf(filterElementsBy.filterLocalIdentifier) !== -1,
+
+        const filterElementsBy = dashboardAttributeFilterItemFilterElementsBy(filter);
+        if (!filterElementsBy) {
+            return filter;
+        }
+
+        const sanitizedFilterElementsBy = filterElementsBy.filter((parent) =>
+            allAttributeFilterLocalIds.includes(parent.filterLocalIdentifier),
         );
-        return {
-            attributeFilter: {
-                ...filter.attributeFilter,
-                filterElementsBy: sanitizedFilterElementsBy,
-            },
-        };
+
+        if (isDashboardAttributeFilter(filter)) {
+            return {
+                attributeFilter: {
+                    ...filter.attributeFilter,
+                    filterElementsBy: sanitizedFilterElementsBy,
+                },
+            };
+        }
+        if (isDashboardArbitraryAttributeFilter(filter)) {
+            return {
+                arbitraryAttributeFilter: {
+                    ...filter.arbitraryAttributeFilter,
+                    filterElementsBy: sanitizedFilterElementsBy,
+                },
+            };
+        }
+        return filter;
     });
 
     return {
@@ -160,24 +182,21 @@ export function dashboardFilterToFilterContextItem(
         };
     } else if (isArbitraryAttributeFilter(filter)) {
         return {
-            attributeFilter: {
-                negativeSelection: filter.arbitraryAttributeFilter.negativeSelection ?? false,
+            arbitraryAttributeFilter: {
                 displayForm: filterObjRef(filter),
-                attributeElements: { values: filter.arbitraryAttributeFilter.values },
-                selectionMode: "multi",
+                values: filter.arbitraryAttributeFilter.values,
+                negativeSelection: filter.arbitraryAttributeFilter.negativeSelection ?? false,
                 localIdentifier: filterLocalIdentifier(filter),
             },
         };
     } else if (isMatchAttributeFilter(filter)) {
-        // TODO INE: add support for match filters in CQ-2015
-        // operator/caseSensitive are not representable in FilterContextItem and are intentionally dropped here.
-
         return {
-            attributeFilter: {
-                negativeSelection: filter.matchAttributeFilter.negativeSelection ?? false,
+            matchAttributeFilter: {
                 displayForm: filterObjRef(filter),
-                attributeElements: { values: [filter.matchAttributeFilter.literal] },
-                selectionMode: "multi",
+                operator: filter.matchAttributeFilter.operator,
+                literal: filter.matchAttributeFilter.literal,
+                caseSensitive: filter.matchAttributeFilter.caseSensitive,
+                negativeSelection: filter.matchAttributeFilter.negativeSelection,
                 localIdentifier: filterLocalIdentifier(filter),
             },
         };

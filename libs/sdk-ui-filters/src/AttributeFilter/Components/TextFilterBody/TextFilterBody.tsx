@@ -5,126 +5,20 @@ import { useCallback } from "react";
 import cx from "classnames";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { Checkbox, Input, UiLink } from "@gooddata/sdk-ui-kit";
+import { ValidationContextStore } from "@gooddata/sdk-ui";
+import { Checkbox, Input, UiLink, isEnterKey, useIdPrefixed } from "@gooddata/sdk-ui-kit";
 
 import { ArbitraryValuesInput } from "./ArbitraryValuesInput.js";
 import { ArbitraryValuesTooltip } from "./ArbitraryValuesTooltip.js";
 import { TextFilterOperatorDropdown } from "./TextFilterOperatorDropdown.js";
 import { TextFilterStateSummary } from "./TextFilterStateSummary.js";
 import { TextFilterValidationMessages } from "./TextFilterValidationMessages.js";
+import { type ITextFilterBodyProps } from "./types.js";
 import { useTextFilterBodyTexts } from "./useTextFilterBodyTexts.js";
-import { type AttributeFilterTextMode } from "../../filterModeTypes.js";
-import { type TextFilterOperator, isAllOperator, isMatchOperator } from "../../textFilterOperatorUtils.js";
-
-/**
- * Props for TextFilterBody component.
- *
- * @alpha
- */
-export interface ITextFilterBodyProps {
-    /**
-     * Current operator
-     */
-    operator: TextFilterOperator;
-
-    /**
-     * Current values (chips for is/is not) or literal (single input for others)
-     */
-    values: Array<string | null>;
-
-    /**
-     * Literal for like operators (when not using chips)
-     */
-    literal: string;
-
-    /**
-     * Case sensitive flag for like operators
-     */
-    caseSensitive: boolean;
-
-    /**
-     * Callback when operator changes
-     */
-    onOperatorChange?: (operator: TextFilterOperator) => void;
-
-    /**
-     * Callback when values change (for is/is not)
-     */
-    onValuesChange?: (values: Array<string | null>) => void;
-
-    /**
-     * Callback when values input loses focus.
-     */
-    onValuesBlur?: () => void;
-
-    /**
-     * Callback when literal changes (for other operators)
-     */
-    onLiteralChange?: (literal: string) => void;
-
-    /**
-     * Callback when literal field loses focus.
-     */
-    onLiteralBlur?: () => void;
-
-    /**
-     * Callback to toggle case sensitivity
-     */
-    onToggleCaseSensitive?: () => void;
-
-    /**
-     * True if empty-literal validation should be shown.
-     */
-    hasLiteralEmptyError?: boolean;
-
-    /**
-     * True if empty-values validation should be shown.
-     */
-    hasValuesEmptyError?: boolean;
-
-    /**
-     * True when at value limit (values.length === max) - warning shown, Apply enabled.
-     */
-    hasValuesLimitReachedWarning?: boolean;
-
-    /**
-     * True when value limit exceeded (truncated) - error shown, Apply disabled.
-     */
-    hasValuesLimitExceededError?: boolean;
-
-    /**
-     * Attribute title for context
-     */
-    attributeTitle: string;
-
-    /**
-     * Whether the filter is disabled
-     */
-    disabled?: boolean;
-
-    /**
-     * Available text sub-modes.
-     */
-    availableTextModes?: AttributeFilterTextMode[];
-
-    /**
-     * Autocomplete suggestions for the values input (is / is not operators).
-     * Populated from the loaded attribute elements so the user can pick known values.
-     */
-    autocompleteOptions?: string[];
-
-    /**
-     * Optional callback to trigger a search for autocomplete suggestions.
-     * When provided, this will be called as the user types to fetch matching elements
-     * from the backend.
-     */
-    onAutocompleteSearch?: (searchString: string) => void;
-
-    /**
-     * Whether autocomplete is currently loading results from the backend.
-     */
-    isAutocompleteLoading?: boolean;
-}
+import { useTextFilterBodyValidation } from "./useTextFilterBodyValidation.js";
+import { useAttributeFilterDropdownHeader } from "../../hooks/useAttributeFilterDropdownHeader.js";
+import { isAllOperator, isMatchOperator } from "../../textFilterOperatorUtils.js";
+import { AttributeFilterDropdownHeader } from "../Dropdown/AttributeFilterDropdownHeader.js";
 
 /**
  * Unified text filter body component.
@@ -155,6 +49,8 @@ export function TextFilterBody(props: ITextFilterBodyProps) {
         isAutocompleteLoading,
     } = props;
 
+    const { showFilterHeader, headerProps } = useAttributeFilterDropdownHeader();
+
     const isArbitraryOperator = operator === "is" || operator === "isNot";
     const isAll = isAllOperator(operator);
 
@@ -168,108 +64,153 @@ export function TextFilterBody(props: ITextFilterBodyProps) {
     const intl = useIntl();
     const { arbitraryValuePlaceholder, matchValuePlaceholder, arbitraryFilterValue, matchFilterValue } =
         useTextFilterBodyTexts();
+    const operatorSelectId = useIdPrefixed("text-filter-operator-select");
+    const valuesInputId = useIdPrefixed("text-filter-values-input");
+    const literalInputId = useIdPrefixed("text-filter-literal-input");
+    const { validationContextValue, describedByFromValidation, hasErrorInValidation } =
+        useTextFilterBodyValidation({
+            operator,
+            hasLiteralEmptyError,
+            hasValuesEmptyError,
+            hasValuesLimitReachedWarning,
+            hasValuesLimitExceededError,
+        });
+
+    const { getInvalidDatapoints } = validationContextValue;
+    const invalidDatapoint = getInvalidDatapoints()[0];
+    const inputErrorId = invalidDatapoint?.id ?? "";
+
+    const clearAllValues = useCallback(() => {
+        if (!disabled) {
+            onValuesChange?.([]);
+        }
+    }, [disabled, onValuesChange]);
 
     return (
-        <div className="gd-text-filter-body s-text-filter-body">
-            <div className="gd-text-filter-body__operator">
-                <label className="gd-text-filter-body__label">
-                    <FormattedMessage id="attributeFilter.text.condition" />
-                </label>
-                <TextFilterOperatorDropdown
-                    operator={operator}
-                    onOperatorChange={onOperatorChange}
-                    disabled={disabled}
-                    availableTextModes={availableTextModes}
-                />
-            </div>
-
-            {!isAll && (
-                <div className="gd-text-filter-body__values">
-                    <div
-                        className={cx("gd-text-filter-body__values-header", {
-                            "gd-text-filter-body__values-header--disabled": disabled,
-                        })}
-                    >
-                        <label
-                            className={cx("gd-text-filter-body__label", {
-                                "gd-text-filter-body__label-with-help": isArbitraryOperator,
-                            })}
-                        >
-                            {isArbitraryOperator ? arbitraryFilterValue : matchFilterValue}
-                            {isArbitraryOperator ? <ArbitraryValuesTooltip /> : null}
+        <>
+            {showFilterHeader ? <AttributeFilterDropdownHeader {...headerProps} /> : null}
+            <ValidationContextStore value={validationContextValue}>
+                <div className="gd-text-filter-body s-text-filter-body">
+                    <div className="gd-text-filter-body__operator">
+                        <label htmlFor={operatorSelectId} className="gd-text-filter-body__label">
+                            <FormattedMessage id="attributeFilter.text.condition" />
                         </label>
-                        {isArbitraryOperator && values.length > 0 ? (
-                            <UiLink
-                                variant="secondary"
-                                role="button"
-                                onClick={() => !disabled && onValuesChange?.([])}
-                                aria-label={intl.formatMessage({
-                                    id: "attributeFilter.text.values.clearAll",
-                                })}
-                                aria-disabled={disabled}
-                                tabIndex={disabled ? -1 : 0}
-                                dataTestId="s-text-filter-clear-all"
-                            >
-                                <FormattedMessage id="attributeFilter.text.values.clearAll" />
-                            </UiLink>
-                        ) : null}
+                        <TextFilterOperatorDropdown
+                            operator={operator}
+                            onOperatorChange={onOperatorChange}
+                            disabled={disabled}
+                            availableTextModes={availableTextModes}
+                            controlId={operatorSelectId}
+                        />
                     </div>
 
-                    {isArbitraryOperator ? (
-                        <ArbitraryValuesInput
-                            values={values}
-                            onValuesChange={onValuesChange}
-                            onBlur={onValuesBlur}
-                            hasEmptyError={hasValuesEmptyError}
-                            hasValuesLimitReachedWarning={hasValuesLimitReachedWarning}
-                            hasValuesLimitExceededError={hasValuesLimitExceededError}
-                            placeholder={arbitraryValuePlaceholder}
-                            disabled={disabled}
-                            emptyValueDisplay={`(${intl.formatMessage({ id: "empty_value" })})`}
-                            autocompleteOptions={autocompleteOptions}
-                            onAutocompleteSearch={onAutocompleteSearch}
-                            isAutocompleteLoading={isAutocompleteLoading}
-                        />
-                    ) : (
-                        <Input
-                            type="text"
-                            className={cx("gd-text-filter-body__input s-text-filter-input", {
-                                "gd-text-filter-body__input--error s-text-filter-input-error":
-                                    hasLiteralEmptyError,
-                            })}
-                            hasError={hasLiteralEmptyError}
-                            value={literal}
-                            onChange={handleLiteralChange}
-                            onBlur={onLiteralBlur}
-                            placeholder={matchValuePlaceholder}
-                            disabled={disabled}
-                        />
+                    {!isAll && (
+                        <div className="gd-text-filter-body__values">
+                            <div
+                                className={cx("gd-text-filter-body__values-header", {
+                                    "gd-text-filter-body__values-header--disabled": disabled,
+                                })}
+                            >
+                                <label
+                                    htmlFor={isArbitraryOperator ? valuesInputId : literalInputId}
+                                    className={cx("gd-text-filter-body__label", {
+                                        "gd-text-filter-body__label-with-help": isArbitraryOperator,
+                                    })}
+                                >
+                                    {isArbitraryOperator ? arbitraryFilterValue : matchFilterValue}
+                                    {isArbitraryOperator ? <ArbitraryValuesTooltip /> : null}
+                                </label>
+                                {isArbitraryOperator && values.length > 0 ? (
+                                    <UiLink
+                                        variant="secondary"
+                                        role="button"
+                                        onClick={clearAllValues}
+                                        onKeyDown={(event) => {
+                                            if (isEnterKey(event)) {
+                                                event.preventDefault();
+                                                clearAllValues();
+                                            }
+                                        }}
+                                        aria-label={intl.formatMessage({
+                                            id: "attributeFilter.text.values.clearAll",
+                                        })}
+                                        aria-disabled={disabled}
+                                        tabIndex={disabled ? -1 : 0}
+                                        dataTestId="s-text-filter-clear-all"
+                                    >
+                                        <FormattedMessage id="attributeFilter.text.values.clearAll" />
+                                    </UiLink>
+                                ) : null}
+                            </div>
+
+                            {isArbitraryOperator ? (
+                                <ArbitraryValuesInput
+                                    values={values}
+                                    onValuesChange={onValuesChange}
+                                    onBlur={onValuesBlur}
+                                    hasEmptyError={hasValuesEmptyError}
+                                    hasValuesLimitReachedWarning={hasValuesLimitReachedWarning}
+                                    hasValuesLimitExceededError={hasValuesLimitExceededError}
+                                    placeholder={arbitraryValuePlaceholder}
+                                    disabled={disabled}
+                                    emptyValueDisplay={`(${intl.formatMessage({ id: "empty_value" })})`}
+                                    autocompleteOptions={autocompleteOptions}
+                                    onAutocompleteSearch={onAutocompleteSearch}
+                                    isAutocompleteLoading={isAutocompleteLoading}
+                                    inputId={valuesInputId}
+                                    ariaDescribedBy={describedByFromValidation}
+                                />
+                            ) : (
+                                <Input
+                                    id={literalInputId}
+                                    type="text"
+                                    className={cx("gd-text-filter-body__input s-text-filter-input", {
+                                        "gd-text-filter-body__input--error s-text-filter-input-error":
+                                            hasLiteralEmptyError,
+                                    })}
+                                    hasError={hasLiteralEmptyError}
+                                    value={literal}
+                                    onChange={handleLiteralChange}
+                                    onBlur={onLiteralBlur}
+                                    placeholder={matchValuePlaceholder}
+                                    disabled={disabled}
+                                    accessibilityConfig={{
+                                        ariaDescribedBy: describedByFromValidation,
+                                        ariaInvalid: hasErrorInValidation || undefined,
+                                    }}
+                                />
+                            )}
+
+                            <TextFilterValidationMessages
+                                errorText={invalidDatapoint?.message}
+                                descriptionId={inputErrorId}
+                                hasLiteralEmptyError={hasLiteralEmptyError}
+                                hasValuesEmptyError={hasValuesEmptyError}
+                                hasValuesLimitReachedWarning={hasValuesLimitReachedWarning}
+                                hasValuesLimitExceededError={hasValuesLimitExceededError}
+                            />
+                        </div>
                     )}
-                    <TextFilterValidationMessages
-                        isArbitraryOperator={isArbitraryOperator}
-                        hasLiteralEmptyError={hasLiteralEmptyError}
-                        hasValuesEmptyError={hasValuesEmptyError}
-                        hasValuesLimitReachedWarning={hasValuesLimitReachedWarning}
-                        hasValuesLimitExceededError={hasValuesLimitExceededError}
-                    />
-                </div>
-            )}
 
-            {/* Case sensitivity - only for non-arbitrary operators */}
-            {isMatchOperator(operator) && (
-                <div className="gd-text-filter-body__options">
-                    <Checkbox
-                        value={caseSensitive}
-                        text={intl.formatMessage({
-                            id: "attributeFilter.text.caseSensitive",
-                        })}
-                        onChange={onToggleCaseSensitive}
-                        disabled={disabled}
-                    />
-                </div>
-            )}
+                    {/* Case sensitivity - only for non-arbitrary operators */}
+                    {isMatchOperator(operator) ? (
+                        <div className="gd-text-filter-body__options">
+                            <Checkbox
+                                value={caseSensitive}
+                                text={intl.formatMessage({
+                                    id: "attributeFilter.text.caseSensitive",
+                                })}
+                                onChange={onToggleCaseSensitive}
+                                disabled={disabled}
+                            />
+                        </div>
+                    ) : null}
 
-            {isAll ? null : <TextFilterStateSummary operator={operator} values={values} literal={literal} />}
-        </div>
+                    {isAll ? null : (
+                        <TextFilterStateSummary operator={operator} values={values} literal={literal} />
+                    )}
+                </div>
+            </ValidationContextStore>
+        </>
     );
 }

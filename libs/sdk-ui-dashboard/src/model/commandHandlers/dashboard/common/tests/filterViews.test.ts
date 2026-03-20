@@ -1,8 +1,8 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
-import { type FilterContextItem, type IFilterContext } from "@gooddata/sdk-model";
+import { type FilterContextItem, type IFilterContext, idRef } from "@gooddata/sdk-model";
 
 import { changeFilterContextSelection } from "../filterViews.js";
 
@@ -134,6 +134,48 @@ describe("filterViews", () => {
                     });
                 },
             );
+
+            it("should reset attribute filter when title differs between dashboard and view", () => {
+                const filterContext = buildFilterContext([
+                    {
+                        attributeFilter: {
+                            attributeElements: { uris: ["Content"] },
+                            displayForm: { identifier: "campaign_channels.category", type: "displayForm" },
+                            negativeSelection: false,
+                            localIdentifier: "86e90c9b864e4701affced5e55b36b9c",
+                            selectionMode: "single",
+                            title: "Current Title",
+                        },
+                    },
+                ]);
+
+                const filterViewFilters: FilterContextItem[] = [
+                    {
+                        attributeFilter: {
+                            attributeElements: { uris: ["A", "B"] },
+                            displayForm: { identifier: "campaign_channels.category", type: "displayForm" },
+                            negativeSelection: false,
+                            localIdentifier: "86e90c9b864e4701affced5e55b36b9c",
+                            selectionMode: "single",
+                            title: "Old Title From View",
+                        },
+                    },
+                ];
+
+                const updatedFilterContext = changeFilterContextSelection(filterContext, filterViewFilters);
+                expect(updatedFilterContext.filters).toEqual([
+                    {
+                        attributeFilter: {
+                            attributeElements: { uris: [] },
+                            displayForm: { identifier: "campaign_channels.category", type: "displayForm" },
+                            negativeSelection: true,
+                            localIdentifier: "86e90c9b864e4701affced5e55b36b9c",
+                            selectionMode: "single",
+                            title: "Current Title",
+                        },
+                    },
+                ]);
+            });
 
             it("should update filter if everything apart from selected elements is the same", () => {
                 const filterContext = buildFilterContext([
@@ -474,6 +516,538 @@ describe("filterViews", () => {
                             },
                         ],
                     });
+                });
+            });
+        });
+
+        describe("text attribute filter (arbitrary, match)", () => {
+            const displayFormRef = { identifier: "campaign_channels.category", type: "displayForm" as const };
+            const localId = "text-filter-1";
+
+            describe("arbitrary filter", () => {
+                it("should restore arbitrary filter selection from view when matched by localIdentifier", () => {
+                    const filterContext = buildFilterContext([
+                        {
+                            arbitraryAttributeFilter: {
+                                displayForm: displayFormRef,
+                                values: ["old"],
+                                negativeSelection: false,
+                                localIdentifier: localId,
+                            },
+                        },
+                    ]);
+
+                    const filterViewFilters: FilterContextItem[] = [
+                        {
+                            arbitraryAttributeFilter: {
+                                displayForm: displayFormRef,
+                                values: ["A", "B"],
+                                negativeSelection: true,
+                                localIdentifier: localId,
+                            },
+                        },
+                    ];
+
+                    const updatedFilterContext = changeFilterContextSelection(
+                        filterContext,
+                        filterViewFilters,
+                    );
+                    expect(updatedFilterContext).toEqual({
+                        ...filterContext,
+                        filters: filterViewFilters,
+                    });
+                });
+
+                it("should preserve dashboard title when applying arbitrary filter from view", () => {
+                    const filterContext = buildFilterContext([
+                        {
+                            arbitraryAttributeFilter: {
+                                displayForm: displayFormRef,
+                                values: ["old"],
+                                negativeSelection: false,
+                                localIdentifier: localId,
+                                title: "My Filter",
+                            },
+                        },
+                    ]);
+
+                    const filterViewFilters: FilterContextItem[] = [
+                        {
+                            arbitraryAttributeFilter: {
+                                displayForm: displayFormRef,
+                                values: ["A", "B"],
+                                negativeSelection: true,
+                                localIdentifier: localId,
+                                title: "My Filter",
+                            },
+                        },
+                    ];
+
+                    const updatedFilterContext = changeFilterContextSelection(
+                        filterContext,
+                        filterViewFilters,
+                    );
+                    expect(updatedFilterContext.filters).toEqual([
+                        {
+                            arbitraryAttributeFilter: {
+                                displayForm: displayFormRef,
+                                values: ["A", "B"],
+                                negativeSelection: true,
+                                localIdentifier: localId,
+                                title: "My Filter",
+                            },
+                        },
+                    ]);
+                });
+
+                it("should preserve dashboard filterElementsBy, filterElementsByDate, validateElementsBy when applying arbitrary filter from view", () => {
+                    const filterElementsBy = [
+                        {
+                            filterLocalIdentifier: "parent-filter",
+                            over: { attributes: [{ identifier: "parent", type: "displayForm" as const }] },
+                        },
+                    ];
+                    const filterElementsByDate = [
+                        {
+                            filterLocalIdentifier: "date-filter",
+                            isCommonDate: false,
+                        },
+                    ];
+                    const validateElementsBy = [idRef("validate", "displayForm")];
+
+                    const filterContext = buildFilterContext([
+                        {
+                            arbitraryAttributeFilter: {
+                                displayForm: displayFormRef,
+                                values: ["old"],
+                                negativeSelection: false,
+                                localIdentifier: localId,
+                                title: "My Filter",
+                                filterElementsBy,
+                                filterElementsByDate,
+                                validateElementsBy,
+                            },
+                        },
+                    ]);
+
+                    const filterViewFilters: FilterContextItem[] = [
+                        {
+                            arbitraryAttributeFilter: {
+                                displayForm: displayFormRef,
+                                values: ["A", "B"],
+                                negativeSelection: true,
+                                localIdentifier: localId,
+                                title: "My Filter",
+                            },
+                        },
+                    ];
+
+                    const updatedFilterContext = changeFilterContextSelection(
+                        filterContext,
+                        filterViewFilters,
+                    );
+                    expect(updatedFilterContext.filters).toEqual([
+                        {
+                            arbitraryAttributeFilter: {
+                                displayForm: displayFormRef,
+                                values: ["A", "B"],
+                                negativeSelection: true,
+                                localIdentifier: localId,
+                                title: "My Filter",
+                                filterElementsBy,
+                                filterElementsByDate,
+                                validateElementsBy,
+                            },
+                        },
+                    ]);
+                });
+
+                it("should reset arbitrary filter when title differs", () => {
+                    const filterContext = buildFilterContext([
+                        {
+                            arbitraryAttributeFilter: {
+                                displayForm: displayFormRef,
+                                values: ["old"],
+                                negativeSelection: false,
+                                localIdentifier: localId,
+                                title: "Current Title",
+                            },
+                        },
+                    ]);
+
+                    const filterViewFilters: FilterContextItem[] = [
+                        {
+                            arbitraryAttributeFilter: {
+                                displayForm: displayFormRef,
+                                values: ["A", "B"],
+                                negativeSelection: true,
+                                localIdentifier: localId,
+                                title: "Old Saved Title",
+                            },
+                        },
+                    ];
+
+                    const updatedFilterContext = changeFilterContextSelection(
+                        filterContext,
+                        filterViewFilters,
+                    );
+                    expect(updatedFilterContext.filters).toEqual([
+                        {
+                            arbitraryAttributeFilter: {
+                                displayForm: displayFormRef,
+                                values: [],
+                                negativeSelection: true,
+                                localIdentifier: localId,
+                                title: "Current Title",
+                                filterElementsBy: undefined,
+                                filterElementsByDate: undefined,
+                                validateElementsBy: undefined,
+                            },
+                        },
+                    ]);
+                });
+
+                it("should reset arbitrary filter when not found in view", () => {
+                    const filterContext = buildFilterContext([
+                        {
+                            arbitraryAttributeFilter: {
+                                displayForm: displayFormRef,
+                                values: ["selected"],
+                                negativeSelection: false,
+                                localIdentifier: localId,
+                            },
+                        },
+                    ]);
+
+                    const filterViewFilters: FilterContextItem[] = [];
+
+                    const updatedFilterContext = changeFilterContextSelection(
+                        filterContext,
+                        filterViewFilters,
+                    );
+                    expect(updatedFilterContext.filters).toEqual([
+                        {
+                            arbitraryAttributeFilter: {
+                                displayForm: displayFormRef,
+                                values: [],
+                                negativeSelection: true,
+                                localIdentifier: localId,
+                            },
+                        },
+                    ]);
+                });
+
+                it("should reset arbitrary filter when matched by localIdentifier but displayForm differs", () => {
+                    const filterContext = buildFilterContext([
+                        {
+                            arbitraryAttributeFilter: {
+                                displayForm: displayFormRef,
+                                values: ["selected"],
+                                negativeSelection: false,
+                                localIdentifier: localId,
+                            },
+                        },
+                    ]);
+
+                    const filterViewFilters: FilterContextItem[] = [
+                        {
+                            arbitraryAttributeFilter: {
+                                displayForm: { identifier: "other.displayForm", type: "displayForm" },
+                                values: ["A", "B"],
+                                negativeSelection: false,
+                                localIdentifier: localId,
+                            },
+                        },
+                    ];
+
+                    const updatedFilterContext = changeFilterContextSelection(
+                        filterContext,
+                        filterViewFilters,
+                    );
+                    expect(updatedFilterContext.filters).toEqual([
+                        {
+                            arbitraryAttributeFilter: {
+                                displayForm: displayFormRef,
+                                values: [],
+                                negativeSelection: true,
+                                localIdentifier: localId,
+                            },
+                        },
+                    ]);
+                });
+            });
+
+            describe("match filter", () => {
+                it("should restore match filter selection from view when matched by localIdentifier", () => {
+                    const filterContext = buildFilterContext([
+                        {
+                            matchAttributeFilter: {
+                                displayForm: displayFormRef,
+                                operator: "contains",
+                                literal: "old",
+                                caseSensitive: false,
+                                localIdentifier: localId,
+                            },
+                        },
+                    ]);
+
+                    const filterViewFilters: FilterContextItem[] = [
+                        {
+                            matchAttributeFilter: {
+                                displayForm: displayFormRef,
+                                operator: "contains",
+                                literal: "new-value",
+                                caseSensitive: true,
+                                negativeSelection: true,
+                                localIdentifier: localId,
+                            },
+                        },
+                    ];
+
+                    const updatedFilterContext = changeFilterContextSelection(
+                        filterContext,
+                        filterViewFilters,
+                    );
+                    expect(updatedFilterContext).toEqual({
+                        ...filterContext,
+                        filters: filterViewFilters,
+                    });
+                });
+
+                it("should reset match filter when not found in view", () => {
+                    const filterContext = buildFilterContext([
+                        {
+                            matchAttributeFilter: {
+                                displayForm: displayFormRef,
+                                operator: "startsWith",
+                                literal: "prefix",
+                                localIdentifier: localId,
+                            },
+                        },
+                    ]);
+
+                    const filterViewFilters: FilterContextItem[] = [];
+
+                    const updatedFilterContext = changeFilterContextSelection(
+                        filterContext,
+                        filterViewFilters,
+                    );
+                    expect(updatedFilterContext.filters).toEqual([
+                        {
+                            arbitraryAttributeFilter: {
+                                displayForm: displayFormRef,
+                                values: [],
+                                negativeSelection: true,
+                                localIdentifier: localId,
+                            },
+                        },
+                    ]);
+                });
+
+                it("should allow to change operator of match filter", () => {
+                    const filterContext = buildFilterContext([
+                        {
+                            matchAttributeFilter: {
+                                displayForm: displayFormRef,
+                                operator: "contains",
+                                literal: "value",
+                                localIdentifier: localId,
+                            },
+                        },
+                    ]);
+
+                    const filterViewFilters: FilterContextItem[] = [
+                        {
+                            matchAttributeFilter: {
+                                displayForm: displayFormRef,
+                                operator: "endsWith",
+                                literal: "different",
+                                localIdentifier: localId,
+                            },
+                        },
+                    ];
+
+                    const updatedFilterContext = changeFilterContextSelection(
+                        filterContext,
+                        filterViewFilters,
+                    );
+                    expect(updatedFilterContext.filters).toEqual([
+                        {
+                            matchAttributeFilter: {
+                                displayForm: displayFormRef,
+                                operator: "endsWith",
+                                literal: "different",
+                                localIdentifier: localId,
+                            },
+                        },
+                    ]);
+                });
+            });
+
+            describe("cross-type (arbitrary vs match)", () => {
+                it("should apply arbitrary filter from view when dashboard has match filter with same localId", () => {
+                    const filterContext = buildFilterContext([
+                        {
+                            matchAttributeFilter: {
+                                displayForm: displayFormRef,
+                                operator: "contains",
+                                literal: "value",
+                                localIdentifier: localId,
+                            },
+                        },
+                    ]);
+
+                    const filterViewFilters: FilterContextItem[] = [
+                        {
+                            arbitraryAttributeFilter: {
+                                displayForm: displayFormRef,
+                                values: ["A", "B"],
+                                negativeSelection: false,
+                                localIdentifier: localId,
+                            },
+                        },
+                    ];
+
+                    const updatedFilterContext = changeFilterContextSelection(
+                        filterContext,
+                        filterViewFilters,
+                    );
+                    expect(updatedFilterContext.filters).toEqual([
+                        {
+                            arbitraryAttributeFilter: {
+                                displayForm: displayFormRef,
+                                values: ["A", "B"],
+                                negativeSelection: false,
+                                localIdentifier: localId,
+                            },
+                        },
+                    ]);
+                });
+
+                it("should apply match filter from view when dashboard has arbitrary filter with same localId", () => {
+                    const filterContext = buildFilterContext([
+                        {
+                            arbitraryAttributeFilter: {
+                                displayForm: displayFormRef,
+                                values: ["A", "B"],
+                                negativeSelection: false,
+                                localIdentifier: localId,
+                            },
+                        },
+                    ]);
+
+                    const filterViewFilters: FilterContextItem[] = [
+                        {
+                            matchAttributeFilter: {
+                                displayForm: displayFormRef,
+                                operator: "contains",
+                                literal: "value",
+                                localIdentifier: localId,
+                            },
+                        },
+                    ];
+
+                    const updatedFilterContext = changeFilterContextSelection(
+                        filterContext,
+                        filterViewFilters,
+                    );
+                    expect(updatedFilterContext.filters).toEqual([
+                        {
+                            matchAttributeFilter: {
+                                displayForm: displayFormRef,
+                                operator: "contains",
+                                literal: "value",
+                                localIdentifier: localId,
+                            },
+                        },
+                    ]);
+                });
+
+                it("should preserve dashboard title on cross-type change", () => {
+                    const filterContext = buildFilterContext([
+                        {
+                            arbitraryAttributeFilter: {
+                                displayForm: displayFormRef,
+                                values: ["A"],
+                                negativeSelection: false,
+                                localIdentifier: localId,
+                                title: "My Filter",
+                            },
+                        },
+                    ]);
+
+                    const filterViewFilters: FilterContextItem[] = [
+                        {
+                            matchAttributeFilter: {
+                                displayForm: displayFormRef,
+                                operator: "contains",
+                                literal: "value",
+                                localIdentifier: localId,
+                                title: "My Filter",
+                            },
+                        },
+                    ];
+
+                    const updatedFilterContext = changeFilterContextSelection(
+                        filterContext,
+                        filterViewFilters,
+                    );
+                    expect(updatedFilterContext.filters).toEqual([
+                        {
+                            matchAttributeFilter: {
+                                displayForm: displayFormRef,
+                                operator: "contains",
+                                literal: "value",
+                                localIdentifier: localId,
+                                title: "My Filter",
+                            },
+                        },
+                    ]);
+                });
+
+                it("should reset on cross-type change when title differs", () => {
+                    const filterContext = buildFilterContext([
+                        {
+                            arbitraryAttributeFilter: {
+                                displayForm: displayFormRef,
+                                values: ["A"],
+                                negativeSelection: false,
+                                localIdentifier: localId,
+                                title: "Dashboard Title",
+                            },
+                        },
+                    ]);
+
+                    const filterViewFilters: FilterContextItem[] = [
+                        {
+                            matchAttributeFilter: {
+                                displayForm: displayFormRef,
+                                operator: "contains",
+                                literal: "value",
+                                localIdentifier: localId,
+                                title: "View Title",
+                            },
+                        },
+                    ];
+
+                    const updatedFilterContext = changeFilterContextSelection(
+                        filterContext,
+                        filterViewFilters,
+                    );
+                    expect(updatedFilterContext.filters).toEqual([
+                        {
+                            arbitraryAttributeFilter: {
+                                displayForm: displayFormRef,
+                                values: [],
+                                negativeSelection: true,
+                                localIdentifier: localId,
+                                title: "Dashboard Title",
+                                filterElementsBy: undefined,
+                                filterElementsByDate: undefined,
+                                validateElementsBy: undefined,
+                            },
+                        },
+                    ]);
                 });
             });
         });

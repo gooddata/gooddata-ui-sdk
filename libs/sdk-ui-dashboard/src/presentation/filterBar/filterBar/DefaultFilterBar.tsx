@@ -6,14 +6,17 @@ import classNames from "classnames";
 
 import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
 import {
+    type DashboardAttributeFilterItem,
     DashboardDateFilterConfigModeValues,
     type FilterContextItem,
-    type IDashboardAttributeFilter,
     type IDashboardDateFilter,
     type ObjRef,
     areObjRefsEqual,
+    dashboardAttributeFilterItemDisplayForm,
+    dashboardAttributeFilterItemLocalIdentifier,
     isAllTimeDashboardDateFilter,
     isDashboardAttributeFilter,
+    isDashboardAttributeFilterItem,
     isDashboardDateFilter,
 } from "@gooddata/sdk-model";
 
@@ -32,6 +35,8 @@ import {
     changeMigratedAttributeFilterSelection,
     changeWorkingAttributeFilterSelection,
     clearDateFilterSelection,
+    replaceAttributeFilterItemSelection,
+    replaceWorkingAttributeFilterItemSelection,
     setAttributeFilterDisplayForm,
 } from "../../../model/commands/filters.js";
 import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
@@ -78,16 +83,68 @@ export const useFilterBarProps = (): IFilterBarProps => {
     const dispatch = useDashboardDispatch();
     const onAttributeFilterChanged = useCallback(
         (
-            filter: IDashboardAttributeFilter,
+            filter: DashboardAttributeFilterItem,
             displayAsLabel?: ObjRef,
             isWorkingSelectionChange?: boolean,
             isResultOfMigration?: boolean,
             isSelectionInvalid?: boolean,
         ) => {
+            const localIdentifier = dashboardAttributeFilterItemLocalIdentifier(filter);
+
+            // Detect cross-type migration: incoming filter type differs from stored filter type.
+            // e.g. text filter in store being replaced by a list filter (or vice versa).
+            const existingFilter = filters.find(
+                (f) =>
+                    isDashboardAttributeFilterItem(f) &&
+                    dashboardAttributeFilterItemLocalIdentifier(f) === localIdentifier,
+            );
+            const isCrossTypeMigration = existingFilter
+                ? isDashboardAttributeFilter(filter) !== isDashboardAttributeFilter(existingFilter)
+                : false;
+
+            // For text filter types OR cross-type migrations, use the replace command which
+            // swaps the entire filter item in the filter context.
+            if (!isDashboardAttributeFilter(filter) || isCrossTypeMigration) {
+                if (isWorkingSelectionChange && isApplyAllAtOnceEnabledAndSet) {
+                    dispatch(
+                        replaceWorkingAttributeFilterItemSelection(
+                            localIdentifier!,
+                            filter,
+                            undefined,
+                            isSelectionInvalid,
+                        ),
+                    );
+                } else {
+                    dispatch(
+                        replaceAttributeFilterItemSelection(
+                            localIdentifier!,
+                            filter,
+                            undefined,
+                            isSelectionInvalid,
+                        ),
+                    );
+                }
+
+                // For text→list migration: transfer the old text filter's displayForm
+                // as displayAsLabel on the new list filter (it was the secondary label).
+                if (isCrossTypeMigration && isDashboardAttributeFilter(filter) && existingFilter) {
+                    const secondaryLabel = dashboardAttributeFilterItemDisplayForm(
+                        existingFilter as DashboardAttributeFilterItem,
+                    );
+                    if (!areObjRefsEqual(secondaryLabel, filter.attributeFilter.displayForm)) {
+                        dispatch(
+                            setDashboardAttributeFilterConfigDisplayAsLabel(localIdentifier!, secondaryLabel),
+                        );
+                    }
+                }
+                return;
+            }
+
+            // Standard element-based attribute filter handling (existing flow)
             const convertedFilter = supportElementUris
                 ? filter
                 : convertDashboardAttributeFilterElementsValuesToUris(filter);
-            const { attributeElements, negativeSelection, localIdentifier } = convertedFilter.attributeFilter;
+            const { attributeElements, negativeSelection } = convertedFilter.attributeFilter;
 
             const getCurrentFilter = (
                 existingFilter: FilterContextItem[],

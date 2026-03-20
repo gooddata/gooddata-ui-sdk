@@ -8,7 +8,7 @@ import { attributeFilterMoved } from "../../../events/filters.js";
 import { invalidArgumentsProvided } from "../../../events/general.js";
 import { dispatchDashboardEvent } from "../../../store/_infra/eventDispatcher.js";
 import {
-    selectFilterContextAttributeFilterByLocalId,
+    selectFilterContextAttributeFilterItemByLocalId,
     selectFilterContextDraggableFilterIndexByRef,
     selectFilterContextFilters,
 } from "../../../store/tabs/filterContext/filterContextSelectors.js";
@@ -23,8 +23,8 @@ export function* moveAttributeFilterHandler(
     const { filterLocalId, index } = cmd.payload;
 
     // validate filterLocalId
-    const affectedFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterByLocalId>> =
-        yield select(selectFilterContextAttributeFilterByLocalId(filterLocalId));
+    const affectedFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterItemByLocalId>> =
+        yield select(selectFilterContextAttributeFilterItemByLocalId(filterLocalId));
 
     if (!affectedFilter) {
         throw invalidArgumentsProvided(ctx, cmd, `Filter with filterLocalId ${filterLocalId} not found.`);

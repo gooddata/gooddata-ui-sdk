@@ -1,13 +1,15 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { FormattedMessage } from "react-intl";
+import { useMemo } from "react";
+
+import { defineMessages, useIntl } from "react-intl";
 
 import { type IAttributeDisplayFormMetadataObject, type ObjRef, areObjRefsEqual } from "@gooddata/sdk-model";
-import { Dropdown, type IAlignPoint, UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
+import { Dropdown, type IAlignPoint, type IUiListboxItem } from "@gooddata/sdk-ui-kit";
 
 import { FilterModeMenuButton } from "./FilterModeMenuButton.js";
-import { FilterModeMenuItem } from "./FilterModeMenuItem.js";
-import { FilterModeMenuLabelItem } from "./FilterModeMenuLabelItem.js";
+import { FilterModeMenuDropdownBody } from "./FilterModeMenuDropdownBody.js";
+import { type ILabelItemData, type IModeItemData } from "./types.js";
 import { type AttributeFilterMode } from "../../filterModeTypes.js";
 
 /**
@@ -49,6 +51,10 @@ export interface IFilterModeMenuProps {
 }
 
 const ALIGN_POINTS: IAlignPoint[] = [{ align: "bl tl" }, { align: "tl bl" }];
+const modeMessages = defineMessages({
+    list: { id: "attributeFilter.mode.list" },
+    text: { id: "attributeFilter.mode.text" },
+});
 
 /**
  * Menu for switching between different attribute filter modes.
@@ -64,6 +70,7 @@ export function FilterModeMenu(props: IFilterModeMenuProps) {
         selectedLabelRef,
         onLabelChange: onDisplayFormChange,
     } = props;
+    const intl = useIntl();
 
     // Simplified: just 2 options per Figma design
     const allOptions: AttributeFilterMode[] = ["elements", "text"];
@@ -74,15 +81,43 @@ export function FilterModeMenu(props: IFilterModeMenuProps) {
     const showDisplayForms = labels.length > 1;
     const hasMenuContent = showModeSection || showDisplayForms;
 
-    const handleOptionClick = (mode: AttributeFilterMode, closeDropdown: () => void) => {
+    const handleOptionClick = (mode: AttributeFilterMode) => {
         onModeChange(mode);
-        closeDropdown();
     };
 
-    const handleDisplayFormClick = (displayFormRef: ObjRef, closeDropdown: () => void) => {
+    const handleDisplayFormClick = (displayFormRef: ObjRef) => {
         onDisplayFormChange?.(displayFormRef);
-        closeDropdown();
     };
+
+    const modeListboxItems = useMemo<IUiListboxItem<IModeItemData, never>[]>(() => {
+        return visibleOptions.map((mode) => ({
+            type: "interactive",
+            id: `mode:${mode}`,
+            stringTitle: intl.formatMessage(mode === "text" ? modeMessages.text : modeMessages.list),
+            data: { mode },
+        }));
+    }, [intl, visibleOptions]);
+
+    const labelListboxItems = useMemo<IUiListboxItem<ILabelItemData, never>[]>(() => {
+        return labels.map((label) => ({
+            type: "interactive",
+            id: `label:${label.id}`,
+            stringTitle: label.title,
+            data: { labelRef: label.ref },
+        }));
+    }, [labels]);
+
+    const selectedLabelItemId = useMemo(() => {
+        if (!selectedLabelRef) {
+            return undefined;
+        }
+        const selectedLabel = labels.find((label) => areObjRefsEqual(label.ref, selectedLabelRef));
+        return selectedLabel ? `label:${selectedLabel.id}` : undefined;
+    }, [labels, selectedLabelRef]);
+
+    const selectedModeItemId = useMemo(() => {
+        return showModeSection && visibleOptions.includes(currentMode) ? `mode:${currentMode}` : undefined;
+    }, [currentMode, showModeSection, visibleOptions]);
 
     if (!hasMenuContent) {
         return null;
@@ -95,105 +130,48 @@ export function FilterModeMenu(props: IFilterModeMenuProps) {
                 closeOnParentScroll
                 closeOnOutsideClick
                 shouldTrapFocus
-                renderButton={({ toggleDropdown, isOpen: dropdownIsOpen }) => (
-                    <FilterModeMenuButton isOpen={dropdownIsOpen} onClick={toggleDropdown} />
+                autofocusOnOpen
+                renderButton={({
+                    toggleDropdown,
+                    isOpen: dropdownIsOpen,
+                    ariaAttributes,
+                    accessibilityConfig,
+                }) => (
+                    <FilterModeMenuButton
+                        isOpen={dropdownIsOpen}
+                        onClick={toggleDropdown}
+                        ariaAttributes={ariaAttributes}
+                        accessibilityConfig={accessibilityConfig}
+                    />
                 )}
-                renderBody={({ closeDropdown }) => (
-                    <div className="gd-filter-mode-menu__dropdown">
-                        {showModeSection ? (
-                            <>
-                                <div className="gd-filter-mode-menu__section">
-                                    <div className="gd-filter-mode-menu__section-label">
-                                        <span className="gd-filter-mode-menu__section-text">
-                                            <FormattedMessage id="attributeFilter.mode.selection" />
-                                        </span>
-                                        <UiTooltip
-                                            anchor={
-                                                <span
-                                                    className="gd-filter-mode-menu__section-icon"
-                                                    aria-hidden="true"
-                                                >
-                                                    <UiIconButton
-                                                        icon="question"
-                                                        size="xsmall"
-                                                        variant="tertiary"
-                                                        iconColor="complementary-7"
-                                                        dataTestId="attribute-filter-mode-selection-trigger"
-                                                    />
-                                                </span>
-                                            }
-                                            content={
-                                                <FormattedMessage id="attributeFilter.mode.selection.tooltip" />
-                                            }
-                                            triggerBy={["hover", "focus"]}
-                                            arrowPlacement="left"
-                                        />
-                                    </div>
-                                </div>
-                                {visibleOptions.map((mode) => {
-                                    const isSelected = mode === currentMode;
-
-                                    return (
-                                        <FilterModeMenuItem
-                                            key={mode}
-                                            mode={mode}
-                                            isSelected={isSelected}
-                                            onClick={() => handleOptionClick(mode, closeDropdown)}
-                                        />
-                                    );
-                                })}
-                            </>
-                        ) : null}
-                        {showModeSection && showDisplayForms ? (
-                            <div className="gd-filter-mode-menu__divider" />
-                        ) : null}
-                        {showDisplayForms ? (
-                            <>
-                                <div className="gd-filter-mode-menu__section">
-                                    <div className="gd-filter-mode-menu__section-label">
-                                        <span className="gd-filter-mode-menu__section-text">
-                                            <FormattedMessage id="attributeFilter.mode.valuesAs" />
-                                        </span>
-                                        <UiTooltip
-                                            anchor={
-                                                <span
-                                                    className="gd-filter-mode-menu__section-icon"
-                                                    aria-hidden="true"
-                                                >
-                                                    <UiIconButton
-                                                        icon="question"
-                                                        size="xsmall"
-                                                        variant="tertiary"
-                                                        iconColor="complementary-7"
-                                                        dataTestId="attribute-filter-mode-values-as-trigger"
-                                                    />
-                                                </span>
-                                            }
-                                            content={
-                                                <FormattedMessage id="attributeFilter.mode.valuesAs.tooltip" />
-                                            }
-                                            triggerBy={["hover", "focus"]}
-                                            arrowPlacement="left"
-                                        />
-                                    </div>
-                                </div>
-                                {labels.map((label) => {
-                                    const isSelected =
-                                        !!selectedLabelRef && areObjRefsEqual(label.ref, selectedLabelRef);
-
-                                    return (
-                                        <FilterModeMenuLabelItem
-                                            key={label.id}
-                                            label={label}
-                                            isSelected={isSelected}
-                                            onClick={() => handleDisplayFormClick(label.ref, closeDropdown)}
-                                        />
-                                    );
-                                })}
-                            </>
-                        ) : null}
-                    </div>
-                )}
+                renderBody={({ closeDropdown, ariaAttributes }) => {
+                    return (
+                        <FilterModeMenuDropdownBody
+                            showModeSection={showModeSection}
+                            showDisplayForms={showDisplayForms}
+                            modeListboxItems={modeListboxItems}
+                            selectedModeItemId={selectedModeItemId}
+                            onModeSelect={(item) => {
+                                handleOptionClick(item.data.mode);
+                            }}
+                            labelListboxItems={labelListboxItems}
+                            selectedLabelItemId={selectedLabelItemId}
+                            onLabelSelect={(item) => {
+                                handleDisplayFormClick(item.data.labelRef);
+                            }}
+                            closeDropdown={closeDropdown}
+                            ariaAttributes={ariaAttributes}
+                            selectionTitle={intl.formatMessage({ id: "attributeFilter.mode.selection" })}
+                            selectionTooltip={intl.formatMessage({
+                                id: "attributeFilter.mode.selection.tooltip",
+                            })}
+                            valuesAsTitle={intl.formatMessage({ id: "attributeFilter.mode.valuesAs" })}
+                            valuesAsTooltip={intl.formatMessage({
+                                id: "attributeFilter.mode.valuesAs.tooltip",
+                            })}
+                        />
+                    );
+                }}
             />
         </div>
     );

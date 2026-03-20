@@ -59,6 +59,7 @@ import {
     type ISetAttributeFilterSelectionMode,
     type ISetAttributeFilterTitle,
     type ISetFilterViewAsDefault,
+    type ReplaceAttributeFilterItemSelection,
 } from "./filters.js";
 import {
     type ChangeInsightWidgetVisConfiguration,
@@ -155,6 +156,7 @@ export type DashboardCommands =
     | ChangeFilterContextSelection
     | ChangeDateFilterSelection
     | ChangeAttributeFilterSelection
+    | ReplaceAttributeFilterItemSelection
     //beta
     | IChangeRenderMode
     | IChangeDashboardDensity

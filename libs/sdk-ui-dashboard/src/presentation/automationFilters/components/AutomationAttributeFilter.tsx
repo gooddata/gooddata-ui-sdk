@@ -4,7 +4,7 @@ import { type MutableRefObject, type ReactNode, useCallback } from "react";
 
 import { useIntl } from "react-intl";
 
-import { type FilterContextItem, type IDashboardAttributeFilter, type ObjRef } from "@gooddata/sdk-model";
+import { type DashboardAttributeFilterItem, type FilterContextItem, type ObjRef } from "@gooddata/sdk-model";
 import {
     AttributeFilterButton,
     type IAttributeFilterButtonProps,
@@ -35,7 +35,7 @@ export function AutomationAttributeFilter({
     readonly,
     tabId,
 }: {
-    filter: IDashboardAttributeFilter;
+    filter: DashboardAttributeFilterItem;
     onChange: (filter: FilterContextItem) => void;
     onDelete: (filter: FilterContextItem) => void;
     isLocked?: boolean;
@@ -83,7 +83,7 @@ function AttributeFilterWrapper({
     const { onChange, filter } = useAutomationAttributeFilterContext();
 
     const handleFilterChanged = useCallback(
-        (newFilter: IDashboardAttributeFilter) => {
+        (newFilter: DashboardAttributeFilterItem) => {
             onChange(newFilter);
         },
         [onChange],

@@ -1,6 +1,7 @@
 // (C) 2020-2026 GoodData Corporation
 
 import {
+    type DashboardAttributeFilterItem,
     type FilterContextItem,
     type IAttributeFilter,
     type IDashboardAttributeFilter,
@@ -13,9 +14,14 @@ import {
     type IWidgetDefinition,
     type ObjRef,
     isAllTimeDashboardDateFilter,
-    isDashboardAttributeFilter,
+    isDashboardArbitraryAttributeFilter,
+    isDashboardAttributeFilterItem,
+    isDashboardDateFilter,
+    isDashboardMatchAttributeFilter,
     newAbsoluteDateFilter,
     newAllTimeFilter,
+    newArbitraryAttributeFilter,
+    newMatchAttributeFilter,
     newNegativeAttributeFilter,
     newPositiveAttributeFilter,
     newRelativeDateFilter,
@@ -64,11 +70,57 @@ export function filterContextToDashboardFiltersByDateDataSet(
  * Converts {@link @gooddata/sdk-backend-spi#IDashboardAttributeFilter} to {@link @gooddata/sdk-model#IAttributeFilter} instance.
  *
  * @param filter - filter context attribute filter to convert
+ * @deprecated Use {@link dashboardAttributeFilterItemToAttributeFilter} instead,
+ * which supports all attribute filter types including text filters.
  * @public
  */
 export function dashboardAttributeFilterToAttributeFilter(
     filter: IDashboardAttributeFilter,
 ): IAttributeFilter {
+    if (filter.attributeFilter.negativeSelection) {
+        return newNegativeAttributeFilter(
+            filter.attributeFilter.displayForm,
+            filter.attributeFilter.attributeElements,
+            filter.attributeFilter.localIdentifier,
+        );
+    }
+
+    return newPositiveAttributeFilter(
+        filter.attributeFilter.displayForm,
+        filter.attributeFilter.attributeElements,
+        filter.attributeFilter.localIdentifier,
+    );
+}
+
+/**
+ * Converts any {@link @gooddata/sdk-model#DashboardAttributeFilterItem} to {@link @gooddata/sdk-model#IAttributeFilter} instance.
+ *
+ * @remarks
+ * Handles all attribute filter types: element-based (positive/negative selection),
+ * arbitrary value filters, and match (text) filters.
+ *
+ * @param filter - dashboard attribute filter item to convert
+ * @public
+ */
+export function dashboardAttributeFilterItemToAttributeFilter(
+    filter: DashboardAttributeFilterItem,
+): IAttributeFilter {
+    if (isDashboardArbitraryAttributeFilter(filter)) {
+        const { displayForm, values, negativeSelection, localIdentifier } = filter.arbitraryAttributeFilter;
+        return newArbitraryAttributeFilter(displayForm, values, negativeSelection, localIdentifier);
+    }
+    if (isDashboardMatchAttributeFilter(filter)) {
+        const { displayForm, operator, literal, caseSensitive, negativeSelection, localIdentifier } =
+            filter.matchAttributeFilter;
+        return newMatchAttributeFilter(
+            displayForm,
+            operator,
+            literal,
+            { caseSensitive, negativeSelection },
+            localIdentifier,
+        );
+    }
+
     if (filter.attributeFilter.negativeSelection) {
         return newNegativeAttributeFilter(
             filter.attributeFilter.displayForm,
@@ -178,13 +230,18 @@ export function filterContextItemsToDashboardFiltersByWidget(
     filterContextItems: FilterContextItem[],
     widget?: Partial<IFilterableWidget>,
 ): IDashboardFilter[] {
-    return filterContextItems.map((filter) => {
-        if (isDashboardAttributeFilter(filter)) {
-            return dashboardAttributeFilterToAttributeFilter(filter);
-        } else {
-            return dashboardDateFilterToDateFilterByWidget(filter, widget);
-        }
-    });
+    return filterContextItems
+        .filter(
+            (filter): filter is DashboardAttributeFilterItem | IDashboardDateFilter =>
+                isDashboardAttributeFilterItem(filter) || isDashboardDateFilter(filter),
+        )
+        .map((filter) => {
+            if (isDashboardAttributeFilterItem(filter)) {
+                return dashboardAttributeFilterItemToAttributeFilter(filter);
+            } else {
+                return dashboardDateFilterToDateFilterByWidget(filter, widget);
+            }
+        });
 }
 
 /**
@@ -199,9 +256,13 @@ export function filterContextItemsToDashboardFiltersByRichTextWidget(
     widget?: Partial<IFilterableWidget>,
 ): IDashboardFilter[] {
     return filterContextItems
+        .filter(
+            (filter): filter is DashboardAttributeFilterItem | IDashboardDateFilter =>
+                isDashboardAttributeFilterItem(filter) || isDashboardDateFilter(filter),
+        )
         .map((filter) => {
-            if (isDashboardAttributeFilter(filter)) {
-                return dashboardAttributeFilterToAttributeFilter(filter);
+            if (isDashboardAttributeFilterItem(filter)) {
+                return dashboardAttributeFilterItemToAttributeFilter(filter);
             } else {
                 return dashboardDateFilterToDateFilterByWidget(filter, widget);
             }
@@ -220,13 +281,18 @@ export function filterContextItemsToDashboardFiltersByDateDataSet(
     filterContextItems: FilterContextItem[],
     dateDataSet: ObjRef,
 ): IDashboardFilter[] {
-    return filterContextItems.map((filter) => {
-        if (isDashboardAttributeFilter(filter)) {
-            return dashboardAttributeFilterToAttributeFilter(filter);
-        } else {
-            return dashboardDateFilterToDateFilterByDateDataSet(filter, dateDataSet);
-        }
-    });
+    return filterContextItems
+        .filter(
+            (filter): filter is DashboardAttributeFilterItem | IDashboardDateFilter =>
+                isDashboardAttributeFilterItem(filter) || isDashboardDateFilter(filter),
+        )
+        .map((filter) => {
+            if (isDashboardAttributeFilterItem(filter)) {
+                return dashboardAttributeFilterItemToAttributeFilter(filter);
+            } else {
+                return dashboardDateFilterToDateFilterByDateDataSet(filter, dateDataSet);
+            }
+        });
 }
 
 function numberOrStringToNumber(input: number | string): number {

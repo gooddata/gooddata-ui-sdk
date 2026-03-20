@@ -1,4 +1,5 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
+
 import { cloneDeep } from "lodash-es";
 import { describe, expect, it, vi } from "vitest";
 
@@ -6,6 +7,7 @@ import {
     DashboardAttributeFilterConfigModeValues,
     type DashboardDateFilterConfigMode,
     DashboardDateFilterConfigModeValues,
+    dashboardAttributeFilterItemLocalIdentifier,
 } from "@gooddata/sdk-model";
 
 import { filterBarAttributeFilterIndexes } from "./filterBar.fixture.js";
@@ -92,7 +94,7 @@ describe("utils", () => {
     describe("areAllFiltersHidden", () => {
         const effectedAttributeFiltersModeMap = filterBarAttributeFilterIndexes.reduce((map, filter) => {
             map.set(
-                filter.filter.attributeFilter.localIdentifier,
+                dashboardAttributeFilterItemLocalIdentifier(filter.filter),
                 DashboardAttributeFilterConfigModeValues.HIDDEN,
             );
             return map;
@@ -140,7 +142,7 @@ describe("utils", () => {
         it("should return false when at least one attribute filter visible", () => {
             const attributeFiltersModeMap = cloneDeep(effectedAttributeFiltersModeMap);
             attributeFiltersModeMap.set(
-                filterBarAttributeFilterIndexes[0].filter.attributeFilter.localIdentifier,
+                dashboardAttributeFilterItemLocalIdentifier(filterBarAttributeFilterIndexes[0].filter),
                 DashboardAttributeFilterConfigModeValues.ACTIVE,
             );
 

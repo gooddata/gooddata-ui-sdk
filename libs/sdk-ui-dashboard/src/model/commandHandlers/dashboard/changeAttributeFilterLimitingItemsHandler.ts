@@ -8,7 +8,7 @@ import { type ISetAttributeFilterLimitingItems } from "../../commands/dashboard.
 import { dashboardAttributeConfigLimitingItemsChanged } from "../../events/filters.js";
 import { invalidArgumentsProvided } from "../../events/general.js";
 import { dispatchDashboardEvent } from "../../store/_infra/eventDispatcher.js";
-import { selectFilterContextAttributeFilterByLocalId } from "../../store/tabs/filterContext/filterContextSelectors.js";
+import { selectFilterContextAttributeFilterItemByLocalId } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { tabsActions } from "../../store/tabs/index.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { dispatchFilterContextChanged } from "../filterContext/common.js";
@@ -26,8 +26,8 @@ export function* changeAttributeFilterLimitingItemsHandler(
         }),
     );
 
-    const changedFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterByLocalId>> =
-        yield select(selectFilterContextAttributeFilterByLocalId(filterLocalId));
+    const changedFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterItemByLocalId>> =
+        yield select(selectFilterContextAttributeFilterItemByLocalId(filterLocalId));
 
     invariant(
         changedFilter,
@@ -44,8 +44,8 @@ function* getValidatedFilterLocalIdentifier(
 ): SagaIterator<string> {
     const { localIdentifier } = cmd.payload;
 
-    const affectedFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterByLocalId>> =
-        yield select(selectFilterContextAttributeFilterByLocalId(localIdentifier));
+    const affectedFilter: ReturnType<ReturnType<typeof selectFilterContextAttributeFilterItemByLocalId>> =
+        yield select(selectFilterContextAttributeFilterItemByLocalId(localIdentifier));
 
     if (!affectedFilter) {
         throw invalidArgumentsProvided(ctx, cmd, `Filter with localIdentifier ${localIdentifier} not found.`);

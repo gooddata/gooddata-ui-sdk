@@ -3,7 +3,7 @@
 import cx from "classnames";
 import { defineMessages, useIntl } from "react-intl";
 
-import { UiIconButton } from "@gooddata/sdk-ui-kit";
+import { type IDropdownButtonRenderProps, UiIconButton } from "@gooddata/sdk-ui-kit";
 
 /**
  * Props for FilterModeMenuButton component.
@@ -20,6 +20,16 @@ export interface IFilterModeMenuButtonProps {
      * Click handler
      */
     onClick: () => void;
+
+    /**
+     * ARIA attributes from dropdown trigger render props.
+     */
+    ariaAttributes?: IDropdownButtonRenderProps["ariaAttributes"];
+
+    /**
+     * Accessibility config from dropdown trigger render props.
+     */
+    accessibilityConfig?: IDropdownButtonRenderProps["accessibilityConfig"];
 }
 
 const modeMessages = defineMessages({
@@ -32,7 +42,7 @@ const modeMessages = defineMessages({
  * @alpha
  */
 export function FilterModeMenuButton(props: IFilterModeMenuButtonProps) {
-    const { isOpen, onClick } = props;
+    const { isOpen, onClick, ariaAttributes, accessibilityConfig } = props;
     const { formatMessage } = useIntl();
 
     return (
@@ -53,7 +63,9 @@ export function FilterModeMenuButton(props: IFilterModeMenuButtonProps) {
                 iconColor="complementary-7"
                 isActive={isOpen}
                 onClick={onClick}
+                ariaAttributes={ariaAttributes}
                 label={formatMessage(modeMessages.selection)}
+                accessibilityConfig={accessibilityConfig}
             />
         </div>
     );

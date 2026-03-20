@@ -24,7 +24,7 @@ import { useResolveDependentDateFiltersInput } from "./useResolveDependentDateFi
 import { useResolveFilterInput } from "./useResolveFilterInput.js";
 import { useResolveParentFiltersInput } from "./useResolveParentFiltersInput.js";
 import { useTextFilterController } from "./useTextFilterController.js";
-import { type ITextFilterState } from "./useTextFilterInnerController.js";
+import { type ITextFilterState, isTextStateInvalid } from "./useTextFilterInnerController.js";
 import { type AttributeFilterAvailableMode, type AttributeFilterMode } from "../filterModeTypes.js";
 import {
     createEmptyFilterForAvailableMode,
@@ -98,8 +98,10 @@ export const useAttributeFilterController = (
         selectFirst = false,
         enableImmediateAttributeFilterDisplayAsLabelMigration = false,
         withoutApply = false,
-        availableFilterModes = DEFAULT_AVAILABLE_FILTER_MODES,
+        menuConfig,
     } = props;
+
+    const availableFilterModes = menuConfig?.availableFilterModes ?? DEFAULT_AVAILABLE_FILTER_MODES;
 
     const backend = useBackendStrict(backendInput, "AttributeFilter");
     const workspace = useWorkspaceStrict(workspaceInput, "AttributeFilter");
@@ -253,14 +255,20 @@ export const useAttributeFilterController = (
                 ? (nextFilter.arbitraryAttributeFilter.negativeSelection ?? false)
                 : false;
 
+            const isInvalid = isTextStateInvalid(state);
+
             // When withoutApply=false, do NOT update the placeholder on every working change.
             // That would flow back via resolvedFilter → textModeFilter → syncFromFilter (with
             // updateCommitted=true), auto-committing working state and disabling the Apply button.
             // The placeholder is updated on Apply click instead (see onApplyTextFilter).
-            if (connectToPlaceholder && withoutApply) {
+            // When withoutApply=true, only update placeholder for valid states — matching
+            // elements filter which only updates placeholder on explicit apply/commit.
+            if (connectToPlaceholder && withoutApply && !isInvalid) {
                 setConnectedPlaceholderValue(nextFilter);
             }
-            onChange?.(nextFilter, isInverted, selectionMode, [], effectiveDisplayFormRef, false, {});
+            onChange?.(nextFilter, isInverted, selectionMode, [], effectiveDisplayFormRef, false, {
+                isSelectionInvalid: isInvalid,
+            });
         },
         [
             effectiveDisplayFormRef,
@@ -325,6 +333,7 @@ export const useAttributeFilterController = (
         onTextStateChange,
         availableFilterModes,
         filterModeChanged,
+        withoutApply,
     });
 
     const { resetForModeSwitch: textResetForModeSwitchFn } = textFilterController;
@@ -364,9 +373,19 @@ export const useAttributeFilterController = (
                         textResetForModeSwitch(newFilter);
                     }
                 }
-                // onChange covers all filter changes including mode switch reset
+                // onChange covers all filter changes including mode switch reset.
+                // Pass newDisplayAsLabel when available (text→list: secondary label becomes displayAsLabel),
+                // otherwise fall back to the new filter's own displayForm.
                 const isInverted = isNegativeFilter(newFilter);
-                onChange?.(newFilter, isInverted, selectionMode, [], filterObjRef(newFilter), false, {});
+                onChange?.(
+                    newFilter,
+                    isInverted,
+                    selectionMode,
+                    [],
+                    newDisplayAsLabel ?? filterObjRef(newFilter),
+                    false,
+                    {},
+                );
             }
         },
         [
@@ -509,6 +528,24 @@ export const useAttributeFilterController = (
         );
     }, [textFilterController.committedState, effectiveDisplayFormRef, localId]);
 
+    // In text mode, dropdown close must also clear the elements search string
+    // (used for autocomplete) in addition to resetting text controller state.
+    // Also revert filterMode to the original mode derived from the resolved filter
+    // so that closing without Apply reverts an uncommitted mode switch.
+    const { onReset: onResetElements } = elementsFilterController;
+    const { onReset: onResetText } = textFilterController;
+    const onResetTextMode = useCallback(() => {
+        onResetText?.();
+        onResetElements();
+        setFilterMode(getFilterModeFromFilter(resolvedFilter) ?? "elements");
+    }, [onResetText, onResetElements, resolvedFilter]);
+
+    // Wrap elements onReset to also revert filterMode on dropdown close without Apply.
+    const onResetElementsMode = useCallback(() => {
+        onResetElements();
+        setFilterMode(getFilterModeFromFilter(resolvedFilter) ?? "elements");
+    }, [onResetElements, resolvedFilter]);
+
     if (isTextMode) {
         return {
             attribute: elementsFilterController.attribute,
@@ -536,7 +573,7 @@ export const useAttributeFilterController = (
             onTextFilterLiteralBlur: textFilterController.onTextFilterLiteralBlur,
             onToggleTextFilterCaseSensitive: textFilterController.onToggleTextFilterCaseSensitive,
             onApply: onApplyTextFilter,
-            onReset: textFilterController.onReset ?? noop,
+            onReset: onResetTextMode,
             filterDetailRequestHandler,
             setDisplayForm,
             resetForModeSwitch: textFilterController.resetForModeSwitch ?? noop,
@@ -577,6 +614,7 @@ export const useAttributeFilterController = (
         // Override elements controller's setDisplayForm with root's unified version
         // so header menu changes in elements mode also update userSelectedDisplayForm.
         setDisplayForm,
+        onReset: onResetElementsMode,
         currentFilterMode: filterMode,
         availableInternalFilterModes,
         availableTextFilterModes,
