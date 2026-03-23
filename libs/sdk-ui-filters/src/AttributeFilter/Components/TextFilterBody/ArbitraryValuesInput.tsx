@@ -187,6 +187,7 @@ export function ArbitraryValuesInput(props: IArbitraryValuesInputProps) {
             id={inputId}
             type="text"
             className="gd-chips-input__input s-chips-input-field"
+            dataTestId="text-filter-values-input"
             value={inputValue}
             onChange={(value) => setInputValue(String(value))}
             onKeyDown={handleKeyDown}

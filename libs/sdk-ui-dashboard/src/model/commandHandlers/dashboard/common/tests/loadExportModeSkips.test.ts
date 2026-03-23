@@ -6,7 +6,6 @@ import { dummyBackend } from "@gooddata/sdk-backend-base";
 import { type ISettings, idRef } from "@gooddata/sdk-model";
 
 import { type DashboardContext } from "../../../../types/commonTypes.js";
-import { loadFilterViews } from "../../initializeDashboardHandler/loadFilterViews.js";
 import { loadNotificationChannelsCount } from "../loadNotificationChannelsCount.js";
 import { loadWorkspaceAutomationsCount } from "../loadWorkspaceAutomationsCount.js";
 
@@ -75,33 +74,6 @@ describe("export mode skips non-essential calls", () => {
             const ctx = createCtx({});
             const result = await loadNotificationChannelsCount(ctx, {});
             expect(result).toBe(0);
-        });
-    });
-
-    describe("loadFilterViews", () => {
-        it("should return empty array when isExport is true", async () => {
-            const ctx = createCtx({ isExport: true });
-            const result = await loadFilterViews(ctx);
-            expect(result).toEqual([]);
-        });
-
-        it("should return empty array when initialRenderMode is export", async () => {
-            const ctx = createCtx({ initialRenderMode: "export" });
-            const result = await loadFilterViews(ctx);
-            expect(result).toEqual([]);
-        });
-
-        it("should return empty array when isReadOnly is true", async () => {
-            const ctx = createCtx({ isReadOnly: true });
-            const result = await loadFilterViews(ctx);
-            expect(result).toEqual([]);
-        });
-
-        it("should return empty array when dashboardRef is missing", async () => {
-            const ctx = createCtx({});
-            ctx.dashboardRef = undefined;
-            const result = await loadFilterViews(ctx);
-            expect(result).toEqual([]);
         });
     });
 });

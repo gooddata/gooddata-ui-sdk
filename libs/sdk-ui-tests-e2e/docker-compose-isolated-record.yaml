@@ -35,7 +35,7 @@ services:
             - backend-mock
 
     backend-mock:
-        image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/docker.io/gooddata/gooddata-goodmock:0.6.0
+        image: 020413372491.dkr.ecr.us-east-1.amazonaws.com/pullthrough/docker.io/gooddata/gooddata-goodmock:0.10.0
         command: record
         # Use environment variable "VERBOSE=true" for verbose logging
         environment:

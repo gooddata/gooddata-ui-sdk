@@ -55,6 +55,7 @@ export function FilterModeMenuButton(props: IFilterModeMenuButtonProps) {
                     "is-active": isOpen,
                 },
             )}
+            data-testid="filter-mode-menu-button"
         >
             <UiIconButton
                 icon="ellipsis"

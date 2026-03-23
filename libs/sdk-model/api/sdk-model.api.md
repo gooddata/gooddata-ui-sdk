@@ -3980,6 +3980,7 @@ export interface IRemotePluggableApplicationsRegistryV1 {
     overrides?: {
         [applicationId: string]: Partial<PluggableApplicationRegistryItem>;
     };
+    uiModule?: IRemotePluggableApplicationModule;
 }
 
 // @public
@@ -4926,6 +4927,8 @@ export interface ITheme {
     button?: IThemeButton;
     chart?: IThemeChart;
     dashboards?: IThemeDashboard;
+    // @alpha
+    header?: IThemeHeader;
     images?: IThemeImages;
     kpi?: IThemeKpi;
     message?: IThemeMessage;
@@ -5156,6 +5159,13 @@ export type IThemeFontsDef = {
     font: ThemeFontUri;
     unicodeRange?: string;
 };
+
+// @alpha
+export interface IThemeHeader {
+    activeColor?: ThemeColor;
+    backgroundColor?: ThemeColor;
+    color?: ThemeColor;
+}
 
 // @beta
 export interface IThemeImages {

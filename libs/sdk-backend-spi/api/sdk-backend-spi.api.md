@@ -1796,6 +1796,7 @@ export interface IOrganizationStylingService {
     getActiveColorPalette(): Promise<ObjRef | undefined>;
     getActiveTheme(): Promise<ObjRef | undefined>;
     getColorPalettes(): Promise<IColorPaletteMetadataObject[]>;
+    getTheme(): Promise<ITheme>;
     getThemes(): Promise<IThemeMetadataObject[]>;
     setActiveColorPalette(colorPaletteRef: ObjRef): Promise<void>;
     setActiveTheme(themeRef: ObjRef): Promise<void>;

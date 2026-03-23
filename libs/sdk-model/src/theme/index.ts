@@ -1040,6 +1040,28 @@ export interface IThemeToastMessageVariant extends IThemeMessageVariant {
 }
 
 /**
+ * Application header (top bar) customizable properties.
+ *
+ * @alpha
+ */
+export interface IThemeHeader {
+    /**
+     * Header background color
+     */
+    backgroundColor?: ThemeColor;
+
+    /**
+     * Header text / foreground color
+     */
+    color?: ThemeColor;
+
+    /**
+     * Active menu item accent color
+     */
+    activeColor?: ThemeColor;
+}
+
+/**
  * Theme used to customize selected parts of the UI
  *
  * @remarks
@@ -1119,6 +1141,13 @@ export interface ITheme {
      * Toast message specific properties
      */
     toastMessage?: IThemeToastMessage;
+
+    /**
+     * Application header (top bar) specific properties
+     *
+     * @alpha
+     */
+    header?: IThemeHeader;
 }
 
 /**

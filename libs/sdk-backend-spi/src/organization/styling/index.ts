@@ -1,8 +1,9 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import {
     type IColorPaletteDefinition,
     type IColorPaletteMetadataObject,
+    type ITheme,
     type IThemeDefinition,
     type IThemeMetadataObject,
     type ObjRef,
@@ -14,6 +15,17 @@ import {
  * @public
  */
 export interface IOrganizationStylingService {
+    /**
+     * Asynchronously returns the active theme for the organization.
+     *
+     * @remarks
+     * Resolves the active theme setting and fetches the corresponding theme content.
+     * Returns an empty theme when no active theme is configured or the fetch fails.
+     *
+     * @returns promise of theme
+     */
+    getTheme(): Promise<ITheme>;
+
     /**
      * Request all themes defined on organization level.
      *

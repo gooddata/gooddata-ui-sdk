@@ -164,6 +164,7 @@ export function TextFilterOperatorDropdown(props: ITextFilterOperatorDropdownPro
                         ref={(el) => {
                             triggerRef.current = el;
                         }}
+                        data-testid="text-filter-operator-trigger"
                     >
                         <DropdownButton
                             id={controlId}
@@ -182,7 +183,10 @@ export function TextFilterOperatorDropdown(props: ITextFilterOperatorDropdownPro
                     </div>
                 )}
                 renderBody={({ closeDropdown, ariaAttributes }) => (
-                    <div className="gd-text-filter-operator-dropdown__menu">
+                    <div
+                        className="gd-text-filter-operator-dropdown__menu"
+                        data-testid="text-filter-operator-menu"
+                    >
                         <UiListbox<OperatorItem, { type: "separator" }>
                             shouldKeyboardActionPreventDefault
                             shouldKeyboardActionStopPropagation
@@ -199,6 +203,7 @@ export function TextFilterOperatorDropdown(props: ITextFilterOperatorDropdownPro
                                 return (
                                     <SingleSelectListItem
                                         className="gd-text-filter-operator-dropdown__item"
+                                        dataTestId={`text-filter-operator-${item.data.value}`}
                                         title={item.stringTitle}
                                         isSelected={isSelected}
                                         isFocused={isFocused}

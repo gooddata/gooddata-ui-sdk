@@ -309,6 +309,7 @@ export function AttributeFilterDropdownButton({
                 <div className="gd-attribute-filter-dropdown-button-subtitle__next">
                     <span
                         className="gd-attribute-filter-dropdown-button-selected-items__next s-attribute-filter-button-subtitle"
+                        data-testid={isOpen ? "attribute-filter-button-subtitle" : undefined}
                         ref={subtitleSelectedItemsRef}
                     >
                         {buttonSubtitle}

@@ -2,7 +2,7 @@
     "changes": [
         {
             "packageName": "@gooddata/sdk-ui-all",
-            "comment": "sdk-ui-all: Improve text filters handling in dashboard features.",
+            "comment": "sdk-model, sdk-ui-theme-provider: Add abilty to theme application header (as an alpha feature)",
             "type": "none"
         }
     ],

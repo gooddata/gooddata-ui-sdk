@@ -560,6 +560,7 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 });
 
             return {
+                getTheme: () => Promise.resolve(implConfig.theme ?? {}),
                 getThemes: () => Promise.resolve([]),
                 getActiveTheme: () => Promise.resolve(undefined),
                 setActiveTheme: () => Promise.resolve(),

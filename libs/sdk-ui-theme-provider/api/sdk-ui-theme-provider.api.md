@@ -7,6 +7,7 @@
 import { ComponentType } from 'react';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { ITheme } from '@gooddata/sdk-model';
+import { IThemeHeader } from '@gooddata/sdk-model';
 import { JSX } from 'react/jsx-runtime';
 import { ReactNode } from 'react';
 
@@ -14,6 +15,9 @@ import { ReactNode } from 'react';
 export function ConditionalScopedThemeProvider({ children }: {
     children: ReactNode;
 }): ReactNode;
+
+// @beta
+export const defaultHeaderTheme: IThemeHeader;
 
 // @internal (undocumented)
 export interface IScopedThemeProviderProps {

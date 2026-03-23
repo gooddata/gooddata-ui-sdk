@@ -56,6 +56,8 @@ export interface ISingleSelectListItemProps {
     onClick?: (e: MouseEvent<HTMLElement>) => void;
     onMouseOver?: (e: MouseEvent<HTMLElement>) => void;
     onMouseOut?: (e: MouseEvent<HTMLElement>) => void;
+    /** Optional stable id for e2e (renders as data-testid). */
+    dataTestId?: string;
 }
 
 /**
@@ -77,11 +79,12 @@ const DivElement = forwardRef<HTMLDivElement, ISingleSelectListItemProps & { chi
                 aria-describedby={props.accessibilityConfig?.ariaDescribedBy}
                 tabIndex={props.tabIndex}
                 data-testid={
-                    props.type === "separator"
+                    props.dataTestId ??
+                    (props.type === "separator"
                         ? "item-separator"
                         : props.type === "header"
                           ? "item-header"
-                          : undefined
+                          : undefined)
                 }
             >
                 {children}
@@ -109,6 +112,7 @@ const ButtonElement = forwardRef<HTMLButtonElement, ISingleSelectListItemProps &
                 aria-expanded={props.accessibilityConfig?.ariaExpanded}
                 aria-describedby={props.accessibilityConfig?.ariaDescribedBy}
                 tabIndex={props.tabIndex}
+                data-testid={props.dataTestId}
             >
                 {children}
             </button>
