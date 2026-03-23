@@ -1,5 +1,8 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
+
 import { type IThemeDefinition } from "@gooddata/sdk-model";
+
+import { defaultHeaderTheme } from "./defaultHeaderTheme.js";
 
 /**
  * Indigo theme still does not match default scss (because of inconsistent variables),
@@ -170,5 +173,6 @@ export const indigoTheme: IThemeDefinition = {
                 borderColor: "#dde4eb",
             },
         },
+        header: defaultHeaderTheme,
     },
 };

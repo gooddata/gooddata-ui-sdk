@@ -14,7 +14,7 @@
     "scripts": {
         "_phase:build": "npm run build",
         "_phase:validate": "npm run validate",
-        "build": "npm-run-all -p dist build-check",
+        "build": "npm run build-check",
         "build-check": "tsgo",
         "clean": "../../common/scripts/clean-command-state.sh && rm -rf dist *.log",
         "dev": "vite --force",
@@ -68,7 +68,6 @@
         "eslint-plugin-sonarjs": "3.0.6",
         "lodash-es": "^4.17.23",
         "maplibre-gl": "^4.7.1",
-        "npm-run-all": "^4.1.5",
         "oxfmt": "0.27.0",
         "oxlint": "^1.43.0",
         "oxlint-tsgolint": "0.11.4",

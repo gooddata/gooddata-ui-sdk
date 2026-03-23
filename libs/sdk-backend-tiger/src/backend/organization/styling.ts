@@ -22,6 +22,7 @@ import { type IOrganizationStylingService } from "@gooddata/sdk-backend-spi";
 import {
     type IColorPaletteDefinition,
     type IColorPaletteMetadataObject,
+    type ITheme,
     type IThemeDefinition,
     type IThemeMetadataObject,
     type ObjRef,
@@ -44,6 +45,7 @@ import { convertColorPalette as convertColorPaletteToBackend } from "../../conve
 import { convertTheme as convertThemeToBackend } from "../../convertors/toBackend/ThemeConverter.js";
 import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
 import { objRefToIdentifier } from "../../utils/api.js";
+import { DefaultTheme } from "../workspace/styling/mocks/theme.js";
 
 export class OrganizationStylingService implements IOrganizationStylingService {
     private settingsService: OrganizationSettingsService;
@@ -51,6 +53,31 @@ export class OrganizationStylingService implements IOrganizationStylingService {
     constructor(private readonly authCall: TigerAuthenticatedCallGuard) {
         this.settingsService = new OrganizationSettingsService(this.authCall);
     }
+
+    public getTheme = async (): Promise<ITheme> => {
+        const settings = await this.settingsService.getSettings();
+        const activeThemeId = (settings?.["activeTheme"] as IThemeMetadataObject)?.id ?? "";
+
+        if (!activeThemeId) {
+            return DefaultTheme;
+        }
+
+        return this.authCall(async (client) =>
+            EntitiesApi_GetAllEntitiesThemes(client.axios, client.basePath, {
+                filter: `id=="${activeThemeId}"`,
+            })
+                .then((themes) => {
+                    if (themes.data.data.length !== 0) {
+                        return themes.data.data[0].attributes.content;
+                    }
+                    return DefaultTheme;
+                })
+                .catch(() => {
+                    // Failed theme loading should not break application
+                    return DefaultTheme;
+                }),
+        );
+    };
 
     public async getThemes(): Promise<IThemeMetadataObject[]> {
         return await this.authCall((client) =>

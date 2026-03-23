@@ -1014,6 +1014,7 @@ export type {
     IThemeMessageVariant,
     IThemeToastMessage,
     IThemeToastMessageVariant,
+    IThemeHeader,
     ImageUri,
     IThemeAxis,
     IThemeChartTooltip,

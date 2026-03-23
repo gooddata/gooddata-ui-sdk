@@ -28,3 +28,10 @@ export {
     type IPluggableAppEvent,
     type PluggableApplicationMount,
 } from "./mount.js";
+
+export {
+    type IShellUiModule,
+    type IShellUiMountHandle,
+    type IShellUiMountOptions,
+    type ShellUiMount,
+} from "./shellUi.js";

@@ -1030,6 +1030,7 @@ class DummyOrganization implements IOrganization {
             });
 
         return {
+            getTheme: () => Promise.resolve({}),
             getThemes: () => Promise.resolve([]),
             getActiveTheme: () => Promise.resolve(undefined),
             setActiveTheme: () => Promise.resolve(),

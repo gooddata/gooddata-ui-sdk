@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/eslint-config",
-    "version": "11.27.0-alpha.1",
+    "version": "11.27.0-alpha.2",
     "license": "MIT",
     "author": "GoodData",
     "repository": {
@@ -44,6 +44,13 @@
         "./oxlint-cypress": {
             "import": "./dist/oxlint-cypress.js"
         },
+        "./playwright": {
+            "import": "./dist/playwright.js",
+            "require": "./dist/playwright.json"
+        },
+        "./oxlint-playwright": {
+            "import": "./dist/oxlint-playwright.js"
+        },
         "./vitest": {
             "import": "./dist/vitest.js",
             "require": "./dist/vitest.json"
@@ -86,12 +93,26 @@
         "./oxlint-react-cypress": {
             "import": "./dist/oxlint-react-cypress.js"
         },
+        "./react-playwright": {
+            "import": "./dist/react-playwright.js",
+            "require": "./dist/react-playwright.json"
+        },
+        "./oxlint-react-playwright": {
+            "import": "./dist/oxlint-react-playwright.js"
+        },
         "./esm-cypress": {
             "import": "./dist/esm-cypress.js",
             "require": "./dist/esm-cypress.json"
         },
         "./oxlint-esm-cypress": {
             "import": "./dist/oxlint-esm-cypress.js"
+        },
+        "./esm-playwright": {
+            "import": "./dist/esm-playwright.js",
+            "require": "./dist/esm-playwright.json"
+        },
+        "./oxlint-esm-playwright": {
+            "import": "./dist/oxlint-esm-playwright.js"
         },
         "./esm-react": {
             "import": "./dist/esm-react.js",
@@ -106,6 +127,13 @@
         },
         "./oxlint-esm-react-cypress": {
             "import": "./dist/oxlint-esm-react-cypress.js"
+        },
+        "./esm-react-playwright": {
+            "import": "./dist/esm-react-playwright.js",
+            "require": "./dist/esm-react-playwright.json"
+        },
+        "./oxlint-esm-react-playwright": {
+            "import": "./dist/oxlint-esm-react-playwright.js"
         },
         "./esm-react-vitest": {
             "import": "./dist/esm-react-vitest.js",
@@ -153,6 +181,7 @@
         "eslint-plugin-jsdoc": "62.1.0",
         "eslint-plugin-no-barrel-files": "1.2.2",
         "eslint-plugin-no-only-tests": "3.3.0",
+        "eslint-plugin-playwright": "2.10.1",
         "eslint-plugin-react": "7.37.5",
         "eslint-plugin-react-hooks": "5.2.0",
         "eslint-plugin-sonarjs": "3.0.6",

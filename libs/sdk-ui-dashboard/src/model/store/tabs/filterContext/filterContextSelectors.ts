@@ -19,6 +19,7 @@ import {
     dashboardAttributeFilterItemFilterElementsBy,
     dashboardAttributeFilterItemFilterElementsByDate,
     dashboardAttributeFilterItemLocalIdentifier,
+    dashboardAttributeFilterItemTitle,
     getAttributeElementsItems,
     idRef,
     isDashboardAttributeFilter,
@@ -1352,27 +1353,47 @@ export const selectPreloadedAttributesWithReferences: DashboardSelector<
 export const selectNamesOfFiltersWithInvalidSelection: DashboardSelector<string[]> = createSelector(
     selectFiltersWithInvalidSelection,
     selectAttributeFilterDisplayForms,
+    selectPreloadedAttributesWithReferences,
     selectFilterContextAttributeFilterItems,
-    (invalidFilterIds, attributeFilterDisplayForms, attributeFilterItems): string[] => {
-        // If attributeFilterDisplayForms is undefined, return empty array
-        if (!attributeFilterDisplayForms) {
-            return [];
-        }
+    (
+        invalidFilterIds,
+        attributeFilterDisplayForms,
+        attributesWithReferences,
+        attributeFilterItems,
+    ): string[] => {
         // Find filters with invalid selection
         const invalidFilters = attributeFilterItems.filter((filter) => {
             const localId = dashboardAttributeFilterItemLocalIdentifier(filter);
             return localId && invalidFilterIds.includes(localId);
         });
 
-        // For each invalid filter, find the attribute name from attributeFilterDisplayForms
+        // For each invalid filter, resolve its name:
+        // 1. Use the filter's own title (alias) if set
+        // 2. Otherwise, look up the attribute title via displayForm -> attribute ref
         const attributeNames = invalidFilters.map((filter) => {
-            // TODO INE: add support for aliases
+            // Filter alias takes priority
+            const filterTitle = dashboardAttributeFilterItemTitle(filter);
+            if (filterTitle) {
+                return filterTitle;
+            }
+
+            // Look up the display form metadata to get the attribute ref
             const displayFormRef = dashboardAttributeFilterItemDisplayForm(filter);
-            const attributeWithReferences = attributeFilterDisplayForms?.find((item) =>
+            const displayForm = attributeFilterDisplayForms?.find((item) =>
                 areObjRefsEqual(item.ref, displayFormRef),
             );
 
-            return attributeWithReferences?.title ?? "";
+            // Use the attribute ref from the display form to find the attribute and its title
+            if (displayForm?.attribute && attributesWithReferences) {
+                const attrWithRefs = attributesWithReferences.find((item) =>
+                    areObjRefsEqual(item.attribute.ref, displayForm.attribute),
+                );
+                if (attrWithRefs) {
+                    return attrWithRefs.attribute.title;
+                }
+            }
+
+            return "";
         });
 
         // Filter out empty strings and remove duplicates

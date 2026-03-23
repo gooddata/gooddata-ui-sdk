@@ -23,6 +23,7 @@ export {
     noBarrelFilesRules,
 } from "./configurations/no-barrel-files.js";
 export { noOnlyTestsPlugin, noOnlyTestsRules } from "./configurations/no-only-tests.js";
+export { playwrightPlugin, playwrightRules } from "./configurations/playwright.js";
 export { securityRules } from "./configurations/security.js";
 export { sonarjsOverrides, sonarjsPlugin, sonarjsRules } from "./configurations/sonarjs.js";
 export {

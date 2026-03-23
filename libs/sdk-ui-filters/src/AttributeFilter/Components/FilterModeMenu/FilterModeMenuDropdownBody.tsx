@@ -51,7 +51,7 @@ export function FilterModeMenuDropdownBody({
     };
 
     return (
-        <div className="gd-filter-mode-menu__dropdown">
+        <div className="gd-filter-mode-menu__dropdown" data-testid="filter-mode-menu-dropdown">
             {showModeSection ? (
                 <>
                     <FilterModeMenuSectionHeader title={selectionTitle} tooltip={selectionTooltip} />

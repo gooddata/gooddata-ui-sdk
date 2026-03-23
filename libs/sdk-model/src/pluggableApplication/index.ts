@@ -435,6 +435,19 @@ export interface IRemotePluggableApplicationsRegistryV1 {
      * Mainly used to register 3rd party hosted remote module federated applications.
      */
     applications?: PluggableApplicationRegistryItem[];
+    /**
+     * Optional remote module federation definition for a custom shell UI module.
+     *
+     * @remarks
+     * When set, the shell application loads the UI module from this remote instead of using the
+     * built-in default shell UI. The loaded module must conform to the {@link @gooddata/sdk-pluggable-application-model#IShellUiModule}
+     * interface.
+     *
+     * This allows organizations to fully replace the application chrome (header, navigation, layout)
+     * with a custom implementation while keeping the pluggable application loading and lifecycle
+     * management intact.
+     */
+    uiModule?: IRemotePluggableApplicationModule;
 }
 
 /**

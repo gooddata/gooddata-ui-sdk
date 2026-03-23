@@ -14,6 +14,7 @@ import { IUserSettings } from '@gooddata/sdk-backend-spi';
 import { IWhiteLabeling } from '@gooddata/sdk-model';
 import { IWorkspacePermissions } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
+import { PluggableApplicationRegistryItem } from '@gooddata/sdk-model';
 
 // @alpha
 export type EmbeddingMode = "none" | "iframe" | "export";
@@ -125,6 +126,31 @@ export interface IPluggableApplicationNavigation {
 }
 
 // @alpha
+export interface IShellUiModule {
+    // (undocumented)
+    mount: ShellUiMount;
+}
+
+// @alpha
+export interface IShellUiMountHandle {
+    getAppContainer(): HTMLElement;
+    unmount(): void;
+    updateApplications?(apps: PluggableApplicationRegistryItem[]): void;
+    updateContext?(ctx: IPlatformContext): void;
+    updatePathname?(pathname: string): void;
+}
+
+// @alpha
+export interface IShellUiMountOptions {
+    container: HTMLElement;
+    ctx: IPlatformContext;
+    navigate: (url: string) => void;
+    pathname: string;
+    replace: (url: string) => void;
+    resolvedApplications: PluggableApplicationRegistryItem[];
+}
+
+// @alpha
 export function isPlatformContextV1(context: unknown): context is IPlatformContextV1;
 
 // @alpha
@@ -143,5 +169,8 @@ export enum PantherTier {
 
 // @alpha
 export type PluggableApplicationMount = (options: IPluggableApplicationMountOptions) => IPluggableApplicationMountHandle;
+
+// @alpha
+export type ShellUiMount = (options: IShellUiMountOptions) => IShellUiMountHandle;
 
 ```

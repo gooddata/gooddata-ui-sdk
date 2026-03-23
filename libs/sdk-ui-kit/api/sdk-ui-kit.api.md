@@ -5273,6 +5273,7 @@ export interface ISingleSelectListItemProps {
     accessibilityConfig?: IMenuAccessibilityConfig;
     // (undocumented)
     className?: string;
+    dataTestId?: string;
     // (undocumented)
     elementType?: "div" | "button";
     // (undocumented)

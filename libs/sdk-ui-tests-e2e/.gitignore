@@ -1,3 +1,2 @@
-/cypress/results
-/cypress/videos
-/cypress/screenshots
+test-results/
+playwright/results/

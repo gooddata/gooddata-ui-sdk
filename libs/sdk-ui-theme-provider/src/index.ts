@@ -12,6 +12,7 @@
  *
  * @packageDocumentation
  */
+export { defaultHeaderTheme } from "./defaultThemes/defaultHeaderTheme.js";
 export {
     ThemeProvider,
     type IThemeProviderProps,

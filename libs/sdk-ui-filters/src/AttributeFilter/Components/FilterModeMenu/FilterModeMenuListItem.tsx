@@ -7,6 +7,8 @@ import {
     UiIcon,
 } from "@gooddata/sdk-ui-kit";
 
+import { type IModeItemData } from "./types.js";
+
 type IFilterModeMenuListItemProps<TData> = {
     item: IUiListboxInteractiveItem<TData>;
     onSelect: IUiListboxInteractiveItemProps<TData>["onSelect"];
@@ -20,9 +22,13 @@ export function FilterModeMenuListItem<TData>({
     isFocused,
     isSelected,
 }: IFilterModeMenuListItemProps<TData>) {
+    const modeData = item.data as unknown as IModeItemData | undefined;
+    const filterModeTestId = modeData && "mode" in modeData ? `filter-mode-${modeData.mode}` : undefined;
+
     return (
         <SingleSelectListItem
             className="gd-filter-mode-menu__item"
+            dataTestId={filterModeTestId}
             title={item.stringTitle}
             isSelected={isSelected}
             isFocused={isFocused}

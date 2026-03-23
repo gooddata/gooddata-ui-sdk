@@ -168,6 +168,7 @@ export function TextFilterBody(props: ITextFilterBodyProps) {
                                         "gd-text-filter-body__input--error s-text-filter-input-error":
                                             hasLiteralEmptyError,
                                     })}
+                                    dataTestId="text-filter-literal-input"
                                     hasError={hasLiteralEmptyError}
                                     value={literal}
                                     onChange={handleLiteralChange}
@@ -194,7 +195,10 @@ export function TextFilterBody(props: ITextFilterBodyProps) {
 
                     {/* Case sensitivity - only for non-arbitrary operators */}
                     {isMatchOperator(operator) ? (
-                        <div className="gd-text-filter-body__options">
+                        <div
+                            className="gd-text-filter-body__options"
+                            data-testid="text-filter-case-sensitive"
+                        >
                             <Checkbox
                                 value={caseSensitive}
                                 text={intl.formatMessage({

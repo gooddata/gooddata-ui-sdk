@@ -8,7 +8,6 @@ import {
     goodmockMode as getGoodmockMode,
     loadMappings,
     resetMappings,
-    resetScenarios,
     snapshotAndSaveRecording,
     startRecording,
 } from "./goodmock.js";
@@ -34,9 +33,10 @@ export function createDescribe(
         const details = hasDetails ? (detailsOrFn as TestDetails) : undefined;
         const fn = hasDetails ? (func as () => void) : (detailsOrFn as () => void);
 
+        const goodmockMode = getGoodmockMode();
+
         let suite = fn;
-        if (goodmockHost) {
-            const goodmockMode = getGoodmockMode();
+        if (goodmockHost && goodmockMode !== GoodmockMode.Proxy) {
             suite = () => {
                 test.beforeAll(async () => {
                     await resetMappings(goodmockHost);
@@ -57,14 +57,14 @@ export function createDescribe(
                             baseUrl,
                         );
                     }
-                    if (goodmockMode !== GoodmockMode.Proxy) {
-                        await resetMappings(goodmockHost);
-                    }
+
+                    await resetMappings(goodmockHost);
                 });
 
-                test.beforeEach(async () => {
-                    await resetScenarios(goodmockHost);
-                });
+                // TODO: When this is supported in goodmock, uncomment this block
+                // test.beforeEach(async () => {
+                //     await resetScenarios(goodmockHost);
+                // });
 
                 fn(); // user's test.beforeAll/beforeEach calls stack on top naturally
             };

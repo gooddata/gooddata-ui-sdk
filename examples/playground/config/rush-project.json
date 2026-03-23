@@ -4,7 +4,7 @@
     "operationSettings": [
         {
             "operationName": "_phase:build",
-            "outputFolderNames": ["dist"]
+            "outputFolderNames": []
         },
         {
             "operationName": "_phase:validate",

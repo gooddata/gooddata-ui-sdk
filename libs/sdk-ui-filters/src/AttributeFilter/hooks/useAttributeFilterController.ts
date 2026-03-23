@@ -266,6 +266,16 @@ export const useAttributeFilterController = (
             if (connectToPlaceholder && withoutApply && !isInvalid) {
                 setConnectedPlaceholderValue(nextFilter);
             }
+
+            // In withoutApply mode, don't dispatch invalid text filter states to the store.
+            // The filter representation is ambiguous — e.g. "IS NOT with empty values" produces
+            // the same filter object as "All" (negative arbitrary with empty values). Dispatching
+            // it triggers a round-trip where the component re-evaluates the filter as "All" and
+            // resets, preventing the user from building an IS NOT filter.
+            if (withoutApply && isInvalid) {
+                return;
+            }
+
             onChange?.(nextFilter, isInverted, selectionMode, [], effectiveDisplayFormRef, false, {
                 isSelectionInvalid: isInvalid,
             });

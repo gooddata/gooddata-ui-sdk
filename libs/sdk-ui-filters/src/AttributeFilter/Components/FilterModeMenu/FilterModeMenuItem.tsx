@@ -47,6 +47,7 @@ export function FilterModeMenuItem(props: IFilterModeMenuItemProps) {
     return (
         <SingleSelectListItem
             className={cx("gd-filter-mode-menu__item", `s-filter-mode-${mode}`)}
+            dataTestId={`filter-mode-${mode}`}
             title={title}
             isSelected={isSelected}
             elementType="button"

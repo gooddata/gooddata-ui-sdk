@@ -14,6 +14,7 @@ import { importX } from "./configurations/import-x.js";
 import { jsdoc } from "./configurations/jsdoc.js";
 import { noBarrelFiles } from "./configurations/no-barrel-files.js";
 import { noOnlyTests } from "./configurations/no-only-tests.js";
+import { playwright } from "./configurations/playwright.js";
 import { reactHooks } from "./configurations/react-hooks.js";
 import { react } from "./configurations/react.js";
 import { regexp } from "./configurations/regexp.js";
@@ -45,15 +46,28 @@ export const commonVariants: Record<string, IDualConfiguration[]> = {
     browser: [browserEnv], // for any packages that uses document, but are not react libs
     "browser-esm": [browserEnv, esm, importEsm], // unsure if needed
     cypress: [browserEnv, esm, cypress, chaiFriendly, noOnlyTests], // for sdk-ui-tests
+    playwright: [browserEnv, esm, playwright, chaiFriendly, noOnlyTests], // for sdk-ui-tests
     vitest: [vitest, noOnlyTests],
     esm: [esm, importEsm], // used for this lib
     "esm-vitest": [esm, importEsm, vitest, noOnlyTests], // for @gooddata/util and MAQL language server
     react: [browserEnv, esm, react, reactHooks], // for skel tsx
     "react-vitest": [browserEnv, esm, react, reactHooks, vitest, noOnlyTests], // for gdc-ui libs
     "react-cypress": [browserEnv, esm, react, reactHooks, cypress, chaiFriendly, noOnlyTests], // for gdc e2e libs
+    "react-playwright": [browserEnv, esm, react, reactHooks, playwright, chaiFriendly, noOnlyTests], // for gdc e2e libs
     "esm-cypress": [browserEnv, esm, importEsm, cypress, chaiFriendly, noOnlyTests], // for e2e-utils
+    "esm-playwright": [browserEnv, esm, importEsm, playwright, chaiFriendly, noOnlyTests], // for e2e-utils
     "esm-react": [browserEnv, esm, react, reactHooks, importEsm], // for most react libs
     "esm-react-cypress": [browserEnv, esm, react, reactHooks, importEsm, cypress, chaiFriendly, noOnlyTests], // for gdc e2e libs with react
+    "esm-react-playwright": [
+        browserEnv,
+        esm,
+        react,
+        reactHooks,
+        importEsm,
+        playwright,
+        chaiFriendly,
+        noOnlyTests,
+    ], // for gdc e2e libs with react
     "esm-react-vitest": [browserEnv, esm, react, reactHooks, importEsm, vitest, noOnlyTests], // for most sdk react libs with vitest
     "esm-react-vitest-storybook": [
         browserEnv,

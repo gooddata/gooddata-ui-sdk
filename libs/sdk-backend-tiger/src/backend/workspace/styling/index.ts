@@ -75,7 +75,7 @@ export class TigerWorkspaceStyling implements IWorkspaceStylingService {
                   EntitiesApi_GetAllEntitiesThemes(client.axios, client.basePath, {
                       filter: `id=="${activeThemeId}"`,
                   })
-                      .then((themes: any) => {
+                      .then((themes) => {
                           if (themes.data.data.length !== 0) {
                               return themes.data.data[0].attributes.content;
                           }
