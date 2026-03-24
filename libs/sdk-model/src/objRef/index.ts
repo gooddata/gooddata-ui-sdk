@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import stringify from "json-stable-stringify";
 import { isEmpty } from "lodash-es";
@@ -60,6 +60,7 @@ export type ObjectType =
     | "filterView"
     | "workspaceDataFilter"
     | "workspaceDataFilterSetting"
+    | "userDataFilter"
     | "notificationChannel"
     | "memoryItem";
 

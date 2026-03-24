@@ -164,13 +164,9 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
                 const onInitLoadingChanged = useCallback((loading: boolean) => {
                     initLoadingChangedHandler(filterIdentifier)(loading);
                 }, []);
-                return (
-                    <AttributeFilterButton
-                        {...attributeFilterProps}
-                        alignPoints={ITEM_ALIGN_POINTS}
-                        onError={onError}
-                        onInitLoadingChanged={onInitLoadingChanged}
-                        DropdownButtonComponent={(props) => {
+                const DropdownButtonComponent: NonNullable<IAttributeFilterProps["DropdownButtonComponent"]> =
+                    useCallback(
+                        (props) => {
                             const titleExtension = getTitleExtension?.(filterIdentifier, props.title);
                             const CustomDropdownButtonComponent =
                                 attributeFilterProps.DropdownButtonComponent ?? FilterGroupItem;
@@ -189,21 +185,44 @@ export function FilterGroup<P>(props: IFilterGroupProps<P>) {
                                     }
                                 />
                             );
-                        }}
-                        LoadingComponent={() => <FilterGroupItem isLoading />}
-                        ErrorComponent={() => <FilterGroupItem isError />}
-                        ElementsSearchBarComponent={(props) => (
-                            <AttributeFilterElementsSearchBar
-                                {...props}
-                                onKeyDown={(e) => {
-                                    // allow space key to be handled by filter search bar
-                                    // and not stolen by filter group dropdown keyboard navigation
-                                    if (isSpaceKey(e)) {
-                                        e.stopPropagation();
-                                    }
-                                }}
-                            />
-                        )}
+                        },
+                        [attributeFilterProps.DropdownButtonComponent],
+                    );
+                const LoadingComponent: NonNullable<IAttributeFilterProps["LoadingComponent"]> = useCallback(
+                    () => <FilterGroupItem isLoading />,
+                    [],
+                );
+                const ErrorComponent: NonNullable<IAttributeFilterProps["ErrorComponent"]> = useCallback(
+                    () => <FilterGroupItem isError />,
+                    [],
+                );
+                const ElementsSearchBarComponent: NonNullable<
+                    IAttributeFilterProps["ElementsSearchBarComponent"]
+                > = useCallback(
+                    (props) => (
+                        <AttributeFilterElementsSearchBar
+                            {...props}
+                            onKeyDown={(e) => {
+                                // allow space key to be handled by filter search bar
+                                // and not stolen by filter group dropdown keyboard navigation
+                                if (isSpaceKey(e)) {
+                                    e.stopPropagation();
+                                }
+                            }}
+                        />
+                    ),
+                    [],
+                );
+                return (
+                    <AttributeFilterButton
+                        {...attributeFilterProps}
+                        alignPoints={ITEM_ALIGN_POINTS}
+                        onError={onError}
+                        onInitLoadingChanged={onInitLoadingChanged}
+                        DropdownButtonComponent={DropdownButtonComponent}
+                        LoadingComponent={LoadingComponent}
+                        ErrorComponent={ErrorComponent}
+                        ElementsSearchBarComponent={ElementsSearchBarComponent}
                     />
                 );
             }

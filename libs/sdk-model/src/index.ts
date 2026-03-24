@@ -1145,10 +1145,20 @@ export {
     isExportDefinitionVisualizationObjectRequestPayload,
 } from "./exports/index.js";
 
-export type {
-    IWorkspaceDataFilter,
-    IWorkspaceDataFilterDefinition,
-    IWorkspaceDataFilterSetting,
+export {
+    type IWorkspaceDataFilter,
+    type IWorkspaceDataFilterDefinition,
+    type IWorkspaceDataFilterSetting,
+    type IUserDataFilterBase,
+    type IUserDataFilter,
+    type IUserGroupDataFilter,
+    type UserDataFilter,
+    type IUserDataFilterDefinitionBase,
+    type IUserDataFilterDefinition,
+    type IUserGroupDataFilterDefinition,
+    type UserDataFilterDefinition,
+    isUserDataFilter,
+    isUserGroupDataFilter,
 } from "./dataFilter/index.js";
 export {
     type IAutomationMetadataObjectBase,

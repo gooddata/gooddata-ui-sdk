@@ -31,6 +31,7 @@ export const useAutomationActions = (type: AutomationsType, scope: AutomationsSc
         promisePauseAutomations,
         promiseResumeAutomation,
         promiseResumeAutomations,
+        promiseTriggerAutomation,
     } = useAutomationService(scope);
 
     const actionMessages = useMemo(() => getActionMessages(type), [type]);
@@ -203,6 +204,26 @@ export const useAutomationActions = (type: AutomationsType, scope: AutomationsSc
         [state.bulkResumedAutomations],
     );
 
+    const { status: triggerStatus } = useCancelablePromise(
+        {
+            promise: state.triggeredAutomation
+                ? async () => {
+                      await promiseTriggerAutomation(state.triggeredAutomation!);
+                  }
+                : null,
+            onSuccess: () => {
+                resetState();
+                addSuccess(actionMessages.messageTriggerSuccess);
+            },
+            onError: (error) => {
+                resetState();
+                addError(actionMessages.messageTriggerError);
+                console.error(error);
+            },
+        },
+        [state.triggeredAutomation],
+    );
+
     // Action methods
     const actions = useMemo(
         () => ({
@@ -230,6 +251,9 @@ export const useAutomationActions = (type: AutomationsType, scope: AutomationsSc
             bulkResumeAutomations: (automations: Array<IAutomationMetadataObject>) => {
                 setState((prev) => ({ ...prev, bulkResumedAutomations: automations }));
             },
+            triggerAutomation: (automation: IAutomationMetadataObject) => {
+                setState((prev) => ({ ...prev, triggeredAutomation: automation }));
+            },
         }),
         [],
     );
@@ -243,7 +267,8 @@ export const useAutomationActions = (type: AutomationsType, scope: AutomationsSc
             pauseStatus === "loading" ||
             bulkPauseStatus === "loading" ||
             resumeStatus === "loading" ||
-            bulkResumeStatus === "loading"
+            bulkResumeStatus === "loading" ||
+            triggerStatus === "loading"
         );
     }, [
         deleteStatus,
@@ -254,6 +279,7 @@ export const useAutomationActions = (type: AutomationsType, scope: AutomationsSc
         bulkPauseStatus,
         resumeStatus,
         bulkResumeStatus,
+        triggerStatus,
     ]);
 
     return {

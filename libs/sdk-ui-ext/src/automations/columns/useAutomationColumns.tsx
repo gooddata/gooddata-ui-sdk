@@ -33,6 +33,7 @@ export const useAutomationColumns = ({
     unsubscribeFromAutomation,
     pauseAutomation,
     resumeAutomation,
+    triggerAutomation,
     dashboardUrlBuilder,
     widgetUrlBuilder,
     editAutomation,
@@ -44,8 +45,13 @@ export const useAutomationColumns = ({
 } => {
     const workspace = useWorkspace();
     const intl = useIntl();
-    const { canManageAutomation, isSubscribedToAutomation, canPauseAutomation, canResumeAutomation } =
-        useUser();
+    const {
+        canManageAutomation,
+        isSubscribedToAutomation,
+        canPauseAutomation,
+        canResumeAutomation,
+        canTriggerAutomation,
+    } = useUser();
     const isSmall = tableVariant === "small";
 
     const allColumns = useMemo(
@@ -168,6 +174,7 @@ export const useAutomationColumns = ({
                     const canManage = canManageAutomation(item);
                     const canPause = canPauseAutomation(item);
                     const canResume = canResumeAutomation(item);
+                    const canTrigger = canTriggerAutomation(item);
                     const isSubscribed = isSubscribedToAutomation(item);
                     return (
                         <AutomationMenu
@@ -177,12 +184,14 @@ export const useAutomationColumns = ({
                             unsubscribeFromAutomation={unsubscribeFromAutomation}
                             pauseAutomation={pauseAutomation}
                             resumeAutomation={resumeAutomation}
+                            triggerAutomation={triggerAutomation}
                             setPendingAction={setPendingAction}
                             workspace={workspace!}
                             canManage={canManage}
                             isSubscribed={isSubscribed}
                             canPause={canPause}
                             canResume={canResume}
+                            canTrigger={canTrigger}
                             closeDropdown={closeDropdown}
                             automationsType={automationsType}
                         />
@@ -207,9 +216,11 @@ export const useAutomationColumns = ({
             unsubscribeFromAutomation,
             pauseAutomation,
             resumeAutomation,
+            triggerAutomation,
             setPendingAction,
             canPauseAutomation,
             canResumeAutomation,
+            canTriggerAutomation,
             automationsType,
             isSmall,
         ],

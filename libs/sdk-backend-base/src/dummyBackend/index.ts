@@ -1703,6 +1703,10 @@ class DummyWorkspaceAutomationService implements IWorkspaceAutomationService {
         return Promise.resolve(undefined);
     }
 
+    triggerAutomation(_id: string): Promise<void> {
+        return Promise.resolve(undefined);
+    }
+
     getAutomation(id: string, _options?: IGetAutomationOptions): Promise<IAutomationMetadataObject> {
         return Promise.resolve({
             id: id,

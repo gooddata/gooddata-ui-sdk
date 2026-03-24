@@ -1,6 +1,6 @@
 {
     "extends": "../tsconfig.strict.json",
-    "exclude": ["**/node_modules", "**/esm", "**/dist", "**/temp", "**/dist-storybook"],
+    "exclude": ["**/node_modules", "**/esm", "**/dist", "**/temp"],
     "compilerOptions": {
         "target": "ES2022",
         "lib": ["ES2022", "dom"],

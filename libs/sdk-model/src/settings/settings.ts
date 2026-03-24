@@ -1090,4 +1090,14 @@ export interface IFeatureFlags {
      * Enable Analytical Catalog application.
      */
     enableAnalyticalCatalog?: boolean;
+
+    /**
+     * Enable ad-hoc triggering of existing automations from the manage dialog.
+     */
+    enableAutomationTrigger?: boolean;
+
+    /**
+     * Enable User Data Filters UI.
+     */
+    enableUserDataFiltersUi?: boolean;
 }

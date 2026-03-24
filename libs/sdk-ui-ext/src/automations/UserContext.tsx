@@ -9,7 +9,7 @@ import {
     type IUser,
     isAutomationUserGroupRecipient,
 } from "@gooddata/sdk-model";
-import { useBackend, useCancelablePromise } from "@gooddata/sdk-ui";
+import { useBackend, useCancelablePromise, useWorkspace } from "@gooddata/sdk-ui";
 
 import { type AutomationsScope, type IUserContextValue } from "./types.js";
 import { useAutomationService } from "./useAutomationService.js";
@@ -24,8 +24,10 @@ interface IUserProviderProps {
 export function UserProvider({ children, scope }: IUserProviderProps) {
     const [currentUser, setCurrentUser] = useState<IUser | null>(null);
     const [canManageWorkspace, setCanManageWorkspace] = useState<boolean>(false);
+    const [enableAutomationTrigger, setEnableAutomationTrigger] = useState<boolean>(false);
 
     const backend = useBackend();
+    const workspace = useWorkspace();
     const { promiseGetCurrentUser, promiseCanManageWorkspace } = useAutomationService(scope);
 
     useCancelablePromise(
@@ -52,6 +54,22 @@ export function UserProvider({ children, scope }: IUserProviderProps) {
             },
         },
         [backend],
+    );
+
+    useCancelablePromise(
+        {
+            promise:
+                backend && workspace
+                    ? async () => backend.workspace(workspace).settings().getSettingsForCurrentUser()
+                    : null,
+            onSuccess: (result) => {
+                setEnableAutomationTrigger(result?.enableAutomationTrigger ?? false);
+            },
+            onError: (error) => {
+                console.error(error);
+            },
+        },
+        [backend, workspace],
     );
 
     // Compare by login since current user doesn't have id property,
@@ -114,12 +132,20 @@ export function UserProvider({ children, scope }: IUserProviderProps) {
         [canManageAutomation],
     );
 
+    const canTriggerAutomation = useCallback(
+        (automation: IAutomationMetadataObject): boolean => {
+            return enableAutomationTrigger && canManageAutomation(automation);
+        },
+        [enableAutomationTrigger, canManageAutomation],
+    );
+
     const contextValue: IUserContextValue = {
         canManageAutomation,
         isCurrentUserByLogin,
         isSubscribedToAutomation,
         canPauseAutomation,
         canResumeAutomation,
+        canTriggerAutomation,
     };
 
     return <UserContext.Provider value={contextValue}>{children}</UserContext.Provider>;

@@ -5,6 +5,8 @@ import { defineMessages, useIntl } from "react-intl";
 
 import { type IDropdownButtonRenderProps, UiIconButton } from "@gooddata/sdk-ui-kit";
 
+import { TEXT_FILTER_MODE_BUTTON_ID } from "./accessibility/elementId.js";
+
 /**
  * Props for FilterModeMenuButton component.
  *
@@ -58,6 +60,7 @@ export function FilterModeMenuButton(props: IFilterModeMenuButtonProps) {
             data-testid="filter-mode-menu-button"
         >
             <UiIconButton
+                id={TEXT_FILTER_MODE_BUTTON_ID}
                 icon="ellipsis"
                 size="large"
                 variant="tertiary"

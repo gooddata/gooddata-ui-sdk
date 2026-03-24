@@ -2376,6 +2376,7 @@ export interface IFeatureFlags {
     enableAthenaDataSource?: boolean;
     enableAutomationFilterContext?: boolean;
     enableAutomationManagement?: boolean;
+    enableAutomationTrigger?: boolean;
     enableCatalogSmartSearchResults?: boolean;
     enableCatalogTrendingObjects?: boolean;
     enableCertification?: boolean;
@@ -2494,6 +2495,7 @@ export interface IFeatureFlags {
     // (undocumented)
     enableStarrocksDataSource?: boolean;
     enableToDateFilters?: boolean;
+    enableUserDataFiltersUi?: boolean;
     enableUserManagement?: boolean;
     enableVisualizationFilteringByTags?: boolean;
     enableVisualizationFineTuning?: boolean;
@@ -4853,10 +4855,16 @@ export const isUserAccess: (obj: unknown) => obj is IUserAccess;
 export const isUserAccessGrantee: (obj: unknown) => obj is IUserAccessGrantee;
 
 // @alpha
+export function isUserDataFilter(filter: UserDataFilter): filter is IUserDataFilter;
+
+// @alpha
 export const isUserGroupAccess: (obj: unknown) => obj is IUserGroupAccess;
 
 // @public
 export const isUserGroupAccessGrantee: (obj: unknown) => obj is IUserGroupAccessGrantee;
+
+// @alpha
+export function isUserGroupDataFilter(filter: UserDataFilter): filter is IUserGroupDataFilter;
 
 // @alpha
 export const isUserGroupWorkspaceAccessGrantee: (obj: unknown) => obj is IUserGroupWorkspaceAccessGrantee;
@@ -5356,6 +5364,45 @@ export interface IUserAccessGrantee {
 }
 
 // @alpha
+export interface IUserDataFilter extends IUserDataFilterBase {
+    // (undocumented)
+    assignee: IUser;
+}
+
+// @alpha
+export interface IUserDataFilterBase {
+    // (undocumented)
+    description?: string;
+    // (undocumented)
+    isInherited: boolean;
+    maql: string;
+    // (undocumented)
+    ref: ObjRef;
+    // (undocumented)
+    tags?: string[];
+    // (undocumented)
+    title?: string;
+}
+
+// @alpha
+export interface IUserDataFilterDefinition extends IUserDataFilterDefinitionBase {
+    userRef: ObjRef;
+}
+
+// @alpha
+export interface IUserDataFilterDefinitionBase {
+    // (undocumented)
+    description?: string;
+    // (undocumented)
+    id?: string;
+    maql: string;
+    // (undocumented)
+    tags?: string[];
+    // (undocumented)
+    title?: string;
+}
+
+// @alpha
 export interface IUserGroup {
     id: string;
     name?: string;
@@ -5372,6 +5419,17 @@ export interface IUserGroupAccess {
 export interface IUserGroupAccessGrantee {
     granteeRef: ObjRef;
     type: "group";
+}
+
+// @alpha
+export interface IUserGroupDataFilter extends IUserDataFilterBase {
+    // (undocumented)
+    assignee: IUserGroup;
+}
+
+// @alpha
+export interface IUserGroupDataFilterDefinition extends IUserDataFilterDefinitionBase {
+    userGroupRef: ObjRef;
 }
 
 // @alpha
@@ -5994,7 +6052,7 @@ export type NotificationType = "alertNotification" | "scheduleNotification" | "t
 export type ObjectOrigin = "ALL" | "PARENTS" | "NATIVE";
 
 // @public
-export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "user" | "userGroup" | "dateHierarchyTemplate" | "dateAttributeHierarchy" | "exportDefinition" | "automation" | "filterView" | "workspaceDataFilter" | "workspaceDataFilterSetting" | "notificationChannel" | "memoryItem";
+export type ObjectType = "measure" | "fact" | "attribute" | "displayForm" | "dataSet" | "tag" | "insight" | "variable" | "analyticalDashboard" | "theme" | "colorPalette" | "filterContext" | "dashboardPlugin" | "attributeHierarchy" | "user" | "userGroup" | "dateHierarchyTemplate" | "dateAttributeHierarchy" | "exportDefinition" | "automation" | "filterView" | "workspaceDataFilter" | "workspaceDataFilterSetting" | "userDataFilter" | "notificationChannel" | "memoryItem";
 
 // @public
 export type ObjRef = UriRef | IdentifierRef;
@@ -6208,6 +6266,12 @@ export type UriRef = {
 
 // @public
 export function uriRef(uri: Uri): UriRef;
+
+// @alpha
+export type UserDataFilter = IUserDataFilter | IUserGroupDataFilter;
+
+// @alpha
+export type UserDataFilterDefinition = IUserDataFilterDefinition | IUserGroupDataFilterDefinition;
 
 // @public
 export function userFullName(user: IUser): string | undefined;

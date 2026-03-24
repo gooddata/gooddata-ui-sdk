@@ -1066,6 +1066,20 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "BOOLEAN",
             FeatureFlagsValues.enableDashboardDensitySetting,
         ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableAutomationTrigger,
+            "enableAutomationTrigger",
+            "BOOLEAN",
+            FeatureFlagsValues.enableAutomationTrigger,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableUserDataFiltersUi,
+            "enableUserDataFiltersUi",
+            "BOOLEAN",
+            FeatureFlagsValues.enableUserDataFiltersUi,
+        ),
     };
 }
 

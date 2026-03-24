@@ -4,7 +4,7 @@ import { test } from "@playwright/test";
 
 import { injectAuthHeader } from "@gooddata/e2e-utils";
 
-import { API_TOKEN, describe } from "../config";
+import { API_TOKEN, describe } from "../config.js";
 import { expectTableCellValue, mockFeatureHub, scrollTableTo, visit, waitTableLoaded } from "../helpers.js";
 
 test.beforeEach(async ({ page }) => {

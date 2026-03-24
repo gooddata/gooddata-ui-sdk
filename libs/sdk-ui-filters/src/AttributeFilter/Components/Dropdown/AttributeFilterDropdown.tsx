@@ -15,6 +15,7 @@ import {
     isArbitraryOperator,
 } from "../../textFilterOperatorUtils.js";
 import { AttributeFilterButtonErrorTooltip } from "../DropdownButton/AttributeFilterButtonErrorTooltip.js";
+import { TEXT_FILTER_MODE_BUTTON_ID } from "../FilterModeMenu/accessibility/elementId.js";
 
 const ALIGN_POINTS = [
     { align: "bl tl" },
@@ -98,6 +99,8 @@ export function AttributeFilterDropdown() {
         subtitleFilter,
     );
 
+    const initialFocus = currentFilterMode === "text" ? TEXT_FILTER_MODE_BUTTON_ID : undefined;
+
     const isMultiselect = selectionMode !== "single";
     const committedValues = getValuesFromFilter(textFilterCommittedFilter);
     let arbitraryCount = 0;
@@ -126,6 +129,7 @@ export function AttributeFilterDropdown() {
             alignPoints={alignPoints ?? ALIGN_POINTS}
             fullscreenOnMobile={fullscreenOnMobile}
             autofocusOnOpen
+            initialFocus={initialFocus}
             overlayPositionType={overlayPositionType}
             renderButton={({ toggleDropdown, isOpen, buttonRef, dropdownId }) => {
                 const handleClickAction = disabled ? () => {} : toggleDropdown;

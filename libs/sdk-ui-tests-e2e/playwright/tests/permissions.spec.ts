@@ -5,7 +5,7 @@ import { expect, test } from "@playwright/test";
 import { injectAuthHeader } from "@gooddata/e2e-utils";
 import { Dashboards } from "@gooddata/sdk-ui-tests-reference-workspace/current_tiger";
 
-import { API_TOKEN, describe } from "../config";
+import { API_TOKEN, describe } from "../config.js";
 import {
     assignGroupPermissionToDashboard,
     assignUserPermissionToDashboard,

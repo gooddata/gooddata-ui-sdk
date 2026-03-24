@@ -1,14 +1,13 @@
 {
-    "include": ["**/*.ts"],
+    "extends": "../tsconfig.base.json",
     "compilerOptions": {
+        "lib": ["ESNext", "dom"],
         "target": "ESNext",
-        "module": "ESNext",
-        "moduleResolution": "bundler",
-        "strict": true,
-        "esModuleInterop": true,
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
         "skipLibCheck": true,
-        "resolveJsonModule": true,
-        "noEmit": true,
-        "noImplicitAny": false
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "noEmit": true
     }
 }

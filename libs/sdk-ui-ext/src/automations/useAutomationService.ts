@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useMemo } from "react";
 
@@ -200,6 +200,10 @@ export const useAutomationService = (scope: AutomationsScope): IAutomationServic
                 return (service as IAnalyticalWorkspace)
                     .automations()
                     .resumeAutomations(automations.map((automation) => automation.id));
+            },
+            promiseTriggerAutomation: (automation: IAutomationMetadataObject) => {
+                invariant(scope === "workspace", "triggerAutomation is only supported in workspace scope");
+                return (service as IAnalyticalWorkspace).automations().triggerAutomation(automation.id);
             },
         }),
         [service, scope, backend],

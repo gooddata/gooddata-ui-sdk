@@ -160,6 +160,8 @@ export enum TigerFeaturesNames {
     EnableShellApplication = "enableShellApplication",
     EnableNullJoins = "enableNullJoins",
     EnableDashboardDensitySetting = "enableDashboardDensitySetting",
+    EnableAutomationTrigger = "enableAutomationTrigger",
+    EnableUserDataFiltersUi = "enableUserDataFiltersUi",
 }
 
 export type ITigerFeatureFlags = {
@@ -313,6 +315,8 @@ export type ITigerFeatureFlags = {
     enableShellApplication: (typeof FeatureFlagsValues)["enableShellApplication"][number];
     enableNullJoins: (typeof FeatureFlagsValues)["enableNullJoins"][number];
     enableDashboardDensitySetting: (typeof FeatureFlagsValues)["enableDashboardDensitySetting"][number];
+    enableAutomationTrigger: (typeof FeatureFlagsValues)["enableAutomationTrigger"][number];
+    enableUserDataFiltersUi: (typeof FeatureFlagsValues)["enableUserDataFiltersUi"][number];
 };
 
 export const DefaultFeatureFlags: ITigerFeatureFlags = {
@@ -466,6 +470,8 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableShellApplication: false,
     enableNullJoins: false,
     enableDashboardDensitySetting: false,
+    enableAutomationTrigger: false,
+    enableUserDataFiltersUi: false,
 };
 
 export const FeatureFlagsValues = {
@@ -620,4 +626,6 @@ export const FeatureFlagsValues = {
     enableShellApplication: [true, false] as const,
     enableNullJoins: [true, false] as const,
     enableDashboardDensitySetting: [true, false] as const,
+    enableAutomationTrigger: [true, false] as const,
+    enableUserDataFiltersUi: [true, false] as const,
 };

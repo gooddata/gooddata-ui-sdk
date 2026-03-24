@@ -94,6 +94,15 @@ export class PluggableGeoPushpinChartNext extends PluggableBaseChart {
         this.backend = props.backend;
         this.workspace = props.projectId;
         this.initializeProperties(props.visualizationProperties);
+        this.initializePropertiesMeta();
+    }
+
+    // Clear stale propertiesMeta synchronously. useGeoPushData will push the
+    // computed value once async data loading completes.
+    private initializePropertiesMeta(): void {
+        this.pushData({
+            propertiesMeta: { isGeoSegmentConflictRecommended: false },
+        });
     }
 
     /**

@@ -14,4 +14,6 @@ export {
     type ActionsAutomationTestExistingNotificationChannelRequest as AutomationApiTestExistingNotificationChannelRequest,
     ActionsAutomation_TestNotificationChannel as AutomationApi_TestNotificationChannel,
     type ActionsAutomationTestNotificationChannelRequest as AutomationApiTestNotificationChannelRequest,
+    ActionsAutomation_TriggerExistingAutomation as AutomationApi_TriggerExistingAutomation,
+    type ActionsAutomationTriggerExistingAutomationRequest as AutomationApiTriggerExistingAutomationRequest,
 } from "../../generated/automation-json-api/api.js";

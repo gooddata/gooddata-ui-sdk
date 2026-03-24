@@ -207,6 +207,7 @@ export interface IUserContextValue {
     isCurrentUserByLogin: (userLogin: string) => boolean;
     canPauseAutomation: (automation: IAutomationMetadataObject) => boolean;
     canResumeAutomation: (automation: IAutomationMetadataObject) => boolean;
+    canTriggerAutomation: (automation: IAutomationMetadataObject) => boolean;
 }
 
 export interface IAutomationsState {
@@ -236,6 +237,7 @@ export interface IAutomationActionsState {
     bulkPausedAutomations: Array<IAutomationMetadataObject>;
     resumedAutomation: IAutomationMetadataObject | undefined;
     bulkResumedAutomations: Array<IAutomationMetadataObject>;
+    triggeredAutomation: IAutomationMetadataObject | undefined;
 }
 
 export interface IAutomationsPendingAction {
@@ -284,6 +286,7 @@ export interface IUseAutomationColumnsProps {
     unsubscribeFromAutomation: AutomationAction;
     pauseAutomation: AutomationAction;
     resumeAutomation: AutomationAction;
+    triggerAutomation: AutomationAction;
     dashboardUrlBuilder: IDashboardUrlBuilder;
     widgetUrlBuilder: IWidgetUrlBuilder;
     editAutomation: IEditAutomation;
@@ -302,6 +305,7 @@ export interface IAutomationActions {
     bulkPauseAutomations: AutomationBulkAction;
     resumeAutomation: AutomationAction;
     bulkResumeAutomations: AutomationBulkAction;
+    triggerAutomation: AutomationAction;
     isLoading: boolean;
 }
 
@@ -322,6 +326,7 @@ export interface IAutomationService {
     promisePauseAutomations: AutomationBulkActionPromise;
     promiseResumeAutomation: AutomationActionPromise;
     promiseResumeAutomations: AutomationBulkActionPromise;
+    promiseTriggerAutomation: AutomationActionPromise;
 }
 
 export interface IAutomationsQueryParams {

@@ -389,6 +389,7 @@ export const objectTypeToTigerIdType: {
     notificationChannel: TigerObjectType;
     theme: TigerObjectType;
     user: TigerObjectType;
+    userDataFilter: TigerObjectType;
     userGroup: TigerObjectType;
     variable: TigerObjectType;
     workspaceDataFilter: TigerObjectType;

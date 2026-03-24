@@ -4,23 +4,35 @@ import { v4 as uuid } from "uuid";
 
 import {
     type ITigerClientBase,
+    type JsonApiUserDataFilterOutIncludes,
+    type JsonApiUserDataFilterOutWithLinks,
+    type JsonApiUserGroupOutWithLinks,
+    type JsonApiUserOutWithLinks,
     type JsonApiWorkspaceDataFilterSettingOutWithLinks,
 } from "@gooddata/api-client-tiger";
 import {
+    EntitiesApi_CreateEntityUserDataFilters,
     EntitiesApi_CreateEntityWorkspaceDataFilterSettings,
     EntitiesApi_CreateEntityWorkspaceDataFilters,
+    EntitiesApi_DeleteEntityUserDataFilters,
     EntitiesApi_DeleteEntityWorkspaceDataFilterSettings,
     EntitiesApi_DeleteEntityWorkspaceDataFilters,
+    EntitiesApi_GetAllEntitiesUserDataFilters,
     EntitiesApi_GetAllEntitiesWorkspaceDataFilterSettings,
     EntitiesApi_GetAllEntitiesWorkspaceDataFilters,
+    EntitiesApi_PatchEntityUserDataFilters,
     EntitiesApi_PatchEntityWorkspaceDataFilters,
 } from "@gooddata/api-client-tiger/endpoints/entitiesObjects";
 import { type IDataFiltersService } from "@gooddata/sdk-backend-spi";
 import {
+    type IUserDataFilter,
+    type IUserGroupDataFilter,
     type IWorkspaceDataFilter,
     type IWorkspaceDataFilterDefinition,
     type IWorkspaceDataFilterSetting,
     type ObjRef,
+    type UserDataFilter,
+    type UserDataFilterDefinition,
     idRef,
 } from "@gooddata/sdk-model";
 
@@ -201,4 +213,162 @@ export class TigerDataFiltersService implements IDataFiltersService {
             });
         });
     };
+
+    public getUserDataFilters = async (): Promise<UserDataFilter[]> => {
+        return this.authCall(async (client) => {
+            const result = await EntitiesApi_GetAllEntitiesUserDataFilters(client.axios, client.basePath, {
+                workspaceId: this.workspace,
+                include: ["user", "userGroup"],
+                size: 1000,
+                metaInclude: ["origin"],
+            });
+            const included = result.data?.included ?? [];
+            return (result.data?.data ?? []).map((filter) => this.convertUserDataFilter(filter, included));
+        });
+    };
+
+    public createUserDataFilter = async (
+        newUserDataFilter: UserDataFilterDefinition,
+    ): Promise<UserDataFilter> => {
+        return this.authCall(async (client) => {
+            const result = await EntitiesApi_CreateEntityUserDataFilters(client.axios, client.basePath, {
+                workspaceId: this.workspace,
+                jsonApiUserDataFilterPostOptionalIdDocument: {
+                    data: {
+                        id: newUserDataFilter.id ?? uuid(),
+                        type: "userDataFilter",
+                        attributes: {
+                            maql: newUserDataFilter.maql,
+                            title: newUserDataFilter.title,
+                            description: newUserDataFilter.description,
+                            tags: newUserDataFilter.tags,
+                        },
+                        relationships: this.buildUserDataFilterRelationships(newUserDataFilter),
+                    },
+                },
+                include: ["user", "userGroup"],
+                metaInclude: ["origin"],
+            });
+            return this.convertUserDataFilter(result.data.data, result.data.included ?? []);
+        });
+    };
+
+    public updateUserDataFilter = async (updatedUserDataFilter: UserDataFilter): Promise<UserDataFilter> => {
+        return this.authCall(async (client) => {
+            const objectId = objRefToIdentifier(updatedUserDataFilter.ref, this.authCall);
+            const result = await EntitiesApi_PatchEntityUserDataFilters(client.axios, client.basePath, {
+                workspaceId: this.workspace,
+                objectId,
+                jsonApiUserDataFilterPatchDocument: {
+                    data: {
+                        id: objectId,
+                        type: "userDataFilter",
+                        attributes: {
+                            maql: updatedUserDataFilter.maql,
+                            title: updatedUserDataFilter.title,
+                            description: updatedUserDataFilter.description,
+                            tags: updatedUserDataFilter.tags,
+                        },
+                        relationships: this.buildUserDataFilterRelationshipsFromAssignee(
+                            updatedUserDataFilter.assignee,
+                        ),
+                    },
+                },
+                include: ["user", "userGroup"],
+            });
+            return this.convertUserDataFilter(result.data.data, result.data.included ?? []);
+        });
+    };
+
+    public deleteUserDataFilter = async (ref: ObjRef): Promise<void> => {
+        return this.authCall(async (client) => {
+            const objectId = objRefToIdentifier(ref, this.authCall);
+            await EntitiesApi_DeleteEntityUserDataFilters(client.axios, client.basePath, {
+                workspaceId: this.workspace,
+                objectId,
+            });
+        });
+    };
+
+    private convertUserDataFilter = (
+        filter: JsonApiUserDataFilterOutWithLinks,
+        included: JsonApiUserDataFilterOutIncludes[],
+    ): UserDataFilter => {
+        const base = {
+            ref: idRef(filter.id, "userDataFilter"),
+            title: filter.attributes?.title,
+            description: filter.attributes?.description,
+            maql: filter.attributes?.maql,
+            tags: filter.attributes?.tags,
+            isInherited: filter.meta?.origin?.originType === "PARENT",
+        };
+
+        const userId = filter.relationships?.user?.data?.id;
+        if (userId !== undefined) {
+            const userEntity = included.find(
+                (e): e is JsonApiUserOutWithLinks => e.type === "user" && e.id === userId,
+            );
+            const userFilter: IUserDataFilter = {
+                ...base,
+                assignee: {
+                    ref: idRef(userId),
+                    login: userId,
+                    email: userEntity?.attributes?.email,
+                    fullName: this.buildFullName(
+                        userEntity?.attributes?.firstname,
+                        userEntity?.attributes?.lastname,
+                    ),
+                    firstName: userEntity?.attributes?.firstname,
+                    lastName: userEntity?.attributes?.lastname,
+                },
+            };
+            return userFilter;
+        }
+
+        const userGroupId = filter.relationships?.userGroup?.data?.id;
+        if (userGroupId === undefined) {
+            throw new Error(`User data filter ${filter.id} has no user or user group assignment.`);
+        }
+        const userGroupEntity = included.find(
+            (e): e is JsonApiUserGroupOutWithLinks => e.type === "userGroup" && e.id === userGroupId,
+        );
+        const userGroupFilter: IUserGroupDataFilter = {
+            ...base,
+            assignee: {
+                ref: idRef(userGroupId),
+                id: userGroupId,
+                name: userGroupEntity?.attributes?.name,
+            },
+        };
+        return userGroupFilter;
+    };
+
+    private buildUserDataFilterRelationships(definition: UserDataFilterDefinition) {
+        if ("userRef" in definition) {
+            const userId = objRefToIdentifier(definition.userRef, this.authCall);
+            return { user: { data: { id: userId, type: "user" as const } }, userGroup: undefined };
+        }
+        const userGroupId = objRefToIdentifier(definition.userGroupRef, this.authCall);
+        return {
+            user: undefined,
+            userGroup: { data: { id: userGroupId, type: "userGroup" as const } },
+        };
+    }
+
+    private buildUserDataFilterRelationshipsFromAssignee(assignee: UserDataFilter["assignee"]) {
+        if ("login" in assignee) {
+            const userId = objRefToIdentifier(assignee.ref, this.authCall);
+            return { user: { data: { id: userId, type: "user" as const } }, userGroup: undefined };
+        }
+        const userGroupId = objRefToIdentifier(assignee.ref, this.authCall);
+        return {
+            user: undefined,
+            userGroup: { data: { id: userGroupId, type: "userGroup" as const } },
+        };
+    }
+
+    private buildFullName(firstName?: string, lastName?: string): string | undefined {
+        const parts = [firstName, lastName].filter(Boolean);
+        return parts.length > 0 ? parts.join(" ") : undefined;
+    }
 }
