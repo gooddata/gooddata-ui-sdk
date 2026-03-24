@@ -70,7 +70,3 @@
 **/.rush/temp/**
 **/.gdcatalogrc
 **/.gdmockrc
-
-libs/sdk-ui-tests/dist-storybook
-libs/sdk-ui-tests/backstop/stories.json
-libs/sdk-ui-tests/backstop/output/**

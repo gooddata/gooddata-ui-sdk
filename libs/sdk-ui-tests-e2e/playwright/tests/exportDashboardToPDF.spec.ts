@@ -5,7 +5,7 @@ import { camelCase } from "lodash-es";
 
 import { injectAuthHeader } from "@gooddata/e2e-utils";
 
-import { API_TOKEN, describe } from "../config";
+import { API_TOKEN, describe } from "../config.js";
 import {
     applyAttributeFilter,
     clearAllFilterValues,

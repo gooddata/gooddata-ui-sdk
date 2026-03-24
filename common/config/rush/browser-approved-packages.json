@@ -752,7 +752,7 @@
     },
     {
       "name": "eslint-plugin-cypress",
-      "allowedCategories": [ "production", "tools" ]
+      "allowedCategories": [ "tools" ]
     },
     {
       "name": "eslint-plugin-header",
@@ -788,7 +788,7 @@
     },
     {
       "name": "eslint-plugin-playwright",
-      "allowedCategories": [ "tools" ]
+      "allowedCategories": [ "production", "tools" ]
     },
     {
       "name": "eslint-plugin-react",

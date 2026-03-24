@@ -1867,6 +1867,10 @@
         "text": "Repeats",
         "crowdinContext": "Label for automation icon tooltip section: Repeats"
     },
+    "automations.menu.trigger": {
+        "text": "Send now",
+        "crowdinContext": "Menu item for triggering an automation to run immediately"
+    },
     "automations.menu.copyId": {
         "text": "Copy ID",
         "crowdinContext": "Menu item for copying an automation ID"
@@ -1938,6 +1942,14 @@
     "automations.message.schedule.bulk.resume.error": {
         "text": "Error! Failed to resume your scheduled emails.",
         "crowdinContext": "Error message when schedules cannot be resumed"
+    },
+    "automations.message.schedule.trigger.success": {
+        "text": "Success! Your scheduled email was sent.",
+        "crowdinContext": "Success message when schedule is triggered to run immediately"
+    },
+    "automations.message.schedule.trigger.error": {
+        "text": "Error! Failed to send your scheduled email.",
+        "crowdinContext": "Error message when schedule cannot be triggered"
     },
     "automations.message.alert.delete.success": {
         "text": "Success! Your alert was deleted.",

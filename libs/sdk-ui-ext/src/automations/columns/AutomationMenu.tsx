@@ -49,11 +49,13 @@ export function AutomationMenu({
     automationsType,
     canPause,
     canResume,
+    canTrigger,
     editAutomation,
     deleteAutomation,
     unsubscribeFromAutomation,
     pauseAutomation,
     resumeAutomation,
+    triggerAutomation,
     closeDropdown,
     setPendingAction,
 }: {
@@ -64,11 +66,13 @@ export function AutomationMenu({
     automationsType: AutomationsType;
     canPause: boolean;
     canResume: boolean;
+    canTrigger: boolean;
     editAutomation: IEditAutomation;
     deleteAutomation: AutomationAction;
     unsubscribeFromAutomation: AutomationAction;
     pauseAutomation: AutomationAction;
     resumeAutomation: AutomationAction;
+    triggerAutomation: AutomationAction;
     closeDropdown: () => void;
     setPendingAction: (pendingAction: IAutomationsPendingAction | undefined) => void;
 }) {
@@ -139,6 +143,11 @@ export function AutomationMenu({
         });
     }, [resumeAutomation, closeDropdown, setPendingAction, automationsType, item]);
 
+    const onTrigger = useCallback(() => {
+        closeDropdown();
+        triggerAutomation(item);
+    }, [triggerAutomation, closeDropdown, item]);
+
     const onCopyId = useCallback(() => {
         closeDropdown();
         void navigator.clipboard.writeText(item.id);
@@ -186,6 +195,14 @@ export function AutomationMenu({
             });
         }
 
+        if (canTrigger && automationsType === "schedule") {
+            items.push({
+                id: "trigger",
+                label: intl.formatMessage(messages.menuTrigger),
+                onClick: onTrigger,
+            });
+        }
+
         items.push({
             id: "copyId",
             label: intl.formatMessage(messages.menuCopyId),
@@ -208,12 +225,15 @@ export function AutomationMenu({
         isSubscribed,
         canResume,
         canPause,
+        canTrigger,
+        automationsType,
         editActionUnavailable,
         intl,
         onEdit,
         onUnsubscribe,
         onResume,
         onPause,
+        onTrigger,
         onCopyId,
         onDelete,
     ]);

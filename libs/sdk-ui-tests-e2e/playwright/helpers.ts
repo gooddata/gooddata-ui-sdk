@@ -1415,7 +1415,9 @@ export async function removeWidgetFromDashboard(page: Page): Promise<void> {
  */
 export async function expectPdfContent(pdfBuffer: Buffer, expected: string): Promise<void> {
     const pdfParseModule = (await import("pdf-parse")) as Record<string, unknown>;
-    const pdfParse = (pdfParseModule.default ?? pdfParseModule) as (buf: Buffer) => Promise<{ text: string }>;
+    const pdfParse = (pdfParseModule["default"] ?? pdfParseModule) as (
+        buf: Buffer,
+    ) => Promise<{ text: string }>;
     const data = await pdfParse(pdfBuffer);
     const actual = JSON.stringify(data.text).replace(/\n/g, "");
     const normalised = JSON.stringify(expected).replace(/"/g, "");

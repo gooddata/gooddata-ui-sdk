@@ -1,6 +1,6 @@
 {
     "$schema": "./node_modules/oxlint/configuration_schema.json",
-    "extends": ["node_modules/@gooddata/oxlint-config/dist/esm-cypress.json"],
+    "extends": ["node_modules/@gooddata/oxlint-config/dist/esm-playwright.json"],
     "overrides": [
         {
             "files": ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts"],

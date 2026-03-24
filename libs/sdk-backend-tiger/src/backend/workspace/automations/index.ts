@@ -8,6 +8,7 @@ import {
     ActionsApi_UnsubscribeAutomation,
     ActionsApi_UnsubscribeSelectedWorkspaceAutomations,
 } from "@gooddata/api-client-tiger/endpoints/actions";
+import { AutomationApi_TriggerExistingAutomation } from "@gooddata/api-client-tiger/endpoints/automation";
 import {
     EntitiesApi_CreateEntityAutomations,
     EntitiesApi_DeleteEntityAutomations,
@@ -252,6 +253,15 @@ export class TigerWorkspaceAutomationService implements IWorkspaceAutomationServ
                 workspaceAutomationManagementBulkRequest: {
                     automations: ids.map((id) => ({ id })),
                 },
+            });
+        });
+    }
+
+    public triggerAutomation(id: string): Promise<void> {
+        return this.authCall(async (client: ITigerClientBase) => {
+            await AutomationApi_TriggerExistingAutomation(client.axios, client.basePath, {
+                workspaceId: this.workspaceId,
+                automationId: id,
             });
         });
     }

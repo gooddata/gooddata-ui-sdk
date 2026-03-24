@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import {
     type AutomationFilterType,
@@ -127,5 +127,9 @@ export abstract class DecoratedWorkspaceAutomationsService implements IWorkspace
 
     resumeAutomations(ids: string[]): Promise<void> {
         return this.decorated.resumeAutomations(ids);
+    }
+
+    triggerAutomation(id: string): Promise<void> {
+        return this.decorated.triggerAutomation(id);
     }
 }

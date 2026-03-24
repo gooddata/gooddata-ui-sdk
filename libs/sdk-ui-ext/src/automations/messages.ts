@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { defineMessages } from "react-intl";
 
@@ -152,6 +152,9 @@ export const messages = defineMessages({
     iconTooltipTraceId: {
         id: "automations.icon.tooltip.traceId",
     },
+    menuTrigger: {
+        id: "automations.menu.trigger",
+    },
     menuCopyId: {
         id: "automations.menu.copyId",
     },
@@ -206,6 +209,12 @@ export const messages = defineMessages({
     },
     messageScheduleBulkResumeError: {
         id: "automations.message.schedule.bulk.resume.error",
+    },
+    messageScheduleTriggerSuccess: {
+        id: "automations.message.schedule.trigger.success",
+    },
+    messageScheduleTriggerError: {
+        id: "automations.message.schedule.trigger.error",
     },
     //Alert actions info messages
     messageAlertDeleteSuccess: {
@@ -446,6 +455,9 @@ export const getActionMessages = (type: AutomationsType) => {
             messageResumeError: messages.messageScheduleResumeError,
             messageBulkResumeSuccess: messages.messageScheduleBulkResumeSuccess,
             messageBulkResumeError: messages.messageScheduleBulkResumeError,
+
+            messageTriggerSuccess: messages.messageScheduleTriggerSuccess,
+            messageTriggerError: messages.messageScheduleTriggerError,
         };
     }
     return {
@@ -468,5 +480,8 @@ export const getActionMessages = (type: AutomationsType) => {
         messageResumeError: messages.messageAlertResumeError,
         messageBulkResumeSuccess: messages.messageAlertBulkResumeSuccess,
         messageBulkResumeError: messages.messageAlertBulkResumeError,
+
+        messageTriggerSuccess: messages.messageScheduleTriggerSuccess,
+        messageTriggerError: messages.messageScheduleTriggerError,
     };
 };

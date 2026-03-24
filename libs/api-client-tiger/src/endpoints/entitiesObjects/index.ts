@@ -173,6 +173,17 @@ export {
     type EntitiesApiCreateEntityWorkspaceDataFiltersRequest,
     type EntitiesApiPatchEntityWorkspaceDataFiltersRequest,
     type EntitiesApiDeleteEntityWorkspaceDataFiltersRequest,
+    // EntitiesApi - UserDataFilters
+    EntitiesApi_GetAllEntitiesUserDataFilters,
+    EntitiesApi_GetEntityUserDataFilters,
+    EntitiesApi_CreateEntityUserDataFilters,
+    EntitiesApi_PatchEntityUserDataFilters,
+    EntitiesApi_DeleteEntityUserDataFilters,
+    type EntitiesApiGetAllEntitiesUserDataFiltersRequest,
+    type EntitiesApiGetEntityUserDataFiltersRequest,
+    type EntitiesApiCreateEntityUserDataFiltersRequest,
+    type EntitiesApiPatchEntityUserDataFiltersRequest,
+    type EntitiesApiDeleteEntityUserDataFiltersRequest,
     // EntitiesApi - WorkspaceDataFilterSettings
     EntitiesApi_GetEntityWorkspaceDataFilterSettings,
     EntitiesApi_GetAllEntitiesWorkspaceDataFilterSettings,

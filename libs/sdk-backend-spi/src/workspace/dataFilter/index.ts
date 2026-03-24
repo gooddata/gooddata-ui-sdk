@@ -1,16 +1,17 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import {
     type IWorkspaceDataFilter,
     type IWorkspaceDataFilterDefinition,
     type ObjRef,
+    type UserDataFilter,
+    type UserDataFilterDefinition,
 } from "@gooddata/sdk-model";
 
 /**
  * The service that returns information about data filters.
  *
- * Currently, it supports only Workspace Data Filters but in future in can be extended with User Data
- * Filters support.
+ * Supports both Workspace Data Filters and User Data Filters.
  *
  * @alpha
  */
@@ -48,4 +49,26 @@ export interface IDataFiltersService {
      * Delete an existing data filter.
      */
     deleteDataFilter(ref: ObjRef): Promise<void>;
+
+    // --- User Data Filters ---
+
+    /**
+     * Get all user data filters for the current workspace.
+     */
+    getUserDataFilters(): Promise<UserDataFilter[]>;
+
+    /**
+     * Create a new user data filter.
+     */
+    createUserDataFilter(newUserDataFilter: UserDataFilterDefinition): Promise<UserDataFilter>;
+
+    /**
+     * Update an existing user data filter.
+     */
+    updateUserDataFilter(updatedUserDataFilter: UserDataFilter): Promise<UserDataFilter>;
+
+    /**
+     * Delete an existing user data filter.
+     */
+    deleteUserDataFilter(ref: ObjRef): Promise<void>;
 }

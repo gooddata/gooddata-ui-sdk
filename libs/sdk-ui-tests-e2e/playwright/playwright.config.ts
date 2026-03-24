@@ -1,7 +1,9 @@
 // (C) 2026 GoodData Corporation
 
+process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = "0";
+
 import { defineConfig } from "@playwright/test";
-const isRecording = process.env.RECORD_MODE === "true";
+const isRecording = process.env["RECORD_MODE"] === "true";
 
 // eslint-disable-next-line no-restricted-exports
 export default defineConfig({
@@ -15,7 +17,7 @@ export default defineConfig({
     retries: isRecording ? 0 : 2, // no retries when recording — they break mapping storage
     reporter: [["list"], ["json", { outputFile: "results/results.json" }]],
     use: {
-        baseURL: process.env.BASE_URL || "http://gooddata-ui-sdk-scenarios:9500",
+        baseURL: process.env["BASE_URL"] || "http://gooddata-ui-sdk-scenarios:9500",
         ignoreHTTPSErrors: true,
         trace: "retain-on-failure",
         video: "retain-on-failure",

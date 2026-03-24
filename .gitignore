@@ -39,7 +39,6 @@ jspm_packages/
 #
 dist/
 esm/
-dist-storybook
 
 # TypeScript incremental build files
 *.tsbuildinfo

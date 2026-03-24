@@ -683,6 +683,7 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 resumeAutomation: () => Promise.resolve(),
                 pauseAutomations: () => Promise.resolve(),
                 resumeAutomations: () => Promise.resolve(),
+                triggerAutomation: () => Promise.resolve(),
                 unsubscribeAutomation: () => Promise.resolve(),
                 unsubscribeAutomations: () => Promise.resolve(),
             };

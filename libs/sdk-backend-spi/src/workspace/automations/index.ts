@@ -1,4 +1,4 @@
-// (C) 2023-2025 GoodData Corporation
+// (C) 2023-2026 GoodData Corporation
 
 import {
     type IAutomationMetadataObject,
@@ -193,6 +193,16 @@ export interface IWorkspaceAutomationService {
      * @returns Promise resolved when the automations are resumed.
      */
     resumeAutomations(ids: string[]): Promise<void>;
+
+    /**
+     * Trigger existing automation
+     *
+     * Triggers the existing automation to execute immediately.
+     *
+     * @param id - id of the automation
+     * @returns Promise resolved when the automation is triggered.
+     */
+    triggerAutomation(id: string): Promise<void>;
 }
 
 /**

@@ -148,6 +148,7 @@ export const AutomationActionsDefaultState: IAutomationActionsState = {
     bulkPausedAutomations: [],
     resumedAutomation: undefined,
     bulkResumedAutomations: [],
+    triggeredAutomation: undefined,
 };
 
 export const defaultAvailableFilters: Record<AutomationsScope, AutomationsAvailableFilters> = {

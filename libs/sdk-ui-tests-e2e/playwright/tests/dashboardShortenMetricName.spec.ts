@@ -4,7 +4,7 @@ import { expect, test } from "@playwright/test";
 
 import { injectAuthHeader } from "@gooddata/e2e-utils";
 
-import { API_TOKEN, describe } from "../config";
+import { API_TOKEN, describe } from "../config.js";
 import {
     mockFeatureHub,
     visit,
@@ -12,7 +12,7 @@ import {
     waitDashboardLoaded,
     waitTableLoaded,
     widgetSelector,
-} from "../helpers";
+} from "../helpers.js";
 
 test.beforeEach(async ({ page }) => {
     await injectAuthHeader(page, API_TOKEN);

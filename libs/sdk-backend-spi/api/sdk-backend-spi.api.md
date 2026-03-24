@@ -156,6 +156,8 @@ import { ObjectType } from '@gooddata/sdk-model';
 import { ObjRef } from '@gooddata/sdk-model';
 import { OrganizationPermissionAssignment } from '@gooddata/sdk-model';
 import { SortDirection } from '@gooddata/sdk-model';
+import { UserDataFilter } from '@gooddata/sdk-model';
+import { UserDataFilterDefinition } from '@gooddata/sdk-model';
 
 // @public
 export class AbortError extends AnalyticalBackendError {
@@ -824,12 +826,16 @@ export interface IDashboardWithReferences {
 // @alpha
 export interface IDataFiltersService {
     createDataFilter(newDataFilter: IWorkspaceDataFilterDefinition): Promise<IWorkspaceDataFilter>;
+    createUserDataFilter(newUserDataFilter: UserDataFilterDefinition): Promise<UserDataFilter>;
     deleteDataFilter(ref: ObjRef): Promise<void>;
+    deleteUserDataFilter(ref: ObjRef): Promise<void>;
     getDataFilters(): Promise<IWorkspaceDataFilter[]>;
+    getUserDataFilters(): Promise<UserDataFilter[]>;
     // @deprecated
     getWorkspaceDataFilters(): Promise<IWorkspaceDataFilter[]>;
     updateDataFilter(updatedDataFilter: IWorkspaceDataFilter): Promise<IWorkspaceDataFilter>;
     updateDataFilterValue(dataFilter: ObjRef, values: string[]): Promise<void>;
+    updateUserDataFilter(updatedUserDataFilter: UserDataFilter): Promise<UserDataFilter>;
 }
 
 // @beta
@@ -2197,6 +2203,7 @@ export interface IWorkspaceAutomationService {
     pauseAutomations(ids: string[]): Promise<void>;
     resumeAutomation(id: string): Promise<void>;
     resumeAutomations(ids: string[]): Promise<void>;
+    triggerAutomation(id: string): Promise<void>;
     unsubscribeAutomation(id: string): Promise<void>;
     unsubscribeAutomations(ids: string[]): Promise<void>;
     updateAutomation(automation: IAutomationMetadataObject, options?: IGetAutomationOptions, widgetExecution?: IExecutionDefinition, overrides?: IRawExportCustomOverrides): Promise<IAutomationMetadataObject>;

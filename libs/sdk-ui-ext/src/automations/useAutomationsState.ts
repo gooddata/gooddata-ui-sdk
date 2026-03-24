@@ -62,6 +62,7 @@ export const useAutomationsState = ({
         bulkUnsubscribeFromAutomations,
         pauseAutomation,
         resumeAutomation,
+        triggerAutomation,
         bulkPauseAutomations,
         bulkResumeAutomations,
     } = useAutomationActions(type, scope);
@@ -87,6 +88,7 @@ export const useAutomationsState = ({
         unsubscribeFromAutomation,
         pauseAutomation,
         resumeAutomation,
+        triggerAutomation,
         editAutomation,
         dashboardUrlBuilder,
         widgetUrlBuilder,

@@ -71,8 +71,10 @@ export function createDescribe(
         }
 
         if (details) {
+            // oxlint-disable-next-line playwright/valid-describe-callback
             test.describe(suiteName, details, suite);
         } else {
+            // oxlint-disable-next-line playwright/valid-describe-callback
             test.describe(suiteName, suite);
         }
     }
