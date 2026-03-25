@@ -11,6 +11,8 @@ import {
     type IExportDefinitionDashboardRequestPayload,
     type IMeasureValueFilter,
     idRef,
+    isDashboardArbitraryAttributeFilter,
+    isDashboardMatchAttributeFilter,
     isMeasureValueFilter,
 } from "@gooddata/sdk-model";
 
@@ -100,6 +102,28 @@ describe("ExportDefinitionsConverter fromBackend", () => {
                 attributeElements: { values: ["A"] },
             },
         };
+        const tigerArbitraryFilter = {
+            arbitraryAttributeFilter: {
+                displayForm: {
+                    identifier: { id: "attr.df", type: "label" },
+                },
+                values: ["custom-value"],
+                negativeSelection: false,
+                localIdentifier: "arbLocalId",
+            },
+        };
+        const tigerMatchFilter = {
+            matchAttributeFilter: {
+                displayForm: {
+                    identifier: { id: "attr.df", type: "label" },
+                },
+                operator: "contains",
+                literal: "foo",
+                caseSensitive: true,
+                negativeSelection: false,
+                localIdentifier: "matchLocalId",
+            },
+        };
 
         const exportRequest = {
             requestPayload: {
@@ -107,7 +131,7 @@ describe("ExportDefinitionsConverter fromBackend", () => {
                 format: "XLSX",
                 dashboardId: "dashboardId",
                 dashboardTabsFiltersOverrides: {
-                    tab1: [tigerDashboardFilter],
+                    tab1: [tigerDashboardFilter, tigerArbitraryFilter, tigerMatchFilter],
                 },
                 settings: {},
             },
@@ -117,9 +141,11 @@ describe("ExportDefinitionsConverter fromBackend", () => {
             exportRequest,
         ) as IExportDefinitionDashboardRequestPayload;
         expect(result.type).toBe("dashboard");
-        expect(result.content.filtersByTab?.["tab1"]).toHaveLength(1);
+        expect(result.content.filtersByTab?.["tab1"]).toHaveLength(3);
         const converted = result.content.filtersByTab?.["tab1"]?.[0] as IDashboardAttributeFilter;
         expect(converted).toBeDefined();
         expect(converted.attributeFilter.displayForm).toEqual(idRef("attr.df", "displayForm"));
+        expect(isDashboardArbitraryAttributeFilter(result.content.filtersByTab?.["tab1"]?.[1])).toBe(true);
+        expect(isDashboardMatchAttributeFilter(result.content.filtersByTab?.["tab1"]?.[2])).toBe(true);
     });
 });

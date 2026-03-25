@@ -43,23 +43,24 @@ export const useDrillDialogInsightDrills = ({
     const [drillTargets, setDrillTargets] = useState<IAvailableDrillTargets>();
     const disableDrillDownOnInsight = insight.insight.properties["controls"]?.["disableDrillDown"];
 
+    const enableDrillToUrlByDefault = useDashboardSelector(selectEnableDrillToUrlByDefault);
+    const disableDrillIntoURL =
+        insight.insight.properties["controls"]?.disableDrillIntoURL ?? !enableDrillToUrlByDefault;
+
     const onPushData = useCallback(
         (data: IPushData): void => {
             const targets = sanitizeAvailableDrillTargets(
                 data?.availableDrillTargets,
                 !disableDrillDownOnInsight,
+                !disableDrillIntoURL,
             );
 
             if (targets && !isEqual(drillTargets, data.availableDrillTargets)) {
                 setDrillTargets(targets);
             }
         },
-        [disableDrillDownOnInsight, drillTargets],
+        [disableDrillDownOnInsight, disableDrillIntoURL, drillTargets],
     );
-
-    const enableDrillToUrlByDefault = useDashboardSelector(selectEnableDrillToUrlByDefault);
-    const disableDrillIntoURL =
-        insight.insight.properties["controls"]?.disableDrillIntoURL ?? !enableDrillToUrlByDefault;
 
     const implicitDrillDefinitions = useDashboardSelector(
         selectImplicitDrillsByAvailableDrillTargets(
@@ -110,6 +111,7 @@ export const useDrillDialogInsightDrills = ({
 const sanitizeAvailableDrillTargets = (
     availableDrillTargets: IAvailableDrillTargets | undefined,
     isDrillDownOnInsightEnabled: boolean,
+    isDrillToUrlOnInsightEnabled: boolean,
 ) => {
     // if no drill targets went in (likely the pushData was fired in a non-drill-related case)
     // pass the undefined through, this avoids useless setting of the drill targets down the line
@@ -117,8 +119,8 @@ const sanitizeAvailableDrillTargets = (
         return availableDrillTargets;
     }
 
-    // Both drill from attribute FF and drilldown enablement on insight level must be enabled
-    return isDrillDownOnInsightEnabled
-        ? availableDrillTargets
-        : { ...availableDrillTargets, attributes: undefined };
+    // Keep attribute drill targets when either drill down or drill to URL is enabled,
+    // as both features depend on them.
+    const keepAttributes = isDrillDownOnInsightEnabled || isDrillToUrlOnInsightEnabled;
+    return keepAttributes ? availableDrillTargets : { ...availableDrillTargets, attributes: undefined };
 };

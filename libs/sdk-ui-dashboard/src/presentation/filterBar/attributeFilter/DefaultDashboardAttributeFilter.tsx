@@ -9,6 +9,8 @@ import {
     type DashboardAttributeFilterItem,
     type IDashboardAttributeFilter,
     dashboardAttributeFilterItemDisplayForm,
+    dashboardAttributeFilterItemFilterElementsBy,
+    dashboardAttributeFilterItemFilterElementsByDate,
     dashboardAttributeFilterItemLocalIdentifier,
     dashboardAttributeFilterItemTitle,
     dashboardAttributeFilterItemValidateElementsBy,
@@ -599,13 +601,16 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
 
                 // Convert the SDK-level filter to a dashboard filter item.
                 // The result may be a text filter (arbitrary/match) after a mode switch.
-                const convertedFilter = attributeFilterToDashboardAttributeFilter(
-                    newFilter,
-                    filterLocalId,
-                    filterTitle,
-                    selectionTitles,
-                    isInverted,
-                    selectionMode,
+                const convertedFilter = mergeDashboardAttributeFilterMetadata(
+                    filter,
+                    attributeFilterToDashboardAttributeFilter(
+                        newFilter,
+                        filterLocalId,
+                        filterTitle,
+                        selectionTitles,
+                        isInverted,
+                        selectionMode,
+                    ),
                 );
                 if (isApplyAllAtOnceEnabledAndSet) {
                     onFilterChanged(convertedFilter, displayAsLabel, true, false, isSelectionInvalid);
@@ -630,9 +635,10 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
                 additionalProps,
             ) => {
                 if (isApplyAllAtOnceEnabledAndSet) {
-                    onFilterChanged(
-                        // Convert the SDK-level filter to a dashboard filter item.
-                        // The result may be a text filter (arbitrary/match) after a mode switch.
+                    // Convert the SDK-level filter to a dashboard filter item.
+                    // The result may be a text filter (arbitrary/match) after a mode switch.
+                    const convertedFilter = mergeDashboardAttributeFilterMetadata(
+                        filter,
                         attributeFilterToDashboardAttributeFilter(
                             newFilter,
                             filterLocalId,
@@ -641,6 +647,9 @@ function DefaultDashboardAttributeFilterInner(props: IDashboardAttributeFilterPr
                             isInverted,
                             selectionMode,
                         ),
+                    );
+                    onFilterChanged(
+                        convertedFilter,
                         displayAsLabel,
                         true,
                         isResultOfMigration as unknown as boolean | undefined,
@@ -735,4 +744,37 @@ function toSyntheticAttributeFilter(filter: DashboardAttributeFilterItem): IDash
             attributeElements: { uris: [] },
         },
     };
+}
+
+/**
+ * Merges dashboard-only metadata into the converted filter.
+ *
+ * `attributeFilterToDashboardAttributeFilter` builds selection from `IAttributeFilter` only.
+ * `filterElementsBy`, `filterElementsByDate`, and `validateElementsBy` are not on that type, so they are
+ * copied from `originalFilter`. Without this, replacing the whole filter item drops parent filtering and
+ * validation config.
+ */
+function mergeDashboardAttributeFilterMetadata(
+    originalFilter: DashboardAttributeFilterItem,
+    convertedFilter: DashboardAttributeFilterItem,
+): DashboardAttributeFilterItem {
+    const filterElementsBy = dashboardAttributeFilterItemFilterElementsBy(originalFilter);
+    const filterElementsByDate = dashboardAttributeFilterItemFilterElementsByDate(originalFilter);
+    const validateElementsBy = dashboardAttributeFilterItemValidateElementsBy(originalFilter);
+    const metadata = {
+        ...(filterElementsBy === undefined ? {} : { filterElementsBy }),
+        ...(filterElementsByDate === undefined ? {} : { filterElementsByDate }),
+        ...(validateElementsBy === undefined ? {} : { validateElementsBy }),
+    };
+    if (isDashboardAttributeFilter(convertedFilter)) {
+        return {
+            attributeFilter: { ...convertedFilter.attributeFilter, ...metadata },
+        };
+    }
+    if (isDashboardArbitraryAttributeFilter(convertedFilter)) {
+        return {
+            arbitraryAttributeFilter: { ...convertedFilter.arbitraryAttributeFilter, ...metadata },
+        };
+    }
+    return convertedFilter;
 }

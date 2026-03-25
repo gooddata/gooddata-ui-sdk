@@ -12,7 +12,8 @@ import {
     type IDashboardDateFilterConfigItem,
     type ObjRef,
     areObjRefsEqual,
-    isDashboardAttributeFilter,
+    dashboardAttributeFilterItemDisplayForm,
+    isDashboardAttributeFilterItem,
     isDashboardDateFilter,
 } from "@gooddata/sdk-model";
 
@@ -551,9 +552,9 @@ export const useAutomationFiltersByTab = ({
 
             // Search through all display forms to find matching filter
             const availableFilter = tabData.availableFilters.find((f) => {
-                if (isDashboardAttributeFilter(f)) {
+                if (isDashboardAttributeFilterItem(f)) {
                     return selectedAttributeDisplayForms.some((dfRef) =>
-                        areObjRefsEqual(f.attributeFilter.displayForm, dfRef),
+                        areObjRefsEqual(dashboardAttributeFilterItemDisplayForm(f), dfRef),
                     );
                 } else if (isDashboardDateFilter(f)) {
                     return selectedDateDataSets.some((ds) =>

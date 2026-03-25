@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type IntlShape } from "react-intl";
 
@@ -215,11 +215,9 @@ export function getAlertFilters(alert?: IAutomationMetadataObject): IFilter[] {
     const attrs = (alert?.alert?.execution.attributes ?? []).map((a) => a.attribute.localIdentifier);
 
     return filters.filter((f) => {
-        if (isPositiveAttributeFilter(f) && isLocalIdRef(f.positiveAttributeFilter.displayForm)) {
-            return !attrs.includes(f.positiveAttributeFilter.displayForm.localIdentifier);
-        }
-        if (isNegativeAttributeFilter(f) && isLocalIdRef(f.negativeAttributeFilter.displayForm)) {
-            return !attrs.includes(f.negativeAttributeFilter.displayForm.localIdentifier);
+        const sliceLocalId = getSliceFilterDisplayFormLocalId(f);
+        if (sliceLocalId) {
+            return !attrs.includes(sliceLocalId);
         }
         if (isRelativeDateFilter(f)) {
             return !localFilters.includes(f.relativeDateFilter.localIdentifier ?? "");
@@ -362,19 +360,7 @@ export function getFiltersAttribute(
 
 function getAttributeRelatedFilter(attr: AlertAttribute | undefined, alert?: IAutomationMetadataObject) {
     const filter = alert?.alert?.execution.filters.filter((f) => {
-        if (isPositiveAttributeFilter(f) && isLocalIdRef(f.positiveAttributeFilter.displayForm)) {
-            return (
-                f.positiveAttributeFilter.displayForm.localIdentifier ===
-                attr?.attribute.attribute.localIdentifier
-            );
-        }
-        if (isNegativeAttributeFilter(f) && isLocalIdRef(f.negativeAttributeFilter.displayForm)) {
-            return (
-                f.negativeAttributeFilter.displayForm.localIdentifier ===
-                attr?.attribute.attribute.localIdentifier
-            );
-        }
-        return false;
+        return getSliceFilterDisplayFormLocalId(f) === attr?.attribute.attribute.localIdentifier;
     })[0];
 
     if (isPositiveAttributeFilter(filter) && isAttributeElementsByValue(filter.positiveAttributeFilter.in)) {
@@ -398,6 +384,17 @@ function getAttributeRelatedFilter(attr: AlertAttribute | undefined, alert?: IAu
         filterDefinition: undefined,
         filterValue: undefined,
     };
+}
+
+function getSliceFilterDisplayFormLocalId(filter: IFilter): string | undefined {
+    // "For attribute" alert slice filters are selection-based filters using localIdRef display forms.
+    if (isPositiveAttributeFilter(filter) && isLocalIdRef(filter.positiveAttributeFilter.displayForm)) {
+        return filter.positiveAttributeFilter.displayForm.localIdentifier;
+    }
+    if (isNegativeAttributeFilter(filter) && isLocalIdRef(filter.negativeAttributeFilter.displayForm)) {
+        return filter.negativeAttributeFilter.displayForm.localIdentifier;
+    }
+    return undefined;
 }
 
 /**

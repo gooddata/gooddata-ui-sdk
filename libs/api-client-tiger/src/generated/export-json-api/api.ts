@@ -382,6 +382,7 @@ export interface ExportDashboardArbitraryAttributeFilterArbitraryAttributeFilter
     'negativeSelection': boolean;
     'filterElementsBy'?: Array<ExportAttributeFilterParent>;
     'filterElementsByDate'?: Array<ExportAttributeFilterByDate>;
+    'validateElementsBy'?: Array<ExportIdentifierRef>;
     'title'?: string;
     'localIdentifier'?: string;
 }
@@ -703,6 +704,10 @@ export interface ExportNegativeAttributeFilterNegativeAttributeFilter {
     'notIn': ExportAttributeFilterElements;
     'localIdentifier'?: string;
     'applyOnResult'?: boolean;
+    /**
+     * If true, indicates that the values in notInElements were filled free-form, otherwise they have been picked from existing elements.
+     */
+    'usesArbitraryValues'?: boolean;
     'label': ExportAfmIdentifier;
 }
 
@@ -806,6 +811,10 @@ export interface ExportPositiveAttributeFilterPositiveAttributeFilter {
     'in': ExportAttributeFilterElements;
     'localIdentifier'?: string;
     'applyOnResult'?: boolean;
+    /**
+     * If true, indicates that the values in inElements were filled free-form, otherwise they have been picked from existing elements.
+     */
+    'usesArbitraryValues'?: boolean;
     'label': ExportAfmIdentifier;
 }
 

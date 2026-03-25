@@ -18,6 +18,8 @@ import {
     absoluteDateFilterValues,
     areObjRefsEqual,
     attributeLocalId,
+    dashboardAttributeFilterItemDisplayForm,
+    dashboardAttributeFilterItemLocalIdentifier,
     dashboardFilterLocalIdentifier,
     filterAttributeElements,
     filterLocalIdentifier,
@@ -32,6 +34,7 @@ import {
     isAttributeFilter,
     isDashboardArbitraryAttributeFilter,
     isDashboardAttributeFilter,
+    isDashboardAttributeFilterItem,
     isDashboardCommonDateFilter,
     isDashboardDateFilter,
     isDashboardMatchAttributeFilter,
@@ -89,13 +92,14 @@ export const getCatalogAttributesByFilters = (
 
     return attributes.filter((attribute) => {
         return filters.some((filter) => {
-            if (isDashboardAttributeFilter(filter)) {
-                const localIdentifier = filter.attributeFilter.localIdentifier;
+            if (isDashboardAttributeFilterItem(filter)) {
+                const localIdentifier = dashboardAttributeFilterItemLocalIdentifier(filter);
+                const displayForm = dashboardAttributeFilterItemDisplayForm(filter);
                 return (
                     localIdentifier &&
                     !ignoredLocalIdentifiers.includes(localIdentifier) &&
-                    attribute.displayForms.some((displayForm) => {
-                        return areObjRefsEqual(displayForm.ref, filter.attributeFilter.displayForm);
+                    attribute.displayForms.some((attributeDisplayForm) => {
+                        return areObjRefsEqual(attributeDisplayForm.ref, displayForm);
                     })
                 );
             }
@@ -136,8 +140,8 @@ export const getFilterByCatalogItemRef = (
     filters: FilterContextItem[],
 ): FilterContextItem | undefined => {
     return filters.find((filter) => {
-        if (isDashboardAttributeFilter(filter)) {
-            return areObjRefsEqual(filter.attributeFilter.displayForm, ref);
+        if (isDashboardAttributeFilterItem(filter)) {
+            return areObjRefsEqual(dashboardAttributeFilterItemDisplayForm(filter), ref);
         } else if (isDashboardDateFilter(filter)) {
             return areObjRefsEqual(filter.dateFilter.dataSet, ref);
         }
@@ -344,9 +348,10 @@ export const getNonHiddenFilters = (
     disableDateFilters: boolean,
 ): FilterContextItem[] => {
     return (filters ?? []).filter((filter) => {
-        if (isDashboardAttributeFilter(filter)) {
+        if (isDashboardAttributeFilterItem(filter)) {
+            const localIdentifier = dashboardAttributeFilterItemLocalIdentifier(filter);
             const config = attributeConfigs.find(
-                (attribute) => attribute.localIdentifier === filter.attributeFilter.localIdentifier,
+                (attribute) => attribute.localIdentifier === localIdentifier,
             );
             return config?.mode !== "hidden";
         } else if ((isDashboardCommonDateFilter as (filter: FilterContextItem) => boolean)(filter)) {
@@ -511,8 +516,14 @@ export function isFilterIgnoredByWidget(filter: FilterContextItem, widget: Exten
                   return areObjRefsEqual(ignoredFilter.dataSet, filter.dateFilter.dataSet);
               }
 
-              if (isDashboardAttributeFilter(filter) && ignoredFilter.type === "attributeFilterReference") {
-                  return areObjRefsEqual(ignoredFilter.displayForm, filter.attributeFilter.displayForm);
+              if (
+                  isDashboardAttributeFilterItem(filter) &&
+                  ignoredFilter.type === "attributeFilterReference"
+              ) {
+                  return areObjRefsEqual(
+                      ignoredFilter.displayForm,
+                      dashboardAttributeFilterItemDisplayForm(filter),
+                  );
               }
 
               return false;

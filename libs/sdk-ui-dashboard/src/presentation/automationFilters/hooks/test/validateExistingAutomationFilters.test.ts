@@ -13,6 +13,8 @@ import {
     idRef,
     isAllTimeDashboardDateFilter,
     newAllTimeDashboardDateFilter,
+    newArbitraryAttributeFilter,
+    newMatchAttributeFilter,
     newPositiveAttributeFilter,
     newRelativeDashboardDateFilter,
     newRelativeDateFilter,
@@ -138,6 +140,29 @@ const changedAttributeFilterContextItem: FilterContextItem = {
     },
 };
 
+const arbitraryAttributeFilterContextItem: FilterContextItem = {
+    arbitraryAttributeFilter: {
+        displayForm: {
+            identifier: "textAttribute",
+        },
+        values: ["foo"],
+        negativeSelection: false,
+        localIdentifier: "textAttribute",
+    },
+};
+
+const matchAttributeFilterContextItem: FilterContextItem = {
+    matchAttributeFilter: {
+        displayForm: {
+            identifier: "textAttribute",
+        },
+        operator: "contains",
+        literal: "foo",
+        negativeSelection: false,
+        localIdentifier: "textMatch",
+    },
+};
+
 const allValuesAttributeFilterContextItem: FilterContextItem = {
     attributeFilter: {
         displayForm: {
@@ -163,6 +188,19 @@ const insightAttributeFilter = newPositiveAttributeFilter(
     idRef("attribute", "attribute"),
     ["element"],
     "insightAttribute",
+);
+const arbitraryAttributeFilter = newArbitraryAttributeFilter(
+    idRef("textAttribute", "displayForm"),
+    ["foo"],
+    false,
+    "textAttribute",
+);
+const matchAttributeFilter = newMatchAttributeFilter(
+    idRef("textAttribute", "displayForm"),
+    "contains",
+    "foo",
+    { negativeSelection: false, caseSensitive: false },
+    "textMatch",
 );
 
 const sliceAttributeFilter: IAttributeFilter = {
@@ -320,6 +358,23 @@ describe("validateExistingAutomationFilters", () => {
             expect(isValid).toBe(true);
             expect(hiddenFilterIsMissingInSavedFilters).toBe(false);
             expect(hiddenFilterHasDifferentValueInSavedFilter).toBe(false);
+        });
+
+        it("should be valid with unchanged saved hidden arbitrary and match filters", () => {
+            const result = validateExistingAutomationFilters({
+                savedAutomationFilters: [arbitraryAttributeFilter, matchAttributeFilter],
+                savedAutomationVisibleFilters: [],
+                hiddenFilters: [arbitraryAttributeFilterContextItem, matchAttributeFilterContextItem],
+                lockedFilters: [],
+                ignoredFilters: [],
+                dashboardFilters: [arbitraryAttributeFilterContextItem, matchAttributeFilterContextItem],
+                widget,
+                insight,
+            });
+
+            expect(result.isValid).toBe(true);
+            expect(result.hiddenFilterIsMissingInSavedFilters).toBe(false);
+            expect(result.hiddenFilterHasDifferentValueInSavedFilter).toBe(false);
         });
 
         it("should be valid with unchanged saved hidden filters, handling uris vs values change", () => {
@@ -509,6 +564,22 @@ describe("validateExistingAutomationFilters", () => {
             expect(isValid).toBe(false);
             expect(hiddenFilterIsMissingInSavedFilters).toBe(true);
             expect(hiddenFilterHasDifferentValueInSavedFilter).toBe(false);
+        });
+
+        it("should be invalid when hidden arbitrary filter is missing in saved automation filters", () => {
+            const result = validateExistingAutomationFilters({
+                savedAutomationFilters: [],
+                savedAutomationVisibleFilters: [],
+                hiddenFilters: [arbitraryAttributeFilterContextItem],
+                lockedFilters: [],
+                ignoredFilters: [],
+                dashboardFilters: [arbitraryAttributeFilterContextItem],
+                widget,
+                insight,
+            });
+
+            expect(result.isValid).toBe(false);
+            expect(result.hiddenFilterIsMissingInSavedFilters).toBe(true);
         });
     });
 

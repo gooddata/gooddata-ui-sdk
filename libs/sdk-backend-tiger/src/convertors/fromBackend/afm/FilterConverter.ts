@@ -29,6 +29,7 @@ import {
     type MeasureValueFilterCondition,
     type ObjRefInScope,
     type RangeConditionOperator,
+    newArbitraryAttributeFilter,
 } from "@gooddata/sdk-model";
 
 import { toSdkGranularity } from "../dateGranularityConversions.js";
@@ -144,6 +145,15 @@ function convertTigerMeasureValueConditionsToSdk(
 
 export const convertFilter = (filter: FilterDefinition): IFilter => {
     if (isPositiveAttributeFilter(filter) && isAfmObjectIdentifier(filter.positiveAttributeFilter.label)) {
+        if (filter.positiveAttributeFilter.usesArbitraryValues) {
+            return newArbitraryAttributeFilter(
+                toObjRef(filter.positiveAttributeFilter.label),
+                filter.positiveAttributeFilter.in.values,
+                false,
+                filter.positiveAttributeFilter.localIdentifier,
+            );
+        }
+
         return {
             positiveAttributeFilter: {
                 displayForm: toObjRef(filter.positiveAttributeFilter.label),
@@ -166,6 +176,15 @@ export const convertFilter = (filter: FilterDefinition): IFilter => {
         isNegativeAttributeFilter(filter) &&
         isAfmObjectIdentifier(filter.negativeAttributeFilter.label)
     ) {
+        if (filter.negativeAttributeFilter.usesArbitraryValues) {
+            return newArbitraryAttributeFilter(
+                toObjRef(filter.negativeAttributeFilter.label),
+                filter.negativeAttributeFilter.notIn.values,
+                true,
+                filter.negativeAttributeFilter.localIdentifier,
+            );
+        }
+
         return {
             negativeAttributeFilter: {
                 displayForm: toObjRef(filter.negativeAttributeFilter.label),

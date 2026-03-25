@@ -43,11 +43,9 @@ export const commonConfigurations: IDualConfiguration[] = [
 
 // please note, if you modify keys in the following array, please run `npm run update-package` in addition to `npm run build`
 export const commonVariants: Record<string, IDualConfiguration[]> = {
-    browser: [browserEnv], // for any packages that uses document, but are not react libs
-    "browser-esm": [browserEnv, esm, importEsm], // unsure if needed
-    cypress: [browserEnv, esm, cypress, chaiFriendly, noOnlyTests], // for sdk-ui-tests
-    playwright: [browserEnv, esm, playwright, chaiFriendly, noOnlyTests], // for sdk-ui-tests
-    vitest: [vitest, noOnlyTests],
+    // browser: [browserEnv], // for any packages that uses document, but are not react libs
+    "browser-esm": [browserEnv, esm, importEsm], // for sdk-embedding
+    // vitest: [vitest, noOnlyTests],
     esm: [esm, importEsm], // used for this lib
     "esm-vitest": [esm, importEsm, vitest, noOnlyTests], // for @gooddata/util and MAQL language server
     react: [browserEnv, esm, react, reactHooks], // for skel tsx
@@ -78,7 +76,7 @@ export const commonVariants: Record<string, IDualConfiguration[]> = {
         vitest,
         noOnlyTests,
         storybook,
-    ], // for sdk-ui-tests
+    ], // for sdk-ui-tests-storybook
 };
 
 export const v8Variants = { ...commonVariants };

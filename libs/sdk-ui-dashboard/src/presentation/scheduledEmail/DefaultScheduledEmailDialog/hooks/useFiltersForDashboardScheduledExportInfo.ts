@@ -8,7 +8,8 @@ import {
     type DashboardDateFilterConfigMode,
     DashboardDateFilterConfigModeValues,
     type FilterContextItem,
-    isDashboardAttributeFilter,
+    dashboardAttributeFilterItemLocalIdentifier,
+    isDashboardAttributeFilterItem,
     isDashboardCommonDateFilter,
     isDashboardDateFilter,
 } from "@gooddata/sdk-model";
@@ -65,8 +66,9 @@ const removeHiddenFilters = (
         } else if (isDashboardDateFilter(filter) && filter.dateFilter.localIdentifier) {
             const mode = dateFiltersModeMap.get(filter.dateFilter.localIdentifier);
             return mode !== DashboardDateFilterConfigModeValues.HIDDEN;
-        } else if (isDashboardAttributeFilter(filter) && filter.attributeFilter.localIdentifier) {
-            const mode = attributeFiltersModeMap.get(filter.attributeFilter.localIdentifier);
+        } else if (isDashboardAttributeFilterItem(filter)) {
+            const localIdentifier = dashboardAttributeFilterItemLocalIdentifier(filter);
+            const mode = localIdentifier ? attributeFiltersModeMap.get(localIdentifier) : undefined;
             return mode !== DashboardAttributeFilterConfigModeValues.HIDDEN;
         }
 

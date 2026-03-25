@@ -41,11 +41,13 @@ import {
     idRef,
     isAbsoluteDateFilter,
     isAllTimeDateFilter,
+    isArbitraryAttributeFilter,
     isAttributeFilterWithSelection,
     isAutomationUserRecipient,
     isExportDefinitionVisualizationObjectRequestPayload,
     isFilter,
     isFilterContextItem,
+    isMatchAttributeFilter,
     isNegativeAttributeFilter,
     isRelativeBoundedDateFilter,
     isRelativeDateFilter,
@@ -493,6 +495,30 @@ function convertExecutionFilterToFilterContextItem(filter: IFilter): FilterConte
                 attributeElements: filterAttributeElements(filter),
                 displayForm: filterObjRef(filter),
                 selectionMode: "multi",
+                localIdentifier: filterLocalIdentifier(filter),
+            },
+        };
+    }
+
+    if (isArbitraryAttributeFilter(filter)) {
+        return {
+            arbitraryAttributeFilter: {
+                displayForm: filterObjRef(filter),
+                values: filter.arbitraryAttributeFilter.values,
+                negativeSelection: filter.arbitraryAttributeFilter.negativeSelection ?? false,
+                localIdentifier: filterLocalIdentifier(filter),
+            },
+        };
+    }
+
+    if (isMatchAttributeFilter(filter)) {
+        return {
+            matchAttributeFilter: {
+                displayForm: filterObjRef(filter),
+                operator: filter.matchAttributeFilter.operator,
+                literal: filter.matchAttributeFilter.literal,
+                caseSensitive: filter.matchAttributeFilter.caseSensitive,
+                negativeSelection: filter.matchAttributeFilter.negativeSelection,
                 localIdentifier: filterLocalIdentifier(filter),
             },
         };

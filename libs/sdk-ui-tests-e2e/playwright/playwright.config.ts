@@ -3,7 +3,10 @@
 process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = "0";
 
 import { defineConfig } from "@playwright/test";
-const isRecording = process.env["RECORD_MODE"] === "true";
+
+import { GoodmockMode, goodmockMode } from "@gooddata/e2e-utils";
+
+const isRecording = goodmockMode() === GoodmockMode.Record;
 
 // eslint-disable-next-line no-restricted-exports
 export default defineConfig({

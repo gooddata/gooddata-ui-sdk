@@ -10,7 +10,10 @@ import {
     type ICatalogDateDataset,
     type IDataSetMetadataObject,
     type IInsight,
+    idRef,
+    newArbitraryAttributeFilter,
     newInsightDefinition,
+    newMatchAttributeFilter,
     newMeasureValueFilter,
 } from "@gooddata/sdk-model";
 import { createIntlMock } from "@gooddata/sdk-ui-ext/internal";
@@ -1753,6 +1756,37 @@ describe("alert transforms", () => {
             const filters = getAlertFilters(baseAllAttribute);
             expect(filters.length).toEqual(1);
             expect(filters[0]).toEqual(baseAllAttribute.alert?.execution.filters[1]);
+        });
+
+        it("getAlertFilters - keeps arbitrary and match filters, strips only slice filter", () => {
+            const arbitrary = newArbitraryAttributeFilter(
+                idRef("textAttribute", "displayForm"),
+                ["foo"],
+                false,
+                "textAttribute",
+            );
+            const match = newMatchAttributeFilter(
+                idRef("textAttribute", "displayForm"),
+                "contains",
+                "foo",
+                { negativeSelection: false },
+                "textMatch",
+            );
+
+            const alertWithTextFilters: IAutomationMetadataObject = {
+                ...baseAllAttribute,
+                alert: {
+                    ...baseAllAttribute.alert!,
+                    execution: {
+                        ...baseAllAttribute.alert!.execution,
+                        filters: [...baseAllAttribute.alert!.execution.filters, arbitrary, match],
+                    },
+                },
+            };
+
+            const filters = getAlertFilters(alertWithTextFilters);
+            expect(filters).toHaveLength(3);
+            expect(filters).toEqual([baseAllAttribute.alert?.execution.filters[1], arbitrary, match]);
         });
 
         it("getAlertAiOperator - relative", () => {

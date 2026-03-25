@@ -5,7 +5,8 @@ import { isEqual } from "lodash-es";
 import { generateDateFilterLocalIdentifier } from "@gooddata/sdk-backend-base";
 import {
     type FilterContextItem,
-    isDashboardAttributeFilter,
+    dashboardAttributeFilterItemLocalIdentifier,
+    isDashboardAttributeFilterItem,
     isDashboardCommonDateFilter,
     newAllTimeDashboardDateFilter,
 } from "@gooddata/sdk-model";
@@ -82,8 +83,11 @@ const removeCrossFilteringFilters = (
     );
 
     return filters.filter((filter) => {
-        if (isDashboardAttributeFilter(filter) && filter.attributeFilter.localIdentifier) {
-            return !crossFilteringFilterLocalIdentifiers.includes(filter.attributeFilter.localIdentifier);
+        if (isDashboardAttributeFilterItem(filter)) {
+            const localIdentifier = dashboardAttributeFilterItemLocalIdentifier(filter);
+            if (localIdentifier) {
+                return !crossFilteringFilterLocalIdentifiers.includes(localIdentifier);
+            }
         }
 
         return true;
