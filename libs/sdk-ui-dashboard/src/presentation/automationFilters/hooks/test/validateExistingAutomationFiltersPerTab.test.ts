@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { describe, expect, it } from "vitest";
 
@@ -42,6 +42,29 @@ const attributeFilterContextItem: FilterContextItem = {
     },
 };
 
+const arbitraryFilterContextItem: FilterContextItem = {
+    arbitraryAttributeFilter: {
+        displayForm: {
+            identifier: "textAttribute",
+        },
+        values: ["foo"],
+        negativeSelection: false,
+        localIdentifier: "textAttribute",
+    },
+};
+
+const matchFilterContextItem: FilterContextItem = {
+    matchAttributeFilter: {
+        displayForm: {
+            identifier: "textAttribute",
+        },
+        operator: "contains",
+        literal: "foo",
+        negativeSelection: false,
+        localIdentifier: "textMatch",
+    },
+};
+
 function createVisibleFilter(filterContextItem: FilterContextItem): IAutomationVisibleFilter {
     return {
         localIdentifier: dashboardFilterLocalIdentifier(filterContextItem),
@@ -76,6 +99,34 @@ describe("validateExistingAutomationFiltersPerTab", () => {
                 savedAutomationVisibleFiltersByTab: {
                     tab1: [createVisibleFilter(allTimeCommonDateFilterContextItem)],
                     tab2: [createVisibleFilter(attributeFilterContextItem)],
+                },
+                dashboardFiltersPerTab,
+            });
+
+            expect(result.isValid).toBe(true);
+        });
+
+        it("should be valid when tab contains arbitrary and match filters", () => {
+            const dashboardFiltersPerTab: IAutomationFiltersPerTabData[] = [
+                {
+                    tabId: "tab1",
+                    availableFilters: [arbitraryFilterContextItem, matchFilterContextItem],
+                    hiddenFilters: [],
+                    lockedFilters: [],
+                },
+            ];
+
+            const savedDashboardFiltersByTab = {
+                tab1: [arbitraryFilterContextItem, matchFilterContextItem],
+            };
+
+            const result = validateExistingAutomationFiltersPerTab({
+                savedDashboardFiltersByTab,
+                savedAutomationVisibleFiltersByTab: {
+                    tab1: [
+                        createVisibleFilter(arbitraryFilterContextItem),
+                        createVisibleFilter(matchFilterContextItem),
+                    ],
                 },
                 dashboardFiltersPerTab,
             });

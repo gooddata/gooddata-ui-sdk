@@ -1541,6 +1541,186 @@
                 }
             }
         },
+        "/api/v1/actions/workspaces/{workspaceId}/ai/agent/{runId}/feedback": {
+            "post": {
+                "tags": [
+                    "actions"
+                ],
+                "operationId": "userFeedback",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "runId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/FeedbackRequestDto"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/ai/agent/{runId}/cancel": {
+            "post": {
+                "tags": [
+                    "actions"
+                ],
+                "operationId": "cancelWorkflow_1",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "runId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "additionalProperties": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/ai/agent/knowledgeRecommendations": {
+            "post": {
+                "tags": [
+                    "actions"
+                ],
+                "operationId": "generateKnowledgeRecommendations",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/KnowledgeRecommendationsRequestDto"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/KnowledgeRecommendationsResponseDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/ai/agent/dashboardSummary": {
+            "post": {
+                "tags": [
+                    "actions"
+                ],
+                "operationId": "generateDashboardSummary_1",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DashboardSummaryRequestDto"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DashboardSummaryResponseDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/actions/ai/llmProvider/{llmProviderId}/test": {
             "post": {
                 "tags": [
@@ -3157,6 +3337,46 @@
                     }
                 }
             }
+        },
+        "/api/v1/actions/workspaces/{workspaceId}/ai/agent/{runId}/status": {
+            "get": {
+                "tags": [
+                    "actions"
+                ],
+                "operationId": "getWorkflowStatus_1",
+                "parameters": [
+                    {
+                        "name": "workspaceId",
+                        "in": "path",
+                        "description": "Workspace identifier",
+                        "required": true,
+                        "schema": {
+                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "runId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/WorkflowStatusResponseDto"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -4197,6 +4417,10 @@
                             "applyOnResult": {
                                 "type": "boolean"
                             },
+                            "usesArbitraryValues": {
+                                "type": "boolean",
+                                "description": "If true, indicates that the values in notInElements were filled free-form, otherwise they have been picked from existing elements."
+                            },
                             "label": {
                                 "$ref": "#/components/schemas/AfmIdentifier"
                             }
@@ -4402,6 +4626,10 @@
                             },
                             "applyOnResult": {
                                 "type": "boolean"
+                            },
+                            "usesArbitraryValues": {
+                                "type": "boolean",
+                                "description": "If true, indicates that the values in inElements were filled free-form, otherwise they have been picked from existing elements."
                             },
                             "label": {
                                 "$ref": "#/components/schemas/AfmIdentifier"
@@ -6438,17 +6666,7 @@
                         "type": "array",
                         "description": "Widgets currently visible on the dashboard.",
                         "items": {
-                            "oneOf": [
-                                {
-                                    "$ref": "#/components/schemas/InsightWidgetDescriptor"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/RichTextWidgetDescriptor"
-                                },
-                                {
-                                    "$ref": "#/components/schemas/VisualizationSwitcherWidgetDescriptor"
-                                }
-                            ]
+                            "$ref": "#/components/schemas/WidgetDescriptor"
                         }
                     }
                 },
@@ -6461,33 +6679,25 @@
                     "widgetId"
                 ],
                 "type": "object",
-                "description": "Insight widget displaying a visualization.",
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/WidgetDescriptor"
+                "properties": {
+                    "widgetId": {
+                        "type": "string",
+                        "description": "Widget object ID."
                     },
-                    {
-                        "type": "object",
-                        "properties": {
-                            "widgetId": {
-                                "type": "string",
-                                "description": "Widget object ID."
-                            },
-                            "title": {
-                                "type": "string",
-                                "description": "Widget title as displayed on the dashboard."
-                            },
-                            "resultId": {
-                                "type": "string",
-                                "description": "Signed result ID for this widget's cached execution result."
-                            },
-                            "visualizationId": {
-                                "type": "string",
-                                "description": "Visualization object ID referenced by this insight widget."
-                            }
-                        }
+                    "title": {
+                        "type": "string",
+                        "description": "Widget title as displayed on the dashboard."
+                    },
+                    "resultId": {
+                        "type": "string",
+                        "description": "Signed result ID for this widget's cached execution result."
+                    },
+                    "visualizationId": {
+                        "type": "string",
+                        "description": "Visualization object ID referenced by this insight widget."
                     }
-                ]
+                },
+                "description": "Insight widget displaying a visualization."
             },
             "ObjectReference": {
                 "required": [
@@ -6536,25 +6746,17 @@
                     "widgetId"
                 ],
                 "type": "object",
-                "description": "Rich text widget displaying static content. Has no execution result.",
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/WidgetDescriptor"
+                "properties": {
+                    "widgetId": {
+                        "type": "string",
+                        "description": "Widget object ID."
                     },
-                    {
-                        "type": "object",
-                        "properties": {
-                            "widgetId": {
-                                "type": "string",
-                                "description": "Widget object ID."
-                            },
-                            "title": {
-                                "type": "string",
-                                "description": "Widget title as displayed on the dashboard."
-                            }
-                        }
+                    "title": {
+                        "type": "string",
+                        "description": "Widget title as displayed on the dashboard."
                     }
-                ]
+                },
+                "description": "Rich text widget displaying static content. Has no execution result."
             },
             "UIContext": {
                 "type": "object",
@@ -6592,40 +6794,32 @@
                     "widgetId"
                 ],
                 "type": "object",
-                "description": "Visualization switcher widget allowing users to toggle between multiple visualizations.",
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/WidgetDescriptor"
+                "properties": {
+                    "widgetId": {
+                        "type": "string",
+                        "description": "Widget object ID."
                     },
-                    {
-                        "type": "object",
-                        "properties": {
-                            "widgetId": {
-                                "type": "string",
-                                "description": "Widget object ID."
-                            },
-                            "title": {
-                                "type": "string",
-                                "description": "Widget title as displayed on the dashboard."
-                            },
-                            "resultId": {
-                                "type": "string",
-                                "description": "Signed result ID for the currently active visualization's execution result."
-                            },
-                            "activeVisualizationId": {
-                                "type": "string",
-                                "description": "ID of the currently active visualization in the switcher."
-                            },
-                            "visualizationIds": {
-                                "type": "array",
-                                "description": "IDs of all visualizations available in the switcher.",
-                                "items": {
-                                    "type": "string"
-                                }
-                            }
+                    "title": {
+                        "type": "string",
+                        "description": "Widget title as displayed on the dashboard."
+                    },
+                    "resultId": {
+                        "type": "string",
+                        "description": "Signed result ID for the currently active visualization's execution result."
+                    },
+                    "activeVisualizationId": {
+                        "type": "string",
+                        "description": "ID of the currently active visualization in the switcher."
+                    },
+                    "visualizationIds": {
+                        "type": "array",
+                        "description": "IDs of all visualizations available in the switcher.",
+                        "items": {
+                            "type": "string"
                         }
                     }
-                ]
+                },
+                "description": "Visualization switcher widget allowing users to toggle between multiple visualizations."
             },
             "WidgetDescriptor": {
                 "required": [
@@ -7601,6 +7795,170 @@
                     "note": {
                         "type": "string",
                         "description": "Additional note with details in case generation was not performed"
+                    }
+                }
+            },
+            "FeedbackRequestDto": {
+                "required": [
+                    "sentiment"
+                ],
+                "type": "object",
+                "properties": {
+                    "sentiment": {
+                        "type": "string",
+                        "enum": [
+                            "POSITIVE",
+                            "NEGATIVE"
+                        ]
+                    }
+                }
+            },
+            "KnowledgeRecommendationsRequestDto": {
+                "required": [
+                    "comparisonType",
+                    "metricId"
+                ],
+                "type": "object",
+                "properties": {
+                    "metricId": {
+                        "type": "string"
+                    },
+                    "direction": {
+                        "type": "string",
+                        "enum": [
+                            "INCREASED",
+                            "DECREASED"
+                        ]
+                    },
+                    "comparisonType": {
+                        "type": "string",
+                        "enum": [
+                            "MONTH",
+                            "QUARTER",
+                            "YEAR"
+                        ]
+                    },
+                    "limit": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "minScore": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "aiModel": {
+                        "type": "string"
+                    },
+                    "temperature": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "maxTokens": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "gooddataHost": {
+                        "type": "string"
+                    },
+                    "gooddataToken": {
+                        "type": "string"
+                    },
+                    "analyticalDashboardId": {
+                        "type": "string"
+                    },
+                    "widgetId": {
+                        "type": "string"
+                    },
+                    "widgetName": {
+                        "type": "string"
+                    },
+                    "dryRun": {
+                        "type": "boolean"
+                    },
+                    "referenceValue": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "analyzedValue": {
+                        "type": "number",
+                        "format": "double"
+                    }
+                }
+            },
+            "KnowledgeRecommendationsResponseDto": {
+                "required": [
+                    "message",
+                    "runId",
+                    "status"
+                ],
+                "type": "object",
+                "properties": {
+                    "runId": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            },
+            "DashboardSummaryRequestDto": {
+                "required": [
+                    "dashboardId"
+                ],
+                "type": "object",
+                "properties": {
+                    "dashboardId": {
+                        "type": "string"
+                    },
+                    "customUserPrompt": {
+                        "type": "string"
+                    },
+                    "gooddataHost": {
+                        "type": "string"
+                    },
+                    "gooddataToken": {
+                        "type": "string"
+                    },
+                    "keyMetricIds": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "referenceQuarter": {
+                        "type": "string"
+                    },
+                    "dryRun": {
+                        "type": "boolean"
+                    },
+                    "temperature": {
+                        "type": "number",
+                        "format": "double"
+                    },
+                    "aiModel": {
+                        "type": "string"
+                    }
+                }
+            },
+            "DashboardSummaryResponseDto": {
+                "required": [
+                    "message",
+                    "runId",
+                    "status"
+                ],
+                "type": "object",
+                "properties": {
+                    "runId": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "message": {
+                        "type": "string"
                     }
                 }
             },

@@ -195,6 +195,7 @@ function convertArbitraryFilter(
             negativeAttributeFilter: {
                 label,
                 notIn: { values },
+                usesArbitraryValues: true,
                 ...(localIdentifier ? { localIdentifier } : {}),
                 ...applyOnResultProp,
             },
@@ -205,6 +206,7 @@ function convertArbitraryFilter(
         positiveAttributeFilter: {
             label,
             in: { values },
+            usesArbitraryValues: true,
             ...(localIdentifier ? { localIdentifier } : {}),
             ...applyOnResultProp,
         },

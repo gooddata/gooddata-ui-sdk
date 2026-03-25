@@ -1216,6 +1216,12 @@ export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApi
     cancelWorkflow(requestParameters: ActionsApiCancelWorkflowRequest, options?: AxiosRequestConfig): AxiosPromise<{
         [key: string]: string;
     }>;
+    // Warning: (ae-forgotten-export) The symbol "ActionsApiCancelWorkflow1Request" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    cancelWorkflow1(requestParameters: ActionsApiCancelWorkflow1Request, options?: AxiosRequestConfig): AxiosPromise<{
+        [key: string]: string;
+    }>;
     // Warning: (ae-forgotten-export) The symbol "ActionsApiChangeAnalysisRequest" needs to be exported by the entry point index.d.ts
     // Warning: (ae-forgotten-export) The symbol "ChangeAnalysisResponse" needs to be exported by the entry point index.d.ts
     changeAnalysis(requestParameters: ActionsApiChangeAnalysisRequest, options?: AxiosRequestConfig): AxiosPromise<ChangeAnalysisResponse>;
@@ -1248,9 +1254,19 @@ export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApi
     //
     // (undocumented)
     generateDashboardSummary(requestParameters: ActionsApiGenerateDashboardSummaryRequest, options?: AxiosRequestConfig): AxiosPromise<WorkflowDashboardSummaryResponseDto>;
+    // Warning: (ae-forgotten-export) The symbol "ActionsApiGenerateDashboardSummary1Request" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "DashboardSummaryResponseDto" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    generateDashboardSummary1(requestParameters: ActionsApiGenerateDashboardSummary1Request, options?: AxiosRequestConfig): AxiosPromise<DashboardSummaryResponseDto>;
     // Warning: (ae-forgotten-export) The symbol "ActionsApiGenerateDescriptionRequest" needs to be exported by the entry point index.d.ts
     // Warning: (ae-forgotten-export) The symbol "GenerateDescriptionResponse" needs to be exported by the entry point index.d.ts
     generateDescription(requestParameters: ActionsApiGenerateDescriptionRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateDescriptionResponse>;
+    // Warning: (ae-forgotten-export) The symbol "ActionsApiGenerateKnowledgeRecommendationsRequest" needs to be exported by the entry point index.d.ts
+    // Warning: (ae-forgotten-export) The symbol "KnowledgeRecommendationsResponseDto" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    generateKnowledgeRecommendations(requestParameters: ActionsApiGenerateKnowledgeRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<KnowledgeRecommendationsResponseDto>;
     // Warning: (ae-forgotten-export) The symbol "ActionsApiGenerateTitleRequest" needs to be exported by the entry point index.d.ts
     // Warning: (ae-forgotten-export) The symbol "GenerateTitleResponse" needs to be exported by the entry point index.d.ts
     generateTitle(requestParameters: ActionsApiGenerateTitleRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateTitleResponse>;
@@ -1266,6 +1282,10 @@ export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApi
     //
     // (undocumented)
     getWorkflowStatus(requestParameters: ActionsApiGetWorkflowStatusRequest, options?: AxiosRequestConfig): AxiosPromise<WorkflowStatusResponseDto>;
+    // Warning: (ae-forgotten-export) The symbol "ActionsApiGetWorkflowStatus1Request" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    getWorkflowStatus1(requestParameters: ActionsApiGetWorkflowStatus1Request, options?: AxiosRequestConfig): AxiosPromise<WorkflowStatusResponseDto>;
     keyDriverAnalysis(requestParameters: ActionsApiKeyDriverAnalysisRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResponse>;
     keyDriverAnalysisResult(requestParameters: ActionsApiKeyDriverAnalysisResultRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResult>;
     // Warning: (ae-forgotten-export) The symbol "ActionsApiListDocumentsRequest" needs to be exported by the entry point index.d.ts
@@ -1320,6 +1340,12 @@ export class AfmActionsApi extends LabelElementsBaseApi implements AfmActionsApi
     //
     // (undocumented)
     upsertDocument(requestParameters: ActionsApiUpsertDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<UpsertKnowledgeDocumentResponseDto>;
+    // Warning: (ae-forgotten-export) The symbol "ActionsApiUserFeedbackRequest" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    userFeedback(requestParameters: ActionsApiUserFeedbackRequest, options?: AxiosRequestConfig): AxiosPromise<{
+        [key: string]: string;
+    }>;
     // @deprecated
     validateLLMEndpoint(requestParameters: ActionsApiValidateLLMEndpointRequest, options?: AxiosRequestConfig): AxiosPromise<ValidateLLMEndpointResponse>;
     // @deprecated
@@ -1351,6 +1377,10 @@ export interface AfmActionsApiInterface {
     cancelWorkflow(requestParameters: ActionsApiCancelWorkflowRequest, options?: AxiosRequestConfig): AxiosPromise<{
         [key: string]: string;
     }>;
+    // (undocumented)
+    cancelWorkflow1(requestParameters: ActionsApiCancelWorkflow1Request, options?: AxiosRequestConfig): AxiosPromise<{
+        [key: string]: string;
+    }>;
     changeAnalysis(requestParameters: ActionsApiChangeAnalysisRequest, options?: AxiosRequestConfig): AxiosPromise<ChangeAnalysisResponse>;
     changeAnalysisResult(requestParameters: ActionsApiChangeAnalysisResultRequest, options?: AxiosRequestConfig): AxiosPromise<ChangeAnalysisResult>;
     clustering(requestParameters: ActionsApiClusteringRequest, options?: AxiosRequestConfig): AxiosPromise<SmartFunctionResponse>;
@@ -1369,7 +1399,11 @@ export interface AfmActionsApiInterface {
     forecastResult(requestParameters: ActionsApiForecastResultRequest, options?: AxiosRequestConfig): AxiosPromise<ForecastResult>;
     // (undocumented)
     generateDashboardSummary(requestParameters: ActionsApiGenerateDashboardSummaryRequest, options?: AxiosRequestConfig): AxiosPromise<WorkflowDashboardSummaryResponseDto>;
+    // (undocumented)
+    generateDashboardSummary1(requestParameters: ActionsApiGenerateDashboardSummary1Request, options?: AxiosRequestConfig): AxiosPromise<DashboardSummaryResponseDto>;
     generateDescription(requestParameters: ActionsApiGenerateDescriptionRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateDescriptionResponse>;
+    // (undocumented)
+    generateKnowledgeRecommendations(requestParameters: ActionsApiGenerateKnowledgeRecommendationsRequest, options?: AxiosRequestConfig): AxiosPromise<KnowledgeRecommendationsResponseDto>;
     generateTitle(requestParameters: ActionsApiGenerateTitleRequest, options?: AxiosRequestConfig): AxiosPromise<GenerateTitleResponse>;
     // (undocumented)
     getDocument(requestParameters: ActionsApiGetDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<KnowledgeDocumentMetadataDto>;
@@ -1377,6 +1411,8 @@ export interface AfmActionsApiInterface {
     getQualityIssuesCalculationStatus(requestParameters: AfmActionsApiGetQualityIssuesCalculationStatusRequest, options?: AxiosRequestConfig): AxiosPromise<AfmQualityIssuesCalculationStatusResponse>;
     // (undocumented)
     getWorkflowStatus(requestParameters: ActionsApiGetWorkflowStatusRequest, options?: AxiosRequestConfig): AxiosPromise<WorkflowStatusResponseDto>;
+    // (undocumented)
+    getWorkflowStatus1(requestParameters: ActionsApiGetWorkflowStatus1Request, options?: AxiosRequestConfig): AxiosPromise<WorkflowStatusResponseDto>;
     keyDriverAnalysis(requestParameters: ActionsApiKeyDriverAnalysisRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResponse>;
     keyDriverAnalysisResult(requestParameters: ActionsApiKeyDriverAnalysisResultRequest, options?: AxiosRequestConfig): AxiosPromise<KeyDriversResult>;
     // (undocumented)
@@ -1403,6 +1439,10 @@ export interface AfmActionsApiInterface {
     triggerQualityIssuesCalculation(requestParameters: AfmActionsApiTriggerQualityIssuesCalculationRequest, options?: AxiosRequestConfig): AxiosPromise<AfmTriggerQualityIssuesCalculationResponse>;
     // (undocumented)
     upsertDocument(requestParameters: ActionsApiUpsertDocumentRequest, options?: AxiosRequestConfig): AxiosPromise<UpsertKnowledgeDocumentResponseDto>;
+    // (undocumented)
+    userFeedback(requestParameters: ActionsApiUserFeedbackRequest, options?: AxiosRequestConfig): AxiosPromise<{
+        [key: string]: string;
+    }>;
     // @deprecated
     validateLLMEndpoint(requestParameters: ActionsApiValidateLLMEndpointRequest, options?: AxiosRequestConfig): AxiosPromise<ValidateLLMEndpointResponse>;
     // @deprecated
@@ -1766,6 +1806,7 @@ export interface AfmNegativeAttributeFilterNegativeAttributeFilter {
     'localIdentifier'?: string;
     // (undocumented)
     'notIn': AfmAttributeFilterElements;
+    'usesArbitraryValues'?: boolean;
 }
 
 // @public
@@ -1912,6 +1953,7 @@ export interface AfmPositiveAttributeFilterPositiveAttributeFilter {
     'label': AfmModelIdentifier;
     // (undocumented)
     'localIdentifier'?: string;
+    'usesArbitraryValues'?: boolean;
 }
 
 // @public
@@ -2917,10 +2959,10 @@ export function AppearanceApiAxiosParamCreator_CreateEntityColorPalettes(jsonApi
 export function AppearanceApiAxiosParamCreator_CreateEntityThemes(jsonApiThemeInDocument: JsonApiThemeInDocument, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function AppearanceApiAxiosParamCreator_DeleteEntityColorPalettes(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function AppearanceApiAxiosParamCreator_DeleteEntityColorPalettes(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function AppearanceApiAxiosParamCreator_DeleteEntityThemes(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function AppearanceApiAxiosParamCreator_DeleteEntityThemes(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function AppearanceApiAxiosParamCreator_GetAllEntitiesColorPalettes(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -2958,13 +3000,11 @@ export interface AppearanceApiCreateEntityThemesRequest {
 
 // @public
 export interface AppearanceApiDeleteEntityColorPalettesRequest {
-    readonly filter?: string;
     readonly id: string;
 }
 
 // @public
 export interface AppearanceApiDeleteEntityThemesRequest {
-    readonly filter?: string;
     readonly id: string;
 }
 
@@ -4269,6 +4309,32 @@ export interface AutomationCustomOverride {
 }
 
 // @public (undocumented)
+export interface AutomationDashboardArbitraryAttributeFilter {
+    // (undocumented)
+    'arbitraryAttributeFilter': AutomationDashboardArbitraryAttributeFilterArbitraryAttributeFilter;
+}
+
+// @public (undocumented)
+export interface AutomationDashboardArbitraryAttributeFilterArbitraryAttributeFilter {
+    // (undocumented)
+    'displayForm': AutomationIdentifierRef;
+    // (undocumented)
+    'filterElementsBy'?: Array<AutomationAttributeFilterParent>;
+    // (undocumented)
+    'filterElementsByDate'?: Array<AutomationAttributeFilterByDate>;
+    // (undocumented)
+    'localIdentifier'?: string;
+    // (undocumented)
+    'negativeSelection': boolean;
+    // (undocumented)
+    'title'?: string;
+    // (undocumented)
+    'validateElementsBy'?: Array<AutomationIdentifierRef>;
+    // (undocumented)
+    'values': Array<string>;
+}
+
+// @public (undocumented)
 export interface AutomationDashboardAttributeFilter {
     // (undocumented)
     'attributeFilter': AutomationDashboardAttributeFilterAttributeFilter;
@@ -4349,7 +4415,34 @@ export interface AutomationDashboardExportSettings {
 }
 
 // @public
-export type AutomationDashboardFilter = AutomationDashboardAttributeFilter | AutomationDashboardDateFilter;
+export type AutomationDashboardFilter = AutomationDashboardArbitraryAttributeFilter | AutomationDashboardAttributeFilter | AutomationDashboardDateFilter | AutomationDashboardMatchAttributeFilter;
+
+// @public (undocumented)
+export interface AutomationDashboardMatchAttributeFilter {
+    // (undocumented)
+    'matchAttributeFilter': AutomationDashboardMatchAttributeFilterMatchAttributeFilter;
+}
+
+// @public (undocumented)
+export interface AutomationDashboardMatchAttributeFilterMatchAttributeFilter {
+    // (undocumented)
+    'caseSensitive': boolean;
+    // (undocumented)
+    'displayForm': AutomationIdentifierRef;
+    // (undocumented)
+    'literal': string;
+    // (undocumented)
+    'localIdentifier'?: string;
+    // (undocumented)
+    'negativeSelection': boolean;
+    // (undocumented)
+    'operator': AutomationDashboardMatchAttributeFilterMatchAttributeFilterOperatorEnum;
+    // (undocumented)
+    'title'?: string;
+}
+
+// @public (undocumented)
+export type AutomationDashboardMatchAttributeFilterMatchAttributeFilterOperatorEnum = 'contains' | 'startsWith' | 'endsWith';
 
 // @public (undocumented)
 export interface AutomationDashboardTabularExport {
@@ -4590,6 +4683,7 @@ export interface AutomationNegativeAttributeFilterNegativeAttributeFilter {
     'localIdentifier'?: string;
     // (undocumented)
     'notIn': AutomationAttributeFilterElements;
+    'usesArbitraryValues'?: boolean;
 }
 
 // @public (undocumented)
@@ -4753,6 +4847,7 @@ export interface AutomationPositiveAttributeFilterPositiveAttributeFilter {
     'label': AutomationAfmIdentifier;
     // (undocumented)
     'localIdentifier'?: string;
+    'usesArbitraryValues'?: boolean;
 }
 
 // @public (undocumented)
@@ -5787,6 +5882,101 @@ export interface ClusteringResult {
 }
 
 // @public
+export class ColorPaletteControllerApi extends MetadataBaseApi implements ColorPaletteControllerApiInterface {
+    createEntityColorPalettes(requestParameters: ColorPaletteControllerApiCreateEntityColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiColorPaletteOutDocument>;
+    deleteEntityColorPalettes(requestParameters: ColorPaletteControllerApiDeleteEntityColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getAllEntitiesColorPalettes(requestParameters?: ColorPaletteControllerApiGetAllEntitiesColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiColorPaletteOutList>;
+    getEntityColorPalettes(requestParameters: ColorPaletteControllerApiGetEntityColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiColorPaletteOutDocument>;
+    patchEntityColorPalettes(requestParameters: ColorPaletteControllerApiPatchEntityColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiColorPaletteOutDocument>;
+    updateEntityColorPalettes(requestParameters: ColorPaletteControllerApiUpdateEntityColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiColorPaletteOutDocument>;
+}
+
+// @public
+export function ColorPaletteControllerApi_CreateEntityColorPalettes(axios: AxiosInstance, basePath: string, requestParameters: ColorPaletteControllerApiCreateEntityColorPalettesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiColorPaletteOutDocument>;
+
+// @public
+export function ColorPaletteControllerApi_DeleteEntityColorPalettes(axios: AxiosInstance, basePath: string, requestParameters: ColorPaletteControllerApiDeleteEntityColorPalettesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
+
+// @public
+export function ColorPaletteControllerApi_GetAllEntitiesColorPalettes(axios: AxiosInstance, basePath: string, requestParameters: ColorPaletteControllerApiGetAllEntitiesColorPalettesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiColorPaletteOutList>;
+
+// @public
+export function ColorPaletteControllerApi_GetEntityColorPalettes(axios: AxiosInstance, basePath: string, requestParameters: ColorPaletteControllerApiGetEntityColorPalettesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiColorPaletteOutDocument>;
+
+// @public
+export function ColorPaletteControllerApi_PatchEntityColorPalettes(axios: AxiosInstance, basePath: string, requestParameters: ColorPaletteControllerApiPatchEntityColorPalettesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiColorPaletteOutDocument>;
+
+// @public
+export function ColorPaletteControllerApi_UpdateEntityColorPalettes(axios: AxiosInstance, basePath: string, requestParameters: ColorPaletteControllerApiUpdateEntityColorPalettesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiColorPaletteOutDocument>;
+
+// @public
+export function ColorPaletteControllerApiAxiosParamCreator_CreateEntityColorPalettes(jsonApiColorPaletteInDocument: JsonApiColorPaletteInDocument, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function ColorPaletteControllerApiAxiosParamCreator_DeleteEntityColorPalettes(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function ColorPaletteControllerApiAxiosParamCreator_GetAllEntitiesColorPalettes(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function ColorPaletteControllerApiAxiosParamCreator_GetEntityColorPalettes(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function ColorPaletteControllerApiAxiosParamCreator_PatchEntityColorPalettes(id: string, jsonApiColorPalettePatchDocument: JsonApiColorPalettePatchDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function ColorPaletteControllerApiAxiosParamCreator_UpdateEntityColorPalettes(id: string, jsonApiColorPaletteInDocument: JsonApiColorPaletteInDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export interface ColorPaletteControllerApiCreateEntityColorPalettesRequest {
+    readonly jsonApiColorPaletteInDocument: JsonApiColorPaletteInDocument;
+}
+
+// @public
+export interface ColorPaletteControllerApiDeleteEntityColorPalettesRequest {
+    readonly id: string;
+}
+
+// @public
+export interface ColorPaletteControllerApiGetAllEntitiesColorPalettesRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<'page' | 'all' | 'ALL'>;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+}
+
+// @public
+export interface ColorPaletteControllerApiGetEntityColorPalettesRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
+export interface ColorPaletteControllerApiInterface {
+    createEntityColorPalettes(requestParameters: ColorPaletteControllerApiCreateEntityColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiColorPaletteOutDocument>;
+    deleteEntityColorPalettes(requestParameters: ColorPaletteControllerApiDeleteEntityColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getAllEntitiesColorPalettes(requestParameters: ColorPaletteControllerApiGetAllEntitiesColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiColorPaletteOutList>;
+    getEntityColorPalettes(requestParameters: ColorPaletteControllerApiGetEntityColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiColorPaletteOutDocument>;
+    patchEntityColorPalettes(requestParameters: ColorPaletteControllerApiPatchEntityColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiColorPaletteOutDocument>;
+    updateEntityColorPalettes(requestParameters: ColorPaletteControllerApiUpdateEntityColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiColorPaletteOutDocument>;
+}
+
+// @public
+export interface ColorPaletteControllerApiPatchEntityColorPalettesRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiColorPalettePatchDocument: JsonApiColorPalettePatchDocument;
+}
+
+// @public
+export interface ColorPaletteControllerApiUpdateEntityColorPalettesRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiColorPaletteInDocument: JsonApiColorPaletteInDocument;
+}
+
+// @public
 export interface ColumnOverride {
     'labelTargetColumn'?: string;
     'labelType'?: ColumnOverrideLabelTypeEnum;
@@ -6124,6 +6314,101 @@ export interface CreatedVisualizations {
 export type CreatedVisualizationVisualizationTypeEnum = 'TABLE' | 'HEADLINE' | 'BAR' | 'LINE' | 'PIE' | 'COLUMN' | 'SCATTER';
 
 // @public
+export class CspDirectiveControllerApi extends MetadataBaseApi implements CspDirectiveControllerApiInterface {
+    createEntityCspDirectives(requestParameters: CspDirectiveControllerApiCreateEntityCspDirectivesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCspDirectiveOutDocument>;
+    deleteEntityCspDirectives(requestParameters: CspDirectiveControllerApiDeleteEntityCspDirectivesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getAllEntitiesCspDirectives(requestParameters?: CspDirectiveControllerApiGetAllEntitiesCspDirectivesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCspDirectiveOutList>;
+    getEntityCspDirectives(requestParameters: CspDirectiveControllerApiGetEntityCspDirectivesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCspDirectiveOutDocument>;
+    patchEntityCspDirectives(requestParameters: CspDirectiveControllerApiPatchEntityCspDirectivesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCspDirectiveOutDocument>;
+    updateEntityCspDirectives(requestParameters: CspDirectiveControllerApiUpdateEntityCspDirectivesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCspDirectiveOutDocument>;
+}
+
+// @public
+export function CspDirectiveControllerApi_CreateEntityCspDirectives(axios: AxiosInstance, basePath: string, requestParameters: CspDirectiveControllerApiCreateEntityCspDirectivesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiCspDirectiveOutDocument>;
+
+// @public
+export function CspDirectiveControllerApi_DeleteEntityCspDirectives(axios: AxiosInstance, basePath: string, requestParameters: CspDirectiveControllerApiDeleteEntityCspDirectivesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
+
+// @public
+export function CspDirectiveControllerApi_GetAllEntitiesCspDirectives(axios: AxiosInstance, basePath: string, requestParameters: CspDirectiveControllerApiGetAllEntitiesCspDirectivesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiCspDirectiveOutList>;
+
+// @public
+export function CspDirectiveControllerApi_GetEntityCspDirectives(axios: AxiosInstance, basePath: string, requestParameters: CspDirectiveControllerApiGetEntityCspDirectivesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiCspDirectiveOutDocument>;
+
+// @public
+export function CspDirectiveControllerApi_PatchEntityCspDirectives(axios: AxiosInstance, basePath: string, requestParameters: CspDirectiveControllerApiPatchEntityCspDirectivesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiCspDirectiveOutDocument>;
+
+// @public
+export function CspDirectiveControllerApi_UpdateEntityCspDirectives(axios: AxiosInstance, basePath: string, requestParameters: CspDirectiveControllerApiUpdateEntityCspDirectivesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiCspDirectiveOutDocument>;
+
+// @public
+export function CspDirectiveControllerApiAxiosParamCreator_CreateEntityCspDirectives(jsonApiCspDirectiveInDocument: JsonApiCspDirectiveInDocument, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function CspDirectiveControllerApiAxiosParamCreator_DeleteEntityCspDirectives(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function CspDirectiveControllerApiAxiosParamCreator_GetAllEntitiesCspDirectives(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function CspDirectiveControllerApiAxiosParamCreator_GetEntityCspDirectives(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function CspDirectiveControllerApiAxiosParamCreator_PatchEntityCspDirectives(id: string, jsonApiCspDirectivePatchDocument: JsonApiCspDirectivePatchDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function CspDirectiveControllerApiAxiosParamCreator_UpdateEntityCspDirectives(id: string, jsonApiCspDirectiveInDocument: JsonApiCspDirectiveInDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export interface CspDirectiveControllerApiCreateEntityCspDirectivesRequest {
+    readonly jsonApiCspDirectiveInDocument: JsonApiCspDirectiveInDocument;
+}
+
+// @public
+export interface CspDirectiveControllerApiDeleteEntityCspDirectivesRequest {
+    readonly id: string;
+}
+
+// @public
+export interface CspDirectiveControllerApiGetAllEntitiesCspDirectivesRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<'page' | 'all' | 'ALL'>;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+}
+
+// @public
+export interface CspDirectiveControllerApiGetEntityCspDirectivesRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
+export interface CspDirectiveControllerApiInterface {
+    createEntityCspDirectives(requestParameters: CspDirectiveControllerApiCreateEntityCspDirectivesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCspDirectiveOutDocument>;
+    deleteEntityCspDirectives(requestParameters: CspDirectiveControllerApiDeleteEntityCspDirectivesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getAllEntitiesCspDirectives(requestParameters: CspDirectiveControllerApiGetAllEntitiesCspDirectivesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCspDirectiveOutList>;
+    getEntityCspDirectives(requestParameters: CspDirectiveControllerApiGetEntityCspDirectivesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCspDirectiveOutDocument>;
+    patchEntityCspDirectives(requestParameters: CspDirectiveControllerApiPatchEntityCspDirectivesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCspDirectiveOutDocument>;
+    updateEntityCspDirectives(requestParameters: CspDirectiveControllerApiUpdateEntityCspDirectivesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCspDirectiveOutDocument>;
+}
+
+// @public
+export interface CspDirectiveControllerApiPatchEntityCspDirectivesRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiCspDirectivePatchDocument: JsonApiCspDirectivePatchDocument;
+}
+
+// @public
+export interface CspDirectiveControllerApiUpdateEntityCspDirectivesRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiCspDirectiveInDocument: JsonApiCspDirectiveInDocument;
+}
+
+// @public
 export class CSPDirectivesApi extends MetadataBaseApi implements CSPDirectivesApiInterface {
     createEntityCspDirectives(requestParameters: CSPDirectivesApiCreateEntityCspDirectivesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCspDirectiveOutDocument>;
     deleteEntityCspDirectives(requestParameters: CSPDirectivesApiDeleteEntityCspDirectivesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -6155,7 +6440,7 @@ export function CSPDirectivesApi_UpdateEntityCspDirectives(axios: AxiosInstance,
 export function CSPDirectivesApiAxiosParamCreator_CreateEntityCspDirectives(jsonApiCspDirectiveInDocument: JsonApiCspDirectiveInDocument, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function CSPDirectivesApiAxiosParamCreator_DeleteEntityCspDirectives(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function CSPDirectivesApiAxiosParamCreator_DeleteEntityCspDirectives(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function CSPDirectivesApiAxiosParamCreator_GetAllEntitiesCspDirectives(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -6176,7 +6461,6 @@ export interface CSPDirectivesApiCreateEntityCspDirectivesRequest {
 
 // @public
 export interface CSPDirectivesApiDeleteEntityCspDirectivesRequest {
-    readonly filter?: string;
     readonly id: string;
 }
 
@@ -6536,6 +6820,8 @@ export interface DashboardArbitraryAttributeFilterArbitraryAttributeFilter {
     'negativeSelection': boolean;
     // (undocumented)
     'title'?: string;
+    // (undocumented)
+    'validateElementsBy'?: Array<IdentifierRef>;
     // (undocumented)
     'values': Array<string | null>;
 }
@@ -7802,6 +8088,46 @@ export interface DataSourceEntityAPIsApiUpdateEntityDataSourcesRequest {
     readonly filter?: string;
     readonly id: string;
     readonly jsonApiDataSourceInDocument: JsonApiDataSourceInDocument;
+}
+
+// @public
+export class DataSourceIdentifierControllerApi extends MetadataBaseApi implements DataSourceIdentifierControllerApiInterface {
+    getAllEntitiesDataSourceIdentifiers(requestParameters?: DataSourceIdentifierControllerApiGetAllEntitiesDataSourceIdentifiersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceIdentifierOutList>;
+    getEntityDataSourceIdentifiers(requestParameters: DataSourceIdentifierControllerApiGetEntityDataSourceIdentifiersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceIdentifierOutDocument>;
+}
+
+// @public
+export function DataSourceIdentifierControllerApi_GetAllEntitiesDataSourceIdentifiers(axios: AxiosInstance, basePath: string, requestParameters: DataSourceIdentifierControllerApiGetAllEntitiesDataSourceIdentifiersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiDataSourceIdentifierOutList>;
+
+// @public
+export function DataSourceIdentifierControllerApi_GetEntityDataSourceIdentifiers(axios: AxiosInstance, basePath: string, requestParameters: DataSourceIdentifierControllerApiGetEntityDataSourceIdentifiersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiDataSourceIdentifierOutDocument>;
+
+// @public
+export function DataSourceIdentifierControllerApiAxiosParamCreator_GetAllEntitiesDataSourceIdentifiers(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'permissions' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function DataSourceIdentifierControllerApiAxiosParamCreator_GetEntityDataSourceIdentifiers(id: string, filter?: string, metaInclude?: Array<'permissions' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export interface DataSourceIdentifierControllerApiGetAllEntitiesDataSourceIdentifiersRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<'permissions' | 'page' | 'all' | 'ALL'>;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+}
+
+// @public
+export interface DataSourceIdentifierControllerApiGetEntityDataSourceIdentifiersRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly metaInclude?: Array<'permissions' | 'all' | 'ALL'>;
+}
+
+// @public
+export interface DataSourceIdentifierControllerApiInterface {
+    getAllEntitiesDataSourceIdentifiers(requestParameters: DataSourceIdentifierControllerApiGetAllEntitiesDataSourceIdentifiersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceIdentifierOutList>;
+    getEntityDataSourceIdentifiers(requestParameters: DataSourceIdentifierControllerApiGetEntityDataSourceIdentifiersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceIdentifierOutDocument>;
 }
 
 // @public
@@ -9182,7 +9508,6 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     // (undocumented)
     getAllEntitiesMemoryItems(requestParameters: EntitiesApiGetAllEntitiesMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMemoryItemOutList>;
     getAllEntitiesMetrics(requestParameters: EntitiesApiGetAllEntitiesMetricsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMetricOutList>;
-    // (undocumented)
     getAllEntitiesNotificationChannelIdentifiers(requestParameters?: EntitiesApiGetAllEntitiesNotificationChannelIdentifiersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelIdentifierOutList>;
     getAllEntitiesNotificationChannels(requestParameters?: EntitiesApiGetAllEntitiesNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutList>;
     getAllEntitiesOrganizationSettings(requestParameters?: EntitiesApiGetAllEntitiesOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutList>;
@@ -9234,7 +9559,6 @@ export class EntitiesApi extends MetadataBaseApi implements EntitiesApiInterface
     // (undocumented)
     getEntityMemoryItems(requestParameters: EntitiesApiGetEntityMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMemoryItemOutDocument>;
     getEntityMetrics(requestParameters: EntitiesApiGetEntityMetricsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMetricOutDocument>;
-    // (undocumented)
     getEntityNotificationChannelIdentifiers(requestParameters: EntitiesApiGetEntityNotificationChannelIdentifiersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelIdentifierOutDocument>;
     getEntityNotificationChannels(requestParameters: EntitiesApiGetEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
     getEntityOrganizations(requestParameters: EntitiesApiGetEntityOrganizationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationOutDocument>;
@@ -9637,7 +9961,7 @@ export function EntitiesApi_GetAllEntitiesMemoryItems(axios: AxiosInstance, base
 // @public
 export function EntitiesApi_GetAllEntitiesMetrics(axios: AxiosInstance, basePath: string, requestParameters: EntitiesApiGetAllEntitiesMetricsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiMetricOutList>;
 
-// @public (undocumented)
+// @public
 export function EntitiesApi_GetAllEntitiesNotificationChannelIdentifiers(axios: AxiosInstance, basePath: string, requestParameters: EntitiesApiGetAllEntitiesNotificationChannelIdentifiersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiNotificationChannelIdentifierOutList>;
 
 // @public
@@ -9774,7 +10098,7 @@ export function EntitiesApi_GetEntityMemoryItems(axios: AxiosInstance, basePath:
 // @public
 export function EntitiesApi_GetEntityMetrics(axios: AxiosInstance, basePath: string, requestParameters: EntitiesApiGetEntityMetricsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiMetricOutDocument>;
 
-// @public (undocumented)
+// @public
 export function EntitiesApi_GetEntityNotificationChannelIdentifiers(axios: AxiosInstance, basePath: string, requestParameters: EntitiesApiGetEntityNotificationChannelIdentifiersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiNotificationChannelIdentifierOutDocument>;
 
 // @public
@@ -10213,10 +10537,10 @@ export function EntitiesApiAxiosParamCreator_DeleteEntityAttributeHierarchies(wo
 export function EntitiesApiAxiosParamCreator_DeleteEntityAutomations(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function EntitiesApiAxiosParamCreator_DeleteEntityColorPalettes(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function EntitiesApiAxiosParamCreator_DeleteEntityColorPalettes(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function EntitiesApiAxiosParamCreator_DeleteEntityCspDirectives(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function EntitiesApiAxiosParamCreator_DeleteEntityCspDirectives(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function EntitiesApiAxiosParamCreator_DeleteEntityCustomApplicationSettings(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -10234,7 +10558,7 @@ export function EntitiesApiAxiosParamCreator_DeleteEntityDataSources(id: string,
 export function EntitiesApiAxiosParamCreator_DeleteEntityExportDefinitions(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function EntitiesApiAxiosParamCreator_DeleteEntityExportTemplates(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function EntitiesApiAxiosParamCreator_DeleteEntityExportTemplates(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function EntitiesApiAxiosParamCreator_DeleteEntityFilterContexts(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -10243,7 +10567,7 @@ export function EntitiesApiAxiosParamCreator_DeleteEntityFilterContexts(workspac
 export function EntitiesApiAxiosParamCreator_DeleteEntityFilterViews(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function EntitiesApiAxiosParamCreator_DeleteEntityIdentityProviders(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function EntitiesApiAxiosParamCreator_DeleteEntityIdentityProviders(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function EntitiesApiAxiosParamCreator_DeleteEntityJwks(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -10252,10 +10576,10 @@ export function EntitiesApiAxiosParamCreator_DeleteEntityJwks(id: string, option
 export function EntitiesApiAxiosParamCreator_DeleteEntityKnowledgeRecommendations(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function EntitiesApiAxiosParamCreator_DeleteEntityLlmEndpoints(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function EntitiesApiAxiosParamCreator_DeleteEntityLlmEndpoints(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function EntitiesApiAxiosParamCreator_DeleteEntityLlmProviders(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function EntitiesApiAxiosParamCreator_DeleteEntityLlmProviders(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public (undocumented)
 export function EntitiesApiAxiosParamCreator_DeleteEntityMemoryItems(workspaceId: string, objectId: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -10264,22 +10588,22 @@ export function EntitiesApiAxiosParamCreator_DeleteEntityMemoryItems(workspaceId
 export function EntitiesApiAxiosParamCreator_DeleteEntityMetrics(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function EntitiesApiAxiosParamCreator_DeleteEntityNotificationChannels(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function EntitiesApiAxiosParamCreator_DeleteEntityNotificationChannels(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function EntitiesApiAxiosParamCreator_DeleteEntityOrganizationSettings(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function EntitiesApiAxiosParamCreator_DeleteEntityOrganizationSettings(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function EntitiesApiAxiosParamCreator_DeleteEntityThemes(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function EntitiesApiAxiosParamCreator_DeleteEntityThemes(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function EntitiesApiAxiosParamCreator_DeleteEntityUserDataFilters(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function EntitiesApiAxiosParamCreator_DeleteEntityUserGroups(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function EntitiesApiAxiosParamCreator_DeleteEntityUserGroups(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function EntitiesApiAxiosParamCreator_DeleteEntityUsers(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function EntitiesApiAxiosParamCreator_DeleteEntityUsers(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function EntitiesApiAxiosParamCreator_DeleteEntityUserSettings(userId: string, id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -10294,7 +10618,7 @@ export function EntitiesApiAxiosParamCreator_DeleteEntityWorkspaceDataFilters(wo
 export function EntitiesApiAxiosParamCreator_DeleteEntityWorkspaceDataFilterSettings(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function EntitiesApiAxiosParamCreator_DeleteEntityWorkspaces(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function EntitiesApiAxiosParamCreator_DeleteEntityWorkspaces(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function EntitiesApiAxiosParamCreator_DeleteEntityWorkspaceSettings(workspaceId: string, objectId: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -10386,7 +10710,7 @@ export function EntitiesApiAxiosParamCreator_GetAllEntitiesMemoryItems(workspace
 // @public
 export function EntitiesApiAxiosParamCreator_GetAllEntitiesMetrics(workspaceId: string, origin?: 'ALL' | 'PARENTS' | 'NATIVE', filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
-// @public (undocumented)
+// @public
 export function EntitiesApiAxiosParamCreator_GetAllEntitiesNotificationChannelIdentifiers(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
@@ -10521,7 +10845,7 @@ export function EntitiesApiAxiosParamCreator_GetEntityMemoryItems(workspaceId: s
 // @public
 export function EntitiesApiAxiosParamCreator_GetEntityMetrics(workspaceId: string, objectId: string, filter?: string, include?: Array<'userIdentifiers' | 'facts' | 'attributes' | 'labels' | 'metrics' | 'datasets' | 'createdBy' | 'modifiedBy' | 'certifiedBy' | 'ALL'>, xGDCVALIDATERELATIONS?: boolean, metaInclude?: Array<'origin' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
-// @public (undocumented)
+// @public
 export function EntitiesApiAxiosParamCreator_GetEntityNotificationChannelIdentifiers(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
@@ -11091,13 +11415,11 @@ export interface EntitiesApiDeleteEntityAutomationsRequest {
 
 // @public
 export interface EntitiesApiDeleteEntityColorPalettesRequest {
-    readonly filter?: string;
     readonly id: string;
 }
 
 // @public
 export interface EntitiesApiDeleteEntityCspDirectivesRequest {
-    readonly filter?: string;
     readonly id: string;
 }
 
@@ -11131,7 +11453,6 @@ export interface EntitiesApiDeleteEntityExportDefinitionsRequest {
 
 // @public
 export interface EntitiesApiDeleteEntityExportTemplatesRequest {
-    readonly filter?: string;
     readonly id: string;
 }
 
@@ -11149,7 +11470,6 @@ export interface EntitiesApiDeleteEntityFilterViewsRequest {
 
 // @public
 export interface EntitiesApiDeleteEntityIdentityProvidersRequest {
-    readonly filter?: string;
     readonly id: string;
 }
 
@@ -11167,13 +11487,11 @@ export interface EntitiesApiDeleteEntityKnowledgeRecommendationsRequest {
 
 // @public
 export interface EntitiesApiDeleteEntityLlmEndpointsRequest {
-    readonly filter?: string;
     readonly id: string;
 }
 
 // @public
 export interface EntitiesApiDeleteEntityLlmProvidersRequest {
-    readonly filter?: string;
     readonly id: string;
 }
 
@@ -11192,19 +11510,16 @@ export interface EntitiesApiDeleteEntityMetricsRequest {
 
 // @public
 export interface EntitiesApiDeleteEntityNotificationChannelsRequest {
-    readonly filter?: string;
     readonly id: string;
 }
 
 // @public
 export interface EntitiesApiDeleteEntityOrganizationSettingsRequest {
-    readonly filter?: string;
     readonly id: string;
 }
 
 // @public
 export interface EntitiesApiDeleteEntityThemesRequest {
-    readonly filter?: string;
     readonly id: string;
 }
 
@@ -11216,7 +11531,6 @@ export interface EntitiesApiDeleteEntityUserDataFiltersRequest {
 
 // @public
 export interface EntitiesApiDeleteEntityUserGroupsRequest {
-    readonly filter?: string;
     readonly id: string;
 }
 
@@ -11228,7 +11542,6 @@ export interface EntitiesApiDeleteEntityUserSettingsRequest {
 
 // @public
 export interface EntitiesApiDeleteEntityUsersRequest {
-    readonly filter?: string;
     readonly id: string;
 }
 
@@ -11258,7 +11571,6 @@ export interface EntitiesApiDeleteEntityWorkspaceSettingsRequest {
 
 // @public
 export interface EntitiesApiDeleteEntityWorkspacesRequest {
-    readonly filter?: string;
     readonly id: string;
 }
 
@@ -12204,7 +12516,6 @@ export interface EntitiesApiInterface {
     // (undocumented)
     getAllEntitiesMemoryItems(requestParameters: EntitiesApiGetAllEntitiesMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMemoryItemOutList>;
     getAllEntitiesMetrics(requestParameters: EntitiesApiGetAllEntitiesMetricsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMetricOutList>;
-    // (undocumented)
     getAllEntitiesNotificationChannelIdentifiers(requestParameters: EntitiesApiGetAllEntitiesNotificationChannelIdentifiersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelIdentifierOutList>;
     getAllEntitiesNotificationChannels(requestParameters: EntitiesApiGetAllEntitiesNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutList>;
     getAllEntitiesOrganizationSettings(requestParameters: EntitiesApiGetAllEntitiesOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutList>;
@@ -12256,7 +12567,6 @@ export interface EntitiesApiInterface {
     // (undocumented)
     getEntityMemoryItems(requestParameters: EntitiesApiGetEntityMemoryItemsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMemoryItemOutDocument>;
     getEntityMetrics(requestParameters: EntitiesApiGetEntityMetricsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiMetricOutDocument>;
-    // (undocumented)
     getEntityNotificationChannelIdentifiers(requestParameters: EntitiesApiGetEntityNotificationChannelIdentifiersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelIdentifierOutDocument>;
     getEntityNotificationChannels(requestParameters: EntitiesApiGetEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
     getEntityOrganizations(requestParameters: EntitiesApiGetEntityOrganizationsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationOutDocument>;
@@ -13184,6 +13494,45 @@ export interface EntitlementApiResolveRequestedEntitlementsRequest {
     readonly entitlementsRequest: EntitlementsRequest;
 }
 
+// @public
+export class EntitlementEntityControllerApi extends MetadataBaseApi implements EntitlementEntityControllerApiInterface {
+    getAllEntitiesEntitlements(requestParameters?: EntitlementEntityControllerApiGetAllEntitiesEntitlementsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiEntitlementOutList>;
+    getEntityEntitlements(requestParameters: EntitlementEntityControllerApiGetEntityEntitlementsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiEntitlementOutDocument>;
+}
+
+// @public
+export function EntitlementEntityControllerApi_GetAllEntitiesEntitlements(axios: AxiosInstance, basePath: string, requestParameters: EntitlementEntityControllerApiGetAllEntitiesEntitlementsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiEntitlementOutList>;
+
+// @public
+export function EntitlementEntityControllerApi_GetEntityEntitlements(axios: AxiosInstance, basePath: string, requestParameters: EntitlementEntityControllerApiGetEntityEntitlementsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiEntitlementOutDocument>;
+
+// @public
+export function EntitlementEntityControllerApiAxiosParamCreator_GetAllEntitiesEntitlements(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function EntitlementEntityControllerApiAxiosParamCreator_GetEntityEntitlements(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export interface EntitlementEntityControllerApiGetAllEntitiesEntitlementsRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<'page' | 'all' | 'ALL'>;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+}
+
+// @public
+export interface EntitlementEntityControllerApiGetEntityEntitlementsRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
+export interface EntitlementEntityControllerApiInterface {
+    getAllEntitiesEntitlements(requestParameters: EntitlementEntityControllerApiGetAllEntitiesEntitlementsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiEntitlementOutList>;
+    getEntityEntitlements(requestParameters: EntitlementEntityControllerApiGetEntityEntitlementsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiEntitlementOutDocument>;
+}
+
 // @public (undocumented)
 export interface EntitlementsRequest {
     // (undocumented)
@@ -13659,6 +14008,8 @@ export interface ExportDashboardArbitraryAttributeFilterArbitraryAttributeFilter
     'negativeSelection': boolean;
     // (undocumented)
     'title'?: string;
+    // (undocumented)
+    'validateElementsBy'?: Array<ExportIdentifierRef>;
     // (undocumented)
     'values': Array<string>;
 }
@@ -14213,6 +14564,7 @@ export interface ExportNegativeAttributeFilterNegativeAttributeFilter {
     'localIdentifier'?: string;
     // (undocumented)
     'notIn': ExportAttributeFilterElements;
+    'usesArbitraryValues'?: boolean;
 }
 
 // @public (undocumented)
@@ -14292,6 +14644,7 @@ export interface ExportPositiveAttributeFilterPositiveAttributeFilter {
     'label': ExportAfmIdentifier;
     // (undocumented)
     'localIdentifier'?: string;
+    'usesArbitraryValues'?: boolean;
 }
 
 // @public
@@ -14529,6 +14882,101 @@ export interface ExportTabularExportRequest {
 export type ExportTabularExportRequestFormatEnum = 'CSV' | 'XLSX' | 'HTML' | 'PDF';
 
 // @public
+export class ExportTemplateControllerApi extends MetadataBaseApi implements ExportTemplateControllerApiInterface {
+    createEntityExportTemplates(requestParameters: ExportTemplateControllerApiCreateEntityExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportTemplateOutDocument>;
+    deleteEntityExportTemplates(requestParameters: ExportTemplateControllerApiDeleteEntityExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getAllEntitiesExportTemplates(requestParameters?: ExportTemplateControllerApiGetAllEntitiesExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportTemplateOutList>;
+    getEntityExportTemplates(requestParameters: ExportTemplateControllerApiGetEntityExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportTemplateOutDocument>;
+    patchEntityExportTemplates(requestParameters: ExportTemplateControllerApiPatchEntityExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportTemplateOutDocument>;
+    updateEntityExportTemplates(requestParameters: ExportTemplateControllerApiUpdateEntityExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportTemplateOutDocument>;
+}
+
+// @public
+export function ExportTemplateControllerApi_CreateEntityExportTemplates(axios: AxiosInstance, basePath: string, requestParameters: ExportTemplateControllerApiCreateEntityExportTemplatesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiExportTemplateOutDocument>;
+
+// @public
+export function ExportTemplateControllerApi_DeleteEntityExportTemplates(axios: AxiosInstance, basePath: string, requestParameters: ExportTemplateControllerApiDeleteEntityExportTemplatesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
+
+// @public
+export function ExportTemplateControllerApi_GetAllEntitiesExportTemplates(axios: AxiosInstance, basePath: string, requestParameters: ExportTemplateControllerApiGetAllEntitiesExportTemplatesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiExportTemplateOutList>;
+
+// @public
+export function ExportTemplateControllerApi_GetEntityExportTemplates(axios: AxiosInstance, basePath: string, requestParameters: ExportTemplateControllerApiGetEntityExportTemplatesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiExportTemplateOutDocument>;
+
+// @public
+export function ExportTemplateControllerApi_PatchEntityExportTemplates(axios: AxiosInstance, basePath: string, requestParameters: ExportTemplateControllerApiPatchEntityExportTemplatesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiExportTemplateOutDocument>;
+
+// @public
+export function ExportTemplateControllerApi_UpdateEntityExportTemplates(axios: AxiosInstance, basePath: string, requestParameters: ExportTemplateControllerApiUpdateEntityExportTemplatesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiExportTemplateOutDocument>;
+
+// @public
+export function ExportTemplateControllerApiAxiosParamCreator_CreateEntityExportTemplates(jsonApiExportTemplatePostOptionalIdDocument: JsonApiExportTemplatePostOptionalIdDocument, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function ExportTemplateControllerApiAxiosParamCreator_DeleteEntityExportTemplates(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function ExportTemplateControllerApiAxiosParamCreator_GetAllEntitiesExportTemplates(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function ExportTemplateControllerApiAxiosParamCreator_GetEntityExportTemplates(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function ExportTemplateControllerApiAxiosParamCreator_PatchEntityExportTemplates(id: string, jsonApiExportTemplatePatchDocument: JsonApiExportTemplatePatchDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function ExportTemplateControllerApiAxiosParamCreator_UpdateEntityExportTemplates(id: string, jsonApiExportTemplateInDocument: JsonApiExportTemplateInDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export interface ExportTemplateControllerApiCreateEntityExportTemplatesRequest {
+    readonly jsonApiExportTemplatePostOptionalIdDocument: JsonApiExportTemplatePostOptionalIdDocument;
+}
+
+// @public
+export interface ExportTemplateControllerApiDeleteEntityExportTemplatesRequest {
+    readonly id: string;
+}
+
+// @public
+export interface ExportTemplateControllerApiGetAllEntitiesExportTemplatesRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<'page' | 'all' | 'ALL'>;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+}
+
+// @public
+export interface ExportTemplateControllerApiGetEntityExportTemplatesRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
+export interface ExportTemplateControllerApiInterface {
+    createEntityExportTemplates(requestParameters: ExportTemplateControllerApiCreateEntityExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportTemplateOutDocument>;
+    deleteEntityExportTemplates(requestParameters: ExportTemplateControllerApiDeleteEntityExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getAllEntitiesExportTemplates(requestParameters: ExportTemplateControllerApiGetAllEntitiesExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportTemplateOutList>;
+    getEntityExportTemplates(requestParameters: ExportTemplateControllerApiGetEntityExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportTemplateOutDocument>;
+    patchEntityExportTemplates(requestParameters: ExportTemplateControllerApiPatchEntityExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportTemplateOutDocument>;
+    updateEntityExportTemplates(requestParameters: ExportTemplateControllerApiUpdateEntityExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportTemplateOutDocument>;
+}
+
+// @public
+export interface ExportTemplateControllerApiPatchEntityExportTemplatesRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiExportTemplatePatchDocument: JsonApiExportTemplatePatchDocument;
+}
+
+// @public
+export interface ExportTemplateControllerApiUpdateEntityExportTemplatesRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiExportTemplateInDocument: JsonApiExportTemplateInDocument;
+}
+
+// @public
 export class ExportTemplatesApi extends MetadataBaseApi implements ExportTemplatesApiInterface {
     createEntityExportTemplates(requestParameters: ExportTemplatesApiCreateEntityExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportTemplateOutDocument>;
     deleteEntityExportTemplates(requestParameters: ExportTemplatesApiDeleteEntityExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -14560,7 +15008,7 @@ export function ExportTemplatesApi_UpdateEntityExportTemplates(axios: AxiosInsta
 export function ExportTemplatesApiAxiosParamCreator_CreateEntityExportTemplates(jsonApiExportTemplatePostOptionalIdDocument: JsonApiExportTemplatePostOptionalIdDocument, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function ExportTemplatesApiAxiosParamCreator_DeleteEntityExportTemplates(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function ExportTemplatesApiAxiosParamCreator_DeleteEntityExportTemplates(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function ExportTemplatesApiAxiosParamCreator_GetAllEntitiesExportTemplates(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -14581,7 +15029,6 @@ export interface ExportTemplatesApiCreateEntityExportTemplatesRequest {
 
 // @public
 export interface ExportTemplatesApiDeleteEntityExportTemplatesRequest {
-    readonly filter?: string;
     readonly id: string;
 }
 
@@ -15930,6 +16377,101 @@ export interface IdentifierRefIdentifier {
 export type IdentifierRefIdentifierTypeEnum = 'analyticalDashboard' | 'attribute' | 'attributeHierarchy' | 'dashboardPlugin' | 'dataset' | 'fact' | 'aggregatedFact' | 'label' | 'metric' | 'userDataFilter' | 'exportDefinition' | 'automation' | 'automationResult' | 'memoryItem' | 'knowledgeRecommendation' | 'prompt' | 'visualizationObject' | 'filterContext' | 'workspaceSettings' | 'customApplicationSetting' | 'workspaceDataFilter' | 'workspaceDataFilterSetting' | 'filterView';
 
 // @public
+export class IdentityProviderControllerApi extends MetadataBaseApi implements IdentityProviderControllerApiInterface {
+    createEntityIdentityProviders(requestParameters: IdentityProviderControllerApiCreateEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutDocument>;
+    deleteEntityIdentityProviders(requestParameters: IdentityProviderControllerApiDeleteEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getAllEntitiesIdentityProviders(requestParameters?: IdentityProviderControllerApiGetAllEntitiesIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutList>;
+    getEntityIdentityProviders(requestParameters: IdentityProviderControllerApiGetEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutDocument>;
+    patchEntityIdentityProviders(requestParameters: IdentityProviderControllerApiPatchEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutDocument>;
+    updateEntityIdentityProviders(requestParameters: IdentityProviderControllerApiUpdateEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutDocument>;
+}
+
+// @public
+export function IdentityProviderControllerApi_CreateEntityIdentityProviders(axios: AxiosInstance, basePath: string, requestParameters: IdentityProviderControllerApiCreateEntityIdentityProvidersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiIdentityProviderOutDocument>;
+
+// @public
+export function IdentityProviderControllerApi_DeleteEntityIdentityProviders(axios: AxiosInstance, basePath: string, requestParameters: IdentityProviderControllerApiDeleteEntityIdentityProvidersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
+
+// @public
+export function IdentityProviderControllerApi_GetAllEntitiesIdentityProviders(axios: AxiosInstance, basePath: string, requestParameters: IdentityProviderControllerApiGetAllEntitiesIdentityProvidersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiIdentityProviderOutList>;
+
+// @public
+export function IdentityProviderControllerApi_GetEntityIdentityProviders(axios: AxiosInstance, basePath: string, requestParameters: IdentityProviderControllerApiGetEntityIdentityProvidersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiIdentityProviderOutDocument>;
+
+// @public
+export function IdentityProviderControllerApi_PatchEntityIdentityProviders(axios: AxiosInstance, basePath: string, requestParameters: IdentityProviderControllerApiPatchEntityIdentityProvidersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiIdentityProviderOutDocument>;
+
+// @public
+export function IdentityProviderControllerApi_UpdateEntityIdentityProviders(axios: AxiosInstance, basePath: string, requestParameters: IdentityProviderControllerApiUpdateEntityIdentityProvidersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiIdentityProviderOutDocument>;
+
+// @public
+export function IdentityProviderControllerApiAxiosParamCreator_CreateEntityIdentityProviders(jsonApiIdentityProviderInDocument: JsonApiIdentityProviderInDocument, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function IdentityProviderControllerApiAxiosParamCreator_DeleteEntityIdentityProviders(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function IdentityProviderControllerApiAxiosParamCreator_GetAllEntitiesIdentityProviders(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function IdentityProviderControllerApiAxiosParamCreator_GetEntityIdentityProviders(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function IdentityProviderControllerApiAxiosParamCreator_PatchEntityIdentityProviders(id: string, jsonApiIdentityProviderPatchDocument: JsonApiIdentityProviderPatchDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function IdentityProviderControllerApiAxiosParamCreator_UpdateEntityIdentityProviders(id: string, jsonApiIdentityProviderInDocument: JsonApiIdentityProviderInDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export interface IdentityProviderControllerApiCreateEntityIdentityProvidersRequest {
+    readonly jsonApiIdentityProviderInDocument: JsonApiIdentityProviderInDocument;
+}
+
+// @public
+export interface IdentityProviderControllerApiDeleteEntityIdentityProvidersRequest {
+    readonly id: string;
+}
+
+// @public
+export interface IdentityProviderControllerApiGetAllEntitiesIdentityProvidersRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<'page' | 'all' | 'ALL'>;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+}
+
+// @public
+export interface IdentityProviderControllerApiGetEntityIdentityProvidersRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
+export interface IdentityProviderControllerApiInterface {
+    createEntityIdentityProviders(requestParameters: IdentityProviderControllerApiCreateEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutDocument>;
+    deleteEntityIdentityProviders(requestParameters: IdentityProviderControllerApiDeleteEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getAllEntitiesIdentityProviders(requestParameters: IdentityProviderControllerApiGetAllEntitiesIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutList>;
+    getEntityIdentityProviders(requestParameters: IdentityProviderControllerApiGetEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutDocument>;
+    patchEntityIdentityProviders(requestParameters: IdentityProviderControllerApiPatchEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutDocument>;
+    updateEntityIdentityProviders(requestParameters: IdentityProviderControllerApiUpdateEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutDocument>;
+}
+
+// @public
+export interface IdentityProviderControllerApiPatchEntityIdentityProvidersRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiIdentityProviderPatchDocument: JsonApiIdentityProviderPatchDocument;
+}
+
+// @public
+export interface IdentityProviderControllerApiUpdateEntityIdentityProvidersRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiIdentityProviderInDocument: JsonApiIdentityProviderInDocument;
+}
+
+// @public
 export class IdentityProvidersApi extends MetadataBaseApi implements IdentityProvidersApiInterface {
     createEntityIdentityProviders(requestParameters: IdentityProvidersApiCreateEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutDocument>;
     deleteEntityIdentityProviders(requestParameters: IdentityProvidersApiDeleteEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -15969,7 +16511,7 @@ export function IdentityProvidersApi_UpdateEntityIdentityProviders(axios: AxiosI
 export function IdentityProvidersApiAxiosParamCreator_CreateEntityIdentityProviders(jsonApiIdentityProviderInDocument: JsonApiIdentityProviderInDocument, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function IdentityProvidersApiAxiosParamCreator_DeleteEntityIdentityProviders(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function IdentityProvidersApiAxiosParamCreator_DeleteEntityIdentityProviders(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function IdentityProvidersApiAxiosParamCreator_GetAllEntitiesIdentityProviders(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -15996,7 +16538,6 @@ export interface IdentityProvidersApiCreateEntityIdentityProvidersRequest {
 
 // @public
 export interface IdentityProvidersApiDeleteEntityIdentityProvidersRequest {
-    readonly filter?: string;
     readonly id: string;
 }
 
@@ -16895,7 +17436,7 @@ export interface JsonApiAggregatedFactOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -17014,7 +17555,7 @@ export interface JsonApiAnalyticalDashboardOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -17233,7 +17774,7 @@ export interface JsonApiApiTokenOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -17340,7 +17881,7 @@ export interface JsonApiAttributeHierarchyOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -17472,7 +18013,7 @@ export interface JsonApiAttributeOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -17715,7 +18256,7 @@ export interface JsonApiAutomationOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -17817,7 +18358,7 @@ export interface JsonApiAutomationResultOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -17853,16 +18394,9 @@ export type JsonApiAutomationResultOutWithLinksTypeEnum = 'automationResult';
 // @public
 export interface JsonApiColorPaletteIn {
     // (undocumented)
-    'attributes': JsonApiColorPaletteInAttributes;
+    'attributes': JsonApiColorPaletteOutAttributes;
     'id': string;
     'type': JsonApiColorPaletteInTypeEnum;
-}
-
-// @public (undocumented)
-export interface JsonApiColorPaletteInAttributes {
-    'content': object;
-    // (undocumented)
-    'name': string;
 }
 
 // @public (undocumented)
@@ -17877,9 +18411,16 @@ export type JsonApiColorPaletteInTypeEnum = 'colorPalette';
 // @public
 export interface JsonApiColorPaletteOut {
     // (undocumented)
-    'attributes': JsonApiColorPaletteInAttributes;
+    'attributes': JsonApiColorPaletteOutAttributes;
     'id': string;
     'type': JsonApiColorPaletteOutTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiColorPaletteOutAttributes {
+    'content': object;
+    // (undocumented)
+    'name': string;
 }
 
 // @public (undocumented)
@@ -17897,7 +18438,13 @@ export interface JsonApiColorPaletteOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
+}
+
+// @public (undocumented)
+export interface JsonApiColorPaletteOutListMeta {
+    // (undocumented)
+    'page'?: PageMetadata;
 }
 
 // @public (undocumented)
@@ -17906,7 +18453,7 @@ export type JsonApiColorPaletteOutTypeEnum = 'colorPalette';
 // @public (undocumented)
 export interface JsonApiColorPaletteOutWithLinks {
     // (undocumented)
-    'attributes': JsonApiColorPaletteInAttributes;
+    'attributes': JsonApiColorPaletteOutAttributes;
     'id': string;
     // (undocumented)
     'links'?: ObjectLinks;
@@ -17943,9 +18490,16 @@ export type JsonApiColorPalettePatchTypeEnum = 'colorPalette';
 // @public
 export interface JsonApiCookieSecurityConfigurationIn {
     // (undocumented)
-    'attributes'?: JsonApiCookieSecurityConfigurationPatchAttributes;
+    'attributes'?: JsonApiCookieSecurityConfigurationInAttributes;
     'id': string;
     'type': JsonApiCookieSecurityConfigurationInTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiCookieSecurityConfigurationInAttributes {
+    // (undocumented)
+    'lastRotation'?: string;
+    'rotationInterval'?: string;
 }
 
 // @public (undocumented)
@@ -17960,7 +18514,7 @@ export type JsonApiCookieSecurityConfigurationInTypeEnum = 'cookieSecurityConfig
 // @public
 export interface JsonApiCookieSecurityConfigurationOut {
     // (undocumented)
-    'attributes'?: JsonApiCookieSecurityConfigurationPatchAttributes;
+    'attributes'?: JsonApiCookieSecurityConfigurationInAttributes;
     'id': string;
     'type': JsonApiCookieSecurityConfigurationOutTypeEnum;
 }
@@ -17979,16 +18533,9 @@ export type JsonApiCookieSecurityConfigurationOutTypeEnum = 'cookieSecurityConfi
 // @public
 export interface JsonApiCookieSecurityConfigurationPatch {
     // (undocumented)
-    'attributes'?: JsonApiCookieSecurityConfigurationPatchAttributes;
+    'attributes'?: JsonApiCookieSecurityConfigurationInAttributes;
     'id': string;
     'type': JsonApiCookieSecurityConfigurationPatchTypeEnum;
-}
-
-// @public (undocumented)
-export interface JsonApiCookieSecurityConfigurationPatchAttributes {
-    // (undocumented)
-    'lastRotation'?: string;
-    'rotationInterval'?: string;
 }
 
 // @public (undocumented)
@@ -18003,15 +18550,9 @@ export type JsonApiCookieSecurityConfigurationPatchTypeEnum = 'cookieSecurityCon
 // @public
 export interface JsonApiCspDirectiveIn {
     // (undocumented)
-    'attributes': JsonApiCspDirectiveInAttributes;
+    'attributes': JsonApiCspDirectiveOutAttributes;
     'id': string;
     'type': JsonApiCspDirectiveInTypeEnum;
-}
-
-// @public (undocumented)
-export interface JsonApiCspDirectiveInAttributes {
-    // (undocumented)
-    'sources': Array<string>;
 }
 
 // @public (undocumented)
@@ -18026,9 +18567,15 @@ export type JsonApiCspDirectiveInTypeEnum = 'cspDirective';
 // @public
 export interface JsonApiCspDirectiveOut {
     // (undocumented)
-    'attributes': JsonApiCspDirectiveInAttributes;
+    'attributes': JsonApiCspDirectiveOutAttributes;
     'id': string;
     'type': JsonApiCspDirectiveOutTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiCspDirectiveOutAttributes {
+    // (undocumented)
+    'sources': Array<string>;
 }
 
 // @public (undocumented)
@@ -18046,7 +18593,7 @@ export interface JsonApiCspDirectiveOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -18055,7 +18602,7 @@ export type JsonApiCspDirectiveOutTypeEnum = 'cspDirective';
 // @public (undocumented)
 export interface JsonApiCspDirectiveOutWithLinks {
     // (undocumented)
-    'attributes': JsonApiCspDirectiveInAttributes;
+    'attributes': JsonApiCspDirectiveOutAttributes;
     'id': string;
     // (undocumented)
     'links'?: ObjectLinks;
@@ -18130,7 +18677,7 @@ export interface JsonApiCustomApplicationSettingOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -18202,17 +18749,9 @@ export type JsonApiCustomApplicationSettingPostOptionalIdTypeEnum = 'customAppli
 // @public
 export interface JsonApiCustomGeoCollectionIn {
     // (undocumented)
-    'attributes'?: JsonApiCustomGeoCollectionInAttributes;
+    'attributes'?: JsonApiCustomGeoCollectionOutAttributes;
     'id': string;
     'type': JsonApiCustomGeoCollectionInTypeEnum;
-}
-
-// @public (undocumented)
-export interface JsonApiCustomGeoCollectionInAttributes {
-    // (undocumented)
-    'description'?: string | null;
-    // (undocumented)
-    'name'?: string | null;
 }
 
 // @public (undocumented)
@@ -18227,9 +18766,17 @@ export type JsonApiCustomGeoCollectionInTypeEnum = 'customGeoCollection';
 // @public
 export interface JsonApiCustomGeoCollectionOut {
     // (undocumented)
-    'attributes'?: JsonApiCustomGeoCollectionInAttributes;
+    'attributes'?: JsonApiCustomGeoCollectionOutAttributes;
     'id': string;
     'type': JsonApiCustomGeoCollectionOutTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiCustomGeoCollectionOutAttributes {
+    // (undocumented)
+    'description'?: string | null;
+    // (undocumented)
+    'name'?: string | null;
 }
 
 // @public (undocumented)
@@ -18247,13 +18794,7 @@ export interface JsonApiCustomGeoCollectionOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
-}
-
-// @public (undocumented)
-export interface JsonApiCustomGeoCollectionOutListMeta {
-    // (undocumented)
-    'page'?: PageMetadata;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -18262,7 +18803,7 @@ export type JsonApiCustomGeoCollectionOutTypeEnum = 'customGeoCollection';
 // @public (undocumented)
 export interface JsonApiCustomGeoCollectionOutWithLinks {
     // (undocumented)
-    'attributes'?: JsonApiCustomGeoCollectionInAttributes;
+    'attributes'?: JsonApiCustomGeoCollectionOutAttributes;
     'id': string;
     // (undocumented)
     'links'?: ObjectLinks;
@@ -18275,7 +18816,7 @@ export type JsonApiCustomGeoCollectionOutWithLinksTypeEnum = 'customGeoCollectio
 // @public
 export interface JsonApiCustomGeoCollectionPatch {
     // (undocumented)
-    'attributes'?: JsonApiCustomGeoCollectionInAttributes;
+    'attributes'?: JsonApiCustomGeoCollectionOutAttributes;
     'id': string;
     'type': JsonApiCustomGeoCollectionPatchTypeEnum;
 }
@@ -18361,7 +18902,7 @@ export interface JsonApiDashboardPluginOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -18574,7 +19115,7 @@ export interface JsonApiDatasetOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -18654,7 +19195,7 @@ export interface JsonApiDataSourceIdentifierOut {
     'attributes': JsonApiDataSourceIdentifierOutAttributes;
     'id': string;
     // (undocumented)
-    'meta'?: JsonApiDataSourceOutMeta;
+    'meta'?: JsonApiDataSourceIdentifierOutMeta;
     'type': JsonApiDataSourceIdentifierOutTypeEnum;
 }
 
@@ -18686,8 +19227,16 @@ export interface JsonApiDataSourceIdentifierOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
+
+// @public (undocumented)
+export interface JsonApiDataSourceIdentifierOutMeta {
+    'permissions'?: Array<JsonApiDataSourceIdentifierOutMetaPermissionsEnum>;
+}
+
+// @public (undocumented)
+export type JsonApiDataSourceIdentifierOutMetaPermissionsEnum = 'MANAGE' | 'USE';
 
 // @public (undocumented)
 export type JsonApiDataSourceIdentifierOutTypeEnum = 'dataSourceIdentifier';
@@ -18700,7 +19249,7 @@ export interface JsonApiDataSourceIdentifierOutWithLinks {
     // (undocumented)
     'links'?: ObjectLinks;
     // (undocumented)
-    'meta'?: JsonApiDataSourceOutMeta;
+    'meta'?: JsonApiDataSourceIdentifierOutMeta;
     'type': JsonApiDataSourceIdentifierOutWithLinksTypeEnum;
 }
 
@@ -18722,7 +19271,7 @@ export interface JsonApiDataSourceInAttributes {
     'clientId'?: string | null;
     'clientSecret'?: string | null;
     'name': string;
-    'parameters'?: Array<JsonApiDataSourceInAttributesParametersInner> | null;
+    'parameters'?: Array<JsonApiDataSourceOutAttributesParametersInner> | null;
     'password'?: string | null;
     'privateKey'?: string | null;
     'privateKeyPassphrase'?: string | null;
@@ -18735,14 +19284,6 @@ export interface JsonApiDataSourceInAttributes {
 
 // @public (undocumented)
 export type JsonApiDataSourceInAttributesCacheStrategyEnum = 'ALWAYS' | 'NEVER';
-
-// @public (undocumented)
-export interface JsonApiDataSourceInAttributesParametersInner {
-    // (undocumented)
-    'name': string;
-    // (undocumented)
-    'value': string;
-}
 
 // @public (undocumented)
 export type JsonApiDataSourceInAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'GREENPLUM' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE';
@@ -18762,7 +19303,7 @@ export interface JsonApiDataSourceOut {
     'attributes': JsonApiDataSourceOutAttributes;
     'id': string;
     // (undocumented)
-    'meta'?: JsonApiDataSourceOutMeta;
+    'meta'?: JsonApiDataSourceIdentifierOutMeta;
     'type': JsonApiDataSourceOutTypeEnum;
 }
 
@@ -18772,9 +19313,9 @@ export interface JsonApiDataSourceOutAttributes {
     'authenticationType'?: JsonApiDataSourceOutAttributesAuthenticationTypeEnum | null;
     'cacheStrategy'?: JsonApiDataSourceOutAttributesCacheStrategyEnum | null;
     'clientId'?: string | null;
-    'decodedParameters'?: Array<JsonApiDataSourceInAttributesParametersInner> | null;
+    'decodedParameters'?: Array<JsonApiDataSourceOutAttributesParametersInner> | null;
     'name': string;
-    'parameters'?: Array<JsonApiDataSourceInAttributesParametersInner> | null;
+    'parameters'?: Array<JsonApiDataSourceOutAttributesParametersInner> | null;
     'schema': string;
     'type': JsonApiDataSourceOutAttributesTypeEnum;
     'url'?: string | null;
@@ -18786,6 +19327,14 @@ export type JsonApiDataSourceOutAttributesAuthenticationTypeEnum = 'USERNAME_PAS
 
 // @public (undocumented)
 export type JsonApiDataSourceOutAttributesCacheStrategyEnum = 'ALWAYS' | 'NEVER';
+
+// @public (undocumented)
+export interface JsonApiDataSourceOutAttributesParametersInner {
+    // (undocumented)
+    'name': string;
+    // (undocumented)
+    'value': string;
+}
 
 // @public (undocumented)
 export type JsonApiDataSourceOutAttributesTypeEnum = 'POSTGRESQL' | 'REDSHIFT' | 'VERTICA' | 'SNOWFLAKE' | 'ADS' | 'BIGQUERY' | 'MSSQL' | 'PRESTO' | 'DREMIO' | 'DRILL' | 'GREENPLUM' | 'AZURESQL' | 'SYNAPSESQL' | 'DATABRICKS' | 'GDSTORAGE' | 'CLICKHOUSE' | 'MYSQL' | 'MARIADB' | 'ORACLE' | 'PINOT' | 'SINGLESTORE' | 'MOTHERDUCK' | 'FLEXCONNECT' | 'STARROCKS' | 'ATHENA' | 'MONGODB' | 'CRATEDB' | 'AILAKEHOUSE';
@@ -18805,16 +19354,8 @@ export interface JsonApiDataSourceOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
-
-// @public (undocumented)
-export interface JsonApiDataSourceOutMeta {
-    'permissions'?: Array<JsonApiDataSourceOutMetaPermissionsEnum>;
-}
-
-// @public (undocumented)
-export type JsonApiDataSourceOutMetaPermissionsEnum = 'MANAGE' | 'USE';
 
 // @public (undocumented)
 export type JsonApiDataSourceOutTypeEnum = 'dataSource';
@@ -18827,7 +19368,7 @@ export interface JsonApiDataSourceOutWithLinks {
     // (undocumented)
     'links'?: ObjectLinks;
     // (undocumented)
-    'meta'?: JsonApiDataSourceOutMeta;
+    'meta'?: JsonApiDataSourceIdentifierOutMeta;
     'type': JsonApiDataSourceOutWithLinksTypeEnum;
 }
 
@@ -18849,7 +19390,7 @@ export interface JsonApiDataSourcePatchAttributes {
     'clientId'?: string | null;
     'clientSecret'?: string | null;
     'name'?: string;
-    'parameters'?: Array<JsonApiDataSourceInAttributesParametersInner> | null;
+    'parameters'?: Array<JsonApiDataSourceOutAttributesParametersInner> | null;
     'password'?: string | null;
     'privateKey'?: string | null;
     'privateKeyPassphrase'?: string | null;
@@ -18906,7 +19447,7 @@ export interface JsonApiEntitlementOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -19006,7 +19547,7 @@ export interface JsonApiExportDefinitionOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -19161,7 +19702,7 @@ export interface JsonApiExportTemplateOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -19323,7 +19864,7 @@ export interface JsonApiFactOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -19442,7 +19983,7 @@ export interface JsonApiFilterContextOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -19525,34 +20066,15 @@ export type JsonApiFilterContextPostOptionalIdTypeEnum = 'filterContext';
 // @public
 export interface JsonApiFilterViewIn {
     // (undocumented)
-    'attributes': JsonApiFilterViewOutAttributes;
+    'attributes': JsonApiFilterViewInAttributes;
     'id': string;
     // (undocumented)
-    'relationships'?: JsonApiFilterViewOutRelationships;
+    'relationships'?: JsonApiFilterViewInRelationships;
     'type': JsonApiFilterViewInTypeEnum;
 }
 
 // @public (undocumented)
-export interface JsonApiFilterViewInDocument {
-    // (undocumented)
-    'data': JsonApiFilterViewIn;
-}
-
-// @public (undocumented)
-export type JsonApiFilterViewInTypeEnum = 'filterView';
-
-// @public
-export interface JsonApiFilterViewOut {
-    // (undocumented)
-    'attributes': JsonApiFilterViewOutAttributes;
-    'id': string;
-    // (undocumented)
-    'relationships'?: JsonApiFilterViewOutRelationships;
-    'type': JsonApiFilterViewOutTypeEnum;
-}
-
-// @public (undocumented)
-export interface JsonApiFilterViewOutAttributes {
+export interface JsonApiFilterViewInAttributes {
     // (undocumented)
     'areRelationsValid'?: boolean;
     'content': object;
@@ -19563,6 +20085,33 @@ export interface JsonApiFilterViewOutAttributes {
     'tags'?: Array<string>;
     // (undocumented)
     'title': string;
+}
+
+// @public (undocumented)
+export interface JsonApiFilterViewInDocument {
+    // (undocumented)
+    'data': JsonApiFilterViewIn;
+}
+
+// @public (undocumented)
+export interface JsonApiFilterViewInRelationships {
+    // (undocumented)
+    'analyticalDashboard'?: JsonApiExportDefinitionOutRelationshipsAnalyticalDashboard;
+    // (undocumented)
+    'user'?: JsonApiOrganizationOutRelationshipsBootstrapUser;
+}
+
+// @public (undocumented)
+export type JsonApiFilterViewInTypeEnum = 'filterView';
+
+// @public
+export interface JsonApiFilterViewOut {
+    // (undocumented)
+    'attributes': JsonApiFilterViewInAttributes;
+    'id': string;
+    // (undocumented)
+    'relationships'?: JsonApiFilterViewInRelationships;
+    'type': JsonApiFilterViewOutTypeEnum;
 }
 
 // @public (undocumented)
@@ -19585,15 +20134,7 @@ export interface JsonApiFilterViewOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
-}
-
-// @public (undocumented)
-export interface JsonApiFilterViewOutRelationships {
-    // (undocumented)
-    'analyticalDashboard'?: JsonApiExportDefinitionOutRelationshipsAnalyticalDashboard;
-    // (undocumented)
-    'user'?: JsonApiOrganizationOutRelationshipsBootstrapUser;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -19602,12 +20143,12 @@ export type JsonApiFilterViewOutTypeEnum = 'filterView';
 // @public (undocumented)
 export interface JsonApiFilterViewOutWithLinks {
     // (undocumented)
-    'attributes': JsonApiFilterViewOutAttributes;
+    'attributes': JsonApiFilterViewInAttributes;
     'id': string;
     // (undocumented)
     'links'?: ObjectLinks;
     // (undocumented)
-    'relationships'?: JsonApiFilterViewOutRelationships;
+    'relationships'?: JsonApiFilterViewInRelationships;
     'type': JsonApiFilterViewOutWithLinksTypeEnum;
 }
 
@@ -19620,7 +20161,7 @@ export interface JsonApiFilterViewPatch {
     'attributes': JsonApiFilterViewPatchAttributes;
     'id': string;
     // (undocumented)
-    'relationships'?: JsonApiFilterViewOutRelationships;
+    'relationships'?: JsonApiFilterViewInRelationships;
     'type': JsonApiFilterViewPatchTypeEnum;
 }
 
@@ -19746,7 +20287,7 @@ export interface JsonApiIdentityProviderOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -19785,9 +20326,15 @@ export type JsonApiIdentityProviderPatchTypeEnum = 'identityProvider';
 // @public
 export interface JsonApiJwkIn {
     // (undocumented)
-    'attributes'?: JsonApiJwkOutAttributes;
+    'attributes'?: JsonApiJwkInAttributes;
     'id': string;
     'type': JsonApiJwkInTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiJwkInAttributes {
+    // (undocumented)
+    'content'?: RsaSpecification;
 }
 
 // @public (undocumented)
@@ -19802,15 +20349,9 @@ export type JsonApiJwkInTypeEnum = 'jwk';
 // @public
 export interface JsonApiJwkOut {
     // (undocumented)
-    'attributes'?: JsonApiJwkOutAttributes;
+    'attributes'?: JsonApiJwkInAttributes;
     'id': string;
     'type': JsonApiJwkOutTypeEnum;
-}
-
-// @public (undocumented)
-export interface JsonApiJwkOutAttributes {
-    // (undocumented)
-    'content'?: RsaSpecification;
 }
 
 // @public (undocumented)
@@ -19828,7 +20369,7 @@ export interface JsonApiJwkOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -19837,7 +20378,7 @@ export type JsonApiJwkOutTypeEnum = 'jwk';
 // @public (undocumented)
 export interface JsonApiJwkOutWithLinks {
     // (undocumented)
-    'attributes'?: JsonApiJwkOutAttributes;
+    'attributes'?: JsonApiJwkInAttributes;
     'id': string;
     // (undocumented)
     'links'?: ObjectLinks;
@@ -19850,7 +20391,7 @@ export type JsonApiJwkOutWithLinksTypeEnum = 'jwk';
 // @public
 export interface JsonApiJwkPatch {
     // (undocumented)
-    'attributes'?: JsonApiJwkOutAttributes;
+    'attributes'?: JsonApiJwkInAttributes;
     'id': string;
     'type': JsonApiJwkPatchTypeEnum;
 }
@@ -19946,7 +20487,7 @@ export interface JsonApiKnowledgeRecommendationOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -19954,7 +20495,13 @@ export interface JsonApiKnowledgeRecommendationOutRelationships {
     // (undocumented)
     'analyticalDashboard'?: JsonApiExportDefinitionOutRelationshipsAnalyticalDashboard;
     // (undocumented)
-    'metric'?: JsonApiKnowledgeRecommendationPostOptionalIdRelationshipsMetric;
+    'metric'?: JsonApiKnowledgeRecommendationOutRelationshipsMetric;
+}
+
+// @public (undocumented)
+export interface JsonApiKnowledgeRecommendationOutRelationshipsMetric {
+    // (undocumented)
+    'data': JsonApiMetricLinkage | null;
 }
 
 // @public (undocumented)
@@ -20075,13 +20622,7 @@ export interface JsonApiKnowledgeRecommendationPostOptionalIdRelationships {
     // (undocumented)
     'analyticalDashboard'?: JsonApiExportDefinitionOutRelationshipsAnalyticalDashboard;
     // (undocumented)
-    'metric': JsonApiKnowledgeRecommendationPostOptionalIdRelationshipsMetric;
-}
-
-// @public (undocumented)
-export interface JsonApiKnowledgeRecommendationPostOptionalIdRelationshipsMetric {
-    // (undocumented)
-    'data': JsonApiMetricLinkage | null;
+    'metric': JsonApiKnowledgeRecommendationOutRelationshipsMetric;
 }
 
 // @public (undocumented)
@@ -20179,7 +20720,7 @@ export interface JsonApiLabelOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -20298,7 +20839,7 @@ export interface JsonApiLlmEndpointOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -20351,33 +20892,10 @@ export type JsonApiLlmEndpointPatchTypeEnum = 'llmEndpoint';
 // @public
 export interface JsonApiLlmProviderIn {
     // (undocumented)
-    'attributes'?: JsonApiLlmProviderInAttributes;
+    'attributes'?: JsonApiLlmProviderOutAttributes;
     'id': string;
     'type': JsonApiLlmProviderInTypeEnum;
 }
-
-// @public (undocumented)
-export interface JsonApiLlmProviderInAttributes {
-    'defaultModelId'?: string | null;
-    'description'?: string | null;
-    'models'?: Array<JsonApiLlmProviderInAttributesModelsInner> | null;
-    // (undocumented)
-    'name'?: string | null;
-    // (undocumented)
-    'providerConfig'?: JsonApiLlmProviderInAttributesProviderConfig | null;
-}
-
-// @public
-export interface JsonApiLlmProviderInAttributesModelsInner {
-    'family': JsonApiLlmProviderInAttributesModelsInnerFamilyEnum;
-    'id': string;
-}
-
-// @public (undocumented)
-export type JsonApiLlmProviderInAttributesModelsInnerFamilyEnum = 'OPENAI' | 'ANTHROPIC' | 'META' | 'MISTRAL' | 'AMAZON' | 'GOOGLE' | 'COHERE' | 'UNKNOWN';
-
-// @public
-export type JsonApiLlmProviderInAttributesProviderConfig = AwsBedrockProviderConfig | AzureFoundryProviderConfig | OpenAIProviderConfig;
 
 // @public (undocumented)
 export interface JsonApiLlmProviderInDocument {
@@ -20391,10 +20909,33 @@ export type JsonApiLlmProviderInTypeEnum = 'llmProvider';
 // @public
 export interface JsonApiLlmProviderOut {
     // (undocumented)
-    'attributes'?: JsonApiLlmProviderInAttributes;
+    'attributes'?: JsonApiLlmProviderOutAttributes;
     'id': string;
     'type': JsonApiLlmProviderOutTypeEnum;
 }
+
+// @public (undocumented)
+export interface JsonApiLlmProviderOutAttributes {
+    'defaultModelId'?: string | null;
+    'description'?: string | null;
+    'models'?: Array<JsonApiLlmProviderOutAttributesModelsInner> | null;
+    // (undocumented)
+    'name'?: string | null;
+    // (undocumented)
+    'providerConfig'?: JsonApiLlmProviderOutAttributesProviderConfig | null;
+}
+
+// @public
+export interface JsonApiLlmProviderOutAttributesModelsInner {
+    'family': JsonApiLlmProviderOutAttributesModelsInnerFamilyEnum;
+    'id': string;
+}
+
+// @public (undocumented)
+export type JsonApiLlmProviderOutAttributesModelsInnerFamilyEnum = 'OPENAI' | 'ANTHROPIC' | 'META' | 'MISTRAL' | 'AMAZON' | 'GOOGLE' | 'COHERE' | 'UNKNOWN';
+
+// @public
+export type JsonApiLlmProviderOutAttributesProviderConfig = AwsBedrockProviderConfig | AzureFoundryProviderConfig | OpenAIProviderConfig;
 
 // @public (undocumented)
 export interface JsonApiLlmProviderOutDocument {
@@ -20411,7 +20952,7 @@ export interface JsonApiLlmProviderOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -20420,7 +20961,7 @@ export type JsonApiLlmProviderOutTypeEnum = 'llmProvider';
 // @public (undocumented)
 export interface JsonApiLlmProviderOutWithLinks {
     // (undocumented)
-    'attributes'?: JsonApiLlmProviderInAttributes;
+    'attributes'?: JsonApiLlmProviderOutAttributes;
     'id': string;
     // (undocumented)
     'links'?: ObjectLinks;
@@ -20433,7 +20974,7 @@ export type JsonApiLlmProviderOutWithLinksTypeEnum = 'llmProvider';
 // @public
 export interface JsonApiLlmProviderPatch {
     // (undocumented)
-    'attributes'?: JsonApiLlmProviderInAttributes;
+    'attributes'?: JsonApiLlmProviderOutAttributes;
     'id': string;
     'type': JsonApiLlmProviderPatchTypeEnum;
 }
@@ -20514,7 +21055,7 @@ export interface JsonApiMemoryItemOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -20706,7 +21247,7 @@ export interface JsonApiMetricOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -20859,7 +21400,7 @@ export interface JsonApiNotificationChannelIdentifierOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -20922,7 +21463,7 @@ export interface JsonApiNotificationChannelOutAttributes {
     // (undocumented)
     'description'?: string | null;
     // (undocumented)
-    'destination'?: JsonApiNotificationChannelOutAttributesDestination;
+    'destination'?: JsonApiNotificationChannelPostOptionalIdAttributesDestination;
     // (undocumented)
     'destinationType'?: JsonApiNotificationChannelOutAttributesDestinationTypeEnum | null;
     'inPlatformNotification'?: JsonApiNotificationChannelOutAttributesInPlatformNotificationEnum;
@@ -20936,9 +21477,6 @@ export type JsonApiNotificationChannelOutAttributesAllowedRecipientsEnum = 'CREA
 
 // @public (undocumented)
 export type JsonApiNotificationChannelOutAttributesDashboardLinkVisibilityEnum = 'HIDDEN' | 'INTERNAL_ONLY' | 'ALL';
-
-// @public
-export type JsonApiNotificationChannelOutAttributesDestination = DefaultSmtp | InPlatform | Smtp | Webhook;
 
 // @public (undocumented)
 export type JsonApiNotificationChannelOutAttributesDestinationTypeEnum = 'WEBHOOK' | 'SMTP' | 'DEFAULT_SMTP' | 'IN_PLATFORM';
@@ -20961,7 +21499,7 @@ export interface JsonApiNotificationChannelOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -21013,7 +21551,7 @@ export interface JsonApiNotificationChannelPostOptionalIdAttributes {
     // (undocumented)
     'description'?: string | null;
     // (undocumented)
-    'destination'?: JsonApiNotificationChannelOutAttributesDestination;
+    'destination'?: JsonApiNotificationChannelPostOptionalIdAttributesDestination;
     'inPlatformNotification'?: JsonApiNotificationChannelPostOptionalIdAttributesInPlatformNotificationEnum;
     // (undocumented)
     'name'?: string | null;
@@ -21025,6 +21563,9 @@ export type JsonApiNotificationChannelPostOptionalIdAttributesAllowedRecipientsE
 
 // @public (undocumented)
 export type JsonApiNotificationChannelPostOptionalIdAttributesDashboardLinkVisibilityEnum = 'HIDDEN' | 'INTERNAL_ONLY' | 'ALL';
+
+// @public
+export type JsonApiNotificationChannelPostOptionalIdAttributesDestination = DefaultSmtp | InPlatform | Smtp | Webhook;
 
 // @public (undocumented)
 export type JsonApiNotificationChannelPostOptionalIdAttributesInPlatformNotificationEnum = 'DISABLED' | 'ENABLED';
@@ -21041,42 +21582,17 @@ export type JsonApiNotificationChannelPostOptionalIdTypeEnum = 'notificationChan
 // @public
 export interface JsonApiOrganizationIn {
     // (undocumented)
-    'attributes'?: JsonApiOrganizationInAttributes;
+    'attributes'?: JsonApiOrganizationPatchAttributes;
     'id': string;
     // (undocumented)
-    'relationships'?: JsonApiOrganizationInRelationships;
+    'relationships'?: JsonApiOrganizationPatchRelationships;
     'type': JsonApiOrganizationInTypeEnum;
-}
-
-// @public (undocumented)
-export interface JsonApiOrganizationInAttributes {
-    // (undocumented)
-    'allowedOrigins'?: Array<string>;
-    // @deprecated
-    'earlyAccess'?: string | null;
-    'earlyAccessValues'?: Array<string> | null;
-    // (undocumented)
-    'hostname'?: string;
-    // (undocumented)
-    'name'?: string | null;
 }
 
 // @public (undocumented)
 export interface JsonApiOrganizationInDocument {
     // (undocumented)
     'data': JsonApiOrganizationIn;
-}
-
-// @public (undocumented)
-export interface JsonApiOrganizationInRelationships {
-    // (undocumented)
-    'identityProvider'?: JsonApiOrganizationInRelationshipsIdentityProvider;
-}
-
-// @public (undocumented)
-export interface JsonApiOrganizationInRelationshipsIdentityProvider {
-    // (undocumented)
-    'data': JsonApiIdentityProviderLinkage | null;
 }
 
 // @public (undocumented)
@@ -21149,7 +21665,7 @@ export interface JsonApiOrganizationOutRelationships {
     // (undocumented)
     'bootstrapUserGroup'?: JsonApiOrganizationOutRelationshipsBootstrapUserGroup;
     // (undocumented)
-    'identityProvider'?: JsonApiOrganizationInRelationshipsIdentityProvider;
+    'identityProvider'?: JsonApiOrganizationOutRelationshipsIdentityProvider;
 }
 
 // @public (undocumented)
@@ -21165,16 +21681,35 @@ export interface JsonApiOrganizationOutRelationshipsBootstrapUserGroup {
 }
 
 // @public (undocumented)
+export interface JsonApiOrganizationOutRelationshipsIdentityProvider {
+    // (undocumented)
+    'data': JsonApiIdentityProviderLinkage | null;
+}
+
+// @public (undocumented)
 export type JsonApiOrganizationOutTypeEnum = 'organization';
 
 // @public
 export interface JsonApiOrganizationPatch {
     // (undocumented)
-    'attributes'?: JsonApiOrganizationInAttributes;
+    'attributes'?: JsonApiOrganizationPatchAttributes;
     'id': string;
     // (undocumented)
-    'relationships'?: JsonApiOrganizationInRelationships;
+    'relationships'?: JsonApiOrganizationPatchRelationships;
     'type': JsonApiOrganizationPatchTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiOrganizationPatchAttributes {
+    // (undocumented)
+    'allowedOrigins'?: Array<string>;
+    // @deprecated
+    'earlyAccess'?: string | null;
+    'earlyAccessValues'?: Array<string> | null;
+    // (undocumented)
+    'hostname'?: string;
+    // (undocumented)
+    'name'?: string | null;
 }
 
 // @public (undocumented)
@@ -21184,12 +21719,18 @@ export interface JsonApiOrganizationPatchDocument {
 }
 
 // @public (undocumented)
+export interface JsonApiOrganizationPatchRelationships {
+    // (undocumented)
+    'identityProvider'?: JsonApiOrganizationOutRelationshipsIdentityProvider;
+}
+
+// @public (undocumented)
 export type JsonApiOrganizationPatchTypeEnum = 'organization';
 
 // @public
 export interface JsonApiOrganizationSettingIn {
     // (undocumented)
-    'attributes'?: JsonApiUserSettingInAttributes;
+    'attributes'?: JsonApiOrganizationSettingOutAttributes;
     'id': string;
     'type': JsonApiOrganizationSettingInTypeEnum;
 }
@@ -21206,10 +21747,20 @@ export type JsonApiOrganizationSettingInTypeEnum = 'organizationSetting';
 // @public
 export interface JsonApiOrganizationSettingOut {
     // (undocumented)
-    'attributes'?: JsonApiUserSettingInAttributes;
+    'attributes'?: JsonApiOrganizationSettingOutAttributes;
     'id': string;
     'type': JsonApiOrganizationSettingOutTypeEnum;
 }
+
+// @public (undocumented)
+export interface JsonApiOrganizationSettingOutAttributes {
+    'content'?: object;
+    // (undocumented)
+    'type'?: JsonApiOrganizationSettingOutAttributesTypeEnum;
+}
+
+// @public (undocumented)
+export type JsonApiOrganizationSettingOutAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_ENDPOINT' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS';
 
 // @public (undocumented)
 export interface JsonApiOrganizationSettingOutDocument {
@@ -21226,7 +21777,7 @@ export interface JsonApiOrganizationSettingOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -21235,7 +21786,7 @@ export type JsonApiOrganizationSettingOutTypeEnum = 'organizationSetting';
 // @public (undocumented)
 export interface JsonApiOrganizationSettingOutWithLinks {
     // (undocumented)
-    'attributes'?: JsonApiUserSettingInAttributes;
+    'attributes'?: JsonApiOrganizationSettingOutAttributes;
     'id': string;
     // (undocumented)
     'links'?: ObjectLinks;
@@ -21248,7 +21799,7 @@ export type JsonApiOrganizationSettingOutWithLinksTypeEnum = 'organizationSettin
 // @public
 export interface JsonApiOrganizationSettingPatch {
     // (undocumented)
-    'attributes'?: JsonApiUserSettingInAttributes;
+    'attributes'?: JsonApiOrganizationSettingOutAttributes;
     'id': string;
     'type': JsonApiOrganizationSettingPatchTypeEnum;
 }
@@ -21265,7 +21816,7 @@ export type JsonApiOrganizationSettingPatchTypeEnum = 'organizationSetting';
 // @public
 export interface JsonApiThemeIn {
     // (undocumented)
-    'attributes': JsonApiColorPaletteInAttributes;
+    'attributes': JsonApiColorPaletteOutAttributes;
     'id': string;
     'type': JsonApiThemeInTypeEnum;
 }
@@ -21282,7 +21833,7 @@ export type JsonApiThemeInTypeEnum = 'theme';
 // @public
 export interface JsonApiThemeOut {
     // (undocumented)
-    'attributes': JsonApiColorPaletteInAttributes;
+    'attributes': JsonApiColorPaletteOutAttributes;
     'id': string;
     'type': JsonApiThemeOutTypeEnum;
 }
@@ -21302,7 +21853,7 @@ export interface JsonApiThemeOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -21311,7 +21862,7 @@ export type JsonApiThemeOutTypeEnum = 'theme';
 // @public (undocumented)
 export interface JsonApiThemeOutWithLinks {
     // (undocumented)
-    'attributes': JsonApiColorPaletteInAttributes;
+    'attributes': JsonApiColorPaletteOutAttributes;
     'id': string;
     // (undocumented)
     'links'?: ObjectLinks;
@@ -21341,7 +21892,7 @@ export type JsonApiThemePatchTypeEnum = 'theme';
 // @public
 export interface JsonApiUserDataFilterIn {
     // (undocumented)
-    'attributes': JsonApiUserDataFilterPostOptionalIdAttributes;
+    'attributes': JsonApiUserDataFilterOutAttributes;
     'id': string;
     // (undocumented)
     'relationships'?: JsonApiUserDataFilterPostOptionalIdRelationships;
@@ -21360,13 +21911,27 @@ export type JsonApiUserDataFilterInTypeEnum = 'userDataFilter';
 // @public
 export interface JsonApiUserDataFilterOut {
     // (undocumented)
-    'attributes': JsonApiUserDataFilterPostOptionalIdAttributes;
+    'attributes': JsonApiUserDataFilterOutAttributes;
     'id': string;
     // (undocumented)
     'meta'?: JsonApiExportDefinitionOutMeta;
     // (undocumented)
     'relationships'?: JsonApiUserDataFilterOutRelationships;
     'type': JsonApiUserDataFilterOutTypeEnum;
+}
+
+// @public (undocumented)
+export interface JsonApiUserDataFilterOutAttributes {
+    // (undocumented)
+    'areRelationsValid'?: boolean;
+    // (undocumented)
+    'description'?: string;
+    // (undocumented)
+    'maql': string;
+    // (undocumented)
+    'tags'?: Array<string>;
+    // (undocumented)
+    'title'?: string;
 }
 
 // @public (undocumented)
@@ -21389,7 +21954,7 @@ export interface JsonApiUserDataFilterOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -21416,7 +21981,7 @@ export type JsonApiUserDataFilterOutTypeEnum = 'userDataFilter';
 // @public (undocumented)
 export interface JsonApiUserDataFilterOutWithLinks {
     // (undocumented)
-    'attributes': JsonApiUserDataFilterPostOptionalIdAttributes;
+    'attributes': JsonApiUserDataFilterOutAttributes;
     'id': string;
     // (undocumented)
     'links'?: ObjectLinks;
@@ -21466,25 +22031,11 @@ export type JsonApiUserDataFilterPatchTypeEnum = 'userDataFilter';
 // @public
 export interface JsonApiUserDataFilterPostOptionalId {
     // (undocumented)
-    'attributes': JsonApiUserDataFilterPostOptionalIdAttributes;
+    'attributes': JsonApiUserDataFilterOutAttributes;
     'id'?: string;
     // (undocumented)
     'relationships'?: JsonApiUserDataFilterPostOptionalIdRelationships;
     'type': JsonApiUserDataFilterPostOptionalIdTypeEnum;
-}
-
-// @public (undocumented)
-export interface JsonApiUserDataFilterPostOptionalIdAttributes {
-    // (undocumented)
-    'areRelationsValid'?: boolean;
-    // (undocumented)
-    'description'?: string;
-    // (undocumented)
-    'maql': string;
-    // (undocumented)
-    'tags'?: Array<string>;
-    // (undocumented)
-    'title'?: string;
 }
 
 // @public (undocumented)
@@ -21567,7 +22118,7 @@ export interface JsonApiUserGroupOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -21657,7 +22208,7 @@ export interface JsonApiUserIdentifierOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -21745,7 +22296,7 @@ export interface JsonApiUserOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -21799,20 +22350,10 @@ export type JsonApiUserPatchTypeEnum = 'user';
 // @public
 export interface JsonApiUserSettingIn {
     // (undocumented)
-    'attributes'?: JsonApiUserSettingInAttributes;
+    'attributes'?: JsonApiOrganizationSettingOutAttributes;
     'id': string;
     'type': JsonApiUserSettingInTypeEnum;
 }
-
-// @public (undocumented)
-export interface JsonApiUserSettingInAttributes {
-    'content'?: object;
-    // (undocumented)
-    'type'?: JsonApiUserSettingInAttributesTypeEnum;
-}
-
-// @public (undocumented)
-export type JsonApiUserSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_ENDPOINT' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS';
 
 // @public (undocumented)
 export interface JsonApiUserSettingInDocument {
@@ -21826,7 +22367,7 @@ export type JsonApiUserSettingInTypeEnum = 'userSetting';
 // @public
 export interface JsonApiUserSettingOut {
     // (undocumented)
-    'attributes'?: JsonApiUserSettingInAttributes;
+    'attributes'?: JsonApiOrganizationSettingOutAttributes;
     'id': string;
     'type': JsonApiUserSettingOutTypeEnum;
 }
@@ -21846,7 +22387,7 @@ export interface JsonApiUserSettingOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -21855,7 +22396,7 @@ export type JsonApiUserSettingOutTypeEnum = 'userSetting';
 // @public (undocumented)
 export interface JsonApiUserSettingOutWithLinks {
     // (undocumented)
-    'attributes'?: JsonApiUserSettingInAttributes;
+    'attributes'?: JsonApiOrganizationSettingOutAttributes;
     'id': string;
     // (undocumented)
     'links'?: ObjectLinks;
@@ -21945,7 +22486,7 @@ export interface JsonApiVisualizationObjectOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -22172,7 +22713,7 @@ export interface JsonApiWorkspaceAutomationOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -22303,7 +22844,7 @@ export interface JsonApiWorkspaceDataFilterOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -22437,7 +22978,7 @@ export interface JsonApiWorkspaceDataFilterSettingOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -22560,7 +23101,7 @@ export interface JsonApiWorkspaceOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -22648,7 +23189,7 @@ export type JsonApiWorkspacePatchTypeEnum = 'workspace';
 // @public
 export interface JsonApiWorkspaceSettingIn {
     // (undocumented)
-    'attributes'?: JsonApiUserSettingInAttributes;
+    'attributes'?: JsonApiOrganizationSettingOutAttributes;
     'id': string;
     'type': JsonApiWorkspaceSettingInTypeEnum;
 }
@@ -22665,7 +23206,7 @@ export type JsonApiWorkspaceSettingInTypeEnum = 'workspaceSetting';
 // @public
 export interface JsonApiWorkspaceSettingOut {
     // (undocumented)
-    'attributes'?: JsonApiUserSettingInAttributes;
+    'attributes'?: JsonApiOrganizationSettingOutAttributes;
     'id': string;
     // (undocumented)
     'meta'?: JsonApiExportDefinitionOutMeta;
@@ -22687,7 +23228,7 @@ export interface JsonApiWorkspaceSettingOutList {
     // (undocumented)
     'links'?: ListLinks;
     // (undocumented)
-    'meta'?: JsonApiCustomGeoCollectionOutListMeta;
+    'meta'?: JsonApiColorPaletteOutListMeta;
 }
 
 // @public (undocumented)
@@ -22696,7 +23237,7 @@ export type JsonApiWorkspaceSettingOutTypeEnum = 'workspaceSetting';
 // @public (undocumented)
 export interface JsonApiWorkspaceSettingOutWithLinks {
     // (undocumented)
-    'attributes'?: JsonApiUserSettingInAttributes;
+    'attributes'?: JsonApiOrganizationSettingOutAttributes;
     'id': string;
     // (undocumented)
     'links'?: ObjectLinks;
@@ -22711,7 +23252,7 @@ export type JsonApiWorkspaceSettingOutWithLinksTypeEnum = 'workspaceSetting';
 // @public
 export interface JsonApiWorkspaceSettingPatch {
     // (undocumented)
-    'attributes'?: JsonApiUserSettingInAttributes;
+    'attributes'?: JsonApiOrganizationSettingOutAttributes;
     'id': string;
     'type': JsonApiWorkspaceSettingPatchTypeEnum;
 }
@@ -22728,7 +23269,7 @@ export type JsonApiWorkspaceSettingPatchTypeEnum = 'workspaceSetting';
 // @public
 export interface JsonApiWorkspaceSettingPostOptionalId {
     // (undocumented)
-    'attributes'?: JsonApiUserSettingInAttributes;
+    'attributes'?: JsonApiOrganizationSettingOutAttributes;
     'id'?: string;
     'type': JsonApiWorkspaceSettingPostOptionalIdTypeEnum;
 }
@@ -23791,6 +24332,113 @@ export interface ListLinks {
 }
 
 // @public
+export class LlmEndpointControllerApi extends MetadataBaseApi implements LlmEndpointControllerApiInterface {
+    // @deprecated
+    createEntityLlmEndpoints(requestParameters: LlmEndpointControllerApiCreateEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutDocument>;
+    // @deprecated
+    deleteEntityLlmEndpoints(requestParameters: LlmEndpointControllerApiDeleteEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // @deprecated
+    getAllEntitiesLlmEndpoints(requestParameters?: LlmEndpointControllerApiGetAllEntitiesLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutList>;
+    // @deprecated
+    getEntityLlmEndpoints(requestParameters: LlmEndpointControllerApiGetEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutDocument>;
+    // @deprecated
+    patchEntityLlmEndpoints(requestParameters: LlmEndpointControllerApiPatchEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutDocument>;
+    // @deprecated
+    updateEntityLlmEndpoints(requestParameters: LlmEndpointControllerApiUpdateEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutDocument>;
+}
+
+// @public
+export function LlmEndpointControllerApi_CreateEntityLlmEndpoints(axios: AxiosInstance, basePath: string, requestParameters: LlmEndpointControllerApiCreateEntityLlmEndpointsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiLlmEndpointOutDocument>;
+
+// @public
+export function LlmEndpointControllerApi_DeleteEntityLlmEndpoints(axios: AxiosInstance, basePath: string, requestParameters: LlmEndpointControllerApiDeleteEntityLlmEndpointsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
+
+// @public
+export function LlmEndpointControllerApi_GetAllEntitiesLlmEndpoints(axios: AxiosInstance, basePath: string, requestParameters: LlmEndpointControllerApiGetAllEntitiesLlmEndpointsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiLlmEndpointOutList>;
+
+// @public
+export function LlmEndpointControllerApi_GetEntityLlmEndpoints(axios: AxiosInstance, basePath: string, requestParameters: LlmEndpointControllerApiGetEntityLlmEndpointsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiLlmEndpointOutDocument>;
+
+// @public
+export function LlmEndpointControllerApi_PatchEntityLlmEndpoints(axios: AxiosInstance, basePath: string, requestParameters: LlmEndpointControllerApiPatchEntityLlmEndpointsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiLlmEndpointOutDocument>;
+
+// @public
+export function LlmEndpointControllerApi_UpdateEntityLlmEndpoints(axios: AxiosInstance, basePath: string, requestParameters: LlmEndpointControllerApiUpdateEntityLlmEndpointsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiLlmEndpointOutDocument>;
+
+// @public
+export function LlmEndpointControllerApiAxiosParamCreator_CreateEntityLlmEndpoints(jsonApiLlmEndpointInDocument: JsonApiLlmEndpointInDocument, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function LlmEndpointControllerApiAxiosParamCreator_DeleteEntityLlmEndpoints(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function LlmEndpointControllerApiAxiosParamCreator_GetAllEntitiesLlmEndpoints(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function LlmEndpointControllerApiAxiosParamCreator_GetEntityLlmEndpoints(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function LlmEndpointControllerApiAxiosParamCreator_PatchEntityLlmEndpoints(id: string, jsonApiLlmEndpointPatchDocument: JsonApiLlmEndpointPatchDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function LlmEndpointControllerApiAxiosParamCreator_UpdateEntityLlmEndpoints(id: string, jsonApiLlmEndpointInDocument: JsonApiLlmEndpointInDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export interface LlmEndpointControllerApiCreateEntityLlmEndpointsRequest {
+    readonly jsonApiLlmEndpointInDocument: JsonApiLlmEndpointInDocument;
+}
+
+// @public
+export interface LlmEndpointControllerApiDeleteEntityLlmEndpointsRequest {
+    readonly id: string;
+}
+
+// @public
+export interface LlmEndpointControllerApiGetAllEntitiesLlmEndpointsRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<'page' | 'all' | 'ALL'>;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+}
+
+// @public
+export interface LlmEndpointControllerApiGetEntityLlmEndpointsRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
+export interface LlmEndpointControllerApiInterface {
+    // @deprecated
+    createEntityLlmEndpoints(requestParameters: LlmEndpointControllerApiCreateEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutDocument>;
+    // @deprecated
+    deleteEntityLlmEndpoints(requestParameters: LlmEndpointControllerApiDeleteEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    // @deprecated
+    getAllEntitiesLlmEndpoints(requestParameters: LlmEndpointControllerApiGetAllEntitiesLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutList>;
+    // @deprecated
+    getEntityLlmEndpoints(requestParameters: LlmEndpointControllerApiGetEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutDocument>;
+    // @deprecated
+    patchEntityLlmEndpoints(requestParameters: LlmEndpointControllerApiPatchEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutDocument>;
+    // @deprecated
+    updateEntityLlmEndpoints(requestParameters: LlmEndpointControllerApiUpdateEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutDocument>;
+}
+
+// @public
+export interface LlmEndpointControllerApiPatchEntityLlmEndpointsRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiLlmEndpointPatchDocument: JsonApiLlmEndpointPatchDocument;
+}
+
+// @public
+export interface LlmEndpointControllerApiUpdateEntityLlmEndpointsRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiLlmEndpointInDocument: JsonApiLlmEndpointInDocument;
+}
+
+// @public
 export class LLMEndpointsApi extends MetadataBaseApi implements LLMEndpointsApiInterface {
     // @deprecated
     createEntityLlmEndpoints(requestParameters: LLMEndpointsApiCreateEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutDocument>;
@@ -23828,7 +24476,7 @@ export function LLMEndpointsApi_UpdateEntityLlmEndpoints(axios: AxiosInstance, b
 export function LLMEndpointsApiAxiosParamCreator_CreateEntityLlmEndpoints(jsonApiLlmEndpointInDocument: JsonApiLlmEndpointInDocument, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function LLMEndpointsApiAxiosParamCreator_DeleteEntityLlmEndpoints(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function LLMEndpointsApiAxiosParamCreator_DeleteEntityLlmEndpoints(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function LLMEndpointsApiAxiosParamCreator_GetAllEntitiesLlmEndpoints(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -23849,7 +24497,6 @@ export interface LLMEndpointsApiCreateEntityLlmEndpointsRequest {
 
 // @public
 export interface LLMEndpointsApiDeleteEntityLlmEndpointsRequest {
-    readonly filter?: string;
     readonly id: string;
 }
 
@@ -23905,6 +24552,101 @@ export interface LlmProviderAuth {
 }
 
 // @public
+export class LlmProviderControllerApi extends MetadataBaseApi implements LlmProviderControllerApiInterface {
+    createEntityLlmProviders(requestParameters: LlmProviderControllerApiCreateEntityLlmProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmProviderOutDocument>;
+    deleteEntityLlmProviders(requestParameters: LlmProviderControllerApiDeleteEntityLlmProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getAllEntitiesLlmProviders(requestParameters?: LlmProviderControllerApiGetAllEntitiesLlmProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmProviderOutList>;
+    getEntityLlmProviders(requestParameters: LlmProviderControllerApiGetEntityLlmProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmProviderOutDocument>;
+    patchEntityLlmProviders(requestParameters: LlmProviderControllerApiPatchEntityLlmProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmProviderOutDocument>;
+    updateEntityLlmProviders(requestParameters: LlmProviderControllerApiUpdateEntityLlmProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmProviderOutDocument>;
+}
+
+// @public
+export function LlmProviderControllerApi_CreateEntityLlmProviders(axios: AxiosInstance, basePath: string, requestParameters: LlmProviderControllerApiCreateEntityLlmProvidersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiLlmProviderOutDocument>;
+
+// @public
+export function LlmProviderControllerApi_DeleteEntityLlmProviders(axios: AxiosInstance, basePath: string, requestParameters: LlmProviderControllerApiDeleteEntityLlmProvidersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
+
+// @public
+export function LlmProviderControllerApi_GetAllEntitiesLlmProviders(axios: AxiosInstance, basePath: string, requestParameters: LlmProviderControllerApiGetAllEntitiesLlmProvidersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiLlmProviderOutList>;
+
+// @public
+export function LlmProviderControllerApi_GetEntityLlmProviders(axios: AxiosInstance, basePath: string, requestParameters: LlmProviderControllerApiGetEntityLlmProvidersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiLlmProviderOutDocument>;
+
+// @public
+export function LlmProviderControllerApi_PatchEntityLlmProviders(axios: AxiosInstance, basePath: string, requestParameters: LlmProviderControllerApiPatchEntityLlmProvidersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiLlmProviderOutDocument>;
+
+// @public
+export function LlmProviderControllerApi_UpdateEntityLlmProviders(axios: AxiosInstance, basePath: string, requestParameters: LlmProviderControllerApiUpdateEntityLlmProvidersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiLlmProviderOutDocument>;
+
+// @public
+export function LlmProviderControllerApiAxiosParamCreator_CreateEntityLlmProviders(jsonApiLlmProviderInDocument: JsonApiLlmProviderInDocument, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function LlmProviderControllerApiAxiosParamCreator_DeleteEntityLlmProviders(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function LlmProviderControllerApiAxiosParamCreator_GetAllEntitiesLlmProviders(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function LlmProviderControllerApiAxiosParamCreator_GetEntityLlmProviders(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function LlmProviderControllerApiAxiosParamCreator_PatchEntityLlmProviders(id: string, jsonApiLlmProviderPatchDocument: JsonApiLlmProviderPatchDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function LlmProviderControllerApiAxiosParamCreator_UpdateEntityLlmProviders(id: string, jsonApiLlmProviderInDocument: JsonApiLlmProviderInDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export interface LlmProviderControllerApiCreateEntityLlmProvidersRequest {
+    readonly jsonApiLlmProviderInDocument: JsonApiLlmProviderInDocument;
+}
+
+// @public
+export interface LlmProviderControllerApiDeleteEntityLlmProvidersRequest {
+    readonly id: string;
+}
+
+// @public
+export interface LlmProviderControllerApiGetAllEntitiesLlmProvidersRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<'page' | 'all' | 'ALL'>;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+}
+
+// @public
+export interface LlmProviderControllerApiGetEntityLlmProvidersRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
+export interface LlmProviderControllerApiInterface {
+    createEntityLlmProviders(requestParameters: LlmProviderControllerApiCreateEntityLlmProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmProviderOutDocument>;
+    deleteEntityLlmProviders(requestParameters: LlmProviderControllerApiDeleteEntityLlmProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getAllEntitiesLlmProviders(requestParameters: LlmProviderControllerApiGetAllEntitiesLlmProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmProviderOutList>;
+    getEntityLlmProviders(requestParameters: LlmProviderControllerApiGetEntityLlmProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmProviderOutDocument>;
+    patchEntityLlmProviders(requestParameters: LlmProviderControllerApiPatchEntityLlmProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmProviderOutDocument>;
+    updateEntityLlmProviders(requestParameters: LlmProviderControllerApiUpdateEntityLlmProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmProviderOutDocument>;
+}
+
+// @public
+export interface LlmProviderControllerApiPatchEntityLlmProvidersRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiLlmProviderPatchDocument: JsonApiLlmProviderPatchDocument;
+}
+
+// @public
+export interface LlmProviderControllerApiUpdateEntityLlmProvidersRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiLlmProviderInDocument: JsonApiLlmProviderInDocument;
+}
+
+// @public
 export class LLMProvidersApi extends MetadataBaseApi implements LLMProvidersApiInterface {
     createEntityLlmProviders(requestParameters: LLMProvidersApiCreateEntityLlmProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmProviderOutDocument>;
     deleteEntityLlmProviders(requestParameters: LLMProvidersApiDeleteEntityLlmProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -23936,7 +24678,7 @@ export function LLMProvidersApi_UpdateEntityLlmProviders(axios: AxiosInstance, b
 export function LLMProvidersApiAxiosParamCreator_CreateEntityLlmProviders(jsonApiLlmProviderInDocument: JsonApiLlmProviderInDocument, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function LLMProvidersApiAxiosParamCreator_DeleteEntityLlmProviders(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function LLMProvidersApiAxiosParamCreator_DeleteEntityLlmProviders(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function LLMProvidersApiAxiosParamCreator_GetAllEntitiesLlmProviders(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -23957,7 +24699,6 @@ export interface LLMProvidersApiCreateEntityLlmProvidersRequest {
 
 // @public
 export interface LLMProvidersApiDeleteEntityLlmProvidersRequest {
-    readonly filter?: string;
     readonly id: string;
 }
 
@@ -24622,6 +25363,7 @@ export interface NegativeAttributeFilterNegativeAttributeFilter {
     'localIdentifier'?: string;
     // (undocumented)
     'notIn': AttributeFilterElements;
+    'usesArbitraryValues'?: boolean;
 }
 
 // @public
@@ -24657,16 +25399,148 @@ export interface Notes {
 }
 
 // @public
+export class NotificationChannelControllerApi extends MetadataBaseApi implements NotificationChannelControllerApiInterface {
+    createEntityNotificationChannels(requestParameters: NotificationChannelControllerApiCreateEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
+    deleteEntityNotificationChannels(requestParameters: NotificationChannelControllerApiDeleteEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getAllEntitiesNotificationChannels(requestParameters?: NotificationChannelControllerApiGetAllEntitiesNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutList>;
+    getEntityNotificationChannels(requestParameters: NotificationChannelControllerApiGetEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
+    patchEntityNotificationChannels(requestParameters: NotificationChannelControllerApiPatchEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
+    updateEntityNotificationChannels(requestParameters: NotificationChannelControllerApiUpdateEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
+}
+
+// @public
+export function NotificationChannelControllerApi_CreateEntityNotificationChannels(axios: AxiosInstance, basePath: string, requestParameters: NotificationChannelControllerApiCreateEntityNotificationChannelsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiNotificationChannelOutDocument>;
+
+// @public
+export function NotificationChannelControllerApi_DeleteEntityNotificationChannels(axios: AxiosInstance, basePath: string, requestParameters: NotificationChannelControllerApiDeleteEntityNotificationChannelsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
+
+// @public
+export function NotificationChannelControllerApi_GetAllEntitiesNotificationChannels(axios: AxiosInstance, basePath: string, requestParameters: NotificationChannelControllerApiGetAllEntitiesNotificationChannelsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiNotificationChannelOutList>;
+
+// @public
+export function NotificationChannelControllerApi_GetEntityNotificationChannels(axios: AxiosInstance, basePath: string, requestParameters: NotificationChannelControllerApiGetEntityNotificationChannelsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiNotificationChannelOutDocument>;
+
+// @public
+export function NotificationChannelControllerApi_PatchEntityNotificationChannels(axios: AxiosInstance, basePath: string, requestParameters: NotificationChannelControllerApiPatchEntityNotificationChannelsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiNotificationChannelOutDocument>;
+
+// @public
+export function NotificationChannelControllerApi_UpdateEntityNotificationChannels(axios: AxiosInstance, basePath: string, requestParameters: NotificationChannelControllerApiUpdateEntityNotificationChannelsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiNotificationChannelOutDocument>;
+
+// @public
+export function NotificationChannelControllerApiAxiosParamCreator_CreateEntityNotificationChannels(jsonApiNotificationChannelPostOptionalIdDocument: JsonApiNotificationChannelPostOptionalIdDocument, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function NotificationChannelControllerApiAxiosParamCreator_DeleteEntityNotificationChannels(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function NotificationChannelControllerApiAxiosParamCreator_GetAllEntitiesNotificationChannels(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function NotificationChannelControllerApiAxiosParamCreator_GetEntityNotificationChannels(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function NotificationChannelControllerApiAxiosParamCreator_PatchEntityNotificationChannels(id: string, jsonApiNotificationChannelPatchDocument: JsonApiNotificationChannelPatchDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function NotificationChannelControllerApiAxiosParamCreator_UpdateEntityNotificationChannels(id: string, jsonApiNotificationChannelInDocument: JsonApiNotificationChannelInDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export interface NotificationChannelControllerApiCreateEntityNotificationChannelsRequest {
+    readonly jsonApiNotificationChannelPostOptionalIdDocument: JsonApiNotificationChannelPostOptionalIdDocument;
+}
+
+// @public
+export interface NotificationChannelControllerApiDeleteEntityNotificationChannelsRequest {
+    readonly id: string;
+}
+
+// @public
+export interface NotificationChannelControllerApiGetAllEntitiesNotificationChannelsRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<'page' | 'all' | 'ALL'>;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+}
+
+// @public
+export interface NotificationChannelControllerApiGetEntityNotificationChannelsRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
+export interface NotificationChannelControllerApiInterface {
+    createEntityNotificationChannels(requestParameters: NotificationChannelControllerApiCreateEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
+    deleteEntityNotificationChannels(requestParameters: NotificationChannelControllerApiDeleteEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getAllEntitiesNotificationChannels(requestParameters: NotificationChannelControllerApiGetAllEntitiesNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutList>;
+    getEntityNotificationChannels(requestParameters: NotificationChannelControllerApiGetEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
+    patchEntityNotificationChannels(requestParameters: NotificationChannelControllerApiPatchEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
+    updateEntityNotificationChannels(requestParameters: NotificationChannelControllerApiUpdateEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
+}
+
+// @public
+export interface NotificationChannelControllerApiPatchEntityNotificationChannelsRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiNotificationChannelPatchDocument: JsonApiNotificationChannelPatchDocument;
+}
+
+// @public
+export interface NotificationChannelControllerApiUpdateEntityNotificationChannelsRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiNotificationChannelInDocument: JsonApiNotificationChannelInDocument;
+}
+
+// @public
 export type NotificationChannelDestination = DefaultSmtp | InPlatform | Smtp | Webhook;
+
+// @public
+export class NotificationChannelIdentifierControllerApi extends MetadataBaseApi implements NotificationChannelIdentifierControllerApiInterface {
+    getAllEntitiesNotificationChannelIdentifiers(requestParameters?: NotificationChannelIdentifierControllerApiGetAllEntitiesNotificationChannelIdentifiersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelIdentifierOutList>;
+    getEntityNotificationChannelIdentifiers(requestParameters: NotificationChannelIdentifierControllerApiGetEntityNotificationChannelIdentifiersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelIdentifierOutDocument>;
+}
+
+// @public
+export function NotificationChannelIdentifierControllerApi_GetAllEntitiesNotificationChannelIdentifiers(axios: AxiosInstance, basePath: string, requestParameters: NotificationChannelIdentifierControllerApiGetAllEntitiesNotificationChannelIdentifiersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiNotificationChannelIdentifierOutList>;
+
+// @public
+export function NotificationChannelIdentifierControllerApi_GetEntityNotificationChannelIdentifiers(axios: AxiosInstance, basePath: string, requestParameters: NotificationChannelIdentifierControllerApiGetEntityNotificationChannelIdentifiersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiNotificationChannelIdentifierOutDocument>;
+
+// @public
+export function NotificationChannelIdentifierControllerApiAxiosParamCreator_GetAllEntitiesNotificationChannelIdentifiers(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function NotificationChannelIdentifierControllerApiAxiosParamCreator_GetEntityNotificationChannelIdentifiers(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export interface NotificationChannelIdentifierControllerApiGetAllEntitiesNotificationChannelIdentifiersRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<'page' | 'all' | 'ALL'>;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+}
+
+// @public
+export interface NotificationChannelIdentifierControllerApiGetEntityNotificationChannelIdentifiersRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
+export interface NotificationChannelIdentifierControllerApiInterface {
+    getAllEntitiesNotificationChannelIdentifiers(requestParameters: NotificationChannelIdentifierControllerApiGetAllEntitiesNotificationChannelIdentifiersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelIdentifierOutList>;
+    getEntityNotificationChannelIdentifiers(requestParameters: NotificationChannelIdentifierControllerApiGetEntityNotificationChannelIdentifiersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelIdentifierOutDocument>;
+}
 
 // @public
 export class NotificationChannelsApi extends MetadataBaseApi implements NotificationChannelsApiInterface {
     createEntityNotificationChannels(requestParameters: NotificationChannelsApiCreateEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
     deleteEntityNotificationChannels(requestParameters: NotificationChannelsApiDeleteEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    // (undocumented)
     getAllEntitiesNotificationChannelIdentifiers(requestParameters?: NotificationChannelsApiGetAllEntitiesNotificationChannelIdentifiersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelIdentifierOutList>;
     getAllEntitiesNotificationChannels(requestParameters?: NotificationChannelsApiGetAllEntitiesNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutList>;
-    // (undocumented)
     getEntityNotificationChannelIdentifiers(requestParameters: NotificationChannelsApiGetEntityNotificationChannelIdentifiersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelIdentifierOutDocument>;
     getEntityNotificationChannels(requestParameters: NotificationChannelsApiGetEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
     getExportTemplatesLayout(options?: AxiosRequestConfig): AxiosPromise<DeclarativeExportTemplates>;
@@ -24683,13 +25557,13 @@ export function NotificationChannelsApi_CreateEntityNotificationChannels(axios: 
 // @public
 export function NotificationChannelsApi_DeleteEntityNotificationChannels(axios: AxiosInstance, basePath: string, requestParameters: NotificationChannelsApiDeleteEntityNotificationChannelsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
 
-// @public (undocumented)
+// @public
 export function NotificationChannelsApi_GetAllEntitiesNotificationChannelIdentifiers(axios: AxiosInstance, basePath: string, requestParameters: NotificationChannelsApiGetAllEntitiesNotificationChannelIdentifiersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiNotificationChannelIdentifierOutList>;
 
 // @public
 export function NotificationChannelsApi_GetAllEntitiesNotificationChannels(axios: AxiosInstance, basePath: string, requestParameters: NotificationChannelsApiGetAllEntitiesNotificationChannelsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiNotificationChannelOutList>;
 
-// @public (undocumented)
+// @public
 export function NotificationChannelsApi_GetEntityNotificationChannelIdentifiers(axios: AxiosInstance, basePath: string, requestParameters: NotificationChannelsApiGetEntityNotificationChannelIdentifiersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiNotificationChannelIdentifierOutDocument>;
 
 // @public
@@ -24717,15 +25591,15 @@ export function NotificationChannelsApi_UpdateEntityNotificationChannels(axios: 
 export function NotificationChannelsApiAxiosParamCreator_CreateEntityNotificationChannels(jsonApiNotificationChannelPostOptionalIdDocument: JsonApiNotificationChannelPostOptionalIdDocument, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function NotificationChannelsApiAxiosParamCreator_DeleteEntityNotificationChannels(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function NotificationChannelsApiAxiosParamCreator_DeleteEntityNotificationChannels(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
-// @public (undocumented)
+// @public
 export function NotificationChannelsApiAxiosParamCreator_GetAllEntitiesNotificationChannelIdentifiers(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function NotificationChannelsApiAxiosParamCreator_GetAllEntitiesNotificationChannels(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
-// @public (undocumented)
+// @public
 export function NotificationChannelsApiAxiosParamCreator_GetEntityNotificationChannelIdentifiers(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
@@ -24756,7 +25630,6 @@ export interface NotificationChannelsApiCreateEntityNotificationChannelsRequest 
 
 // @public
 export interface NotificationChannelsApiDeleteEntityNotificationChannelsRequest {
-    readonly filter?: string;
     readonly id: string;
 }
 
@@ -24794,10 +25667,8 @@ export interface NotificationChannelsApiGetEntityNotificationChannelsRequest {
 export interface NotificationChannelsApiInterface {
     createEntityNotificationChannels(requestParameters: NotificationChannelsApiCreateEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
     deleteEntityNotificationChannels(requestParameters: NotificationChannelsApiDeleteEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    // (undocumented)
     getAllEntitiesNotificationChannelIdentifiers(requestParameters: NotificationChannelsApiGetAllEntitiesNotificationChannelIdentifiersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelIdentifierOutList>;
     getAllEntitiesNotificationChannels(requestParameters: NotificationChannelsApiGetAllEntitiesNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutList>;
-    // (undocumented)
     getEntityNotificationChannelIdentifiers(requestParameters: NotificationChannelsApiGetEntityNotificationChannelIdentifiersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelIdentifierOutDocument>;
     getEntityNotificationChannels(requestParameters: NotificationChannelsApiGetEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
     getExportTemplatesLayout(options?: AxiosRequestConfig): AxiosPromise<DeclarativeExportTemplates>;
@@ -25087,7 +25958,7 @@ export function OrganizationEntityAPIsApi_UpdateEntityOrganizationSettings(axios
 export function OrganizationEntityAPIsApiAxiosParamCreator_CreateEntityOrganizationSettings(jsonApiOrganizationSettingInDocument: JsonApiOrganizationSettingInDocument, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function OrganizationEntityAPIsApiAxiosParamCreator_DeleteEntityOrganizationSettings(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function OrganizationEntityAPIsApiAxiosParamCreator_DeleteEntityOrganizationSettings(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function OrganizationEntityAPIsApiAxiosParamCreator_GetAllEntitiesOrganizationSettings(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -25120,7 +25991,6 @@ export interface OrganizationEntityAPIsApiCreateEntityOrganizationSettingsReques
 
 // @public
 export interface OrganizationEntityAPIsApiDeleteEntityOrganizationSettingsRequest {
-    readonly filter?: string;
     readonly id: string;
 }
 
@@ -25265,1228 +26135,6 @@ export type OrganizationGetEntitiesResult = JsonApiDataSourceIdentifierOutList |
 export type OrganizationGetEntitiesSupportingIncludedResult = JsonApiUserOutList | JsonApiUserGroupOutList | JsonApiWorkspaceOutList;
 
 // @public
-export class OrganizationModelControllerApi extends MetadataBaseApi implements OrganizationModelControllerApiInterface {
-    createEntityColorPalettes(requestParameters: OrganizationModelControllerApiCreateEntityColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiColorPaletteOutDocument>;
-    createEntityCspDirectives(requestParameters: OrganizationModelControllerApiCreateEntityCspDirectivesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCspDirectiveOutDocument>;
-    createEntityExportTemplates(requestParameters: OrganizationModelControllerApiCreateEntityExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportTemplateOutDocument>;
-    createEntityIdentityProviders(requestParameters: OrganizationModelControllerApiCreateEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutDocument>;
-    // @deprecated
-    createEntityLlmEndpoints(requestParameters: OrganizationModelControllerApiCreateEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutDocument>;
-    createEntityLlmProviders(requestParameters: OrganizationModelControllerApiCreateEntityLlmProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmProviderOutDocument>;
-    createEntityNotificationChannels(requestParameters: OrganizationModelControllerApiCreateEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
-    createEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiCreateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
-    createEntityThemes(requestParameters: OrganizationModelControllerApiCreateEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
-    createEntityUserGroups(requestParameters: OrganizationModelControllerApiCreateEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
-    createEntityUsers(requestParameters: OrganizationModelControllerApiCreateEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutDocument>;
-    createEntityWorkspaces(requestParameters: OrganizationModelControllerApiCreateEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
-    deleteEntityColorPalettes(requestParameters: OrganizationModelControllerApiDeleteEntityColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    deleteEntityCspDirectives(requestParameters: OrganizationModelControllerApiDeleteEntityCspDirectivesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    deleteEntityExportTemplates(requestParameters: OrganizationModelControllerApiDeleteEntityExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    deleteEntityIdentityProviders(requestParameters: OrganizationModelControllerApiDeleteEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    // @deprecated
-    deleteEntityLlmEndpoints(requestParameters: OrganizationModelControllerApiDeleteEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    deleteEntityLlmProviders(requestParameters: OrganizationModelControllerApiDeleteEntityLlmProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    deleteEntityNotificationChannels(requestParameters: OrganizationModelControllerApiDeleteEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    deleteEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiDeleteEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    deleteEntityThemes(requestParameters: OrganizationModelControllerApiDeleteEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    deleteEntityUserGroups(requestParameters: OrganizationModelControllerApiDeleteEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    deleteEntityUsers(requestParameters: OrganizationModelControllerApiDeleteEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    deleteEntityWorkspaces(requestParameters: OrganizationModelControllerApiDeleteEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    getAllEntitiesColorPalettes(requestParameters?: OrganizationModelControllerApiGetAllEntitiesColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiColorPaletteOutList>;
-    getAllEntitiesCspDirectives(requestParameters?: OrganizationModelControllerApiGetAllEntitiesCspDirectivesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCspDirectiveOutList>;
-    getAllEntitiesDataSourceIdentifiers(requestParameters?: OrganizationModelControllerApiGetAllEntitiesDataSourceIdentifiersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceIdentifierOutList>;
-    getAllEntitiesEntitlements(requestParameters?: OrganizationModelControllerApiGetAllEntitiesEntitlementsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiEntitlementOutList>;
-    getAllEntitiesExportTemplates(requestParameters?: OrganizationModelControllerApiGetAllEntitiesExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportTemplateOutList>;
-    getAllEntitiesIdentityProviders(requestParameters?: OrganizationModelControllerApiGetAllEntitiesIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutList>;
-    // @deprecated
-    getAllEntitiesLlmEndpoints(requestParameters?: OrganizationModelControllerApiGetAllEntitiesLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutList>;
-    getAllEntitiesLlmProviders(requestParameters?: OrganizationModelControllerApiGetAllEntitiesLlmProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmProviderOutList>;
-    // (undocumented)
-    getAllEntitiesNotificationChannelIdentifiers(requestParameters?: OrganizationModelControllerApiGetAllEntitiesNotificationChannelIdentifiersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelIdentifierOutList>;
-    getAllEntitiesNotificationChannels(requestParameters?: OrganizationModelControllerApiGetAllEntitiesNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutList>;
-    getAllEntitiesOrganizationSettings(requestParameters?: OrganizationModelControllerApiGetAllEntitiesOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutList>;
-    getAllEntitiesThemes(requestParameters?: OrganizationModelControllerApiGetAllEntitiesThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutList>;
-    getAllEntitiesUserGroups(requestParameters?: OrganizationModelControllerApiGetAllEntitiesUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutList>;
-    getAllEntitiesUserIdentifiers(requestParameters?: OrganizationModelControllerApiGetAllEntitiesUserIdentifiersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserIdentifierOutList>;
-    getAllEntitiesUsers(requestParameters?: OrganizationModelControllerApiGetAllEntitiesUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutList>;
-    getAllEntitiesWorkspaces(requestParameters?: OrganizationModelControllerApiGetAllEntitiesWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutList>;
-    getEntityColorPalettes(requestParameters: OrganizationModelControllerApiGetEntityColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiColorPaletteOutDocument>;
-    getEntityCspDirectives(requestParameters: OrganizationModelControllerApiGetEntityCspDirectivesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCspDirectiveOutDocument>;
-    getEntityDataSourceIdentifiers(requestParameters: OrganizationModelControllerApiGetEntityDataSourceIdentifiersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceIdentifierOutDocument>;
-    getEntityEntitlements(requestParameters: OrganizationModelControllerApiGetEntityEntitlementsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiEntitlementOutDocument>;
-    getEntityExportTemplates(requestParameters: OrganizationModelControllerApiGetEntityExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportTemplateOutDocument>;
-    getEntityIdentityProviders(requestParameters: OrganizationModelControllerApiGetEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutDocument>;
-    // @deprecated
-    getEntityLlmEndpoints(requestParameters: OrganizationModelControllerApiGetEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutDocument>;
-    getEntityLlmProviders(requestParameters: OrganizationModelControllerApiGetEntityLlmProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmProviderOutDocument>;
-    // (undocumented)
-    getEntityNotificationChannelIdentifiers(requestParameters: OrganizationModelControllerApiGetEntityNotificationChannelIdentifiersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelIdentifierOutDocument>;
-    getEntityNotificationChannels(requestParameters: OrganizationModelControllerApiGetEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
-    getEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiGetEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
-    getEntityThemes(requestParameters: OrganizationModelControllerApiGetEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
-    getEntityUserGroups(requestParameters: OrganizationModelControllerApiGetEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
-    getEntityUserIdentifiers(requestParameters: OrganizationModelControllerApiGetEntityUserIdentifiersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserIdentifierOutDocument>;
-    getEntityUsers(requestParameters: OrganizationModelControllerApiGetEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutDocument>;
-    getEntityWorkspaces(requestParameters: OrganizationModelControllerApiGetEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
-    patchEntityColorPalettes(requestParameters: OrganizationModelControllerApiPatchEntityColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiColorPaletteOutDocument>;
-    patchEntityCspDirectives(requestParameters: OrganizationModelControllerApiPatchEntityCspDirectivesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCspDirectiveOutDocument>;
-    patchEntityExportTemplates(requestParameters: OrganizationModelControllerApiPatchEntityExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportTemplateOutDocument>;
-    patchEntityIdentityProviders(requestParameters: OrganizationModelControllerApiPatchEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutDocument>;
-    // @deprecated
-    patchEntityLlmEndpoints(requestParameters: OrganizationModelControllerApiPatchEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutDocument>;
-    patchEntityLlmProviders(requestParameters: OrganizationModelControllerApiPatchEntityLlmProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmProviderOutDocument>;
-    patchEntityNotificationChannels(requestParameters: OrganizationModelControllerApiPatchEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
-    patchEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiPatchEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
-    patchEntityThemes(requestParameters: OrganizationModelControllerApiPatchEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
-    patchEntityUserGroups(requestParameters: OrganizationModelControllerApiPatchEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
-    patchEntityUsers(requestParameters: OrganizationModelControllerApiPatchEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutDocument>;
-    patchEntityWorkspaces(requestParameters: OrganizationModelControllerApiPatchEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
-    updateEntityColorPalettes(requestParameters: OrganizationModelControllerApiUpdateEntityColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiColorPaletteOutDocument>;
-    updateEntityCspDirectives(requestParameters: OrganizationModelControllerApiUpdateEntityCspDirectivesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCspDirectiveOutDocument>;
-    updateEntityExportTemplates(requestParameters: OrganizationModelControllerApiUpdateEntityExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportTemplateOutDocument>;
-    updateEntityIdentityProviders(requestParameters: OrganizationModelControllerApiUpdateEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutDocument>;
-    // @deprecated
-    updateEntityLlmEndpoints(requestParameters: OrganizationModelControllerApiUpdateEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutDocument>;
-    updateEntityLlmProviders(requestParameters: OrganizationModelControllerApiUpdateEntityLlmProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmProviderOutDocument>;
-    updateEntityNotificationChannels(requestParameters: OrganizationModelControllerApiUpdateEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
-    updateEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiUpdateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
-    updateEntityThemes(requestParameters: OrganizationModelControllerApiUpdateEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
-    updateEntityUserGroups(requestParameters: OrganizationModelControllerApiUpdateEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
-    updateEntityUsers(requestParameters: OrganizationModelControllerApiUpdateEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutDocument>;
-    updateEntityWorkspaces(requestParameters: OrganizationModelControllerApiUpdateEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
-}
-
-// @public
-export function OrganizationModelControllerApi_CreateEntityColorPalettes(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiCreateEntityColorPalettesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiColorPaletteOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_CreateEntityCspDirectives(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiCreateEntityCspDirectivesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiCspDirectiveOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_CreateEntityExportTemplates(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiCreateEntityExportTemplatesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiExportTemplateOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_CreateEntityIdentityProviders(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiCreateEntityIdentityProvidersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiIdentityProviderOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_CreateEntityLlmEndpoints(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiCreateEntityLlmEndpointsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiLlmEndpointOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_CreateEntityLlmProviders(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiCreateEntityLlmProvidersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiLlmProviderOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_CreateEntityNotificationChannels(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiCreateEntityNotificationChannelsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiNotificationChannelOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_CreateEntityOrganizationSettings(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiCreateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_CreateEntityThemes(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiCreateEntityThemesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiThemeOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_CreateEntityUserGroups(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiCreateEntityUserGroupsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiUserGroupOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_CreateEntityUsers(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiCreateEntityUsersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiUserOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_CreateEntityWorkspaces(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiCreateEntityWorkspacesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_DeleteEntityColorPalettes(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiDeleteEntityColorPalettesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
-
-// @public
-export function OrganizationModelControllerApi_DeleteEntityCspDirectives(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiDeleteEntityCspDirectivesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
-
-// @public
-export function OrganizationModelControllerApi_DeleteEntityExportTemplates(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiDeleteEntityExportTemplatesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
-
-// @public
-export function OrganizationModelControllerApi_DeleteEntityIdentityProviders(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiDeleteEntityIdentityProvidersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
-
-// @public
-export function OrganizationModelControllerApi_DeleteEntityLlmEndpoints(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiDeleteEntityLlmEndpointsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
-
-// @public
-export function OrganizationModelControllerApi_DeleteEntityLlmProviders(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiDeleteEntityLlmProvidersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
-
-// @public
-export function OrganizationModelControllerApi_DeleteEntityNotificationChannels(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiDeleteEntityNotificationChannelsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
-
-// @public
-export function OrganizationModelControllerApi_DeleteEntityOrganizationSettings(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiDeleteEntityOrganizationSettingsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
-
-// @public
-export function OrganizationModelControllerApi_DeleteEntityThemes(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiDeleteEntityThemesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
-
-// @public
-export function OrganizationModelControllerApi_DeleteEntityUserGroups(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiDeleteEntityUserGroupsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
-
-// @public
-export function OrganizationModelControllerApi_DeleteEntityUsers(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiDeleteEntityUsersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
-
-// @public
-export function OrganizationModelControllerApi_DeleteEntityWorkspaces(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiDeleteEntityWorkspacesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
-
-// @public
-export function OrganizationModelControllerApi_GetAllEntitiesColorPalettes(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiGetAllEntitiesColorPalettesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiColorPaletteOutList>;
-
-// @public
-export function OrganizationModelControllerApi_GetAllEntitiesCspDirectives(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiGetAllEntitiesCspDirectivesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiCspDirectiveOutList>;
-
-// @public
-export function OrganizationModelControllerApi_GetAllEntitiesDataSourceIdentifiers(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiGetAllEntitiesDataSourceIdentifiersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiDataSourceIdentifierOutList>;
-
-// @public
-export function OrganizationModelControllerApi_GetAllEntitiesEntitlements(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiGetAllEntitiesEntitlementsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiEntitlementOutList>;
-
-// @public
-export function OrganizationModelControllerApi_GetAllEntitiesExportTemplates(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiGetAllEntitiesExportTemplatesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiExportTemplateOutList>;
-
-// @public
-export function OrganizationModelControllerApi_GetAllEntitiesIdentityProviders(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiGetAllEntitiesIdentityProvidersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiIdentityProviderOutList>;
-
-// @public
-export function OrganizationModelControllerApi_GetAllEntitiesLlmEndpoints(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiGetAllEntitiesLlmEndpointsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiLlmEndpointOutList>;
-
-// @public
-export function OrganizationModelControllerApi_GetAllEntitiesLlmProviders(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiGetAllEntitiesLlmProvidersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiLlmProviderOutList>;
-
-// @public (undocumented)
-export function OrganizationModelControllerApi_GetAllEntitiesNotificationChannelIdentifiers(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiGetAllEntitiesNotificationChannelIdentifiersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiNotificationChannelIdentifierOutList>;
-
-// @public
-export function OrganizationModelControllerApi_GetAllEntitiesNotificationChannels(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiGetAllEntitiesNotificationChannelsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiNotificationChannelOutList>;
-
-// @public
-export function OrganizationModelControllerApi_GetAllEntitiesOrganizationSettings(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiGetAllEntitiesOrganizationSettingsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiOrganizationSettingOutList>;
-
-// @public
-export function OrganizationModelControllerApi_GetAllEntitiesThemes(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiGetAllEntitiesThemesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiThemeOutList>;
-
-// @public
-export function OrganizationModelControllerApi_GetAllEntitiesUserGroups(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiGetAllEntitiesUserGroupsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiUserGroupOutList>;
-
-// @public
-export function OrganizationModelControllerApi_GetAllEntitiesUserIdentifiers(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiGetAllEntitiesUserIdentifiersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiUserIdentifierOutList>;
-
-// @public
-export function OrganizationModelControllerApi_GetAllEntitiesUsers(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiGetAllEntitiesUsersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiUserOutList>;
-
-// @public
-export function OrganizationModelControllerApi_GetAllEntitiesWorkspaces(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiGetAllEntitiesWorkspacesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceOutList>;
-
-// @public
-export function OrganizationModelControllerApi_GetEntityColorPalettes(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiGetEntityColorPalettesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiColorPaletteOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_GetEntityCspDirectives(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiGetEntityCspDirectivesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiCspDirectiveOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_GetEntityDataSourceIdentifiers(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiGetEntityDataSourceIdentifiersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiDataSourceIdentifierOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_GetEntityEntitlements(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiGetEntityEntitlementsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiEntitlementOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_GetEntityExportTemplates(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiGetEntityExportTemplatesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiExportTemplateOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_GetEntityIdentityProviders(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiGetEntityIdentityProvidersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiIdentityProviderOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_GetEntityLlmEndpoints(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiGetEntityLlmEndpointsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiLlmEndpointOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_GetEntityLlmProviders(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiGetEntityLlmProvidersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiLlmProviderOutDocument>;
-
-// @public (undocumented)
-export function OrganizationModelControllerApi_GetEntityNotificationChannelIdentifiers(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiGetEntityNotificationChannelIdentifiersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiNotificationChannelIdentifierOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_GetEntityNotificationChannels(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiGetEntityNotificationChannelsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiNotificationChannelOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_GetEntityOrganizationSettings(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiGetEntityOrganizationSettingsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_GetEntityThemes(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiGetEntityThemesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiThemeOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_GetEntityUserGroups(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiGetEntityUserGroupsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiUserGroupOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_GetEntityUserIdentifiers(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiGetEntityUserIdentifiersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiUserIdentifierOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_GetEntityUsers(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiGetEntityUsersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiUserOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_GetEntityWorkspaces(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiGetEntityWorkspacesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_PatchEntityColorPalettes(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiPatchEntityColorPalettesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiColorPaletteOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_PatchEntityCspDirectives(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiPatchEntityCspDirectivesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiCspDirectiveOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_PatchEntityExportTemplates(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiPatchEntityExportTemplatesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiExportTemplateOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_PatchEntityIdentityProviders(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiPatchEntityIdentityProvidersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiIdentityProviderOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_PatchEntityLlmEndpoints(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiPatchEntityLlmEndpointsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiLlmEndpointOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_PatchEntityLlmProviders(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiPatchEntityLlmProvidersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiLlmProviderOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_PatchEntityNotificationChannels(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiPatchEntityNotificationChannelsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiNotificationChannelOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_PatchEntityOrganizationSettings(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiPatchEntityOrganizationSettingsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_PatchEntityThemes(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiPatchEntityThemesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiThemeOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_PatchEntityUserGroups(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiPatchEntityUserGroupsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiUserGroupOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_PatchEntityUsers(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiPatchEntityUsersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiUserOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_PatchEntityWorkspaces(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiPatchEntityWorkspacesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_UpdateEntityColorPalettes(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiUpdateEntityColorPalettesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiColorPaletteOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_UpdateEntityCspDirectives(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiUpdateEntityCspDirectivesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiCspDirectiveOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_UpdateEntityExportTemplates(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiUpdateEntityExportTemplatesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiExportTemplateOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_UpdateEntityIdentityProviders(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiUpdateEntityIdentityProvidersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiIdentityProviderOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_UpdateEntityLlmEndpoints(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiUpdateEntityLlmEndpointsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiLlmEndpointOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_UpdateEntityLlmProviders(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiUpdateEntityLlmProvidersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiLlmProviderOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_UpdateEntityNotificationChannels(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiUpdateEntityNotificationChannelsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiNotificationChannelOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_UpdateEntityOrganizationSettings(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiUpdateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_UpdateEntityThemes(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiUpdateEntityThemesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiThemeOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_UpdateEntityUserGroups(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiUpdateEntityUserGroupsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiUserGroupOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_UpdateEntityUsers(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiUpdateEntityUsersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiUserOutDocument>;
-
-// @public
-export function OrganizationModelControllerApi_UpdateEntityWorkspaces(axios: AxiosInstance, basePath: string, requestParameters: OrganizationModelControllerApiUpdateEntityWorkspacesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceOutDocument>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_CreateEntityColorPalettes(jsonApiColorPaletteInDocument: JsonApiColorPaletteInDocument, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_CreateEntityCspDirectives(jsonApiCspDirectiveInDocument: JsonApiCspDirectiveInDocument, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_CreateEntityExportTemplates(jsonApiExportTemplatePostOptionalIdDocument: JsonApiExportTemplatePostOptionalIdDocument, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_CreateEntityIdentityProviders(jsonApiIdentityProviderInDocument: JsonApiIdentityProviderInDocument, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_CreateEntityLlmEndpoints(jsonApiLlmEndpointInDocument: JsonApiLlmEndpointInDocument, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_CreateEntityLlmProviders(jsonApiLlmProviderInDocument: JsonApiLlmProviderInDocument, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_CreateEntityNotificationChannels(jsonApiNotificationChannelPostOptionalIdDocument: JsonApiNotificationChannelPostOptionalIdDocument, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_CreateEntityOrganizationSettings(jsonApiOrganizationSettingInDocument: JsonApiOrganizationSettingInDocument, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_CreateEntityThemes(jsonApiThemeInDocument: JsonApiThemeInDocument, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_CreateEntityUserGroups(jsonApiUserGroupInDocument: JsonApiUserGroupInDocument, include?: Array<'userGroups' | 'parents' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_CreateEntityUsers(jsonApiUserInDocument: JsonApiUserInDocument, include?: Array<'userGroups' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_CreateEntityWorkspaces(jsonApiWorkspaceInDocument: JsonApiWorkspaceInDocument, include?: Array<'workspaces' | 'parent' | 'ALL'>, metaInclude?: Array<'config' | 'permissions' | 'hierarchy' | 'dataModelDatasets' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_DeleteEntityColorPalettes(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_DeleteEntityCspDirectives(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_DeleteEntityExportTemplates(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_DeleteEntityIdentityProviders(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_DeleteEntityLlmEndpoints(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_DeleteEntityLlmProviders(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_DeleteEntityNotificationChannels(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_DeleteEntityOrganizationSettings(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_DeleteEntityThemes(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_DeleteEntityUserGroups(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_DeleteEntityUsers(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_DeleteEntityWorkspaces(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_GetAllEntitiesColorPalettes(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_GetAllEntitiesCspDirectives(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_GetAllEntitiesDataSourceIdentifiers(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'permissions' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_GetAllEntitiesEntitlements(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_GetAllEntitiesExportTemplates(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_GetAllEntitiesIdentityProviders(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_GetAllEntitiesLlmEndpoints(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_GetAllEntitiesLlmProviders(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public (undocumented)
-export function OrganizationModelControllerApiAxiosParamCreator_GetAllEntitiesNotificationChannelIdentifiers(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_GetAllEntitiesNotificationChannels(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_GetAllEntitiesOrganizationSettings(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_GetAllEntitiesThemes(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_GetAllEntitiesUserGroups(filter?: string, include?: Array<'userGroups' | 'parents' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_GetAllEntitiesUserIdentifiers(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_GetAllEntitiesUsers(filter?: string, include?: Array<'userGroups' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_GetAllEntitiesWorkspaces(filter?: string, include?: Array<'workspaces' | 'parent' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'config' | 'permissions' | 'hierarchy' | 'dataModelDatasets' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_GetEntityColorPalettes(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_GetEntityCspDirectives(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_GetEntityDataSourceIdentifiers(id: string, filter?: string, metaInclude?: Array<'permissions' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_GetEntityEntitlements(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_GetEntityExportTemplates(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_GetEntityIdentityProviders(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_GetEntityLlmEndpoints(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_GetEntityLlmProviders(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public (undocumented)
-export function OrganizationModelControllerApiAxiosParamCreator_GetEntityNotificationChannelIdentifiers(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_GetEntityNotificationChannels(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_GetEntityOrganizationSettings(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_GetEntityThemes(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_GetEntityUserGroups(id: string, filter?: string, include?: Array<'userGroups' | 'parents' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_GetEntityUserIdentifiers(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_GetEntityUsers(id: string, filter?: string, include?: Array<'userGroups' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_GetEntityWorkspaces(id: string, filter?: string, include?: Array<'workspaces' | 'parent' | 'ALL'>, metaInclude?: Array<'config' | 'permissions' | 'hierarchy' | 'dataModelDatasets' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_PatchEntityColorPalettes(id: string, jsonApiColorPalettePatchDocument: JsonApiColorPalettePatchDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_PatchEntityCspDirectives(id: string, jsonApiCspDirectivePatchDocument: JsonApiCspDirectivePatchDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_PatchEntityExportTemplates(id: string, jsonApiExportTemplatePatchDocument: JsonApiExportTemplatePatchDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_PatchEntityIdentityProviders(id: string, jsonApiIdentityProviderPatchDocument: JsonApiIdentityProviderPatchDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_PatchEntityLlmEndpoints(id: string, jsonApiLlmEndpointPatchDocument: JsonApiLlmEndpointPatchDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_PatchEntityLlmProviders(id: string, jsonApiLlmProviderPatchDocument: JsonApiLlmProviderPatchDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_PatchEntityNotificationChannels(id: string, jsonApiNotificationChannelPatchDocument: JsonApiNotificationChannelPatchDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_PatchEntityOrganizationSettings(id: string, jsonApiOrganizationSettingPatchDocument: JsonApiOrganizationSettingPatchDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_PatchEntityThemes(id: string, jsonApiThemePatchDocument: JsonApiThemePatchDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_PatchEntityUserGroups(id: string, jsonApiUserGroupPatchDocument: JsonApiUserGroupPatchDocument, filter?: string, include?: Array<'userGroups' | 'parents' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_PatchEntityUsers(id: string, jsonApiUserPatchDocument: JsonApiUserPatchDocument, filter?: string, include?: Array<'userGroups' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_PatchEntityWorkspaces(id: string, jsonApiWorkspacePatchDocument: JsonApiWorkspacePatchDocument, filter?: string, include?: Array<'workspaces' | 'parent' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_UpdateEntityColorPalettes(id: string, jsonApiColorPaletteInDocument: JsonApiColorPaletteInDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_UpdateEntityCspDirectives(id: string, jsonApiCspDirectiveInDocument: JsonApiCspDirectiveInDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_UpdateEntityExportTemplates(id: string, jsonApiExportTemplateInDocument: JsonApiExportTemplateInDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_UpdateEntityIdentityProviders(id: string, jsonApiIdentityProviderInDocument: JsonApiIdentityProviderInDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_UpdateEntityLlmEndpoints(id: string, jsonApiLlmEndpointInDocument: JsonApiLlmEndpointInDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_UpdateEntityLlmProviders(id: string, jsonApiLlmProviderInDocument: JsonApiLlmProviderInDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_UpdateEntityNotificationChannels(id: string, jsonApiNotificationChannelInDocument: JsonApiNotificationChannelInDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_UpdateEntityOrganizationSettings(id: string, jsonApiOrganizationSettingInDocument: JsonApiOrganizationSettingInDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_UpdateEntityThemes(id: string, jsonApiThemeInDocument: JsonApiThemeInDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_UpdateEntityUserGroups(id: string, jsonApiUserGroupInDocument: JsonApiUserGroupInDocument, filter?: string, include?: Array<'userGroups' | 'parents' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_UpdateEntityUsers(id: string, jsonApiUserInDocument: JsonApiUserInDocument, filter?: string, include?: Array<'userGroups' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export function OrganizationModelControllerApiAxiosParamCreator_UpdateEntityWorkspaces(id: string, jsonApiWorkspaceInDocument: JsonApiWorkspaceInDocument, filter?: string, include?: Array<'workspaces' | 'parent' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
-
-// @public
-export interface OrganizationModelControllerApiCreateEntityColorPalettesRequest {
-    readonly jsonApiColorPaletteInDocument: JsonApiColorPaletteInDocument;
-}
-
-// @public
-export interface OrganizationModelControllerApiCreateEntityCspDirectivesRequest {
-    readonly jsonApiCspDirectiveInDocument: JsonApiCspDirectiveInDocument;
-}
-
-// @public
-export interface OrganizationModelControllerApiCreateEntityExportTemplatesRequest {
-    readonly jsonApiExportTemplatePostOptionalIdDocument: JsonApiExportTemplatePostOptionalIdDocument;
-}
-
-// @public
-export interface OrganizationModelControllerApiCreateEntityIdentityProvidersRequest {
-    readonly jsonApiIdentityProviderInDocument: JsonApiIdentityProviderInDocument;
-}
-
-// @public
-export interface OrganizationModelControllerApiCreateEntityLlmEndpointsRequest {
-    readonly jsonApiLlmEndpointInDocument: JsonApiLlmEndpointInDocument;
-}
-
-// @public
-export interface OrganizationModelControllerApiCreateEntityLlmProvidersRequest {
-    readonly jsonApiLlmProviderInDocument: JsonApiLlmProviderInDocument;
-}
-
-// @public
-export interface OrganizationModelControllerApiCreateEntityNotificationChannelsRequest {
-    readonly jsonApiNotificationChannelPostOptionalIdDocument: JsonApiNotificationChannelPostOptionalIdDocument;
-}
-
-// @public
-export interface OrganizationModelControllerApiCreateEntityOrganizationSettingsRequest {
-    readonly jsonApiOrganizationSettingInDocument: JsonApiOrganizationSettingInDocument;
-}
-
-// @public
-export interface OrganizationModelControllerApiCreateEntityThemesRequest {
-    readonly jsonApiThemeInDocument: JsonApiThemeInDocument;
-}
-
-// @public
-export interface OrganizationModelControllerApiCreateEntityUserGroupsRequest {
-    readonly include?: Array<'userGroups' | 'parents' | 'ALL'>;
-    readonly jsonApiUserGroupInDocument: JsonApiUserGroupInDocument;
-}
-
-// @public
-export interface OrganizationModelControllerApiCreateEntityUsersRequest {
-    readonly include?: Array<'userGroups' | 'ALL'>;
-    readonly jsonApiUserInDocument: JsonApiUserInDocument;
-}
-
-// @public
-export interface OrganizationModelControllerApiCreateEntityWorkspacesRequest {
-    readonly include?: Array<'workspaces' | 'parent' | 'ALL'>;
-    readonly jsonApiWorkspaceInDocument: JsonApiWorkspaceInDocument;
-    readonly metaInclude?: Array<'config' | 'permissions' | 'hierarchy' | 'dataModelDatasets' | 'all' | 'ALL'>;
-}
-
-// @public
-export interface OrganizationModelControllerApiDeleteEntityColorPalettesRequest {
-    readonly filter?: string;
-    readonly id: string;
-}
-
-// @public
-export interface OrganizationModelControllerApiDeleteEntityCspDirectivesRequest {
-    readonly filter?: string;
-    readonly id: string;
-}
-
-// @public
-export interface OrganizationModelControllerApiDeleteEntityExportTemplatesRequest {
-    readonly filter?: string;
-    readonly id: string;
-}
-
-// @public
-export interface OrganizationModelControllerApiDeleteEntityIdentityProvidersRequest {
-    readonly filter?: string;
-    readonly id: string;
-}
-
-// @public
-export interface OrganizationModelControllerApiDeleteEntityLlmEndpointsRequest {
-    readonly filter?: string;
-    readonly id: string;
-}
-
-// @public
-export interface OrganizationModelControllerApiDeleteEntityLlmProvidersRequest {
-    readonly filter?: string;
-    readonly id: string;
-}
-
-// @public
-export interface OrganizationModelControllerApiDeleteEntityNotificationChannelsRequest {
-    readonly filter?: string;
-    readonly id: string;
-}
-
-// @public
-export interface OrganizationModelControllerApiDeleteEntityOrganizationSettingsRequest {
-    readonly filter?: string;
-    readonly id: string;
-}
-
-// @public
-export interface OrganizationModelControllerApiDeleteEntityThemesRequest {
-    readonly filter?: string;
-    readonly id: string;
-}
-
-// @public
-export interface OrganizationModelControllerApiDeleteEntityUserGroupsRequest {
-    readonly filter?: string;
-    readonly id: string;
-}
-
-// @public
-export interface OrganizationModelControllerApiDeleteEntityUsersRequest {
-    readonly filter?: string;
-    readonly id: string;
-}
-
-// @public
-export interface OrganizationModelControllerApiDeleteEntityWorkspacesRequest {
-    readonly filter?: string;
-    readonly id: string;
-}
-
-// @public
-export interface OrganizationModelControllerApiGetAllEntitiesColorPalettesRequest {
-    readonly filter?: string;
-    readonly metaInclude?: Array<'page' | 'all' | 'ALL'>;
-    readonly page?: number;
-    readonly size?: number;
-    readonly sort?: Array<string>;
-}
-
-// @public
-export interface OrganizationModelControllerApiGetAllEntitiesCspDirectivesRequest {
-    readonly filter?: string;
-    readonly metaInclude?: Array<'page' | 'all' | 'ALL'>;
-    readonly page?: number;
-    readonly size?: number;
-    readonly sort?: Array<string>;
-}
-
-// @public
-export interface OrganizationModelControllerApiGetAllEntitiesDataSourceIdentifiersRequest {
-    readonly filter?: string;
-    readonly metaInclude?: Array<'permissions' | 'page' | 'all' | 'ALL'>;
-    readonly page?: number;
-    readonly size?: number;
-    readonly sort?: Array<string>;
-}
-
-// @public
-export interface OrganizationModelControllerApiGetAllEntitiesEntitlementsRequest {
-    readonly filter?: string;
-    readonly metaInclude?: Array<'page' | 'all' | 'ALL'>;
-    readonly page?: number;
-    readonly size?: number;
-    readonly sort?: Array<string>;
-}
-
-// @public
-export interface OrganizationModelControllerApiGetAllEntitiesExportTemplatesRequest {
-    readonly filter?: string;
-    readonly metaInclude?: Array<'page' | 'all' | 'ALL'>;
-    readonly page?: number;
-    readonly size?: number;
-    readonly sort?: Array<string>;
-}
-
-// @public
-export interface OrganizationModelControllerApiGetAllEntitiesIdentityProvidersRequest {
-    readonly filter?: string;
-    readonly metaInclude?: Array<'page' | 'all' | 'ALL'>;
-    readonly page?: number;
-    readonly size?: number;
-    readonly sort?: Array<string>;
-}
-
-// @public
-export interface OrganizationModelControllerApiGetAllEntitiesLlmEndpointsRequest {
-    readonly filter?: string;
-    readonly metaInclude?: Array<'page' | 'all' | 'ALL'>;
-    readonly page?: number;
-    readonly size?: number;
-    readonly sort?: Array<string>;
-}
-
-// @public
-export interface OrganizationModelControllerApiGetAllEntitiesLlmProvidersRequest {
-    readonly filter?: string;
-    readonly metaInclude?: Array<'page' | 'all' | 'ALL'>;
-    readonly page?: number;
-    readonly size?: number;
-    readonly sort?: Array<string>;
-}
-
-// @public
-export interface OrganizationModelControllerApiGetAllEntitiesNotificationChannelIdentifiersRequest {
-    readonly filter?: string;
-    readonly metaInclude?: Array<'page' | 'all' | 'ALL'>;
-    readonly page?: number;
-    readonly size?: number;
-    readonly sort?: Array<string>;
-}
-
-// @public
-export interface OrganizationModelControllerApiGetAllEntitiesNotificationChannelsRequest {
-    readonly filter?: string;
-    readonly metaInclude?: Array<'page' | 'all' | 'ALL'>;
-    readonly page?: number;
-    readonly size?: number;
-    readonly sort?: Array<string>;
-}
-
-// @public
-export interface OrganizationModelControllerApiGetAllEntitiesOrganizationSettingsRequest {
-    readonly filter?: string;
-    readonly metaInclude?: Array<'page' | 'all' | 'ALL'>;
-    readonly page?: number;
-    readonly size?: number;
-    readonly sort?: Array<string>;
-}
-
-// @public
-export interface OrganizationModelControllerApiGetAllEntitiesThemesRequest {
-    readonly filter?: string;
-    readonly metaInclude?: Array<'page' | 'all' | 'ALL'>;
-    readonly page?: number;
-    readonly size?: number;
-    readonly sort?: Array<string>;
-}
-
-// @public
-export interface OrganizationModelControllerApiGetAllEntitiesUserGroupsRequest {
-    readonly filter?: string;
-    readonly include?: Array<'userGroups' | 'parents' | 'ALL'>;
-    readonly metaInclude?: Array<'page' | 'all' | 'ALL'>;
-    readonly page?: number;
-    readonly size?: number;
-    readonly sort?: Array<string>;
-}
-
-// @public
-export interface OrganizationModelControllerApiGetAllEntitiesUserIdentifiersRequest {
-    readonly filter?: string;
-    readonly metaInclude?: Array<'page' | 'all' | 'ALL'>;
-    readonly page?: number;
-    readonly size?: number;
-    readonly sort?: Array<string>;
-}
-
-// @public
-export interface OrganizationModelControllerApiGetAllEntitiesUsersRequest {
-    readonly filter?: string;
-    readonly include?: Array<'userGroups' | 'ALL'>;
-    readonly metaInclude?: Array<'page' | 'all' | 'ALL'>;
-    readonly page?: number;
-    readonly size?: number;
-    readonly sort?: Array<string>;
-}
-
-// @public
-export interface OrganizationModelControllerApiGetAllEntitiesWorkspacesRequest {
-    readonly filter?: string;
-    readonly include?: Array<'workspaces' | 'parent' | 'ALL'>;
-    readonly metaInclude?: Array<'config' | 'permissions' | 'hierarchy' | 'dataModelDatasets' | 'page' | 'all' | 'ALL'>;
-    readonly page?: number;
-    readonly size?: number;
-    readonly sort?: Array<string>;
-}
-
-// @public
-export interface OrganizationModelControllerApiGetEntityColorPalettesRequest {
-    readonly filter?: string;
-    readonly id: string;
-}
-
-// @public
-export interface OrganizationModelControllerApiGetEntityCspDirectivesRequest {
-    readonly filter?: string;
-    readonly id: string;
-}
-
-// @public
-export interface OrganizationModelControllerApiGetEntityDataSourceIdentifiersRequest {
-    readonly filter?: string;
-    readonly id: string;
-    readonly metaInclude?: Array<'permissions' | 'all' | 'ALL'>;
-}
-
-// @public
-export interface OrganizationModelControllerApiGetEntityEntitlementsRequest {
-    readonly filter?: string;
-    readonly id: string;
-}
-
-// @public
-export interface OrganizationModelControllerApiGetEntityExportTemplatesRequest {
-    readonly filter?: string;
-    readonly id: string;
-}
-
-// @public
-export interface OrganizationModelControllerApiGetEntityIdentityProvidersRequest {
-    readonly filter?: string;
-    readonly id: string;
-}
-
-// @public
-export interface OrganizationModelControllerApiGetEntityLlmEndpointsRequest {
-    readonly filter?: string;
-    readonly id: string;
-}
-
-// @public
-export interface OrganizationModelControllerApiGetEntityLlmProvidersRequest {
-    readonly filter?: string;
-    readonly id: string;
-}
-
-// @public
-export interface OrganizationModelControllerApiGetEntityNotificationChannelIdentifiersRequest {
-    readonly filter?: string;
-    readonly id: string;
-}
-
-// @public
-export interface OrganizationModelControllerApiGetEntityNotificationChannelsRequest {
-    readonly filter?: string;
-    readonly id: string;
-}
-
-// @public
-export interface OrganizationModelControllerApiGetEntityOrganizationSettingsRequest {
-    readonly filter?: string;
-    readonly id: string;
-}
-
-// @public
-export interface OrganizationModelControllerApiGetEntityThemesRequest {
-    readonly filter?: string;
-    readonly id: string;
-}
-
-// @public
-export interface OrganizationModelControllerApiGetEntityUserGroupsRequest {
-    readonly filter?: string;
-    readonly id: string;
-    readonly include?: Array<'userGroups' | 'parents' | 'ALL'>;
-}
-
-// @public
-export interface OrganizationModelControllerApiGetEntityUserIdentifiersRequest {
-    readonly filter?: string;
-    readonly id: string;
-}
-
-// @public
-export interface OrganizationModelControllerApiGetEntityUsersRequest {
-    readonly filter?: string;
-    readonly id: string;
-    readonly include?: Array<'userGroups' | 'ALL'>;
-}
-
-// @public
-export interface OrganizationModelControllerApiGetEntityWorkspacesRequest {
-    readonly filter?: string;
-    readonly id: string;
-    readonly include?: Array<'workspaces' | 'parent' | 'ALL'>;
-    readonly metaInclude?: Array<'config' | 'permissions' | 'hierarchy' | 'dataModelDatasets' | 'all' | 'ALL'>;
-}
-
-// @public
-export interface OrganizationModelControllerApiInterface {
-    createEntityColorPalettes(requestParameters: OrganizationModelControllerApiCreateEntityColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiColorPaletteOutDocument>;
-    createEntityCspDirectives(requestParameters: OrganizationModelControllerApiCreateEntityCspDirectivesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCspDirectiveOutDocument>;
-    createEntityExportTemplates(requestParameters: OrganizationModelControllerApiCreateEntityExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportTemplateOutDocument>;
-    createEntityIdentityProviders(requestParameters: OrganizationModelControllerApiCreateEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutDocument>;
-    // @deprecated
-    createEntityLlmEndpoints(requestParameters: OrganizationModelControllerApiCreateEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutDocument>;
-    createEntityLlmProviders(requestParameters: OrganizationModelControllerApiCreateEntityLlmProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmProviderOutDocument>;
-    createEntityNotificationChannels(requestParameters: OrganizationModelControllerApiCreateEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
-    createEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiCreateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
-    createEntityThemes(requestParameters: OrganizationModelControllerApiCreateEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
-    createEntityUserGroups(requestParameters: OrganizationModelControllerApiCreateEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
-    createEntityUsers(requestParameters: OrganizationModelControllerApiCreateEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutDocument>;
-    createEntityWorkspaces(requestParameters: OrganizationModelControllerApiCreateEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
-    deleteEntityColorPalettes(requestParameters: OrganizationModelControllerApiDeleteEntityColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    deleteEntityCspDirectives(requestParameters: OrganizationModelControllerApiDeleteEntityCspDirectivesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    deleteEntityExportTemplates(requestParameters: OrganizationModelControllerApiDeleteEntityExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    deleteEntityIdentityProviders(requestParameters: OrganizationModelControllerApiDeleteEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    // @deprecated
-    deleteEntityLlmEndpoints(requestParameters: OrganizationModelControllerApiDeleteEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    deleteEntityLlmProviders(requestParameters: OrganizationModelControllerApiDeleteEntityLlmProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    deleteEntityNotificationChannels(requestParameters: OrganizationModelControllerApiDeleteEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    deleteEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiDeleteEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    deleteEntityThemes(requestParameters: OrganizationModelControllerApiDeleteEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    deleteEntityUserGroups(requestParameters: OrganizationModelControllerApiDeleteEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    deleteEntityUsers(requestParameters: OrganizationModelControllerApiDeleteEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    deleteEntityWorkspaces(requestParameters: OrganizationModelControllerApiDeleteEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
-    getAllEntitiesColorPalettes(requestParameters: OrganizationModelControllerApiGetAllEntitiesColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiColorPaletteOutList>;
-    getAllEntitiesCspDirectives(requestParameters: OrganizationModelControllerApiGetAllEntitiesCspDirectivesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCspDirectiveOutList>;
-    getAllEntitiesDataSourceIdentifiers(requestParameters: OrganizationModelControllerApiGetAllEntitiesDataSourceIdentifiersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceIdentifierOutList>;
-    getAllEntitiesEntitlements(requestParameters: OrganizationModelControllerApiGetAllEntitiesEntitlementsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiEntitlementOutList>;
-    getAllEntitiesExportTemplates(requestParameters: OrganizationModelControllerApiGetAllEntitiesExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportTemplateOutList>;
-    getAllEntitiesIdentityProviders(requestParameters: OrganizationModelControllerApiGetAllEntitiesIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutList>;
-    // @deprecated
-    getAllEntitiesLlmEndpoints(requestParameters: OrganizationModelControllerApiGetAllEntitiesLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutList>;
-    getAllEntitiesLlmProviders(requestParameters: OrganizationModelControllerApiGetAllEntitiesLlmProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmProviderOutList>;
-    // (undocumented)
-    getAllEntitiesNotificationChannelIdentifiers(requestParameters: OrganizationModelControllerApiGetAllEntitiesNotificationChannelIdentifiersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelIdentifierOutList>;
-    getAllEntitiesNotificationChannels(requestParameters: OrganizationModelControllerApiGetAllEntitiesNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutList>;
-    getAllEntitiesOrganizationSettings(requestParameters: OrganizationModelControllerApiGetAllEntitiesOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutList>;
-    getAllEntitiesThemes(requestParameters: OrganizationModelControllerApiGetAllEntitiesThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutList>;
-    getAllEntitiesUserGroups(requestParameters: OrganizationModelControllerApiGetAllEntitiesUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutList>;
-    getAllEntitiesUserIdentifiers(requestParameters: OrganizationModelControllerApiGetAllEntitiesUserIdentifiersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserIdentifierOutList>;
-    getAllEntitiesUsers(requestParameters: OrganizationModelControllerApiGetAllEntitiesUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutList>;
-    getAllEntitiesWorkspaces(requestParameters: OrganizationModelControllerApiGetAllEntitiesWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutList>;
-    getEntityColorPalettes(requestParameters: OrganizationModelControllerApiGetEntityColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiColorPaletteOutDocument>;
-    getEntityCspDirectives(requestParameters: OrganizationModelControllerApiGetEntityCspDirectivesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCspDirectiveOutDocument>;
-    getEntityDataSourceIdentifiers(requestParameters: OrganizationModelControllerApiGetEntityDataSourceIdentifiersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiDataSourceIdentifierOutDocument>;
-    getEntityEntitlements(requestParameters: OrganizationModelControllerApiGetEntityEntitlementsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiEntitlementOutDocument>;
-    getEntityExportTemplates(requestParameters: OrganizationModelControllerApiGetEntityExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportTemplateOutDocument>;
-    getEntityIdentityProviders(requestParameters: OrganizationModelControllerApiGetEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutDocument>;
-    // @deprecated
-    getEntityLlmEndpoints(requestParameters: OrganizationModelControllerApiGetEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutDocument>;
-    getEntityLlmProviders(requestParameters: OrganizationModelControllerApiGetEntityLlmProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmProviderOutDocument>;
-    // (undocumented)
-    getEntityNotificationChannelIdentifiers(requestParameters: OrganizationModelControllerApiGetEntityNotificationChannelIdentifiersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelIdentifierOutDocument>;
-    getEntityNotificationChannels(requestParameters: OrganizationModelControllerApiGetEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
-    getEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiGetEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
-    getEntityThemes(requestParameters: OrganizationModelControllerApiGetEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
-    getEntityUserGroups(requestParameters: OrganizationModelControllerApiGetEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
-    getEntityUserIdentifiers(requestParameters: OrganizationModelControllerApiGetEntityUserIdentifiersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserIdentifierOutDocument>;
-    getEntityUsers(requestParameters: OrganizationModelControllerApiGetEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutDocument>;
-    getEntityWorkspaces(requestParameters: OrganizationModelControllerApiGetEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
-    patchEntityColorPalettes(requestParameters: OrganizationModelControllerApiPatchEntityColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiColorPaletteOutDocument>;
-    patchEntityCspDirectives(requestParameters: OrganizationModelControllerApiPatchEntityCspDirectivesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCspDirectiveOutDocument>;
-    patchEntityExportTemplates(requestParameters: OrganizationModelControllerApiPatchEntityExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportTemplateOutDocument>;
-    patchEntityIdentityProviders(requestParameters: OrganizationModelControllerApiPatchEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutDocument>;
-    // @deprecated
-    patchEntityLlmEndpoints(requestParameters: OrganizationModelControllerApiPatchEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutDocument>;
-    patchEntityLlmProviders(requestParameters: OrganizationModelControllerApiPatchEntityLlmProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmProviderOutDocument>;
-    patchEntityNotificationChannels(requestParameters: OrganizationModelControllerApiPatchEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
-    patchEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiPatchEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
-    patchEntityThemes(requestParameters: OrganizationModelControllerApiPatchEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
-    patchEntityUserGroups(requestParameters: OrganizationModelControllerApiPatchEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
-    patchEntityUsers(requestParameters: OrganizationModelControllerApiPatchEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutDocument>;
-    patchEntityWorkspaces(requestParameters: OrganizationModelControllerApiPatchEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
-    updateEntityColorPalettes(requestParameters: OrganizationModelControllerApiUpdateEntityColorPalettesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiColorPaletteOutDocument>;
-    updateEntityCspDirectives(requestParameters: OrganizationModelControllerApiUpdateEntityCspDirectivesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiCspDirectiveOutDocument>;
-    updateEntityExportTemplates(requestParameters: OrganizationModelControllerApiUpdateEntityExportTemplatesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiExportTemplateOutDocument>;
-    updateEntityIdentityProviders(requestParameters: OrganizationModelControllerApiUpdateEntityIdentityProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiIdentityProviderOutDocument>;
-    // @deprecated
-    updateEntityLlmEndpoints(requestParameters: OrganizationModelControllerApiUpdateEntityLlmEndpointsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmEndpointOutDocument>;
-    updateEntityLlmProviders(requestParameters: OrganizationModelControllerApiUpdateEntityLlmProvidersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiLlmProviderOutDocument>;
-    updateEntityNotificationChannels(requestParameters: OrganizationModelControllerApiUpdateEntityNotificationChannelsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiNotificationChannelOutDocument>;
-    updateEntityOrganizationSettings(requestParameters: OrganizationModelControllerApiUpdateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
-    updateEntityThemes(requestParameters: OrganizationModelControllerApiUpdateEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
-    updateEntityUserGroups(requestParameters: OrganizationModelControllerApiUpdateEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
-    updateEntityUsers(requestParameters: OrganizationModelControllerApiUpdateEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutDocument>;
-    updateEntityWorkspaces(requestParameters: OrganizationModelControllerApiUpdateEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
-}
-
-// @public
-export interface OrganizationModelControllerApiPatchEntityColorPalettesRequest {
-    readonly filter?: string;
-    readonly id: string;
-    readonly jsonApiColorPalettePatchDocument: JsonApiColorPalettePatchDocument;
-}
-
-// @public
-export interface OrganizationModelControllerApiPatchEntityCspDirectivesRequest {
-    readonly filter?: string;
-    readonly id: string;
-    readonly jsonApiCspDirectivePatchDocument: JsonApiCspDirectivePatchDocument;
-}
-
-// @public
-export interface OrganizationModelControllerApiPatchEntityExportTemplatesRequest {
-    readonly filter?: string;
-    readonly id: string;
-    readonly jsonApiExportTemplatePatchDocument: JsonApiExportTemplatePatchDocument;
-}
-
-// @public
-export interface OrganizationModelControllerApiPatchEntityIdentityProvidersRequest {
-    readonly filter?: string;
-    readonly id: string;
-    readonly jsonApiIdentityProviderPatchDocument: JsonApiIdentityProviderPatchDocument;
-}
-
-// @public
-export interface OrganizationModelControllerApiPatchEntityLlmEndpointsRequest {
-    readonly filter?: string;
-    readonly id: string;
-    readonly jsonApiLlmEndpointPatchDocument: JsonApiLlmEndpointPatchDocument;
-}
-
-// @public
-export interface OrganizationModelControllerApiPatchEntityLlmProvidersRequest {
-    readonly filter?: string;
-    readonly id: string;
-    readonly jsonApiLlmProviderPatchDocument: JsonApiLlmProviderPatchDocument;
-}
-
-// @public
-export interface OrganizationModelControllerApiPatchEntityNotificationChannelsRequest {
-    readonly filter?: string;
-    readonly id: string;
-    readonly jsonApiNotificationChannelPatchDocument: JsonApiNotificationChannelPatchDocument;
-}
-
-// @public
-export interface OrganizationModelControllerApiPatchEntityOrganizationSettingsRequest {
-    readonly filter?: string;
-    readonly id: string;
-    readonly jsonApiOrganizationSettingPatchDocument: JsonApiOrganizationSettingPatchDocument;
-}
-
-// @public
-export interface OrganizationModelControllerApiPatchEntityThemesRequest {
-    readonly filter?: string;
-    readonly id: string;
-    readonly jsonApiThemePatchDocument: JsonApiThemePatchDocument;
-}
-
-// @public
-export interface OrganizationModelControllerApiPatchEntityUserGroupsRequest {
-    readonly filter?: string;
-    readonly id: string;
-    readonly include?: Array<'userGroups' | 'parents' | 'ALL'>;
-    readonly jsonApiUserGroupPatchDocument: JsonApiUserGroupPatchDocument;
-}
-
-// @public
-export interface OrganizationModelControllerApiPatchEntityUsersRequest {
-    readonly filter?: string;
-    readonly id: string;
-    readonly include?: Array<'userGroups' | 'ALL'>;
-    readonly jsonApiUserPatchDocument: JsonApiUserPatchDocument;
-}
-
-// @public
-export interface OrganizationModelControllerApiPatchEntityWorkspacesRequest {
-    readonly filter?: string;
-    readonly id: string;
-    readonly include?: Array<'workspaces' | 'parent' | 'ALL'>;
-    readonly jsonApiWorkspacePatchDocument: JsonApiWorkspacePatchDocument;
-}
-
-// @public
-export interface OrganizationModelControllerApiUpdateEntityColorPalettesRequest {
-    readonly filter?: string;
-    readonly id: string;
-    readonly jsonApiColorPaletteInDocument: JsonApiColorPaletteInDocument;
-}
-
-// @public
-export interface OrganizationModelControllerApiUpdateEntityCspDirectivesRequest {
-    readonly filter?: string;
-    readonly id: string;
-    readonly jsonApiCspDirectiveInDocument: JsonApiCspDirectiveInDocument;
-}
-
-// @public
-export interface OrganizationModelControllerApiUpdateEntityExportTemplatesRequest {
-    readonly filter?: string;
-    readonly id: string;
-    readonly jsonApiExportTemplateInDocument: JsonApiExportTemplateInDocument;
-}
-
-// @public
-export interface OrganizationModelControllerApiUpdateEntityIdentityProvidersRequest {
-    readonly filter?: string;
-    readonly id: string;
-    readonly jsonApiIdentityProviderInDocument: JsonApiIdentityProviderInDocument;
-}
-
-// @public
-export interface OrganizationModelControllerApiUpdateEntityLlmEndpointsRequest {
-    readonly filter?: string;
-    readonly id: string;
-    readonly jsonApiLlmEndpointInDocument: JsonApiLlmEndpointInDocument;
-}
-
-// @public
-export interface OrganizationModelControllerApiUpdateEntityLlmProvidersRequest {
-    readonly filter?: string;
-    readonly id: string;
-    readonly jsonApiLlmProviderInDocument: JsonApiLlmProviderInDocument;
-}
-
-// @public
-export interface OrganizationModelControllerApiUpdateEntityNotificationChannelsRequest {
-    readonly filter?: string;
-    readonly id: string;
-    readonly jsonApiNotificationChannelInDocument: JsonApiNotificationChannelInDocument;
-}
-
-// @public
-export interface OrganizationModelControllerApiUpdateEntityOrganizationSettingsRequest {
-    readonly filter?: string;
-    readonly id: string;
-    readonly jsonApiOrganizationSettingInDocument: JsonApiOrganizationSettingInDocument;
-}
-
-// @public
-export interface OrganizationModelControllerApiUpdateEntityThemesRequest {
-    readonly filter?: string;
-    readonly id: string;
-    readonly jsonApiThemeInDocument: JsonApiThemeInDocument;
-}
-
-// @public
-export interface OrganizationModelControllerApiUpdateEntityUserGroupsRequest {
-    readonly filter?: string;
-    readonly id: string;
-    readonly include?: Array<'userGroups' | 'parents' | 'ALL'>;
-    readonly jsonApiUserGroupInDocument: JsonApiUserGroupInDocument;
-}
-
-// @public
-export interface OrganizationModelControllerApiUpdateEntityUsersRequest {
-    readonly filter?: string;
-    readonly id: string;
-    readonly include?: Array<'userGroups' | 'ALL'>;
-    readonly jsonApiUserInDocument: JsonApiUserInDocument;
-}
-
-// @public
-export interface OrganizationModelControllerApiUpdateEntityWorkspacesRequest {
-    readonly filter?: string;
-    readonly id: string;
-    readonly include?: Array<'workspaces' | 'parent' | 'ALL'>;
-    readonly jsonApiWorkspaceInDocument: JsonApiWorkspaceInDocument;
-}
-
-// @public
 export interface OrganizationPermissionAssignment {
     // (undocumented)
     'assigneeIdentifier': AssigneeIdentifier;
@@ -26496,6 +26144,101 @@ export interface OrganizationPermissionAssignment {
 
 // @public (undocumented)
 export type OrganizationPermissionAssignmentPermissionsEnum = 'MANAGE' | 'SELF_CREATE_TOKEN' | 'BASE_UI_ACCESS';
+
+// @public
+export class OrganizationSettingControllerApi extends MetadataBaseApi implements OrganizationSettingControllerApiInterface {
+    createEntityOrganizationSettings(requestParameters: OrganizationSettingControllerApiCreateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
+    deleteEntityOrganizationSettings(requestParameters: OrganizationSettingControllerApiDeleteEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getAllEntitiesOrganizationSettings(requestParameters?: OrganizationSettingControllerApiGetAllEntitiesOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutList>;
+    getEntityOrganizationSettings(requestParameters: OrganizationSettingControllerApiGetEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
+    patchEntityOrganizationSettings(requestParameters: OrganizationSettingControllerApiPatchEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
+    updateEntityOrganizationSettings(requestParameters: OrganizationSettingControllerApiUpdateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
+}
+
+// @public
+export function OrganizationSettingControllerApi_CreateEntityOrganizationSettings(axios: AxiosInstance, basePath: string, requestParameters: OrganizationSettingControllerApiCreateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
+
+// @public
+export function OrganizationSettingControllerApi_DeleteEntityOrganizationSettings(axios: AxiosInstance, basePath: string, requestParameters: OrganizationSettingControllerApiDeleteEntityOrganizationSettingsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
+
+// @public
+export function OrganizationSettingControllerApi_GetAllEntitiesOrganizationSettings(axios: AxiosInstance, basePath: string, requestParameters: OrganizationSettingControllerApiGetAllEntitiesOrganizationSettingsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiOrganizationSettingOutList>;
+
+// @public
+export function OrganizationSettingControllerApi_GetEntityOrganizationSettings(axios: AxiosInstance, basePath: string, requestParameters: OrganizationSettingControllerApiGetEntityOrganizationSettingsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
+
+// @public
+export function OrganizationSettingControllerApi_PatchEntityOrganizationSettings(axios: AxiosInstance, basePath: string, requestParameters: OrganizationSettingControllerApiPatchEntityOrganizationSettingsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
+
+// @public
+export function OrganizationSettingControllerApi_UpdateEntityOrganizationSettings(axios: AxiosInstance, basePath: string, requestParameters: OrganizationSettingControllerApiUpdateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
+
+// @public
+export function OrganizationSettingControllerApiAxiosParamCreator_CreateEntityOrganizationSettings(jsonApiOrganizationSettingInDocument: JsonApiOrganizationSettingInDocument, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function OrganizationSettingControllerApiAxiosParamCreator_DeleteEntityOrganizationSettings(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function OrganizationSettingControllerApiAxiosParamCreator_GetAllEntitiesOrganizationSettings(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function OrganizationSettingControllerApiAxiosParamCreator_GetEntityOrganizationSettings(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function OrganizationSettingControllerApiAxiosParamCreator_PatchEntityOrganizationSettings(id: string, jsonApiOrganizationSettingPatchDocument: JsonApiOrganizationSettingPatchDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function OrganizationSettingControllerApiAxiosParamCreator_UpdateEntityOrganizationSettings(id: string, jsonApiOrganizationSettingInDocument: JsonApiOrganizationSettingInDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export interface OrganizationSettingControllerApiCreateEntityOrganizationSettingsRequest {
+    readonly jsonApiOrganizationSettingInDocument: JsonApiOrganizationSettingInDocument;
+}
+
+// @public
+export interface OrganizationSettingControllerApiDeleteEntityOrganizationSettingsRequest {
+    readonly id: string;
+}
+
+// @public
+export interface OrganizationSettingControllerApiGetAllEntitiesOrganizationSettingsRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<'page' | 'all' | 'ALL'>;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+}
+
+// @public
+export interface OrganizationSettingControllerApiGetEntityOrganizationSettingsRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
+export interface OrganizationSettingControllerApiInterface {
+    createEntityOrganizationSettings(requestParameters: OrganizationSettingControllerApiCreateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
+    deleteEntityOrganizationSettings(requestParameters: OrganizationSettingControllerApiDeleteEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getAllEntitiesOrganizationSettings(requestParameters: OrganizationSettingControllerApiGetAllEntitiesOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutList>;
+    getEntityOrganizationSettings(requestParameters: OrganizationSettingControllerApiGetEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
+    patchEntityOrganizationSettings(requestParameters: OrganizationSettingControllerApiPatchEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
+    updateEntityOrganizationSettings(requestParameters: OrganizationSettingControllerApiUpdateEntityOrganizationSettingsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiOrganizationSettingOutDocument>;
+}
+
+// @public
+export interface OrganizationSettingControllerApiPatchEntityOrganizationSettingsRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiOrganizationSettingPatchDocument: JsonApiOrganizationSettingPatchDocument;
+}
+
+// @public
+export interface OrganizationSettingControllerApiUpdateEntityOrganizationSettingsRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiOrganizationSettingInDocument: JsonApiOrganizationSettingInDocument;
+}
 
 // @internal
 export class OrganizationUtilities {
@@ -26994,6 +26737,7 @@ export interface PositiveAttributeFilterPositiveAttributeFilter {
     'label': AfmIdentifier;
     // (undocumented)
     'localIdentifier'?: string;
+    'usesArbitraryValues'?: boolean;
 }
 
 // @public (undocumented)
@@ -28020,6 +27764,101 @@ export interface TestResponse {
     'successful': boolean;
 }
 
+// @public
+export class ThemeControllerApi extends MetadataBaseApi implements ThemeControllerApiInterface {
+    createEntityThemes(requestParameters: ThemeControllerApiCreateEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
+    deleteEntityThemes(requestParameters: ThemeControllerApiDeleteEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getAllEntitiesThemes(requestParameters?: ThemeControllerApiGetAllEntitiesThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutList>;
+    getEntityThemes(requestParameters: ThemeControllerApiGetEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
+    patchEntityThemes(requestParameters: ThemeControllerApiPatchEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
+    updateEntityThemes(requestParameters: ThemeControllerApiUpdateEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
+}
+
+// @public
+export function ThemeControllerApi_CreateEntityThemes(axios: AxiosInstance, basePath: string, requestParameters: ThemeControllerApiCreateEntityThemesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiThemeOutDocument>;
+
+// @public
+export function ThemeControllerApi_DeleteEntityThemes(axios: AxiosInstance, basePath: string, requestParameters: ThemeControllerApiDeleteEntityThemesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
+
+// @public
+export function ThemeControllerApi_GetAllEntitiesThemes(axios: AxiosInstance, basePath: string, requestParameters: ThemeControllerApiGetAllEntitiesThemesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiThemeOutList>;
+
+// @public
+export function ThemeControllerApi_GetEntityThemes(axios: AxiosInstance, basePath: string, requestParameters: ThemeControllerApiGetEntityThemesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiThemeOutDocument>;
+
+// @public
+export function ThemeControllerApi_PatchEntityThemes(axios: AxiosInstance, basePath: string, requestParameters: ThemeControllerApiPatchEntityThemesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiThemeOutDocument>;
+
+// @public
+export function ThemeControllerApi_UpdateEntityThemes(axios: AxiosInstance, basePath: string, requestParameters: ThemeControllerApiUpdateEntityThemesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiThemeOutDocument>;
+
+// @public
+export function ThemeControllerApiAxiosParamCreator_CreateEntityThemes(jsonApiThemeInDocument: JsonApiThemeInDocument, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function ThemeControllerApiAxiosParamCreator_DeleteEntityThemes(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function ThemeControllerApiAxiosParamCreator_GetAllEntitiesThemes(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function ThemeControllerApiAxiosParamCreator_GetEntityThemes(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function ThemeControllerApiAxiosParamCreator_PatchEntityThemes(id: string, jsonApiThemePatchDocument: JsonApiThemePatchDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function ThemeControllerApiAxiosParamCreator_UpdateEntityThemes(id: string, jsonApiThemeInDocument: JsonApiThemeInDocument, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export interface ThemeControllerApiCreateEntityThemesRequest {
+    readonly jsonApiThemeInDocument: JsonApiThemeInDocument;
+}
+
+// @public
+export interface ThemeControllerApiDeleteEntityThemesRequest {
+    readonly id: string;
+}
+
+// @public
+export interface ThemeControllerApiGetAllEntitiesThemesRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<'page' | 'all' | 'ALL'>;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+}
+
+// @public
+export interface ThemeControllerApiGetEntityThemesRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
+export interface ThemeControllerApiInterface {
+    createEntityThemes(requestParameters: ThemeControllerApiCreateEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
+    deleteEntityThemes(requestParameters: ThemeControllerApiDeleteEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getAllEntitiesThemes(requestParameters: ThemeControllerApiGetAllEntitiesThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutList>;
+    getEntityThemes(requestParameters: ThemeControllerApiGetEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
+    patchEntityThemes(requestParameters: ThemeControllerApiPatchEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
+    updateEntityThemes(requestParameters: ThemeControllerApiUpdateEntityThemesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiThemeOutDocument>;
+}
+
+// @public
+export interface ThemeControllerApiPatchEntityThemesRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiThemePatchDocument: JsonApiThemePatchDocument;
+}
+
+// @public
+export interface ThemeControllerApiUpdateEntityThemesRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly jsonApiThemeInDocument: JsonApiThemeInDocument;
+}
+
 // @public (undocumented)
 export const tigerActionsClientFactory: (axios: AxiosInstance) => ActionsApiInterface;
 
@@ -28231,6 +28070,106 @@ export interface UserContext {
 }
 
 // @public
+export class UserControllerApi extends MetadataBaseApi implements UserControllerApiInterface {
+    createEntityUsers(requestParameters: UserControllerApiCreateEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutDocument>;
+    deleteEntityUsers(requestParameters: UserControllerApiDeleteEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getAllEntitiesUsers(requestParameters?: UserControllerApiGetAllEntitiesUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutList>;
+    getEntityUsers(requestParameters: UserControllerApiGetEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutDocument>;
+    patchEntityUsers(requestParameters: UserControllerApiPatchEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutDocument>;
+    updateEntityUsers(requestParameters: UserControllerApiUpdateEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutDocument>;
+}
+
+// @public
+export function UserControllerApi_CreateEntityUsers(axios: AxiosInstance, basePath: string, requestParameters: UserControllerApiCreateEntityUsersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiUserOutDocument>;
+
+// @public
+export function UserControllerApi_DeleteEntityUsers(axios: AxiosInstance, basePath: string, requestParameters: UserControllerApiDeleteEntityUsersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
+
+// @public
+export function UserControllerApi_GetAllEntitiesUsers(axios: AxiosInstance, basePath: string, requestParameters: UserControllerApiGetAllEntitiesUsersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiUserOutList>;
+
+// @public
+export function UserControllerApi_GetEntityUsers(axios: AxiosInstance, basePath: string, requestParameters: UserControllerApiGetEntityUsersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiUserOutDocument>;
+
+// @public
+export function UserControllerApi_PatchEntityUsers(axios: AxiosInstance, basePath: string, requestParameters: UserControllerApiPatchEntityUsersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiUserOutDocument>;
+
+// @public
+export function UserControllerApi_UpdateEntityUsers(axios: AxiosInstance, basePath: string, requestParameters: UserControllerApiUpdateEntityUsersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiUserOutDocument>;
+
+// @public
+export function UserControllerApiAxiosParamCreator_CreateEntityUsers(jsonApiUserInDocument: JsonApiUserInDocument, include?: Array<'userGroups' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function UserControllerApiAxiosParamCreator_DeleteEntityUsers(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function UserControllerApiAxiosParamCreator_GetAllEntitiesUsers(filter?: string, include?: Array<'userGroups' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function UserControllerApiAxiosParamCreator_GetEntityUsers(id: string, filter?: string, include?: Array<'userGroups' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function UserControllerApiAxiosParamCreator_PatchEntityUsers(id: string, jsonApiUserPatchDocument: JsonApiUserPatchDocument, filter?: string, include?: Array<'userGroups' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function UserControllerApiAxiosParamCreator_UpdateEntityUsers(id: string, jsonApiUserInDocument: JsonApiUserInDocument, filter?: string, include?: Array<'userGroups' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export interface UserControllerApiCreateEntityUsersRequest {
+    readonly include?: Array<'userGroups' | 'ALL'>;
+    readonly jsonApiUserInDocument: JsonApiUserInDocument;
+}
+
+// @public
+export interface UserControllerApiDeleteEntityUsersRequest {
+    readonly id: string;
+}
+
+// @public
+export interface UserControllerApiGetAllEntitiesUsersRequest {
+    readonly filter?: string;
+    readonly include?: Array<'userGroups' | 'ALL'>;
+    readonly metaInclude?: Array<'page' | 'all' | 'ALL'>;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+}
+
+// @public
+export interface UserControllerApiGetEntityUsersRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly include?: Array<'userGroups' | 'ALL'>;
+}
+
+// @public
+export interface UserControllerApiInterface {
+    createEntityUsers(requestParameters: UserControllerApiCreateEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutDocument>;
+    deleteEntityUsers(requestParameters: UserControllerApiDeleteEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getAllEntitiesUsers(requestParameters: UserControllerApiGetAllEntitiesUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutList>;
+    getEntityUsers(requestParameters: UserControllerApiGetEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutDocument>;
+    patchEntityUsers(requestParameters: UserControllerApiPatchEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutDocument>;
+    updateEntityUsers(requestParameters: UserControllerApiUpdateEntityUsersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserOutDocument>;
+}
+
+// @public
+export interface UserControllerApiPatchEntityUsersRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly include?: Array<'userGroups' | 'ALL'>;
+    readonly jsonApiUserPatchDocument: JsonApiUserPatchDocument;
+}
+
+// @public
+export interface UserControllerApiUpdateEntityUsersRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly include?: Array<'userGroups' | 'ALL'>;
+    readonly jsonApiUserInDocument: JsonApiUserInDocument;
+}
+
+// @public
 export class UserDataFilterControllerApi extends MetadataBaseApi implements UserDataFilterControllerApiInterface {
     createEntityUserDataFilters(requestParameters: UserDataFilterControllerApiCreateEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserDataFilterOutDocument>;
     deleteEntityUserDataFilters(requestParameters: UserDataFilterControllerApiDeleteEntityUserDataFiltersRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
@@ -28400,6 +28339,106 @@ export interface UserGroupAssignee {
 }
 
 // @public
+export class UserGroupControllerApi extends MetadataBaseApi implements UserGroupControllerApiInterface {
+    createEntityUserGroups(requestParameters: UserGroupControllerApiCreateEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
+    deleteEntityUserGroups(requestParameters: UserGroupControllerApiDeleteEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getAllEntitiesUserGroups(requestParameters?: UserGroupControllerApiGetAllEntitiesUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutList>;
+    getEntityUserGroups(requestParameters: UserGroupControllerApiGetEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
+    patchEntityUserGroups(requestParameters: UserGroupControllerApiPatchEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
+    updateEntityUserGroups(requestParameters: UserGroupControllerApiUpdateEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
+}
+
+// @public
+export function UserGroupControllerApi_CreateEntityUserGroups(axios: AxiosInstance, basePath: string, requestParameters: UserGroupControllerApiCreateEntityUserGroupsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiUserGroupOutDocument>;
+
+// @public
+export function UserGroupControllerApi_DeleteEntityUserGroups(axios: AxiosInstance, basePath: string, requestParameters: UserGroupControllerApiDeleteEntityUserGroupsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
+
+// @public
+export function UserGroupControllerApi_GetAllEntitiesUserGroups(axios: AxiosInstance, basePath: string, requestParameters: UserGroupControllerApiGetAllEntitiesUserGroupsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiUserGroupOutList>;
+
+// @public
+export function UserGroupControllerApi_GetEntityUserGroups(axios: AxiosInstance, basePath: string, requestParameters: UserGroupControllerApiGetEntityUserGroupsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiUserGroupOutDocument>;
+
+// @public
+export function UserGroupControllerApi_PatchEntityUserGroups(axios: AxiosInstance, basePath: string, requestParameters: UserGroupControllerApiPatchEntityUserGroupsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiUserGroupOutDocument>;
+
+// @public
+export function UserGroupControllerApi_UpdateEntityUserGroups(axios: AxiosInstance, basePath: string, requestParameters: UserGroupControllerApiUpdateEntityUserGroupsRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiUserGroupOutDocument>;
+
+// @public
+export function UserGroupControllerApiAxiosParamCreator_CreateEntityUserGroups(jsonApiUserGroupInDocument: JsonApiUserGroupInDocument, include?: Array<'userGroups' | 'parents' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function UserGroupControllerApiAxiosParamCreator_DeleteEntityUserGroups(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function UserGroupControllerApiAxiosParamCreator_GetAllEntitiesUserGroups(filter?: string, include?: Array<'userGroups' | 'parents' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function UserGroupControllerApiAxiosParamCreator_GetEntityUserGroups(id: string, filter?: string, include?: Array<'userGroups' | 'parents' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function UserGroupControllerApiAxiosParamCreator_PatchEntityUserGroups(id: string, jsonApiUserGroupPatchDocument: JsonApiUserGroupPatchDocument, filter?: string, include?: Array<'userGroups' | 'parents' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function UserGroupControllerApiAxiosParamCreator_UpdateEntityUserGroups(id: string, jsonApiUserGroupInDocument: JsonApiUserGroupInDocument, filter?: string, include?: Array<'userGroups' | 'parents' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export interface UserGroupControllerApiCreateEntityUserGroupsRequest {
+    readonly include?: Array<'userGroups' | 'parents' | 'ALL'>;
+    readonly jsonApiUserGroupInDocument: JsonApiUserGroupInDocument;
+}
+
+// @public
+export interface UserGroupControllerApiDeleteEntityUserGroupsRequest {
+    readonly id: string;
+}
+
+// @public
+export interface UserGroupControllerApiGetAllEntitiesUserGroupsRequest {
+    readonly filter?: string;
+    readonly include?: Array<'userGroups' | 'parents' | 'ALL'>;
+    readonly metaInclude?: Array<'page' | 'all' | 'ALL'>;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+}
+
+// @public
+export interface UserGroupControllerApiGetEntityUserGroupsRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly include?: Array<'userGroups' | 'parents' | 'ALL'>;
+}
+
+// @public
+export interface UserGroupControllerApiInterface {
+    createEntityUserGroups(requestParameters: UserGroupControllerApiCreateEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
+    deleteEntityUserGroups(requestParameters: UserGroupControllerApiDeleteEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getAllEntitiesUserGroups(requestParameters: UserGroupControllerApiGetAllEntitiesUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutList>;
+    getEntityUserGroups(requestParameters: UserGroupControllerApiGetEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
+    patchEntityUserGroups(requestParameters: UserGroupControllerApiPatchEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
+    updateEntityUserGroups(requestParameters: UserGroupControllerApiUpdateEntityUserGroupsRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserGroupOutDocument>;
+}
+
+// @public
+export interface UserGroupControllerApiPatchEntityUserGroupsRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly include?: Array<'userGroups' | 'parents' | 'ALL'>;
+    readonly jsonApiUserGroupPatchDocument: JsonApiUserGroupPatchDocument;
+}
+
+// @public
+export interface UserGroupControllerApiUpdateEntityUserGroupsRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly include?: Array<'userGroups' | 'parents' | 'ALL'>;
+    readonly jsonApiUserGroupInDocument: JsonApiUserGroupInDocument;
+}
+
+// @public
 export interface UserGroupIdentifier {
     // (undocumented)
     'id': string;
@@ -28497,7 +28536,7 @@ export function UserGroupsEntityAPIsApi_UpdateEntityUserGroups(axios: AxiosInsta
 export function UserGroupsEntityAPIsApiAxiosParamCreator_CreateEntityUserGroups(jsonApiUserGroupInDocument: JsonApiUserGroupInDocument, include?: Array<'userGroups' | 'parents' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function UserGroupsEntityAPIsApiAxiosParamCreator_DeleteEntityUserGroups(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function UserGroupsEntityAPIsApiAxiosParamCreator_DeleteEntityUserGroups(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function UserGroupsEntityAPIsApiAxiosParamCreator_GetAllEntitiesUserGroups(filter?: string, include?: Array<'userGroups' | 'parents' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -28519,7 +28558,6 @@ export interface UserGroupsEntityAPIsApiCreateEntityUserGroupsRequest {
 
 // @public
 export interface UserGroupsEntityAPIsApiDeleteEntityUserGroupsRequest {
-    readonly filter?: string;
     readonly id: string;
 }
 
@@ -28564,6 +28602,45 @@ export interface UserGroupsEntityAPIsApiUpdateEntityUserGroupsRequest {
     readonly id: string;
     readonly include?: Array<'userGroups' | 'parents' | 'ALL'>;
     readonly jsonApiUserGroupInDocument: JsonApiUserGroupInDocument;
+}
+
+// @public
+export class UserIdentifierControllerApi extends MetadataBaseApi implements UserIdentifierControllerApiInterface {
+    getAllEntitiesUserIdentifiers(requestParameters?: UserIdentifierControllerApiGetAllEntitiesUserIdentifiersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserIdentifierOutList>;
+    getEntityUserIdentifiers(requestParameters: UserIdentifierControllerApiGetEntityUserIdentifiersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserIdentifierOutDocument>;
+}
+
+// @public
+export function UserIdentifierControllerApi_GetAllEntitiesUserIdentifiers(axios: AxiosInstance, basePath: string, requestParameters: UserIdentifierControllerApiGetAllEntitiesUserIdentifiersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiUserIdentifierOutList>;
+
+// @public
+export function UserIdentifierControllerApi_GetEntityUserIdentifiers(axios: AxiosInstance, basePath: string, requestParameters: UserIdentifierControllerApiGetEntityUserIdentifiersRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiUserIdentifierOutDocument>;
+
+// @public
+export function UserIdentifierControllerApiAxiosParamCreator_GetAllEntitiesUserIdentifiers(filter?: string, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function UserIdentifierControllerApiAxiosParamCreator_GetEntityUserIdentifiers(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export interface UserIdentifierControllerApiGetAllEntitiesUserIdentifiersRequest {
+    readonly filter?: string;
+    readonly metaInclude?: Array<'page' | 'all' | 'ALL'>;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+}
+
+// @public
+export interface UserIdentifierControllerApiGetEntityUserIdentifiersRequest {
+    readonly filter?: string;
+    readonly id: string;
+}
+
+// @public
+export interface UserIdentifierControllerApiInterface {
+    getAllEntitiesUserIdentifiers(requestParameters: UserIdentifierControllerApiGetAllEntitiesUserIdentifiersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserIdentifierOutList>;
+    getEntityUserIdentifiers(requestParameters: UserIdentifierControllerApiGetEntityUserIdentifiersRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiUserIdentifierOutDocument>;
 }
 
 // @public
@@ -29005,7 +29082,7 @@ export function UsersEntityAPIsApi_UpdateEntityUsers(axios: AxiosInstance, baseP
 export function UsersEntityAPIsApiAxiosParamCreator_CreateEntityUsers(jsonApiUserInDocument: JsonApiUserInDocument, include?: Array<'userGroups' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function UsersEntityAPIsApiAxiosParamCreator_DeleteEntityUsers(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function UsersEntityAPIsApiAxiosParamCreator_DeleteEntityUsers(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function UsersEntityAPIsApiAxiosParamCreator_GetAllEntitiesUsers(filter?: string, include?: Array<'userGroups' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -29027,7 +29104,6 @@ export interface UsersEntityAPIsApiCreateEntityUsersRequest {
 
 // @public
 export interface UsersEntityAPIsApiDeleteEntityUsersRequest {
-    readonly filter?: string;
     readonly id: string;
 }
 
@@ -29706,6 +29782,108 @@ export interface WorkspaceCacheUsage {
     'removalIntervals': Array<CacheRemovalInterval>;
     // (undocumented)
     'settings': WorkspaceCacheSettings;
+}
+
+// @public
+export class WorkspaceControllerApi extends MetadataBaseApi implements WorkspaceControllerApiInterface {
+    createEntityWorkspaces(requestParameters: WorkspaceControllerApiCreateEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
+    deleteEntityWorkspaces(requestParameters: WorkspaceControllerApiDeleteEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getAllEntitiesWorkspaces(requestParameters?: WorkspaceControllerApiGetAllEntitiesWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutList>;
+    getEntityWorkspaces(requestParameters: WorkspaceControllerApiGetEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
+    patchEntityWorkspaces(requestParameters: WorkspaceControllerApiPatchEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
+    updateEntityWorkspaces(requestParameters: WorkspaceControllerApiUpdateEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
+}
+
+// @public
+export function WorkspaceControllerApi_CreateEntityWorkspaces(axios: AxiosInstance, basePath: string, requestParameters: WorkspaceControllerApiCreateEntityWorkspacesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceOutDocument>;
+
+// @public
+export function WorkspaceControllerApi_DeleteEntityWorkspaces(axios: AxiosInstance, basePath: string, requestParameters: WorkspaceControllerApiDeleteEntityWorkspacesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<void>;
+
+// @public
+export function WorkspaceControllerApi_GetAllEntitiesWorkspaces(axios: AxiosInstance, basePath: string, requestParameters: WorkspaceControllerApiGetAllEntitiesWorkspacesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceOutList>;
+
+// @public
+export function WorkspaceControllerApi_GetEntityWorkspaces(axios: AxiosInstance, basePath: string, requestParameters: WorkspaceControllerApiGetEntityWorkspacesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceOutDocument>;
+
+// @public
+export function WorkspaceControllerApi_PatchEntityWorkspaces(axios: AxiosInstance, basePath: string, requestParameters: WorkspaceControllerApiPatchEntityWorkspacesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceOutDocument>;
+
+// @public
+export function WorkspaceControllerApi_UpdateEntityWorkspaces(axios: AxiosInstance, basePath: string, requestParameters: WorkspaceControllerApiUpdateEntityWorkspacesRequest, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): AxiosPromise<JsonApiWorkspaceOutDocument>;
+
+// @public
+export function WorkspaceControllerApiAxiosParamCreator_CreateEntityWorkspaces(jsonApiWorkspaceInDocument: JsonApiWorkspaceInDocument, include?: Array<'workspaces' | 'parent' | 'ALL'>, metaInclude?: Array<'config' | 'permissions' | 'hierarchy' | 'dataModelDatasets' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function WorkspaceControllerApiAxiosParamCreator_DeleteEntityWorkspaces(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function WorkspaceControllerApiAxiosParamCreator_GetAllEntitiesWorkspaces(filter?: string, include?: Array<'workspaces' | 'parent' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'config' | 'permissions' | 'hierarchy' | 'dataModelDatasets' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function WorkspaceControllerApiAxiosParamCreator_GetEntityWorkspaces(id: string, filter?: string, include?: Array<'workspaces' | 'parent' | 'ALL'>, metaInclude?: Array<'config' | 'permissions' | 'hierarchy' | 'dataModelDatasets' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function WorkspaceControllerApiAxiosParamCreator_PatchEntityWorkspaces(id: string, jsonApiWorkspacePatchDocument: JsonApiWorkspacePatchDocument, filter?: string, include?: Array<'workspaces' | 'parent' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export function WorkspaceControllerApiAxiosParamCreator_UpdateEntityWorkspaces(id: string, jsonApiWorkspaceInDocument: JsonApiWorkspaceInDocument, filter?: string, include?: Array<'workspaces' | 'parent' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+
+// @public
+export interface WorkspaceControllerApiCreateEntityWorkspacesRequest {
+    readonly include?: Array<'workspaces' | 'parent' | 'ALL'>;
+    readonly jsonApiWorkspaceInDocument: JsonApiWorkspaceInDocument;
+    readonly metaInclude?: Array<'config' | 'permissions' | 'hierarchy' | 'dataModelDatasets' | 'all' | 'ALL'>;
+}
+
+// @public
+export interface WorkspaceControllerApiDeleteEntityWorkspacesRequest {
+    readonly id: string;
+}
+
+// @public
+export interface WorkspaceControllerApiGetAllEntitiesWorkspacesRequest {
+    readonly filter?: string;
+    readonly include?: Array<'workspaces' | 'parent' | 'ALL'>;
+    readonly metaInclude?: Array<'config' | 'permissions' | 'hierarchy' | 'dataModelDatasets' | 'page' | 'all' | 'ALL'>;
+    readonly page?: number;
+    readonly size?: number;
+    readonly sort?: Array<string>;
+}
+
+// @public
+export interface WorkspaceControllerApiGetEntityWorkspacesRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly include?: Array<'workspaces' | 'parent' | 'ALL'>;
+    readonly metaInclude?: Array<'config' | 'permissions' | 'hierarchy' | 'dataModelDatasets' | 'all' | 'ALL'>;
+}
+
+// @public
+export interface WorkspaceControllerApiInterface {
+    createEntityWorkspaces(requestParameters: WorkspaceControllerApiCreateEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
+    deleteEntityWorkspaces(requestParameters: WorkspaceControllerApiDeleteEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<void>;
+    getAllEntitiesWorkspaces(requestParameters: WorkspaceControllerApiGetAllEntitiesWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutList>;
+    getEntityWorkspaces(requestParameters: WorkspaceControllerApiGetEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
+    patchEntityWorkspaces(requestParameters: WorkspaceControllerApiPatchEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
+    updateEntityWorkspaces(requestParameters: WorkspaceControllerApiUpdateEntityWorkspacesRequest, options?: AxiosRequestConfig): AxiosPromise<JsonApiWorkspaceOutDocument>;
+}
+
+// @public
+export interface WorkspaceControllerApiPatchEntityWorkspacesRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly include?: Array<'workspaces' | 'parent' | 'ALL'>;
+    readonly jsonApiWorkspacePatchDocument: JsonApiWorkspacePatchDocument;
+}
+
+// @public
+export interface WorkspaceControllerApiUpdateEntityWorkspacesRequest {
+    readonly filter?: string;
+    readonly id: string;
+    readonly include?: Array<'workspaces' | 'parent' | 'ALL'>;
+    readonly jsonApiWorkspaceInDocument: JsonApiWorkspaceInDocument;
 }
 
 // @public
@@ -30442,7 +30620,7 @@ export function WorkspacesEntityAPIsApi_UpdateEntityWorkspaces(axios: AxiosInsta
 export function WorkspacesEntityAPIsApiAxiosParamCreator_CreateEntityWorkspaces(jsonApiWorkspaceInDocument: JsonApiWorkspaceInDocument, include?: Array<'workspaces' | 'parent' | 'ALL'>, metaInclude?: Array<'config' | 'permissions' | 'hierarchy' | 'dataModelDatasets' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
-export function WorkspacesEntityAPIsApiAxiosParamCreator_DeleteEntityWorkspaces(id: string, filter?: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
+export function WorkspacesEntityAPIsApiAxiosParamCreator_DeleteEntityWorkspaces(id: string, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
 
 // @public
 export function WorkspacesEntityAPIsApiAxiosParamCreator_GetAllEntitiesWorkspaces(filter?: string, include?: Array<'workspaces' | 'parent' | 'ALL'>, page?: number, size?: number, sort?: Array<string>, metaInclude?: Array<'config' | 'permissions' | 'hierarchy' | 'dataModelDatasets' | 'page' | 'all' | 'ALL'>, options?: AxiosRequestConfig, configuration?: MetadataConfiguration): Promise<MetadataRequestArgs>;
@@ -30465,7 +30643,6 @@ export interface WorkspacesEntityAPIsApiCreateEntityWorkspacesRequest {
 
 // @public
 export interface WorkspacesEntityAPIsApiDeleteEntityWorkspacesRequest {
-    readonly filter?: string;
     readonly id: string;
 }
 

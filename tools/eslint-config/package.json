@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/eslint-config",
-    "version": "11.27.0-alpha.3",
+    "version": "11.27.0-alpha.4",
     "license": "MIT",
     "author": "GoodData",
     "repository": {
@@ -23,40 +23,12 @@
             "import": "./dist/base.js",
             "require": "./dist/base.json"
         },
-        "./browser": {
-            "import": "./dist/browser.js",
-            "require": "./dist/browser.json"
-        },
-        "./oxlint-browser": {
-            "import": "./dist/oxlint-browser.js"
-        },
         "./browser-esm": {
             "import": "./dist/browser-esm.js",
             "require": "./dist/browser-esm.json"
         },
         "./oxlint-browser-esm": {
             "import": "./dist/oxlint-browser-esm.js"
-        },
-        "./cypress": {
-            "import": "./dist/cypress.js",
-            "require": "./dist/cypress.json"
-        },
-        "./oxlint-cypress": {
-            "import": "./dist/oxlint-cypress.js"
-        },
-        "./playwright": {
-            "import": "./dist/playwright.js",
-            "require": "./dist/playwright.json"
-        },
-        "./oxlint-playwright": {
-            "import": "./dist/oxlint-playwright.js"
-        },
-        "./vitest": {
-            "import": "./dist/vitest.js",
-            "require": "./dist/vitest.json"
-        },
-        "./oxlint-vitest": {
-            "import": "./dist/oxlint-vitest.js"
         },
         "./esm": {
             "import": "./dist/esm.js",

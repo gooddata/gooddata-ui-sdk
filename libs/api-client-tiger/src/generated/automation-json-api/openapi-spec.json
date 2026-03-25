@@ -1579,6 +1579,12 @@
                                     "$ref": "#/components/schemas/AttributeFilterByDate"
                                 }
                             },
+                            "validateElementsBy": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/IdentifierRef"
+                                }
+                            },
                             "title": {
                                 "type": "string"
                             },
@@ -2418,6 +2424,10 @@
                             "applyOnResult": {
                                 "type": "boolean"
                             },
+                            "usesArbitraryValues": {
+                                "type": "boolean",
+                                "description": "If true, indicates that the values in notInElements were filled free-form, otherwise they have been picked from existing elements."
+                            },
                             "label": {
                                 "$ref": "#/components/schemas/AfmIdentifier"
                             }
@@ -2616,6 +2626,10 @@
                             },
                             "applyOnResult": {
                                 "type": "boolean"
+                            },
+                            "usesArbitraryValues": {
+                                "type": "boolean",
+                                "description": "If true, indicates that the values in inElements were filled free-form, otherwise they have been picked from existing elements."
                             },
                             "label": {
                                 "$ref": "#/components/schemas/AfmIdentifier"

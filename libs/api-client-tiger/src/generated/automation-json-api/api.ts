@@ -572,6 +572,21 @@ export interface AutomationCustomOverride {
     'metrics'?: { [key: string]: AutomationCustomMetric; };
 }
 
+export interface AutomationDashboardArbitraryAttributeFilter {
+    'arbitraryAttributeFilter': AutomationDashboardArbitraryAttributeFilterArbitraryAttributeFilter;
+}
+
+export interface AutomationDashboardArbitraryAttributeFilterArbitraryAttributeFilter {
+    'displayForm': AutomationIdentifierRef;
+    'values': Array<string>;
+    'negativeSelection': boolean;
+    'filterElementsBy'?: Array<AutomationAttributeFilterParent>;
+    'filterElementsByDate'?: Array<AutomationAttributeFilterByDate>;
+    'validateElementsBy'?: Array<AutomationIdentifierRef>;
+    'title'?: string;
+    'localIdentifier'?: string;
+}
+
 export interface AutomationDashboardAttributeFilter {
     'attributeFilter': AutomationDashboardAttributeFilterAttributeFilter;
 }
@@ -643,7 +658,23 @@ export type AutomationDashboardExportSettingsPageOrientationEnum = 'PORTRAIT' | 
 /**
  * @type AutomationDashboardFilter
  */
-export type AutomationDashboardFilter = AutomationDashboardAttributeFilter | AutomationDashboardDateFilter;
+export type AutomationDashboardFilter = AutomationDashboardArbitraryAttributeFilter | AutomationDashboardAttributeFilter | AutomationDashboardDateFilter | AutomationDashboardMatchAttributeFilter;
+
+export interface AutomationDashboardMatchAttributeFilter {
+    'matchAttributeFilter': AutomationDashboardMatchAttributeFilterMatchAttributeFilter;
+}
+
+export interface AutomationDashboardMatchAttributeFilterMatchAttributeFilter {
+    'displayForm': AutomationIdentifierRef;
+    'operator': AutomationDashboardMatchAttributeFilterMatchAttributeFilterOperatorEnum;
+    'literal': string;
+    'negativeSelection': boolean;
+    'caseSensitive': boolean;
+    'title'?: string;
+    'localIdentifier'?: string;
+}
+
+export type AutomationDashboardMatchAttributeFilterMatchAttributeFilterOperatorEnum = 'contains' | 'startsWith' | 'endsWith';
 
 /**
  * Export request object describing the export properties for dashboard tabular exports (v2 with dashboardId).
@@ -981,6 +1012,10 @@ export interface AutomationNegativeAttributeFilterNegativeAttributeFilter {
     'notIn': AutomationAttributeFilterElements;
     'localIdentifier'?: string;
     'applyOnResult'?: boolean;
+    /**
+     * If true, indicates that the values in notInElements were filled free-form, otherwise they have been picked from existing elements.
+     */
+    'usesArbitraryValues'?: boolean;
     'label': AutomationAfmIdentifier;
 }
 
@@ -1126,6 +1161,10 @@ export interface AutomationPositiveAttributeFilterPositiveAttributeFilter {
     'in': AutomationAttributeFilterElements;
     'localIdentifier'?: string;
     'applyOnResult'?: boolean;
+    /**
+     * If true, indicates that the values in inElements were filled free-form, otherwise they have been picked from existing elements.
+     */
+    'usesArbitraryValues'?: boolean;
     'label': AutomationAfmIdentifier;
 }
 

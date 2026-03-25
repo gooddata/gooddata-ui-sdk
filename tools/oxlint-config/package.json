@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/oxlint-config",
-    "version": "11.27.0-alpha.3",
+    "version": "11.27.0-alpha.4",
     "license": "MIT",
     "author": "GoodData",
     "repository": {
@@ -20,11 +20,7 @@
     "sideEffects": false,
     "exports": {
         ".": "./dist/base.json",
-        "./browser": "./dist/browser.json",
         "./browser-esm": "./dist/browser-esm.json",
-        "./cypress": "./dist/cypress.json",
-        "./playwright": "./dist/playwright.json",
-        "./vitest": "./dist/vitest.json",
         "./esm": "./dist/esm.json",
         "./esm-vitest": "./dist/esm-vitest.json",
         "./react": "./dist/react.json",

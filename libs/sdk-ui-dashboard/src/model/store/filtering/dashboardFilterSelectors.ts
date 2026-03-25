@@ -9,8 +9,9 @@ import {
     type IDashboardDateFilterConfig,
     type IDashboardDateFilterConfigItem,
     areObjRefsEqual,
+    dashboardAttributeFilterItemLocalIdentifier,
     isAllValuesDashboardAttributeFilter,
-    isDashboardAttributeFilter,
+    isDashboardAttributeFilterItem,
     isDashboardCommonDateFilter,
     isDashboardDateFilter,
     isDashboardDateFilterWithDimension,
@@ -170,8 +171,11 @@ const removeCrossFilteringFilters = (
     );
 
     return filters.filter((filter) => {
-        if (isDashboardAttributeFilter(filter) && filter.attributeFilter.localIdentifier) {
-            return !crossFilteringFilterLocalIdentifiers.includes(filter.attributeFilter.localIdentifier);
+        if (isDashboardAttributeFilterItem(filter)) {
+            const localIdentifier = dashboardAttributeFilterItemLocalIdentifier(filter);
+            if (localIdentifier) {
+                return !crossFilteringFilterLocalIdentifiers.includes(localIdentifier);
+            }
         }
 
         return true;
@@ -180,7 +184,7 @@ const removeCrossFilteringFilters = (
 
 export function removeEmptyDashboardAttributeFilters(filters: FilterContextItem[] = []) {
     return filters.filter((filter) => {
-        if (isDashboardAttributeFilter(filter)) {
+        if (isDashboardAttributeFilterItem(filter)) {
             return !isAllValuesDashboardAttributeFilter(filter);
         }
 
@@ -216,9 +220,11 @@ export const isFilterContextItemHidden = (
     const { dateFilterWithDimensionConfigs, attributeFilterConfigs, commonDateFilterConfig } =
         filterConfigurations;
 
-    if (isDashboardAttributeFilter(filter)) {
+    if (isDashboardAttributeFilterItem(filter)) {
+        const attributeFilterLocalIdentifier = dashboardAttributeFilterItemLocalIdentifier(filter);
         const config = attributeFilterConfigs.find(
-            (attribute) => attribute.localIdentifier === filter.attributeFilter.localIdentifier,
+            (attributeFilterConfig) =>
+                attributeFilterConfig.localIdentifier === attributeFilterLocalIdentifier,
         );
 
         return config?.mode === "hidden";
@@ -248,9 +254,11 @@ export const isFilterContextItemLocked = (
     const { dateFilterWithDimensionConfigs, attributeFilterConfigs, commonDateFilterConfig } =
         filterConfigurations;
 
-    if (isDashboardAttributeFilter(filter)) {
+    if (isDashboardAttributeFilterItem(filter)) {
+        const attributeFilterLocalIdentifier = dashboardAttributeFilterItemLocalIdentifier(filter);
         const config = attributeFilterConfigs.find(
-            (attribute) => attribute.localIdentifier === filter.attributeFilter.localIdentifier,
+            (attributeFilterConfig) =>
+                attributeFilterConfig.localIdentifier === attributeFilterLocalIdentifier,
         );
 
         return config?.mode === "readonly";

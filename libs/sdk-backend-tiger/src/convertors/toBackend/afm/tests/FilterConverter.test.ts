@@ -11,6 +11,8 @@ import {
     localIdRef,
     newAbsoluteDateFilter,
     newAllTimeFilter,
+    newArbitraryAttributeFilter,
+    newMatchAttributeFilter,
     newMeasureValueFilter,
     newMeasureValueFilterWithOptions,
     newNegativeAttributeFilter,
@@ -222,6 +224,25 @@ describe("tiger filter converter from model to AFM", () => {
             [
                 "negative attribute filter with applyOnResult false",
                 newFilterWithApplyOnResult(negativeAttributeFilter, false),
+            ],
+            [
+                "arbitrary attribute filter",
+                newArbitraryAttributeFilter(
+                    ReferenceMd.Product.Name,
+                    ["custom-a", "custom-b"],
+                    false,
+                    "f_arb",
+                ),
+            ],
+            [
+                "match attribute filter",
+                newMatchAttributeFilter(
+                    ReferenceMd.Product.Name,
+                    "contains",
+                    "foo",
+                    { caseSensitive: true, negativeSelection: true },
+                    "f_match",
+                ),
             ],
             [
                 "absolute date filter",

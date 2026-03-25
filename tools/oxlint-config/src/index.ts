@@ -31,11 +31,9 @@ export const common: IConfiguration[] = [
 
 // please note, if you modify keys in the following array, please run `npm run update-package` in addition to `npm run build`
 export const variants: Record<string, IConfiguration[]> = {
-    browser: [browserEnv], // for any packages that uses document, but are not react libs
+    // browser: [browserEnv], // for any packages that uses document, but are not react libs
     "browser-esm": [browserEnv, importEsm], // unsure if needed
-    cypress: [browserEnv, cypress, chaiFriendly, noOnlyTests], // for sdk-ui-tests
-    playwright: [browserEnv, playwright, chaiFriendly, noOnlyTests], // for sdk-ui-tests
-    vitest: [noOnlyTests],
+    // vitest: [noOnlyTests],
     esm: [importEsm], // used for this lib
     "esm-vitest": [importEsm, noOnlyTests], // for @gooddata/util and MAQL language server
     react: [browserEnv], // for skel tsx
@@ -48,5 +46,5 @@ export const variants: Record<string, IConfiguration[]> = {
     "esm-react-cypress": [browserEnv, importEsm, cypress, chaiFriendly, noOnlyTests], // for gdc e2e libs with react
     "esm-react-playwright": [browserEnv, importEsm, playwright, chaiFriendly, noOnlyTests], // for gdc e2e libs with react
     "esm-react-vitest": [browserEnv, importEsm, noOnlyTests], // for most sdk react libs with vitest
-    "esm-react-vitest-storybook": [browserEnv, importEsm, noOnlyTests], // for sdk-ui-tests
+    "esm-react-vitest-storybook": [browserEnv, importEsm, noOnlyTests], // for sdk-ui-tests-storybook
 };

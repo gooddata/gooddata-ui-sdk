@@ -5,10 +5,13 @@ import { all, call, put, select } from "redux-saga/effects";
 import { v4 as uuid } from "uuid";
 
 import {
+    type DashboardAttributeFilterItem,
     type IDashboardAttributeFilter,
     type ObjRef,
     areObjRefsEqual,
-    isDashboardAttributeFilter,
+    dashboardAttributeFilterItemDisplayForm,
+    dashboardAttributeFilterItemLocalIdentifier,
+    isDashboardAttributeFilterItem,
 } from "@gooddata/sdk-model";
 
 import { convertIntersectionToAttributeFilters } from "./common/intersectionUtils.js";
@@ -32,7 +35,7 @@ import {
 } from "../../store/drill/drillSelectors.js";
 import { drillActions } from "../../store/drill/index.js";
 import { selectAttributeFilterConfigsDisplayAsLabelMap } from "../../store/tabs/attributeFilterConfigs/attributeFilterConfigsSelectors.js";
-import { selectFilterContextDraggableFilters } from "../../store/tabs/filterContext/filterContextSelectors.js";
+import { selectFilterContextDraggableFilterItems } from "../../store/tabs/filterContext/filterContextSelectors.js";
 import { selectActiveOrDefaultTabLocalIdentifier } from "../../store/tabs/tabsSelectors.js";
 import { type DashboardContext } from "../../types/commonTypes.js";
 import { addAttributeFilterHandler } from "../filterContext/attributeFilter/addAttributeFilterHandler.js";
@@ -40,19 +43,23 @@ import { changeAttributeFilterSelectionHandler } from "../filterContext/attribut
 import { removeAttributeFiltersHandler } from "../filterContext/attributeFilter/removeAttributeFiltersHandler.js";
 
 function findMatchingVirtualFilter(
-    currentVirtualFilters: IDashboardAttributeFilter[],
+    currentVirtualFilters: DashboardAttributeFilterItem[],
     attributeFilterDisplayAsLabelMap: Map<string, ObjRef>,
     displayForm: ObjRef,
     primaryLabel: ObjRef | undefined,
-): IDashboardAttributeFilter | undefined {
+): DashboardAttributeFilterItem | undefined {
     return currentVirtualFilters.find((vf) => {
-        const vfDisplayAsLabel = attributeFilterDisplayAsLabelMap.get(vf.attributeFilter.localIdentifier!);
+        const vfDisplayAsLabel = attributeFilterDisplayAsLabelMap.get(
+            dashboardAttributeFilterItemLocalIdentifier(vf)!,
+        );
         const useDisplayAsLabel = displayForm && primaryLabel && !areObjRefsEqual(displayForm, primaryLabel);
         const displayFormMatches =
             // strict checking of both primary and secondary label means that cross filtering is able to create two filters using same primary label but different display as label. It was possible even before.
             vfDisplayAsLabel || useDisplayAsLabel ? areObjRefsEqual(vfDisplayAsLabel, displayForm) : true;
 
-        return areObjRefsEqual(vf.attributeFilter.displayForm, primaryLabel) && displayFormMatches;
+        return (
+            areObjRefsEqual(dashboardAttributeFilterItemDisplayForm(vf), primaryLabel) && displayFormMatches
+        );
     });
 }
 
@@ -60,7 +67,7 @@ function findMatchingVirtualFilter(
  * Check if a virtual filter has a matching attribute in drill intersection.
  */
 function virtualFilterHasMatchInIntersection(
-    virtualFilter: IDashboardAttributeFilter,
+    virtualFilter: DashboardAttributeFilterItem,
     drillIntersectionFilters: ReturnType<typeof convertIntersectionToAttributeFilters>,
     attributeFilterDisplayAsLabelMap: Map<string, ObjRef>,
 ): boolean {
@@ -80,7 +87,7 @@ function virtualFilterHasMatchInIntersection(
 function shouldUpdateExistingFiltering(
     crossFilteringItemByWidget: { filterLocalIdentifiers: string[] } | undefined,
     drillIntersectionFilters: ReturnType<typeof convertIntersectionToAttributeFilters>,
-    currentVirtualFilters: IDashboardAttributeFilter[],
+    currentVirtualFilters: DashboardAttributeFilterItem[],
     attributeFilterDisplayAsLabelMap: Map<string, ObjRef>,
 ): boolean {
     if (isEmpty(crossFilteringItemByWidget)) {
@@ -133,8 +140,8 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: ICrossFilteri
         yield select(selectEnableCrossFilteringAliasTitles);
 
     const widgetRef = cmd.payload.drillEvent.widgetRef!;
-    const currentFilters: ReturnType<typeof selectFilterContextDraggableFilters> = yield select(
-        selectFilterContextDraggableFilters,
+    const currentFilters: ReturnType<typeof selectFilterContextDraggableFilterItems> = yield select(
+        selectFilterContextDraggableFilterItems,
     );
     const dateAttributes: ReturnType<typeof selectCatalogDateAttributes> =
         yield select(selectCatalogDateAttributes);
@@ -145,8 +152,8 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: ICrossFilteri
     > = yield select(selectCrossFilteringFiltersLocalIdentifiers);
     const currentVirtualFilters = currentVirtualFiltersLocalIdentifiers.map((localIdentifier) => {
         return currentFilters
-            .filter(isDashboardAttributeFilter)
-            .find((filter) => filter.attributeFilter.localIdentifier === localIdentifier)!;
+            .filter(isDashboardAttributeFilterItem)
+            .find((filter) => dashboardAttributeFilterItemLocalIdentifier(filter) === localIdentifier)!;
     });
     const crossFilteringItemByWidget: ReturnType<ReturnType<typeof selectCrossFilteringItemByWidgetRef>> =
         yield select(selectCrossFilteringItemByWidgetRef(widgetRef));
@@ -185,7 +192,9 @@ export function* crossFilteringHandler(ctx: DashboardContext, cmd: ICrossFilteri
 
         return createVirtualFilter(
             drillFilterData,
-            existingVirtualFilter?.attributeFilter.localIdentifier,
+            existingVirtualFilter
+                ? dashboardAttributeFilterItemLocalIdentifier(existingVirtualFilter)
+                : undefined,
             filtersCount,
             i,
         );
