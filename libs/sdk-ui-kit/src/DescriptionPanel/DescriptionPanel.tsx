@@ -1,4 +1,4 @@
-// (C) 2022-2025 GoodData Corporation
+// (C) 2022-2026 GoodData Corporation
 
 import { type ComponentType } from "react";
 
@@ -9,6 +9,7 @@ import { type IExecutionConfig, type IFilter, type ISeparators } from "@gooddata
 import { IntlWrapper } from "@gooddata/sdk-ui";
 
 import { EllipsisText } from "./EllipsisText.js";
+import { UiIcon } from "../@ui/UiIcon/UiIcon.js";
 import { Bubble } from "../Bubble/Bubble.js";
 import { BubbleHoverTrigger } from "../Bubble/BubbleHoverTrigger.js";
 import { type ArrowOffsets } from "../Bubble/typings.js";
@@ -73,6 +74,7 @@ export interface IDescriptionPanelProps {
     description?: string;
     locale?: string;
     className?: string;
+    isLocked?: boolean;
     onBubbleOpen?: () => void;
     arrowOffsets?: ArrowOffsets;
     useRichText?: boolean;
@@ -147,6 +149,7 @@ function DescriptionPanelCore(props: IDescriptionPanelProps) {
 function DescriptionPanelContentCore({
     title,
     description,
+    isLocked,
     useRichText = false,
     useReferences = false,
     LoadingComponent,
@@ -163,7 +166,12 @@ function DescriptionPanelContentCore({
 
     return (
         <div className={className} id={id}>
-            {!isEmpty(title) && <div className="gd-description-panel-title">{title}</div>}
+            {!isEmpty(title) && (
+                <div className="gd-description-panel-title">
+                    {isLocked ? <UiIcon type="lock" size={16} color="complementary-6" /> : null}
+                    {title}
+                </div>
+            )}
             {!isEmpty(description) && (
                 <div className="gd-description-panel-content">
                     {useRichText ? (

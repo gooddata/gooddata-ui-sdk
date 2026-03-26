@@ -1,6 +1,6 @@
 // (C) 2007-2026 GoodData Corporation
 
-import { type ComponentType, type MouseEvent, useCallback, useEffect, useMemo, useRef } from "react";
+import { type ComponentType, type MouseEvent, useCallback, useEffect, useRef } from "react";
 
 import cx from "classnames";
 import { useIntl } from "react-intl";
@@ -9,6 +9,7 @@ import { type IExecutionConfig, type IFilter, type ISeparators } from "@gooddata
 import { simplifyText } from "@gooddata/util";
 
 import { InsightListItemDate } from "./InsightListItemDate.js";
+import { UiIcon } from "../@ui/UiIcon/UiIcon.js";
 import { Button } from "../Button/Button.js";
 import { DESCRIPTION_PANEL_ARROW_OFFSETS, DescriptionPanel } from "../DescriptionPanel/DescriptionPanel.js";
 import { ShortenedText } from "../ShortenedText/ShortenedText.js";
@@ -69,19 +70,6 @@ export interface IInsightListItemProps {
 /**
  * @internal
  */
-export function InsightListItemTypeIcon({ type }: { type: string }) {
-    const iconClassName = cx("gd-vis-type", `gd-vis-type-${type}`);
-
-    return (
-        <div className="gd-vis-type-container">
-            <div className={iconClassName} />
-        </div>
-    );
-}
-
-/**
- * @internal
- */
 export function InsightListItem({
     title,
     description,
@@ -106,6 +94,7 @@ export function InsightListItem({
     const intl = useIntl();
     const shortenedTextRef = useRef<ShortenedText>(null);
     const currentWidthRef = useRef<number | undefined>(width);
+    const shouldRenderActions = !!onDelete;
 
     useEffect(() => {
         if (shortenedTextRef.current && currentWidthRef.current !== width) {
@@ -124,34 +113,17 @@ export function InsightListItem({
         [onDelete],
     );
 
-    const lockElement = useMemo(() => {
-        if (isLocked) {
-            return <i className="gd-icon-lock" />;
-        }
-        return null;
-    }, [isLocked]);
-
-    const renderUpdatedDateTime = useCallback(
-        (date: any) => {
-            if (!date) {
-                return false;
-            }
-
-            if (type === WIDGET_TYPE_KPI) {
-                return <span />;
-            }
-
-            const dateTimeConfig = getDateTimeConfig(date, { dateTimezone: metadataTimeZone });
-            return <InsightListItemDate config={dateTimeConfig} />;
-        },
-        [type, metadataTimeZone],
-    );
-
-    const shouldRenderActions = !!onDelete;
-
-    const renderActions = useCallback(() => {
-        return (
-            shouldRenderActions && (
+    return (
+        <div
+            className={cx(
+                "gd-visualizations-list-item",
+                `s-${simplifyText(title ?? "")}`,
+                isSelected && "is-selected",
+            )}
+            onClick={onClick}
+        >
+            {/* reversed order of items because of hover effect for whole item when hovering over trash bin - css hack with flex-direction: row-reverse; */}
+            {shouldRenderActions ? (
                 <div className="gd-visualizations-list-item-actions">
                     <Button
                         className="gd-button-link gd-button-icon-only gd-button-small
@@ -159,28 +131,14 @@ export function InsightListItem({
                         onClick={handleClickDelete}
                     />
                 </div>
-            )
-        );
-    }, [shouldRenderActions, handleClickDelete]);
-
-    const visualizationListItemClassname = useMemo(
-        () =>
-            cx("gd-visualizations-list-item", `s-${simplifyText(title ?? "")}`, {
-                "is-selected": isSelected,
-            }),
-        [title, isSelected],
-    );
-
-    return (
-        <div className={visualizationListItemClassname} onClick={onClick}>
-            {/* reversed order of items because of hover effect for whole item when hovering over trash bin - css hack with flex-direction: row-reverse; */}
-            {renderActions()}
+            ) : null}
             {showDescriptionPanel ? (
                 <div className="gd-visualizations-list-item-description">
                     <DescriptionPanel
                         onBubbleOpen={onDescriptionPanelOpen}
                         title={title}
                         description={description}
+                        isLocked={isLocked}
                         arrowOffsets={shouldRenderActions ? modifiedArrowOffsets : undefined}
                         useReferences={useReferences}
                         useRichText={useRichText}
@@ -193,7 +151,7 @@ export function InsightListItem({
             ) : null}
             <div className="gd-visualizations-list-item-content">
                 <div className="gd-visualizations-list-item-content-name">
-                    {lockElement}
+                    {isLocked ? <UiIcon type="lock" size={14} color="complementary-6" /> : null}
                     <div style={{ maxWidth: "100%", whiteSpace: "nowrap" }}>
                         <ShortenedText
                             ref={shortenedTextRef}
@@ -207,10 +165,44 @@ export function InsightListItem({
                     </div>
                 </div>
                 <div className="gd-visualizations-list-item-content-date">
-                    {renderUpdatedDateTime(updated)}
+                    <UpdatedDateTime date={updated} type={type} metadataTimeZone={metadataTimeZone} />
                 </div>
             </div>
             <InsightListItemTypeIcon type={type} />
+        </div>
+    );
+}
+
+function UpdatedDateTime({
+    date,
+    type,
+    metadataTimeZone,
+}: {
+    date?: string;
+    type?: string;
+    metadataTimeZone?: string;
+}) {
+    if (!date) {
+        return null;
+    }
+
+    if (type === WIDGET_TYPE_KPI) {
+        return <span />;
+    }
+
+    const dateTimeConfig = getDateTimeConfig(date, { dateTimezone: metadataTimeZone });
+    return <InsightListItemDate config={dateTimeConfig} />;
+}
+
+/**
+ * @internal
+ */
+export function InsightListItemTypeIcon({ type }: { type: string }) {
+    const iconClassName = cx("gd-vis-type", `gd-vis-type-${type}`);
+
+    return (
+        <div className="gd-vis-type-container">
+            <div className={iconClassName} />
         </div>
     );
 }
