@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import type { IForecastConfig } from "@gooddata/sdk-backend-spi";
+import type { IChatVisualisationDefinition, IForecastConfig } from "@gooddata/sdk-backend-spi";
 import type { IGenAIVisualization } from "@gooddata/sdk-model";
 import type { IForecast } from "@gooddata/sdk-ui-charts";
 
@@ -11,7 +11,7 @@ export interface INormalizedForecastValues {
 }
 
 export function mapVisualizationForecastToChartConfig(
-    visualization?: IGenAIVisualization,
+    visualization?: IGenAIVisualization | IChatVisualisationDefinition,
 ): IForecast | undefined {
     const forecastValues = getNormalizedForecastValues(visualization);
 
@@ -28,7 +28,7 @@ export function mapVisualizationForecastToChartConfig(
 }
 
 export function mapVisualizationForecastToBackendConfig(
-    visualization?: IGenAIVisualization,
+    visualization?: IGenAIVisualization | IChatVisualisationDefinition,
 ): IForecastConfig | undefined {
     const forecastValues = getNormalizedForecastValues(visualization);
 
@@ -44,7 +44,7 @@ export function mapVisualizationForecastToBackendConfig(
 }
 
 export function getNormalizedForecastValues(
-    visualization?: IGenAIVisualization,
+    visualization?: IGenAIVisualization | IChatVisualisationDefinition,
 ): INormalizedForecastValues | undefined {
     const forecast = visualization?.config?.forecast;
 

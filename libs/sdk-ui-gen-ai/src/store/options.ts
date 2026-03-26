@@ -1,7 +1,7 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { type GenAIObjectType, type IColorPalette } from "@gooddata/sdk-model";
+import { type CatalogItem, type GenAIObjectType, type IColorPalette } from "@gooddata/sdk-model";
 
 /**
  * A dispatcher for chat events.
@@ -13,6 +13,7 @@ export class OptionsDispatcher {
     private objectTypes: GenAIObjectType[] | undefined = undefined;
     private includeTags: string[] | undefined = undefined;
     private excludeTags: string[] | undefined = undefined;
+    private catalogItems: CatalogItem[] | undefined = undefined;
 
     public setColorPalette(colorPalette: IColorPalette | undefined): void {
         this.colorPalette = colorPalette;
@@ -48,5 +49,13 @@ export class OptionsDispatcher {
             includeTags: this.includeTags,
             excludeTags: this.excludeTags,
         };
+    }
+
+    public setCatalogItems(catalogItems: CatalogItem[] | undefined): void {
+        this.catalogItems = catalogItems;
+    }
+
+    public getCatalogItems(): CatalogItem[] | undefined {
+        return this.catalogItems;
     }
 }

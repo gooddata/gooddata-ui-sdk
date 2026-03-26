@@ -1,10 +1,17 @@
 // (C) 2024-2026 GoodData Corporation
 
-import { getContext, select, takeEvery } from "redux-saga/effects";
+import { call, getContext, select, takeEvery } from "redux-saga/effects";
+
+import { type GenAIChatRoutingUseCase } from "@gooddata/sdk-model";
 
 import {
+    type IChatConversationErrorContent,
+    type IChatConversationLocalContent,
+    type IChatConversationLocalItem,
+    type IChatConversationMultipartLocalPart,
     type Message,
     type RoutingContents,
+    isChatConversationLocalItem,
     isRoutingContents,
     isTextContents,
     isUserMessage,
@@ -12,10 +19,16 @@ import {
 import { copyToClipboardAction, setOpenAction } from "../chatWindow/chatWindowSlice.js";
 import { type EventDispatcher } from "../events.js";
 import { clearCachedMessages, saveMessages, setIsOpened } from "../localStorage.js";
-import { messagesSelector, threadIdSelector } from "../messages/messagesSelectors.js";
+import {
+    conversationMessagesSelector,
+    conversationSelector,
+    messagesSelector,
+    threadIdSelector,
+} from "../messages/messagesSelectors.js";
 import {
     clearThreadAction,
     evaluateMessageCompleteAction,
+    loadConversationsSuccessAction,
     loadThreadSuccessAction,
     newMessageAction,
     saveVisualizationErrorAction,
@@ -28,6 +41,7 @@ import {
 export function* onEvent() {
     yield takeEvery(setOpenAction.type, onSetOpen);
     yield takeEvery(loadThreadSuccessAction.type, onThreadLoaded);
+    yield takeEvery(loadConversationsSuccessAction.type, onThreadLoaded);
     yield takeEvery(clearThreadAction.type, onClearThread);
     yield takeEvery(newMessageAction.type, onNewMessage);
     yield takeEvery(evaluateMessageCompleteAction.type, onEvaluateMessageComplete);
@@ -62,7 +76,9 @@ function* onSetOpen({ payload: { isOpen } }: ReturnType<typeof setOpenAction>) {
     });
 }
 
-function* onThreadLoaded({ payload: { threadId } }: ReturnType<typeof loadThreadSuccessAction>) {
+function* onThreadLoaded({
+    payload: { threadId },
+}: ReturnType<typeof loadThreadSuccessAction | typeof loadConversationsSuccessAction>) {
     yield* persistMessages();
 
     // Only emit the chatOpened event when we have a real server-side threadId.
@@ -70,7 +86,6 @@ function* onThreadLoaded({ payload: { threadId } }: ReturnType<typeof loadThread
     if (!threadId) {
         return;
     }
-
     const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
 
     eventDispatcher.dispatch({
@@ -93,25 +108,46 @@ function* onClearThread(_action: ReturnType<typeof clearThreadAction>) {
 }
 
 function* onNewMessage({ payload: message }: ReturnType<typeof newMessageAction>) {
-    if (!isUserMessage(message)) {
-        return;
+    if (isChatConversationLocalItem(message)) {
+        if (message.role !== "user") {
+            return;
+        }
+
+        const messageContent = message.content as IChatConversationLocalContent;
+        if (messageContent.type !== "text") {
+            return;
+        }
+
+        const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
+        const threadId: string | undefined = yield select(threadIdSelector);
+
+        eventDispatcher.dispatch({
+            type: "chatUserMessage",
+            threadId,
+            question: messageContent.text,
+            objects: messageContent.objects ?? [],
+        });
+    } else {
+        if (!isUserMessage(message)) {
+            return;
+        }
+
+        const messageContent = message.content.find((c) => isTextContents(c));
+
+        if (!messageContent?.text) {
+            return;
+        }
+
+        const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
+        const threadId: string | undefined = yield select(threadIdSelector);
+
+        eventDispatcher.dispatch({
+            type: "chatUserMessage",
+            threadId,
+            question: messageContent.text,
+            objects: messageContent.objects,
+        });
     }
-
-    const messageContent = message.content.find((c) => isTextContents(c));
-
-    if (!messageContent?.text) {
-        return;
-    }
-
-    const eventDispatcher: EventDispatcher = yield getContext("eventDispatcher");
-    const threadId: string | undefined = yield select(threadIdSelector);
-
-    eventDispatcher.dispatch({
-        type: "chatUserMessage",
-        threadId,
-        question: messageContent.text,
-        objects: messageContent.objects,
-    });
 }
 
 function* onEvaluateMessageComplete({
@@ -119,16 +155,9 @@ function* onEvaluateMessageComplete({
 }: ReturnType<typeof evaluateMessageCompleteAction>) {
     yield* persistMessages();
 
-    const allMessages: Message[] = yield select(messagesSelector);
-    const assistantMessage = allMessages.find((m) => m.localId === assistantMessageId);
+    const message: MessageInfo | null = yield call(loadMessage, assistantMessageId);
 
-    if (!assistantMessage) {
-        return;
-    }
-
-    const useCase = assistantMessage.content.find((c): c is RoutingContents => isRoutingContents(c))?.useCase;
-
-    if (!useCase) {
+    if (!message?.useCase) {
         return;
     }
 
@@ -137,19 +166,18 @@ function* onEvaluateMessageComplete({
 
     eventDispatcher.dispatch({
         type: "chatAssistantMessage",
-        interactionId: assistantMessage.id,
+        interactionId: message.id,
+        useCase: message.useCase,
         threadId,
-        useCase,
     });
 }
 
 function* onUserFeedback({
     payload: { assistantMessageId, feedback, userTextFeedback },
 }: ReturnType<typeof setUserFeedback>) {
-    const allMessages: Message[] = yield select(messagesSelector);
-    const assistantMessage = allMessages.find((m) => m.localId === assistantMessageId);
+    const message: MessageInfo | null = yield call(loadMessage, assistantMessageId);
 
-    if (!assistantMessage) {
+    if (!message) {
         return;
     }
 
@@ -158,7 +186,7 @@ function* onUserFeedback({
 
     eventDispatcher.dispatch({
         type: "chatFeedback",
-        interactionId: assistantMessage.id,
+        interactionId: message.id,
         threadId,
         feedback,
         userTextFeedback,
@@ -168,10 +196,9 @@ function* onUserFeedback({
 function* onUserFeedbackError({
     payload: { assistantMessageId, error },
 }: ReturnType<typeof setUserFeedbackError>) {
-    const allMessages: Message[] = yield select(messagesSelector);
-    const assistantMessage = allMessages.find((m) => m.localId === assistantMessageId);
+    const message: MessageInfo | null = yield call(loadMessage, assistantMessageId);
 
-    if (!assistantMessage) {
+    if (!message) {
         return;
     }
 
@@ -180,7 +207,7 @@ function* onUserFeedbackError({
 
     eventDispatcher.dispatch({
         type: "chatFeedbackError",
-        interactionId: assistantMessage.id,
+        interactionId: message.id,
         threadId,
         errorMessage: error,
     });
@@ -234,4 +261,63 @@ function* onCopyToClipboard({ payload: { content } }: ReturnType<typeof copyToCl
         threadId,
         content,
     });
+}
+
+type MessageInfo = {
+    id: string;
+    localId: string;
+    useCase: GenAIChatRoutingUseCase | undefined;
+};
+
+function* loadMessage(assistantMessageId: string): Generator<unknown, MessageInfo | null> {
+    const conversation: ReturnType<typeof conversationSelector> = yield select(conversationSelector);
+    if (conversation) {
+        const allMessages: IChatConversationLocalItem[] = yield select(conversationMessagesSelector);
+        const message = allMessages.find((m) => m.localId === assistantMessageId);
+
+        return message
+            ? {
+                  id: message.id,
+                  localId: message.localId,
+                  useCase: convertMessageTypeTo(message?.content),
+              }
+            : null;
+    } else {
+        const allMessages: Message[] = yield select(messagesSelector);
+        const message = allMessages.find((m) => m.localId === assistantMessageId);
+        const useCase = message?.content.find((c): c is RoutingContents => isRoutingContents(c))?.useCase;
+
+        return message
+            ? {
+                  id: message.id ?? "",
+                  localId: message.localId,
+                  useCase,
+              }
+            : null;
+    }
+}
+
+function convertMessageTypeTo(
+    content:
+        | IChatConversationLocalContent
+        | IChatConversationErrorContent
+        | IChatConversationMultipartLocalPart
+        | undefined,
+): GenAIChatRoutingUseCase {
+    switch (content?.type) {
+        case "error":
+            return "INVALID";
+        case "multipart": {
+            const cases = content.parts.map((part) => convertMessageTypeTo(part));
+            return cases.find((c) => c !== "GENERAL") ?? "GENERAL";
+        }
+        case "whatIf":
+            return "WHAT_IF";
+        case "visualization":
+            return "CREATE_VISUALIZATION";
+        case "kda":
+            return "CHANGE_ANALYSIS";
+        default:
+            return "GENERAL";
+    }
 }

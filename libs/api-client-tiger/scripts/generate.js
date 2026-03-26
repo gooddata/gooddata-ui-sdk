@@ -99,10 +99,16 @@ const specs = [
         modelNamePrefix: "Automation",
         apiNameSuffix: "Automation",
     },
+    {
+        path: "/api/v1/schemas/gen-ai",
+        name: "ai-json-api",
+        modelNamePrefix: "Ai",
+        apiNameSuffix: "Ai",
+    },
 ];
 
 const downloadSpec = async (specMeta, outputDir, outputFile) => {
-    let { data } = await axios.get(specMeta.path);
+    let data = (await axios.get(specMeta.path)).data;
 
     if (specMeta.schemaOverrides) {
         data = specMeta.schemaOverrides(data);

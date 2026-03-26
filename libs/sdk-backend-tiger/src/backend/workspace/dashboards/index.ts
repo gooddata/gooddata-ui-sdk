@@ -813,10 +813,12 @@ export class TigerWorkspaceDashboards implements IWorkspaceDashboardsService {
         options?: IDashboardExportRawOptions,
     ): Promise<IExportResult> => {
         const execution = toAfmExecution(definition);
+        const delimiter = options?.delimiter;
         const payload: ExportRawExportRequest = {
             format: "CSV",
             execution: execution.execution as ExportAFM,
             fileName: filename,
+            delimiter,
             executionSettings: execution.settings,
             customOverride: isEmpty(customOverrides)
                 ? undefined

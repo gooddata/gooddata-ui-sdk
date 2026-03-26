@@ -123,6 +123,7 @@ export function GenAIAssistant(props: GenAIAssistantProps) {
         eventHandlers,
         settings,
         objectTypes,
+        catalogItems,
         includeTags,
         excludeTags,
         onDispatcher,
@@ -136,6 +137,7 @@ export function GenAIAssistant(props: GenAIAssistantProps) {
         objectTypes,
         includeTags,
         excludeTags,
+        catalogItems,
     });
 
     useEffect(() => {

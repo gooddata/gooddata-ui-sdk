@@ -346,6 +346,11 @@ export { BackButton, type IBackButtonProps } from "./Dialog/BackButton.js";
 export { ConfirmDialog } from "./Dialog/ConfirmDialog.js";
 export { ConfirmDialogBase } from "./Dialog/ConfirmDialogBase.js";
 export { ContentDivider } from "./Dialog/ContentDivider.js";
+export {
+    CsvDelimiterPicker,
+    type ICsvDelimiterPickerProps,
+    type ICsvDelimiterPickerValue,
+} from "./Dialog/CsvDelimiterPicker.js";
 export { ExportDialog } from "./Dialog/ExportDialog.js";
 export { ExportDialogBase } from "./Dialog/ExportDialogBase.js";
 export { ExportTabularPdfDialog } from "./Dialog/ExportTabularPdfDialog.js";

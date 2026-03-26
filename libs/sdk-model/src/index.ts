@@ -1146,6 +1146,17 @@ export {
 } from "./exports/index.js";
 
 export {
+    CSV_DELIMITER_PRESETS,
+    DEFAULT_CSV_DELIMITER,
+    type CsvDelimiterPreset,
+    type CsvDelimiterValidationError,
+    getCsvDelimiterValidationError,
+    getCsvDelimiterPreset,
+    getCsvDelimiterValue,
+    getCsvDelimiterState,
+} from "./exports/csvDelimiter.js";
+
+export {
     type IWorkspaceDataFilter,
     type IWorkspaceDataFilterDefinition,
     type IWorkspaceDataFilterSetting,

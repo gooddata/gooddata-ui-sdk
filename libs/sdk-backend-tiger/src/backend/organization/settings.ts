@@ -80,6 +80,14 @@ export class OrganizationSettingsService
         return this.setSetting("ATTACHMENT_SIZE_LIMIT", { value: size });
     }
 
+    public async setExportCsvCustomDelimiter(delimiter: string): Promise<void> {
+        return this.setSetting("EXPORT_CSV_CUSTOM_DELIMITER", { value: delimiter });
+    }
+
+    public async deleteExportCsvCustomDelimiter(): Promise<void> {
+        return this.deleteSettingByType("EXPORT_CSV_CUSTOM_DELIMITER");
+    }
+
     public async setMaxZoomLevel(level: number | null): Promise<void> {
         return this.setSetting("MAX_ZOOM_LEVEL", { value: level });
     }

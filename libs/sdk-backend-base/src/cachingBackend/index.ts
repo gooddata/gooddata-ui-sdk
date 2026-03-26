@@ -880,13 +880,27 @@ class WithWorkspaceSettingsCaching extends DecoratedWorkspaceSettingsService {
         return super.getEnableDrillToUrlByDefault();
     }
 
+    public override async getExportCsvCustomDelimiter(): Promise<string | undefined> {
+        return super.getExportCsvCustomDelimiter();
+    }
+
     public override async setEnableDrillToUrlByDefault(enabled: boolean): Promise<void> {
         await super.setEnableDrillToUrlByDefault(enabled);
         this.invalidateCache();
     }
 
+    public override async setExportCsvCustomDelimiter(delimiter: string): Promise<void> {
+        await super.setExportCsvCustomDelimiter(delimiter);
+        this.invalidateCache();
+    }
+
     public override async deleteEnableDrillToUrlByDefault(): Promise<void> {
         await super.deleteEnableDrillToUrlByDefault();
+        this.invalidateCache();
+    }
+
+    public override async deleteExportCsvCustomDelimiter(): Promise<void> {
+        await super.deleteExportCsvCustomDelimiter();
         this.invalidateCache();
     }
 

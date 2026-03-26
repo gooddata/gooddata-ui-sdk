@@ -61,8 +61,7 @@ function GenAIChatWrapperComponent({
 }: GenAIChatWrapperProps) {
     const intl = useIntl();
     const workspaceId = useWorkspaceStrict();
-    const { linkHandler, allowNativeLinks, catalogItems, canManage, canAnalyze, canFullControl } =
-        useConfig();
+    const { linkHandler, allowNativeLinks, canManage, canAnalyze, canFullControl } = useConfig();
     const { checking, evaluated, count, restart } = useEndpointCheck(settings, canFullControl);
 
     const canEdit = canFullControl || canManage || canAnalyze;
@@ -133,7 +132,6 @@ function GenAIChatWrapperComponent({
                 <Input
                     targetRef={targetRef}
                     autofocus={autofocus}
-                    catalogItems={catalogItems}
                     canManage={canManage}
                     canAnalyze={canAnalyze}
                 />

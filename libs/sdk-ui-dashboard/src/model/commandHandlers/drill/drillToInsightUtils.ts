@@ -5,12 +5,16 @@ import {
     type IFilter,
     type IInsight,
     areObjRefsEqual,
+    filterMeasureRef,
     filterObjRef,
     insightFilters,
+    insightMeasures,
     insightSetFilters,
     isDateFilter,
+    isLocalIdRef,
     isMeasureValueFilter,
     isRankingFilter,
+    measureLocalId,
 } from "@gooddata/sdk-model";
 import { addIntersectionFiltersToInsight } from "@gooddata/sdk-ui-ext";
 
@@ -74,9 +78,12 @@ function addSourceInsightFiltersToInsight(
     sourceInsight: IInsight | null,
     drillDefinition: IDrillToInsightDefinition,
 ) {
-    const sourceFiltersToApply = getIncludedSourceInsightFilters(
-        sourceInsight,
-        drillDefinition.includedSourceInsightFiltersObjRefs ?? [],
+    const sourceFiltersToApply = filterOutInvalidMeasureFilters(
+        getIncludedSourceInsightFilters(
+            sourceInsight,
+            drillDefinition.includedSourceInsightFiltersObjRefs ?? [],
+        ),
+        targetInsight,
     );
     const targetFilters = insightFilters(targetInsight);
     const mergedFilters = mergeInsightFilters(sourceFiltersToApply, targetFilters);
@@ -92,10 +99,35 @@ function addSourceMeasureFiltersToInsight(
         return targetInsight;
     }
 
-    const sourceFiltersToApply = getIncludedSourceMeasureFilters(sourceInsight, drillDefinition);
+    const sourceFiltersToApply = filterOutInvalidMeasureFilters(
+        getIncludedSourceMeasureFilters(sourceInsight, drillDefinition),
+        targetInsight,
+    );
     const targetFilters = insightFilters(targetInsight);
     const mergedFilters = mergeInsightFilters(sourceFiltersToApply, targetFilters);
     return insightSetFilters(targetInsight, mergedFilters);
+}
+
+/**
+ * Filters out MVF/ranking filters that reference measures by localIdentifier not present
+ * in the target insight. Such filters would cause the execution normalizer to throw
+ * because it cannot resolve the dangling localId reference.
+ */
+function filterOutInvalidMeasureFilters(filters: IFilter[], targetInsight: IInsight): IFilter[] {
+    const targetMeasureLocalIds = new Set(insightMeasures(targetInsight).map(measureLocalId));
+
+    return filters.filter((filter) => {
+        if (!isMeasureValueFilter(filter) && !isRankingFilter(filter)) {
+            return true;
+        }
+
+        const measureRef = filterMeasureRef(filter);
+        if (!measureRef || !isLocalIdRef(measureRef)) {
+            return true;
+        }
+
+        return targetMeasureLocalIds.has(measureRef.localIdentifier);
+    });
 }
 
 function mergeInsightFilters(sourceFiltersToApply: IFilter[], targetFilters: IFilter[]): IFilter[] {

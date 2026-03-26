@@ -1060,5 +1060,14 @@
     "fileUpload.action.remove": "Hapus",
     "fileUpload.list.label": "Unggah file",
     "fileUpload.action.retryFile": "Coba lagi {fileName}",
-    "fileUpload.action.removeFile": "Hapus {fileName}"
+    "fileUpload.action.removeFile": "Hapus {fileName}",
+    "csvDelimiterPicker.option.comma": "Koma",
+    "csvDelimiterPicker.option.semicolon": "Titik koma",
+    "csvDelimiterPicker.option.pipe": "Garis vertikal",
+    "csvDelimiterPicker.option.tab": "Tab",
+    "csvDelimiterPicker.option.custom": "Kustom",
+    "csvDelimiterPicker.customInput": "Pembatas CSV kustom",
+    "csvDelimiterPicker.menuLabel": "Pemisah CSV",
+    "csvDelimiterPicker.validation.singleCharacter": "Gunakan satu karakter",
+    "csvDelimiterPicker.validation.unsupported": "Karakter ini tidak didukung"
 }

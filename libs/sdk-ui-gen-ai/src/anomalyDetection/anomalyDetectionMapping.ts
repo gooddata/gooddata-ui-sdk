@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import type { IOutliersConfig } from "@gooddata/sdk-backend-spi";
+import type { IChatVisualisationDefinition, IOutliersConfig } from "@gooddata/sdk-backend-spi";
 import type { IGenAIVisualization } from "@gooddata/sdk-model";
 import type { IAnomalies } from "@gooddata/sdk-ui-charts";
 
@@ -15,7 +15,7 @@ export interface INormalizedAnomalyDetectionValues {
  * @internal
  */
 export function mapVisualizationAnomalyDetectionToChartConfig(
-    visualization?: IGenAIVisualization,
+    visualization?: IGenAIVisualization | IChatVisualisationDefinition,
 ): IAnomalies | undefined {
     const anomalyValues = getNormalizedAnomalyDetectionValues(visualization);
 
@@ -42,7 +42,7 @@ export function mapVisualizationAnomalyDetectionToChartConfig(
  * @internal
  */
 export function mapVisualizationAnomalyDetectionToBackendConfig(
-    visualization?: IGenAIVisualization,
+    visualization?: IGenAIVisualization | IChatVisualisationDefinition,
 ): IOutliersConfig | undefined {
     const anomalyValues = getNormalizedAnomalyDetectionValues(visualization);
 
@@ -59,7 +59,7 @@ export function mapVisualizationAnomalyDetectionToBackendConfig(
  * @internal
  */
 export function getNormalizedAnomalyDetectionValues(
-    visualization?: IGenAIVisualization,
+    visualization?: IGenAIVisualization | IChatVisualisationDefinition,
 ): INormalizedAnomalyDetectionValues | undefined {
     const anomalyDetection = visualization?.config?.anomalyDetection;
 

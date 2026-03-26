@@ -3,7 +3,6 @@
 export type { IPackage, GlobalValue } from "./types.js";
 
 export { chaiFriendlyPlugin, chaiFriendlyRules } from "./configurations/chai-friendly.js";
-export { cypressPlugin, cypressRules } from "./configurations/cypress.js";
 export {
     eslintOverrides,
     eslintRules,

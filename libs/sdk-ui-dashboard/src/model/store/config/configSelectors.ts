@@ -975,6 +975,18 @@ export const selectEnableNewScheduledExport: DashboardSelector<boolean> = create
 );
 
 /**
+ * Selector for the customizable CSV delimiter feature flag
+ *
+ * @internal
+ */
+export const selectEnableCustomizableCsvDelimiter: DashboardSelector<boolean> = createSelector(
+    selectConfig,
+    (state) => {
+        return Boolean(state.settings?.enableCustomizableCsvDelimiter);
+    },
+);
+
+/**
  * Selector for the centralized automation management feature flag
  *
  * @internal

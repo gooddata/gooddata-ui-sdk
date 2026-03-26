@@ -4246,5 +4246,41 @@
     "fileUpload.action.removeFile": {
         "text": "Remove {fileName}",
         "crowdinContext": "Accessible label for the remove button including the file name, e.g. Remove data.csv"
+    },
+    "csvDelimiterPicker.option.comma": {
+        "text": "Comma",
+        "crowdinContext": "Label for the comma delimiter option in the CSV delimiter picker"
+    },
+    "csvDelimiterPicker.option.semicolon": {
+        "text": "Semicolon",
+        "crowdinContext": "Label for the semicolon delimiter option in the CSV delimiter picker"
+    },
+    "csvDelimiterPicker.option.pipe": {
+        "text": "Pipe",
+        "crowdinContext": "Label for the pipe delimiter option in the CSV delimiter picker"
+    },
+    "csvDelimiterPicker.option.tab": {
+        "text": "Tab",
+        "crowdinContext": "Label for the tab delimiter option in the CSV delimiter picker"
+    },
+    "csvDelimiterPicker.option.custom": {
+        "text": "Custom",
+        "crowdinContext": "Label for the custom delimiter option in the CSV delimiter picker"
+    },
+    "csvDelimiterPicker.customInput": {
+        "text": "Custom CSV delimiter",
+        "crowdinContext": "Accessible label for the custom CSV delimiter text input"
+    },
+    "csvDelimiterPicker.menuLabel": {
+        "text": "CSV delimiter",
+        "crowdinContext": "Accessible label for the CSV delimiter dropdown menu"
+    },
+    "csvDelimiterPicker.validation.singleCharacter": {
+        "text": "Use a single character",
+        "crowdinContext": "Validation error shown when the custom delimiter is more than one character"
+    },
+    "csvDelimiterPicker.validation.unsupported": {
+        "text": "This character isn't supported",
+        "crowdinContext": "Validation error shown when the custom delimiter character is not allowed"
     }
 }

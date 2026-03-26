@@ -403,6 +403,11 @@ export interface IPermanentSettings {
     exportResultPollingTimeoutSeconds?: number;
 
     /**
+     * Default delimiter to use for CSV exports when not overridden by request.
+     */
+    exportCsvCustomDelimiter?: string;
+
+    /**
      * Headline component will not be underlined when it is set up with drilling.
      */
     disableKpiDashboardHeadlineUnderline?: boolean;
@@ -779,6 +784,11 @@ export interface IFeatureFlags {
     enableRawExports?: boolean;
 
     /**
+     * Enable customizable CSV delimiter in exports.
+     */
+    enableCustomizableCsvDelimiter?: boolean;
+
+    /**
      * Enable new PDF tabular export option for insights.
      */
     enableNewPdfTabularExport?: boolean;
@@ -1100,4 +1110,9 @@ export interface IFeatureFlags {
      * Enable User Data Filters UI.
      */
     enableUserDataFiltersUi?: boolean;
+
+    /**
+     * Enable ai agentic conversations.
+     */
+    enableAiAgenticConversations?: boolean;
 }

@@ -539,6 +539,7 @@ export {
     type IExportInsightWidgetPayload,
     type IAttributeHierarchyModified,
     type IExportRawInsightWidget,
+    type IExportRawInsightWidgetOptions,
     type IExportRawInsightWidgetPayload,
     type IExportSlidesInsightWidget,
     type IExportSlidesInsightWidgetPayload,

@@ -49,6 +49,7 @@ export type GenAIChatRoutingUseCase =
     | "CREATE_VISUALIZATION"
     | "EXTEND_VISUALIZATION"
     | "GENERAL"
+    | "WHAT_IF"
     | "INVALID";
 
 /**

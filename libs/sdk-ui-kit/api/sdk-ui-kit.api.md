@@ -17,6 +17,8 @@ import { ComponentType } from 'react';
 import { Context } from 'react';
 import { ContextType } from 'react';
 import { CSSProperties } from 'react';
+import { CsvDelimiterPreset } from '@gooddata/sdk-model';
+import { CsvDelimiterValidationError } from '@gooddata/sdk-model';
 import { DebouncedFunc } from 'lodash-es';
 import { Dispatch } from 'react';
 import { EditorView } from '@codemirror/view';
@@ -321,6 +323,9 @@ export function createStandardPresets(formatMessage: (descriptor: {
 export function createTemplates(formatMessage: (descriptor: {
     id: string;
 }) => string, definitions: readonly ITemplateDefinition[], messageIdPrefix?: string): IFormatTemplate[];
+
+// @internal
+export function CsvDelimiterPicker({ value, onChange, validationError, label, onEnterKeyPress }: ICsvDelimiterPickerProps): JSX.Element;
 
 // @internal
 export const CURRENCY_PRESET_DEFINITIONS: readonly ICurrencyPresetDefinition[];
@@ -1878,6 +1883,23 @@ export function IconWebsite({ color, className, width, height }: IIconProps): JS
 
 // @internal (undocumented)
 export function IconWidget({ color, className, width, height }: IIconProps): JSX.Element;
+
+// @internal (undocumented)
+export interface ICsvDelimiterPickerProps {
+    label?: string;
+    onChange: (value: ICsvDelimiterPickerValue) => void;
+    onEnterKeyPress?: () => void;
+    validationError?: CsvDelimiterValidationError;
+    value: ICsvDelimiterPickerValue;
+}
+
+// @internal (undocumented)
+export interface ICsvDelimiterPickerValue {
+    // (undocumented)
+    customDelimiter: string;
+    // (undocumented)
+    selectedPreset: CsvDelimiterPreset;
+}
 
 // @alpha (undocumented)
 export interface ICurrencyFormatValidationError {

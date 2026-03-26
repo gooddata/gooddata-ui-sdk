@@ -891,6 +891,10 @@
         "text": "XLSX options",
         "crowdinContext": "Section header for Excel export format configuration. XLSX is the file format."
     },
+    "dialogs.schedule.management.attachments.csv.settings": {
+        "text": "CSV options",
+        "crowdinContext": "Section header for CSV export format configuration. CSV is the file format."
+    },
     "dialogs.schedule.management.attachments.cells.merged": {
         "text": "Keep attribute cells merged",
         "crowdinContext": "Label for checkbox option in Excel export settings to keep attribute cells merged"
@@ -898,6 +902,18 @@
     "dialogs.schedule.management.attachments.exportInfo": {
         "text": "Include sheet with export info",
         "crowdinContext": "Label of a checkbox field"
+    },
+    "dialogs.export.csv.delimiter": {
+        "text": "CSV delimiter",
+        "crowdinContext": "Label for the field used to choose the CSV delimiter character."
+    },
+    "dialogs.export.csv.headline": {
+        "text": "Export settings (.csv)",
+        "crowdinContext": "Headline of the CSV export settings dialog."
+    },
+    "dialogs.export.pdf.headline": {
+        "text": "Export settings (.pdf)",
+        "crowdinContext": "Headline of the PDF export settings dialog."
     },
     "dialogs.schedule.management.attachments.delete": {
         "text": "Delete {format} attachment",

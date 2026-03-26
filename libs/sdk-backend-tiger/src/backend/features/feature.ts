@@ -641,6 +641,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableCustomizableCsvDelimiter,
+            "enableCustomizableCsvDelimiter",
+            "BOOLEAN",
+            FeatureFlagsValues.enableCustomizableCsvDelimiter,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.EnableExecutionCancelling,
             "enableExecutionCancelling",
             "BOOLEAN",
@@ -925,6 +932,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
             "enableGenAIReasoningVisibility",
             "BOOLEAN",
             FeatureFlagsValues.enableGenAIReasoningVisibility,
+        ),
+        ...loadFeature(
+            features,
+            TigerFeaturesNames.EnableAiAgenticConversations,
+            "enableAiAgenticConversations",
+            "BOOLEAN",
+            FeatureFlagsValues.enableAiAgenticConversations,
         ),
         ...loadFeature(
             features,

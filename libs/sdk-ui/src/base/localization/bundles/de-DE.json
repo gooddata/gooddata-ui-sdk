@@ -1060,5 +1060,14 @@
     "fileUpload.action.remove": "Entfernen",
     "fileUpload.list.label": "Dateien hochladen",
     "fileUpload.action.retryFile": "{fileName} wiederholen",
-    "fileUpload.action.removeFile": "{fileName} entfernen"
+    "fileUpload.action.removeFile": "{fileName} entfernen",
+    "csvDelimiterPicker.option.comma": "Komma",
+    "csvDelimiterPicker.option.semicolon": "Semikolon",
+    "csvDelimiterPicker.option.pipe": "Pipe",
+    "csvDelimiterPicker.option.tab": "Registerkarte",
+    "csvDelimiterPicker.option.custom": "Benutzerdefiniert",
+    "csvDelimiterPicker.customInput": "Benutzerdefiniertes CSV-Trennzeichen",
+    "csvDelimiterPicker.menuLabel": "CSV-Trennzeichen",
+    "csvDelimiterPicker.validation.singleCharacter": "Verwenden Sie ein einzelnes Zeichen",
+    "csvDelimiterPicker.validation.unsupported": "Dieses Zeichen wird nicht unterstützt"
 }

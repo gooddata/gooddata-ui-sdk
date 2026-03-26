@@ -738,6 +738,7 @@ export interface IKdUriInsightRef {
 
 // @public (undocumented)
 export interface ILegacyBaseExportConfig {
+    delimiter?: string;
     format?: "xlsx" | "csv" | "raw";
     mergeHeaders?: boolean;
     title?: string;

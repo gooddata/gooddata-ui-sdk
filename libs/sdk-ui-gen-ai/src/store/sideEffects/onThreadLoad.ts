@@ -4,6 +4,10 @@ import { call, cancelled, getContext, put, race, select, take } from "redux-saga
 
 import {
     type IAnalyticalBackend,
+    type IChatConversation,
+    type IChatConversationItem,
+    type IChatConversationItemsQueryResult,
+    type IChatConversationThread,
     type IChatThread,
     type IChatThreadHistory,
     type IUserWorkspaceSettings,
@@ -16,11 +20,13 @@ import {
     type Message,
     isAssistantMessage,
     isSemanticSearchContents,
+    makeConversationItem,
 } from "../../model.js";
 import { settingsSelector } from "../chatWindow/chatWindowSelectors.js";
 import { loadMessages } from "../localStorage.js";
 import {
     cancelAsyncAction,
+    loadConversationsSuccessAction,
     loadThreadErrorAction,
     loadThreadSuccessAction,
     restoreCachedMessagesAction,
@@ -32,41 +38,11 @@ import {
  */
 export function* onThreadLoad() {
     try {
-        // Retrieve backend from context
-        const backend: IAnalyticalBackend = yield getContext("backend");
-        const workspace: string = yield getContext("workspace");
         const settings: IUserWorkspaceSettings | undefined = yield select(settingsSelector);
-        const showReasoning = Boolean(settings?.enableGenAIReasoningVisibility);
-
-        // Immediately restore cached messages so the UI doesn't flash empty while backend loads.
-        // Uses restoreCachedMessagesAction which shows messages but keeps loaded=false,
-        // preventing useThreadLoading from cancelling the in-progress backend fetch.
-        const cachedMessages = loadMessages(workspace);
-        if (cachedMessages?.length) {
-            yield put(restoreCachedMessagesAction({ messages: cachedMessages }));
-        }
-
-        const chatThread = backend.workspace(workspace).genAI().getChatThread();
-
-        const [results, wasCancelled]: [results: IChatThreadHistory, ReturnType<typeof cancelAsyncAction>] =
-            yield race([call(fetchChatHistory, chatThread), take(cancelAsyncAction.type)]);
-
-        if (wasCancelled) {
-            // TODO - cancelled during the loading
+        if (settings?.enableAiAgenticConversations) {
+            yield fetchConversations();
         } else {
-            const backendMessages = interactionsToMessages(results?.interactions ?? [], { showReasoning });
-
-            // Merge: preserve semanticSearch content from cached messages when the backend omits it.
-            const mergedMessages = cachedMessages?.length
-                ? mergeWithCache(backendMessages, cachedMessages)
-                : backendMessages;
-
-            yield put(
-                loadThreadSuccessAction({
-                    messages: mergedMessages,
-                    threadId: results?.threadId ?? "",
-                }),
-            );
+            yield fetchThread(settings);
         }
     } catch (e) {
         yield put(loadThreadErrorAction({ error: e as Error }));
@@ -113,12 +89,126 @@ export function mergeWithCache(backendMessages: Message[], cachedMessages: Messa
     });
 }
 
+//THREAD API
+
+function* fetchThread(settings: IUserWorkspaceSettings | undefined) {
+    // Retrieve backend from context
+    const backend: IAnalyticalBackend = yield getContext("backend");
+    const workspace: string = yield getContext("workspace");
+    const showReasoning = Boolean(settings?.enableGenAIReasoningVisibility);
+
+    // Immediately restore cached messages so the UI doesn't flash empty while backend loads.
+    // Uses restoreCachedMessagesAction which shows messages but keeps loaded=false,
+    // preventing useThreadLoading from cancelling the in-progress backend fetch.
+    const cachedMessages = loadMessages(workspace);
+    if (cachedMessages?.length) {
+        yield put(restoreCachedMessagesAction({ messages: cachedMessages }));
+    }
+
+    const chatThread = backend.workspace(workspace).genAI().getChatThread();
+
+    const [results, wasCancelled]: [results: IChatThreadHistory, ReturnType<typeof cancelAsyncAction>] =
+        yield race([call(fetchChatHistory, chatThread), take(cancelAsyncAction.type)]);
+
+    if (!wasCancelled) {
+        const backendMessages = interactionsToMessages(results?.interactions ?? [], { showReasoning });
+
+        // Merge: preserve semanticSearch content from cached messages when the backend omits it.
+        const mergedMessages = cachedMessages?.length
+            ? mergeWithCache(backendMessages, cachedMessages)
+            : backendMessages;
+        yield put(
+            loadThreadSuccessAction({
+                messages: mergedMessages,
+                threadId: results?.threadId ?? "",
+            }),
+        );
+    }
+}
+
 function* fetchChatHistory(preparedChatThread: IChatThread) {
     const controller = new AbortController();
     try {
         const results: IChatThreadHistory = yield call(
             preparedChatThread.loadHistory.bind(preparedChatThread),
             undefined,
+            { signal: controller.signal },
+        );
+
+        return results;
+    } finally {
+        const wasCancelled: boolean = yield cancelled();
+
+        if (wasCancelled) {
+            controller.abort();
+        }
+    }
+}
+
+//CONVERSATIONS API
+
+function* fetchConversations() {
+    // Retrieve backend from context
+    const backend: IAnalyticalBackend = yield getContext("backend");
+    const workspace: string = yield getContext("workspace");
+
+    const api = backend.workspace(workspace).genAI().getChatConversations();
+    const query = api.getConversationItemsQuery();
+
+    const getConversations = query.query.bind(query);
+    const [resultsConversations, cancelledConversations]: [
+        results: IChatConversationItemsQueryResult,
+        ReturnType<typeof cancelAsyncAction>,
+    ] = yield race([call(getConversations), take(cancelAsyncAction.type)]);
+    const conversationItems = resultsConversations.items;
+
+    //Canceled during the loading
+    if (cancelledConversations) {
+        return;
+    }
+
+    let conversation = conversationItems[0];
+    if (!conversation) {
+        const [resultCreateConversation, cancelledCreateConversation]: [
+            results: IChatConversation,
+            ReturnType<typeof cancelAsyncAction>,
+        ] = yield race([call(api.create.bind(api)), take(cancelAsyncAction.type)]);
+
+        //Canceled during the creation of the conversation
+        if (cancelledCreateConversation) {
+            return;
+        }
+
+        conversationItems.unshift(resultCreateConversation);
+        conversation = resultCreateConversation;
+    }
+
+    const preparedThread = api.getConversationThread(conversation.id);
+    const [resultsItems, cancelledItems]: [
+        results: IChatConversationItem[],
+        ReturnType<typeof cancelAsyncAction>,
+    ] = yield race([call(fetchConversationHistory, preparedThread), take(cancelAsyncAction.type)]);
+
+    //Canceled during the loading
+    if (cancelledItems) {
+        return;
+    }
+
+    yield put(
+        loadConversationsSuccessAction({
+            conversations: conversationItems,
+            currentConversation: conversation,
+            conversationItems: resultsItems.map(makeConversationItem),
+            threadId: conversation.id,
+        }),
+    );
+}
+
+function* fetchConversationHistory(preparedChatThread: IChatConversationThread) {
+    const controller = new AbortController();
+    try {
+        const results: IChatConversationItem[] = yield call(
+            preparedChatThread.loadHistory.bind(preparedChatThread),
             { signal: controller.signal },
         );
 

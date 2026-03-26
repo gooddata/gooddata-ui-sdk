@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type KeyboardEvent as ReactKeyboardEvent, useCallback, useEffect, useState } from "react";
 
@@ -143,6 +143,10 @@ export function ColumnHeader(props: IColumnHeaderProps) {
         };
     }, [eGridHeader, column, isSortingEnabled, setLastSortedColId, showMenu, onSortRequested]);
 
+    const firstSortOrder = column.getColDef().sortingOrder?.[0];
+    const defaultSortDirection: SortDirection | undefined =
+        firstSortOrder === "asc" || firstSortOrder === "desc" ? firstSortOrder : undefined;
+
     return (
         <HeaderCell
             className={cx("s-pivot-table-column-header", className)}
@@ -150,7 +154,7 @@ export function ColumnHeader(props: IColumnHeaderProps) {
             displayText={displayName}
             enableSorting={isSortingEnabled}
             sortDirection={sorting}
-            defaultSortDirection={column.getColDef().sortingOrder?.[0] ?? undefined}
+            defaultSortDirection={defaultSortDirection}
             onSortClick={onSortRequested}
             onMenuAggregationClick={props.onMenuAggregationClick}
             menu={showMenu ? menu?.() : undefined}

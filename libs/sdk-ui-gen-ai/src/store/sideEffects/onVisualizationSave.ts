@@ -2,8 +2,9 @@
 
 import { type PayloadAction } from "@reduxjs/toolkit";
 import { call, getContext, put, select } from "redux-saga/effects";
+import { v4 as uuidV4 } from "uuid";
 
-import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend, type IChatConversation } from "@gooddata/sdk-backend-spi";
 import {
     type IAttributeOrMeasure,
     type IBucket,
@@ -19,9 +20,18 @@ import { mapVisualizationAnomalyDetectionToChartConfig } from "../../anomalyDete
 import { mapVisualizationClusteringToChartConfig } from "../../clustering/clusteringMapping.js";
 import { prepareExecution } from "../../components/messages/contents/useExecution.js";
 import { mapVisualizationForecastToChartConfig } from "../../forecast/forecastMapping.js";
-import { type Message, isVisualizationContents } from "../../model.js";
+import {
+    type IChatConversationLocalItem,
+    type IChatConversationMultipartLocalPart,
+    type Message,
+    isVisualizationContents,
+} from "../../model.js";
 import { getHeadlineComparison } from "../../utils.js";
-import { messagesSelector } from "../messages/messagesSelectors.js";
+import {
+    conversationMessagesSelector,
+    conversationSelector,
+    messagesSelector,
+} from "../messages/messagesSelectors.js";
 import { saveVisualizationErrorAction, saveVisualizationSuccessAction } from "../messages/messagesSlice.js";
 
 export function* onVisualizationSave({
@@ -32,38 +42,97 @@ export function* onVisualizationSave({
     assistantMessageId: string;
     explore: boolean;
 }>) {
+    // Retrieve backend from context
+    const backend: IAnalyticalBackend = yield getContext("backend");
+    const workspace: string = yield getContext("workspace");
+    const conversation: IChatConversation = yield select(conversationSelector);
+
     try {
-        // Retrieve backend from context
-        const backend: IAnalyticalBackend = yield getContext("backend");
-        const workspace: string = yield getContext("workspace");
-        const messages: Message[] = yield select(messagesSelector);
-        const assistantMessage = messages.find((message) => message.localId === payload.assistantMessageId);
+        if (conversation) {
+            const messages: IChatConversationLocalItem[] = yield select(conversationMessagesSelector);
+            const assistantMessage = messages.find(
+                (message) => message.localId === payload.assistantMessageId,
+            );
 
-        if (!assistantMessage) return;
+            if (!assistantMessage || assistantMessage.content.type !== "multipart") {
+                return;
+            }
 
-        // Find the content with the visualization
-        const visualizationContent = assistantMessage.content
-            .filter(isVisualizationContents)
-            .flatMap((content) => content.createdVisualizations)
-            .find((visualization) => visualization.id === payload.visualizationId);
+            const visualizationContent: IChatConversationMultipartLocalPart | undefined =
+                assistantMessage.content.parts
+                    .filter((filter) => filter.type === "visualization")
+                    .find((content) => content.visualization.id === payload.visualizationId);
 
-        if (!visualizationContent) return;
+            if (!visualizationContent) {
+                return;
+            }
 
-        const visDefinition = buildInsightDefinition(visualizationContent, payload.visualizationTitle);
+            const { visualizationId } = yield call(
+                checkId,
+                backend,
+                workspace,
+                conversation.id,
+                payload.visualizationId,
+            );
 
-        const savedVisualization: IInsight = yield call(
-            backend.workspace(workspace).insights().createInsight,
-            visDefinition,
-        );
+            const visualization = {
+                ...visualizationContent.visualization,
+                id: visualizationId,
+            };
 
-        yield put(
-            saveVisualizationSuccessAction({
-                visualizationId: payload.visualizationId,
-                assistantMessageId: payload.assistantMessageId,
-                savedVisualizationId: savedVisualization.insight.identifier,
-                explore: payload.explore,
-            }),
-        );
+            //TODO: s.hacker Save visualization
+            // eslint-disable-next-line no-console
+            console.log("visualization", visualization);
+
+            const savedVisualization: IInsight = yield call(
+                backend.workspace(workspace).insights().createInsight,
+                {} as IInsightDefinition,
+            );
+
+            yield put(
+                saveVisualizationSuccessAction({
+                    visualizationId: payload.visualizationId,
+                    assistantMessageId: payload.assistantMessageId,
+                    savedVisualizationId: savedVisualization.insight.identifier,
+                    explore: payload.explore,
+                }),
+            );
+        } else {
+            const messages: Message[] = yield select(messagesSelector);
+            const assistantMessage = messages.find(
+                (message) => message.localId === payload.assistantMessageId,
+            );
+
+            if (!assistantMessage) {
+                return;
+            }
+
+            // Find the content with the visualization
+            const visualizationContent = assistantMessage.content
+                .filter(isVisualizationContents)
+                .flatMap((content) => content.createdVisualizations)
+                .find((visualization) => visualization.id === payload.visualizationId);
+
+            if (!visualizationContent) {
+                return;
+            }
+
+            const visDefinition = buildInsightDefinition(visualizationContent, payload.visualizationTitle);
+
+            const savedVisualization: IInsight = yield call(
+                backend.workspace(workspace).insights().createInsight,
+                visDefinition,
+            );
+
+            yield put(
+                saveVisualizationSuccessAction({
+                    visualizationId: payload.visualizationId,
+                    assistantMessageId: payload.assistantMessageId,
+                    savedVisualizationId: savedVisualization.insight.identifier,
+                    explore: payload.explore,
+                }),
+            );
+        }
     } catch (e) {
         console.error(e);
 
@@ -313,3 +382,41 @@ const buildHeadlineChart = (
         },
     };
 };
+
+async function checkId(
+    backend: IAnalyticalBackend,
+    workspace: string,
+    conversationId: string,
+    visualizationId: string,
+) {
+    try {
+        const existing = await backend.workspace(workspace).insights().getInsight({
+            identifier: visualizationId,
+            type: "insight",
+        });
+
+        if (existing) {
+            const id = uuidV4();
+
+            await backend
+                .workspace(workspace)
+                .genAI()
+                .getChatConversations()
+                .getConversationThread(conversationId)
+                .resaveVisualisation(visualizationId, id);
+
+            return {
+                visualizationId: id,
+            };
+        } else {
+            return {
+                visualizationId,
+            };
+        }
+    } catch (e) {
+        return {
+            error: e,
+            visualizationId,
+        };
+    }
+}

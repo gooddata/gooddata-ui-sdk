@@ -12,11 +12,11 @@ import {
 } from "@gooddata/api-client-tiger";
 import { ProfileApi_GetCurrent } from "@gooddata/api-client-tiger/endpoints/profile";
 
+import { getFeatureHubFeatures } from "./hub.js";
+import { getStaticFeatures } from "./static.js";
 import { LIB_VERSION } from "../../__version.js";
 import { type TigerAuthenticatedCallGuard } from "../../types/index.js";
 import { DefaultFeatureFlags, type ITigerFeatureFlags } from "../uiFeatures.js";
-import { getFeatureHubFeatures } from "./hub.js";
-import { getStaticFeatures } from "./static.js";
 
 const getKeyFromContext = (wsContext?: Partial<FeatureContext>): string => {
     return `${wsContext?.organizationId}-${wsContext?.tier}-${

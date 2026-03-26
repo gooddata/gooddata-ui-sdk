@@ -94,7 +94,6 @@ export { tigerAutomationClientFactory } from "./automation.js";
 export { tigerExecutionClientFactory } from "./execution.js";
 export { tigerExecutionResultClientFactory } from "./executionResult.js";
 export { tigerExportClientFactory } from "./export.js";
-export { tigerGenAIClientFactory } from "./genAI.js";
 export { tigerLabelElementsClientFactory } from "./labelElements.js";
 export { tigerLayoutClientFactory } from "./layout.js";
 export { tigerResultClientFactory } from "./result.js";
@@ -103,6 +102,14 @@ export { tigerSmartFunctionsClientFactory } from "./smartFunctions.js";
 export { tigerUserManagementClientFactory } from "./userManagement.js";
 export { tigerValidDescendantsClientFactory } from "./validDescendants.js";
 export { tigerValidObjectsClientFactory } from "./validObjects.js";
+
+// -----------------------------------------------------------------------------
+// Gen AI API
+// -----------------------------------------------------------------------------
+
+export * from "./generated/ai-json-api/api.js";
+export { tigerGenAIClientFactory } from "./genAI.js";
+export * from "./endpoints/genAI/index.js";
 
 // -----------------------------------------------------------------------------
 // GD Tiger Model

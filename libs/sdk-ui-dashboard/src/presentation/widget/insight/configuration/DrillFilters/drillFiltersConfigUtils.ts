@@ -1,5 +1,7 @@
 // (C) 2020-2026 GoodData Corporation
 
+import { type IntlShape } from "react-intl";
+
 import {
     type FilterContextItem,
     type IAttributeDisplayFormMetadataObject,
@@ -19,6 +21,8 @@ import {
     measureTitle,
     serializeObjRef,
 } from "@gooddata/sdk-model";
+import { type ILocale } from "@gooddata/sdk-ui";
+import { buildMeasureTitles } from "@gooddata/sdk-ui/internal";
 
 import { type IDrillFiltersConfigOption } from "./types.js";
 import { sourceInsightFilterObjRefValue } from "../../../../../_staging/drills/drillingUtils.js";
@@ -34,6 +38,7 @@ export function getMeasureTitleFromSourceInsightMeasures(
     sourceInsightMeasures: IMeasure[],
     measureRef: ObjRefInScope | undefined,
     allCatalogMeasures: ICatalogMeasure[],
+    intl: IntlShape,
 ): string | undefined {
     if (!measureRef) {
         return undefined;
@@ -47,7 +52,29 @@ export function getMeasureTitleFromSourceInsightMeasures(
             return undefined;
         }
 
-        return measureAlias(sourceMeasure) ?? measureTitle(sourceMeasure);
+        const alias = measureAlias(sourceMeasure);
+        if (alias) {
+            return alias;
+        }
+
+        const title = measureTitle(sourceMeasure);
+        if (title) {
+            return title;
+        }
+
+        // For arithmetic and derived measures that don't have explicit titles,
+        // build the title using buildMeasureTitles from sdk-ui.
+        const locale = intl.locale as ILocale;
+        const messages = intl.messages as Record<string, string>;
+        const allTitleProps = buildMeasureTitles(
+            sourceInsightMeasures,
+            locale,
+            Number.MAX_SAFE_INTEGER,
+            messages,
+        );
+
+        const titleProp = allTitleProps.find((p) => p.localIdentifier === measureRef.localIdentifier);
+        return titleProp?.alias ?? titleProp?.title;
     }
 
     //fallback to catalog lookup in case of object ref

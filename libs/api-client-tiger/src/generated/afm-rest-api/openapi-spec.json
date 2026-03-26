@@ -1541,186 +1541,6 @@
                 }
             }
         },
-        "/api/v1/actions/workspaces/{workspaceId}/ai/agent/{runId}/feedback": {
-            "post": {
-                "tags": [
-                    "actions"
-                ],
-                "operationId": "userFeedback",
-                "parameters": [
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "description": "Workspace identifier",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "runId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/FeedbackRequestDto"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "additionalProperties": {
-                                        "type": "string"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/actions/workspaces/{workspaceId}/ai/agent/{runId}/cancel": {
-            "post": {
-                "tags": [
-                    "actions"
-                ],
-                "operationId": "cancelWorkflow_1",
-                "parameters": [
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "description": "Workspace identifier",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "runId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "additionalProperties": {
-                                        "type": "string"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/actions/workspaces/{workspaceId}/ai/agent/knowledgeRecommendations": {
-            "post": {
-                "tags": [
-                    "actions"
-                ],
-                "operationId": "generateKnowledgeRecommendations",
-                "parameters": [
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "description": "Workspace identifier",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/KnowledgeRecommendationsRequestDto"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/KnowledgeRecommendationsResponseDto"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/actions/workspaces/{workspaceId}/ai/agent/dashboardSummary": {
-            "post": {
-                "tags": [
-                    "actions"
-                ],
-                "operationId": "generateDashboardSummary_1",
-                "parameters": [
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "description": "Workspace identifier",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/DashboardSummaryRequestDto"
-                            }
-                        }
-                    },
-                    "required": true
-                },
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/DashboardSummaryResponseDto"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/api/v1/actions/ai/llmProvider/{llmProviderId}/test": {
             "post": {
                 "tags": [
@@ -2227,9 +2047,11 @@
                     {
                         "name": "instanceId",
                         "in": "path",
+                        "description": "Database instance identifier. Accepts the database name (preferred) or UUID.",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "description": "Database instance identifier. Accepts the database name (preferred) or UUID."
                         }
                     }
                 ],
@@ -2263,9 +2085,11 @@
                     {
                         "name": "instanceId",
                         "in": "path",
+                        "description": "Database instance identifier. Accepts the database name (preferred) or UUID.",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "type": "string",
+                            "description": "Database instance identifier. Accepts the database name (preferred) or UUID."
                         }
                     },
                     {
@@ -3331,46 +3155,6 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/AnalyticsCatalogCreatedBy"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/actions/workspaces/{workspaceId}/ai/agent/{runId}/status": {
-            "get": {
-                "tags": [
-                    "actions"
-                ],
-                "operationId": "getWorkflowStatus_1",
-                "parameters": [
-                    {
-                        "name": "workspaceId",
-                        "in": "path",
-                        "description": "Workspace identifier",
-                        "required": true,
-                        "schema": {
-                            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "runId",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/WorkflowStatusResponseDto"
                                 }
                             }
                         }
@@ -7795,170 +7579,6 @@
                     "note": {
                         "type": "string",
                         "description": "Additional note with details in case generation was not performed"
-                    }
-                }
-            },
-            "FeedbackRequestDto": {
-                "required": [
-                    "sentiment"
-                ],
-                "type": "object",
-                "properties": {
-                    "sentiment": {
-                        "type": "string",
-                        "enum": [
-                            "POSITIVE",
-                            "NEGATIVE"
-                        ]
-                    }
-                }
-            },
-            "KnowledgeRecommendationsRequestDto": {
-                "required": [
-                    "comparisonType",
-                    "metricId"
-                ],
-                "type": "object",
-                "properties": {
-                    "metricId": {
-                        "type": "string"
-                    },
-                    "direction": {
-                        "type": "string",
-                        "enum": [
-                            "INCREASED",
-                            "DECREASED"
-                        ]
-                    },
-                    "comparisonType": {
-                        "type": "string",
-                        "enum": [
-                            "MONTH",
-                            "QUARTER",
-                            "YEAR"
-                        ]
-                    },
-                    "limit": {
-                        "type": "integer",
-                        "format": "int32"
-                    },
-                    "minScore": {
-                        "type": "number",
-                        "format": "double"
-                    },
-                    "aiModel": {
-                        "type": "string"
-                    },
-                    "temperature": {
-                        "type": "number",
-                        "format": "double"
-                    },
-                    "maxTokens": {
-                        "type": "integer",
-                        "format": "int32"
-                    },
-                    "gooddataHost": {
-                        "type": "string"
-                    },
-                    "gooddataToken": {
-                        "type": "string"
-                    },
-                    "analyticalDashboardId": {
-                        "type": "string"
-                    },
-                    "widgetId": {
-                        "type": "string"
-                    },
-                    "widgetName": {
-                        "type": "string"
-                    },
-                    "dryRun": {
-                        "type": "boolean"
-                    },
-                    "referenceValue": {
-                        "type": "number",
-                        "format": "double"
-                    },
-                    "analyzedValue": {
-                        "type": "number",
-                        "format": "double"
-                    }
-                }
-            },
-            "KnowledgeRecommendationsResponseDto": {
-                "required": [
-                    "message",
-                    "runId",
-                    "status"
-                ],
-                "type": "object",
-                "properties": {
-                    "runId": {
-                        "type": "string"
-                    },
-                    "status": {
-                        "type": "string"
-                    },
-                    "message": {
-                        "type": "string"
-                    }
-                }
-            },
-            "DashboardSummaryRequestDto": {
-                "required": [
-                    "dashboardId"
-                ],
-                "type": "object",
-                "properties": {
-                    "dashboardId": {
-                        "type": "string"
-                    },
-                    "customUserPrompt": {
-                        "type": "string"
-                    },
-                    "gooddataHost": {
-                        "type": "string"
-                    },
-                    "gooddataToken": {
-                        "type": "string"
-                    },
-                    "keyMetricIds": {
-                        "type": "array",
-                        "items": {
-                            "type": "string"
-                        }
-                    },
-                    "referenceQuarter": {
-                        "type": "string"
-                    },
-                    "dryRun": {
-                        "type": "boolean"
-                    },
-                    "temperature": {
-                        "type": "number",
-                        "format": "double"
-                    },
-                    "aiModel": {
-                        "type": "string"
-                    }
-                }
-            },
-            "DashboardSummaryResponseDto": {
-                "required": [
-                    "message",
-                    "runId",
-                    "status"
-                ],
-                "type": "object",
-                "properties": {
-                    "runId": {
-                        "type": "string"
-                    },
-                    "status": {
-                        "type": "string"
-                    },
-                    "message": {
-                        "type": "string"
                     }
                 }
             },

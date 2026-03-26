@@ -1,6 +1,6 @@
 // (C) 2025-2026 GoodData Corporation
 
-import { type MutableRefObject, useCallback, useRef, useState } from "react";
+import { type MutableRefObject, useCallback, useRef } from "react";
 
 import {
     type CompletionContext,
@@ -8,12 +8,12 @@ import {
     type CompletionSource,
 } from "@codemirror/autocomplete";
 import { useIntl } from "react-intl";
+import { useSelector } from "react-redux";
 
-import { type IWorkspaceCatalog } from "@gooddata/sdk-backend-spi";
 import { type CatalogItem, type ICatalogDateAttribute } from "@gooddata/sdk-model";
-import { useBackendStrict, useWorkspaceStrict } from "@gooddata/sdk-ui";
 
 import { type ICompletionItem, getCatalogItemId, getCompletionItemId, getOptions } from "./utils.js";
+import { catalogItemsSelector } from "../../store/chatWindow/chatWindowSelectors.js";
 
 const WORD_REGEX = /\p{L}[\p{L}\p{N}_]*/u;
 
@@ -23,24 +23,12 @@ export interface IUseCompletion {
 }
 
 export function useCompletion(
-    items: CatalogItem[] | undefined,
     selected: CatalogItem[] | undefined,
     { canManage, canAnalyze }: { canManage?: boolean; canAnalyze?: boolean },
 ): IUseCompletion {
-    const [catalogItems, setCatalogItems] = useState<CatalogItem[] | undefined>(items);
+    const catalogItemsList = useSelector(catalogItemsSelector);
     const usedItems = useRef<(CatalogItem | ICatalogDateAttribute)[]>(selected ?? []);
-    const backend = useBackendStrict();
-    const workspace = useWorkspaceStrict();
     const intl = useIntl();
-
-    const searchRef = useRef<string>("");
-    const promiseSearchRef = useRef<{
-        promise: Promise<IWorkspaceCatalog>;
-        abort: AbortController;
-    } | null>(null);
-    const promiseAllRef = useRef<{
-        promise: Promise<IWorkspaceCatalog>;
-    } | null>(null);
 
     const onCompletionSelected = useCallback((completion: ICompletionItem) => {
         usedItems.current = [
@@ -50,74 +38,6 @@ export function useCompletion(
             completion.item,
         ];
     }, []);
-
-    const loadItemsBySearch = useCallback(
-        async (search: string) => {
-            // If catalog items are provided, do not do any call
-            if (catalogItems) {
-                return catalogItems;
-            }
-
-            // If catalog items are not provided, do a call and all caching stuff
-            const starts = search.startsWith(searchRef.current) && searchRef.current.length > 0;
-
-            // If the search term starts with the previous search term, do not trigger a new search, we can do in on client side
-            if (starts && promiseSearchRef.current) {
-                const catalog = await promiseSearchRef.current.promise;
-                return catalog.allItems();
-            }
-
-            // If the search term is different, reset the promise
-            if (!starts) {
-                promiseSearchRef.current?.abort.abort();
-                promiseSearchRef.current = null;
-            }
-
-            // Create a new search call
-            if (!promiseSearchRef.current) {
-                searchRef.current = search;
-                const abort = new AbortController();
-                promiseSearchRef.current = {
-                    abort,
-                    promise: backend
-                        .workspace(workspace)
-                        .catalog()
-                        .withOptions({
-                            search,
-                        })
-                        .withSignal(abort.signal)
-                        .load(),
-                };
-            }
-
-            const catalog = await promiseSearchRef.current.promise;
-            return catalog.allItems();
-        },
-        [backend, workspace, catalogItems],
-    );
-
-    const loadItemsByExplicit = useCallback(async () => {
-        // If catalog items are provided, do not do any call
-        if (catalogItems) {
-            return catalogItems;
-        }
-
-        // If catalog is already loading, do not trigger a new call
-        if (promiseAllRef.current) {
-            const catalog = await promiseAllRef.current.promise;
-            return catalog.allItems();
-        }
-
-        const promise = backend.workspace(workspace).catalog().load();
-        promiseAllRef.current = {
-            promise,
-        };
-
-        const catalog = await promise;
-        const items = catalog.allItems();
-        setCatalogItems(items);
-        return items;
-    }, [backend, workspace, catalogItems]);
 
     const onWordCompletion = useCallback(
         async (context: CompletionContext): Promise<CompletionResult | null> => {
@@ -133,7 +53,7 @@ export function useCompletion(
                 return null;
             }
 
-            const items = await loadItemsBySearch(search);
+            const items = catalogItemsList;
             // If no items are found, do not show the completion
             if (items.length === 0) {
                 return null;
@@ -153,15 +73,14 @@ export function useCompletion(
                 },
             };
         },
-        [loadItemsBySearch, intl, onCompletionSelected, canManage, canAnalyze],
+        [catalogItemsList, intl, onCompletionSelected, canManage, canAnalyze],
     );
 
     const onExplicitCompletion = useCallback(
         async (context: CompletionContext): Promise<CompletionResult | null> => {
             // Match the word before the cursor
             const word = context.matchBefore(WORD_REGEX);
-
-            const items = await loadItemsByExplicit();
+            const items = catalogItemsList;
             // If no items are found, do not show the completion
             if (!items) {
                 return null;
@@ -181,7 +100,7 @@ export function useCompletion(
                 },
             };
         },
-        [loadItemsByExplicit, intl, onCompletionSelected, canManage, canAnalyze],
+        [catalogItemsList, intl, onCompletionSelected, canManage, canAnalyze],
     );
 
     const onCompletion = useCallback(

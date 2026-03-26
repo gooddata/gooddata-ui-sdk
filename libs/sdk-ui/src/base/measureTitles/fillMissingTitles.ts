@@ -155,7 +155,10 @@ function buildDerivedMeasureTitle(
     return null;
 }
 
-function buildMeasureTitles(
+/**
+ * @internal
+ */
+export function buildMeasureTitles(
     measures: IMeasure[],
     locale: ILocale,
     maxArithmeticMeasureTitleLength: number,

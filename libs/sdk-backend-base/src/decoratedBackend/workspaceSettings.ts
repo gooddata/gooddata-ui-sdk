@@ -92,12 +92,24 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
         return this.decorated.getEnableDrillToUrlByDefault();
     }
 
+    async getExportCsvCustomDelimiter(): Promise<string | undefined> {
+        return this.decorated.getExportCsvCustomDelimiter();
+    }
+
     async setEnableDrillToUrlByDefault(enabled: boolean): Promise<void> {
         return this.decorated.setEnableDrillToUrlByDefault(enabled);
     }
 
+    async setExportCsvCustomDelimiter(delimiter: string): Promise<void> {
+        return this.decorated.setExportCsvCustomDelimiter(delimiter);
+    }
+
     async deleteEnableDrillToUrlByDefault(): Promise<void> {
         return this.decorated.deleteEnableDrillToUrlByDefault();
+    }
+
+    async deleteExportCsvCustomDelimiter(): Promise<void> {
+        return this.decorated.deleteExportCsvCustomDelimiter();
     }
 
     async setTheme(themeId: string): Promise<void> {

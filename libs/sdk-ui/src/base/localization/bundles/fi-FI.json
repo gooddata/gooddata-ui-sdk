@@ -1060,5 +1060,14 @@
     "fileUpload.action.remove": "Poista",
     "fileUpload.list.label": "Lataa tiedostoja",
     "fileUpload.action.retryFile": "Yritä uudelleen {fileName}",
-    "fileUpload.action.removeFile": "Poista {fileName}"
+    "fileUpload.action.removeFile": "Poista {fileName}",
+    "csvDelimiterPicker.option.comma": "Pilkku",
+    "csvDelimiterPicker.option.semicolon": "Puolipiste",
+    "csvDelimiterPicker.option.pipe": "Pystyviiva",
+    "csvDelimiterPicker.option.tab": "Välilehti",
+    "csvDelimiterPicker.option.custom": "Mukautettu",
+    "csvDelimiterPicker.customInput": "Mukautettu CSV-erotin",
+    "csvDelimiterPicker.menuLabel": "CSV-erotin",
+    "csvDelimiterPicker.validation.singleCharacter": "Käytä yhtä merkkiä",
+    "csvDelimiterPicker.validation.unsupported": "Tätä merkkiä ei tueta"
 }

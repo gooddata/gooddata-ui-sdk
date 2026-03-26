@@ -18,6 +18,11 @@ export function AttachmentsList<T extends WidgetAttachmentType | DashboardAttach
     onXlsxSettingsChange,
     pdfSettings,
     onPdfSettingsChange,
+    csvSettings,
+    onCsvSettingsChange,
+    csvRawSettings,
+    onCsvRawSettingsChange,
+    isCsvSettingsEnabled,
     defaultPdfPageSize,
     mode,
 }: {
@@ -27,6 +32,11 @@ export function AttachmentsList<T extends WidgetAttachmentType | DashboardAttach
     onXlsxSettingsChange: (settings: IExportDefinitionVisualizationObjectSettings) => void;
     pdfSettings?: IExportDefinitionVisualizationObjectSettings;
     onPdfSettingsChange?: (settings: IExportDefinitionVisualizationObjectSettings) => void;
+    csvSettings?: IExportDefinitionVisualizationObjectSettings;
+    onCsvSettingsChange?: (settings: IExportDefinitionVisualizationObjectSettings) => void;
+    csvRawSettings?: IExportDefinitionVisualizationObjectSettings;
+    onCsvRawSettingsChange?: (settings: IExportDefinitionVisualizationObjectSettings) => void;
+    isCsvSettingsEnabled?: boolean;
     defaultPdfPageSize?: IExportDefinitionVisualizationObjectSettings["pageSize"];
     mode: "widget" | "dashboard";
 }) {
@@ -54,6 +64,23 @@ export function AttachmentsList<T extends WidgetAttachmentType | DashboardAttach
                             settings={pdfSettings}
                             onSettingsChange={onPdfSettingsChange}
                             defaultPdfPageSize={defaultPdfPageSize}
+                        />
+                    ) : null}
+                    {attachment === "CSV" && isCsvSettingsEnabled && csvSettings && onCsvSettingsChange ? (
+                        <AttachmentSettings
+                            type="CSV"
+                            settings={csvSettings}
+                            onSettingsChange={onCsvSettingsChange}
+                        />
+                    ) : null}
+                    {attachment === "CSV_RAW" &&
+                    isCsvSettingsEnabled &&
+                    csvRawSettings &&
+                    onCsvRawSettingsChange ? (
+                        <AttachmentSettings
+                            type="CSV_RAW"
+                            settings={csvRawSettings}
+                            onSettingsChange={onCsvRawSettingsChange}
                         />
                     ) : null}
                     <button

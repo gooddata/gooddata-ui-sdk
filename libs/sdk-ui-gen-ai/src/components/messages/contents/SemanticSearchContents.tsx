@@ -13,7 +13,7 @@ import { replaceLinks } from "./replaceLinks.js";
 import { type SemanticSearchContents } from "../../../model.js";
 
 const SemanticSearchTreeView = lazy(() =>
-    import("./SemanticSearchTreeView.js").then((module) => ({
+    import("../components/SemanticSearchTreeView.js").then((module) => ({
         default: module.SemanticSearchTreeView,
     })),
 );

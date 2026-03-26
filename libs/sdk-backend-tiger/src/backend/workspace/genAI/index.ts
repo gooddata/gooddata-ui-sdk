@@ -6,6 +6,7 @@ import {
 } from "@gooddata/api-client-tiger/endpoints/actions";
 import type {
     IAnalyticsCatalogService,
+    IChatConversations,
     IChatThread,
     IGenAIService,
     IKnowledgeDocumentsService,
@@ -15,6 +16,7 @@ import type {
 } from "@gooddata/sdk-backend-spi";
 
 import { AnalyticsCatalogService } from "./AnalyticsCatalogService.js";
+import { ChatConversationsService } from "./ChatConversations.js";
 import { ChatThreadService } from "./ChatThread.js";
 import { KnowledgeDocumentsService } from "./KnowledgeDocumentsService.js";
 import { MemoryItemsService } from "./MemoryItemsService.js";
@@ -32,6 +34,10 @@ export class GenAIService implements IGenAIService {
 
     getChatThread(): IChatThread {
         return new ChatThreadService(this.authCall, this.workspaceId, this.dateNormalizer);
+    }
+
+    getChatConversations(): IChatConversations {
+        return new ChatConversationsService(this.authCall, this.workspaceId, this.dateNormalizer);
     }
 
     getSemanticSearchQuery(): ISemanticSearchQuery {

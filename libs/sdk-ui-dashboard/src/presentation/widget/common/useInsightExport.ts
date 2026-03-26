@@ -6,6 +6,7 @@ import { useIntl } from "react-intl";
 import { invariant } from "ts-invariant";
 import { v4 as uuid } from "uuid";
 
+import { type IDashboardExportRawOptions } from "@gooddata/sdk-backend-spi";
 import {
     type IInsight,
     type IInsightWidget,
@@ -36,6 +37,7 @@ import { type IDashboardInsightWidgetExportResolved } from "../../../model/event
 import { useDashboardDispatch, useDashboardSelector } from "../../../model/react/DashboardStoreProvider.js";
 import { dispatchAndWaitFor } from "../../../model/store/_infra/dispatchAndWaitFor.js";
 import {
+    selectEnableCustomizableCsvDelimiter,
     selectEnableDashboardTabularExport,
     selectSettings,
 } from "../../../model/store/config/configSelectors.js";
@@ -52,6 +54,7 @@ import {
     selectIsExportableToPngImage,
     selectIsExportableToXLSX,
 } from "../../../model/store/widgetExports/widgetExportsSelectors.js";
+import { useExportCsvDialogContext } from "../../dashboardContexts/ExportCsvDialogContext.js";
 import { useExportTabularPdfDialogContext } from "../../dashboardContexts/ExportTabularPdfDialogContext.js";
 import { useExportXlsxDialogContext } from "../../dashboardContexts/ExportXlsxDialogContext.js";
 import { getDefaultPdfPageSize } from "../../scheduledEmail/utils/pdfPageSize.js";
@@ -111,10 +114,10 @@ export const useInsightExport = (config: {
     );
 
     const exportRawFunction = useCallback(
-        (title: string) =>
+        (title: string, options?: IDashboardExportRawOptions) =>
             dispatchAndWaitFor<IExportRawInsightWidget, IDashboardInsightWidgetExportResolved>(
                 dispatch,
-                exportRawInsightWidget(widgetRef, widget!, insight!, title, uuid()),
+                exportRawInsightWidget(widgetRef, widget!, insight!, title, options, uuid()),
             ).then((result) => result.payload.result),
         // eslint-disable-next-line react-hooks/exhaustive-deps
         [widgetRef, widget, insight],
@@ -155,25 +158,69 @@ export const useInsightExport = (config: {
     const exportSlidesHandler = useSlidesExportHandler();
     const exportImageHandler = useImageExportHandler();
     const { openDialog: openXlsxDialog, closeDialog: closeXlsxDialog } = useExportXlsxDialogContext();
+    const { openDialog: openCsvDialog } = useExportCsvDialogContext();
     const { openDialog: openPdfDialog, closeDialog: closePdfDialog } = useExportTabularPdfDialogContext();
+    const csvDelimiterDialogEnabled = useDashboardSelector(selectEnableCustomizableCsvDelimiter);
 
     const onExportCSV = useCallback(() => {
-        setIsExporting(true);
         // if this bombs there is an issue with the logic enabling the buttons
         invariant(exportFunction);
+        if (csvDelimiterDialogEnabled) {
+            openCsvDialog({
+                initialDelimiter: settings?.exportCsvCustomDelimiter,
+                onSubmit: ({ delimiter }) => {
+                    setIsExporting(true);
+                    const exportConfig: IExtendedExportConfig = {
+                        format: "csv",
+                        title,
+                        delimiter,
+                        grandTotalsPosition,
+                    };
+
+                    void exportHandler(exportFunction, exportConfig).finally(() => setIsExporting(false));
+                },
+            });
+            return;
+        }
+
+        setIsExporting(true);
         void exportHandler(exportFunction, { format: "csv", title, grandTotalsPosition }).finally(() =>
             setIsExporting(false),
         );
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [exportFunction, setIsExporting, title, grandTotalsPosition]);
+    }, [
+        exportFunction,
+        exportHandler,
+        csvDelimiterDialogEnabled,
+        grandTotalsPosition,
+        openCsvDialog,
+        settings,
+        setIsExporting,
+        title,
+    ]);
 
     const onExportRawCSV = useCallback(() => {
-        setIsExporting(true);
         // if this bombs there is an issue with the logic enabling the buttons
         invariant(exportRawFunction);
+        if (csvDelimiterDialogEnabled) {
+            openCsvDialog({
+                initialDelimiter: settings?.exportCsvCustomDelimiter,
+                onSubmit: ({ delimiter }) => {
+                    setIsExporting(true);
+                    const exportOptions: IDashboardExportRawOptions = { delimiter };
+
+                    void exportRawHandler(exportRawFunction, title, exportOptions).finally(() =>
+                        setIsExporting(false),
+                    );
+                },
+            });
+            return;
+        }
+
+        setIsExporting(true);
         void exportRawHandler(exportRawFunction, title).finally(() => setIsExporting(false));
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [exportRawFunction, title]);
+    }, [csvDelimiterDialogEnabled, exportRawFunction, exportRawHandler, openCsvDialog, settings, title]);
 
     const onExportPowerPointPresentation = useCallback(() => {
         setIsExporting(true);

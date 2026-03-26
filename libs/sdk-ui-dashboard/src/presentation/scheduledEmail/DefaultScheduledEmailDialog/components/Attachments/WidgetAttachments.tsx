@@ -31,6 +31,11 @@ export interface IWidgetAttachmentsProps {
     onXlsxSettingsChange: (settings: IExportDefinitionVisualizationObjectSettings) => void;
     pdfSettings: IExportDefinitionVisualizationObjectSettings;
     onPdfSettingsChange: (settings: IExportDefinitionVisualizationObjectSettings) => void;
+    csvSettings: IExportDefinitionVisualizationObjectSettings;
+    onCsvSettingsChange: (settings: IExportDefinitionVisualizationObjectSettings) => void;
+    csvRawSettings: IExportDefinitionVisualizationObjectSettings;
+    onCsvRawSettingsChange: (settings: IExportDefinitionVisualizationObjectSettings) => void;
+    isCsvSettingsEnabled: boolean;
     defaultPdfPageSize?: IExportDefinitionVisualizationObjectSettings["pageSize"];
 }
 
@@ -41,6 +46,11 @@ export function WidgetAttachments({
     onXlsxSettingsChange,
     pdfSettings,
     onPdfSettingsChange,
+    csvSettings,
+    onCsvSettingsChange,
+    csvRawSettings,
+    onCsvRawSettingsChange,
+    isCsvSettingsEnabled,
     defaultPdfPageSize,
 }: IWidgetAttachmentsProps) {
     const intl = useIntl();
@@ -129,6 +139,11 @@ export function WidgetAttachments({
                         onXlsxSettingsChange={onXlsxSettingsChange}
                         pdfSettings={pdfSettings}
                         onPdfSettingsChange={onPdfSettingsChange}
+                        csvSettings={csvSettings}
+                        onCsvSettingsChange={onCsvSettingsChange}
+                        csvRawSettings={csvRawSettings}
+                        onCsvRawSettingsChange={onCsvRawSettingsChange}
+                        isCsvSettingsEnabled={isCsvSettingsEnabled}
                         defaultPdfPageSize={defaultPdfPageSize}
                         mode="widget"
                     />

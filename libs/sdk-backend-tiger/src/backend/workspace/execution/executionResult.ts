@@ -401,7 +401,9 @@ export class TigerExecutionResult implements IExecutionResult {
     public async export(options: IExportConfig): Promise<IExportResult> {
         const uppercaseFormat = options.format?.toUpperCase();
         const format = isTabularExportFormat(uppercaseFormat) ? uppercaseFormat : "CSV";
+        const delimiter = options.delimiter;
         const settings: Settings = {
+            ...(format === "CSV" && delimiter ? { delimiter } : {}),
             ...(format === "XLSX"
                 ? {
                       mergeHeaders: Boolean(options.mergeHeaders),

@@ -1060,5 +1060,14 @@
     "fileUpload.action.remove": "นำออก",
     "fileUpload.list.label": "อัปโหลดไฟล์",
     "fileUpload.action.retryFile": "ลองใหม่ {fileName}",
-    "fileUpload.action.removeFile": "นำ {fileName} ออก"
+    "fileUpload.action.removeFile": "นำ {fileName} ออก",
+    "csvDelimiterPicker.option.comma": "จุลภาค",
+    "csvDelimiterPicker.option.semicolon": "อัฒภาค",
+    "csvDelimiterPicker.option.pipe": "ไปป์",
+    "csvDelimiterPicker.option.tab": "แท็บ",
+    "csvDelimiterPicker.option.custom": "กำหนดเอง",
+    "csvDelimiterPicker.customInput": "ตัวคั่น CSV แบบกำหนดเอง",
+    "csvDelimiterPicker.menuLabel": "ตัวคั่น CSV",
+    "csvDelimiterPicker.validation.singleCharacter": "ใช้อักขระเดียว",
+    "csvDelimiterPicker.validation.unsupported": "ไม่รองรับอักขระนี้"
 }

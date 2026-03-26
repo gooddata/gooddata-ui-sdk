@@ -131,12 +131,29 @@ export class TigerWorkspaceSettings
         return unwrapSettingContent(content) as boolean | undefined;
     }
 
+    public async getExportCsvCustomDelimiter(): Promise<string | undefined> {
+        const settings = await this.getSettingByType("EXPORT_CSV_CUSTOM_DELIMITER");
+        if (settings.data.data.length === 0) {
+            return undefined;
+        }
+        const content = settings.data.data[0].attributes?.content;
+        return unwrapSettingContent(content) as string | undefined;
+    }
+
     public async setEnableDrillToUrlByDefault(enabled: boolean): Promise<void> {
         return this.setSetting("ENABLE_DRILL_TO_URL_BY_DEFAULT", { value: enabled });
     }
 
+    public async setExportCsvCustomDelimiter(delimiter: string): Promise<void> {
+        return this.setSetting("EXPORT_CSV_CUSTOM_DELIMITER", { value: delimiter });
+    }
+
     public async deleteEnableDrillToUrlByDefault(): Promise<void> {
         return this.deleteSettingByType("ENABLE_DRILL_TO_URL_BY_DEFAULT");
+    }
+
+    public async deleteExportCsvCustomDelimiter(): Promise<void> {
+        return this.deleteSettingByType("EXPORT_CSV_CUSTOM_DELIMITER");
     }
 
     public override async setTheme(activeThemeId: string): Promise<void> {

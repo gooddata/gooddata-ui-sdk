@@ -16,7 +16,9 @@ import type {
     IMemoryItemMetadataObject,
     ISemanticQualityIssuesCalculation,
     ISemanticQualityReport,
+    ISemanticSearchRelationship,
     ISemanticSearchResult,
+    ISemanticSearchResultItem,
     IUser,
     MemoryItemStrategy,
     ObjectOrigin,
@@ -50,6 +52,12 @@ export interface IGenAIService {
      * Get a chatbot thread builder.
      */
     getChatThread(): IChatThread;
+
+    /**
+     * Get a chatbot conversations builder.
+     * @internal
+     */
+    getChatConversations(): IChatConversations;
 
     /**
      * Get a memory service for listing and managing memory items.
@@ -703,4 +711,482 @@ export interface IKnowledgeDocumentsService {
      * Search the knowledge base using semantic similarity.
      */
     search(query: string, options?: ISearchKnowledgeOptions): Promise<ISearchKnowledgeResponse>;
+}
+
+//new conversations
+
+/**
+ * GenAI Chat Conversations.
+ * @internal
+ */
+export interface IChatConversations {
+    /**
+     * Get conversations items query.
+     */
+    getConversationItemsQuery(): IChatConversationItemsQuery;
+
+    /**
+     * Create a new conversation.
+     */
+    create(): Promise<IChatConversation>;
+
+    /**
+     * Delete a conversation.
+     */
+    delete(conversationId: string): Promise<void>;
+
+    /**
+     * Get conversation by id.
+     */
+    getConversation(conversationId: string): Promise<IChatConversation>;
+
+    /**
+     * Get conversation thread by id.
+     */
+    getConversationThread(conversationId: string): IChatConversationThread;
+}
+
+/**
+ * Service to query conversations items.
+ *
+ * @public
+ */
+export interface IChatConversationItemsQuery {
+    /**
+     * Sets number of memory items to return per page.
+     * Default size: 50
+     *
+     * @param size - desired max number of memory items per page must be a positive number
+     * @returns memory items query
+     */
+    withSize(size: number): IChatConversationItemsQuery;
+
+    /**
+     * Sets starting page for the query. Backend WILL return no data if the page is greater than
+     * total number of pages.
+     * Default page: 0
+     *
+     * @param page - zero indexed, must be non-negative
+     * @returns memory items query
+     */
+    withPage(page: number): IChatConversationItemsQuery;
+
+    /**
+     * Starts the query.
+     *
+     * @returns promise of first page of the results
+     */
+    query(): Promise<IChatConversationItemsQueryResult>;
+}
+
+/**
+ * Conversations items query result.
+ * @internal
+ */
+export type IChatConversationItemsQueryResult = IPagedResource<IChatConversation>;
+
+/**
+ * GenAI Chat Conversation.
+ * @internal
+ */
+export type IChatConversation = {
+    /**
+     * Conversation id
+     */
+    id: string;
+    /**
+     * Conversation creation date
+     */
+    createdAt: string;
+    /**
+     * Conversation last update date
+     */
+    updatedAt: string;
+};
+
+/**
+ * GenAI Chat Conversation error.
+ * @internal
+ */
+export type IChatConversationError = {
+    type: "error";
+    code: number;
+    message: string;
+};
+
+/**
+ * Is chat conversation error
+ * @internal
+ */
+export function isChatConversationError(
+    item: Partial<IChatConversationItem | IChatConversationError>,
+): item is IChatConversationError {
+    return typeof item === "object" && item !== null && "type" in item && item.type === "error";
+}
+
+/**
+ * GenAI Chat Conversation item
+ * @internal
+ */
+export type IChatConversationItem = {
+    id: string;
+    type: "item";
+    responseId: string;
+    replyTo?: string;
+    createdAt: number;
+    role: "user" | "assistant" | "tool";
+    content: IChatConversationContent;
+    feedback?: IChatConversationFeedback;
+};
+
+/**
+ * Is chat conversation item
+ * @internal
+ */
+export function isChatConversationItem(item: unknown): item is IChatConversationItem {
+    return typeof item === "object" && item !== null && "type" in item && item.type === "item";
+}
+
+/**
+ * GenAI Chat Conversation content
+ * @internal
+ */
+export type IChatConversationContent =
+    | IChatConversationTextContent
+    | IChatConversationReasoningContent
+    | IChatConversationMultipartContent
+    | IChatConversationToolCallContent
+    | IChatConversationToolResultContent;
+
+/**
+ * GenAI Chat Conversation multipart content
+ * @internal
+ */
+export type IChatConversationMultipartPart =
+    | IChatConversationTextContent
+    | IChatConversationVisualisationContent
+    | IChatConversationKeyDriverAnalysisContent
+    | IChatConversationWhatIfContent
+    | IChatConversationSearchContent;
+
+/**
+ * GenAI Chat Conversation text content
+ * @internal
+ */
+export type IChatConversationTextContent = {
+    type: "text";
+    text: string;
+};
+
+/**
+ * Is chat conversation text content
+ * @internal
+ */
+export function isChatConversationTextContent(
+    content: IChatConversationContent,
+): content is IChatConversationTextContent {
+    return content.type === "text";
+}
+
+/**
+ * GenAI Chat Conversation reasoning content
+ * @internal
+ */
+export type IChatConversationReasoningContent = {
+    type: "reasoning";
+    summary: string;
+};
+
+/**
+ * Is chat conversation reasoning content
+ * @internal
+ */
+export function isChatConversationReasoningContent(
+    content: IChatConversationContent,
+): content is IChatConversationReasoningContent {
+    return content.type === "reasoning";
+}
+
+/**
+ * GenAI Chat Conversation multipart content
+ * @internal
+ */
+export type IChatConversationMultipartContent = {
+    type: "multipart";
+    parts: IChatConversationMultipartPart[];
+};
+
+/**
+ * Is chat conversation multipart content
+ * @internal
+ */
+export function isChatConversationMultipartContent(
+    content: IChatConversationContent,
+): content is IChatConversationMultipartContent {
+    return content.type === "multipart";
+}
+
+/**
+ * GenAI Chat Conversation tool call content
+ * @internal
+ */
+export type IChatConversationToolCallContent = {
+    type: "toolCall";
+    id: string;
+    callId: string;
+    name: string;
+    arguments: object;
+};
+
+/**
+ * Is chat conversation tool call content
+ * @internal
+ */
+export function isChatConversationToolCallContent(
+    content: IChatConversationContent,
+): content is IChatConversationToolCallContent {
+    return content.type === "toolCall";
+}
+
+/**
+ * GenAI Chat Conversation tool result content
+ * @internal
+ */
+export type IChatConversationToolResultContent = {
+    type: "toolResult";
+    callId: string;
+    result: string;
+};
+
+/**
+ * Is chat conversation tool result content
+ * @internal
+ */
+export function isChatConversationToolResultContent(
+    content: IChatConversationContent,
+): content is IChatConversationToolResultContent {
+    return content.type === "toolResult";
+}
+
+/**
+ * GenAI Chat Conversation visualisation definition
+ * @internal
+ */
+export interface IChatVisualisationDefinition {
+    id: string;
+    title: string;
+    type: string;
+    config: {
+        forecast?: {
+            forecastPeriod: number;
+            confidenceLevel: number;
+            seasonal: boolean;
+        };
+        anomalyDetection?: {
+            sensitivity: "LOW" | "MEDIUM" | "HIGH";
+        };
+        clustering?: {
+            numberOfClusters: number;
+            threshold?: number;
+        };
+        whatIf?: {
+            scenarios: {
+                label: string;
+                adjustments: {
+                    metricId: string;
+                    metricType: "metric" | "fact" | "attribute";
+                    scenarioMaql: string;
+                }[];
+            }[];
+            includeBaseline?: boolean;
+        };
+    };
+    //TODO: s.hacker: Use yaml spec types
+}
+
+/**
+ * GenAI Chat Conversation tool result content
+ * @internal
+ */
+export type IChatConversationVisualisationContent = {
+    type: "visualization";
+    visualization: IChatVisualisationDefinition;
+};
+
+/**
+ * Is chat conversation visualization content
+ * @internal
+ */
+export function isChatConversationVisualisationContent(
+    content: IChatConversationMultipartPart,
+): content is IChatConversationVisualisationContent {
+    return content.type === "visualization";
+}
+
+/**
+ * GenAI Chat Conversation key driver analysis definition
+ * @internal
+ */
+export interface IChatKdaDefinition {
+    id: string;
+    //TODO: s.hacker: Use yaml spec types
+}
+
+/**
+ * GenAI Chat Conversation key driver content
+ * @internal
+ */
+export type IChatConversationKeyDriverAnalysisContent = {
+    type: "kda";
+    kda: IChatKdaDefinition;
+};
+
+/**
+ * Is chat conversation key driver analysis content
+ * @internal
+ */
+export function isChatConversationKeyDriverAnalysisContent(
+    content: IChatConversationMultipartPart,
+): content is IChatConversationKeyDriverAnalysisContent {
+    return content.type === "kda";
+}
+
+/**
+ * GenAI Chat Conversation what if definition
+ * @internal
+ */
+export interface IChatWhatIfDefinition {
+    id: string;
+    //TODO: s.hacker: Use yaml spec types
+}
+
+/**
+ * GenAI Chat Conversation what if content
+ * @internal
+ */
+export type IChatConversationWhatIfContent = {
+    type: "whatIf";
+    whatIf: IChatWhatIfDefinition;
+};
+
+/**
+ * Is chat conversation key driver analysis content
+ * @internal
+ */
+export function isChatConversationWhatIfContent(
+    content: IChatConversationMultipartPart,
+): content is IChatConversationWhatIfContent {
+    return content.type === "whatIf";
+}
+
+/**
+ * GenAI Chat Conversation search content
+ * @internal
+ */
+export type IChatConversationSearchContent = {
+    type: "searchResults";
+    searchResults: ISemanticSearchResultItem[];
+    relationships: ISemanticSearchRelationship[];
+    keywords: string[];
+};
+
+/**
+ * Is chat conversation search content
+ * @internal
+ */
+export function isChatConversationSearchContent(
+    content: IChatConversationMultipartPart,
+): content is IChatConversationSearchContent {
+    return content.type === "searchResults";
+}
+
+/**
+ * Feedback for a chat conversation item.
+ * @internal
+ */
+export type IChatConversationFeedback = {
+    type: "feedback";
+    feedback: GenAIChatInteractionUserFeedback;
+    text?: string;
+    createdAt: number;
+    updatedAt: number;
+    error?: string;
+};
+
+/**
+ * Chat conversation user feedback.
+ * @internal
+ */
+export type IChatSuggestion = {
+    label: string;
+    query: string;
+};
+
+/**
+ * Chatbot conversations thread.
+ * @internal
+ */
+export interface IChatConversationThread {
+    /**
+     * Load chat conversation history
+     */
+    loadHistory(options?: { signal?: AbortSignal }): Promise<IChatConversationItem[]>;
+    /**
+     * Reset the chat thread history.
+     */
+    reset(): Promise<IChatConversation>;
+    /**
+     * Save user feedback for the interaction.
+     */
+    saveFeedback(
+        responseId: string,
+        feedback: GenAIChatInteractionUserFeedback,
+        userTextFeedback?: string,
+    ): Promise<void>;
+    /**
+     * Save user visualization for the interaction.
+     */
+    resaveVisualisation(oldVisualizationId: string, newVisualizationId: string): Promise<void>;
+    /**
+     * Add a user message to the chat thread.
+     */
+    query(userMessage: string): IChatConversationThreadQuery;
+}
+
+/**
+ * Chatbot conversation thread query builder.
+ * @internal
+ */
+export interface IChatConversationThreadQuery {
+    /**
+     * Define the limit for the number of search results returned by the chat thread.
+     */
+    withSearchLimit(searchLimit: number): IChatConversationThreadQuery;
+    /**
+     * Define the limit for the number of created visualization returned by the chat thread.
+     */
+    withCreateLimit(createLimit: number): IChatConversationThreadQuery;
+    /**
+     * Define the user context for the chat thread.
+     * For example, what dashboard the user is currently looking at.
+     */
+    withUserContext(userContext: IGenAIUserContext): IChatConversationThreadQuery;
+    /**
+     * Define the object types for the chat thread.
+     */
+    withObjectTypes(objectTypes?: GenAIObjectType[]): IChatConversationThreadQuery;
+    /**
+     * Define allowed relationships for search queries in search
+     */
+    withAllowedRelationshipTypes(
+        relationshipTypes?: IAllowedRelationshipType[],
+    ): IChatConversationThreadQuery;
+    /**
+     * Execute the chat thread.
+     */
+    query(options?: { signal?: AbortSignal }): Promise<IChatConversationItem[]>;
+    /**
+     * Execute the chat thread and stream the results.
+     */
+    stream(): ReadableStream<IChatConversationItem | IChatConversationError>;
 }

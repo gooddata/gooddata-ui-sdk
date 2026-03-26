@@ -20,6 +20,7 @@ import {
     type IAuthenticationProvider,
     type IAutomationsQuery,
     type IAutomationsQueryResult,
+    type IChatConversations,
     type IChatThread,
     type IClusteringConfig,
     type IClusteringResult,
@@ -217,7 +218,7 @@ import {
 } from "@gooddata/sdk-model";
 
 import { DummyAnalyticsCatalogService } from "./DummyAnalyticsCatalogService.js";
-import { DummyGenAIChatThread } from "./DummyGenAIChatThread.js";
+import { DummyChatConversations, DummyGenAIChatThread } from "./DummyGenAIChatThread.js";
 import { DummySemanticQualityService } from "./DummySemanticQualityService.js";
 import { DummySemanticSearchQueryBuilder } from "./DummySemanticSearch.js";
 import { AbstractExecutionFactory } from "../toolkit/execution.js";
@@ -510,6 +511,9 @@ function dummyWorkspace(workspace: string, config: DummyBackendConfig): IAnalyti
             return {
                 getChatThread(): IChatThread {
                     return new DummyGenAIChatThread();
+                },
+                getChatConversations(): IChatConversations {
+                    return new DummyChatConversations();
                 },
                 getSemanticSearchQuery(): ISemanticSearchQuery {
                     return new DummySemanticSearchQueryBuilder(workspace);
@@ -1073,6 +1077,8 @@ class DummyOrganization implements IOrganization {
             getSettings: () => Promise.resolve({}),
             setAlertDefault: () => Promise.resolve(),
             setAttachmentSizeLimit: () => Promise.resolve(),
+            setExportCsvCustomDelimiter: () => Promise.resolve(),
+            deleteExportCsvCustomDelimiter: () => Promise.resolve(),
             setMaxZoomLevel: () => Promise.resolve(),
             setMetricFormatOverride: () => Promise.resolve(),
             setActiveCalendars: () => Promise.resolve(),
@@ -1317,11 +1323,23 @@ class DummyWorkspaceSettingsService implements IWorkspaceSettingsService {
         return Promise.resolve(undefined);
     }
 
+    getExportCsvCustomDelimiter(): Promise<string | undefined> {
+        return Promise.resolve(undefined);
+    }
+
     setEnableDrillToUrlByDefault(_enabled: boolean): Promise<void> {
         return Promise.resolve();
     }
 
+    setExportCsvCustomDelimiter(_delimiter: string): Promise<void> {
+        return Promise.resolve();
+    }
+
     deleteEnableDrillToUrlByDefault(): Promise<void> {
+        return Promise.resolve();
+    }
+
+    deleteExportCsvCustomDelimiter(): Promise<void> {
         return Promise.resolve();
     }
 

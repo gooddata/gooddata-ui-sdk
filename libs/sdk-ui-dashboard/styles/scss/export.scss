@@ -111,6 +111,25 @@
     width: 100%;
 }
 
+.gd-csv-export-dialog {
+    min-width: 300px;
+
+    .gd-dialog-content {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+
+        .gd-csv-export-dialog-item {
+            h4 {
+                margin: 0 0 8px 0;
+                color: var(--gd-palette-complementary-7);
+                font-size: 14px;
+                font-weight: 400;
+            }
+        }
+    }
+}
+
 .export-slides-mode {
     .dash-item.type-visualization {
         &.viz-type-headline .headline {

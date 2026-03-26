@@ -1,6 +1,7 @@
 // (C) 2019-2026 GoodData Corporation
 
 import {
+    DummyChatConversations,
     DummyGenAIChatThread,
     DummySemanticSearchQueryBuilder,
     InMemoryPaging,
@@ -12,6 +13,7 @@ import {
     type IAuthenticatedPrincipal,
     type IAuthenticationProvider,
     type IBackendCapabilities,
+    type IChatConversations,
     type IChatThread,
     type IDataFiltersService,
     type IDataSourcesService,
@@ -332,6 +334,15 @@ function recordedWorkspace(
                 async setActiveCalendars(): Promise<void> {
                     return Promise.resolve();
                 },
+                async getExportCsvCustomDelimiter(): Promise<string | undefined> {
+                    return Promise.resolve(undefined);
+                },
+                async setExportCsvCustomDelimiter(): Promise<void> {
+                    return Promise.resolve();
+                },
+                async deleteExportCsvCustomDelimiter(): Promise<void> {
+                    return Promise.resolve();
+                },
             };
         },
         styling(): IWorkspaceStylingService {
@@ -402,6 +413,9 @@ function recordedWorkspace(
             return {
                 getChatThread(): IChatThread {
                     return new DummyGenAIChatThread();
+                },
+                getChatConversations(): IChatConversations {
+                    return new DummyChatConversations();
                 },
                 getSemanticSearchQuery: () => {
                     return new DummySemanticSearchQueryBuilder(workspace);
@@ -605,6 +619,8 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 setMaxZoomLevel: () => Promise.resolve(),
                 setMetricFormatOverride: () => Promise.resolve(),
                 setActiveCalendars: () => Promise.resolve(),
+                setExportCsvCustomDelimiter: () => Promise.resolve(),
+                deleteExportCsvCustomDelimiter: () => Promise.resolve(),
             };
         },
         notificationChannels(): IOrganizationNotificationChannelService {

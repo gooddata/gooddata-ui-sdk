@@ -1060,5 +1060,14 @@
     "fileUpload.action.remove": "Remover",
     "fileUpload.list.label": "Carregar ficheiros",
     "fileUpload.action.retryFile": "Tentar novamente {fileName}",
-    "fileUpload.action.removeFile": "Remover {fileName}"
+    "fileUpload.action.removeFile": "Remover {fileName}",
+    "csvDelimiterPicker.option.comma": "Vírgula",
+    "csvDelimiterPicker.option.semicolon": "Ponto e vírgula",
+    "csvDelimiterPicker.option.pipe": "Barra vertical",
+    "csvDelimiterPicker.option.tab": "Aba",
+    "csvDelimiterPicker.option.custom": "Personalizado",
+    "csvDelimiterPicker.customInput": "Delimitador CSV personalizado",
+    "csvDelimiterPicker.menuLabel": "Delimitador CSV",
+    "csvDelimiterPicker.validation.singleCharacter": "Use um único caractere",
+    "csvDelimiterPicker.validation.unsupported": "Este caractere não é suportado"
 }

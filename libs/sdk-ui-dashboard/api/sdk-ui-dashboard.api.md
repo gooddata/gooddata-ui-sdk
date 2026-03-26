@@ -77,6 +77,7 @@ import { IDashboardDateFilterConfig as IDashboardDateFilterConfig_2 } from '@goo
 import { IDashboardDateFilterConfigItem } from '@gooddata/sdk-model';
 import { IDashboardDefinition } from '@gooddata/sdk-model';
 import { IDashboardExportPresentationOptions } from '@gooddata/sdk-backend-spi';
+import { IDashboardExportRawOptions } from '@gooddata/sdk-backend-spi';
 import { IDashboardFilterGroup } from '@gooddata/sdk-model';
 import { IDashboardFilterGroupsConfig } from '@gooddata/sdk-model';
 import { IDashboardFilterReference } from '@gooddata/sdk-model';
@@ -1813,6 +1814,9 @@ export type ExportMetaType = "dashboard-id" | "dashboard-title" | "dashboard-des
 // @alpha
 export function exportRawInsightWidget(ref: ObjRef, widget: IInsightWidget, insight: IInsight, filename: string, correlationId?: string): IExportRawInsightWidget;
 
+// @alpha (undocumented)
+export function exportRawInsightWidget(ref: ObjRef, widget: IInsightWidget, insight: IInsight, filename: string, options: IExportRawInsightWidgetOptions | undefined, correlationId?: string): IExportRawInsightWidget;
+
 // @alpha
 export function exportSlidesInsightWidget(ref: ObjRef, filename: string, exportType: "pdf" | "pptx", correlationId?: string): IExportSlidesInsightWidget;
 
@@ -2803,6 +2807,8 @@ export interface ICrossFilteringPayload {
 
 // @beta (undocumented)
 export interface ICsvExportConfig {
+    // (undocumented)
+    delimiter?: string;
     // (undocumented)
     format: "csv";
     // (undocumented)
@@ -5528,10 +5534,14 @@ export interface IExportRawInsightWidget extends IDashboardCommand {
     readonly type: "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT_RAW";
 }
 
+// @alpha (undocumented)
+export type IExportRawInsightWidgetOptions = IDashboardExportRawOptions;
+
 // @alpha
 export interface IExportRawInsightWidgetPayload {
     readonly filename: string;
     readonly insight: IInsight;
+    readonly options?: IExportRawInsightWidgetOptions;
     readonly ref: ObjRef;
     readonly widget: IInsightWidget;
 }

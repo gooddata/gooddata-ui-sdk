@@ -13,6 +13,9 @@ import type { GenAIChatInteractionUserFeedback } from '@gooddata/sdk-model';
 import type { GenAIChatRoutingUseCase } from '@gooddata/sdk-model';
 import { GenAIObjectType } from '@gooddata/sdk-model';
 import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
+import { IChatConversationContent } from '@gooddata/sdk-backend-spi';
+import { IChatConversationItem } from '@gooddata/sdk-backend-spi';
+import { IChatConversationMultipartPart } from '@gooddata/sdk-backend-spi';
 import { IColorPalette } from '@gooddata/sdk-model';
 import type { IGenAIChangeAnalysisParams } from '@gooddata/sdk-model';
 import type { IGenAIVisualization } from '@gooddata/sdk-model';
@@ -190,6 +193,39 @@ export const GenAIChat: typeof GenAIAssistant;
 // @public @deprecated
 export type GenAIChatProps = GenAIAssistantProps;
 
+// @public
+export type IChatConversationErrorContent = {
+    type: "error";
+    message: string;
+    code?: number;
+};
+
+// @public
+export type IChatConversationLocalContent = IChatConversationContent & {
+    objects?: TextContentObject[];
+    parts?: IChatConversationMultipartPart[];
+};
+
+// @public
+export type IChatConversationLocalItem = Omit<IChatConversationItem, "content"> & {
+    cancelled?: boolean;
+    complete?: boolean;
+    streaming?: boolean;
+    localId: string;
+    content: IChatConversationLocalContent | IChatConversationErrorContent;
+};
+
+// @public
+export type IChatConversationMultipartLocalPart = IChatConversationMultipartPart & {
+    reporting?: boolean;
+    saving?: boolean;
+    error?: {
+        name: string;
+        message: string;
+    };
+    objects?: TextContentObject[];
+};
+
 // @beta (undocumented)
 export interface ILandingContentProps {
     // (undocumented)
@@ -282,7 +318,7 @@ export const makeUserMessage: (content: Contents[]) => UserMessage;
 export type Message = UserMessage | AssistantMessage;
 
 // @public (undocumented)
-export const newMessageAction: ActionCreatorWithPayload<Message, "messages/newMessageAction">;
+export const newMessageAction: ActionCreatorWithPayload<Message | IChatConversationLocalItem, "messages/newMessageAction">;
 
 // @public (undocumented)
 export type ReasoningContents = {

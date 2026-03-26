@@ -4,10 +4,17 @@ import { type Ref, useId, useMemo, useState } from "react";
 
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { type IExportDefinitionVisualizationObjectSettings } from "@gooddata/sdk-model";
+import {
+    DEFAULT_CSV_DELIMITER,
+    type IExportDefinitionVisualizationObjectSettings,
+    getCsvDelimiterState,
+    getCsvDelimiterValidationError,
+    getCsvDelimiterValue,
+} from "@gooddata/sdk-model";
 import {
     Button,
     ContentDivider,
+    CsvDelimiterPicker,
     Dropdown,
     DropdownButton,
     type IAlignPoint,
@@ -39,7 +46,7 @@ type PdfPageSize = NonNullable<IExportDefinitionVisualizationObjectSettings["pag
 type PdfPageOrientation = "PORTRAIT" | "LANDSCAPE";
 type PdfOrientation = NonNullable<IExportDefinitionVisualizationObjectSettings["orientation"]>;
 
-type IAttachmentSettingsType = "XLSX" | "PDF_TABULAR";
+type IAttachmentSettingsType = "XLSX" | "PDF_TABULAR" | "CSV" | "CSV_RAW";
 
 export interface IAttachmentSettingsProps {
     type: IAttachmentSettingsType;
@@ -83,21 +90,30 @@ export function AttachmentSettings({
 }: IAttachmentSettingsProps) {
     const intl = useIntl();
     const isPdfTabular = type === "PDF_TABULAR";
+    const isCsv = type === "CSV" || type === "CSV_RAW";
     const legacyOrientation = settings.orientation;
     const legacyPageOrientation = mapLegacyOrientationToPageOrientation(legacyOrientation);
     const resolvedDefaultPageSize = settings.pageSize ?? defaultPdfPageSize ?? DEFAULT_PDF_PAGE_SIZE;
+    const resolvedCsvDelimiter = settings.delimiter ?? DEFAULT_CSV_DELIMITER;
+    const resolvedCsvState = getCsvDelimiterState(settings.delimiter);
     const [mergeHeaders, setMergeHeaders] = useState(settings.mergeHeaders ?? true);
     const [exportInfo, setExportInfo] = useState(settings.exportInfo ?? true);
     const [pageSize, setPageSize] = useState(resolvedDefaultPageSize);
     const [pageOrientation, setPageOrientation] = useState(
         legacyPageOrientation ?? DEFAULT_PDF_PAGE_ORIENTATION,
     );
+    const [csvDelimiterValue, setCsvDelimiterValue] = useState(resolvedCsvState);
     const pageSizeMenuId = useId();
     const orientationMenuId = useId();
 
-    const settingsLabelId = isPdfTabular
-        ? "dialogs.export.pdf.headline"
-        : "dialogs.schedule.management.attachments.xlsx.settings";
+    const settingsLabel = isPdfTabular
+        ? intl.formatMessage({ id: "dialogs.export.pdf.headline" })
+        : isCsv
+          ? intl.formatMessage({
+                id: "dialogs.schedule.management.attachments.csv.settings",
+                defaultMessage: "CSV options",
+            })
+          : intl.formatMessage({ id: "dialogs.schedule.management.attachments.xlsx.settings" });
 
     const pageSizeMenuItems = useMemo<IUiMenuInteractiveItem<PageSizeMenuData>[]>(
         () => [
@@ -143,6 +159,15 @@ export function AttachmentSettings({
         [intl],
     );
 
+    const resetSettings = () => {
+        const nextCsvState = getCsvDelimiterState(settings.delimiter);
+        setMergeHeaders(settings.mergeHeaders ?? true);
+        setExportInfo(settings.exportInfo ?? true);
+        setPageSize(resolvedDefaultPageSize);
+        setPageOrientation(legacyPageOrientation ?? DEFAULT_PDF_PAGE_ORIENTATION);
+        setCsvDelimiterValue(nextCsvState);
+    };
+
     const isPdfSettingsDirty =
         pageSize !== resolvedDefaultPageSize ||
         (mapPageOrientationToLegacyOrientation(pageOrientation) ?? DEFAULT_PDF_ORIENTATION) !==
@@ -150,14 +175,26 @@ export function AttachmentSettings({
         exportInfo !== (settings.exportInfo ?? true);
     const isXlsxSettingsDirty =
         mergeHeaders !== (settings.mergeHeaders ?? true) || exportInfo !== (settings.exportInfo ?? true);
-    const isSettingsDirty = isPdfTabular ? isPdfSettingsDirty : isXlsxSettingsDirty;
-
-    const resetSettings = () => {
-        setMergeHeaders(settings.mergeHeaders ?? true);
-        setExportInfo(settings.exportInfo ?? true);
-        setPageSize(resolvedDefaultPageSize);
-        setPageOrientation(legacyPageOrientation ?? DEFAULT_PDF_PAGE_ORIENTATION);
-    };
+    const selectedDelimiter = getCsvDelimiterValue(
+        csvDelimiterValue.selectedPreset,
+        csvDelimiterValue.customDelimiter,
+    );
+    const csvValidationError =
+        csvDelimiterValue.selectedPreset === "custom"
+            ? getCsvDelimiterValidationError(csvDelimiterValue.customDelimiter)
+            : undefined;
+    const isCsvSettingsDirty = selectedDelimiter !== resolvedCsvDelimiter;
+    const isSettingsDirty = isPdfTabular
+        ? isPdfSettingsDirty
+        : isCsv
+          ? isCsvSettingsDirty
+          : isXlsxSettingsDirty;
+    const isSaveDisabled =
+        !isSettingsDirty ||
+        (isCsv &&
+            (csvDelimiterValue.selectedPreset === "custom"
+                ? !csvDelimiterValue.customDelimiter || Boolean(csvValidationError)
+                : false));
 
     return (
         <Dropdown
@@ -175,14 +212,14 @@ export function AttachmentSettings({
                     className="gd-attachment-chip-button"
                     onClick={toggleDropdown}
                     ref={buttonRef as Ref<HTMLButtonElement>}
-                    aria-label={intl.formatMessage({ id: settingsLabelId })}
+                    aria-label={settingsLabel}
                 >
                     <UiIcon type="settings" size={14} color="complementary-8" />
                 </button>
             )}
             renderBody={({ closeDropdown }) => (
                 <div
-                    className="gd-attachment-settings-dropdown"
+                    className={`gd-attachment-settings-dropdown${isCsv ? " gd-attachment-settings-dropdown--csv" : ""}`}
                     onKeyDown={(e) => {
                         if (isEscapeKey(e)) {
                             e.stopPropagation();
@@ -191,7 +228,7 @@ export function AttachmentSettings({
                     }}
                 >
                     <div className="gd-list-title">
-                        <FormattedMessage id={settingsLabelId} />
+                        {settingsLabel}
                         <div className="gd-close-button">
                             <Button
                                 className="gd-button-link gd-button-icon-only gd-icon-cross s-dialog-close-button"
@@ -323,6 +360,29 @@ export function AttachmentSettings({
                                     </span>
                                 </label>
                             </>
+                        ) : isCsv ? (
+                            <div className="gd-attachment-settings-dropdown-item">
+                                <CsvDelimiterPicker
+                                    value={csvDelimiterValue}
+                                    onChange={setCsvDelimiterValue}
+                                    validationError={csvValidationError}
+                                    label={intl.formatMessage({
+                                        id: "dialogs.export.csv.delimiter",
+                                        defaultMessage: "CSV delimiter",
+                                    })}
+                                    onEnterKeyPress={
+                                        isSaveDisabled
+                                            ? undefined
+                                            : () => {
+                                                  onSettingsChange({
+                                                      ...settings,
+                                                      delimiter: selectedDelimiter,
+                                                  });
+                                                  closeDropdown();
+                                              }
+                                    }
+                                />
+                            </div>
                         ) : (
                             <>
                                 <label className="input-checkbox-label">
@@ -369,6 +429,11 @@ export function AttachmentSettings({
                                             mapPageOrientationToLegacyOrientation(pageOrientation) ??
                                             DEFAULT_PDF_ORIENTATION,
                                     });
+                                } else if (isCsv) {
+                                    onSettingsChange({
+                                        ...settings,
+                                        delimiter: selectedDelimiter,
+                                    });
                                 } else {
                                     onSettingsChange({
                                         mergeHeaders,
@@ -377,7 +442,7 @@ export function AttachmentSettings({
                                 }
                                 closeDropdown();
                             }}
-                            disabled={!isSettingsDirty}
+                            disabled={isSaveDisabled}
                         />
                     </div>
                 </div>

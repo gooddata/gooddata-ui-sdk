@@ -121,6 +121,24 @@ export interface IOrganizationSettingsService {
     setAttachmentSizeLimit(size: number): Promise<void>;
 
     /**
+     * Sets the default CSV delimiter for exports in the organization.
+     *
+     * @param delimiter - single character delimiter to use for CSV exports.
+     *
+     * @returns promise
+     * @alpha
+     */
+    setExportCsvCustomDelimiter(delimiter: string): Promise<void>;
+
+    /**
+     * Clears the organization CSV delimiter configuration so the default (comma) is used.
+     *
+     * @returns promise
+     * @alpha
+     */
+    deleteExportCsvCustomDelimiter(): Promise<void>;
+
+    /**
      * Sets first day of week for organization.
      *
      * @param weekStart - "Sunday | "Monday"

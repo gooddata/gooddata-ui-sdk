@@ -215,6 +215,7 @@ export function RepeaterChart(props: IRepeaterChartProps) {
                 suppressCellFocus={false}
                 suppressHeaderFocus={false}
                 suppressMovableColumns
+                suppressNoRowsOverlay
                 onCellClicked={onCellClicked}
                 onCellKeyDown={onCellKeyDown}
                 focusGridInnerElement={focusGridInnerElement}

@@ -1,4 +1,4 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type ISemanticSearchResultItem } from "@gooddata/sdk-model";
 
@@ -22,7 +22,7 @@ const getFoundObjectLink = (obj: ISemanticSearchResultItem, workspaceId: string)
 };
 
 /**
- * TODO - consider using inline directives syntax for object references,
+ * NOTE: consider using inline directives syntax for object references,
  *  or teach LLM to return custom schema URLs from the get-go.
  */
 const rx = /\{[^}][^.}]*\.[^}]+\}/g;

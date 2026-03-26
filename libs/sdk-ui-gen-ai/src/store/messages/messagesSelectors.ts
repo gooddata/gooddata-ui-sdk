@@ -2,8 +2,10 @@
 
 import { createSelector } from "@reduxjs/toolkit";
 
+import { type IChatConversation } from "@gooddata/sdk-backend-spi";
+
 import { messagesSliceName } from "./messagesSlice.js";
-import { type Message } from "../../model.js";
+import { type IChatConversationLocalItem, type Message } from "../../model.js";
 import { type RootState } from "../types.js";
 
 const messagesSliceSelector = (state: RootState) => state[messagesSliceName];
@@ -30,7 +32,7 @@ export const lastMessageSelector: (state: RootState) => Message | undefined = cr
 
 export const hasMessagesSelector: (state: RootState) => boolean = createSelector(
     messagesSliceSelector,
-    (state) => state.messageOrder.length > 0,
+    (state) => state.messageOrder.length > 0 || state.conversationItemsOrder.length > 0,
 );
 
 export const asyncProcessSelector: (state: RootState) => RootState[typeof messagesSliceName]["asyncProcess"] =
@@ -49,4 +51,14 @@ export const lastMessageIdSelector: (state: RootState) => string | undefined = c
 export const threadIdSelector: (state: RootState) => string | undefined = createSelector(
     messagesSliceSelector,
     (state) => state.threadId,
+);
+
+export const conversationMessagesSelector: (state: RootState) => IChatConversationLocalItem[] =
+    createSelector(messagesSliceSelector, (state) =>
+        state.conversationItemsOrder.map((id) => state.conversationItems[id]),
+    );
+
+export const conversationSelector: (state: RootState) => IChatConversation | undefined = createSelector(
+    messagesSliceSelector,
+    (state) => state.currentConversation,
 );
