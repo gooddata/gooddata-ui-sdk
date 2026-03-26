@@ -2053,6 +2053,8 @@ export interface IDescriptionPanelProps {
     // (undocumented)
     id?: string;
     // (undocumented)
+    isLocked?: boolean;
+    // (undocumented)
     LoadingComponent?: ComponentType;
     // (undocumented)
     locale?: string;

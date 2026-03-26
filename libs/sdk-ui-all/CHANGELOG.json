@@ -2,6 +2,63 @@
     "name": "@gooddata/sdk-ui-all",
     "entries": [
         {
+            "version": "11.27.0",
+            "tag": "@gooddata/sdk-ui-all_v11.27.0",
+            "date": "Thu, 26 Mar 2026 07:00:37 GMT",
+            "comments": {
+                "none": [
+                    {
+                        "comment": "sdk-ui-all: Custom delimiter in CSV exports."
+                    },
+                    {
+                        "comment": "sdk-ui-kit: Fix insight list item lock icon wrapping and add lock icon to description panel tooltip."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Add back loading of filter views in export mode."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Preserve dashboard attribute filter parent fields when converting to SDK filter."
+                    },
+                    {
+                        "comment": "sdk-ui-filters: Removed `enableFilterAccessibility` feature flag."
+                    },
+                    {
+                        "comment": "add data-testid in sdk-ui-kit and sdk-ui-filters for Playwright e2e tests"
+                    },
+                    {
+                        "comment": "sdk-ui-all: implementation and support of new agentic approach in chatbot"
+                    },
+                    {
+                        "comment": "sdk-ui-pivot: Bump aggrid version to 35.1.0."
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Use correct filter name in toooltip."
+                    },
+                    {
+                        "comment": "sdk-ui-all: Support text filters in dashboard component."
+                    },
+                    {
+                        "comment": "sdk-ui-all: Automation trigger."
+                    },
+                    {
+                        "comment": "chore: Remove cypress lint variants from eslint-config and oxlint-config"
+                    },
+                    {
+                        "comment": "fix attribute filter focus retention inside filter group"
+                    },
+                    {
+                        "comment": "sdk-model, sdk-ui-theme-provider: Add abilty to theme application header (as an alpha feature)"
+                    },
+                    {
+                        "comment": "sdk-ui-dashboard: Do not sanitize attribute when drill to URL is enabled and drill down disabled to allow drill to URL to still work"
+                    },
+                    {
+                        "comment": "sdk-backend-spi: Introduce SPI for user data filters management"
+                    }
+                ]
+            }
+        },
+        {
             "version": "11.26.0",
             "tag": "@gooddata/sdk-ui-all_v11.26.0",
             "date": "Thu, 19 Mar 2026 07:54:08 GMT",

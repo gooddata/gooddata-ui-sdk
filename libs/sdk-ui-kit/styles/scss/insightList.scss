@@ -105,6 +105,9 @@ $visualization-types:
         }
 
         .gd-visualizations-list-item-content-name {
+            display: flex;
+            align-items: center;
+            gap: 4px;
             line-height: 14px;
             color: variables.$gd-color-text;
             font-size: 12px;
@@ -131,6 +134,11 @@ $visualization-types:
         flex: 0 0 15px;
         padding-top: 8px;
         padding-left: 10px;
+
+        // When actions are missing, compensate the whitespace.
+        &:first-child {
+            margin-right: 15px;
+        }
     }
 
     .gd-visualizations-list-item-actions {
@@ -158,11 +166,6 @@ $visualization-types:
                 }
             }
         }
-    }
-
-    .gd-icon-lock {
-        color: variables.$gd-color-state-blank;
-        margin-right: 4px;
     }
 }
 
