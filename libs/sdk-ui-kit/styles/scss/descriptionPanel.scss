@@ -57,6 +57,9 @@
     padding: 15px 0;
 
     &-title {
+        display: flex;
+        align-items: center;
+        gap: 5px;
         flex-shrink: 0;
         font-size: 14px;
         line-height: 23px;

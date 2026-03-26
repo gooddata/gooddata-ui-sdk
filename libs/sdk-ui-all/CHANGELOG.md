@@ -1,6 +1,29 @@
 # Change Log - @gooddata/sdk-ui-all
 
-This log was last generated on Thu, 19 Mar 2026 07:54:08 GMT and should not be manually modified.
+This log was last generated on Thu, 26 Mar 2026 07:00:37 GMT and should not be manually modified.
+
+## 11.27.0
+
+Thu, 26 Mar 2026 07:00:37 GMT
+
+### Updates
+
+- sdk-ui-all: Custom delimiter in CSV exports.
+- sdk-ui-kit: Fix insight list item lock icon wrapping and add lock icon to description panel tooltip.
+- sdk-ui-dashboard: Add back loading of filter views in export mode.
+- sdk-ui-dashboard: Preserve dashboard attribute filter parent fields when converting to SDK filter.
+- sdk-ui-filters: Removed `enableFilterAccessibility` feature flag.
+- add data-testid in sdk-ui-kit and sdk-ui-filters for Playwright e2e tests
+- sdk-ui-all: implementation and support of new agentic approach in chatbot
+- sdk-ui-pivot: Bump aggrid version to 35.1.0.
+- sdk-ui-dashboard: Use correct filter name in toooltip.
+- sdk-ui-all: Support text filters in dashboard component.
+- sdk-ui-all: Automation trigger.
+- chore: Remove cypress lint variants from eslint-config and oxlint-config
+- fix attribute filter focus retention inside filter group
+- sdk-model, sdk-ui-theme-provider: Add abilty to theme application header (as an alpha feature)
+- sdk-ui-dashboard: Do not sanitize attribute when drill to URL is enabled and drill down disabled to allow drill to URL to still work
+- sdk-backend-spi: Introduce SPI for user data filters management
 
 ## 11.26.0
 
