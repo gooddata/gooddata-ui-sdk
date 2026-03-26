@@ -397,6 +397,22 @@ $min-content-height: 110px;
         justify-content: end;
         padding: 10px;
     }
+
+    .gd-attachment-settings-dropdown-item {
+        h4 {
+            margin: 0 0 8px 0;
+            color: var(--gd-palette-complementary-7);
+            font-size: 14px;
+            font-weight: 400;
+        }
+    }
+
+    .gd-attachment-settings-dropdown-error {
+        margin-top: 6px;
+        color: var(--gd-message-error-textColor);
+        font-size: 12px;
+        line-height: 16px;
+    }
 }
 
 .gd-notifications-channels-management-dialog {

@@ -1060,5 +1060,14 @@
     "fileUpload.action.remove": "Verwijderen",
     "fileUpload.list.label": "Bestanden uploaden",
     "fileUpload.action.retryFile": "{fileName} opnieuw proberen",
-    "fileUpload.action.removeFile": "{fileName} verwijderen"
+    "fileUpload.action.removeFile": "{fileName} verwijderen",
+    "csvDelimiterPicker.option.comma": "Komma",
+    "csvDelimiterPicker.option.semicolon": "Puntkomma",
+    "csvDelimiterPicker.option.pipe": "Pipe",
+    "csvDelimiterPicker.option.tab": "Tabblad",
+    "csvDelimiterPicker.option.custom": "Aangepast",
+    "csvDelimiterPicker.customInput": "Aangepast CSV-scheidingsteken",
+    "csvDelimiterPicker.menuLabel": "CSV-scheidingsteken",
+    "csvDelimiterPicker.validation.singleCharacter": "Gebruik één teken",
+    "csvDelimiterPicker.validation.unsupported": "Dit teken wordt niet ondersteund"
 }

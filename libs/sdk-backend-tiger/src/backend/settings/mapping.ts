@@ -21,7 +21,6 @@ type UnmappedTypes =
     | "LDM_DEFAULT_LOCALE"
     | "EXPORT_RESULT_POLLING_TIMEOUT_SECONDS"
     | "SORT_CASE_SENSITIVE"
-    | "EXPORT_CSV_CUSTOM_DELIMITER"
     | "ENABLE_QUERY_TAGS"
     | "CERTIFY_PARENT_OBJECTS";
 
@@ -63,6 +62,7 @@ const TYPE_TO_KEY_MAP = {
     ACTIVE_CALENDARS: "activeCalendars",
     ENABLE_AI_ON_DATA: "enableAiOnData",
     API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE: "apiEntitiesDefaultContentMediaType",
+    EXPORT_CSV_CUSTOM_DELIMITER: "exportCsvCustomDelimiter",
     RESTRICT_BASE_UI: "restrictBaseUi",
     ACTIVE_LLM_PROVIDER: "activeLlmProvider",
     SORT_COLLATION: "sortCollation",

@@ -1060,5 +1060,14 @@
     "fileUpload.action.remove": "Xóa",
     "fileUpload.list.label": "Tải lên tệp",
     "fileUpload.action.retryFile": "Thử lại {fileName}",
-    "fileUpload.action.removeFile": "Loại bỏ {fileName}"
+    "fileUpload.action.removeFile": "Loại bỏ {fileName}",
+    "csvDelimiterPicker.option.comma": "Dấu phẩy",
+    "csvDelimiterPicker.option.semicolon": "Dấu chấm phẩy",
+    "csvDelimiterPicker.option.pipe": "Dấu gạch đứng",
+    "csvDelimiterPicker.option.tab": "Thẻ",
+    "csvDelimiterPicker.option.custom": "Tùy chỉnh",
+    "csvDelimiterPicker.customInput": "Dấu phân cách CSV tùy chỉnh",
+    "csvDelimiterPicker.menuLabel": "Dấu phân cách CSV",
+    "csvDelimiterPicker.validation.singleCharacter": "Sử dụng một ký tự duy nhất",
+    "csvDelimiterPicker.validation.unsupported": "Ký tự này không được hỗ trợ"
 }

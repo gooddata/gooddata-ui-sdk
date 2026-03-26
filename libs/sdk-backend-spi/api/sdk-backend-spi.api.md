@@ -123,7 +123,9 @@ import type { IScheduledMail } from '@gooddata/sdk-model';
 import type { IScheduledMailDefinition } from '@gooddata/sdk-model';
 import type { ISemanticQualityIssuesCalculation } from '@gooddata/sdk-model';
 import type { ISemanticQualityReport } from '@gooddata/sdk-model';
+import type { ISemanticSearchRelationship } from '@gooddata/sdk-model';
 import type { ISemanticSearchResult } from '@gooddata/sdk-model';
+import type { ISemanticSearchResultItem } from '@gooddata/sdk-model';
 import { ISeparators } from '@gooddata/sdk-model';
 import { ISettings } from '@gooddata/sdk-model';
 import { ISortItem } from '@gooddata/sdk-model';
@@ -620,6 +622,163 @@ export interface IChangeAnalysisResults {
     toValue?: number;
 }
 
+// @internal
+export type IChatConversation = {
+    id: string;
+    createdAt: string;
+    updatedAt: string;
+};
+
+// @internal
+export type IChatConversationContent = IChatConversationTextContent | IChatConversationReasoningContent | IChatConversationMultipartContent | IChatConversationToolCallContent | IChatConversationToolResultContent;
+
+// @internal
+export type IChatConversationError = {
+    type: "error";
+    code: number;
+    message: string;
+};
+
+// @internal
+export type IChatConversationFeedback = {
+    type: "feedback";
+    feedback: GenAIChatInteractionUserFeedback;
+    text?: string;
+    createdAt: number;
+    updatedAt: number;
+    error?: string;
+};
+
+// @internal
+export type IChatConversationItem = {
+    id: string;
+    type: "item";
+    responseId: string;
+    replyTo?: string;
+    createdAt: number;
+    role: "user" | "assistant" | "tool";
+    content: IChatConversationContent;
+    feedback?: IChatConversationFeedback;
+};
+
+// @public
+export interface IChatConversationItemsQuery {
+    query(): Promise<IChatConversationItemsQueryResult>;
+    withPage(page: number): IChatConversationItemsQuery;
+    withSize(size: number): IChatConversationItemsQuery;
+}
+
+// @internal
+export type IChatConversationItemsQueryResult = IPagedResource<IChatConversation>;
+
+// @internal
+export type IChatConversationKeyDriverAnalysisContent = {
+    type: "kda";
+    kda: IChatKdaDefinition;
+};
+
+// @internal
+export type IChatConversationMultipartContent = {
+    type: "multipart";
+    parts: IChatConversationMultipartPart[];
+};
+
+// @internal
+export type IChatConversationMultipartPart = IChatConversationTextContent | IChatConversationVisualisationContent | IChatConversationKeyDriverAnalysisContent | IChatConversationWhatIfContent | IChatConversationSearchContent;
+
+// @internal
+export type IChatConversationReasoningContent = {
+    type: "reasoning";
+    summary: string;
+};
+
+// @internal
+export interface IChatConversations {
+    create(): Promise<IChatConversation>;
+    delete(conversationId: string): Promise<void>;
+    getConversation(conversationId: string): Promise<IChatConversation>;
+    getConversationItemsQuery(): IChatConversationItemsQuery;
+    getConversationThread(conversationId: string): IChatConversationThread;
+}
+
+// @internal
+export type IChatConversationSearchContent = {
+    type: "searchResults";
+    searchResults: ISemanticSearchResultItem[];
+    relationships: ISemanticSearchRelationship[];
+    keywords: string[];
+};
+
+// @internal
+export type IChatConversationTextContent = {
+    type: "text";
+    text: string;
+};
+
+// @internal
+export interface IChatConversationThread {
+    loadHistory(options?: {
+        signal?: AbortSignal;
+    }): Promise<IChatConversationItem[]>;
+    query(userMessage: string): IChatConversationThreadQuery;
+    resaveVisualisation(oldVisualizationId: string, newVisualizationId: string): Promise<void>;
+    reset(): Promise<IChatConversation>;
+    saveFeedback(responseId: string, feedback: GenAIChatInteractionUserFeedback, userTextFeedback?: string): Promise<void>;
+}
+
+// @internal
+export interface IChatConversationThreadQuery {
+    query(options?: {
+        signal?: AbortSignal;
+    }): Promise<IChatConversationItem[]>;
+    stream(): ReadableStream<IChatConversationItem | IChatConversationError>;
+    withAllowedRelationshipTypes(relationshipTypes?: IAllowedRelationshipType[]): IChatConversationThreadQuery;
+    withCreateLimit(createLimit: number): IChatConversationThreadQuery;
+    withObjectTypes(objectTypes?: GenAIObjectType[]): IChatConversationThreadQuery;
+    withSearchLimit(searchLimit: number): IChatConversationThreadQuery;
+    withUserContext(userContext: IGenAIUserContext): IChatConversationThreadQuery;
+}
+
+// @internal
+export type IChatConversationToolCallContent = {
+    type: "toolCall";
+    id: string;
+    callId: string;
+    name: string;
+    arguments: object;
+};
+
+// @internal
+export type IChatConversationToolResultContent = {
+    type: "toolResult";
+    callId: string;
+    result: string;
+};
+
+// @internal
+export type IChatConversationVisualisationContent = {
+    type: "visualization";
+    visualization: IChatVisualisationDefinition;
+};
+
+// @internal
+export type IChatConversationWhatIfContent = {
+    type: "whatIf";
+    whatIf: IChatWhatIfDefinition;
+};
+
+// @internal
+export interface IChatKdaDefinition {
+    // (undocumented)
+    id: string;
+}
+
+// @internal
+export type IChatSuggestion = {
+    label: string;
+    query: string;
+};
+
 // @beta
 export interface IChatThread {
     loadHistory(fromInteractionId?: string, options?: {
@@ -651,6 +810,48 @@ export interface IChatThreadQuery {
     withObjectTypes(objectTypes?: GenAIObjectType[]): IChatThreadQuery;
     withSearchLimit(searchLimit: number): IChatThreadQuery;
     withUserContext(userContext: IGenAIUserContext): IChatThreadQuery;
+}
+
+// @internal
+export interface IChatVisualisationDefinition {
+    // (undocumented)
+    config: {
+        forecast?: {
+            forecastPeriod: number;
+            confidenceLevel: number;
+            seasonal: boolean;
+        };
+        anomalyDetection?: {
+            sensitivity: "LOW" | "MEDIUM" | "HIGH";
+        };
+        clustering?: {
+            numberOfClusters: number;
+            threshold?: number;
+        };
+        whatIf?: {
+            scenarios: {
+                label: string;
+                adjustments: {
+                    metricId: string;
+                    metricType: "metric" | "fact" | "attribute";
+                    scenarioMaql: string;
+                }[];
+            }[];
+            includeBaseline?: boolean;
+        };
+    };
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    title: string;
+    // (undocumented)
+    type: string;
+}
+
+// @internal
+export interface IChatWhatIfDefinition {
+    // (undocumented)
+    id: string;
 }
 
 // @alpha (undocumented)
@@ -751,6 +952,7 @@ export interface IDashboardExportPresentationOptions {
 
 // @alpha
 export interface IDashboardExportRawOptions {
+    delimiter?: string;
     timeout?: number;
 }
 
@@ -1091,6 +1293,7 @@ export type IExplainResult = {
 
 // @public
 export interface IExportConfig {
+    delimiter?: string;
     format?: "xlsx" | "csv" | "raw" | "pdf";
     grandTotalsPosition?: "pinnedBottom" | "pinnedTop" | "bottom" | "top";
     mergeHeaders?: boolean;
@@ -1246,6 +1449,8 @@ export interface IGenAIChatEvaluation {
 export interface IGenAIService {
     // @internal
     getAnalyticsCatalog(): IAnalyticsCatalogService;
+    // @internal
+    getChatConversations(): IChatConversations;
     getChatThread(): IChatThread;
     // @internal
     getKnowledgeDocuments(): IKnowledgeDocumentsService;
@@ -1763,6 +1968,8 @@ export interface IOrganizationSettingsService {
     deleteActiveLlmEndpoint(): Promise<void>;
     deleteActiveLlmProvider(): Promise<void>;
     deleteColorPalette(): Promise<void>;
+    // @alpha
+    deleteExportCsvCustomDelimiter(): Promise<void>;
     deleteTheme(): Promise<void>;
     getSettings(): Promise<ISettings>;
     setActiveCalendars(calendars: IActiveCalendars): Promise<void>;
@@ -1776,6 +1983,8 @@ export interface IOrganizationSettingsService {
     setDateFormat(dateFormat: string): Promise<void>;
     // @alpha
     setEnableDrillToUrlByDefault(enabled: boolean): Promise<void>;
+    // @alpha
+    setExportCsvCustomDelimiter(delimiter: string): Promise<void>;
     setFiscalCalendar(fiscalYear: IFiscalYear): Promise<void>;
     setFormatLocale(locale: string): Promise<void>;
     setLocale(locale: string): Promise<void>;
@@ -1999,6 +2208,39 @@ export function isAbortError(obj: unknown): obj is AbortError;
 
 // @public
 export function isAnalyticalBackendError(obj: unknown): obj is AnalyticalBackendError;
+
+// @internal
+export function isChatConversationError(item: Partial<IChatConversationItem | IChatConversationError>): item is IChatConversationError;
+
+// @internal
+export function isChatConversationItem(item: unknown): item is IChatConversationItem;
+
+// @internal
+export function isChatConversationKeyDriverAnalysisContent(content: IChatConversationMultipartPart): content is IChatConversationKeyDriverAnalysisContent;
+
+// @internal
+export function isChatConversationMultipartContent(content: IChatConversationContent): content is IChatConversationMultipartContent;
+
+// @internal
+export function isChatConversationReasoningContent(content: IChatConversationContent): content is IChatConversationReasoningContent;
+
+// @internal
+export function isChatConversationSearchContent(content: IChatConversationMultipartPart): content is IChatConversationSearchContent;
+
+// @internal
+export function isChatConversationTextContent(content: IChatConversationContent): content is IChatConversationTextContent;
+
+// @internal
+export function isChatConversationToolCallContent(content: IChatConversationContent): content is IChatConversationToolCallContent;
+
+// @internal
+export function isChatConversationToolResultContent(content: IChatConversationContent): content is IChatConversationToolResultContent;
+
+// @internal
+export function isChatConversationVisualisationContent(content: IChatConversationMultipartPart): content is IChatConversationVisualisationContent;
+
+// @internal
+export function isChatConversationWhatIfContent(content: IChatConversationMultipartPart): content is IChatConversationWhatIfContent;
 
 // @public
 export function isContractExpired(obj: unknown): obj is ContractExpired;
@@ -2465,10 +2707,14 @@ export interface IWorkspaceSettingsService {
     deleteDashboardFiltersApplyMode(): Promise<void>;
     // @alpha
     deleteEnableDrillToUrlByDefault(): Promise<void>;
+    // @alpha
+    deleteExportCsvCustomDelimiter(): Promise<void>;
     deleteMetricFormatOverride(): Promise<void>;
     deleteTheme(): Promise<void>;
     // @alpha
     getEnableDrillToUrlByDefault(): Promise<boolean | undefined>;
+    // @alpha
+    getExportCsvCustomDelimiter(): Promise<string | undefined>;
     getSettings(): Promise<IWorkspaceSettings>;
     getSettingsForCurrentUser(): Promise<IUserWorkspaceSettings>;
     setActiveCalendars(calendars: IActiveCalendars): Promise<void>;
@@ -2483,6 +2729,8 @@ export interface IWorkspaceSettingsService {
     setEnableAiOnData(enabled: boolean): Promise<void>;
     // @alpha
     setEnableDrillToUrlByDefault(enabled: boolean): Promise<void>;
+    // @alpha
+    setExportCsvCustomDelimiter(delimiter: string): Promise<void>;
     setFiscalCalendar(fiscalYear: IFiscalYear): Promise<void>;
     setFormatLocale(locale: string): Promise<void>;
     setLocale(locale: string): Promise<void>;

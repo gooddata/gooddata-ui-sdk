@@ -751,10 +751,6 @@
       "allowedCategories": [ "production", "tools" ]
     },
     {
-      "name": "eslint-plugin-cypress",
-      "allowedCategories": [ "tools" ]
-    },
-    {
       "name": "eslint-plugin-header",
       "allowedCategories": [ "examples", "production", "tools" ]
     },

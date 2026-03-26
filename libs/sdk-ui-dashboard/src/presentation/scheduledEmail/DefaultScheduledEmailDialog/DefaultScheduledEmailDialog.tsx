@@ -52,6 +52,7 @@ import {
     selectDateFormat,
     selectEnableAutomationFilterContext,
     selectEnableAutomationManagement,
+    selectEnableCustomizableCsvDelimiter,
     selectEnableNewScheduledExport,
     selectExternalRecipient,
     selectIsWhiteLabeled,
@@ -202,6 +203,7 @@ export function ScheduledMailDialogRenderer({
         isExecutionTimestampMode,
         enableAutomationFilterContext,
         enableNewScheduledExport,
+        enableCustomizableCsvDelimiter,
         defaultPdfPageSize,
     } = useDefaultScheduledEmailDialogData({
         filters: availableFilters ?? [],
@@ -215,6 +217,8 @@ export function ScheduledMailDialogRenderer({
         isSubmitDisabled,
         xlsxSettings,
         pdfSettings,
+        csvSettings,
+        csvRawSettings,
         startDate,
         allowExternalRecipients,
         allowOnlyLoggedUserRecipients,
@@ -231,6 +235,8 @@ export function ScheduledMailDialogRenderer({
         onWidgetAttachmentsChangeOld,
         onXlsxSettingsChange,
         onPdfSettingsChange,
+        onCsvSettingsChange,
+        onCsvRawSettingsChange,
         onDestinationChange,
         onMessageChange,
         onRecipientsChange,
@@ -629,6 +635,11 @@ export function ScheduledMailDialogRenderer({
                                                     pdfSettings={pdfSettings}
                                                     onXlsxSettingsChange={onXlsxSettingsChange}
                                                     onPdfSettingsChange={onPdfSettingsChange}
+                                                    csvSettings={csvSettings}
+                                                    onCsvSettingsChange={onCsvSettingsChange}
+                                                    csvRawSettings={csvRawSettings}
+                                                    onCsvRawSettingsChange={onCsvRawSettingsChange}
+                                                    isCsvSettingsEnabled={enableCustomizableCsvDelimiter}
                                                     defaultPdfPageSize={defaultPdfPageSize}
                                                 />
                                             ) : (
@@ -794,6 +805,7 @@ function useDefaultScheduledEmailDialogData({
         );
     }, [filters, filtersByTab, enableAutomationFilterContextFlag]);
     const enableNewScheduledExport = useDashboardSelector(selectEnableNewScheduledExport);
+    const enableCustomizableCsvDelimiter = useDashboardSelector(selectEnableCustomizableCsvDelimiter);
 
     const defaultPdfPageSize = getDefaultPdfPageSize(formatLocale);
 
@@ -808,6 +820,7 @@ function useDefaultScheduledEmailDialogData({
         isExecutionTimestampMode,
         enableAutomationFilterContext,
         enableNewScheduledExport,
+        enableCustomizableCsvDelimiter,
         defaultPdfPageSize,
     };
 }

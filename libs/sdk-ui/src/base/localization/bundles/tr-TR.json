@@ -1060,5 +1060,14 @@
     "fileUpload.action.remove": "Kaldır",
     "fileUpload.list.label": "Dosyaları yükle",
     "fileUpload.action.retryFile": "{fileName} öğesini yeniden dene",
-    "fileUpload.action.removeFile": "{fileName} öğesini kaldır"
+    "fileUpload.action.removeFile": "{fileName} öğesini kaldır",
+    "csvDelimiterPicker.option.comma": "Virgül",
+    "csvDelimiterPicker.option.semicolon": "Noktalı virgül",
+    "csvDelimiterPicker.option.pipe": "Dikey çizgi",
+    "csvDelimiterPicker.option.tab": "Sekme",
+    "csvDelimiterPicker.option.custom": "Özel",
+    "csvDelimiterPicker.customInput": "Özel CSV ayırıcısı",
+    "csvDelimiterPicker.menuLabel": "CSV ayırıcı",
+    "csvDelimiterPicker.validation.singleCharacter": "Tek bir karakter kullanın",
+    "csvDelimiterPicker.validation.unsupported": "Bu karakter desteklenmiyor"
 }

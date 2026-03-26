@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 import { type FocusGridInnerElementParams } from "ag-grid-community";
 
@@ -155,6 +155,7 @@ export function createGridOptions(
         suppressCellFocus: false,
         suppressHeaderFocus: false,
         suppressAutoSize: tableMethods.hasColumnWidths,
+        suppressNoRowsOverlay: true,
         // Suppress AG Grid menus to prevent leakage from PivotTableNext's enterprise modules
         suppressContextMenu: true,
 

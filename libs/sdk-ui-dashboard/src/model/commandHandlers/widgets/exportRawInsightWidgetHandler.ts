@@ -63,7 +63,7 @@ export function* exportRawInsightWidgetHandler(
     ctx: DashboardContext,
     cmd: IExportRawInsightWidget,
 ): SagaIterator<IDashboardInsightWidgetExportResolved> {
-    const { ref, widget, insight, filename } = cmd.payload;
+    const { ref, widget, insight, filename, options } = cmd.payload;
     const { workspace } = ctx;
 
     const executionEnvelope: ReturnType<ReturnType<typeof selectExecutionResultByRef>> = yield select(
@@ -116,6 +116,7 @@ export function* exportRawInsightWidgetHandler(
     const timeout: ReturnType<typeof selectExportResultPollingTimeout> = yield select(
         selectExportResultPollingTimeout,
     );
+    const effectiveTimeout = options?.timeout ?? timeout;
 
     const result: PromiseFnReturnType<typeof exportDashboardToCSVRaw> = yield call(
         exportDashboardToCSVRaw,
@@ -123,7 +124,7 @@ export function* exportRawInsightWidgetHandler(
         preparedExecutionDefinition,
         filename,
         overrides,
-        { timeout },
+        { ...options, timeout: effectiveTimeout },
     );
 
     // prepend hostname if provided so that the results are downloaded from there, not from where the app is hosted

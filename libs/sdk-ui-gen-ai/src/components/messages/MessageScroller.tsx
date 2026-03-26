@@ -1,8 +1,8 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { useCallback, useEffect, useRef } from "react";
 
-import { type Message } from "../../model.js";
+import { type IChatConversationLocalItem, type Message } from "../../model.js";
 
 const STABLE_SCROLL_TICKS = 3;
 
@@ -18,7 +18,7 @@ const STABLE_SCROLL_TICKS = 3;
  * identical `scrollHeight` before performing the scroll. This preserves the smooth UX
  * while guaranteeing the viewport ends at the actual bottom once the async content settles.
  */
-export function useMessageScroller(messages: Message[]) {
+export function useMessageScroller(messages: (Message | IChatConversationLocalItem)[]) {
     const scrollerRef = useRef<HTMLDivElement | null>(null);
     const pendingAnimationFrame = useRef<number | null>(null);
 

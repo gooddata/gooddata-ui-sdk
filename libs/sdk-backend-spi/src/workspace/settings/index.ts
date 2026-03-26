@@ -188,6 +188,18 @@ export interface IWorkspaceSettingsService {
     getEnableDrillToUrlByDefault(): Promise<boolean | undefined>;
 
     /**
+     * Gets CSV delimiter setting value for workspace.
+     *
+     * @remarks
+     * Returns the workspace-owned value only, not the resolved/inherited value.
+     * Returns `undefined` if no workspace override exists (inherits from organization).
+     *
+     * @returns promise of workspace-owned setting value, or undefined if not set
+     * @alpha
+     */
+    getExportCsvCustomDelimiter(): Promise<string | undefined>;
+
+    /**
      * Sets enable drill to URL by default setting for workspace. Default is taken from organization setting.
      *
      * @param enabled - whether to enable drill to URL by default for dashboard widgets.
@@ -198,6 +210,16 @@ export interface IWorkspaceSettingsService {
     setEnableDrillToUrlByDefault(enabled: boolean): Promise<void>;
 
     /**
+     * Sets default CSV delimiter for exports in workspace. Default is taken from organization setting.
+     *
+     * @param delimiter - single character delimiter to use for CSV exports.
+     *
+     * @returns promise
+     * @alpha
+     */
+    setExportCsvCustomDelimiter(delimiter: string): Promise<void>;
+
+    /**
      * Clears enable drill to URL by default configuration for workspace
      * so default value from organization is used.
      *
@@ -205,6 +227,14 @@ export interface IWorkspaceSettingsService {
      * @alpha
      */
     deleteEnableDrillToUrlByDefault(): Promise<void>;
+
+    /**
+     * Clears workspace CSV delimiter configuration so default value from organization is used.
+     *
+     * @returns promise
+     * @alpha
+     */
+    deleteExportCsvCustomDelimiter(): Promise<void>;
 
     /**
      * Sets color palette for current workspace.

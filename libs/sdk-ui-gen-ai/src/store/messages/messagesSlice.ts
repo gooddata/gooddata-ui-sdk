@@ -2,17 +2,24 @@
 
 import { type PayloadAction, type Reducer, createSlice } from "@reduxjs/toolkit";
 
+import { type IChatConversation, type IChatConversationItem } from "@gooddata/sdk-backend-spi";
 import { type GenAIChatInteractionUserFeedback } from "@gooddata/sdk-model";
 import { type SdkErrorType } from "@gooddata/sdk-ui";
 
 import {
     type AssistantMessage,
     type Contents,
+    type IChatConversationErrorContent,
+    type IChatConversationLocalContent,
+    type IChatConversationLocalItem,
+    type IChatConversationMultipartLocalPart,
     type Message,
     type UserMessage,
     isAssistantMessage,
+    isChatConversationLocalItem,
     isUserMessage,
     isVisualizationContents,
+    makeErrorContent,
     makeErrorContents,
 } from "../../model.js";
 
@@ -33,6 +40,24 @@ type MessagesSliceState = {
      * An order of messages in the chat.
      */
     messageOrder: string[];
+
+    /**
+     * A list of conversations.
+     */
+    conversations: IChatConversation[];
+    /**
+     * The current conversation.
+     */
+    currentConversation: IChatConversation | undefined;
+    /**
+     * Conversation items.
+     */
+    conversationItems: Record<string, IChatConversationLocalItem>;
+    /**
+     * Conversation items order.
+     */
+    conversationItemsOrder: string[];
+
     /**
      * A global error object. I.e. if something unexpected went wrong,
      * not on the interaction level.
@@ -73,10 +98,16 @@ const getInitialVerboseState = () => {
 const initialState: MessagesSliceState = {
     // Start with loading state to avoid re-render from empty state on startup
     asyncProcess: "loading",
-    messageOrder: [],
-    messages: {},
     loaded: false,
     verbose: getInitialVerboseState(),
+    //old messages
+    messageOrder: [],
+    messages: {},
+    //conversations
+    conversations: [],
+    currentConversation: undefined,
+    conversationItems: {},
+    conversationItemsOrder: [],
 };
 
 const setNormalizedMessages = (state: MessagesSliceState, messages: Message[]) => {
@@ -91,18 +122,69 @@ const setNormalizedMessages = (state: MessagesSliceState, messages: Message[]) =
     state.loaded = true;
 };
 
+const setNormalizedConversations = (state: MessagesSliceState, conversations: IChatConversation[]) => {
+    state.conversations = conversations;
+};
+
+const setNormalizedConversation = (
+    state: MessagesSliceState,
+    conversation: IChatConversation,
+    items: IChatConversationLocalItem[] = [],
+) => {
+    state.currentConversation = conversation;
+    state.conversationItems = items.reduce(
+        (acc, message) => {
+            acc[message.localId] = message;
+            return acc;
+        },
+        {} as MessagesSliceState["conversationItems"],
+    );
+    state.conversationItemsOrder = items.map((message) => message.localId);
+    state.loaded = true;
+};
+
 const getAssistantMessageStrict = (
     state: MessagesSliceState,
     assistantMessageId: string,
-): AssistantMessage => {
-    const message = state.messages[assistantMessageId];
-    if (!isAssistantMessage(message)) {
-        throw new Error(`Unexpected error during message evaluation.`);
+): AssistantMessage | IChatConversationLocalItem => {
+    if (state.currentConversation) {
+        const message = state.conversationItems[assistantMessageId];
+        if (message.role !== "assistant") {
+            throw new Error(`Unexpected error during message evaluation.`);
+        }
+        return message;
+    } else {
+        const message = state.messages[assistantMessageId];
+        if (!isAssistantMessage(message)) {
+            throw new Error(`Unexpected error during message evaluation.`);
+        }
+        return message;
     }
-    return message;
+};
+
+const getUserMessageStrict = (
+    state: MessagesSliceState,
+    assistantMessageId: string,
+): UserMessage | IChatConversationLocalItem => {
+    if (state.currentConversation) {
+        const message = state.conversationItems[assistantMessageId];
+        if (message.role !== "user") {
+            throw new Error(`Unexpected error during message evaluation.`);
+        }
+        return message;
+    } else {
+        const message = state.messages[assistantMessageId];
+        if (!isUserMessage(message)) {
+            throw new Error(`Unexpected error during message evaluation.`);
+        }
+        return message;
+    }
 };
 
 const getMessageExists = (state: MessagesSliceState, assistantMessageId: string): boolean => {
+    if (state.currentConversation) {
+        return !!state.conversationItems[assistantMessageId];
+    }
     return !!state.messages[assistantMessageId];
 };
 
@@ -113,7 +195,16 @@ const getMessageExists = (state: MessagesSliceState, assistantMessageId: string)
 const getUserMessageBeforeSafe = (
     state: MessagesSliceState,
     assistantMessageId: string,
-): UserMessage | undefined => {
+): UserMessage | IChatConversationLocalItem | undefined => {
+    if (state.currentConversation) {
+        const messageIndex = state.conversationItemsOrder.indexOf(assistantMessageId);
+        if (messageIndex <= 0) {
+            return undefined;
+        }
+        const message = state.conversationItems[state.conversationItemsOrder[messageIndex - 1]];
+        return message.role === "user" ? message : undefined;
+    }
+
     const messageIndex = state.messageOrder.indexOf(assistantMessageId);
     if (messageIndex <= 0) {
         return undefined;
@@ -153,6 +244,7 @@ const messagesSlice = createSlice({
             state,
             { payload: { messages } }: PayloadAction<{ messages: Message[] }>,
         ) => {
+            //TODO: s.hacker New needs to be changed
             const normalized = messages.reduce(
                 (acc, message) => {
                     acc[message.localId] = message;
@@ -163,6 +255,22 @@ const messagesSlice = createSlice({
             state.messages = normalized;
             state.messageOrder = messages.map((message) => message.localId);
             state.asyncProcess = "restoring";
+        },
+        loadConversationsSuccessAction: (
+            state,
+            {
+                payload: { conversations, currentConversation, conversationItems, threadId },
+            }: PayloadAction<{
+                conversations: IChatConversation[];
+                currentConversation: IChatConversation;
+                conversationItems: IChatConversationLocalItem[];
+                threadId?: string;
+            }>,
+        ) => {
+            setNormalizedConversations(state, conversations);
+            setNormalizedConversation(state, currentConversation, conversationItems);
+            state.threadId = threadId;
+            delete state.asyncProcess;
         },
         clearThreadAction: (state) => {
             state.asyncProcess = "clearing";
@@ -178,12 +286,39 @@ const messagesSlice = createSlice({
             delete state.asyncProcess;
             delete state.globalError;
         },
+        clearConversationSuccessAction: (
+            state,
+            {
+                payload: { conversation, threadId },
+            }: PayloadAction<{ conversation: IChatConversation; threadId: string }>,
+        ) => {
+            state.conversations.unshift(conversation);
+            state.currentConversation = conversation;
+            state.conversationItems = {};
+            state.conversationItemsOrder = [];
+            state.threadId = threadId;
+            state.loaded = false;
+            delete state.asyncProcess;
+            delete state.globalError;
+        },
         /**
          * Add message to the stack
          */
-        newMessageAction: (state, action: PayloadAction<Message>) => {
-            state.messages[action.payload.localId] = action.payload;
-            state.messageOrder.push(action.payload.localId);
+        newMessageAction: (state, action: PayloadAction<Message | IChatConversationLocalItem>) => {
+            const message = action.payload;
+            if (isChatConversationLocalItem(message)) {
+                if (!state.currentConversation) {
+                    throw new Error("Working with conversation message but thread mode is active.");
+                }
+                state.conversationItems[message.localId] = message;
+                state.conversationItemsOrder.push(message.localId);
+            } else {
+                if (state.currentConversation) {
+                    throw new Error("Working with thread message but conversation mode is active.");
+                }
+                state.messages[message.localId] = message;
+                state.messageOrder.push(action.payload.localId);
+            }
             state.loaded = true;
         },
         /**
@@ -191,11 +326,24 @@ const messagesSlice = createSlice({
          */
         evaluateMessageAction: (
             state,
-            { payload: { message } }: PayloadAction<{ message: AssistantMessage }>,
+            {
+                payload: { message },
+            }: PayloadAction<{ message: AssistantMessage | IChatConversationLocalItem }>,
         ) => {
+            if (isChatConversationLocalItem(message)) {
+                if (!state.currentConversation) {
+                    throw new Error("Working with conversation message but thread mode is active.");
+                }
+                state.conversationItems[message.localId] = message;
+                state.conversationItemsOrder.push(message.localId);
+            } else {
+                if (state.currentConversation) {
+                    throw new Error("Working with thread message but conversation mode is active.");
+                }
+                state.messages[message.localId] = message;
+                state.messageOrder.push(message.localId);
+            }
             state.asyncProcess = "evaluating";
-            state.messages[message.localId] = message;
-            state.messageOrder.push(message.localId);
         },
         /**
          * The evaluation failed, need to update the assistant message.
@@ -211,8 +359,14 @@ const messagesSlice = createSlice({
         ) => {
             const assistantMessage = getAssistantMessageStrict(state, payload.assistantMessageId);
 
-            assistantMessage.complete = true;
-            assistantMessage.content.push(makeErrorContents(payload.error));
+            if (isChatConversationLocalItem(assistantMessage)) {
+                assistantMessage.complete = true;
+                assistantMessage.streaming = false;
+                assistantMessage.content = makeErrorContent(payload.error);
+            } else {
+                assistantMessage.complete = true;
+                assistantMessage.content.push(makeErrorContents(payload.error));
+            }
             delete state.asyncProcess;
         },
         /**
@@ -223,7 +377,8 @@ const messagesSlice = createSlice({
             {
                 payload,
             }: PayloadAction<{
-                contents: Contents[];
+                contents?: Contents[];
+                content?: IChatConversationLocalContent | IChatConversationErrorContent;
                 assistantMessageId: string;
                 interactionId?: string;
             }>,
@@ -239,8 +394,17 @@ const messagesSlice = createSlice({
             const assistantMessage = getAssistantMessageStrict(state, payload.assistantMessageId);
             assistantMessage.id = payload.interactionId ?? assistantMessage.id;
 
-            assistantMessage.content.push(...payload.contents);
-            assistantMessage.cancelled = false;
+            if (isChatConversationLocalItem(assistantMessage)) {
+                assistantMessage.content = payload.content ?? {
+                    type: "text",
+                    text: "",
+                };
+                assistantMessage.streaming = true;
+                assistantMessage.cancelled = false;
+            } else {
+                assistantMessage.content.push(...(payload.contents ?? []));
+                assistantMessage.cancelled = false;
+            }
 
             // Also update the interaction id in the relevant user message (if one exists)
             // Note: dynamically created assistant messages (for multi-interaction streams)
@@ -248,6 +412,37 @@ const messagesSlice = createSlice({
             const userMessage = getUserMessageBeforeSafe(state, payload.assistantMessageId);
             if (userMessage) {
                 userMessage.id = payload.interactionId ?? userMessage.id;
+            }
+        },
+        evaluateMessageUpdateAction: (
+            state,
+            {
+                payload,
+            }: PayloadAction<{
+                userMessageId: string;
+                message: IChatConversationItem | UserMessage;
+                interactionId?: string;
+            }>,
+        ) => {
+            //NOTE: During streaming a message, user can choose to close or reset a chat
+            // and without this check, we would get an unwanted error
+            const exists = getMessageExists(state, payload.userMessageId);
+            if (!exists) {
+                return;
+            }
+
+            // Update assistant message
+            const userMessage = getUserMessageStrict(state, payload.userMessageId);
+            userMessage.id = payload.interactionId ?? userMessage.id;
+
+            if (isChatConversationLocalItem(userMessage)) {
+                const message = payload.message as IChatConversationItem;
+                userMessage.responseId = message.responseId;
+                userMessage.replyTo = message.replyTo;
+                userMessage.createdAt = message.createdAt;
+            } else {
+                const message = payload.message as UserMessage;
+                userMessage.created = message.created;
             }
         },
         evaluateMessageCompleteAction: (
@@ -259,7 +454,6 @@ const messagesSlice = createSlice({
             }>,
         ) => {
             const assistantMessage = getAssistantMessageStrict(state, payload.assistantMessageId);
-
             assistantMessage.complete = true;
             delete state.asyncProcess;
         },
@@ -287,7 +481,19 @@ const messagesSlice = createSlice({
         ) => {
             const assistantMessage = getAssistantMessageStrict(state, payload.assistantMessageId);
 
-            assistantMessage.feedback = payload.feedback;
+            if (isChatConversationLocalItem(assistantMessage)) {
+                const original = assistantMessage.feedback ?? {
+                    type: "feedback",
+                    createdAt: new Date().getTime(),
+                    updatedAt: new Date().getTime(),
+                };
+                assistantMessage.feedback = {
+                    ...original,
+                    feedback: payload.feedback,
+                };
+            } else {
+                assistantMessage.feedback = payload.feedback;
+            }
         },
         setUserFeedbackError: (
             state,
@@ -300,8 +506,23 @@ const messagesSlice = createSlice({
         ) => {
             // Reset feedback to NONE and set error when submission fails
             const assistantMessage = getAssistantMessageStrict(state, payload.assistantMessageId);
-            assistantMessage.feedback = "NONE";
-            assistantMessage.feedbackError = payload.error;
+
+            if (isChatConversationLocalItem(assistantMessage)) {
+                const original = assistantMessage.feedback ?? {
+                    type: "feedback",
+                    createdAt: new Date().getTime(),
+                    updatedAt: new Date().getTime(),
+                };
+
+                assistantMessage.feedback = {
+                    ...original,
+                    feedback: "NONE",
+                    error: payload.error,
+                };
+            } else {
+                assistantMessage.feedback = "NONE";
+                assistantMessage.feedbackError = payload.error;
+            }
         },
         clearUserFeedbackError: (
             state,
@@ -313,7 +534,11 @@ const messagesSlice = createSlice({
         ) => {
             // Clear feedback error after showing toast
             const assistantMessage = getAssistantMessageStrict(state, payload.assistantMessageId);
-            delete assistantMessage.feedbackError;
+            if (isChatConversationLocalItem(assistantMessage)) {
+                delete assistantMessage.feedback?.error;
+            } else {
+                delete assistantMessage.feedbackError;
+            }
         },
         saveVisualizationAction: (
             state,
@@ -328,13 +553,28 @@ const messagesSlice = createSlice({
         ) => {
             const assistantMessage = getAssistantMessageStrict(state, payload.assistantMessageId);
 
-            const visualization = assistantMessage.content
-                .filter(isVisualizationContents)
-                .flatMap((content) => content.createdVisualizations)
-                .find((content) => content.id === payload.visualizationId);
+            if (isChatConversationLocalItem(assistantMessage)) {
+                if (assistantMessage.content.type !== "multipart") {
+                    throw new Error("Unexpected message type");
+                }
 
-            if (visualization) {
-                visualization.saving = true;
+                const visualization: IChatConversationMultipartLocalPart | undefined =
+                    assistantMessage.content.parts
+                        .filter((filter) => filter.type === "visualization")
+                        .find((content) => content.visualization.id === payload.visualizationId);
+
+                if (visualization) {
+                    visualization.saving = true;
+                }
+            } else {
+                const visualization = assistantMessage.content
+                    .filter(isVisualizationContents)
+                    .flatMap((content) => content.createdVisualizations)
+                    .find((content) => content.id === payload.visualizationId);
+
+                if (visualization) {
+                    visualization.saving = true;
+                }
             }
         },
         saveVisualizationErrorAction: (
@@ -352,13 +592,29 @@ const messagesSlice = createSlice({
         ) => {
             const assistantMessage = getAssistantMessageStrict(state, payload.assistantMessageId);
 
-            const visualization = assistantMessage.content
-                .filter(isVisualizationContents)
-                .flatMap((content) => content.createdVisualizations)
-                .find((content) => content.id === payload.visualizationId);
+            if (isChatConversationLocalItem(assistantMessage)) {
+                if (assistantMessage.content.type !== "multipart") {
+                    throw new Error("Unexpected message type");
+                }
 
-            if (visualization) {
-                visualization.saving = false;
+                const visualization: IChatConversationMultipartLocalPart | undefined =
+                    assistantMessage.content.parts
+                        .filter((filter) => filter.type === "visualization")
+                        .find((content) => content.visualization.id === payload.visualizationId);
+
+                if (visualization) {
+                    visualization.saving = false;
+                    visualization.error = payload.error;
+                }
+            } else {
+                const visualization = assistantMessage.content
+                    .filter(isVisualizationContents)
+                    .flatMap((content) => content.createdVisualizations)
+                    .find((content) => content.id === payload.visualizationId);
+
+                if (visualization) {
+                    visualization.saving = false;
+                }
             }
         },
         saveVisualizationSuccessAction: (
@@ -374,14 +630,29 @@ const messagesSlice = createSlice({
         ) => {
             const assistantMessage = getAssistantMessageStrict(state, payload.assistantMessageId);
 
-            const visualization = assistantMessage.content
-                .filter(isVisualizationContents)
-                .flatMap((content) => content.createdVisualizations)
-                .find((content) => content.id === payload.visualizationId);
+            if (isChatConversationLocalItem(assistantMessage)) {
+                if (assistantMessage.content.type !== "multipart") {
+                    throw new Error("Unexpected message type");
+                }
 
-            if (visualization) {
-                visualization.saving = false;
-                visualization.savedVisualizationId = payload.savedVisualizationId;
+                const visualization: IChatConversationMultipartLocalPart | undefined =
+                    assistantMessage.content.parts
+                        .filter((filter) => filter.type === "visualization")
+                        .find((content) => content.visualization.id === payload.visualizationId);
+
+                if (visualization) {
+                    visualization.saving = false;
+                }
+            } else {
+                const visualization = assistantMessage.content
+                    .filter(isVisualizationContents)
+                    .flatMap((content) => content.createdVisualizations)
+                    .find((content) => content.id === payload.visualizationId);
+
+                if (visualization) {
+                    visualization.saving = false;
+                    visualization.savedVisualizationId = payload.savedVisualizationId;
+                }
             }
         },
         saveVisualisationRenderStatusAction: (
@@ -404,13 +675,28 @@ const messagesSlice = createSlice({
         ) => {
             const assistantMessage = getAssistantMessageStrict(state, payload.assistantMessageId);
 
-            const visualization = assistantMessage.content
-                .filter(isVisualizationContents)
-                .flatMap((content) => content.createdVisualizations)
-                .find((content) => content.id === payload.visualizationId);
+            if (isChatConversationLocalItem(assistantMessage)) {
+                if (assistantMessage.content.type !== "multipart") {
+                    throw new Error("Unexpected message type");
+                }
 
-            if (visualization) {
-                delete visualization.statusReportPending;
+                const visualization: IChatConversationMultipartLocalPart | undefined =
+                    assistantMessage.content.parts
+                        .filter((filter) => filter.type === "visualization")
+                        .find((content) => content.visualization.id === payload.visualizationId);
+
+                if (visualization) {
+                    delete visualization.reporting;
+                }
+            } else {
+                const visualization = assistantMessage.content
+                    .filter(isVisualizationContents)
+                    .flatMap((content) => content.createdVisualizations)
+                    .find((content) => content.id === payload.visualizationId);
+
+                if (visualization) {
+                    delete visualization.statusReportPending;
+                }
             }
         },
         visualizationErrorAction: (
@@ -431,12 +717,15 @@ export const {
     loadThreadAction,
     loadThreadErrorAction,
     loadThreadSuccessAction,
+    loadConversationsSuccessAction,
     restoreCachedMessagesAction,
     clearThreadErrorAction,
     clearThreadSuccessAction,
+    clearConversationSuccessAction,
     evaluateMessageAction,
     evaluateMessageErrorAction,
     evaluateMessageStreamingAction,
+    evaluateMessageUpdateAction,
     evaluateMessageCompleteAction,
     setMessagesAction,
     setVerboseAction,

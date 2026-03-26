@@ -1060,5 +1060,14 @@
     "fileUpload.action.remove": "Удалить",
     "fileUpload.list.label": "Загрузить файлы",
     "fileUpload.action.retryFile": "Повторить {fileName}",
-    "fileUpload.action.removeFile": "Удалить {fileName}"
+    "fileUpload.action.removeFile": "Удалить {fileName}",
+    "csvDelimiterPicker.option.comma": "Запятая",
+    "csvDelimiterPicker.option.semicolon": "Точка с запятой",
+    "csvDelimiterPicker.option.pipe": "Вертикальная черта",
+    "csvDelimiterPicker.option.tab": "Вкладка",
+    "csvDelimiterPicker.option.custom": "Свои правила",
+    "csvDelimiterPicker.customInput": "Пользовательский разделитель CSV",
+    "csvDelimiterPicker.menuLabel": "Разделитель CSV",
+    "csvDelimiterPicker.validation.singleCharacter": "Используйте один символ",
+    "csvDelimiterPicker.validation.unsupported": "Этот символ не поддерживается"
 }

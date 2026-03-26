@@ -197,7 +197,7 @@ export const convertToRawExportRequest = (
     exportRequest: JsonApiWorkspaceAutomationOutAttributesRawExportsInner,
 ): IExportDefinitionVisualizationObjectRequestPayload => {
     const {
-        requestPayload: { fileName, execution, metadata },
+        requestPayload: { fileName, execution, metadata, delimiter },
     } = exportRequest;
     const metadataObj = (metadata ?? {}) as MetadataObjectDefinition<ITigerFilter>;
     const filters = execution?.filters?.map(convertFilter);
@@ -208,6 +208,7 @@ export const convertToRawExportRequest = (
         type: "visualizationObject",
         fileName,
         format: "CSV_RAW",
+        ...(delimiter ? { settings: { delimiter } } : {}),
         content: {
             visualizationObject: metadataObj.visualizationObject ?? "",
             widget: metadataObj.widget ?? "",
@@ -397,7 +398,7 @@ const convertExportDefinitionRequestPayload = (
         const filters = exportRequest.visualizationObjectCustomFilters as ITigerFilter[] | undefined;
         const filtersObj = filters ? { filters: convertTigerToSdkFilters(filters) } : {};
 
-        const { mergeHeaders, pdfPageSize, pageOrientation } = exportRequest.settings ?? {};
+        const { mergeHeaders, pdfPageSize, pageOrientation, delimiter } = exportRequest.settings ?? {};
         const orientation =
             pdfPageSize === "portrait" || pdfPageSize === "landscape"
                 ? pdfPageSize
@@ -405,6 +406,7 @@ const convertExportDefinitionRequestPayload = (
         const settings: IExportDefinitionVisualizationObjectSettings = {
             ...(exportRequest.format === "PDF" ? { orientation } : {}),
             ...(mergeHeaders ? { mergeHeaders } : {}),
+            ...(delimiter ? { delimiter } : {}),
         };
         const settingsObj = isEmpty(settings) ? {} : { settings };
 

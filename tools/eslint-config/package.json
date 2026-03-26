@@ -1,6 +1,6 @@
 {
     "name": "@gooddata/eslint-config",
-    "version": "11.27.0-alpha.4",
+    "version": "11.27.0-alpha.5",
     "license": "MIT",
     "author": "GoodData",
     "repository": {
@@ -58,26 +58,12 @@
         "./oxlint-react-vitest": {
             "import": "./dist/oxlint-react-vitest.js"
         },
-        "./react-cypress": {
-            "import": "./dist/react-cypress.js",
-            "require": "./dist/react-cypress.json"
-        },
-        "./oxlint-react-cypress": {
-            "import": "./dist/oxlint-react-cypress.js"
-        },
         "./react-playwright": {
             "import": "./dist/react-playwright.js",
             "require": "./dist/react-playwright.json"
         },
         "./oxlint-react-playwright": {
             "import": "./dist/oxlint-react-playwright.js"
-        },
-        "./esm-cypress": {
-            "import": "./dist/esm-cypress.js",
-            "require": "./dist/esm-cypress.json"
-        },
-        "./oxlint-esm-cypress": {
-            "import": "./dist/oxlint-esm-cypress.js"
         },
         "./esm-playwright": {
             "import": "./dist/esm-playwright.js",
@@ -92,13 +78,6 @@
         },
         "./oxlint-esm-react": {
             "import": "./dist/oxlint-esm-react.js"
-        },
-        "./esm-react-cypress": {
-            "import": "./dist/esm-react-cypress.js",
-            "require": "./dist/esm-react-cypress.json"
-        },
-        "./oxlint-esm-react-cypress": {
-            "import": "./dist/oxlint-esm-react-cypress.js"
         },
         "./esm-react-playwright": {
             "import": "./dist/esm-react-playwright.js",
@@ -146,7 +125,6 @@
         "eslint": "^9.39.2",
         "eslint-import-resolver-typescript": "4.4.4",
         "eslint-plugin-chai-friendly": "1.1.0",
-        "eslint-plugin-cypress": "3.6.0",
         "eslint-plugin-headers": "1.3.3",
         "eslint-plugin-import-esm": "1.2.1",
         "eslint-plugin-import-x": "4.16.1",

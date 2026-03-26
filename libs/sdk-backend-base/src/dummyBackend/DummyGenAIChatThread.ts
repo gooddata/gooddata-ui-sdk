@@ -1,6 +1,10 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import {
+    type IChatConversation,
+    type IChatConversationItemsQuery,
+    type IChatConversationThread,
+    type IChatConversations,
     type IChatThread,
     type IChatThreadHistory,
     type IChatThreadQuery,
@@ -26,22 +30,27 @@ export class DummyGenAIChatThread implements IChatThread {
             threadId: "",
         });
     }
+
     async reset(): Promise<void> {
         await cancellableTimeout(100);
     }
+
     async saveUserVisualisation(
         _interactionId: string,
         _visualization: GenAIChatInteractionUserVisualisation,
     ): Promise<void> {}
+
     async saveUserFeedback(
         _interactionId: string,
         _feedback: GenAIChatInteractionUserFeedback,
         _userTextFeedback?: string,
     ): Promise<void> {}
+
     async saveRenderVisualisationStatus(
         _interactionId: string,
         _status: "SUCCESSFUL" | "UNEXPECTED_ERROR" | "TOO_MANY_DATA_POINTS" | "NO_DATA" | "NO_RESULTS",
     ): Promise<void> {}
+
     query(_userMessage: string): IChatThreadQuery {
         return new DummyGenAIChatQueryBuilder();
     }
@@ -127,3 +136,25 @@ const cancellableTimeout = async (ms: number, signal?: AbortSignal) => {
         });
     });
 };
+
+/**
+ * Dummy chat conversations interface for testing.
+ * @internal
+ */
+export class DummyChatConversations implements IChatConversations {
+    getConversationItemsQuery(): IChatConversationItemsQuery {
+        throw new Error("Method not implemented.");
+    }
+    create(): Promise<IChatConversation> {
+        throw new Error("Method not implemented.");
+    }
+    delete(_conversationId: string): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
+    getConversation(_conversationId: string): Promise<IChatConversation> {
+        throw new Error("Method not implemented.");
+    }
+    getConversationThread(_conversationId: string): IChatConversationThread {
+        throw new Error("Method not implemented.");
+    }
+}

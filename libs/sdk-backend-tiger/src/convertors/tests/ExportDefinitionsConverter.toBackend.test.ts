@@ -6,6 +6,7 @@ import { type DashboardTabularExportRequestV2 } from "@gooddata/api-client-tiger
 import {
     type FilterContextItem,
     type IDashboardAttributeFilter,
+    type IExecutionDefinition,
     type IExportDefinitionDashboardRequestPayload,
     type IExportDefinitionVisualizationObjectRequestPayload,
     idRef,
@@ -14,6 +15,7 @@ import {
 
 import {
     convertToDashboardTabularExportRequest,
+    convertToRawExportRequest,
     convertToTabularExportRequest,
     convertToVisualExportRequest,
     convertVisualizationToDashboardTabularExportRequest,
@@ -51,6 +53,55 @@ describe("ExportDefinitionsConverter toBackend", () => {
         expect(filters).toHaveLength(1);
         expect(filters[0].measureValueFilter?.condition?.compound?.treatNullValuesAs).toBe(7);
         expect(filters[0].measureValueFilter?.condition?.compound?.conditions).toHaveLength(2);
+    });
+
+    it("passes CSV delimiter to visualization tabular export", () => {
+        const request: IExportDefinitionVisualizationObjectRequestPayload = {
+            type: "visualizationObject",
+            fileName: "tabular",
+            format: "CSV",
+            settings: {
+                delimiter: ";",
+            },
+            content: {
+                visualizationObject: "visId",
+                widget: "widgetId",
+                dashboard: "dashboardId",
+            },
+        };
+
+        const result = convertToTabularExportRequest(request);
+
+        expect(result.settings?.delimiter).toBe(";");
+    });
+
+    it("passes CSV delimiter to raw export", () => {
+        const request: IExportDefinitionVisualizationObjectRequestPayload = {
+            type: "visualizationObject",
+            fileName: "raw-export",
+            format: "CSV_RAW",
+            settings: {
+                delimiter: "|",
+            },
+            content: {
+                visualizationObject: "visId",
+                widget: "widgetId",
+                dashboard: "dashboardId",
+            },
+        };
+        const widgetExecution: IExecutionDefinition = {
+            workspace: "workspaceId",
+            buckets: [],
+            attributes: [],
+            measures: [],
+            filters: [],
+            sortBy: [],
+            dimensions: [],
+        };
+
+        const result = convertToRawExportRequest(request, widgetExecution);
+
+        expect(result.delimiter).toBe("|");
     });
 
     it("converts dashboard filter context metadata in visual export", () => {

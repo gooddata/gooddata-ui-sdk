@@ -160,12 +160,12 @@ export function* drillToDashboardHandler(
     attributeFilterConfigs.push(...dashboardFilterConfigs);
     const includedSourceFilters = getIncludedSourceFiltersForDashboard(insight, cmd.payload.drillDefinition);
 
-    // Order matters: explicitly included source filters should win over carried-over dashboard filters.
+    // Order matters: intersection > dashboard > source insight/measure.
     const resultingFilters = compact([
-        ...includedSourceFilters,
-        commonDateFilter,
         ...intersectionFilters,
+        commonDateFilter,
         ...dashboardFilters,
+        ...includedSourceFilters,
     ]);
 
     const targetTabLocalIdentifier = cmd.payload.drillDefinition.targetTabLocalIdentifier;

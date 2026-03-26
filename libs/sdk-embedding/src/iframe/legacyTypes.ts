@@ -17,6 +17,11 @@ export interface ILegacyBaseExportConfig {
     format?: "xlsx" | "csv" | "raw";
 
     /**
+     * When exporting to CSV, specify delimiter to use between values.
+     */
+    delimiter?: string;
+
+    /**
      * When exporting to XLSX, specify whether to merge table headers or not.
      */
     mergeHeaders?: boolean;

@@ -6,3 +6,4 @@ export { useDebugEquality } from "./base/react/useDebugEquality.js";
 export { useDeepMemo } from "./base/react/useDeepMemo.js";
 export { useInitialProp } from "./base/react/useInitialProp.js";
 export { createExportExecutionDefinition } from "./base/vis/createExportExecutionDefinition.js";
+export { buildMeasureTitles } from "./base/measureTitles/fillMissingTitles.js";

@@ -1060,5 +1060,14 @@
     "fileUpload.action.remove": "제거",
     "fileUpload.list.label": "파일 업로드",
     "fileUpload.action.retryFile": "{fileName} 재시도",
-    "fileUpload.action.removeFile": "{fileName} 제거"
+    "fileUpload.action.removeFile": "{fileName} 제거",
+    "csvDelimiterPicker.option.comma": "쉼표",
+    "csvDelimiterPicker.option.semicolon": "세미콜론",
+    "csvDelimiterPicker.option.pipe": "파이프",
+    "csvDelimiterPicker.option.tab": "탭",
+    "csvDelimiterPicker.option.custom": "사용자 정의",
+    "csvDelimiterPicker.customInput": "사용자 지정 CSV 구분 기호",
+    "csvDelimiterPicker.menuLabel": "CSV 구분 기호",
+    "csvDelimiterPicker.validation.singleCharacter": "단일 문자를 사용하세요",
+    "csvDelimiterPicker.validation.unsupported": "이 문자는 지원되지 않습니다"
 }

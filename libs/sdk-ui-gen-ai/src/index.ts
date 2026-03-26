@@ -33,6 +33,10 @@ export {
     type ChangeAnalysisContents,
     type ErrorContents,
     type TextContentObject,
+    type IChatConversationLocalContent,
+    type IChatConversationLocalItem,
+    type IChatConversationErrorContent,
+    type IChatConversationMultipartLocalPart,
 } from "./model.js";
 export {
     type ChatEventHandler,

@@ -2,7 +2,6 @@
 
 import { browserEnv } from "./configurations/browser-env.js";
 import { chaiFriendly } from "./configurations/chai-friendly.js";
-import { cypress } from "./configurations/cypress.js";
 import { env } from "./configurations/env.js";
 import { eslint } from "./configurations/eslint.js";
 import { esm } from "./configurations/esm.js";
@@ -50,12 +49,9 @@ export const commonVariants: Record<string, IDualConfiguration[]> = {
     "esm-vitest": [esm, importEsm, vitest, noOnlyTests], // for @gooddata/util and MAQL language server
     react: [browserEnv, esm, react, reactHooks], // for skel tsx
     "react-vitest": [browserEnv, esm, react, reactHooks, vitest, noOnlyTests], // for gdc-ui libs
-    "react-cypress": [browserEnv, esm, react, reactHooks, cypress, chaiFriendly, noOnlyTests], // for gdc e2e libs
     "react-playwright": [browserEnv, esm, react, reactHooks, playwright, chaiFriendly, noOnlyTests], // for gdc e2e libs
-    "esm-cypress": [browserEnv, esm, importEsm, cypress, chaiFriendly, noOnlyTests], // for e2e-utils
     "esm-playwright": [browserEnv, esm, importEsm, playwright, chaiFriendly, noOnlyTests], // for e2e-utils
     "esm-react": [browserEnv, esm, react, reactHooks, importEsm], // for most react libs
-    "esm-react-cypress": [browserEnv, esm, react, reactHooks, importEsm, cypress, chaiFriendly, noOnlyTests], // for gdc e2e libs with react
     "esm-react-playwright": [
         browserEnv,
         esm,

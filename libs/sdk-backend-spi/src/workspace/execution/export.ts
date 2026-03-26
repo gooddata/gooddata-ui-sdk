@@ -19,6 +19,11 @@ export interface IExportConfig {
     title?: string;
 
     /**
+     * Applicable for CSV format; specifies the delimiter to use between values.
+     */
+    delimiter?: string;
+
+    /**
      * Applicable for XLSX format; indicates whether headers and cells in the sheet
      * should be merged.
      */

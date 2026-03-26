@@ -1,0 +1,2381 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "Gen-AI HTTP API",
+        "description": "HTTP API for chat sessions, items, and SSE messages.",
+        "version": "0.1.0"
+    },
+    "paths": {
+        "/api/v1/ai/workspaces/{workspace_id}/chat/conversations": {
+            "post": {
+                "tags": [
+                    "Conversations"
+                ],
+                "summary": "Post Conversations",
+                "operationId": "post_conversations_api_v1_ai_workspaces__workspace_id__chat_conversations_post",
+                "parameters": [
+                    {
+                        "name": "workspace_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Workspace Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConversationResponseDto"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "Conversations"
+                ],
+                "summary": "Get Conversations",
+                "operationId": "get_conversations_api_v1_ai_workspaces__workspace_id__chat_conversations_get",
+                "parameters": [
+                    {
+                        "name": "workspace_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Workspace Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ConversationResponseDto"
+                                    },
+                                    "title": "Response Get Conversations Api V1 Ai Workspaces  Workspace Id  Chat Conversations Get"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}": {
+            "get": {
+                "tags": [
+                    "Conversations"
+                ],
+                "summary": "Get Conversation",
+                "operationId": "get_conversation_api_v1_ai_workspaces__workspace_id__chat_conversations__conversation_id__get",
+                "parameters": [
+                    {
+                        "name": "workspace_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Workspace Id"
+                        }
+                    },
+                    {
+                        "name": "conversation_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Conversation Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConversationResponseDto"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Conversations"
+                ],
+                "summary": "Delete Conversation",
+                "operationId": "delete_conversation_api_v1_ai_workspaces__workspace_id__chat_conversations__conversation_id__delete",
+                "parameters": [
+                    {
+                        "name": "workspace_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Workspace Id"
+                        }
+                    },
+                    {
+                        "name": "conversation_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Conversation Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Successful Response"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/items": {
+            "get": {
+                "tags": [
+                    "Items"
+                ],
+                "summary": "Get Conversation Items",
+                "operationId": "get_conversation_items_api_v1_ai_workspaces__workspace_id__chat_conversations__conversation_id__items_get",
+                "parameters": [
+                    {
+                        "name": "workspace_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Workspace Id"
+                        }
+                    },
+                    {
+                        "name": "conversation_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Conversation Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConversationItemListResponseDto"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/responses": {
+            "get": {
+                "tags": [
+                    "Responses"
+                ],
+                "summary": "Get Conversation Responses",
+                "operationId": "get_conversation_responses_api_v1_ai_workspaces__workspace_id__chat_conversations__conversation_id__responses_get",
+                "parameters": [
+                    {
+                        "name": "workspace_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Workspace Id"
+                        }
+                    },
+                    {
+                        "name": "conversation_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Conversation Id"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConversationResponseListDto"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/messages": {
+            "post": {
+                "tags": [
+                    "Messages"
+                ],
+                "summary": "Post Messages",
+                "operationId": "post_messages_api_v1_ai_workspaces__workspace_id__chat_conversations__conversation_id__messages_post",
+                "parameters": [
+                    {
+                        "name": "workspace_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Workspace Id"
+                        }
+                    },
+                    {
+                        "name": "conversation_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Conversation Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SendMessageRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "SSE stream with response_started/item/response_ended events",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "406": {
+                        "description": "Accept header must include text/event-stream"
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/responses/{response_id}": {
+            "patch": {
+                "tags": [
+                    "Responses"
+                ],
+                "summary": "Patch Response",
+                "operationId": "patch_response_api_v1_ai_workspaces__workspace_id__chat_conversations__conversation_id__responses__response_id__patch",
+                "parameters": [
+                    {
+                        "name": "workspace_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Workspace Id"
+                        }
+                    },
+                    {
+                        "name": "conversation_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Conversation Id"
+                        }
+                    },
+                    {
+                        "name": "response_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Response Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ResponseFeedbackRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "Successful Response"
+                    },
+                    "400": {
+                        "description": "Bad request payload."
+                    },
+                    "404": {
+                        "description": "Conversation or response not found."
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/ai/workspaces/{workspace_id}/chat/conversations/{conversation_id}/visualizations/{visualization_id}": {
+            "patch": {
+                "tags": [
+                    "Visualizations"
+                ],
+                "summary": "Patch Visualization",
+                "operationId": "patch_visualization_api_v1_ai_workspaces__workspace_id__chat_conversations__conversation_id__visualizations__visualization_id__patch",
+                "parameters": [
+                    {
+                        "name": "workspace_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Workspace Id"
+                        }
+                    },
+                    {
+                        "name": "conversation_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Conversation Id"
+                        }
+                    },
+                    {
+                        "name": "visualization_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Visualization Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/VisualizationIdUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "204": {
+                        "description": "Successful Response"
+                    },
+                    "400": {
+                        "description": "Bad request payload."
+                    },
+                    "404": {
+                        "description": "Conversation or visualization not found."
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/ai/workspaces/{workspace_id}/knowledge/documents/upload": {
+            "post": {
+                "tags": [
+                    "Knowledge"
+                ],
+                "summary": "Upload Document",
+                "description": "Upload a new knowledge document. Returns 409 if filename already exists.",
+                "operationId": "upload_document_api_v1_ai_workspaces__workspace_id__knowledge_documents_upload_post",
+                "parameters": [
+                    {
+                        "name": "workspace_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Workspace Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Body_upload_document_api_v1_ai_workspaces__workspace_id__knowledge_documents_upload_post"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Knowledge"
+                ],
+                "summary": "Upsert Document",
+                "description": "Upload or replace a knowledge document.",
+                "operationId": "upsert_document_api_v1_ai_workspaces__workspace_id__knowledge_documents_upload_put",
+                "parameters": [
+                    {
+                        "name": "workspace_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Workspace Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Body_upsert_document_api_v1_ai_workspaces__workspace_id__knowledge_documents_upload_put"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/ai/workspaces/{workspace_id}/knowledge/documents/{filename}/download": {
+            "get": {
+                "tags": [
+                    "Knowledge"
+                ],
+                "summary": "Download Document",
+                "description": "Download a knowledge document's raw file.",
+                "operationId": "download_document_api_v1_ai_workspaces__workspace_id__knowledge_documents__filename__download_get",
+                "parameters": [
+                    {
+                        "name": "workspace_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Workspace Id"
+                        }
+                    },
+                    {
+                        "name": "filename",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Filename"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "AllowedRelationshipTypeDto": {
+                "properties": {
+                    "sourceType": {
+                        "type": "string",
+                        "title": "Sourcetype"
+                    },
+                    "targetType": {
+                        "type": "string",
+                        "title": "Targettype"
+                    },
+                    "allowOrphans": {
+                        "type": "boolean",
+                        "title": "Alloworphans",
+                        "default": true
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "sourceType",
+                    "targetType"
+                ],
+                "title": "AllowedRelationshipTypeDto"
+            },
+            "AttributeFilter": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "const": "attribute_filter",
+                        "title": "Type"
+                    },
+                    "using": {
+                        "type": "string",
+                        "title": "Using"
+                    },
+                    "state": {
+                        "$ref": "#/components/schemas/AttributeFilterState"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "type",
+                    "using",
+                    "state"
+                ],
+                "title": "AttributeFilter"
+            },
+            "AttributeFilterState": {
+                "properties": {
+                    "include": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Include"
+                    },
+                    "exclude": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Exclude"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "title": "AttributeFilterState"
+            },
+            "Body_upload_document_api_v1_ai_workspaces__workspace_id__knowledge_documents_upload_post": {
+                "properties": {
+                    "file": {
+                        "type": "string",
+                        "format": "binary",
+                        "title": "File"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "file"
+                ],
+                "title": "Body_upload_document_api_v1_ai_workspaces__workspace_id__knowledge_documents_upload_post"
+            },
+            "Body_upsert_document_api_v1_ai_workspaces__workspace_id__knowledge_documents_upload_put": {
+                "properties": {
+                    "file": {
+                        "type": "string",
+                        "format": "binary",
+                        "title": "File"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "file"
+                ],
+                "title": "Body_upsert_document_api_v1_ai_workspaces__workspace_id__knowledge_documents_upload_put"
+            },
+            "BucketRefObject": {
+                "properties": {
+                    "field": {
+                        "type": "string",
+                        "title": "Field"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "field"
+                ],
+                "title": "BucketRefObject"
+            },
+            "ConversationItemListResponseDto": {
+                "properties": {
+                    "items": {
+                        "items": {
+                            "$ref": "#/components/schemas/ConversationItemResponseDto"
+                        },
+                        "type": "array",
+                        "title": "Items",
+                        "description": "Ordered list of conversation items."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "items"
+                ],
+                "title": "ConversationItemListResponseDto",
+                "description": "Conversation item list response."
+            },
+            "ConversationItemResponseDto": {
+                "properties": {
+                    "itemId": {
+                        "type": "string",
+                        "title": "Itemid",
+                        "description": "Conversation item identifier."
+                    },
+                    "conversationId": {
+                        "type": "string",
+                        "title": "Conversationid",
+                        "description": "Parent conversation identifier."
+                    },
+                    "itemIndex": {
+                        "type": "integer",
+                        "title": "Itemindex",
+                        "description": "Zero-based item order within the response turn."
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "title": "Createdat",
+                        "description": "Item creation timestamp (ISO-8601 UTC)."
+                    },
+                    "role": {
+                        "type": "string",
+                        "enum": [
+                            "user",
+                            "assistant",
+                            "tool"
+                        ],
+                        "title": "Role",
+                        "description": "Author role of the item."
+                    },
+                    "content": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/TextMessageContentDto"
+                            },
+                            {
+                                "$ref": "#/components/schemas/ReasoningContentDto"
+                            },
+                            {
+                                "$ref": "#/components/schemas/MultipartContentDto"
+                            },
+                            {
+                                "$ref": "#/components/schemas/FunctionCallContentDto"
+                            },
+                            {
+                                "$ref": "#/components/schemas/FunctionResultContentDto"
+                            }
+                        ],
+                        "title": "Content",
+                        "description": "Conversation item content payload.",
+                        "discriminator": {
+                            "propertyName": "type",
+                            "mapping": {
+                                "multipart": "#/components/schemas/MultipartContentDto",
+                                "reasoning": "#/components/schemas/ReasoningContentDto",
+                                "text": "#/components/schemas/TextMessageContentDto",
+                                "toolCall": "#/components/schemas/FunctionCallContentDto",
+                                "toolResult": "#/components/schemas/FunctionResultContentDto"
+                            }
+                        }
+                    },
+                    "responseId": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Responseid",
+                        "description": "Response/turn identifier grouping related items."
+                    },
+                    "replyTo": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Replyto",
+                        "description": "Optional parent item identifier."
+                    },
+                    "taskId": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Taskid",
+                        "description": "Task identifier grouping related work items."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "itemId",
+                    "conversationId",
+                    "itemIndex",
+                    "createdAt",
+                    "role",
+                    "content"
+                ],
+                "title": "ConversationItemResponseDto",
+                "description": "Conversation item returned by the agentic HTTP API."
+            },
+            "ConversationResponseDto": {
+                "properties": {
+                    "conversationId": {
+                        "type": "string",
+                        "title": "Conversationid",
+                        "description": "Conversation identifier."
+                    },
+                    "workspaceId": {
+                        "type": "string",
+                        "title": "Workspaceid",
+                        "description": "Workspace identifier."
+                    },
+                    "organizationId": {
+                        "type": "string",
+                        "title": "Organizationid",
+                        "description": "Organization identifier."
+                    },
+                    "userId": {
+                        "type": "string",
+                        "title": "Userid",
+                        "description": "Owner user identifier."
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "title": "Createdat",
+                        "description": "Conversation creation timestamp (ISO-8601 UTC)."
+                    },
+                    "lastActivityAt": {
+                        "type": "string",
+                        "title": "Lastactivityat",
+                        "description": "Last activity timestamp (ISO-8601 UTC)."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "conversationId",
+                    "workspaceId",
+                    "organizationId",
+                    "userId",
+                    "createdAt",
+                    "lastActivityAt"
+                ],
+                "title": "ConversationResponseDto",
+                "description": "Conversation returned by the agentic HTTP API."
+            },
+            "ConversationResponseListDto": {
+                "properties": {
+                    "responses": {
+                        "items": {
+                            "$ref": "#/components/schemas/ConversationTurnResponseDto"
+                        },
+                        "type": "array",
+                        "title": "Responses",
+                        "description": "Conversation responses."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "responses"
+                ],
+                "title": "ConversationResponseListDto"
+            },
+            "ConversationTurnResponseDto": {
+                "properties": {
+                    "responseId": {
+                        "type": "string",
+                        "title": "Responseid",
+                        "description": "Response identifier."
+                    },
+                    "feedback": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/FeedbackDto"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Optional user feedback."
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "title": "Createdat",
+                        "description": "Response creation timestamp (ISO-8601 UTC)."
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "title": "Updatedat",
+                        "description": "Response update timestamp (ISO-8601 UTC)."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "responseId",
+                    "createdAt",
+                    "updatedAt"
+                ],
+                "title": "ConversationTurnResponseDto"
+            },
+            "DateFilterAbsolute": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "const": "date_filter",
+                        "title": "Type"
+                    },
+                    "using": {
+                        "type": "string",
+                        "title": "Using"
+                    },
+                    "from": {
+                        "type": "string",
+                        "title": "From"
+                    },
+                    "to": {
+                        "type": "string",
+                        "title": "To"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "type",
+                    "using",
+                    "from",
+                    "to"
+                ],
+                "title": "DateFilterAbsolute"
+            },
+            "DateFilterRelative": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "const": "date_filter",
+                        "title": "Type"
+                    },
+                    "using": {
+                        "type": "string",
+                        "title": "Using"
+                    },
+                    "granularity": {
+                        "$ref": "#/components/schemas/DateGranularity"
+                    },
+                    "from": {
+                        "type": "integer",
+                        "title": "From"
+                    },
+                    "to": {
+                        "type": "integer",
+                        "title": "To"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "type",
+                    "using",
+                    "granularity",
+                    "from",
+                    "to"
+                ],
+                "title": "DateFilterRelative"
+            },
+            "DateGranularity": {
+                "type": "string",
+                "enum": [
+                    "DAY",
+                    "WEEK",
+                    "MONTH",
+                    "QUARTER",
+                    "YEAR"
+                ],
+                "title": "DateGranularity",
+                "description": "Date granularity for date filters."
+            },
+            "FeedbackDto": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "POSITIVE",
+                            "NEGATIVE"
+                        ],
+                        "title": "Type",
+                        "description": "Feedback type."
+                    },
+                    "text": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Text",
+                        "description": "Optional free-form feedback comment."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "type"
+                ],
+                "title": "FeedbackDto"
+            },
+            "FunctionCallContentDto": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "const": "toolCall",
+                        "title": "Type",
+                        "description": "Type of item content.",
+                        "default": "toolCall"
+                    },
+                    "id": {
+                        "type": "string",
+                        "title": "Id",
+                        "description": "Function call item identifier from LLM."
+                    },
+                    "callId": {
+                        "type": "string",
+                        "title": "Callid",
+                        "description": "Function call correlation identifier."
+                    },
+                    "name": {
+                        "type": "string",
+                        "title": "Name",
+                        "description": "Function/tool name."
+                    },
+                    "arguments": {
+                        "additionalProperties": true,
+                        "type": "object",
+                        "title": "Arguments",
+                        "description": "Function/tool arguments payload."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "id",
+                    "callId",
+                    "name",
+                    "arguments"
+                ],
+                "title": "FunctionCallContentDto"
+            },
+            "FunctionResultContentDto": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "const": "toolResult",
+                        "title": "Type",
+                        "description": "Type of item content.",
+                        "default": "toolResult"
+                    },
+                    "callId": {
+                        "type": "string",
+                        "title": "Callid",
+                        "description": "Function call correlation identifier."
+                    },
+                    "result": {
+                        "type": "string",
+                        "title": "Result",
+                        "description": "Serialized function/tool execution result."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "callId",
+                    "result"
+                ],
+                "title": "FunctionResultContentDto"
+            },
+            "HTTPValidationError": {
+                "properties": {
+                    "detail": {
+                        "items": {
+                            "$ref": "#/components/schemas/ValidationError"
+                        },
+                        "type": "array",
+                        "title": "Detail"
+                    }
+                },
+                "type": "object",
+                "title": "HTTPValidationError"
+            },
+            "KeyDriverAnalysisDto": {
+                "properties": {
+                    "measure": {
+                        "$ref": "#/components/schemas/KeyDriverAnalysisMeasureDto",
+                        "description": "Measure definition for key driver analysis."
+                    },
+                    "dateAttributeId": {
+                        "type": "string",
+                        "title": "Dateattributeid",
+                        "description": "Date attribute identifier used for period comparison."
+                    },
+                    "analyzedPeriod": {
+                        "type": "string",
+                        "title": "Analyzedperiod",
+                        "description": "Analyzed period identifier."
+                    },
+                    "referencePeriod": {
+                        "type": "string",
+                        "title": "Referenceperiod",
+                        "description": "Reference period identifier."
+                    },
+                    "filters": {
+                        "items": {
+                            "additionalProperties": true,
+                            "type": "object"
+                        },
+                        "type": "array",
+                        "title": "Filters",
+                        "description": "Filters applied to analysis."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "measure",
+                    "dateAttributeId",
+                    "analyzedPeriod",
+                    "referencePeriod",
+                    "filters"
+                ],
+                "title": "KeyDriverAnalysisDto"
+            },
+            "KeyDriverAnalysisMeasureDto": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "title": "Id",
+                        "description": "Measure object identifier."
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "metric",
+                            "fact",
+                            "attribute"
+                        ],
+                        "title": "Type",
+                        "description": "Measure object type."
+                    },
+                    "aggregation": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "enum": [
+                                    "SUM",
+                                    "AVG",
+                                    "MIN",
+                                    "MAX",
+                                    "MEDIAN",
+                                    "COUNT"
+                                ]
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Aggregation",
+                        "description": "Optional aggregation function."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "id",
+                    "type"
+                ],
+                "title": "KeyDriverAnalysisMeasureDto"
+            },
+            "KeyDriverAnalysisPartDto": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "const": "kda",
+                        "title": "Type",
+                        "description": "Type of multipart part.",
+                        "default": "kda"
+                    },
+                    "kda": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/KeyDriverAnalysisDto"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Optional full key driver analysis payload when available."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "title": "KeyDriverAnalysisPartDto"
+            },
+            "MultipartContentDto": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "const": "multipart",
+                        "title": "Type",
+                        "description": "Type of item content.",
+                        "default": "multipart"
+                    },
+                    "parts": {
+                        "items": {
+                            "oneOf": [
+                                {
+                                    "$ref": "#/components/schemas/TextPartDto"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/VisualizationPartDto"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/KeyDriverAnalysisPartDto"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/WhatIfAnalysisPartDto"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/SearchResultsDto"
+                                }
+                            ],
+                            "discriminator": {
+                                "propertyName": "type",
+                                "mapping": {
+                                    "kda": "#/components/schemas/KeyDriverAnalysisPartDto",
+                                    "searchResults": "#/components/schemas/SearchResultsDto",
+                                    "text": "#/components/schemas/TextPartDto",
+                                    "visualization": "#/components/schemas/VisualizationPartDto",
+                                    "whatIf": "#/components/schemas/WhatIfAnalysisPartDto"
+                                }
+                            }
+                        },
+                        "type": "array",
+                        "title": "Parts",
+                        "description": "Ordered multipart content fragments."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "parts"
+                ],
+                "title": "MultipartContentDto"
+            },
+            "ObjectType": {
+                "type": "string",
+                "enum": [
+                    "unidentified",
+                    "workspace",
+                    "dataset",
+                    "date",
+                    "fact",
+                    "metric",
+                    "attribute",
+                    "date_attribute",
+                    "label",
+                    "visualization",
+                    "dashboard",
+                    "filter_context"
+                ],
+                "title": "ObjectType"
+            },
+            "Query": {
+                "properties": {
+                    "fields": {
+                        "additionalProperties": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/QueryFieldMeasure"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/QueryFieldAttribute"
+                                }
+                            ]
+                        },
+                        "type": "object",
+                        "title": "Fields"
+                    },
+                    "filter_by": {
+                        "additionalProperties": {
+                            "anyOf": [
+                                {
+                                    "$ref": "#/components/schemas/AttributeFilter"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/DateFilterAbsolute"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/DateFilterRelative"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/RankingFilter"
+                                }
+                            ]
+                        },
+                        "type": "object",
+                        "title": "Filter By"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "fields"
+                ],
+                "title": "Query"
+            },
+            "QueryFieldAttribute": {
+                "properties": {
+                    "using": {
+                        "type": "string",
+                        "title": "Using"
+                    },
+                    "title": {
+                        "type": "string",
+                        "title": "Title"
+                    },
+                    "show_all_values": {
+                        "type": "boolean",
+                        "title": "Show All Values"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "using"
+                ],
+                "title": "QueryFieldAttribute"
+            },
+            "QueryFieldMeasure": {
+                "properties": {
+                    "using": {
+                        "type": "string",
+                        "title": "Using"
+                    },
+                    "aggregation": {
+                        "type": "string",
+                        "enum": [
+                            "SUM",
+                            "AVG",
+                            "MIN",
+                            "MAX",
+                            "MEDIAN",
+                            "COUNT"
+                        ],
+                        "title": "Aggregation"
+                    },
+                    "title": {
+                        "type": "string",
+                        "title": "Title"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "using"
+                ],
+                "title": "QueryFieldMeasure",
+                "description": "Metric/fact/attribute measure field (attribute requires COUNT)."
+            },
+            "RankingFilter": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "const": "ranking_filter",
+                        "title": "Type"
+                    },
+                    "using": {
+                        "type": "string",
+                        "title": "Using"
+                    },
+                    "attribute": {
+                        "type": "string",
+                        "title": "Attribute"
+                    },
+                    "attributes": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Attributes"
+                    },
+                    "top": {
+                        "type": "integer",
+                        "title": "Top"
+                    },
+                    "bottom": {
+                        "type": "integer",
+                        "title": "Bottom"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "type",
+                    "using"
+                ],
+                "title": "RankingFilter"
+            },
+            "ReasoningContentDto": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "const": "reasoning",
+                        "title": "Type",
+                        "description": "Type of item content.",
+                        "default": "reasoning"
+                    },
+                    "summary": {
+                        "type": "string",
+                        "title": "Summary",
+                        "description": "Reasoning summary intended for UI display."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "summary"
+                ],
+                "title": "ReasoningContentDto"
+            },
+            "ResponseFeedbackDto": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "POSITIVE",
+                            "NEGATIVE"
+                        ],
+                        "title": "Type"
+                    },
+                    "text": {
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "maxLength": 2000
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Text"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "type"
+                ],
+                "title": "ResponseFeedbackDto"
+            },
+            "ResponseFeedbackRequest": {
+                "properties": {
+                    "feedback": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/ResponseFeedbackDto"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "feedback"
+                ],
+                "title": "ResponseFeedbackRequest"
+            },
+            "SearchObjectDto": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "title": "Id",
+                        "description": "Object identifier."
+                    },
+                    "type": {
+                        "type": "string",
+                        "title": "Type",
+                        "description": "Object type name."
+                    },
+                    "workspaceId": {
+                        "type": "string",
+                        "title": "Workspaceid",
+                        "description": "Workspace identifier."
+                    },
+                    "title": {
+                        "type": "string",
+                        "title": "Title",
+                        "description": "Object title."
+                    },
+                    "description": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Description",
+                        "description": "Object description."
+                    },
+                    "tags": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Tags",
+                        "description": "Object tags."
+                    },
+                    "datasetId": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Datasetid",
+                        "description": "Parent dataset ID."
+                    },
+                    "datasetType": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Datasettype",
+                        "description": "Parent dataset type."
+                    },
+                    "datasetTitle": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Datasettitle",
+                        "description": "Parent dataset title."
+                    },
+                    "visualizationUrl": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Visualizationurl",
+                        "description": "Visualization URL when applicable."
+                    },
+                    "createdAt": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Createdat",
+                        "description": "Object creation timestamp."
+                    },
+                    "modifiedAt": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Modifiedat",
+                        "description": "Object modification timestamp."
+                    },
+                    "isHidden": {
+                        "anyOf": [
+                            {
+                                "type": "boolean"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Ishidden",
+                        "description": "Whether object is hidden."
+                    },
+                    "score": {
+                        "type": "number",
+                        "title": "Score",
+                        "description": "Search relevance score."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "id",
+                    "type",
+                    "workspaceId",
+                    "title",
+                    "score"
+                ],
+                "title": "SearchObjectDto"
+            },
+            "SearchRelationshipDto": {
+                "properties": {
+                    "sourceWorkspaceId": {
+                        "type": "string",
+                        "title": "Sourceworkspaceid",
+                        "description": "Workspace ID of the source object."
+                    },
+                    "sourceId": {
+                        "type": "string",
+                        "title": "Sourceid",
+                        "description": "Source object identifier."
+                    },
+                    "sourceType": {
+                        "type": "string",
+                        "title": "Sourcetype",
+                        "description": "Source object type."
+                    },
+                    "sourceTitle": {
+                        "type": "string",
+                        "title": "Sourcetitle",
+                        "description": "Source object title."
+                    },
+                    "targetWorkspaceId": {
+                        "type": "string",
+                        "title": "Targetworkspaceid",
+                        "description": "Workspace ID of the target object."
+                    },
+                    "targetId": {
+                        "type": "string",
+                        "title": "Targetid",
+                        "description": "Target object identifier."
+                    },
+                    "targetType": {
+                        "type": "string",
+                        "title": "Targettype",
+                        "description": "Target object type."
+                    },
+                    "targetTitle": {
+                        "type": "string",
+                        "title": "Targettitle",
+                        "description": "Target object title."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "sourceWorkspaceId",
+                    "sourceId",
+                    "sourceType",
+                    "sourceTitle",
+                    "targetWorkspaceId",
+                    "targetId",
+                    "targetType",
+                    "targetTitle"
+                ],
+                "title": "SearchRelationshipDto"
+            },
+            "SearchResultsDto": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "const": "searchResults",
+                        "title": "Type",
+                        "description": "Type of multipart part.",
+                        "default": "searchResults"
+                    },
+                    "objects": {
+                        "items": {
+                            "$ref": "#/components/schemas/SearchObjectDto"
+                        },
+                        "type": "array",
+                        "title": "Objects",
+                        "description": "Search result objects for widget rendering."
+                    },
+                    "keywords": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Keywords",
+                        "description": "Keywords used in search query."
+                    },
+                    "requestedObjectType": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Requestedobjecttype",
+                        "description": "Primary requested object type."
+                    },
+                    "relationships": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "$ref": "#/components/schemas/SearchRelationshipDto"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Relationships",
+                        "description": "Parent-child relationships among returned objects."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "objects",
+                    "keywords"
+                ],
+                "title": "SearchResultsDto"
+            },
+            "SendMessageContentDto": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "const": "text",
+                        "title": "Type"
+                    },
+                    "text": {
+                        "type": "string",
+                        "title": "Text"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "type",
+                    "text"
+                ],
+                "title": "SendMessageContentDto"
+            },
+            "SendMessageItemDto": {
+                "properties": {
+                    "role": {
+                        "type": "string",
+                        "const": "user",
+                        "title": "Role"
+                    },
+                    "content": {
+                        "$ref": "#/components/schemas/SendMessageContentDto"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "role",
+                    "content"
+                ],
+                "title": "SendMessageItemDto"
+            },
+            "SendMessageOptionsDto": {
+                "properties": {
+                    "search": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/SendMessageSearchOptionsDto"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    }
+                },
+                "type": "object",
+                "title": "SendMessageOptionsDto"
+            },
+            "SendMessageRequest": {
+                "properties": {
+                    "item": {
+                        "$ref": "#/components/schemas/SendMessageItemDto"
+                    },
+                    "options": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/SendMessageOptionsDto"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ]
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "item"
+                ],
+                "title": "SendMessageRequest",
+                "description": "POST /conversations/{conversationId}/messages body."
+            },
+            "SendMessageSearchOptionsDto": {
+                "properties": {
+                    "objectTypes": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "$ref": "#/components/schemas/ObjectType"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Objecttypes"
+                    },
+                    "searchLimit": {
+                        "anyOf": [
+                            {
+                                "type": "integer",
+                                "maximum": 100,
+                                "minimum": 1
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Searchlimit"
+                    },
+                    "allowedRelationshipTypes": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "$ref": "#/components/schemas/AllowedRelationshipTypeDto"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Allowedrelationshiptypes"
+                    }
+                },
+                "type": "object",
+                "title": "SendMessageSearchOptionsDto"
+            },
+            "TextMessageContentDto": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "const": "text",
+                        "title": "Type",
+                        "description": "Type of item content.",
+                        "default": "text"
+                    },
+                    "text": {
+                        "type": "string",
+                        "title": "Text",
+                        "description": "Plain text message content."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "text"
+                ],
+                "title": "TextMessageContentDto"
+            },
+            "TextPartDto": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "const": "text",
+                        "title": "Type",
+                        "description": "Type of multipart part.",
+                        "default": "text"
+                    },
+                    "text": {
+                        "type": "string",
+                        "title": "Text",
+                        "description": "Text fragment."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "text"
+                ],
+                "title": "TextPartDto"
+            },
+            "ValidationError": {
+                "properties": {
+                    "loc": {
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "integer"
+                                }
+                            ]
+                        },
+                        "type": "array",
+                        "title": "Location"
+                    },
+                    "msg": {
+                        "type": "string",
+                        "title": "Message"
+                    },
+                    "type": {
+                        "type": "string",
+                        "title": "Error Type"
+                    },
+                    "input": {
+                        "title": "Input"
+                    },
+                    "ctx": {
+                        "type": "object",
+                        "title": "Context"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "loc",
+                    "msg",
+                    "type"
+                ],
+                "title": "ValidationError"
+            },
+            "Visualization": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "table",
+                            "headline_chart",
+                            "bar_chart",
+                            "column_chart",
+                            "line_chart",
+                            "pie_chart",
+                            "scatter_chart"
+                        ],
+                        "title": "Type"
+                    },
+                    "id": {
+                        "type": "string",
+                        "title": "Id"
+                    },
+                    "query": {
+                        "$ref": "#/components/schemas/Query"
+                    },
+                    "title": {
+                        "type": "string",
+                        "title": "Title"
+                    },
+                    "description": {
+                        "type": "string",
+                        "title": "Description"
+                    },
+                    "tags": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Tags"
+                    },
+                    "metrics": {
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/BucketRefObject"
+                                }
+                            ]
+                        },
+                        "type": "array",
+                        "title": "Metrics"
+                    },
+                    "view_by": {
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/BucketRefObject"
+                                }
+                            ]
+                        },
+                        "type": "array",
+                        "title": "View By"
+                    },
+                    "segment_by": {
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/BucketRefObject"
+                                }
+                            ]
+                        },
+                        "type": "array",
+                        "title": "Segment By"
+                    },
+                    "rows": {
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/BucketRefObject"
+                                }
+                            ]
+                        },
+                        "type": "array",
+                        "title": "Rows"
+                    },
+                    "columns": {
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "$ref": "#/components/schemas/BucketRefObject"
+                                }
+                            ]
+                        },
+                        "type": "array",
+                        "title": "Columns"
+                    },
+                    "config": {
+                        "$ref": "#/components/schemas/VisualizationConfig"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "type",
+                    "id",
+                    "query"
+                ],
+                "title": "Visualization"
+            },
+            "VisualizationConfig": {
+                "properties": {
+                    "forecast_enabled": {
+                        "type": "boolean",
+                        "title": "Forecast Enabled"
+                    },
+                    "forecast_confidence": {
+                        "type": "number",
+                        "title": "Forecast Confidence"
+                    },
+                    "forecast_period": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "number"
+                            }
+                        ],
+                        "title": "Forecast Period"
+                    },
+                    "forecast_seasonal": {
+                        "type": "boolean",
+                        "title": "Forecast Seasonal"
+                    },
+                    "clustering_enabled": {
+                        "type": "boolean",
+                        "title": "Clustering Enabled"
+                    },
+                    "clustering_amount": {
+                        "anyOf": [
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "number"
+                            }
+                        ],
+                        "title": "Clustering Amount"
+                    },
+                    "clustering_threshold": {
+                        "type": "number",
+                        "title": "Clustering Threshold"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "title": "VisualizationConfig"
+            },
+            "VisualizationIdUpdateRequest": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "minLength": 1,
+                        "title": "Id"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "id"
+                ],
+                "title": "VisualizationIdUpdateRequest",
+                "description": "PATCH /conversations/{conversationId}/visualizations/{visualizationId} body."
+            },
+            "VisualizationPartDto": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "const": "visualization",
+                        "title": "Type",
+                        "description": "Type of multipart part.",
+                        "default": "visualization"
+                    },
+                    "visualization": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/Visualization"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Optional full visualization payload (AAC JSON) when available."
+                    },
+                    "metadata": {
+                        "$ref": "#/components/schemas/VisualizationPartMetadataDto",
+                        "description": "Visualization state metadata."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "metadata"
+                ],
+                "title": "VisualizationPartDto"
+            },
+            "VisualizationPartMetadataDto": {
+                "properties": {
+                    "isSaved": {
+                        "type": "boolean",
+                        "title": "Issaved",
+                        "description": "Whether the visualization was explicitly saved by user action."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "isSaved"
+                ],
+                "title": "VisualizationPartMetadataDto"
+            },
+            "WhatIfAnalysisPartDto": {
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "const": "whatIf",
+                        "title": "Type",
+                        "description": "Type of multipart part.",
+                        "default": "whatIf"
+                    },
+                    "whatIf": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/components/schemas/WhatIfScenarioDto"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "description": "Optional full what-if scenario payload when available."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "title": "WhatIfAnalysisPartDto"
+            },
+            "WhatIfMeasureAdjustmentDto": {
+                "properties": {
+                    "metricId": {
+                        "type": "string",
+                        "title": "Metricid",
+                        "description": "Adjusted metric identifier."
+                    },
+                    "metricType": {
+                        "type": "string",
+                        "title": "Metrictype",
+                        "description": "Adjusted metric type."
+                    },
+                    "scenarioMaql": {
+                        "type": "string",
+                        "title": "Scenariomaql",
+                        "description": "Scenario MAQL formula."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "metricId",
+                    "metricType",
+                    "scenarioMaql"
+                ],
+                "title": "WhatIfMeasureAdjustmentDto"
+            },
+            "WhatIfScenarioDto": {
+                "properties": {
+                    "visualizationRef": {
+                        "type": "string",
+                        "title": "Visualizationref",
+                        "description": "Base visualization reference used by scenario."
+                    },
+                    "scenarios": {
+                        "items": {
+                            "$ref": "#/components/schemas/WhatIfScenarioVariantDto"
+                        },
+                        "type": "array",
+                        "title": "Scenarios",
+                        "description": "Defined what-if variants."
+                    },
+                    "includeBaseline": {
+                        "type": "boolean",
+                        "title": "Includebaseline",
+                        "description": "Whether baseline values are included."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "visualizationRef",
+                    "scenarios",
+                    "includeBaseline"
+                ],
+                "title": "WhatIfScenarioDto"
+            },
+            "WhatIfScenarioVariantDto": {
+                "properties": {
+                    "label": {
+                        "type": "string",
+                        "title": "Label",
+                        "description": "Scenario name."
+                    },
+                    "adjustments": {
+                        "items": {
+                            "$ref": "#/components/schemas/WhatIfMeasureAdjustmentDto"
+                        },
+                        "type": "array",
+                        "title": "Adjustments",
+                        "description": "Scenario adjustments."
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "label",
+                    "adjustments"
+                ],
+                "title": "WhatIfScenarioVariantDto"
+            }
+        }
+    }
+}

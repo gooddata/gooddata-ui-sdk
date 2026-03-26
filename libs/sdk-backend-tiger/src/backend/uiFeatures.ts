@@ -99,6 +99,7 @@ export enum TigerFeaturesNames {
     EnableAmplitudeTracker = "enableAmplitudeTracker",
     EnableSlideshowExports = "enableSlideshowExports",
     EnableRawExports = "enableRawExports",
+    EnableCustomizableCsvDelimiter = "enableCustomizableCsvDelimiter",
     EnableExecutionCancelling = "enableExecutionCancelling",
     EnableDashboardTabularExport = "enableDashboardTabularExport",
     EnableOrchestratedTabularExports = "enableOrchestratedTabularExports",
@@ -140,6 +141,7 @@ export enum TigerFeaturesNames {
     EnableGenAIMemory = "enableGenAIMemory",
     EnableAIKnowledge = "enableAIKnowledge",
     EnableGenAIReasoningVisibility = "enableGenAIReasoningVisibility",
+    EnableAiAgenticConversations = "enableAiAgenticConversations",
     AIChatSearchLimit = "aiChatSearchLimit",
     EnableEmptyDateValuesFilter = "enableEmptyDateValuesFilter",
     EnableKDEmptyDateValuesFilter = "enableKDEmptyDateValuesFilter",
@@ -254,6 +256,7 @@ export type ITigerFeatureFlags = {
     enableAmplitudeTracker: (typeof FeatureFlagsValues)["enableAmplitudeTracker"][number];
     enableSlideshowExports: (typeof FeatureFlagsValues)["enableSlideshowExports"][number];
     enableRawExports: (typeof FeatureFlagsValues)["enableRawExports"][number];
+    enableCustomizableCsvDelimiter: (typeof FeatureFlagsValues)["enableCustomizableCsvDelimiter"][number];
     enableExecutionCancelling: (typeof FeatureFlagsValues)["enableExecutionCancelling"][number];
     enableImmediateAttributeFilterDisplayAsLabelMigration: (typeof FeatureFlagsValues)["enableImmediateAttributeFilterDisplayAsLabelMigration"][number];
     enableRichTextDynamicReferences: (typeof FeatureFlagsValues)["enableRichTextDynamicReferences"][number];
@@ -315,6 +318,7 @@ export type ITigerFeatureFlags = {
     enableShellApplication: (typeof FeatureFlagsValues)["enableShellApplication"][number];
     enableNullJoins: (typeof FeatureFlagsValues)["enableNullJoins"][number];
     enableDashboardDensitySetting: (typeof FeatureFlagsValues)["enableDashboardDensitySetting"][number];
+    enableAiAgenticConversations: (typeof FeatureFlagsValues)["enableAiAgenticConversations"][number];
     enableAutomationTrigger: (typeof FeatureFlagsValues)["enableAutomationTrigger"][number];
     enableUserDataFiltersUi: (typeof FeatureFlagsValues)["enableUserDataFiltersUi"][number];
 };
@@ -381,7 +385,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableGenAIChat: false,
     enableGenAIChatRollout: false,
     enableGenAICatalogQualityChecker: false,
-    enableCatalogTrendingObjects: true,
+    enableCatalogTrendingObjects: false,
     enableCatalogLineage: false,
     enableCertification: false,
     enableAIDataSetting: false,
@@ -409,6 +413,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableAmplitudeTracker: false,
     enableSlideshowExports: true,
     enableRawExports: false,
+    enableCustomizableCsvDelimiter: false,
     enableExecutionCancelling: false,
     enableImmediateAttributeFilterDisplayAsLabelMigration: false,
     enableRichTextDynamicReferences: true,
@@ -470,6 +475,7 @@ export const DefaultFeatureFlags: ITigerFeatureFlags = {
     enableShellApplication: false,
     enableNullJoins: false,
     enableDashboardDensitySetting: false,
+    enableAiAgenticConversations: false,
     enableAutomationTrigger: false,
     enableUserDataFiltersUi: false,
 };
@@ -565,6 +571,7 @@ export const FeatureFlagsValues = {
     enableAmplitudeTracker: [true, false] as const,
     enableSlideshowExports: [true, false] as const,
     enableRawExports: [true, false] as const,
+    enableCustomizableCsvDelimiter: [true, false] as const,
     enableHighchartsAccessibility: [true, false] as const,
     enableAccessibleChartTooltip: [true, false] as const,
     enableExecutionCancelling: [true, false] as const,
@@ -626,6 +633,7 @@ export const FeatureFlagsValues = {
     enableShellApplication: [true, false] as const,
     enableNullJoins: [true, false] as const,
     enableDashboardDensitySetting: [true, false] as const,
+    enableAiAgenticConversations: [true, false] as const,
     enableAutomationTrigger: [true, false] as const,
     enableUserDataFiltersUi: [true, false] as const,
 };

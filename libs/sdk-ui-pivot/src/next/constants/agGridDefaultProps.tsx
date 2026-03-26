@@ -1,4 +1,4 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
 
 import { merge } from "lodash-es";
 
@@ -75,6 +75,7 @@ const LOADING_PROPS: AgGridProps = {
     loading: true,
     loadingOverlayComponent: LoadingComponent,
     suppressServerSideFullWidthLoadingRow: true,
+    suppressNoRowsOverlay: true,
 };
 
 const HEADER_PROPS: AgGridProps = {

@@ -31,6 +31,7 @@ export interface IExportDefinitionVisualizationObjectSettings {
     pageSize?: "A3" | "A4" | "LETTER";
     orientation?: "portrait" | "landscape";
     grandTotalsPosition?: "pinnedBottom" | "pinnedTop" | "bottom" | "top";
+    delimiter?: string;
 }
 
 /**

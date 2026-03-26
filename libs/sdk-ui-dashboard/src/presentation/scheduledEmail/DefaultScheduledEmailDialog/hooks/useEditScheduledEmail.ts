@@ -7,6 +7,7 @@ import { invariant } from "ts-invariant";
 
 import {
     type AutomationEvaluationMode,
+    DEFAULT_CSV_DELIMITER,
     type DashboardAttachmentType,
     type FilterContextItem,
     type IAutomationMetadataObject,
@@ -47,6 +48,7 @@ import { useDashboardSelector } from "../../../../model/react/DashboardStoreProv
 import {
     selectEnableAutomationEvaluationMode,
     selectEnableExternalRecipients,
+    selectSettings,
     selectTimezone,
 } from "../../../../model/store/config/configSelectors.js";
 import {
@@ -142,7 +144,9 @@ export function useEditScheduledEmail({
     // Dashboard
     const dashboardId = useDashboardSelector(selectDashboardId);
     const dashboardTitle = useDashboardSelector(selectDashboardTitle);
+    const settings = useDashboardSelector(selectSettings);
     const timezone = useDashboardSelector(selectTimezone);
+    const resolvedDefaultCsvDelimiter = settings?.exportCsvCustomDelimiter ?? DEFAULT_CSV_DELIMITER;
 
     const areDashboardFiltersChanged = !!dashboardFilters;
 
@@ -584,6 +588,56 @@ export function useEditScheduledEmail({
         [setEditedAutomation],
     );
 
+    const onCsvSettingsChange = useCallback(
+        (settings: IExportDefinitionVisualizationObjectSettings) => {
+            setEditedAutomation((s) => ({
+                ...s,
+                exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
+                    if (exportDefinition.requestPayload.format !== "CSV") {
+                        return exportDefinition;
+                    }
+
+                    return {
+                        ...exportDefinition,
+                        requestPayload: {
+                            ...exportDefinition.requestPayload,
+                            settings: {
+                                ...exportDefinition.requestPayload.settings,
+                                delimiter: settings.delimiter,
+                            },
+                        },
+                    };
+                }),
+            }));
+        },
+        [setEditedAutomation],
+    );
+
+    const onCsvRawSettingsChange = useCallback(
+        (settings: IExportDefinitionVisualizationObjectSettings) => {
+            setEditedAutomation((s) => ({
+                ...s,
+                exportDefinitions: s.exportDefinitions?.map((exportDefinition) => {
+                    if (exportDefinition.requestPayload.format !== "CSV_RAW") {
+                        return exportDefinition;
+                    }
+
+                    return {
+                        ...exportDefinition,
+                        requestPayload: {
+                            ...exportDefinition.requestPayload,
+                            settings: {
+                                ...exportDefinition.requestPayload.settings,
+                                delimiter: settings.delimiter,
+                            },
+                        },
+                    };
+                }),
+            }));
+        },
+        [setEditedAutomation],
+    );
+
     const onFiltersChange = useCallback(
         (filters: FilterContextItem[], enableNewScheduledExport: boolean, storeFiltersParam?: boolean) => {
             setEditedAutomationFilters(filters);
@@ -868,6 +922,34 @@ export function useEditScheduledEmail({
         exportInfo: pdfTabularSettings?.exportInfo ?? true,
     };
 
+    const csvExportDefinition = editedAutomation.exportDefinitions?.find(
+        (exportDefinition) =>
+            isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload) &&
+            exportDefinition.requestPayload.format === "CSV",
+    );
+    const csvExportSettings =
+        csvExportDefinition &&
+        isExportDefinitionVisualizationObjectRequestPayload(csvExportDefinition.requestPayload)
+            ? csvExportDefinition.requestPayload.settings
+            : undefined;
+    const csvSettings = {
+        delimiter: csvExportSettings?.delimiter ?? resolvedDefaultCsvDelimiter,
+    };
+
+    const csvRawExportDefinition = editedAutomation.exportDefinitions?.find(
+        (exportDefinition) =>
+            isExportDefinitionVisualizationObjectRequestPayload(exportDefinition.requestPayload) &&
+            exportDefinition.requestPayload.format === "CSV_RAW",
+    );
+    const csvRawExportSettings =
+        csvRawExportDefinition &&
+        isExportDefinitionVisualizationObjectRequestPayload(csvRawExportDefinition.requestPayload)
+            ? csvRawExportDefinition.requestPayload.settings
+            : undefined;
+    const csvRawSettings = {
+        delimiter: csvRawExportSettings?.delimiter ?? resolvedDefaultCsvDelimiter,
+    };
+
     const startDate = toNormalizedStartDate(
         editedAutomation.schedule?.firstRun,
         editedAutomation.schedule?.timezone,
@@ -933,6 +1015,8 @@ export function useEditScheduledEmail({
         isXlsxExportSelected,
         xlsxSettings,
         pdfSettings,
+        csvSettings,
+        csvRawSettings,
         startDate,
         allowOnlyLoggedUserRecipients,
         allowExternalRecipients,
@@ -954,6 +1038,8 @@ export function useEditScheduledEmail({
         onWidgetAttachmentsChangeOld,
         onXlsxSettingsChange,
         onPdfSettingsChange,
+        onCsvSettingsChange,
+        onCsvRawSettingsChange,
         onFiltersChange,
         onApplyCurrentFilters,
         onStoreFiltersChange,
@@ -1010,6 +1096,7 @@ function newWidgetExportDefinitionMetadataObjectDefinition({
     dashboardFilters,
     enableNewScheduledExport,
     defaultPdfPageSize,
+    defaultCsvDelimiter,
 }: {
     insight: IInsight;
     widget: ExtendedDashboardWidget;
@@ -1020,6 +1107,7 @@ function newWidgetExportDefinitionMetadataObjectDefinition({
     dashboardFilters?: FilterContextItem[];
     enableNewScheduledExport: boolean;
     defaultPdfPageSize?: IExportDefinitionVisualizationObjectSettings["pageSize"];
+    defaultCsvDelimiter?: string;
 }): IExportDefinitionMetadataObjectDefinition {
     const widgetTitle = isWidget(widget) ? widget?.title : widget?.identifier;
 
@@ -1056,12 +1144,20 @@ function newWidgetExportDefinitionMetadataObjectDefinition({
         ...(grandTotalsPosition ? { grandTotalsPosition } : {}),
     };
 
+    const csvSettings: IExportDefinitionVisualizationObjectSettings = {
+        ...(defaultCsvDelimiter ? { delimiter: defaultCsvDelimiter } : {}),
+        ...(grandTotalsPosition ? { grandTotalsPosition } : {}),
+    };
+    const hasCsvSettings = Object.keys(csvSettings).length > 0;
+
     const settingsObj =
         format === "XLSX"
             ? { settings: xlsxSettings }
             : format === "PDF_TABULAR"
               ? { settings: pdfSettings }
-              : {};
+              : (format === "CSV" || format === "CSV_RAW") && hasCsvSettings
+                ? { settings: csvSettings }
+                : {};
 
     return {
         type: "exportDefinition",

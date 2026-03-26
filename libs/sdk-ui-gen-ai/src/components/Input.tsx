@@ -16,22 +16,31 @@ import cx from "classnames";
 import { FormattedMessage, defineMessages, useIntl } from "react-intl";
 import { connect } from "react-redux";
 
-import { type CatalogItem } from "@gooddata/sdk-model";
 import { SyntaxHighlightingInput, UiIconButton, UiTooltip } from "@gooddata/sdk-ui-kit";
 
-import { makeTextContents, makeUserMessage } from "../model.js";
+import {
+    type IChatConversationLocalItem,
+    type UserMessage,
+    makeTextContents,
+    makeUserItem,
+    makeUserMessage,
+} from "../model.js";
 import { collectReferences } from "./completion/references.js";
 import { useCompletion } from "./completion/useCompletion.js";
 import { useHighlight } from "./highlight/useHighlight.js";
 import { useFullscreenCheck } from "./hooks/useFullscreenCheck.js";
 import { escapeMarkdown } from "./utils/markdownUtils.js";
-import { asyncProcessSelector, messagesSelector } from "../store/messages/messagesSelectors.js";
+import {
+    asyncProcessSelector,
+    conversationMessagesSelector,
+    conversationSelector,
+    messagesSelector,
+} from "../store/messages/messagesSelectors.js";
 import { newMessageAction } from "../store/messages/messagesSlice.js";
 import { type RootState } from "../store/types.js";
 
 export type InputOwnProps = {
     autofocus?: boolean;
-    catalogItems?: CatalogItem[];
     canManage?: boolean;
     canAnalyze?: boolean;
     targetRef?: LegacyRef<HTMLDivElement>;
@@ -42,6 +51,8 @@ type InputStateProps = {
     isEvaluating: boolean;
     messages: ReturnType<typeof messagesSelector>;
     loading: ReturnType<typeof asyncProcessSelector>;
+    conversation: ReturnType<typeof conversationSelector>;
+    items: ReturnType<typeof conversationMessagesSelector>;
 };
 
 type InputDispatchProps = {
@@ -72,24 +83,25 @@ function InputComponent({
     isEvaluating,
     newMessage,
     autofocus = false,
-    catalogItems,
     canManage,
     canAnalyze,
     targetRef,
     messages,
+    conversation,
+    items,
     loading,
 }: InputOwnProps & InputStateProps & InputDispatchProps) {
     const intl = useIntl();
     const { isBigScreen, isSmallScreen, isFullscreen } = useFullscreenCheck();
 
     const isLoading = loading === "loading" || loading === "clearing";
-    const isEmpty = !messages?.length && !isLoading;
+    const isEmpty = conversation ? !items?.length && !isLoading : !messages?.length && !isLoading;
 
     const [value, setValue] = useState("");
     const [editorApi, setApi] = useState<EditorView | null>(null);
     const [focused, setFocused] = useState(false);
 
-    const { onCompletion, used } = useCompletion(catalogItems, [], { canManage, canAnalyze });
+    const { onCompletion, used } = useCompletion([], { canManage, canAnalyze });
     const { highlightExtension, atomicCursorExtension } = useHighlight(used);
 
     const beforeExtensions = useMemo(() => [atomicCursorExtension], [atomicCursorExtension]);
@@ -130,11 +142,19 @@ function InputComponent({
     );
 
     const handleSubmit = () => {
-        newMessage(
-            makeUserMessage([
+        let item: IChatConversationLocalItem | UserMessage;
+        if (conversation) {
+            item = makeUserItem({
+                type: "text",
+                text: escapeMarkdown(value),
+                objects: collectReferences(value, used.current),
+            });
+        } else {
+            item = makeUserMessage([
                 makeTextContents(escapeMarkdown(value), collectReferences(value, used.current)),
-            ]),
-        );
+            ]);
+        }
+        newMessage(item);
         setValue("");
     };
 
@@ -260,12 +280,16 @@ const mapStateToProps = (
 ): {
     isBusy: boolean;
     isEvaluating: boolean;
+    items: ReturnType<typeof conversationMessagesSelector>;
+    conversation: ReturnType<typeof conversationSelector>;
     messages: ReturnType<typeof messagesSelector>;
     loading: ReturnType<typeof asyncProcessSelector>;
 } => {
     const asyncState = asyncProcessSelector(state);
 
     return {
+        conversation: conversationSelector(state),
+        items: conversationMessagesSelector(state),
         messages: messagesSelector(state),
         loading: asyncState,
         isBusy: !!asyncState,

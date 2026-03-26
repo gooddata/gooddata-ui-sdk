@@ -1,7 +1,13 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { v4 as uuidv4 } from "uuid";
 
+import {
+    type IChatConversationContent,
+    type IChatConversationItem,
+    type IChatConversationMultipartPart,
+    isChatConversationItem,
+} from "@gooddata/sdk-backend-spi";
 import type {
     GenAIChatInteractionUserFeedback,
     GenAIChatRoutingUseCase,
@@ -338,3 +344,116 @@ export const makeAssistantMessage = (
  * @public
  */
 export type Message = UserMessage | AssistantMessage;
+
+/**
+ * Chat conversation item with local ID.
+ * @public
+ */
+export type IChatConversationLocalItem = Omit<IChatConversationItem, "content"> & {
+    //states
+    cancelled?: boolean;
+    complete?: boolean;
+    streaming?: boolean;
+    //data
+    localId: string;
+    content: IChatConversationLocalContent | IChatConversationErrorContent;
+};
+
+/**
+ * Type guard for the IChatConversationLocalItem.
+ * @internal
+ */
+export function isChatConversationLocalItem(obj: any): obj is IChatConversationLocalItem {
+    return isChatConversationItem(obj);
+}
+
+/**
+ * Chat local conversation content
+ * @public
+ */
+export type IChatConversationLocalContent = IChatConversationContent & {
+    objects?: TextContentObject[];
+    parts?: IChatConversationMultipartPart[];
+};
+
+/**
+ * Chat conversation error content
+ * @public
+ */
+export type IChatConversationErrorContent = {
+    type: "error";
+    message: string;
+    code?: number;
+};
+
+/**
+ * Chat local conversation multipart local part
+ * @public
+ */
+export type IChatConversationMultipartLocalPart = IChatConversationMultipartPart & {
+    reporting?: boolean;
+    saving?: boolean;
+    error?: {
+        name: string;
+        message: string;
+    };
+    objects?: TextContentObject[];
+};
+
+/**
+ * Make a new conversation item with local ID.
+ * @internal
+ */
+export const makeConversationItem = (item: IChatConversationItem): IChatConversationLocalItem => ({
+    ...item,
+    localId: uuidv4(),
+    complete: true,
+});
+
+/**
+ * Make a new assistant message item.
+ */
+export const makeAssistantItem = (
+    content?: IChatConversationLocalContent,
+    id?: string,
+): IChatConversationLocalItem => ({
+    id: id ?? "",
+    type: "item",
+    localId: uuidv4(),
+    responseId: "",
+    createdAt: Date.now(),
+    role: "assistant",
+    content: content ?? {
+        type: "reasoning",
+        summary: "",
+    },
+});
+
+/**
+ * Make a new user message item.
+ */
+export const makeUserItem = (
+    content?: IChatConversationLocalContent,
+    id?: string,
+): IChatConversationLocalItem => ({
+    id: id ?? "",
+    type: "item",
+    localId: uuidv4(),
+    responseId: "",
+    complete: true,
+    createdAt: Date.now(),
+    role: "user",
+    content: content ?? {
+        type: "text",
+        text: "",
+    },
+});
+
+/**
+ * Make a new error message item.
+ */
+export const makeErrorContent = (message: string, code?: number): IChatConversationErrorContent => ({
+    type: "error",
+    message,
+    code,
+});

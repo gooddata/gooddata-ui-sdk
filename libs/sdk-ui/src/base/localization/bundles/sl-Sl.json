@@ -1060,5 +1060,14 @@
     "fileUpload.action.remove": "Odstrani",
     "fileUpload.list.label": "Naloži datoteke",
     "fileUpload.action.retryFile": "Poskusi znova {fileName}",
-    "fileUpload.action.removeFile": "Odstrani {fileName}"
+    "fileUpload.action.removeFile": "Odstrani {fileName}",
+    "csvDelimiterPicker.option.comma": "Vejica",
+    "csvDelimiterPicker.option.semicolon": "Podpičje",
+    "csvDelimiterPicker.option.pipe": "Navpična črta",
+    "csvDelimiterPicker.option.tab": "Zavihek",
+    "csvDelimiterPicker.option.custom": "Prilagojeno",
+    "csvDelimiterPicker.customInput": "Ločilo CSV po meri",
+    "csvDelimiterPicker.menuLabel": "Ločilo CSV",
+    "csvDelimiterPicker.validation.singleCharacter": "Uporabite en znak",
+    "csvDelimiterPicker.validation.unsupported": "Ta znak ni podprt"
 }

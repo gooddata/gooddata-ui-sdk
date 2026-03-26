@@ -12,6 +12,7 @@ import { CancelEditDialog } from "../../cancelEditDialog/CancelEditDialog.js";
 import { useCancelEditDialog } from "../../cancelEditDialog/DefaultCancelEditDialog.js";
 import { useDeleteDialogProps } from "../../deleteDialog/DefaultDeleteDialog.js";
 import { DeleteDialog } from "../../deleteDialog/DeleteDialog.js";
+import { ExportCsvDialogProvider } from "../../dialogs/ExportCsvDialogProvider.js";
 import { ExportTabularPdfDialogProvider } from "../../dialogs/ExportTabularPdfDialogProvider.js";
 import { ExportXlsxDialogProvider } from "../../dialogs/ExportXlsxDialogProvider.js";
 import { useFilterBarProps } from "../../filterBar/filterBar/DefaultFilterBar.js";
@@ -75,6 +76,7 @@ export function DashboardHeader(): ReactElement {
         <>
             <ToastMessages />
             <ExportXlsxDialogProvider />
+            <ExportCsvDialogProvider />
             <ExportTabularPdfDialogProvider />
             <ScheduledEmailDialogProvider />
             <AlertingDialogProvider />

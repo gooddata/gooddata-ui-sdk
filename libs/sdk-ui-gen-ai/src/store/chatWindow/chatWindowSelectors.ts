@@ -3,7 +3,12 @@
 import { createSelector } from "@reduxjs/toolkit";
 
 import { type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { type GenAIObjectType, type IAllowedRelationshipType, type IColorPalette } from "@gooddata/sdk-model";
+import {
+    type CatalogItem,
+    type GenAIObjectType,
+    type IAllowedRelationshipType,
+    type IColorPalette,
+} from "@gooddata/sdk-model";
 import type { IKdaDefinition } from "@gooddata/sdk-ui-dashboard";
 
 import { chatWindowSliceName } from "./chatWindowSlice.js";
@@ -48,6 +53,13 @@ export const tagsSelector: (state: RootState) => {
         excludeTags: state.excludeTags,
     };
 });
+
+export const catalogItemsSelector: (state: RootState) => CatalogItem[] = createSelector(
+    chatWindowSliceSelector,
+    (state) => {
+        return state.catalogItems ?? [];
+    },
+);
 
 export const keyDriverAnalysisSelector: (state: RootState) => IKdaDefinition | undefined = createSelector(
     chatWindowSliceSelector,

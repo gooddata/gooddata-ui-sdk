@@ -1,4 +1,5 @@
-// (C) 2025 GoodData Corporation
+// (C) 2025-2026 GoodData Corporation
+
 import { useCallback } from "react";
 
 import { useColumnDefs } from "../../context/ColumnDefsContext.js";

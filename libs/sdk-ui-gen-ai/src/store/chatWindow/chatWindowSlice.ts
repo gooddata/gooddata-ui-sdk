@@ -3,7 +3,12 @@
 import { type PayloadAction, type Reducer, createSlice } from "@reduxjs/toolkit";
 
 import { type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { type GenAIObjectType, type IAllowedRelationshipType, type IColorPalette } from "@gooddata/sdk-model";
+import {
+    type CatalogItem,
+    type GenAIObjectType,
+    type IAllowedRelationshipType,
+    type IColorPalette,
+} from "@gooddata/sdk-model";
 import type { IKdaDefinition } from "@gooddata/sdk-ui-dashboard";
 
 type ChatWindowSliceState = {
@@ -31,6 +36,10 @@ type ChatWindowSliceState = {
      * Object types to use for the chat UI.
      */
     objectTypes?: GenAIObjectType[];
+    /**
+     * Catalog items for autocomplete.
+     */
+    catalogItems?: CatalogItem[];
     /**
      * Only objects with these tags will be included
      */
@@ -104,6 +113,9 @@ const chatWindowSlice = createSlice({
             state.includeTags = includeTags;
             state.excludeTags = excludeTags;
         },
+        setCatalogItemsActions: (state, { payload }: PayloadAction<CatalogItem[] | undefined>) => {
+            state.catalogItems = payload;
+        },
         setAllowedRelationshipTypesAction: (
             state,
             {
@@ -126,5 +138,6 @@ export const {
     setKeyDriverAnalysisAction,
     setObjectTypesAction,
     setTagsAction,
+    setCatalogItemsActions,
     setAllowedRelationshipTypesAction,
 } = chatWindowSlice.actions;

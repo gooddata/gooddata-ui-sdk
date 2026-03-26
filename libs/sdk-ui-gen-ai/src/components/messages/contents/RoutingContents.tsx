@@ -11,7 +11,6 @@ export type RoutingContentsProps = {
     isReasoningEnabled?: boolean;
 };
 
-// TODO: Remove this component when reasoning is in GA
 export function RoutingContentsComponent({ content, useMarkdown = true }: RoutingContentsProps) {
     const className = cx("gd-gen-ai-chat__messages__content", "gd-gen-ai-chat__messages__content--routing");
 

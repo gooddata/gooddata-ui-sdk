@@ -1,5 +1,6 @@
 // (C) 2021-2026 GoodData Corporation
 
+import { type IDashboardExportRawOptions } from "@gooddata/sdk-backend-spi";
 import {
     type IDrillDownReference,
     type IInsight,
@@ -20,6 +21,11 @@ import {
     type IWidgetFilterOperation,
     type IWidgetHeader,
 } from "../types/widgetTypes.js";
+
+/**
+ * @alpha
+ */
+export type IExportRawInsightWidgetOptions = IDashboardExportRawOptions;
 
 /**
  * Payload of the {@link IChangeInsightWidgetHeader} command.
@@ -1064,6 +1070,11 @@ export interface IExportRawInsightWidgetPayload {
      * Reference to Insight title to export.
      */
     readonly filename: string;
+
+    /**
+     * Export options.
+     */
+    readonly options?: IExportRawInsightWidgetOptions;
 }
 
 /**
@@ -1080,6 +1091,7 @@ export interface IExportRawInsightWidget extends IDashboardCommand {
  * @param widget -
  * @param insight - insight to export
  * @param filename - filename of the exported file
+ * @param options - export options
  * @param correlationId - specify correlation id to use for this command. this will be included in all
  *  events that will be emitted during the command processing
  *
@@ -1091,6 +1103,40 @@ export function exportRawInsightWidget(
     insight: IInsight,
     filename: string,
     correlationId?: string,
+): IExportRawInsightWidget;
+/**
+ * @alpha
+ */
+export function exportRawInsightWidget(
+    ref: ObjRef,
+    widget: IInsightWidget,
+    insight: IInsight,
+    filename: string,
+    options: IExportRawInsightWidgetOptions | undefined,
+    correlationId?: string,
+): IExportRawInsightWidget;
+export function exportRawInsightWidget(
+    ref: ObjRef,
+    widget: IInsightWidget,
+    insight: IInsight,
+    filename: string,
+    optionsOrCorrelationId?: IExportRawInsightWidgetOptions | string,
+    correlationId?: string,
+): IExportRawInsightWidget {
+    const options = typeof optionsOrCorrelationId === "string" ? undefined : optionsOrCorrelationId;
+    const effectiveCorrelationId =
+        typeof optionsOrCorrelationId === "string" ? optionsOrCorrelationId : correlationId;
+
+    return exportRawInsightWidgetWithOptions(ref, widget, insight, filename, options, effectiveCorrelationId);
+}
+
+function exportRawInsightWidgetWithOptions(
+    ref: ObjRef,
+    widget: IInsightWidget,
+    insight: IInsight,
+    filename: string,
+    options?: IExportRawInsightWidgetOptions,
+    correlationId?: string,
 ): IExportRawInsightWidget {
     return {
         type: "GDC.DASH/CMD.INSIGHT_WIDGET.EXPORT_RAW",
@@ -1100,6 +1146,7 @@ export function exportRawInsightWidget(
             widget,
             insight,
             filename,
+            options,
         },
     };
 }

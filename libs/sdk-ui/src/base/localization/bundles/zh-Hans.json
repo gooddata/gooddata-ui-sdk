@@ -1060,5 +1060,14 @@
     "fileUpload.action.remove": "删除",
     "fileUpload.list.label": "上传文件",
     "fileUpload.action.retryFile": "重试 {fileName}",
-    "fileUpload.action.removeFile": "移除 {fileName}"
+    "fileUpload.action.removeFile": "移除 {fileName}",
+    "csvDelimiterPicker.option.comma": "逗号",
+    "csvDelimiterPicker.option.semicolon": "分号",
+    "csvDelimiterPicker.option.pipe": "竖线",
+    "csvDelimiterPicker.option.tab": "选项卡",
+    "csvDelimiterPicker.option.custom": "自定义",
+    "csvDelimiterPicker.customInput": "自定义 CSV 分隔符",
+    "csvDelimiterPicker.menuLabel": "CSV 分隔符",
+    "csvDelimiterPicker.validation.singleCharacter": "使用单个字符",
+    "csvDelimiterPicker.validation.unsupported": "不支持此字符"
 }

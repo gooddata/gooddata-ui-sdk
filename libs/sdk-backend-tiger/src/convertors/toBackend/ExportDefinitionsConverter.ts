@@ -116,6 +116,7 @@ export const convertToRawExportRequest = (
         widgetExecution.executionConfig && !isEmpty(widgetExecution.executionConfig)
             ? widgetExecution.executionConfig
             : undefined;
+    const delimiter = exportRequest.settings?.delimiter;
 
     return {
         fileName: exportRequest.fileName,
@@ -123,6 +124,7 @@ export const convertToRawExportRequest = (
         execution: automationExecution,
         executionSettings,
         customOverride,
+        ...(delimiter ? { delimiter } : {}),
         ...(isEmpty(metadata) ? {} : { metadata }),
     };
 };
@@ -319,7 +321,8 @@ export const convertToTabularExportRequest = (
         isExportDefinitionVisualizationObjectRequestPayload(exportRequest)
     ) {
         const { visualizationObject, filters, widget, dashboard } = exportRequest.content;
-        const { mergeHeaders, orientation, exportInfo, grandTotalsPosition } = exportRequest.settings ?? {};
+        const { mergeHeaders, orientation, exportInfo, grandTotalsPosition, delimiter } =
+            exportRequest.settings ?? {};
         const filtersObj = filters
             ? { visualizationObjectCustomFilters: convertSdkFiltersToTiger(filters) }
             : {};
@@ -331,6 +334,7 @@ export const convertToTabularExportRequest = (
             ...filtersObj,
             relatedDashboardId: dashboard,
             settings: {
+                ...(delimiter ? { delimiter } : {}),
                 ...(mergeHeaders ? { mergeHeaders } : {}),
                 ...(orientation ? { pdfPageSize: orientation } : {}),
                 ...(exportInfo ? { exportInfo } : {}),
@@ -430,7 +434,7 @@ export const convertExportDefinitionRequestPayload = (
         } as VisualExportRequest;
     }
 
-    const { mergeHeaders, orientation, grandTotalsPosition } = exportRequest.settings ?? {};
+    const { mergeHeaders, orientation, grandTotalsPosition, delimiter } = exportRequest.settings ?? {};
     const { visualizationObject, filters, widget, dashboard } = exportRequest.content;
     const filtersObj = filters ? { visualizationObjectCustomFilters: convertSdkFiltersToTiger(filters) } : {};
 
@@ -441,6 +445,7 @@ export const convertExportDefinitionRequestPayload = (
         ...filtersObj,
         relatedDashboardId: dashboard,
         settings: {
+            ...(delimiter ? { delimiter } : {}),
             ...(mergeHeaders ? { mergeHeaders } : {}),
             ...(orientation ? { pdfPageSize: orientation } : {}),
             ...(grandTotalsPosition ? { grandTotalsPosition } : {}),

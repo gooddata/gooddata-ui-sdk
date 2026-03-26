@@ -134,6 +134,7 @@ export function mapSourceInsightFilterToOption({
             sourceInsightMeasures,
             measureRef,
             allCatalogMeasures,
+            intl,
         );
 
         return {
@@ -156,6 +157,7 @@ export function mapSourceInsightFilterToOption({
             sourceInsightMeasures,
             measureRef,
             allCatalogMeasures,
+            intl,
         );
         const rankingPreviewMessage =
             sourceInsightFilter.rankingFilter.operator === "TOP"

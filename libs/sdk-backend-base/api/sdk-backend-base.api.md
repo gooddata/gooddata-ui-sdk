@@ -41,6 +41,10 @@ import { ICatalogDateDataset } from '@gooddata/sdk-model';
 import { ICatalogFact } from '@gooddata/sdk-model';
 import { ICatalogGroup } from '@gooddata/sdk-model';
 import { ICatalogMeasure } from '@gooddata/sdk-model';
+import { IChatConversation } from '@gooddata/sdk-backend-spi';
+import { IChatConversationItemsQuery } from '@gooddata/sdk-backend-spi';
+import { IChatConversations } from '@gooddata/sdk-backend-spi';
+import { IChatConversationThread } from '@gooddata/sdk-backend-spi';
 import { IChatThread } from '@gooddata/sdk-backend-spi';
 import { IChatThreadHistory } from '@gooddata/sdk-backend-spi';
 import { IChatThreadQuery } from '@gooddata/sdk-backend-spi';
@@ -698,11 +702,15 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
     // (undocumented)
     deleteEnableDrillToUrlByDefault(): Promise<void>;
     // (undocumented)
+    deleteExportCsvCustomDelimiter(): Promise<void>;
+    // (undocumented)
     deleteMetricFormatOverride(): Promise<void>;
     // (undocumented)
     deleteTheme(): Promise<void>;
     // (undocumented)
     getEnableDrillToUrlByDefault(): Promise<boolean | undefined>;
+    // (undocumented)
+    getExportCsvCustomDelimiter(): Promise<string | undefined>;
     // (undocumented)
     getSettings(): Promise<IWorkspaceSettings>;
     // (undocumented)
@@ -725,6 +733,8 @@ export abstract class DecoratedWorkspaceSettingsService implements IWorkspaceSet
     setEnableAiOnData(enabled: boolean): Promise<void>;
     // (undocumented)
     setEnableDrillToUrlByDefault(enabled: boolean): Promise<void>;
+    // (undocumented)
+    setExportCsvCustomDelimiter(delimiter: string): Promise<void>;
     // (undocumented)
     setFiscalCalendar(fiscalYear: IFiscalYear): Promise<void>;
     // (undocumented)
@@ -777,6 +787,20 @@ export type DummyBackendConfig = IAnalyticalBackendConfig & {
 
 // @internal
 export function dummyBackendEmptyData(): IAnalyticalBackend;
+
+// @internal
+export class DummyChatConversations implements IChatConversations {
+    // (undocumented)
+    create(): Promise<IChatConversation>;
+    // (undocumented)
+    delete(_conversationId: string): Promise<void>;
+    // (undocumented)
+    getConversation(_conversationId: string): Promise<IChatConversation>;
+    // (undocumented)
+    getConversationItemsQuery(): IChatConversationItemsQuery;
+    // (undocumented)
+    getConversationThread(_conversationId: string): IChatConversationThread;
+}
 
 // @internal
 export function dummyDataView(definition: IExecutionDefinition, result?: IExecutionResult, config?: DummyBackendConfig): IDataView;

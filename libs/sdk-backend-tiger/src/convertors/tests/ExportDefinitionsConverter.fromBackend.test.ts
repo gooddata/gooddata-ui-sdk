@@ -5,6 +5,7 @@ import { describe, expect, it } from "vitest";
 import {
     type AutomationAutomationTabularExport,
     type JsonApiWorkspaceAutomationOutAttributesDashboardTabularExportsInner,
+    type JsonApiWorkspaceAutomationOutAttributesRawExportsInner,
 } from "@gooddata/api-client-tiger";
 import {
     type IDashboardAttributeFilter,
@@ -19,6 +20,7 @@ import {
 import {
     convertDashboardTabularExportRequest,
     convertTabularExportRequest,
+    convertToRawExportRequest,
 } from "../fromBackend/ExportDefinitionsConverter.js";
 
 describe("ExportDefinitionsConverter fromBackend", () => {
@@ -48,7 +50,7 @@ describe("ExportDefinitionsConverter fromBackend", () => {
                 metadata: { widget: "widgetId" },
                 settings: {},
             },
-        } as unknown as AutomationAutomationTabularExport;
+        } as AutomationAutomationTabularExport;
 
         const result = convertTabularExportRequest(exportRequest);
         const mvf = result.content.filters?.[0] as IMeasureValueFilter;
@@ -60,6 +62,50 @@ describe("ExportDefinitionsConverter fromBackend", () => {
             { comparison: { operator: "GREATER_THAN", value: 10, treatNullValuesAs: 5 } },
             { range: { operator: "BETWEEN", from: 1, to: 9, treatNullValuesAs: 5 } },
         ]);
+    });
+
+    it("converts CSV delimiter from tabular export settings", () => {
+        const exportRequest = {
+            requestPayload: {
+                fileName: "tabular",
+                format: "CSV",
+                visualizationObject: "visId",
+                relatedDashboardId: "dashboardId",
+                metadata: { widget: "widgetId" },
+                settings: {
+                    delimiter: ";",
+                },
+            },
+        } as AutomationAutomationTabularExport;
+
+        const result = convertTabularExportRequest(exportRequest);
+
+        expect(result.settings?.delimiter).toBe(";");
+    });
+
+    it("converts CSV delimiter from raw export settings", () => {
+        const exportRequest = {
+            requestPayload: {
+                fileName: "raw-export",
+                format: "CSV",
+                delimiter: "|",
+                execution: {
+                    attributes: [],
+                    filters: [],
+                    measures: [],
+                    auxMeasures: [],
+                },
+                metadata: {
+                    widget: "widgetId",
+                    visualizationObject: "visId",
+                    dashboard: "dashboardId",
+                },
+            },
+        } as JsonApiWorkspaceAutomationOutAttributesRawExportsInner;
+
+        const result = convertToRawExportRequest(exportRequest);
+
+        expect(result.settings?.delimiter).toBe("|");
     });
 
     it("converts dashboard tabular widget override filters through stored filter conversion", () => {
@@ -135,7 +181,7 @@ describe("ExportDefinitionsConverter fromBackend", () => {
                 },
                 settings: {},
             },
-        } as unknown as JsonApiWorkspaceAutomationOutAttributesDashboardTabularExportsInner;
+        } as JsonApiWorkspaceAutomationOutAttributesDashboardTabularExportsInner;
 
         const result = convertDashboardTabularExportRequest(
             exportRequest,

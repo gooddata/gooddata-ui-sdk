@@ -79,6 +79,7 @@ export function GenAIChatDialog({
         objectTypes,
         includeTags,
         excludeTags,
+        catalogItems,
     });
 
     const open = useRef(onOpen);

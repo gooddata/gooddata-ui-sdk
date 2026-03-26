@@ -1,13 +1,13 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { type PayloadAction } from "@reduxjs/toolkit";
 import { call, getContext, put, select } from "redux-saga/effects";
 
-import { type IAnalyticalBackend } from "@gooddata/sdk-backend-spi";
+import { type IAnalyticalBackend, type IChatConversation } from "@gooddata/sdk-backend-spi";
 
 import { extractError } from "./utils.js";
 import { type Message, isVisualizationContents } from "../../model.js";
-import { messagesSelector } from "../messages/messagesSelectors.js";
+import { conversationSelector, messagesSelector } from "../messages/messagesSelectors.js";
 import { saveVisualisationRenderStatusSuccessAction } from "../messages/messagesSlice.js";
 
 /**
@@ -22,10 +22,19 @@ export function* onVisualisationRender({
     assistantMessageId: string;
     status: "SUCCESSFUL" | "UNEXPECTED_ERROR" | "TOO_MANY_DATA_POINTS" | "NO_DATA" | "NO_RESULTS";
 }>) {
+    // Retrieve backend from context
+    const backend: IAnalyticalBackend = yield getContext("backend");
+    const workspace: string = yield getContext("workspace");
+    const conversation: IChatConversation = yield select(conversationSelector);
+
     try {
-        // Retrieve backend from context
-        const backend: IAnalyticalBackend = yield getContext("backend");
-        const workspace: string = yield getContext("workspace");
+        if (conversation) {
+            // NOTE: In new conversations, the render status is now
+            // not saved to the server, so we can skip this.
+            yield put(saveVisualisationRenderStatusSuccessAction(payload));
+            return;
+        }
+
         const messages: Message[] = yield select(messagesSelector);
         const message = messages.find((message) => message.localId === payload.assistantMessageId);
 

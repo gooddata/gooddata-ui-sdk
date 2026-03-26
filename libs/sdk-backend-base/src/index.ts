@@ -20,7 +20,7 @@ export {
 } from "./dummyBackend/index.js";
 
 export { DummySemanticSearchQueryBuilder } from "./dummyBackend/DummySemanticSearch.js";
-export { DummyGenAIChatThread } from "./dummyBackend/DummyGenAIChatThread.js";
+export { DummyGenAIChatThread, DummyChatConversations } from "./dummyBackend/DummyGenAIChatThread.js";
 
 export { decoratedBackend } from "./decoratedBackend/index.js";
 

@@ -1060,5 +1060,14 @@
     "fileUpload.action.remove": "Usuń",
     "fileUpload.list.label": "Prześlij pliki",
     "fileUpload.action.retryFile": "Ponów próbę: {fileName}",
-    "fileUpload.action.removeFile": "Usuń {fileName}"
+    "fileUpload.action.removeFile": "Usuń {fileName}",
+    "csvDelimiterPicker.option.comma": "Przecinek",
+    "csvDelimiterPicker.option.semicolon": "Średnik",
+    "csvDelimiterPicker.option.pipe": "Pionowa kreska",
+    "csvDelimiterPicker.option.tab": "Karta",
+    "csvDelimiterPicker.option.custom": "Niestandardowy",
+    "csvDelimiterPicker.customInput": "Niestandardowy separator CSV",
+    "csvDelimiterPicker.menuLabel": "Separator CSV",
+    "csvDelimiterPicker.validation.singleCharacter": "Użyj pojedynczego znaku",
+    "csvDelimiterPicker.validation.unsupported": "Ten znak nie jest obsługiwany"
 }

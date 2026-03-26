@@ -5,9 +5,10 @@ import { useEffect, useMemo } from "react";
 import { type EnhancedStore } from "@reduxjs/toolkit";
 
 import { type IAnalyticalBackend, type IUserWorkspaceSettings } from "@gooddata/sdk-backend-spi";
-import { type GenAIObjectType, type IColorPalette } from "@gooddata/sdk-model";
+import { type CatalogItem, type GenAIObjectType, type IColorPalette } from "@gooddata/sdk-model";
 
 import {
+    setCatalogItemsActions,
     setColorPaletteAction,
     setObjectTypesAction,
     setSettingsAction,
@@ -27,9 +28,11 @@ export const useGenAIStore = (
         objectTypes?: GenAIObjectType[];
         includeTags?: string[];
         excludeTags?: string[];
+        catalogItems?: CatalogItem[];
     },
 ): EnhancedStore => {
-    const { eventHandlers, colorPalette, settings, objectTypes, includeTags, excludeTags } = opts;
+    const { eventHandlers, colorPalette, settings, objectTypes, includeTags, excludeTags, catalogItems } =
+        opts;
 
     // Instantiate EventDispatcher. It's a designed to hold a reference to the handlers, so that
     // we don't update the context every time a new array of handlers is passed.
@@ -88,6 +91,13 @@ export const useGenAIStore = (
             );
         }
     }, [includeTags, excludeTags, optionsDispatcher, store]);
+
+    useEffect(() => {
+        if (catalogItems) {
+            optionsDispatcher.setCatalogItems(catalogItems);
+            store.dispatch(setCatalogItemsActions(catalogItems));
+        }
+    }, [eventHandlers, eventDispatcher, catalogItems, optionsDispatcher, store]);
 
     useEffect(() => {
         if (eventHandlers) {

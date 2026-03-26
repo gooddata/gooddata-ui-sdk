@@ -1,7 +1,8 @@
-// (C) 2024-2025 GoodData Corporation
+// (C) 2024-2026 GoodData Corporation
 
 import { call, fork, takeEvery, takeLatest } from "redux-saga/effects";
 
+import { loadCatalogItems } from "./loadCatalogItems.js";
 import { loadColorPalette } from "./loadColorPalette.js";
 import { loadSettings } from "./loadSettings.js";
 import { onEvent } from "./onEvent.js";
@@ -29,15 +30,18 @@ import {
  * @internal
  */
 export function* rootSaga() {
-    yield takeEvery(setVerboseAction.type, onVerboseStore);
     yield takeLatest(loadThreadAction.type, onThreadLoad);
     yield takeLatest(clearThreadAction.type, onThreadClear);
     yield takeLatest(newMessageAction.type, onUserMessage);
+    //messages API
     yield takeEvery(setUserFeedback.type, onUserFeedback);
     yield takeEvery(saveVisualizationAction.type, onVisualizationSave);
     yield takeEvery(saveVisualizationSuccessAction.type, onVisualizationSuccessSave);
     yield takeEvery(saveVisualisationRenderStatusAction.type, onVisualisationRender);
+    //others
+    yield takeEvery(setVerboseAction.type, onVerboseStore);
     yield fork(onEvent);
     yield call(loadColorPalette);
     yield call(loadSettings);
+    yield call(loadCatalogItems);
 }

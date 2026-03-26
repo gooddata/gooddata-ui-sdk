@@ -342,6 +342,31 @@ export enum ComputeRatioRule {
 export type Condition<T> = T | IConditionOr<T> | IConditionAnd<T>;
 
 // @alpha
+export const CSV_DELIMITER_PRESETS: readonly [{
+    readonly id: "comma";
+    readonly delimiter: ",";
+    readonly previewSymbol: ",";
+}, {
+    readonly id: "semicolon";
+    readonly delimiter: ";";
+    readonly previewSymbol: ";";
+}, {
+    readonly id: "pipe";
+    readonly delimiter: "|";
+    readonly previewSymbol: "|";
+}, {
+    readonly id: "tab";
+    readonly delimiter: "\t";
+    readonly previewSymbol: "⇥";
+}];
+
+// @alpha
+export type CsvDelimiterPreset = (typeof CSV_DELIMITER_PRESETS)[number]["id"] | "custom";
+
+// @alpha
+export type CsvDelimiterValidationError = "singleCharacter" | "unsupportedCharacter";
+
+// @alpha
 export type DashboardAttachmentType = "PDF" | "XLSX" | "PPTX" | "PDF_SLIDES";
 
 // @alpha
@@ -454,6 +479,9 @@ export const DateGranularity: {
 
 // @beta
 export type DateString = string;
+
+// @alpha
+export const DEFAULT_CSV_DELIMITER: ",";
 
 // @public
 export function defaultDimensionsGenerator(definition: IExecutionDefinition): IDimension[];
@@ -624,7 +652,7 @@ export type GenAIChatInteractionUserVisualisation = {
 export type GenAIChatRole = "USER" | "AI";
 
 // @internal
-export type GenAIChatRoutingUseCase = "ALERT" | "SEARCH" | "HOWTO" | "CHANGE_ANALYSIS" | "SEARCH_ALL" | "SEARCH_VISUALIZATIONS" | "SEARCH_DASHBOARDS" | "CREATE_VISUALIZATION" | "EXTEND_VISUALIZATION" | "GENERAL" | "INVALID";
+export type GenAIChatRoutingUseCase = "ALERT" | "SEARCH" | "HOWTO" | "CHANGE_ANALYSIS" | "SEARCH_ALL" | "SEARCH_VISUALIZATIONS" | "SEARCH_DASHBOARDS" | "CREATE_VISUALIZATION" | "EXTEND_VISUALIZATION" | "GENERAL" | "WHAT_IF" | "INVALID";
 
 // @internal
 export type GenAIDateGranularity = "MINUTE" | "HOUR" | "DAY" | "WEEK" | "MONTH" | "QUARTER" | "YEAR" | "MINUTE_OF_HOUR" | "HOUR_OF_DAY" | "DAY_OF_WEEK" | "DAY_OF_MONTH" | "DAY_OF_YEAR" | "WEEK_OF_YEAR" | "MONTH_OF_YEAR" | "QUARTER_OF_YEAR";
@@ -701,6 +729,21 @@ export const GeoVisualizationTypes: {
 
 // @internal
 export function getAttributeElementsItems(attributeElements: IAttributeElements): Array<string | null>;
+
+// @alpha
+export function getCsvDelimiterPreset(delimiter?: string): CsvDelimiterPreset;
+
+// @alpha
+export function getCsvDelimiterState(delimiter?: string): {
+    selectedPreset: CsvDelimiterPreset;
+    customDelimiter: string;
+};
+
+// @alpha
+export function getCsvDelimiterValidationError(delimiter: string): CsvDelimiterValidationError | undefined;
+
+// @alpha
+export function getCsvDelimiterValue(selectedPreset: CsvDelimiterPreset, customDelimiter: string): string;
 
 // @internal (undocumented)
 export const getHierarchyAttributes: (hierarchy: ICatalogAttributeHierarchy | ICatalogDateAttributeHierarchy) => ObjRef[];
@@ -2301,6 +2344,8 @@ export type IExportDefinitionVisualizationObjectRequestPayload = {
 // @alpha
 export interface IExportDefinitionVisualizationObjectSettings {
     // (undocumented)
+    delimiter?: string;
+    // (undocumented)
     exportInfo?: boolean;
     // (undocumented)
     grandTotalsPosition?: "pinnedBottom" | "pinnedTop" | "bottom" | "top";
@@ -2357,6 +2402,7 @@ export interface IFeatureFlags {
     aiChatSearchLimit?: number;
     enableAccessibilityMode?: boolean;
     enableAccessibleChartTooltip?: boolean;
+    enableAiAgenticConversations?: boolean;
     // @deprecated
     enableAIFunctions?: boolean;
     enableAIKnowledge?: boolean;
@@ -2389,6 +2435,7 @@ export interface IFeatureFlags {
     // @internal
     enableCrossFilteringAliasTitles?: boolean;
     enableCustomGeoCollection?: boolean;
+    enableCustomizableCsvDelimiter?: boolean;
     enableCustomizedDashboardsWithoutPluginOverlay?: boolean;
     enableDashboardDensitySetting?: boolean;
     enableDashboardDescriptionDynamicHeight?: boolean;
@@ -3730,6 +3777,7 @@ export interface IPermanentSettings {
     // @beta
     earlyAccessFeatures?: IEarlyAccessFeaturesConfig;
     enableAutomationEvaluationMode?: boolean;
+    exportCsvCustomDelimiter?: string;
     exportResultPollingTimeoutSeconds?: number;
     fiscalYear?: IFiscalYear;
     formatLocale?: string;

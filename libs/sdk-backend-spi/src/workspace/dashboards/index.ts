@@ -322,6 +322,11 @@ export interface IDashboardExportPdfOptions {
  */
 export interface IDashboardExportRawOptions {
     /**
+     * CSV delimiter to use for the exported file.
+     */
+    delimiter?: string;
+
+    /**
      * Override the default export result polling timeout (in milliseconds).
      *
      * @remarks

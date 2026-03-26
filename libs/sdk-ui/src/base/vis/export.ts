@@ -14,6 +14,7 @@ function buildExportRequestConfig(exportConfig: IExtendedExportConfig, exportTit
         showFilters,
         mergeHeaders,
         title: customTitle,
+        delimiter,
         pdfConfiguration,
         grandTotalsPosition,
         timeout,
@@ -25,6 +26,7 @@ function buildExportRequestConfig(exportConfig: IExtendedExportConfig, exportTit
         format,
         mergeHeaders,
         title,
+        delimiter,
         ...(grandTotalsPosition ? { grandTotalsPosition } : {}),
         timeout,
     };
