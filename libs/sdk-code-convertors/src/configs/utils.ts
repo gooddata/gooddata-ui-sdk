@@ -4,6 +4,7 @@ import { Pair, YAMLMap } from "yaml";
 
 import { entryWithSpace } from "../utils/yamlUtils.js";
 
+/** @public */
 export type VisualisationConfig<T> = {
     controls?: T;
 };
@@ -12,8 +13,10 @@ export type ConfigDefaults<T> = {
     [key in keyof T]: T[key];
 };
 
+/** @public */
 export type ValueType = "string" | "bool" | "number" | "bool_auto" | "array";
 
+/** @public */
 export function getValueOrDefault<T>(
     value: T,
     defaultValue: T,

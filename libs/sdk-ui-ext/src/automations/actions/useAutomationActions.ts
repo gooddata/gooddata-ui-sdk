@@ -2,6 +2,8 @@
 
 import { useCallback, useMemo, useState } from "react";
 
+import { type MessageDescriptor } from "react-intl";
+
 import { type IAutomationMetadataObject } from "@gooddata/sdk-model";
 import { useCancelablePromise } from "@gooddata/sdk-ui";
 import { useToastMessage } from "@gooddata/sdk-ui-kit";
@@ -40,6 +42,23 @@ export const useAutomationActions = (type: AutomationsType, scope: AutomationsSc
         setState(getAutomationActionsEmptyState());
     }, []);
 
+    const createActionSuccessHandler = useCallback(
+        (message: MessageDescriptor) => () => {
+            resetState();
+            addSuccess(message);
+        },
+        [addSuccess, resetState],
+    );
+
+    const createActionErrorHandler = useCallback(
+        (message: MessageDescriptor) => (error: unknown) => {
+            resetState();
+            addError(message);
+            console.error(error);
+        },
+        [addError, resetState],
+    );
+
     const { status: deleteStatus } = useCancelablePromise(
         {
             promise: state.deletedAutomation
@@ -47,15 +66,8 @@ export const useAutomationActions = (type: AutomationsType, scope: AutomationsSc
                       await promiseDeleteAutomation(state.deletedAutomation!);
                   }
                 : null,
-            onSuccess: () => {
-                resetState();
-                addSuccess(actionMessages.messageDeleteSuccess);
-            },
-            onError: (error) => {
-                resetState();
-                addError(actionMessages.messageDeleteError);
-                console.error(error);
-            },
+            onSuccess: createActionSuccessHandler(actionMessages.messageDeleteSuccess),
+            onError: createActionErrorHandler(actionMessages.messageDeleteError),
         },
         [state.deletedAutomation],
     );
@@ -68,15 +80,8 @@ export const useAutomationActions = (type: AutomationsType, scope: AutomationsSc
                           await promiseDeleteAutomations(state.bulkDeletedAutomations);
                       }
                     : null,
-            onSuccess: () => {
-                resetState();
-                addSuccess(actionMessages.messageBulkDeleteSuccess);
-            },
-            onError: (error) => {
-                resetState();
-                addError(actionMessages.messageBulkDeleteError);
-                console.error(error);
-            },
+            onSuccess: createActionSuccessHandler(actionMessages.messageBulkDeleteSuccess),
+            onError: createActionErrorHandler(actionMessages.messageBulkDeleteError),
         },
         [state.bulkDeletedAutomations],
     );
@@ -88,15 +93,8 @@ export const useAutomationActions = (type: AutomationsType, scope: AutomationsSc
                       await promiseUnsubscribeAutomation(state.unsubscribedAutomation!);
                   }
                 : null,
-            onSuccess: () => {
-                resetState();
-                addSuccess(actionMessages.messageUnsubscribeSuccess);
-            },
-            onError: (error) => {
-                resetState();
-                addError(actionMessages.messageUnsubscribeError);
-                console.error(error);
-            },
+            onSuccess: createActionSuccessHandler(actionMessages.messageUnsubscribeSuccess),
+            onError: createActionErrorHandler(actionMessages.messageUnsubscribeError),
         },
         [state.unsubscribedAutomation],
     );
@@ -109,15 +107,8 @@ export const useAutomationActions = (type: AutomationsType, scope: AutomationsSc
                           await promiseUnsubscribeAutomations(state.bulkUnsubscribedAutomations);
                       }
                     : null,
-            onSuccess: () => {
-                resetState();
-                addSuccess(actionMessages.messageBulkUnsubscribeSuccess);
-            },
-            onError: (error) => {
-                resetState();
-                addError(actionMessages.messageBulkUnsubscribeError);
-                console.error(error);
-            },
+            onSuccess: createActionSuccessHandler(actionMessages.messageBulkUnsubscribeSuccess),
+            onError: createActionErrorHandler(actionMessages.messageBulkUnsubscribeError),
         },
         [state.bulkUnsubscribedAutomations],
     );
@@ -129,15 +120,8 @@ export const useAutomationActions = (type: AutomationsType, scope: AutomationsSc
                       await promisePauseAutomation(state.pausedAutomation!);
                   }
                 : null,
-            onSuccess: () => {
-                resetState();
-                addSuccess(actionMessages.messagePauseSuccess);
-            },
-            onError: (error) => {
-                resetState();
-                addError(actionMessages.messagePauseError);
-                console.error(error);
-            },
+            onSuccess: createActionSuccessHandler(actionMessages.messagePauseSuccess),
+            onError: createActionErrorHandler(actionMessages.messagePauseError),
         },
         [state.pausedAutomation],
     );
@@ -150,15 +134,8 @@ export const useAutomationActions = (type: AutomationsType, scope: AutomationsSc
                           await promisePauseAutomations(state.bulkPausedAutomations);
                       }
                     : null,
-            onSuccess: () => {
-                resetState();
-                addSuccess(actionMessages.messageBulkPauseSuccess);
-            },
-            onError: (error) => {
-                resetState();
-                addError(actionMessages.messageBulkPauseError);
-                console.error(error);
-            },
+            onSuccess: createActionSuccessHandler(actionMessages.messageBulkPauseSuccess),
+            onError: createActionErrorHandler(actionMessages.messageBulkPauseError),
         },
         [state.bulkPausedAutomations],
     );
@@ -170,15 +147,8 @@ export const useAutomationActions = (type: AutomationsType, scope: AutomationsSc
                       await promiseResumeAutomation(state.resumedAutomation!);
                   }
                 : null,
-            onSuccess: () => {
-                resetState();
-                addSuccess(actionMessages.messageResumeSuccess);
-            },
-            onError: (error) => {
-                resetState();
-                addError(actionMessages.messageResumeError);
-                console.error(error);
-            },
+            onSuccess: createActionSuccessHandler(actionMessages.messageResumeSuccess),
+            onError: createActionErrorHandler(actionMessages.messageResumeError),
         },
         [state.resumedAutomation],
     );
@@ -191,15 +161,8 @@ export const useAutomationActions = (type: AutomationsType, scope: AutomationsSc
                           await promiseResumeAutomations(state.bulkResumedAutomations);
                       }
                     : null,
-            onSuccess: () => {
-                resetState();
-                addSuccess(actionMessages.messageBulkResumeSuccess);
-            },
-            onError: (error) => {
-                resetState();
-                addError(actionMessages.messageBulkResumeError);
-                console.error(error);
-            },
+            onSuccess: createActionSuccessHandler(actionMessages.messageBulkResumeSuccess),
+            onError: createActionErrorHandler(actionMessages.messageBulkResumeError),
         },
         [state.bulkResumedAutomations],
     );
@@ -211,15 +174,8 @@ export const useAutomationActions = (type: AutomationsType, scope: AutomationsSc
                       await promiseTriggerAutomation(state.triggeredAutomation!);
                   }
                 : null,
-            onSuccess: () => {
-                resetState();
-                addSuccess(actionMessages.messageTriggerSuccess);
-            },
-            onError: (error) => {
-                resetState();
-                addError(actionMessages.messageTriggerError);
-                console.error(error);
-            },
+            onSuccess: createActionSuccessHandler(actionMessages.messageTriggerSuccess),
+            onError: createActionErrorHandler(actionMessages.messageTriggerError),
         },
         [state.triggeredAutomation],
     );

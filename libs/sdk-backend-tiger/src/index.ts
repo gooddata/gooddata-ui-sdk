@@ -119,6 +119,11 @@ export type {
     INotificationChannel,
 } from "./backend/tigerSpecificFunctions.js";
 
+export {
+    createTigerSpecificFunctionsProxy,
+    type ITigerSpecificFunctionsProxyResult,
+} from "./backend/tigerSpecificFunctionsProxy.js";
+
 export type { TigerAfmType, TigerMetadataType, TigerObjectType } from "./types/index.js";
 export {
     type TigerCompatibleObjectType,

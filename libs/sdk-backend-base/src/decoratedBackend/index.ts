@@ -26,6 +26,7 @@ import { type DecoratorFactories } from "./types.js";
 class BackendWithDecoratedServices implements IAnalyticalBackend {
     public capabilities: IBackendCapabilities;
     public config: IAnalyticalBackendConfig;
+    public readonly internal_backendSpecificFunctions?: unknown;
     private decorated: IAnalyticalBackend;
     private readonly factories: DecoratorFactories;
 
@@ -34,6 +35,7 @@ class BackendWithDecoratedServices implements IAnalyticalBackend {
         this.factories = factories;
         this.capabilities = backend.capabilities;
         this.config = backend.config;
+        this.internal_backendSpecificFunctions = backend.internal_backendSpecificFunctions;
     }
 
     public authenticate(force?: boolean): Promise<IAuthenticatedPrincipal> {

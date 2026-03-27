@@ -303,8 +303,7 @@ export type { INotificationsPanelView } from "./notificationsPanel/types.js";
  * @deprecated no longer necessary to call this method. It's now no-op for React 18 and 19, kept for backward compatibility.
  */
 export function provideCreateRoot(_fn: any) {
-    // eslint-disable-next-line no-console
-    console.log("Info: no longer necessary to call provideCreateRoot");
+    // no-op, kept for backward compatibility
 }
 
 export {

@@ -12,3 +12,5 @@
 
 // oxlint-disable no-barrel-files/no-barrel-files
 export type * as v1 from "./v1/metadata.js";
+
+export { metadata_v1 } from "./v1/schema.js";

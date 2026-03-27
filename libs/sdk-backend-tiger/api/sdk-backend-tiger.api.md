@@ -89,6 +89,9 @@ export function createTigerAuthenticationUrl(backend: IAnalyticalBackend, authen
     externalProviderId?: string;
 }): string;
 
+// @internal @deprecated
+export function createTigerSpecificFunctionsProxy(initialImplementation?: TigerSpecificFunctions): ITigerSpecificFunctionsProxyResult;
+
 // @internal (undocumented)
 export type DataSourceDefinition = JsonApiDataSourceInDocument;
 
@@ -363,6 +366,12 @@ export const isTigerCompatibleType: (obj: unknown) => obj is TigerObjectType;
 
 // @alpha (undocumented)
 export const isTigerType: (obj: unknown) => obj is TigerObjectType;
+
+// @internal @deprecated
+export interface ITigerSpecificFunctionsProxyResult {
+    readonly functions: TigerSpecificFunctions;
+    updateImplementation(impl: TigerSpecificFunctions): void;
+}
 
 // @alpha
 export type JwtIsAboutToExpireHandler = (setJwt: SetJwtCallback) => void;

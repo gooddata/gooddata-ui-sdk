@@ -1810,6 +1810,6509 @@ type Metadata8 = DateDataset;
 // @public
 type Metadata9 = Metadata10 & Metadata11;
 
+// @public
+export const metadata_v1: {
+    $schema: string;
+    $id: string;
+    title: string;
+    description: string;
+    allOf: ({
+        if: {
+            properties: {
+                type: {
+                    const: string;
+                    enum?: undefined;
+                };
+            };
+            required: string[];
+            not?: undefined;
+        };
+        then: {
+            $ref: string;
+            $semantic?: undefined;
+        };
+    } | {
+        if: {
+            properties: {
+                type: {
+                    const?: undefined;
+                    enum: string[];
+                };
+            };
+            required: string[];
+            not?: undefined;
+        };
+        then: {
+            $ref: string;
+            $semantic?: undefined;
+        };
+    } | {
+        if: {
+            properties?: undefined;
+            required?: undefined;
+            not: {
+                properties: {
+                    type: {
+                        type: string;
+                    };
+                };
+                required: string[];
+            };
+        };
+        then: {
+            $ref?: undefined;
+            $semantic: {
+                type: string;
+                snippets: string[];
+            };
+        };
+    })[];
+    properties: {
+        type: {
+            type: string;
+            enum: string[];
+        };
+    };
+    required: string[];
+    $global: {
+        gaac: {
+            dataset: {
+                title: string;
+                type: string;
+                additionalProperties: boolean;
+                properties: {
+                    id: {
+                        $ref: string;
+                        description: string;
+                        $semantic: ({
+                            type: string;
+                            source: string;
+                            code: string;
+                        } | {
+                            code?: undefined;
+                            type: string;
+                            source: string;
+                        })[];
+                    };
+                    type: {
+                        type: string;
+                        enum: string[];
+                    };
+                    title: {
+                        $ref: string;
+                        description: string;
+                    };
+                    description: {
+                        $ref: string;
+                        description: string;
+                    };
+                    tags: {
+                        $ref: string;
+                        description: string;
+                    };
+                    table_path: {
+                        type: string;
+                        description: string;
+                        pattern: string;
+                        $semantic: {
+                            type: string;
+                            source: string;
+                            code: string;
+                        };
+                    };
+                    sql: {
+                        type: string;
+                        description: string;
+                        $semantic: {
+                            type: string;
+                        };
+                    };
+                    primary_key: {
+                        oneOf: ({
+                            title: string;
+                            type: string;
+                            $ref: string;
+                            description: string;
+                            $semantic: {
+                                type: string;
+                                source: string;
+                                code: string;
+                            };
+                            items?: undefined;
+                            uniqueItems?: undefined;
+                        } | {
+                            $ref?: undefined;
+                            $semantic?: undefined;
+                            title: string;
+                            type: string;
+                            items: {
+                                $ref: string;
+                                $semantic: {
+                                    type: string;
+                                    source: string;
+                                    code: string;
+                                };
+                            };
+                            uniqueItems: boolean;
+                            description: string;
+                        })[];
+                    };
+                    fields: {
+                        $ref: string;
+                        description: string;
+                    };
+                    references: {
+                        type: string;
+                        items: {
+                            $ref: string;
+                        };
+                        description: string;
+                    };
+                    workspace_data_filters: {
+                        type: string;
+                        items: {
+                            $ref: string;
+                        };
+                        description: string;
+                    };
+                    data_source: {
+                        type: string;
+                        $semantic: {
+                            type: string;
+                            source: string;
+                            code: string;
+                        };
+                        description: string;
+                    };
+                    precedence: {
+                        type: string;
+                        description: string;
+                    };
+                };
+                $semantic: ({
+                    type: string;
+                    snippets?: undefined;
+                } | {
+                    type: string;
+                    snippets: string[];
+                })[];
+                required: string[];
+                oneOf: {
+                    title: string;
+                    required: string[];
+                }[];
+            };
+            dateDataset: {
+                title: string;
+                type: string;
+                additionalProperties: boolean;
+                properties: {
+                    id: {
+                        $ref: string;
+                        description: string;
+                        $semantic: ({
+                            type: string;
+                            source: string;
+                            code: string;
+                        } | {
+                            code?: undefined;
+                            type: string;
+                            source: string;
+                        })[];
+                    };
+                    type: {
+                        type: string;
+                        enum: string[];
+                    };
+                    title: {
+                        $ref: string;
+                        description: string;
+                    };
+                    description: {
+                        $ref: string;
+                        description: string;
+                    };
+                    tags: {
+                        $ref: string;
+                        description: string;
+                    };
+                    title_base: {
+                        type: string;
+                        description: string;
+                        maxLength: number;
+                    };
+                    title_pattern: {
+                        type: string;
+                        description: string;
+                        maxLength: number;
+                    };
+                    granularities: {
+                        type: string;
+                        uniqueItems: boolean;
+                        items: {
+                            type: string;
+                            enum: string[];
+                            $semantic: {
+                                type: string;
+                                sources: string[];
+                                mode: string;
+                            };
+                        };
+                        $semantic: {
+                            type: string;
+                            required: string[];
+                        };
+                    };
+                };
+                $semantic: {
+                    type: string;
+                    snippets: string[];
+                };
+                required: string[];
+            };
+            metric: {
+                title: string;
+                type: string;
+                additionalProperties: boolean;
+                properties: {
+                    id: {
+                        $ref: string;
+                        description: string;
+                        $semantic: ({
+                            type: string;
+                            source: string;
+                            code: string;
+                        } | {
+                            code?: undefined;
+                            type: string;
+                            source: string;
+                        })[];
+                    };
+                    type: {
+                        type: string;
+                        enum: string[];
+                    };
+                    title: {
+                        $ref: string;
+                        description: string;
+                    };
+                    description: {
+                        $ref: string;
+                        description: string;
+                    };
+                    tags: {
+                        $ref: string;
+                        description: string;
+                    };
+                    maql: {
+                        type: string;
+                        description: string;
+                        $semantic: {
+                            type: string;
+                        };
+                    };
+                    format: {
+                        type: string;
+                        description: string;
+                    };
+                    show_in_ai_results: {
+                        type: string;
+                        description: string;
+                    };
+                    is_hidden: {
+                        type: string;
+                        description: string;
+                        deprecated: boolean;
+                    };
+                };
+                $semantic: {
+                    type: string;
+                    snippets: string[];
+                };
+                required: string[];
+            };
+            dashboard: {
+                title: string;
+                type: string;
+                additionalProperties: boolean;
+                properties: {
+                    id: {
+                        $ref: string;
+                        description: string;
+                        $semantic: ({
+                            type: string;
+                            source: string;
+                            code: string;
+                        } | {
+                            code?: undefined;
+                            type: string;
+                            source: string;
+                        })[];
+                    };
+                    type: {
+                        type: string;
+                        enum: string[];
+                    };
+                    title: {
+                        $ref: string;
+                        description: string;
+                    };
+                    description: {
+                        $ref: string;
+                        description: string;
+                    };
+                    tags: {
+                        $ref: string;
+                        description: string;
+                    };
+                    cross_filtering: {
+                        type: string;
+                        description: string;
+                    };
+                    user_filters_reset: {
+                        type: string;
+                        description: string;
+                    };
+                    user_filters_save: {
+                        type: string;
+                        description: string;
+                    };
+                    filter_views: {
+                        type: string;
+                        description: string;
+                    };
+                    enable_section_headers: {
+                        type: string;
+                        description: string;
+                    };
+                    sections: {
+                        type: string;
+                        description: string;
+                        items: {
+                            $ref: string;
+                        };
+                    };
+                    filters: {
+                        $ref: string;
+                        $semantic: {
+                            type: string;
+                        }[];
+                    };
+                    plugins: {
+                        type: string;
+                        description: string;
+                        items: {
+                            oneOf: ({
+                                $ref?: undefined;
+                                $semantic?: undefined;
+                                type: string;
+                                properties: {
+                                    id: {
+                                        $ref: string;
+                                        description: string;
+                                        $semantic: {
+                                            type: string;
+                                            source: string;
+                                        };
+                                    };
+                                    parameters: {
+                                        description: string;
+                                    };
+                                };
+                                required: string[];
+                                additionalProperties: boolean;
+                                description?: undefined;
+                            } | {
+                                properties?: undefined;
+                                required?: undefined;
+                                type?: undefined;
+                                additionalProperties?: undefined;
+                                $ref: string;
+                                description: string;
+                                $semantic: {
+                                    type: string;
+                                    source: string;
+                                };
+                            })[];
+                        };
+                    };
+                    tabs: {
+                        type: string;
+                        description: string;
+                        items: {
+                            $ref: string;
+                        };
+                        $semantic: {
+                            type: string;
+                        };
+                    };
+                    permissions: {
+                        type: string;
+                        description: string;
+                        additionalProperties: boolean;
+                        properties: {
+                            VIEW: {
+                                $ref: string;
+                            };
+                            EDIT: {
+                                $ref: string;
+                            };
+                            SHARE: {
+                                $ref: string;
+                            };
+                        };
+                    };
+                };
+                required: string[];
+            };
+            plugin: {
+                title: string;
+                type: string;
+                additionalProperties: boolean;
+                properties: {
+                    id: {
+                        $ref: string;
+                        description: string;
+                        $semantic: ({
+                            type: string;
+                            source: string;
+                            code: string;
+                        } | {
+                            code?: undefined;
+                            type: string;
+                            source: string;
+                        })[];
+                    };
+                    type: {
+                        type: string;
+                        enum: string[];
+                    };
+                    title: {
+                        $ref: string;
+                        description: string;
+                    };
+                    description: {
+                        $ref: string;
+                        description: string;
+                    };
+                    tags: {
+                        $ref: string;
+                        description: string;
+                    };
+                    url: {
+                        type: string;
+                        description: string;
+                        pattern: string;
+                    };
+                };
+                required: string[];
+            };
+            attribute_hierarchy: {
+                title: string;
+                type: string;
+                additionalProperties: boolean;
+                properties: {
+                    id: {
+                        $ref: string;
+                        description: string;
+                        $semantic: ({
+                            type: string;
+                            source: string;
+                            code: string;
+                        } | {
+                            code?: undefined;
+                            type: string;
+                            source: string;
+                        })[];
+                    };
+                    type: {
+                        type: string;
+                        enum: string[];
+                    };
+                    title: {
+                        $ref: string;
+                        description: string;
+                    };
+                    description: {
+                        $ref: string;
+                        description: string;
+                    };
+                    tags: {
+                        $ref: string;
+                        description: string;
+                    };
+                    attributes: {
+                        type: string;
+                        description: string;
+                        items: {
+                            $ref: string;
+                        };
+                        minItems: number;
+                    };
+                };
+                required: string[];
+            };
+            visualisation: {
+                $schema: string;
+                title: string;
+                description: string;
+                properties: {
+                    type: {
+                        description: string;
+                        type: string;
+                        enum: string[];
+                    };
+                };
+                allOf: ({
+                    if: {
+                        properties: {
+                            type: {
+                                type: string;
+                                enum: string[];
+                            };
+                        };
+                        required: string[];
+                    };
+                    then: {
+                        title: string;
+                        additionalProperties: boolean;
+                        properties: {
+                            type: {
+                                description: string;
+                                type: string;
+                                enum: string[];
+                            };
+                            id: {
+                                $ref: string;
+                                description: string;
+                                $semantic: ({
+                                    type: string;
+                                    source: string;
+                                    code: string;
+                                } | {
+                                    code?: undefined;
+                                    type: string;
+                                    source: string;
+                                })[];
+                            };
+                            title: {
+                                $ref: string;
+                                description: string;
+                            };
+                            description: {
+                                $ref: string;
+                                description: string;
+                            };
+                            tags: {
+                                $ref: string;
+                                description: string;
+                            };
+                            show_in_ai_results: {
+                                type: string;
+                                description: string;
+                            };
+                            is_hidden: {
+                                type: string;
+                                description: string;
+                                deprecated: boolean;
+                            };
+                            query: {
+                                $ref: string;
+                                description: string;
+                            };
+                            config: {
+                                $ref: string;
+                                description: string;
+                            };
+                            metrics: {
+                                type: string;
+                                description: string;
+                                items: {
+                                    $ref: string;
+                                    oneOf?: undefined;
+                                };
+                            };
+                            view_by: {
+                                type: string;
+                                description: string;
+                                items: {
+                                    $ref: string;
+                                    oneOf?: undefined;
+                                };
+                            };
+                            segment_by: {
+                                type: string;
+                                description: string;
+                                items: {
+                                    $ref: string;
+                                };
+                            };
+                            rows: {
+                                type: string;
+                                description: string;
+                                items: {
+                                    $ref: string;
+                                };
+                            };
+                            columns: {
+                                type: string;
+                                description: string;
+                                items: {
+                                    $ref: string;
+                                };
+                            };
+                            stack_by?: undefined;
+                            trend_by?: undefined;
+                            attributes?: undefined;
+                            size_by?: undefined;
+                            from?: undefined;
+                            to?: undefined;
+                            layers?: undefined;
+                        };
+                        required: string[];
+                    };
+                } | {
+                    if: {
+                        properties: {
+                            type: {
+                                type: string;
+                                enum: string[];
+                            };
+                        };
+                        required: string[];
+                    };
+                    then: {
+                        title: string;
+                        additionalProperties: boolean;
+                        properties: {
+                            rows?: undefined;
+                            columns?: undefined;
+                            type: {
+                                description: string;
+                                type: string;
+                                enum: string[];
+                            };
+                            id: {
+                                $ref: string;
+                                description: string;
+                                $semantic: ({
+                                    type: string;
+                                    source: string;
+                                    code: string;
+                                } | {
+                                    code?: undefined;
+                                    type: string;
+                                    source: string;
+                                })[];
+                            };
+                            title: {
+                                $ref: string;
+                                description: string;
+                            };
+                            description: {
+                                $ref: string;
+                                description: string;
+                            };
+                            tags: {
+                                $ref: string;
+                                description: string;
+                            };
+                            show_in_ai_results: {
+                                type: string;
+                                description: string;
+                            };
+                            is_hidden: {
+                                type: string;
+                                description: string;
+                                deprecated: boolean;
+                            };
+                            query: {
+                                $ref: string;
+                                description: string;
+                            };
+                            config: {
+                                $ref: string;
+                                description: string;
+                            };
+                            metrics: {
+                                type: string;
+                                description: string;
+                                items: {
+                                    $ref: string;
+                                    oneOf?: undefined;
+                                };
+                            };
+                            view_by: {
+                                type: string;
+                                description: string;
+                                items: {
+                                    $ref: string;
+                                    oneOf?: undefined;
+                                };
+                            };
+                            segment_by: {
+                                type: string;
+                                description: string;
+                                items: {
+                                    $ref: string;
+                                };
+                            };
+                            stack_by: {
+                                type: string;
+                                description: string;
+                                items: {
+                                    $ref: string;
+                                };
+                            };
+                            trend_by?: undefined;
+                            attributes?: undefined;
+                            size_by?: undefined;
+                            from?: undefined;
+                            to?: undefined;
+                            layers?: undefined;
+                        };
+                        required: string[];
+                    };
+                } | {
+                    if: {
+                        properties: {
+                            type: {
+                                type: string;
+                                enum: string[];
+                            };
+                        };
+                        required: string[];
+                    };
+                    then: {
+                        title: string;
+                        additionalProperties: boolean;
+                        properties: {
+                            rows?: undefined;
+                            columns?: undefined;
+                            stack_by?: undefined;
+                            type: {
+                                description: string;
+                                type: string;
+                                enum: string[];
+                            };
+                            id: {
+                                $ref: string;
+                                description: string;
+                                $semantic: ({
+                                    type: string;
+                                    source: string;
+                                    code: string;
+                                } | {
+                                    code?: undefined;
+                                    type: string;
+                                    source: string;
+                                })[];
+                            };
+                            title: {
+                                $ref: string;
+                                description: string;
+                            };
+                            description: {
+                                $ref: string;
+                                description: string;
+                            };
+                            tags: {
+                                $ref: string;
+                                description: string;
+                            };
+                            show_in_ai_results: {
+                                type: string;
+                                description: string;
+                            };
+                            is_hidden: {
+                                type: string;
+                                description: string;
+                                deprecated: boolean;
+                            };
+                            query: {
+                                $ref: string;
+                                description: string;
+                            };
+                            config: {
+                                $ref: string;
+                                description: string;
+                            };
+                            metrics: {
+                                type: string;
+                                description: string;
+                                items: {
+                                    $ref: string;
+                                    oneOf?: undefined;
+                                };
+                            };
+                            view_by: {
+                                type: string;
+                                description: string;
+                                items: {
+                                    $ref: string;
+                                    oneOf?: undefined;
+                                };
+                            };
+                            trend_by: {
+                                type: string;
+                                description: string;
+                                items: {
+                                    $ref: string;
+                                };
+                            };
+                            segment_by: {
+                                type: string;
+                                description: string;
+                                items: {
+                                    $ref: string;
+                                };
+                            };
+                            attributes?: undefined;
+                            size_by?: undefined;
+                            from?: undefined;
+                            to?: undefined;
+                            layers?: undefined;
+                        };
+                        required: string[];
+                    };
+                } | {
+                    if: {
+                        properties: {
+                            type: {
+                                type: string;
+                                enum: string[];
+                            };
+                        };
+                        required: string[];
+                    };
+                    then: {
+                        title: string;
+                        additionalProperties: boolean;
+                        properties: {
+                            rows?: undefined;
+                            columns?: undefined;
+                            stack_by?: undefined;
+                            trend_by?: undefined;
+                            type: {
+                                description: string;
+                                type: string;
+                                enum: string[];
+                            };
+                            id: {
+                                $ref: string;
+                                description: string;
+                                $semantic: ({
+                                    type: string;
+                                    source: string;
+                                    code: string;
+                                } | {
+                                    code?: undefined;
+                                    type: string;
+                                    source: string;
+                                })[];
+                            };
+                            title: {
+                                $ref: string;
+                                description: string;
+                            };
+                            description: {
+                                $ref: string;
+                                description: string;
+                            };
+                            tags: {
+                                $ref: string;
+                                description: string;
+                            };
+                            show_in_ai_results: {
+                                type: string;
+                                description: string;
+                            };
+                            is_hidden: {
+                                type: string;
+                                description: string;
+                                deprecated: boolean;
+                            };
+                            query: {
+                                $ref: string;
+                                description: string;
+                            };
+                            config: {
+                                $ref: string;
+                                description: string;
+                            };
+                            metrics: {
+                                type: string;
+                                description: string;
+                                items: {
+                                    $ref?: undefined;
+                                    oneOf: {
+                                        $ref: string;
+                                    }[];
+                                };
+                            };
+                            view_by: {
+                                type: string;
+                                description: string;
+                                items: {
+                                    $ref: string;
+                                    oneOf?: undefined;
+                                };
+                            };
+                            attributes: {
+                                type: string;
+                                description: string;
+                                items: {
+                                    $ref: string;
+                                };
+                            };
+                            segment_by: {
+                                type: string;
+                                description: string;
+                                items: {
+                                    $ref: string;
+                                };
+                            };
+                            size_by?: undefined;
+                            from?: undefined;
+                            to?: undefined;
+                            layers?: undefined;
+                        };
+                        required: string[];
+                    };
+                } | {
+                    if: {
+                        properties: {
+                            type: {
+                                type: string;
+                                enum: string[];
+                            };
+                        };
+                        required: string[];
+                    };
+                    then: {
+                        title: string;
+                        additionalProperties: boolean;
+                        properties: {
+                            rows?: undefined;
+                            columns?: undefined;
+                            stack_by?: undefined;
+                            trend_by?: undefined;
+                            attributes?: undefined;
+                            type: {
+                                description: string;
+                                type: string;
+                                enum: string[];
+                            };
+                            id: {
+                                $ref: string;
+                                description: string;
+                                $semantic: ({
+                                    type: string;
+                                    source: string;
+                                    code: string;
+                                } | {
+                                    code?: undefined;
+                                    type: string;
+                                    source: string;
+                                })[];
+                            };
+                            title: {
+                                $ref: string;
+                                description: string;
+                            };
+                            description: {
+                                $ref: string;
+                                description: string;
+                            };
+                            tags: {
+                                $ref: string;
+                                description: string;
+                            };
+                            show_in_ai_results: {
+                                type: string;
+                                description: string;
+                            };
+                            is_hidden: {
+                                type: string;
+                                description: string;
+                                deprecated: boolean;
+                            };
+                            query: {
+                                $ref: string;
+                                description: string;
+                            };
+                            config: {
+                                $ref: string;
+                                description: string;
+                            };
+                            metrics: {
+                                type: string;
+                                description: string;
+                                items: {
+                                    $ref?: undefined;
+                                    oneOf: {
+                                        $ref: string;
+                                    }[];
+                                };
+                            };
+                            view_by: {
+                                type: string;
+                                description: string;
+                                items: {
+                                    $ref: string;
+                                    oneOf?: undefined;
+                                };
+                            };
+                            segment_by: {
+                                type: string;
+                                description: string;
+                                items: {
+                                    $ref: string;
+                                };
+                            };
+                            size_by: {
+                                type: string;
+                                description: string;
+                                items: {
+                                    $ref: string;
+                                };
+                            };
+                            from?: undefined;
+                            to?: undefined;
+                            layers?: undefined;
+                        };
+                        required: string[];
+                    };
+                } | {
+                    if: {
+                        properties: {
+                            type: {
+                                type: string;
+                                enum: string[];
+                            };
+                        };
+                        required: string[];
+                    };
+                    then: {
+                        title: string;
+                        additionalProperties: boolean;
+                        properties: {
+                            rows?: undefined;
+                            columns?: undefined;
+                            stack_by?: undefined;
+                            trend_by?: undefined;
+                            attributes?: undefined;
+                            size_by?: undefined;
+                            type: {
+                                description: string;
+                                type: string;
+                                enum: string[];
+                            };
+                            id: {
+                                $ref: string;
+                                description: string;
+                                $semantic: ({
+                                    type: string;
+                                    source: string;
+                                    code: string;
+                                } | {
+                                    code?: undefined;
+                                    type: string;
+                                    source: string;
+                                })[];
+                            };
+                            title: {
+                                $ref: string;
+                                description: string;
+                            };
+                            description: {
+                                $ref: string;
+                                description: string;
+                            };
+                            tags: {
+                                $ref: string;
+                                description: string;
+                            };
+                            show_in_ai_results: {
+                                type: string;
+                                description: string;
+                            };
+                            is_hidden: {
+                                type: string;
+                                description: string;
+                                deprecated: boolean;
+                            };
+                            query: {
+                                $ref: string;
+                                description: string;
+                            };
+                            config: {
+                                $ref: string;
+                                description: string;
+                            };
+                            metrics: {
+                                type: string;
+                                description: string;
+                                items: {
+                                    $ref: string;
+                                    oneOf?: undefined;
+                                };
+                            };
+                            view_by: {
+                                type: string;
+                                description: string;
+                                items: {
+                                    $ref: string;
+                                    oneOf?: undefined;
+                                };
+                            };
+                            segment_by: {
+                                items?: undefined;
+                                type: string;
+                                description: string;
+                            };
+                            from?: undefined;
+                            to?: undefined;
+                            layers?: undefined;
+                        };
+                        required: string[];
+                    };
+                } | {
+                    if: {
+                        properties: {
+                            type: {
+                                type: string;
+                                enum: string[];
+                            };
+                        };
+                        required: string[];
+                    };
+                    then: {
+                        title: string;
+                        additionalProperties: boolean;
+                        properties: {
+                            rows?: undefined;
+                            columns?: undefined;
+                            stack_by?: undefined;
+                            trend_by?: undefined;
+                            attributes?: undefined;
+                            size_by?: undefined;
+                            type: {
+                                description: string;
+                                type: string;
+                                enum: string[];
+                            };
+                            id: {
+                                $ref: string;
+                                description: string;
+                                $semantic: ({
+                                    type: string;
+                                    source: string;
+                                    code: string;
+                                } | {
+                                    code?: undefined;
+                                    type: string;
+                                    source: string;
+                                })[];
+                            };
+                            title: {
+                                $ref: string;
+                                description: string;
+                            };
+                            description: {
+                                $ref: string;
+                                description: string;
+                            };
+                            tags: {
+                                $ref: string;
+                                description: string;
+                            };
+                            show_in_ai_results: {
+                                type: string;
+                                description: string;
+                            };
+                            is_hidden: {
+                                type: string;
+                                description: string;
+                                deprecated: boolean;
+                            };
+                            query: {
+                                $ref: string;
+                                description: string;
+                            };
+                            config: {
+                                $ref: string;
+                                description: string;
+                            };
+                            metrics: {
+                                type: string;
+                                description: string;
+                                items: {
+                                    $ref: string;
+                                    oneOf?: undefined;
+                                };
+                            };
+                            view_by: {
+                                type: string;
+                                description: string;
+                                items: {
+                                    $ref: string;
+                                    oneOf?: undefined;
+                                };
+                            };
+                            segment_by: {
+                                type: string;
+                                description: string;
+                                items: {
+                                    $ref: string;
+                                };
+                            };
+                            from?: undefined;
+                            to?: undefined;
+                            layers?: undefined;
+                        };
+                        required: string[];
+                    };
+                } | {
+                    if: {
+                        properties: {
+                            type: {
+                                type: string;
+                                enum: string[];
+                            };
+                        };
+                        required: string[];
+                    };
+                    then: {
+                        title: string;
+                        additionalProperties: boolean;
+                        properties: {
+                            rows?: undefined;
+                            columns?: undefined;
+                            stack_by?: undefined;
+                            trend_by?: undefined;
+                            attributes?: undefined;
+                            size_by?: undefined;
+                            type: {
+                                description: string;
+                                type: string;
+                                enum: string[];
+                            };
+                            id: {
+                                $ref: string;
+                                description: string;
+                                $semantic: ({
+                                    type: string;
+                                    source: string;
+                                    code: string;
+                                } | {
+                                    code?: undefined;
+                                    type: string;
+                                    source: string;
+                                })[];
+                            };
+                            title: {
+                                $ref: string;
+                                description: string;
+                            };
+                            description: {
+                                $ref: string;
+                                description: string;
+                            };
+                            tags: {
+                                $ref: string;
+                                description: string;
+                            };
+                            show_in_ai_results: {
+                                type: string;
+                                description: string;
+                            };
+                            is_hidden: {
+                                type: string;
+                                description: string;
+                                deprecated: boolean;
+                            };
+                            query: {
+                                $ref: string;
+                                description: string;
+                            };
+                            config: {
+                                $ref: string;
+                                description: string;
+                            };
+                            metrics: {
+                                type: string;
+                                description: string;
+                                items: {
+                                    $ref?: undefined;
+                                    oneOf: {
+                                        $ref: string;
+                                    }[];
+                                };
+                            };
+                            view_by: {
+                                type: string;
+                                description: string;
+                                items: {
+                                    $ref: string;
+                                    oneOf?: undefined;
+                                };
+                            };
+                            segment_by: {
+                                items?: undefined;
+                                type: string;
+                                description: string;
+                            };
+                            from?: undefined;
+                            to?: undefined;
+                            layers?: undefined;
+                        };
+                        required: string[];
+                    };
+                } | {
+                    if: {
+                        properties: {
+                            type: {
+                                type: string;
+                                enum: string[];
+                            };
+                        };
+                        required: string[];
+                    };
+                    then: {
+                        title: string;
+                        additionalProperties: boolean;
+                        properties: {
+                            rows?: undefined;
+                            columns?: undefined;
+                            stack_by?: undefined;
+                            trend_by?: undefined;
+                            attributes?: undefined;
+                            size_by?: undefined;
+                            type: {
+                                description: string;
+                                type: string;
+                                enum: string[];
+                            };
+                            id: {
+                                $ref: string;
+                                description: string;
+                                $semantic: ({
+                                    type: string;
+                                    source: string;
+                                    code: string;
+                                } | {
+                                    code?: undefined;
+                                    type: string;
+                                    source: string;
+                                })[];
+                            };
+                            title: {
+                                $ref: string;
+                                description: string;
+                            };
+                            description: {
+                                $ref: string;
+                                description: string;
+                            };
+                            tags: {
+                                $ref: string;
+                                description: string;
+                            };
+                            show_in_ai_results: {
+                                type: string;
+                                description: string;
+                            };
+                            is_hidden: {
+                                type: string;
+                                description: string;
+                                deprecated: boolean;
+                            };
+                            query: {
+                                $ref: string;
+                                description: string;
+                            };
+                            config: {
+                                $ref: string;
+                                description: string;
+                            };
+                            metrics: {
+                                type: string;
+                                description: string;
+                                items: {
+                                    $ref: string;
+                                    oneOf?: undefined;
+                                };
+                            };
+                            view_by: {
+                                type: string;
+                                description: string;
+                                items: {
+                                    $ref?: undefined;
+                                    oneOf: {
+                                        $ref: string;
+                                    }[];
+                                };
+                            };
+                            from: {
+                                description: string;
+                                $ref: string;
+                            };
+                            to: {
+                                description: string;
+                                $ref: string;
+                            };
+                            segment_by: {
+                                items?: undefined;
+                                type: string;
+                                description: string;
+                            };
+                            layers?: undefined;
+                        };
+                        required: string[];
+                    };
+                } | {
+                    if: {
+                        properties: {
+                            type: {
+                                type: string;
+                                enum: string[];
+                            };
+                        };
+                        required: string[];
+                    };
+                    then: {
+                        title: string;
+                        additionalProperties: boolean;
+                        properties: {
+                            rows?: undefined;
+                            columns?: undefined;
+                            stack_by?: undefined;
+                            trend_by?: undefined;
+                            attributes?: undefined;
+                            size_by?: undefined;
+                            from?: undefined;
+                            to?: undefined;
+                            type: {
+                                description: string;
+                                type: string;
+                                enum: string[];
+                            };
+                            id: {
+                                $ref: string;
+                                description: string;
+                                $semantic: ({
+                                    type: string;
+                                    source: string;
+                                    code: string;
+                                } | {
+                                    code?: undefined;
+                                    type: string;
+                                    source: string;
+                                })[];
+                            };
+                            title: {
+                                $ref: string;
+                                description: string;
+                            };
+                            description: {
+                                $ref: string;
+                                description: string;
+                            };
+                            tags: {
+                                $ref: string;
+                                description: string;
+                            };
+                            show_in_ai_results: {
+                                type: string;
+                                description: string;
+                            };
+                            is_hidden: {
+                                type: string;
+                                description: string;
+                                deprecated: boolean;
+                            };
+                            query: {
+                                $ref: string;
+                                description: string;
+                            };
+                            config: {
+                                $ref: string;
+                                description: string;
+                            };
+                            metrics: {
+                                type: string;
+                                description: string;
+                                items: {
+                                    $ref: string;
+                                    oneOf?: undefined;
+                                };
+                            };
+                            view_by: {
+                                items?: undefined;
+                                type: string;
+                                description: string;
+                            };
+                            segment_by: {
+                                items?: undefined;
+                                type: string;
+                                description: string;
+                            };
+                            layers?: undefined;
+                        };
+                        required: string[];
+                    };
+                } | {
+                    if: {
+                        properties: {
+                            type: {
+                                type: string;
+                                enum: string[];
+                            };
+                        };
+                        required: string[];
+                    };
+                    then: {
+                        title: string;
+                        additionalProperties: boolean;
+                        properties: {
+                            rows?: undefined;
+                            columns?: undefined;
+                            stack_by?: undefined;
+                            trend_by?: undefined;
+                            attributes?: undefined;
+                            size_by?: undefined;
+                            from?: undefined;
+                            to?: undefined;
+                            type: {
+                                description: string;
+                                type: string;
+                                enum: string[];
+                            };
+                            id: {
+                                $ref: string;
+                                description: string;
+                                $semantic: ({
+                                    type: string;
+                                    source: string;
+                                    code: string;
+                                } | {
+                                    code?: undefined;
+                                    type: string;
+                                    source: string;
+                                })[];
+                            };
+                            title: {
+                                $ref: string;
+                                description: string;
+                            };
+                            description: {
+                                $ref: string;
+                                description: string;
+                            };
+                            tags: {
+                                $ref: string;
+                                description: string;
+                            };
+                            show_in_ai_results: {
+                                type: string;
+                                description: string;
+                            };
+                            is_hidden: {
+                                type: string;
+                                description: string;
+                                deprecated: boolean;
+                            };
+                            query: {
+                                $ref: string;
+                                description: string;
+                            };
+                            config: {
+                                $ref: string;
+                                description: string;
+                            };
+                            metrics: {
+                                type: string;
+                                description: string;
+                                items: {
+                                    $ref?: undefined;
+                                    oneOf: {
+                                        $ref: string;
+                                    }[];
+                                };
+                            };
+                            view_by: {
+                                type: string;
+                                description: string;
+                                items: {
+                                    oneOf?: undefined;
+                                    $ref: string;
+                                };
+                            };
+                            segment_by: {
+                                type: string;
+                                description: string;
+                                items: {
+                                    $ref: string;
+                                };
+                            };
+                            layers: {
+                                type: string;
+                                description: string;
+                                items: {
+                                    $ref: string;
+                                };
+                            };
+                        };
+                        required: string[];
+                    };
+                } | {
+                    if: {
+                        properties: {
+                            type: {
+                                type: string;
+                                enum: string[];
+                            };
+                        };
+                        required: string[];
+                    };
+                    then: {
+                        title: string;
+                        additionalProperties: boolean;
+                        properties: {
+                            rows?: undefined;
+                            columns?: undefined;
+                            stack_by?: undefined;
+                            trend_by?: undefined;
+                            attributes?: undefined;
+                            size_by?: undefined;
+                            from?: undefined;
+                            to?: undefined;
+                            type: {
+                                description: string;
+                                type: string;
+                                enum: string[];
+                            };
+                            id: {
+                                $ref: string;
+                                description: string;
+                                $semantic: ({
+                                    type: string;
+                                    source: string;
+                                    code: string;
+                                } | {
+                                    code?: undefined;
+                                    type: string;
+                                    source: string;
+                                })[];
+                            };
+                            title: {
+                                $ref: string;
+                                description: string;
+                            };
+                            description: {
+                                $ref: string;
+                                description: string;
+                            };
+                            tags: {
+                                $ref: string;
+                                description: string;
+                            };
+                            show_in_ai_results: {
+                                type: string;
+                                description: string;
+                            };
+                            is_hidden: {
+                                type: string;
+                                description: string;
+                                deprecated: boolean;
+                            };
+                            query: {
+                                $ref: string;
+                                description: string;
+                            };
+                            config: {
+                                $ref: string;
+                                description: string;
+                            };
+                            metrics: {
+                                type: string;
+                                description: string;
+                                items: {
+                                    oneOf?: undefined;
+                                    $ref: string;
+                                };
+                            };
+                            view_by: {
+                                type: string;
+                                description: string;
+                                items: {
+                                    oneOf?: undefined;
+                                    $ref: string;
+                                };
+                            };
+                            segment_by: {
+                                type: string;
+                                description: string;
+                                items: {
+                                    $ref: string;
+                                };
+                            };
+                            layers: {
+                                type: string;
+                                description: string;
+                                items: {
+                                    $ref: string;
+                                };
+                            };
+                        };
+                        required: string[];
+                    };
+                })[];
+                required: string[];
+                $defs: {};
+            };
+            identifier: {
+                title: string;
+                type: string;
+                pattern: string;
+            };
+            title: {
+                type: string;
+                maxLength: number;
+            };
+            description: {
+                type: string;
+                maxLength: number;
+            };
+            tags: {
+                type: string;
+                uniqueItems: boolean;
+                items: {
+                    type: string;
+                };
+            };
+            attributeIdentifier: {
+                title: string;
+                description: string;
+                type: string;
+                pattern: string;
+                $semantic: {
+                    type: string;
+                    source: string;
+                    typePrefix: boolean;
+                };
+            };
+            dashboardFilters: {
+                title: string;
+                type: string;
+                additionalProperties: boolean;
+                patternProperties: {
+                    "^(?!\\.)[.A-Za-z0-9_-]{1,255}$": {
+                        properties: {
+                            type: {
+                                type: string;
+                                enum: string[];
+                            };
+                        };
+                        required: string[];
+                        allOf: ({
+                            if: {
+                                properties?: undefined;
+                                required?: undefined;
+                                allOf: ({
+                                    not?: undefined;
+                                    properties: {
+                                        type: {
+                                            const: string;
+                                        };
+                                    };
+                                } | {
+                                    properties?: undefined;
+                                    not: {
+                                        properties: {
+                                            from: {
+                                                type: string;
+                                            };
+                                        };
+                                        required: string[];
+                                    };
+                                })[];
+                            };
+                            then: {
+                                $ref: string;
+                            };
+                        } | {
+                            if: {
+                                allOf?: undefined;
+                                properties: {
+                                    type: {
+                                        const: string;
+                                    };
+                                    from: {
+                                        type: string;
+                                    };
+                                };
+                                required: string[];
+                            };
+                            then: {
+                                $ref: string;
+                            };
+                        } | {
+                            if: {
+                                required?: undefined;
+                                allOf?: undefined;
+                                properties: {
+                                    from?: undefined;
+                                    type: {
+                                        const: string;
+                                    };
+                                };
+                            };
+                            then: {
+                                $ref: string;
+                            };
+                        })[];
+                    };
+                };
+            };
+            permission: {
+                title: string;
+                description: string;
+                type: string;
+                properties: {
+                    all: {
+                        type: string;
+                    };
+                    users: {
+                        type: string;
+                        items: {
+                            type: string;
+                        };
+                    };
+                    user_groups: {
+                        type: string;
+                        items: {
+                            type: string;
+                        };
+                    };
+                };
+            };
+            labelIdentifier: {
+                title: string;
+                description: string;
+                type: string;
+                pattern: string;
+                $semantic: {
+                    type: string;
+                    source: string;
+                    typePrefix: boolean;
+                };
+            };
+            queryFilters: {
+                title: string;
+                type: string;
+                additionalProperties: boolean;
+                patternProperties: {
+                    "^(?!\\.)[.A-Za-z0-9_-]{1,255}$": {
+                        $ref: string;
+                    };
+                };
+            };
+            metricIdentifier: {
+                title: string;
+                description: string;
+                type: string;
+                pattern: string;
+                $semantic: {
+                    type: string;
+                    source: string;
+                    typePrefix: boolean;
+                };
+            };
+            factIdentifier: {
+                title: string;
+                description: string;
+                type: string;
+                pattern: string;
+                $semantic: {
+                    type: string;
+                    source: string;
+                    typePrefix: boolean;
+                };
+            };
+            query: {
+                $schema: string;
+                title: string;
+                type: string;
+                additionalProperties: boolean;
+                properties: {
+                    fields: {
+                        $ref: string;
+                        description: string;
+                    };
+                    filter_by: {
+                        $ref: string;
+                        description: string;
+                    };
+                    sort_by: {
+                        $ref: string;
+                        description: string;
+                    };
+                };
+                required: string[];
+                $defs: {};
+            };
+            config: {
+                $schema: string;
+                title: string;
+                type: string;
+                properties: {
+                    widths: {
+                        type: string;
+                        items: {
+                            $ref: string;
+                        };
+                        description: string;
+                    };
+                    colors: {
+                        $ref: string;
+                        description: string;
+                    };
+                    color: {
+                        $ref: string;
+                        description: string;
+                    };
+                    column_header: {
+                        type: string;
+                    };
+                    metrics_in: {
+                        type: string;
+                    };
+                    data_labels: {
+                        oneOf: ({
+                            const?: undefined;
+                            type: string;
+                        } | {
+                            type: string;
+                            const: string;
+                        })[];
+                    };
+                    data_labels_style: {
+                        type: string;
+                        enum: string[];
+                    };
+                    chart_fill: {
+                        type: string;
+                        properties: {
+                            type: {
+                                type: string;
+                                enum: string[];
+                            };
+                            pattern_name_mapping: {
+                                type: string;
+                                additionalProperties: {
+                                    type: string;
+                                    enum: string[];
+                                };
+                            };
+                        };
+                    };
+                    data_points: {
+                        oneOf: ({
+                            const?: undefined;
+                            type: string;
+                        } | {
+                            type: string;
+                            const: string;
+                        })[];
+                    };
+                    data_totals: {
+                        oneOf: ({
+                            const?: undefined;
+                            type: string;
+                        } | {
+                            type: string;
+                            const: string;
+                        })[];
+                    };
+                    orientation: {
+                        type: string;
+                    };
+                    legend_enabled: {
+                        type: string;
+                    };
+                    legend_position: {
+                        type: string;
+                    };
+                    xaxis_format: {
+                        type: string;
+                    };
+                    xaxis_max: {
+                        type: string;
+                    };
+                    xaxis_min: {
+                        type: string;
+                    };
+                    xaxis_name_position: {
+                        type: string;
+                    };
+                    xaxis_name_visible: {
+                        type: string;
+                    };
+                    xaxis_rotation: {
+                        type: string;
+                    };
+                    xaxis_visible: {
+                        type: string;
+                    };
+                    xaxis_labels: {
+                        type: string;
+                    };
+                    yaxis_name_position: {
+                        type: string;
+                    };
+                    yaxis_name_visible: {
+                        type: string;
+                    };
+                    yaxis_rotation: {
+                        type: string;
+                    };
+                    yaxis_visible: {
+                        type: string;
+                    };
+                    yaxis_labels: {
+                        type: string;
+                    };
+                    yaxis_format: {
+                        type: string;
+                    };
+                    yaxis_max: {
+                        type: string;
+                    };
+                    yaxis_min: {
+                        type: string;
+                    };
+                    grid_enabled: {
+                        type: string;
+                    };
+                    stack_measures_to_100: {
+                        type: string;
+                    };
+                    stack_measures: {
+                        type: string;
+                    };
+                    continuous_line: {
+                        type: string;
+                    };
+                    distinct_point_shapes: {
+                        type: string;
+                        properties: {
+                            enabled: {
+                                type: string;
+                            };
+                            point_shape_mapping: {
+                                type: string;
+                                additionalProperties: {
+                                    type: string;
+                                    enum: string[];
+                                };
+                            };
+                        };
+                    };
+                    total_enabled: {
+                        type: string;
+                    };
+                    total_name: {
+                        type: string;
+                    };
+                    comparison_enabled: {
+                        type: string;
+                    };
+                    comparison_type: {
+                        type: string;
+                    };
+                    format: {
+                        type: string;
+                    };
+                    position: {
+                        type: string;
+                    };
+                    indicator_arrow: {
+                        type: string;
+                    };
+                    indicator_colors: {
+                        type: string;
+                    };
+                    indicator_color_equals: {
+                        $ref: string;
+                    };
+                    indicator_color_negative: {
+                        $ref: string;
+                    };
+                    indicator_color_positive: {
+                        $ref: string;
+                    };
+                    label_default: {
+                        type: string;
+                    };
+                    label_conditional: {
+                        type: string;
+                    };
+                    label_equals: {
+                        type: string;
+                    };
+                    label_negative: {
+                        type: string;
+                    };
+                    label_positive: {
+                        type: string;
+                    };
+                    yaxis_primary_type: {
+                        type: string;
+                        enum: string[];
+                    };
+                    yaxis_primary_format: {
+                        type: string;
+                    };
+                    yaxis_primary_max: {
+                        type: string;
+                    };
+                    yaxis_primary_min: {
+                        type: string;
+                    };
+                    yaxis_primary_name_position: {
+                        type: string;
+                    };
+                    yaxis_primary_name_visible: {
+                        type: string;
+                    };
+                    yaxis_primary_rotation: {
+                        type: string;
+                    };
+                    yaxis_primary_visible: {
+                        type: string;
+                    };
+                    yaxis_primary_labels: {
+                        type: string;
+                    };
+                    yaxis_secondary_type: {
+                        type: string;
+                        enum: string[];
+                    };
+                    yaxis_secondary_format: {
+                        type: string;
+                    };
+                    yaxis_secondary_max: {
+                        type: string;
+                    };
+                    yaxis_secondary_min: {
+                        type: string;
+                    };
+                    yaxis_secondary_name_position: {
+                        type: string;
+                    };
+                    yaxis_secondary_name_visible: {
+                        type: string;
+                    };
+                    yaxis_secondary_rotation: {
+                        type: string;
+                    };
+                    yaxis_secondary_visible: {
+                        type: string;
+                    };
+                    yaxis_secondary_labels: {
+                        type: string;
+                    };
+                    yaxis_secondary_show_on_right: {
+                        type: string;
+                    };
+                    tooltip_text: {
+                        type: string;
+                    };
+                    viewport: {
+                        type: string;
+                        enum: string[];
+                    };
+                    basemap: {
+                        type: string;
+                        enum: string[];
+                    };
+                    color_scheme: {
+                        type: string;
+                        enum: string[];
+                    };
+                    viewport_pan: {
+                        type: string;
+                    };
+                    viewport_zoom: {
+                        type: string;
+                    };
+                    center_lat: {
+                        type: string;
+                    };
+                    center_lng: {
+                        type: string;
+                    };
+                    zoom_level: {
+                        type: string;
+                    };
+                    group_nearby_points: {
+                        type: string;
+                    };
+                    min_size: {
+                        type: string;
+                        enum: string[];
+                    };
+                    max_size: {
+                        type: string;
+                        enum: string[];
+                    };
+                    row_height: {
+                        type: string;
+                        enum: string[];
+                    };
+                    cell_vertical_align: {
+                        type: string;
+                        enum: string[];
+                    };
+                    cell_text_wrapping: {
+                        type: string;
+                        enum: string[];
+                    };
+                    cell_image_sizing: {
+                        type: string;
+                        enum: string[];
+                    };
+                    forecast_enabled: {
+                        type: string;
+                    };
+                    forecast_confidence: {
+                        type: string;
+                        minimum: number;
+                        maximum: number;
+                    };
+                    forecast_period: {
+                        type: string;
+                    };
+                    forecast_seasonal: {
+                        type: string;
+                    };
+                    anomaly_detection_enabled: {
+                        type: string;
+                    };
+                    anomaly_detection_sensitivity: {
+                        type: string;
+                        enum: string[];
+                    };
+                    anomaly_detection_size: {
+                        type: string;
+                        enum: string[];
+                    };
+                    anomaly_detection_color: {
+                        $ref: string;
+                    };
+                    clustering_enabled: {
+                        type: string;
+                    };
+                    clustering_amount: {
+                        type: string;
+                    };
+                    clustering_threshold: {
+                        type: string;
+                        exclusiveMinimum: number;
+                        exclusiveMaximum: number;
+                    };
+                    disable_drill_down: {
+                        type: string;
+                    };
+                    disable_drill_into_url: {
+                        type: string;
+                    };
+                    disable_alerts: {
+                        type: string;
+                    };
+                    disable_scheduled_exports: {
+                        type: string;
+                    };
+                    text_wrapping: {
+                        type: string;
+                        description: string;
+                        properties: {
+                            wrap_text: {
+                                type: string;
+                                description: string;
+                            };
+                            wrap_header_text: {
+                                type: string;
+                                description: string;
+                            };
+                            column_overrides: {
+                                type: string;
+                                description: string;
+                                items: {
+                                    type: string;
+                                    properties: {
+                                        locators: {
+                                            type: string;
+                                            items: {
+                                                type: string;
+                                            };
+                                        };
+                                        wrap_text: {
+                                            type: string;
+                                        };
+                                        wrap_header_text: {
+                                            type: string;
+                                        };
+                                        match_type: {
+                                            type: string;
+                                            enum: string[];
+                                        };
+                                    };
+                                };
+                            };
+                        };
+                    };
+                    pagination: {
+                        type: string;
+                        description: string;
+                    };
+                    page_size: {
+                        type: string;
+                        description: string;
+                    };
+                    grand_totals_position: {
+                        type: string;
+                        enum: string[];
+                        description: string;
+                    };
+                    enable_accessibility: {
+                        type: string;
+                        description: string;
+                    };
+                    line_style_control_metrics: {
+                        type: string;
+                        items: {
+                            type: string;
+                        };
+                    };
+                    line_style_excluded_metrics: {
+                        type: string;
+                        items: {
+                            type: string;
+                        };
+                    };
+                };
+                $defs: {};
+            };
+        };
+    };
+    $defs: {
+        attribute_hierarchy: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                id: {
+                    $ref: string;
+                    description: string;
+                    $semantic: ({
+                        type: string;
+                        source: string;
+                        code: string;
+                    } | {
+                        code?: undefined;
+                        type: string;
+                        source: string;
+                    })[];
+                };
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+                title: {
+                    $ref: string;
+                    description: string;
+                };
+                description: {
+                    $ref: string;
+                    description: string;
+                };
+                tags: {
+                    $ref: string;
+                    description: string;
+                };
+                attributes: {
+                    type: string;
+                    description: string;
+                    items: {
+                        $ref: string;
+                    };
+                    minItems: number;
+                };
+            };
+            required: string[];
+        };
+        identifier: {
+            title: string;
+            type: string;
+            pattern: string;
+        };
+        title: {
+            type: string;
+            maxLength: number;
+        };
+        description: {
+            type: string;
+            maxLength: number;
+        };
+        tags: {
+            type: string;
+            uniqueItems: boolean;
+            items: {
+                type: string;
+            };
+        };
+        attributeIdentifier: {
+            title: string;
+            description: string;
+            type: string;
+            pattern: string;
+            $semantic: {
+                type: string;
+                source: string;
+                typePrefix: boolean;
+            };
+        };
+        labelIdentifier: {
+            title: string;
+            description: string;
+            type: string;
+            pattern: string;
+            $semantic: {
+                type: string;
+                source: string;
+                typePrefix: boolean;
+            };
+        };
+        displayAsLabelIdentifier: {
+            title: string;
+            description: string;
+            type: string;
+            pattern: string;
+            $semantic: {
+                type: string;
+                source: string;
+                typePrefix: boolean;
+            };
+        };
+        factIdentifier: {
+            title: string;
+            description: string;
+            type: string;
+            pattern: string;
+            $semantic: {
+                type: string;
+                source: string;
+                typePrefix: boolean;
+            };
+        };
+        metricIdentifier: {
+            title: string;
+            description: string;
+            type: string;
+            pattern: string;
+            $semantic: {
+                type: string;
+                source: string;
+                typePrefix: boolean;
+            };
+        };
+        permission: {
+            title: string;
+            description: string;
+            type: string;
+            properties: {
+                all: {
+                    type: string;
+                };
+                users: {
+                    type: string;
+                    items: {
+                        type: string;
+                    };
+                };
+                user_groups: {
+                    type: string;
+                    items: {
+                        type: string;
+                    };
+                };
+            };
+        };
+        dashboardFilters: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            patternProperties: {
+                "^(?!\\.)[.A-Za-z0-9_-]{1,255}$": {
+                    properties: {
+                        type: {
+                            type: string;
+                            enum: string[];
+                        };
+                    };
+                    required: string[];
+                    allOf: ({
+                        if: {
+                            properties?: undefined;
+                            required?: undefined;
+                            allOf: ({
+                                not?: undefined;
+                                properties: {
+                                    type: {
+                                        const: string;
+                                    };
+                                };
+                            } | {
+                                properties?: undefined;
+                                not: {
+                                    properties: {
+                                        from: {
+                                            type: string;
+                                        };
+                                    };
+                                    required: string[];
+                                };
+                            })[];
+                        };
+                        then: {
+                            $ref: string;
+                        };
+                    } | {
+                        if: {
+                            allOf?: undefined;
+                            properties: {
+                                type: {
+                                    const: string;
+                                };
+                                from: {
+                                    type: string;
+                                };
+                            };
+                            required: string[];
+                        };
+                        then: {
+                            $ref: string;
+                        };
+                    } | {
+                        if: {
+                            required?: undefined;
+                            allOf?: undefined;
+                            properties: {
+                                from?: undefined;
+                                type: {
+                                    const: string;
+                                };
+                            };
+                        };
+                        then: {
+                            $ref: string;
+                        };
+                    })[];
+                };
+            };
+        };
+        dashboardAbsoluteDateFilter: {
+            type: string;
+            title: string;
+            description: string;
+            properties: {
+                title: {
+                    type: string;
+                    description: string;
+                };
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+                granularity: {
+                    $ref: string;
+                };
+                from: {
+                    type: string;
+                    pattern: string;
+                    description: string;
+                };
+                to: {
+                    type: string;
+                    pattern: string;
+                    description: string;
+                };
+                mode: {
+                    type: string;
+                    enum: string[];
+                    description: string;
+                };
+                empty_values: {
+                    type: string;
+                    enum: string[];
+                    description: string;
+                };
+                date: {
+                    $ref: string;
+                    description: string;
+                    $semantic: ({
+                        type: string;
+                        source: string;
+                    } | {
+                        source?: undefined;
+                        type: string;
+                    })[];
+                };
+            };
+            required: string[];
+        };
+        dashboardRelativeDateFilter: {
+            type: string;
+            title: string;
+            description: string;
+            properties: {
+                title: {
+                    type: string;
+                    description: string;
+                };
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+                granularity: {
+                    $ref: string;
+                };
+                from: {
+                    type: string;
+                    description: string;
+                };
+                to: {
+                    type: string;
+                    description: string;
+                };
+                mode: {
+                    type: string;
+                    enum: string[];
+                    description: string;
+                };
+                empty_values: {
+                    type: string;
+                    enum: string[];
+                    description: string;
+                };
+                date: {
+                    $ref: string;
+                    description: string;
+                    $semantic: ({
+                        type: string;
+                        source: string;
+                    } | {
+                        source?: undefined;
+                        type: string;
+                    })[];
+                };
+            };
+            required: string[];
+        };
+        dashboardAttributeFilter: {
+            type: string;
+            title: string;
+            description: string;
+            properties: {
+                title: {
+                    type: string;
+                    description: string;
+                };
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+                using: {
+                    description: string;
+                    oneOf: {
+                        $ref: string;
+                    }[];
+                    $semantic: {
+                        type: string;
+                    };
+                };
+                multiselect: {
+                    type: string;
+                    description: string;
+                };
+                mode: {
+                    type: string;
+                    enum: string[];
+                    description: string;
+                };
+                display_as: {
+                    type: string;
+                    description: string;
+                    $ref: string;
+                };
+                parents: {
+                    type: string;
+                    description: string;
+                    uniqueItems: boolean;
+                    items: {
+                        oneOf: ({
+                            properties?: undefined;
+                            required?: undefined;
+                            type: string;
+                            title: string;
+                            description: string;
+                        } | {
+                            description?: undefined;
+                            type: string;
+                            title: string;
+                            properties: {
+                                using: {
+                                    type: string;
+                                    description: string;
+                                };
+                                common: {
+                                    type: string;
+                                    description: string;
+                                };
+                            };
+                            required: string[];
+                        })[];
+                    };
+                };
+                metric_filters: {
+                    type: string;
+                    description: string;
+                    uniqueItems: boolean;
+                    items: {
+                        type: string;
+                    };
+                };
+            };
+            oneOf: {
+                if: {
+                    properties: {
+                        multiselect: {
+                            type: string;
+                            enum: boolean[];
+                        };
+                    };
+                    required: string[];
+                };
+                then: {
+                    properties: {
+                        title: {
+                            type: string;
+                            description: string;
+                        };
+                        type: {
+                            type: string;
+                            enum: string[];
+                        };
+                        using: {
+                            description: string;
+                            oneOf: {
+                                $ref: string;
+                            }[];
+                        };
+                        multiselect: {
+                            type: string;
+                            description: string;
+                        };
+                        mode: {
+                            type: string;
+                            enum: string[];
+                            description: string;
+                        };
+                        display_as: {
+                            type: string;
+                            description: string;
+                            $ref: string;
+                        };
+                        state: {
+                            ref: string;
+                        };
+                        parents: {
+                            type: string;
+                            description: string;
+                            uniqueItems: boolean;
+                            items: {
+                                oneOf: ({
+                                    properties?: undefined;
+                                    required?: undefined;
+                                    type: string;
+                                    title: string;
+                                    description: string;
+                                    $semantic: {
+                                        type: string;
+                                        sources: string[];
+                                    };
+                                } | {
+                                    $semantic?: undefined;
+                                    description?: undefined;
+                                    type: string;
+                                    title: string;
+                                    properties: {
+                                        using: {
+                                            type: string;
+                                            description: string;
+                                            $semantic: {
+                                                type: string;
+                                                source: string;
+                                            };
+                                        };
+                                        common: {
+                                            type: string;
+                                            description: string;
+                                        };
+                                    };
+                                    required: string[];
+                                })[];
+                            };
+                        };
+                        metric_filters: {
+                            type: string;
+                            description: string;
+                            uniqueItems: boolean;
+                            items: {
+                                type: string;
+                                $semantic: {
+                                    type: string;
+                                    sources: string[];
+                                    typePrefix: boolean;
+                                };
+                            };
+                        };
+                    };
+                };
+                else: {
+                    properties: {
+                        title: {
+                            type: string;
+                            description: string;
+                        };
+                        type: {
+                            type: string;
+                            enum: string[];
+                        };
+                        using: {
+                            description: string;
+                            oneOf: {
+                                $ref: string;
+                            }[];
+                        };
+                        multiselect: {
+                            type: string;
+                            description: string;
+                        };
+                        mode: {
+                            type: string;
+                            enum: string[];
+                            description: string;
+                        };
+                        display_as: {
+                            type: string;
+                            description: string;
+                            $ref: string;
+                        };
+                        state: {
+                            ref: string;
+                        };
+                        parents: {
+                            type: string;
+                            description: string;
+                            uniqueItems: boolean;
+                            items: {
+                                oneOf: ({
+                                    properties?: undefined;
+                                    required?: undefined;
+                                    type: string;
+                                    title: string;
+                                    description: string;
+                                    $semantic: {
+                                        type: string;
+                                        sources: string[];
+                                    };
+                                } | {
+                                    $semantic?: undefined;
+                                    description?: undefined;
+                                    type: string;
+                                    title: string;
+                                    properties: {
+                                        using: {
+                                            type: string;
+                                            description: string;
+                                            $semantic: {
+                                                type: string;
+                                                source: string;
+                                            };
+                                        };
+                                        common: {
+                                            type: string;
+                                            description: string;
+                                        };
+                                    };
+                                    required: string[];
+                                })[];
+                            };
+                        };
+                        metric_filters: {
+                            type: string;
+                            description: string;
+                            uniqueItems: boolean;
+                            items: {
+                                type: string;
+                                $semantic: {
+                                    type: string;
+                                    sources: string[];
+                                    typePrefix: boolean;
+                                };
+                            };
+                        };
+                    };
+                };
+            }[];
+            required: string[];
+            $semantic: {
+                type: string;
+                source: string;
+                mode: string;
+            };
+        };
+        dashboardFilterGroup: {
+            type: string;
+            title: string;
+            description: string;
+            additionalProperties: boolean;
+            properties: {
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+                title: {
+                    type: string;
+                    description: string;
+                };
+                filters: {
+                    $ref: string;
+                    description: string;
+                    $semantic: {
+                        type: string;
+                    }[];
+                };
+            };
+            required: string[];
+        };
+        dashboardFiltersNoGroups: {
+            title: string;
+            description: string;
+            type: string;
+            additionalProperties: boolean;
+            patternProperties: {
+                "^(?!\\.)[.A-Za-z0-9_-]{1,255}$": {
+                    properties: {
+                        type: {
+                            type: string;
+                            enum: string[];
+                        };
+                    };
+                    required: string[];
+                    allOf: ({
+                        if: {
+                            properties?: undefined;
+                            required?: undefined;
+                            allOf: ({
+                                not?: undefined;
+                                properties: {
+                                    type: {
+                                        const: string;
+                                    };
+                                };
+                            } | {
+                                properties?: undefined;
+                                not: {
+                                    properties: {
+                                        from: {
+                                            type: string;
+                                        };
+                                    };
+                                    required: string[];
+                                };
+                            })[];
+                        };
+                        then: {
+                            $ref: string;
+                        };
+                    } | {
+                        if: {
+                            allOf?: undefined;
+                            properties: {
+                                type: {
+                                    const: string;
+                                };
+                                from: {
+                                    type: string;
+                                };
+                            };
+                            required: string[];
+                        };
+                        then: {
+                            $ref: string;
+                        };
+                    } | {
+                        if: {
+                            required?: undefined;
+                            allOf?: undefined;
+                            properties: {
+                                from?: undefined;
+                                type: {
+                                    const: string;
+                                };
+                            };
+                        };
+                        then: {
+                            $ref: string;
+                        };
+                    })[];
+                };
+            };
+        };
+        dateFilterGranularity: {
+            type: string;
+            enum: string[];
+        };
+        queryFilter: {
+            title: string;
+            allOf: ({
+                if: {
+                    not?: undefined;
+                    properties: {
+                        type: {
+                            enum: string[];
+                        };
+                    };
+                    required: string[];
+                };
+                then: {
+                    $semantic?: undefined;
+                    $ref: string;
+                };
+            } | {
+                if: {
+                    properties?: undefined;
+                    required?: undefined;
+                    not: {
+                        properties: {
+                            type: {
+                                type: string;
+                            };
+                        };
+                        required: string[];
+                    };
+                };
+                then: {
+                    $ref?: undefined;
+                    $semantic: {
+                        type: string;
+                        snippets: never[];
+                    };
+                };
+            })[];
+            properties: {
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+            };
+            required: string[];
+        };
+        queryDateFilter: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+                using: {
+                    type: string;
+                    description: string;
+                    $semantic: {
+                        type: string;
+                        source: string;
+                    };
+                };
+                granularity: {
+                    type: string;
+                    enum: string[];
+                    description: string;
+                };
+                from: {
+                    type: string[];
+                };
+                to: {
+                    type: string[];
+                };
+                with: {
+                    type: string;
+                    description: string;
+                    additionalProperties: boolean;
+                    patternProperties: {
+                        "^(?!\\.)[.A-Za-z0-9_-]{1,255}$": {
+                            $ref: string;
+                        };
+                    };
+                };
+                empty_values: {
+                    type: string;
+                    enum: string[];
+                    description: string;
+                };
+            };
+            allOf: ({
+                if: {
+                    not?: undefined;
+                    properties: {
+                        granularity: {
+                            type: string;
+                        };
+                    };
+                    required: string[];
+                };
+                then: {
+                    properties: {
+                        type: {
+                            type: string;
+                            enum: string[];
+                        };
+                        using: {
+                            type: string;
+                            description: string;
+                            $semantic: {
+                                type: string;
+                                source: string;
+                            };
+                        };
+                        granularity: {
+                            type: string;
+                            enum: string[];
+                            description: string;
+                        };
+                        from: {
+                            type: string;
+                            description: string;
+                            pattern?: undefined;
+                        };
+                        to: {
+                            type: string;
+                            description: string;
+                            pattern?: undefined;
+                        };
+                        with: {
+                            type: string;
+                            description: string;
+                            additionalProperties: boolean;
+                            patternProperties: {
+                                "^(?!\\.)[.A-Za-z0-9_-]{1,255}$": {
+                                    $ref: string;
+                                };
+                            };
+                        };
+                        empty_values: {
+                            type: string;
+                            enum: string[];
+                            description: string;
+                        };
+                    };
+                    required: string[];
+                };
+            } | {
+                if: {
+                    properties?: undefined;
+                    required?: undefined;
+                    not: {
+                        properties: {
+                            granularity: {
+                                type: string;
+                            };
+                        };
+                        required: string[];
+                    };
+                };
+                then: {
+                    properties: {
+                        granularity?: undefined;
+                        type: {
+                            type: string;
+                            enum: string[];
+                        };
+                        using: {
+                            type: string;
+                            description: string;
+                            $semantic: {
+                                type: string;
+                                source: string;
+                            };
+                        };
+                        from: {
+                            type: string;
+                            pattern: string;
+                            description: string;
+                        };
+                        to: {
+                            type: string;
+                            pattern: string;
+                            description: string;
+                        };
+                        with: {
+                            type: string;
+                            description: string;
+                            additionalProperties: boolean;
+                            patternProperties: {
+                                "^(?!\\.)[.A-Za-z0-9_-]{1,255}$": {
+                                    $ref: string;
+                                };
+                            };
+                        };
+                        empty_values: {
+                            type: string;
+                            enum: string[];
+                            description: string;
+                        };
+                    };
+                    required: string[];
+                };
+            })[];
+            required: string[];
+            $semantic: ({
+                source?: undefined;
+                type: string;
+                sources: string[];
+                mode?: undefined;
+            } | {
+                sources?: undefined;
+                type: string;
+                source: string;
+                mode: string;
+            })[];
+        };
+        queryAttributeFilter: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+                using: {
+                    description: string;
+                    oneOf: {
+                        $ref: string;
+                    }[];
+                };
+                display_as: {
+                    type: string;
+                    description: string;
+                    $ref: string;
+                };
+                state: {
+                    title: string;
+                    type: string;
+                    additionalProperties: boolean;
+                    properties: {
+                        include: {
+                            type: string;
+                            items: {
+                                type: string[];
+                                $semantic: {
+                                    type: string;
+                                    from: string;
+                                };
+                            };
+                        };
+                        exclude: {
+                            type: string;
+                            items: {
+                                type: string[];
+                                $semantic: {
+                                    type: string;
+                                    from: string;
+                                };
+                            };
+                        };
+                    };
+                };
+            };
+            required: string[];
+            $semantic: {
+                type: string;
+                source: string;
+                mode: string;
+            };
+        };
+        queryMetricValueFilter: {
+            title: string;
+            type: string;
+            properties: {
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+                conditions: {
+                    type: string;
+                    description: string;
+                    items: {
+                        $ref: string;
+                    };
+                };
+                condition: {
+                    type: string;
+                    enum: string[];
+                    description: string;
+                };
+            };
+            allOf: ({
+                description?: undefined;
+                title: string;
+                if: {
+                    not?: undefined;
+                    properties: {
+                        conditions: {
+                            type: string;
+                        };
+                        condition?: undefined;
+                    };
+                    required: string[];
+                };
+                then: {
+                    additionalProperties: boolean;
+                    properties: {
+                        from?: undefined;
+                        to?: undefined;
+                        type: {
+                            type: string;
+                            enum: string[];
+                        };
+                        using: {
+                            description: string;
+                            oneOf: ({
+                                $semantic?: undefined;
+                                type?: undefined;
+                                $ref: string;
+                            } | {
+                                $ref?: undefined;
+                                type: string;
+                                $semantic: {
+                                    type: string;
+                                    source: string;
+                                };
+                            })[];
+                        };
+                        conditions: {
+                            description?: undefined;
+                            type: string;
+                            minItems: number;
+                            items: {
+                                $ref: string;
+                            };
+                        };
+                        null_values_as_zero: {
+                            type: string;
+                            description: string;
+                        };
+                        dimensionality: {
+                            type: string;
+                            description: string;
+                            items: {
+                                oneOf: ({
+                                    $semantic?: undefined;
+                                    type?: undefined;
+                                    $ref: string;
+                                } | {
+                                    $ref?: undefined;
+                                    type: string;
+                                    $semantic: {
+                                        type: string;
+                                        sources: string[];
+                                    };
+                                })[];
+                            };
+                        };
+                        value?: undefined;
+                        condition?: undefined;
+                    };
+                    required: string[];
+                };
+            } | {
+                description?: undefined;
+                title: string;
+                if: {
+                    not?: undefined;
+                    properties: {
+                        conditions?: undefined;
+                        condition: {
+                            enum: string[];
+                        };
+                    };
+                    required: string[];
+                };
+                then: {
+                    additionalProperties: boolean;
+                    properties: {
+                        from?: undefined;
+                        to?: undefined;
+                        conditions?: undefined;
+                        type: {
+                            type: string;
+                            enum: string[];
+                        };
+                        using: {
+                            description: string;
+                            oneOf: ({
+                                $semantic?: undefined;
+                                type?: undefined;
+                                $ref: string;
+                            } | {
+                                $ref?: undefined;
+                                type: string;
+                                $semantic: {
+                                    type: string;
+                                    source: string;
+                                };
+                            })[];
+                        };
+                        condition: {
+                            type: string;
+                            enum: string[];
+                            description: string;
+                        };
+                        value: {
+                            type: string;
+                            description: string;
+                        };
+                        null_values_as_zero: {
+                            type: string;
+                            description: string;
+                        };
+                        dimensionality: {
+                            type: string;
+                            description: string;
+                            items: {
+                                oneOf: ({
+                                    $semantic?: undefined;
+                                    type?: undefined;
+                                    $ref: string;
+                                } | {
+                                    $ref?: undefined;
+                                    type: string;
+                                    $semantic: {
+                                        type: string;
+                                        sources: string[];
+                                    };
+                                })[];
+                            };
+                        };
+                    };
+                    required: string[];
+                };
+            } | {
+                description?: undefined;
+                title: string;
+                if: {
+                    not?: undefined;
+                    properties: {
+                        conditions?: undefined;
+                        condition: {
+                            enum: string[];
+                        };
+                    };
+                    required: string[];
+                };
+                then: {
+                    additionalProperties: boolean;
+                    properties: {
+                        conditions?: undefined;
+                        value?: undefined;
+                        type: {
+                            type: string;
+                            enum: string[];
+                        };
+                        using: {
+                            description: string;
+                            oneOf: ({
+                                $semantic?: undefined;
+                                type?: undefined;
+                                $ref: string;
+                            } | {
+                                $ref?: undefined;
+                                type: string;
+                                $semantic: {
+                                    type: string;
+                                    source: string;
+                                };
+                            })[];
+                        };
+                        condition: {
+                            type: string;
+                            enum: string[];
+                            description: string;
+                        };
+                        from: {
+                            type: string;
+                            description: string;
+                        };
+                        to: {
+                            type: string;
+                            description: string;
+                        };
+                        null_values_as_zero: {
+                            type: string;
+                            description: string;
+                        };
+                        dimensionality: {
+                            type: string;
+                            description: string;
+                            items: {
+                                oneOf: ({
+                                    $semantic?: undefined;
+                                    type?: undefined;
+                                    $ref: string;
+                                } | {
+                                    $ref?: undefined;
+                                    type: string;
+                                    $semantic: {
+                                        type: string;
+                                        sources: string[];
+                                    };
+                                })[];
+                            };
+                        };
+                    };
+                    required: string[];
+                };
+            } | {
+                title: string;
+                description: string;
+                if: {
+                    properties?: undefined;
+                    required?: undefined;
+                    not: {
+                        anyOf: {
+                            required: string[];
+                        }[];
+                    };
+                };
+                then: {
+                    additionalProperties: boolean;
+                    properties: {
+                        from?: undefined;
+                        to?: undefined;
+                        value?: undefined;
+                        condition?: undefined;
+                        null_values_as_zero?: undefined;
+                        type: {
+                            type: string;
+                            enum: string[];
+                        };
+                        using: {
+                            description: string;
+                            oneOf: ({
+                                $semantic?: undefined;
+                                type?: undefined;
+                                $ref: string;
+                            } | {
+                                $ref?: undefined;
+                                type: string;
+                                $semantic: {
+                                    type: string;
+                                    source: string;
+                                };
+                            })[];
+                        };
+                        conditions: {
+                            minItems?: undefined;
+                            type: string;
+                            description: string;
+                            items: {
+                                $ref: string;
+                            };
+                        };
+                        dimensionality: {
+                            type: string;
+                            description: string;
+                            items: {
+                                oneOf: ({
+                                    $semantic?: undefined;
+                                    type?: undefined;
+                                    $ref: string;
+                                } | {
+                                    $ref?: undefined;
+                                    type: string;
+                                    $semantic: {
+                                        type: string;
+                                        sources: string[];
+                                    };
+                                })[];
+                            };
+                        };
+                    };
+                    required: string[];
+                };
+            })[];
+            required: string[];
+            $semantic: {
+                type: string;
+                source: string;
+                mode: string;
+            };
+        };
+        queryRankingFilter: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+                using: {
+                    description: string;
+                    oneOf: ({
+                        $semantic?: undefined;
+                        type?: undefined;
+                        $ref: string;
+                    } | {
+                        $ref?: undefined;
+                        type: string;
+                        $semantic: {
+                            type: string;
+                            source: string;
+                        };
+                    })[];
+                };
+                attribute: {
+                    description: string;
+                    oneOf: ({
+                        $semantic?: undefined;
+                        type?: undefined;
+                        $ref: string;
+                    } | {
+                        $ref?: undefined;
+                        type: string;
+                        $semantic: {
+                            type: string;
+                            source: string;
+                        };
+                    })[];
+                };
+                bottom: {
+                    type: string;
+                    description: string;
+                };
+                top: {
+                    type: string;
+                    description: string;
+                };
+            };
+            oneOf: {
+                title: string;
+                required: string[];
+            }[];
+            required: string[];
+            $semantic: {
+                type: string;
+                source: string;
+                mode: string;
+            };
+        };
+        mvfCondition: {
+            title: string;
+            type: string;
+            properties: {
+                condition: {
+                    type: string;
+                    enum: string[];
+                    description: string;
+                };
+            };
+            allOf: ({
+                title: string;
+                if: {
+                    properties?: undefined;
+                    required?: undefined;
+                    not: {
+                        required: string[];
+                    };
+                };
+                then: {
+                    required?: undefined;
+                    additionalProperties: boolean;
+                    properties: {
+                        from?: undefined;
+                        to?: undefined;
+                        value?: undefined;
+                        condition?: undefined;
+                    };
+                };
+            } | {
+                title: string;
+                if: {
+                    not?: undefined;
+                    properties: {
+                        condition: {
+                            enum: string[];
+                        };
+                    };
+                    required: string[];
+                };
+                then: {
+                    additionalProperties: boolean;
+                    properties: {
+                        from?: undefined;
+                        to?: undefined;
+                        condition: {
+                            type: string;
+                            enum: string[];
+                        };
+                        value: {
+                            type: string;
+                            description: string;
+                        };
+                    };
+                    required: string[];
+                };
+            } | {
+                title: string;
+                if: {
+                    not?: undefined;
+                    properties: {
+                        condition: {
+                            enum: string[];
+                        };
+                    };
+                    required: string[];
+                };
+                then: {
+                    additionalProperties: boolean;
+                    properties: {
+                        value?: undefined;
+                        condition: {
+                            type: string;
+                            enum: string[];
+                        };
+                        from: {
+                            type: string;
+                            description: string;
+                        };
+                        to: {
+                            type: string;
+                            description: string;
+                        };
+                    };
+                    required: string[];
+                };
+            })[];
+        };
+        widthItem: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                value: {
+                    title: string;
+                    oneOf: ({
+                        const?: undefined;
+                        type: string;
+                    } | {
+                        type: string;
+                        const: string;
+                    })[];
+                };
+                allowGrowToFit: {
+                    title: string;
+                    type: string;
+                };
+                using: {
+                    type: string;
+                    $semantic: {
+                        type: string;
+                        sources: string[];
+                    };
+                    items: {
+                        oneOf: ({
+                            properties?: undefined;
+                            additionalProperties?: undefined;
+                            type: string;
+                            $semantic: {
+                                mode?: undefined;
+                                type: string;
+                                sources: string[];
+                            };
+                            title?: undefined;
+                            minProperties?: undefined;
+                            maxProperties?: undefined;
+                        } | {
+                            properties?: undefined;
+                            type: string;
+                            title: string;
+                            minProperties: number;
+                            maxProperties: number;
+                            additionalProperties: {
+                                type: string;
+                            };
+                            $semantic: {
+                                type: string;
+                                sources: string[];
+                                mode: string;
+                            };
+                        } | {
+                            $semantic?: undefined;
+                            type: string;
+                            title: string;
+                            additionalProperties: boolean;
+                            minProperties: number;
+                            maxProperties: number;
+                            properties: {
+                                SUM: {
+                                    type: string;
+                                    $semantic: {
+                                        type: string;
+                                        sources: string[];
+                                    };
+                                };
+                                AVG: {
+                                    type: string;
+                                    $semantic: {
+                                        type: string;
+                                        sources: string[];
+                                    };
+                                };
+                                MAX: {
+                                    type: string;
+                                    $semantic: {
+                                        type: string;
+                                        sources: string[];
+                                    };
+                                };
+                                MIN: {
+                                    type: string;
+                                    $semantic: {
+                                        type: string;
+                                        sources: string[];
+                                    };
+                                };
+                                MED: {
+                                    type: string;
+                                    $semantic: {
+                                        type: string;
+                                        sources: string[];
+                                    };
+                                };
+                                NAT: {
+                                    type: string;
+                                    $semantic: {
+                                        type: string;
+                                        sources: string[];
+                                    };
+                                };
+                            };
+                        })[];
+                    };
+                };
+            };
+        };
+        colorItems: {
+            title: string;
+            type: string;
+            additionalProperties: {
+                $ref: string;
+            };
+        };
+        colorDefinition: {
+            title: string;
+            type: string;
+            properties: {
+                total: {
+                    $ref: string;
+                };
+                negative: {
+                    $ref: string;
+                };
+                positive: {
+                    $ref: string;
+                };
+            };
+        };
+        simpleColorItem: {
+            title: string;
+            oneOf: ({
+                pattern?: undefined;
+                type: string;
+            } | {
+                type: string;
+                pattern: string;
+            })[];
+            $semantic: ({
+                snippets?: undefined;
+                type: string;
+                from: string[];
+                mode: string;
+            } | {
+                from?: undefined;
+                mode?: undefined;
+                type: string;
+                snippets: string[];
+            })[];
+        };
+        complexColorItem: {
+            title: string;
+            oneOf: ({
+                pattern?: undefined;
+                type: string;
+            } | {
+                type: string;
+                pattern: string;
+            })[];
+            $semantic: ({
+                snippets?: undefined;
+                type: string;
+                from: string[];
+                mode: string;
+            } | {
+                from?: undefined;
+                mode?: undefined;
+                type: string;
+                snippets: string[];
+            })[];
+        };
+        dashboard: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                id: {
+                    $ref: string;
+                    description: string;
+                    $semantic: ({
+                        type: string;
+                        source: string;
+                        code: string;
+                    } | {
+                        code?: undefined;
+                        type: string;
+                        source: string;
+                    })[];
+                };
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+                title: {
+                    $ref: string;
+                    description: string;
+                };
+                description: {
+                    $ref: string;
+                    description: string;
+                };
+                tags: {
+                    $ref: string;
+                    description: string;
+                };
+                cross_filtering: {
+                    type: string;
+                    description: string;
+                };
+                user_filters_reset: {
+                    type: string;
+                    description: string;
+                };
+                user_filters_save: {
+                    type: string;
+                    description: string;
+                };
+                filter_views: {
+                    type: string;
+                    description: string;
+                };
+                enable_section_headers: {
+                    type: string;
+                    description: string;
+                };
+                sections: {
+                    type: string;
+                    description: string;
+                    items: {
+                        $ref: string;
+                    };
+                };
+                filters: {
+                    $ref: string;
+                    $semantic: {
+                        type: string;
+                    }[];
+                };
+                plugins: {
+                    type: string;
+                    description: string;
+                    items: {
+                        oneOf: ({
+                            $ref?: undefined;
+                            $semantic?: undefined;
+                            description?: undefined;
+                            type: string;
+                            properties: {
+                                id: {
+                                    $ref: string;
+                                    description: string;
+                                    $semantic: {
+                                        type: string;
+                                        source: string;
+                                    };
+                                };
+                                parameters: {
+                                    description: string;
+                                };
+                            };
+                            required: string[];
+                            additionalProperties: boolean;
+                        } | {
+                            properties?: undefined;
+                            required?: undefined;
+                            type?: undefined;
+                            additionalProperties?: undefined;
+                            $ref: string;
+                            description: string;
+                            $semantic: {
+                                type: string;
+                                source: string;
+                            };
+                        })[];
+                    };
+                };
+                tabs: {
+                    type: string;
+                    description: string;
+                    items: {
+                        $ref: string;
+                    };
+                    $semantic: {
+                        type: string;
+                    };
+                };
+                permissions: {
+                    type: string;
+                    description: string;
+                    additionalProperties: boolean;
+                    properties: {
+                        VIEW: {
+                            $ref: string;
+                        };
+                        EDIT: {
+                            $ref: string;
+                        };
+                        SHARE: {
+                            $ref: string;
+                        };
+                    };
+                };
+            };
+            required: string[];
+        };
+        section: {
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                title: {
+                    type: string;
+                    description: string;
+                };
+                description: {
+                    type: string;
+                    description: string;
+                };
+                widgets: {
+                    type: string;
+                    description: string;
+                    items: {
+                        $ref: string;
+                    };
+                };
+            };
+            required: string[];
+        };
+        tab: {
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                id: {
+                    $ref: string;
+                    description: string;
+                    $semantic: {
+                        type: string;
+                        source: string;
+                    }[];
+                };
+                title: {
+                    $ref: string;
+                    description: string;
+                };
+                filters: {
+                    $ref: string;
+                    description: string;
+                    $semantic: {
+                        type: string;
+                    };
+                };
+                sections: {
+                    type: string;
+                    description: string;
+                    items: {
+                        $ref: string;
+                    };
+                };
+            };
+            required: string[];
+        };
+        widget: {
+            title: string;
+            type: string;
+            allOf: ({
+                if: {
+                    properties: {
+                        visualization: {
+                            type: string[];
+                        };
+                        content?: undefined;
+                        visualizations?: undefined;
+                        sections?: undefined;
+                    };
+                    required: string[];
+                };
+                then: {
+                    properties?: undefined;
+                    required?: undefined;
+                    type?: undefined;
+                    additionalProperties?: undefined;
+                    title?: undefined;
+                    $ref: string;
+                };
+            } | {
+                if: {
+                    properties: {
+                        visualization?: undefined;
+                        content: {
+                            type: string[];
+                        };
+                        visualizations?: undefined;
+                        sections?: undefined;
+                    };
+                    required: string[];
+                };
+                then: {
+                    $ref?: undefined;
+                    title: string;
+                    type: string;
+                    additionalProperties: boolean;
+                    properties: {
+                        id: {
+                            $ref: string;
+                            description: string;
+                            $semantic: ({
+                                type: string;
+                                source: string;
+                                code: string;
+                            } | {
+                                code?: undefined;
+                                type: string;
+                                source: string;
+                            })[];
+                        };
+                        content: {
+                            type: string;
+                            description: string;
+                        };
+                        columns: {
+                            type: string;
+                            enum: number[];
+                            description: string;
+                        };
+                        rows: {
+                            type: string;
+                            description: string;
+                        };
+                        visualizations?: undefined;
+                        sections?: undefined;
+                        container?: undefined;
+                        layout_direction?: undefined;
+                        enable_section_headers?: undefined;
+                    };
+                    required: string[];
+                };
+            } | {
+                if: {
+                    properties: {
+                        visualization?: undefined;
+                        content?: undefined;
+                        visualizations: {
+                            type: string;
+                        };
+                        sections?: undefined;
+                    };
+                    required: string[];
+                };
+                then: {
+                    $ref?: undefined;
+                    title: string;
+                    type: string;
+                    additionalProperties: boolean;
+                    properties: {
+                        content?: undefined;
+                        id: {
+                            $ref: string;
+                            description: string;
+                            $semantic: ({
+                                type: string;
+                                source: string;
+                                code: string;
+                            } | {
+                                code?: undefined;
+                                type: string;
+                                source: string;
+                            })[];
+                        };
+                        columns: {
+                            type: string;
+                            enum: number[];
+                            description: string;
+                        };
+                        rows: {
+                            type: string;
+                            description: string;
+                        };
+                        visualizations: {
+                            type: string;
+                            description: string;
+                            items: {
+                                $ref: string;
+                            };
+                        };
+                        sections?: undefined;
+                        container?: undefined;
+                        layout_direction?: undefined;
+                        enable_section_headers?: undefined;
+                    };
+                    required: string[];
+                };
+            } | {
+                if: {
+                    properties: {
+                        visualization?: undefined;
+                        content?: undefined;
+                        visualizations?: undefined;
+                        sections: {
+                            type: string;
+                        };
+                    };
+                    required: string[];
+                };
+                then: {
+                    $ref?: undefined;
+                    title: string;
+                    type: string;
+                    additionalProperties: boolean;
+                    properties: {
+                        content?: undefined;
+                        visualizations?: undefined;
+                        id?: undefined;
+                        container: {
+                            $ref: string;
+                            description: string;
+                            $semantic: ({
+                                type: string;
+                                source: string;
+                                code: string;
+                            } | {
+                                code?: undefined;
+                                type: string;
+                                source: string;
+                            })[];
+                        };
+                        columns: {
+                            type: string;
+                            enum: number[];
+                            description: string;
+                        };
+                        rows: {
+                            type: string;
+                            description: string;
+                        };
+                        layout_direction: {
+                            type: string;
+                            enum: string[];
+                            description: string;
+                        };
+                        enable_section_headers: {
+                            type: string;
+                            description: string;
+                        };
+                        sections: {
+                            type: string;
+                            description: string;
+                            items: {
+                                type: string;
+                                additionalProperties: boolean;
+                                properties: {
+                                    title: {
+                                        type: string;
+                                        description: string;
+                                    };
+                                    description: {
+                                        type: string;
+                                        description: string;
+                                    };
+                                    widgets: {
+                                        type: string;
+                                        description: string;
+                                        items: {
+                                            $ref: string;
+                                        };
+                                    };
+                                };
+                                required: string[];
+                            };
+                        };
+                    };
+                    required: string[];
+                };
+            })[];
+        };
+        interaction: {
+            title: string;
+            description: string;
+            oneOf: ({
+                if: {
+                    properties: {
+                        open_url: {
+                            type: string;
+                        };
+                        open_dashboard?: undefined;
+                        open_visualization?: undefined;
+                    };
+                    required: string[];
+                };
+                then: {
+                    $ref: string;
+                };
+                else: {
+                    not: {};
+                };
+            } | {
+                if: {
+                    properties: {
+                        open_url?: undefined;
+                        open_dashboard: {
+                            type: string;
+                        };
+                        open_visualization?: undefined;
+                    };
+                    required: string[];
+                };
+                then: {
+                    $ref: string;
+                };
+                else: {
+                    not: {};
+                };
+            } | {
+                if: {
+                    properties: {
+                        open_url?: undefined;
+                        open_dashboard?: undefined;
+                        open_visualization: {
+                            type: string;
+                        };
+                    };
+                    required: string[];
+                };
+                then: {
+                    $ref: string;
+                };
+                else: {
+                    not: {};
+                };
+            })[];
+        };
+        ignored_drill_down: {
+            title: string;
+            description: string;
+            allOf: ({
+                if: {
+                    properties: {
+                        hierarchy: {
+                            type: string[];
+                        };
+                        template?: undefined;
+                    };
+                    required: string[];
+                };
+                then: {
+                    type: string;
+                    properties: {
+                        hierarchy: {
+                            type: string;
+                            description: string;
+                            $semantic: {
+                                type: string;
+                                source: string;
+                            };
+                        };
+                        on: {
+                            type: string;
+                            description: string;
+                            $semantic: {
+                                type: string;
+                                source: string;
+                            };
+                        };
+                        template?: undefined;
+                    };
+                    required: string[];
+                };
+            } | {
+                if: {
+                    properties: {
+                        hierarchy?: undefined;
+                        template: {
+                            type: string[];
+                        };
+                    };
+                    required: string[];
+                };
+                then: {
+                    type: string;
+                    properties: {
+                        hierarchy?: undefined;
+                        template: {
+                            type: string;
+                            description: string;
+                            enum: string[];
+                        };
+                        on: {
+                            type: string;
+                            description: string;
+                            $semantic: {
+                                type: string;
+                                source: string;
+                            };
+                        };
+                    };
+                    required: string[];
+                };
+            })[];
+        };
+        ignored_drill_downs_intersection: {
+            title: string;
+            description: string;
+            type: string;
+            properties: {
+                attributes: {
+                    type: string;
+                    description: string;
+                    items: {
+                        type: string;
+                        $semantic: {
+                            type: string;
+                            sources: string[];
+                        };
+                    };
+                };
+                hierarchy: {
+                    description: string;
+                    $ref: string;
+                };
+            };
+            required: string[];
+        };
+        visualizationWidget: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                id: {
+                    $ref: string;
+                    description: string;
+                    $semantic: ({
+                        type: string;
+                        source: string;
+                        code: string;
+                    } | {
+                        code?: undefined;
+                        type: string;
+                        source: string;
+                    })[];
+                };
+                visualization: {
+                    type: string;
+                    description: string;
+                    $semantic: {
+                        type: string;
+                        source: string;
+                    };
+                };
+                title: {
+                    oneOf: ({
+                        enum?: undefined;
+                        type: string;
+                        description: string;
+                    } | {
+                        type: string;
+                        enum: boolean[];
+                        description: string;
+                    })[];
+                };
+                description: {
+                    anyOf: ({
+                        enum?: undefined;
+                        type: string;
+                        description: string;
+                    } | {
+                        type: string;
+                        enum: boolean[];
+                        description: string;
+                    } | {
+                        type: string;
+                        enum: string[];
+                        description: string;
+                    })[];
+                };
+                columns: {
+                    type: string;
+                    enum: number[];
+                    description: string;
+                };
+                rows: {
+                    type: string;
+                    description: string;
+                };
+                date: {
+                    $ref: string;
+                    description: string;
+                    $semantic: {
+                        type: string;
+                        source: string;
+                    };
+                };
+                ignored_filters: {
+                    type: string;
+                    description: string;
+                    items: {
+                        type: string;
+                        description: string;
+                        $semantic: {
+                            type: string;
+                            sources: string[];
+                            typePrefix: boolean;
+                        };
+                    };
+                };
+                zoom_data: {
+                    type: string;
+                    description: string;
+                };
+                interactions: {
+                    type: string;
+                    items: {
+                        $ref: string;
+                    };
+                };
+                ignored_drill_downs: {
+                    type: string;
+                    description: string;
+                    items: {
+                        $ref: string;
+                    };
+                };
+                ignored_drill_downs_intersections: {
+                    type: string;
+                    description: string;
+                    items: {
+                        $ref: string;
+                    };
+                };
+                ignored_cross_filtering: {
+                    type: string;
+                    description: string;
+                };
+            };
+            required: string[];
+        };
+        interactionOpenPlainUrl: {
+            type: string;
+            properties: {
+                click_on: {
+                    $ref: string;
+                };
+                open_url: {
+                    type: string;
+                    description: string;
+                    $semantic: {
+                        type: string;
+                    };
+                };
+                ignored_intersection_attributes: {
+                    $ref: string;
+                };
+            };
+            required: string[];
+        };
+        interactionOpenParamUrl: {
+            type: string;
+            properties: {
+                click_on: {
+                    $ref: string;
+                };
+                open_url: {
+                    type: string;
+                    properties: {
+                        href: {
+                            description: string;
+                            oneOf: {
+                                $ref: string;
+                            }[];
+                        };
+                        label: {
+                            description: string;
+                            oneOf: {
+                                $ref: string;
+                            }[];
+                        };
+                    };
+                };
+                ignored_intersection_attributes: {
+                    $ref: string;
+                };
+            };
+            required: string[];
+        };
+        interactionOpenDashboard: {
+            type: string;
+            properties: {
+                click_on: {
+                    $ref: string;
+                };
+                open_dashboard: {
+                    type: string;
+                    description: string;
+                    $semantic: {
+                        type: string;
+                        source: string;
+                    };
+                };
+                open_dashboard_tab: {
+                    type: string;
+                    description: string;
+                    $semantic: {
+                        type: string;
+                        source: string;
+                    };
+                };
+                filters: {
+                    $ref: string;
+                };
+            };
+            required: string[];
+        };
+        interactionOpenVisualization: {
+            type: string;
+            properties: {
+                click_on: {
+                    $ref: string;
+                };
+                open_visualization: {
+                    type: string;
+                    description: string;
+                    $semantic: {
+                        type: string;
+                        source: string;
+                    };
+                };
+                filters: {
+                    $ref: string;
+                };
+            };
+            required: string[];
+        };
+        interactionIgnoredIntersectionAttributes: {
+            type: string;
+            description: string;
+            items: {
+                type: string;
+                $semantic: {
+                    type: string;
+                    sources: string[];
+                };
+            };
+        };
+        interactionIgnoredDashboardFilters: {
+            type: string;
+            description: string;
+            items: {
+                type: string;
+                $semantic: {
+                    type: string;
+                    sources: string[];
+                };
+            };
+        };
+        interactionIncludedSourceInsightFilters: {
+            type: string;
+            description: string;
+            items: {
+                type: string;
+                $semantic: {
+                    type: string;
+                    source: string;
+                };
+            };
+        };
+        interactionIncludedSourceMeasureFilters: {
+            type: string;
+            description: string;
+            items: {
+                type: string;
+                $semantic: {
+                    type: string;
+                    source: string;
+                };
+            };
+        };
+        interactionFiltersExclude: {
+            type: string;
+            properties: {
+                drilled_datapoint: {
+                    $ref: string;
+                };
+                dashboard_filters: {
+                    $ref: string;
+                };
+            };
+        };
+        interactionFiltersInclude: {
+            type: string;
+            properties: {
+                visualization_filters: {
+                    $ref: string;
+                };
+                metric_filters: {
+                    $ref: string;
+                };
+            };
+        };
+        interactionClickOn: {
+            type: string;
+            description: string;
+            $semantic: {
+                type: string;
+                source: string;
+                code: string;
+            };
+        };
+        interactionFilters: {
+            type: string;
+            properties: {
+                exclude: {
+                    $ref: string;
+                };
+                include: {
+                    $ref: string;
+                };
+            };
+        };
+        dataset: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                id: {
+                    $ref: string;
+                    description: string;
+                    $semantic: ({
+                        type: string;
+                        source: string;
+                        code: string;
+                    } | {
+                        code?: undefined;
+                        type: string;
+                        source: string;
+                    })[];
+                };
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+                title: {
+                    $ref: string;
+                    description: string;
+                };
+                description: {
+                    $ref: string;
+                    description: string;
+                };
+                tags: {
+                    $ref: string;
+                    description: string;
+                };
+                table_path: {
+                    type: string;
+                    description: string;
+                    pattern: string;
+                    $semantic: {
+                        type: string;
+                        source: string;
+                        code: string;
+                    };
+                };
+                sql: {
+                    type: string;
+                    description: string;
+                    $semantic: {
+                        type: string;
+                    };
+                };
+                primary_key: {
+                    oneOf: ({
+                        items?: undefined;
+                        uniqueItems?: undefined;
+                        title: string;
+                        type: string;
+                        $ref: string;
+                        description: string;
+                        $semantic: {
+                            type: string;
+                            source: string;
+                            code: string;
+                        };
+                    } | {
+                        $ref?: undefined;
+                        $semantic?: undefined;
+                        title: string;
+                        type: string;
+                        items: {
+                            $ref: string;
+                            $semantic: {
+                                type: string;
+                                source: string;
+                                code: string;
+                            };
+                        };
+                        uniqueItems: boolean;
+                        description: string;
+                    })[];
+                };
+                fields: {
+                    $ref: string;
+                    description: string;
+                };
+                references: {
+                    type: string;
+                    items: {
+                        $ref: string;
+                    };
+                    description: string;
+                };
+                workspace_data_filters: {
+                    type: string;
+                    items: {
+                        $ref: string;
+                    };
+                    description: string;
+                };
+                data_source: {
+                    type: string;
+                    $semantic: {
+                        type: string;
+                        source: string;
+                        code: string;
+                    };
+                    description: string;
+                };
+                precedence: {
+                    type: string;
+                    description: string;
+                };
+            };
+            $semantic: ({
+                snippets?: undefined;
+                type: string;
+            } | {
+                type: string;
+                snippets: string[];
+            })[];
+            required: string[];
+            oneOf: {
+                title: string;
+                required: string[];
+            }[];
+        };
+        dateDataset: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                id: {
+                    $ref: string;
+                    description: string;
+                    $semantic: ({
+                        type: string;
+                        source: string;
+                        code: string;
+                    } | {
+                        code?: undefined;
+                        type: string;
+                        source: string;
+                    })[];
+                };
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+                title: {
+                    $ref: string;
+                    description: string;
+                };
+                description: {
+                    $ref: string;
+                    description: string;
+                };
+                tags: {
+                    $ref: string;
+                    description: string;
+                };
+                title_base: {
+                    type: string;
+                    description: string;
+                    maxLength: number;
+                };
+                title_pattern: {
+                    type: string;
+                    description: string;
+                    maxLength: number;
+                };
+                granularities: {
+                    type: string;
+                    uniqueItems: boolean;
+                    items: {
+                        type: string;
+                        enum: string[];
+                        $semantic: {
+                            type: string;
+                            sources: string[];
+                            mode: string;
+                        };
+                    };
+                    $semantic: {
+                        type: string;
+                        required: string[];
+                    };
+                };
+            };
+            $semantic: {
+                type: string;
+                snippets: string[];
+            };
+            required: string[];
+        };
+        fields: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            patternProperties: {
+                "^(?!\\.)[.A-Za-z0-9_-]{1,255}$": {
+                    allOf: ({
+                        if: {
+                            not?: undefined;
+                            properties: {
+                                type: {
+                                    const: string;
+                                };
+                            };
+                            required: string[];
+                        };
+                        then: {
+                            $semantic?: undefined;
+                            $ref: string;
+                        };
+                    } | {
+                        if: {
+                            properties?: undefined;
+                            required?: undefined;
+                            not: {
+                                properties: {
+                                    type: {
+                                        type: string;
+                                    };
+                                };
+                                required: string[];
+                            };
+                        };
+                        then: {
+                            $ref?: undefined;
+                            $semantic: {
+                                type: string;
+                                snippets: string[];
+                            };
+                        };
+                    })[];
+                    properties: {
+                        type: {
+                            type: string;
+                            enum: string[];
+                        };
+                    };
+                    required: string[];
+                };
+            };
+            $semantic: ({
+                type: string;
+                source: string;
+                mode: string;
+                connectedField: string;
+                code: string;
+            } | {
+                connectedField?: undefined;
+                type: string;
+                source: string;
+                mode: string;
+                code: string;
+            })[];
+        };
+        reference: {
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                dataset: {
+                    type: string;
+                    pattern: string;
+                    $semantic: {
+                        type: string;
+                        source: string;
+                        code: string;
+                    };
+                    description: string;
+                };
+                sources: {
+                    type: string;
+                    items: {
+                        $ref: string;
+                    };
+                    description: string;
+                };
+                multi_directional: {
+                    type: string;
+                    description: string;
+                };
+            };
+            required: string[];
+        };
+        workspace_data_filter: {
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                filter_id: {
+                    type: string;
+                    description: string;
+                };
+                source_column: {
+                    $ref: string;
+                };
+                data_type: {
+                    $ref: string;
+                    description: string;
+                };
+            };
+            required: string[];
+        };
+        attribute: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+                title: {
+                    $ref: string;
+                    description: string;
+                };
+                description: {
+                    $ref: string;
+                    description: string;
+                };
+                tags: {
+                    $ref: string;
+                    tags: string;
+                };
+                source_column: {
+                    $ref: string;
+                    description: string;
+                };
+                data_type: {
+                    $ref: string;
+                    description: string;
+                };
+                default_view: {
+                    type: string;
+                    description: string;
+                    $semantic: {
+                        type: string;
+                        source: string;
+                        code: string;
+                    };
+                };
+                sort_column: {
+                    type: string;
+                    description: string;
+                    $semantic: {
+                        type: string;
+                        source: string;
+                        code: string;
+                    };
+                };
+                sort_direction: {
+                    type: string;
+                    enum: string[];
+                };
+                show_in_ai_results: {
+                    type: string;
+                    description: string;
+                };
+                is_hidden: {
+                    type: string;
+                    description: string;
+                    deprecated: boolean;
+                };
+                locale: {
+                    $ref: string;
+                    description: string;
+                };
+                is_nullable: {
+                    type: string;
+                    description: string;
+                };
+                null_value_join_replacement: {
+                    type: string;
+                    description: string;
+                };
+                labels: {
+                    type: string;
+                    additionalProperties: boolean;
+                    patternProperties: {
+                        "^(?!\\.)[.A-Za-z0-9_-]{1,255}$": {
+                            $ref: string;
+                        };
+                    };
+                    $semantic: {
+                        type: string;
+                        source: string;
+                        mode: string;
+                        connectedField: string;
+                        code: string;
+                    }[];
+                };
+            };
+            required: string[];
+            $semantic: ({
+                sources?: undefined;
+                mode?: undefined;
+                type: string;
+                snippets: string[];
+            } | {
+                snippets?: undefined;
+                type: string;
+                sources: string[];
+                mode: string;
+            })[];
+        };
+        fact: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+                title: {
+                    $ref: string;
+                    description: string;
+                };
+                description: {
+                    $ref: string;
+                    description: string;
+                };
+                tags: {
+                    $ref: string;
+                    tags: string;
+                };
+                source_column: {
+                    $ref: string;
+                    description: string;
+                };
+                data_type: {
+                    $ref: string;
+                    description: string;
+                };
+                show_in_ai_results: {
+                    type: string;
+                    description: string;
+                };
+                is_hidden: {
+                    type: string;
+                    description: string;
+                    deprecated: boolean;
+                };
+                is_nullable: {
+                    type: string;
+                    description: string;
+                };
+                null_value_join_replacement: {
+                    type: string;
+                    description: string;
+                };
+            };
+            required: string[];
+            $semantic: ({
+                source?: undefined;
+                mode?: undefined;
+                type: string;
+                snippets: string[];
+            } | {
+                snippets?: undefined;
+                type: string;
+                source: string;
+                mode: string;
+            })[];
+        };
+        aggregated_fact: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+                description: {
+                    $ref: string;
+                    description: string;
+                };
+                tags: {
+                    $ref: string;
+                    tags: string;
+                };
+                source_column: {
+                    $ref: string;
+                    description: string;
+                };
+                data_type: {
+                    $ref: string;
+                    description: string;
+                };
+                aggregated_as: {
+                    type: string;
+                    enum: string[];
+                    description: string;
+                };
+                assigned_to: {
+                    type: string;
+                    description: string;
+                };
+                is_nullable: {
+                    type: string;
+                    description: string;
+                };
+                null_value_join_replacement: {
+                    type: string;
+                    description: string;
+                };
+            };
+            required: string[];
+            $semantic: ({
+                source?: undefined;
+                mode?: undefined;
+                type: string;
+                snippets: string[];
+            } | {
+                snippets?: undefined;
+                type: string;
+                source: string;
+                mode: string;
+            })[];
+        };
+        sourceColumn: {
+            type: string;
+            maxLength: number;
+            $semantic: {
+                type: string;
+                source: string;
+                code: string;
+            };
+        };
+        dataType: {
+            type: string;
+            enum: string[];
+            $semantic: {
+                type: string;
+                source: string;
+                code: string;
+            };
+        };
+        locale: {
+            type: string;
+            pattern: string;
+            description: string;
+        };
+        label: {
+            title: string;
+            type: string;
+            required: never[];
+            additionalProperties: boolean;
+            properties: {
+                source_column: {
+                    $ref: string;
+                    description: string;
+                };
+                data_type: {
+                    $ref: string;
+                    description: string;
+                };
+                title: {
+                    $ref: string;
+                    description: string;
+                };
+                description: {
+                    $ref: string;
+                    description: string;
+                };
+                tags: {
+                    $ref: string;
+                    description: string;
+                };
+                value_type: {
+                    type: string;
+                    enum: string[];
+                };
+                geo_area_config: {
+                    $ref: string;
+                    description: string;
+                };
+                show_in_ai_results: {
+                    type: string;
+                    description: string;
+                };
+                is_hidden: {
+                    type: string;
+                    description: string;
+                    deprecated: boolean;
+                };
+                locale: {
+                    $ref: string;
+                    description: string;
+                };
+                translations: {
+                    type: string;
+                    description: string;
+                    items: {
+                        $ref: string;
+                    };
+                };
+                is_nullable: {
+                    type: string;
+                    description: string;
+                };
+                null_value_join_replacement: {
+                    type: string;
+                    description: string;
+                };
+            };
+            $semantic: {
+                type: string;
+                sources: string[];
+                mode: string;
+            }[];
+        };
+        geoAreaConfig: {
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                collection: {
+                    type: string;
+                    additionalProperties: boolean;
+                    properties: {
+                        id: {
+                            type: string;
+                            description: string;
+                        };
+                    };
+                    required: string[];
+                };
+            };
+            required: string[];
+        };
+        labelTranslation: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                source_column: {
+                    $ref: string;
+                    description: string;
+                };
+                locale: {
+                    $ref: string;
+                    description: string;
+                };
+            };
+            required: string[];
+        };
+        source: {
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                source_column: {
+                    $ref: string;
+                };
+                data_type: {
+                    $ref: string;
+                    description: string;
+                };
+                target: {
+                    type: string;
+                    description: string;
+                    $semantic: ({
+                        mode?: undefined;
+                        type: string;
+                        source: string;
+                        code: string;
+                    } | {
+                        code?: undefined;
+                        type: string;
+                        source: string;
+                        mode: string;
+                    })[];
+                };
+                is_nullable: {
+                    type: string;
+                    description: string;
+                };
+                null_value_join_replacement: {
+                    type: string;
+                    description: string;
+                };
+            };
+            required: string[];
+        };
+        metric: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                id: {
+                    $ref: string;
+                    description: string;
+                    $semantic: ({
+                        type: string;
+                        source: string;
+                        code: string;
+                    } | {
+                        code?: undefined;
+                        type: string;
+                        source: string;
+                    })[];
+                };
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+                title: {
+                    $ref: string;
+                    description: string;
+                };
+                description: {
+                    $ref: string;
+                    description: string;
+                };
+                tags: {
+                    $ref: string;
+                    description: string;
+                };
+                maql: {
+                    type: string;
+                    description: string;
+                    $semantic: {
+                        type: string;
+                    };
+                };
+                format: {
+                    type: string;
+                    description: string;
+                };
+                show_in_ai_results: {
+                    type: string;
+                    description: string;
+                };
+                is_hidden: {
+                    type: string;
+                    description: string;
+                    deprecated: boolean;
+                };
+            };
+            $semantic: {
+                type: string;
+                snippets: string[];
+            };
+            required: string[];
+        };
+        plugin: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                id: {
+                    $ref: string;
+                    description: string;
+                    $semantic: ({
+                        type: string;
+                        source: string;
+                        code: string;
+                    } | {
+                        code?: undefined;
+                        type: string;
+                        source: string;
+                    })[];
+                };
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+                title: {
+                    $ref: string;
+                    description: string;
+                };
+                description: {
+                    $ref: string;
+                    description: string;
+                };
+                tags: {
+                    $ref: string;
+                    description: string;
+                };
+                url: {
+                    type: string;
+                    description: string;
+                    pattern: string;
+                };
+            };
+            required: string[];
+        };
+        queryFields: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            patternProperties: {
+                "^(?!\\.)[.A-Za-z0-9_-]{1,255}$": {
+                    $ref: string;
+                };
+            };
+        };
+        querySorts: {
+            title: string;
+            type: string;
+            items: {
+                $ref: string;
+            };
+        };
+        queryField: {
+            title: string;
+            oneOf: ({
+                properties?: undefined;
+                type?: undefined;
+                oneOf?: undefined;
+                title?: undefined;
+                $ref: string;
+            } | {
+                $ref?: undefined;
+                title: string;
+                type: string;
+                properties: {
+                    aggregation: {
+                        type: string;
+                        description: string;
+                        enum: string[];
+                    };
+                    using: {
+                        oneOf: ({
+                            items?: undefined;
+                            type: string;
+                            description: string;
+                        } | {
+                            type: string;
+                            description: string;
+                            items: {
+                                type: string;
+                            };
+                        })[];
+                    };
+                    maql: {
+                        type: string;
+                        description: string;
+                    };
+                    operator: {
+                        type: string;
+                        enum: string[];
+                        description: string;
+                    };
+                    type: {
+                        type: string;
+                        enum: string[];
+                        description: string;
+                    };
+                    date_filter: {
+                        type: string;
+                        description: string;
+                        $semantic: {
+                            type: string;
+                            sources: string[];
+                        };
+                    };
+                };
+                oneOf: ({
+                    title: string;
+                    if: {
+                        properties?: undefined;
+                        required?: undefined;
+                        allOf: ({
+                            not?: undefined;
+                            properties: {
+                                using: {
+                                    type: string[];
+                                };
+                            };
+                            required: string[];
+                        } | {
+                            properties?: undefined;
+                            required?: undefined;
+                            not: {
+                                type?: undefined;
+                                aggregation: {
+                                    type: string;
+                                };
+                                required: string[];
+                                operator?: undefined;
+                            };
+                        } | {
+                            properties?: undefined;
+                            required?: undefined;
+                            not: {
+                                type?: undefined;
+                                aggregation?: undefined;
+                                operator: {
+                                    type: string;
+                                };
+                                required: string[];
+                            };
+                        } | {
+                            properties?: undefined;
+                            required?: undefined;
+                            not: {
+                                aggregation?: undefined;
+                                operator?: undefined;
+                                type: {
+                                    type: string;
+                                };
+                                required: string[];
+                            };
+                        })[];
+                    };
+                    then: {
+                        title: string;
+                        type: string;
+                        additionalProperties: boolean;
+                        properties: {
+                            type?: undefined;
+                            aggregation?: undefined;
+                            operator?: undefined;
+                            title: {
+                                $ref: string;
+                                description: string;
+                            };
+                            show_all_values: {
+                                description: string;
+                                type: string;
+                            };
+                            using: {
+                                $ref?: undefined;
+                                $semantic?: undefined;
+                                items?: undefined;
+                                minItems?: undefined;
+                                type: string;
+                                description: string;
+                                oneOf: {
+                                    $ref: string;
+                                }[];
+                                maxItems?: undefined;
+                            };
+                            compute_ratio?: undefined;
+                            filter_by?: undefined;
+                            maql?: undefined;
+                            date_filter?: undefined;
+                            period?: undefined;
+                        };
+                        required: string[];
+                    };
+                    else: {
+                        not: {};
+                    };
+                } | {
+                    title: string;
+                    if: {
+                        properties?: undefined;
+                        required?: undefined;
+                        allOf: ({
+                            not?: undefined;
+                            properties: {
+                                using: {
+                                    type: string[];
+                                };
+                            };
+                            required: string[];
+                        } | {
+                            properties?: undefined;
+                            required?: undefined;
+                            not: {
+                                type?: undefined;
+                                operator: {
+                                    type: string;
+                                };
+                                required: string[];
+                            };
+                        } | {
+                            properties?: undefined;
+                            required?: undefined;
+                            not: {
+                                operator?: undefined;
+                                type: {
+                                    type: string;
+                                };
+                                required: string[];
+                            };
+                        })[];
+                    };
+                    then: {
+                        title: string;
+                        type: string;
+                        additionalProperties: boolean;
+                        properties: {
+                            type?: undefined;
+                            aggregation?: undefined;
+                            operator?: undefined;
+                            show_all_values?: undefined;
+                            title: {
+                                $ref: string;
+                                description: string;
+                            };
+                            compute_ratio: {
+                                type: string;
+                                description: string;
+                            };
+                            filter_by: {
+                                $ref: string;
+                                description: string;
+                            };
+                            using: {
+                                $semantic?: undefined;
+                                items?: undefined;
+                                type?: undefined;
+                                oneOf?: undefined;
+                                minItems?: undefined;
+                                $ref: string;
+                                description: string;
+                                maxItems?: undefined;
+                            };
+                            maql?: undefined;
+                            date_filter?: undefined;
+                            period?: undefined;
+                        };
+                        required: string[];
+                    };
+                    else: {
+                        not: {};
+                    };
+                } | {
+                    title: string;
+                    if: {
+                        allOf?: undefined;
+                        properties: {
+                            type?: undefined;
+                            operator?: undefined;
+                            using: {
+                                type: string[];
+                            };
+                            aggregation: {
+                                type: string;
+                            };
+                            maql?: undefined;
+                            date_filter?: undefined;
+                        };
+                        required: string[];
+                    };
+                    then: {
+                        title: string;
+                        type: string;
+                        additionalProperties: boolean;
+                        properties: {
+                            type?: undefined;
+                            operator?: undefined;
+                            show_all_values?: undefined;
+                            title: {
+                                $ref: string;
+                                description: string;
+                            };
+                            compute_ratio: {
+                                type: string;
+                                description: string;
+                            };
+                            filter_by: {
+                                $ref: string;
+                                description: string;
+                            };
+                            aggregation: {
+                                type: string;
+                                enum: string[];
+                                description: string;
+                            };
+                            using: {
+                                $ref?: undefined;
+                                $semantic?: undefined;
+                                items?: undefined;
+                                minItems?: undefined;
+                                type: string;
+                                oneOf: {
+                                    $ref: string;
+                                }[];
+                                description: string;
+                                maxItems?: undefined;
+                            };
+                            maql?: undefined;
+                            date_filter?: undefined;
+                            period?: undefined;
+                        };
+                        required: string[];
+                    };
+                    else: {
+                        not: {};
+                    };
+                } | {
+                    title: string;
+                    if: {
+                        allOf?: undefined;
+                        properties: {
+                            type?: undefined;
+                            aggregation?: undefined;
+                            operator?: undefined;
+                            maql: {
+                                type: string[];
+                            };
+                            using?: undefined;
+                            date_filter?: undefined;
+                        };
+                        required: string[];
+                    };
+                    then: {
+                        title: string;
+                        type: string;
+                        additionalProperties: boolean;
+                        properties: {
+                            type?: undefined;
+                            aggregation?: undefined;
+                            operator?: undefined;
+                            show_all_values?: undefined;
+                            compute_ratio?: undefined;
+                            filter_by?: undefined;
+                            title: {
+                                $ref: string;
+                                description: string;
+                            };
+                            maql: {
+                                type: string;
+                                description: string;
+                                $semantic: {
+                                    type: string;
+                                };
+                            };
+                            using?: undefined;
+                            date_filter?: undefined;
+                            period?: undefined;
+                        };
+                        required: string[];
+                    };
+                    else: {
+                        not: {};
+                    };
+                } | {
+                    title: string;
+                    if: {
+                        allOf?: undefined;
+                        properties: {
+                            type?: undefined;
+                            aggregation?: undefined;
+                            maql?: undefined;
+                            using: {
+                                type: string;
+                            };
+                            operator: {
+                                type: string;
+                            };
+                            date_filter?: undefined;
+                        };
+                        required: string[];
+                    };
+                    then: {
+                        title: string;
+                        type: string;
+                        additionalProperties: boolean;
+                        properties: {
+                            type?: undefined;
+                            aggregation?: undefined;
+                            show_all_values?: undefined;
+                            compute_ratio?: undefined;
+                            filter_by?: undefined;
+                            maql?: undefined;
+                            title: {
+                                $ref: string;
+                                description: string;
+                            };
+                            operator: {
+                                type: string;
+                                enum: string[];
+                                description: string;
+                            };
+                            using: {
+                                $ref?: undefined;
+                                $semantic?: undefined;
+                                description?: undefined;
+                                oneOf?: undefined;
+                                type: string;
+                                items: {
+                                    type: string;
+                                    description: string;
+                                    $semantic: {
+                                        type: string;
+                                        source: string;
+                                    };
+                                };
+                                minItems: number;
+                                maxItems: number;
+                            };
+                            date_filter?: undefined;
+                            period?: undefined;
+                        };
+                        required: string[];
+                    };
+                    else: {
+                        not: {};
+                    };
+                } | {
+                    title: string;
+                    if: {
+                        allOf?: undefined;
+                        properties: {
+                            aggregation?: undefined;
+                            operator?: undefined;
+                            maql?: undefined;
+                            using: {
+                                type: string[];
+                            };
+                            type: {
+                                type: string;
+                                enum: string[];
+                            };
+                            date_filter: {
+                                type: string;
+                            };
+                        };
+                        required: string[];
+                    };
+                    then: {
+                        title: string;
+                        type: string;
+                        additionalProperties: boolean;
+                        properties: {
+                            aggregation?: undefined;
+                            operator?: undefined;
+                            show_all_values?: undefined;
+                            compute_ratio?: undefined;
+                            filter_by?: undefined;
+                            maql?: undefined;
+                            title: {
+                                $ref: string;
+                                description: string;
+                            };
+                            type: {
+                                type: string;
+                                enum: string[];
+                                description: string;
+                            };
+                            using: {
+                                $ref?: undefined;
+                                items?: undefined;
+                                oneOf?: undefined;
+                                minItems?: undefined;
+                                maxItems?: undefined;
+                                type: string;
+                                description: string;
+                                $semantic: {
+                                    type: string;
+                                    source: string;
+                                };
+                            };
+                            date_filter: {
+                                type: string;
+                                description: string;
+                                $semantic: {
+                                    type: string;
+                                    sources: string[];
+                                };
+                            };
+                            period?: undefined;
+                        };
+                        required: string[];
+                    };
+                    else: {
+                        not: {};
+                    };
+                } | {
+                    title: string;
+                    if: {
+                        allOf?: undefined;
+                        properties: {
+                            aggregation?: undefined;
+                            operator?: undefined;
+                            maql?: undefined;
+                            using: {
+                                type: string[];
+                            };
+                            type: {
+                                type: string;
+                                enum: string[];
+                            };
+                            date_filter: {
+                                type: string;
+                            };
+                        };
+                        required: string[];
+                    };
+                    then: {
+                        title: string;
+                        type: string;
+                        additionalProperties: boolean;
+                        properties: {
+                            aggregation?: undefined;
+                            operator?: undefined;
+                            show_all_values?: undefined;
+                            compute_ratio?: undefined;
+                            filter_by?: undefined;
+                            maql?: undefined;
+                            title: {
+                                $ref: string;
+                                description: string;
+                            };
+                            type: {
+                                type: string;
+                                enum: string[];
+                                description: string;
+                            };
+                            using: {
+                                $ref?: undefined;
+                                items?: undefined;
+                                oneOf?: undefined;
+                                minItems?: undefined;
+                                maxItems?: undefined;
+                                type: string;
+                                description: string;
+                                $semantic: {
+                                    type: string;
+                                    source: string;
+                                };
+                            };
+                            date_filter: {
+                                type: string;
+                                description: string;
+                                $semantic: {
+                                    type: string;
+                                    sources: string[];
+                                };
+                            };
+                            period: {
+                                type: string;
+                                description: string;
+                                minimum: number;
+                            };
+                        };
+                        required: string[];
+                    };
+                    else: {
+                        not: {};
+                    };
+                })[];
+            })[];
+            $semantic: {
+                type: string;
+                sources: string[];
+                mode: string;
+            }[];
+        };
+        querySort: {
+            title: string;
+            allOf: ({
+                if: {
+                    not?: undefined;
+                    properties: {
+                        type: {
+                            enum: string[];
+                        };
+                    };
+                    required: string[];
+                };
+                then: {
+                    $semantic?: undefined;
+                    $ref: string;
+                };
+            } | {
+                if: {
+                    properties?: undefined;
+                    required?: undefined;
+                    not: {
+                        properties: {
+                            type: {
+                                type: string;
+                            };
+                        };
+                        required: string[];
+                    };
+                };
+                then: {
+                    $ref?: undefined;
+                    $semantic: {
+                        type: string;
+                        snippets: never[];
+                    };
+                };
+            })[];
+            properties: {
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+            };
+            required: string[];
+        };
+        queryAttributeSort: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+                by: {
+                    description: string;
+                    oneOf: ({
+                        $ref?: undefined;
+                        type: string;
+                        $semantic: {
+                            type: string;
+                            source: string;
+                        };
+                    } | {
+                        $semantic?: undefined;
+                        type?: undefined;
+                        $ref: string;
+                    })[];
+                };
+                direction: {
+                    type: string;
+                    enum: string[];
+                    description: string;
+                };
+                aggregation: {
+                    type: string;
+                    enum: string[];
+                    description: string;
+                };
+            };
+            required: string[];
+        };
+        queryMetricSort: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+                direction: {
+                    type: string;
+                    enum: string[];
+                    description: string;
+                };
+                metrics: {
+                    type: string;
+                    items: {
+                        description: string;
+                        oneOf: ({
+                            properties?: undefined;
+                            required?: undefined;
+                            additionalProperties?: undefined;
+                            type: string;
+                            $semantic: {
+                                type: string;
+                                source: string;
+                            };
+                        } | {
+                            $semantic?: undefined;
+                            type: string;
+                            additionalProperties: boolean;
+                            properties: {
+                                by: {
+                                    description: string;
+                                    oneOf: ({
+                                        $ref?: undefined;
+                                        type: string;
+                                        $semantic: {
+                                            type: string;
+                                            source: string;
+                                        };
+                                    } | {
+                                        $semantic?: undefined;
+                                        type?: undefined;
+                                        $ref: string;
+                                    })[];
+                                };
+                                element: {
+                                    type: string;
+                                    description: string;
+                                    $semantic: {
+                                        type: string;
+                                        from: string;
+                                    };
+                                };
+                                function: {
+                                    type: string;
+                                    description: string;
+                                    enum: string[];
+                                };
+                            };
+                            required: string[];
+                        })[];
+                    };
+                    minItems: number;
+                };
+            };
+            required: string[];
+        };
+        bucketItem: {
+            title: string;
+            $semantic: {
+                type: string;
+                sources: string[];
+            };
+            oneOf: ({
+                properties?: undefined;
+                additionalProperties?: undefined;
+                title: string;
+                type: string;
+                $semantic: {
+                    type: string;
+                    sources: string[];
+                };
+            } | {
+                $semantic?: undefined;
+                title: string;
+                type: string;
+                additionalProperties: boolean;
+                properties: {
+                    field: {
+                        type: string;
+                        description: string;
+                        $semantic: {
+                            type: string;
+                            sources: string[];
+                        };
+                    };
+                    format: {
+                        type: string;
+                        description: string;
+                    };
+                    axis: {
+                        type: string;
+                        description: string;
+                        enum: string[];
+                    };
+                    display_as: {
+                        type: string;
+                        description: string;
+                        enum: string[];
+                    };
+                    totals: {
+                        type: string;
+                        description: string;
+                        items: {
+                            $ref: string;
+                        };
+                    };
+                };
+            })[];
+        };
+        bucketEmptyItem: {
+            title: string;
+            type: string;
+        };
+        bucketPushpinLocationItem: {
+            title: string;
+            type: string;
+            $semantic: {
+                type: string;
+                sources: string[];
+            };
+        };
+        layerItem: {
+            allOf: ({
+                $ref: string;
+                anyOf?: undefined;
+            } | {
+                $ref?: undefined;
+                anyOf: {
+                    properties: {
+                        type: {
+                            const: string;
+                        };
+                        view_by: {
+                            type: string;
+                            description: string;
+                            items: {
+                                $ref: string;
+                            };
+                        };
+                    };
+                    required: string[];
+                }[];
+            })[];
+        };
+        bucketGeoAreaItem: {
+            title: string;
+            type: string;
+            $semantic: {
+                type: string;
+                sources: string[];
+            };
+        };
+        totalItem: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                type: {
+                    type: string;
+                    enum: string[];
+                };
+                title: {
+                    $ref: string;
+                    description: string;
+                };
+                using: {
+                    type: string;
+                    description: string;
+                    $semantic: {
+                        type: string;
+                        source: string;
+                    };
+                };
+            };
+            required: string[];
+        };
+        bucketLocationItem: {
+            title: string;
+            type: string;
+            $semantic: {
+                type: string;
+                sources: string[];
+            };
+        };
+        layerItemBase: {
+            title: string;
+            type: string;
+            additionalProperties: boolean;
+            properties: {
+                id: {
+                    $ref: string;
+                    description: string;
+                };
+                title: {
+                    $ref: string;
+                    description: string;
+                };
+                type: {
+                    type: string;
+                    description: string;
+                    enum: string[];
+                };
+                config: {
+                    $ref: string;
+                    description: string;
+                };
+                metrics: {
+                    type: string;
+                    description: string;
+                    items: {
+                        oneOf: {
+                            $ref: string;
+                        }[];
+                    };
+                };
+                view_by: {
+                    type: string;
+                    description: string;
+                    items: {
+                        $ref: string;
+                    };
+                };
+                segment_by: {
+                    type: string;
+                    description: string;
+                    items: {
+                        $ref: string;
+                    };
+                };
+            };
+            required: string[];
+        };
+    };
+};
+
 // Warning: (ae-missing-release-tag) "Metric" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
 //
 // @public (undocumented)

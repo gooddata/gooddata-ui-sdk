@@ -431,6 +431,7 @@ function buildDatasetLabel(label: Label, id: string): DatasetLabel {
 
 // --- convertBucketToTitle ---
 
+/** @public */
 export function convertBucketToTitle(
     entities: ExportEntities,
     query: Query,

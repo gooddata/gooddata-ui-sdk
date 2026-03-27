@@ -6,28 +6,96 @@
 
 import { AfmExecution } from '@gooddata/api-client-tiger';
 import { AfmObjectIdentifier } from '@gooddata/api-client-tiger';
+import type { ArithmeticMetricField } from '@gooddata/sdk-code-schemas/v1';
+import type { Attribute } from '@gooddata/sdk-code-schemas/v1';
+import type { AttributeField } from '@gooddata/sdk-code-schemas/v1';
 import type { AttributeHierarchy } from '@gooddata/sdk-code-schemas/v1';
+import type { Bucket } from '@gooddata/sdk-code-schemas/v1';
+import type { CalculatedMetricField } from '@gooddata/sdk-code-schemas/v1';
+import type { Color } from '@gooddata/sdk-code-schemas/v1';
+import type { ContainerWidget } from '@gooddata/sdk-code-schemas/v1';
 import type { Dashboard } from '@gooddata/sdk-code-schemas/v1';
 import type { DashboardFilters } from '@gooddata/sdk-code-schemas/v1';
 import type { Dataset } from '@gooddata/sdk-code-schemas/v1';
 import type { DateDataset } from '@gooddata/sdk-code-schemas/v1';
 import { DeclarativeAnalyticalDashboard } from '@gooddata/api-client-tiger';
+import { DeclarativeAttribute } from '@gooddata/api-client-tiger';
 import { DeclarativeAttributeHierarchy } from '@gooddata/api-client-tiger';
 import { DeclarativeDashboardPlugin } from '@gooddata/api-client-tiger';
 import { DeclarativeDataset } from '@gooddata/api-client-tiger';
 import { DeclarativeDateDataset } from '@gooddata/api-client-tiger';
+import { DeclarativeFact } from '@gooddata/api-client-tiger';
 import { DeclarativeFilterContext } from '@gooddata/api-client-tiger';
+import { DeclarativeLabel } from '@gooddata/api-client-tiger';
 import { DeclarativeMetric } from '@gooddata/api-client-tiger';
+import { DeclarativeReference } from '@gooddata/api-client-tiger';
 import { DeclarativeTable } from '@gooddata/api-client-tiger';
 import { DeclarativeVisualizationObject } from '@gooddata/api-client-tiger';
+import type { Fields } from '@gooddata/sdk-code-schemas/v1';
+import { IAbsoluteDateFilter } from '@gooddata/sdk-model';
+import { IArithmeticMeasureDefinition } from '@gooddata/sdk-model';
+import { IAttributeBody } from '@gooddata/sdk-model';
+import { IAttributeFilterConfigs } from '@gooddata/sdk-model';
+import { IAttributeSortItem } from '@gooddata/sdk-model';
+import { IBucket } from '@gooddata/sdk-model';
+import { IDashboardAttributeFilterConfig } from '@gooddata/sdk-model';
+import { IDashboardDateFilterConfig } from '@gooddata/sdk-model';
+import { IDashboardDateFilterConfigItem } from '@gooddata/sdk-model';
 import { IDashboardDefinition } from '@gooddata/sdk-model';
 import { IDashboardFilterGroupsConfig } from '@gooddata/sdk-model';
+import { IDashboardLayout } from '@gooddata/sdk-model';
+import { IDashboardLayoutItem } from '@gooddata/sdk-model';
+import { IDashboardPluginLink } from '@gooddata/sdk-model';
+import { IDashboardWidget } from '@gooddata/sdk-model';
+import { IDrillToAttributeUrl } from '@gooddata/sdk-model';
+import { IDrillToCustomUrl } from '@gooddata/sdk-model';
+import { IDrillToDashboard } from '@gooddata/sdk-model';
+import { IDrillToInsight } from '@gooddata/sdk-model';
+import { IFilter } from '@gooddata/sdk-model';
+import { IFilterContextDefinition } from '@gooddata/sdk-model';
+import { IInlineMeasureDefinition } from '@gooddata/sdk-model';
+import { IInsight } from '@gooddata/sdk-model';
+import { IInsightDefinition } from '@gooddata/sdk-model';
+import { IMeasureBody } from '@gooddata/sdk-model';
+import { IMeasureDefinition } from '@gooddata/sdk-model';
+import { IMeasureSortItem } from '@gooddata/sdk-model';
+import { IMeasureValueFilterBody } from '@gooddata/sdk-model';
+import { INegativeAttributeFilterBody } from '@gooddata/sdk-model';
+import type { InlineMetricField } from '@gooddata/sdk-code-schemas/v1';
+import { InsightDrillDefinition } from '@gooddata/sdk-model';
+import type { Interaction } from '@gooddata/sdk-code-schemas/v1';
+import { IPoPMeasureDefinition } from '@gooddata/sdk-model';
+import { IPositiveAttributeFilterBody } from '@gooddata/sdk-model';
+import { IPreviousPeriodMeasureDefinition } from '@gooddata/sdk-model';
+import { IRankingFilterBody } from '@gooddata/sdk-model';
+import { IRelativeDateFilter } from '@gooddata/sdk-model';
+import { ISortItem } from '@gooddata/sdk-model';
+import { ITotal } from '@gooddata/sdk-model';
+import type { ListOfColors } from '@gooddata/sdk-code-schemas/v1';
 import type { Metadata } from '@gooddata/sdk-code-schemas/v1';
 import type { Metric } from '@gooddata/sdk-code-schemas/v1';
+import type { MetricField } from '@gooddata/sdk-code-schemas/v1';
+import { ObjRef } from '@gooddata/sdk-model';
+import { ObjRefInScope } from '@gooddata/sdk-model';
+import { Pair } from 'yaml';
+import { Permission } from '@gooddata/sdk-code-schemas/v1';
 import type { Plugin as Plugin_2 } from '@gooddata/sdk-code-schemas/v1';
+import type { PoPMetricField } from '@gooddata/sdk-code-schemas/v1';
+import type { PreviousPeriodMetricField } from '@gooddata/sdk-code-schemas/v1';
 import type { Query } from '@gooddata/sdk-code-schemas/v1';
+import type { QueryFilters } from '@gooddata/sdk-code-schemas/v1';
+import type { RichTextWidget } from '@gooddata/sdk-code-schemas/v1';
+import { Scalar } from 'yaml';
 import type { Section } from '@gooddata/sdk-code-schemas/v1';
+import type { Sorts } from '@gooddata/sdk-code-schemas/v1';
+import type { Total } from '@gooddata/sdk-code-schemas/v1';
 import type { Visualisation } from '@gooddata/sdk-code-schemas/v1';
+import type { VisualisationWidget } from '@gooddata/sdk-code-schemas/v1';
+import type { VisualizationSwitcherWidget } from '@gooddata/sdk-code-schemas/v1';
+import type { Widget } from '@gooddata/sdk-code-schemas/v1';
+import type { Width } from '@gooddata/sdk-code-schemas/v1';
+import { YAMLMap } from 'yaml';
+import { YAMLSeq } from 'yaml';
 
 // @public (undocumented)
 export type AacAttributeHierarchy = AttributeHierarchy;
@@ -61,6 +129,46 @@ export type AacSection = Section;
 
 // @public (undocumented)
 export type AacVisualisation = Visualisation;
+
+// Warning: (ae-missing-release-tag) "AllTypes" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export const AllTypes: string[];
+
+// Warning: (ae-missing-release-tag) "areaChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export const areaChart: {
+    load: typeof load_5;
+    save: typeof save_5;
+    DEFAULTS: ConfigDefaults<DefaultProperties_5>;
+};
+
+// @public (undocumented)
+export function assertUnreachable(x: never): never;
+
+// Warning: (ae-missing-release-tag) "AttributeHierarchyTypes" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export const AttributeHierarchyTypes: string[];
+
+// Warning: (ae-missing-release-tag) "barChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export const barChart: {
+    load: typeof load_2;
+    save: typeof save_2;
+    DEFAULTS: ConfigDefaults<DefaultProperties_2>;
+};
+
+// Warning: (ae-missing-release-tag) "bubbleChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export const bubbleChart: {
+    load: typeof load_7;
+    save: typeof save_7;
+    DEFAULTS: ConfigDefaults<DefaultProperties_7>;
+};
 
 // @public (undocumented)
 export enum BucketsType {
@@ -99,6 +207,112 @@ export enum BucketsType {
 // @public (undocumented)
 export function buildAfmExecution(entities: ExportEntities, query: Query): ToExecutionResults;
 
+// Warning: (ae-missing-release-tag) "buildAttributeLabels" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+export function buildAttributeLabels(labels?: Attribute["labels"]): DeclarativeLabel[];
+
+// Warning: (ae-missing-release-tag) "buildAttributes" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+export function buildAttributes(fields?: Fields): DeclarativeAttribute[];
+
+// Warning: (ae-missing-release-tag) "buildFacts" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+export function buildFacts(fields?: Fields): DeclarativeFact[];
+
+// Warning: (ae-missing-release-tag) "buildReferences" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public
+export function buildReferences(entities: ExportEntities, refs?: Dataset["references"]): DeclarativeReference[];
+
+// Warning: (ae-missing-release-tag) "bulletChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export const bulletChart: {
+    load: typeof load_14;
+    save: typeof save_14;
+    DEFAULTS: ConfigDefaults<DefaultProperties_14>;
+};
+
+// Warning: (ae-missing-release-tag) "IChartFill" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export interface ChartFill {
+    // (undocumented)
+    measureToPatternName?: Record<string, PatternFillName>;
+    // (undocumented)
+    type: ChartFillType;
+}
+
+// Warning: (ae-missing-release-tag) "ChartFillType" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export type ChartFillType = "solid" | "pattern" | "outline";
+
+// Warning: (ae-missing-release-tag) "ColorMapping" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export type ColorMapping = {
+    id: string;
+    color: {
+        type: "guid";
+        value: string;
+    } | {
+        type: "rgb";
+        value: {
+            r: number;
+            g: number;
+            b: number;
+        };
+    };
+};
+
+// Warning: (ae-missing-release-tag) "columnChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export const columnChart: {
+    load: typeof load_3;
+    save: typeof save_3;
+    DEFAULTS: ConfigDefaults<DefaultProperties_3>;
+};
+
+// Warning: (ae-missing-release-tag) "ColumnLocator" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export type ColumnLocator = IAttributeColumnLocator | IMeasureColumnLocator | ITotalColumnLocator;
+
+// Warning: (ae-missing-release-tag) "ColumnWidth" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export type ColumnWidth = IAbsoluteColumnWidth | IAutoColumnWidth;
+
+// Warning: (ae-missing-release-tag) "ColumnWidthItem" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export type ColumnWidthItem = IAttributeColumnWidthItem | IMeasureColumnWidthItem | ISliceMeasureColumnWidthItem | IMixedValuesColumnWidthItem | IAllMeasureColumnWidthItem | IWeakMeasureColumnWidthItem;
+
+// Warning: (ae-missing-release-tag) "comboChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export const comboChart: {
+    load: typeof load_19;
+    save: typeof save_19;
+    DEFAULTS: ConfigDefaults<DefaultProperties_19>;
+};
+
+// Warning: (ae-forgotten-export) The symbol "FullFields" needs to be exported by the entry point index.d.ts
+//
+// @public (undocumented)
+export function convertBucketToTitle(entities: ExportEntities, query: Query, field: FullFields, location?: boolean): string | null;
+
+// @public (undocumented)
+export function createIdentifier<T = AfmObjectIdentifier>(data: string, { forceMetric, forceType }?: {
+    forceMetric?: boolean;
+    forceType?: "user" | "userGroup" | "dataset" | "date" | "attribute" | "label" | "measure" | "workspaceDataFilter" | "visualizationObject" | "analyticalDashboard" | "dashboardPlugin" | "filterContext";
+}): T | null;
+
 // @public (undocumented)
 export type DashboardTab = {
     localIdentifier: string;
@@ -111,11 +325,52 @@ export type DashboardTab = {
     filterGroupsConfig?: IDashboardFilterGroupsConfig;
 };
 
+// Warning: (ae-missing-release-tag) "DashboardTypes" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export const DashboardTypes: string[];
+
+// Warning: (ae-missing-release-tag) "DatasetTypes" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export const DatasetTypes: string[];
+
+// Warning: (ae-missing-release-tag) "DateDatasetTypes" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export const DateDatasetTypes: string[];
+
+// Warning: (ae-missing-release-tag) "declarativeAbsoluteDateFilterToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export function declarativeAbsoluteDateFilterToYaml(absoluteDateFilter: IAbsoluteDateFilter["absoluteDateFilter"], connectedAttributeFilters: IFilter[] | undefined, entities: FromEntities, getUniqueKey: (baseKey: string) => string): YAMLMap;
+
+// Warning: (ae-missing-release-tag) "declarativeArithmeticMetricToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export function declarativeArithmeticMetricToYaml(def: IMeasureBody, arithmeticDefinition: IArithmeticMeasureDefinition): YAMLMap;
+
 // @public (undocumented)
 export function declarativeAttributeHierarchyToYaml(hierarchy: DeclarativeAttributeHierarchy): {
     content: string;
     json: AttributeHierarchy;
 };
+
+// Warning: (ae-missing-release-tag) "declarativeAttributeSortToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export function declarativeAttributeSortToYaml(sort: IAttributeSortItem): YAMLMap;
+
+// Warning: (ae-missing-release-tag) "declarativeAttributeToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export function declarativeAttributeToYaml(def: IAttributeBody): YAMLMap;
+
+// Warning: (ae-forgotten-export) The symbol "Buckets" needs to be exported by the entry point index.d.ts
+// Warning: (ae-missing-release-tag) "declarativeBucketsToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export function declarativeBucketsToYaml(entities: FromEntities, buckets: IBucket[]): Buckets;
 
 // @public (undocumented)
 export function declarativeDashboardToYaml(entities: FromEntities, dashboard: DeclarativeAnalyticalDashboard, filterContexts?: DeclarativeFilterContext[]): {
@@ -135,11 +390,68 @@ export function declarativeDateInstanceToYaml(dataset: DeclarativeDateDataset): 
     json: DateDataset;
 };
 
+// Warning: (ae-missing-release-tag) "declarativeDrillToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export function declarativeDrillToYaml(drill: InsightDrillDefinition, entities?: FromEntities, sourceVisualizationId?: string): YAMLMap<unknown, unknown>;
+
+// Warning: (ae-missing-release-tag) "declarativeFilterContextToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export function declarativeFilterContextToYaml(dateFilterConfig?: IDashboardDateFilterConfig, filterContext?: DeclarativeFilterContext): {
+    filters: YAMLMap<unknown, unknown>;
+    filtersMap: {
+        [key: string]: FilterContextItem;
+    };
+};
+
+// Warning: (ae-missing-release-tag) "declarativeFiltersConfigToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export function declarativeFiltersConfigToYaml(filtersMap: Record<string, FilterContextItem>, dateFilterConfig?: IDashboardDateFilterConfig, dateFilterConfigs?: IDashboardDateFilterConfigItem[], attributeFilterConfigs?: IDashboardAttributeFilterConfig[]): void;
+
+// Warning: (ae-forgotten-export) The symbol "Filters" needs to be exported by the entry point index.d.ts
+// Warning: (ae-missing-release-tag) "declarativeFiltersToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export function declarativeFiltersToYaml(entities: FromEntities, filters: IFilter[]): Filters;
+
+// Warning: (ae-missing-release-tag) "declarativeInlineMetricToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export function declarativeInlineMetricToYaml(def: IMeasureBody, inlineDef: IInlineMeasureDefinition): YAMLMap;
+
+// Warning: (ae-missing-release-tag) "declarativeMeasureSortToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export function declarativeMeasureSortToYaml(sort: IMeasureSortItem): YAMLMap;
+
+// Warning: (ae-missing-release-tag) "declarativeMeasureValueFilterToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export function declarativeMeasureValueFilterToYaml(measureValueFilter: IMeasureValueFilterBody): YAMLMap;
+
 // @public (undocumented)
 export function declarativeMetricToYaml(metric: DeclarativeMetric): {
     content: string;
     json: Metric;
 };
+
+// Warning: (ae-missing-release-tag) "declarativeNegativeAttributeFilterToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export function declarativeNegativeAttributeFilterToYaml(entities: FromEntities, attributeFilter: INegativeAttributeFilterBody): YAMLMap;
+
+// Warning: (ae-forgotten-export) The symbol "PostProcessors" needs to be exported by the entry point index.d.ts
+// Warning: (ae-missing-release-tag) "declarativeNormalMetricToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export function declarativeNormalMetricToYaml(def: IMeasureBody, metricDefinition: IMeasureDefinition, postProcessors: PostProcessors): YAMLMap;
+
+// Warning: (ae-missing-release-tag) "declarativePluginsToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export function declarativePluginsToYaml(dashboard: IDashboardDefinition): YAMLSeq<unknown> | undefined;
 
 // @public (undocumented)
 export function declarativePluginToYaml(plugin: DeclarativeDashboardPlugin): {
@@ -147,10 +459,87 @@ export function declarativePluginToYaml(plugin: DeclarativeDashboardPlugin): {
     json: Plugin_2;
 };
 
+// Warning: (ae-missing-release-tag) "declarativePoPMetricToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export function declarativePoPMetricToYaml(def: IMeasureBody, popDefinition: IPoPMeasureDefinition): YAMLMap;
+
+// Warning: (ae-missing-release-tag) "declarativePositiveAttributeFilterToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export function declarativePositiveAttributeFilterToYaml(entities: FromEntities, attributeFilter: IPositiveAttributeFilterBody): YAMLMap;
+
+// Warning: (ae-missing-release-tag) "declarativePreviousPeriodMetricToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export function declarativePreviousPeriodMetricToYaml(def: IMeasureBody, previousDefinition: IPreviousPeriodMeasureDefinition): YAMLMap;
+
+// Warning: (ae-missing-release-tag) "declarativeRankingFilterToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export function declarativeRankingFilterToYaml(rankingFilter: IRankingFilterBody): YAMLMap;
+
+// Warning: (ae-missing-release-tag) "declarativeRelativeDateFilterToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export function declarativeRelativeDateFilterToYaml(relativeDateFilter: IRelativeDateFilter["relativeDateFilter"], connectedAttributeFilters: IFilter[] | undefined, entities: FromEntities, getUniqueKey: (baseKey: string) => string): YAMLMap;
+
+// Warning: (ae-missing-release-tag) "declarativeSectionsToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export function declarativeSectionsToYaml(layout?: IDashboardLayout, entities?: FromEntities): YAMLSeq<unknown> | undefined;
+
+// Warning: (ae-forgotten-export) The symbol "Sorts_2" needs to be exported by the entry point index.d.ts
+// Warning: (ae-missing-release-tag) "declarativeSortsToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export function declarativeSortsToYaml(sorts: ISortItem[]): Sorts_2;
+
+// Warning: (ae-missing-release-tag) "declarativeTabsToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export function declarativeTabsToYaml(tabs: DashboardTab[], filterContexts?: DeclarativeFilterContext[], entities?: FromEntities): YAMLSeq | undefined;
+
+// Warning: (ae-missing-release-tag) "declarativeTotalToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export function declarativeTotalToYaml(total: ITotal): {
+    totalMap: YAMLMap<unknown, unknown>;
+    attribute: string;
+};
+
+// Warning: (ae-missing-release-tag) "declarativeVisTypeToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export function declarativeVisTypeToYaml(def: IInsightDefinition["insight"]): string | null;
+
 // @public (undocumented)
 export function declarativeVisualisationToYaml(entities: FromEntities, visualisation: DeclarativeVisualizationObject): {
     content: string;
     json?: Visualisation;
+};
+
+// Warning: (ae-missing-release-tag) "declarativeWidgetToYaml" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export function declarativeWidgetToYaml(widget?: IDashboardWidget | null, size?: IDashboardLayoutItem["size"], entities?: FromEntities): YAMLMap<unknown, unknown> | undefined;
+
+// Warning: (ae-missing-release-tag) "dependencyWheelChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export const dependencyWheelChart: {
+    load: typeof load_16;
+    save: typeof save_16;
+    DEFAULTS: ConfigDefaults<DefaultProperties_16>;
+};
+
+// Warning: (ae-missing-release-tag) "donutChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export const donutChart: {
+    load: typeof load_9;
+    save: typeof save_9;
+    DEFAULTS: ConfigDefaults<DefaultProperties_9>;
 };
 
 // @public (undocumented)
@@ -166,12 +555,351 @@ export type ExportEntities = Array<{
 }>;
 
 // @public (undocumented)
+export type FileNamesUsed = {
+    files: string[];
+};
+
+// @public (undocumented)
+export type FilePath = string[] | string;
+
+// Warning: (ae-missing-release-tag) "FilterContextItem" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export type FilterContextItem = {
+    yaml: YAMLMap;
+    filter: IFilterContextDefinition["filters"][number];
+};
+
+// @public (undocumented)
+export const fromDeclarativePermissions: (permissions?: GenericPermission[] | undefined, hierarchyPermissions?: GenericPermission[] | undefined) => Permissions_2 | undefined;
+
+// @public (undocumented)
 export type FromEntities = Array<{
     id: string;
     type: Metadata["type"];
     path: string;
     data?: Dataset | DateDataset | Metric | Visualisation | Dashboard | Plugin_2 | AttributeHierarchy;
 }>;
+
+// Warning: (ae-missing-release-tag) "funnelChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export const funnelChart: {
+    load: typeof load_12;
+    save: typeof save_12;
+    DEFAULTS: ConfigDefaults<DefaultProperties_12>;
+};
+
+// @public (undocumented)
+export function generateFileName(used: FileNamesUsed, base: string[], id: string, title?: string | null): string;
+
+// @public (undocumented)
+export type GenericAssigneePermission = {
+    name: string;
+    assignee: {
+        type: string;
+        id: string;
+    };
+};
+
+// @public (undocumented)
+export type GenericAssigneeRulePermission = {
+    name: string;
+    assigneeRule: {
+        type: "allWorkspaceUsers";
+    };
+};
+
+// @public (undocumented)
+export type GenericPermission = GenericAssigneePermission | GenericAssigneeRulePermission;
+
+// Warning: (ae-missing-release-tag) "geoAreaChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export const geoAreaChart: {
+    load: typeof load_21;
+    save: typeof save_21;
+    DEFAULTS: ConfigDefaults<DefaultProperties_21>;
+};
+
+// Warning: (ae-missing-release-tag) "geoChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export const geoChart: {
+    load: typeof load_20;
+    save: typeof save_20;
+    DEFAULTS: ConfigDefaults<DefaultProperties_20>;
+};
+
+// @public (undocumented)
+export function getIdentifier(obj: ObjRef | ObjRefInScope | AfmObjectIdentifier, untype?: boolean): string;
+
+// @public (undocumented)
+export function getValueOrDefault<T>(value: T, defaultValue: T, type?: ValueType, undefinedAsDefault?: boolean): T | undefined;
+
+// Warning: (ae-missing-release-tag) "headlineChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export const headlineChart: {
+    load: typeof load_18;
+    save: typeof save_18;
+    DEFAULTS: ConfigDefaults<DefaultProperties_18>;
+};
+
+// Warning: (ae-missing-release-tag) "heatmapChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export const heatmapChart: {
+    load: typeof load_13;
+    save: typeof save_13;
+    DEFAULTS: ConfigDefaults<DefaultProperties_13>;
+};
+
+// Warning: (ae-missing-release-tag) "IAbsoluteColumnWidth" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export interface IAbsoluteColumnWidth {
+    // (undocumented)
+    allowGrowToFit?: boolean;
+    // (undocumented)
+    value: number;
+}
+
+// Warning: (ae-missing-release-tag) "IAllMeasureColumnWidthItem" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export interface IAllMeasureColumnWidthItem {
+    // (undocumented)
+    measureColumnWidthItem: IAllMeasureColumnWidthItemBody;
+}
+
+// Warning: (ae-missing-release-tag) "IAllMeasureColumnWidthItemBody" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export interface IAllMeasureColumnWidthItemBody {
+    // (undocumented)
+    width: IAbsoluteColumnWidth;
+}
+
+// Warning: (ae-missing-release-tag) "IAttributeColumnLocator" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export interface IAttributeColumnLocator {
+    // (undocumented)
+    attributeLocatorItem: IAttributeColumnLocatorBody;
+}
+
+// Warning: (ae-missing-release-tag) "IAttributeColumnLocatorBody" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export interface IAttributeColumnLocatorBody {
+    // (undocumented)
+    attributeIdentifier: string;
+    // (undocumented)
+    element?: string | null;
+}
+
+// Warning: (ae-missing-release-tag) "IAttributeColumnWidthItem" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export interface IAttributeColumnWidthItem {
+    // (undocumented)
+    attributeColumnWidthItem: IAttributeColumnWidthItemBody;
+}
+
+// Warning: (ae-missing-release-tag) "IAttributeColumnWidthItemBody" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export interface IAttributeColumnWidthItemBody {
+    // (undocumented)
+    attributeIdentifier: string;
+    // (undocumented)
+    width: IAbsoluteColumnWidth;
+}
+
+// Warning: (ae-missing-release-tag) "IAutoColumnWidth" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export interface IAutoColumnWidth {
+    // (undocumented)
+    value: "auto";
+}
+
+// Warning: (ae-missing-release-tag) "IMeasureColumnLocator" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export interface IMeasureColumnLocator {
+    // (undocumented)
+    measureLocatorItem: IMeasureColumnLocatorBody;
+}
+
+// Warning: (ae-missing-release-tag) "IMeasureColumnLocatorBody" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export interface IMeasureColumnLocatorBody {
+    // (undocumented)
+    measureIdentifier: string;
+}
+
+// Warning: (ae-missing-release-tag) "IMeasureColumnWidthItem" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export interface IMeasureColumnWidthItem {
+    // (undocumented)
+    measureColumnWidthItem: IMeasureColumnWidthItemBody;
+}
+
+// Warning: (ae-missing-release-tag) "IMeasureColumnWidthItemBody" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export interface IMeasureColumnWidthItemBody {
+    // (undocumented)
+    locators: ColumnLocator[];
+    // (undocumented)
+    width: ColumnWidth;
+}
+
+// Warning: (ae-missing-release-tag) "IMixedValuesColumnWidthItem" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export interface IMixedValuesColumnWidthItem {
+    // (undocumented)
+    mixedValuesColumnWidthItem: IMixedValuesColumnWidthItemBody;
+}
+
+// Warning: (ae-missing-release-tag) "IMixedValuesColumnWidthItemBody" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export interface IMixedValuesColumnWidthItemBody {
+    // (undocumented)
+    locators: IMeasureColumnLocator[];
+    // (undocumented)
+    width: ColumnWidth;
+}
+
+// Warning: (ae-missing-release-tag) "InlineVisualizations" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export type InlineVisualizations = Record<string, {
+    type: "metric" | "line" | "column";
+}>;
+
+// Warning: (ae-missing-release-tag) "ISliceMeasureColumnWidthItem" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export interface ISliceMeasureColumnWidthItem {
+    // (undocumented)
+    sliceMeasureColumnWidthItem: ISliceMeasureColumnWidthItemBody;
+}
+
+// Warning: (ae-missing-release-tag) "ISliceMeasureColumnWidthItemBody" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export interface ISliceMeasureColumnWidthItemBody {
+    // (undocumented)
+    locators: IMeasureColumnLocator[];
+    // (undocumented)
+    width: ColumnWidth;
+}
+
+// Warning: (ae-missing-release-tag) "ITotalColumnLocator" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export interface ITotalColumnLocator {
+    // (undocumented)
+    totalLocatorItem: ITotalColumnLocatorBody;
+}
+
+// Warning: (ae-missing-release-tag) "ITotalColumnLocatorBody" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export interface ITotalColumnLocatorBody {
+    // (undocumented)
+    attributeIdentifier: string;
+    // (undocumented)
+    totalFunction: string;
+}
+
+// Warning: (ae-missing-release-tag) "IWeakMeasureColumnWidthItem" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export interface IWeakMeasureColumnWidthItem {
+    // (undocumented)
+    measureColumnWidthItem: IWeakMeasureColumnWidthItemBody;
+}
+
+// Warning: (ae-missing-release-tag) "IWeakMeasureColumnWidthItemBody" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export interface IWeakMeasureColumnWidthItemBody {
+    // (undocumented)
+    locator: IMeasureColumnLocator;
+    // (undocumented)
+    width: IAbsoluteColumnWidth;
+}
+
+// Warning: (ae-missing-release-tag) "lineChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export const lineChart: {
+    load: typeof load_4;
+    save: typeof save_4;
+    DEFAULTS: ConfigDefaults<DefaultProperties_4>;
+};
+
+// @public (undocumented)
+export function loadColorMapping(mappings: Array<ColorMapping>): YAMLMap<keyof ListOfColors, Color>;
+
+// @public (undocumented)
+export function loadColumnsWidth(widths: Array<ColumnWidthItem>): YAMLMap<keyof Width, any>[] | undefined;
+
+// Warning: (ae-missing-release-tag) "MetricTypes" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export const MetricTypes: string[];
+
+// Warning: (ae-missing-release-tag) "OverrideDashboardDefinition" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export type OverrideDashboardDefinition = Omit<IDashboardDefinition, "filterContext"> & {
+    filterContextRef?: AfmObjectIdentifier;
+    tabs?: DashboardTab[];
+    activeTabLocalIdentifier?: string;
+};
+
+// Warning: (ae-missing-release-tag) "PatternFillName" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export type PatternFillName = "diagonal_grid_small" | "vertical_lines_small" | "grid_small" | "horizontal_lines_small" | "circle_small" | "flag_small" | "waffle_small" | "dot_small" | "pyramid_small" | "needle_small" | "diamond_small" | "pizza_small" | "diagonal_grid_medium" | "vertical_lines_medium" | "grid_large" | "horizontal_lines_medium" | "circle_medium" | "flag_medium" | "waffle_medium" | "dot_medium" | "pyramid_medium" | "needle_medium" | "diamond_medium" | "pizza_medium";
+
+// @public (undocumented)
+type Permissions_2 = {
+    [name: string]: {
+        all?: boolean;
+        users?: string[];
+        user_groups?: string[];
+    } | undefined;
+};
+export { Permissions_2 as Permissions }
+
+// Warning: (ae-missing-release-tag) "pieChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export const pieChart: {
+    load: typeof load_8;
+    save: typeof save_8;
+    DEFAULTS: ConfigDefaults<DefaultProperties_8>;
+};
+
+// Warning: (ae-missing-release-tag) "PluginTypes" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export const PluginTypes: string[];
+
+// Warning: (ae-missing-release-tag) "PointShapeSymbol" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export type PointShapeSymbol = "circle" | "square" | "diamond" | "triangle" | "triangle-down";
 
 // @public (undocumented)
 export type Profile = {
@@ -180,6 +908,68 @@ export type Profile = {
     workspace_id: string;
     data_source?: string;
 };
+
+// Warning: (ae-missing-release-tag) "pyramidChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export const pyramidChart: {
+    load: typeof load_11;
+    save: typeof save_11;
+    DEFAULTS: ConfigDefaults<DefaultProperties_11>;
+};
+
+// Warning: (ae-missing-release-tag) "repeaterChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export const repeaterChart: {
+    load: typeof load_22;
+    save: typeof save_22;
+    saveInlineVisualizations: typeof saveInlineVisualizations;
+    DEFAULTS: ConfigDefaults<DefaultProperties_22>;
+};
+
+// @public (undocumented)
+export function resolveIdFromFileName(fileName: FilePath): string;
+
+// Warning: (ae-missing-release-tag) "sankeyChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export const sankeyChart: {
+    load: typeof load_17;
+    save: typeof save_17;
+    DEFAULTS: ConfigDefaults<DefaultProperties_17>;
+};
+
+// @public (undocumented)
+export function saveColorMapping(mapping: ListOfColors): Array<ColorMapping> | undefined;
+
+// @public (undocumented)
+export function saveColumnWidths(fields: Visualisation["query"]["fields"], widths: Width[] | undefined): ColumnWidthItem[] | undefined;
+
+// Warning: (ae-missing-release-tag) "scatterChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export const scatterChart: {
+    load: typeof load_6;
+    save: typeof save_6;
+    DEFAULTS: ConfigDefaults<DefaultProperties_6>;
+};
+
+// Warning: (ae-missing-release-tag) "table" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export const table: {
+    load: typeof load;
+    save: typeof save;
+    DEFAULTS: ConfigDefaults<DefaultProperties>;
+};
+
+// @public (undocumented)
+export const toDeclarativePermissions: (permissions?: {
+    VIEW?: Permission | undefined;
+    EDIT?: Permission | undefined;
+    SHARE?: Permission | undefined;
+} | undefined) => [GenericPermission[], GenericPermission[]];
 
 // @public (undocumented)
 export type ToExecutionResults = {
@@ -190,8 +980,45 @@ export type ToExecutionResults = {
     sorting: Record<string, "ASC" | "DESC">;
 };
 
+// Warning: (ae-missing-release-tag) "treemapChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export const treemapChart: {
+    load: typeof load_10;
+    save: typeof save_10;
+    DEFAULTS: ConfigDefaults<DefaultProperties_10>;
+};
+
+// @public (undocumented)
+export type ValueType = "string" | "bool" | "number" | "bool_auto" | "array";
+
+// @public (undocumented)
+export type VisualisationConfig<T> = {
+    controls?: T;
+};
+
+// Warning: (ae-missing-release-tag) "VisualisationsTypes" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export const VisualisationsTypes: string[];
+
+// Warning: (ae-missing-release-tag) "waterfallChart" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export const waterfallChart: {
+    load: typeof load_15;
+    save: typeof save_15;
+    DEFAULTS: ConfigDefaults<DefaultProperties_15>;
+};
+
 // @public (undocumented)
 export function yamlAttributeHierarchyToDeclarative(input: AttributeHierarchy): DeclarativeAttributeHierarchy;
+
+// Warning: (ae-forgotten-export) The symbol "VisBucket" needs to be exported by the entry point index.d.ts
+// Warning: (ae-missing-release-tag) "yamlBucketsToDeclarative" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export function yamlBucketsToDeclarative(input: Visualisation): VisBucket[];
 
 // @public (undocumented)
 export function yamlDashboardToDeclarative(entities: ExportEntities, input: Dashboard): {
@@ -206,14 +1033,150 @@ export function yamlDatasetToDeclarative(entities: ExportEntities, input: Datase
 // @public (undocumented)
 export function yamlDateDatesetToDeclarative(input: DateDataset): DeclarativeDateDataset;
 
+// Warning: (ae-missing-release-tag) "yamlFilterContextToDeclarative" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export function yamlFilterContextToDeclarative(baseId: string, yamlFilters: DashboardFilters | undefined): {
+    filterContext: DeclarativeFilterContext;
+    dateFilterConfig: IDashboardDateFilterConfig | undefined;
+    dateFilterConfigs: IDashboardDateFilterConfigItem[] | undefined;
+    attributeFilterConfigs: IDashboardAttributeFilterConfig[] | undefined;
+    filterGroupsConfig: IDashboardFilterGroupsConfig | undefined;
+};
+
+// Warning: (ae-missing-release-tag) "yamlFiltersToDeclarative" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export function yamlFiltersToDeclarative(entities: ExportEntities, filters_by: QueryFilters | undefined, attributeFilterConfigs?: IAttributeFilterConfigs): {
+    filters: IFilter[];
+    attributeFilterConfigs: IAttributeFilterConfigs | undefined;
+};
+
+// Warning: (ae-missing-release-tag) "yamlInteractionToDeclarative" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export function yamlInteractionToDeclarative(entities: ExportEntities, visualisation: string, input: Interaction): IDrillToInsight | IDrillToDashboard | IDrillToCustomUrl | IDrillToAttributeUrl | null;
+
 // @public (undocumented)
 export function yamlMetricToDeclarative(input: Metric): DeclarativeMetric;
+
+// Warning: (ae-missing-release-tag) "yamlPluginsToDeclarative" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export function yamlPluginsToDeclarative(plugins: Dashboard["plugins"]): IDashboardPluginLink[] | undefined;
 
 // @public (undocumented)
 export function yamlPluginToDeclarative(input: Plugin_2): DeclarativeDashboardPlugin;
 
+// Warning: (ae-missing-release-tag) "yamlReportToDeclarative" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export function yamlReportToDeclarative(entities: ExportEntities, input: Visualisation): {
+    buckets: VisualisationDefinition["buckets"];
+    sorts: VisualisationDefinition["sorts"];
+    filters: VisualisationDefinition["filters"];
+    positions: Array<{
+        longitude: string;
+        latitude: string;
+    }>;
+    attributeFilterConfigs?: IAttributeFilterConfigs;
+};
+
+// Warning: (ae-missing-release-tag) "yamlReportTotalToDeclarative" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export function yamlReportTotalToDeclarative(totals: Total[] | undefined, attributeIdentifier: string): ITotal[];
+
+// Warning: (ae-missing-release-tag) "yamlSortsToDeclarative" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export function yamlSortsToDeclarative(sort_by: Sorts | undefined, fields: Visualisation["query"]["fields"]): ISortItem[];
+
 // @public (undocumented)
 export function yamlVisualisationToDeclarative(entities: ExportEntities, input: Visualisation): DeclarativeVisualizationObject;
+
+// Warning: (ae-forgotten-export) The symbol "DashboardWidget" needs to be exported by the entry point index.d.ts
+// Warning: (ae-missing-release-tag) "yamlWidgetItemToDeclarative" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export function yamlWidgetItemToDeclarative(entities: ExportEntities, input: Widget, enableSectionHeaders?: boolean): DashboardWidget | null;
+
+// Warning: (ae-missing-release-tag) "yamlWidgetToDeclarative" is part of the package's API, but it is missing a release tag (@alpha, @beta, @public, or @internal)
+//
+// @public (undocumented)
+export function yamlWidgetToDeclarative(entities: ExportEntities, input: VisualisationWidget | RichTextWidget | VisualizationSwitcherWidget | ContainerWidget, enableSectionHeaders?: boolean): DashboardWidget["widget"];
+
+// Warnings were encountered during analysis:
+//
+// src/configs/areaChart.ts:316:23 - (ae-forgotten-export) The symbol "load_5" needs to be exported by the entry point index.d.ts
+// src/configs/areaChart.ts:316:23 - (ae-forgotten-export) The symbol "save_5" needs to be exported by the entry point index.d.ts
+// src/configs/areaChart.ts:316:23 - (ae-forgotten-export) The symbol "ConfigDefaults" needs to be exported by the entry point index.d.ts
+// src/configs/areaChart.ts:316:23 - (ae-forgotten-export) The symbol "DefaultProperties_5" needs to be exported by the entry point index.d.ts
+// src/configs/barChart.ts:281:22 - (ae-forgotten-export) The symbol "load_2" needs to be exported by the entry point index.d.ts
+// src/configs/barChart.ts:281:22 - (ae-forgotten-export) The symbol "save_2" needs to be exported by the entry point index.d.ts
+// src/configs/barChart.ts:281:22 - (ae-forgotten-export) The symbol "DefaultProperties_2" needs to be exported by the entry point index.d.ts
+// src/configs/bubbleChart.ts:245:25 - (ae-forgotten-export) The symbol "load_7" needs to be exported by the entry point index.d.ts
+// src/configs/bubbleChart.ts:245:25 - (ae-forgotten-export) The symbol "save_7" needs to be exported by the entry point index.d.ts
+// src/configs/bubbleChart.ts:245:25 - (ae-forgotten-export) The symbol "DefaultProperties_7" needs to be exported by the entry point index.d.ts
+// src/configs/bulletChart.ts:230:25 - (ae-forgotten-export) The symbol "load_14" needs to be exported by the entry point index.d.ts
+// src/configs/bulletChart.ts:230:25 - (ae-forgotten-export) The symbol "save_14" needs to be exported by the entry point index.d.ts
+// src/configs/bulletChart.ts:230:25 - (ae-forgotten-export) The symbol "DefaultProperties_14" needs to be exported by the entry point index.d.ts
+// src/configs/columnChart.ts:281:25 - (ae-forgotten-export) The symbol "load_3" needs to be exported by the entry point index.d.ts
+// src/configs/columnChart.ts:281:25 - (ae-forgotten-export) The symbol "save_3" needs to be exported by the entry point index.d.ts
+// src/configs/columnChart.ts:281:25 - (ae-forgotten-export) The symbol "DefaultProperties_3" needs to be exported by the entry point index.d.ts
+// src/configs/comboChart.ts:506:24 - (ae-forgotten-export) The symbol "load_19" needs to be exported by the entry point index.d.ts
+// src/configs/comboChart.ts:506:24 - (ae-forgotten-export) The symbol "save_19" needs to be exported by the entry point index.d.ts
+// src/configs/comboChart.ts:506:24 - (ae-forgotten-export) The symbol "DefaultProperties_19" needs to be exported by the entry point index.d.ts
+// src/configs/dependencyWheelChart.ts:112:34 - (ae-forgotten-export) The symbol "load_16" needs to be exported by the entry point index.d.ts
+// src/configs/dependencyWheelChart.ts:112:34 - (ae-forgotten-export) The symbol "save_16" needs to be exported by the entry point index.d.ts
+// src/configs/dependencyWheelChart.ts:112:34 - (ae-forgotten-export) The symbol "DefaultProperties_16" needs to be exported by the entry point index.d.ts
+// src/configs/donutChart.ts:132:24 - (ae-forgotten-export) The symbol "load_9" needs to be exported by the entry point index.d.ts
+// src/configs/donutChart.ts:132:24 - (ae-forgotten-export) The symbol "save_9" needs to be exported by the entry point index.d.ts
+// src/configs/donutChart.ts:132:24 - (ae-forgotten-export) The symbol "DefaultProperties_9" needs to be exported by the entry point index.d.ts
+// src/configs/funnelChart.ts:132:25 - (ae-forgotten-export) The symbol "load_12" needs to be exported by the entry point index.d.ts
+// src/configs/funnelChart.ts:132:25 - (ae-forgotten-export) The symbol "save_12" needs to be exported by the entry point index.d.ts
+// src/configs/funnelChart.ts:132:25 - (ae-forgotten-export) The symbol "DefaultProperties_12" needs to be exported by the entry point index.d.ts
+// src/configs/geoAreaChart.ts:184:26 - (ae-forgotten-export) The symbol "load_21" needs to be exported by the entry point index.d.ts
+// src/configs/geoAreaChart.ts:184:26 - (ae-forgotten-export) The symbol "save_21" needs to be exported by the entry point index.d.ts
+// src/configs/geoAreaChart.ts:184:26 - (ae-forgotten-export) The symbol "DefaultProperties_21" needs to be exported by the entry point index.d.ts
+// src/configs/geoChart.ts:230:22 - (ae-forgotten-export) The symbol "load_20" needs to be exported by the entry point index.d.ts
+// src/configs/geoChart.ts:230:22 - (ae-forgotten-export) The symbol "save_20" needs to be exported by the entry point index.d.ts
+// src/configs/geoChart.ts:230:22 - (ae-forgotten-export) The symbol "DefaultProperties_20" needs to be exported by the entry point index.d.ts
+// src/configs/headlineChart.ts:197:27 - (ae-forgotten-export) The symbol "load_18" needs to be exported by the entry point index.d.ts
+// src/configs/headlineChart.ts:197:27 - (ae-forgotten-export) The symbol "save_18" needs to be exported by the entry point index.d.ts
+// src/configs/headlineChart.ts:197:27 - (ae-forgotten-export) The symbol "DefaultProperties_18" needs to be exported by the entry point index.d.ts
+// src/configs/heatmapChart.ts:208:26 - (ae-forgotten-export) The symbol "load_13" needs to be exported by the entry point index.d.ts
+// src/configs/heatmapChart.ts:208:26 - (ae-forgotten-export) The symbol "save_13" needs to be exported by the entry point index.d.ts
+// src/configs/heatmapChart.ts:208:26 - (ae-forgotten-export) The symbol "DefaultProperties_13" needs to be exported by the entry point index.d.ts
+// src/configs/lineChart.ts:391:23 - (ae-forgotten-export) The symbol "load_4" needs to be exported by the entry point index.d.ts
+// src/configs/lineChart.ts:391:23 - (ae-forgotten-export) The symbol "save_4" needs to be exported by the entry point index.d.ts
+// src/configs/lineChart.ts:391:23 - (ae-forgotten-export) The symbol "DefaultProperties_4" needs to be exported by the entry point index.d.ts
+// src/configs/pieChart.ts:132:22 - (ae-forgotten-export) The symbol "load_8" needs to be exported by the entry point index.d.ts
+// src/configs/pieChart.ts:132:22 - (ae-forgotten-export) The symbol "save_8" needs to be exported by the entry point index.d.ts
+// src/configs/pieChart.ts:132:22 - (ae-forgotten-export) The symbol "DefaultProperties_8" needs to be exported by the entry point index.d.ts
+// src/configs/pyramidChart.ts:132:26 - (ae-forgotten-export) The symbol "load_11" needs to be exported by the entry point index.d.ts
+// src/configs/pyramidChart.ts:132:26 - (ae-forgotten-export) The symbol "save_11" needs to be exported by the entry point index.d.ts
+// src/configs/pyramidChart.ts:132:26 - (ae-forgotten-export) The symbol "DefaultProperties_11" needs to be exported by the entry point index.d.ts
+// src/configs/repeaterChart.ts:153:27 - (ae-forgotten-export) The symbol "load_22" needs to be exported by the entry point index.d.ts
+// src/configs/repeaterChart.ts:153:27 - (ae-forgotten-export) The symbol "save_22" needs to be exported by the entry point index.d.ts
+// src/configs/repeaterChart.ts:153:27 - (ae-forgotten-export) The symbol "saveInlineVisualizations" needs to be exported by the entry point index.d.ts
+// src/configs/repeaterChart.ts:153:27 - (ae-forgotten-export) The symbol "DefaultProperties_22" needs to be exported by the entry point index.d.ts
+// src/configs/sankeyChart.ts:116:25 - (ae-forgotten-export) The symbol "load_17" needs to be exported by the entry point index.d.ts
+// src/configs/sankeyChart.ts:116:25 - (ae-forgotten-export) The symbol "save_17" needs to be exported by the entry point index.d.ts
+// src/configs/sankeyChart.ts:116:25 - (ae-forgotten-export) The symbol "DefaultProperties_17" needs to be exported by the entry point index.d.ts
+// src/configs/scatterChart.ts:270:26 - (ae-forgotten-export) The symbol "load_6" needs to be exported by the entry point index.d.ts
+// src/configs/scatterChart.ts:270:26 - (ae-forgotten-export) The symbol "save_6" needs to be exported by the entry point index.d.ts
+// src/configs/scatterChart.ts:270:26 - (ae-forgotten-export) The symbol "DefaultProperties_6" needs to be exported by the entry point index.d.ts
+// src/configs/table.ts:246:19 - (ae-forgotten-export) The symbol "load" needs to be exported by the entry point index.d.ts
+// src/configs/table.ts:246:19 - (ae-forgotten-export) The symbol "save" needs to be exported by the entry point index.d.ts
+// src/configs/table.ts:246:19 - (ae-forgotten-export) The symbol "DefaultProperties" needs to be exported by the entry point index.d.ts
+// src/configs/treemapChart.ts:132:26 - (ae-forgotten-export) The symbol "load_10" needs to be exported by the entry point index.d.ts
+// src/configs/treemapChart.ts:132:26 - (ae-forgotten-export) The symbol "save_10" needs to be exported by the entry point index.d.ts
+// src/configs/treemapChart.ts:132:26 - (ae-forgotten-export) The symbol "DefaultProperties_10" needs to be exported by the entry point index.d.ts
+// src/configs/waterfallChart.ts:286:28 - (ae-forgotten-export) The symbol "load_15" needs to be exported by the entry point index.d.ts
+// src/configs/waterfallChart.ts:286:28 - (ae-forgotten-export) The symbol "save_15" needs to be exported by the entry point index.d.ts
+// src/configs/waterfallChart.ts:286:28 - (ae-forgotten-export) The symbol "DefaultProperties_15" needs to be exported by the entry point index.d.ts
+// src/to/yamlVisualisationToDeclarative.ts:291:5 - (ae-forgotten-export) The symbol "VisualisationDefinition" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 

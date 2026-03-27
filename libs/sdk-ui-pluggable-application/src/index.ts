@@ -9,6 +9,7 @@
  */
 
 export {
+    type IClientPlatformContext,
     PlatformContextProvider,
     type IPlatformContextProviderProps,
     usePlatformContext,

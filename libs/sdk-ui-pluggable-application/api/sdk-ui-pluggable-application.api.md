@@ -4,22 +4,28 @@
 
 ```ts
 
+import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IPlatformContext } from '@gooddata/sdk-pluggable-application-model';
 import { JSX } from 'react/jsx-runtime';
 import { PropsWithChildren } from 'react';
 
 // @public
+export interface IClientPlatformContext extends IPlatformContext {
+    backend: IAnalyticalBackend;
+}
+
+// @public
 export interface IPlatformContextProviderProps extends PropsWithChildren {
-    value: IPlatformContext;
+    value: IClientPlatformContext;
 }
 
 // @public
 export function PlatformContextProvider({ value, children }: IPlatformContextProviderProps): JSX.Element;
 
 // @public
-export function usePlatformContext(): IPlatformContext | undefined;
+export function usePlatformContext(): IClientPlatformContext | undefined;
 
 // @public
-export function usePlatformContextStrict(context?: string): IPlatformContext;
+export function usePlatformContextStrict(context?: string): IClientPlatformContext;
 
 ```

@@ -5,6 +5,7 @@
     "compilerOptions": {
         "noCheck": true,
         "rootDir": "./src",
-        "outDir": "./esm"
+        "outDir": "./esm",
+        "resolveJsonModule": true
     }
 }

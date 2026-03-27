@@ -195,13 +195,6 @@ export function DefaultMenuButton({ menuItems }: IMenuButtonProps): ReactElement
     }, [selectedMenuItem, parentItemId, menuItemRefs, autofocusSubmenu]);
 
     if (!visibleMenuItems.length) {
-        if (!menuItems.length) {
-            // only warn if the items were really empty before filtering
-            console.warn(
-                "DefaultMenuButton rendered without menu items. Make sure you are passing some items there.",
-            );
-        }
-
         return null;
     }
 

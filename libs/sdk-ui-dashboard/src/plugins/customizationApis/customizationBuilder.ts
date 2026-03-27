@@ -150,11 +150,11 @@ export class DashboardCustomizationBuilder implements IDashboardCustomizer {
 
     public onBeforePluginRegister = (plugin: IDashboardPluginContract_V1): void => {
         this.logger.setCurrentPlugin(plugin);
-        this.logger.log("Starting registration.");
+        this.logger.debug("Starting registration.");
     };
 
     public onAfterPluginRegister = (): void => {
-        this.logger.log("Registration finished.");
+        this.logger.debug("Registration finished.");
         this.logger.setCurrentPlugin(undefined);
     };
 

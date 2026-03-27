@@ -124,7 +124,7 @@ export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoa
         initializeLoader(loader, baseProps, extraPluginsArr, clientWorkspace);
 
         // eslint-disable-next-line no-console
-        console.log(
+        console.debug(
             `Dashboard loader initialized in ${loadingMode} mode to load ${
                 dashboardRef ? objRefToString(dashboardRef) : "empty dashboard"
             }.`,
@@ -162,9 +162,9 @@ export function useDashboardLoader(options: IDashboardLoadOptions): DashboardLoa
             },
             onSuccess: (result) => {
                 // eslint-disable-next-line no-console
-                console.log("Loaded dashboard engine", result.engine.version);
+                console.debug("Loaded dashboard engine", result.engine.version);
                 // eslint-disable-next-line no-console
-                console.log(
+                console.debug(
                     `Dashboard engine ${result.engine.version} initialized with plugins`,
                     result.plugins.map((plugin) => `${plugin.displayName}/${plugin.version}`).join(", "),
                 );

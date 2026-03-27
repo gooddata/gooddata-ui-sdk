@@ -4,7 +4,8 @@ import type { Dashboard } from "@gooddata/sdk-code-schemas/v1";
 
 import { createIdentifier } from "./yamlUtils.js";
 
-type GenericAssigneePermission = {
+/** @public */
+export type GenericAssigneePermission = {
     name: string;
     assignee: {
         type: string;
@@ -12,16 +13,19 @@ type GenericAssigneePermission = {
     };
 };
 
-type GenericAssigneeRulePermission = {
+/** @public */
+export type GenericAssigneeRulePermission = {
     name: string;
     assigneeRule: {
         type: "allWorkspaceUsers";
     };
 };
 
-type GenericPermission = GenericAssigneePermission | GenericAssigneeRulePermission;
+/** @public */
+export type GenericPermission = GenericAssigneePermission | GenericAssigneeRulePermission;
 
-type Permissions = {
+/** @public */
+export type Permissions = {
     [name: string]:
         | {
               all?: boolean;
@@ -31,6 +35,7 @@ type Permissions = {
         | undefined;
 };
 
+/** @public */
 export const fromDeclarativePermissions = (
     permissions?: GenericPermission[],
     hierarchyPermissions?: GenericPermission[],
@@ -75,6 +80,7 @@ const mapPermission =
         }
     };
 
+/** @public */
 export const toDeclarativePermissions = (
     permissions?: Dashboard["permissions"],
 ): [GenericPermission[], GenericPermission[]] => {
