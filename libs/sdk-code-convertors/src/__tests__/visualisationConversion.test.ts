@@ -2,8 +2,9 @@
 
 import { describe, expect, it } from "vitest";
 
+import type { Visualisation } from "@gooddata/sdk-code-schemas/v1";
+
 import { declarativeVisualisationToYaml } from "../from/declarativeVisualisationToYaml.js";
-import type { Visualisation } from "../schemas/v1/metadata.js";
 import {
     yamlBucketsToDeclarative,
     yamlVisualisationToDeclarative,

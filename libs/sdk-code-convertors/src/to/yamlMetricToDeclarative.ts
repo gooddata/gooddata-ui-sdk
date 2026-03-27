@@ -1,8 +1,8 @@
 // (C) 2023-2026 GoodData Corporation
 
 import { type DeclarativeMetric } from "@gooddata/api-client-tiger";
+import type { Metric } from "@gooddata/sdk-code-schemas/v1";
 
-import type { Metric } from "../schemas/v1/metadata.js";
 import { convertIdToTitle } from "../utils/sharedUtils.js";
 
 /** @public */

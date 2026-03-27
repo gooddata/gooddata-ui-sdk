@@ -1,4 +1,4 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
 
 const MEASURES = "measures";
 const SECONDARY_MEASURES = "secondary_measures";
@@ -19,6 +19,7 @@ const LATITUDE = "latitude";
 const SIZE = "size";
 const COLOR = "color";
 const TOOLTIP_TEXT = "tooltipText";
+const GEO_ICON = "geoIcon";
 
 /**
  * Standard bucket names used in the different visualizations.
@@ -44,6 +45,7 @@ export const BucketNames = {
     SIZE,
     COLOR,
     TOOLTIP_TEXT,
+    GEO_ICON,
 } as const;
 
 /**

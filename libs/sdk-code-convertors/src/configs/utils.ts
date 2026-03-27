@@ -78,7 +78,7 @@ export function saveConfigObject<T extends object>(obj: T | undefined): T | unde
         return undefined;
     }
 
-    const validKeys = Object.keys(obj).filter((key) => obj[key] !== undefined);
+    const validKeys = Object.keys(obj).filter((key) => (obj as Record<string, unknown>)[key] !== undefined);
     if (validKeys.length === 0) {
         return undefined;
     }

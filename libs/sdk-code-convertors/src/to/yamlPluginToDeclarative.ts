@@ -1,9 +1,9 @@
 // (C) 2023-2026 GoodData Corporation
 
 import { type DeclarativeDashboardPlugin } from "@gooddata/api-client-tiger";
+import type { Plugin } from "@gooddata/sdk-code-schemas/v1";
 import { type IDashboardPluginDefinition } from "@gooddata/sdk-model";
 
-import type { Plugin } from "../schemas/v1/metadata.js";
 import { convertIdToTitle } from "../utils/sharedUtils.js";
 
 type PluginDefinition = Pick<IDashboardPluginDefinition, "url"> & {

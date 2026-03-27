@@ -25,6 +25,7 @@ export {
     geoLayersToInsightLayers,
 } from "../next/utils/layerConversion.js";
 export { isConcreteViewportPreset } from "../next/types/config/viewport.js";
+export { PRESET_VIEWPORT_BOUNDS } from "../next/map/runtime/mapConfig.js";
 export { normalizeGeoLegendPosition } from "../next/utils/legend/geoLegendPosition.js";
 export type {
     GeoLegendCornerPosition,

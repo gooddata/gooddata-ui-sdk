@@ -621,6 +621,8 @@ function recordedOrganization(organizationId: string, implConfig: RecordedBacken
                 setActiveCalendars: () => Promise.resolve(),
                 setExportCsvCustomDelimiter: () => Promise.resolve(),
                 deleteExportCsvCustomDelimiter: () => Promise.resolve(),
+                setGeoIconSheet: () => Promise.resolve(),
+                deleteGeoIconSheet: () => Promise.resolve(),
             };
         },
         notificationChannels(): IOrganizationNotificationChannelService {

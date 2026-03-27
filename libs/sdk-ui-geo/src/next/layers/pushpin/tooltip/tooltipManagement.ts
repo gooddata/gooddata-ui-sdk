@@ -27,7 +27,11 @@ import {
     parseTooltipPayload,
 } from "../../common/tooltipUtils.js";
 import type { IGeoTooltipConfig } from "../../registry/adapterTypes.js";
-import { DEFAULT_PUSHPIN_COLOR_VALUE, NULL_TOOLTIP_VALUE } from "../constants.js";
+import {
+    DEFAULT_PUSHPIN_COLOR_VALUE,
+    NULL_TOOLTIP_VALUE,
+    PUSHPIN_STYLE_FEATURE_PROPERTIES,
+} from "../constants.js";
 import { parsePushpinGeoProperties } from "../data/transformation.js";
 
 const TOOLTIP_FULLSCREEN_THRESHOLD = 480;
@@ -60,12 +64,12 @@ function resolveStrokeFromFeatureProperties(
         return undefined;
     }
 
-    const background = geoProperties["color_background"];
+    const background = geoProperties[PUSHPIN_STYLE_FEATURE_PROPERTIES.colorBackground];
     if (typeof background === "string") {
         return background;
     }
 
-    const border = geoProperties["color_border"];
+    const border = geoProperties[PUSHPIN_STYLE_FEATURE_PROPERTIES.colorBorder];
     return typeof border === "string" ? border : undefined;
 }
 
@@ -115,13 +119,15 @@ export function shouldShowTooltip(geoProperties: GeoJSON.GeoJsonProperties | und
         return false;
     }
 
-    const { locationName, color, size, segment, tooltipText } = geoProperties ?? {};
+    const { locationName, color, size, segment, tooltipText, measures } = geoProperties ?? {};
+    const hasMeasures = Array.isArray(measures) && measures.some(isTooltipItemValid);
     return (
         isTooltipItemValid(locationName) ||
         isTooltipItemValid(size) ||
         isTooltipItemValid(color) ||
         isTooltipItemValid(segment) ||
-        isTooltipItemValid(tooltipText)
+        isTooltipItemValid(tooltipText) ||
+        hasMeasures
     );
 }
 
@@ -157,6 +163,8 @@ export function getTooltipHtml(
     const locationPayload = parseTooltipPayload(properties["locationName"]);
     const sizePayload = parseTooltipPayload(properties["size"]);
     const colorPayload = parseTooltipPayload(properties["color"]);
+    const rawMeasures = properties["measures"];
+    const measuresPayloads = Array.isArray(rawMeasures) ? rawMeasures.map(parseTooltipPayload) : [];
     const segmentPayload = parseTooltipPayload(properties["segment"]);
     const tooltipTextPayload = parseTooltipPayload(properties["tooltipText"]);
     const [locationAttribute, segmentAttribute, tooltipTextAttribute] = dedupeAttributePayloadsByAttrId([
@@ -169,6 +177,7 @@ export function getTooltipHtml(
         formatAttributeHtml(locationAttribute, tooltipFormatConfig),
         formatMeasureHtml(sizePayload, separators, tooltipFormatConfig),
         formatMeasureHtml(colorPayload, separators, tooltipFormatConfig),
+        ...measuresPayloads.map((p) => formatMeasureHtml(p, separators, tooltipFormatConfig)),
         formatAttributeHtml(segmentAttribute, tooltipFormatConfig),
         formatAttributeHtml(tooltipTextAttribute, tooltipFormatConfig),
     ]

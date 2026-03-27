@@ -203,6 +203,10 @@
         "text": "Color",
         "crowdinContext": "Color of a pin pushed to a map"
     },
+    "dashboard.bucket.metric_title.pushpin": {
+        "text": "Metrics",
+        "crowdinContext": "Label for the measures bucket in geo pushpin chart, shown in tooltip without affecting size or color"
+    },
     "dashboard.bucket.view_title.bubble": {
         "text": "View by",
         "crowdinContext": "Label for a categorical data field used to group or categorize your data (e.g., Product, Customer, Region)"
@@ -882,6 +886,42 @@
     "properties.points.groupNearbyPoints": {
         "text": "Group nearby points",
         "crowdinContext": "Option to group nearby points on map visualizations"
+    },
+    "properties.points.shape.title": {
+        "text": "Shape",
+        "crowdinContext": "Configuration section for pushpin marker shape"
+    },
+    "properties.points.shape.type.title": {
+        "text": "Type",
+        "crowdinContext": "Label for the pushpin marker shape type selector"
+    },
+    "properties.points.shape.type.circle": {
+        "text": "Circle (default)",
+        "crowdinContext": "Default circle marker shape for geo pushpin chart"
+    },
+    "properties.points.shape.type.iconByValue": {
+        "text": "Icon by value",
+        "crowdinContext": "Icon marker shape resolved from a geo icon label attribute"
+    },
+    "properties.points.shape.type.oneIcon": {
+        "text": "One icon",
+        "crowdinContext": "Single static icon chosen from the sprite sheet"
+    },
+    "properties.points.shape.icon.title": {
+        "text": "Icon",
+        "crowdinContext": "Label for selecting a specific icon from the sprite sheet"
+    },
+    "properties.points.shape.type.iconByValue.info": {
+        "text": "Each point's icon is resolved from its GEO_ICON data column value",
+        "crowdinContext": "Tooltip describing the icon-by-value shape type"
+    },
+    "properties.points.shape.type.oneIcon.info": {
+        "text": "Use one icon for all points in this layer",
+        "crowdinContext": "Tooltip describing the one-icon shape type"
+    },
+    "properties.points.shape.type.icon.disabled": {
+        "text": "Not applicable for this configuration of the visualization.",
+        "crowdinContext": "Tooltip when icon shape options are unavailable due to active size/color metrics"
     },
     "properties.points.size.title": {
         "text": "Point Size",

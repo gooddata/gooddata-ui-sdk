@@ -2,6 +2,8 @@
 
 import {
     type ITigerAbsoluteDateFilter,
+    type ITigerDashboardArbitraryAttributeFilter,
+    type ITigerDashboardMatchAttributeFilter,
     type ITigerFilter,
     type ITigerFilterContextItem,
     type ITigerMeasureValueFilter,
@@ -182,7 +184,9 @@ export function isTigerFilter(obj: unknown): obj is ITigerFilter {
         isTigerDateFilter(obj) ||
         isTigerAttributeFilter(obj) ||
         isTigerMeasureValueFilter(obj) ||
-        isTigerRankingFilter(obj)
+        isTigerRankingFilter(obj) ||
+        isTigerArbitraryAttributeFilter(obj) ||
+        isTigerMatchAttributeFilter(obj)
     );
 }
 
@@ -234,4 +238,12 @@ function isDashboardAttributeFilter(obj: unknown): obj is DashboardAttributeFilt
 function isDashboardDateFilter(obj: unknown): obj is DashboardDateFilter {
     const dateFilter = (obj as DashboardDateFilter).dateFilter;
     return !!dateFilter;
+}
+
+function isTigerArbitraryAttributeFilter(obj: unknown): obj is ITigerDashboardArbitraryAttributeFilter {
+    return !!obj && typeof obj === "object" && "arbitraryAttributeFilter" in obj;
+}
+
+function isTigerMatchAttributeFilter(obj: unknown): obj is ITigerDashboardMatchAttributeFilter {
+    return !!obj && typeof obj === "object" && "matchAttributeFilter" in obj;
 }

@@ -4,7 +4,9 @@ import { useEffect } from "react";
 
 import type { IMapFacade } from "../../layers/common/mapFacade.js";
 import {
+    type BoundsChangedCallback,
     type CenterPositionChangedCallback,
+    type ViewportInteractionEndCallback,
     type ZoomChangedCallback,
 } from "../../types/common/callbacks.js";
 
@@ -26,9 +28,11 @@ export function useMapCallbacks(
     callbacks: {
         onCenterPositionChanged?: CenterPositionChangedCallback;
         onZoomChanged?: ZoomChangedCallback;
+        onBoundsChanged?: BoundsChangedCallback;
+        onViewportInteractionEnd?: ViewportInteractionEndCallback;
     },
 ): void {
-    const { onCenterPositionChanged, onZoomChanged } = callbacks;
+    const { onCenterPositionChanged, onZoomChanged, onBoundsChanged, onViewportInteractionEnd } = callbacks;
 
     useEffect(() => {
         if (!map) {
@@ -47,13 +51,25 @@ export function useMapCallbacks(
             if (onZoomChanged) {
                 onZoomChanged(map.getZoom());
             }
+
+            if (onBoundsChanged) {
+                onBoundsChanged(map.getBounds());
+            }
+        };
+
+        const handleMoveEnd = (event: { originalEvent?: Event }) => {
+            emitViewportSnapshot();
+
+            if (event.originalEvent) {
+                onViewportInteractionEnd?.();
+            }
         };
 
         emitViewportSnapshot();
-        map.on("moveend", emitViewportSnapshot);
+        map.on("moveend", handleMoveEnd);
 
         return () => {
-            map.off("moveend", emitViewportSnapshot);
+            map.off("moveend", handleMoveEnd);
         };
-    }, [map, onCenterPositionChanged, onZoomChanged]);
+    }, [map, onCenterPositionChanged, onZoomChanged, onBoundsChanged, onViewportInteractionEnd]);
 }

@@ -374,7 +374,9 @@ export type ITigerFilter =
     | ITigerPositiveAttributeFilter
     | ITigerNegativeAttributeFilter
     | ITigerMeasureValueFilter
-    | ITigerRankingFilter;
+    | ITigerRankingFilter
+    | ITigerDashboardArbitraryAttributeFilter
+    | ITigerDashboardMatchAttributeFilter;
 
 //
 // =====================================================================================================================

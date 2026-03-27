@@ -43,6 +43,9 @@ import type { StyleSpecification as StyleSpecification_2 } from 'maplibre-gl';
 import { WrappedComponentProps } from 'react-intl';
 
 // @public
+export type BoundsChangedCallback = (bounds: IGeoLngLatBounds) => void;
+
+// @public
 export type CenterPositionChangedCallback = (center: IGeoLngLat) => void;
 
 // @internal (undocumented)
@@ -75,6 +78,9 @@ export function GeoChart(props: IGeoChartProps): ReactElement;
 
 // @public
 export type GeoChartPushpinSizeOption = "0.5x" | "0.75x" | "normal" | "1.25x" | "1.5x" | "default";
+
+// @public
+export type GeoChartShapeType = "circle" | "iconByValue" | "oneIcon";
 
 // @alpha
 export type GeoColorScheme = "light" | "dark";
@@ -135,6 +141,7 @@ export interface IGeoAreaChartConfig {
     areas?: IGeoAreasConfig;
     // @alpha
     basemap?: GeoBasemap;
+    bounds?: IGeoLngLatBounds;
     // (undocumented)
     center?: IGeoLngLat;
     // (undocumented)
@@ -204,6 +211,7 @@ export interface IGeoChartConfig {
     areas?: IGeoAreasConfig;
     // @alpha
     basemap?: GeoBasemap;
+    bounds?: IGeoLngLatBounds;
     center?: IGeoLngLat;
     colorMapping?: IColorMapping[];
     colorPalette?: IColorPalette;
@@ -295,8 +303,10 @@ export interface IGeoChartLegendRendererProps {
 // @public
 export interface IGeoChartPointsConfig {
     groupNearbyPoints?: boolean;
+    icon?: string;
     maxSize?: GeoChartPushpinSizeOption;
     minSize?: GeoChartPushpinSizeOption;
+    shapeType?: GeoChartShapeType;
 }
 
 // @public
@@ -351,7 +361,9 @@ export interface IGeoCommonExecutionProps extends IVisualizationProps, IVisualiz
     backend?: IAnalyticalBackend;
     execConfig?: IExecutionConfig;
     filters?: NullableFiltersOrPlaceholders;
+    onBoundsChanged?: BoundsChangedCallback;
     onCenterPositionChanged?: CenterPositionChangedCallback;
+    onViewportInteractionEnd?: ViewportInteractionEndCallback;
     onZoomChanged?: ZoomChangedCallback;
     placeholdersResolutionContext?: object;
     theme?: ITheme;
@@ -462,8 +474,10 @@ export interface IGeoLayerConfig {
 
 // @public
 export interface IGeoLayerPushpin extends IGeoLayerBase {
+    geoIcon?: IAttribute;
     latitude: IAttribute;
     longitude: IAttribute;
+    measures?: IAttributeOrMeasure[];
     size?: IAttributeOrMeasure;
     // (undocumented)
     type: "pushpin";
@@ -532,6 +546,7 @@ export interface IGeoPushpinChartConfig {
     applyViewportNavigation?: boolean;
     // @alpha
     basemap?: GeoBasemap;
+    bounds?: IGeoLngLatBounds;
     // (undocumented)
     center?: IGeoLngLat;
     // (undocumented)
@@ -673,6 +688,9 @@ export function useMapboxToken(mapboxToken?: string): string | undefined;
 
 // @public @deprecated (undocumented)
 export function useMapboxTokenStrict(mapboxToken?: string): string;
+
+// @public
+export type ViewportInteractionEndCallback = () => void;
 
 // @public @deprecated (undocumented)
 export function withMapboxToken<T extends {

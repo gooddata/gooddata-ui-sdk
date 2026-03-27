@@ -22,7 +22,12 @@ import { useMapCallbacks } from "../hooks/map/useMapCallbacks.js";
 import { useMapInitialization } from "../hooks/map/useMapInitialization.js";
 import { useMapResize } from "../hooks/map/useMapResize.js";
 import { useCallbackOnChange } from "../hooks/utils/useCallbackOnChange.js";
-import { type CenterPositionChangedCallback, type ZoomChangedCallback } from "../types/common/callbacks.js";
+import {
+    type BoundsChangedCallback,
+    type CenterPositionChangedCallback,
+    type ViewportInteractionEndCallback,
+    type ZoomChangedCallback,
+} from "../types/common/callbacks.js";
 import { type IGeoChartConfig } from "../types/config/unified.js";
 import { type IMapViewport } from "../types/map/provider.js";
 import { type ILayerExecutionRecord } from "../types/props/geoChart/internal.js";
@@ -37,6 +42,8 @@ export type MapControllerProps = {
     drillablePredicates: IHeaderPredicate[];
     onCenterPositionChanged?: CenterPositionChangedCallback;
     onZoomChanged?: ZoomChangedCallback;
+    onBoundsChanged?: BoundsChangedCallback;
+    onViewportInteractionEnd?: ViewportInteractionEndCallback;
     onDrill?: OnFiredDrillEvent;
     afterRender?: () => void;
     config: IGeoChartConfig | undefined;
@@ -61,6 +68,8 @@ export function MapController({
     drillablePredicates,
     onCenterPositionChanged,
     onZoomChanged,
+    onBoundsChanged,
+    onViewportInteractionEnd,
     onDrill,
     afterRender,
     config,
@@ -105,6 +114,8 @@ export function MapController({
                 drillablePredicates={drillablePredicates}
                 onCenterPositionChanged={onCenterPositionChanged}
                 onZoomChanged={onZoomChanged}
+                onBoundsChanged={onBoundsChanged}
+                onViewportInteractionEnd={onViewportInteractionEnd}
                 onDrill={onDrill}
                 afterRender={afterRender}
             />
@@ -121,6 +132,8 @@ function MapLifecycleEffects({
     drillablePredicates,
     onCenterPositionChanged,
     onZoomChanged,
+    onBoundsChanged,
+    onViewportInteractionEnd,
     onDrill,
     afterRender,
 }: {
@@ -132,6 +145,8 @@ function MapLifecycleEffects({
     drillablePredicates: IHeaderPredicate[];
     onCenterPositionChanged?: CenterPositionChangedCallback;
     onZoomChanged?: ZoomChangedCallback;
+    onBoundsChanged?: BoundsChangedCallback;
+    onViewportInteractionEnd?: ViewportInteractionEndCallback;
     onDrill?: OnFiredDrillEvent;
     afterRender?: () => void;
 }): ReactElement | null {
@@ -144,6 +159,8 @@ function MapLifecycleEffects({
     useMapCallbacks(map, {
         onCenterPositionChanged,
         onZoomChanged,
+        onBoundsChanged,
+        onViewportInteractionEnd,
     });
 
     useSyncLayersToMap({

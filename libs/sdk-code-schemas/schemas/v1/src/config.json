@@ -1,0 +1,443 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "/gaac/config",
+    "title": "Visualisation Config",
+    "type": "object",
+    "properties": {
+        "widths": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/widthItem"
+            },
+            "description": "A list of widths in this visualisation."
+        },
+        "colors": {
+            "$ref": "#/$defs/colorItems",
+            "description": "A map of colors in this visualisation."
+        },
+        "color": {
+            "$ref": "#/$defs/colorDefinition",
+            "description": "A map of color definition in this visualisation."
+        },
+
+        "column_header": { "type": "string" },
+        "metrics_in": { "type": "string" },
+
+        "data_labels": {
+            "oneOf": [{ "type": "boolean" }, { "type": "string", "const": "auto" }]
+        },
+        "data_labels_style": {
+            "type": "string",
+            "enum": ["auto", "backplate"]
+        },
+        "chart_fill": {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": ["solid", "pattern", "outline"]
+                },
+                "pattern_name_mapping": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string",
+                        "enum": [
+                            "diagonal_grid_small",
+                            "vertical_lines_small",
+                            "grid_small",
+                            "horizontal_lines_small",
+                            "circle_small",
+                            "flag_small",
+                            "waffle_small",
+                            "dot_small",
+                            "pyramid_small",
+                            "needle_small",
+                            "diamond_small",
+                            "pizza_small",
+                            "diagonal_grid_medium",
+                            "vertical_lines_medium",
+                            "grid_large",
+                            "horizontal_lines_medium",
+                            "circle_medium",
+                            "flag_medium",
+                            "waffle_medium",
+                            "dot_medium",
+                            "pyramid_medium",
+                            "needle_medium",
+                            "diamond_medium",
+                            "pizza_medium"
+                        ]
+                    }
+                }
+            }
+        },
+        "data_points": {
+            "oneOf": [{ "type": "boolean" }, { "type": "string", "const": "auto" }]
+        },
+        "data_totals": {
+            "oneOf": [{ "type": "boolean" }, { "type": "string", "const": "auto" }]
+        },
+        "orientation": { "type": "string" },
+        "legend_enabled": { "type": "boolean" },
+        "legend_position": { "type": "string" },
+        "xaxis_format": { "type": "string" },
+        "xaxis_max": { "type": "number" },
+        "xaxis_min": { "type": "number" },
+        "xaxis_name_position": { "type": "string" },
+        "xaxis_name_visible": { "type": "boolean" },
+        "xaxis_rotation": { "type": "string" },
+        "xaxis_visible": { "type": "boolean" },
+        "xaxis_labels": { "type": "boolean" },
+        "yaxis_name_position": { "type": "string" },
+        "yaxis_name_visible": { "type": "boolean" },
+        "yaxis_rotation": { "type": "string" },
+        "yaxis_visible": { "type": "boolean" },
+        "yaxis_labels": { "type": "boolean" },
+        "yaxis_format": { "type": "string" },
+        "yaxis_max": { "type": "number" },
+        "yaxis_min": { "type": "number" },
+        "grid_enabled": { "type": "boolean" },
+        "stack_measures_to_100": { "type": "boolean" },
+        "stack_measures": { "type": "boolean" },
+        "continuous_line": { "type": "boolean" },
+        "distinct_point_shapes": {
+            "type": "object",
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                },
+                "point_shape_mapping": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string",
+                        "enum": ["circle", "square", "diamond", "triangle", "triangle-down"]
+                    }
+                }
+            }
+        },
+        "total_enabled": { "type": "boolean" },
+        "total_name": { "type": "string" },
+        "comparison_enabled": { "type": "boolean" },
+        "comparison_type": { "type": "string" },
+        "format": { "type": "string" },
+        "position": { "type": "string" },
+        "indicator_arrow": { "type": "boolean" },
+        "indicator_colors": { "type": "boolean" },
+        "indicator_color_equals": { "$ref": "#/$defs/simpleColorItem" },
+        "indicator_color_negative": { "$ref": "#/$defs/simpleColorItem" },
+        "indicator_color_positive": { "$ref": "#/$defs/simpleColorItem" },
+        "label_default": { "type": "string" },
+        "label_conditional": { "type": "boolean" },
+        "label_equals": { "type": "string" },
+        "label_negative": { "type": "string" },
+        "label_positive": { "type": "string" },
+
+        "yaxis_primary_type": { "type": "string", "enum": ["column", "area", "line"] },
+        "yaxis_primary_format": { "type": "string" },
+        "yaxis_primary_max": { "type": "number" },
+        "yaxis_primary_min": { "type": "number" },
+        "yaxis_primary_name_position": { "type": "string" },
+        "yaxis_primary_name_visible": { "type": "boolean" },
+        "yaxis_primary_rotation": { "type": "string" },
+        "yaxis_primary_visible": { "type": "boolean" },
+        "yaxis_primary_labels": { "type": "boolean" },
+
+        "yaxis_secondary_type": { "type": "string", "enum": ["column", "area", "line"] },
+        "yaxis_secondary_format": { "type": "string" },
+        "yaxis_secondary_max": { "type": "number" },
+        "yaxis_secondary_min": { "type": "number" },
+        "yaxis_secondary_name_position": { "type": "string" },
+        "yaxis_secondary_name_visible": { "type": "boolean" },
+        "yaxis_secondary_rotation": { "type": "string" },
+        "yaxis_secondary_visible": { "type": "boolean" },
+        "yaxis_secondary_labels": { "type": "boolean" },
+        "yaxis_secondary_show_on_right": { "type": "boolean" },
+
+        "tooltip_text": { "type": "string" },
+        "viewport": {
+            "type": "string",
+            "enum": [
+                "auto",
+                "continent_af",
+                "continent_as",
+                "continent_au",
+                "continent_eu",
+                "continent_na",
+                "continent_sa",
+                "world",
+                "custom"
+            ]
+        },
+        "basemap": {
+            "type": "string",
+            "enum": ["standard", "satellite", "monochrome", "hybrid", "none"]
+        },
+        "color_scheme": {
+            "type": "string",
+            "enum": ["light", "dark"]
+        },
+        "viewport_pan": { "type": "boolean" },
+        "viewport_zoom": { "type": "boolean" },
+        "center_lat": { "type": "number" },
+        "center_lng": { "type": "number" },
+        "zoom_level": { "type": "number" },
+        "group_nearby_points": { "type": "boolean" },
+        "min_size": { "type": "string", "enum": ["0.5x", "0.75x", "normal", "1.25x", "1.5x", "default"] },
+        "max_size": { "type": "string", "enum": ["0.5x", "0.75x", "normal", "1.25x", "1.5x", "default"] },
+
+        "row_height": { "type": "string", "enum": ["small", "medium", "large"] },
+        "cell_vertical_align": { "type": "string", "enum": ["top", "middle", "bottom"] },
+        "cell_text_wrapping": { "type": "string", "enum": ["clip", "wrap"] },
+        "cell_image_sizing": { "type": "string", "enum": ["fit", "fill"] },
+
+        "forecast_enabled": { "type": "boolean" },
+        "forecast_confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+        "forecast_period": { "type": "number" },
+        "forecast_seasonal": { "type": "boolean" },
+
+        "anomaly_detection_enabled": { "type": "boolean" },
+        "anomaly_detection_sensitivity": { "type": "string", "enum": ["low", "medium", "high"] },
+        "anomaly_detection_size": { "type": "string", "enum": ["small", "medium", "big"] },
+        "anomaly_detection_color": { "$ref": "#/$defs/simpleColorItem" },
+
+        "clustering_enabled": { "type": "boolean" },
+        "clustering_amount": { "type": "number" },
+        "clustering_threshold": { "type": "number", "exclusiveMinimum": 0, "exclusiveMaximum": 1 },
+
+        "disable_drill_down": { "type": "boolean" },
+        "disable_drill_into_url": { "type": "boolean" },
+        "disable_alerts": { "type": "boolean" },
+        "disable_scheduled_exports": { "type": "boolean" },
+
+        "text_wrapping": {
+            "type": "object",
+            "description": "Text wrapping settings for table cells and headers.",
+            "properties": {
+                "wrap_text": { "type": "boolean", "description": "Enable text wrapping for cell content." },
+                "wrap_header_text": {
+                    "type": "boolean",
+                    "description": "Enable text wrapping for header content."
+                },
+                "column_overrides": {
+                    "type": "array",
+                    "description": "Per-column text wrapping overrides.",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "locators": {
+                                "type": "array",
+                                "items": { "type": "object" }
+                            },
+                            "wrap_text": { "type": "boolean" },
+                            "wrap_header_text": { "type": "boolean" },
+                            "match_type": { "type": "string", "enum": ["column", "pivotGroup"] }
+                        }
+                    }
+                }
+            }
+        },
+        "pagination": { "type": "boolean", "description": "Enable pagination for tables." },
+        "page_size": {
+            "type": "number",
+            "description": "Number of rows per page when pagination is enabled."
+        },
+        "grand_totals_position": {
+            "type": "string",
+            "enum": ["pinnedBottom", "pinnedTop", "bottom", "top"],
+            "description": "Position of grand totals in the table."
+        },
+        "enable_accessibility": {
+            "type": "boolean",
+            "description": "Enable accessibility features for tables."
+        },
+
+        "line_style_control_metrics": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+
+        "line_style_excluded_metrics": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        }
+    },
+    "$defs": {
+        "widthItem": {
+            "title": "Width",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "value": {
+                    "title": "Width value or auto",
+                    "oneOf": [
+                        { "type": "number" },
+                        {
+                            "type": "string",
+                            "const": "auto"
+                        }
+                    ]
+                },
+                "allowGrowToFit": {
+                    "title": "Allow grow to fit",
+                    "type": "boolean"
+                },
+                "using": {
+                    "type": "array",
+                    "$semantic": {
+                        "type": "reference",
+                        "sources": ["current.query.attribute.localId", "current.query.metric.localId"]
+                    },
+                    "items": {
+                        "oneOf": [
+                            {
+                                "type": "string",
+                                "$semantic": {
+                                    "type": "reference",
+                                    "sources": [
+                                        "current.query.attribute.localId",
+                                        "current.query.metric.localId"
+                                    ]
+                                }
+                            },
+                            {
+                                "type": "object",
+                                "title": "Attribute with element value",
+                                "minProperties": 1,
+                                "maxProperties": 1,
+                                "additionalProperties": {
+                                    "type": "string"
+                                },
+                                "$semantic": {
+                                    "type": "reference",
+                                    "sources": [
+                                        "current.query.attribute.localId",
+                                        "current.query.metric.localId"
+                                    ],
+                                    "mode": "property"
+                                }
+                            },
+                            {
+                                "type": "object",
+                                "title": "Total value with attribute",
+                                "additionalProperties": false,
+                                "minProperties": 1,
+                                "maxProperties": 1,
+                                "properties": {
+                                    "SUM": {
+                                        "type": "string",
+                                        "$semantic": {
+                                            "type": "reference",
+                                            "sources": ["current.query.attribute.localId"]
+                                        }
+                                    },
+                                    "AVG": {
+                                        "type": "string",
+                                        "$semantic": {
+                                            "type": "reference",
+                                            "sources": ["current.query.attribute.localId"]
+                                        }
+                                    },
+                                    "MAX": {
+                                        "type": "string",
+                                        "$semantic": {
+                                            "type": "reference",
+                                            "sources": ["current.query.attribute.localId"]
+                                        }
+                                    },
+                                    "MIN": {
+                                        "type": "string",
+                                        "$semantic": {
+                                            "type": "reference",
+                                            "sources": ["current.query.attribute.localId"]
+                                        }
+                                    },
+                                    "MED": {
+                                        "type": "string",
+                                        "$semantic": {
+                                            "type": "reference",
+                                            "sources": ["current.query.attribute.localId"]
+                                        }
+                                    },
+                                    "NAT": {
+                                        "type": "string",
+                                        "$semantic": {
+                                            "type": "reference",
+                                            "sources": ["current.query.attribute.localId"]
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        "colorItems": {
+            "title": "List of Colors",
+            "type": "object",
+            "additionalProperties": {
+                "$ref": "#/$defs/complexColorItem"
+            }
+        },
+        "complexColorItem": {
+            "title": "Color",
+            "oneOf": [
+                { "type": "number" },
+                {
+                    "type": "string",
+                    "pattern": "rgb\\( *0*([1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5]) *, *0*([1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5]) *, *0*([1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5]) *\\)"
+                }
+            ],
+            "$semantic": [
+                {
+                    "type": "values",
+                    "from": ["current.visualisation.colorItem.value"],
+                    "mode": "value"
+                },
+                {
+                    "type": "values",
+                    "from": ["current.visualisation.colorItem.property"],
+                    "mode": "property"
+                },
+                {
+                    "type": "snippet",
+                    "snippets": ["color"]
+                }
+            ]
+        },
+        "simpleColorItem": {
+            "title": "Color",
+            "oneOf": [
+                { "type": "number" },
+                {
+                    "type": "string",
+                    "pattern": "rgb\\( *0*([1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5]) *, *0*([1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5]) *, *0*([1]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5]) *\\)"
+                }
+            ],
+            "$semantic": [
+                {
+                    "type": "values",
+                    "from": ["current.visualisation.colorItem.value"],
+                    "mode": "value"
+                },
+                {
+                    "type": "snippet",
+                    "snippets": ["color"]
+                }
+            ]
+        },
+        "colorDefinition": {
+            "title": "Color Definition",
+            "type": "object",
+            "properties": {
+                "total": { "$ref": "#/$defs/simpleColorItem" },
+                "negative": { "$ref": "#/$defs/simpleColorItem" },
+                "positive": { "$ref": "#/$defs/simpleColorItem" }
+            }
+        }
+    }
+}

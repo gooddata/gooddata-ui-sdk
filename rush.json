@@ -620,6 +620,13 @@
             "shouldPublish": true
         },
         {
+            "packageName": "@gooddata/sdk-code-schemas",
+            "projectFolder": "libs/sdk-code-schemas",
+            "reviewCategory": "production",
+            "versionPolicyName": "sdk",
+            "shouldPublish": true
+        },
+        {
             "packageName": "@gooddata/sdk-code-convertors",
             "projectFolder": "libs/sdk-code-convertors",
             "reviewCategory": "production",

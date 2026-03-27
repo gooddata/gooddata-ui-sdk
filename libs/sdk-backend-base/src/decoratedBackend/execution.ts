@@ -255,6 +255,10 @@ export abstract class DecoratedExecutionResult implements IExecutionResult {
         return this.decorated.fingerprint();
     }
 
+    public resultId(): string | undefined {
+        return this.decorated.resultId?.();
+    }
+
     public withSignal(signal: AbortSignal): IExecutionResult {
         return this.createNew(this.decorated.withSignal(signal));
     }

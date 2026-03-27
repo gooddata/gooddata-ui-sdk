@@ -2,6 +2,7 @@
 
 import type { ReactElement } from "react";
 
+import { waitFor } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import { dummyBackend } from "@gooddata/sdk-backend-mockingbird";
@@ -20,13 +21,18 @@ import {
 import { BucketNames, GeoLocationMissingSdkError } from "@gooddata/sdk-ui";
 import { GeoChartInternal, PUSHPIN_LAYER_ID } from "@gooddata/sdk-ui-geo/internal";
 
-import { type IReferencePoint, type IVisConstruct } from "../../../../interfaces/Visualization.js";
+import {
+    type IBucketItem,
+    type IReferencePoint,
+    type IVisConstruct,
+} from "../../../../interfaces/Visualization.js";
 import {
     firstMeasureArithmeticNoAttributeReferencePoint,
     samePeriodPreviousYearRefPoint,
     twoMeasuresWithShowInPercentOnSecondaryAxisReferencePoint,
 } from "../../../../tests/mocks/referencePointMocks.js";
 import { DEFAULT_LANGUAGE, DEFAULT_MESSAGES } from "../../../../utils/translations.js";
+import { GeoPushpinConfigurationPanel } from "../../../configurationPanels/GeoPushpinConfigurationPanel.js";
 import {
     type ICreateComponentOverrides,
     fireAndExpectNoViewportSync,
@@ -36,6 +42,27 @@ import { PluggableGeoPushpinChartNext } from "../PluggableGeoPushpinChartNext.js
 
 const PROJECT_ID = "PROJECTID";
 const visualizationUrl = "local:pushpin";
+
+function createLocationBucketItem(localIdentifier = "a_location"): IBucketItem {
+    return {
+        localIdentifier,
+        type: "attribute",
+        attribute: "attr.region",
+        dfRef: uriRef(`/df/${localIdentifier}`),
+        locationDisplayFormRef: uriRef(`/df/${localIdentifier}.location`),
+    };
+}
+
+function createMetricBucketItem(localIdentifier = "m1"): IBucketItem {
+    return {
+        localIdentifier,
+        type: "metric",
+        attribute: `measure.${localIdentifier}`,
+        aggregation: undefined,
+        showInPercent: undefined,
+        showOnSecondaryAxis: undefined,
+    };
+}
 
 describe("PluggableGeoPushpinChartNext", () => {
     const messages = DEFAULT_MESSAGES[DEFAULT_LANGUAGE];
@@ -51,6 +78,7 @@ describe("PluggableGeoPushpinChartNext", () => {
         onError = vi.fn(),
         featureFlags?: IVisConstruct["featureFlags"],
         overrides?: ICreateComponentOverrides,
+        backendOverride = backend,
     ) {
         const pushData = vi.fn();
         const props: IVisConstruct = {
@@ -62,7 +90,7 @@ describe("PluggableGeoPushpinChartNext", () => {
                 pushData,
                 onError,
             },
-            backend,
+            backend: backendOverride,
             featureFlags,
             environment: overrides?.environment,
             visualizationProperties: overrides?.visualizationProperties ?? {
@@ -78,8 +106,25 @@ describe("PluggableGeoPushpinChartNext", () => {
         return { visualization: new PluggableGeoPushpinChartNext(props), onError, pushData };
     }
 
+    function getConfigPanelCalls() {
+        return mockRenderFun.mock.calls.filter(
+            ([node]) => (node as ReactElement)?.type === GeoPushpinConfigurationPanel,
+        );
+    }
+
+    function getLastConfigPanelProps(): ReactElement["props"] {
+        const lastCall = getConfigPanelCalls().at(-1);
+        if (!lastCall) {
+            throw new Error("Missing configuration panel render call.");
+        }
+
+        return (lastCall[0] as ReactElement).props;
+    }
+
     afterEach(() => {
         mockRenderFun.mockReset();
+        vi.restoreAllMocks();
+        vi.unstubAllGlobals();
     });
 
     const insightWithoutLocation: IInsightDefinition = newInsightDefinition(visualizationUrl, (builder) =>
@@ -120,6 +165,29 @@ describe("PluggableGeoPushpinChartNext", () => {
                     newBucket(
                         BucketNames.SEGMENT,
                         newAttribute("attr.category", (attribute) => attribute.localId("a_segment")),
+                    ),
+                ])
+                .properties({
+                    controls: {
+                        latitude: "latitude_df",
+                        longitude: "longitude_df",
+                    },
+                }),
+    );
+
+    const insightWithLocationAndTooltipMetric: IInsightDefinition = newInsightDefinition(
+        visualizationUrl,
+        (builder) =>
+            builder
+                .title("with location and tooltip metric")
+                .buckets([
+                    newBucket(
+                        BucketNames.LOCATION,
+                        newAttribute("attr.region", (attribute) => attribute.localId("a1")),
+                    ),
+                    newBucket(
+                        BucketNames.MEASURES,
+                        newMeasure("m1", (m) => m.localId("m_tooltip")),
                     ),
                 ])
                 .properties({
@@ -277,6 +345,186 @@ describe("PluggableGeoPushpinChartNext", () => {
         expect(props.execution).toBeDefined();
         expect(props.executions).toEqual([]);
         expect(props.execution?.context?.id).toBe(PUSHPIN_LAYER_ID);
+    });
+
+    it("should resolve clustering to false for rendering and the panel when tooltip measures are present", () => {
+        const { visualization } = createComponent(vi.fn(), undefined, {
+            visualizationProperties: {
+                controls: {
+                    latitude: "latitude_df",
+                    longitude: "longitude_df",
+                },
+            },
+        });
+
+        visualization.update({ messages }, insightWithLocationAndTooltipMetric, {}, executionFactory);
+
+        const chartCall = mockRenderFun.mock.calls.find(
+            ([node]) => (node as ReactElement)?.type === GeoChartInternal,
+        );
+        expect(chartCall).toBeDefined();
+        if (!chartCall) {
+            throw new Error("Missing GeoChartInternal render call.");
+        }
+
+        const chartProps = (chartCall[0] as ReactElement).props as {
+            config?: { points?: { groupNearbyPoints?: boolean } };
+        };
+        expect(chartProps.config?.points?.groupNearbyPoints).toBe(false);
+
+        const configPanelProps = getLastConfigPanelProps() as {
+            properties?: { controls?: { points?: { groupNearbyPoints?: boolean } } };
+        };
+
+        expect(configPanelProps.properties?.controls?.points?.groupNearbyPoints).toBe(false);
+    });
+
+    it("should regenerate the reference point when pushpin points controls change", () => {
+        const { visualization } = createComponent(undefined, { enableGeoPushpinIcon: true });
+
+        expect(
+            visualization.haveSomePropertiesRelevantForReferencePointChanged(
+                {
+                    buckets: [],
+                    filters: { localIdentifier: "filters", items: [] },
+                    properties: {
+                        controls: {
+                            points: {
+                                shapeType: "oneIcon",
+                            },
+                        },
+                    },
+                },
+                {
+                    buckets: [],
+                    filters: { localIdentifier: "filters", items: [] },
+                    properties: {
+                        controls: {
+                            points: {
+                                shapeType: "circle",
+                            },
+                        },
+                    },
+                },
+            ),
+        ).toBe(true);
+    });
+
+    it("should not regenerate the reference point when only non-structural pushpin controls change", () => {
+        const { visualization } = createComponent(undefined, { enableGeoPushpinIcon: true });
+
+        expect(
+            visualization.haveSomePropertiesRelevantForReferencePointChanged(
+                {
+                    buckets: [],
+                    filters: { localIdentifier: "filters", items: [] },
+                    properties: {
+                        controls: {
+                            points: {
+                                shapeType: "oneIcon",
+                                icon: "airport",
+                                groupNearbyPoints: true,
+                                minSize: "default",
+                                maxSize: "normal",
+                            },
+                        },
+                    },
+                },
+                {
+                    buckets: [],
+                    filters: { localIdentifier: "filters", items: [] },
+                    properties: {
+                        controls: {
+                            points: {
+                                shapeType: "oneIcon",
+                                icon: "harbor",
+                                groupNearbyPoints: false,
+                                minSize: "1.25x",
+                                maxSize: "1.5x",
+                            },
+                        },
+                    },
+                },
+            ),
+        ).toBe(false);
+    });
+
+    it("should rerender the configuration panel after sprite icons load", async () => {
+        const getDefaultStyleSpriteIcons = vi.fn().mockResolvedValue(["airport", "harbor"]);
+        const spriteBackend = {
+            ...backend,
+            geo: () => ({
+                ...backend.geo(),
+                getDefaultStyleSpriteIcons,
+            }),
+        };
+
+        const { visualization } = createComponent(
+            vi.fn(),
+            {
+                enableGeoPushpinIcon: true,
+                geoIconSheet: "https://sprites.test/map",
+            },
+            undefined,
+            spriteBackend,
+        );
+
+        visualization.update({ messages }, insightWithLocation, {}, executionFactory);
+
+        expect(getConfigPanelCalls()).toHaveLength(1);
+        expect((getConfigPanelCalls()[0][0] as ReactElement).props).toMatchObject({
+            spriteIcons: [],
+        });
+
+        await waitFor(() => {
+            expect(getConfigPanelCalls().length).toBeGreaterThan(1);
+            expect(getLastConfigPanelProps()).toMatchObject({
+                spriteIcons: [
+                    { title: "airport", value: "airport" },
+                    { title: "harbor", value: "harbor" },
+                ],
+            });
+        });
+
+        expect(getDefaultStyleSpriteIcons).toHaveBeenCalledTimes(1);
+    });
+
+    it("should clear stale sprite icons when the sprite URL is removed", async () => {
+        const spriteBackend = {
+            ...backend,
+            geo: () => ({
+                ...backend.geo(),
+                getDefaultStyleSpriteIcons: vi.fn().mockResolvedValue(["airport"]),
+            }),
+        };
+
+        const { visualization } = createComponent(
+            vi.fn(),
+            {
+                enableGeoPushpinIcon: true,
+                geoIconSheet: "https://sprites.test/map",
+            },
+            undefined,
+            spriteBackend,
+        );
+
+        visualization.update({ messages }, insightWithLocation, {}, executionFactory);
+
+        await waitFor(() => {
+            expect(getLastConfigPanelProps()).toMatchObject({
+                spriteIcons: [{ title: "airport", value: "airport" }],
+            });
+        });
+
+        (visualization as unknown as { featureFlags: Record<string, unknown> }).featureFlags = {
+            enableGeoPushpinIcon: true,
+        };
+
+        visualization.update({ messages }, insightWithLocation, {}, executionFactory);
+
+        expect(getLastConfigPanelProps()).toMatchObject({
+            spriteIcons: [],
+        });
     });
 
     it("should pass legacy tileset insight properties to the configuration panel as a basemap fallback", () => {
@@ -728,6 +976,167 @@ describe("PluggableGeoPushpinChartNext", () => {
     });
 
     describe("getExtendedReferencePoint (legacy parity cases)", () => {
+        it("should keep drops available while clustering stays enabled", async () => {
+            const { visualization } = createComponent(undefined, {
+                enableGeoPushpinIcon: true,
+            });
+
+            const extendedReferencePoint = await visualization.getExtendedReferencePoint({
+                buckets: [
+                    {
+                        localIdentifier: BucketNames.VIEW,
+                        items: [createLocationBucketItem()],
+                    },
+                ],
+                filters: { localIdentifier: "filters", items: [] },
+                properties: {
+                    controls: {
+                        points: {
+                            groupNearbyPoints: true,
+                        },
+                    },
+                },
+            });
+
+            expect(extendedReferencePoint.uiConfig?.buckets[BucketNames.SIZE].canAddItems).toBe(true);
+            expect(extendedReferencePoint.uiConfig?.buckets[BucketNames.COLOR].canAddItems).toBe(true);
+            expect(extendedReferencePoint.uiConfig?.buckets[BucketNames.MEASURES].canAddItems).toBe(true);
+            expect(extendedReferencePoint.uiConfig?.buckets[BucketNames.SEGMENT].canAddItems).toBe(true);
+        });
+
+        it("should disable invalid clustering when tooltip measures are present", async () => {
+            const { visualization } = createComponent(undefined, {
+                enableGeoPushpinIcon: true,
+            });
+
+            const extendedReferencePoint = await visualization.getExtendedReferencePoint({
+                buckets: [
+                    {
+                        localIdentifier: BucketNames.VIEW,
+                        items: [createLocationBucketItem()],
+                    },
+                    {
+                        localIdentifier: BucketNames.MEASURES,
+                        items: [createMetricBucketItem()],
+                    },
+                ],
+                filters: { localIdentifier: "filters", items: [] },
+                properties: {
+                    controls: {
+                        points: {
+                            groupNearbyPoints: true,
+                        },
+                    },
+                },
+            });
+
+            expect(extendedReferencePoint.properties?.controls?.["points"]?.groupNearbyPoints).toBe(false);
+            expect(extendedReferencePoint.uiConfig?.buckets[BucketNames.MEASURES].canAddItems).toBe(true);
+        });
+
+        it("should keep size and color drops available for circle shape with a stale icon", async () => {
+            const { visualization } = createComponent(undefined, {
+                enableGeoPushpinIcon: true,
+            });
+
+            const extendedReferencePoint = await visualization.getExtendedReferencePoint({
+                buckets: [
+                    {
+                        localIdentifier: BucketNames.VIEW,
+                        items: [createLocationBucketItem()],
+                    },
+                ],
+                filters: { localIdentifier: "filters", items: [] },
+                properties: {
+                    controls: {
+                        points: {
+                            shapeType: "circle",
+                            icon: "airport",
+                        },
+                    },
+                },
+            });
+
+            expect(extendedReferencePoint.uiConfig?.buckets[BucketNames.SIZE].canAddItems).toBe(true);
+            expect(extendedReferencePoint.uiConfig?.buckets[BucketNames.COLOR].canAddItems).toBe(true);
+        });
+
+        it("should disable size and color drops for oneIcon shape", async () => {
+            const { visualization } = createComponent(undefined, {
+                enableGeoPushpinIcon: true,
+            });
+
+            const extendedReferencePoint = await visualization.getExtendedReferencePoint({
+                buckets: [
+                    {
+                        localIdentifier: BucketNames.VIEW,
+                        items: [createLocationBucketItem()],
+                    },
+                ],
+                filters: { localIdentifier: "filters", items: [] },
+                properties: {
+                    controls: {
+                        points: {
+                            shapeType: "oneIcon",
+                            icon: "airport",
+                        },
+                    },
+                },
+            });
+
+            expect(extendedReferencePoint.uiConfig?.buckets[BucketNames.SIZE].canAddItems).toBe(false);
+            expect(extendedReferencePoint.uiConfig?.buckets[BucketNames.COLOR].canAddItems).toBe(false);
+        });
+
+        it("should keep size and color drops available when visualization properties already switched to circle", async () => {
+            const { visualization } = createComponent(undefined, {
+                enableGeoPushpinIcon: true,
+            });
+
+            const insightWithCircleShape = newInsightDefinition(visualizationUrl, (builder) =>
+                builder
+                    .title("with circle shape")
+                    .buckets([
+                        newBucket(
+                            BucketNames.LOCATION,
+                            newAttribute("attr.region", (attribute) => attribute.localId("a1")),
+                        ),
+                    ])
+                    .properties({
+                        controls: {
+                            latitude: "latitude_df",
+                            longitude: "longitude_df",
+                            points: {
+                                shapeType: "circle",
+                            },
+                        },
+                    }),
+            );
+
+            visualization.update({ messages }, insightWithCircleShape, {}, executionFactory);
+
+            const extendedReferencePoint = await visualization.getExtendedReferencePoint({
+                buckets: [
+                    {
+                        localIdentifier: BucketNames.VIEW,
+                        items: [createLocationBucketItem()],
+                    },
+                ],
+                filters: { localIdentifier: "filters", items: [] },
+                properties: {
+                    controls: {
+                        points: {
+                            shapeType: "oneIcon",
+                            icon: "airport",
+                        },
+                    },
+                },
+            });
+
+            expect(extendedReferencePoint.uiConfig?.buckets[BucketNames.SIZE].canAddItems).toBe(true);
+            expect(extendedReferencePoint.uiConfig?.buckets[BucketNames.COLOR].canAddItems).toBe(true);
+        });
+
         it("should reset showInPercent and showOnSecondaryAxis for size and color measures", async () => {
             const { visualization } = createComponent();
             const extendedReferencePoint = await visualization.getExtendedReferencePoint(

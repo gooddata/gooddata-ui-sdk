@@ -1,4 +1,5 @@
-// (C) 2007-2025 GoodData Corporation
+// (C) 2007-2026 GoodData Corporation
+
 import {
     type ImportDeclarationStructure,
     type OptionalKind,
@@ -93,12 +94,45 @@ function initialize(outputFile: string): TypescriptOutput {
     };
 }
 
-function generateSdkModelImports(): OptionalKind<ImportDeclarationStructure> {
+function generateSdkModelImports(projectMeta: WorkspaceMetadata): OptionalKind<ImportDeclarationStructure> {
+    const hasAttributeConstants = projectMeta.catalog.attributes.length > 0;
+    const hasSingleDisplayFormAttribute = projectMeta.catalog.attributes.some(
+        (attribute) => attribute.attribute.content.displayForms.length === 1,
+    );
+    const hasDateDataSetAttributes = projectMeta.dateDataSets.some(
+        (dateDataSet) => dateDataSet.dateDataSet.content.attributes.length > 0,
+    );
+    const hasMetrics = projectMeta.catalog.metrics.length > 0;
+    const hasFacts = projectMeta.catalog.facts.length > 0;
+
+    const namedImports: Array<string | { name: string; isTypeOnly: true }> = [];
+
+    if (hasSingleDisplayFormAttribute) {
+        namedImports.push({ name: "IAttribute", isTypeOnly: true });
+    }
+
+    if (hasMetrics) {
+        namedImports.push(
+            { name: "IMeasure", isTypeOnly: true },
+            { name: "IMeasureDefinition", isTypeOnly: true },
+        );
+    }
+
+    if (hasAttributeConstants || hasDateDataSetAttributes || hasMetrics || hasFacts) {
+        namedImports.push("idRef");
+    }
+
+    if (hasAttributeConstants || hasDateDataSetAttributes) {
+        namedImports.push("newAttribute");
+    }
+
+    if (hasMetrics || hasFacts) {
+        namedImports.push("newMeasure");
+    }
+
     return {
         moduleSpecifier: "@gooddata/sdk-model",
-        namedImports: ["newAttribute", "newMeasure", "IAttribute", "IMeasure", "IMeasureDefinition", "idRef"],
-        leadingTrivia:
-            "// @ts-ignore ignore unused imports here if they happen (e.g. when there is no measure in the workspace)",
+        namedImports,
     };
 }
 
@@ -423,7 +457,7 @@ export function transformToTypescript(projectMeta: WorkspaceMetadata, outputFile
     const output = initialize(outputFile);
     const { sourceFile } = output;
 
-    sourceFile.addImportDeclaration(generateSdkModelImports());
+    sourceFile.addImportDeclaration(generateSdkModelImports(projectMeta));
     sourceFile.addVariableStatements(generateAttributes(projectMeta));
     sourceFile.addVariableStatements(generateMeasures(projectMeta));
     sourceFile.addVariableStatements(generateDateDataSets(projectMeta));

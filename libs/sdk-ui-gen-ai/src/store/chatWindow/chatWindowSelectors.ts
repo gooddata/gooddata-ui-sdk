@@ -8,6 +8,7 @@ import {
     type GenAIObjectType,
     type IAllowedRelationshipType,
     type IColorPalette,
+    type IGenAIUserContext,
 } from "@gooddata/sdk-model";
 import type { IKdaDefinition } from "@gooddata/sdk-ui-dashboard";
 
@@ -64,4 +65,9 @@ export const catalogItemsSelector: (state: RootState) => CatalogItem[] = createS
 export const keyDriverAnalysisSelector: (state: RootState) => IKdaDefinition | undefined = createSelector(
     chatWindowSliceSelector,
     (state) => state.keyDriverAnalysis,
+);
+
+export const userContextSelector: (state: RootState) => IGenAIUserContext | undefined = createSelector(
+    chatWindowSliceSelector,
+    (state) => state.userContext,
 );

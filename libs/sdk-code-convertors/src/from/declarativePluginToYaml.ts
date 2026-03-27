@@ -3,9 +3,9 @@
 import { Document, Pair } from "yaml";
 
 import { type DeclarativeDashboardPlugin } from "@gooddata/api-client-tiger";
+import type { Plugin } from "@gooddata/sdk-code-schemas/v1";
 import { type IDashboardPluginDefinition } from "@gooddata/sdk-model";
 
-import type { Plugin } from "../schemas/v1/metadata.js";
 import { PLUGIN_COMMENT } from "../utils/texts.js";
 import { fillOptionalMetaFields } from "../utils/yamlUtils.js";
 

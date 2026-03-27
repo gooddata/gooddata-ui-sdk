@@ -12,8 +12,8 @@ import {
     type DeclarativeTable,
     type DeclarativeWorkspaceDataFilterReferences,
 } from "@gooddata/api-client-tiger";
+import type { Dataset } from "@gooddata/sdk-code-schemas/v1";
 
-import type { Dataset } from "../schemas/v1/metadata.js";
 import { type Profile } from "../types.js";
 import { DATASET_COMMENT } from "../utils/texts.js";
 import {

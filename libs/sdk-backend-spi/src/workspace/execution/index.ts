@@ -678,6 +678,18 @@ export interface IExecutionResult extends ICancelable<IExecutionResult> {
      * Thus, two results with the same data and same execution definition will have the same fingerprint.
      */
     fingerprint(): string;
+
+    /**
+     * Server-assigned identifier of this execution result.
+     *
+     * @remarks
+     * This is the signed result ID that can be used to reference the cached execution result
+     * when communicating with backend services (e.g. GenAI context).
+     *
+     * @returns the result ID string, or undefined if not available
+     * @internal
+     */
+    resultId(): string | undefined;
 }
 
 /**

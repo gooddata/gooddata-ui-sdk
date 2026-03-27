@@ -106,6 +106,29 @@ describe("geoConfigFromInsight", () => {
 
         expect(config.basemap).toBe("monochrome");
     });
+
+    it("keeps oneIcon points configuration", () => {
+        const locationAttribute = newAttribute(idRef("nm_location", "displayForm"), (attribute) =>
+            attribute.localId("location_id"),
+        );
+        const insight = newInsightDefinition("local:geoPushpin", (builder) =>
+            builder.buckets([newBucket(BucketNames.LOCATION, locationAttribute)]).properties({
+                controls: {
+                    points: {
+                        shapeType: "oneIcon",
+                        icon: "airport",
+                    },
+                },
+            }),
+        );
+
+        const config = geoConfigFromInsight(insight);
+
+        expect(config.points).toEqual({
+            shapeType: "oneIcon",
+            icon: "airport",
+        });
+    });
 });
 
 describe("geoInsightConversion", () => {
@@ -318,6 +341,31 @@ describe("buildGeoVisualizationConfig", () => {
         });
 
         expect(config.basemap).toBe("satellite");
+    });
+
+    it("does not forward bounds when viewport config is disabled", () => {
+        const config = buildGeoVisualizationConfig({
+            options,
+            supportedControls: {
+                center: { lat: 40, lng: -74 },
+                zoom: 3,
+                bounds: {
+                    southWest: { lat: 35, lng: -80 },
+                    northEast: { lat: 45, lng: -68 },
+                },
+                viewport: { area: "custom" },
+            },
+            colorMapping: undefined,
+            environment: ANALYTICAL_ENVIRONMENT,
+            featureFlags: {
+                enableGeoChartsViewportConfig: false,
+            },
+        });
+
+        expect(config.enableGeoChartsViewportConfig).toBe(false);
+        expect(config.bounds).toBeUndefined();
+        expect(config.center).toEqual({ lat: 40, lng: -74 });
+        expect(config.zoom).toBe(3);
     });
 });
 

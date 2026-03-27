@@ -183,6 +183,10 @@
       "allowedCategories": [ "examples", "production", "tools" ]
     },
     {
+      "name": "@gooddata/sdk-code-schemas",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "@gooddata/sdk-embedding",
       "allowedCategories": [ "production" ]
     },
@@ -935,6 +939,10 @@
       "allowedCategories": [ "production" ]
     },
     {
+      "name": "json-schema-to-typescript",
+      "allowedCategories": [ "production" ]
+    },
+    {
       "name": "json-stable-stringify",
       "allowedCategories": [ "production", "tools" ]
     },
@@ -1052,6 +1060,10 @@
     },
     {
       "name": "postcss-value-parser",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "prettier",
       "allowedCategories": [ "production" ]
     },
     {
@@ -1176,6 +1188,10 @@
     },
     {
       "name": "react-window",
+      "allowedCategories": [ "production" ]
+    },
+    {
+      "name": "readdirp",
       "allowedCategories": [ "production" ]
     },
     {

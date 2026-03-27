@@ -5,6 +5,20 @@ import { CalculateAs, ComparisonPositionValues } from "@gooddata/sdk-ui-charts";
 import { comparisonMessages, messages } from "../../locales.js";
 import { type IDropdownItem } from "../interfaces/Dropdown.js";
 
+export const pushpinShapeTypeDropdownItems: IDropdownItem[] = [
+    { title: messages["shapeTypeCircle"].id, value: "circle" },
+    {
+        title: messages["shapeTypeIconByValue"].id,
+        value: "iconByValue",
+        info: messages["shapeTypeIconByValueInfo"].id,
+    },
+    {
+        title: messages["shapeTypeOneIcon"].id,
+        value: "oneIcon",
+        info: messages["shapeTypeOneIconInfo"].id,
+    },
+];
+
 export const pushpinSizeDropdownItems: IDropdownItem[] = [
     { title: messages["autoDefault"].id, value: "default" },
     { type: "separator" },

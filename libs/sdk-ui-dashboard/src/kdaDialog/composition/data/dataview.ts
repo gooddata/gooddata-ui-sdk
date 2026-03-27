@@ -218,6 +218,9 @@ function createExecutionResults(
         fingerprint: () => {
             return JSON.stringify(view.definition);
         },
+        resultId: () => {
+            return undefined;
+        },
     };
 
     return res;

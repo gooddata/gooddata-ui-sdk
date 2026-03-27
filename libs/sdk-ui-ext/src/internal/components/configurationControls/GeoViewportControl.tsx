@@ -6,7 +6,13 @@ import { cloneDeep, set } from "lodash-es";
 import { useIntl } from "react-intl";
 
 import { type IPushData } from "@gooddata/sdk-ui";
-import { type IGeoChartViewport, type IGeoLngLat } from "@gooddata/sdk-ui-geo";
+import {
+    type IGeoChartViewport,
+    type IGeoChartViewportArea,
+    type IGeoLngLat,
+    type IGeoLngLatBounds,
+} from "@gooddata/sdk-ui-geo";
+import { PRESET_VIEWPORT_BOUNDS, isConcreteViewportPreset } from "@gooddata/sdk-ui-geo/internal";
 import { Bubble, BubbleHoverTrigger } from "@gooddata/sdk-ui-kit";
 
 import { CheckboxControl } from "./CheckboxControl.js";
@@ -19,6 +25,7 @@ import { getTranslatedDropdownItems } from "../../utils/translations.js";
 export interface ICurrentMapView {
     center?: IGeoLngLat;
     zoom?: number;
+    bounds?: IGeoLngLatBounds;
 }
 
 export interface IGeoViewportControl {
@@ -39,6 +46,29 @@ function getViewportProperty(props: IGeoViewportControl): IGeoChartViewport {
 }
 
 const TOOLTIP_ALIGN_POINTS = [{ align: "cr cl", offset: { x: 5, y: 0 } }];
+const GEO_COORD_EPSILON = 1e-6;
+
+function getPresetViewportBounds(area: IGeoChartViewportArea | undefined): IGeoLngLatBounds | undefined {
+    if (!isConcreteViewportPreset(area)) {
+        return undefined;
+    }
+
+    const [southWest, northEast] = PRESET_VIEWPORT_BOUNDS[area];
+    return { southWest, northEast };
+}
+
+function areBoundsEqual(left: IGeoLngLatBounds | undefined, right: IGeoLngLatBounds | undefined): boolean {
+    if (!left || !right) {
+        return false;
+    }
+
+    return (
+        Math.abs(left.southWest.lat - right.southWest.lat) < GEO_COORD_EPSILON &&
+        Math.abs(left.southWest.lng - right.southWest.lng) < GEO_COORD_EPSILON &&
+        Math.abs(left.northEast.lat - right.northEast.lat) < GEO_COORD_EPSILON &&
+        Math.abs(left.northEast.lng - right.northEast.lng) < GEO_COORD_EPSILON
+    );
+}
 
 /**
  * Generic viewport control for geo charts (pushpin and area).
@@ -72,17 +102,45 @@ export function GeoViewportControl(props: IGeoViewportControl): ReactElement {
             }
             const selectedArea = nextProperties?.controls?.["viewport"]?.area;
             if (selectedArea === "custom") {
+                const previousArea = properties?.controls?.["viewport"]?.area;
                 const currentMapView = getCurrentMapView?.();
                 const hasValidSnapshot =
                     Boolean(currentMapView?.center) && typeof currentMapView?.zoom === "number";
+                const presetBounds = isConcreteViewportPreset(previousArea)
+                    ? getPresetViewportBounds(previousArea)
+                    : undefined;
+
+                if (presetBounds) {
+                    set(nextProperties, "controls.bounds", presetBounds);
+
+                    if (
+                        hasValidSnapshot &&
+                        currentMapView?.center &&
+                        areBoundsEqual(currentMapView.bounds, presetBounds)
+                    ) {
+                        set(nextProperties, "controls.center", currentMapView.center);
+                        set(nextProperties, "controls.zoom", currentMapView.zoom);
+                    } else {
+                        set(nextProperties, "controls.center", undefined);
+                        set(nextProperties, "controls.zoom", undefined);
+                    }
+
+                    pushData?.({
+                        ...data,
+                        properties: nextProperties,
+                    });
+                    return;
+                }
 
                 if (hasValidSnapshot && currentMapView?.center) {
                     set(nextProperties, "controls.center", currentMapView.center);
                     set(nextProperties, "controls.zoom", currentMapView.zoom);
+                    set(nextProperties, "controls.bounds", currentMapView.bounds);
                 }
             } else {
                 set(nextProperties, "controls.center", undefined);
                 set(nextProperties, "controls.zoom", undefined);
+                set(nextProperties, "controls.bounds", undefined);
             }
 
             pushData?.({

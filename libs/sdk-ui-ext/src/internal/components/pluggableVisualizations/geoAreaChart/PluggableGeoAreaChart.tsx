@@ -329,6 +329,10 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
             onDrill: this.onDrill,
             onCenterPositionChanged: isViewportConfigEnabled ? this.handleCenterPositionChanged : undefined,
             onZoomChanged: isViewportConfigEnabled ? this.handleZoomChanged : undefined,
+            onBoundsChanged: isViewportConfigEnabled ? this.handleBoundsChanged : undefined,
+            onViewportInteractionEnd: isViewportConfigEnabled
+                ? this.handleViewportInteractionEnded
+                : undefined,
         };
 
         this.renderFun(<GeoChartInternal {...geoChartProps} />, this.getElement());
@@ -422,5 +426,7 @@ export class PluggableGeoAreaChart extends PluggableBaseChart {
 
     private handleCenterPositionChanged = this.syncedHandlers.handleCenterPositionChanged;
     private handleZoomChanged = this.syncedHandlers.handleZoomChanged;
+    private handleBoundsChanged = this.syncedHandlers.handleBoundsChanged;
+    private handleViewportInteractionEnded = this.syncedHandlers.handleViewportInteractionEnded;
     private getCurrentMapView = () => this.liveMapView.getCurrentMapView(this.visualizationProperties);
 }

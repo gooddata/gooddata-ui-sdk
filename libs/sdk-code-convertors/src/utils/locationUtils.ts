@@ -1,10 +1,10 @@
 // (C) 2023-2026 GoodData Corporation
 
 import { type AfmObjectIdentifier } from "@gooddata/api-client-tiger";
+import type { AttributeField, Dataset } from "@gooddata/sdk-code-schemas/v1";
 import { type IAttribute } from "@gooddata/sdk-model";
 
 import { isAttribute, parseReferenceObject } from "./typeGuards.js";
-import type { AttributeField, Dataset } from "../schemas/v1/metadata.js";
 import { type ExportEntities, type FromEntities } from "../types.js";
 import { createIdentifier, getIdentifier } from "./yamlUtils.js";
 

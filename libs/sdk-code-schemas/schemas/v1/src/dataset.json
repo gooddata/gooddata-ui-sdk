@@ -1,0 +1,809 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "/gaac/datasets",
+    "title": "Datasets Type",
+    "description": "JSON schema for Gooddata Analytics Datasets",
+    "allOf": [
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "dataset"
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "$ref": "#/$defs/dataset"
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "date"
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "$ref": "#/$defs/dateDataset"
+            }
+        }
+    ],
+    "properties": {
+        "type": {
+            "type": "string",
+            "enum": ["dataset", "date"]
+        }
+    },
+    "required": ["type"],
+    "$defs": {
+        "dataset": {
+            "$id": "/gaac/dataset",
+            "title": "Dataset",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "$ref": "/gaac/identifier",
+                    "description": "A unique identifier of the dataset.",
+                    "$semantic": [
+                        {
+                            "type": "uniqueness",
+                            "source": "dataset.id",
+                            "code": "core.uniqueness.datasets.id"
+                        },
+                        {
+                            "type": "definition",
+                            "source": "dataset.id"
+                        }
+                    ]
+                },
+                "type": {
+                    "type": "string",
+                    "enum": ["dataset"]
+                },
+                "title": {
+                    "$ref": "/gaac/title",
+                    "description": "An optional human readable title for the dataset. Will be derived from id if not provided explicitly."
+                },
+                "description": {
+                    "$ref": "/gaac/description",
+                    "description": "An optional description of the dataset."
+                },
+                "tags": {
+                    "$ref": "/gaac/tags",
+                    "description": "A list of strings - metadata tags of this dataset."
+                },
+                "table_path": {
+                    "type": "string",
+                    "description": "A table path in the data source delimited by / character.",
+                    "pattern": "^(?!\\.)[.A-Za-z0-9_/-]{1,255}$",
+                    "$semantic": {
+                        "type": "reference",
+                        "source": "table.id",
+                        "code": "core.reference.table.id"
+                    }
+                },
+                "sql": {
+                    "type": "string",
+                    "description": "A sql statement that represent a table.",
+                    "$semantic": {
+                        "type": "sql"
+                    }
+                },
+                "primary_key": {
+                    "oneOf": [
+                        {
+                            "title": "Primary key",
+                            "type": "string",
+                            "$ref": "/gaac/identifier",
+                            "description": "A primary key for the given dataset.",
+                            "$semantic": {
+                                "type": "reference",
+                                "source": "current.dataset.primary_key",
+                                "code": "core.reference.current.dataset.primary_key"
+                            }
+                        },
+                        {
+                            "title": "Composite primary key",
+                            "type": "array",
+                            "items": {
+                                "$ref": "/gaac/identifier",
+                                "$semantic": {
+                                    "type": "reference",
+                                    "source": "current.dataset.primary_key",
+                                    "code": "core.reference.current.dataset.primary_key"
+                                }
+                            },
+                            "uniqueItems": true,
+                            "description": "A primary key for the given dataset."
+                        }
+                    ]
+                },
+                "fields": {
+                    "$ref": "#/$defs/fields",
+                    "description": "A list of fields in this dataset."
+                },
+                "references": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/$defs/reference"
+                    },
+                    "description": "A list of references, specifies the relations between datasets.\nForeign dataset is defined in \"dataset\" attribute and will always be joined by it's grain.\nCurrent dataset will be join by the column name defined in \"using\" attribute."
+                },
+                "workspace_data_filters": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/$defs/workspace_data_filter"
+                    },
+                    "description": "A list of workspace data filters to be applied to the dataset."
+                },
+                "data_source": {
+                    "type": "string",
+                    "$semantic": {
+                        "type": "reference",
+                        "source": "dataSource.id",
+                        "code": "core.reference.dataSource.id"
+                    },
+                    "description": "An optional data source id used for the specific dataset."
+                },
+                "precedence": {
+                    "type": "number",
+                    "description": "An optional precedence value for the dataset (whole positive number)."
+                }
+            },
+            "$semantic": [
+                {
+                    "type": "required_primary_key"
+                },
+                {
+                    "type": "required_data_source"
+                },
+                {
+                    "type": "snippet",
+                    "snippets": ["dataset"]
+                }
+            ],
+            "required": ["id", "type"],
+            "oneOf": [
+                {
+                    "title": "Normal dataset",
+                    "required": ["table_path"]
+                },
+                {
+                    "title": "SQL dataset",
+                    "required": ["sql"]
+                }
+            ]
+        },
+        "dateDataset": {
+            "$id": "/gaac/dateDataset",
+            "title": "DateDataset",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "$ref": "/gaac/identifier",
+                    "description": "A unique identifier of the date instance.",
+                    "$semantic": [
+                        {
+                            "type": "uniqueness",
+                            "source": "dataset.id",
+                            "code": "core.uniqueness.datasets.id"
+                        },
+                        {
+                            "type": "definition",
+                            "source": "dataset.id"
+                        }
+                    ]
+                },
+                "type": {
+                    "type": "string",
+                    "enum": ["date"]
+                },
+                "title": {
+                    "$ref": "/gaac/title",
+                    "description": "An optional human readable title for the date instance. Will be derived from id if not provided explicitly."
+                },
+                "description": {
+                    "$ref": "/gaac/description",
+                    "description": "An optional description of the date instance."
+                },
+                "tags": {
+                    "$ref": "/gaac/tags",
+                    "description": "A list of strings - metadata tags of this date instance."
+                },
+                "title_base": {
+                    "type": "string",
+                    "description": "A title for the title formatting",
+                    "maxLength": 255
+                },
+                "title_pattern": {
+                    "type": "string",
+                    "description": "A pattern for the title formatting",
+                    "maxLength": 255
+                },
+                "granularities": {
+                    "type": "array",
+                    "uniqueItems": true,
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "MINUTE",
+                            "HOUR",
+                            "DAY",
+                            "WEEK",
+                            "WEEK_US",
+                            "MONTH",
+                            "QUARTER",
+                            "YEAR",
+                            "MINUTE_OF_HOUR",
+                            "HOUR_OF_DAY",
+                            "DAY_OF_WEEK",
+                            "DAY_OF_WEEK_EU",
+                            "DAY_OF_MONTH",
+                            "DAY_OF_YEAR",
+                            "DAY_OF_QUARTER",
+                            "WEEK_OF_YEAR",
+                            "WEEK_OF_YEAR_EU",
+                            "WEEK_OF_QUARTER_EU",
+                            "WEEK_OF_QUARTER",
+                            "MONTH_OF_YEAR",
+                            "MONTH_OF_QUARTER",
+                            "QUARTER_OF_YEAR",
+                            "FISCAL_YEAR",
+                            "FISCAL_QUARTER",
+                            "FISCAL_MONTH"
+                        ],
+                        "$semantic": {
+                            "type": "definition",
+                            "sources": [
+                                "label.id",
+                                "attribute.id",
+                                "current.widget.visualization.query.dateAttribute.id"
+                            ],
+                            "mode": "value"
+                        }
+                    },
+                    "$semantic": {
+                        "type": "granularities",
+                        "required": ["DAY", "WEEK", "MONTH", "QUARTER", "YEAR"]
+                    }
+                }
+            },
+            "$semantic": {
+                "type": "snippet",
+                "snippets": ["date"]
+            },
+            "required": ["id", "type"]
+        },
+        "fields": {
+            "title": "Fields",
+            "type": "object",
+            "additionalProperties": false,
+            "patternProperties": {
+                "^(?!\\.)[.A-Za-z0-9_-]{1,255}$": {
+                    "allOf": [
+                        {
+                            "if": {
+                                "properties": {
+                                    "type": {
+                                        "const": "attribute"
+                                    }
+                                },
+                                "required": ["type"]
+                            },
+                            "then": {
+                                "$ref": "#/$defs/attribute"
+                            }
+                        },
+                        {
+                            "if": {
+                                "properties": {
+                                    "type": {
+                                        "const": "fact"
+                                    }
+                                },
+                                "required": ["type"]
+                            },
+                            "then": {
+                                "$ref": "#/$defs/fact"
+                            }
+                        },
+                        {
+                            "if": {
+                                "properties": {
+                                    "type": {
+                                        "const": "aggregated_fact"
+                                    }
+                                },
+                                "required": ["type"]
+                            },
+                            "then": {
+                                "$ref": "#/$defs/aggregated_fact"
+                            }
+                        },
+                        {
+                            "if": {
+                                "not": {
+                                    "properties": {
+                                        "type": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": ["type"]
+                                }
+                            },
+                            "then": {
+                                "$semantic": {
+                                    "type": "snippet",
+                                    "snippets": ["attribute", "fact", "aggregated_fact"]
+                                }
+                            }
+                        }
+                    ],
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "enum": ["fact", "attribute", "aggregated_fact"]
+                        }
+                    },
+                    "required": ["type"]
+                }
+            },
+            "$semantic": [
+                {
+                    "type": "reference",
+                    "source": "table/column.id",
+                    "mode": "property",
+                    "connectedField": "source_column",
+                    "code": "core.reference.table.column.id"
+                },
+                {
+                    "type": "uniqueness",
+                    "source": "dataset.field",
+                    "mode": "property",
+                    "code": "core.uniqueness.dataset.field"
+                }
+            ]
+        },
+        "attribute": {
+            "title": "Attribute",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": ["attribute"]
+                },
+                "title": {
+                    "$ref": "/gaac/title",
+                    "description": "A human readable title of the field. Optional, derived from id if not provided explicitly."
+                },
+                "description": {
+                    "$ref": "/gaac/description",
+                    "description": "An optional description of the field."
+                },
+                "tags": {
+                    "$ref": "/gaac/tags",
+                    "tags": "A list of strings - metadata tags for this field."
+                },
+                "source_column": {
+                    "$ref": "#/$defs/sourceColumn",
+                    "description": "A column name in the physical database. Optional, equals to id by default."
+                },
+                "data_type": {
+                    "$ref": "#/$defs/dataType",
+                    "description": "A column data type in the physical database."
+                },
+                "default_view": {
+                    "type": "string",
+                    "description": "An Id of the label to be used by default for this field",
+                    "$semantic": {
+                        "type": "reference",
+                        "source": "current.dataset.field.labels",
+                        "code": "core.reference.current.dataset.field.labels"
+                    }
+                },
+                "sort_column": {
+                    "type": "string",
+                    "description": "A column name in the source table to do sorting by",
+                    "$semantic": {
+                        "type": "reference",
+                        "source": "table/column.id",
+                        "code": "core.reference.table.column.id"
+                    }
+                },
+                "sort_direction": {
+                    "type": "string",
+                    "enum": ["ASC", "DESC"]
+                },
+                "show_in_ai_results": {
+                    "type": "boolean",
+                    "description": "Optional flag to indicate if the attribute should be shown in AI results. When omitted, the attribute is visible."
+                },
+                "is_hidden": {
+                    "type": "boolean",
+                    "description": "Deprecated. Use 'show_in_ai_results' instead.",
+                    "deprecated": true
+                },
+                "locale": {
+                    "$ref": "#/$defs/locale",
+                    "description": "Locale string in BCP 47 format used for default label sorting."
+                },
+                "is_nullable": {
+                    "type": "boolean",
+                    "description": "Optional flag to indicate if the attribute can contain null values."
+                },
+                "null_value_join_replacement": {
+                    "type": "string",
+                    "description": "Optional value which can be used as replacement for NULL in join conditions."
+                },
+                "labels": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "patternProperties": {
+                        "^(?!\\.)[.A-Za-z0-9_-]{1,255}$": {
+                            "$ref": "#/$defs/label"
+                        }
+                    },
+                    "$semantic": [
+                        {
+                            "type": "reference",
+                            "source": "table/column.id",
+                            "mode": "property",
+                            "connectedField": "source_column",
+                            "code": "core.reference.table.column.id"
+                        }
+                    ]
+                }
+            },
+            "required": ["type", "data_type"],
+            "$semantic": [
+                {
+                    "type": "snippet",
+                    "snippets": ["attribute"]
+                },
+                {
+                    "type": "definition",
+                    "sources": [
+                        "attribute.id",
+                        "current.dataset.primary_key",
+                        "current.widget.visualization.query.attribute.id"
+                    ],
+                    "mode": "property"
+                }
+            ]
+        },
+        "fact": {
+            "title": "Fact",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": ["fact"]
+                },
+                "title": {
+                    "$ref": "/gaac/title",
+                    "description": "A human readable title of the field. Optional, derived from id if not provided explicitly."
+                },
+                "description": {
+                    "$ref": "/gaac/description",
+                    "description": "An optional description of the field."
+                },
+                "tags": {
+                    "$ref": "/gaac/tags",
+                    "tags": "A list of strings - metadata tags for this field."
+                },
+                "source_column": {
+                    "$ref": "#/$defs/sourceColumn",
+                    "description": "A column name in the physical database. Optional, equals to id by default."
+                },
+                "data_type": {
+                    "$ref": "#/$defs/dataType",
+                    "description": "A column data type in the physical database."
+                },
+                "show_in_ai_results": {
+                    "type": "boolean",
+                    "description": "Optional flag to indicate if the fact should be shown in AI results. When omitted, the fact is visible."
+                },
+                "is_hidden": {
+                    "type": "boolean",
+                    "description": "Deprecated. Use 'show_in_ai_results' instead.",
+                    "deprecated": true
+                },
+                "is_nullable": {
+                    "type": "boolean",
+                    "description": "Optional flag to indicate if the fact can contain null values."
+                },
+                "null_value_join_replacement": {
+                    "type": "string",
+                    "description": "Optional value which can be used as replacement for NULL in join conditions."
+                }
+            },
+            "required": ["type", "data_type"],
+            "$semantic": [
+                {
+                    "type": "snippet",
+                    "snippets": ["fact"]
+                },
+                {
+                    "type": "definition",
+                    "source": "fact.id",
+                    "mode": "property"
+                }
+            ]
+        },
+        "aggregated_fact": {
+            "title": "AggregatedFact",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": ["aggregated_fact"]
+                },
+                "description": {
+                    "$ref": "/gaac/description",
+                    "description": "An optional description of the field."
+                },
+                "tags": {
+                    "$ref": "/gaac/tags",
+                    "tags": "A list of strings - metadata tags for this field."
+                },
+                "source_column": {
+                    "$ref": "#/$defs/sourceColumn",
+                    "description": "A column name in the physical database. Optional, equals to id by default."
+                },
+                "data_type": {
+                    "$ref": "#/$defs/dataType",
+                    "description": "A column data type in the physical database."
+                },
+                "aggregated_as": {
+                    "type": "string",
+                    "enum": ["MIN", "MAX", "SUM"],
+                    "description": "Aggregation method for the fact. Mapped to sourceFactReference in the API."
+                },
+                "assigned_to": {
+                    "type": "string",
+                    "description": "ID of the source fact this aggregated fact is based on. Mapped to sourceFactReference in the API."
+                },
+                "is_nullable": {
+                    "type": "boolean",
+                    "description": "Optional flag to indicate if the aggregated fact can contain null values."
+                },
+                "null_value_join_replacement": {
+                    "type": "string",
+                    "description": "Optional value which can be used as replacement for NULL in join conditions."
+                }
+            },
+            "required": ["type", "data_type", "aggregated_as", "assigned_to"],
+            "$semantic": [
+                {
+                    "type": "snippet",
+                    "snippets": ["aggregated_fact"]
+                },
+                {
+                    "type": "definition",
+                    "source": "aggregated_fact.id",
+                    "mode": "property"
+                }
+            ]
+        },
+        "label": {
+            "title": "Label",
+            "type": "object",
+            "required": [],
+            "additionalProperties": false,
+            "properties": {
+                "source_column": {
+                    "$ref": "#/$defs/sourceColumn",
+                    "description": "A column name in the physical database."
+                },
+                "data_type": {
+                    "$ref": "#/$defs/dataType",
+                    "description": "A column data type in the physical database."
+                },
+                "title": {
+                    "$ref": "/gaac/title",
+                    "description": "An optional human readable title for the label."
+                },
+                "description": {
+                    "$ref": "/gaac/description",
+                    "description": "An optional description of the label."
+                },
+                "tags": {
+                    "$ref": "/gaac/tags",
+                    "description": "A list of strings - metadata tags of this label."
+                },
+                "value_type": {
+                    "type": "string",
+                    "enum": ["TEXT", "HYPERLINK", "GEO", "GEO_LONGITUDE", "GEO_LATITUDE", "IMAGE", "GEO_AREA"]
+                },
+                "geo_area_config": {
+                    "$ref": "#/$defs/geoAreaConfig",
+                    "description": "Configuration required for GEO_AREA labels."
+                },
+                "show_in_ai_results": {
+                    "type": "boolean",
+                    "description": "Optional flag to indicate if the label should be shown in AI results. When omitted, the label is visible."
+                },
+                "is_hidden": {
+                    "type": "boolean",
+                    "description": "Deprecated. Use 'show_in_ai_results' instead.",
+                    "deprecated": true
+                },
+                "locale": {
+                    "$ref": "#/$defs/locale",
+                    "description": "Locale string in BCP 47 format used for default label sorting."
+                },
+                "translations": {
+                    "type": "array",
+                    "description": "Optional list of localized source columns for this label.",
+                    "items": {
+                        "$ref": "#/$defs/labelTranslation"
+                    }
+                },
+                "is_nullable": {
+                    "type": "boolean",
+                    "description": "Optional flag to indicate if the label can contain null values."
+                },
+                "null_value_join_replacement": {
+                    "type": "string",
+                    "description": "Optional value which can be used as replacement for NULL in join conditions."
+                }
+            },
+            "$semantic": [
+                {
+                    "type": "definition",
+                    "sources": ["label.id", "current.dataset.field.labels"],
+                    "mode": "property"
+                }
+            ]
+        },
+        "locale": {
+            "type": "string",
+            "pattern": "^[a-zA-Z]{2,3}(-[a-zA-Z0-9]{1,8})*$",
+            "description": "Locale string in BCP 47 format (for example en-US or cs-CZ-u-kn-true)."
+        },
+        "labelTranslation": {
+            "title": "LabelTranslation",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "source_column": {
+                    "$ref": "#/$defs/sourceColumn",
+                    "description": "Column that stores the localized label values."
+                },
+                "locale": {
+                    "$ref": "#/$defs/locale",
+                    "description": "Locale string in BCP 47 format that identifies the translation."
+                }
+            },
+            "required": ["source_column", "locale"]
+        },
+        "sourceColumn": {
+            "type": "string",
+            "maxLength": 255,
+            "$semantic": {
+                "type": "reference",
+                "source": "table/column.id",
+                "code": "core.reference.table.column.id"
+            }
+        },
+        "dataType": {
+            "type": "string",
+            "enum": ["INT", "STRING", "DATE", "NUMERIC", "TIMESTAMP", "TIMESTAMP_TZ", "BOOLEAN"],
+            "$semantic": {
+                "type": "reference",
+                "source": "table/column.dataType",
+                "code": "core.reference.table.column.dataType"
+            }
+        },
+        "reference": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "dataset": {
+                    "type": "string",
+                    "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+                    "$semantic": {
+                        "type": "reference",
+                        "source": "dataset.id",
+                        "code": "core.reference.dataset.id"
+                    },
+                    "description": "A dataset id to join to."
+                },
+                "sources": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/$defs/source"
+                    },
+                    "description": "A primary key for the given dataset."
+                },
+                "multi_directional": {
+                    "type": "boolean",
+                    "description": "Defines if dataset connection can work in both directions. Optional, defaults to false."
+                }
+            },
+            "required": ["dataset", "sources"]
+        },
+        "source": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "source_column": {
+                    "$ref": "#/$defs/sourceColumn"
+                },
+                "data_type": {
+                    "$ref": "#/$defs/dataType",
+                    "description": "A column data type in the physical database."
+                },
+                "target": {
+                    "type": "string",
+                    "description": "A target dataset one of primary key or date.",
+                    "$semantic": [
+                        {
+                            "type": "reference",
+                            "source": "source.dataset.primary_key",
+                            "code": "core.reference.source.dataset.primary_key"
+                        },
+                        {
+                            "type": "definition",
+                            "source": "current.dataset.primary_key",
+                            "mode": "property"
+                        }
+                    ]
+                },
+                "is_nullable": {
+                    "type": "boolean",
+                    "description": "Optional flag to indicate if the reference source can contain null values."
+                },
+                "null_value_join_replacement": {
+                    "type": "string",
+                    "description": "Optional value which can be used as replacement for NULL in join conditions."
+                }
+            },
+            "required": ["source_column", "data_type", "target"]
+        },
+        "geoAreaConfig": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "collection": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "id": {
+                            "type": "string",
+                            "description": "Identifier of a GEO collection describing valid areas."
+                        }
+                    },
+                    "required": ["id"]
+                }
+            },
+            "required": ["collection"]
+        },
+        "workspace_data_filter": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "filter_id": {
+                    "type": "string",
+                    "description": "Filter identifier to be applied to the dataset source column."
+                },
+                "source_column": {
+                    "$ref": "#/$defs/sourceColumn"
+                },
+                "data_type": {
+                    "$ref": "#/$defs/dataType",
+                    "description": "A column data type in the physical database."
+                }
+            },
+            "required": ["filter_id", "source_column", "data_type"]
+        }
+    }
+}

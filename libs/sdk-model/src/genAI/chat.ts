@@ -6,6 +6,7 @@ import type { DateAttributeGranularity } from "../base/dateGranularities.js";
 import type { IAttribute } from "../execution/attribute/index.js";
 import type { IFilter } from "../execution/filter/index.js";
 import type { IMeasure } from "../execution/measure/index.js";
+import type { ObjRef } from "../objRef/index.js";
 
 /**
  * Role of the chat interaction.
@@ -114,9 +115,70 @@ export interface IGenAIChatReasoningThought {
  */
 export interface IGenAIUserContext {
     /**
+     * Ambient UI state: what the user is currently looking at.
+     */
+    view?: IGenAIUIContext;
+    /**
      * Active object the user is interacting with.
      */
-    activeObject: IGenAIActiveObject;
+    activeObject?: IGenAIActiveObject;
+    /**
+     * Groups of explicitly referenced objects, each optionally scoped by a context.
+     */
+    referencedObjects?: IGenAIObjectReferenceGroup[];
+}
+
+/**
+ * Ambient UI state for GenAI.
+ * @internal
+ */
+export interface IGenAIUIContext {
+    /**
+     * Dashboard the user is currently viewing.
+     */
+    dashboard?: IGenAIDashboardContext;
+}
+
+/**
+ * Dashboard context for GenAI.
+ * @internal
+ */
+export interface IGenAIDashboardContext {
+    /**
+     * Dashboard object reference.
+     */
+    ref: ObjRef;
+    /**
+     * Widgets currently visible on the dashboard.
+     */
+    widgets: IGenAIWidgetDescriptor[];
+}
+
+/**
+ * Descriptor for a widget on the dashboard.
+ * @internal
+ */
+export interface IGenAIWidgetDescriptor {
+    /**
+     * Widget title.
+     */
+    title: string;
+    /**
+     * Widget reference.
+     */
+    widgetRef: ObjRef;
+    /**
+     * Widget type.
+     */
+    widgetType: string;
+    /**
+     * Insight reference (required for insight widgets).
+     */
+    insightRef?: ObjRef;
+    /**
+     * Signed result ID for this widget's cached execution result.
+     */
+    resultId?: string;
 }
 
 /**
@@ -125,9 +187,9 @@ export interface IGenAIUserContext {
  */
 export interface IGenAIActiveObject {
     /**
-     * ID of the object.
+     * Object reference.
      */
-    id: string;
+    ref: ObjRef;
     /**
      * ID of the workspace the object belongs to.
      */
@@ -136,6 +198,42 @@ export interface IGenAIActiveObject {
      * Type of the object.
      */
     type: GenAIObjectType;
+}
+
+/**
+ * Type of a referenced object.
+ * @internal
+ */
+export type GenAIObjectReferenceType = "WIDGET" | "METRIC" | "ATTRIBUTE" | "DASHBOARD";
+
+/**
+ * A reference to an object in the user context.
+ * @internal
+ */
+export interface IGenAIObjectReference {
+    /**
+     * Type of the referenced object.
+     */
+    type: GenAIObjectReferenceType;
+    /**
+     * Object reference.
+     */
+    ref: ObjRef;
+}
+
+/**
+ * A group of referenced objects, optionally scoped by a context.
+ * @internal
+ */
+export interface IGenAIObjectReferenceGroup {
+    /**
+     * Context for this group of references (e.g. a dashboard).
+     */
+    context?: IGenAIObjectReference;
+    /**
+     * Objects the user explicitly referenced within this context.
+     */
+    objects: IGenAIObjectReference[];
 }
 
 /**

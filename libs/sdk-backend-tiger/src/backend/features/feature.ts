@@ -942,6 +942,13 @@ export function mapFeatures(features: FeaturesMap): Partial<ITigerFeatureFlags> 
         ),
         ...loadFeature(
             features,
+            TigerFeaturesNames.EnableGenAiVisualizationSummarySkill,
+            "enableGenAiVisualizationSummarySkill",
+            "BOOLEAN",
+            FeatureFlagsValues.enableGenAiVisualizationSummarySkill,
+        ),
+        ...loadFeature(
+            features,
             TigerFeaturesNames.AIChatSearchLimit,
             "aiChatSearchLimit",
             "NUMBER",

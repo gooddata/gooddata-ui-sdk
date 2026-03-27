@@ -3,8 +3,8 @@
 import { Document } from "yaml";
 
 import { type DeclarativeDateDataset } from "@gooddata/api-client-tiger";
+import type { DateDataset } from "@gooddata/sdk-code-schemas/v1";
 
-import type { DateDataset } from "../schemas/v1/metadata.js";
 import { DATE_INSTANCE_COMMENT } from "../utils/texts.js";
 import { entryWithSpace, fillOptionalMetaFields } from "../utils/yamlUtils.js";
 

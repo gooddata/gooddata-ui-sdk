@@ -30,7 +30,7 @@ import type {
     RichTextWidget,
     VisualisationWidget,
     VisualizationSwitcherWidget,
-} from "../schemas/v1/metadata.js";
+} from "@gooddata/sdk-code-schemas/v1";
 
 export type ReferenceObject = {
     type:

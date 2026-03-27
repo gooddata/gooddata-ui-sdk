@@ -33,3 +33,17 @@ export type CenterPositionChangedCallback = (center: IGeoLngLat) => void;
  * @public
  */
 export type ZoomChangedCallback = (zoom: number) => void;
+
+/**
+ * Callback fired when the map visible bounds change.
+ *
+ * @public
+ */
+export type BoundsChangedCallback = (bounds: IGeoLngLatBounds) => void;
+
+/**
+ * Callback fired when a viewport change triggered by a real user interaction finishes.
+ *
+ * @public
+ */
+export type ViewportInteractionEndCallback = () => void;

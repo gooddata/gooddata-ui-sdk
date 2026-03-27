@@ -153,6 +153,8 @@ export function RenderGeoChart({ onMapError }: IRenderGeoChartProps): ReactEleme
                         drillablePredicates={drillablePredicates}
                         onCenterPositionChanged={props.onCenterPositionChanged}
                         onZoomChanged={props.onZoomChanged}
+                        onBoundsChanged={props.onBoundsChanged}
+                        onViewportInteractionEnd={props.onViewportInteractionEnd}
                         onDrill={props.onDrill}
                         afterRender={props.afterRender}
                         config={props.config}

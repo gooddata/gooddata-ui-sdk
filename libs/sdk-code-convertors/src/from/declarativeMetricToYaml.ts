@@ -3,8 +3,8 @@
 import { Document } from "yaml";
 
 import { type DeclarativeMetric } from "@gooddata/api-client-tiger";
+import type { Metric } from "@gooddata/sdk-code-schemas/v1";
 
-import type { Metric } from "../schemas/v1/metadata.js";
 import { METRIC_COMMENT } from "../utils/texts.js";
 import { entryWithSpace, fillOptionalMetaFields } from "../utils/yamlUtils.js";
 

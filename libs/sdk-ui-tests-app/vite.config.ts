@@ -104,14 +104,14 @@ function getProductionAliases() {
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, path.resolve(__dirname), "");
     // Fallback to process.env if not found in .env file
-    const backendUrl = env["HOST"] || process.env["HOST"] || "";
+    const backendUrl = env["BACKEND_URL"] || process.env["BACKEND_URL"] || "";
     const workspace = env["TEST_WORKSPACE_ID"] || process.env["TEST_WORKSPACE_ID"] || "";
     // TODO: basePath seems to be unused, no references found in src/
     const basePath = env["basePath"] || process.env["basePath"] || "";
     const authToken = env["TIGER_API_TOKEN"];
 
     if (!backendUrl && mode === "development") {
-        process.stderr.write("HOST needs to be provided in .env\n");
+        process.stderr.write("BACKEND_URL needs to be provided in .env\n");
         process.exit(1);
     }
 

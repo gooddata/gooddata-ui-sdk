@@ -1,0 +1,896 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Dashboard Type",
+    "description": "JSON schema for Gooddata Analytics Dashboard",
+    "allOf": [
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "dashboard"
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "$ref": "#/$defs/dashboard"
+            }
+        }
+    ],
+    "properties": {
+        "type": {
+            "type": "string",
+            "enum": ["dashboard"]
+        }
+    },
+    "required": ["type"],
+    "$defs": {
+        "dashboard": {
+            "$id": "/gaac/dashboard",
+            "title": "Dashboard",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "$ref": "/gaac/identifier",
+                    "description": "A unique identifier of the dashboard.",
+                    "$semantic": [
+                        {
+                            "type": "uniqueness",
+                            "source": "dashboard.id",
+                            "code": "core.uniqueness.dashboards.id"
+                        },
+                        {
+                            "type": "definition",
+                            "source": "dashboard.id"
+                        }
+                    ]
+                },
+                "type": {
+                    "type": "string",
+                    "enum": ["dashboard"]
+                },
+                "title": {
+                    "$ref": "/gaac/title",
+                    "description": "An optional human readable title for the dashboard. Will be derived from id if not provided explicitly."
+                },
+                "description": {
+                    "$ref": "/gaac/description",
+                    "description": "An optional description of the dashboard."
+                },
+                "tags": {
+                    "$ref": "/gaac/tags",
+                    "description": "A list of strings - metadata tags of this dashboard."
+                },
+                "cross_filtering": {
+                    "type": "boolean",
+                    "description": "Whether cross filtering is enabled for this dashboard. Defaults to true."
+                },
+                "user_filters_reset": {
+                    "type": "boolean",
+                    "description": "Whether user can reset custom updated filters. Defaults to true."
+                },
+                "user_filters_save": {
+                    "type": "boolean",
+                    "description": "Whether user filter setting will be stored in local storage. Defaults to true."
+                },
+                "filter_views": {
+                    "type": "boolean",
+                    "description": "Whether user can save and apply filter views for this dashboard. Defaults to true."
+                },
+                "enable_section_headers": {
+                    "type": "boolean",
+                    "description": "Applies to the root layout. Whether all sections headers are enabled. Defaults to true."
+                },
+                "sections": {
+                    "type": "array",
+                    "description": "A list of sections in this dashboard.",
+                    "items": {
+                        "$ref": "#/$defs/section"
+                    }
+                },
+                "filters": {
+                    "$ref": "/gaac/dashboardFilters",
+                    "$semantic": [
+                        {
+                            "type": "required_common_date"
+                        },
+                        {
+                            "type": "unique_filter_local_identifiers"
+                        }
+                    ]
+                },
+                "plugins": {
+                    "type": "array",
+                    "description": "A list of plugins in this dashboard.",
+                    "items": {
+                        "oneOf": [
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "$ref": "/gaac/identifier",
+                                        "description": "An unique identifier of the plugin.",
+                                        "$semantic": {
+                                            "type": "reference",
+                                            "source": "plugin.id"
+                                        }
+                                    },
+                                    "parameters": {
+                                        "description": "Parameter that will be passed to the plugin. Everything other than string will be serialized to JSON automatically."
+                                    }
+                                },
+                                "required": ["id"],
+                                "additionalProperties": false
+                            },
+                            {
+                                "$ref": "/gaac/identifier",
+                                "description": "An unique identifier of the plugin.",
+                                "$semantic": {
+                                    "type": "reference",
+                                    "source": "plugin.id"
+                                }
+                            }
+                        ]
+                    }
+                },
+                "tabs": {
+                    "type": "array",
+                    "description": "A list of tabs in this dashboard. Each tab has its own layout, filters, and filter configurations. Mutually exclusive with sections and filters at dashboard level.",
+                    "items": {
+                        "$ref": "#/$defs/tab"
+                    },
+                    "$semantic": {
+                        "type": "unique_tab_identifiers"
+                    }
+                },
+                "permissions": {
+                    "type": "object",
+                    "description": "Permissions for the dashboard",
+                    "additionalProperties": false,
+                    "properties": {
+                        "VIEW": {
+                            "$ref": "/gaac/permission"
+                        },
+                        "EDIT": {
+                            "$ref": "/gaac/permission"
+                        },
+                        "SHARE": {
+                            "$ref": "/gaac/permission"
+                        }
+                    }
+                }
+            },
+            "required": ["id", "type"]
+        },
+        "tab": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "$ref": "/gaac/identifier",
+                    "description": "A unique identifier of the tab.",
+                    "$semantic": [
+                        {
+                            "type": "definition",
+                            "source": "tab.id"
+                        }
+                    ]
+                },
+                "title": {
+                    "$ref": "/gaac/title",
+                    "description": "Display title for the tab."
+                },
+                "filters": {
+                    "$ref": "/gaac/dashboardFilters",
+                    "description": "Filters specific to this tab.",
+                    "$semantic": {
+                        "type": "unique_filter_local_identifiers"
+                    }
+                },
+                "sections": {
+                    "type": "array",
+                    "description": "A list of sections in this tab.",
+                    "items": {
+                        "$ref": "#/$defs/section"
+                    }
+                }
+            },
+            "required": ["id", "title", "sections"]
+        },
+        "section": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "title": {
+                    "type": "string",
+                    "description": "Optional title of the section"
+                },
+                "description": {
+                    "type": "string",
+                    "description": "Optional description of the section"
+                },
+                "widgets": {
+                    "type": "array",
+                    "description": "A list of widgets in this section.",
+                    "items": {
+                        "$ref": "#/$defs/widget"
+                    }
+                }
+            },
+            "required": ["widgets"]
+        },
+        "visualizationWidget": {
+            "title": "Visualisation Widget",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "id": {
+                    "$ref": "/gaac/identifier",
+                    "description": "A unique identifier of the widget.",
+                    "$semantic": [
+                        {
+                            "type": "uniqueness",
+                            "source": "current.dashboard.widget.localId",
+                            "code": "core.uniqueness.dashboard.widget.localId"
+                        },
+                        {
+                            "type": "definition",
+                            "source": "current.dashboard.widget.localId"
+                        }
+                    ]
+                },
+                "visualization": {
+                    "type": "string",
+                    "description": "An id of the visualization to be rendered with the widget",
+                    "$semantic": {
+                        "type": "reference",
+                        "source": "visualisation.id"
+                    }
+                },
+                "title": {
+                    "oneOf": [
+                        {
+                            "type": "string",
+                            "description": "Optional title of the widget"
+                        },
+                        {
+                            "type": "boolean",
+                            "enum": [false],
+                            "description": "Explicitly disable the title of the widget"
+                        }
+                    ]
+                },
+                "description": {
+                    "anyOf": [
+                        {
+                            "type": "string",
+                            "description": "Optional description of the widget"
+                        },
+                        {
+                            "type": "boolean",
+                            "enum": [false],
+                            "description": "Explicitly disable the description of the widget"
+                        },
+                        {
+                            "type": "string",
+                            "enum": ["inherit"],
+                            "description": "Inherit the description from the visualization"
+                        }
+                    ]
+                },
+                "columns": {
+                    "type": "number",
+                    "enum": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+                    "description": "An optional width of the widget in the grid, total width being 12 columns"
+                },
+                "rows": {
+                    "type": "number",
+                    "description": "An optional height of the widget in the grid, each row being ~20px high"
+                },
+                "date": {
+                    "$ref": "/gaac/identifier",
+                    "description": "An id of the date dataset to be used for date filtering in this widget",
+                    "$semantic": {
+                        "type": "reference",
+                        "source": "dateDataset.id"
+                    }
+                },
+                "ignored_filters": {
+                    "type": "array",
+                    "description": "A list of dashboard filters to be ignored for this widget",
+                    "items": {
+                        "type": "string",
+                        "description": "An id of the dashboard label, attribute or date to be ignored",
+                        "$semantic": {
+                            "type": "reference",
+                            "sources": ["dateDataset.id", "attribute.id", "label.id"],
+                            "typePrefix": true
+                        }
+                    }
+                },
+                "zoom_data": {
+                    "type": "boolean",
+                    "description": "Enable zooming to the data for certain types of visualizations"
+                },
+                "interactions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/$defs/interaction"
+                    }
+                },
+                "ignored_drill_downs": {
+                    "type": "array",
+                    "description": "A list of drill downs to be ignored for this widget",
+                    "items": {
+                        "$ref": "#/$defs/ignored_drill_down"
+                    }
+                },
+                "ignored_drill_downs_intersections": {
+                    "type": "array",
+                    "description": "A list of drill downs intersections to be ignored for this widget",
+                    "items": {
+                        "$ref": "#/$defs/ignored_drill_downs_intersection"
+                    }
+                },
+                "ignored_cross_filtering": {
+                    "type": "boolean",
+                    "description": "Whether cross filtering is disabled for this widget"
+                }
+            },
+            "required": ["visualization"]
+        },
+        "widget": {
+            "title": "Widget",
+            "type": "object",
+            "allOf": [
+                {
+                    "if": {
+                        "properties": {
+                            "visualization": {
+                                "type": ["string", "null"]
+                            }
+                        },
+                        "required": ["visualization"]
+                    },
+                    "then": {
+                        "$ref": "#/$defs/visualizationWidget"
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "content": {
+                                "type": ["string", "null"]
+                            }
+                        },
+                        "required": ["content"]
+                    },
+                    "then": {
+                        "title": "RichText Widget",
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                            "id": {
+                                "$ref": "/gaac/identifier",
+                                "description": "A unique identifier of the widget.",
+                                "$semantic": [
+                                    {
+                                        "type": "uniqueness",
+                                        "source": "current.dashboard.widget.localId",
+                                        "code": "core.uniqueness.dashboard.widget.localId"
+                                    },
+                                    {
+                                        "type": "definition",
+                                        "source": "current.dashboard.widget.localId"
+                                    }
+                                ]
+                            },
+                            "content": {
+                                "type": "string",
+                                "description": "A markdown content of the widget"
+                            },
+                            "columns": {
+                                "type": "number",
+                                "enum": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+                                "description": "An optional width of the widget in the grid, total width being 12 columns"
+                            },
+                            "rows": {
+                                "type": "number",
+                                "description": "An optional height of the widget in the grid, each row being ~20px high"
+                            }
+                        },
+                        "required": ["content"]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "visualizations": {
+                                "type": "array"
+                            }
+                        },
+                        "required": ["visualizations"]
+                    },
+                    "then": {
+                        "title": "Visualization Switcher Widget",
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                            "id": {
+                                "$ref": "/gaac/identifier",
+                                "description": "A unique identifier of the widget.",
+                                "$semantic": [
+                                    {
+                                        "type": "uniqueness",
+                                        "source": "current.dashboard.widget.localId",
+                                        "code": "core.uniqueness.dashboard.widget.localId"
+                                    },
+                                    {
+                                        "type": "definition",
+                                        "source": "current.dashboard.widget.localId"
+                                    }
+                                ]
+                            },
+                            "columns": {
+                                "type": "number",
+                                "enum": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+                                "description": "An optional width of the widget in the grid, total width being 12 columns"
+                            },
+                            "rows": {
+                                "type": "number",
+                                "description": "An optional height of the widget in the grid, each row being ~20px high"
+                            },
+                            "visualizations": {
+                                "type": "array",
+                                "description": "A list of visualizations to be rendered with the widget",
+                                "items": {
+                                    "$ref": "#/$defs/visualizationWidget"
+                                }
+                            }
+                        },
+                        "required": ["visualizations"]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "sections": {
+                                "type": "array"
+                            }
+                        },
+                        "required": ["sections"]
+                    },
+                    "then": {
+                        "title": "Container Widget",
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                            "container": {
+                                "$ref": "/gaac/identifier",
+                                "description": "A unique identifier of the widget.",
+                                "$semantic": [
+                                    {
+                                        "type": "uniqueness",
+                                        "source": "current.dashboard.widget.localId",
+                                        "code": "core.uniqueness.dashboard.widget.localId"
+                                    },
+                                    {
+                                        "type": "definition",
+                                        "source": "current.dashboard.widget.localId"
+                                    }
+                                ]
+                            },
+                            "columns": {
+                                "type": "number",
+                                "enum": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+                                "description": "An optional width of the widget within the grid. When the parent container's direction is set to 'row', widget widths can vary up to the width of the container. Widgets are placed next to each other and wrap to the next row when their combined width exceeds that of the container. When the direction is set to 'column', the width does not need to be set, or it should match the width of the container."
+                            },
+                            "rows": {
+                                "type": "number",
+                                "description": "An optional height of the widget within the grid, where each row is approximately 20px high. When the parent container's direction is 'row', the height should be greater than the total height of all rows formed by wrapped widgets in the container where row height is determined by highest widget in the row. When the direction is 'column', each widget occupies one row; therefore, the height must be equal to or greater than the combined height of all widgets in the container."
+                            },
+                            "layout_direction": {
+                                "type": "string",
+                                "enum": ["row", "column"],
+                                "description": "Layout direction for the container widgets"
+                            },
+                            "enable_section_headers": {
+                                "type": "boolean",
+                                "description": "Whether header of sections in the layout is enabled. Defaults to true"
+                            },
+                            "sections": {
+                                "type": "array",
+                                "description": "A list of sections contained in this container",
+                                "items": {
+                                    "type": "object",
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "title": {
+                                            "type": "string",
+                                            "description": "Optional title of the section"
+                                        },
+                                        "description": {
+                                            "type": "string",
+                                            "description": "Optional description of the section"
+                                        },
+                                        "widgets": {
+                                            "type": "array",
+                                            "description": "A list of widgets in this section",
+                                            "items": {
+                                                "$ref": "#/$defs/widget"
+                                            }
+                                        }
+                                    },
+                                    "required": ["widgets"]
+                                }
+                            }
+                        },
+                        "required": ["sections", "container"]
+                    }
+                }
+            ]
+        },
+        "ignored_drill_down": {
+            "title": "Ignored Drill Down",
+            "description": "An ignored drill down item",
+            "allOf": [
+                {
+                    "if": {
+                        "properties": {
+                            "hierarchy": {
+                                "type": ["string", "null"]
+                            }
+                        },
+                        "required": ["hierarchy"]
+                    },
+                    "then": {
+                        "type": "object",
+                        "properties": {
+                            "hierarchy": {
+                                "type": "string",
+                                "description": "An id of the attribute hierarchy to be ignored",
+                                "$semantic": {
+                                    "type": "reference",
+                                    "source": "attributeHierarchy.id"
+                                }
+                            },
+                            "on": {
+                                "type": "string",
+                                "description": "An id of the drill down to be ignored",
+                                "$semantic": {
+                                    "type": "reference",
+                                    "source": "current.widget.visualization.query.attribute.id"
+                                }
+                            }
+                        },
+                        "required": ["hierarchy", "on"]
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "template": {
+                                "type": ["string", "null"]
+                            }
+                        },
+                        "required": ["template"]
+                    },
+                    "then": {
+                        "type": "object",
+                        "properties": {
+                            "template": {
+                                "type": "string",
+                                "description": "An id of the date attribute hierarchy template to be ignored",
+                                "enum": ["default"]
+                            },
+                            "on": {
+                                "type": "string",
+                                "description": "An id of the drill down to be ignored",
+                                "$semantic": {
+                                    "type": "reference",
+                                    "source": "current.widget.visualization.query.dateAttribute.id"
+                                }
+                            }
+                        },
+                        "required": ["template", "on"]
+                    }
+                }
+            ]
+        },
+        "ignored_drill_downs_intersection": {
+            "title": "Ignored Drill Down Intersection",
+            "description": "An ignored drill down intersection item",
+            "type": "object",
+            "properties": {
+                "attributes": {
+                    "type": "array",
+                    "description": "An attributes list to be ignored",
+                    "items": {
+                        "type": "string",
+                        "$semantic": {
+                            "type": "reference",
+                            "sources": [
+                                "current.widget.visualization.query.attribute.localId",
+                                "current.widget.visualization.query.dateAttribute.localId"
+                            ]
+                        }
+                    }
+                },
+                "hierarchy": {
+                    "description": "An attribute hierarchy that is related to attributes that will be ignored",
+                    "$ref": "#/$defs/ignored_drill_down"
+                }
+            },
+            "required": ["hierarchy", "attributes"]
+        },
+        "interaction": {
+            "title": "Interaction",
+            "description": "An interaction for current widget.",
+            "oneOf": [
+                {
+                    "if": {
+                        "properties": {
+                            "open_url": {
+                                "type": "string"
+                            }
+                        },
+                        "required": ["open_url"]
+                    },
+                    "then": {
+                        "$ref": "#/$defs/interactionOpenPlainUrl"
+                    },
+                    "else": {
+                        "not": {}
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "open_url": {
+                                "type": "object"
+                            }
+                        },
+                        "required": ["open_url"]
+                    },
+                    "then": {
+                        "$ref": "#/$defs/interactionOpenParamUrl"
+                    },
+                    "else": {
+                        "not": {}
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "open_dashboard": {
+                                "type": "string"
+                            }
+                        },
+                        "required": ["open_dashboard"]
+                    },
+                    "then": {
+                        "$ref": "#/$defs/interactionOpenDashboard"
+                    },
+                    "else": {
+                        "not": {}
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "open_visualization": {
+                                "type": "string"
+                            }
+                        },
+                        "required": ["open_visualization"]
+                    },
+                    "then": {
+                        "$ref": "#/$defs/interactionOpenVisualization"
+                    },
+                    "else": {
+                        "not": {}
+                    }
+                }
+            ]
+        },
+        "interactionClickOn": {
+            "type": "string",
+            "description": "An id of the metric or attribute that will trigger the interaction",
+            "$semantic": {
+                "type": "reference",
+                "source": "current.widget.visualization.query.localId",
+                "code": "core.references.current.widget.visualization.query.id"
+            }
+        },
+        "interactionIncludedSourceInsightFilters": {
+            "type": "array",
+            "description": "Source insight filter IDs to include when drilling to this visualization",
+            "items": {
+                "type": "string",
+                "$semantic": {
+                    "type": "reference",
+                    "source": "current.widget.visualization.query.filter.localId"
+                }
+            }
+        },
+        "interactionIncludedSourceMeasureFilters": {
+            "type": "array",
+            "description": "Source measure-level filter IDs to include when drilling to this visualization",
+            "items": {
+                "type": "string",
+                "$semantic": {
+                    "type": "reference",
+                    "source": "current.widget.visualization.query.filter.localId"
+                }
+            }
+        },
+        "interactionIgnoredDashboardFilters": {
+            "type": "array",
+            "description": "Dashboard filter local IDs to exclude when drilling to this visualization",
+            "items": {
+                "type": "string",
+                "$semantic": {
+                    "type": "reference",
+                    "sources": [
+                        "current.dashboard.attribute_filter.localId",
+                        "current.dashboard.date_filter.localId"
+                    ]
+                }
+            }
+        },
+        "interactionIgnoredIntersectionAttributes": {
+            "type": "array",
+            "description": "Attribute local IDs to ignore in the drill intersection",
+            "items": {
+                "type": "string",
+                "$semantic": {
+                    "type": "reference",
+                    "sources": [
+                        "current.widget.visualization.query.attribute.localId",
+                        "current.widget.visualization.query.dateAttribute.localId"
+                    ]
+                }
+            }
+        },
+        "interactionFiltersExclude": {
+            "type": "object",
+            "properties": {
+                "drilled_datapoint": {
+                    "$ref": "#/$defs/interactionIgnoredIntersectionAttributes"
+                },
+                "dashboard_filters": {
+                    "$ref": "#/$defs/interactionIgnoredDashboardFilters"
+                }
+            }
+        },
+        "interactionFiltersInclude": {
+            "type": "object",
+            "properties": {
+                "visualization_filters": {
+                    "$ref": "#/$defs/interactionIncludedSourceInsightFilters"
+                },
+                "metric_filters": {
+                    "$ref": "#/$defs/interactionIncludedSourceMeasureFilters"
+                }
+            }
+        },
+        "interactionFilters": {
+            "type": "object",
+            "properties": {
+                "exclude": {
+                    "$ref": "#/$defs/interactionFiltersExclude"
+                },
+                "include": {
+                    "$ref": "#/$defs/interactionFiltersInclude"
+                }
+            }
+        },
+        "interactionOpenPlainUrl": {
+            "type": "object",
+            "properties": {
+                "click_on": {
+                    "$ref": "#/$defs/interactionClickOn"
+                },
+                "open_url": {
+                    "type": "string",
+                    "description": "An url to be opened on interaction",
+                    "$semantic": {
+                        "type": "custom_url"
+                    }
+                },
+                "ignored_intersection_attributes": {
+                    "$ref": "#/$defs/interactionIgnoredIntersectionAttributes"
+                }
+            },
+            "required": ["click_on", "open_url"]
+        },
+        "interactionOpenParamUrl": {
+            "type": "object",
+            "properties": {
+                "click_on": {
+                    "$ref": "#/$defs/interactionClickOn"
+                },
+                "open_url": {
+                    "type": "object",
+                    "properties": {
+                        "href": {
+                            "description": "An ID of the attribute that holds the url to be opened on interaction",
+                            "oneOf": [
+                                {
+                                    "$ref": "/gaac/attributeIdentifier"
+                                },
+                                {
+                                    "$ref": "/gaac/labelIdentifier"
+                                }
+                            ]
+                        },
+                        "label": {
+                            "description": "An id of the attribute that holds the label for the url to be opened on interaction",
+                            "oneOf": [
+                                {
+                                    "$ref": "/gaac/attributeIdentifier"
+                                },
+                                {
+                                    "$ref": "/gaac/labelIdentifier"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "ignored_intersection_attributes": {
+                    "$ref": "#/$defs/interactionIgnoredIntersectionAttributes"
+                }
+            },
+            "required": ["click_on", "open_url"]
+        },
+        "interactionOpenDashboard": {
+            "type": "object",
+            "properties": {
+                "click_on": {
+                    "$ref": "#/$defs/interactionClickOn"
+                },
+                "open_dashboard": {
+                    "type": "string",
+                    "description": "An id of the dashboard to be opened on interaction",
+                    "$semantic": {
+                        "type": "reference",
+                        "source": "dashboard.id"
+                    }
+                },
+                "open_dashboard_tab": {
+                    "type": "string",
+                    "description": "An optional id of the tab to be opened in the target dashboard",
+                    "$semantic": {
+                        "type": "reference",
+                        "source": "dashboard/tab.id"
+                    }
+                },
+                "filters": {
+                    "$ref": "#/$defs/interactionFilters"
+                }
+            },
+            "required": ["click_on", "open_dashboard"]
+        },
+        "interactionOpenVisualization": {
+            "type": "object",
+            "properties": {
+                "click_on": {
+                    "$ref": "#/$defs/interactionClickOn"
+                },
+                "open_visualization": {
+                    "type": "string",
+                    "description": "An id of the visualization to be opened on interaction",
+                    "$semantic": {
+                        "type": "reference",
+                        "source": "visualisation.id"
+                    }
+                },
+                "filters": {
+                    "$ref": "#/$defs/interactionFilters"
+                }
+            },
+            "required": ["click_on", "open_visualization"]
+        }
+    }
+}

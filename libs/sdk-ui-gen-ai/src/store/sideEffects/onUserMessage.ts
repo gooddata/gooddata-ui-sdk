@@ -14,7 +14,11 @@ import {
     isChatConversationError,
     isChatConversationItem,
 } from "@gooddata/sdk-backend-spi";
-import { type GenAIObjectType, type IAllowedRelationshipType } from "@gooddata/sdk-model";
+import {
+    type GenAIObjectType,
+    type IAllowedRelationshipType,
+    type IGenAIUserContext,
+} from "@gooddata/sdk-model";
 
 import { processContents } from "./converters/interactionsToMessages.js";
 import { convertToLocalContent } from "./converters/toLocalContent.js";
@@ -33,7 +37,9 @@ import {
     allowedRelationshipTypesSelector,
     objectTypesSelector,
     settingsSelector,
+    userContextSelector,
 } from "../chatWindow/chatWindowSelectors.js";
+import { clearUserContextAction } from "../chatWindow/chatWindowSlice.js";
 import {
     conversationMessagesSelector,
     conversationSelector,
@@ -160,6 +166,10 @@ function* evaluateUserMessage(message: AssistantMessage, preparedChatThread: ICh
     const allowedRelationshipTypes: IAllowedRelationshipType[] | undefined = yield select(
         allowedRelationshipTypesSelector,
     );
+    const userContext: IGenAIUserContext | undefined = yield select(userContextSelector);
+    // Clear user context immediately — it is a one-shot value
+    yield put(clearUserContextAction());
+
     const showReasoning = Boolean(settings?.enableGenAIReasoningVisibility);
 
     // Track interaction ID to assistant message mapping
@@ -172,6 +182,10 @@ function* evaluateUserMessage(message: AssistantMessage, preparedChatThread: ICh
 
     if (allowedRelationshipTypes?.length) {
         queryBuilder = queryBuilder.withAllowedRelationshipTypes(allowedRelationshipTypes);
+    }
+
+    if (userContext) {
+        queryBuilder = queryBuilder.withUserContext(userContext);
     }
 
     try {
@@ -359,6 +373,9 @@ function* evaluateUserConversationMessage(
     const allowedRelationshipTypes: IAllowedRelationshipType[] | undefined = yield select(
         allowedRelationshipTypesSelector,
     );
+    const userContext: IGenAIUserContext | undefined = yield select(userContextSelector);
+    // Clear user context immediately — it is a one-shot value
+    yield put(clearUserContextAction());
 
     // Track interaction ID to assistant message mapping
     let currentUserMessage: IChatConversationLocalItem | undefined = userMessage;
@@ -371,6 +388,10 @@ function* evaluateUserConversationMessage(
 
     if (allowedRelationshipTypes?.length) {
         queryBuilder = queryBuilder.withAllowedRelationshipTypes(allowedRelationshipTypes);
+    }
+
+    if (userContext) {
+        queryBuilder = queryBuilder.withUserContext(userContext);
     }
 
     try {
@@ -447,6 +468,7 @@ function* evaluateUserConversationMessage(
                         evaluateMessageStreamingAction({
                             assistantMessageId: currentAssistantMessage.localId,
                             interactionId: chunkInteractionId,
+                            item: value,
                             content: convertToLocalContent(value.content, true),
                         }),
                     );

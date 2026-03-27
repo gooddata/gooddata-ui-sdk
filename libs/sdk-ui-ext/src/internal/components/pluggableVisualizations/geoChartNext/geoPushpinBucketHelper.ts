@@ -12,7 +12,6 @@ import {
 import {
     getAllMeasures,
     getAttributeItemsWithoutStacks,
-    getItemsCount,
     getItemsFromBuckets,
     getPreferredBucketItems,
     isDateBucketItem,
@@ -40,14 +39,24 @@ function isPushpinLocationCapable(item: IBucketItem): boolean {
     return Boolean(item.locationDisplayFormRef);
 }
 
+function removeAllArithmeticMeasures(
+    extendedReferencePoint: IExtendedReferencePoint,
+): IExtendedReferencePoint {
+    extendedReferencePoint.buckets.forEach((bucket) => {
+        bucket.items = bucket.items.filter((item) => !item.operandLocalIdentifiers);
+    });
+
+    return extendedReferencePoint;
+}
+
 /**
- * Distributes measures between SIZE and COLOR buckets based on user preferences.
- * Primary measures go to SIZE, secondary measures go to COLOR.
- * If no preference is set, distributes all measures fairly between both buckets.
+ * Distributes measures between SIZE, COLOR, and MEASURES buckets based on user preferences.
+ * Primary measures go to SIZE, secondary measures go to COLOR, tooltip metric measures go to MEASURES.
+ * MEASURES is independent and can coexist with SIZE and COLOR.
  *
  * @param buckets - All buckets from the reference point
  * @param uiConfig - UI configuration containing bucket item limits
- * @returns Object with sizeMeasures and colorMeasures arrays
+ * @returns Object with sizeMeasures, colorMeasures, and metricMeasures arrays
  * @internal
  */
 export function distributeMeasures(
@@ -56,23 +65,34 @@ export function distributeMeasures(
 ): {
     sizeMeasures: IBucketItem[];
     colorMeasures: IBucketItem[];
+    metricMeasures: IBucketItem[];
 } {
     const allMeasures = getAllMeasures(buckets);
-    const primaryMeasures = getPreferredBucketItems(
-        buckets,
-        [BucketNames.MEASURES, BucketNames.SIZE],
-        [METRIC],
+
+    // Metric bucket is independent — extract it before distributing size/color
+    const metricBucketMeasures = getPreferredBucketItems(buckets, [BucketNames.MEASURES], [METRIC]);
+    const hasMetricBucket = uiConfig.buckets[BucketNames.MEASURES] !== undefined;
+    const metricMeasures = hasMetricBucket
+        ? metricBucketMeasures.slice(0, uiConfig.buckets[BucketNames.MEASURES]?.itemsLimit ?? 1)
+        : [];
+
+    // Exclude metric measures from size/color distribution to avoid duplicates
+    const metricLocalIds = new Set(metricMeasures.map((m) => m.localIdentifier));
+    const excludeMetric = (items: IBucketItem[]) =>
+        items.filter((item) => !metricLocalIds.has(item.localIdentifier));
+
+    const primaryMeasures = excludeMetric(
+        getPreferredBucketItems(buckets, [BucketNames.MEASURES, BucketNames.SIZE], [METRIC]),
     );
-    const secondaryMeasures = getPreferredBucketItems(
-        buckets,
-        [BucketNames.SECONDARY_MEASURES, BucketNames.COLOR],
-        [METRIC],
+    const secondaryMeasures = excludeMetric(
+        getPreferredBucketItems(buckets, [BucketNames.SECONDARY_MEASURES, BucketNames.COLOR], [METRIC]),
     );
+    const remainingMeasures = excludeMetric(allMeasures);
 
     // Determine SIZE measures: use primary if available, otherwise use remaining measures
     const sizeMeasures = selectMeasuresForBucket(
         primaryMeasures,
-        allMeasures,
+        remainingMeasures,
         secondaryMeasures,
         BucketNames.SIZE,
         uiConfig,
@@ -81,13 +101,13 @@ export function distributeMeasures(
     // Determine COLOR measures: use secondary if available, otherwise use remaining measures
     const colorMeasures = selectMeasuresForBucket(
         secondaryMeasures,
-        allMeasures,
+        remainingMeasures,
         sizeMeasures,
         BucketNames.COLOR,
         uiConfig,
     );
 
-    return { sizeMeasures, colorMeasures };
+    return { sizeMeasures, colorMeasures, metricMeasures };
 }
 
 /**
@@ -118,11 +138,12 @@ export function selectMeasuresForBucket(
 }
 
 /**
- * Creates the final bucket configuration with location, size, color, and segment buckets.
+ * Creates the final bucket configuration with location, size, color, metric, and segment buckets.
  *
  * @param buckets - All buckets from the reference point
  * @param sizeMeasures - Measures to place in SIZE bucket
  * @param colorMeasures - Measures to place in COLOR bucket
+ * @param metricMeasures - Measures to place in MEASURES bucket
  * @param uiConfig - UI configuration containing bucket item limits
  * @returns Array of configured buckets
  * @internal
@@ -131,6 +152,7 @@ export function createConfiguredBuckets(
     buckets: IBucketOfFun[],
     sizeMeasures: IBucketItem[],
     colorMeasures: IBucketItem[],
+    metricMeasures: IBucketItem[],
     uiConfig: IUiConfig,
 ): IBucketOfFun[] {
     const locationItems = getLocationItems(buckets, uiConfig);
@@ -147,6 +169,10 @@ export function createConfiguredBuckets(
         {
             localIdentifier: BucketNames.COLOR,
             items: removeShowOnSecondaryAxis(colorMeasures),
+        },
+        {
+            localIdentifier: BucketNames.MEASURES,
+            items: removeShowOnSecondaryAxis(metricMeasures),
         },
         {
             localIdentifier: BucketNames.SEGMENT,
@@ -205,23 +231,6 @@ export function getSegmentItems(buckets: IBucketOfFun[], hasLocation: boolean): 
 }
 
 /**
- * Checks if clustering should be enabled based on bucket configuration.
- * Clustering is enabled only when there's a location but no measures or segments.
- *
- * @param buckets - All buckets from the reference point
- * @returns True if clustering should be enabled
- * @internal
- */
-export function shouldEnableClustering(buckets: IBucketOfFun[]): boolean {
-    const hasLocationAttribute = getItemsCount(buckets, BucketNames.LOCATION) > 0;
-    const hasSizeMeasure = getItemsCount(buckets, BucketNames.SIZE) > 0;
-    const hasColorMeasure = getItemsCount(buckets, BucketNames.COLOR) > 0;
-    const hasSegmentAttribute = getItemsCount(buckets, BucketNames.SEGMENT) > 0;
-
-    return hasLocationAttribute && !hasColorMeasure && !hasSizeMeasure && !hasSegmentAttribute;
-}
-
-/**
  * Removes arithmetic and derived measures from the reference point.
  * Geo pushpin charts don't support these measure types.
  *
@@ -231,5 +240,6 @@ export function shouldEnableClustering(buckets: IBucketOfFun[]): boolean {
  */
 export function sanitizeMeasures(extendedReferencePoint: IExtendedReferencePoint): IExtendedReferencePoint {
     const withoutArithmetic = removeAllArithmeticMeasuresFromDerived(extendedReferencePoint);
-    return removeAllDerivedMeasures(withoutArithmetic);
+    const withoutDerived = removeAllDerivedMeasures(withoutArithmetic);
+    return removeAllArithmeticMeasures(withoutDerived);
 }

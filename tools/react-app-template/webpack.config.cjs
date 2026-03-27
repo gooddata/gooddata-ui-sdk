@@ -53,16 +53,9 @@ function rewriteLocationStyleResponse(buffer, origin) {
         payload.glyphs = replaceUrlOrigin(payload.glyphs, origin);
     }
 
-    // sprite can be a string or an array of { id, url } objects (MapLibre v3+)
-    if (typeof payload.sprite === "string") {
-        payload.sprite = replaceUrlOrigin(payload.sprite, origin);
-    } else if (Array.isArray(payload.sprite)) {
-        payload.sprite = payload.sprite.map((entry) =>
-            entry && typeof entry.url === "string"
-                ? { ...entry, url: replaceUrlOrigin(entry.url, origin) }
-                : entry,
-        );
-    }
+    // NOTE: sprite URLs are intentionally NOT rewritten. The sprite sheet is
+    // served by an external tile server and is not proxied through the dev
+    // server, so it must keep its original absolute URL.
 
     if (payload.sources && typeof payload.sources === "object") {
         Object.values(payload.sources).forEach((source) => {

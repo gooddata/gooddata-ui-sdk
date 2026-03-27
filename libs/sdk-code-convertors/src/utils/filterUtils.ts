@@ -1,7 +1,8 @@
 // (C) 2023-2026 GoodData Corporation
 
+import type { DateDataset } from "@gooddata/sdk-code-schemas/v1";
+
 import { convertGranularityToId, parseGranularityValue } from "./granularityUtils.js";
-import type { DateDataset } from "../schemas/v1/metadata.js";
 import { type ExportEntities, type FromEntities } from "../types.js";
 
 export function parseDateValues(

@@ -150,6 +150,7 @@ type WorkspaceSettingsCacheEntry = {
 
 type GeoCacheEntry = {
     stylesByParams: LRUCache<string, Promise<IGeoStyleSpecification>>;
+    defaultStyleSpriteIcons?: Promise<string[]>;
 };
 
 type CachingContext = {
@@ -1756,6 +1757,21 @@ class WithGeoCaching implements IGeoService {
         return result;
     }
 
+    public getDefaultStyleSpriteIcons(): Promise<string[]> {
+        const cache = this.ctx.caches.geo!;
+        let result = cache.defaultStyleSpriteIcons;
+
+        if (!result) {
+            result = this.decorated.getDefaultStyleSpriteIcons().catch((e) => {
+                cache.defaultStyleSpriteIcons = undefined;
+                throw e;
+            });
+            cache.defaultStyleSpriteIcons = result;
+        }
+
+        return result;
+    }
+
     public collections() {
         return this.decorated.collections();
     }
@@ -1793,6 +1809,9 @@ function cacheControl(ctx: CachingContext): CacheControl {
 
         resetGeoStyles: () => {
             ctx.caches.geo?.stylesByParams.clear();
+            if (ctx.caches.geo) {
+                ctx.caches.geo.defaultStyleSpriteIcons = undefined;
+            }
         },
 
         resetAll: () => {
@@ -2087,11 +2106,12 @@ export type CachingConfiguration = {
     maxWorkspaceSettings?: number;
 
     /**
-     * When true, cache the geo style returned by `backend.geo().getDefaultStyle()`.
+     * When true, cache geo assets returned by `backend.geo()`.
      *
-     * The geo style is the same for all workspaces within a single backend instance. Cached entries
-     * are keyed by the requested basemap and color scheme and kept in a small LRU cache. This is
-     * useful to avoid repeated network calls when multiple geo charts are rendered on the same page.
+     * The geo style is the same for all workspaces within a single backend instance. Cached style
+     * entries are keyed by the requested basemap and color scheme and kept in a small LRU cache.
+     * The default sprite icon list is cached as a single shared promise. This is useful to avoid
+     * repeated network calls when multiple geo charts are rendered on the same page.
      *
      * @remarks
      * Default is false. Set to true to enable caching.
@@ -2182,7 +2202,10 @@ export function withCaching(
                 ? new LRUCache({ max: config.maxAutomationsWorkspaces! })
                 : undefined,
             geo: geoCaching
-                ? { stylesByParams: new LRUCache({ max: MAX_GEO_STYLE_CACHE_ENTRIES }) }
+                ? {
+                      stylesByParams: new LRUCache({ max: MAX_GEO_STYLE_CACHE_ENTRIES }),
+                      defaultStyleSpriteIcons: undefined,
+                  }
                 : undefined,
         },
         config,

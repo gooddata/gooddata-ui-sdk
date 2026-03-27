@@ -1,6 +1,30 @@
 // (C) 2023-2026 GoodData Corporation
 
 import { type DeclarativeVisualizationObject } from "@gooddata/api-client-tiger";
+import type {
+    All,
+    AttributeFilter,
+    Bucket,
+    Comparison,
+    ComparisonCondition,
+    DateDataset,
+    DateFilter,
+    EmptyBucket,
+    Field,
+    MetricSort,
+    MetricValueFilter,
+    MetricValueFilterCondition,
+    MultipleConditions,
+    Query,
+    QueryFilters,
+    Range,
+    RangeCondition,
+    RankingFilter,
+    Sorts,
+    Total,
+    Visualisation,
+    VisualizationDataLayer,
+} from "@gooddata/sdk-code-schemas/v1";
 import {
     type ArithmeticMeasureOperator,
     type IAttributeFilterConfigs,
@@ -39,30 +63,6 @@ import { scatterChart } from "../configs/scatterChart.js";
 import { table } from "../configs/table.js";
 import { treemapChart } from "../configs/treemapChart.js";
 import { waterfallChart } from "../configs/waterfallChart.js";
-import type {
-    All,
-    AttributeFilter,
-    Bucket,
-    Comparison,
-    ComparisonCondition,
-    DateDataset,
-    DateFilter,
-    EmptyBucket,
-    Field,
-    MetricSort,
-    MetricValueFilter,
-    MetricValueFilterCondition,
-    MultipleConditions,
-    Query,
-    QueryFilters,
-    Range,
-    RangeCondition,
-    RankingFilter,
-    Sorts,
-    Total,
-    Visualisation,
-    VisualizationDataLayer,
-} from "../schemas/v1/metadata.js";
 import { BucketsType, type ExportEntities } from "../types.js";
 import { convertBucketToTitle } from "../utils/convertBucketToTitle.js";
 import { mapDateAttribute, mapDateDataset } from "../utils/dateUtils.js";

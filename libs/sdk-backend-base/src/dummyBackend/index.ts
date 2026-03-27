@@ -309,6 +309,9 @@ export function dummyBackend(config: DummyBackendConfig = defaultDummyBackendCon
                 getDefaultStyle: () => {
                     throw new NotSupported("not supported");
                 },
+                getDefaultStyleSpriteIcons: () => {
+                    throw new NotSupported("not supported");
+                },
                 collections: () => ({
                     getAll: () => Promise.resolve([]),
                     getGeoCollection: () => Promise.resolve(undefined),
@@ -623,6 +626,9 @@ function dummyExecutionResult(
         },
         fingerprint(): string {
             return fp;
+        },
+        resultId(): string | undefined {
+            return undefined;
         },
         equals(other: IExecutionResult): boolean {
             return fp === other.fingerprint();
@@ -1082,6 +1088,8 @@ class DummyOrganization implements IOrganization {
             setMaxZoomLevel: () => Promise.resolve(),
             setMetricFormatOverride: () => Promise.resolve(),
             setActiveCalendars: () => Promise.resolve(),
+            setGeoIconSheet: () => Promise.resolve(),
+            deleteGeoIconSheet: () => Promise.resolve(),
         };
     }
 

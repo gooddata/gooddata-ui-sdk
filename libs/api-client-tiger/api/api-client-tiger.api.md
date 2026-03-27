@@ -18099,7 +18099,7 @@ export interface ITigerDashboardTab {
 // Warning: (ae-forgotten-export) The symbol "ITigerRankingFilter" needs to be exported by the entry point index.d.ts
 //
 // @public
-export type ITigerFilter = ITigerAbsoluteDateFilter | ITigerRelativeDateFilter | ITigerPositiveAttributeFilter | ITigerNegativeAttributeFilter | ITigerMeasureValueFilter | ITigerRankingFilter;
+export type ITigerFilter = ITigerAbsoluteDateFilter | ITigerRelativeDateFilter | ITigerPositiveAttributeFilter | ITigerNegativeAttributeFilter | ITigerMeasureValueFilter | ITigerRankingFilter | ITigerDashboardArbitraryAttributeFilter | ITigerDashboardMatchAttributeFilter;
 
 // @public
 export type ITigerFilterContextItem = DashboardFilter | ITigerDashboardArbitraryAttributeFilter | ITigerDashboardMatchAttributeFilter;
@@ -23240,6 +23240,16 @@ export interface JsonApiUserSettingIn {
     'id': string;
     'type': JsonApiUserSettingInTypeEnum;
 }
+
+// @public (undocumented)
+export interface JsonApiUserSettingInAttributes {
+    'content'?: object;
+    // (undocumented)
+    'type'?: JsonApiUserSettingInAttributesTypeEnum;
+}
+
+// @public (undocumented)
+export type JsonApiUserSettingInAttributesTypeEnum = 'TIMEZONE' | 'ACTIVE_THEME' | 'ACTIVE_COLOR_PALETTE' | 'ACTIVE_LLM_ENDPOINT' | 'ACTIVE_LLM_PROVIDER' | 'ACTIVE_CALENDARS' | 'WHITE_LABELING' | 'LOCALE' | 'METADATA_LOCALE' | 'FORMAT_LOCALE' | 'MAPBOX_TOKEN' | 'GEO_ICON_SHEET' | 'AG_GRID_TOKEN' | 'WEEK_START' | 'FISCAL_YEAR' | 'SHOW_HIDDEN_CATALOG_ITEMS' | 'OPERATOR_OVERRIDES' | 'TIMEZONE_VALIDATION_ENABLED' | 'OPENAI_CONFIG' | 'ENABLE_FILE_ANALYTICS' | 'ALERT' | 'SEPARATORS' | 'DATE_FILTER_CONFIG' | 'JIT_PROVISIONING' | 'JWT_JIT_PROVISIONING' | 'DASHBOARD_FILTERS_APPLY_MODE' | 'ENABLE_SLIDES_EXPORT' | 'ENABLE_SNAPSHOT_EXPORT' | 'AI_RATE_LIMIT' | 'ATTACHMENT_SIZE_LIMIT' | 'ATTACHMENT_LINK_TTL' | 'AD_CATALOG_GROUPS_DEFAULT_EXPAND_STATE' | 'ENABLE_DRILL_TO_URL_BY_DEFAULT' | 'ALLOW_UNSAFE_FLEX_CONNECT_ENDPOINTS' | 'ENABLE_AUTOMATION_EVALUATION_MODE' | 'ENABLE_ACCESSIBILITY_MODE' | 'REGISTERED_PLUGGABLE_APPLICATIONS' | 'DATA_LOCALE' | 'LDM_DEFAULT_LOCALE' | 'EXPORT_RESULT_POLLING_TIMEOUT_SECONDS' | 'MAX_ZOOM_LEVEL' | 'SORT_CASE_SENSITIVE' | 'SORT_COLLATION' | 'METRIC_FORMAT_OVERRIDE' | 'ENABLE_AI_ON_DATA' | 'API_ENTITIES_DEFAULT_CONTENT_MEDIA_TYPE' | 'EXPORT_CSV_CUSTOM_DELIMITER' | 'ENABLE_QUERY_TAGS' | 'RESTRICT_BASE_UI' | 'CERTIFY_PARENT_OBJECTS';
 
 // @public (undocumented)
 export interface JsonApiUserSettingInDocument {
@@ -32181,7 +32191,7 @@ export interface Xliff {
 
 // Warnings were encountered during analysis:
 //
-// src/gd-tiger-model/TigerTypes.ts:785:9 - (ae-forgotten-export) The symbol "ITigerDashboardAttributeFilterParent" needs to be exported by the entry point index.d.ts
-// src/gd-tiger-model/TigerTypes.ts:786:9 - (ae-forgotten-export) The symbol "ITigerDashboardAttributeFilterByDate" needs to be exported by the entry point index.d.ts
+// src/gd-tiger-model/TigerTypes.ts:787:9 - (ae-forgotten-export) The symbol "ITigerDashboardAttributeFilterParent" needs to be exported by the entry point index.d.ts
+// src/gd-tiger-model/TigerTypes.ts:788:9 - (ae-forgotten-export) The symbol "ITigerDashboardAttributeFilterByDate" needs to be exported by the entry point index.d.ts
 
 ```

@@ -378,6 +378,7 @@ const messagesSlice = createSlice({
                 payload,
             }: PayloadAction<{
                 contents?: Contents[];
+                item?: IChatConversationItem;
                 content?: IChatConversationLocalContent | IChatConversationErrorContent;
                 assistantMessageId: string;
                 interactionId?: string;
@@ -401,6 +402,8 @@ const messagesSlice = createSlice({
                 };
                 assistantMessage.streaming = true;
                 assistantMessage.cancelled = false;
+                assistantMessage.responseId = payload.item?.responseId ?? "";
+                assistantMessage.replyTo = payload.item?.replyTo;
             } else {
                 assistantMessage.content.push(...(payload.contents ?? []));
                 assistantMessage.cancelled = false;

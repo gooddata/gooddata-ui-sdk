@@ -1207,9 +1207,11 @@ export const transformMeasureBuckets = (
                   ? [BucketNames.SECONDARY_MEASURES, BucketNames.COLOR]
                   : [localIdentifier];
 
-        const preferredBucketItems = getPreferredBucketItems(buckets, preferredBucketLocalIdentifiers, [
-            METRIC,
-        ]);
+        const preferredBucketItems = getFirstNonEmptyPreferredBucketItems(
+            buckets,
+            preferredBucketLocalIdentifiers,
+            [METRIC],
+        );
         const measuresToBePlaced = preferredBucketItems.splice(0, itemsLimit);
 
         if (measuresToBePlaced.length === 0) {
@@ -1241,6 +1243,22 @@ export const transformMeasureBuckets = (
         };
     });
 };
+
+function getFirstNonEmptyPreferredBucketItems(
+    buckets: IBucketOfFun[],
+    preference: string[],
+    type: string[],
+): IBucketItem[] {
+    for (const localIdentifier of preference) {
+        const preferredBucketItems = getPreferredBucketItems(buckets, [localIdentifier], type);
+
+        if (preferredBucketItems.length > 0) {
+            return preferredBucketItems;
+        }
+    }
+
+    return getPreferredBucketItems(buckets, preference, type);
+}
 
 export const hasSameDateDimension = (dateItem: IBucketItem, referenceDateItem: IBucketItem): boolean => {
     if (isDateBucketItem(dateItem) && isDateBucketItem(referenceDateItem)) {

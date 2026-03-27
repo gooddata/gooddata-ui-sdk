@@ -492,6 +492,8 @@ export abstract class DecoratedExecutionResult implements IExecutionResult {
     // (undocumented)
     readWindow(offset: number[], size: number[]): Promise<IDataView>;
     // (undocumented)
+    resultId(): string | undefined;
+    // (undocumented)
     signal: AbortSignal | undefined;
     // (undocumented)
     transform(): IPreparedExecution;

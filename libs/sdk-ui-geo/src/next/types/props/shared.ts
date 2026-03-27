@@ -10,7 +10,9 @@ import {
 } from "@gooddata/sdk-ui";
 
 import {
+    type BoundsChangedCallback,
     type CenterPositionChangedCallback,
+    type ViewportInteractionEndCallback,
     type ZoomChangedCallback,
 } from "../../../publicTypes/geoCommon.js";
 import { type IGeoLayer } from "../layers/index.js";
@@ -72,6 +74,16 @@ export interface IGeoCommonExecutionProps extends IVisualizationProps, IVisualiz
      * Callback fired when map zoom changes.
      */
     onZoomChanged?: ZoomChangedCallback;
+
+    /**
+     * Callback fired when the map visible bounds change.
+     */
+    onBoundsChanged?: BoundsChangedCallback;
+
+    /**
+     * Callback fired when a user-triggered viewport interaction finishes.
+     */
+    onViewportInteractionEnd?: ViewportInteractionEndCallback;
 }
 
 /**

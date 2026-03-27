@@ -1229,6 +1229,8 @@ export interface IExecutionResult extends ICancelable<IExecutionResult> {
     // @alpha
     readOutliersAll(config: IOutliersConfig): Promise<IOutliersResult>;
     readWindow(offset: number[], size: number[]): Promise<IDataView>;
+    // @internal
+    resultId(): string | undefined;
     readonly signal?: AbortSignal;
     transform(): IPreparedExecution;
 }
@@ -1447,6 +1449,7 @@ export interface IGenAIService {
 export interface IGeoService {
     collections(): IOrganizationGeoCollectionsService;
     getDefaultStyle(params?: IGeoStyleParams): Promise<IGeoStyleSpecification>;
+    getDefaultStyleSpriteIcons(): Promise<string[]>;
 }
 
 // @alpha
@@ -1954,6 +1957,8 @@ export interface IOrganizationSettingsService {
     deleteColorPalette(): Promise<void>;
     // @alpha
     deleteExportCsvCustomDelimiter(): Promise<void>;
+    // @alpha
+    deleteGeoIconSheet(): Promise<void>;
     deleteTheme(): Promise<void>;
     getSettings(): Promise<ISettings>;
     setActiveCalendars(calendars: IActiveCalendars): Promise<void>;
@@ -1971,6 +1976,8 @@ export interface IOrganizationSettingsService {
     setExportCsvCustomDelimiter(delimiter: string): Promise<void>;
     setFiscalCalendar(fiscalYear: IFiscalYear): Promise<void>;
     setFormatLocale(locale: string): Promise<void>;
+    // @alpha
+    setGeoIconSheet(url: string): Promise<void>;
     setLocale(locale: string): Promise<void>;
     setMaxZoomLevel(level: number | null): Promise<void>;
     setMetadataLocale(locale: string): Promise<void>;

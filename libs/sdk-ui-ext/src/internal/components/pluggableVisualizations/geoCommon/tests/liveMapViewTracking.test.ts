@@ -5,7 +5,12 @@ import { describe, expect, it, vi } from "vitest";
 import { type IPushData } from "@gooddata/sdk-ui";
 
 import { type IVisualizationProperties } from "../../../../interfaces/Visualization.js";
-import { type ISyncViewportContext, LiveMapViewTracker, isGeoLngLat } from "../liveMapViewTracking.js";
+import {
+    type ISyncViewportContext,
+    LiveMapViewTracker,
+    isGeoLngLat,
+    isGeoLngLatBounds,
+} from "../liveMapViewTracking.js";
 
 describe("isGeoLngLat", () => {
     it.each([
@@ -247,12 +252,9 @@ describe("LiveMapViewTracker.createSyncedHandlers", () => {
     it("should call pushData when synced center handler fires", async () => {
         const { pushData, handlers } = createSyncedContext();
 
-        // Need both center and zoom for sync to fire
         handlers.handleZoomChanged(3);
         handlers.handleCenterPositionChanged({ lat: 52.52, lng: 13.4 });
-
-        // Sync is coalesced via microtask
-        await Promise.resolve();
+        handlers.handleViewportInteractionEnded();
 
         expect(pushData).toHaveBeenCalled();
         const lastCall = pushData.mock.calls.at(-1)?.[0];
@@ -268,16 +270,243 @@ describe("LiveMapViewTracker.createSyncedHandlers", () => {
         handlers.handleZoomChanged(5);
         handlers.handleCenterPositionChanged({ lat: 52, lng: 16 });
         handlers.handleZoomChanged(7);
+        handlers.handleViewportInteractionEnded();
 
-        // Before microtask fires, nothing is pushed
-        expect(pushData).not.toHaveBeenCalled();
-
-        await Promise.resolve();
-
-        // Only one pushData call with the final values
         expect(pushData).toHaveBeenCalledOnce();
         const pushed = pushData.mock.calls[0][0];
         expect(pushed?.properties?.controls?.center).toEqual({ lat: 52, lng: 16 });
         expect(pushed?.properties?.controls?.zoom).toBe(7);
+    });
+
+    it("should include bounds in pushed data when bounds handler fires", async () => {
+        const pushData = vi.fn();
+        let visualizationProperties: IVisualizationProperties = {
+            controls: {
+                viewport: { area: "custom" },
+                center: { lat: 40, lng: -74 },
+                zoom: 3,
+                bounds: {
+                    southWest: { lat: 38, lng: -76 },
+                    northEast: { lat: 42, lng: -72 },
+                },
+            },
+        };
+        const tracker = new LiveMapViewTracker();
+        const handlers = tracker.createSyncedHandlers(() => ({
+            environment: "analyticalDesigner",
+            visualizationProperties,
+            pushData,
+            setVisualizationProperties: (props: IVisualizationProperties) => {
+                visualizationProperties = props;
+            },
+        }));
+
+        handlers.handleCenterPositionChanged({ lat: 40, lng: -74 });
+        handlers.handleZoomChanged(3);
+        handlers.handleBoundsChanged({
+            southWest: { lat: 38, lng: -76 },
+            northEast: { lat: 42, lng: -72 },
+        });
+
+        handlers.handleCenterPositionChanged({ lat: 52.52, lng: 13.4 });
+        handlers.handleZoomChanged(6);
+        handlers.handleBoundsChanged({
+            southWest: { lat: 50, lng: 10 },
+            northEast: { lat: 55, lng: 17 },
+        });
+        handlers.handleViewportInteractionEnded();
+
+        expect(pushData).toHaveBeenCalledOnce();
+        const pushed = pushData.mock.calls[0][0];
+        expect(pushed?.properties?.controls?.bounds).toEqual({
+            southWest: { lat: 50, lng: 10 },
+            northEast: { lat: 55, lng: 17 },
+        });
+    });
+
+    it("should keep the initial snapshot local until a user interaction ends", async () => {
+        const { pushData, handlers } = createSyncedContext();
+
+        handlers.handleCenterPositionChanged({ lat: 41, lng: -73 });
+        handlers.handleZoomChanged(4);
+
+        expect(pushData).not.toHaveBeenCalled();
+
+        handlers.handleViewportInteractionEnded();
+
+        expect(pushData).toHaveBeenCalledOnce();
+        expect(pushData.mock.calls[0]?.[0]?.properties?.controls?.center).toEqual({
+            lat: 41,
+            lng: -73,
+        });
+        expect(pushData.mock.calls[0]?.[0]?.properties?.controls?.zoom).toBe(4);
+    });
+});
+
+describe("isGeoLngLatBounds", () => {
+    it.each([
+        [{ northEast: { lat: 55, lng: 17 }, southWest: { lat: 50, lng: 10 } }, true],
+        [null, false],
+        [undefined, false],
+        [{}, false],
+        [{ northEast: { lat: 55, lng: 17 } }, false],
+        [{ southWest: { lat: 50, lng: 10 } }, false],
+        [{ northEast: { lat: "55", lng: 17 }, southWest: { lat: 50, lng: 10 } }, false],
+    ])("isGeoLngLatBounds(%o) → %s", (value, expected) => {
+        expect(isGeoLngLatBounds(value)).toBe(expected);
+    });
+});
+
+describe("LiveMapViewTracker bounds tracking", () => {
+    function createContext(overrides?: Partial<ISyncViewportContext>) {
+        const pushData = vi.fn<(data: IPushData) => void>();
+        const setVisualizationProperties = vi.fn<(properties: IVisualizationProperties) => void>();
+        const ctx: ISyncViewportContext = {
+            environment: "analyticalDesigner",
+            visualizationProperties: {
+                controls: {
+                    viewport: { area: "custom" },
+                    center: { lat: 40, lng: -74 },
+                    zoom: 3,
+                    bounds: {
+                        southWest: { lat: 38, lng: -76 },
+                        northEast: { lat: 42, lng: -72 },
+                    },
+                },
+            },
+            pushData,
+            setVisualizationProperties,
+            ...overrides,
+        };
+        return { ctx, pushData, setVisualizationProperties };
+    }
+
+    it("should push updated bounds when they differ", () => {
+        const tracker = new LiveMapViewTracker();
+        tracker.handleCenterPositionChanged({ lat: 52.52, lng: 13.4 });
+        tracker.handleZoomChanged(6);
+        tracker.handleBoundsChanged({
+            southWest: { lat: 50, lng: 10 },
+            northEast: { lat: 55, lng: 17 },
+        });
+
+        const { ctx, pushData } = createContext();
+        tracker.syncCustomViewportSnapshot(ctx);
+
+        expect(pushData).toHaveBeenCalledOnce();
+        const pushed = pushData.mock.calls[0][0];
+        expect(pushed.properties?.controls?.["bounds"]).toEqual({
+            southWest: { lat: 50, lng: 10 },
+            northEast: { lat: 55, lng: 17 },
+        });
+        // Center and zoom should also be persisted for backward compatibility
+        expect(pushed.properties?.controls?.["center"]).toEqual({ lat: 52.52, lng: 13.4 });
+        expect(pushed.properties?.controls?.["zoom"]).toBe(6);
+    });
+
+    it("should not push when both center/zoom and bounds are within epsilon", () => {
+        const tracker = new LiveMapViewTracker();
+        tracker.handleCenterPositionChanged({ lat: 40.0000001, lng: -74.0000001 });
+        tracker.handleZoomChanged(3.0000001);
+        tracker.handleBoundsChanged({
+            southWest: { lat: 38.0000001, lng: -76.0000001 },
+            northEast: { lat: 42.0000001, lng: -72.0000001 },
+        });
+
+        const { ctx, pushData } = createContext();
+        tracker.syncCustomViewportSnapshot(ctx);
+
+        expect(pushData).not.toHaveBeenCalled();
+    });
+
+    it("should not push when stored bounds already match and only center/zoom differ", () => {
+        const tracker = new LiveMapViewTracker();
+        tracker.handleCenterPositionChanged({ lat: 41, lng: -73 });
+        tracker.handleZoomChanged(4);
+        tracker.handleBoundsChanged({
+            southWest: { lat: 38, lng: -76 },
+            northEast: { lat: 42, lng: -72 },
+        });
+
+        const { ctx, pushData } = createContext();
+        tracker.syncCustomViewportSnapshot(ctx);
+
+        expect(pushData).not.toHaveBeenCalled();
+    });
+
+    it("should push when bounds differ but center/zoom are within epsilon", () => {
+        const tracker = new LiveMapViewTracker();
+        tracker.handleCenterPositionChanged({ lat: 40.0000001, lng: -74.0000001 });
+        tracker.handleZoomChanged(3.0000001);
+        tracker.handleBoundsChanged({
+            southWest: { lat: 35, lng: -80 },
+            northEast: { lat: 45, lng: -68 },
+        });
+
+        const { ctx, pushData } = createContext();
+        tracker.syncCustomViewportSnapshot(ctx);
+
+        expect(pushData).toHaveBeenCalledOnce();
+    });
+
+    it("should not push legacy custom viewports on initial bounds snapshot", () => {
+        const tracker = new LiveMapViewTracker();
+        tracker.handleCenterPositionChanged({ lat: 40.0000001, lng: -74.0000001 });
+        tracker.handleZoomChanged(3.0000001);
+        tracker.handleBoundsChanged({
+            southWest: { lat: 35, lng: -80 },
+            northEast: { lat: 45, lng: -68 },
+        });
+
+        const { ctx, pushData } = createContext({
+            visualizationProperties: {
+                controls: {
+                    viewport: { area: "custom" },
+                    center: { lat: 40, lng: -74 },
+                    zoom: 3,
+                },
+            },
+        });
+        tracker.syncCustomViewportSnapshot(ctx);
+
+        expect(pushData).not.toHaveBeenCalled();
+    });
+
+    it("should include bounds from getCurrentMapView", () => {
+        const tracker = new LiveMapViewTracker();
+        tracker.handleBoundsChanged({
+            southWest: { lat: 50, lng: 10 },
+            northEast: { lat: 55, lng: 17 },
+        });
+
+        const mapView = tracker.getCurrentMapView({
+            controls: {
+                center: { lat: 52, lng: 13 },
+                zoom: 5,
+            },
+        });
+
+        expect(mapView.bounds).toEqual({
+            southWest: { lat: 50, lng: 10 },
+            northEast: { lat: 55, lng: 17 },
+        });
+    });
+
+    it("should not fall back to stored bounds from visualization properties", () => {
+        const tracker = new LiveMapViewTracker();
+        // No handleBoundsChanged called
+
+        const mapView = tracker.getCurrentMapView({
+            controls: {
+                center: { lat: 52, lng: 13 },
+                zoom: 5,
+                bounds: {
+                    southWest: { lat: 50, lng: 10 },
+                    northEast: { lat: 55, lng: 17 },
+                },
+            },
+        });
+
+        expect(mapView.bounds).toBeUndefined();
     });
 });

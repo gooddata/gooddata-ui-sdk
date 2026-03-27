@@ -24,6 +24,7 @@ interface IBuildAreaVisualizationConfigParams {
 interface IGeoAreaControls {
     center?: IGeoAreaChartConfig["center"];
     zoom?: IGeoAreaChartConfig["zoom"];
+    bounds?: IGeoAreaChartConfig["bounds"];
     legend?: IGeoAreaChartConfig["legend"];
     viewport?: IGeoAreaChartConfig["viewport"];
     mapStyle?: IGeoAreaChartConfig["mapStyle"];
@@ -54,6 +55,7 @@ export function buildAreaVisualizationConfig({
     const {
         center,
         zoom,
+        bounds,
         legend = {},
         viewport = {},
         mapStyle,
@@ -109,6 +111,7 @@ export function buildAreaVisualizationConfig({
         ...(isViewportConfigEnabled && !isPresetViewportAreaSelected && typeof zoom === "number"
             ? { zoom }
             : {}),
+        ...(isViewportConfigEnabled && !isPresetViewportAreaSelected && bounds ? { bounds } : {}),
         ...viewportProp,
         mapStyle,
         ...(sanitizedGeoMapStyle.basemap ? { basemap: sanitizedGeoMapStyle.basemap } : {}),

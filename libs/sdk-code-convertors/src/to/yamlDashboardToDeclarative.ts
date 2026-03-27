@@ -8,6 +8,28 @@ import {
     type DeclarativeAnalyticalDashboardPermissionForAssigneeRule,
     type DeclarativeFilterContext,
 } from "@gooddata/api-client-tiger";
+import type {
+    ContainerWidget,
+    Dashboard,
+    DashboardAbsoluteDateFilter,
+    DashboardAttributeFilter,
+    DashboardFilters,
+    DashboardRelativeDateFilter,
+    IgnoredDrillDown,
+    IgnoredDrillDownIntersection,
+    Interaction,
+    InteractionFilters,
+    InteractionIncludedSourceMeasureFilters,
+    InteractionOpenParamUrl,
+    LocalDateFilter,
+    RichTextWidget,
+    Section,
+    State,
+    Visualisation,
+    VisualisationWidget,
+    VisualizationSwitcherWidget,
+    Widget,
+} from "@gooddata/sdk-code-schemas/v1";
 import {
     type DashboardDateFilterConfigMode,
     type DrillOrigin,
@@ -33,28 +55,6 @@ import {
 
 import { VisualisationsTypes } from "../conts.js";
 import { type OverrideDashboardDefinition } from "../from/declarativeDashboardToYaml.js";
-import type {
-    ContainerWidget,
-    Dashboard,
-    DashboardAbsoluteDateFilter,
-    DashboardAttributeFilter,
-    DashboardFilters,
-    DashboardRelativeDateFilter,
-    IgnoredDrillDown,
-    IgnoredDrillDownIntersection,
-    Interaction,
-    InteractionFilters,
-    InteractionIncludedSourceMeasureFilters,
-    InteractionOpenParamUrl,
-    LocalDateFilter,
-    RichTextWidget,
-    Section,
-    State,
-    Visualisation,
-    VisualisationWidget,
-    VisualizationSwitcherWidget,
-    Widget,
-} from "../schemas/v1/metadata.js";
 import { type DashboardTab, type ExportEntities } from "../types.js";
 import { parseUrlTarget } from "../utils/customUrl.js";
 import { convertGranularity } from "../utils/granularityUtils.js";

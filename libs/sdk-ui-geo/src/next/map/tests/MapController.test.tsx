@@ -39,6 +39,10 @@ function createMapFacadeStub(): IMapFacade {
         jumpTo: vi.fn(() => map),
         panTo: vi.fn(() => map),
         zoomTo: vi.fn(() => map),
+        getBounds: vi.fn(() => ({
+            southWest: { lat: -10, lng: -20 },
+            northEast: { lat: 10, lng: 20 },
+        })),
         getCenter: vi.fn((): ReturnType<IMapFacade["getCenter"]> => {
             const center: ReturnType<IMapFacade["getCenter"]> = {
                 lat: 0,
@@ -145,6 +149,7 @@ describe("MapController", () => {
         const afterRender = vi.fn();
         const onCenterPositionChanged = vi.fn();
         const onZoomChanged = vi.fn();
+        const onViewportInteractionEnd = vi.fn();
 
         geoLayersContextMock.layerExecutions = layerExecutions;
 
@@ -158,6 +163,7 @@ describe("MapController", () => {
                 drillablePredicates={drillablePredicates}
                 onCenterPositionChanged={onCenterPositionChanged}
                 onZoomChanged={onZoomChanged}
+                onViewportInteractionEnd={onViewportInteractionEnd}
                 afterRender={afterRender}
                 config={config}
             />,
@@ -178,6 +184,8 @@ describe("MapController", () => {
         expect(callbacksMock).toHaveBeenCalledWith(mapFacadeStub, {
             onCenterPositionChanged,
             onZoomChanged,
+            onBoundsChanged: undefined,
+            onViewportInteractionEnd,
         });
         expect(syncMock).toHaveBeenCalledWith({
             drillablePredicates,

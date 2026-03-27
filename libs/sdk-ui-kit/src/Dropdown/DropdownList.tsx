@@ -214,6 +214,7 @@ export function DropdownList<T>({
     const [currentSearchString, setCurrentSearchString] = useState(searchString);
     const hasNoData = !isLoading && itemsCount === 0;
     const hasNoMatchingData = hasNoData && !!currentSearchString;
+    const searchWrapperStyle = isMobile || width === undefined ? { display: "contents" } : { width };
 
     const listClassNames = cx("gd-infinite-list", className);
 
@@ -262,7 +263,7 @@ export function DropdownList<T>({
             {showSearch ? (
                 <>
                     <div
-                        style={{ display: "contents" }}
+                        style={searchWrapperStyle}
                         onKeyDown={(e) => {
                             if (isTypingKey(e)) {
                                 e.stopPropagation();

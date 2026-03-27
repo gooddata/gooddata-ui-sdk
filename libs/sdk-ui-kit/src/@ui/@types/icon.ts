@@ -147,6 +147,7 @@ export type IconType =
     | "visualizationRepeater"
     | "visualizationXirr"
     | "link"
+    | "externalLink"
     | "click"
     | "fileXlsx"
     | "filePptx"

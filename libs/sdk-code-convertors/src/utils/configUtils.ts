@@ -2,6 +2,14 @@
 
 import { Pair, YAMLMap } from "yaml";
 
+import type {
+    Color,
+    ColorDefinition,
+    ListOfColors,
+    Visualisation,
+    Width,
+} from "@gooddata/sdk-code-schemas/v1";
+
 import { type FullFields, getFullField } from "./sharedUtils.js";
 import { isAttributeField, isMetricField } from "./typeGuards.js";
 import {
@@ -12,7 +20,6 @@ import {
     type IChartFill,
 } from "../configs/types.js";
 import { getValueOrDefault } from "../configs/utils.js";
-import type { Color, ColorDefinition, ListOfColors, Visualisation, Width } from "../schemas/v1/metadata.js";
 
 export function loadColorMapping(mappings: Array<ColorMapping>): YAMLMap<keyof ListOfColors, Color> {
     const map = new YAMLMap<keyof ListOfColors, Color>();
@@ -237,16 +244,17 @@ export function saveColumnWidths(
                 }
 
                 const key = Object.keys(el)[0];
+                const record = el as Record<string, string>;
                 if (["SUM", "AVG", "MAX", "MIN", "MED", "NAT"].includes(key)) {
                     return {
-                        id: el[key],
+                        id: record[key],
                         total: key,
                     };
                 }
 
                 return {
                     id: key,
-                    element: el[key],
+                    element: record[key],
                 };
             }) ?? [];
         const usingFields = defs.map((def) => getFullField(fields[def.id]));

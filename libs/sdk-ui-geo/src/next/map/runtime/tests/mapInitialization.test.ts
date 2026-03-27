@@ -9,6 +9,10 @@ type IMapConstructorOptions = {
     renderWorldCopies?: boolean;
     maxZoom?: number;
     bounds?: [[number, number], [number, number]];
+    fitBoundsOptions?: {
+        padding?: number;
+        maxDuration?: number;
+    };
     center?: [number, number];
     zoom?: number;
     dragPan?: boolean;
@@ -191,6 +195,24 @@ describe("initializeMapLibreMap", () => {
             [-170, -20],
             [170, 20],
         ]);
+    });
+
+    it("uses zero padding when initializing stored custom bounds", async () => {
+        await initializeMapLibreMap({
+            container: createContainer(),
+            style: MAP_STYLE,
+            basemap: "monochrome",
+            bounds: {
+                southWest: { lng: -103.52, lat: 27.1 },
+                northEast: { lng: -78.42, lat: 47.15 },
+            },
+            boundsPadding: 0,
+        });
+
+        expect(lastMapOptions?.fitBoundsOptions).toEqual({
+            padding: 0,
+            maxDuration: 1,
+        });
     });
 
     it("normalizes explicit wrapped bounds where east is lower than west", async () => {

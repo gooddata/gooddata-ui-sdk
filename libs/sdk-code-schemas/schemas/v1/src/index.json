@@ -1,0 +1,205 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "/gaac/metadata",
+    "title": "Metadata",
+    "description": "JSON schema for Gooddata Analytics",
+    "allOf": [
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "dataset"
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "$ref": "/gaac/dataset"
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "date"
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "$ref": "/gaac/dateDataset"
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "metric"
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "$ref": "/gaac/metric"
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "dashboard"
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "$ref": "/gaac/dashboard"
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "plugin"
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "$ref": "/gaac/plugin"
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "attribute_hierarchy"
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "$ref": "/gaac/attribute_hierarchy"
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "enum": [
+                            "table",
+                            "bar_chart",
+                            "column_chart",
+                            "line_chart",
+                            "area_chart",
+                            "scatter_chart",
+                            "bubble_chart",
+                            "pie_chart",
+                            "donut_chart",
+                            "treemap_chart",
+                            "pyramid_chart",
+                            "funnel_chart",
+                            "heatmap_chart",
+                            "bullet_chart",
+                            "waterfall_chart",
+                            "dependency_wheel_chart",
+                            "sankey_chart",
+                            "headline_chart",
+                            "combo_chart",
+                            "geo_chart",
+                            "geo_area_chart",
+                            "repeater_chart"
+                        ]
+                    }
+                },
+                "required": ["type"]
+            },
+            "then": {
+                "$ref": "/gaac/visualisation"
+            }
+        },
+        {
+            "if": {
+                "not": {
+                    "properties": {
+                        "type": {
+                            "type": "string"
+                        }
+                    },
+                    "required": ["type"]
+                }
+            },
+            "then": {
+                "$semantic": {
+                    "type": "snippet",
+                    "snippets": [
+                        "dataset",
+                        "metric",
+                        "date",
+                        "dashboard",
+                        "plugin",
+                        "table",
+                        "bar_chart",
+                        "column_chart",
+                        "line_chart",
+                        "area_chart",
+                        "scatter_chart",
+                        "bubble_chart",
+                        "pie_chart",
+                        "donut_chart",
+                        "treemap_chart",
+                        "pyramid_chart",
+                        "funnel_chart",
+                        "heatmap_chart",
+                        "bullet_chart",
+                        "waterfall_chart",
+                        "dependency_wheel_chart",
+                        "sankey_chart",
+                        "headline_chart",
+                        "combo_chart",
+                        "geo_chart",
+                        "geo_area_chart",
+                        "repeater_chart",
+                        "attribute_hierarchy"
+                    ]
+                }
+            }
+        }
+    ],
+    "properties": {
+        "type": {
+            "type": "string",
+            "enum": [
+                "dataset",
+                "date",
+                "metric",
+                "dashboard",
+                "plugin",
+                "table",
+                "bar_chart",
+                "column_chart",
+                "line_chart",
+                "area_chart",
+                "scatter_chart",
+                "bubble_chart",
+                "pie_chart",
+                "donut_chart",
+                "treemap_chart",
+                "pyramid_chart",
+                "funnel_chart",
+                "heatmap_chart",
+                "bullet_chart",
+                "waterfall_chart",
+                "dependency_wheel_chart",
+                "sankey_chart",
+                "headline_chart",
+                "combo_chart",
+                "geo_chart",
+                "geo_area_chart",
+                "repeater_chart",
+                "attribute_hierarchy"
+            ]
+        }
+    },
+    "required": ["type"]
+}

@@ -9,6 +9,7 @@ import type {
     SearchRelationshipObject,
     SearchResult,
     SearchResultObject,
+    UserContext,
 } from "@gooddata/api-client-tiger";
 import {
     GenAiApi_AiChat,
@@ -223,7 +224,7 @@ export class ChatThreadQuery implements IChatThreadQuery {
                         question: this.config.userQuestion,
                         limitSearch: this.config.limitSearch,
                         limitCreate: this.config.limitCreate,
-                        userContext: this.config.userContext,
+                        userContext: convertUserContext(this.config.userContext),
                         objectTypes: this.config.objectTypes,
                         allowedRelationshipTypes: this.config.allowedRelationshipTypes,
                     },
@@ -255,7 +256,7 @@ export class ChatThreadQuery implements IChatThreadQuery {
                                 question: config.userQuestion,
                                 limitSearch: config.limitSearch,
                                 limitCreate: config.limitCreate,
-                                userContext: config.userContext,
+                                userContext: convertUserContext(config.userContext),
                                 objectTypes: config.objectTypes,
                                 allowedRelationshipTypes: config.allowedRelationshipTypes,
                             },
@@ -274,11 +275,15 @@ export class ChatThreadQuery implements IChatThreadQuery {
                         },
                     ),
                 )
-                    .catch((error) => {
-                        controller.error(error);
-                    })
-                    .finally(() => {
+                    .then(() => {
+                        // Signal end-of-stream to consumers once the request completes successfully.
                         controller.close();
+                    })
+                    .catch((error) => {
+                        // Signal an error to consumers. This terminates the stream — calling
+                        // close() afterwards is illegal (ReadableStream spec) and was previously
+                        // triggered by using .finally() which runs after both success and failure.
+                        controller.error(error);
                     });
             },
         });
@@ -619,4 +624,59 @@ function getFormatByGranularity(attr: IAttribute): DateAttributeGranularity {
         default:
             throw new Error(`Unsupported granularity: ${granularity}`);
     }
+}
+
+/**
+ * Convert SDK model user context (with ObjRef) to the API user context (with plain string IDs).
+ */
+function convertUserContext(userContext: IGenAIUserContext | undefined): UserContext | undefined {
+    if (!userContext) {
+        return undefined;
+    }
+
+    return {
+        ...(userContext.activeObject
+            ? {
+                  activeObject: {
+                      id: objRefToString(userContext.activeObject.ref),
+                      type: userContext.activeObject.type,
+                      workspaceId: userContext.activeObject.workspaceId,
+                  },
+              }
+            : {}),
+        ...(userContext.view?.dashboard
+            ? {
+                  view: {
+                      dashboard: {
+                          id: objRefToString(userContext.view.dashboard.ref),
+                          widgets: userContext.view.dashboard.widgets.map((w) => ({
+                              title: w.title,
+                              widgetId: objRefToString(w.widgetRef),
+                              widgetType: w.widgetType,
+                              ...(w.insightRef ? { visualizationId: objRefToString(w.insightRef) } : {}),
+                              ...(w.resultId ? { resultId: w.resultId } : {}),
+                          })),
+                      },
+                  },
+              }
+            : {}),
+        ...(userContext.referencedObjects
+            ? {
+                  referencedObjects: userContext.referencedObjects.map((group) => ({
+                      ...(group.context
+                          ? {
+                                context: {
+                                    type: group.context.type,
+                                    id: objRefToString(group.context.ref),
+                                },
+                            }
+                          : {}),
+                      objects: group.objects.map((o) => ({
+                          type: o.type,
+                          id: objRefToString(o.ref),
+                      })),
+                  })),
+              }
+            : {}),
+    };
 }

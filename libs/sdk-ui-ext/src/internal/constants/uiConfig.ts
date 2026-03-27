@@ -758,6 +758,12 @@ export const GEO_PUSHPIN_CHART_UICONFIG: IUiConfig = {
         color: {
             ...geoMeasuresBase,
         },
+        measures: {
+            ...measuresBase,
+            allowsReordering: false,
+            isShowInPercentVisible: false,
+            canAddItems: true,
+        },
         segment: {
             ...geoAttributesBase,
         },

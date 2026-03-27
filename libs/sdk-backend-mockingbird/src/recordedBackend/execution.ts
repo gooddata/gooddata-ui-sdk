@@ -393,6 +393,10 @@ class RecordedExecutionResult implements IExecutionResult {
         return this._fp;
     };
 
+    public resultId = (): string | undefined => {
+        return undefined;
+    };
+
     public withSignal = (_signal: AbortSignal): IExecutionResult => {
         return this;
     };

@@ -1,0 +1,1636 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Commons",
+    "description": "JSON schema for Gooddata Analytics Commons Objects",
+    "properties": {
+        "identifier": {
+            "$ref": "#/$defs/identifier"
+        },
+        "title": {
+            "$ref": "#/$defs/title"
+        },
+        "description": {
+            "$ref": "#/$defs/description"
+        },
+        "tags": {
+            "$ref": "#/$defs/tags"
+        },
+        "attributeIdentifier": {
+            "$ref": "#/$defs/attributeIdentifier"
+        },
+        "labelIdentifier": {
+            "$ref": "#/$defs/labelIdentifier"
+        },
+        "displayAsLabelIdentifier": {
+            "$ref": "#/$defs/displayAsLabelIdentifier"
+        },
+        "factIdentifier": {
+            "$ref": "#/$defs/factIdentifier"
+        },
+        "metricIdentifier": {
+            "$ref": "#/$defs/metricIdentifier"
+        },
+        "permission": {
+            "$ref": "#/$defs/permission"
+        },
+        "dashboardFilters": {
+            "$ref": "#/$defs/dashboardFilters"
+        }
+    },
+    "$defs": {
+        "identifier": {
+            "$id": "/gaac/identifier",
+            "title": "Id",
+            "type": "string",
+            "pattern": "^(?!\\.)[.A-Za-z0-9_-]{1,255}$"
+        },
+        "title": {
+            "$id": "/gaac/title",
+            "type": "string",
+            "maxLength": 255
+        },
+        "description": {
+            "$id": "/gaac/description",
+            "type": "string",
+            "maxLength": 10000
+        },
+        "tags": {
+            "$id": "/gaac/tags",
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+                "type": "string"
+            }
+        },
+        "attributeIdentifier": {
+            "$id": "/gaac/attributeIdentifier",
+            "title": "Attribute Identifier",
+            "description": "A attribute identifier in the form of attribute/{id}.",
+            "type": "string",
+            "pattern": "^attribute/(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+            "$semantic": {
+                "type": "reference",
+                "source": "attribute.id",
+                "typePrefix": true
+            }
+        },
+        "labelIdentifier": {
+            "$id": "/gaac/labelIdentifier",
+            "title": "Label Identifier",
+            "description": "A label identifier in the form of label/{id}.",
+            "type": "string",
+            "pattern": "^label/(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+            "$semantic": {
+                "type": "reference",
+                "source": "label.id",
+                "typePrefix": true
+            }
+        },
+        "displayAsLabelIdentifier": {
+            "$id": "/gaac/displayAsLabelIdentifier",
+            "title": "Display As Label Identifier",
+            "description": "Configures the label used for representing attribute filter elements in UI.",
+            "type": "string",
+            "pattern": "^label/(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+            "$semantic": {
+                "type": "reference",
+                "source": "current.attribute_filter.display_as.id",
+                "typePrefix": true
+            }
+        },
+        "factIdentifier": {
+            "$id": "/gaac/factIdentifier",
+            "title": "Fact Identifier",
+            "description": "A fact identifier in the form of fact/{id}.",
+            "type": "string",
+            "pattern": "^fact/(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+            "$semantic": {
+                "type": "reference",
+                "source": "fact.id",
+                "typePrefix": true
+            }
+        },
+        "metricIdentifier": {
+            "$id": "/gaac/metricIdentifier",
+            "title": "Metric Identifier",
+            "description": "A metric identifier in the form of metric/{id}.",
+            "type": "string",
+            "pattern": "^metric/(?!\\.)[.A-Za-z0-9_-]{1,255}$",
+            "$semantic": {
+                "type": "reference",
+                "source": "metric.id",
+                "typePrefix": true
+            }
+        },
+        "permission": {
+            "$id": "/gaac/permission",
+            "title": "Permission",
+            "description": "A permission object",
+            "type": "object",
+            "properties": {
+                "all": {
+                    "type": "boolean"
+                },
+                "users": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "user_groups": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "dashboardFilters": {
+            "$id": "/gaac/dashboardFilters",
+            "title": "Dashboard Filters",
+            "type": "object",
+            "additionalProperties": false,
+            "patternProperties": {
+                "^(?!\\.)[.A-Za-z0-9_-]{1,255}$": {
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "enum": ["date_filter", "attribute_filter", "filter_group"]
+                        }
+                    },
+                    "required": ["type"],
+                    "allOf": [
+                        {
+                            "if": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "type": {
+                                                "const": "date_filter"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "not": {
+                                            "properties": {
+                                                "from": {
+                                                    "type": "number"
+                                                }
+                                            },
+                                            "required": ["from"]
+                                        }
+                                    }
+                                ]
+                            },
+                            "then": {
+                                "$ref": "#/$defs/dashboardAbsoluteDateFilter"
+                            }
+                        },
+                        {
+                            "if": {
+                                "properties": {
+                                    "type": {
+                                        "const": "date_filter"
+                                    },
+                                    "from": {
+                                        "type": "number"
+                                    }
+                                },
+                                "required": ["type", "from"]
+                            },
+                            "then": {
+                                "$ref": "#/$defs/dashboardRelativeDateFilter"
+                            }
+                        },
+                        {
+                            "if": {
+                                "properties": {
+                                    "type": {
+                                        "const": "attribute_filter"
+                                    }
+                                }
+                            },
+                            "then": {
+                                "$ref": "#/$defs/dashboardAttributeFilter"
+                            }
+                        },
+                        {
+                            "if": {
+                                "properties": {
+                                    "type": {
+                                        "const": "filter_group"
+                                    }
+                                }
+                            },
+                            "then": {
+                                "$ref": "#/$defs/dashboardFilterGroup"
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        "dashboardFilterGroup": {
+            "type": "object",
+            "title": "Dashboard filter group",
+            "description": "A group of dashboard filters displayed together in the filter bar",
+            "additionalProperties": false,
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": ["filter_group"]
+                },
+                "title": {
+                    "type": "string",
+                    "description": "Display title for the filter group"
+                },
+                "filters": {
+                    "$ref": "#/$defs/dashboardFiltersNoGroups",
+                    "description": "Filters contained in this group (only attribute and date filters, no nested groups)",
+                    "$semantic": [
+                        {
+                            "type": "unique_filter_local_identifiers"
+                        }
+                    ]
+                }
+            },
+            "required": ["type", "title", "filters"]
+        },
+        "dashboardFiltersNoGroups": {
+            "title": "Dashboard Filters (no groups)",
+            "description": "Dashboard filters that cannot contain filter groups - only attribute and date filters",
+            "type": "object",
+            "additionalProperties": false,
+            "patternProperties": {
+                "^(?!\\.)[.A-Za-z0-9_-]{1,255}$": {
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "enum": ["date_filter", "attribute_filter"]
+                        }
+                    },
+                    "required": ["type"],
+                    "allOf": [
+                        {
+                            "if": {
+                                "allOf": [
+                                    {
+                                        "properties": {
+                                            "type": {
+                                                "const": "date_filter"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "not": {
+                                            "properties": {
+                                                "from": {
+                                                    "type": "number"
+                                                }
+                                            },
+                                            "required": ["from"]
+                                        }
+                                    }
+                                ]
+                            },
+                            "then": {
+                                "$ref": "#/$defs/dashboardAbsoluteDateFilter"
+                            }
+                        },
+                        {
+                            "if": {
+                                "properties": {
+                                    "type": {
+                                        "const": "date_filter"
+                                    },
+                                    "from": {
+                                        "type": "number"
+                                    }
+                                },
+                                "required": ["type", "from"]
+                            },
+                            "then": {
+                                "$ref": "#/$defs/dashboardRelativeDateFilter"
+                            }
+                        },
+                        {
+                            "if": {
+                                "properties": {
+                                    "type": {
+                                        "const": "attribute_filter"
+                                    }
+                                }
+                            },
+                            "then": {
+                                "$ref": "#/$defs/dashboardAttributeFilter"
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        "dashboardAbsoluteDateFilter": {
+            "type": "object",
+            "title": "Dashboard absolute date filter",
+            "description": "A dashboard absolute date filter",
+            "properties": {
+                "title": {
+                    "type": "string",
+                    "description": "Optional title of the filter"
+                },
+                "type": {
+                    "type": "string",
+                    "enum": ["date_filter"]
+                },
+                "granularity": {
+                    "$ref": "#/$defs/dateFilterGranularity"
+                },
+                "from": {
+                    "type": "string",
+                    "pattern": "^([0-9]{4})-([0-9]{2})-([0-9]{2})$",
+                    "description": "A period start date as YYYY-MM-DD"
+                },
+                "to": {
+                    "type": "string",
+                    "pattern": "^([0-9]{4})-([0-9]{2})-([0-9]{2})$",
+                    "description": "A period end date as YYYY-MM-DD"
+                },
+                "mode": {
+                    "type": "string",
+                    "enum": ["readonly", "hidden", "active"],
+                    "description": "Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter."
+                },
+                "empty_values": {
+                    "type": "string",
+                    "enum": ["only", "include", "exclude"],
+                    "description": "Controls how empty values are handled in the filter."
+                },
+                "date": {
+                    "$ref": "#/$defs/identifier",
+                    "description": "An id of the date dataset to be used for date filter",
+                    "$semantic": [
+                        {
+                            "type": "reference",
+                            "source": "dateDataset.id"
+                        },
+                        {
+                            "type": "one_date_dataset_only"
+                        }
+                    ]
+                }
+            },
+            "required": ["type"]
+        },
+        "dashboardRelativeDateFilter": {
+            "type": "object",
+            "title": "Dashboard relative date filter",
+            "description": "A dashboard relative date filter",
+            "properties": {
+                "title": {
+                    "type": "string",
+                    "description": "Optional title of the filter"
+                },
+                "type": {
+                    "type": "string",
+                    "enum": ["date_filter"]
+                },
+                "granularity": {
+                    "$ref": "#/$defs/dateFilterGranularity"
+                },
+                "from": {
+                    "type": "number",
+                    "description": "A period start as number, from today"
+                },
+                "to": {
+                    "type": "number",
+                    "description": "A period end as number, from today"
+                },
+                "mode": {
+                    "type": "string",
+                    "enum": ["readonly", "hidden", "active"],
+                    "description": "Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter."
+                },
+                "empty_values": {
+                    "type": "string",
+                    "enum": ["only", "include", "exclude"],
+                    "description": "Controls how empty values are handled in the filter."
+                },
+                "date": {
+                    "$ref": "#/$defs/identifier",
+                    "description": "An id of the date dataset to be used for date filter",
+                    "$semantic": [
+                        {
+                            "type": "reference",
+                            "source": "dateDataset.id"
+                        },
+                        {
+                            "type": "one_date_dataset_only"
+                        }
+                    ]
+                }
+            },
+            "required": ["type", "from", "to"]
+        },
+        "dashboardAttributeFilter": {
+            "type": "object",
+            "title": "Dashboard attribute filter",
+            "description": "A dashboard attribute filter",
+            "properties": {
+                "title": {
+                    "type": "string",
+                    "description": "Optional title of the filter"
+                },
+                "type": {
+                    "type": "string",
+                    "enum": ["attribute_filter"]
+                },
+                "using": {
+                    "description": "Attribute or label to use in this filter.",
+                    "oneOf": [
+                        {
+                            "$ref": "#/$defs/attributeIdentifier"
+                        },
+                        {
+                            "$ref": "#/$defs/labelIdentifier"
+                        }
+                    ],
+                    "$semantic": {
+                        "type": "one_attribute_item_only"
+                    }
+                },
+                "multiselect": {
+                    "type": "boolean",
+                    "description": "Whether the filter should allow multiple selection"
+                },
+                "mode": {
+                    "type": "string",
+                    "enum": ["readonly", "hidden", "active"],
+                    "description": "Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter."
+                },
+                "display_as": {
+                    "type": "string",
+                    "description": "Configures the label used for representing attribute filter elements in UI.",
+                    "$ref": "#/$defs/displayAsLabelIdentifier"
+                },
+                "parents": {
+                    "type": "array",
+                    "description": "An ids of the parent local attribute or label filter",
+                    "uniqueItems": true,
+                    "items": {
+                        "oneOf": [
+                            {
+                                "type": "string",
+                                "title": "Local attribute filter",
+                                "description": "Local attribute or date filter to use as parent"
+                            },
+                            {
+                                "type": "object",
+                                "title": "Local date filter",
+                                "properties": {
+                                    "using": {
+                                        "type": "string",
+                                        "description": "Local date filter to use as parent"
+                                    },
+                                    "common": {
+                                        "type": "boolean",
+                                        "description": "Whether the parent filter is common date or special date"
+                                    }
+                                },
+                                "required": ["using", "common"]
+                            }
+                        ]
+                    }
+                },
+                "metric_filters": {
+                    "type": "array",
+                    "description": "An id of the attributes, labels, facts or metrics to validate the filter by",
+                    "uniqueItems": true,
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "oneOf": [
+                {
+                    "if": {
+                        "properties": {
+                            "multiselect": {
+                                "type": "boolean",
+                                "enum": [true]
+                            }
+                        },
+                        "required": ["multiselect"]
+                    },
+                    "then": {
+                        "properties": {
+                            "title": {
+                                "type": "string",
+                                "description": "Optional title of the filter"
+                            },
+                            "type": {
+                                "type": "string",
+                                "enum": ["attribute_filter"]
+                            },
+                            "using": {
+                                "description": "Attribute or label to use in this filter.",
+                                "oneOf": [
+                                    {
+                                        "$ref": "#/$defs/attributeIdentifier"
+                                    },
+                                    {
+                                        "$ref": "#/$defs/labelIdentifier"
+                                    }
+                                ]
+                            },
+                            "multiselect": {
+                                "type": "boolean",
+                                "description": "Whether the filter should allow multiple selection"
+                            },
+                            "mode": {
+                                "type": "string",
+                                "enum": ["readonly", "hidden", "active"],
+                                "description": "Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter."
+                            },
+                            "display_as": {
+                                "type": "string",
+                                "description": "Configures the label used for representing attribute filter elements in UI.",
+                                "$ref": "#/$defs/displayAsLabelIdentifier"
+                            },
+                            "state": {
+                                "ref": "#/$defs/dashboardStateMultiselect"
+                            },
+                            "parents": {
+                                "type": "array",
+                                "description": "An ids of the parent local attribute or label filter",
+                                "uniqueItems": true,
+                                "items": {
+                                    "oneOf": [
+                                        {
+                                            "type": "string",
+                                            "title": "Local attribute filter",
+                                            "description": "Local attribute or date filter to use as parent",
+                                            "$semantic": {
+                                                "type": "reference",
+                                                "sources": [
+                                                    "current.dashboard.attribute_filter.localId",
+                                                    "current.dashboard.date_filter.localId"
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "type": "object",
+                                            "title": "Local date filter",
+                                            "properties": {
+                                                "using": {
+                                                    "type": "string",
+                                                    "description": "Local date filter to use as parent",
+                                                    "$semantic": {
+                                                        "type": "reference",
+                                                        "source": "current.dashboard.date_filter.localId"
+                                                    }
+                                                },
+                                                "common": {
+                                                    "type": "boolean",
+                                                    "description": "Whether the parent filter is common date or special date"
+                                                }
+                                            },
+                                            "required": ["using", "common"]
+                                        }
+                                    ]
+                                }
+                            },
+                            "metric_filters": {
+                                "type": "array",
+                                "description": "An id of the attributes, labels, facts or metrics to validate the filter by",
+                                "uniqueItems": true,
+                                "items": {
+                                    "type": "string",
+                                    "$semantic": {
+                                        "type": "reference",
+                                        "sources": ["attribute.id", "label.id", "fact.id", "metric.id"],
+                                        "typePrefix": true
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "else": {
+                        "properties": {
+                            "title": {
+                                "type": "string",
+                                "description": "Optional title of the filter"
+                            },
+                            "type": {
+                                "type": "string",
+                                "enum": ["attribute_filter"]
+                            },
+                            "using": {
+                                "description": "Attribute or label to use in this filter.",
+                                "oneOf": [
+                                    {
+                                        "$ref": "#/$defs/attributeIdentifier"
+                                    },
+                                    {
+                                        "$ref": "#/$defs/labelIdentifier"
+                                    }
+                                ]
+                            },
+                            "multiselect": {
+                                "type": "boolean",
+                                "description": "Whether the filter should allow multiple selection"
+                            },
+                            "mode": {
+                                "type": "string",
+                                "enum": ["readonly", "hidden", "active"],
+                                "description": "Setting filter mode to readonly will disable the filter. Setting it to hidden will hide the filter from the dashboard. Setting it to active will enable the filter."
+                            },
+                            "display_as": {
+                                "type": "string",
+                                "description": "If specified, the attribute filter will display the elements in selected label form.",
+                                "$ref": "#/$defs/displayAsLabelIdentifier"
+                            },
+                            "state": {
+                                "ref": "#/$defs/dashboardStateSelect"
+                            },
+                            "parents": {
+                                "type": "array",
+                                "description": "An ids of the parent local attribute or label filter",
+                                "uniqueItems": true,
+                                "items": {
+                                    "oneOf": [
+                                        {
+                                            "type": "string",
+                                            "title": "Local attribute filter",
+                                            "description": "Local attribute or date filter to use as parent",
+                                            "$semantic": {
+                                                "type": "reference",
+                                                "sources": [
+                                                    "current.dashboard.attribute_filter.localId",
+                                                    "current.dashboard.date_filter.localId"
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "type": "object",
+                                            "title": "Local date filter",
+                                            "properties": {
+                                                "using": {
+                                                    "type": "string",
+                                                    "description": "Local date filter to use as parent",
+                                                    "$semantic": {
+                                                        "type": "reference",
+                                                        "source": "current.dashboard.date_filter.localId"
+                                                    }
+                                                },
+                                                "common": {
+                                                    "type": "boolean",
+                                                    "description": "Whether the parent filter is common date or special date"
+                                                }
+                                            },
+                                            "required": ["using", "common"]
+                                        }
+                                    ]
+                                }
+                            },
+                            "metric_filters": {
+                                "type": "array",
+                                "description": "An id of the attributes, labels, facts or metrics to validate the filter by",
+                                "uniqueItems": true,
+                                "items": {
+                                    "type": "string",
+                                    "$semantic": {
+                                        "type": "reference",
+                                        "sources": ["attribute.id", "label.id", "fact.id", "metric.id"],
+                                        "typePrefix": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            ],
+            "required": ["type", "using"],
+            "$semantic": {
+                "type": "definition",
+                "source": "current.dashboard.attribute_filter.localId",
+                "mode": "property"
+            }
+        },
+        "dateFilterGranularity": {
+            "type": "string",
+            "enum": [
+                "MINUTE",
+                "HOUR",
+                "DAY",
+                "WEEK",
+                "WEEK_US",
+                "MONTH",
+                "QUARTER",
+                "YEAR",
+                "FISCAL_YEAR",
+                "FISCAL_QUARTER",
+                "FISCAL_MONTH"
+            ]
+        },
+        "dashboardStateMultiselect": {
+            "description": "State of the multiselect",
+            "oneOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "include": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "$semantic": { "type": "values", "from": "current.filter.using" }
+                            }
+                        }
+                    },
+                    "required": ["include"]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "exclude": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "$semantic": { "type": "values", "from": "current.filter.using" }
+                            }
+                        }
+                    },
+                    "required": ["exclude"]
+                }
+            ]
+        },
+        "dashboardStateSelect": {
+            "description": "State of the single select",
+            "type": "object",
+            "properties": {
+                "include": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "$semantic": { "type": "values", "from": "current.filter.using" }
+                    },
+                    "minItems": 1,
+                    "maxItems": 1
+                }
+            },
+            "required": ["include"]
+        },
+        "queryFilters": {
+            "$id": "/gaac/queryFilters",
+            "title": "Query Filters",
+            "type": "object",
+            "additionalProperties": false,
+            "patternProperties": {
+                "^(?!\\.)[.A-Za-z0-9_-]{1,255}$": {
+                    "$ref": "#/$defs/queryFilter"
+                }
+            }
+        },
+        "queryFilter": {
+            "title": "Filter",
+            "allOf": [
+                {
+                    "if": {
+                        "properties": {
+                            "type": {
+                                "enum": ["date_filter"]
+                            }
+                        },
+                        "required": ["type"]
+                    },
+                    "then": {
+                        "$ref": "#/$defs/queryDateFilter"
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": {
+                                "enum": ["attribute_filter"]
+                            }
+                        },
+                        "required": ["type"]
+                    },
+                    "then": {
+                        "$ref": "#/$defs/queryAttributeFilter"
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": {
+                                "enum": ["metric_value_filter"]
+                            }
+                        },
+                        "required": ["type"]
+                    },
+                    "then": {
+                        "$ref": "#/$defs/queryMetricValueFilter"
+                    }
+                },
+                {
+                    "if": {
+                        "properties": {
+                            "type": {
+                                "enum": ["ranking_filter"]
+                            }
+                        },
+                        "required": ["type"]
+                    },
+                    "then": {
+                        "$ref": "#/$defs/queryRankingFilter"
+                    }
+                },
+                {
+                    "if": {
+                        "not": {
+                            "properties": {
+                                "type": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": ["type"]
+                        }
+                    },
+                    "then": {
+                        "$semantic": {
+                            "type": "snippet",
+                            "snippets": []
+                        }
+                    }
+                }
+            ],
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": ["date_filter", "attribute_filter", "metric_value_filter", "ranking_filter"]
+                }
+            },
+            "required": ["type"]
+        },
+        "queryDateFilter": {
+            "title": "Date Filter",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": ["date_filter"]
+                },
+                "using": {
+                    "type": "string",
+                    "description": "Date dataset identifier to use for this field.",
+                    "$semantic": {
+                        "type": "reference",
+                        "source": "dateDataset.id"
+                    }
+                },
+                "granularity": {
+                    "type": "string",
+                    "enum": [
+                        "MINUTE",
+                        "HOUR",
+                        "DAY",
+                        "WEEK",
+                        "WEEK_US",
+                        "MONTH",
+                        "QUARTER",
+                        "YEAR",
+                        "MINUTE_OF_HOUR",
+                        "HOUR_OF_DAY",
+                        "DAY_OF_WEEK",
+                        "DAY_OF_MONTH",
+                        "DAY_OF_YEAR",
+                        "WEEK_OF_YEAR",
+                        "MONTH_OF_YEAR",
+                        "QUARTER_OF_YEAR",
+                        "FISCAL_YEAR",
+                        "FISCAL_QUARTER",
+                        "FISCAL_MONTH"
+                    ],
+                    "description": "A granularity to use in relative date filter"
+                },
+                "from": {
+                    "type": ["string", "number"]
+                },
+                "to": {
+                    "type": ["string", "number"]
+                },
+                "with": {
+                    "type": "object",
+                    "description": "Attribute filters to apply together with this date filter.",
+                    "additionalProperties": false,
+                    "patternProperties": {
+                        "^(?!\\.)[.A-Za-z0-9_-]{1,255}$": {
+                            "$ref": "#/$defs/queryAttributeFilter"
+                        }
+                    }
+                },
+                "empty_values": {
+                    "type": "string",
+                    "enum": ["only", "include", "exclude"],
+                    "description": "Controls how empty values are handled in the filter."
+                }
+            },
+            "allOf": [
+                {
+                    "if": {
+                        "properties": {
+                            "granularity": {
+                                "type": "string"
+                            }
+                        },
+                        "required": ["granularity"]
+                    },
+                    "then": {
+                        "properties": {
+                            "type": {
+                                "type": "string",
+                                "enum": ["date_filter"]
+                            },
+                            "using": {
+                                "type": "string",
+                                "description": "Date dataset identifier to use for this field.",
+                                "$semantic": {
+                                    "type": "reference",
+                                    "source": "dateDataset.id"
+                                }
+                            },
+                            "granularity": {
+                                "type": "string",
+                                "enum": [
+                                    "MINUTE",
+                                    "HOUR",
+                                    "DAY",
+                                    "WEEK",
+                                    "WEEK_US",
+                                    "MONTH",
+                                    "QUARTER",
+                                    "YEAR",
+                                    "MINUTE_OF_HOUR",
+                                    "HOUR_OF_DAY",
+                                    "DAY_OF_WEEK",
+                                    "DAY_OF_MONTH",
+                                    "DAY_OF_YEAR",
+                                    "WEEK_OF_YEAR",
+                                    "MONTH_OF_YEAR",
+                                    "QUARTER_OF_YEAR",
+                                    "FISCAL_YEAR",
+                                    "FISCAL_QUARTER",
+                                    "FISCAL_MONTH"
+                                ],
+                                "description": "A granularity to use in relative date filter"
+                            },
+                            "from": {
+                                "type": "number",
+                                "description": "A relative granularity from which the filter will be applied."
+                            },
+                            "to": {
+                                "type": "number",
+                                "description": "A relative granularity to which the filter will be applied."
+                            },
+                            "with": {
+                                "type": "object",
+                                "description": "Attribute filters to apply together with this date filter.",
+                                "additionalProperties": false,
+                                "patternProperties": {
+                                    "^(?!\\.)[.A-Za-z0-9_-]{1,255}$": {
+                                        "$ref": "#/$defs/queryAttributeFilter"
+                                    }
+                                }
+                            },
+                            "empty_values": {
+                                "type": "string",
+                                "enum": ["only", "include", "exclude"],
+                                "description": "Controls how empty values are handled in the filter."
+                            }
+                        },
+                        "required": ["type", "using", "granularity"]
+                    }
+                },
+                {
+                    "if": {
+                        "not": {
+                            "properties": {
+                                "granularity": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": ["granularity"]
+                        }
+                    },
+                    "then": {
+                        "properties": {
+                            "type": {
+                                "type": "string",
+                                "enum": ["date_filter"]
+                            },
+                            "using": {
+                                "type": "string",
+                                "description": "Date dataset identifier to use for this field.",
+                                "$semantic": {
+                                    "type": "reference",
+                                    "source": "dateDataset.id"
+                                }
+                            },
+                            "from": {
+                                "type": "string",
+                                "pattern": "^([0-9]{4})-([0-9]{2})-([0-9]{2})(?: ([0-9]{2}):([0-9]{2}))?$",
+                                "description": "A date from which the filter will be applied."
+                            },
+                            "to": {
+                                "type": "string",
+                                "pattern": "^([0-9]{4})-([0-9]{2})-([0-9]{2})(?: ([0-9]{2}):([0-9]{2}))?$",
+                                "description": "A date to which the filter will be applied."
+                            },
+                            "with": {
+                                "type": "object",
+                                "description": "Attribute filters to apply together with this date filter.",
+                                "additionalProperties": false,
+                                "patternProperties": {
+                                    "^(?!\\.)[.A-Za-z0-9_-]{1,255}$": {
+                                        "$ref": "#/$defs/queryAttributeFilter"
+                                    }
+                                }
+                            },
+                            "empty_values": {
+                                "type": "string",
+                                "enum": ["only", "include", "exclude"],
+                                "description": "Controls how empty values are handled in the filter."
+                            }
+                        },
+                        "required": ["type", "using"]
+                    }
+                }
+            ],
+            "required": ["type", "using"],
+            "$semantic": [
+                {
+                    "type": "definition",
+                    "sources": [
+                        "current.query.relative_date_filter_datasets",
+                        "current.query.absolute_date_filter_datasets"
+                    ]
+                },
+                {
+                    "type": "definition",
+                    "source": "current.widget.visualization.query.filter.localId",
+                    "mode": "property"
+                }
+            ]
+        },
+        "queryAttributeFilter": {
+            "title": "Attribute Filter",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": ["attribute_filter"]
+                },
+                "using": {
+                    "description": "Attribute or label to use in this filter.",
+                    "oneOf": [
+                        {
+                            "$ref": "#/$defs/attributeIdentifier"
+                        },
+                        {
+                            "$ref": "#/$defs/labelIdentifier"
+                        }
+                    ]
+                },
+                "display_as": {
+                    "type": "string",
+                    "description": "Configures the label used for representing attribute filter elements in UI.",
+                    "$ref": "#/$defs/displayAsLabelIdentifier"
+                },
+                "state": {
+                    "title": "State",
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "include": {
+                            "type": "array",
+                            "items": {
+                                "type": ["string", "number", "boolean"],
+                                "$semantic": {
+                                    "type": "values",
+                                    "from": "current.filter.using"
+                                }
+                            }
+                        },
+                        "exclude": {
+                            "type": "array",
+                            "items": {
+                                "type": ["string", "number", "boolean"],
+                                "$semantic": {
+                                    "type": "values",
+                                    "from": "current.filter.using"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "required": ["type", "using"],
+            "$semantic": {
+                "type": "definition",
+                "source": "current.widget.visualization.query.filter.localId",
+                "mode": "property"
+            }
+        },
+        "queryMetricValueFilter": {
+            "title": "Metric Value Filter",
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": ["metric_value_filter"]
+                },
+                "conditions": {
+                    "type": "array",
+                    "description": "Optional list of conditions for this filter. Conditions are applied as AND during execution.",
+                    "items": {
+                        "$ref": "#/$defs/mvfCondition"
+                    }
+                },
+                "condition": {
+                    "type": "string",
+                    "enum": [
+                        "GREATER_THAN",
+                        "GREATER_THAN_OR_EQUAL_TO",
+                        "LESS_THAN",
+                        "LESS_THAN_OR_EQUAL_TO",
+                        "EQUAL_TO",
+                        "NOT_EQUAL_TO",
+                        "BETWEEN",
+                        "NOT_BETWEEN"
+                    ],
+                    "description": "Condition to use for this filter."
+                }
+            },
+            "allOf": [
+                {
+                    "title": "Multiple conditions",
+                    "if": {
+                        "properties": {
+                            "conditions": {
+                                "type": "array"
+                            }
+                        },
+                        "required": ["conditions"]
+                    },
+                    "then": {
+                        "additionalProperties": false,
+                        "properties": {
+                            "type": {
+                                "type": "string",
+                                "enum": ["metric_value_filter"]
+                            },
+                            "using": {
+                                "description": "Metric or local metric to use in this filter.",
+                                "oneOf": [
+                                    {
+                                        "$ref": "#/$defs/metricIdentifier"
+                                    },
+                                    {
+                                        "type": "string",
+                                        "$semantic": {
+                                            "type": "reference",
+                                            "source": "current.query.metric.localId"
+                                        }
+                                    }
+                                ]
+                            },
+                            "conditions": {
+                                "type": "array",
+                                "minItems": 1,
+                                "items": {
+                                    "$ref": "#/$defs/mvfCondition"
+                                }
+                            },
+                            "null_values_as_zero": {
+                                "type": "boolean",
+                                "description": "Null values will be treated as zero."
+                            },
+                            "dimensionality": {
+                                "type": "array",
+                                "description": "Optional array of attribute or label references or local identifiers to apply dimensionality to the filter.",
+                                "items": {
+                                    "oneOf": [
+                                        {
+                                            "$ref": "#/$defs/labelIdentifier"
+                                        },
+                                        {
+                                            "type": "string",
+                                            "$semantic": {
+                                                "type": "reference",
+                                                "sources": ["current.query.attribute.localId"]
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+                        "required": ["type", "using", "conditions"]
+                    }
+                },
+                {
+                    "title": "Comparison",
+                    "if": {
+                        "properties": {
+                            "condition": {
+                                "enum": [
+                                    "GREATER_THAN",
+                                    "GREATER_THAN_OR_EQUAL_TO",
+                                    "LESS_THAN",
+                                    "LESS_THAN_OR_EQUAL_TO",
+                                    "EQUAL_TO",
+                                    "NOT_EQUAL_TO"
+                                ]
+                            }
+                        },
+                        "required": ["condition"]
+                    },
+                    "then": {
+                        "additionalProperties": false,
+                        "properties": {
+                            "type": {
+                                "type": "string",
+                                "enum": ["metric_value_filter"]
+                            },
+                            "using": {
+                                "description": "Metric or local metric to use in this filter.",
+                                "oneOf": [
+                                    {
+                                        "$ref": "#/$defs/metricIdentifier"
+                                    },
+                                    {
+                                        "type": "string",
+                                        "$semantic": {
+                                            "type": "reference",
+                                            "source": "current.query.metric.localId"
+                                        }
+                                    }
+                                ]
+                            },
+                            "condition": {
+                                "type": "string",
+                                "enum": [
+                                    "GREATER_THAN",
+                                    "GREATER_THAN_OR_EQUAL_TO",
+                                    "LESS_THAN",
+                                    "LESS_THAN_OR_EQUAL_TO",
+                                    "EQUAL_TO",
+                                    "NOT_EQUAL_TO"
+                                ],
+                                "description": "Condition to use for this filter."
+                            },
+                            "value": {
+                                "type": "number",
+                                "description": "Value to use in condition for this filter."
+                            },
+                            "null_values_as_zero": {
+                                "type": "boolean",
+                                "description": "Null values will be treated as zero."
+                            },
+                            "dimensionality": {
+                                "type": "array",
+                                "description": "Optional array of attribute or label references or local identifiers to apply dimensionality to the filter.",
+                                "items": {
+                                    "oneOf": [
+                                        {
+                                            "$ref": "#/$defs/labelIdentifier"
+                                        },
+                                        {
+                                            "type": "string",
+                                            "$semantic": {
+                                                "type": "reference",
+                                                "sources": ["current.query.attribute.localId"]
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+                        "required": ["type", "using", "condition", "value"]
+                    }
+                },
+                {
+                    "title": "Range",
+                    "if": {
+                        "properties": {
+                            "condition": {
+                                "enum": ["BETWEEN", "NOT_BETWEEN"]
+                            }
+                        },
+                        "required": ["condition"]
+                    },
+                    "then": {
+                        "additionalProperties": false,
+                        "properties": {
+                            "type": {
+                                "type": "string",
+                                "enum": ["metric_value_filter"]
+                            },
+                            "using": {
+                                "description": "Metric or local metric to use in this filter.",
+                                "oneOf": [
+                                    {
+                                        "$ref": "#/$defs/metricIdentifier"
+                                    },
+                                    {
+                                        "type": "string",
+                                        "$semantic": {
+                                            "type": "reference",
+                                            "source": "current.query.metric.localId"
+                                        }
+                                    }
+                                ]
+                            },
+                            "condition": {
+                                "type": "string",
+                                "enum": ["BETWEEN", "NOT_BETWEEN"],
+                                "description": "Condition to use for this filter."
+                            },
+                            "from": {
+                                "type": "number",
+                                "description": "From value to use in condition for this filter."
+                            },
+                            "to": {
+                                "type": "number",
+                                "description": "To value to use in condition for this filter."
+                            },
+                            "null_values_as_zero": {
+                                "type": "boolean",
+                                "description": "Null values will be treated as zero."
+                            },
+                            "dimensionality": {
+                                "type": "array",
+                                "description": "Optional array of attribute or label references or local identifiers to apply dimensionality to the filter.",
+                                "items": {
+                                    "oneOf": [
+                                        {
+                                            "$ref": "#/$defs/labelIdentifier"
+                                        },
+                                        {
+                                            "type": "string",
+                                            "$semantic": {
+                                                "type": "reference",
+                                                "sources": ["current.query.attribute.localId"]
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+                        "required": ["type", "using", "condition", "from", "to"]
+                    }
+                },
+                {
+                    "title": "All",
+                    "description": "For MVF with operator \"All\" (no filtering). Such filter can be present without a condition and is treated as a no-op.",
+                    "if": {
+                        "not": {
+                            "anyOf": [
+                                {
+                                    "required": ["condition"]
+                                },
+                                {
+                                    "required": ["conditions"]
+                                }
+                            ]
+                        }
+                    },
+                    "then": {
+                        "additionalProperties": false,
+                        "properties": {
+                            "type": {
+                                "type": "string",
+                                "enum": ["metric_value_filter"]
+                            },
+                            "using": {
+                                "description": "Metric or local metric to use in this filter.",
+                                "oneOf": [
+                                    {
+                                        "$ref": "#/$defs/metricIdentifier"
+                                    },
+                                    {
+                                        "type": "string",
+                                        "$semantic": {
+                                            "type": "reference",
+                                            "source": "current.query.metric.localId"
+                                        }
+                                    }
+                                ]
+                            },
+                            "conditions": {
+                                "type": "array",
+                                "description": "Optional list of conditions for this filter. Conditions are applied as AND during execution.",
+                                "items": {
+                                    "$ref": "#/$defs/mvfCondition"
+                                }
+                            },
+                            "dimensionality": {
+                                "type": "array",
+                                "description": "Optional array of attribute or label references or local identifiers to apply dimensionality to the filter.",
+                                "items": {
+                                    "oneOf": [
+                                        {
+                                            "$ref": "#/$defs/labelIdentifier"
+                                        },
+                                        {
+                                            "type": "string",
+                                            "$semantic": {
+                                                "type": "reference",
+                                                "sources": ["current.query.attribute.localId"]
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        },
+                        "required": ["type", "using"]
+                    }
+                }
+            ],
+            "required": ["type"],
+            "$semantic": {
+                "type": "definition",
+                "source": "current.widget.visualization.query.filter.localId",
+                "mode": "property"
+            }
+        },
+        "mvfCondition": {
+            "title": "Metric Value Filter Condition",
+            "type": "object",
+            "properties": {
+                "condition": {
+                    "type": "string",
+                    "enum": [
+                        "GREATER_THAN",
+                        "GREATER_THAN_OR_EQUAL_TO",
+                        "LESS_THAN",
+                        "LESS_THAN_OR_EQUAL_TO",
+                        "EQUAL_TO",
+                        "NOT_EQUAL_TO",
+                        "BETWEEN",
+                        "NOT_BETWEEN"
+                    ],
+                    "description": "Condition to use for this filter. If omitted, the condition represents ALL (no filtering)."
+                }
+            },
+            "allOf": [
+                {
+                    "title": "All (no condition)",
+                    "if": {
+                        "not": {
+                            "required": ["condition"]
+                        }
+                    },
+                    "then": {
+                        "additionalProperties": false,
+                        "properties": {}
+                    }
+                },
+                {
+                    "title": "Comparison condition",
+                    "if": {
+                        "properties": {
+                            "condition": {
+                                "enum": [
+                                    "GREATER_THAN",
+                                    "GREATER_THAN_OR_EQUAL_TO",
+                                    "LESS_THAN",
+                                    "LESS_THAN_OR_EQUAL_TO",
+                                    "EQUAL_TO",
+                                    "NOT_EQUAL_TO"
+                                ]
+                            }
+                        },
+                        "required": ["condition"]
+                    },
+                    "then": {
+                        "additionalProperties": false,
+                        "properties": {
+                            "condition": {
+                                "type": "string",
+                                "enum": [
+                                    "GREATER_THAN",
+                                    "GREATER_THAN_OR_EQUAL_TO",
+                                    "LESS_THAN",
+                                    "LESS_THAN_OR_EQUAL_TO",
+                                    "EQUAL_TO",
+                                    "NOT_EQUAL_TO"
+                                ]
+                            },
+                            "value": {
+                                "type": "number",
+                                "description": "Value to use in condition for this filter."
+                            }
+                        },
+                        "required": ["condition", "value"]
+                    }
+                },
+                {
+                    "title": "Range condition",
+                    "if": {
+                        "properties": {
+                            "condition": {
+                                "enum": ["BETWEEN", "NOT_BETWEEN"]
+                            }
+                        },
+                        "required": ["condition"]
+                    },
+                    "then": {
+                        "additionalProperties": false,
+                        "properties": {
+                            "condition": {
+                                "type": "string",
+                                "enum": ["BETWEEN", "NOT_BETWEEN"]
+                            },
+                            "from": {
+                                "type": "number",
+                                "description": "From value to use in condition for this filter."
+                            },
+                            "to": {
+                                "type": "number",
+                                "description": "To value to use in condition for this filter."
+                            }
+                        },
+                        "required": ["condition", "from", "to"]
+                    }
+                }
+            ]
+        },
+        "queryRankingFilter": {
+            "title": "Ranking Filter",
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "enum": ["ranking_filter"]
+                },
+                "using": {
+                    "description": "Metric identifier to use for this filter.",
+                    "oneOf": [
+                        {
+                            "$ref": "#/$defs/metricIdentifier"
+                        },
+                        {
+                            "type": "string",
+                            "$semantic": {
+                                "type": "reference",
+                                "source": "current.query.metric.localId"
+                            }
+                        }
+                    ]
+                },
+                "attribute": {
+                    "description": "Attribute identifier to use for this filter.",
+                    "oneOf": [
+                        {
+                            "$ref": "#/$defs/attributeIdentifier"
+                        },
+                        {
+                            "type": "string",
+                            "$semantic": {
+                                "type": "reference",
+                                "source": "current.query.attribute.localId"
+                            }
+                        }
+                    ]
+                },
+                "bottom": {
+                    "type": "number",
+                    "description": "Number of bottom N values to use in this filter."
+                },
+                "top": {
+                    "type": "number",
+                    "description": "Number of top N values to use in this filter."
+                }
+            },
+            "oneOf": [
+                {
+                    "title": "BOTTOM",
+                    "required": ["type", "using", "bottom"]
+                },
+                {
+                    "title": "TOP",
+                    "required": ["type", "using", "top"]
+                }
+            ],
+            "required": ["type", "using"],
+            "$semantic": {
+                "type": "definition",
+                "source": "current.widget.visualization.query.filter.localId",
+                "mode": "property"
+            }
+        }
+    }
+}

@@ -17,7 +17,18 @@ function isClose(a: number, b: number, epsilon: number): boolean {
     return Math.abs(a - b) <= epsilon;
 }
 
-function isCenterAndZoomAlreadyApplied(map: IMapFacade, viewport: Partial<IMapViewport>): boolean {
+function isViewportAlreadyApplied(map: IMapFacade, viewport: Partial<IMapViewport>): boolean {
+    if (viewport.bounds) {
+        const mapBounds = map.getBounds();
+
+        return (
+            isClose(mapBounds.southWest.lat, viewport.bounds.southWest.lat, CENTER_EPSILON) &&
+            isClose(mapBounds.southWest.lng, viewport.bounds.southWest.lng, CENTER_EPSILON) &&
+            isClose(mapBounds.northEast.lat, viewport.bounds.northEast.lat, CENTER_EPSILON) &&
+            isClose(mapBounds.northEast.lng, viewport.bounds.northEast.lng, CENTER_EPSILON)
+        );
+    }
+
     if (!viewport.center || viewport.zoom === undefined) {
         return false;
     }
@@ -40,8 +51,14 @@ function isCenterAndZoomAlreadyApplied(map: IMapFacade, viewport: Partial<IMapVi
  * prop changes. This hook provides the missing behavior for Analytical Designer: when the user changes
  * "Default viewport", we apply the new viewport to the already-initialized map.
  *
- * We only react to viewport-relevant config changes (`center`/`zoom` or `viewport.area`).
+ * We only react to viewport-relevant config changes (`bounds`, `center`/`zoom`, or `viewport.area`).
  * Data changes are intentionally ignored to avoid unexpected re-centering during interactions.
+ *
+ * Contract note:
+ * custom viewport persists `bounds` as the preferred representation. When AD stores the
+ * currently visible bounds after a user pan/zoom, those bounds already describe the live map.
+ * Replaying them through `cameraForBounds()` would zoom out because the fit operation adds padding,
+ * so matching bounds must be treated as an already-applied viewport and skipped here.
  *
  * The current `dataViewport` is still passed in so that switching to `"auto"` (or clearing the preset)
  * applies the latest data-derived bounds.
@@ -56,6 +73,7 @@ export function useApplyViewportOnConfigChange(
 ): void {
     const hasConfig = config !== undefined;
     const enableGeoChartsViewportConfig = config?.enableGeoChartsViewportConfig;
+    const bounds = config?.bounds;
     const center = config?.center;
     const zoom = config?.zoom;
     const applyViewportNavigation = config?.applyViewportNavigation;
@@ -68,6 +86,7 @@ export function useApplyViewportOnConfigChange(
 
         return {
             enableGeoChartsViewportConfig,
+            bounds,
             center,
             zoom,
             applyViewportNavigation,
@@ -75,7 +94,7 @@ export function useApplyViewportOnConfigChange(
                 area,
             },
         };
-    }, [hasConfig, enableGeoChartsViewportConfig, center, zoom, applyViewportNavigation, area]);
+    }, [hasConfig, enableGeoChartsViewportConfig, bounds, center, zoom, applyViewportNavigation, area]);
 
     const configKey = useMemo(() => getViewportConfigKey(viewportConfig), [viewportConfig]);
     const previousConfigKeyRef = useRef<string | null>(null);
@@ -114,9 +133,10 @@ export function useApplyViewportOnConfigChange(
             viewportConfig,
         );
 
-        // Custom viewport persistence updates center/zoom from live map state.
-        // Re-applying an already-current camera with flyTo causes redundant animation.
-        if (isCenterAndZoomAlreadyApplied(map, responsiveViewportToApply)) {
+        // Custom viewport persistence updates the config from live map state.
+        // Re-applying an already-current viewport causes redundant animation and,
+        // for bounds-based custom viewports, zooms out because cameraForBounds applies padding.
+        if (isViewportAlreadyApplied(map, responsiveViewportToApply)) {
             return;
         }
 

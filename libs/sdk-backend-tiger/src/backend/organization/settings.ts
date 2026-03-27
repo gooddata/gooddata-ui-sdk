@@ -132,6 +132,14 @@ export class OrganizationSettingsService
         return this.setSetting("ENABLE_DRILL_TO_URL_BY_DEFAULT", { value: enabled });
     }
 
+    public async setGeoIconSheet(url: string): Promise<void> {
+        return this.setSetting("GEO_ICON_SHEET", { value: url });
+    }
+
+    public async deleteGeoIconSheet(): Promise<void> {
+        return this.deleteSettingByType("GEO_ICON_SHEET");
+    }
+
     public async deleteColorPalette() {
         return this.deleteSettingByType("ACTIVE_COLOR_PALETTE");
     }
