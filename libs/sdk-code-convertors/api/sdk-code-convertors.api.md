@@ -1142,9 +1142,9 @@ export function yamlWidgetToDeclarative(entities: ExportEntities, input: Visuali
 // src/configs/geoChart.ts:230:22 - (ae-forgotten-export) The symbol "load_20" needs to be exported by the entry point index.d.ts
 // src/configs/geoChart.ts:230:22 - (ae-forgotten-export) The symbol "save_20" needs to be exported by the entry point index.d.ts
 // src/configs/geoChart.ts:230:22 - (ae-forgotten-export) The symbol "DefaultProperties_20" needs to be exported by the entry point index.d.ts
-// src/configs/headlineChart.ts:197:27 - (ae-forgotten-export) The symbol "load_18" needs to be exported by the entry point index.d.ts
-// src/configs/headlineChart.ts:197:27 - (ae-forgotten-export) The symbol "save_18" needs to be exported by the entry point index.d.ts
-// src/configs/headlineChart.ts:197:27 - (ae-forgotten-export) The symbol "DefaultProperties_18" needs to be exported by the entry point index.d.ts
+// src/configs/headlineChart.ts:189:27 - (ae-forgotten-export) The symbol "load_18" needs to be exported by the entry point index.d.ts
+// src/configs/headlineChart.ts:189:27 - (ae-forgotten-export) The symbol "save_18" needs to be exported by the entry point index.d.ts
+// src/configs/headlineChart.ts:189:27 - (ae-forgotten-export) The symbol "DefaultProperties_18" needs to be exported by the entry point index.d.ts
 // src/configs/heatmapChart.ts:208:26 - (ae-forgotten-export) The symbol "load_13" needs to be exported by the entry point index.d.ts
 // src/configs/heatmapChart.ts:208:26 - (ae-forgotten-export) The symbol "save_13" needs to be exported by the entry point index.d.ts
 // src/configs/heatmapChart.ts:208:26 - (ae-forgotten-export) The symbol "DefaultProperties_13" needs to be exported by the entry point index.d.ts

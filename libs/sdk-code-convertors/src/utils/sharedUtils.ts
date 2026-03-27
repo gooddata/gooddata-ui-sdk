@@ -8,10 +8,12 @@ import type {
     ComplexBucket,
     Dataset,
     Field,
+    Filter,
     InlineMetricField,
     MetricField,
     PoPMetricField,
     PreviousPeriodMetricField,
+    Visualisation,
 } from "@gooddata/sdk-code-schemas/v1";
 
 import { type Profile } from "../types.js";
@@ -98,4 +100,22 @@ export function getFullBucket(bucket: Bucket): ComplexBucket {
         };
     }
     return bucket as ComplexBucket;
+}
+
+export function collectFieldLevelFilters(
+    visualisation: Visualisation | undefined,
+): Record<string, Filter> | undefined {
+    const fields = visualisation?.query?.fields;
+    if (!fields) {
+        return undefined;
+    }
+
+    const result: Record<string, Filter> = {};
+    for (const field of Object.values(fields)) {
+        if (typeof field === "object" && field !== null && "filter_by" in field && field.filter_by) {
+            Object.assign(result, field.filter_by);
+        }
+    }
+
+    return Object.keys(result).length > 0 ? result : undefined;
 }

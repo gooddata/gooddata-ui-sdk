@@ -1,0 +1,11 @@
+{
+    "changes": [
+        {
+            "comment": "fix colorConfig.disabled inversion and source measure filter lookup",
+            "type": "none",
+            "packageName": "@gooddata/sdk-ui-all"
+        }
+    ],
+    "packageName": "@gooddata/sdk-ui-all",
+    "email": "jan.soubusta@gooddata.com"
+}
