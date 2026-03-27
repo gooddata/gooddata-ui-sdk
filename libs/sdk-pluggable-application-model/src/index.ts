@@ -10,6 +10,10 @@
 
 export {
     type EmbeddingMode,
+    type IApiTokenAuthCredentials,
+    type IAuthCredentials,
+    type IContextDeferredAuthCredentials,
+    type IJwtAuthCredentials,
     type IOrganization,
     type IOrganizationPermissions,
     type IPlatformContext,

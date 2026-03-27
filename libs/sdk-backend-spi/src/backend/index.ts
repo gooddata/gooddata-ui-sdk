@@ -1,4 +1,4 @@
-// (C) 2019-2025 GoodData Corporation
+// (C) 2019-2026 GoodData Corporation
 
 import { type IExecutionDefinition } from "@gooddata/sdk-model";
 
@@ -193,6 +193,19 @@ export interface IAnalyticalBackend {
      * Returns service that can be used to load geo location assets.
      */
     geo(): IGeoService;
+
+    /**
+     * Backend-specific functions for the concrete backend implementation.
+     * This is heavily discouraged and should be migrated away from in the future.
+     *
+     * @remarks
+     * The type is left as `unknown` to avoid introducing a dependency on the backend implementation.
+     * For the Tiger backend the concrete type is `TigerSpecificFunctions` from `@gooddata/sdk-backend-tiger`.
+     *
+     * @internal
+     * @deprecated Will be removed once all callers migrate to proper SDK APIs.
+     */
+    readonly internal_backendSpecificFunctions?: unknown;
 }
 
 /**

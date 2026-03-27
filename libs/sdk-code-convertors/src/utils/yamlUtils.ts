@@ -181,6 +181,7 @@ export function createFilterItemKeyName(item: IFilter, type: string = "date") {
     throw newError(CoreErrorCode.ItemNotSupported, [JSON.stringify(item)]);
 }
 
+/** @public */
 export function getIdentifier(obj: ObjRef | ObjRefInScope | AfmObjectIdentifier, untype?: boolean): string {
     const idRef = isAfmObjectIdentifier(obj)
         ? { type: obj.identifier.type, identifier: obj.identifier.id }
@@ -199,6 +200,7 @@ export function getIdentifier(obj: ObjRef | ObjRefInScope | AfmObjectIdentifier,
     throw newError(CoreErrorCode.ReferenceTypeNotSupported, [JSON.stringify(obj)]);
 }
 
+/** @public */
 export function createIdentifier<T = AfmObjectIdentifier>(
     data: string,
     {

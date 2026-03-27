@@ -280,6 +280,8 @@ export interface IAnalyticalBackend {
     deauthenticate(returnTo?: string): Promise<void>;
     entitlements(): IEntitlements;
     geo(): IGeoService;
+    // @internal @deprecated
+    readonly internal_backendSpecificFunctions?: unknown;
     isAuthenticated(): Promise<IAuthenticatedPrincipal | null>;
     onHostname(hostname: string): IAnalyticalBackend;
     organization(organizationId: string): IOrganization;

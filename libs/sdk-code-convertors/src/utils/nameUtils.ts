@@ -5,10 +5,12 @@ import { type FilePath, convertIdOrTitleToId, convertTitleToId, parsePath } from
 const EXTENSIONS = /\.yaml$/;
 const LENGTH = 50;
 
+/** @public */
 export type FileNamesUsed = {
     files: string[];
 };
 
+/** @public */
 export function generateFileName(
     used: FileNamesUsed,
     base: string[],
@@ -28,6 +30,7 @@ export function generateFileName(
     return file;
 }
 
+/** @public */
 export function resolveIdFromFileName(fileName: FilePath): string {
     const path = parsePath(fileName);
     const name = path[path.length - 1];

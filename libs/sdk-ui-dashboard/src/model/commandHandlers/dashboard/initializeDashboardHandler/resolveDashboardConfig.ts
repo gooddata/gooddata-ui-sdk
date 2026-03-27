@@ -42,8 +42,7 @@ function loadDateFilterConfig({
         .withLimit(1)
         .query()
         .catch((e) => {
-            // eslint-disable-next-line no-console
-            console.log(
+            console.warn(
                 "An error has occurred while loading date filter config. Will fall back to default date filter config.",
                 e,
             );

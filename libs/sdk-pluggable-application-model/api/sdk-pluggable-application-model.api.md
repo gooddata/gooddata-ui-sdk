@@ -5,7 +5,6 @@
 ```ts
 
 import { ApplicationScope } from '@gooddata/sdk-model';
-import { IAnalyticalBackend } from '@gooddata/sdk-backend-spi';
 import { IEntitlementDescriptor } from '@gooddata/sdk-model';
 import { ILocale } from '@gooddata/sdk-model';
 import { ITheme } from '@gooddata/sdk-model';
@@ -20,9 +19,37 @@ import { PluggableApplicationRegistryItem } from '@gooddata/sdk-model';
 export type EmbeddingMode = "none" | "iframe" | "export";
 
 // @alpha
+export interface IApiTokenAuthCredentials {
+    // (undocumented)
+    token: string;
+    // (undocumented)
+    type: "apiToken";
+}
+
+// @alpha
 export interface IAppInstance extends IPluggableApplicationMountHandle {
     // (undocumented)
     id: string;
+}
+
+// @alpha
+export type IAuthCredentials = IContextDeferredAuthCredentials | IApiTokenAuthCredentials | IJwtAuthCredentials;
+
+// @alpha
+export interface IContextDeferredAuthCredentials {
+    externalProviderId?: string;
+    // (undocumented)
+    type: "contextDeferred";
+}
+
+// @alpha
+export interface IJwtAuthCredentials {
+    // (undocumented)
+    secondsBeforeTokenExpirationToCallReminder?: number;
+    // (undocumented)
+    token: string;
+    // (undocumented)
+    type: "jwt";
 }
 
 export { ILocale }
@@ -56,8 +83,7 @@ export type IPlatformContext = IPlatformContextV1;
 
 // @alpha
 export interface IPlatformContextV1 {
-    // (undocumented)
-    backend: IAnalyticalBackend;
+    auth: IAuthCredentials;
     // (undocumented)
     currentApplicationScope?: ApplicationScope;
     // (undocumented)

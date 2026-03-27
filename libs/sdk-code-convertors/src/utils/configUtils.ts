@@ -21,6 +21,7 @@ import {
 } from "../configs/types.js";
 import { getValueOrDefault } from "../configs/utils.js";
 
+/** @public */
 export function loadColorMapping(mappings: Array<ColorMapping>): YAMLMap<keyof ListOfColors, Color> {
     const map = new YAMLMap<keyof ListOfColors, Color>();
 
@@ -70,6 +71,7 @@ export function loadColor(key: string, color: ColorMapping["color"] | undefined)
     throw new Error(`Unknown color type: ${color}`);
 }
 
+/** @public */
 export function saveColorMapping(mapping: ListOfColors): Array<ColorMapping> | undefined {
     const keys = Object.keys(mapping) as Array<keyof ListOfColors>;
 
@@ -168,6 +170,7 @@ function getIdByDef(def: keyof ColorDefinition): string {
     }
 }
 
+/** @public */
 export function loadColumnsWidth(widths: Array<ColumnWidthItem>): YAMLMap<keyof Width, any>[] | undefined {
     if (widths.length === 0) {
         return undefined;
@@ -227,6 +230,7 @@ export function loadColumnsWidth(widths: Array<ColumnWidthItem>): YAMLMap<keyof 
     });
 }
 
+/** @public */
 export function saveColumnWidths(
     fields: Visualisation["query"]["fields"],
     widths: Width[] | undefined,

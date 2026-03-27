@@ -40,6 +40,10 @@ import { TigerEntitlements } from "./entitlements/index.js";
 import { TigerGeoService } from "./geo/index.js";
 import { TigerOrganization, TigerOrganizations } from "./organization/index.js";
 import { type TigerSpecificFunctions, buildTigerSpecificFunctions } from "./tigerSpecificFunctions.js";
+import {
+    type ITigerSpecificFunctionsProxyResult,
+    createTigerSpecificFunctionsProxy,
+} from "./tigerSpecificFunctionsProxy.js";
 import { TigerUserService } from "./user/index.js";
 import { TigerWorkspace } from "./workspace/index.js";
 import { TigerWorkspaceQueryFactory } from "./workspaces/index.js";
@@ -147,9 +151,27 @@ export type TigerBackendConfig = {
  * Provides a way for the TigerBackend to expose some of its backend specific functions.
  */
 type TigerSpecificFunctionsSubscription = {
+    /**
+     * @deprecated - use internal_backendSpecificFunctions instead
+     */
     onTigerSpecificFunctionsReady?: (functions: TigerSpecificFunctions) => void;
     onContractExpired?: (tier: string) => void;
 };
+
+/**
+ * Stashes proxy references keyed by implConfig identity, so the same proxy
+ * survives across withAuthentication re-creations (which pass this.implConfig
+ * to the new TigerBackend constructor). Module-scoped to avoid leaking
+ * the proxy into the public TigerSpecificFunctionsSubscription type.
+ *
+ * IMPORTANT: this is a "last writer wins" design. When withAuthentication (or
+ * withTelemetry, onHostname, etc.) creates a new TigerBackend with the same
+ * implConfig, the proxy's implementation is replaced with functions bound to
+ * the newest instance. This is intentional — the proxy always delegates to the
+ * most recently authenticated backend, matching the legacy
+ * onTigerSpecificFunctionsReady callback semantics.
+ */
+const proxyByImplConfig = new WeakMap<object, ITigerSpecificFunctionsProxyResult>();
 
 /**
  * An implementation of analytical backend for GoodData CloudNative (codename tiger).
@@ -157,6 +179,7 @@ type TigerSpecificFunctionsSubscription = {
 export class TigerBackend implements IAnalyticalBackend {
     public readonly capabilities: IBackendCapabilities = CAPABILITIES;
     public readonly config: IAnalyticalBackendConfig;
+    public readonly internal_backendSpecificFunctions?: unknown;
 
     private readonly telemetry: TelemetryData;
     private readonly implConfig: TigerBackendConfig & TigerSpecificFunctionsSubscription;
@@ -173,24 +196,35 @@ export class TigerBackend implements IAnalyticalBackend {
         authProvider?: IAuthProviderCallGuard,
     ) {
         this.config = config;
-        this.implConfig = implConfig;
         this.telemetry = telemetry;
         this.authProvider = authProvider || new AnonymousAuthProvider();
         this.dateFormatter = implConfig.dateFormatter ?? defaultDateFormatter;
         this.dateStringifier = implConfig.dateStringifier ?? createDateValueStringifier();
         this.dateNormalizer = implConfig.dateNormalizer ?? createDateValueNormalizer();
 
-        const axios = createAxios(this.config, this.implConfig, this.telemetry);
+        const axios = createAxios(this.config, implConfig, this.telemetry);
         interceptBackendErrorsToConsole(axios);
 
         this.client = tigerClientBaseFactory(axios);
 
         this.authProvider.initializeClient?.(this.client);
 
-        if (this.implConfig.onTigerSpecificFunctionsReady) {
-            const specificFunctions = buildTigerSpecificFunctions(this, this.authApiCall);
-            this.implConfig.onTigerSpecificFunctionsReady(specificFunctions);
+        // Reuse existing proxy across withAuthentication re-creations, or create a fresh one.
+        // The proxy is stashed in a module-scoped WeakMap keyed by implConfig identity
+        // (which is passed through by withAuthentication/withTelemetry/etc.).
+        let proxy = proxyByImplConfig.get(implConfig);
+        if (!proxy) {
+            proxy = createTigerSpecificFunctionsProxy();
+            proxyByImplConfig.set(implConfig, proxy);
         }
+        const specificFunctions = buildTigerSpecificFunctions(this, this.authApiCall);
+        proxy.updateImplementation(specificFunctions);
+        this.internal_backendSpecificFunctions = proxy.functions;
+
+        this.implConfig = implConfig;
+
+        // Legacy callback — the users should no longer need to use onTigerSpecificFunctionsReady
+        implConfig.onTigerSpecificFunctionsReady?.(proxy.functions);
     }
 
     public onHostname(hostname: string): IAnalyticalBackend {

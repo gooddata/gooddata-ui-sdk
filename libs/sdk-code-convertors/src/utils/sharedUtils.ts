@@ -18,10 +18,12 @@ import { type Profile } from "../types.js";
 
 export const TABLE_PATH_DELIMITER = "/";
 
+/** @public */
 export function assertUnreachable(x: never): never {
     throw new Error(`Didn't expect to get here. Invalid value is "${JSON.stringify(x, null, 2)}".`);
 }
 
+/** @public */
 export type FilePath = string[] | string;
 
 export function parsePath(path: FilePath): string[] {

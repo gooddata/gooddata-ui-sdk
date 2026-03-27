@@ -1,6 +1,6 @@
 // (C) 2026 GoodData Corporation
 
-import { type IAnalyticalBackend, type IUserSettings } from "@gooddata/sdk-backend-spi";
+import { type IUserSettings } from "@gooddata/sdk-backend-spi";
 import {
     type ApplicationScope,
     type IEntitlementDescriptor,
@@ -70,15 +70,86 @@ export interface IPluggableApplicationNavigation {
     openApp(id: string, path?: string): void;
 }
 
+// ---------------------------------------------------------------------------
+// Authentication credentials
+// ---------------------------------------------------------------------------
+
+/**
+ * Cookie / session-based authentication — no explicit credentials required.
+ *
+ * @alpha
+ */
+export interface IContextDeferredAuthCredentials {
+    type: "contextDeferred";
+    /**
+     * Optional external identity-provider identifier for SSO flows.
+     * When building a backend with `ContextDeferredAuthProvider`, pass
+     * this value to `createNotAuthenticatedHandler` (or equivalent) so
+     * the redirect targets the correct IdP login page.
+     */
+    externalProviderId?: string;
+}
+
+/**
+ * GoodData API-token authentication.
+ *
+ * @alpha
+ */
+export interface IApiTokenAuthCredentials {
+    type: "apiToken";
+    token: string;
+}
+
+/**
+ * JWT-based authentication.
+ *
+ * @alpha
+ */
+export interface IJwtAuthCredentials {
+    type: "jwt";
+    token: string;
+    secondsBeforeTokenExpirationToCallReminder?: number;
+}
+
+/**
+ * Authentication credentials for building a backend instance.
+ *
+ * @remarks
+ * The shell application determines authentication method and passes the
+ * resolved credentials in the platform context. Client applications use
+ * them to construct their own backend instance.
+ *
+ * @alpha
+ */
+export type IAuthCredentials =
+    | IContextDeferredAuthCredentials
+    | IApiTokenAuthCredentials
+    | IJwtAuthCredentials;
+
+// ---------------------------------------------------------------------------
+// Platform context
+// ---------------------------------------------------------------------------
+
 /**
  * Platform context contract version 1.0.
+ *
+ * @remarks
+ * The shell application populates this context after bootstrapping and
+ * passes it to pluggable (client) applications. It intentionally does NOT
+ * include a backend instance — client applications create their own using
+ * the provided {@link IAuthCredentials} to avoid SDK version desync.
  *
  * @alpha
  */
 export interface IPlatformContextV1 {
     version: "1.0";
 
-    backend: IAnalyticalBackend;
+    /**
+     * Authentication credentials resolved by the shell.
+     * Client applications use these to build their own backend instance.
+     */
+    auth: IAuthCredentials;
+
     user: IUser;
     organization?: IOrganization;
 

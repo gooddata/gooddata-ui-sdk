@@ -1,4 +1,4 @@
-// (C) 2021-2025 GoodData Corporation
+// (C) 2021-2026 GoodData Corporation
 
 import { pluginDebugStr } from "./pluginUtils.js";
 import { type IDashboardPluginContract_V1 } from "../plugin.js";
@@ -10,6 +10,7 @@ function addPluginInfoToMessage(plugin: IDashboardPluginContract_V1 | undefined,
 export interface IDashboardCustomizationLogger {
     setCurrentPlugin(plugin: IDashboardPluginContract_V1 | undefined): void;
 
+    debug(message: string, ...optionalParams: any[]): void;
     log(message: string, ...optionalParams: any[]): void;
     warn(message: string, ...optionalParams: any[]): void;
     error(message: string, ...optionalParams: any[]): void;
@@ -25,7 +26,10 @@ export class DashboardCustomizationLogger implements IDashboardCustomizationLogg
     public setCurrentPlugin = (plugin: IDashboardPluginContract_V1 | undefined): void => {
         this.currentPlugin = plugin;
     };
-
+    public debug = (message: string, ...optionalParams: any[]): void => {
+        // eslint-disable-next-line no-console
+        console.debug(addPluginInfoToMessage(this.currentPlugin, message), optionalParams);
+    };
     public log = (message: string, ...optionalParams: any[]): void => {
         // eslint-disable-next-line no-console
         console.log(addPluginInfoToMessage(this.currentPlugin, message), optionalParams);

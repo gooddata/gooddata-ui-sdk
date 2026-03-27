@@ -18,10 +18,6 @@ export function VisualizationConfig({ widget, onVisualizationDeleted }: IVisuali
     const insight = insights.get(widget.insight);
 
     if (!insight) {
-        // eslint-disable-next-line no-console
-        console.debug(
-            "DefaultVisualizationSwitcherToolbar rendered before the insights were ready, skipping render.",
-        );
         return null;
     }
 
